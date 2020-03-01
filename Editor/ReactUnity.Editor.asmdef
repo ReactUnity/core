@@ -1,0 +1,17 @@
+{
+    "name": "ReactUnity.Editor",
+    "references": [
+        "GUID:ed4a920eac98dc342ba18a6baa202849"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

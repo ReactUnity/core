@@ -1,0 +1,15 @@
+{
+  "name": "com.gokhan-kurt.react-unity",
+  "author": "Gokhan Kurt",
+  "displayName": "React Unity",
+  "version": "0.0.1",
+  "unity": "2019.3",
+  "description": "React renderer for Unity",
+  "keywords": [
+    "React",
+    "UI",
+    "Framework",
+    "Front-end"
+  ],
+  "category": "UI"
+}
