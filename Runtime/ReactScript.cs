@@ -30,12 +30,14 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         {
             string path = "";
 
-            if (ScriptSource == ScriptSource.TextAsset)
-                path = UnityEditor.AssetDatabase.GetAssetPath(SourceAsset);
-            else if (ScriptSource == ScriptSource.File)
+            if (ScriptSource == ScriptSource.File)
                 path = SourcePath;
+#if UNITY_EDITOR
+            else if (ScriptSource == ScriptSource.TextAsset)
+                path = UnityEditor.AssetDatabase.GetAssetPath(SourceAsset);
             else if (ScriptSource == ScriptSource.Resource)
                 path = UnityEditor.AssetDatabase.GetAssetPath(Resources.Load(SourcePath));
+#endif
 
             if (string.IsNullOrWhiteSpace(path)) return Observable.Empty<string>();
 
@@ -95,7 +97,7 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 
 
 #if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
-    public class DetectChanges : UnityEditor.AssetPostprocessor
+    public class DetectChanges
     {
         public static IObservable<string> WatchFileSystem(string path)
         {
