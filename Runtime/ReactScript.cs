@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace ReactUnity
 {
@@ -11,18 +10,13 @@ namespace ReactUnity
     {
         public ScriptSource ScriptSource = ScriptSource.TextAsset;
 
-        [NaughtyAttributes.ShowIf("SourceIsTextAsset")]
         public TextAsset SourceAsset;
-
-        [NaughtyAttributes.ShowIf("SourceIsPath")]
         public string SourcePath;
-
-        [NaughtyAttributes.ShowIf("SourceIsText")]
         public string SourceText;
 
         [SerializeField]
-        [Tooltip("Editor only. Watches file for changes and refreshes the view on change.")]
-        [NaughtyAttributes.ShowIf("SourceIsWatchable")]
+        [Tooltip(@"Editor only. Watches file for changes and refreshes the view on change.
+Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_EDITOR to build.")]
         private bool Watch = false;
 
         private bool SourceIsTextAsset => ScriptSource == ScriptSource.TextAsset;
@@ -31,7 +25,7 @@ namespace ReactUnity
         private bool SourceIsWatchable => ScriptSource != ScriptSource.Url && ScriptSource != ScriptSource.Text;
 
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
         IObservable<string> StartWatching()
         {
             string path = "";
@@ -83,7 +77,7 @@ namespace ReactUnity
 
             if (obs != null) res.Add(obs);
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
             if (Watch && SourceIsWatchable) res.Add(StartWatching());
 #endif
             return Observable.Concat(res);
@@ -100,7 +94,7 @@ namespace ReactUnity
     }
 
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
     public class DetectChanges : UnityEditor.AssetPostprocessor
     {
         public static IObservable<string> WatchFileSystem(string path)

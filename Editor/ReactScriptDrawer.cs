@@ -24,11 +24,15 @@ namespace ReactUnity.Editor
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("SourceText"));
             else
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("SourcePath"));
+
+            position.y += 20;
+            position.height = 18;
+            EditorGUI.PropertyField(position, property.FindPropertyRelative("Watch"));
         }
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return 40;
+            return 60;
         }
     }
 }
