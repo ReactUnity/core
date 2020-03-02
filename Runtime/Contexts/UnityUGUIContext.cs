@@ -16,17 +16,17 @@ namespace ReactUnity
     {
         static Dictionary<string, EventTriggerType> EventTypes = new Dictionary<string, EventTriggerType>
         {
-            { "onClick", EventTriggerType.PointerClick },
+            { "onPointerClick", EventTriggerType.PointerClick },
             { "onPointerUp", EventTriggerType.PointerUp },
             { "onPointerDown", EventTriggerType.PointerDown },
+            { "onPointerEnter", EventTriggerType.PointerEnter },
+            { "onPointerExit", EventTriggerType.PointerExit },
             { "onSubmit", EventTriggerType.Submit },
             { "onCancel", EventTriggerType.Cancel },
             { "onSelect", EventTriggerType.Select },
             { "onDeselect", EventTriggerType.Deselect },
             { "onMove", EventTriggerType.Move },
             { "onUpdateSelected", EventTriggerType.UpdateSelected },
-            { "onPointerEnter", EventTriggerType.PointerEnter },
-            { "onPointerExit", EventTriggerType.PointerExit },
             { "onScroll", EventTriggerType.Scroll },
             { "onDrag", EventTriggerType.Drag },
             { "onBeginDrag", EventTriggerType.BeginDrag },
