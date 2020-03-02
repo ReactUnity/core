@@ -46,7 +46,7 @@ namespace ReactUnity
         {
             Engine = engine;
             NamedAssets = assets;
-            Host = new HostComponent(hostElement);
+            Host = new HostComponent(hostElement, this);
             RootLayoutNode = Host.Node;
 
             // TODO: text sizes are not calculated right on the first frame they are added
