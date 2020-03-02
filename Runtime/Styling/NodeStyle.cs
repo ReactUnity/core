@@ -11,11 +11,13 @@ namespace ReactUnity.Styling
         // Universal default style
         public static ResolvedNodeStyle Default = new ResolvedNodeStyle()
         {
-            //backgroundColor = Color.clear,
             fontWeight = FontWeight.Regular,
             fontStyle = FontStyles.Normal,
             fontColor = Color.black,
             fontSize = 24,
+
+            borderRadius = 0,
+            borderColor = Color.black,
         };
 
         public static YogaValue Undefined = YogaValue.Undefined();
@@ -25,6 +27,10 @@ namespace ReactUnity.Styling
         public float? opacity { get; set; }
         public int? zOrder { get; set; }
         public Color? backgroundColor { get; set; }
+
+        public int? borderRadius { get; set; }
+        public Color? borderColor { get; set; }
+
 
         // Inherited styles
         public Color? fontColor { get; set; }
@@ -40,6 +46,8 @@ namespace ReactUnity.Styling
             resolved.opacity = opacity ?? tagDefaults.opacity ?? Default.opacity;
             resolved.zOrder = zOrder ?? tagDefaults.zOrder ?? Default.zOrder;
             resolved.backgroundColor = backgroundColor ?? tagDefaults.backgroundColor ?? Default.backgroundColor;
+            resolved.borderRadius = borderRadius ?? tagDefaults.borderRadius ?? Default.borderRadius;
+            resolved.borderColor = borderColor ?? tagDefaults.borderColor ?? Default.borderColor;
 
             // Inherited styles
             var fontColor = this.fontColor ?? tagDefaults.fontColor;
@@ -70,10 +78,13 @@ namespace ReactUnity.Styling
 
     public class ResolvedNodeStyle
     {
-        // Not inherited styles
+        // Non-inherited styles
         public float? opacity { get; set; }
         public int? zOrder { get; set; }
         public Color? backgroundColor { get; set; }
+
+        public int borderRadius { get; set; }
+        public Color? borderColor { get; set; }
 
         // Inherited styles
         public Color fontColor { get; set; }

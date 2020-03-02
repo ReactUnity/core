@@ -1,8 +1,10 @@
+using ReactUnity.Styling;
 using ReactUnity.Types;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,9 +60,9 @@ namespace ReactUnity.Components
         public override void ApplyStyles()
         {
             base.ApplyStyles();
-
             SetBackgroundColor(Style.resolved.backgroundColor);
             SetZOrder(Style.resolved.zOrder);
+            SetBorderRadius(Style.resolved.borderRadius);
         }
 
         protected virtual void SetBackgroundColor(Color? color)
@@ -70,6 +72,29 @@ namespace ReactUnity.Components
                 var image = GetBackgroundGraphic();
 
                 image.color = color ?? Color.clear;
+            }
+        }
+
+        protected virtual void SetBorderRadius(int radius)
+        {
+            if (radius > 0)
+            {
+                var image = MainGraphic as Image;
+
+                if (!image)
+                {
+                    if (MainGraphic) GameObject.DestroyImmediate(MainGraphic);
+                    MainGraphic = image = GameObject.AddComponent<Image>();
+                }
+
+                Observable.EveryLateUpdate().First().TakeUntilDestroy(GameObject).Subscribe((x) =>
+                {
+                    var sprite = BorderGraphic.CreateBorderSprite(radius);
+                    image.sprite = sprite;
+                    image.type = Image.Type.Sliced;
+                    image.pixelsPerUnitMultiplier = 100;
+                    image.color = Style.resolved.backgroundColor ?? Color.clear;
+                });
             }
         }
 

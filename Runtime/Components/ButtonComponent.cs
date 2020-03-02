@@ -10,7 +10,7 @@ namespace ReactUnity.Components
 
     public class ButtonComponent : ContainerComponent
     {
-        public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle() { backgroundColor = new Color(0.9f, 0.9f, 0.9f) };
+        public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle() { backgroundColor = new Color(0.9f, 0.9f, 0.9f), borderRadius = 8 };
         public override NodeStyle DefaultStyle => ButtonDefaultStyle;
         public override YogaNode DefaultLayout => new YogaNode() { PaddingHorizontal = 12, PaddingVertical = 8 };
 

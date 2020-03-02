@@ -142,7 +142,7 @@ namespace ReactUnity.Components
 
         public virtual Graphic CreateBackgroundGraphic()
         {
-            var image = GameObject.AddComponent<RawImage>();
+            var image = GameObject.AddComponent<Image>();
             image.color = Color.clear;
 
             return MainGraphic = image;
