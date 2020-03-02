@@ -31,7 +31,7 @@ namespace ReactUnity
             { "onDrag", EventTriggerType.Drag },
             { "onBeginDrag", EventTriggerType.BeginDrag },
             { "onEndDrag", EventTriggerType.EndDrag },
-            { "onPotantialDrag", EventTriggerType.InitializePotentialDrag },
+            { "onPotentialDrag", EventTriggerType.InitializePotentialDrag },
             { "onDrop", EventTriggerType.Drop },
         };
 
@@ -47,7 +47,7 @@ namespace ReactUnity
             Engine = engine;
             NamedAssets = assets;
             Host = new HostComponent(hostElement, this);
-            RootLayoutNode = Host.Node;
+            RootLayoutNode = Host.Layout;
 
             // TODO: text sizes are not calculated right on the first frame they are added
             Observable.EveryLateUpdate().Subscribe((x) =>

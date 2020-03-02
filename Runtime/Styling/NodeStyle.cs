@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -22,6 +23,7 @@ namespace ReactUnity.Styling
 
         public static YogaValue Undefined = YogaValue.Undefined();
 
+        public ResolvedNodeStyle resolved { get; } = new ResolvedNodeStyle();
 
         // Non-inherited styles
         public float? opacity { get; set; }
@@ -37,8 +39,6 @@ namespace ReactUnity.Styling
         public FontWeight? fontWeight { get; set; }
         public FontStyles? fontStyle { get; set; }
         public YogaValue fontSize { get; set; }
-
-        public ResolvedNodeStyle resolved { get; } = new ResolvedNodeStyle();
 
 
         public ResolvedNodeStyle ResolveStyle(ResolvedNodeStyle resolvedParent, NodeStyle tagDefaults)
@@ -72,6 +72,20 @@ namespace ReactUnity.Styling
 
 
             return resolved;
+        }
+
+        public void CopyStyle(NodeStyle copyFrom)
+        {
+            opacity = copyFrom.opacity;
+            zOrder = copyFrom.zOrder;
+            backgroundColor = copyFrom.backgroundColor;
+            borderRadius = copyFrom.borderRadius;
+            borderColor = copyFrom.borderColor;
+
+            fontColor = copyFrom.fontColor;
+            fontWeight = copyFrom.fontWeight;
+            fontStyle = copyFrom.fontStyle;
+            fontSize = copyFrom.fontSize;
         }
     }
 

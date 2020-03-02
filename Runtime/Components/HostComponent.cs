@@ -13,12 +13,11 @@ namespace ReactUnity.Components
 
         public HostComponent(RectTransform host, UnityUGUIContext context) : base(host)
         {
-            Node.Width = Width;
-            Node.Height = Height;
+            Layout.Width = Width;
+            Layout.Height = Height;
 
-            Flex.enabled = false;
             var stable = GameObject.AddComponent<ResponsiveElement>();
-            stable.Node = Node;
+            stable.Node = Layout;
             stable.Context = context;
 
             ResolveStyle();

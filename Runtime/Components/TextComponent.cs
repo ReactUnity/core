@@ -23,8 +23,8 @@ namespace ReactUnity.Components
 
         public void RecalculateTextSize()
         {
-            Node.Width = Mathf.CeilToInt(Width);
-            Node.Height = Mathf.CeilToInt(Height);
+            Layout.Width = Mathf.CeilToInt(Width);
+            Layout.Height = Mathf.CeilToInt(Height);
         }
 
         public void SetText(string text)

@@ -13,9 +13,10 @@ namespace ReactUnity.Components
 {
     public class UnityComponent
     {
-        public static NodeStyle TagDefaultStyle { get; } = new NodeStyle() { };
+        public static NodeStyle TagDefaultStyle { get; } = new NodeStyle();
+        public static YogaNode TagDefaultLayout { get; } = new YogaNode();
         public virtual NodeStyle DefaultStyle => TagDefaultStyle;
-        public virtual YogaNode DefaultLayout => new YogaNode();
+        public virtual YogaNode DefaultLayout => TagDefaultLayout;
 
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
@@ -24,7 +25,7 @@ namespace ReactUnity.Components
         public EventTrigger EventTrigger { get; private set; }
 
         public FlexElement Flex { get; private set; }
-        public YogaNode Node;
+        public YogaNode Layout;
         public NodeStyle Style;
 
         public Graphic MainGraphic { get; protected set; }
@@ -35,9 +36,8 @@ namespace ReactUnity.Components
             RectTransform = existing;
 
             Style = new NodeStyle();
-            Node = DefaultLayout;
-            Flex = GameObject.GetComponent<FlexElement>() ?? GameObject.AddComponent<FlexElement>();
-            Flex.Node = Node;
+            Layout = new YogaNode();
+            ResetLayout();
         }
 
         public UnityComponent()
@@ -52,16 +52,17 @@ namespace ReactUnity.Components
 
 
             Style = new NodeStyle();
-            Node = DefaultLayout;
+            Layout = new YogaNode();
+            ResetLayout();
             Flex = GameObject.AddComponent<FlexElement>();
-            Flex.Node = Node;
+            Flex.Node = Layout;
         }
 
         public void Destroy()
         {
             GameObject.DestroyImmediate(GameObject);
             Parent.Children.Remove(this);
-            Parent.Node.RemoveChild(Node);
+            Parent.Layout.RemoveChild(Layout);
         }
 
         public virtual void SetParent(ContainerComponent parent, UnityComponent insertBefore = null)
@@ -72,14 +73,14 @@ namespace ReactUnity.Components
             if (insertBefore == null)
             {
                 parent.Children.Add(this);
-                parent.Node.AddChild(Node);
+                parent.Layout.AddChild(Layout);
             }
             else
             {
                 var ind = insertBefore.RectTransform.GetSiblingIndex();
 
                 parent.Children.Insert(ind, this);
-                parent.Node.Insert(ind, Node);
+                parent.Layout.Insert(ind, Layout);
                 RectTransform.SetSiblingIndex(ind);
             }
 
@@ -122,6 +123,16 @@ namespace ReactUnity.Components
             uevent?.RemoveAllListeners();
         }
         #endregion
+
+        public void ResetLayout()
+        {
+            Layout.CopyStyle(DefaultLayout);
+        }
+
+        public void ResetStyle()
+        {
+            Style.CopyStyle(DefaultStyle);
+        }
 
         public virtual void ResolveStyle()
         {
