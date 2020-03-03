@@ -1,3 +1,5 @@
+using Facebook.Yoga;
+using ReactUnity.Layout;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,14 +8,21 @@ namespace ReactUnity.Components
 {
     public class TextComponent : UnityComponent
     {
+        public static YogaNode TextDefaultLayout { get; } = new YogaNode() { MaxWidth = YogaValue.Percent(100), MaxHeight = YogaValue.Percent(100) };
+        public override YogaNode DefaultLayout => TextDefaultLayout;
+
         public TextMeshProUGUI Text { get; private set; }
 
         public float Width => LayoutUtility.GetPreferredWidth(RectTransform);
         public float Height => LayoutUtility.GetPreferredHeight(RectTransform);
 
-        public TextComponent(string text) : base()
+        public FlexSelfControlledElement SelfControl { get; private set; }
+
+        public TextComponent(string text, UnityUGUIContext context) : base(context)
         {
-            Flex.AutoSized = true;
+            SelfControl = GameObject.AddComponent<FlexSelfControlledElement>();
+            SelfControl.Node = Layout;
+            SelfControl.Context = context;
 
             // TODO: text sizes are not calculated right on the first frame they are added
             var tt = Text = GameObject.AddComponent<TextMeshProUGUI>();

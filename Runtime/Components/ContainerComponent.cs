@@ -19,12 +19,12 @@ namespace ReactUnity.Components
         public CanvasGroup CanvasGroup => GameObject.GetComponents<CanvasGroup>().FirstOrDefault();
         public Canvas Canvas => GameObject.GetComponents<Canvas>().FirstOrDefault();
 
-        protected ContainerComponent(RectTransform existing) : base(existing)
+        protected ContainerComponent(RectTransform existing, UnityUGUIContext context) : base(existing, context)
         {
             Container = existing;
         }
 
-        public ContainerComponent() : base()
+        public ContainerComponent(UnityUGUIContext context) : base(context)
         {
             Container = RectTransform;
         }
@@ -77,6 +77,8 @@ namespace ReactUnity.Components
 
         protected virtual void SetBorderRadius(int radius)
         {
+            if (!MainGraphic) return;
+
             var image = MainGraphic as Image;
 
             if (!image)

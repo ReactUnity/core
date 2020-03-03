@@ -15,27 +15,19 @@ namespace ReactUnity.Components
         public override NodeStyle DefaultStyle => ButtonDefaultStyle;
         public override YogaNode DefaultLayout => ButtonDefaultLayout;
 
-        public Button button { get; private set; }
+        public Button Button { get; private set; }
 
 
-        public ButtonComponent() : base()
+        public ButtonComponent(UnityUGUIContext context) : base(context)
         {
-            button = GameObject.AddComponent<Button>();
+            Button = GameObject.AddComponent<Button>();
+            Selectable = Button;
         }
 
         public void setButtonOnClick(System.Action callback)
         {
-            button.onClick.RemoveAllListeners();
-            if (callback != null) button.onClick.AddListener(new UnityAction(callback));
-        }
-
-        public override Graphic CreateBackgroundGraphic()
-        {
-            var image = base.CreateBackgroundGraphic();
-
-            button.targetGraphic = image;
-
-            return image;
+            Button.onClick.RemoveAllListeners();
+            if (callback != null) Button.onClick.AddListener(new UnityAction(callback));
         }
     }
 }

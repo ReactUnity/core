@@ -66,9 +66,8 @@ namespace ReactUnity
 
         public TextComponent createText(string text)
         {
-            var res = new TextComponent(text);
+            var res = new TextComponent(text, this);
             res.GameObject.name = "TEXT";
-            res.Flex.Context = this;
             return res;
         }
 
@@ -77,18 +76,21 @@ namespace ReactUnity
             UnityComponent res = null;
             if (type == "atom")
             {
-                res = new ContainerComponent();
+                res = new ContainerComponent(this);
             }
             else if (type == "button")
             {
-                res = new ButtonComponent();
+                res = new ButtonComponent(this);
+            }
+            else if (type == "input")
+            {
+                res = new InputComponent(text, this);
             }
             else
             {
                 throw new System.Exception($"Unknown component type {type} specified.");
             }
             res.GameObject.name = $"<{type}>";
-            res.Flex.Context = this;
             return res;
         }
 
@@ -147,6 +149,9 @@ namespace ReactUnity
                     return;
                 case "disabled":
                     (cmp as ContainerComponent)?.SetInteractable(value != true);
+                    return;
+                case "placeholder":
+                    (cmp as InputComponent)?.SetPlaceholder(value.AsString());
                     return;
                 default:
                     break;

@@ -29,8 +29,9 @@ namespace ReactUnity.Components
         public NodeStyle Style;
 
         public Graphic MainGraphic { get; protected set; }
+        public Selectable Selectable { get; protected set; }
 
-        protected UnityComponent(RectTransform existing)
+        protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
             GameObject = existing.gameObject;
             RectTransform = existing;
@@ -40,10 +41,9 @@ namespace ReactUnity.Components
             ResetLayout();
         }
 
-        public UnityComponent()
+        public UnityComponent(UnityUGUIContext context)
         {
             GameObject = new GameObject();
-            GameObject.AddComponent<CanvasRenderer>();
             RectTransform = GameObject.AddComponent<RectTransform>();
 
             RectTransform.anchorMin = Vector2.up;
@@ -155,6 +155,8 @@ namespace ReactUnity.Components
         {
             var image = GameObject.AddComponent<Image>();
             image.color = Color.clear;
+
+            if(Selectable) Selectable.targetGraphic = image;
 
             return MainGraphic = image;
         }

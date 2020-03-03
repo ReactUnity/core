@@ -22,7 +22,7 @@ namespace ReactUnity.Styling
                 smallTexture.SetPixels(colors);
                 smallTexture.Apply();
                 return SpriteCache[borderRadius] =
-                    Sprite.Create(smallTexture, new Rect(0, 0, 3, 3), Vector2.one / 2, 1, 0, SpriteMeshType.FullRect, Vector4.one);
+                    Sprite.Create(smallTexture, new Rect(0, 0, 4, 4), Vector2.one / 2, 1, 0, SpriteMeshType.FullRect, Vector4.one);
             }
 
             var svg = new Scene() { Root = new SceneNode() { Shapes = new List<Shape>() } };

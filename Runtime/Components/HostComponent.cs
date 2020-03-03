@@ -11,14 +11,14 @@ namespace ReactUnity.Components
         public float Width => RectTransform.rect.width;
         public float Height => RectTransform.rect.height;
 
-        public HostComponent(RectTransform host, UnityUGUIContext context) : base(host)
+        public HostComponent(RectTransform host, UnityUGUIContext context) : base(host, context)
         {
             Layout.Width = Width;
             Layout.Height = Height;
 
-            var stable = GameObject.AddComponent<ResponsiveElement>();
-            stable.Node = Layout;
-            stable.Context = context;
+            var responsive = GameObject.AddComponent<ResponsiveElement>();
+            responsive.Node = Layout;
+            responsive.Context = context;
 
             ResolveStyle();
         }

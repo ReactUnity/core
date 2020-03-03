@@ -4,14 +4,11 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Layout
 {
-    public class FlexElement : MonoBehaviour, ILayoutSelfController
+    public class FlexElement : MonoBehaviour
     {
         private RectTransform rt;
 
-        // Used for root and text components
-        public bool AutoSized = false;
         public YogaNode Node;
-        public UnityUGUIContext Context;
 
         [NaughtyAttributes.ShowNativeProperty]
         public string Layout => Node.Print(YogaPrintOptions.Layout);
@@ -41,24 +38,6 @@ namespace ReactUnity.Layout
         public void Recalculate()
         {
             Node.CalculateLayout();
-        }
-
-        void ILayoutController.SetLayoutHorizontal()
-        {
-            if (AutoSized)
-            {
-                Node.Width = Mathf.Ceil(LayoutUtility.GetPreferredSize(transform as RectTransform, 0));
-                Context.scheduleLayout();
-            }
-        }
-
-        void ILayoutController.SetLayoutVertical()
-        {
-            if (AutoSized)
-            {
-                Node.Height = Mathf.Ceil(LayoutUtility.GetPreferredSize(transform as RectTransform, 1));
-                Context.scheduleLayout();
-            }
         }
     }
 }
