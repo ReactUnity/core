@@ -6,7 +6,7 @@ namespace ReactUnity.Components
 {
     public class TextComponent : UnityComponent
     {
-        private TextMeshProUGUI textComponent { get; set; }
+        public TextMeshProUGUI Text { get; private set; }
 
         public float Width => LayoutUtility.GetPreferredWidth(RectTransform);
         public float Height => LayoutUtility.GetPreferredHeight(RectTransform);
@@ -16,7 +16,7 @@ namespace ReactUnity.Components
             Flex.AutoSized = true;
 
             // TODO: text sizes are not calculated right on the first frame they are added
-            var tt = textComponent = GameObject.AddComponent<TextMeshProUGUI>();
+            var tt = Text = GameObject.AddComponent<TextMeshProUGUI>();
             MainGraphic = tt;
             SetText(text);
         }
@@ -29,17 +29,17 @@ namespace ReactUnity.Components
 
         public void SetText(string text)
         {
-            textComponent.text = text;
+            Text.text = text;
             RecalculateTextSize();
         }
 
         public override void ApplyStyles()
         {
             base.ApplyStyles();
-            textComponent.fontSize = Style.resolved.fontSize;
-            textComponent.fontStyle = Style.resolved.fontStyle;
-            textComponent.fontWeight = Style.resolved.fontWeight;
-            textComponent.color = Style.resolved.fontColor;
+            Text.fontSize = Style.resolved.fontSize;
+            Text.fontStyle = Style.resolved.fontStyle;
+            Text.fontWeight = Style.resolved.fontWeight;
+            Text.color = Style.resolved.fontColor;
             RecalculateTextSize();
         }
     }

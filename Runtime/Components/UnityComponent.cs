@@ -140,9 +140,9 @@ namespace ReactUnity.Components
             ApplyStyles();
         }
 
-        public virtual void ApplyStyles()
-        {
-        }
+        public virtual void ApplyLayoutStyles() { }
+
+        public virtual void ApplyStyles() { }
 
 
         public virtual Graphic GetBackgroundGraphic()

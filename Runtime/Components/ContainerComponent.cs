@@ -77,25 +77,22 @@ namespace ReactUnity.Components
 
         protected virtual void SetBorderRadius(int radius)
         {
-            if (radius > 0)
+            var image = MainGraphic as Image;
+
+            if (!image)
             {
-                var image = MainGraphic as Image;
-
-                if (!image)
-                {
-                    if (MainGraphic) GameObject.DestroyImmediate(MainGraphic);
-                    MainGraphic = image = GameObject.AddComponent<Image>();
-                }
-
-                Observable.EveryLateUpdate().First().TakeUntilDestroy(GameObject).Subscribe((x) =>
-                {
-                    var sprite = BorderGraphic.CreateBorderSprite(radius);
-                    image.sprite = sprite;
-                    image.type = Image.Type.Sliced;
-                    image.pixelsPerUnitMultiplier = 100;
-                    image.color = Style.resolved.backgroundColor ?? Color.clear;
-                });
+                if (MainGraphic) GameObject.DestroyImmediate(MainGraphic);
+                MainGraphic = image = GameObject.AddComponent<Image>();
             }
+
+            Observable.EveryLateUpdate().First().TakeUntilDestroy(GameObject).Subscribe((x) =>
+            {
+                var sprite = BorderGraphic.CreateBorderSprite(radius);
+                image.sprite = sprite;
+                image.type = Image.Type.Sliced;
+                image.pixelsPerUnitMultiplier = 100;
+                image.color = Style.resolved.backgroundColor ?? Color.clear;
+            });
         }
 
         protected virtual void SetZOrder(int? z)

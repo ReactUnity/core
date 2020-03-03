@@ -22,5 +22,9 @@ namespace ReactUnity.Components
 
             ResolveStyle();
         }
+
+        public override void ApplyStyles()
+        {
+        }
     }
 }

@@ -11,7 +11,19 @@ namespace ReactUnity.Styling
 
         static public Sprite CreateBorderSprite(int borderRadius)
         {
+            borderRadius = Mathf.Max(borderRadius, 0);
             if (SpriteCache.ContainsKey(borderRadius)) return SpriteCache[borderRadius];
+
+            if (borderRadius == 0)
+            {
+                var smallTexture = new Texture2D(4, 4);
+                var colors = new Color[16];
+                for (int i = 0; i < 16; i++) colors[i] = Color.white;
+                smallTexture.SetPixels(colors);
+                smallTexture.Apply();
+                return SpriteCache[borderRadius] =
+                    Sprite.Create(smallTexture, new Rect(0, 0, 3, 3), Vector2.one / 2, 1, 0, SpriteMeshType.FullRect, Vector4.one);
+            }
 
             var svg = new Scene() { Root = new SceneNode() { Shapes = new List<Shape>() } };
 
