@@ -20,25 +20,25 @@ namespace ReactUnity.Components
 
         public TextComponent(string text, UnityUGUIContext context) : base(context)
         {
+            Text = GameObject.AddComponent<TextMeshProUGUI>();
+
             SelfControl = GameObject.AddComponent<FlexSelfControlledElement>();
             SelfControl.Node = Layout;
             SelfControl.Context = context;
+            Layout.SetMeasureFunction(SelfControl.Measure);
 
-            // TODO: text sizes are not calculated right on the first frame they are added
-            Text = GameObject.AddComponent<TextMeshProUGUI>();
             SetText(text);
-        }
-
-        public void RecalculateTextSize()
-        {
-            Layout.Width = Mathf.CeilToInt(Width);
-            Layout.Height = Mathf.CeilToInt(Height);
         }
 
         public void SetText(string text)
         {
             Text.text = text;
-            RecalculateTextSize();
+        }
+
+        public override void ApplyLayoutStyles()
+        {
+            base.ApplyLayoutStyles();
+            Text.isRightToLeftText = Layout.LayoutDirection == YogaDirection.RTL;
         }
 
         public override void ApplyStyles()
@@ -47,8 +47,8 @@ namespace ReactUnity.Components
             Text.fontSize = Style.resolved.fontSize;
             Text.fontStyle = Style.resolved.fontStyle;
             Text.fontWeight = Style.resolved.fontWeight;
+            Text.overflowMode = Style.resolved.textOverflow;
             Text.color = Style.resolved.fontColor;
-            RecalculateTextSize();
         }
     }
 }
