@@ -1,7 +1,7 @@
 using ReactUnity.Styling;
 using System.Collections.Generic;
 using System.Linq;
-using UniRx;
+using ReactUnity.Interop;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,7 +68,7 @@ namespace ReactUnity.Components
             var group = CanvasGroup;
             if (!group && v == 1) return;
 
-            if(!group) group = GameObject.AddComponent<CanvasGroup>();
+            if (!group) group = GameObject.AddComponent<CanvasGroup>();
             group.alpha = v;
         }
 
@@ -86,8 +86,9 @@ namespace ReactUnity.Components
 
             var image = GetBackgroundGraphic();
 
-            Observable.EveryLateUpdate().First().TakeUntilDestroy(GameObject).Subscribe((x) =>
+            MainThreadDispatcher.OnUpdate(() =>
             {
+                if (!GameObject) return;
                 var sprite = BorderGraphic.CreateBorderSprite(radius);
                 image.SetBorderImage(sprite);
             });

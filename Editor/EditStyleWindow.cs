@@ -150,6 +150,13 @@ namespace ReactUnity.Editor
         {
             var prop = EditorGUILayout.EnumPopup("Flex Direction", CurrentLayout.FlexDirection);
             CurrentLayout.FlexDirection = (YogaFlexDirection)prop;
+
+
+            DrawFloatRowWithNaN(CurrentLayout.BorderWidth, 0, (enabled, appropriateValue) =>
+            {
+                var prop2 = EditorGUILayout.IntField("Border Width", (int)appropriateValue);
+                CurrentLayout.BorderWidth = enabled ? prop2 : float.NaN;
+            });
         }
 
 
@@ -162,6 +169,7 @@ namespace ReactUnity.Editor
             flex.Node.CopyStyle(CurrentLayout);
             flex.Component.Context.scheduleLayout();
             flex.Component.ResolveStyle();
+            flex.Component.ApplyLayoutStyles();
         }
 
         bool Toggle(bool value)
@@ -176,6 +184,21 @@ namespace ReactUnity.Editor
             GUI.enabled = enabled;
 
             draw(enabled);
+
+            GUILayout.EndHorizontal();
+            GUI.enabled = true;
+        }
+
+
+
+        void DrawFloatRowWithNaN(float value, float defaultValue, Action<bool, float> draw)
+        {
+            var isNan = float.IsNaN(value);
+            GUILayout.BeginHorizontal();
+            var enabled = Toggle(!isNan);
+            GUI.enabled = enabled;
+
+            draw(enabled, isNan ? defaultValue : value);
 
             GUILayout.EndHorizontal();
             GUI.enabled = true;

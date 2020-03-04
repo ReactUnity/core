@@ -1,13 +1,13 @@
 using Jint.Native;
+using ReactUnity.Interop;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
 
 namespace ReactUnity.Schedulers
 {
     public class UnityScheduler : IUnityScheduler
     {
-        List<System.IDisposable> Timeouts = new List<System.IDisposable>();
+        List<MainThreadDispatcher.CoroutineForwardRef> Timeouts = new List<MainThreadDispatcher.CoroutineForwardRef>();
 
         public int setTimeout(JsValue callback)
         {
@@ -18,10 +18,7 @@ namespace ReactUnity.Schedulers
             if (!Application.isPlaying) return -1;
             var ind = Timeouts.Count;
 
-            Timeouts.Add(Observable.Timer(System.TimeSpan.FromMilliseconds(timeout)).SubscribeOn(Scheduler.MainThread).Subscribe(x =>
-            {
-                callback.Invoke();
-            }));
+            Timeouts.Add(MainThreadDispatcher.Timeout(() => callback.Invoke(), timeout / 1000));
 
             return ind;
         }
@@ -32,32 +29,25 @@ namespace ReactUnity.Schedulers
 
             var ind = Timeouts.Count;
 
-            if (timeout == 0)
-                Timeouts.Add(Observable.EveryUpdate()
-                    .Subscribe(x => callback.Invoke()));
-            else
-                Timeouts.Add(Observable.Interval(System.TimeSpan.FromMilliseconds(timeout))
-                    .Subscribe(x => callback.Invoke()));
+            Timeouts.Add(MainThreadDispatcher.Interval(() => callback.Invoke(), timeout / 1000));
 
             return ind;
         }
 
         public void clearTimeout(int handle)
         {
-            Timeouts[handle].Dispose();
+            MainThreadDispatcher.StopDeferred(Timeouts[handle]);
         }
 
         public void clearInterval(int handle)
         {
-            Timeouts[handle].Dispose();
+            MainThreadDispatcher.StopDeferred(Timeouts[handle]);
         }
 
         public void clearAllTimeouts()
         {
             foreach (var to in Timeouts)
-            {
-                to.Dispose();
-            }
+                MainThreadDispatcher.StopDeferred(to);
 
             Timeouts.Clear();
         }

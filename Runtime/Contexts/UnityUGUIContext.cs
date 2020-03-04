@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UniRx;
 using UnityEngine.EventSystems;
 using Jint.Native;
 using Jint;
 using ReactUnity.Components;
-using ReactUnity.Converters;
 using ReactUnity.Types;
 using Facebook.Yoga;
 using Jint.Native.Function;
+using ReactUnity.Interop;
 
 namespace ReactUnity
 {
@@ -50,7 +49,7 @@ namespace ReactUnity
             RootLayoutNode = Host.Layout;
 
             // TODO: text sizes are not calculated right on the first frame they are added
-            Observable.EveryLateUpdate().Subscribe((x) =>
+            MainThreadDispatcher.AddCallOnLateUpdate(() =>
             {
                 if (Scheduled)
                 {

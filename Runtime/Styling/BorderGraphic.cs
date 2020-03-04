@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+#if REACT_VECTOR_GRAPHICS
 using Unity.VectorGraphics;
+#endif
 using UnityEngine;
 
 namespace ReactUnity.Styling
@@ -8,9 +10,13 @@ namespace ReactUnity.Styling
     {
         public static Dictionary<int, Sprite> SpriteCache = new Dictionary<int, Sprite>();
 
+#if !REACT_VECTOR_GRAPHICS
+        private static bool ShowVectorGraphicsMessage = true;
+#endif
 
         static public Sprite CreateBorderSprite(int borderRadius)
         {
+
             borderRadius = Mathf.Max(borderRadius, 0);
             if (SpriteCache.ContainsKey(borderRadius)) return SpriteCache[borderRadius];
 
@@ -25,6 +31,15 @@ namespace ReactUnity.Styling
                     Sprite.Create(smallTexture, new Rect(0, 0, 4, 4), Vector2.one / 2, 1, 0, SpriteMeshType.FullRect, Vector4.one);
             }
 
+
+#if !REACT_VECTOR_GRAPHICS
+            if (ShowVectorGraphicsMessage)
+            {
+                Debug.LogError("To use the 'borderRadius' feeature, 'Unity.VectorGraphics' package must be installed.");
+                ShowVectorGraphicsMessage = false;
+            }
+            return null;
+#else
             var svg = new Scene() { Root = new SceneNode() { Shapes = new List<Shape>() } };
 
             var totalSize = borderRadius * 2 + 2;
@@ -54,6 +69,7 @@ namespace ReactUnity.Styling
             Object.DestroyImmediate(sprite);
             SpriteCache[borderRadius] = newSprite;
             return newSprite;
+#endif
         }
     }
 }

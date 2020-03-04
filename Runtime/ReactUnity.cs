@@ -6,7 +6,6 @@ using ReactUnity.Schedulers;
 using ReactUnity.Types;
 using System;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
 
 namespace ReactUnity
@@ -22,11 +21,17 @@ namespace ReactUnity
         public StringObjectDictionary NamedAssets = new StringObjectDictionary();
         public ReactScript Script;
 
+        private IDisposable ScriptWatchDisposable;
+
         void OnEnable()
         {
-            MainThreadDispatcher.CullAllExcessDispatchers();
             MainThreadDispatcher.Initialize();
             Restart();
+        }
+
+        void OnDisable()
+        {
+            if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
         }
 
         void Clean()
@@ -42,8 +47,13 @@ namespace ReactUnity
         [ContextMenu("Restart")]
         public void Restart()
         {
-            Script.GetScript().TakeUntilDisable(this)
-                .Subscribe(RunScript).AddTo(this);
+            MainThreadDispatcher.CoroutineForwardRef debounce = null;
+            ScriptWatchDisposable = Script.GetScript((script) =>
+            {
+                if (debounce != null) MainThreadDispatcher.StopDeferred(debounce);
+                debounce = MainThreadDispatcher.Timeout(() => RunScript(script), 0.5f);
+            }, out var result);
+            RunScript(result);
         }
 
         void RunScript(string script)
