@@ -55,6 +55,11 @@ namespace ReactUnity.Components
             group.alpha = v;
         }
 
+        public override void ApplyLayoutStyles()
+        {
+            base.ApplyLayoutStyles();
+            SetBorderSize(Layout.BorderWidth);
+        }
 
 
         public override void ApplyStyles()
@@ -63,38 +68,48 @@ namespace ReactUnity.Components
             SetBackgroundColor(Style.resolved.backgroundColor);
             SetZOrder(Style.resolved.zOrder);
             SetBorderRadius(Style.resolved.borderRadius);
+            SetBorderColor(Style.resolved.borderColor);
         }
 
         protected virtual void SetBackgroundColor(Color? color)
         {
-            if (MainGraphic || color.HasValue)
+            if (MainGraphic != null || color.HasValue)
             {
                 var image = GetBackgroundGraphic();
 
-                image.color = color ?? Color.clear;
+                image.SetBackgroundColor(color ?? Color.clear);
             }
         }
 
         protected virtual void SetBorderRadius(int radius)
         {
-            if (!MainGraphic) return;
+            if (MainGraphic == null && radius == 0) return;
 
-            var image = MainGraphic as Image;
-
-            if (!image)
-            {
-                if (MainGraphic) GameObject.DestroyImmediate(MainGraphic);
-                MainGraphic = image = GameObject.AddComponent<Image>();
-            }
+            var image = GetBackgroundGraphic();
 
             Observable.EveryLateUpdate().First().TakeUntilDestroy(GameObject).Subscribe((x) =>
             {
                 var sprite = BorderGraphic.CreateBorderSprite(radius);
-                image.sprite = sprite;
-                image.type = Image.Type.Sliced;
-                image.pixelsPerUnitMultiplier = 100;
-                image.color = Style.resolved.backgroundColor ?? Color.clear;
+                image.SetBorderImage(sprite);
             });
+        }
+
+        protected virtual void SetBorderColor(Color? color)
+        {
+            if (MainGraphic == null && !color.HasValue) return;
+
+            var image = GetBackgroundGraphic();
+
+            image.SetBorderColor(color ?? Color.clear);
+        }
+
+        protected virtual void SetBorderSize(float size)
+        {
+            if (MainGraphic == null && size == 0) return;
+
+            var image = GetBackgroundGraphic();
+
+            image.SetBorderSize(size);
         }
 
         protected virtual void SetZOrder(int? z)

@@ -28,7 +28,7 @@ namespace ReactUnity.Components
         public YogaNode Layout;
         public NodeStyle Style;
 
-        public Graphic MainGraphic { get; protected set; }
+        public BorderAndBackground MainGraphic { get; protected set; }
         public Selectable Selectable { get; protected set; }
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
@@ -145,18 +145,17 @@ namespace ReactUnity.Components
         public virtual void ApplyStyles() { }
 
 
-        public virtual Graphic GetBackgroundGraphic()
+        public virtual BorderAndBackground GetBackgroundGraphic()
         {
-            if (MainGraphic) return MainGraphic;
+            if (MainGraphic != null) return MainGraphic;
             return CreateBackgroundGraphic();
         }
 
-        public virtual Graphic CreateBackgroundGraphic()
+        public virtual BorderAndBackground CreateBackgroundGraphic()
         {
-            var image = GameObject.AddComponent<Image>();
-            image.color = Color.clear;
+            var image = new BorderAndBackground(RectTransform);
 
-            if(Selectable) Selectable.targetGraphic = image;
+            if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
 
             return MainGraphic = image;
         }

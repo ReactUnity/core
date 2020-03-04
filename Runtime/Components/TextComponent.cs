@@ -25,8 +25,7 @@ namespace ReactUnity.Components
             SelfControl.Context = context;
 
             // TODO: text sizes are not calculated right on the first frame they are added
-            var tt = Text = GameObject.AddComponent<TextMeshProUGUI>();
-            MainGraphic = tt;
+            Text = GameObject.AddComponent<TextMeshProUGUI>();
             SetText(text);
         }
 
