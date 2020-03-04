@@ -1,7 +1,4 @@
 using ReactUnity.Styling;
-using ReactUnity.Types;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UniRx;
@@ -48,12 +45,6 @@ namespace ReactUnity.Components
             group.blocksRaycasts = v;
         }
 
-        public virtual void SetOpacity(float v)
-        {
-            var group = CanvasGroup ?? GameObject.AddComponent<CanvasGroup>();
-
-            group.alpha = v;
-        }
 
         public override void ApplyLayoutStyles()
         {
@@ -67,8 +58,18 @@ namespace ReactUnity.Components
             base.ApplyStyles();
             SetBackgroundColor(Style.resolved.backgroundColor);
             SetZOrder(Style.resolved.zOrder);
+            SetOpacity(Style.resolved.opacity);
             SetBorderRadius(Style.resolved.borderRadius);
             SetBorderColor(Style.resolved.borderColor);
+        }
+
+        public virtual void SetOpacity(float v)
+        {
+            var group = CanvasGroup;
+            if (!group && v == 1) return;
+
+            if(!group) group = GameObject.AddComponent<CanvasGroup>();
+            group.alpha = v;
         }
 
         protected virtual void SetBackgroundColor(Color? color)
@@ -122,10 +123,10 @@ namespace ReactUnity.Components
             return false;
         }
 
-        protected virtual void SetZOrder(int? z)
+        protected virtual void SetZOrder(int z)
         {
             Canvas canvas = Canvas;
-            if (!canvas && !z.HasValue) return;
+            if (!canvas && z == 0) return;
             if (!canvas)
             {
                 canvas = GameObject.AddComponent<Canvas>();
@@ -133,7 +134,7 @@ namespace ReactUnity.Components
             }
 
             canvas.overrideSorting = true;
-            canvas.sortingOrder = z ?? 0;
+            canvas.sortingOrder = z;
         }
     }
 }

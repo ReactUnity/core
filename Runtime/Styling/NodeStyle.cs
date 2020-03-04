@@ -12,6 +12,9 @@ namespace ReactUnity.Styling
         // Universal default style
         public static ResolvedNodeStyle Default = new ResolvedNodeStyle()
         {
+            opacity = 1,
+            zOrder = 0,
+
             fontWeight = FontWeight.Regular,
             fontStyle = FontStyles.Normal,
             fontColor = Color.black,
@@ -93,8 +96,8 @@ namespace ReactUnity.Styling
     public class ResolvedNodeStyle
     {
         // Non-inherited styles
-        public float? opacity { get; set; }
-        public int? zOrder { get; set; }
+        public float opacity { get; set; }
+        public int zOrder { get; set; }
         public Color? backgroundColor { get; set; }
 
         public int borderRadius { get; set; }

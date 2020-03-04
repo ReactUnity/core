@@ -1,6 +1,7 @@
 using UnityEngine;
 using Facebook.Yoga;
-using UnityEngine.UI;
+using ReactUnity.Styling;
+using ReactUnity.Components;
 
 namespace ReactUnity.Layout
 {
@@ -8,13 +9,9 @@ namespace ReactUnity.Layout
     {
         private RectTransform rt;
 
-        public YogaNode Node;
-
-        [NaughtyAttributes.ShowNativeProperty]
-        public string Layout => Node.Print(YogaPrintOptions.Layout);
-
-        [NaughtyAttributes.ShowNativeProperty]
-        public string Style => Node.Print(YogaPrintOptions.Style);
+        public YogaNode Node { get; internal set; }
+        public NodeStyle Style { get; internal set; }
+        public UnityComponent Component { get; internal set; }
 
         private void OnEnable()
         {
@@ -32,12 +29,6 @@ namespace ReactUnity.Layout
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Node.LayoutHeight);
 
             Node.MarkLayoutSeen();
-        }
-
-        [NaughtyAttributes.Button]
-        public void Recalculate()
-        {
-            Node.CalculateLayout();
         }
     }
 }

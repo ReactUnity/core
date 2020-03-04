@@ -13,6 +13,7 @@ namespace ReactUnity.Components
 {
     public class UnityComponent
     {
+        public UnityUGUIContext Context { get; }
         public static NodeStyle TagDefaultStyle { get; } = new NodeStyle();
         public static YogaNode TagDefaultLayout { get; } = new YogaNode();
         public virtual NodeStyle DefaultStyle => TagDefaultStyle;
@@ -33,6 +34,7 @@ namespace ReactUnity.Components
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
+            Context = context;
             GameObject = existing.gameObject;
             RectTransform = existing;
 
@@ -43,6 +45,7 @@ namespace ReactUnity.Components
 
         public UnityComponent(UnityUGUIContext context)
         {
+            Context = context;
             GameObject = new GameObject();
             RectTransform = GameObject.AddComponent<RectTransform>();
 
@@ -56,6 +59,8 @@ namespace ReactUnity.Components
             ResetLayout();
             Flex = GameObject.AddComponent<FlexElement>();
             Flex.Node = Layout;
+            Flex.Style = Style;
+            Flex.Component = this;
         }
 
         public void Destroy()
