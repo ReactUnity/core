@@ -79,6 +79,8 @@ namespace ReactUnity.Editor
 
         void DrawStyles()
         {
+            GUILayout.Space(14);
+            GUILayout.Label("Rendering");
 
             // Opacity
             DrawNullableRow(CurrentStyle.opacity.HasValue, (enabled) =>
@@ -94,7 +96,6 @@ namespace ReactUnity.Editor
                 CurrentStyle.zOrder = enabled ? (int?)prop : null;
             });
 
-            GUILayout.Space(14);
 
             // Background color
             DrawNullableRow(CurrentStyle.backgroundColor.HasValue, (enabled) =>
@@ -105,11 +106,14 @@ namespace ReactUnity.Editor
             });
 
 
-            // Border radius
-            DrawNullableRow(CurrentStyle.borderRadius.HasValue, (enabled) =>
+            GUILayout.Space(14);
+            GUILayout.Label("Border");
+
+            // Border Width
+            DrawFloatRowWithNaN(CurrentLayout.BorderWidth, 0, (enabled, appropriateValue) =>
             {
-                var prop = EditorGUILayout.IntField("Border radius", CurrentStyle.borderRadius ?? CurrentStyle.resolved.borderRadius);
-                CurrentStyle.borderRadius = enabled ? (int?)prop : null;
+                var prop2 = EditorGUILayout.IntField("Border Width", (int)appropriateValue);
+                CurrentLayout.BorderWidth = enabled ? prop2 : float.NaN;
             });
 
             // Border color
@@ -119,13 +123,29 @@ namespace ReactUnity.Editor
                 CurrentStyle.borderColor = enabled ? (Color?)prop : null;
             });
 
+            // Border radius
+            DrawNullableRow(CurrentStyle.borderRadius.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.IntField("Border radius", CurrentStyle.borderRadius ?? CurrentStyle.resolved.borderRadius);
+                CurrentStyle.borderRadius = enabled ? (int?)prop : null;
+            });
+
+
             GUILayout.Space(14);
+            GUILayout.Label("Font");
 
             // Font style
             DrawNullableRow(CurrentStyle.fontStyle.HasValue, (enabled) =>
             {
                 var prop = EditorGUILayout.EnumFlagsField("Font style", CurrentStyle.fontStyle ?? CurrentStyle.resolved.fontStyle);
                 CurrentStyle.fontStyle = enabled ? (FontStyles?)prop : null;
+            });
+
+            // Text Overflow
+            DrawNullableRow(CurrentStyle.textOverflow.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.EnumPopup("Text Overflow", CurrentStyle.textOverflow ?? CurrentStyle.resolved.textOverflow);
+                CurrentStyle.textOverflow = enabled ? (TextOverflowModes?)prop : null;
             });
 
             // Font color
@@ -135,28 +155,79 @@ namespace ReactUnity.Editor
                 CurrentStyle.fontColor = enabled ? (Color?)prop : null;
             });
 
-            // Font size
-            //DrawNullableRow(CurrentStyle.fontSize.Unit != YogaUnit.Undefined, (enabled) =>
-            //{
-            //var prop = EditorGUILayout.IntField("Font size", CurrentStyle.fontSize.Value ?? CurrentStyle.resolved.fontSize);
-            //if (enabled) CurrentStyle.fontStyle = (FontStyles)prop;
-            //else CurrentStyle.fontStyle = null;
-            //});
-
+            // Direction
+            var prop1 = EditorGUILayout.EnumPopup("Direction", CurrentLayout.StyleDirection);
+            CurrentLayout.StyleDirection = (YogaDirection)prop1;
         }
 
 
         void DrawLayout()
         {
-            var prop = EditorGUILayout.EnumPopup("Flex Direction", CurrentLayout.FlexDirection);
-            CurrentLayout.FlexDirection = (YogaFlexDirection)prop;
+            GUILayout.Space(14);
+            GUILayout.Label("Layout");
+
+            // Display
+            var display = EditorGUILayout.EnumPopup("Display", CurrentLayout.Display);
+            CurrentLayout.Display = (YogaDisplay)display;
+
+            // Overflow
+            var ovf = EditorGUILayout.EnumPopup("Overflow", CurrentLayout.Overflow);
+            CurrentLayout.Overflow = (YogaOverflow)ovf;
 
 
-            DrawFloatRowWithNaN(CurrentLayout.BorderWidth, 0, (enabled, appropriateValue) =>
+            GUILayout.Space(14);
+            GUILayout.Label("Flex");
+
+            // Flex direction
+            var prop1 = EditorGUILayout.EnumPopup("Flex Direction", CurrentLayout.FlexDirection);
+            CurrentLayout.FlexDirection = (YogaFlexDirection)prop1;
+
+
+            // Flex grow
+            var grow = EditorGUILayout.FloatField("Flex Grow", CurrentLayout.FlexGrow);
+            CurrentLayout.FlexGrow = grow;
+
+            // Flex shrink
+            var shrink = EditorGUILayout.FloatField("Flex Shrink", CurrentLayout.FlexShrink);
+            CurrentLayout.FlexShrink = shrink;
+
+            // Wrap
+            var prop6 = EditorGUILayout.EnumPopup("Wrap", CurrentLayout.Wrap);
+            CurrentLayout.Wrap = (YogaWrap)prop6;
+
+
+            GUILayout.Space(14);
+            GUILayout.Label("Align");
+
+            // Align Items
+            var prop2 = EditorGUILayout.EnumPopup("Align Items", CurrentLayout.AlignItems);
+            CurrentLayout.AlignItems = (YogaAlign)prop2;
+
+            // Align Content
+            var prop3 = EditorGUILayout.EnumPopup("Align Content", CurrentLayout.AlignContent);
+            CurrentLayout.AlignContent = (YogaAlign)prop3;
+
+            // Align Self
+            var prop4 = EditorGUILayout.EnumPopup("Align Self", CurrentLayout.AlignSelf);
+            CurrentLayout.AlignSelf = (YogaAlign)prop4;
+
+            // Justify Content
+            var prop5 = EditorGUILayout.EnumPopup("Justify Content", CurrentLayout.JustifyContent);
+            CurrentLayout.JustifyContent = (YogaJustify)prop5;
+
+
+
+            GUILayout.Space(14);
+            GUILayout.Label("Size");
+
+            // Aspect ratio
+            DrawFloatRowWithNaN(CurrentLayout.AspectRatio, 1, (enabled, appropriateValue) =>
             {
-                var prop2 = EditorGUILayout.IntField("Border Width", (int)appropriateValue);
-                CurrentLayout.BorderWidth = enabled ? prop2 : float.NaN;
+                var val = EditorGUILayout.FloatField("Aspect Ratio", appropriateValue);
+                CurrentLayout.AspectRatio = enabled ? val : float.NaN;
             });
+
+
         }
 
 
@@ -167,9 +238,8 @@ namespace ReactUnity.Editor
 
             flex.Style.CopyStyle(CurrentStyle);
             flex.Node.CopyStyle(CurrentLayout);
-            flex.Component.Context.scheduleLayout();
+            flex.Component.Context.scheduleLayout(flex.Component.ApplyLayoutStyles);
             flex.Component.ResolveStyle();
-            flex.Component.ApplyLayoutStyles();
         }
 
         bool Toggle(bool value)

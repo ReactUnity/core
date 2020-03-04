@@ -41,6 +41,6 @@ namespace ReactUnity
 
         #endregion
 
-        void scheduleLayout();
+        void scheduleLayout(System.Action callback = null);
     }
 }

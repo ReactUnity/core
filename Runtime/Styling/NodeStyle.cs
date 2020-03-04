@@ -19,6 +19,7 @@ namespace ReactUnity.Styling
             fontStyle = FontStyles.Normal,
             fontColor = Color.black,
             fontSize = 24,
+            textOverflow = TextOverflowModes.Overflow,
 
             borderRadius = 0,
             borderColor = Color.black,
@@ -42,6 +43,7 @@ namespace ReactUnity.Styling
         public FontWeight? fontWeight { get; set; }
         public FontStyles? fontStyle { get; set; }
         public YogaValue fontSize { get; set; }
+        public TextOverflowModes? textOverflow { get; set; }
 
 
         public ResolvedNodeStyle ResolveStyle(ResolvedNodeStyle resolvedParent, NodeStyle tagDefaults)
@@ -64,6 +66,10 @@ namespace ReactUnity.Styling
             var fontStyle = this.fontStyle ?? tagDefaults.fontStyle;
             if (!fontStyle.HasValue) resolved.fontStyle = resolvedParent?.fontStyle ?? Default.fontStyle;
             else resolved.fontStyle = fontStyle.Value;
+
+            var textOverflow = this.textOverflow ?? tagDefaults.textOverflow;
+            if (!textOverflow.HasValue) resolved.textOverflow = resolvedParent?.textOverflow ?? Default.textOverflow;
+            else resolved.textOverflow = textOverflow.Value;
 
 
             var fontSize = Undefined.Equals(this.fontSize) ? tagDefaults.fontSize : this.fontSize;
@@ -89,6 +95,7 @@ namespace ReactUnity.Styling
             fontWeight = copyFrom.fontWeight;
             fontStyle = copyFrom.fontStyle;
             fontSize = copyFrom.fontSize;
+            textOverflow = copyFrom.textOverflow;
         }
     }
 
@@ -108,6 +115,7 @@ namespace ReactUnity.Styling
         public FontWeight fontWeight { get; set; }
         public FontStyles fontStyle { get; set; }
         public float fontSize { get; set; }
+        public TextOverflowModes textOverflow { get; set; }
 
     }
 }

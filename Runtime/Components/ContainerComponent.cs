@@ -50,6 +50,11 @@ namespace ReactUnity.Components
         {
             base.ApplyLayoutStyles();
             SetBorderSize(Layout.BorderWidth);
+
+            foreach (var child in Children)
+            {
+                child.ApplyLayoutStyles();
+            }
         }
 
 
