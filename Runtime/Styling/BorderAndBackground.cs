@@ -37,6 +37,8 @@ namespace ReactUnity.Styling
 
         public void SetBorderSize(float size)
         {
+            if (float.IsNaN(size)) size = 0;
+
             size = size * 2;
             Root.sizeDelta = new Vector2(-size, -size);
             Border.sizeDelta = new Vector2(size, size);

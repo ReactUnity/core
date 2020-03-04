@@ -112,5 +112,10 @@ namespace ReactUnity.Components
             base.ApplyStyles();
             InputField.pointSize = Style.resolved.fontSize;
         }
+
+        public void Focus()
+        {
+            InputField.Select();
+        }
     }
 }

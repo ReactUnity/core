@@ -73,17 +73,15 @@ namespace ReactUnity.Components
 
         protected virtual void SetBackgroundColor(Color? color)
         {
-            if (MainGraphic != null || color.HasValue)
-            {
-                var image = GetBackgroundGraphic();
+            if (!HasBorderOrBackground()) return;
 
-                image.SetBackgroundColor(color ?? Color.clear);
-            }
+            var image = GetBackgroundGraphic();
+            image.SetBackgroundColor(color ?? Color.clear);
         }
 
         protected virtual void SetBorderRadius(int radius)
         {
-            if (MainGraphic == null && radius == 0) return;
+            if (!HasBorderOrBackground()) return;
 
             var image = GetBackgroundGraphic();
 
@@ -96,20 +94,32 @@ namespace ReactUnity.Components
 
         protected virtual void SetBorderColor(Color? color)
         {
-            if (MainGraphic == null && !color.HasValue) return;
+            if (!HasBorderOrBackground()) return;
 
             var image = GetBackgroundGraphic();
-
             image.SetBorderColor(color ?? Color.clear);
         }
 
         protected virtual void SetBorderSize(float size)
         {
-            if (MainGraphic == null && size == 0) return;
+            if (!HasBorderOrBackground()) return;
 
             var image = GetBackgroundGraphic();
-
             image.SetBorderSize(size);
+        }
+
+        protected bool HasBorderOrBackground()
+        {
+            if (MainGraphic != null) return true;
+
+            var borderSize = Layout.BorderWidth;
+            if (borderSize > 0 && !float.IsNaN(borderSize)) return true;
+
+            var resolved = Style.resolved;
+            if (resolved.borderRadius > 0 && resolved.borderColor.HasValue) return true;
+            if (resolved.backgroundColor.HasValue) return true;
+
+            return false;
         }
 
         protected virtual void SetZOrder(int? z)
