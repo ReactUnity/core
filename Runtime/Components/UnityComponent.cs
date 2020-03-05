@@ -147,8 +147,30 @@ namespace ReactUnity.Components
 
         public virtual void ApplyLayoutStyles() { }
 
-        public virtual void ApplyStyles() { }
+        public virtual void ApplyStyles()
+        {
+            SetTransform();
+        }
 
+        protected void SetTransform()
+        {
+            RectTransform.localScale = Vector3.one;
+            RectTransform.localRotation = Quaternion.identity;
+            SetPivot(Style.resolved.pivot);
+            RectTransform.localScale = new Vector3(Style.resolved.scale.x, Style.resolved.scale.y, 1);
+            RectTransform.localRotation = Quaternion.Euler(0, 0, Style.resolved.rotation);
+        }
+
+        private void SetPivot(Vector2 pivot)
+        {
+            Vector3 deltaPosition = RectTransform.pivot - pivot;    // get change in pivot
+            deltaPosition.Scale(RectTransform.rect.size);           // apply sizing
+            deltaPosition.Scale(RectTransform.localScale);          // apply scaling
+            deltaPosition = RectTransform.rotation * deltaPosition; // apply rotation
+
+            RectTransform.pivot = pivot;                            // change the pivot
+            RectTransform.localPosition -= deltaPosition;           // reverse the position change
+        }
 
         public virtual BorderAndBackground GetBackgroundGraphic()
         {

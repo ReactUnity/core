@@ -113,6 +113,30 @@ namespace ReactUnity.Editor
                 CurrentStyle.backgroundColor = enabled ? (Color?)prop : null;
             });
 
+            // Pivot
+            DrawNullableRow(CurrentStyle.pivot.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.Vector2Field("Pivot",
+                    CurrentStyle.pivot ?? CurrentStyle.resolved.pivot);
+                CurrentStyle.pivot = enabled ? (Vector2?)prop : null;
+            });
+
+            // Scale
+            DrawNullableRow(CurrentStyle.scale.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.Vector2Field("Scale",
+                    CurrentStyle.scale ?? CurrentStyle.resolved.scale);
+                CurrentStyle.scale = enabled ? (Vector2?)prop : null;
+            });
+
+            // Rotation
+            DrawNullableRow(CurrentStyle.rotation.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.FloatField("Rotation",
+                    CurrentStyle.rotation ?? CurrentStyle.resolved.rotation);
+                CurrentStyle.rotation = enabled ? (float?)prop : null;
+            });
+
 
             GUILayout.Space(14);
             GUILayout.Label("Border");
@@ -339,6 +363,8 @@ namespace ReactUnity.Editor
                     var enumName = Enum.GetName(type, value);
                     if (enumName != null) return $"{type.Name}.{enumName}";
                     return value.ToString();
+                case Vector2 v2:
+                    return $"[{v2.x}, {v2.y}]";
                 case Color c:
                     return $"[{c.r}, {c.g}, {c.b}, {c.a}]";
                 case string s:

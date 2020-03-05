@@ -15,14 +15,18 @@ namespace ReactUnity.Styling
             opacity = 1,
             zOrder = 0,
 
+            borderRadius = 0,
+            borderColor = Color.black,
+
+            scale = Vector2.one,
+            pivot = Vector2.up,
+            rotation = 0,
+
             fontWeight = FontWeight.Regular,
             fontStyle = FontStyles.Normal,
             fontColor = Color.black,
             fontSize = 24,
             textOverflow = TextOverflowModes.Overflow,
-
-            borderRadius = 0,
-            borderColor = Color.black,
         };
 
         public static YogaValue Undefined = YogaValue.Undefined();
@@ -37,6 +41,9 @@ namespace ReactUnity.Styling
         public int? borderRadius { get; set; }
         public Color? borderColor { get; set; }
 
+        public Vector2? scale { get; set; }
+        public Vector2? pivot { get; set; }
+        public float? rotation { get; set; }
 
         // Inherited styles
         public Color? fontColor { get; set; }
@@ -53,6 +60,9 @@ namespace ReactUnity.Styling
             resolved.backgroundColor = backgroundColor ?? tagDefaults.backgroundColor ?? Default.backgroundColor;
             resolved.borderRadius = borderRadius ?? tagDefaults.borderRadius ?? Default.borderRadius;
             resolved.borderColor = borderColor ?? tagDefaults.borderColor ?? Default.borderColor;
+            resolved.scale = scale ?? tagDefaults.scale ?? Default.scale;
+            resolved.pivot = pivot ?? tagDefaults.pivot ?? Default.pivot;
+            resolved.rotation = rotation ?? tagDefaults.rotation ?? Default.rotation;
 
             // Inherited styles
             var fontColor = this.fontColor ?? tagDefaults.fontColor;
@@ -90,6 +100,9 @@ namespace ReactUnity.Styling
             backgroundColor = copyFrom.backgroundColor;
             borderRadius = copyFrom.borderRadius;
             borderColor = copyFrom.borderColor;
+            pivot = copyFrom.pivot;
+            scale = copyFrom.scale;
+            rotation = copyFrom.rotation;
 
             fontColor = copyFrom.fontColor;
             fontWeight = copyFrom.fontWeight;
@@ -109,6 +122,10 @@ namespace ReactUnity.Styling
 
         public int borderRadius { get; set; }
         public Color? borderColor { get; set; }
+
+        public Vector2 scale { get; set; }
+        public Vector2 pivot { get; set; }
+        public float rotation { get; set; }
 
         // Inherited styles
         public Color fontColor { get; set; }
