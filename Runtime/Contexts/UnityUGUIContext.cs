@@ -90,6 +90,10 @@ namespace ReactUnity
             {
                 res = new InputComponent(text, this);
             }
+            else if (type == "text")
+            {
+                return createText(text);
+            }
             else
             {
                 throw new System.Exception($"Unknown component type {type} specified.");
