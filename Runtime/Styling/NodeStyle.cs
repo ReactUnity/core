@@ -20,7 +20,7 @@ namespace ReactUnity.Styling
 
             scale = Vector2.one,
             pivot = Vector2.up,
-            rotation = 0,
+            rotate = 0,
 
             fontWeight = FontWeight.Regular,
             fontStyle = FontStyles.Normal,
@@ -43,7 +43,7 @@ namespace ReactUnity.Styling
 
         public Vector2? scale { get; set; }
         public Vector2? pivot { get; set; }
-        public float? rotation { get; set; }
+        public float? rotate { get; set; }
 
         // Inherited styles
         public Color? fontColor { get; set; }
@@ -62,7 +62,7 @@ namespace ReactUnity.Styling
             resolved.borderColor = borderColor ?? tagDefaults.borderColor ?? Default.borderColor;
             resolved.scale = scale ?? tagDefaults.scale ?? Default.scale;
             resolved.pivot = pivot ?? tagDefaults.pivot ?? Default.pivot;
-            resolved.rotation = rotation ?? tagDefaults.rotation ?? Default.rotation;
+            resolved.rotate = rotate ?? tagDefaults.rotate ?? Default.rotate;
 
             // Inherited styles
             var fontColor = this.fontColor ?? tagDefaults.fontColor;
@@ -102,7 +102,7 @@ namespace ReactUnity.Styling
             borderColor = copyFrom.borderColor;
             pivot = copyFrom.pivot;
             scale = copyFrom.scale;
-            rotation = copyFrom.rotation;
+            rotate = copyFrom.rotate;
 
             fontColor = copyFrom.fontColor;
             fontWeight = copyFrom.fontWeight;
@@ -125,7 +125,7 @@ namespace ReactUnity.Styling
 
         public Vector2 scale { get; set; }
         public Vector2 pivot { get; set; }
-        public float rotation { get; set; }
+        public float rotate { get; set; }
 
         // Inherited styles
         public Color fontColor { get; set; }

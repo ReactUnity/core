@@ -158,7 +158,7 @@ namespace ReactUnity.Components
             RectTransform.localRotation = Quaternion.identity;
             SetPivot(Style.resolved.pivot);
             RectTransform.localScale = new Vector3(Style.resolved.scale.x, Style.resolved.scale.y, 1);
-            RectTransform.localRotation = Quaternion.Euler(0, 0, Style.resolved.rotation);
+            RectTransform.localRotation = Quaternion.Euler(0, 0, Style.resolved.rotate);
         }
 
         private void SetPivot(Vector2 pivot)

@@ -130,11 +130,11 @@ namespace ReactUnity.Editor
             });
 
             // Rotation
-            DrawNullableRow(CurrentStyle.rotation.HasValue, (enabled) =>
+            DrawNullableRow(CurrentStyle.rotate.HasValue, (enabled) =>
             {
                 var prop = EditorGUILayout.FloatField("Rotation",
-                    CurrentStyle.rotation ?? CurrentStyle.resolved.rotation);
-                CurrentStyle.rotation = enabled ? (float?)prop : null;
+                    CurrentStyle.rotate ?? CurrentStyle.resolved.rotate);
+                CurrentStyle.rotate = enabled ? (float?)prop : null;
             });
 
 
