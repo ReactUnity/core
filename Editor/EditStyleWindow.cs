@@ -32,6 +32,11 @@ namespace ReactUnity.Editor
             window.titleContent = new GUIContent("React - Edit Style");
         }
 
+        private void OnSelectionChange()
+        {
+            this.Repaint();
+        }
+
         void OnGUI()
         {
             var flex = Selection.activeGameObject?.GetComponent<FlexElement>();
@@ -45,7 +50,7 @@ namespace ReactUnity.Editor
             if (PreviousFlex != flex)
             {
                 CurrentStyle.CopyStyle(flex.Style);
-                CurrentLayout.CopyStyle(flex.Node);
+                CurrentLayout.CopyStyle(flex.Layout);
 
                 CurrentStyleDefaults = flex.Component.DefaultStyle;
                 CurrentLayoutDefaults = flex.Component.DefaultLayout;
@@ -237,7 +242,7 @@ namespace ReactUnity.Editor
             if (!flex) return;
 
             flex.Style.CopyStyle(CurrentStyle);
-            flex.Node.CopyStyle(CurrentLayout);
+            flex.Layout.CopyStyle(CurrentLayout);
             flex.Component.Context.scheduleLayout(flex.Component.ApplyLayoutStyles);
             flex.Component.ResolveStyle();
         }

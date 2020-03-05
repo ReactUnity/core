@@ -58,7 +58,7 @@ namespace ReactUnity.Components
             Layout = new YogaNode();
             ResetLayout();
             Flex = GameObject.AddComponent<FlexElement>();
-            Flex.Node = Layout;
+            Flex.Layout = Layout;
             Flex.Style = Style;
             Flex.Component = this;
         }

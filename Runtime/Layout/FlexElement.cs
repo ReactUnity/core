@@ -9,7 +9,7 @@ namespace ReactUnity.Layout
     {
         private RectTransform rt;
 
-        public YogaNode Node { get; internal set; }
+        public YogaNode Layout { get; internal set; }
         public NodeStyle Style { get; internal set; }
         public UnityComponent Component { get; internal set; }
 
@@ -20,15 +20,15 @@ namespace ReactUnity.Layout
 
         private void LateUpdate()
         {
-            if (!Node.HasNewLayout) return;
+            if (!Layout.HasNewLayout) return;
 
             var pivotDiff = rt.pivot - Vector2.up;
 
-            rt.anchoredPosition = new Vector2(Node.LayoutX + pivotDiff.x * Node.LayoutWidth, -Node.LayoutY + pivotDiff.y * Node.LayoutHeight);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Node.LayoutWidth);
-            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Node.LayoutHeight);
+            rt.anchoredPosition = new Vector2(Layout.LayoutX + pivotDiff.x * Layout.LayoutWidth, -Layout.LayoutY + pivotDiff.y * Layout.LayoutHeight);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
+            rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
 
-            Node.MarkLayoutSeen();
+            Layout.MarkLayoutSeen();
         }
     }
 }
