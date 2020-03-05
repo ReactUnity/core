@@ -10,7 +10,7 @@ namespace ReactUnity.Components
 
     public class ContainerComponent : UnityComponent
     {
-        public RectTransform Container { get; private set; }
+        public RectTransform Container { get; protected set; }
         public List<UnityComponent> Children { get; private set; } = new List<UnityComponent>();
 
         public CanvasGroup CanvasGroup => GameObject.GetComponents<CanvasGroup>().FirstOrDefault();
@@ -50,6 +50,7 @@ namespace ReactUnity.Components
         {
             base.ApplyLayoutStyles();
             SetBorderSize(Layout.BorderWidth);
+            SetOverflow();
 
             foreach (var child in Children)
             {
@@ -66,6 +67,24 @@ namespace ReactUnity.Components
             SetOpacity(Style.resolved.opacity);
             SetBorderRadius(Style.resolved.borderRadius);
             SetBorderColor(Style.resolved.borderColor);
+            SetOverflow();
+        }
+
+        public virtual void SetOverflow()
+        {
+            if (Layout.Overflow == Facebook.Yoga.YogaOverflow.Visible) return;
+
+            var image = GameObject.GetComponent<Image>() ?? GameObject.AddComponent<Image>();
+            image.type = Image.Type.Sliced;
+            image.pixelsPerUnitMultiplier = 100;
+            var mask = GameObject.GetComponent<Mask>() ?? GameObject.AddComponent<Mask>();
+            mask.showMaskGraphic = false;
+
+            MainThreadDispatcher.OnUpdate(() =>
+            {
+                if (!image) return;
+                image.sprite = BorderGraphic.CreateBorderSprite(Style.resolved.borderRadius);
+            });
         }
 
         public virtual void SetOpacity(float v)

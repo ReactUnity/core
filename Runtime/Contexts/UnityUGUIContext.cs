@@ -90,6 +90,10 @@ namespace ReactUnity
             {
                 res = new InputComponent(text, this);
             }
+            else if (type == "scroll")
+            {
+                res = new ScrollComponent(this);
+            }
             else if (type == "text")
             {
                 return createText(text);

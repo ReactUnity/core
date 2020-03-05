@@ -13,13 +13,13 @@ namespace ReactUnity.Editor
 {
     public class EditStyleWindow : EditorWindow
     {
-        public FlexElement PreviousFlex;
+        public FlexElement PreviousFlex { get; set; }
 
-        public NodeStyle CurrentStyle = new NodeStyle();
-        public YogaNode CurrentLayout = new YogaNode();
+        public NodeStyle CurrentStyle { get; set; }
+        public YogaNode CurrentLayout { get; set; }
 
-        public NodeStyle CurrentStyleDefaults;
-        public YogaNode CurrentLayoutDefaults;
+        public NodeStyle CurrentStyleDefaults { get; set; }
+        public YogaNode CurrentLayoutDefaults { get; set; }
 
 
         public bool AutoApply = true;
@@ -28,8 +28,8 @@ namespace ReactUnity.Editor
         public static void Open()
         {
             EditStyleWindow window = GetWindow<EditStyleWindow>();
-            window.Show();
             window.titleContent = new GUIContent("React - Edit Style");
+            window.Show();
         }
 
         private void OnSelectionChange()
@@ -39,6 +39,9 @@ namespace ReactUnity.Editor
 
         void OnGUI()
         {
+            if (CurrentStyle == null) CurrentStyle = new NodeStyle();
+            if (CurrentLayout == null) CurrentLayout = new YogaNode();
+
             var flex = Selection.activeGameObject?.GetComponent<FlexElement>();
             if (!flex)
             {
@@ -172,6 +175,9 @@ namespace ReactUnity.Editor
             GUILayout.Label("Layout");
 
             // Display
+            var position = EditorGUILayout.EnumPopup("Position", CurrentLayout.PositionType);
+            CurrentLayout.PositionType = (YogaPositionType)position;
+
             var display = EditorGUILayout.EnumPopup("Display", CurrentLayout.Display);
             CurrentLayout.Display = (YogaDisplay)display;
 
