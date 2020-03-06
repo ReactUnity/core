@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace ReactUnity.Editor
         public NodeStyle CurrentStyleDefaults { get; set; }
         public YogaNode CurrentLayoutDefaults { get; set; }
 
+        Vector2 scrollPosition;
 
         public bool AutoApply = true;
 
@@ -79,8 +81,13 @@ namespace ReactUnity.Editor
 
             if (AutoApply) EditorGUI.BeginChangeCheck();
 
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition);
+
             DrawStyles();
             DrawLayout();
+
+            GUILayout.EndScrollView();
+
 
             if (AutoApply && EditorGUI.EndChangeCheck()) ApplyStyles();
         }
@@ -269,6 +276,118 @@ namespace ReactUnity.Editor
                 CurrentLayout.AspectRatio = enabled ? val : float.NaN;
             });
 
+            // Width
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Width", GUILayout.Width(150));
+            CurrentLayout.Width = DrawYogaValue(CurrentLayout.Width);
+            GUILayout.EndHorizontal();
+
+            // Height
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Height", GUILayout.Width(150));
+            CurrentLayout.Height = DrawYogaValue(CurrentLayout.Height);
+            GUILayout.EndHorizontal();
+
+
+            // Min Width
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Min Width", GUILayout.Width(150));
+            CurrentLayout.MinWidth = DrawYogaValue(CurrentLayout.MinWidth);
+            GUILayout.EndHorizontal();
+
+            // Min Height
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Min Height", GUILayout.Width(150));
+            CurrentLayout.MinHeight = DrawYogaValue(CurrentLayout.MinHeight);
+            GUILayout.EndHorizontal();
+
+
+            // Max Width
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Max Width", GUILayout.Width(150));
+            CurrentLayout.MaxWidth = DrawYogaValue(CurrentLayout.MaxWidth);
+            GUILayout.EndHorizontal();
+
+            // Max Height
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Max Height", GUILayout.Width(150));
+            CurrentLayout.MaxHeight = DrawYogaValue(CurrentLayout.MaxHeight);
+            GUILayout.EndHorizontal();
+
+
+            var style = new GUIStyle(GUI.skin.textField);
+            style.alignment = TextAnchor.MiddleCenter;
+
+            GUILayout.Space(14);
+            GUILayout.Label("Margin");
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.MarginTop = DrawYogaValue(CurrentLayout.MarginTop, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.MarginLeft = DrawYogaValue(CurrentLayout.MarginLeft, style, GUILayout.Width(100));
+            CurrentLayout.MarginRight = DrawYogaValue(CurrentLayout.MarginRight, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.MarginBottom = DrawYogaValue(CurrentLayout.MarginBottom, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+
+
+            GUILayout.Space(14);
+            GUILayout.Label("Padding");
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.PaddingTop = DrawYogaValue(CurrentLayout.PaddingTop, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.PaddingLeft = DrawYogaValue(CurrentLayout.PaddingLeft, style, GUILayout.Width(100));
+            CurrentLayout.PaddingRight = DrawYogaValue(CurrentLayout.PaddingRight, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.PaddingBottom = DrawYogaValue(CurrentLayout.PaddingBottom, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+
+
+            GUILayout.Space(14);
+            GUILayout.Label("Border");
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.BorderTopWidth = DrawFloat(CurrentLayout.BorderTopWidth, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.BorderLeftWidth = DrawFloat(CurrentLayout.BorderLeftWidth, style, GUILayout.Width(100));
+            GUILayout.Space(20);
+            CurrentLayout.BorderRightWidth = DrawFloat(CurrentLayout.BorderRightWidth, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.BorderBottomWidth = DrawFloat(CurrentLayout.BorderBottomWidth, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
 
         }
 
@@ -364,7 +483,7 @@ namespace ReactUnity.Editor
                 case YogaValue v:
                     if (v.Unit == YogaUnit.Auto) return "'auto'";
                     if (v.Unit == YogaUnit.Undefined) return "null";
-                    if (v.Unit == YogaUnit.Percent) return $"{v.Value}%";
+                    if (v.Unit == YogaUnit.Percent) return $"'{v.Value}%'";
                     return v.Value.ToString();
                 case Enum e:
                     var enumName = Enum.GetName(type, value);
@@ -376,9 +495,46 @@ namespace ReactUnity.Editor
                     return $"[{c.r}, {c.g}, {c.b}, {c.a}]";
                 case string s:
                     return $"'{s}'";
+                case float f:
+                    if (float.IsNaN(f)) return "null";
+                    return f.ToString();
                 default:
                     return value.ToString();
             }
+        }
+
+        YogaValue DrawYogaValue(YogaValue value, GUIStyle style = null, params GUILayoutOption[] options)
+        {
+            var str = "";
+            if (value.Unit == YogaUnit.Auto) str = "auto";
+            else if (value.Unit == YogaUnit.Percent) str = $"{value.Value}%";
+            else if (value.Unit == YogaUnit.Point) str = $"{value.Value}";
+
+            var res = GUILayout.TextField(str, style ?? GUI.skin.textField, options);
+
+            var trimmed = new Regex("[^\\d\\.-]").Replace(res, "");
+
+            if (res == "auto") return YogaValue.Undefined();
+            if (trimmed.Length > 0 && float.TryParse(trimmed, out var fval))
+            {
+                if (res.EndsWith("%")) return YogaValue.Percent(fval);
+                return YogaValue.Point(fval);
+            }
+
+            return YogaValue.Undefined();
+        }
+
+
+        float DrawFloat(float value, GUIStyle style = null, params GUILayoutOption[] options)
+        {
+            var enabled = Toggle(!float.IsNaN(value));
+            value = float.IsNaN(value) ? 0 : value;
+            GUI.enabled = enabled;
+            var floatRes = EditorGUILayout.FloatField(value, style ?? GUI.skin.textField, options);
+            GUI.enabled = true;
+
+            if (enabled) return floatRes;
+            else return float.NaN;
         }
     }
 }
