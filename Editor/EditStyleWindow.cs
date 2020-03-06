@@ -187,6 +187,13 @@ namespace ReactUnity.Editor
                 CurrentStyle.fontColor = enabled ? (Color?)prop : null;
             });
 
+            // Text wrap
+            DrawNullableRow(CurrentStyle.textWrap.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.Toggle("Text wrap", CurrentStyle.textWrap ?? CurrentStyle.resolved.textWrap);
+                CurrentStyle.textWrap = enabled ? (bool?)prop : null;
+            });
+
             // Direction
             var prop1 = EditorGUILayout.EnumPopup("Direction", CurrentLayout.StyleDirection);
             CurrentLayout.StyleDirection = (YogaDirection)prop1;

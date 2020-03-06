@@ -26,6 +26,7 @@ namespace ReactUnity.Styling
             fontStyle = FontStyles.Normal,
             fontColor = Color.black,
             fontSize = 24,
+            textWrap = true,
             textOverflow = TextOverflowModes.Overflow,
         };
 
@@ -51,6 +52,7 @@ namespace ReactUnity.Styling
         public FontStyles? fontStyle { get; set; }
         public YogaValue fontSize { get; set; }
         public TextOverflowModes? textOverflow { get; set; }
+        public bool? textWrap { get; set; }
 
 
         public ResolvedNodeStyle ResolveStyle(ResolvedNodeStyle resolvedParent, NodeStyle tagDefaults)
@@ -81,6 +83,9 @@ namespace ReactUnity.Styling
             if (!textOverflow.HasValue) resolved.textOverflow = resolvedParent?.textOverflow ?? Default.textOverflow;
             else resolved.textOverflow = textOverflow.Value;
 
+            var textWrap = this.textWrap ?? tagDefaults.textWrap;
+            if (!textWrap.HasValue) resolved.textWrap = resolvedParent?.textWrap ?? Default.textWrap;
+            else resolved.textWrap = textWrap.Value;
 
             var fontSize = Undefined.Equals(this.fontSize) ? tagDefaults.fontSize : this.fontSize;
             if (Undefined.Equals(fontSize) || fontSize.Unit == YogaUnit.Auto)
@@ -109,6 +114,7 @@ namespace ReactUnity.Styling
             fontStyle = copyFrom.fontStyle;
             fontSize = copyFrom.fontSize;
             textOverflow = copyFrom.textOverflow;
+            textWrap = copyFrom.textWrap;
         }
     }
 
@@ -133,6 +139,6 @@ namespace ReactUnity.Styling
         public FontStyles fontStyle { get; set; }
         public float fontSize { get; set; }
         public TextOverflowModes textOverflow { get; set; }
-
+        public bool textWrap { get; set; }
     }
 }

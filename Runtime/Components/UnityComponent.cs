@@ -63,14 +63,14 @@ namespace ReactUnity.Components
             Flex.Component = this;
         }
 
-        public void Destroy()
+        public virtual void Destroy()
         {
             GameObject.DestroyImmediate(GameObject);
             Parent.Children.Remove(this);
             Parent.Layout.RemoveChild(Layout);
         }
 
-        public virtual void SetParent(ContainerComponent parent, UnityComponent insertBefore = null)
+        public virtual void SetParent(ContainerComponent parent, UnityComponent insertBefore = null, bool insertAfter = false)
         {
             Parent = parent;
             RectTransform.SetParent(parent.Container, false);
@@ -83,6 +83,7 @@ namespace ReactUnity.Components
             else
             {
                 var ind = insertBefore.RectTransform.GetSiblingIndex();
+                if (insertAfter) ind++;
 
                 parent.Children.Insert(ind, this);
                 parent.Layout.Insert(ind, Layout);
