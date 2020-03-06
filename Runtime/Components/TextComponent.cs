@@ -26,7 +26,7 @@ namespace ReactUnity.Components
             Text = GameObject.AddComponent<TextMeshProUGUI>();
 
             SelfControl = GameObject.AddComponent<FlexSelfControlledElement>();
-            SelfControl.Node = Layout;
+            SelfControl.Layout = Layout;
             SelfControl.Context = context;
             Layout.SetMeasureFunction(SelfControl.Measure);
 

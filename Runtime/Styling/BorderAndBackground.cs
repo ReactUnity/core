@@ -42,6 +42,9 @@ namespace ReactUnity.Styling
             size = size * 2;
             Root.sizeDelta = new Vector2(-size, -size);
             Border.sizeDelta = new Vector2(size, size);
+
+            var borderImage = Border.GetComponent<Image>();
+            borderImage.enabled = size > 0;
         }
 
         public void SetBorderImage(Sprite sprite)

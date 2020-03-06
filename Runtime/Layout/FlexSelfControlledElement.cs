@@ -10,7 +10,7 @@ namespace ReactUnity.Layout
         private TextMeshProUGUI tmpro;
         private RectTransform rt;
 
-        public YogaNode Node;
+        public YogaNode Layout;
         public UnityUGUIContext Context;
 
         private void Awake()
@@ -21,20 +21,18 @@ namespace ReactUnity.Layout
 
         void ILayoutController.SetLayoutHorizontal()
         {
-            Node.MarkDirty();
+            Layout.MarkDirty();
             Context.scheduleLayout();
         }
 
         void ILayoutController.SetLayoutVertical()
         {
-            Node.MarkDirty();
+            Layout.MarkDirty();
             Context.scheduleLayout();
         }
 
 
-#pragma warning disable IDE0060 // Remove unused parameter
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
-#pragma warning restore IDE0060 // Remove unused parameter
         {
             if (tmpro)
             {

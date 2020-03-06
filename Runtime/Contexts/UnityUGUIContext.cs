@@ -98,6 +98,10 @@ namespace ReactUnity
             {
                 return createText(text);
             }
+            else if (type == "image")
+            {
+                res = new ImageComponent(this);
+            }
             else
             {
                 throw new System.Exception($"Unknown component type {type} specified.");
@@ -164,6 +168,15 @@ namespace ReactUnity
                     return;
                 case "placeholder":
                     (cmp as InputComponent)?.SetPlaceholder(value.AsString());
+                    return;
+                case "source":
+                    (cmp as ImageComponent)?.SetSource(value.ToObject());
+                    return;
+                case "preserveAspect":
+                    (cmp as ImageComponent)?.SetPreserveAspect(value.AsBoolean());
+                    return;
+                case "fit":
+                    (cmp as ImageComponent)?.SetFit((ImageFitMode)(int)value.AsNumber());
                     return;
                 default:
                     break;
