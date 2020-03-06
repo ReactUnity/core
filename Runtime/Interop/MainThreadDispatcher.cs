@@ -7,7 +7,7 @@ namespace ReactUnity.Interop
 {
     public class MainThreadDispatcher : MonoBehaviour
     {
-        public class CoroutineForwardRef
+        public class CoroutineForwardRef : IDisposable
         {
             internal IEnumerator Enumerator;
             internal Coroutine Coroutine;
@@ -15,6 +15,11 @@ namespace ReactUnity.Interop
             internal CoroutineForwardRef(IEnumerator ie)
             {
                 Enumerator = ie;
+            }
+
+            public void Dispose()
+            {
+                StopDeferred(this);
             }
         }
 
@@ -67,7 +72,7 @@ namespace ReactUnity.Interop
             return StartDeferred(IntervalCoroutine(callback, intervalSeconds));
         }
 
-        static private CoroutineForwardRef StartDeferred(IEnumerator cr)
+        static public CoroutineForwardRef StartDeferred(IEnumerator cr)
         {
             var handle = new CoroutineForwardRef(cr);
             ToStart.Add(handle);
@@ -76,7 +81,8 @@ namespace ReactUnity.Interop
 
         static public void StopDeferred(CoroutineForwardRef cr)
         {
-            ToStop.Add(cr);
+            cr.Enumerator = null;
+            if (cr.Coroutine != null) ToStop.Add(cr);
         }
 
         void StartAndStopDeferreds()
@@ -84,7 +90,7 @@ namespace ReactUnity.Interop
             for (int i = 0; i < ToStart.Count; i++)
             {
                 var cr = ToStart[i];
-                cr.Coroutine = StartCoroutine(cr.Enumerator);
+                if (cr.Enumerator != null) cr.Coroutine = StartCoroutine(cr.Enumerator);
             }
             ToStart.Clear();
 
@@ -92,6 +98,7 @@ namespace ReactUnity.Interop
             {
                 var cr = ToStop[i];
                 if (cr.Coroutine != null) StopCoroutine(cr.Coroutine);
+                cr.Coroutine = null;
             }
             ToStop.Clear();
         }

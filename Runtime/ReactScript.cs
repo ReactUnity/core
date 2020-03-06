@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace ReactUnity
@@ -56,13 +57,26 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 #endif
                     break;
                 case ScriptSource.File:
+#if UNITY_EDITOR || REACT_FILE_API
+#if !REACT_FILE_API
+                    Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
+#endif
                     result = System.IO.File.ReadAllText(SourcePath);
                     break;
+#else
+                    throw new Exception("REACT_FILE_API must be defined to use File API outside the editor. Add REACT_FILE_API to build symbols to use this feature.");
+#endif
                 case ScriptSource.Url:
+#if UNITY_EDITOR || REACT_URL_API
+#if !REACT_URL_API
+                    Debug.LogWarning("REACT_URL_API is not defined. Add REACT_URL_API to build symbols to if you want to use this feature outside editor.");
+#endif
                     result = null;
-                    // TODO: Maybe we don't need url 
-                    //return new UnityWebRequest(SourcePath);
-                    break;
+                    var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
+                    return Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, changeCallback));
+#else
+                    throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
+#endif
                 case ScriptSource.Resource:
                     var asset = Resources.Load(SourcePath) as TextAsset;
                     if (asset) result = asset.text;
@@ -81,6 +95,14 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 #endif
             return null;
         }
+
+#if UNITY_EDITOR || REACT_URL_API
+        private IEnumerator WatchWebRequest(UnityEngine.Networking.UnityWebRequest request, Action<string> callback)
+        {
+            yield return request.SendWebRequest();
+            callback(request.downloadHandler.text);
+        }
+#endif
     }
 
     public enum ScriptSource
