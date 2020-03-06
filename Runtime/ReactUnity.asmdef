@@ -2,7 +2,6 @@
     "name": "ReactUnity",
     "references": [
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:a2b0e588887412244ba068aa99108de7",
         "GUID:68550284b645f4b9894995579f34290a"
     ],
     "includePlatforms": [],

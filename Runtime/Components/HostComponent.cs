@@ -16,8 +16,8 @@ namespace ReactUnity.Components
             Layout.Width = Width;
             Layout.Height = Height;
 
-            var responsive = GameObject.AddComponent<ResponsiveElement>();
-            responsive.Node = Layout;
+            var responsive = GameObject.GetComponent<ResponsiveElement>() ?? GameObject.AddComponent<ResponsiveElement>();
+            responsive.Layout = Layout;
             responsive.Context = context;
 
             ResolveStyle();

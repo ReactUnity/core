@@ -38,8 +38,8 @@ namespace ReactUnity.Layout
             //return new YogaSize() { width = width, height = height };
             var sprite = image.sprite;
             var mode = Component.Fit;
-            var ow = sprite.rect.width;
-            var oh = sprite.rect.height;
+            var ow = sprite ? sprite.rect.width : 0;
+            var oh = sprite ? sprite.rect.height : 0;
 
             var rw = ow;
             var rh = oh;

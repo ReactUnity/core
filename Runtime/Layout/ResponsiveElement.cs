@@ -9,17 +9,17 @@ namespace ReactUnity.Layout
         private float PreviousHeight = -1;
         private RectTransform rt;
 
-        public YogaNode Node;
+        public YogaNode Layout;
         public UnityUGUIContext Context;
 
-        private void OnEnable()
+        void OnEnable()
         {
             rt = GetComponent<RectTransform>();
             PreviousWidth = rt.rect.width;
             PreviousHeight = rt.rect.height;
         }
 
-        // Update is called once per frame
+
         void Update()
         {
             var width = rt.rect.width;
@@ -27,8 +27,8 @@ namespace ReactUnity.Layout
 
             if (width != PreviousWidth || height != PreviousHeight)
             {
-                Node.Width = width;
-                Node.Height = height;
+                Layout.Width = width;
+                Layout.Height = height;
                 Context.scheduleLayout();
                 PreviousWidth = width;
                 PreviousHeight = height;
