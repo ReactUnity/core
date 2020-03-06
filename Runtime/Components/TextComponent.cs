@@ -76,6 +76,8 @@ namespace ReactUnity.Components
             else if (!isLinked && LinkedTextWatcher)
             {
                 GameObject.Destroy(LinkedTextWatcher);
+                if (LinkedTextWatcher?.LinkedText != null)
+                    LinkedTextWatcher.LinkedText.Destroy();
                 LinkedTextWatcher = null;
             }
 
@@ -87,9 +89,7 @@ namespace ReactUnity.Components
         {
             base.Destroy();
             if (LinkedTextWatcher?.LinkedText != null)
-            {
                 LinkedTextWatcher.LinkedText.Destroy();
-            }
         }
     }
 }

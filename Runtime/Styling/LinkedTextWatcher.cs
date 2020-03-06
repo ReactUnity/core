@@ -8,7 +8,7 @@ namespace ReactUnity.Styling
         public TextComponent WatchedText { get; internal set; }
         public TextComponent LinkedText { get; internal set; }
 
-        public int overflowIndex = -1;
+        private int overflowIndex = -1;
 
 
         void Update()
