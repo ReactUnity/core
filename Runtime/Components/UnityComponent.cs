@@ -1,9 +1,8 @@
 using Facebook.Yoga;
-using Jint;
-using Jint.Native;
+using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.Styling;
-using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -29,8 +28,13 @@ namespace ReactUnity.Components
         public YogaNode Layout;
         public NodeStyle Style;
 
-        public BorderAndBackground MainGraphic { get; protected set; }
+        public BorderAndBackground BorderAndBackground { get; protected set; }
+        public MaskAndImage MaskAndImage { get; protected set; }
         public Selectable Selectable { get; protected set; }
+
+        public CanvasGroup CanvasGroup => GameObject.GetComponents<CanvasGroup>().FirstOrDefault();
+        public Canvas Canvas => GameObject.GetComponents<Canvas>().FirstOrDefault();
+
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
@@ -146,24 +150,32 @@ namespace ReactUnity.Components
             ApplyStyles();
         }
 
-        public virtual void ApplyLayoutStyles() { }
+        public virtual void ApplyLayoutStyles()
+        {
+            ResolveOpacityAndInteractable();
+            SetBorderSize(Layout.BorderWidth);
+            SetOverflow();
+        }
 
         public virtual void ApplyStyles()
         {
-            SetTransform();
+            ResolveTransform();
+            ResolveOpacityAndInteractable();
+            SetBackgroundColor(Style.resolved.backgroundColor);
+            SetZOrder(Style.resolved.zOrder);
+            SetBorderRadius(Style.resolved.borderRadius);
+            SetBorderColor(Style.resolved.borderColor);
+            SetOverflow();
         }
 
-        protected void SetTransform()
+        protected void ResolveTransform()
         {
+            // Reset rotation and scale before setting pivot
             RectTransform.localScale = Vector3.one;
             RectTransform.localRotation = Quaternion.identity;
-            SetPivot(Style.resolved.pivot);
-            RectTransform.localScale = new Vector3(Style.resolved.scale.x, Style.resolved.scale.y, 1);
-            RectTransform.localRotation = Quaternion.Euler(0, 0, Style.resolved.rotate);
-        }
 
-        private void SetPivot(Vector2 pivot)
-        {
+
+            var pivot = Style.resolved.pivot;
             Vector3 deltaPosition = RectTransform.pivot - pivot;    // get change in pivot
             deltaPosition.Scale(RectTransform.rect.size);           // apply sizing
             deltaPosition.Scale(RectTransform.localScale);          // apply scaling
@@ -171,22 +183,131 @@ namespace ReactUnity.Components
 
             RectTransform.pivot = pivot;                            // change the pivot
             RectTransform.localPosition -= deltaPosition;           // reverse the position change
+
+
+            // Restore rotation and scale
+            RectTransform.localScale = new Vector3(Style.resolved.scale.x, Style.resolved.scale.y, 1);
+            RectTransform.localRotation = Quaternion.Euler(0, 0, Style.resolved.rotate);
         }
+
+        protected void ResolveOpacityAndInteractable()
+        {
+            var opacity = Style.resolved.opacity;
+            var hidden = Style.resolved.hidden;
+            var none = Layout.Display == YogaDisplay.None;
+            var interaction = Style.resolved.interaction;
+
+            if (hidden || none) opacity = 0;
+            if (none) interaction = InteractionType.Ignore;
+
+            var isTransparent = opacity < 1;
+            var isInvisible = opacity == 0;
+
+            var hasInteraction = interaction == InteractionType.Always || (!isInvisible && interaction == InteractionType.WhenVisible);
+
+
+            var group = CanvasGroup;
+            // Group does not exist and there is no need for it, quit early
+            if (!group && !isTransparent && hasInteraction) return;
+            if (!group) group = GameObject.AddComponent<CanvasGroup>();
+
+            group.alpha = opacity;
+            group.interactable = hasInteraction;
+
+            if (interaction == InteractionType.Ignore) group.blocksRaycasts = false;
+            else if (isInvisible && interaction == InteractionType.WhenVisible) group.blocksRaycasts = false;
+            else group.blocksRaycasts = true;
+        }
+
 
         public virtual BorderAndBackground GetBackgroundGraphic()
         {
-            if (MainGraphic != null) return MainGraphic;
-            return CreateBackgroundGraphic();
-        }
+            if (BorderAndBackground != null) return BorderAndBackground;
 
-        public virtual BorderAndBackground CreateBackgroundGraphic()
-        {
             var image = new BorderAndBackground(RectTransform);
 
             if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
 
-            return MainGraphic = image;
+            return BorderAndBackground = image;
         }
 
+        public virtual void SetOverflow()
+        {
+            var mask = MaskAndImage;
+
+            // Mask is not defined and there is no need for it
+            if (Layout.Overflow == YogaOverflow.Visible && mask == null) return;
+
+            if (mask == null) mask = MaskAndImage = new MaskAndImage(RectTransform);
+
+            mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
+            mask.SetBorderRadius(Style.resolved.borderRadius);
+        }
+
+        protected virtual void SetBackgroundColor(Color? color)
+        {
+            if (!HasBorderOrBackground()) return;
+
+            var image = GetBackgroundGraphic();
+            image.SetBackgroundColor(color ?? Color.clear);
+        }
+
+        protected virtual void SetBorderRadius(int radius)
+        {
+            if (!HasBorderOrBackground()) return;
+
+            var image = GetBackgroundGraphic();
+
+            MainThreadDispatcher.OnUpdate(() =>
+            {
+                if (!GameObject) return;
+                var sprite = BorderGraphic.CreateBorderSprite(radius);
+                image.SetBorderImage(sprite);
+            });
+        }
+
+        protected virtual void SetBorderColor(Color? color)
+        {
+            if (!HasBorderOrBackground()) return;
+
+            var image = GetBackgroundGraphic();
+            image.SetBorderColor(color ?? Color.clear);
+        }
+
+        protected virtual void SetBorderSize(float size)
+        {
+            if (!HasBorderOrBackground()) return;
+
+            var image = GetBackgroundGraphic();
+            image.SetBorderSize(size);
+        }
+
+        protected bool HasBorderOrBackground()
+        {
+            if (BorderAndBackground != null) return true;
+
+            var borderSize = Layout.BorderWidth;
+            if (borderSize > 0 && !float.IsNaN(borderSize)) return true;
+
+            var resolved = Style.resolved;
+            if (resolved.borderRadius > 0 && resolved.borderColor.HasValue) return true;
+            if (resolved.backgroundColor.HasValue) return true;
+
+            return false;
+        }
+
+        protected virtual void SetZOrder(int z)
+        {
+            Canvas canvas = Canvas;
+            if (!canvas && z == 0) return;
+            if (!canvas)
+            {
+                canvas = GameObject.AddComponent<Canvas>();
+                GameObject.AddComponent<GraphicRaycaster>();
+            }
+
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = z;
+        }
     }
 }

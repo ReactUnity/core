@@ -13,9 +13,6 @@ namespace ReactUnity.Components
         public RectTransform Container { get; protected set; }
         public List<UnityComponent> Children { get; private set; } = new List<UnityComponent>();
 
-        public CanvasGroup CanvasGroup => GameObject.GetComponents<CanvasGroup>().FirstOrDefault();
-        public Canvas Canvas => GameObject.GetComponents<Canvas>().FirstOrDefault();
-
         protected ContainerComponent(RectTransform existing, UnityUGUIContext context) : base(existing, context)
         {
             Container = existing;
@@ -49,117 +46,11 @@ namespace ReactUnity.Components
         public override void ApplyLayoutStyles()
         {
             base.ApplyLayoutStyles();
-            SetBorderSize(Layout.BorderWidth);
-            SetOverflow();
 
             foreach (var child in Children)
             {
                 child.ApplyLayoutStyles();
             }
-        }
-
-
-        public override void ApplyStyles()
-        {
-            base.ApplyStyles();
-            SetBackgroundColor(Style.resolved.backgroundColor);
-            SetZOrder(Style.resolved.zOrder);
-            SetOpacity(Style.resolved.opacity);
-            SetBorderRadius(Style.resolved.borderRadius);
-            SetBorderColor(Style.resolved.borderColor);
-            SetOverflow();
-        }
-
-        public virtual void SetOverflow()
-        {
-            if (Layout.Overflow == Facebook.Yoga.YogaOverflow.Visible) return;
-
-            var image = GameObject.GetComponent<Image>() ?? GameObject.AddComponent<Image>();
-            image.type = Image.Type.Sliced;
-            image.pixelsPerUnitMultiplier = 100;
-            var mask = GameObject.GetComponent<Mask>() ?? GameObject.AddComponent<Mask>();
-            mask.showMaskGraphic = false;
-
-            MainThreadDispatcher.OnUpdate(() =>
-            {
-                if (!image) return;
-                image.sprite = BorderGraphic.CreateBorderSprite(Style.resolved.borderRadius);
-            });
-        }
-
-        public virtual void SetOpacity(float v)
-        {
-            var group = CanvasGroup;
-            if (!group && v == 1) return;
-
-            if (!group) group = GameObject.AddComponent<CanvasGroup>();
-            group.alpha = v;
-        }
-
-        protected virtual void SetBackgroundColor(Color? color)
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBackgroundColor(color ?? Color.clear);
-        }
-
-        protected virtual void SetBorderRadius(int radius)
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-
-            MainThreadDispatcher.OnUpdate(() =>
-            {
-                if (!GameObject) return;
-                var sprite = BorderGraphic.CreateBorderSprite(radius);
-                image.SetBorderImage(sprite);
-            });
-        }
-
-        protected virtual void SetBorderColor(Color? color)
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBorderColor(color ?? Color.clear);
-        }
-
-        protected virtual void SetBorderSize(float size)
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBorderSize(size);
-        }
-
-        protected bool HasBorderOrBackground()
-        {
-            if (MainGraphic != null) return true;
-
-            var borderSize = Layout.BorderWidth;
-            if (borderSize > 0 && !float.IsNaN(borderSize)) return true;
-
-            var resolved = Style.resolved;
-            if (resolved.borderRadius > 0 && resolved.borderColor.HasValue) return true;
-            if (resolved.backgroundColor.HasValue) return true;
-
-            return false;
-        }
-
-        protected virtual void SetZOrder(int z)
-        {
-            Canvas canvas = Canvas;
-            if (!canvas && z == 0) return;
-            if (!canvas)
-            {
-                canvas = GameObject.AddComponent<Canvas>();
-                GameObject.AddComponent<GraphicRaycaster>();
-            }
-
-            canvas.overrideSorting = true;
-            canvas.sortingOrder = z;
         }
     }
 }

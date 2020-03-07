@@ -157,23 +157,11 @@ namespace ReactUnity
                 case "name":
                     cmp.GameObject.name = value.ToString();
                     return;
-                case "interactable":
-                    (cmp as ContainerComponent)?.SetInteractable(value == true);
-                    return;
-                case "opacity":
-                    (cmp as ContainerComponent)?.SetOpacity(value.IsNumber() ? (float)value.AsNumber() : 1f);
-                    return;
-                case "disabled":
-                    (cmp as ContainerComponent)?.SetInteractable(value != true);
-                    return;
                 case "placeholder":
                     (cmp as InputComponent)?.SetPlaceholder(value.AsString());
                     return;
                 case "source":
                     (cmp as ImageComponent)?.SetSource(value.ToObject());
-                    return;
-                case "preserveAspect":
-                    (cmp as ImageComponent)?.SetPreserveAspect(value.AsBoolean());
                     return;
                 case "fit":
                     (cmp as ImageComponent)?.SetFit((ImageFitMode)(int)value.AsNumber());

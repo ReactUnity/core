@@ -14,6 +14,8 @@ namespace ReactUnity.Styling
         {
             opacity = 1,
             zOrder = 0,
+            hidden = false,
+            interaction = InteractionType.WhenVisible,
 
             borderRadius = 0,
             borderColor = Color.black,
@@ -37,8 +39,10 @@ namespace ReactUnity.Styling
         // Non-inherited styles
         public float? opacity { get; set; }
         public int? zOrder { get; set; }
-        public Color? backgroundColor { get; set; }
+        public bool? hidden { get; set; }
+        public InteractionType? interaction { get; set; }
 
+        public Color? backgroundColor { get; set; }
         public int? borderRadius { get; set; }
         public Color? borderColor { get; set; }
 
@@ -59,6 +63,8 @@ namespace ReactUnity.Styling
         {
             resolved.opacity = opacity ?? tagDefaults.opacity ?? Default.opacity;
             resolved.zOrder = zOrder ?? tagDefaults.zOrder ?? Default.zOrder;
+            resolved.hidden = hidden ?? tagDefaults.hidden ?? Default.hidden;
+            resolved.interaction = interaction ?? tagDefaults.interaction ?? Default.interaction;
             resolved.backgroundColor = backgroundColor ?? tagDefaults.backgroundColor ?? Default.backgroundColor;
             resolved.borderRadius = borderRadius ?? tagDefaults.borderRadius ?? Default.borderRadius;
             resolved.borderColor = borderColor ?? tagDefaults.borderColor ?? Default.borderColor;
@@ -102,9 +108,13 @@ namespace ReactUnity.Styling
         {
             opacity = copyFrom.opacity;
             zOrder = copyFrom.zOrder;
+            hidden = copyFrom.hidden;
+            interaction = copyFrom.interaction;
+
             backgroundColor = copyFrom.backgroundColor;
             borderRadius = copyFrom.borderRadius;
             borderColor = copyFrom.borderColor;
+
             pivot = copyFrom.pivot;
             scale = copyFrom.scale;
             rotate = copyFrom.rotate;
@@ -124,8 +134,11 @@ namespace ReactUnity.Styling
         // Non-inherited styles
         public float opacity { get; set; }
         public int zOrder { get; set; }
-        public Color? backgroundColor { get; set; }
+        public bool hidden { get; set; }
+        public InteractionType interaction { get; set; }
 
+
+        public Color? backgroundColor { get; set; }
         public int borderRadius { get; set; }
         public Color? borderColor { get; set; }
 
@@ -140,5 +153,13 @@ namespace ReactUnity.Styling
         public float fontSize { get; set; }
         public TextOverflowModes textOverflow { get; set; }
         public bool textWrap { get; set; }
+    }
+
+    public enum InteractionType
+    {
+        WhenVisible = 0,
+        Always = 1,
+        Ignore = 2,
+        Block = 3,
     }
 }

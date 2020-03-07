@@ -111,6 +111,20 @@ namespace ReactUnity.Editor
                 CurrentStyle.zOrder = enabled ? (int?)prop : null;
             });
 
+            // Opacity
+            DrawNullableRow(CurrentStyle.hidden.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.Toggle("Hidden", CurrentStyle.hidden ?? CurrentStyle.resolved.hidden);
+                CurrentStyle.hidden = enabled ? (bool?)prop : null;
+            });
+
+            // Interaction
+            DrawNullableRow(CurrentStyle.interaction.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.EnumPopup("Interaction", CurrentStyle.interaction ?? CurrentStyle.resolved.interaction);
+                CurrentStyle.interaction = enabled ? (InteractionType?)prop : null;
+            });
+
 
             // Background color
             DrawNullableRow(CurrentStyle.backgroundColor.HasValue, (enabled) =>
@@ -118,30 +132,6 @@ namespace ReactUnity.Editor
                 var prop = EditorGUILayout.ColorField("Background color",
                     CurrentStyle.backgroundColor ?? CurrentStyle.resolved.backgroundColor ?? Color.white);
                 CurrentStyle.backgroundColor = enabled ? (Color?)prop : null;
-            });
-
-            // Pivot
-            DrawNullableRow(CurrentStyle.pivot.HasValue, (enabled) =>
-            {
-                var prop = EditorGUILayout.Vector2Field("Pivot",
-                    CurrentStyle.pivot ?? CurrentStyle.resolved.pivot);
-                CurrentStyle.pivot = enabled ? (Vector2?)prop : null;
-            });
-
-            // Scale
-            DrawNullableRow(CurrentStyle.scale.HasValue, (enabled) =>
-            {
-                var prop = EditorGUILayout.Vector2Field("Scale",
-                    CurrentStyle.scale ?? CurrentStyle.resolved.scale);
-                CurrentStyle.scale = enabled ? (Vector2?)prop : null;
-            });
-
-            // Rotation
-            DrawNullableRow(CurrentStyle.rotate.HasValue, (enabled) =>
-            {
-                var prop = EditorGUILayout.FloatField("Rotation",
-                    CurrentStyle.rotate ?? CurrentStyle.resolved.rotate);
-                CurrentStyle.rotate = enabled ? (float?)prop : null;
             });
 
 
@@ -204,6 +194,36 @@ namespace ReactUnity.Editor
             // Direction
             var prop1 = EditorGUILayout.EnumPopup("Direction", CurrentLayout.StyleDirection);
             CurrentLayout.StyleDirection = (YogaDirection)prop1;
+
+
+
+            GUILayout.Space(14);
+            GUILayout.Label("Transform");
+
+            // Pivot
+            DrawNullableRow(CurrentStyle.pivot.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.Vector2Field("Pivot",
+                    CurrentStyle.pivot ?? CurrentStyle.resolved.pivot);
+                CurrentStyle.pivot = enabled ? (Vector2?)prop : null;
+            });
+
+            // Scale
+            DrawNullableRow(CurrentStyle.scale.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.Vector2Field("Scale",
+                    CurrentStyle.scale ?? CurrentStyle.resolved.scale);
+                CurrentStyle.scale = enabled ? (Vector2?)prop : null;
+            });
+
+            // Rotation
+            DrawNullableRow(CurrentStyle.rotate.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.FloatField("Rotation",
+                    CurrentStyle.rotate ?? CurrentStyle.resolved.rotate);
+                CurrentStyle.rotate = enabled ? (float?)prop : null;
+            });
+
         }
 
 

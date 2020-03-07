@@ -55,11 +55,6 @@ namespace ReactUnity.Components
         }
 
 
-        public void SetPreserveAspect(bool value)
-        {
-            Image.preserveAspect = value;
-        }
-
         public void SetFit(ImageFitMode fit)
         {
             Fit = fit;
