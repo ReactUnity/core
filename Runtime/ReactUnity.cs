@@ -47,10 +47,10 @@ namespace ReactUnity
         [ContextMenu("Restart")]
         public void Restart()
         {
-            MainThreadDispatcher.CoroutineForwardRef debounce = null;
+            int debounce = -1;
             ScriptWatchDisposable = Script.GetScript((script) =>
             {
-                if (debounce != null) MainThreadDispatcher.StopDeferred(debounce);
+                if (debounce >= 0) MainThreadDispatcher.StopDeferred(debounce);
                 debounce = MainThreadDispatcher.Timeout(() => RunScript(script), 0.5f);
             }, out var result);
             RunScript(result);

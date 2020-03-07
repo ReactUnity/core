@@ -7,8 +7,6 @@ namespace ReactUnity.Schedulers
 {
     public class UnityScheduler : IUnityScheduler
     {
-        List<MainThreadDispatcher.CoroutineForwardRef> Timeouts = new List<MainThreadDispatcher.CoroutineForwardRef>();
-
         public int setTimeout(JsValue callback)
         {
             return setTimeout(callback, 0);
@@ -16,56 +14,39 @@ namespace ReactUnity.Schedulers
         public int setTimeout(JsValue callback, int timeout)
         {
             if (!Application.isPlaying) return -1;
-            var ind = Timeouts.Count;
-
-            Timeouts.Add(MainThreadDispatcher.Timeout(() => callback.Invoke(), timeout / 1000));
-
-            return ind;
+            return MainThreadDispatcher.Timeout(() => callback.Invoke(), timeout / 1000);
         }
 
         public int setInterval(JsValue callback, int timeout)
         {
             if (!Application.isPlaying) return -1;
-
-            var ind = Timeouts.Count;
-
-            Timeouts.Add(MainThreadDispatcher.Interval(() => callback.Invoke(), timeout / 1000));
-
-            return ind;
+            return MainThreadDispatcher.Interval(() => callback.Invoke(), timeout / 1000);
         }
 
         public void clearTimeout(int handle)
         {
-            MainThreadDispatcher.StopDeferred(Timeouts[handle]);
+            MainThreadDispatcher.StopDeferred(handle);
         }
 
         public void clearInterval(int handle)
         {
-            MainThreadDispatcher.StopDeferred(Timeouts[handle]);
+            MainThreadDispatcher.StopDeferred(handle);
         }
 
 
         public int requestAnimationFrame(JsValue callback)
         {
             if (!Application.isPlaying) return -1;
-            var ind = Timeouts.Count;
-
-            Timeouts.Add(MainThreadDispatcher.AnimationFrame(() => callback.Invoke()));
-
-            return ind;
+            return MainThreadDispatcher.AnimationFrame(() => callback.Invoke());
         }
 
         public void cancelAnimationFrame(int handle)
         {
-            MainThreadDispatcher.StopDeferred(Timeouts[handle]);
+            MainThreadDispatcher.StopDeferred(handle);
         }
 
         public void clearAllTimeouts()
         {
-            foreach (var to in Timeouts)
-                MainThreadDispatcher.StopDeferred(to);
-
-            Timeouts.Clear();
         }
     }
 }

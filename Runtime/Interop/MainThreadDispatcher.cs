@@ -7,19 +7,17 @@ namespace ReactUnity.Interop
 {
     public class MainThreadDispatcher : MonoBehaviour
     {
-        public class CoroutineForwardRef : IDisposable
+        public class CoroutineHandle : IDisposable
         {
-            internal IEnumerator Enumerator;
-            internal Coroutine Coroutine;
-
-            internal CoroutineForwardRef(IEnumerator ie)
+            public int Handle { get; }
+            public CoroutineHandle(int handle)
             {
-                Enumerator = ie;
+                Handle = handle;
             }
 
             public void Dispose()
             {
-                StopDeferred(this);
+                StopDeferred(Handle);
             }
         }
 
@@ -48,8 +46,9 @@ namespace ReactUnity.Interop
         #endregion
 
 
-        private static List<CoroutineForwardRef> ToStart = new List<CoroutineForwardRef>();
-        private static List<CoroutineForwardRef> ToStop = new List<CoroutineForwardRef>();
+        private static List<IEnumerator> ToStart = new List<IEnumerator>();
+        private static List<Coroutine> Started = new List<Coroutine>();
+        private static List<int> ToStop = new List<int>();
         private static List<Action> CallOnLateUpdate = new List<Action>();
 
         static public void AddCallOnLateUpdate(Action call)
@@ -57,55 +56,62 @@ namespace ReactUnity.Interop
             CallOnLateUpdate.Add(call);
         }
 
-        static public CoroutineForwardRef OnUpdate(Action callback)
+        static public int OnUpdate(Action callback)
         {
             return StartDeferred(OnUpdateCoroutine(callback));
         }
 
-        static public CoroutineForwardRef Timeout(Action callback, float timeSeconds)
+        static public int Timeout(Action callback, float timeSeconds)
         {
             return StartDeferred(TimeoutCoroutine(callback, timeSeconds));
         }
 
-        static public CoroutineForwardRef AnimationFrame(Action callback)
+        static public int AnimationFrame(Action callback)
         {
             return StartDeferred(AnimationFrameCoroutine(callback));
         }
 
-        static public CoroutineForwardRef Interval(Action callback, float intervalSeconds)
+        static public int Interval(Action callback, float intervalSeconds)
         {
             return StartDeferred(IntervalCoroutine(callback, intervalSeconds));
         }
 
-        static public CoroutineForwardRef StartDeferred(IEnumerator cr)
+        static public int StartDeferred(IEnumerator cr)
         {
-            var handle = new CoroutineForwardRef(cr);
-            ToStart.Add(handle);
+            var handle = Started.Count + ToStart.Count;
+            ToStart.Add(cr);
             return handle;
         }
 
-        static public void StopDeferred(CoroutineForwardRef cr)
+        static public void StopDeferred(int cr)
         {
-            cr.Enumerator = null;
-            if (cr.Coroutine != null) ToStop.Add(cr);
+            ToStop.Add(cr);
         }
 
         void StartAndStopDeferreds()
         {
-            for (int i = 0; i < ToStart.Count; i++)
-            {
-                var cr = ToStart[i];
-                if (cr.Enumerator != null) cr.Coroutine = StartCoroutine(cr.Enumerator);
-            }
-            ToStart.Clear();
-
             for (int i = 0; i < ToStop.Count; i++)
             {
                 var cr = ToStop[i];
-                if (cr.Coroutine != null) StopCoroutine(cr.Coroutine);
-                cr.Coroutine = null;
+                var toStartIndex = cr - Started.Count;
+
+                if (toStartIndex >= 0) ToStart[toStartIndex] = null;
+                else
+                {
+                    var coroutine = Started[cr];
+                    if (coroutine != null) StopCoroutine(coroutine);
+                    Started[cr] = null;
+                }
             }
             ToStop.Clear();
+
+
+            for (int i = 0; i < ToStart.Count; i++)
+            {
+                var cr = ToStart[i];
+                if (cr != null) Started.Add(StartCoroutine(cr));
+            }
+            ToStart.Clear();
         }
 
         void Update()

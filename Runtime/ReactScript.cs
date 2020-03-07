@@ -73,7 +73,8 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 #endif
                     result = null;
                     var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
-                    return Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, changeCallback));
+                    return new Interop.MainThreadDispatcher.CoroutineHandle(
+                        Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, changeCallback)));
 #else
                     throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
 #endif
