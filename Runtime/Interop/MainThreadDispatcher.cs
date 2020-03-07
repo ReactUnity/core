@@ -67,6 +67,11 @@ namespace ReactUnity.Interop
             return StartDeferred(TimeoutCoroutine(callback, timeSeconds));
         }
 
+        static public CoroutineForwardRef AnimationFrame(Action callback)
+        {
+            return StartDeferred(AnimationFrameCoroutine(callback));
+        }
+
         static public CoroutineForwardRef Interval(Action callback, float intervalSeconds)
         {
             return StartDeferred(IntervalCoroutine(callback, intervalSeconds));
@@ -137,6 +142,12 @@ namespace ReactUnity.Interop
                 yield return new WaitForSeconds(interval);
                 callback();
             }
+        }
+
+        private static IEnumerator AnimationFrameCoroutine(Action callback)
+        {
+            yield return null;
+            callback();
         }
 
     }

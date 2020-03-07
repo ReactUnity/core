@@ -44,6 +44,22 @@ namespace ReactUnity.Schedulers
             MainThreadDispatcher.StopDeferred(Timeouts[handle]);
         }
 
+
+        public int requestAnimationFrame(JsValue callback)
+        {
+            if (!Application.isPlaying) return -1;
+            var ind = Timeouts.Count;
+
+            Timeouts.Add(MainThreadDispatcher.AnimationFrame(() => callback.Invoke()));
+
+            return ind;
+        }
+
+        public void cancelAnimationFrame(int handle)
+        {
+            MainThreadDispatcher.StopDeferred(Timeouts[handle]);
+        }
+
         public void clearAllTimeouts()
         {
             foreach (var to in Timeouts)

@@ -125,7 +125,9 @@ console.{item.Key} = (x, ...args) => old(x, args);
             engine.SetValue("setTimeout", new Func<JsValue, int, int>(scheduler.setTimeout));
             engine.SetValue("setInterval", new Func<JsValue, int, int>(scheduler.setInterval));
             engine.SetValue("clearTimeout", new Action<int>(scheduler.clearTimeout));
-            engine.SetValue("clearInterval", new Action<int>(scheduler.clearTimeout));
+            engine.SetValue("clearInterval", new Action<int>(scheduler.clearInterval));
+            engine.SetValue("requestAnimationFrame", new Func<JsValue, int>(scheduler.requestAnimationFrame));
+            engine.SetValue("cancelAnimationFrame", new Action<int>(scheduler.cancelAnimationFrame));
         }
     }
 }

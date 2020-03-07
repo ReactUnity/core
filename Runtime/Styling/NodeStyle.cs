@@ -37,6 +37,60 @@ namespace ReactUnity.Styling
 
         public ResolvedNodeStyle resolved { get; } = new ResolvedNodeStyle();
 
+        #region Fields
+
+        private float? _opacity;
+        private int? _zOrder;
+        private bool? _hidden;
+        private InteractionType? _interaction;
+        private Color? _backgroundColor;
+        private object _backgroundImage;
+        private int? _borderRadius;
+        private Color? _borderColor;
+        private Vector2? _translate;
+        private Vector2? _scale;
+        private Vector2? _pivot;
+        private float? _rotate;
+
+        private Color? _fontColor;
+        private FontWeight? _fontWeight;
+        private FontStyles? _fontStyle;
+        private YogaValue _fontSize;
+        private TextOverflowModes? _textOverflow;
+        private bool? _textWrap;
+
+        #endregion
+
+
+        #region Changes
+
+        public bool hasChanges = true;
+        public bool hasInteritedChanges = true;
+
+        public bool opacityChanged = true;
+        public bool zOrderChanged = true;
+        public bool hiddenChanged = true;
+        public bool interactionChanged = true;
+        public bool backgroundColorChanged = true;
+        public bool backgroundImageChanged = true;
+        public bool borderRadiusChanged = true;
+        public bool borderColorChanged = true;
+        public bool translateChanged = true;
+        public bool scaleChanged = true;
+        public bool pivotChanged = true;
+        public bool rotateChanged = true;
+        public bool fontColorChanged = true;
+        public bool fontWeightChanged = true;
+        public bool fontStyleChanged = true;
+        public bool fontSizeChanged = true;
+        public bool textOverflowChanged = true;
+        public bool textWrapChanged = true;
+
+        #endregion
+
+
+        #region Changes
+
         // Non-inherited styles
         public float? opacity { get; set; }
         public int? zOrder { get; set; }
@@ -55,12 +109,80 @@ namespace ReactUnity.Styling
         public float? rotate { get; set; }
 
         // Inherited styles
-        public Color? fontColor { get; set; }
-        public FontWeight? fontWeight { get; set; }
-        public FontStyles? fontStyle { get; set; }
-        public YogaValue fontSize { get; set; }
-        public TextOverflowModes? textOverflow { get; set; }
-        public bool? textWrap { get; set; }
+        public Color? fontColor
+        {
+            get => _fontColor;
+            set
+            {
+                fontColorChanged = fontColorChanged || value != _fontColor;
+                hasInteritedChanges = hasInteritedChanges || fontColorChanged;
+                hasChanges = hasChanges || fontColorChanged;
+                _fontColor = value;
+            }
+        }
+
+        public FontWeight? fontWeight
+        {
+            get => _fontWeight;
+            set
+            {
+                fontWeightChanged = fontWeightChanged || value != _fontWeight;
+                hasInteritedChanges = hasInteritedChanges || fontWeightChanged;
+                hasChanges = hasChanges || fontWeightChanged;
+                _fontWeight = value;
+            }
+        }
+
+        public FontStyles? fontStyle
+        {
+            get => _fontStyle;
+            set
+            {
+                fontStyleChanged = fontStyleChanged || value != _fontStyle;
+                hasInteritedChanges = hasInteritedChanges || fontStyleChanged;
+                hasChanges = hasChanges || fontStyleChanged;
+                _fontStyle = value;
+            }
+        }
+
+        public YogaValue fontSize
+        {
+            get => _fontSize;
+            set
+            {
+                fontSizeChanged = fontSizeChanged || !value.Equals(_fontSize);
+                hasInteritedChanges = hasInteritedChanges || fontSizeChanged;
+                hasChanges = hasChanges || fontSizeChanged;
+                _fontSize = value;
+            }
+        }
+
+        public TextOverflowModes? textOverflow
+        {
+            get => _textOverflow;
+            set
+            {
+                textOverflowChanged = textOverflowChanged || value != _textOverflow;
+                hasInteritedChanges = hasInteritedChanges || textOverflowChanged;
+                hasChanges = hasChanges || textOverflowChanged;
+                _textOverflow = value;
+            }
+        }
+
+        public bool? textWrap
+        {
+            get => _textWrap;
+            set
+            {
+                textWrapChanged = textWrapChanged || value != _textWrap;
+                hasInteritedChanges = hasInteritedChanges || textWrapChanged;
+                hasChanges = hasChanges || textWrapChanged;
+                _textWrap = value;
+            }
+        }
+
+        #endregion
+
 
 
         public ResolvedNodeStyle ResolveStyle(ResolvedNodeStyle resolvedParent, NodeStyle tagDefaults)
@@ -108,6 +230,7 @@ namespace ReactUnity.Styling
                 resolved.fontSize = (resolvedParent?.fontSize ?? Default.fontSize) * fontSize.Value;
             else resolved.fontSize = fontSize.Value;
 
+            resolved.hasInteritedChanges = hasInteritedChanges || (resolvedParent?.hasInteritedChanges ?? false);
 
             return resolved;
         }
@@ -135,12 +258,42 @@ namespace ReactUnity.Styling
             fontSize = copyFrom.fontSize;
             textOverflow = copyFrom.textOverflow;
             textWrap = copyFrom.textWrap;
+
+            hasChanges = true;
+            hasInteritedChanges = true;
+        }
+
+        public void MarkChangesSeen()
+        {
+            hasChanges = false;
+            hasInteritedChanges = false;
+
+            opacityChanged = false;
+            zOrderChanged = false;
+            hiddenChanged = false;
+            interactionChanged = false;
+            backgroundColorChanged = false;
+            backgroundImageChanged = false;
+            borderRadiusChanged = false;
+            borderColorChanged = false;
+            translateChanged = false;
+            scaleChanged = false;
+            pivotChanged = false;
+            rotateChanged = false;
+            fontColorChanged = false;
+            fontWeightChanged = false;
+            fontStyleChanged = false;
+            fontSizeChanged = false;
+            textOverflowChanged = false;
+            textWrapChanged = false;
         }
     }
 
 
     public class ResolvedNodeStyle
     {
+        public bool hasInteritedChanges { get; set; }
+
         // Non-inherited styles
         public float opacity { get; set; }
         public int zOrder { get; set; }

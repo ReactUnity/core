@@ -149,6 +149,8 @@ namespace ReactUnity.Components
         {
             Style.ResolveStyle(Parent?.Style.resolved, DefaultStyle);
             ApplyStyles();
+
+            Style.MarkChangesSeen();
         }
 
         public virtual void ApplyLayoutStyles()

@@ -27,9 +27,13 @@ namespace ReactUnity.Components
         {
             base.ResolveStyle();
 
-            foreach (var child in Children)
+            var inheritedChanges = Style.resolved.hasInteritedChanges;
+            if (inheritedChanges)
             {
-                child.ResolveStyle();
+                foreach (var child in Children)
+                {
+                    child.ResolveStyle();
+                }
             }
         }
 
