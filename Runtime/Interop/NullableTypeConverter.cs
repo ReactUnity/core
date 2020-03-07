@@ -73,7 +73,10 @@ namespace ReactUnity.Interop
                 var res = Vector4Converter.FromJsValue(JsValue.FromObject(engine, value));
                 if (res.HasValue) return res.Value;
             }
-
+            else if (type.IsEnum && value is string s)
+            {
+                return Enum.Parse(type, s, true);
+            }
 
             return base.Convert(value, type, formatProvider);
         }
