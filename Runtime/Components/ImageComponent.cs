@@ -35,23 +35,7 @@ namespace ReactUnity.Components
 
         public void SetSource(object source)
         {
-            switch (source)
-            {
-                case Sprite s:
-                    Image.sprite = s;
-                    break;
-                case Texture2D s:
-                    Image.sprite = Sprite.Create(s, new Rect(0, 0, s.width, s.height), Vector2.one / 2);
-                    break;
-                case AssetReference a:
-                    Image.sprite = a.Get<Sprite>(Context.NamedAssets);
-                    break;
-                case string s:
-                    Image.sprite = new AssetReference(AssetReferenceType.Procedural, s).Get<Sprite>(Context.NamedAssets);
-                    break;
-                default:
-                    break;
-            }
+            Image.sprite = AssetReference.GetSpriteFromObject(source, Context);
         }
 
 

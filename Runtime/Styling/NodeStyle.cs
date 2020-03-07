@@ -1,7 +1,4 @@
 using Facebook.Yoga;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -16,6 +13,9 @@ namespace ReactUnity.Styling
             zOrder = 0,
             hidden = false,
             interaction = InteractionType.WhenVisible,
+
+            backgroundColor = null,
+            backgroundImage = null,
 
             borderRadius = 0,
             borderColor = Color.black,
@@ -43,6 +43,8 @@ namespace ReactUnity.Styling
         public InteractionType? interaction { get; set; }
 
         public Color? backgroundColor { get; set; }
+        public object backgroundImage { get; set; }
+
         public int? borderRadius { get; set; }
         public Color? borderColor { get; set; }
 
@@ -66,6 +68,7 @@ namespace ReactUnity.Styling
             resolved.hidden = hidden ?? tagDefaults.hidden ?? Default.hidden;
             resolved.interaction = interaction ?? tagDefaults.interaction ?? Default.interaction;
             resolved.backgroundColor = backgroundColor ?? tagDefaults.backgroundColor ?? Default.backgroundColor;
+            resolved.backgroundImage = backgroundImage ?? tagDefaults.backgroundImage ?? Default.backgroundImage;
             resolved.borderRadius = borderRadius ?? tagDefaults.borderRadius ?? Default.borderRadius;
             resolved.borderColor = borderColor ?? tagDefaults.borderColor ?? Default.borderColor;
             resolved.scale = scale ?? tagDefaults.scale ?? Default.scale;
@@ -111,6 +114,7 @@ namespace ReactUnity.Styling
             hidden = copyFrom.hidden;
             interaction = copyFrom.interaction;
 
+            backgroundImage = copyFrom.backgroundImage;
             backgroundColor = copyFrom.backgroundColor;
             borderRadius = copyFrom.borderRadius;
             borderColor = copyFrom.borderColor;
@@ -139,6 +143,7 @@ namespace ReactUnity.Styling
 
 
         public Color? backgroundColor { get; set; }
+        public object backgroundImage { get; set; }
         public int borderRadius { get; set; }
         public Color? borderColor { get; set; }
 

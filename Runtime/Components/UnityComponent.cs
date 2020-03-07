@@ -2,6 +2,7 @@ using Facebook.Yoga;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.Styling;
+using ReactUnity.Types;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -162,6 +163,7 @@ namespace ReactUnity.Components
             ResolveTransform();
             ResolveOpacityAndInteractable();
             SetBackgroundColor(Style.resolved.backgroundColor);
+            SetBackgroundImage();
             SetZOrder(Style.resolved.zOrder);
             SetBorderRadius(Style.resolved.borderRadius);
             SetBorderColor(Style.resolved.borderColor);
@@ -252,6 +254,15 @@ namespace ReactUnity.Components
             image.SetBackgroundColor(color ?? Color.clear);
         }
 
+        protected virtual void SetBackgroundImage()
+        {
+            if (!HasBorderOrBackground()) return;
+
+            var image = GetBackgroundGraphic();
+            var sprite = AssetReference.GetSpriteFromObject(Style.resolved.backgroundImage, Context);
+            image.SetBackgroundImage(sprite);
+        }
+
         protected virtual void SetBorderRadius(int radius)
         {
             if (!HasBorderOrBackground()) return;
@@ -292,6 +303,7 @@ namespace ReactUnity.Components
             var resolved = Style.resolved;
             if (resolved.borderRadius > 0 && resolved.borderColor.HasValue) return true;
             if (resolved.backgroundColor.HasValue) return true;
+            if (resolved.backgroundImage != null) return true;
 
             return false;
         }

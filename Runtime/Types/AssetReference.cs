@@ -13,6 +13,7 @@ namespace ReactUnity.Types
         Resource = 3,
         NamedAsset = 4,
         Procedural = 5,
+        Object = 6,
     }
 
     public class AssetReference
@@ -44,6 +45,10 @@ namespace ReactUnity.Types
             }
             else
             {
+                var ob = obj.ToObject();
+
+                if (ob is Object) return new AssetReference(AssetReferenceType.Object, obj);
+
                 return new AssetReference(AssetReferenceType.Procedural, obj);
             }
         }
@@ -62,6 +67,8 @@ namespace ReactUnity.Types
                     return NamedAssets.GetValueOrDefault(value.AsString()) as T;
                 case AssetReferenceType.Procedural:
                     return GetProcedural<T>();
+                case AssetReferenceType.Object:
+                    return value.ToObject() as T;
                 case AssetReferenceType.None:
                 default:
                     return null;
@@ -105,6 +112,29 @@ namespace ReactUnity.Types
             }
 
             return default(T);
+        }
+
+        public bool IsNone()
+        {
+            return type == AssetReferenceType.None;
+        }
+
+        static public Sprite GetSpriteFromObject(object source, UnityUGUIContext Context)
+        {
+            switch (source)
+            {
+                case Sprite s:
+                    return s;
+                case Texture2D s:
+                    return Sprite.Create(s, new Rect(0, 0, s.width, s.height), Vector2.one / 2);
+                case AssetReference a:
+                    return a.Get<Sprite>(Context.NamedAssets);
+                case string s:
+                    return new AssetReference(AssetReferenceType.Procedural, s).Get<Sprite>(Context.NamedAssets);
+                default:
+                    break;
+            }
+            return null;
         }
     }
 }

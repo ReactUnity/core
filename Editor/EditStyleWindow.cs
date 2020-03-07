@@ -409,6 +409,28 @@ namespace ReactUnity.Editor
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 
+
+            GUILayout.Space(14);
+            GUILayout.Label("Position");
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.Top = DrawYogaValue(CurrentLayout.Top, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.Left = DrawYogaValue(CurrentLayout.Left, style, GUILayout.Width(100));
+            CurrentLayout.Right = DrawYogaValue(CurrentLayout.Right, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            CurrentLayout.Bottom = DrawYogaValue(CurrentLayout.Bottom, style, GUILayout.Width(100));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
         }
 
 
