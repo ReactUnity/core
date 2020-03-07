@@ -200,27 +200,31 @@ namespace ReactUnity.Editor
             GUILayout.Space(14);
             GUILayout.Label("Transform");
 
+            // Translate
+            DrawNullableRow(CurrentStyle.translate.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.Vector2Field("Translate", CurrentStyle.translate ?? CurrentStyle.resolved.translate);
+                CurrentStyle.translate = enabled ? (Vector2?)prop : null;
+            });
+
             // Pivot
             DrawNullableRow(CurrentStyle.pivot.HasValue, (enabled) =>
             {
-                var prop = EditorGUILayout.Vector2Field("Pivot",
-                    CurrentStyle.pivot ?? CurrentStyle.resolved.pivot);
+                var prop = EditorGUILayout.Vector2Field("Pivot", CurrentStyle.pivot ?? CurrentStyle.resolved.pivot);
                 CurrentStyle.pivot = enabled ? (Vector2?)prop : null;
             });
 
             // Scale
             DrawNullableRow(CurrentStyle.scale.HasValue, (enabled) =>
             {
-                var prop = EditorGUILayout.Vector2Field("Scale",
-                    CurrentStyle.scale ?? CurrentStyle.resolved.scale);
+                var prop = EditorGUILayout.Vector2Field("Scale", CurrentStyle.scale ?? CurrentStyle.resolved.scale);
                 CurrentStyle.scale = enabled ? (Vector2?)prop : null;
             });
 
             // Rotation
             DrawNullableRow(CurrentStyle.rotate.HasValue, (enabled) =>
             {
-                var prop = EditorGUILayout.FloatField("Rotation",
-                    CurrentStyle.rotate ?? CurrentStyle.resolved.rotate);
+                var prop = EditorGUILayout.FloatField("Rotation", CurrentStyle.rotate ?? CurrentStyle.resolved.rotate);
                 CurrentStyle.rotate = enabled ? (float?)prop : null;
             });
 

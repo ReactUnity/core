@@ -67,10 +67,12 @@ namespace ReactUnity.Components
             TextComponent.SetParent(TextViewport);
             TextComponent.Flex.enabled = false;
             var textRect = TextComponent.RectTransform;
-            textRect.pivot = Vector2.up;
+            textRect.pivot = Vector2.one / 2;
             textRect.anchorMin = Vector2.zero;
             textRect.anchorMax = Vector2.one;
             textRect.sizeDelta = Vector2.zero;
+            textRect.offsetMin = Vector2.zero;
+            textRect.offsetMax = Vector2.zero;
 
 
             InputField.textViewport = TextViewport.RectTransform;

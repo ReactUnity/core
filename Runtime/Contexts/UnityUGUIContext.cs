@@ -49,7 +49,6 @@ namespace ReactUnity
             Host = new HostComponent(hostElement, this);
             RootLayoutNode = Host.Layout;
 
-            // TODO: text sizes are not calculated right on the first frame they are added
             MainThreadDispatcher.AddCallOnLateUpdate(() =>
             {
                 if (Scheduled)

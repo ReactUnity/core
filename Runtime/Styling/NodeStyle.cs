@@ -20,8 +20,9 @@ namespace ReactUnity.Styling
             borderRadius = 0,
             borderColor = Color.black,
 
+            translate = Vector2.zero,
             scale = Vector2.one,
-            pivot = Vector2.up,
+            pivot = Vector2.one / 2,
             rotate = 0,
 
             fontWeight = FontWeight.Regular,
@@ -48,6 +49,7 @@ namespace ReactUnity.Styling
         public int? borderRadius { get; set; }
         public Color? borderColor { get; set; }
 
+        public Vector2? translate { get; set; }
         public Vector2? scale { get; set; }
         public Vector2? pivot { get; set; }
         public float? rotate { get; set; }
@@ -67,10 +69,13 @@ namespace ReactUnity.Styling
             resolved.zOrder = zOrder ?? tagDefaults.zOrder ?? Default.zOrder;
             resolved.hidden = hidden ?? tagDefaults.hidden ?? Default.hidden;
             resolved.interaction = interaction ?? tagDefaults.interaction ?? Default.interaction;
+
             resolved.backgroundColor = backgroundColor ?? tagDefaults.backgroundColor ?? Default.backgroundColor;
             resolved.backgroundImage = backgroundImage ?? tagDefaults.backgroundImage ?? Default.backgroundImage;
             resolved.borderRadius = borderRadius ?? tagDefaults.borderRadius ?? Default.borderRadius;
             resolved.borderColor = borderColor ?? tagDefaults.borderColor ?? Default.borderColor;
+
+            resolved.translate = translate ?? tagDefaults.translate ?? Default.translate;
             resolved.scale = scale ?? tagDefaults.scale ?? Default.scale;
             resolved.pivot = pivot ?? tagDefaults.pivot ?? Default.pivot;
             resolved.rotate = rotate ?? tagDefaults.rotate ?? Default.rotate;
@@ -119,8 +124,9 @@ namespace ReactUnity.Styling
             borderRadius = copyFrom.borderRadius;
             borderColor = copyFrom.borderColor;
 
-            pivot = copyFrom.pivot;
+            translate = copyFrom.translate;
             scale = copyFrom.scale;
+            pivot = copyFrom.pivot;
             rotate = copyFrom.rotate;
 
             fontColor = copyFrom.fontColor;
@@ -147,6 +153,7 @@ namespace ReactUnity.Styling
         public int borderRadius { get; set; }
         public Color? borderColor { get; set; }
 
+        public Vector2 translate { get; set; }
         public Vector2 scale { get; set; }
         public Vector2 pivot { get; set; }
         public float rotate { get; set; }
