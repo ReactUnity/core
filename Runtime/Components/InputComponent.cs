@@ -2,6 +2,7 @@ using Facebook.Yoga;
 using ReactUnity.Styling;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ReactUnity.Components
@@ -118,6 +119,19 @@ namespace ReactUnity.Components
         public void Focus()
         {
             InputField.Select();
+        }
+
+
+        public void setOnEndEdit(System.Action<string> callback)
+        {
+            InputField.onEndEdit.RemoveAllListeners();
+            if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(callback));
+        }
+
+        public void setOnSubmit(System.Action<string> callback)
+        {
+            InputField.onSubmit.RemoveAllListeners();
+            if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(callback));
         }
     }
 }

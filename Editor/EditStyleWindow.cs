@@ -3,6 +3,7 @@ using ReactUnity.Layout;
 using ReactUnity.Styling;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -75,8 +76,7 @@ namespace ReactUnity.Editor
 
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Copy Style")) CopyStyle();
-            if (GUILayout.Button("Copy Layout")) CopyLayout();
+            if (GUILayout.Button("Copy Json")) CopyStyleAndLayout();
             GUILayout.EndHorizontal();
 
             if (AutoApply) EditorGUI.BeginChangeCheck();
@@ -162,6 +162,12 @@ namespace ReactUnity.Editor
 
             GUILayout.Space(14);
             GUILayout.Label("Font");
+
+            // Font size
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Font size", GUILayout.Width(150));
+            CurrentStyle.fontSize = DrawYogaValue(CurrentStyle.fontSize);
+            GUILayout.EndHorizontal();
 
             // Font style
             DrawNullableRow(CurrentStyle.fontStyle.HasValue, (enabled) =>
@@ -263,6 +269,13 @@ namespace ReactUnity.Editor
             // Flex shrink
             var shrink = EditorGUILayout.FloatField("Flex Shrink", CurrentLayout.FlexShrink);
             CurrentLayout.FlexShrink = shrink;
+
+            // Flex basis
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Flex Basis", GUILayout.Width(150));
+            CurrentLayout.FlexBasis = DrawYogaValue(CurrentLayout.FlexBasis);
+            GUILayout.EndHorizontal();
+
 
             // Wrap
             var prop6 = EditorGUILayout.EnumPopup("Wrap", CurrentLayout.Wrap);
@@ -481,7 +494,25 @@ namespace ReactUnity.Editor
             GUI.enabled = true;
         }
 
-        void CopyStyle()
+        void CopyStyleAndLayout()
+        {
+            var str = new StringBuilder();
+            str.Append("{\n");
+
+            str.Append($"  style: ");
+            str.Append(GetStyleJson());
+            str.Append(",\n");
+
+            str.Append($"  layout: ");
+            str.Append(GetLayoutJson());
+            str.Append(",\n");
+
+            str.Append("}");
+
+            EditorGUIUtility.systemCopyBuffer = str.ToString();
+        }
+
+        string GetStyleJson()
         {
             var str = new StringBuilder();
             str.Append("{\n");
@@ -491,12 +522,36 @@ namespace ReactUnity.Editor
 
             var properties = styleType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
+            return CopyObjectFor(
+                properties.Where(x => !excludedProperties.Contains(x.Name)),
+                CurrentStyle,
+                CurrentStyleDefaults);
+        }
+
+        string GetLayoutJson()
+        {
+            var excludedProperties = new List<string>() {
+                "IsBaselineDefined", "IsMeasureDefined", "Parent", "HasNewLayout", "IsDirty", "Data", "Count", "Flex" };
+            var styleType = typeof(YogaNode);
+
+            var properties = styleType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            return CopyObjectFor(
+                properties.Where(x => !excludedProperties.Contains(x.Name) && !x.Name.StartsWith("Layout")),
+                CurrentLayout,
+                CurrentLayoutDefaults);
+        }
+
+        string CopyObjectFor(IEnumerable<PropertyInfo> properties, object current, object currentDefaults)
+        {
+            var str = new StringBuilder();
+            str.Append("{");
+
             foreach (var prop in properties)
             {
-                if (excludedProperties.Contains(prop.Name)) continue;
-
-                var currentValue = prop.GetValue(CurrentStyle);
-                var defaultValue = prop.GetValue(CurrentStyleDefaults);
+                if (prop.GetIndexParameters().Length > 0) continue;
+                var currentValue = prop.GetValue(current);
+                var defaultValue = prop.GetValue(currentDefaults);
 
                 if (currentValue == null && defaultValue == null) continue;
 
@@ -504,20 +559,18 @@ namespace ReactUnity.Editor
                     if (currentValue.Equals(defaultValue)) continue;
 
                 var type = prop.PropertyType;
-                if (type.GetGenericTypeDefinition() == typeof(Nullable<>)) type = type.GenericTypeArguments[0];
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) type = type.GenericTypeArguments[0];
 
-                str.Append($"  {prop.Name}: ");
+                str.Append($"\n    {prop.Name}: ");
                 str.Append(ObjectAsString(currentValue, type));
-                str.Append(",\n");
+                str.Append(",");
             }
 
-            str.Append("}");
+            if (str.Length > 1)
+                str.Append("\n");
+            str.Append("  }");
 
-            EditorGUIUtility.systemCopyBuffer = str.ToString();
-        }
-
-        void CopyLayout()
-        {
+            return str.ToString();
         }
 
         string ObjectAsString(object value, Type type)

@@ -83,6 +83,7 @@ namespace ReactUnity
                 .Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
 
             CreateConsole(engine);
+            CreateLocalStorage(engine);
             engine.SetValue("YogaValueNative", typeof(Facebook.Yoga.YogaValue));
             engine.SetValue("ColorNative", typeof(Color));
         }
@@ -128,6 +129,20 @@ console.{item.Key} = (x, ...args) => old(x, args);
             engine.SetValue("clearInterval", new Action<int>(scheduler.clearInterval));
             engine.SetValue("requestAnimationFrame", new Func<JsValue, int>(scheduler.requestAnimationFrame));
             engine.SetValue("cancelAnimationFrame", new Action<int>(scheduler.cancelAnimationFrame));
+        }
+
+        void CreateLocalStorage(Engine engine)
+        {
+            var storage = new ObjectInstance(engine);
+            engine.SetValue("localStorage", storage);
+
+
+            storage.FastAddProperty("setItem",
+                JsValue.FromObject(engine, new Action<string, string>(PlayerPrefs.SetString)),
+                false, true, false);
+            storage.FastAddProperty("getItem",
+                JsValue.FromObject(engine, new Func<string, string>(x => PlayerPrefs.GetString(x, ""))),
+                false, true, false);
         }
     }
 }

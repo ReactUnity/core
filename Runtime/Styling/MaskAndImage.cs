@@ -36,7 +36,7 @@ namespace ReactUnity.Styling
         {
             MainThreadDispatcher.OnUpdate(() =>
             {
-                Image.sprite = BorderGraphic.CreateBorderSprite(borderRadius);
+                if (Image) Image.sprite = BorderGraphic.CreateBorderSprite(borderRadius);
             });
         }
     }

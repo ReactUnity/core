@@ -174,6 +174,36 @@ namespace ReactUnity
         {
             var hasAction = value != null && !value.IsNull() && !value.IsUndefined() && !value.IsBoolean();
 
+            switch (eventType)
+            {
+                case "onButtonClick":
+                    (el as ButtonComponent)?.setButtonOnClick(
+                        hasAction
+                        ? (() => value.As<FunctionInstance>().Invoke())
+                        : null as System.Action);
+                    return;
+                case "onEndEdit":
+                    (el as InputComponent)?.setOnEndEdit(
+                        hasAction
+                        ? ((x) => value.As<FunctionInstance>().Invoke(x))
+                        : null as System.Action<string>);
+                    return;
+
+                case "onSubmit":
+                    if (el is InputComponent ip)
+                    {
+                        ip.setOnEndEdit(
+                            hasAction
+                            ? ((x) => value.As<FunctionInstance>().Invoke(x))
+                            : null as System.Action<string>);
+                        return;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+
             if (EventTypes.TryGetValue(eventType, out var type))
             {
                 el.removeEventListeners(type);
@@ -185,20 +215,7 @@ namespace ReactUnity
                         (e) => fun.Call(JsValue.FromObject(fun.Engine, el), new JsValue[] { JsValue.FromObject(fun.Engine, e) }));
                 }
             }
-            else
-            {
-                switch (eventType)
-                {
-                    case "onButtonClick":
-                        (el as ButtonComponent)?.setButtonOnClick(
-                            hasAction
-                            ? (() => value.As<FunctionInstance>().Invoke())
-                            : null as System.Action);
-                        break;
-                    default:
-                        break;
-                }
-            }
+
         }
 
         #endregion
