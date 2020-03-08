@@ -84,7 +84,7 @@ namespace ReactUnity.Components
 
             sc.targetGraphic = go.AddComponent<Image>();
             var handleImage = handle.AddComponent<Image>();
-            handleImage.color = Color.black;
+            handleImage.color = new Color(0, 0, 0, 0.3f);
             sc.SetDirection(vertical ? Scrollbar.Direction.BottomToTop : Scrollbar.Direction.LeftToRight, true);
             rt.SetSizeWithCurrentAnchors(vertical ? RectTransform.Axis.Horizontal : RectTransform.Axis.Vertical, 10);
             go.SetActive(true);

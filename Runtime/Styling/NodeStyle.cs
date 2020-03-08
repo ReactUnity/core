@@ -7,51 +7,14 @@ namespace ReactUnity.Styling
     public class NodeStyle
     {
         // Universal default style
-        public static ResolvedNodeStyle Default = new ResolvedNodeStyle()
-        {
-            opacity = 1,
-            zOrder = 0,
-            hidden = false,
-            interaction = InteractionType.WhenVisible,
-
-            backgroundColor = null,
-            backgroundImage = null,
-
-            borderRadius = 0,
-            borderColor = Color.black,
-
-            translate = Vector2.zero,
-            scale = Vector2.one,
-            pivot = Vector2.one / 2,
-            rotate = 0,
-
-            fontWeight = FontWeight.Regular,
-            fontStyle = FontStyles.Normal,
-            fontColor = Color.black,
-            fontSize = 24,
-            textWrap = true,
-            textOverflow = TextOverflowModes.Overflow,
-        };
-
+        public static ResolvedNodeStyle Default = new ResolvedNodeStyle();
         public static YogaValue Undefined = YogaValue.Undefined();
 
         public ResolvedNodeStyle resolved { get; } = new ResolvedNodeStyle();
 
         #region Fields
 
-        private float? _opacity;
-        private int? _zOrder;
-        private bool? _hidden;
-        private InteractionType? _interaction;
-        private Color? _backgroundColor;
-        private object _backgroundImage;
-        private int? _borderRadius;
-        private Color? _borderColor;
-        private Vector2? _translate;
-        private Vector2? _scale;
-        private Vector2? _pivot;
-        private float? _rotate;
-
+        private TMP_FontAsset _font;
         private Color? _fontColor;
         private FontWeight? _fontWeight;
         private FontStyles? _fontStyle;
@@ -67,18 +30,7 @@ namespace ReactUnity.Styling
         public bool hasChanges = true;
         public bool hasInteritedChanges = true;
 
-        public bool opacityChanged = true;
-        public bool zOrderChanged = true;
-        public bool hiddenChanged = true;
-        public bool interactionChanged = true;
-        public bool backgroundColorChanged = true;
-        public bool backgroundImageChanged = true;
-        public bool borderRadiusChanged = true;
-        public bool borderColorChanged = true;
-        public bool translateChanged = true;
-        public bool scaleChanged = true;
-        public bool pivotChanged = true;
-        public bool rotateChanged = true;
+        public bool fontChanged = true;
         public bool fontColorChanged = true;
         public bool fontWeightChanged = true;
         public bool fontStyleChanged = true;
@@ -109,6 +61,18 @@ namespace ReactUnity.Styling
         public float? rotate { get; set; }
 
         // Inherited styles
+        public TMP_FontAsset font
+        {
+            get => _font;
+            set
+            {
+                fontChanged = fontChanged || value != _font;
+                hasInteritedChanges = hasInteritedChanges || fontChanged;
+                hasChanges = hasChanges || fontChanged;
+                _font = value;
+            }
+        }
+
         public Color? fontColor
         {
             get => _fontColor;
@@ -203,6 +167,8 @@ namespace ReactUnity.Styling
             resolved.rotate = rotate ?? tagDefaults.rotate ?? Default.rotate;
 
             // Inherited styles
+            resolved.font = font ?? tagDefaults.font ?? resolvedParent?.font ?? Default.font;
+
             var fontColor = this.fontColor ?? tagDefaults.fontColor;
             if (!fontColor.HasValue) resolved.fontColor = resolvedParent?.fontColor ?? Default.fontColor;
             else resolved.fontColor = fontColor.Value;
@@ -252,6 +218,7 @@ namespace ReactUnity.Styling
             pivot = copyFrom.pivot;
             rotate = copyFrom.rotate;
 
+            font = copyFrom.font;
             fontColor = copyFrom.fontColor;
             fontWeight = copyFrom.fontWeight;
             fontStyle = copyFrom.fontStyle;
@@ -268,18 +235,7 @@ namespace ReactUnity.Styling
             hasChanges = false;
             hasInteritedChanges = false;
 
-            opacityChanged = false;
-            zOrderChanged = false;
-            hiddenChanged = false;
-            interactionChanged = false;
-            backgroundColorChanged = false;
-            backgroundImageChanged = false;
-            borderRadiusChanged = false;
-            borderColorChanged = false;
-            translateChanged = false;
-            scaleChanged = false;
-            pivotChanged = false;
-            rotateChanged = false;
+            fontChanged = false;
             fontColorChanged = false;
             fontWeightChanged = false;
             fontStyleChanged = false;
@@ -295,29 +251,30 @@ namespace ReactUnity.Styling
         public bool hasInteritedChanges { get; set; }
 
         // Non-inherited styles
-        public float opacity { get; set; }
-        public int zOrder { get; set; }
-        public bool hidden { get; set; }
-        public InteractionType interaction { get; set; }
+        public float opacity { get; set; } = 1;
+        public int zOrder { get; set; } = 0;
+        public bool hidden { get; set; } = false;
+        public InteractionType interaction { get; set; } = InteractionType.WhenVisible;
 
+        public Color? backgroundColor { get; set; } = null;
+        public object backgroundImage { get; set; } = null;
 
-        public Color? backgroundColor { get; set; }
-        public object backgroundImage { get; set; }
-        public int borderRadius { get; set; }
-        public Color? borderColor { get; set; }
+        public int borderRadius { get; set; } = 0;
+        public Color? borderColor { get; set; } = Color.black;
 
-        public Vector2 translate { get; set; }
-        public Vector2 scale { get; set; }
-        public Vector2 pivot { get; set; }
-        public float rotate { get; set; }
+        public Vector2 translate { get; set; } = Vector2.zero;
+        public Vector2 scale { get; set; } = Vector2.one;
+        public Vector2 pivot { get; set; } = Vector2.one / 2;
+        public float rotate { get; set; } = 0;
 
         // Inherited styles
-        public Color fontColor { get; set; }
-        public FontWeight fontWeight { get; set; }
-        public FontStyles fontStyle { get; set; }
-        public float fontSize { get; set; }
-        public TextOverflowModes textOverflow { get; set; }
-        public bool textWrap { get; set; }
+        public TMP_FontAsset font { get; set; } = null;
+        public Color fontColor { get; set; } = Color.black;
+        public FontWeight fontWeight { get; set; } = FontWeight.Regular;
+        public FontStyles fontStyle { get; set; } = FontStyles.Normal;
+        public float fontSize { get; set; } = 24;
+        public TextOverflowModes textOverflow { get; set; } = TextOverflowModes.Overflow;
+        public bool textWrap { get; set; } = true;
     }
 
     public enum InteractionType

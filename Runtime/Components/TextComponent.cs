@@ -60,6 +60,7 @@ namespace ReactUnity.Components
         public override void ApplyStyles()
         {
             base.ApplyStyles();
+            Text.font = Style.resolved.font;
             Text.fontSize = Style.resolved.fontSize;
             Text.fontStyle = Style.resolved.fontStyle;
             Text.fontWeight = Style.resolved.fontWeight;

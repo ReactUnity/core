@@ -92,11 +92,6 @@ namespace ReactUnity.Components
             InputField.text = text;
         }
 
-        public void SetPlaceholder(string text)
-        {
-            Placeholder.SetText(text);
-        }
-
         public override void ApplyLayoutStyles()
         {
             base.ApplyLayoutStyles();
@@ -136,6 +131,20 @@ namespace ReactUnity.Components
                     InputField.onSubmit.RemoveAllListeners();
                     if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
                     return;
+                case "onChange":
+                    InputField.onValueChanged.RemoveAllListeners();
+                    if (callback != null) InputField.onValueChanged.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    return;
+                case "onTextSelection":
+                    InputField.onTextSelection.RemoveAllListeners();
+                    if (callback != null) InputField.onTextSelection.AddListener(
+                        new UnityAction<string, int, int>((x, i, j) => callback.Invoke(x, i, j)));
+                    return;
+                case "onEndTextSelection":
+                    InputField.onEndTextSelection.RemoveAllListeners();
+                    if (callback != null) InputField.onEndTextSelection.AddListener(
+                        new UnityAction<string, int, int>((x, i, j) => callback.Invoke(x, i, j)));
+                    return;
                 default:
                     base.SetEventListener(eventName, callback);
                     return;
@@ -147,7 +156,34 @@ namespace ReactUnity.Components
             switch (propertyName)
             {
                 case "placeholder":
-                    SetPlaceholder(value.ToString());
+                    Placeholder.SetText(value.ToString());
+                    return;
+                case "value":
+                    InputField.text = value.ToString();
+                    return;
+                case "characterLimit":
+                    InputField.characterLimit = System.Convert.ToInt32(value);
+                    return;
+                case "lineLimit":
+                    InputField.lineLimit = System.Convert.ToInt32(value);
+                    return;
+                case "readonly":
+                    InputField.readOnly = System.Convert.ToBoolean(value);
+                    return;
+                case "richText":
+                    InputField.richText = System.Convert.ToBoolean(value);
+                    return;
+                case "contentType":
+                    InputField.contentType = (TMP_InputField.ContentType)System.Convert.ToInt32(value);
+                    return;
+                case "keyboardType":
+                    InputField.keyboardType = (TouchScreenKeyboardType)System.Convert.ToInt32(value);
+                    return;
+                case "lineType":
+                    InputField.lineType = (TMP_InputField.LineType)System.Convert.ToInt32(value);
+                    return;
+                case "validation":
+                    InputField.characterValidation = (TMP_InputField.CharacterValidation)System.Convert.ToInt32(value);
                     return;
                 default:
                     base.SetProperty(propertyName, value);
