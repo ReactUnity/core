@@ -8,7 +8,7 @@ namespace ReactUnity.Components
 {
     public class ScrollComponent : ContainerComponent
     {
-        public static YogaNode ScrollDefaultLayout { get; } = new YogaNode() { Overflow = YogaOverflow.Scroll };
+        public static YogaNode ScrollDefaultLayout { get; } = new YogaNode() { Overflow = YogaOverflow.Scroll, FlexShrink = 1 };
         public override YogaNode DefaultLayout => ScrollDefaultLayout;
 
         public ScrollRect ScrollRect { get; private set; }

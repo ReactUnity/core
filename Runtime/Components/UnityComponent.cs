@@ -15,7 +15,7 @@ namespace ReactUnity.Components
     {
         public UnityUGUIContext Context { get; }
         public static NodeStyle TagDefaultStyle { get; } = new NodeStyle();
-        public static YogaNode TagDefaultLayout { get; } = new YogaNode();
+        public static YogaNode TagDefaultLayout { get; } = new YogaNode() { };
         public virtual NodeStyle DefaultStyle => TagDefaultStyle;
         public virtual YogaNode DefaultLayout => TagDefaultLayout;
 
@@ -156,7 +156,7 @@ namespace ReactUnity.Components
         public virtual void ApplyLayoutStyles()
         {
             ResolveOpacityAndInteractable();
-            SetBorderSize(Layout.BorderWidth);
+            SetBorderSize();
             SetOverflow();
         }
 
@@ -287,20 +287,22 @@ namespace ReactUnity.Components
             image.SetBorderColor(color ?? Color.clear);
         }
 
-        protected virtual void SetBorderSize(float size)
+        protected virtual void SetBorderSize()
         {
             if (!HasBorderOrBackground()) return;
 
             var image = GetBackgroundGraphic();
-            image.SetBorderSize(size);
+            image.SetBorderSize(Layout);
         }
 
         protected bool HasBorderOrBackground()
         {
             if (BorderAndBackground != null) return true;
 
-            var borderSize = Layout.BorderWidth;
-            if (borderSize > 0 && !float.IsNaN(borderSize)) return true;
+            var borderAny = Layout.BorderWidth > 0 || Layout.BorderLeftWidth > 0 || Layout.BorderRightWidth > 0
+                || Layout.BorderTopWidth > 0 || Layout.BorderBottomWidth > 0
+                || Layout.BorderStartWidth > 0 || Layout.BorderEndWidth > 0;
+            if (borderAny) return true;
 
             var resolved = Style.resolved;
             if (resolved.borderRadius > 0 && resolved.borderColor.HasValue) return true;

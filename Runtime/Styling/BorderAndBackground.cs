@@ -1,3 +1,4 @@
+using Facebook.Yoga;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,16 +36,25 @@ namespace ReactUnity.Styling
             Root.SetAsFirstSibling();
         }
 
-        public void SetBorderSize(float size)
+        public void SetBorderSize(YogaNode layout)
         {
-            if (float.IsNaN(size)) size = 0;
+            var bidiLeft = layout.LayoutDirection == YogaDirection.LTR ? layout.BorderStartWidth : layout.BorderEndWidth;
+            var bidiRight = layout.LayoutDirection == YogaDirection.RTL ? layout.BorderStartWidth : layout.BorderEndWidth;
 
-            size = size * 2;
-            Root.sizeDelta = new Vector2(-size, -size);
-            Border.sizeDelta = new Vector2(size, size);
+            var borderLeft = GetFirstDefinedSize(bidiLeft, layout.BorderLeftWidth, layout.BorderWidth);
+            var borderRight = GetFirstDefinedSize(bidiRight, layout.BorderRightWidth, layout.BorderWidth);
+            var borderTop = GetFirstDefinedSize(layout.BorderTopWidth, layout.BorderWidth);
+            var borderBottom = GetFirstDefinedSize(layout.BorderBottomWidth, layout.BorderWidth);
+
+            Root.offsetMin = new Vector2(borderLeft, borderBottom);
+            Root.offsetMax = new Vector2(-borderRight, -borderTop);
+
+            Border.offsetMin = new Vector2(-borderLeft, -borderBottom);
+            Border.offsetMax = new Vector2(borderRight, borderTop);
+
 
             var borderImage = Border.GetComponent<Image>();
-            borderImage.enabled = size > 0;
+            borderImage.enabled = borderLeft > 0 || borderRight > 0 || borderBottom > 0 || borderTop > 0;
         }
 
         public void SetBorderImage(Sprite sprite)
@@ -76,6 +86,18 @@ namespace ReactUnity.Styling
             child.anchoredPosition = Vector2.zero;
             child.pivot = new Vector2(0.5f, 0.5f);
             child.sizeDelta = Vector2.zero;
+        }
+
+        private float GetFirstDefinedSize(params float[] fallbacks)
+        {
+            for (int i = 0; i < fallbacks.Length; i++)
+            {
+                var f = fallbacks[i];
+
+                if (!float.IsNaN(f)) return f;
+            }
+
+            return 0;
         }
     }
 }
