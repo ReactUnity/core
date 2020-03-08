@@ -55,13 +55,13 @@ namespace ReactUnity.Editor
 
             if (PreviousFlex != flex)
             {
-                CurrentStyle.CopyStyle(flex.Style);
-                CurrentLayout.CopyStyle(flex.Layout);
+                if (flex.Style != null) CurrentStyle.CopyStyle(flex.Style);
+                if (flex.Layout != null) CurrentLayout.CopyStyle(flex.Layout);
 
-                CurrentStyleDefaults = flex.Component.DefaultStyle;
-                CurrentLayoutDefaults = flex.Component.DefaultLayout;
+                CurrentStyleDefaults = flex.Component?.DefaultStyle;
+                CurrentLayoutDefaults = flex.Component?.DefaultLayout;
 
-                CurrentStyle.ResolveStyle(flex.Component.Parent?.Style.resolved, CurrentStyleDefaults);
+                CurrentStyle.ResolveStyle(flex.Component?.Parent?.Style.resolved, CurrentStyleDefaults);
 
                 PreviousFlex = flex;
             }
@@ -81,13 +81,15 @@ namespace ReactUnity.Editor
 
             if (AutoApply) EditorGUI.BeginChangeCheck();
 
+            var wide = EditorGUIUtility.wideMode;
+            EditorGUIUtility.wideMode = true;
             scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
             DrawStyles();
             DrawLayout();
 
             GUILayout.EndScrollView();
-
+            EditorGUIUtility.wideMode = wide;
 
             if (AutoApply && EditorGUI.EndChangeCheck()) ApplyStyles();
         }
@@ -126,6 +128,33 @@ namespace ReactUnity.Editor
             });
 
 
+
+            GUILayout.Space(14);
+
+            // Box Shadow
+            DrawNullableRow(CurrentStyle.boxShadow != null, (enabled) =>
+            {
+                EditorGUILayout.BeginVertical();
+                GUILayout.Label("Box Shadow");
+
+                if (!enabled) CurrentStyle.boxShadow = null;
+                else CurrentStyle.boxShadow = CurrentStyle.boxShadow ?? new ShadowDefinition();
+
+                var tempShadow = CurrentStyle.boxShadow ?? new ShadowDefinition();
+
+                tempShadow.blur = EditorGUILayout.FloatField("Blur", CurrentStyle.boxShadow?.blur ?? 0);
+                tempShadow.offset = EditorGUILayout.Vector2Field("Offset", CurrentStyle.boxShadow?.offset ?? Vector2.zero);
+                tempShadow.spread = EditorGUILayout.Vector2Field("Spread", CurrentStyle.boxShadow?.spread ?? Vector2.zero);
+                tempShadow.color = EditorGUILayout.ColorField("Color", CurrentStyle.boxShadow?.color ?? Color.black);
+
+                EditorGUILayout.EndVertical();
+            });
+
+
+            GUILayout.Space(14);
+            GUILayout.Label("Graphic");
+
+
             // Background color
             DrawNullableRow(CurrentStyle.backgroundColor.HasValue, (enabled) =>
             {
@@ -135,8 +164,6 @@ namespace ReactUnity.Editor
             });
 
 
-            GUILayout.Space(14);
-            GUILayout.Label("Border");
 
             // Border Width
             DrawFloatRowWithNaN(CurrentLayout.BorderWidth, 0, (enabled, appropriateValue) =>
@@ -573,7 +600,7 @@ namespace ReactUnity.Editor
             return str.ToString();
         }
 
-        string ObjectAsString(object value, Type type)
+        string ObjectAsString(object value, Type type = null)
         {
             switch (value)
             {
@@ -597,6 +624,8 @@ namespace ReactUnity.Editor
                 case float f:
                     if (float.IsNaN(f)) return "null";
                     return f.ToString();
+                case ShadowDefinition sd:
+                    return $"new ShadowDefinitionNative({ObjectAsString(sd.offset)}, {ObjectAsString(sd.spread)}, {ObjectAsString(sd.color)}, {ObjectAsString(sd.blur)})";
                 default:
                     return value.ToString();
             }

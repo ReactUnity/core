@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -54,6 +55,8 @@ namespace ReactUnity.Styling
 
         public int? borderRadius { get; set; }
         public Color? borderColor { get; set; }
+
+        public ShadowDefinition boxShadow { get; set; }
 
         public Vector2? translate { get; set; }
         public Vector2? scale { get; set; }
@@ -151,45 +154,46 @@ namespace ReactUnity.Styling
 
         public ResolvedNodeStyle ResolveStyle(ResolvedNodeStyle resolvedParent, NodeStyle tagDefaults)
         {
-            resolved.opacity = opacity ?? tagDefaults.opacity ?? Default.opacity;
-            resolved.zOrder = zOrder ?? tagDefaults.zOrder ?? Default.zOrder;
-            resolved.hidden = hidden ?? tagDefaults.hidden ?? Default.hidden;
-            resolved.interaction = interaction ?? tagDefaults.interaction ?? Default.interaction;
+            resolved.opacity = opacity ?? tagDefaults?.opacity ?? Default.opacity;
+            resolved.zOrder = zOrder ?? tagDefaults?.zOrder ?? Default.zOrder;
+            resolved.hidden = hidden ?? tagDefaults?.hidden ?? Default.hidden;
+            resolved.interaction = interaction ?? tagDefaults?.interaction ?? Default.interaction;
 
-            resolved.backgroundColor = backgroundColor ?? tagDefaults.backgroundColor ?? Default.backgroundColor;
-            resolved.backgroundImage = backgroundImage ?? tagDefaults.backgroundImage ?? Default.backgroundImage;
-            resolved.borderRadius = borderRadius ?? tagDefaults.borderRadius ?? Default.borderRadius;
-            resolved.borderColor = borderColor ?? tagDefaults.borderColor ?? Default.borderColor;
+            resolved.backgroundColor = backgroundColor ?? tagDefaults?.backgroundColor ?? Default.backgroundColor;
+            resolved.backgroundImage = backgroundImage ?? tagDefaults?.backgroundImage ?? Default.backgroundImage;
+            resolved.borderRadius = borderRadius ?? tagDefaults?.borderRadius ?? Default.borderRadius;
+            resolved.borderColor = borderColor ?? tagDefaults?.borderColor ?? Default.borderColor;
+            resolved.boxShadow = boxShadow ?? tagDefaults?.boxShadow ?? Default.boxShadow;
 
-            resolved.translate = translate ?? tagDefaults.translate ?? Default.translate;
-            resolved.scale = scale ?? tagDefaults.scale ?? Default.scale;
-            resolved.pivot = pivot ?? tagDefaults.pivot ?? Default.pivot;
-            resolved.rotate = rotate ?? tagDefaults.rotate ?? Default.rotate;
+            resolved.translate = translate ?? tagDefaults?.translate ?? Default.translate;
+            resolved.scale = scale ?? tagDefaults?.scale ?? Default.scale;
+            resolved.pivot = pivot ?? tagDefaults?.pivot ?? Default.pivot;
+            resolved.rotate = rotate ?? tagDefaults?.rotate ?? Default.rotate;
 
             // Inherited styles
-            resolved.font = font ?? tagDefaults.font ?? resolvedParent?.font ?? Default.font;
+            resolved.font = font ?? tagDefaults?.font ?? resolvedParent?.font ?? Default.font;
 
-            var fontColor = this.fontColor ?? tagDefaults.fontColor;
+            var fontColor = this.fontColor ?? tagDefaults?.fontColor;
             if (!fontColor.HasValue) resolved.fontColor = resolvedParent?.fontColor ?? Default.fontColor;
             else resolved.fontColor = fontColor.Value;
 
-            var fontWeight = this.fontWeight ?? tagDefaults.fontWeight;
+            var fontWeight = this.fontWeight ?? tagDefaults?.fontWeight;
             if (!fontWeight.HasValue) resolved.fontWeight = resolvedParent?.fontWeight ?? Default.fontWeight;
             else resolved.fontWeight = fontWeight.Value;
 
-            var fontStyle = this.fontStyle ?? tagDefaults.fontStyle;
+            var fontStyle = this.fontStyle ?? tagDefaults?.fontStyle;
             if (!fontStyle.HasValue) resolved.fontStyle = resolvedParent?.fontStyle ?? Default.fontStyle;
             else resolved.fontStyle = fontStyle.Value;
 
-            var textOverflow = this.textOverflow ?? tagDefaults.textOverflow;
+            var textOverflow = this.textOverflow ?? tagDefaults?.textOverflow;
             if (!textOverflow.HasValue) resolved.textOverflow = resolvedParent?.textOverflow ?? Default.textOverflow;
             else resolved.textOverflow = textOverflow.Value;
 
-            var textWrap = this.textWrap ?? tagDefaults.textWrap;
+            var textWrap = this.textWrap ?? tagDefaults?.textWrap;
             if (!textWrap.HasValue) resolved.textWrap = resolvedParent?.textWrap ?? Default.textWrap;
             else resolved.textWrap = textWrap.Value;
 
-            var fontSize = Undefined.Equals(this.fontSize) ? tagDefaults.fontSize : this.fontSize;
+            var fontSize = Undefined.Equals(this.fontSize) ? (tagDefaults?.fontSize ?? Undefined) : this.fontSize;
             if (Undefined.Equals(fontSize) || fontSize.Unit == YogaUnit.Auto)
                 resolved.fontSize = resolvedParent?.fontSize ?? Default.fontSize;
             else if (fontSize.Unit == YogaUnit.Percent)
@@ -212,6 +216,7 @@ namespace ReactUnity.Styling
             backgroundColor = copyFrom.backgroundColor;
             borderRadius = copyFrom.borderRadius;
             borderColor = copyFrom.borderColor;
+            boxShadow = copyFrom.boxShadow;
 
             translate = copyFrom.translate;
             scale = copyFrom.scale;
@@ -262,6 +267,8 @@ namespace ReactUnity.Styling
         public int borderRadius { get; set; } = 0;
         public Color? borderColor { get; set; } = Color.black;
 
+        public ShadowDefinition boxShadow { get; set; } = null;
+
         public Vector2 translate { get; set; } = Vector2.zero;
         public Vector2 scale { get; set; } = Vector2.one;
         public Vector2 pivot { get; set; } = Vector2.one / 2;
@@ -283,5 +290,24 @@ namespace ReactUnity.Styling
         Always = 1,
         Ignore = 2,
         Block = 3,
+    }
+
+    [Serializable]
+    public class ShadowDefinition
+    {
+        public Vector2 offset;
+        public Vector2 spread;
+        public Color color = Color.black;
+        public float blur;
+
+        public ShadowDefinition() { }
+
+        public ShadowDefinition(Vector2 offset, Vector2 spread, Color color, float blur)
+        {
+            this.offset = offset;
+            this.spread = spread;
+            this.color = color;
+            this.blur = blur;
+        }
     }
 }

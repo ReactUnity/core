@@ -3,6 +3,7 @@ using Jint.Native;
 using Jint.Native.Object;
 using ReactUnity.Interop;
 using ReactUnity.Schedulers;
+using ReactUnity.Styling;
 using ReactUnity.Types;
 using System;
 using System.Collections.Generic;
@@ -86,6 +87,7 @@ namespace ReactUnity
             CreateLocalStorage(engine);
             engine.SetValue("YogaValueNative", typeof(Facebook.Yoga.YogaValue));
             engine.SetValue("ColorNative", typeof(Color));
+            engine.SetValue("ShadowDefinitionNative", typeof(ShadowDefinition));
         }
 
         ObjectInstance CreateConsole(Engine engine)

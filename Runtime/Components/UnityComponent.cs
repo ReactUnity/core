@@ -178,6 +178,7 @@ namespace ReactUnity.Components
             ResolveOpacityAndInteractable();
             SetBackgroundColor(Style.resolved.backgroundColor);
             SetBackgroundImage();
+            SetBoxShadow();
             SetZOrder(Style.resolved.zOrder);
             SetBorderRadius(Style.resolved.borderRadius);
             SetBorderColor(Style.resolved.borderColor);
@@ -275,6 +276,14 @@ namespace ReactUnity.Components
             var image = GetBackgroundGraphic();
             var sprite = AssetReference.GetSpriteFromObject(Style.resolved.backgroundImage, Context);
             image.SetBackgroundImage(sprite);
+        }
+
+        protected void SetBoxShadow()
+        {
+            if (!HasBorderOrBackground()) return;
+
+            var image = GetBackgroundGraphic();
+            image.SetBoxShadow(Style.resolved.boxShadow);
         }
 
         protected virtual void SetBorderRadius(int radius)

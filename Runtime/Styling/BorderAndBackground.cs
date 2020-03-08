@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using ReactUnity.Helpers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,9 @@ namespace ReactUnity.Styling
         public RectTransform Root;
         public RectTransform Border;
         public RectTransform Background;
+        public RectTransform Shadow;
+
+        public Sprite ShadowSprite;
 
         public BorderAndBackground(RectTransform parent)
         {
@@ -26,10 +30,18 @@ namespace ReactUnity.Styling
             borderImage.type = Image.Type.Sliced;
             borderImage.pixelsPerUnitMultiplier = 100;
 
+
+            var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(IgnoreMaskImage));
+            var sdImage = sd.GetComponent<Image>();
+            sdImage.type = Image.Type.Sliced;
+            sdImage.sprite = ResourcesHelper.BoxShadowSprite;
+
             Root = root.transform as RectTransform;
+            Shadow = sd.transform as RectTransform;
             Border = border.transform as RectTransform;
             Background = bg.transform as RectTransform;
 
+            FullStretch(Shadow, Root);
             FullStretch(Border, Root);
             FullStretch(Background, Root);
             FullStretch(Root, parent);
@@ -76,6 +88,22 @@ namespace ReactUnity.Styling
         public void SetBackgroundColor(Color color)
         {
             Background.GetComponent<Image>().color = color;
+        }
+
+        public void SetBoxShadow(ShadowDefinition shadow)
+        {
+            Shadow.gameObject.SetActive(shadow != null);
+
+            if (shadow == null) return;
+
+            Shadow.sizeDelta = shadow.spread * 2;
+            Shadow.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
+
+            var sd = Shadow.GetComponent<Image>();
+            var ppu = shadow.blur <= 0 ? 4000 : (4000 / shadow.blur);
+            sd.pixelsPerUnitMultiplier = ppu;
+            sd.color = shadow.color;
+            sd.SetVerticesDirty();
         }
 
         void FullStretch(RectTransform child, RectTransform parent)

@@ -16,9 +16,9 @@ namespace ReactUnity.Components
         public ScrollComponent(UnityUGUIContext Context) : base(Context)
         {
             ScrollRect = GameObject.AddComponent<ScrollRect>();
-            GameObject.AddComponent<RectMask2D>();
 
             var viewport = new GameObject("[Scroll Viewport]").AddComponent<RectTransform>();
+            viewport.gameObject.AddComponent<RectMask2D>();
             viewport.SetParent(RectTransform, false);
 
             viewport.anchorMin = Vector2.zero;
