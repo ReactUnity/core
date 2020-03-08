@@ -13,27 +13,6 @@ namespace ReactUnity
 {
     public class UnityUGUIContext : IUnityContext<UnityComponent, TextComponent, ContainerComponent, HostComponent>
     {
-        static Dictionary<string, EventTriggerType> EventTypes = new Dictionary<string, EventTriggerType>
-        {
-            { "onPointerClick", EventTriggerType.PointerClick },
-            { "onPointerUp", EventTriggerType.PointerUp },
-            { "onPointerDown", EventTriggerType.PointerDown },
-            { "onPointerEnter", EventTriggerType.PointerEnter },
-            { "onPointerExit", EventTriggerType.PointerExit },
-            { "onSubmit", EventTriggerType.Submit },
-            { "onCancel", EventTriggerType.Cancel },
-            { "onSelect", EventTriggerType.Select },
-            { "onDeselect", EventTriggerType.Deselect },
-            { "onMove", EventTriggerType.Move },
-            { "onUpdateSelected", EventTriggerType.UpdateSelected },
-            { "onScroll", EventTriggerType.Scroll },
-            { "onDrag", EventTriggerType.Drag },
-            { "onBeginDrag", EventTriggerType.BeginDrag },
-            { "onEndDrag", EventTriggerType.EndDrag },
-            { "onPotentialDrag", EventTriggerType.InitializePotentialDrag },
-            { "onDrop", EventTriggerType.Drop },
-        };
-
         public Engine Engine { get; }
         public HostComponent Host { get; }
         public StringObjectDictionary NamedAssets { get; }
@@ -149,73 +128,18 @@ namespace ReactUnity
             scheduleLayout();
         }
 
-        public void setProperty(UnityComponent cmp, string property, JsValue value)
+        public void setProperty(UnityComponent element, string property, object value)
         {
-            switch (property)
-            {
-                case "name":
-                    cmp.GameObject.name = value.ToString();
-                    return;
-                case "placeholder":
-                    (cmp as InputComponent)?.SetPlaceholder(value.AsString());
-                    return;
-                case "source":
-                    (cmp as ImageComponent)?.SetSource(value.ToObject());
-                    return;
-                case "fit":
-                    (cmp as ImageComponent)?.SetFit((ImageFitMode)(int)value.AsNumber());
-                    return;
-                default:
-                    break;
-            }
+            element.SetProperty(property, value);
         }
 
-        public void setEventListener(UnityComponent el, string eventType, JsValue value)
+        public void setEventListener(UnityComponent element, string eventType, JsValue value)
         {
-            var hasAction = value != null && !value.IsNull() && !value.IsUndefined() && !value.IsBoolean();
+            var hasValue = value != null && !value.IsNull() && !value.IsUndefined() && !value.IsBoolean();
+            var callback = value.As<FunctionInstance>();
+            if (hasValue && callback == null) throw new System.Exception("The callback for an event must be a function.");
 
-            switch (eventType)
-            {
-                case "onButtonClick":
-                    (el as ButtonComponent)?.setButtonOnClick(
-                        hasAction
-                        ? (() => value.As<FunctionInstance>().Invoke())
-                        : null as System.Action);
-                    return;
-                case "onEndEdit":
-                    (el as InputComponent)?.setOnEndEdit(
-                        hasAction
-                        ? ((x) => value.As<FunctionInstance>().Invoke(x))
-                        : null as System.Action<string>);
-                    return;
-
-                case "onSubmit":
-                    if (el is InputComponent ip)
-                    {
-                        ip.setOnEndEdit(
-                            hasAction
-                            ? ((x) => value.As<FunctionInstance>().Invoke(x))
-                            : null as System.Action<string>);
-                        return;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-
-            if (EventTypes.TryGetValue(eventType, out var type))
-            {
-                el.removeEventListeners(type);
-                if (hasAction)
-                {
-                    var fun = value.As<FunctionInstance>();
-                    if (fun == null) throw new System.Exception("The callback for an event must be a function.");
-                    el.addEventListener(type,
-                        (e) => fun.Call(JsValue.FromObject(fun.Engine, el), new JsValue[] { JsValue.FromObject(fun.Engine, e) }));
-                }
-            }
-
+            element.SetEventListener(eventType, callback);
         }
 
         #endregion

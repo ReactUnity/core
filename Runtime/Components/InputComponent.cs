@@ -1,4 +1,6 @@
 using Facebook.Yoga;
+using Jint.Native;
+using Jint.Native.Function;
 using ReactUnity.Styling;
 using TMPro;
 using UnityEngine;
@@ -122,16 +124,35 @@ namespace ReactUnity.Components
         }
 
 
-        public void setOnEndEdit(System.Action<string> callback)
+        public override void SetEventListener(string eventName, FunctionInstance callback)
         {
-            InputField.onEndEdit.RemoveAllListeners();
-            if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(callback));
+            switch (eventName)
+            {
+                case "onEndEdit":
+                    InputField.onEndEdit.RemoveAllListeners();
+                    if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    return;
+                case "onSubmit":
+                    InputField.onSubmit.RemoveAllListeners();
+                    if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    return;
+                default:
+                    base.SetEventListener(eventName, callback);
+                    return;
+            }
         }
 
-        public void setOnSubmit(System.Action<string> callback)
+        public override void SetProperty(string propertyName, object value)
         {
-            InputField.onSubmit.RemoveAllListeners();
-            if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(callback));
+            switch (propertyName)
+            {
+                case "placeholder":
+                    SetPlaceholder(value.ToString());
+                    return;
+                default:
+                    base.SetProperty(propertyName, value);
+                    break;
+            }
         }
     }
 }

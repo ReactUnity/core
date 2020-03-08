@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using Jint.Native.Function;
 using ReactUnity.Styling;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,10 +32,19 @@ namespace ReactUnity.Components
             Selectable = Button;
         }
 
-        public void setButtonOnClick(System.Action callback)
+
+        public override void SetEventListener(string eventName, FunctionInstance callback)
         {
-            Button.onClick.RemoveAllListeners();
-            if (callback != null) Button.onClick.AddListener(new UnityAction(callback));
+            switch (eventName)
+            {
+                case "onClick":
+                    Button.onClick.RemoveAllListeners();
+                    if (callback != null) Button.onClick.AddListener(new UnityAction(() => callback.Invoke()));
+                    return;
+                default:
+                    base.SetEventListener(eventName, callback);
+                    return;
+            }
         }
     }
 }

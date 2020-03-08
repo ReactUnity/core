@@ -33,13 +33,31 @@ namespace ReactUnity.Components
             ImageContainer.SetParent(this);
         }
 
-        public void SetSource(object source)
+        public override void SetProperty(string propertyName, object value)
+        {
+            switch (propertyName)
+            {
+                case "source":
+                    SetSource(value);
+                    return;
+                case "fit":
+                    SetFit((ImageFitMode)System.Convert.ToInt32(value));
+                    return;
+                default:
+                    base.SetProperty(propertyName, value);
+                    break;
+            }
+        }
+
+
+
+        private void SetSource(object source)
         {
             Image.sprite = AssetReference.GetSpriteFromObject(source, Context);
         }
 
 
-        public void SetFit(ImageFitMode fit)
+        private void SetFit(ImageFitMode fit)
         {
             Fit = fit;
             if (fit == ImageFitMode.FitStart)

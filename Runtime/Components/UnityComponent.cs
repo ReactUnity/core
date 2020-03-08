@@ -1,4 +1,7 @@
 using Facebook.Yoga;
+using Jint.Native;
+using Jint.Native.Function;
+using ReactUnity.Helpers;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.Styling;
@@ -23,7 +26,6 @@ namespace ReactUnity.Components
         public RectTransform RectTransform { get; private set; }
         public ContainerComponent Parent { get; private set; }
 
-        public EventTrigger EventTrigger { get; private set; }
 
         public FlexElement Flex { get; private set; }
         public YogaNode Layout;
@@ -31,10 +33,11 @@ namespace ReactUnity.Components
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
-        public Selectable Selectable { get; protected set; }
 
-        public CanvasGroup CanvasGroup => GameObject.GetComponents<CanvasGroup>().FirstOrDefault();
-        public Canvas Canvas => GameObject.GetComponents<Canvas>().FirstOrDefault();
+        public Selectable Selectable { get; protected set; }
+        public EventTrigger EventTrigger { get; private set; }
+        public CanvasGroup CanvasGroup => GameObject.GetComponent<CanvasGroup>();
+        public Canvas Canvas => GameObject.GetComponent<Canvas>();
 
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
@@ -98,17 +101,23 @@ namespace ReactUnity.Components
             ResolveStyle();
         }
 
-        #region Events
-        public EventTrigger getEventTrigger()
-        {
-            return EventTrigger ?? (EventTrigger = RectTransform.gameObject.AddComponent<EventTrigger>());
-        }
 
-        public virtual void addEventListener(EventTriggerType type, System.Action<BaseEventData> callback)
+        public virtual void SetEventListener(string eventName, FunctionInstance fun)
         {
-            var eventTrigger = getEventTrigger();
+            var eventType = EventTypes.GetEventType(eventName);
+            if (!eventType.HasValue) throw new System.Exception($"Unknown event name specified, '{eventName}'");
 
-            var trigger = eventTrigger.triggers.Find(x => x.eventID == type);
+            // Remove
+            EventTrigger?.triggers.Find(x => x.eventID == eventType)?.callback?.RemoveAllListeners();
+
+            // No event to add
+            if (fun == null) return;
+
+            System.Action<BaseEventData> callAction = (e) => fun.Invoke(JsValue.FromObject(Context.Engine, e));
+
+            var eventTrigger = EventTrigger ?? (EventTrigger = RectTransform.gameObject.AddComponent<EventTrigger>());
+
+            var trigger = eventTrigger.triggers.Find(x => x.eventID == eventType);
             var uevent = trigger?.callback;
             if (trigger == null)
             {
@@ -116,24 +125,27 @@ namespace ReactUnity.Components
 
                 eventTrigger.triggers.Add(new EventTrigger.Entry()
                 {
-                    eventID = type,
+                    eventID = eventType.Value,
                     callback = uevent,
                 });
             }
 
-            var action = new UnityAction<BaseEventData>(callback);
+            var action = new UnityAction<BaseEventData>(callAction);
             uevent.AddListener(action);
-
-            GetBackgroundGraphic();
         }
 
-        public virtual void removeEventListeners(EventTriggerType type)
+        public virtual void SetProperty(string propertyName, object value)
         {
-            var trigger = EventTrigger?.triggers.Find(x => x.eventID == type);
-            var uevent = trigger?.callback;
-            uevent?.RemoveAllListeners();
+            switch (propertyName)
+            {
+                case "name":
+                    GameObject.name = value?.ToString();
+                    return;
+                default:
+                    throw new System.Exception($"Unknown property name specified, '{propertyName}'");
+            }
         }
-        #endregion
+
 
         public void ResetLayout()
         {

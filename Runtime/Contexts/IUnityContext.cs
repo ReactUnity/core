@@ -35,7 +35,7 @@ namespace ReactUnity
 
         void setText(TextType instance, string text);
 
-        void setProperty(BaseType el, string property, JsValue value);
+        void setProperty(BaseType el, string property, object value);
 
         void setEventListener(BaseType el, string eventType, JsValue value);
 
