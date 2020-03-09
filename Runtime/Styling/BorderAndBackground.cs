@@ -30,6 +30,10 @@ namespace ReactUnity.Styling
             borderImage.type = Image.Type.Sliced;
             borderImage.pixelsPerUnitMultiplier = 100;
 
+            var bgImage = bg.GetComponent<Image>();
+            bgImage.type = Image.Type.Sliced;
+            bgImage.pixelsPerUnitMultiplier = 1;
+
 
             var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(IgnoreMaskImage));
             var sdImage = sd.GetComponent<Image>();
@@ -80,14 +84,11 @@ namespace ReactUnity.Styling
             Border.GetComponent<Image>().color = color;
         }
 
-        public void SetBackgroundImage(Sprite sprite)
+        public void SetBackgroundColorAndImage(Color? color, Sprite sprite)
         {
-            Background.GetComponent<Image>().sprite = sprite;
-        }
-
-        public void SetBackgroundColor(Color color)
-        {
-            Background.GetComponent<Image>().color = color;
+            var bg = Background.GetComponent<Image>();
+            bg.color = color.HasValue ? color.Value : (sprite ? Color.white : Color.clear);
+            bg.sprite = sprite;
         }
 
         public void SetBoxShadow(ShadowDefinition shadow)

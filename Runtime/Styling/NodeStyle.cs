@@ -59,6 +59,7 @@ namespace ReactUnity.Styling
         public ShadowDefinition boxShadow { get; set; }
 
         public Vector2? translate { get; set; }
+        public bool? translateRelative { get; set; }
         public Vector2? scale { get; set; }
         public Vector2? pivot { get; set; }
         public float? rotate { get; set; }
@@ -166,6 +167,7 @@ namespace ReactUnity.Styling
             resolved.boxShadow = boxShadow ?? tagDefaults?.boxShadow ?? Default.boxShadow;
 
             resolved.translate = translate ?? tagDefaults?.translate ?? Default.translate;
+            resolved.translateRelative = translateRelative ?? tagDefaults?.translateRelative ?? Default.translateRelative;
             resolved.scale = scale ?? tagDefaults?.scale ?? Default.scale;
             resolved.pivot = pivot ?? tagDefaults?.pivot ?? Default.pivot;
             resolved.rotate = rotate ?? tagDefaults?.rotate ?? Default.rotate;
@@ -219,6 +221,7 @@ namespace ReactUnity.Styling
             boxShadow = copyFrom.boxShadow;
 
             translate = copyFrom.translate;
+            translateRelative = copyFrom.translateRelative;
             scale = copyFrom.scale;
             pivot = copyFrom.pivot;
             rotate = copyFrom.rotate;
@@ -270,6 +273,7 @@ namespace ReactUnity.Styling
         public ShadowDefinition boxShadow { get; set; } = null;
 
         public Vector2 translate { get; set; } = Vector2.zero;
+        public bool translateRelative { get; set; } = false;
         public Vector2 scale { get; set; } = Vector2.one;
         public Vector2 pivot { get; set; } = Vector2.one / 2;
         public float rotate { get; set; } = 0;

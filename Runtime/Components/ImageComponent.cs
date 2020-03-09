@@ -1,4 +1,6 @@
 using Facebook.Yoga;
+using Jint.Native;
+using ReactUnity.Converters;
 using ReactUnity.Layout;
 using ReactUnity.Styling;
 using ReactUnity.Types;
@@ -42,6 +44,9 @@ namespace ReactUnity.Components
                     return;
                 case "fit":
                     SetFit((ImageFitMode)System.Convert.ToInt32(value));
+                    return;
+                case "tint":
+                    Image.color = ColorConverter.FromJsValue(JsValue.FromObject(Context.Engine, value)) ?? Color.white;
                     return;
                 default:
                     base.SetProperty(propertyName, value);

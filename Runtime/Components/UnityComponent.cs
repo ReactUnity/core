@@ -176,8 +176,7 @@ namespace ReactUnity.Components
         {
             ResolveTransform();
             ResolveOpacityAndInteractable();
-            SetBackgroundColor(Style.resolved.backgroundColor);
-            SetBackgroundImage();
+            SetBackground();
             SetBoxShadow();
             SetZOrder(Style.resolved.zOrder);
             SetBorderRadius(Style.resolved.borderRadius);
@@ -248,7 +247,7 @@ namespace ReactUnity.Components
             return BorderAndBackground = image;
         }
 
-        public virtual void SetOverflow()
+        private void SetOverflow()
         {
             var mask = MaskAndImage;
 
@@ -261,24 +260,16 @@ namespace ReactUnity.Components
             mask.SetBorderRadius(Style.resolved.borderRadius);
         }
 
-        protected virtual void SetBackgroundColor(Color? color)
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBackgroundColor(color ?? Color.clear);
-        }
-
-        protected virtual void SetBackgroundImage()
+        private void SetBackground()
         {
             if (!HasBorderOrBackground()) return;
 
             var image = GetBackgroundGraphic();
             var sprite = AssetReference.GetSpriteFromObject(Style.resolved.backgroundImage, Context);
-            image.SetBackgroundImage(sprite);
+            image.SetBackgroundColorAndImage(Style.resolved.backgroundColor, sprite);
         }
 
-        protected void SetBoxShadow()
+        private void SetBoxShadow()
         {
             if (!HasBorderOrBackground()) return;
 
@@ -286,7 +277,7 @@ namespace ReactUnity.Components
             image.SetBoxShadow(Style.resolved.boxShadow);
         }
 
-        protected virtual void SetBorderRadius(int radius)
+        private void SetBorderRadius(int radius)
         {
             if (!HasBorderOrBackground()) return;
 
@@ -300,7 +291,7 @@ namespace ReactUnity.Components
             });
         }
 
-        protected virtual void SetBorderColor(Color? color)
+        private void SetBorderColor(Color? color)
         {
             if (!HasBorderOrBackground()) return;
 
@@ -308,7 +299,7 @@ namespace ReactUnity.Components
             image.SetBorderColor(color ?? Color.clear);
         }
 
-        protected virtual void SetBorderSize()
+        private void SetBorderSize()
         {
             if (!HasBorderOrBackground()) return;
 
@@ -333,7 +324,7 @@ namespace ReactUnity.Components
             return false;
         }
 
-        protected virtual void SetZOrder(int z)
+        private void SetZOrder(int z)
         {
             Canvas canvas = Canvas;
             if (!canvas && z == 0) return;

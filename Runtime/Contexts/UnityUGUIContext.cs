@@ -64,6 +64,10 @@ namespace ReactUnity
             {
                 res = new ButtonComponent(this);
             }
+            else if (type == "toggle")
+            {
+                res = new ToggleComponent(this);
+            }
             else if (type == "input")
             {
                 res = new InputComponent(text, this);

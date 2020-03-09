@@ -240,6 +240,13 @@ namespace ReactUnity.Editor
                 CurrentStyle.translate = enabled ? (Vector2?)prop : null;
             });
 
+            // Translate Relative
+            DrawNullableRow(CurrentStyle.translateRelative.HasValue, (enabled) =>
+            {
+                var prop = EditorGUILayout.Toggle("Translate relative", CurrentStyle.translateRelative ?? CurrentStyle.resolved.translateRelative);
+                CurrentStyle.translateRelative = enabled ? (bool?)prop : null;
+            });
+
             // Pivot
             DrawNullableRow(CurrentStyle.pivot.HasValue, (enabled) =>
             {
@@ -634,16 +641,22 @@ namespace ReactUnity.Editor
         YogaValue DrawYogaValue(YogaValue value, GUIStyle style = null, params GUILayoutOption[] options)
         {
             var str = "";
+            var valueStr = IsNegativeZero(value.Value) ? "-0" : $"{value.Value}";
             if (value.Unit == YogaUnit.Auto) str = "auto";
-            else if (value.Unit == YogaUnit.Percent) str = $"{value.Value}%";
-            else if (value.Unit == YogaUnit.Point) str = $"{value.Value}";
+            else if (value.Unit == YogaUnit.Percent) str = $"{valueStr}%";
+            else if (value.Unit == YogaUnit.Point) str = $"{valueStr}";
 
-            var res = GUILayout.TextField(str, style ?? GUI.skin.textField, options);
+            var res = EditorGUILayout.DelayedTextField(str, style ?? GUI.skin.textField, options);
+
+            if (res == "auto") return YogaValue.Undefined();
 
             var trimmed = new Regex("[^\\d\\.-]").Replace(res, "");
 
-            if (res == "auto") return YogaValue.Undefined();
-            if (trimmed.Length > 0 && float.TryParse(trimmed, out var fval))
+            var canParse = float.TryParse(trimmed, out var fval);
+            if (trimmed == "-" || trimmed == "-0") fval = -0f;
+
+
+            if (trimmed.Length > 0 && (canParse || trimmed == "-"))
             {
                 if (res.EndsWith("%")) return YogaValue.Percent(fval);
                 return YogaValue.Point(fval);
@@ -652,6 +665,10 @@ namespace ReactUnity.Editor
             return YogaValue.Undefined();
         }
 
+        private static bool IsNegativeZero(float x)
+        {
+            return x == 0f && float.IsNegativeInfinity(1 / x);
+        }
 
         float DrawFloat(float value, GUIStyle style = null, params GUILayoutOption[] options)
         {

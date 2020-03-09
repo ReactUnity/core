@@ -12,6 +12,9 @@ namespace ReactUnity.Converters
         {
             if (obj == null || obj.IsNull() || obj.IsUndefined()) return null;
 
+            var nativeObject = obj.ToObject();
+            if (nativeObject is Color c) return c;
+
             if (obj.IsString())
             {
                 var s = obj.ToString();
