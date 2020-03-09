@@ -1,6 +1,7 @@
 using Facebook.Yoga;
 using Jint.Native;
 using Jint.Native.Function;
+using ReactUnity.EventHandlers;
 using ReactUnity.Helpers;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
@@ -35,7 +36,6 @@ namespace ReactUnity.Components
         public MaskAndImage MaskAndImage { get; protected set; }
 
         public Selectable Selectable { get; protected set; }
-        public EventTrigger EventTrigger { get; private set; }
         public CanvasGroup CanvasGroup => GameObject.GetComponent<CanvasGroup>();
         public Canvas Canvas => GameObject.GetComponent<Canvas>();
 
@@ -104,34 +104,20 @@ namespace ReactUnity.Components
 
         public virtual void SetEventListener(string eventName, FunctionInstance fun)
         {
-            var eventType = EventTypes.GetEventType(eventName);
-            if (!eventType.HasValue) throw new System.Exception($"Unknown event name specified, '{eventName}'");
+            var eventType = EventHandlerMap.GetEventType(eventName);
+            if (eventType == null) throw new System.Exception($"Unknown event name specified, '{eventName}'");
 
             // Remove
-            EventTrigger?.triggers.Find(x => x.eventID == eventType)?.callback?.RemoveAllListeners();
+            var handler = GameObject.GetComponent(eventType) as IEventHandler;
+            handler?.ClearListeners();
 
             // No event to add
             if (fun == null) return;
 
+            if(handler == null) handler = GameObject.AddComponent(eventType) as IEventHandler;
+
             System.Action<BaseEventData> callAction = (e) => fun.Invoke(JsValue.FromObject(Context.Engine, e));
-
-            var eventTrigger = EventTrigger ?? (EventTrigger = RectTransform.gameObject.AddComponent<EventTrigger>());
-
-            var trigger = eventTrigger.triggers.Find(x => x.eventID == eventType);
-            var uevent = trigger?.callback;
-            if (trigger == null)
-            {
-                uevent = new EventTrigger.TriggerEvent();
-
-                eventTrigger.triggers.Add(new EventTrigger.Entry()
-                {
-                    eventID = eventType.Value,
-                    callback = uevent,
-                });
-            }
-
-            var action = new UnityAction<BaseEventData>(callAction);
-            uevent.AddListener(action);
+            handler.OnEvent += callAction;
         }
 
         public virtual void SetProperty(string propertyName, object value)
