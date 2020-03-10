@@ -13,10 +13,12 @@ namespace ReactUnity
         public string SourcePath;
         public string SourceText;
 
+#pragma warning disable CS0414
         [SerializeField]
         [Tooltip(@"Editor only. Watches file for changes and refreshes the view on change.
 Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_EDITOR to build.")]
         private bool Watch = false;
+#pragma warning restore CS0414
 
         private bool SourceIsTextAsset => ScriptSource == ScriptSource.TextAsset;
         private bool SourceIsPath => ScriptSource != ScriptSource.TextAsset && ScriptSource != ScriptSource.Text;
