@@ -14,16 +14,13 @@ namespace ReactUnity.Components
     {
         public static NodeStyle ToggleDefaultStyle { get; } = new NodeStyle()
         {
-            backgroundColor = Color.white,
-            borderColor = new Color(0.4f, 0.4f, 0.4f, 1),
+            backgroundColor = new Color(0.82f, 0.82f, 0.82f, 1),
             borderRadius = 6,
-            //backgroundImage = ResourcesHelper.CheckBoxSprite,
         };
         public static YogaNode ToggleDefaultLayout { get; } = new YogaNode()
         {
             AspectRatio = 1,
-            Width = 30,
-            BorderWidth = 3,
+            Width = 24,
             MarginHorizontal = 6,
             Padding = 0,
             AlignItems = YogaAlign.Center,

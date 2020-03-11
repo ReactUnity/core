@@ -143,6 +143,11 @@ namespace ReactUnity.Components
             Style.CopyStyle(DefaultStyle);
         }
 
+        public void ScheduleLayout(System.Action callback = null)
+        {
+            Context.scheduleLayout(callback);
+        }
+
         public virtual void ResolveStyle()
         {
             Style.ResolveStyle(Parent?.Style.resolved, DefaultStyle);

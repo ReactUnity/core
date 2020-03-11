@@ -43,7 +43,7 @@ namespace ReactUnity.Components
             ApplyLayoutStyles();
             ApplyStyles();
 
-            Context.scheduleLayout();
+            ScheduleLayout();
         }
 
         public void SetText(string text)

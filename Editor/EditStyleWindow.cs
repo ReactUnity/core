@@ -492,7 +492,7 @@ namespace ReactUnity.Editor
 
             flex.Style.CopyStyle(CurrentStyle);
             flex.Layout.CopyStyle(CurrentLayout);
-            flex.Component.Context.scheduleLayout(flex.Component.ApplyLayoutStyles);
+            flex.Component.ScheduleLayout(flex.Component.ApplyLayoutStyles);
             flex.Component.ResolveStyle();
         }
 
