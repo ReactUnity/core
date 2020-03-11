@@ -38,7 +38,9 @@ namespace Facebook.Yoga
             if (_ygConfig == YGConfigHandle.Default)
             {
                 _managedLogger = LoggerInternal;
-                //Native.YGInteropSetLogger(_managedLogger);
+#if !UNITY_WEBGL || UNITY_EDITOR
+                Native.YGInteropSetLogger(_managedLogger);
+#endif
             }
         }
 

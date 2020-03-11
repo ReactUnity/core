@@ -6,13 +6,20 @@
  */
 
 using System;
+#if UNITY_WEBGL && !UNITY_EDITOR
+using System.Collections.Generic;
+#endif
 using System.Runtime.InteropServices;
 
 namespace Facebook.Yoga
 {
     internal class YGNodeHandle : SafeHandle
     {
+#if !UNITY_WEBGL || UNITY_EDITOR
         private GCHandle _managedNodeHandle;
+#else
+        static Dictionary<IntPtr, YogaNode> contexts = new Dictionary<IntPtr, YogaNode>();
+#endif
 
         private YGNodeHandle() : base(IntPtr.Zero, true)
         {
@@ -37,6 +44,7 @@ namespace Facebook.Yoga
             return true;
         }
 
+#if !UNITY_WEBGL || UNITY_EDITOR
         public void SetContext(YogaNode node)
         {
             if (!_managedNodeHandle.IsAllocated)
@@ -74,5 +82,24 @@ namespace Facebook.Yoga
             }
             return null;
         }
+
+#else
+
+        public void SetContext(YogaNode node)
+        {
+            contexts[this.handle] = node;
+        }
+
+        public void ReleaseManaged() { }
+
+        public static YogaNode GetManaged(IntPtr unmanagedNodePtr)
+        {
+            if (unmanagedNodePtr != IntPtr.Zero)
+            {
+                return contexts[unmanagedNodePtr];
+            }
+            return null;
+        }
+#endif
     }
 }

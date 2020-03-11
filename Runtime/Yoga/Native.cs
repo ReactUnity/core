@@ -18,9 +18,11 @@ namespace Facebook.Yoga
         private const string DllName = "yoga";
 #endif
 
+#if !UNITY_WEBGL || UNITY_EDITOR
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGInteropSetLogger(
             [MarshalAs(UnmanagedType.FunctionPtr)] YogaLogger logger);
+#endif
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YGNodeHandle YGNodeNew();
@@ -66,14 +68,6 @@ namespace Facebook.Yoga
         public static extern bool YGConfigGetUseWebDefaults(YGConfigHandle config);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGConfigSetUseLegacyStretchBehaviour(
-            YGConfigHandle config,
-            bool useLegacyStretchBehavior);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool YGConfigGetUseLegacyStretchBehaviour(YGConfigHandle config);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGConfigSetPointScaleFactor(
             YGConfigHandle config,
             float pixelsInPoint);
@@ -86,14 +80,6 @@ namespace Facebook.Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeRemoveChild(YGNodeHandle node, YGNodeHandle child);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeSetIsReferenceBaseline(
-            YGNodeHandle node,
-            bool isReferenceBaseline);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool YGNodeIsReferenceBaseline(YGNodeHandle node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeCalculateLayout(
@@ -364,15 +350,17 @@ namespace Facebook.Yoga
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YogaDirection YGNodeLayoutGetDirection(YGNodeHandle node);
 
-#endregion
+        #endregion
 
 #region Context
 
+#if !UNITY_WEBGL || UNITY_EDITOR
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr YGNodeGetContext(IntPtr node);
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern void YGNodeSetContext(IntPtr node, IntPtr managed);
+#endif
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr YGConfigGetContext(IntPtr config);
