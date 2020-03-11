@@ -65,8 +65,9 @@ namespace ReactUnity
 
             if (engine == null) CreateEngine();
             unityContext = new UnityUGUIContext(DocumentRoot, engine, NamedAssets);
-            engine.SetValue("Unity", unityContext);
-            CreateScheduler(engine);
+            engine.SetValue("Unity", typeof(ReactUnityAPI));
+            engine.SetValue("RootContainer", unityContext.Host);
+            engine.SetValue("NamedAssets", NamedAssets);
             engine.Execute(script);
         }
 
@@ -85,6 +86,7 @@ namespace ReactUnity
 
             CreateConsole(engine);
             CreateLocalStorage(engine);
+            CreateScheduler(engine);
             engine.SetValue("YogaValueNative", typeof(Facebook.Yoga.YogaValue));
             engine.SetValue("ColorNative", typeof(Color));
             engine.SetValue("ShadowDefinitionNative", typeof(ShadowDefinition));
