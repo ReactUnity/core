@@ -1,5 +1,6 @@
-src
-models
+/src
+/models
+index.ts
 test
 typings
 bundled
@@ -17,7 +18,9 @@ CONTRIBUTING.md
 ISSUE_TEMPLATE.md
 PULL_REQUEST_TEMPLATE.md
 tslint.json
-.eslintrc.json
+tsconfig.json
+.editorconfig
+.eslintrc
 wallaby.js
 .travis.yml
 .gitignore
