@@ -9,6 +9,7 @@ namespace ReactUnity.EventHandlers
         {
             { "onPointerEnter", typeof(PointerEnterHandler) },
             { "onPointerExit", typeof(PointerExitHandler) },
+            { "onDrag", typeof(DragHandler) },
         };
 
         public static Type GetEventType(string eventName)

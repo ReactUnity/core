@@ -5,6 +5,8 @@ using ReactUnity.Components;
 using ReactUnity.Types;
 using Facebook.Yoga;
 using ReactUnity.Interop;
+using System.Diagnostics;
+using System.Threading;
 
 namespace ReactUnity
 {
@@ -35,6 +37,7 @@ namespace ReactUnity
                     for (int i = 0; i < ScheduledCallbacks.Count; i++)
                         ScheduledCallbacks[i]?.Invoke();
 
+                    // TODO: is this necessary?
                     Canvas.ForceUpdateCanvases();
                 }
             });

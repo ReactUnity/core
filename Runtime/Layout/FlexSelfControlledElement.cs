@@ -31,27 +31,15 @@ namespace ReactUnity.Layout
             Context.scheduleLayout();
         }
 
-
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            if (tmpro)
-            {
-                var values = tmpro.GetPreferredValues(width, height);
+            var values = tmpro.GetPreferredValues(width, height);
 
-                return new YogaSize
-                {
-                    width = Mathf.Ceil(values.x),
-                    height = Mathf.Ceil(values.y),
-                };
-            }
-            else
+            return new YogaSize
             {
-                return new YogaSize
-                {
-                    width = Mathf.Ceil(LayoutUtility.GetPreferredSize(rt, 0)),
-                    height = Mathf.Ceil(LayoutUtility.GetPreferredSize(rt, 1)),
-                };
-            }
+                width = Mathf.Ceil(values.x),
+                height = Mathf.Ceil(values.y),
+            };
         }
     }
 }
