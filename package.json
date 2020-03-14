@@ -2,7 +2,7 @@
   "name": "com.gokhan-kurt.react-unity",
   "author": "Gokhan Kurt",
   "displayName": "React Unity",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "unity": "2019.3",
   "description": "React renderer for Unity",
   "keywords": [
@@ -15,5 +15,12 @@
   "type": "library",
   "dependencies": {
     "com.unity.textmeshpro": "2.0.1"
-  }
+  },
+  "samples": [
+    {
+      "displayName": "Todo Sample",
+      "description": "A sample demonstrating simple configuration with a TODO app",
+      "path": "Samples~/TodoSample"
+    }
+  ]
 }

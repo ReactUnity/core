@@ -238,3 +238,7 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+
+# Don't ignore Unity sample files
+!/Samples~

@@ -120,8 +120,6 @@ GameObject:
   - component: {fileID: 97318270827724991}
   - component: {fileID: 97318270827724960}
   - component: {fileID: 97318270827724990}
-  - component: {fileID: 97318270827724989}
-  - component: {fileID: 97318270827724988}
   m_Layer: 5
   m_Name: REACT_ROOT
   m_TagString: Untagged
@@ -169,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+  m_Color: {r: 0.8784314, g: 0.8784314, b: 0.8784314, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -198,35 +196,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DocumentRoot: {fileID: 97318270827724961}
   NamedAssets:
-    m_keys: []
-    m_values: []
+    Entries: []
   Script:
     ScriptSource: 0
     SourceAsset: {fileID: 0}
     SourcePath: 
     SourceText: 
     Watch: 1
---- !u!114 &97318270827724989
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 97318270827724962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d9c7eb607af1fd4aa0e15f52cc0543b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &97318270827724988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 97318270827724962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb219b23cdf4b314f94a27bca3cc8012, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
