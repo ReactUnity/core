@@ -2,7 +2,8 @@
 
 [![openupm](https://img.shields.io/npm/v/com.kurtgokhan.react-unity?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.kurtgokhan.react-unity/)
 
-
+React Unity is a way to build interactive UI in Unity3D using the popular React framework. 
+It is designed to support CSS-like features and Flex layout system. 
 
 ## Requirements
 
@@ -45,6 +46,7 @@ Following dependencies are optional and they are only needed if you are planning
 
 ## Resources and References
 
+- [Sample React TODO App](https://github.com/KurtGokhan/react-unity-todo-sample)
 - [React Unity Renderer (npm package)](https://github.com/KurtGokhan/react-unity-renderer)
 - [Create React Unity (npm project scaffold)](https://github.com/KurtGokhan/create-react-unity)
 - [React](https://reactjs.org/)
