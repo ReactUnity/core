@@ -46,7 +46,7 @@ Following dependencies are optional and they are only needed if you are planning
 
 ## Resources and References
 
-- [Sample React TODO App](https://github.com/KurtGokhan/react-unity-todo-sample)
+- [Sample React TODO App](https://github.com/KurtGokhan/react-unity-todo-sample) and [Demo](https://reactunity.github.io/)
 - [React Unity Renderer (npm package)](https://github.com/KurtGokhan/react-unity-renderer)
 - [Create React Unity (npm project scaffold)](https://github.com/KurtGokhan/create-react-unity)
 - [React](https://reactjs.org/)
