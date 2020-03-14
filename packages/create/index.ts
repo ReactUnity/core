@@ -22,9 +22,17 @@ async function create() {
     throw new Error('The directory `react` already exist and is not empty.');
   }
 
+  // Copy project template
   await fse.copy(path.join(__dirname, 'scaffold'), newProjectPath, { recursive: true });
 
 
+  // Workaround for npm deleting .gitignore file
+  const gitignoreSrcPath = path.join(newProjectPath, 'gitignore');
+  const gitignoreDestPath = path.join(newProjectPath, '.gitignore');
+  await fse.move(gitignoreSrcPath, gitignoreDestPath);
+
+
+  // Install npm modules
   var npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
   try {
@@ -35,6 +43,7 @@ async function create() {
     console.error('Could not install node modules. You need to manually go to the project folder and run `npm install`.');
     console.error(err);
   }
+
 
   console.log('Successfully created react-unity project at ' + newProjectPath);
 }
