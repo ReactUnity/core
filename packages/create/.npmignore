@@ -28,3 +28,4 @@
 /.publishrc
 /type_definitions
 !scaffold/.gitignore
+!scaffold/.npmignore
