@@ -4,7 +4,7 @@ import { Vector3Native, Vector2Native } from '../native/vectors';
 export enum InputButton {
   Left = 0,
   Right = 1,
-  Middle = 2
+  Middle = 2,
 }
 
 export enum FramePressState {
@@ -12,6 +12,14 @@ export enum FramePressState {
   Released = 1,
   PressedAndReleased = 2,
   NotChanged = 3
+}
+
+export enum MoveDirection {
+  Left = 0,
+  Up = 1,
+  Right = 2,
+  Down = 3,
+  None = 4,
 }
 
 export interface RaycastResult {
@@ -61,6 +69,10 @@ export interface PointerEventData extends BaseEventData {
   IsScrolling(): boolean;
 }
 
+export interface AxisEventData extends BaseEventData {
+  readonly moveVector: Vector2Native;
+  readonly moveDir: MoveDirection;
+}
 
 export type ActionCallback = () => void;
 export type BaseEventCallback = (e: BaseEventData) => void;
@@ -76,12 +88,12 @@ export type Events = {
   onCancel?: BaseEventCallback;
   onSelect?: BaseEventCallback;
   onDeselect?: BaseEventCallback;
-  onMove?: BaseEventCallback;
+  onMove?: AxisEventData;
   onUpdateSelected?: BaseEventCallback;
   onScroll?: BaseEventCallback;
   onDrag?: PointerEventCallback;
-  onBeginDrag?: BaseEventCallback;
-  onEndDrag?: BaseEventCallback;
-  onPotentialDrag?: BaseEventCallback;
-  onDrop?: BaseEventCallback;
+  onBeginDrag?: PointerEventCallback;
+  onEndDrag?: PointerEventCallback;
+  onPotentialDrag?: PointerEventCallback;
+  onDrop?: PointerEventCallback;
 };
