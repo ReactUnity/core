@@ -71,10 +71,10 @@ const hostConfig: ReactReconciler.HostConfig<InstanceTag, Props, NativeContainer
     internalInstanceHandle,
   ) {
     if (type === 'text') {
-      if (props.children && props.children !== true && typeof props.children !== 'string') {
-        console.warn('Text elements should not have children.');
-      }
-      const text = props.children === true ? '' : props.children?.toString() || '';
+      const text = props.children === true ? '' :
+        Array.isArray(props.children) ? props.children.join('') :
+          props.children?.toString() || '';
+
       return Unity.createElement(type, text, rootContainerInstance);
     }
 

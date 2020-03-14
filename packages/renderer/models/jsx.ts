@@ -7,6 +7,8 @@ import {
 
 type Children<T = any> = { children?: T };
 
+type Textable = string | number | boolean | null | undefined;
+
 declare module 'react' {
   export namespace JSX {
     export interface ElementChildrenAttribute {
@@ -15,7 +17,7 @@ declare module 'react' {
 
     export interface IntrinsicElements {
       atom: Components.Atom & rc.RefAttributes<NativeInstance> & Children;
-      text: Components.Atom & rc.RefAttributes<NativeTextInstance> & Children<string | number | boolean | null | undefined>;
+      text: Components.Atom & rc.RefAttributes<NativeTextInstance> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<NativeInstance> & Children;
       input: Components.Input & rc.RefAttributes<NativeInputInstance> & Children<never>;
       scroll: Components.Atom & rc.RefAttributes<NativeInstance> & Children;
