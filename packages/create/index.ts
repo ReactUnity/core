@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import * as fse from 'fs-extra';
 import * as path from 'path';
 import * as cp from 'child_process';
