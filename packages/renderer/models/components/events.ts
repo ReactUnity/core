@@ -1,6 +1,5 @@
 import { UnityObject } from '../native/context';
-import { Vector3Native } from '../native/vectors';
-import { Vector2 } from '../values/values';
+import { Vector3Native, Vector2Native } from '../native/vectors';
 
 export enum InputButton {
   Left = 0,
@@ -24,7 +23,7 @@ export interface RaycastResult {
   readonly sortingOrder: number;
   readonly worldPosition: Vector3Native;
   readonly worldNormal: Vector3Native;
-  readonly screenPosition: Vector2;
+  readonly screenPosition: Vector2Native;
   readonly displayIndex: number;
   readonly gameObject: UnityObject;
   readonly isValid: boolean;
@@ -43,12 +42,12 @@ export interface PointerEventData extends BaseEventData {
   readonly button: InputButton;
   readonly dragging: boolean;
   readonly useDragThreshold: boolean;
-  readonly scrollDelta: Vector2;
+  readonly scrollDelta: Vector2Native;
   readonly clickCount: number;
   readonly clickTime: number;
-  readonly pressPosition: Vector2;
-  readonly delta: Vector2;
-  readonly position: Vector2;
+  readonly pressPosition: Vector2Native;
+  readonly delta: Vector2Native;
+  readonly position: Vector2Native;
   readonly pointerId: number;
   readonly eligibleForClick: boolean;
   readonly pointerPressRaycast: RaycastResult;
@@ -80,7 +79,7 @@ export type Events = {
   onMove?: BaseEventCallback;
   onUpdateSelected?: BaseEventCallback;
   onScroll?: BaseEventCallback;
-  onDrag?: BaseEventCallback;
+  onDrag?: PointerEventCallback;
   onBeginDrag?: BaseEventCallback;
   onEndDrag?: BaseEventCallback;
   onPotentialDrag?: BaseEventCallback;
