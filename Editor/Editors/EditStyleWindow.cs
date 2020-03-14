@@ -30,7 +30,7 @@ namespace ReactUnity.Editor
         [MenuItem("React/Edit Style")]
         public static void Open()
         {
-            EditStyleWindow window = GetWindow<EditStyleWindow>();
+            var window = GetWindow<EditStyleWindow>();
             window.titleContent = new GUIContent("React - Edit Style");
             window.Show();
         }
