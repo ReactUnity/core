@@ -1,0 +1,21 @@
+{
+  "name": "my-react-unity-ui",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "private": true,
+  "scripts": {
+    "build": "ncc build index.ts -o ../Assets/Resources/react",
+    "watch": "npm run build -- -w"
+  },
+  "dependencies": {
+    "react": "^16.13.0",
+    "react-unity-renderer": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^13.9.1",
+    "@types/react": "^16.9.23",
+    "@zeit/ncc": "^0.21.1",
+    "typescript": "^3.8.3"
+  }
+}

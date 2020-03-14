@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./",
+    "sourceMap": false,
+    "allowJs": true,
+    "pretty": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "preserveSymlinks": true,
+    "importHelpers": false,
+    "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "jsx": "react",
+    "skipLibCheck": true,
+    "lib": ["es2018"],
+    "module": "commonjs",
+    "target": "es2018"
+  },
+  "files": [
+    "./index.ts"
+  ],
+  "exclude": [
+    "./dist/**/*.*",
+    "./scaffold/**/*.*"
+  ]
+}

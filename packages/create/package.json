@@ -1,0 +1,29 @@
+{
+  "name": "create-react-unity",
+  "version": "0.0.1",
+  "description": "Scaffold a react-unity app using npm init",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KurtGokhan/create-react-unity"
+  },
+  "author": {
+    "name": "Gokhan Kurt",
+    "email": "krtgkn@gmail.com"
+  },
+  "scripts": {
+    "start": "ts-node index.ts",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "fs-extra": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^8.1.0",
+    "@types/node": "^13.9.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  }
+}
