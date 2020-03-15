@@ -40,9 +40,12 @@ Import the sample from Package Manager Window to see how the Canvas is set up. N
 
 ## Optional Features
 
-Following dependencies are optional and they are only needed if you are planning to use the corresponding features.
+Following steps are optional and they are only needed if you are planning to use the corresponding features.
 
 - To use _**border-radius**_ feature, `com.unity.vectorgraphics` module must be added.
+- `REACT_FILE_API` build flag must be defined to set script source to _file_.
+- `REACT_WATCH_OUTSIDE_EDITOR` and `REACT_FILE_API` build flags must be defined to use the watch feature. Only works in standalone and when the script source is _file_.
+- `REACT_URL_API` build flag must be defined to set script source to _url_.
 
 
 ## Resources and References
