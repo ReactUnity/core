@@ -14,13 +14,13 @@ namespace ReactUnity.Schedulers
         public int setTimeout(JsValue callback, int timeout)
         {
             if (!Application.isPlaying) return -1;
-            return MainThreadDispatcher.Timeout(() => callback.Invoke(), timeout / 1000);
+            return MainThreadDispatcher.Timeout(() => callback.Invoke(), timeout / 1000f);
         }
 
         public int setInterval(JsValue callback, int timeout)
         {
             if (!Application.isPlaying) return -1;
-            return MainThreadDispatcher.Interval(() => callback.Invoke(), timeout / 1000);
+            return MainThreadDispatcher.Interval(() => callback.Invoke(), timeout / 1000f);
         }
 
         public void clearTimeout(int handle)

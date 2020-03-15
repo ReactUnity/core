@@ -34,6 +34,8 @@ namespace ReactUnity.Components
                 {
                     child.ResolveStyle();
                 }
+
+                Style.resolved.hasInteritedChanges = false;
             }
         }
 
