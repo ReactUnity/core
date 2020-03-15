@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { DropdownItem } from './dropdown-item';
 import { fullScreen, dropdownBottom, bottomEdge } from '../../helpers/common-layouts';
-import { Atom } from '../../../models/components';
+import { View } from '../../../models/components';
 
 export interface DropdownProps {
   onSelect?: (value: any, ind: number) => void;
   autoClose?: boolean;
 }
 
-export type DropdownFullProps = DropdownProps & Atom;
+export type DropdownFullProps = DropdownProps & View;
 
 export class Dropdown extends React.Component<DropdownFullProps, { opened: boolean; selectedIndex: number }> {
   static defaultProps: DropdownProps = {
@@ -42,24 +42,24 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
     const { autoClose, onSelect, name, ...otherProps } = this.props;
 
     return (
-      <atom name={name || '<Dropdown>'}>
+      <view name={name || '<Dropdown>'}>
         <button name="<Dropdown Trigger>" onClick={this.toggle} {...otherProps}>
           {this.state.selectedIndex < 0
             ? nonItems
             : (selectedItem.props?.triggerTemplate || selectedItem)
           }
 
-          {this.state.opened && <atom layout={bottomEdge} style={{ zOrder: 1000 }}>
-            <atom name="<Dropdown Backdrop>" onPointerClick={this.close} layout={fullScreen} />
+          {this.state.opened && <view layout={bottomEdge} style={{ zOrder: 1000 }}>
+            <view name="<Dropdown Backdrop>" onPointerClick={this.close} layout={fullScreen} />
 
-            <atom name="<Dropdown Menu>" layout={dropdownBottom}>
+            <view name="<Dropdown Menu>" layout={dropdownBottom}>
               {items.map((x, i) =>
                 <button style={{ backgroundColor: ColorNative.white }} onClick={this.handleChildClick.bind(this, i, x.props.value)}>{x}</button>
               )}
-            </atom>
-          </atom>}
+            </view>
+          </view>}
         </button>
-      </atom>
+      </view>
     );
   }
 }

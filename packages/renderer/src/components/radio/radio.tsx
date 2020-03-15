@@ -50,8 +50,8 @@ export class RadioGroup extends React.Component<RadioGroupProps> {
 
   render() {
     const { name, selectedValue, onChange, children, ...rest } = this.props;
-    return <atom name={name || '<RadioGroup>'} {...rest}>
+    return <view name={name || '<RadioGroup>'} {...rest}>
       {children}
-    </atom>;
+    </view>;
   }
 }

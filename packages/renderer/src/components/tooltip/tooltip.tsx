@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { PositionType, Atom } from '../../../models/components';
+import { PositionType, View } from '../../../models/components';
 
 export interface TooltipProps {
   tooltipContent?: React.ReactNode;
 }
 
-export type TooltipFullProps = TooltipProps & Atom;
+export type TooltipFullProps = TooltipProps & View;
 
 export class Tooltip extends React.Component<TooltipFullProps, { opened: boolean }> {
   static defaultProps: TooltipProps = {
@@ -32,18 +32,18 @@ export class Tooltip extends React.Component<TooltipFullProps, { opened: boolean
     const { tooltipContent, ...otherProps } = this.props;
 
     return (
-      <atom {...otherProps} onPointerEnter={this.open} onPointerExit={this.close}>
+      <view {...otherProps} onPointerEnter={this.open} onPointerExit={this.close}>
         {this.props.children}
 
         {this.state.opened &&
-          <atom name="<Tooltip>" layout={{
+          <view name="<Tooltip>" layout={{
             PositionType: PositionType.Absolute,
             Top: -40,
           }} style={{ zOrder: 1003 }}>
             {tooltipContent}
-          </atom>
+          </view>
         }
-      </atom>
+      </view>
     );
   }
 }

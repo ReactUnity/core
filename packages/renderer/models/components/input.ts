@@ -1,4 +1,4 @@
-import { Atom } from './components';
+import { View } from './components';
 
 export const enum TouchScreenKeyboardType {
   Default = 0,
@@ -47,7 +47,7 @@ export const enum LineType {
 export type InputEvent = (val: string) => void;
 export type TextSelectionEvent = (val: string, start: number, end: number) => void;
 
-export interface Input extends Omit<Atom, 'onSubmit'> {
+export interface Input extends Omit<View, 'onSubmit'> {
   onSubmit?: InputEvent;
   onEndEdit?: InputEvent;
   onChange?: InputEvent;

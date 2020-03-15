@@ -10,15 +10,15 @@ export interface StyleAndLayout {
   style?: Style | boolean | null | undefined;
 }
 
-export interface Atom extends Events, StyleAndLayout {
+export interface View extends Events, StyleAndLayout {
   name?: string;
 }
 
-export interface Button extends Atom {
+export interface Button extends View {
   onClick?: ActionCallback;
 }
 
-export interface Image extends Atom {
+export interface Image extends View {
   source?: AssetReference | UnityObject;
   fit?: number;
   tint?: Color;
@@ -27,7 +27,7 @@ export interface Image extends Atom {
 
 export type ToggleEvent = (val: boolean) => void;
 
-export interface Toggle extends Atom {
+export interface Toggle extends View {
   onChange?: ToggleEvent;
 
   value?: boolean;

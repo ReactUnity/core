@@ -16,11 +16,11 @@ declare module 'react' {
     }
 
     export interface IntrinsicElements {
-      atom: Components.Atom & rc.RefAttributes<NativeInstance> & Children;
-      text: Components.Atom & rc.RefAttributes<NativeTextInstance> & Children<Textable | Textable[]>;
+      view: Components.View & rc.RefAttributes<NativeInstance> & Children;
+      text: Components.View & rc.RefAttributes<NativeTextInstance> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<NativeInstance> & Children;
       input: Components.Input & rc.RefAttributes<NativeInputInstance> & Children<never>;
-      scroll: Components.Atom & rc.RefAttributes<NativeInstance> & Children;
+      scroll: Components.View & rc.RefAttributes<NativeInstance> & Children;
       image: Components.Image & rc.RefAttributes<NativeInstance> & Children<never>;
       toggle: Components.Toggle & rc.RefAttributes<NativeToggleInstance> & Children<never>;
     }
