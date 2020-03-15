@@ -21,7 +21,7 @@ namespace ReactUnity
         public static UnityComponent createElement(string type, string text, HostComponent host)
         {
             UnityComponent res = null;
-            if (type == "atom")
+            if (type == "view")
             {
                 res = new ContainerComponent(host.Context);
             }

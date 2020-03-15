@@ -2399,7 +2399,7 @@ var RadioGroup = /** @class */ (function (_super) {
     };
     RadioGroup.prototype.render = function () {
         var _a = this.props, name = _a.name, selectedValue = _a.selectedValue, onChange = _a.onChange, children = _a.children, rest = __rest(_a, ["name", "selectedValue", "onChange", "children"]);
-        return react__WEBPACK_IMPORTED_MODULE_0__.createElement("atom", __assign({ name: name || '<RadioGroup>' }, rest), children);
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement("view", __assign({ name: name || '<RadioGroup>' }, rest), children);
     };
     return RadioGroup;
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component));
@@ -2599,13 +2599,13 @@ var footer_TodoFooter = /** @class */ (function (_super) {
         var TabButton = function (props) {
             return Object(react.createElement)("button", { onClick: function () { return _this.props.onSwitch(props.id); }, layout: { BorderWidth: 1, MarginHorizontal: 5, PaddingHorizontal: 7, PaddingVertical: 3 }, style: { backgroundColor: props.id === nowShowing ? '#cecece' : 'transparent', borderColor: ['#af2f2f', 0.2] } }, props.children);
         };
-        return (Object(react.createElement)("atom", { name: "Footer", style: { fontSize: 14, borderColor: '#cecece' }, layout: {
+        return (Object(react.createElement)("view", { name: "Footer", style: { fontSize: 14, borderColor: '#cecece' }, layout: {
                 BorderTopWidth: 2,
                 FlexDirection: 2 /* Row */, JustifyContent: 3 /* SpaceBetween */,
                 AlignItems: 2 /* Center */, PaddingHorizontal: 16, PaddingVertical: 4
             } },
-            Object(react.createElement)("atom", { layout: { Width: 150 } }, "<b>" + this.props.count + "</b> " + activeTodoWord + " left"),
-            Object(react.createElement)("atom", { layout: { FlexDirection: 'Row' } },
+            Object(react.createElement)("view", { layout: { Width: 150 } }, "<b>" + this.props.count + "</b> " + activeTodoWord + " left"),
+            Object(react.createElement)("view", { layout: { FlexDirection: 'Row' } },
                 Object(react.createElement)(TabButton, { id: ALL_TODOS }, "All"),
                 Object(react.createElement)(TabButton, { id: ACTIVE_TODOS }, "Active"),
                 Object(react.createElement)(TabButton, { id: COMPLETED_TODOS }, "Completed")),
@@ -2674,8 +2674,8 @@ var todoItem_TodoItem = /** @class */ (function (_super) {
     };
     TodoItem.prototype.render = function () {
         var completed = this.props.todo.completed;
-        return (Object(react.createElement)("atom", { name: "<TodoItem>", onPointerEnter: this.pointerEnter, onPointerExit: this.pointerExit, layout: { FlexDirection: 2 /* Row */, AlignItems: 2 /* Center */, BorderBottomWidth: 1 }, style: { borderColor: '#dedede', fontStyle: completed ? 'Strikethrough' : null, opacity: completed ? 0.4 : 1 } },
-            Object(react.createElement)("atom", { layout: { FlexGrow: 1, FlexShrink: 1, Padding: 16, PaddingLeft: 64 } }, this.props.todo.title),
+        return (Object(react.createElement)("view", { name: "<TodoItem>", onPointerEnter: this.pointerEnter, onPointerExit: this.pointerExit, layout: { FlexDirection: 2 /* Row */, AlignItems: 2 /* Center */, BorderBottomWidth: 1 }, style: { borderColor: '#dedede', fontStyle: completed ? 'Strikethrough' : null, opacity: completed ? 0.4 : 1 } },
+            Object(react.createElement)("view", { layout: { FlexGrow: 1, FlexShrink: 1, Padding: 16, PaddingLeft: 64 } }, this.props.todo.title),
             Object(react.createElement)("input", { layout: { Display: 1 /* None */ }, ref: this.editField }),
             Object(react.createElement)("toggle", { onChange: this.props.onToggle, value: this.props.todo.completed, layout: { PositionType: 1 /* Absolute */, Left: 8, Top: '50%' }, style: { translate: [0, -0.5], translateRelative: true } }),
             Object(react.createElement)("button", { onClick: this.props.onDestroy, style: { backgroundColor: 'clear', fontColor: '#cc9a9a', hidden: !this.state.hovered, interaction: 1 /* Always */ }, layout: { MarginRight: 20 } }, "\u00D7")));
@@ -2800,10 +2800,10 @@ var todo_mvc_TodoApp = /** @class */ (function (_super) {
         if (todos.length) {
             main = (Object(react.createElement)("scroll", { name: "<Main>" }, todoItems));
         }
-        return (Object(react.createElement)("atom", { layout: this.pageLayout, style: { font: NamedAssets.font } },
-            Object(react.createElement)("atom", { style: this.headerStyle, layout: this.headerLayout }, "todos"),
-            Object(react.createElement)("atom", { style: { backgroundColor: 'white', boxShadow: new ShadowDefinitionNative(6, 22, ColorNative.black, 16) }, layout: { FlexShrink: 1 } },
-                Object(react.createElement)("atom", { name: "Header", layout: { FlexDirection: 2 /* Row */, AlignItems: 2 /* Center */, BorderBottomWidth: 2 }, style: this.headerInputStyle },
+        return (Object(react.createElement)("view", { layout: this.pageLayout, style: { font: NamedAssets.font } },
+            Object(react.createElement)("view", { style: this.headerStyle, layout: this.headerLayout }, "todos"),
+            Object(react.createElement)("view", { style: { backgroundColor: 'white', boxShadow: new ShadowDefinitionNative(6, 22, ColorNative.black, 16) }, layout: { FlexShrink: 1 } },
+                Object(react.createElement)("view", { name: "Header", layout: { FlexDirection: 2 /* Row */, AlignItems: 2 /* Center */, BorderBottomWidth: 2 }, style: this.headerInputStyle },
                     Object(react.createElement)("input", { layout: { Padding: 16, PaddingLeft: 64, FlexGrow: 1 }, style: { borderRadius: 0 }, ref: this.newTodoField, placeholder: "What needs to be done?", onSubmit: function (value) { return _this.addTodo(value); } }),
                     Object(react.createElement)("toggle", { ref: this.selectAllToggle, onChange: this.toggleAll, value: activeTodoCount === 0 && completedCount > 0, layout: { PositionType: 1 /* Absolute */, Left: 8, Top: '50%' }, style: { translate: [0, -0.5], translateRelative: true } })),
                 main,
@@ -18943,7 +18943,7 @@ function injectIntoDevTools(devToolsConfig) {
     // Enables DevTools to append owner stacks to error messages in DEV mode.
     getCurrentFiber:  function () {
       return current;
-    } 
+    }
   }));
 }
 var IsSomeRendererActing$1 = ReactSharedInternals.IsSomeRendererActing;
@@ -19203,10 +19203,10 @@ var Tooltip = /** @class */ (function (_super) {
     }
     Tooltip.prototype.render = function () {
         var _a = this.props, tooltipContent = _a.tooltipContent, otherProps = __rest(_a, ["tooltipContent"]);
-        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("atom", __assign({}, otherProps, { onPointerEnter: this.open, onPointerExit: this.close }),
+        return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("view", __assign({}, otherProps, { onPointerEnter: this.open, onPointerExit: this.close }),
             this.props.children,
             this.state.opened &&
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement("atom", { name: "<Tooltip>", layout: {
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement("view", { name: "<Tooltip>", layout: {
                         PositionType: 1 /* Absolute */,
                         Top: -40,
                     }, style: { zOrder: 1003 } }, tooltipContent)));
@@ -21091,14 +21091,14 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
         var items = children.filter(function (x) { return (x === null || x === void 0 ? void 0 : x.type) === DropdownItem; });
         var selectedItem = items[this.state.selectedIndex];
         var _b = this.props, autoClose = _b.autoClose, onSelect = _b.onSelect, name = _b.name, otherProps = __rest(_b, ["autoClose", "onSelect", "name"]);
-        return (Object(react.createElement)("atom", { name: name || '<Dropdown>' },
+        return (Object(react.createElement)("view", { name: name || '<Dropdown>' },
             Object(react.createElement)("button", __assign({ name: "<Dropdown Trigger>", onClick: this.toggle }, otherProps),
                 this.state.selectedIndex < 0
                     ? nonItems
                     : (((_a = selectedItem.props) === null || _a === void 0 ? void 0 : _a.triggerTemplate) || selectedItem),
-                this.state.opened && Object(react.createElement)("atom", { layout: bottomEdge, style: { zOrder: 1000 } },
-                    Object(react.createElement)("atom", { name: "<Dropdown Backdrop>", onPointerClick: this.close, layout: fullScreen }),
-                    Object(react.createElement)("atom", { name: "<Dropdown Menu>", layout: dropdownBottom }, items.map(function (x, i) {
+                this.state.opened && Object(react.createElement)("view", { layout: bottomEdge, style: { zOrder: 1000 } },
+                    Object(react.createElement)("view", { name: "<Dropdown Backdrop>", onPointerClick: this.close, layout: fullScreen }),
+                    Object(react.createElement)("view", { name: "<Dropdown Menu>", layout: dropdownBottom }, items.map(function (x, i) {
                         return Object(react.createElement)("button", { style: { backgroundColor: ColorNative.white }, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
                     }))))));
     };
@@ -21226,7 +21226,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ 	"use strict";
-/******/ 
+/******/
 /******/ 	/* webpack/runtime/define property getter */
 /******/ 	!function() {
 /******/ 		// define getter function for harmony exports
@@ -21237,7 +21237,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			}
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	!function() {
 /******/ 		__webpack_require__.nmd = function(module) {
@@ -21254,7 +21254,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	!function() {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -21266,7 +21266,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -21277,7 +21277,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/create fake namespace object */
 /******/ 	!function() {
 /******/ 		// create a fake namespace object
@@ -21296,6 +21296,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return ns;
 /******/ 		};
 /******/ 	}();
-/******/ 	
+/******/
 /******/ }
 );
