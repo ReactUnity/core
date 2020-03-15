@@ -26,6 +26,7 @@ export function startAnimation(options: AnimationOptionsBase | AnimationOptionsE
   const loopMode = options.loopMode;
   let loopCount = 0;
   let normal = true;
+  const intervalTime = options.interval == null ? 20 : (options.interval || 0);
 
   const start = () => {
     if (onStart) {
@@ -51,7 +52,7 @@ export function startAnimation(options: AnimationOptionsBase | AnimationOptionsE
       options.onTick(e * (to - from));
 
       if (t >= 1) {
-        clearTimeout(interval);
+        clearInterval(interval);
 
         if (loop == true || loopCount < loop) {
           if (loopMode === 'ping-pong') normal = !normal;
@@ -60,7 +61,7 @@ export function startAnimation(options: AnimationOptionsBase | AnimationOptionsE
           options.onEnd && options.onEnd();
         }
       }
-    }, options.interval || 0);
+    }, intervalTime);
   };
 
   if (options.delay != null) setTimeout(start, options.delay);

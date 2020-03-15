@@ -3,11 +3,8 @@ import { NativeContainerInstance, NativeInstance, InstanceTag } from '../../mode
 export type DiffResult = null | Array<string | any>;
 
 export function diffProperties(
-  instance: NativeInstance,
-  tag: InstanceTag,
   lastRawProps: Record<string, any>,
   nextRawProps: Record<string, any>,
-  rootContainerElement: NativeContainerInstance,
 ): DiffResult {
   let updatePayload: DiffResult = null;
 
@@ -24,9 +21,15 @@ export function diffProperties(
       continue;
     }
 
+    let prop = null;
+    if (propKey === 'style' || propKey === 'layout') {
+      prop = diffProperties(lastProps[propKey], null);
+      if (!prop) continue;
+    }
+
     // For all other deleted properties we add it to the queue. We use
     // the whitelist in the commit phase instead.
-    (updatePayload = updatePayload || []).push(propKey, null);
+    (updatePayload = updatePayload || []).push(propKey, prop);
   }
   for (propKey in nextProps) {
     const nextProp = nextProps[propKey];
@@ -39,7 +42,14 @@ export function diffProperties(
       continue;
     }
 
-    (updatePayload = updatePayload || []).push(propKey, nextProp);
+    let prop = nextProp;
+
+    if (propKey === 'style' || propKey === 'layout') {
+      prop = diffProperties(lastProp, nextProp);
+      if (!prop) continue;
+    }
+
+    (updatePayload = updatePayload || []).push(propKey, prop);
   }
 
   return updatePayload;

@@ -10,6 +10,24 @@ import {
 const hostContext = {};
 const childContext = {};
 
+function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResult | Record<string, any>) {
+  if(!updatePayload) return false;
+
+  if (Array.isArray(updatePayload)) {
+    for (let index = 0; index < updatePayload.length; index += 2) {
+      const attr = updatePayload[index];
+      const value = updatePayload[index + 1];
+      writeTo[attr] = value;
+    }
+
+    return updatePayload.length > 0;
+  }
+  else {
+    objectAssign(writeTo, updatePayload);
+    return true;
+  }
+}
+
 function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfterMount: boolean) {
   let updateAfterMount = false;
   for (let index = 0; index < updatePayload.length; index += 2) {
@@ -20,10 +38,10 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     if (attr === 'key') continue;
     if (attr === 'ref') continue;
     if (attr === 'layout') {
-      instance.ResetLayout();
-      if (value !== true && value) objectAssign(instance.Layout, value);
-      instance.ScheduleLayout();
-      instance.ApplyLayoutStyles();
+      if (applyDiffedUpdate(instance.Layout, value)) {
+        instance.ScheduleLayout();
+        instance.ApplyLayoutStyles();
+      }
       continue;
     }
     if (!isAfterMount && (attr === 'style')) {
@@ -32,9 +50,9 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     }
 
     if (attr === 'style') {
-      instance.ResetStyle();
-      if (value !== true && value) objectAssign(instance.Style, value);
-      instance.ResolveStyle();
+      if (applyDiffedUpdate(instance.Style, value)) {
+        instance.ResolveStyle();
+      }
       continue;
     }
 
@@ -141,7 +159,7 @@ const hostConfig: ReactReconciler.HostConfig<InstanceTag, Props, NativeContainer
     rootContainerInstance,
     hostContext,
   ): DiffResult {
-    return diffProperties(instance, type, oldProps, newProps, rootContainerInstance);
+    return diffProperties(oldProps, newProps);
   },
 
   commitUpdate(
