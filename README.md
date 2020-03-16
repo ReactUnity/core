@@ -8,7 +8,8 @@ It is designed to support CSS-like features and Flex layout system.
 
 ## Requirements
 
-Node.js version 10 or above is required on the development machine. (Version 12 recommended)
+- Node.js version 10 or above is required on the development machine. (Version 12 recommended)
+- Tested in Unity 2019.3
 
 
 ## Installing
