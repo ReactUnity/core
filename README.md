@@ -37,16 +37,12 @@ Open ```React > Quick Start``` from the menu bar for quick start wizard that wil
 
 Import the sample from Package Manager Window to see how the Canvas is set up. Note that the _Source Asset_ property must point to the output file of your React project, which is `Assets/Resources/react/index.js` by default.
 
-Make sure to read the [wiki](https://github.com/KurtGokhan/react-unity/wiki) for further usage instructions.
+Make sure to read the [wiki](https://github.com/KurtGokhan/react-unity/wiki) for further usage instructions. You should also check the [sample app](https://github.com/KurtGokhan/react-unity-todo-sample).
 
-## Optional Features
 
-Following steps are optional and they are only needed if you are planning to use the corresponding features.
+## Issues and Contribution
 
-- To use _**border-radius**_ feature, `com.unity.vectorgraphics` module must be added.
-- `REACT_FILE_API` build flag must be defined to set script source to _file_.
-- `REACT_WATCH_OUTSIDE_EDITOR` and `REACT_FILE_API` build flags must be defined to use the watch feature. Only works in standalone and when the script source is _file_.
-- `REACT_URL_API` build flag must be defined to set script source to _url_.
+Please feel free to share all your questions, proposals and feedbacks by opening issues. This package is in its early stages and looking for constructive feedback.
 
 
 ## Resources and References
