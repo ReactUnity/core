@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "sourceMap": false,
+    "allowJs": true,
+    "pretty": true,
+    "declaration": false,
+    "module": "ES2015",
+    "moduleResolution": "node",
+    "preserveSymlinks": true,
+    "importHelpers": false,
+    "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "jsx": "react",
+    "target": "ES5",
+    "skipLibCheck": true,
+    "lib": []
+  },
+  "files": [
+    "./index.ts"
+  ],
+  "exclude": [
+    "./dist/**/*.*"
+  ]
+}

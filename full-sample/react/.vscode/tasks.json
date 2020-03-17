@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run",
+      "command": "npm run start",
+      "type": "shell"
+    },
+    {
+      "label": "Watch",
+      "command": "npm run watch",
+      "type": "shell"
+    },
+    {
+      "label": "Build",
+      "command": "npm run build",
+      "type": "shell"
+    },
+    {
+      "label": "Serve",
+      "command": "npm run serve",
+      "type": "shell"
+    }
+  ]
+}
