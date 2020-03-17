@@ -38,7 +38,7 @@ Open ```React > Quick Start``` from the menu bar for quick start wizard that wil
 
 Import the sample from Package Manager Window to see how the Canvas is set up. Note that the _Source Asset_ property must point to the output file of your React project, which is `Assets/Resources/react/index.js` by default.
 
-Make sure to read the [wiki](https://github.com/KurtGokhan/react-unity/wiki) for further usage instructions. You should also check the [sample app](https://github.com/KurtGokhan/react-unity-todo-sample).
+Make sure to read the [wiki](https://github.com/KurtGokhan/react-unity/wiki) for further usage instructions. You should also check the [sample projects](https://github.com/KurtGokhan/react-unity-full-sample).
 
 
 ## Issues and Contribution
@@ -48,6 +48,7 @@ Please feel free to share all your questions, proposals and feedbacks by opening
 
 ## Resources and References
 
+- [Full Unity Project Sample](https://github.com/KurtGokhan/react-unity-full-sample)
 - [Sample React TODO App](https://github.com/KurtGokhan/react-unity-todo-sample) and [Demo](https://reactunity.github.io/)
 - [React Unity Renderer (npm package)](https://github.com/KurtGokhan/react-unity-renderer)
 - [Create React Unity (npm project scaffold)](https://github.com/KurtGokhan/create-react-unity)
