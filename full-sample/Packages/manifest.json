@@ -1,14 +1,10 @@
 {
   "dependencies": {
-    "com.coffee.softmask-for-ugui": "ssh://git@github.com/mob-sakai/SoftMaskForUGUI.git#upm",
-    "com.kurtgokhan.react-unity": "0.0.2",
+    "com.kurtgokhan.react-unity": "https://github.com/KurtGokhan/react-unity.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ide.vscode": "1.1.4",
-    "com.unity.quicksearch": "1.5.2",
-    "com.unity.test-framework": "1.1.11",
     "com.unity.textmeshpro": "2.0.1",
     "com.unity.ugui": "1.0.0",
-    "com.unity.ui.builder": "0.10.1-preview",
     "com.unity.vectorgraphics": "2.0.0-preview.12",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
@@ -47,16 +43,11 @@
       "name": "package.openupm.com",
       "url": "https://package.openupm.com",
       "scopes": [
-        "com.azixmcaze.unityserializabledictionary",
         "com.kurtgokhan.react-unity",
         "com.openupm"
       ]
     }
   ],
   "lock": {
-    "com.coffee.softmask-for-ugui": {
-      "revision": "upm",
-      "hash": "4b59e3dc9b9f042224576ec52adb5b1f6f232992"
-    }
   }
 }
