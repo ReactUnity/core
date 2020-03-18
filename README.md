@@ -34,7 +34,7 @@ openupm add com.kurtgokhan.react-unity
 
 ## Usage
 
-Open ```React > Quick Start``` from the menu bar for quick start wizard that will check requirements and create the React project next to the Asset folder. 
+Open ```React > Quick Start``` from the menu bar for quick start wizard that will check requirements and create the React project next to the Assets folder. 
 
 Import the sample from Package Manager Window to see how the Canvas is set up. Note that the _Source Asset_ property must point to the output file of your React project, which is `Assets/Resources/react/index.js` by default.
 
