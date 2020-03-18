@@ -50,7 +50,6 @@ artifacts/
 *.ilk
 *.obj
 *.pch
-*.pdb
 *.pgc
 *.pgd
 *.rsp
