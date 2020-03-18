@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.coffee.softmask-for-ugui": "ssh://git@github.com/mob-sakai/SoftMaskForUGUI.git#upm",
-    "com.kurtgokhan.react-unity": "file:../../packages/react-unity",
+    "com.kurtgokhan.react-unity": "0.0.2",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ide.vscode": "1.1.4",
     "com.unity.quicksearch": "1.5.2",
@@ -48,6 +48,7 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "com.azixmcaze.unityserializabledictionary",
+        "com.kurtgokhan.react-unity",
         "com.openupm"
       ]
     }
