@@ -6,6 +6,8 @@ export function diffProperties(
   lastRawProps: Record<string, any>,
   nextRawProps: Record<string, any>,
 ): DiffResult {
+  if (lastRawProps == nextRawProps) return null;
+
   let updatePayload: DiffResult = null;
 
   const lastProps = lastRawProps;
