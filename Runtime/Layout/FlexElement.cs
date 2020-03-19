@@ -27,6 +27,7 @@ namespace ReactUnity.Layout
             var relative = Style.resolved.translateRelative;
             var sameTranslate = translate == previousTranslate;
             if (!Layout.HasNewLayout && sameTranslate && previousTranslateRelative == relative) return;
+            if (float.IsNaN(Layout.LayoutWidth)) return;
 
             var pivotDiff = rt.pivot - Vector2.up;
 
