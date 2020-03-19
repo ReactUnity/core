@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Diagnostics;
 using System.Linq;
+using System;
 
 namespace ReactUnity.Editor
 {
@@ -124,16 +125,23 @@ namespace ReactUnity.Editor
 
         void CheckNodeVersion()
         {
-            var process = RunCommand("node", "-v", true);
-            process.WaitForExit();
+            try
+            {
+                var process = RunCommand("node", "-v", true);
+                process.WaitForExit();
 
-            var result = process.StandardOutput.ReadToEnd() ?? "";
+                var result = process.StandardOutput.ReadToEnd() ?? "";
 
-            var major = result.Split('.').FirstOrDefault()?.Replace("v", "");
+                var major = result.Split('.').FirstOrDefault()?.Replace("v", "");
 
-            if (!int.TryParse(major, out var version)) version = 0;
+                if (!int.TryParse(major, out var version)) version = 0;
 
-            NodeVersion = version;
+                NodeVersion = version;
+            }
+            catch (Exception)
+            {
+                NodeVersion = 0;
+            }
         }
 
         Process RunCommand(string target, string args, bool hasOutput = false)
