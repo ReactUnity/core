@@ -5,12 +5,6 @@ using Jint.Runtime;
 using Jint.Runtime.Interop;
 using ReactUnity.Converters;
 using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq.Expressions;
-using System.Reflection;
 using UnityEngine;
 
 namespace ReactUnity.Interop
@@ -34,12 +28,10 @@ namespace ReactUnity.Interop
         {
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                Type underlyingType = Nullable.GetUnderlyingType(type);
+                if (value == null) return null;
 
-                if (underlyingType != null)
-                {
-                    return (value == null) ? null : Convert(value, underlyingType, formatProvider);
-                }
+                Type underlyingType = type.GetGenericArguments()[0];
+                return Convert(value, underlyingType, formatProvider);
             }
 
 

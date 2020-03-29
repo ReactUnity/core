@@ -10,7 +10,8 @@ namespace ReactUnity.Converters
 
         public static YogaValue? NormalizeYogaValue(object value)
         {
-            if (value is YogaValue c) return c;
+            if (value == null) return YogaValue.Undefined();
+            else if (value is YogaValue c) return c;
             else if (value is double d) return YogaValue.Point((float)d);
             else if (value is int i) return YogaValue.Point(i);
             else if (value is float v) return YogaValue.Point(v);
@@ -20,7 +21,6 @@ namespace ReactUnity.Converters
                 else if (s.EndsWith("%")) return YogaValue.Percent(float.Parse(s.Replace("%", "")));
                 else return YogaValue.Point(float.Parse(s));
             }
-            else if (value == null) return YogaValue.Undefined();
             else return value as YogaValue?;
         }
 
