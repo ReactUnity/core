@@ -1,4 +1,5 @@
-// This file can be necessary in local development. Keep it for now.
+// This file is strictly for internal development. You should not have this file in your projects.
+// If you remove this file, don't forget to remove 'index.d.ts' line from tsconfig.json
 
 import * as rc from 'react';
 import { NativeInstance, NativeTextInstance, NativeInputInstance, NativeToggleInstance, View, Button, Input, Image, Toggle } from 'react-unity-renderer';

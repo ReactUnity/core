@@ -13,17 +13,17 @@
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-motion": "^0.5.2",
-    "react-reconciler": "^0.25.0",
+    "react-reconciler": "^0.25.1",
     "react-unity-renderer": "0.0.4"
   },
   "devDependencies": {
-    "@types/node": "^13.9.1",
-    "@types/react": "^16.9.23",
+    "@types/node": "^13.9.8",
+    "@types/react": "^16.9.31",
     "@types/react-motion": "0.0.29",
     "@types/react-reconciler": "^0.18.0",
-    "@zeit/ncc": "^0.21.1",
+    "@zeit/ncc": "^0.22.0",
     "typescript": "^3.8.3"
   }
 }
