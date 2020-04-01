@@ -17,10 +17,16 @@
     "jsx": "react",
     "target": "ES5",
     "skipLibCheck": true,
-    "lib": []
+    "lib": [],
+    "paths": {
+      "react-unity-renderer": [
+        "node_modules/react-unity-renderer/index.ts"
+      ]
+    }
   },
   "files": [
-    "./index.ts"
+    "./index.ts",
+    "./index.d.ts"
   ],
   "exclude": [
     "./dist/**/*.*"

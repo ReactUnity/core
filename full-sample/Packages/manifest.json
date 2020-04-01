@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.kurtgokhan.react-unity": "https://github.com/KurtGokhan/react-unity.git",
+    "com.kurtgokhan.react-unity": "file:../../packages/react-unity",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ide.vscode": "1.1.4",
     "com.unity.textmeshpro": "2.0.1",
@@ -47,7 +47,5 @@
         "com.openupm"
       ]
     }
-  ],
-  "lock": {
-  }
+  ]
 }

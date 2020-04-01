@@ -6,5 +6,11 @@
     {
       "path": "./react"
     },
+    {
+      "path": "../packages/react-unity"
+    },
+    {
+      "path": "../packages/react-unity-renderer"
+    },
   ]
 }
