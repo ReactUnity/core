@@ -1,10 +1,9 @@
 {
   "dependencies": {
-    "com.kurtgokhan.react-unity": "file:../../packages/react-unity",
+    "com.kurtgokhan.react-unity": "0.0.3",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ide.vscode": "1.1.4",
     "com.unity.textmeshpro": "2.0.1",
-    "com.unity.ugui": "1.0.0",
     "com.unity.vectorgraphics": "2.0.0-preview.12",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
