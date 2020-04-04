@@ -16,7 +16,7 @@
     "react": "^16.13.1",
     "react-motion": "^0.5.2",
     "react-reconciler": "^0.25.1",
-    "react-unity-renderer": "0.0.5"
+    "react-unity-renderer": "0.0.6"
   },
   "devDependencies": {
     "@types/node": "^13.9.8",
