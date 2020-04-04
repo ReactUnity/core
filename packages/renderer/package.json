@@ -6,9 +6,11 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -d",
+    "watch": "tsc -d --watch",
     "build:clean": "rimraf dist",
     "lint": "eslint --ext .js,.ts,.tsx .",
-    "prepare": "npm run build:clean && npm run build"
+    "prepare": "npm run build:clean && npm run build",
+    "pack": "npm pack"
   },
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
   "license": "MIT",

@@ -3,7 +3,7 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint",
+    "@typescript-eslint"
   ],
   "extends": [
     "eslint:recommended",
@@ -20,5 +20,8 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-namespace": "off",
     "no-prototype-builtins": "off"
-  }
+  },
+  "ignorePatterns": [
+    "dist/**/*.*"
+  ]
 }

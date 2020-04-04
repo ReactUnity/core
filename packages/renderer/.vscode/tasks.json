@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Renderer",
+      "command": "npm run ${input:script}",
+      "type": "shell"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "script",
+      "description": "The script to run",
+      "type": "pickString",
+      "options": [
+        "build",
+        "watch",
+        "lint",
+        "pack"
+      ]
+    }
+  ]
+}

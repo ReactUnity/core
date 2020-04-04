@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { DropdownItem } from './dropdown-item';
-import { fullScreen, dropdownBottom, bottomEdge } from '../../helpers/common-layouts';
+import { fullScreen, dropdownBottom, bottomEdge, transparentColor } from '../../helpers/common-layouts';
 import { View } from '../../../models/components';
 
 export interface DropdownProps {
-  onSelect?: (value: any, ind: number) => void;
+  onChange?: (value: any, ind: number) => void;
   autoClose?: boolean;
 }
 
@@ -24,14 +24,17 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
   }
 
   handleChildClick = (ind, value) => {
-    if (this.props.onSelect) this.props.onSelect(value, ind);
+    if (this.props.onChange) this.props.onChange(value, ind);
     if (this.props.autoClose) this.close();
     this.setState({ selectedIndex: ind })
   }
 
   toggle = () => this.setState(st => ({ opened: !st.opened }));
   open = () => this.setState({ opened: true });
-  close = () => this.setState({ opened: false });
+  close = () => {
+    console.log('Dropdown Closed');
+    this.setState({ opened: false });
+  }
 
   render() {
     const children = React.Children.toArray(this.props.children) as React.ReactElement[];
@@ -39,7 +42,7 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
     const items: DropdownItem[] = children.filter(x => x?.type === DropdownItem) as any;
     const selectedItem = items[this.state.selectedIndex];
 
-    const { autoClose, onSelect, name, ...otherProps } = this.props;
+    const { autoClose, onChange, name, ...otherProps } = this.props;
 
     return (
       <view name={name || '<Dropdown>'}>
@@ -50,11 +53,11 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
           }
 
           {this.state.opened && <view layout={bottomEdge} style={{ zOrder: 1000 }}>
-            <view name="<Dropdown Backdrop>" onPointerClick={this.close} layout={fullScreen} />
+            <button name="<Dropdown Backdrop>" onClick={this.close} layout={fullScreen} style={{ backgroundColor: transparentColor }} />
 
             <view name="<Dropdown Menu>" layout={dropdownBottom}>
               {items.map((x, i) =>
-                <button style={{ backgroundColor: ColorNative.white }} onClick={this.handleChildClick.bind(this, i, x.props.value)}>{x}</button>
+                <button style={{ backgroundColor: ColorNative.white, borderRadius: 0 }} onClick={this.handleChildClick.bind(this, i, x.props.value)}>{x}</button>
               )}
             </view>
           </view>}

@@ -9,13 +9,17 @@ type Children<T = any> = { children?: T };
 
 type Textable = string | number | boolean | null | undefined;
 
-declare module 'react' {
-  export namespace JSX {
-    export interface ElementChildrenAttribute {
+declare module 'React' {
+  namespace JSX {
+    interface ElementAttributesProperty {
+      props;
+    }
+
+    interface ElementChildrenAttribute {
       children: {};
     }
 
-    export interface IntrinsicElements {
+    interface IntrinsicElements {
       view: Components.View & rc.RefAttributes<NativeInstance> & Children;
       text: Components.View & rc.RefAttributes<NativeTextInstance> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<NativeInstance> & Children;

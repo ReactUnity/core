@@ -1,5 +1,7 @@
 import { Layout, PositionType } from "../../models/components";
 
+export const transparentColor = new ColorNative(0, 0, 0, 0);
+
 export const fullScreen: Layout = {
   PositionType: PositionType.Absolute,
   Top: YogaValueNative.Point(-5000),
