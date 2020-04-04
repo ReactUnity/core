@@ -34,7 +34,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(359);
+/******/ 		return __webpack_require__(248);
 /******/ 	};
 /******/ 	// initialize runtime
 /******/ 	runtime(__webpack_require__);
@@ -391,6 +391,7 @@ var DropdownItem = /** @class */ (function (_super) {
 
 
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/react-unity-renderer/src/helpers/common-layouts.ts
+var transparentColor = new ColorNative(0, 0, 0, 0);
 var fullScreen = {
     PositionType: 1 /* Absolute */,
     Top: YogaValueNative.Point(-5000),
@@ -469,15 +470,18 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
     function Dropdown(props) {
         var _this = _super.call(this, props) || this;
         _this.handleChildClick = function (ind, value) {
-            if (_this.props.onSelect)
-                _this.props.onSelect(value, ind);
+            if (_this.props.onChange)
+                _this.props.onChange(value, ind);
             if (_this.props.autoClose)
                 _this.close();
             _this.setState({ selectedIndex: ind });
         };
         _this.toggle = function () { return _this.setState(function (st) { return ({ opened: !st.opened }); }); };
         _this.open = function () { return _this.setState({ opened: true }); };
-        _this.close = function () { return _this.setState({ opened: false }); };
+        _this.close = function () {
+            console.log('Dropdown Closed');
+            _this.setState({ opened: false });
+        };
         _this.state = {
             opened: false,
             selectedIndex: -1,
@@ -491,16 +495,16 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
         var nonItems = children.filter(function (x) { return (x === null || x === void 0 ? void 0 : x.type) !== DropdownItem; });
         var items = children.filter(function (x) { return (x === null || x === void 0 ? void 0 : x.type) === DropdownItem; });
         var selectedItem = items[this.state.selectedIndex];
-        var _b = this.props, autoClose = _b.autoClose, onSelect = _b.onSelect, name = _b.name, otherProps = __rest(_b, ["autoClose", "onSelect", "name"]);
+        var _b = this.props, autoClose = _b.autoClose, onChange = _b.onChange, name = _b.name, otherProps = __rest(_b, ["autoClose", "onChange", "name"]);
         return (Object(react.createElement)("view", { name: name || '<Dropdown>' },
             Object(react.createElement)("button", __assign({ name: "<Dropdown Trigger>", onClick: this.toggle }, otherProps),
                 this.state.selectedIndex < 0
                     ? nonItems
                     : (((_a = selectedItem.props) === null || _a === void 0 ? void 0 : _a.triggerTemplate) || selectedItem),
                 this.state.opened && Object(react.createElement)("view", { layout: bottomEdge, style: { zOrder: 1000 } },
-                    Object(react.createElement)("view", { name: "<Dropdown Backdrop>", onPointerClick: this.close, layout: fullScreen }),
+                    Object(react.createElement)("button", { name: "<Dropdown Backdrop>", onClick: this.close, layout: fullScreen, style: { backgroundColor: transparentColor } }),
                     Object(react.createElement)("view", { name: "<Dropdown Menu>", layout: dropdownBottom }, items.map(function (x, i) {
-                        return Object(react.createElement)("button", { style: { backgroundColor: ColorNative.white }, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
+                        return Object(react.createElement)("button", { style: { backgroundColor: ColorNative.white, borderRadius: 0 }, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
                     }))))));
     };
     Dropdown.defaultProps = {
@@ -511,8 +515,8 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
 
 
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/react-unity-renderer/src/components/dropdown/index.ts
-/* unused concated harmony import Dropdown */
-/* unused concated harmony import DropdownItem */
+/* concated harmony reexport */ __webpack_require__.d(__webpack_exports__, "Dropdown", function() { return dropdown_Dropdown; });
+/* concated harmony reexport */ __webpack_require__.d(__webpack_exports__, "DropdownItem", function() { return DropdownItem; });
 
 
 
@@ -2486,6 +2490,62 @@ exports.useState = useState;
 exports.version = ReactVersion;
   })();
 }
+
+
+/***/ }),
+
+/***/ 248:
+/***/ (function(__unusedmodule, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(175);
+
+// EXTERNAL MODULE: D:/Documents/UnityProjects/packages/react-unity-renderer/index.ts
+var react_unity_renderer = __webpack_require__(693);
+
+// CONCATENATED MODULE: ./src/wiki/dropdown.tsx
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var dropdown_App = /** @class */ (function (_super) {
+    __extends(App, _super);
+    function App() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    App.prototype.render = function () {
+        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
+            Object(react.createElement)(react_unity_renderer.Dropdown, { autoClose: false, onChange: function (val) { return console.log(val); }, layout: { Width: 250 } },
+                "Select an option",
+                Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 5, triggerTemplate: Object(react.createElement)("view", { style: { fontColor: 'green' } }, "Option 1") }, "Option 1"),
+                Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 10 }, "Option 2"),
+                Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 15 }, "Option With Long Name"))));
+    };
+    return App;
+}(react.Component));
+Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(dropdown_App, null), RootContainer, null);
+
+// CONCATENATED MODULE: ./index.ts
+// Try different samples by enabling only one of them
+// import './src/todo-mvc';
+// import './src/todo';
+// import './src/text';
+// import './src/anim';
+
 
 
 /***/ }),
@@ -19111,386 +19171,6 @@ module.exports = checkPropTypes;
 
 /***/ }),
 
-/***/ 359:
-/***/ (function(__unusedmodule, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: ./src/todo-mvc/utils.ts
-var Utils = /** @class */ (function () {
-    function Utils() {
-    }
-    Utils.uuid = function () {
-        /*jshint bitwise:false */
-        var i, random;
-        var uuid = '';
-        for (i = 0; i < 32; i++) {
-            random = Math.random() * 16 | 0;
-            if (i === 8 || i === 12 || i === 16 || i === 20) {
-                uuid += '-';
-            }
-            uuid += (i === 12 ? 4 : (i === 16 ? (random & 3 | 8) : random))
-                .toString(16);
-        }
-        return uuid;
-    };
-    Utils.pluralize = function (count, word) {
-        return count === 1 ? word : word + 's';
-    };
-    Utils.store = function (namespace, data) {
-        if (data) {
-            return localStorage.setItem(namespace, JSON.stringify(data));
-        }
-        var store = localStorage.getItem(namespace);
-        return (store && JSON.parse(store)) || [];
-    };
-    Utils.extend = function () {
-        var objs = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            objs[_i] = arguments[_i];
-        }
-        var newObj = {};
-        for (var i = 0; i < objs.length; i++) {
-            var obj = objs[i];
-            for (var key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    newObj[key] = obj[key];
-                }
-            }
-        }
-        return newObj;
-    };
-    return Utils;
-}());
-
-
-// CONCATENATED MODULE: ./src/todo-mvc/todoModel.ts
-
-// Generic "model" object. You can use whatever
-// framework you want. For this application it
-// may not even be worth separating this logic
-// out, but we do this to demonstrate one way to
-// separate out parts of your application.
-var todoModel_TodoModel = /** @class */ (function () {
-    function TodoModel(key) {
-        this.key = key;
-        this.todos = Utils.store(key);
-        this.onChanges = [];
-    }
-    TodoModel.prototype.subscribe = function (onChange) {
-        this.onChanges.push(onChange);
-    };
-    TodoModel.prototype.inform = function () {
-        Utils.store(this.key, this.todos);
-        this.onChanges.forEach(function (cb) { cb(); });
-    };
-    TodoModel.prototype.addTodo = function (title) {
-        this.todos = this.todos.concat({
-            id: Utils.uuid(),
-            title: title,
-            completed: false
-        });
-        this.inform();
-    };
-    TodoModel.prototype.toggleAll = function (checked) {
-        // Note: It's usually better to use immutable data structures since they're
-        // easier to reason about and React works very well with them. That's why
-        // we use map(), filter() and reduce() everywhere instead of mutating the
-        // array or todo items themselves.
-        this.todos = this.todos.map(function (todo) {
-            return Utils.extend({}, todo, { completed: checked });
-        });
-        this.inform();
-    };
-    TodoModel.prototype.toggle = function (todoToToggle) {
-        this.todos = this.todos.map(function (todo) {
-            return todo !== todoToToggle ?
-                todo :
-                Utils.extend({}, todo, { completed: !todo.completed });
-        });
-        this.inform();
-    };
-    TodoModel.prototype.destroy = function (todo) {
-        this.todos = this.todos.filter(function (candidate) {
-            return candidate !== todo;
-        });
-        this.inform();
-    };
-    TodoModel.prototype.save = function (todoToSave, text) {
-        this.todos = this.todos.map(function (todo) {
-            return todo !== todoToSave ? todo : Utils.extend({}, todo, { title: text });
-        });
-        this.inform();
-    };
-    TodoModel.prototype.clearCompleted = function () {
-        this.todos = this.todos.filter(function (todo) {
-            return !todo.completed;
-        });
-        this.inform();
-    };
-    return TodoModel;
-}());
-
-
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(175);
-
-// CONCATENATED MODULE: ./src/todo-mvc/constants.ts
-var ALL_TODOS = 'all';
-var ACTIVE_TODOS = 'active';
-var COMPLETED_TODOS = 'completed';
-var ENTER_KEY = 13;
-var ESCAPE_KEY = 27;
-
-// CONCATENATED MODULE: ./src/todo-mvc/footer.tsx
-var __extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-
-
-var footer_TodoFooter = /** @class */ (function (_super) {
-    __extends(TodoFooter, _super);
-    function TodoFooter() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    TodoFooter.prototype.render = function () {
-        var _this = this;
-        var activeTodoWord = Utils.pluralize(this.props.count, 'item');
-        var clearButton = (Object(react.createElement)("button", { style: { hidden: this.props.completedCount === 0 }, layout: { Width: 150 }, onClick: this.props.onClearCompleted }, "Clear completed"));
-        var nowShowing = this.props.nowShowing;
-        var TabButton = function (props) {
-            return Object(react.createElement)("button", { onClick: function () { return _this.props.onSwitch(props.id); }, layout: { BorderWidth: 1, MarginHorizontal: 5, PaddingHorizontal: 7, PaddingVertical: 3 }, style: { backgroundColor: props.id === nowShowing ? '#cecece' : 'transparent', borderColor: ['#af2f2f', 0.2] } }, props.children);
-        };
-        return (Object(react.createElement)("view", { name: "Footer", style: { fontSize: 14, borderColor: '#cecece' }, layout: {
-                BorderTopWidth: 2,
-                FlexDirection: 2 /* Row */, JustifyContent: 3 /* SpaceBetween */,
-                AlignItems: 2 /* Center */, PaddingHorizontal: 16, PaddingVertical: 4
-            } },
-            Object(react.createElement)("view", { layout: { Width: 150 } }, "<b>" + this.props.count + "</b> " + activeTodoWord + " left"),
-            Object(react.createElement)("view", { layout: { FlexDirection: 'Row' } },
-                Object(react.createElement)(TabButton, { id: ALL_TODOS }, "All"),
-                Object(react.createElement)(TabButton, { id: ACTIVE_TODOS }, "Active"),
-                Object(react.createElement)(TabButton, { id: COMPLETED_TODOS }, "Completed")),
-            clearButton));
-    };
-    return TodoFooter;
-}(react.Component));
-
-
-// CONCATENATED MODULE: ./src/todo-mvc/todoItem.tsx
-var todoItem_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-var todoItem_TodoItem = /** @class */ (function (_super) {
-    todoItem_extends(TodoItem, _super);
-    function TodoItem(props) {
-        var _this = _super.call(this, props) || this;
-        _this.setHover = function (x) { return _this.setState({ hovered: x }); };
-        _this.pointerEnter = function () { return _this.setHover(true); };
-        _this.pointerExit = function () { return _this.setHover(false); };
-        _this.state = { editText: _this.props.todo.title, hovered: false };
-        return _this;
-    }
-    TodoItem.prototype.handleSubmit = function () {
-        var val = this.state.editText.trim();
-        if (val) {
-            this.props.onSave(val);
-            this.setState({ editText: val });
-        }
-        else {
-            this.props.onDestroy();
-        }
-    };
-    TodoItem.prototype.handleEdit = function () {
-        this.props.onEdit();
-        this.setState({ editText: this.props.todo.title });
-    };
-    TodoItem.prototype.shouldComponentUpdate = function (nextProps, nextState) {
-        return (nextProps.todo !== this.props.todo ||
-            nextProps.editing !== this.props.editing ||
-            nextState.editText !== this.state.editText ||
-            nextState.hovered !== this.state.hovered);
-    };
-    TodoItem.prototype.render = function () {
-        var completed = this.props.todo.completed;
-        return (Object(react.createElement)("view", { name: "<TodoItem>", onPointerEnter: this.pointerEnter, onPointerExit: this.pointerExit, layout: { FlexDirection: 2 /* Row */, AlignItems: 2 /* Center */, BorderBottomWidth: 1 }, style: { borderColor: '#dedede', fontStyle: completed ? 'Strikethrough' : null, opacity: completed ? 0.4 : 1 } },
-            Object(react.createElement)("view", { layout: { FlexGrow: 1, FlexShrink: 1, Padding: 16, PaddingLeft: 64 } }, this.props.todo.title),
-            Object(react.createElement)("input", { layout: { Display: 1 /* None */ }, ref: this.editField }),
-            Object(react.createElement)("toggle", { onChange: this.props.onToggle, value: this.props.todo.completed, layout: { PositionType: 1 /* Absolute */, Left: 8, Top: '50%' }, style: { translate: [0, -0.5], translateRelative: true } }),
-            Object(react.createElement)("button", { onClick: this.props.onDestroy, style: { backgroundColor: 'clear', fontColor: '#cc9a9a', hidden: !this.state.hovered, interaction: 1 /* Always */ }, layout: { MarginRight: 20 } }, "\u00D7")));
-    };
-    return TodoItem;
-}(react.Component));
-
-
-// EXTERNAL MODULE: D:/Documents/UnityProjects/packages/react-unity-renderer/index.ts
-var react_unity_renderer = __webpack_require__(693);
-
-// CONCATENATED MODULE: ./src/todo-mvc/index.tsx
-var todo_mvc_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-
-
-
-
-
-var todo_mvc_TodoApp = /** @class */ (function (_super) {
-    todo_mvc_extends(TodoApp, _super);
-    function TodoApp(props) {
-        var _this = _super.call(this, props) || this;
-        _this.newTodoField = Object(react.createRef)();
-        _this.selectAllToggle = Object(react.createRef)();
-        _this.pageLayout = {
-            AlignSelf: 2 /* Center */,
-            Width: '100%',
-            MaxWidth: 640,
-            FlexShrink: 1,
-            Padding: 30,
-        };
-        _this.headerStyle = {
-            fontColor: [1, 0.5235849, 0.5235849, 1],
-            fontSize: 100,
-        };
-        _this.headerLayout = {
-            PaddingBottom: 20,
-            AlignSelf: 2 /* Center */,
-            MinWidth: 'auto',
-            MinHeight: 'auto',
-        };
-        _this.setShowing = function (nowShowing) { return _this.setState(function (state) { return ({ nowShowing: nowShowing }); }); };
-        _this.headerInputStyle = {
-            borderColor: '#cecece',
-            zOrder: 1,
-            backgroundColor: [1, 1, 1, 1],
-            boxShadow: new ShadowDefinitionNative([0, 8], [10, 10], [0, 0, 0, 1], 10),
-        };
-        _this.toggleAll = function (checked) {
-            _this.props.model.toggleAll(checked);
-        };
-        _this.state = {
-            nowShowing: ALL_TODOS,
-            editing: null
-        };
-        return _this;
-    }
-    TodoApp.prototype.addTodo = function (val) {
-        var _this = this;
-        if (val) {
-            this.props.model.addTodo(val);
-            this.newTodoField.current.Value = '';
-            setTimeout(function () { return _this.newTodoField.current.Focus(); }, 0);
-        }
-    };
-    TodoApp.prototype.toggle = function (todoToToggle) {
-        this.props.model.toggle(todoToToggle);
-    };
-    TodoApp.prototype.destroy = function (todo) {
-        this.props.model.destroy(todo);
-    };
-    TodoApp.prototype.edit = function (todo) {
-        this.setState({ editing: todo.id });
-    };
-    TodoApp.prototype.save = function (todoToSave, text) {
-        this.props.model.save(todoToSave, text);
-        this.setState({ editing: null });
-    };
-    TodoApp.prototype.cancel = function () {
-        this.setState({ editing: null });
-    };
-    TodoApp.prototype.clearCompleted = function () {
-        this.props.model.clearCompleted();
-    };
-    TodoApp.prototype.render = function () {
-        var _this = this;
-        var footer;
-        var main;
-        var todos = this.props.model.todos;
-        var shownTodos = todos.filter(function (todo) {
-            switch (_this.state.nowShowing) {
-                case ACTIVE_TODOS:
-                    return !todo.completed;
-                case COMPLETED_TODOS:
-                    return todo.completed;
-                default:
-                    return true;
-            }
-        });
-        var todoItems = shownTodos.map(function (todo) {
-            return (Object(react.createElement)(todoItem_TodoItem, { key: todo.id, todo: todo, onToggle: _this.toggle.bind(_this, todo), onDestroy: _this.destroy.bind(_this, todo), onEdit: _this.edit.bind(_this, todo), editing: _this.state.editing === todo.id, onSave: _this.save.bind(_this, todo), onCancel: function (e) { return _this.cancel(); } }));
-        });
-        var activeTodoCount = todos.filter(function (x) { return !x.completed; }).length;
-        var completedCount = todos.length - activeTodoCount;
-        if (activeTodoCount || completedCount) {
-            footer =
-                Object(react.createElement)(footer_TodoFooter, { count: activeTodoCount, completedCount: completedCount, nowShowing: this.state.nowShowing, onSwitch: this.setShowing, onClearCompleted: function (e) { return _this.clearCompleted(); } });
-        }
-        if (todos.length) {
-            main = (Object(react.createElement)("scroll", { name: "<Main>" }, todoItems));
-        }
-        return (Object(react.createElement)("view", { layout: this.pageLayout, style: { font: NamedAssets.font } },
-            Object(react.createElement)("view", { style: this.headerStyle, layout: this.headerLayout }, "todos"),
-            Object(react.createElement)("view", { style: { backgroundColor: 'white', boxShadow: new ShadowDefinitionNative(6, 22, ColorNative.black, 16) }, layout: { FlexShrink: 1 } },
-                Object(react.createElement)("view", { name: "Header", layout: { FlexDirection: 2 /* Row */, AlignItems: 2 /* Center */, BorderBottomWidth: 2 }, style: this.headerInputStyle },
-                    Object(react.createElement)("input", { layout: { Padding: 16, PaddingLeft: 64, FlexGrow: 1 }, style: { borderRadius: 0 }, ref: this.newTodoField, placeholder: "What needs to be done?", onSubmit: function (value) { return _this.addTodo(value); } }),
-                    Object(react.createElement)("toggle", { ref: this.selectAllToggle, onChange: this.toggleAll, value: activeTodoCount === 0 && completedCount > 0, layout: { PositionType: 1 /* Absolute */, Left: 8, Top: '50%' }, style: { translate: [0, -0.5], translateRelative: true } })),
-                main,
-                footer)));
-    };
-    return TodoApp;
-}(react.Component));
-var model = new todoModel_TodoModel('react-todos');
-function render() {
-    Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(todo_mvc_TodoApp, { model: model }), RootContainer, null);
-}
-model.subscribe(render);
-render();
-
-// CONCATENATED MODULE: ./index.ts
-// Try different samples by enabling only one of them
-
-// import './src/todo';
-// import './src/text';
-// import './src/anim';
-// import './src/wiki/button';
-
-
-/***/ }),
-
 /***/ 395:
 /***/ (function() {
 
@@ -19738,6 +19418,8 @@ var Vector4Native = /** @class */ (function () {
 
 "use strict";
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ReactUnity", function() { return _src_renderer_react_unity__WEBPACK_IMPORTED_MODULE_0__[["ReactUnity"]]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Dropdown", function() { return _src_components_dropdown__WEBPACK_IMPORTED_MODULE_3__[["Dropdown"]]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DropdownItem", function() { return _src_components_dropdown__WEBPACK_IMPORTED_MODULE_3__[["DropdownItem"]]; });
 /* harmony import */ var _src_renderer_react_unity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(847);
 /* harmony import */ var _src_animation_animation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(76);
 /* harmony import */ var _src_animation_easing__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(25);

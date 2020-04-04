@@ -6,13 +6,17 @@ import { NativeInstance, NativeTextInstance, NativeInputInstance, NativeToggleIn
 
 type Children<T = any> = { children?: T };
 
-declare module "React" {
-  export namespace JSX {
-    export interface ElementChildrenAttribute {
+declare module 'React' {
+  namespace JSX {
+    interface ElementAttributesProperty {
+      props;
+    }
+
+    interface ElementChildrenAttribute {
       children: {};
     }
 
-    export interface IntrinsicElements {
+    interface IntrinsicElements {
       view: View & rc.RefAttributes<NativeInstance> & Children;
       text: View & rc.RefAttributes<NativeTextInstance> & Children<string | number | boolean | null | undefined>;
       button: Button & rc.RefAttributes<NativeInstance> & Children;
