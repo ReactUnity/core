@@ -36,9 +36,6 @@ namespace ReactUnity
 
                     for (int i = 0; i < ScheduledCallbacks.Count; i++)
                         ScheduledCallbacks[i]?.Invoke();
-
-                    // TODO: is this necessary?
-                    Canvas.ForceUpdateCanvases();
                 }
             });
         }

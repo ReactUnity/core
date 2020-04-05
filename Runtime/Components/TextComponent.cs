@@ -23,6 +23,7 @@ namespace ReactUnity.Components
 
         public TextComponent(string text, UnityUGUIContext context) : base(context)
         {
+            GameObject.name = "TEXT";
             Text = GameObject.AddComponent<TextMeshProUGUI>();
 
             SelfControl = GameObject.AddComponent<FlexSelfControlledElement>();

@@ -39,16 +39,6 @@ namespace ReactUnity.Components
             }
         }
 
-        public virtual void SetInteractable(bool v)
-        {
-            var group = CanvasGroup;
-            if (!group) group = GameObject.AddComponent<CanvasGroup>();
-
-            group.interactable = v;
-            group.blocksRaycasts = v;
-        }
-
-
         public override void ApplyLayoutStyles()
         {
             base.ApplyLayoutStyles();

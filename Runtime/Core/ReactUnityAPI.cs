@@ -1,57 +1,42 @@
 using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.Components;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace ReactUnity
 {
     public static class ReactUnityAPI
     {
+        public static Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>> ComponentCreators
+            = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
+            {
+                { "text", (type, text, context) => new TextComponent(text, context) },
+                { "view", (type, text, context) => new ContainerComponent(context) },
+                { "button", (type, text, context) => new ButtonComponent(context) },
+                { "toggle", (type, text, context) => new ToggleComponent(context) },
+                { "input", (type, text, context) => new InputComponent(text, context) },
+                { "scroll", (type, text, context) => new ScrollComponent(context) },
+                { "image", (type, text, context) => new ImageComponent(context) },
+            };
+
         #region Creation
 
-        public static TextComponent createText(string text, HostComponent host)
+        public static UnityComponent createText(string text, HostComponent host)
         {
-            var res = new TextComponent(text, host.Context);
-            res.GameObject.name = "TEXT";
-            return res;
+            return ComponentCreators["text"]("text", text, host.Context);
         }
 
         public static UnityComponent createElement(string type, string text, HostComponent host)
         {
             UnityComponent res = null;
-            if (type == "view")
+            if (ComponentCreators.TryGetValue(type, out var creator))
             {
-                res = new ContainerComponent(host.Context);
-            }
-            else if (type == "button")
-            {
-                res = new ButtonComponent(host.Context);
-            }
-            else if (type == "toggle")
-            {
-                res = new ToggleComponent(host.Context);
-            }
-            else if (type == "input")
-            {
-                res = new InputComponent(text, host.Context);
-            }
-            else if (type == "scroll")
-            {
-                res = new ScrollComponent(host.Context);
-            }
-            else if (type == "text")
-            {
-                res = createText(text, host);
-            }
-            else if (type == "image")
-            {
-                res = new ImageComponent(host.Context);
+                res = creator(type, text, host.Context);
             }
             else
             {
-                throw new System.Exception($"Unknown component type {type} specified.");
+                throw new Exception($"Unknown component type '{type}' specified.");
             }
             res.GameObject.name = $"<{type}>";
             return res;
