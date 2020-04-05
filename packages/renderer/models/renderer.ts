@@ -7,8 +7,6 @@ export type NativeCommonProps = {
   Layout: Layout;
   Style: Style;
 
-  ResetLayout: () => void;
-  ResetStyle: () => void;
   ResolveStyle: () => void;
   ScheduleLayout: () => void;
   ApplyLayoutStyles: () => void;
