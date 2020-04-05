@@ -56,7 +56,7 @@ module.exports =
 /***/ (function(__unusedmodule, exports) {
 
 "use strict";
-/** @license React v0.19.0
+/** @license React v0.19.1
  * scheduler-tracing.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -133,21 +133,6 @@ var Vector4Native = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 175:
-/***/ (function(module, __unusedexports, __webpack_require__) {
-
-"use strict";
-
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(233);
-} else {
-  module.exports = __webpack_require__(243);
-}
-
-
-/***/ }),
-
 /***/ 176:
 /***/ (function(__unusedmodule, __unused__webpack_exports__, __webpack_require__) {
 
@@ -171,7 +156,7 @@ if (process.env.NODE_ENV === 'production') {
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-/** @license React v0.25.0
+/** @license React v0.25.1
  * react-reconciler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -180,7 +165,7 @@ if (process.env.NODE_ENV === 'production') {
  * LICENSE file in the root directory of this source tree.
  */
 module.exports = function $$$reconciler($$$hostConfig) {
-'use strict';var aa=__webpack_require__(999),ba=__webpack_require__(175),m=__webpack_require__(533);function n(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}var p=ba.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+'use strict';var aa=__webpack_require__(999),ba=__webpack_require__(325),m=__webpack_require__(533);function n(a){for(var b="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=1;c<arguments.length;c++)b+="&args[]="+encodeURIComponent(arguments[c]);return"Minified React error #"+a+"; visit "+b+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings."}var p=ba.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
 p.hasOwnProperty("ReactCurrentDispatcher")||(p.ReactCurrentDispatcher={current:null});p.hasOwnProperty("ReactCurrentBatchConfig")||(p.ReactCurrentBatchConfig={suspense:null});
 var u="function"===typeof Symbol&&Symbol.for,ca=u?Symbol.for("react.element"):60103,da=u?Symbol.for("react.portal"):60106,ea=u?Symbol.for("react.fragment"):60107,fa=u?Symbol.for("react.strict_mode"):60108,ha=u?Symbol.for("react.profiler"):60114,ia=u?Symbol.for("react.provider"):60109,ja=u?Symbol.for("react.context"):60110,ka=u?Symbol.for("react.concurrent_mode"):60111,la=u?Symbol.for("react.forward_ref"):60112,ma=u?Symbol.for("react.suspense"):60113,na=u?Symbol.for("react.suspense_list"):60120,oa=
 u?Symbol.for("react.memo"):60115,pa=u?Symbol.for("react.lazy"):60116,qa=u?Symbol.for("react.block"):60121,ra="function"===typeof Symbol&&Symbol.iterator;function sa(a){if(null===a||"object"!==typeof a)return null;a=ra&&a[ra]||a["@@iterator"];return"function"===typeof a?a:null}function ta(a){if(-1===a._status){a._status=0;var b=a._ctor;b=b();a._result=b;b.then(function(b){0===a._status&&(b=b.default,a._status=1,a._result=b)},function(b){0===a._status&&(a._status=2,a._result=b)})}}
@@ -313,11 +298,11 @@ Ma(Tf.bind(null,a),d);break}}Tf(a);break;default:throw Error(n(329));}Z(a);if(a.
 function If(a){var b=a.lastExpiredTime;b=0!==b?b:1073741823;if((W&(pf|qf))!==V)throw Error(n(327));Nf();a===T&&b===U||Of(a,b);if(null!==X){var c=W;W|=pf;var d=Pf();do try{Uf();break}catch(e){Rf(a,e)}while(1);rc();W=c;mf.current=d;if(S===rf)throw c=uf,Of(a,b),De(a,b),Z(a),c;if(null!==X)throw Error(n(261));a.finishedWork=a.current.alternate;a.finishedExpirationTime=b;T=null;Tf(a);Z(a)}return null}function Vf(a,b){Mf(a,b);Z(a);(W&(pf|qf))===V&&H()}
 function Wf(){if(null!==Df){var a=Df;Df=null;a.forEach(function(a,c){Mf(c,a);Z(c)});H()}}function Xf(a,b){var c=W;W|=1;try{return a(b)}finally{W=c,W===V&&H()}}function Yf(a,b){if((W&(pf|qf))!==V)throw Error(n(187));var c=W;W|=1;try{return dc(99,a.bind(null,b))}finally{W=c,H()}}
 function Of(a,b){a.finishedWork=null;a.finishedExpirationTime=0;var c=a.timeoutHandle;c!==Oa&&(a.timeoutHandle=Oa,Na(c));if(null!==X)for(c=X.return;null!==c;){var d=c;switch(d.tag){case 1:d=d.type.childContextTypes;null!==d&&void 0!==d&&Fb();break;case 3:id();B(E);B(D);break;case 5:kd(d);break;case 4:id();break;case 13:B(K);break;case 19:B(K);break;case 10:tc(d)}c=c.return}T=a;X=Xc(a.current,null);U=b;S=ze;uf=null;wf=vf=1073741823;xf=null;Ce=0;yf=!1}
-function Rf(a,b){do{try{rc();nd.current=vd;if(pd)for(var c=M.memoizedState;null!==c;){var d=c.queue;null!==d&&(d.pending=null);c=c.next}od=0;O=N=M=null;pd=!1;if(null===X||null===X.return)return S=rf,uf=b,X=null;a:{var e=a,f=X.return,g=X,h=b;b=U;g.effectTag|=2048;g.firstEffect=g.lastEffect=null;if(null!==h&&"object"===typeof h&&"function"===typeof h.then){var k=h;if(0===(g.mode&2)){var l=g.alternate;l?(g.memoizedState=l.memoizedState,g.expirationTime=l.expirationTime):g.memoizedState=null}var q=0!==
-(K.current&1),r=f;do{var w;if(w=13===r.tag){var z=r.memoizedState;if(null!==z)w=null!==z.dehydrated?!0:!1;else{var Q=r.memoizedProps;w=void 0===Q.fallback?!1:!0!==Q.unstable_avoidThisFallback?!0:q?!1:!0}}if(w){var A=r.updateQueue;if(null===A){var v=new Set;v.add(k);r.updateQueue=v}else A.add(k);if(0===(r.mode&2)){r.effectTag|=64;g.effectTag&=-2981;if(1===g.tag)if(null===g.alternate)g.tag=17;else{var t=Ac(1073741823,null);t.tag=2;Bc(g,t)}g.expirationTime=1073741823;break a}h=void 0;g=b;var x=e.pingCache;
-null===x?(x=e.pingCache=new ef,h=new Set,x.set(k,h)):(h=x.get(k),void 0===h&&(h=new Set,x.set(k,h)));if(!h.has(g)){h.add(g);var ke=cg.bind(null,e,k,g);k.then(ke,ke)}r.effectTag|=4096;r.expirationTime=b;break a}r=r.return}while(null!==r);h=Error((ua(g.type)||"A React component")+" suspended while rendering, but no fallback UI was specified.\n\nAdd a <Suspense fallback=...> component higher in the tree to provide a loading indicator or placeholder to display."+zb(g))}S!==tf&&(S=sf);h=Ge(h,g);r=f;do{switch(r.tag){case 3:k=
-h;r.effectTag|=4096;r.expirationTime=b;var Zf=ff(r,k,b);Cc(r,Zf);break a;case 1:k=h;var $f=r.type,Fc=r.stateNode;if(0===(r.effectTag&64)&&("function"===typeof $f.getDerivedStateFromError||null!==Fc&&"function"===typeof Fc.componentDidCatch&&(null===kf||!kf.has(Fc)))){r.effectTag|=4096;r.expirationTime=b;var ag=jf(r,k,b);Cc(r,ag);break a}}r=r.return}while(null!==r)}X=dg(X)}catch(bg){b=bg;continue}break}while(1)}function Pf(){var a=mf.current;mf.current=vd;return null===a?vd:a}
-function Ec(a,b){a<vf&&2<a&&(vf=a);null!==b&&a<wf&&2<a&&(wf=a,xf=b)}function Gc(a){a>Ce&&(Ce=a)}function Uf(){for(;null!==X;)X=eg(X)}function Qf(){for(;null!==X&&!Wb();)X=eg(X)}function eg(a){var b=fg(a.alternate,a,U);a.memoizedProps=a.pendingProps;null===b&&(b=dg(a));nf.current=null;return b}
+function Rf(a,b){do{try{rc();nd.current=vd;if(pd)for(var c=M.memoizedState;null!==c;){var d=c.queue;null!==d&&(d.pending=null);c=c.next}od=0;O=N=M=null;pd=!1;if(null===X||null===X.return)return S=rf,uf=b,X=null;a:{var e=a,f=X.return,g=X,h=b;b=U;g.effectTag|=2048;g.firstEffect=g.lastEffect=null;if(null!==h&&"object"===typeof h&&"function"===typeof h.then){var k=h;if(0===(g.mode&2)){var l=g.alternate;l?(g.updateQueue=l.updateQueue,g.memoizedState=l.memoizedState,g.expirationTime=l.expirationTime):(g.updateQueue=
+null,g.memoizedState=null)}var q=0!==(K.current&1),r=f;do{var w;if(w=13===r.tag){var z=r.memoizedState;if(null!==z)w=null!==z.dehydrated?!0:!1;else{var Q=r.memoizedProps;w=void 0===Q.fallback?!1:!0!==Q.unstable_avoidThisFallback?!0:q?!1:!0}}if(w){var A=r.updateQueue;if(null===A){var v=new Set;v.add(k);r.updateQueue=v}else A.add(k);if(0===(r.mode&2)){r.effectTag|=64;g.effectTag&=-2981;if(1===g.tag)if(null===g.alternate)g.tag=17;else{var t=Ac(1073741823,null);t.tag=2;Bc(g,t)}g.expirationTime=1073741823;
+break a}h=void 0;g=b;var x=e.pingCache;null===x?(x=e.pingCache=new ef,h=new Set,x.set(k,h)):(h=x.get(k),void 0===h&&(h=new Set,x.set(k,h)));if(!h.has(g)){h.add(g);var ke=cg.bind(null,e,k,g);k.then(ke,ke)}r.effectTag|=4096;r.expirationTime=b;break a}r=r.return}while(null!==r);h=Error((ua(g.type)||"A React component")+" suspended while rendering, but no fallback UI was specified.\n\nAdd a <Suspense fallback=...> component higher in the tree to provide a loading indicator or placeholder to display."+
+zb(g))}S!==tf&&(S=sf);h=Ge(h,g);r=f;do{switch(r.tag){case 3:k=h;r.effectTag|=4096;r.expirationTime=b;var Zf=ff(r,k,b);Cc(r,Zf);break a;case 1:k=h;var $f=r.type,Fc=r.stateNode;if(0===(r.effectTag&64)&&("function"===typeof $f.getDerivedStateFromError||null!==Fc&&"function"===typeof Fc.componentDidCatch&&(null===kf||!kf.has(Fc)))){r.effectTag|=4096;r.expirationTime=b;var ag=jf(r,k,b);Cc(r,ag);break a}}r=r.return}while(null!==r)}X=dg(X)}catch(bg){b=bg;continue}break}while(1)}
+function Pf(){var a=mf.current;mf.current=vd;return null===a?vd:a}function Ec(a,b){a<vf&&2<a&&(vf=a);null!==b&&a<wf&&2<a&&(wf=a,xf=b)}function Gc(a){a>Ce&&(Ce=a)}function Uf(){for(;null!==X;)X=eg(X)}function Qf(){for(;null!==X&&!Wb();)X=eg(X)}function eg(a){var b=fg(a.alternate,a,U);a.memoizedProps=a.pendingProps;null===b&&(b=dg(a));nf.current=null;return b}
 function dg(a){X=a;do{var b=X.alternate;a=X.return;if(0===(X.effectTag&2048)){b=ye(b,X,U);if(1===U||1!==X.childExpirationTime){for(var c=0,d=X.child;null!==d;){var e=d.expirationTime,f=d.childExpirationTime;e>c&&(c=e);f>c&&(c=f);d=d.sibling}X.childExpirationTime=c}if(null!==b)return b;null!==a&&0===(a.effectTag&2048)&&(null===a.firstEffect&&(a.firstEffect=X.firstEffect),null!==X.lastEffect&&(null!==a.lastEffect&&(a.lastEffect.nextEffect=X.firstEffect),a.lastEffect=X.lastEffect),1<X.effectTag&&(null!==
 a.lastEffect?a.lastEffect.nextEffect=X:a.firstEffect=X,a.lastEffect=X))}else{b=Fe(X);if(null!==b)return b.effectTag&=2047,b;null!==a&&(a.firstEffect=a.lastEffect=null,a.effectTag|=2048)}b=X.sibling;if(null!==b)return b;X=a}while(null!==X);S===ze&&(S=tf);return null}function Sf(a){var b=a.expirationTime;a=a.childExpirationTime;return b>a?b:a}function Tf(a){var b=bc();dc(99,gg.bind(null,a,b));return null}
 function gg(a,b){do Nf();while(null!==Bf);if((W&(pf|qf))!==V)throw Error(n(327));var c=a.finishedWork,d=a.finishedExpirationTime;if(null===c)return null;a.finishedWork=null;a.finishedExpirationTime=0;if(c===a.current)throw Error(n(177));a.callbackNode=null;a.callbackExpirationTime=0;a.callbackPriority=90;a.nextKnownPendingLevel=0;var e=Sf(c);a.firstPendingTime=e;d<=a.lastSuspendedTime?a.firstSuspendedTime=a.lastSuspendedTime=a.nextKnownPendingLevel=0:d<=a.firstSuspendedTime&&(a.firstSuspendedTime=
@@ -370,7 +355,7 @@ c?d(c):a()})},function(a){b();d(a)})}};try{1!==zg||!1!==wg&&!1!==c||xg(),b()}cat
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.13.0
+/** @license React v16.13.1
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -394,7 +379,7 @@ exports.Component=F;exports.Fragment=r;exports.Profiler=u;exports.PureComponent=
 exports.cloneElement=function(a,b,c){if(null===a||void 0===a)throw Error(C(267,a));var e=l({},a.props),d=a.key,g=a.ref,k=a._owner;if(null!=b){void 0!==b.ref&&(g=b.ref,k=J.current);void 0!==b.key&&(d=""+b.key);if(a.type&&a.type.defaultProps)var f=a.type.defaultProps;for(h in b)K.call(b,h)&&!L.hasOwnProperty(h)&&(e[h]=void 0===b[h]&&void 0!==f?f[h]:b[h])}var h=arguments.length-2;if(1===h)e.children=c;else if(1<h){f=Array(h);for(var m=0;m<h;m++)f[m]=arguments[m+2];e.children=f}return{$$typeof:p,type:a.type,
 key:d,ref:g,props:e,_owner:k}};exports.createContext=function(a,b){void 0===b&&(b=null);a={$$typeof:w,_calculateChangedBits:b,_currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null};a.Provider={$$typeof:v,_context:a};return a.Consumer=a};exports.createElement=M;exports.createFactory=function(a){var b=M.bind(null,a);b.type=a;return b};exports.createRef=function(){return{current:null}};exports.forwardRef=function(a){return{$$typeof:x,render:a}};exports.isValidElement=O;
 exports.lazy=function(a){return{$$typeof:A,_ctor:a,_status:-1,_result:null}};exports.memo=function(a,b){return{$$typeof:z,type:a,compare:void 0===b?null:b}};exports.useCallback=function(a,b){return Z().useCallback(a,b)};exports.useContext=function(a,b){return Z().useContext(a,b)};exports.useDebugValue=function(){};exports.useEffect=function(a,b){return Z().useEffect(a,b)};exports.useImperativeHandle=function(a,b,c){return Z().useImperativeHandle(a,b,c)};
-exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return Z().useMemo(a,b)};exports.useReducer=function(a,b,c){return Z().useReducer(a,b,c)};exports.useRef=function(a){return Z().useRef(a)};exports.useState=function(a){return Z().useState(a)};exports.version="16.13.0";
+exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.useMemo=function(a,b){return Z().useMemo(a,b)};exports.useReducer=function(a,b,c){return Z().useReducer(a,b,c)};exports.useRef=function(a){return Z().useRef(a)};exports.useState=function(a){return Z().useState(a)};exports.version="16.13.1";
 
 
 /***/ }),
@@ -403,7 +388,7 @@ exports.useLayoutEffect=function(a,b){return Z().useLayoutEffect(a,b)};exports.u
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.13.0
+/** @license React v16.13.1
  * react.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -423,7 +408,7 @@ if (process.env.NODE_ENV !== "production") {
 var _assign = __webpack_require__(999);
 var checkPropTypes = __webpack_require__(499);
 
-var ReactVersion = '16.13.0';
+var ReactVersion = '16.13.1';
 
 // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
 // nor polyfill, then a plain number is used for performance.
@@ -2325,7 +2310,7 @@ exports.version = ReactVersion;
 "use strict";
 /* unused harmony export Radio */
 /* unused harmony export RadioGroup */
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(175);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(325);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -2412,7 +2397,7 @@ var RadioGroup = /** @class */ (function (_super) {
 /***/ (function(__unusedmodule, exports) {
 
 "use strict";
-/** @license React v0.19.0
+/** @license React v0.19.1
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -2433,6 +2418,21 @@ function Y(a){switch(a){case 1:return-1;case 2:return 250;case 5:return 10737418
 exports.unstable_getCurrentPriorityLevel=function(){return R};exports.unstable_getFirstCallbackNode=function(){return L(N)};exports.unstable_next=function(a){switch(R){case 1:case 2:case 3:var b=3;break;default:b=R}var c=R;R=b;try{return a()}finally{R=c}};exports.unstable_pauseExecution=function(){};exports.unstable_requestPaint=Z;exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=R;R=a;try{return b()}finally{R=c}};
 exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();if("object"===typeof c&&null!==c){var e=c.delay;e="number"===typeof e&&0<e?d+e:d;c="number"===typeof c.timeout?c.timeout:Y(a)}else c=Y(a),e=d;c=e+c;a={id:P++,callback:b,priorityLevel:a,startTime:e,expirationTime:c,sortIndex:-1};e>d?(a.sortIndex=e,J(O,a),null===L(N)&&a===L(O)&&(U?h():U=!0,g(W,e-d))):(a.sortIndex=c,J(N,a),T||S||(T=!0,f(X)));return a};
 exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=L(N);return b!==Q&&null!==Q&&null!==b&&null!==b.callback&&b.startTime<=a&&b.expirationTime<Q.expirationTime||k()};exports.unstable_wrapCallback=function(a){var b=R;return function(){var c=R;R=b;try{return a.apply(this,arguments)}finally{R=c}}};
+
+
+/***/ }),
+
+/***/ 325:
+/***/ (function(module, __unusedexports, __webpack_require__) {
+
+"use strict";
+
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(233);
+} else {
+  module.exports = __webpack_require__(243);
+}
 
 
 /***/ }),
@@ -2560,7 +2560,7 @@ var todoModel_TodoModel = /** @class */ (function () {
 
 
 // EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(175);
+var react = __webpack_require__(325);
 
 // CONCATENATED MODULE: ./src/todo-mvc/constants.ts
 var ALL_TODOS = 'all';
@@ -2653,18 +2653,6 @@ var todoItem_TodoItem = /** @class */ (function (_super) {
     TodoItem.prototype.handleEdit = function () {
         this.props.onEdit();
         this.setState({ editText: this.props.todo.title });
-    };
-    TodoItem.prototype.handleKeyDown = function () {
-        // if (event.keyCode === ESCAPE_KEY) {
-        //   this.setState({ editText: this.props.todo.title });
-        //   this.props.onCancel(event);
-        // } else if (event.keyCode === ENTER_KEY) {
-        //   this.handleSubmit(event);
-        // }
-    };
-    TodoItem.prototype.handleChange = function () {
-        // var input: any = event.target;
-        // this.setState({ editText: input.value });
     };
     TodoItem.prototype.shouldComponentUpdate = function (nextProps, nextState) {
         return (nextProps.todo !== this.props.todo ||
@@ -2819,7 +2807,12 @@ model.subscribe(render);
 render();
 
 // CONCATENATED MODULE: ./index.ts
+// Try different samples by enabling only one of them
 
+// import './src/todo';
+// import './src/text';
+// import './src/anim';
+// import './src/wiki/tooltip';
 
 
 /***/ }),
@@ -2850,7 +2843,7 @@ render();
 
 "use strict";
 /* module decorator */ module = __webpack_require__.nmd(module);
-/** @license React v0.25.0
+/** @license React v0.25.1
  * react-reconciler.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -2866,7 +2859,7 @@ if (process.env.NODE_ENV !== "production") {
 'use strict';
 
 var _assign = __webpack_require__(999);
-var React = __webpack_require__(175);
+var React = __webpack_require__(325);
 var checkPropTypes = __webpack_require__(499);
 var Scheduler = __webpack_require__(533);
 var tracing = __webpack_require__(880);
@@ -3717,7 +3710,7 @@ function getStackByFiberInDevAndProd(workInProgress) {
   return info;
 }
 var current = null;
-var phase = null;
+var isRendering = false;
 function getCurrentFiberOwnerNameInDevOrNull() {
   {
     if (current === null) {
@@ -3748,19 +3741,19 @@ function resetCurrentFiber() {
   {
     ReactDebugCurrentFrame.getCurrentStack = null;
     current = null;
-    phase = null;
+    isRendering = false;
   }
 }
 function setCurrentFiber(fiber) {
   {
     ReactDebugCurrentFrame.getCurrentStack = getCurrentFiberStackInDev;
     current = fiber;
-    phase = null;
+    isRendering = false;
   }
 }
-function setCurrentPhase(lifeCyclePhase) {
+function setIsRendering(rendering) {
   {
-    phase = lifeCyclePhase;
+    isRendering = rendering;
   }
 }
 
@@ -4378,18 +4371,9 @@ function processChildContext(fiber, type, parentContext) {
     }
 
     var childContext;
-
-    {
-      setCurrentPhase('getChildContext');
-    }
-
     startPhaseTimer(fiber, 'getChildContext');
     childContext = instance.getChildContext();
     stopPhaseTimer();
-
-    {
-      setCurrentPhase(null);
-    }
 
     for (var contextKey in childContext) {
       if (!(contextKey in childContextTypes)) {
@@ -10404,7 +10388,6 @@ var didWarnAboutContextTypeOnFunctionComponent;
 var didWarnAboutGetDerivedStateOnFunctionComponent;
 var didWarnAboutFunctionRefs;
 var didWarnAboutReassigningProps;
-var didWarnAboutMaxDuration;
 var didWarnAboutRevealOrder;
 var didWarnAboutTailOptions;
 
@@ -10415,7 +10398,6 @@ var didWarnAboutTailOptions;
   didWarnAboutGetDerivedStateOnFunctionComponent = {};
   didWarnAboutFunctionRefs = {};
   didWarnAboutReassigningProps = false;
-  didWarnAboutMaxDuration = false;
   didWarnAboutRevealOrder = {};
   didWarnAboutTailOptions = {};
 }
@@ -10479,7 +10461,7 @@ function updateForwardRef(current, workInProgress, Component, nextProps, renderE
 
   {
     ReactCurrentOwner$1.current = workInProgress;
-    setCurrentPhase('render');
+    setIsRendering(true);
     nextChildren = renderWithHooks(current, workInProgress, render, nextProps, ref, renderExpirationTime);
 
     if ( workInProgress.mode & StrictMode) {
@@ -10489,7 +10471,7 @@ function updateForwardRef(current, workInProgress, Component, nextProps, renderE
       }
     }
 
-    setCurrentPhase(null);
+    setIsRendering(false);
   }
 
   if (current !== null && !didReceiveUpdate) {
@@ -10697,7 +10679,7 @@ function updateFunctionComponent(current, workInProgress, Component, nextProps, 
 
   {
     ReactCurrentOwner$1.current = workInProgress;
-    setCurrentPhase('render');
+    setIsRendering(true);
     nextChildren = renderWithHooks(current, workInProgress, Component, nextProps, context, renderExpirationTime);
 
     if ( workInProgress.mode & StrictMode) {
@@ -10707,7 +10689,7 @@ function updateFunctionComponent(current, workInProgress, Component, nextProps, 
       }
     }
 
-    setCurrentPhase(null);
+    setIsRendering(false);
   }
 
   if (current !== null && !didReceiveUpdate) {
@@ -10823,14 +10805,14 @@ function finishClassComponent(current, workInProgress, Component, shouldUpdate, 
     }
   } else {
     {
-      setCurrentPhase('render');
+      setIsRendering(true);
       nextChildren = instance.render();
 
       if ( workInProgress.mode & StrictMode) {
         instance.render();
       }
 
-      setCurrentPhase(null);
+      setIsRendering(false);
     }
   } // React DevTools reads this flag.
 
@@ -11144,8 +11126,10 @@ function mountIndeterminateComponent(_current, workInProgress, Component, render
       ReactStrictModeWarnings.recordLegacyContextWarning(workInProgress, null);
     }
 
+    setIsRendering(true);
     ReactCurrentOwner$1.current = workInProgress;
     value = renderWithHooks(null, workInProgress, Component, props, context, renderExpirationTime);
+    setIsRendering(false);
   } // React DevTools reads this flag.
 
 
@@ -11311,17 +11295,7 @@ function updateSuspenseComponent(current, workInProgress, renderExpirationTime) 
   }
 
   suspenseContext = setDefaultShallowSuspenseContext(suspenseContext);
-  pushSuspenseContext(workInProgress, suspenseContext);
-
-  {
-    if ('maxDuration' in nextProps) {
-      if (!didWarnAboutMaxDuration) {
-        didWarnAboutMaxDuration = true;
-
-        error('maxDuration has been removed from React. ' + 'Remove the maxDuration prop.');
-      }
-    }
-  } // This next part is a bit confusing. If the children timeout, we switch to
+  pushSuspenseContext(workInProgress, suspenseContext); // This next part is a bit confusing. If the children timeout, we switch to
   // showing the fallback children in place of the "primary" children.
   // However, we don't want to delete the primary children because then their
   // state will be lost (both the React state and the host state, e.g.
@@ -11342,7 +11316,6 @@ function updateSuspenseComponent(current, workInProgress, renderExpirationTime) 
   // Otherwise, we render the primary children directly. This requires some
   // custom reconciliation logic to preserve the state of the primary
   // children. It's essentially a very basic form of re-parenting.
-
 
   if (current === null) {
     // If we're currently hydrating, try to hydrate this boundary.
@@ -11976,9 +11949,9 @@ function updateContextConsumer(current, workInProgress, renderExpirationTime) {
 
   {
     ReactCurrentOwner$1.current = workInProgress;
-    setCurrentPhase('render');
+    setIsRendering(true);
     newChildren = render(newValue);
-    setCurrentPhase(null);
+    setIsRendering(false);
   } // React DevTools reads this flag.
 
 
@@ -15071,9 +15044,11 @@ function throwException(root, returnFiber, sourceFiber, value, renderExpirationT
       var currentSource = sourceFiber.alternate;
 
       if (currentSource) {
+        sourceFiber.updateQueue = currentSource.updateQueue;
         sourceFiber.memoizedState = currentSource.memoizedState;
         sourceFiber.expirationTime = currentSource.expirationTime;
       } else {
+        sourceFiber.updateQueue = null;
         sourceFiber.memoizedState = null;
       }
     }
@@ -17499,43 +17474,40 @@ var beginWork$1;
 }
 
 var didWarnAboutUpdateInRender = false;
-var didWarnAboutUpdateInGetChildContext = false;
+var didWarnAboutUpdateInRenderForAnotherComponent;
+
+{
+  didWarnAboutUpdateInRenderForAnotherComponent = new Set();
+}
 
 function warnAboutRenderPhaseUpdatesInDEV(fiber) {
   {
-    if ((executionContext & RenderContext) !== NoContext) {
+    if (isRendering && (executionContext & RenderContext) !== NoContext) {
       switch (fiber.tag) {
         case FunctionComponent:
         case ForwardRef:
         case SimpleMemoComponent:
           {
-            error('Cannot update a component from inside the function body of a ' + 'different component.');
+            var renderingComponentName = workInProgress && getComponentName(workInProgress.type) || 'Unknown'; // Dedupe by the rendering component because it's the one that needs to be fixed.
+
+            var dedupeKey = renderingComponentName;
+
+            if (!didWarnAboutUpdateInRenderForAnotherComponent.has(dedupeKey)) {
+              didWarnAboutUpdateInRenderForAnotherComponent.add(dedupeKey);
+              var setStateComponentName = getComponentName(fiber.type) || 'Unknown';
+
+              error('Cannot update a component (`%s`) while rendering a ' + 'different component (`%s`). To locate the bad setState() call inside `%s`, ' + 'follow the stack trace as described in https://fb.me/setstate-in-render', setStateComponentName, renderingComponentName, renderingComponentName);
+            }
 
             break;
           }
 
         case ClassComponent:
           {
-            switch (phase) {
-              case 'getChildContext':
-                if (didWarnAboutUpdateInGetChildContext) {
-                  return;
-                }
+            if (!didWarnAboutUpdateInRender) {
+              error('Cannot update during an existing state transition (such as ' + 'within `render`). Render methods should be a pure ' + 'function of props and state.');
 
-                error('setState(...): Cannot call setState() inside getChildContext()');
-
-                didWarnAboutUpdateInGetChildContext = true;
-                break;
-
-              case 'render':
-                if (didWarnAboutUpdateInRender) {
-                  return;
-                }
-
-                error('Cannot update during an existing state transition (such as ' + 'within `render`). Render methods should be a pure ' + 'function of props and state.');
-
-                didWarnAboutUpdateInRender = true;
-                break;
+              didWarnAboutUpdateInRender = true;
             }
 
             break;
@@ -18695,7 +18667,7 @@ function updateContainer(element, container, parentComponent, callback) {
   }
 
   {
-    if (phase === 'render' && current !== null && !didWarnAboutNestedUpdates) {
+    if (isRendering && current !== null && !didWarnAboutNestedUpdates) {
       didWarnAboutNestedUpdates = true;
 
       error('Render methods should be a pure function of props and state; ' + 'triggering nested component updates from render is not allowed. ' + 'If necessary, trigger nested updates in componentDidUpdate.\n\n' + 'Check the render method of %s.', getComponentName(current.type) || 'Unknown');
@@ -18943,7 +18915,7 @@ function injectIntoDevTools(devToolsConfig) {
     // Enables DevTools to append owner stacks to error messages in DEV mode.
     getCurrentFiber:  function () {
       return current;
-    }
+    } 
   }));
 }
 var IsSomeRendererActing$1 = ReactSharedInternals.IsSomeRendererActing;
@@ -19147,7 +19119,7 @@ module.exports = reactReconciler;
 
 "use strict";
 /* unused harmony export Tooltip */
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(175);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(325);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
@@ -19189,10 +19161,6 @@ var Tooltip = /** @class */ (function (_super) {
     __extends(Tooltip, _super);
     function Tooltip(props) {
         var _this = _super.call(this, props) || this;
-        _this.handleHoverIn = function () {
-        };
-        _this.handleHoverOut = function () {
-        };
         _this.toggle = function () { return _this.setState(function (st) { return ({ opened: !st.opened }); }); };
         _this.open = function () { return _this.setState({ opened: true }); };
         _this.close = function () { return _this.setState({ opened: false }); };
@@ -19202,16 +19170,33 @@ var Tooltip = /** @class */ (function (_super) {
         return _this;
     }
     Tooltip.prototype.render = function () {
-        var _a = this.props, tooltipContent = _a.tooltipContent, otherProps = __rest(_a, ["tooltipContent"]);
+        var _a, _b;
+        var _c = this.props, tooltipContent = _c.tooltipContent, position = _c.position, offset = _c.offset, otherProps = __rest(_c, ["tooltipContent", "position", "offset"]);
+        var containerProp = Tooltip.containerPositionProp[position];
+        var childProp = Tooltip.childPositionProp[position];
         return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("view", __assign({}, otherProps, { onPointerEnter: this.open, onPointerExit: this.close }),
             this.props.children,
-            this.state.opened &&
-                react__WEBPACK_IMPORTED_MODULE_0__.createElement("view", { name: "<Tooltip>", layout: {
-                        PositionType: 1 /* Absolute */,
-                        Top: -40,
-                    }, style: { zOrder: 1003 } }, tooltipContent)));
+            this.state.opened && tooltipContent &&
+                react__WEBPACK_IMPORTED_MODULE_0__.createElement("view", { layout: (_a = { PositionType: 1 /* Absolute */ }, _a[containerProp] = Tooltip.yogaZeroPercent, _a) },
+                    react__WEBPACK_IMPORTED_MODULE_0__.createElement("view", { name: "<Tooltip>", layout: (_b = { PositionType: 1 /* Absolute */ }, _b[childProp] = offset, _b), style: { zOrder: 1003 } }, tooltipContent))));
     };
-    Tooltip.defaultProps = {};
+    Tooltip.defaultProps = {
+        position: 'bottom',
+        offset: 10,
+    };
+    Tooltip.containerPositionProp = {
+        top: 'Top',
+        bottom: 'Bottom',
+        left: 'Left',
+        right: 'Right',
+    };
+    Tooltip.childPositionProp = {
+        top: 'Bottom',
+        bottom: 'Top',
+        left: 'Right',
+        right: 'Left',
+    };
+    Tooltip.yogaZeroPercent = YogaValueNative.Point(0);
     return Tooltip;
 }(react__WEBPACK_IMPORTED_MODULE_0__.Component));
 
@@ -19350,7 +19335,7 @@ module.exports = checkPropTypes;
 /***/ (function(__unusedmodule, exports) {
 
 "use strict";
-/** @license React v0.19.0
+/** @license React v0.19.1
  * scheduler-tracing.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -19760,7 +19745,7 @@ var easing = {
 /***/ (function(__unusedmodule, exports) {
 
 "use strict";
-/** @license React v0.19.0
+/** @license React v0.19.1
  * scheduler.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -20649,7 +20634,9 @@ var object_assign = __webpack_require__(999);
 var react_reconciler = __webpack_require__(668);
 
 // CONCATENATED MODULE: ./node_modules/react-unity-renderer/dist/src/renderer/diffing.js
-function diffProperties(instance, tag, lastRawProps, nextRawProps, rootContainerElement) {
+function diffProperties(lastRawProps, nextRawProps) {
+    if (lastRawProps == nextRawProps)
+        return null;
     var updatePayload = null;
     var lastProps = lastRawProps;
     var nextProps = nextRawProps;
@@ -20660,9 +20647,15 @@ function diffProperties(instance, tag, lastRawProps, nextRawProps, rootContainer
             || lastProps[propKey] == null) {
             continue;
         }
+        var prop = null;
+        if (propKey === 'style' || propKey === 'layout') {
+            prop = diffProperties(lastProps[propKey], null);
+            if (!prop)
+                continue;
+        }
         // For all other deleted properties we add it to the queue. We use
         // the whitelist in the commit phase instead.
-        (updatePayload = updatePayload || []).push(propKey, null);
+        (updatePayload = updatePayload || []).push(propKey, prop);
     }
     for (propKey in nextProps) {
         var nextProp = nextProps[propKey];
@@ -20672,7 +20665,13 @@ function diffProperties(instance, tag, lastRawProps, nextRawProps, rootContainer
             || (nextProp == null && lastProp == null)) {
             continue;
         }
-        (updatePayload = updatePayload || []).push(propKey, nextProp);
+        var prop = nextProp;
+        if (propKey === 'style' || propKey === 'layout') {
+            prop = diffProperties(lastProp, nextProp);
+            if (!prop)
+                continue;
+        }
+        (updatePayload = updatePayload || []).push(propKey, prop);
     }
     return updatePayload;
 }
@@ -20684,6 +20683,22 @@ function diffProperties(instance, tag, lastRawProps, nextRawProps, rootContainer
 
 var react_unity_hostContext = {};
 var childContext = {};
+function applyDiffedUpdate(writeTo, updatePayload) {
+    if (!updatePayload)
+        return false;
+    if (Array.isArray(updatePayload)) {
+        for (var index = 0; index < updatePayload.length; index += 2) {
+            var attr = updatePayload[index];
+            var value = updatePayload[index + 1];
+            writeTo[attr] = value;
+        }
+        return updatePayload.length > 0;
+    }
+    else {
+        object_assign(writeTo, updatePayload);
+        return true;
+    }
+}
 function applyUpdate(instance, updatePayload, isAfterMount) {
     var updateAfterMount = false;
     for (var index = 0; index < updatePayload.length; index += 2) {
@@ -20696,11 +20711,10 @@ function applyUpdate(instance, updatePayload, isAfterMount) {
         if (attr === 'ref')
             continue;
         if (attr === 'layout') {
-            instance.ResetLayout();
-            if (value !== true && value)
-                object_assign(instance.Layout, value);
-            instance.ScheduleLayout();
-            instance.ApplyLayoutStyles();
+            if (applyDiffedUpdate(instance.Layout, value)) {
+                instance.ScheduleLayout();
+                instance.ApplyLayoutStyles();
+            }
             continue;
         }
         if (!isAfterMount && (attr === 'style')) {
@@ -20708,10 +20722,9 @@ function applyUpdate(instance, updatePayload, isAfterMount) {
             continue;
         }
         if (attr === 'style') {
-            instance.ResetStyle();
-            if (value !== true && value)
-                object_assign(instance.Style, value);
-            instance.ResolveStyle();
+            if (applyDiffedUpdate(instance.Style, value)) {
+                instance.ResolveStyle();
+            }
             continue;
         }
         if (typeof attr !== 'string') {
@@ -20739,10 +20752,9 @@ var hostConfig = {
     createInstance: function (type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
         var _a;
         if (type === 'text') {
-            if (props.children && props.children !== true && typeof props.children !== 'string') {
-                console.warn('Text elements should not have children.');
-            }
-            var text = props.children === true ? '' : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
+            var text = props.children === true ? '' :
+                Array.isArray(props.children) ? props.children.join('') :
+                    ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
             return Unity.createElement(type, text, rootContainerInstance);
         }
         return Unity.createElement(type, null, rootContainerInstance);
@@ -20779,7 +20791,7 @@ var hostConfig = {
     // -------------------
     supportsMutation: true,
     prepareUpdate: function (instance, type, oldProps, newProps, rootContainerInstance, hostContext) {
-        return diffProperties(instance, type, oldProps, newProps, rootContainerInstance);
+        return diffProperties(oldProps, newProps);
     },
     commitUpdate: function (instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
         applyUpdate(instance, updatePayload, true);
@@ -20838,6 +20850,7 @@ function startAnimation(options) {
     var loopMode = options.loopMode;
     var loopCount = 0;
     var normal = true;
+    var intervalTime = options.interval == null ? 20 : (options.interval || 0);
     var start = function () {
         if (onStart) {
             options.onStart();
@@ -20859,7 +20872,7 @@ function startAnimation(options) {
                 e = 1 - e;
             options.onTick(e * (to - from));
             if (t >= 1) {
-                clearTimeout(interval);
+                clearInterval(interval);
                 if (loop == true || loopCount < loop) {
                     if (loopMode === 'ping-pong')
                         normal = !normal;
@@ -20869,7 +20882,7 @@ function startAnimation(options) {
                     options.onEnd && options.onEnd();
                 }
             }
-        }, options.interval || 0);
+        }, intervalTime);
     };
     if (options.delay != null)
         setTimeout(start, options.delay);
@@ -20893,6 +20906,7 @@ function startAnimation(options) {
 "use strict";
 /* unused harmony export InputButton */
 /* unused harmony export FramePressState */
+/* unused harmony export MoveDirection */
 var InputButton;
 (function (InputButton) {
     InputButton[InputButton["Left"] = 0] = "Left";
@@ -20906,6 +20920,14 @@ var FramePressState;
     FramePressState[FramePressState["PressedAndReleased"] = 2] = "PressedAndReleased";
     FramePressState[FramePressState["NotChanged"] = 3] = "NotChanged";
 })(FramePressState || (FramePressState = {}));
+var MoveDirection;
+(function (MoveDirection) {
+    MoveDirection[MoveDirection["Left"] = 0] = "Left";
+    MoveDirection[MoveDirection["Up"] = 1] = "Up";
+    MoveDirection[MoveDirection["Right"] = 2] = "Right";
+    MoveDirection[MoveDirection["Down"] = 3] = "Down";
+    MoveDirection[MoveDirection["None"] = 4] = "None";
+})(MoveDirection || (MoveDirection = {}));
 
 
 /***/ }),
@@ -20958,7 +20980,7 @@ if (process.env.NODE_ENV === 'production') {
 "use strict";
 
 // EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(175);
+var react = __webpack_require__(325);
 
 // CONCATENATED MODULE: ./node_modules/react-unity-renderer/dist/src/components/dropdown/dropdown-item.js
 var __extends = (undefined && undefined.__extends) || (function () {
@@ -20990,6 +21012,7 @@ var DropdownItem = /** @class */ (function (_super) {
 
 
 // CONCATENATED MODULE: ./node_modules/react-unity-renderer/dist/src/helpers/common-layouts.js
+var transparentColor = new ColorNative(0, 0, 0, 0);
 var fullScreen = {
     PositionType: 1 /* Absolute */,
     Top: YogaValueNative.Point(-5000),
@@ -21068,15 +21091,18 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
     function Dropdown(props) {
         var _this = _super.call(this, props) || this;
         _this.handleChildClick = function (ind, value) {
-            if (_this.props.onSelect)
-                _this.props.onSelect(value, ind);
+            if (_this.props.onChange)
+                _this.props.onChange(value, ind);
             if (_this.props.autoClose)
                 _this.close();
             _this.setState({ selectedIndex: ind });
         };
         _this.toggle = function () { return _this.setState(function (st) { return ({ opened: !st.opened }); }); };
         _this.open = function () { return _this.setState({ opened: true }); };
-        _this.close = function () { return _this.setState({ opened: false }); };
+        _this.close = function () {
+            console.log('Dropdown Closed');
+            _this.setState({ opened: false });
+        };
         _this.state = {
             opened: false,
             selectedIndex: -1,
@@ -21090,16 +21116,16 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
         var nonItems = children.filter(function (x) { return (x === null || x === void 0 ? void 0 : x.type) !== DropdownItem; });
         var items = children.filter(function (x) { return (x === null || x === void 0 ? void 0 : x.type) === DropdownItem; });
         var selectedItem = items[this.state.selectedIndex];
-        var _b = this.props, autoClose = _b.autoClose, onSelect = _b.onSelect, name = _b.name, otherProps = __rest(_b, ["autoClose", "onSelect", "name"]);
+        var _b = this.props, autoClose = _b.autoClose, onChange = _b.onChange, name = _b.name, otherProps = __rest(_b, ["autoClose", "onChange", "name"]);
         return (Object(react.createElement)("view", { name: name || '<Dropdown>' },
             Object(react.createElement)("button", __assign({ name: "<Dropdown Trigger>", onClick: this.toggle }, otherProps),
                 this.state.selectedIndex < 0
                     ? nonItems
                     : (((_a = selectedItem.props) === null || _a === void 0 ? void 0 : _a.triggerTemplate) || selectedItem),
                 this.state.opened && Object(react.createElement)("view", { layout: bottomEdge, style: { zOrder: 1000 } },
-                    Object(react.createElement)("view", { name: "<Dropdown Backdrop>", onPointerClick: this.close, layout: fullScreen }),
+                    Object(react.createElement)("button", { name: "<Dropdown Backdrop>", onClick: this.close, layout: fullScreen, style: { backgroundColor: transparentColor } }),
                     Object(react.createElement)("view", { name: "<Dropdown Menu>", layout: dropdownBottom }, items.map(function (x, i) {
-                        return Object(react.createElement)("button", { style: { backgroundColor: ColorNative.white }, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
+                        return Object(react.createElement)("button", { style: { backgroundColor: ColorNative.white, borderRadius: 0 }, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
                     }))))));
     };
     Dropdown.defaultProps = {
@@ -21226,7 +21252,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ 	"use strict";
-/******/
+/******/ 
 /******/ 	/* webpack/runtime/define property getter */
 /******/ 	!function() {
 /******/ 		// define getter function for harmony exports
@@ -21237,7 +21263,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			}
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	!function() {
 /******/ 		__webpack_require__.nmd = function(module) {
@@ -21254,7 +21280,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	!function() {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -21266,7 +21292,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -21277,7 +21303,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/create fake namespace object */
 /******/ 	!function() {
 /******/ 		// create a fake namespace object
@@ -21296,6 +21322,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return ns;
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ }
 );

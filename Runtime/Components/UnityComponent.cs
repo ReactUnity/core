@@ -47,8 +47,7 @@ namespace ReactUnity.Components
             RectTransform = existing;
 
             Style = new NodeStyle();
-            Layout = new YogaNode();
-            ResetLayout();
+            Layout = new YogaNode(DefaultLayout);
         }
 
         public UnityComponent(UnityUGUIContext context)
@@ -63,8 +62,7 @@ namespace ReactUnity.Components
 
 
             Style = new NodeStyle();
-            Layout = new YogaNode();
-            ResetLayout();
+            Layout = new YogaNode(DefaultLayout);
             Flex = GameObject.AddComponent<FlexElement>();
             Flex.Layout = Layout;
             Flex.Style = Style;
@@ -130,17 +128,6 @@ namespace ReactUnity.Components
                 default:
                     throw new System.Exception($"Unknown property name specified, '{propertyName}'");
             }
-        }
-
-
-        public void ResetLayout()
-        {
-            Layout.CopyStyle(DefaultLayout);
-        }
-
-        public void ResetStyle()
-        {
-            Style.CopyStyle(DefaultStyle);
         }
 
         public void ScheduleLayout(System.Action callback = null)
