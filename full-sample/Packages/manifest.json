@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.kurtgokhan.react-unity": "0.0.3",
+    "com.kurtgokhan.react-unity": "0.0.4",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ide.vscode": "1.1.4",
     "com.unity.textmeshpro": "2.0.1",
