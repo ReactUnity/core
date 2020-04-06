@@ -19164,9 +19164,11 @@ var custom_component_App = /** @class */ (function (_super) {
         return _this;
     }
     App.prototype.render = function () {
+        var ElementName = 'customButton';
         return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
             Object(react.createElement)("button", { layout: { MarginBottom: 20 }, style: { fontColor: 'white' } }, "Normal Button"),
-            Object(react.createElement)("customButton", { style: { fontColor: 'white' } }, "Custom Button")));
+            Object(react.createElement)("customButton", { layout: { MarginBottom: 20 }, style: { fontColor: 'white' } }, "Custom Button"),
+            Object(react.createElement)(ElementName, { style: { fontColor: 'white' } }, "Custom Button - Value Based")));
     };
     return App;
 }(react.Component));
