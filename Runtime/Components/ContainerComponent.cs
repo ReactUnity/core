@@ -23,19 +23,17 @@ namespace ReactUnity.Components
             Container = RectTransform;
         }
 
-        public override void ResolveStyle()
+        public override void ResolveStyle(bool recursive = false)
         {
-            base.ResolveStyle();
+            var inheritedChanges = Style.HasInheritedChanges;
+            base.ResolveStyle(recursive);
 
-            var inheritedChanges = Style.resolved.hasInteritedChanges;
-            if (inheritedChanges)
+            if (inheritedChanges || recursive)
             {
                 foreach (var child in Children)
                 {
-                    child.ResolveStyle();
+                    child.ResolveStyle(true);
                 }
-
-                Style.resolved.hasInteritedChanges = false;
             }
         }
 

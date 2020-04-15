@@ -19,7 +19,7 @@ namespace ReactUnity.Components
     {
         public UnityUGUIContext Context { get; }
         public static NodeStyle TagDefaultStyle { get; } = new NodeStyle();
-        public static YogaNode TagDefaultLayout { get; } = new YogaNode() { };
+        public static YogaNode TagDefaultLayout { get; } = new YogaNode();
         public virtual NodeStyle DefaultStyle => TagDefaultStyle;
         public virtual YogaNode DefaultLayout => TagDefaultLayout;
 
@@ -46,7 +46,7 @@ namespace ReactUnity.Components
             GameObject = existing.gameObject;
             RectTransform = existing;
 
-            Style = new NodeStyle();
+            Style = new NodeStyle(DefaultStyle);
             Layout = new YogaNode(DefaultLayout);
         }
 
@@ -61,8 +61,9 @@ namespace ReactUnity.Components
             RectTransform.pivot = Vector2.up;
 
 
-            Style = new NodeStyle();
+            Style = new NodeStyle(DefaultStyle);
             Layout = new YogaNode(DefaultLayout);
+
             Flex = GameObject.AddComponent<FlexElement>();
             Flex.Layout = Layout;
             Flex.Style = Style;
@@ -96,7 +97,8 @@ namespace ReactUnity.Components
                 RectTransform.SetSiblingIndex(ind);
             }
 
-            ResolveStyle();
+            Style.Parent = parent.Style;
+            ResolveStyle(true);
         }
 
 
@@ -112,7 +114,7 @@ namespace ReactUnity.Components
             // No event to add
             if (fun == null) return;
 
-            if(handler == null) handler = GameObject.AddComponent(eventType) as IEventHandler;
+            if (handler == null) handler = GameObject.AddComponent(eventType) as IEventHandler;
 
             System.Action<BaseEventData> callAction = (e) => fun.Invoke(JsValue.FromObject(Context.Engine, e));
             handler.OnEvent += callAction;
@@ -135,11 +137,10 @@ namespace ReactUnity.Components
             Context.scheduleLayout(callback);
         }
 
-        public virtual void ResolveStyle()
+        public virtual void ResolveStyle(bool recursive = false)
         {
-            Style.ResolveStyle(Parent?.Style.resolved, DefaultStyle);
+            if (Parent == null) return;
             ApplyStyles();
-
             Style.MarkChangesSeen();
         }
 
@@ -156,9 +157,9 @@ namespace ReactUnity.Components
             ResolveOpacityAndInteractable();
             SetBackground();
             SetBoxShadow();
-            SetZOrder(Style.resolved.zOrder);
-            SetBorderRadius(Style.resolved.borderRadius);
-            SetBorderColor(Style.resolved.borderColor);
+            SetZOrder();
+            SetBorderRadius();
+            SetBorderColor();
             SetOverflow();
         }
 
@@ -169,7 +170,7 @@ namespace ReactUnity.Components
             RectTransform.localRotation = Quaternion.identity;
 
 
-            var pivot = Style.resolved.pivot;
+            var pivot = Style.pivot;
             Vector3 deltaPosition = RectTransform.pivot - pivot;    // get change in pivot
             deltaPosition.Scale(RectTransform.rect.size);           // apply sizing
             deltaPosition.Scale(RectTransform.localScale);          // apply scaling
@@ -180,16 +181,17 @@ namespace ReactUnity.Components
 
 
             // Restore rotation and scale
-            RectTransform.localScale = new Vector3(Style.resolved.scale.x, Style.resolved.scale.y, 1);
-            RectTransform.localRotation = Quaternion.Euler(0, 0, Style.resolved.rotate);
+            var scale = Style.scale;
+            RectTransform.localScale = new Vector3(scale.x, scale.y, 1);
+            RectTransform.localRotation = Quaternion.Euler(0, 0, Style.rotate);
         }
 
         protected void ResolveOpacityAndInteractable()
         {
-            var opacity = Style.resolved.opacity;
-            var hidden = Style.resolved.hidden;
+            var opacity = Style.opacity;
+            var hidden = Style.hidden;
             var none = Layout.Display == YogaDisplay.None;
-            var interaction = Style.resolved.interaction;
+            var interaction = Style.interaction;
 
             if (hidden || none) opacity = 0;
             if (none) interaction = InteractionType.Ignore;
@@ -235,7 +237,7 @@ namespace ReactUnity.Components
             if (mask == null) mask = MaskAndImage = new MaskAndImage(RectTransform);
 
             mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
-            mask.SetBorderRadius(Style.resolved.borderRadius);
+            mask.SetBorderRadius(Style.borderRadius);
         }
 
         private void SetBackground()
@@ -243,8 +245,8 @@ namespace ReactUnity.Components
             if (!HasBorderOrBackground()) return;
 
             var image = GetBackgroundGraphic();
-            var sprite = AssetReference.GetSpriteFromObject(Style.resolved.backgroundImage, Context);
-            image.SetBackgroundColorAndImage(Style.resolved.backgroundColor, sprite);
+            var sprite = AssetReference.GetSpriteFromObject(Style.backgroundImage, Context);
+            image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
         }
 
         private void SetBoxShadow()
@@ -252,10 +254,10 @@ namespace ReactUnity.Components
             if (!HasBorderOrBackground()) return;
 
             var image = GetBackgroundGraphic();
-            image.SetBoxShadow(Style.resolved.boxShadow);
+            image.SetBoxShadow(Style.boxShadow);
         }
 
-        private void SetBorderRadius(int radius)
+        private void SetBorderRadius()
         {
             if (!HasBorderOrBackground()) return;
 
@@ -264,17 +266,17 @@ namespace ReactUnity.Components
             MainThreadDispatcher.OnUpdate(() =>
             {
                 if (!GameObject) return;
-                var sprite = BorderGraphic.CreateBorderSprite(radius);
+                var sprite = BorderGraphic.CreateBorderSprite(Style.borderRadius);
                 image.SetBorderImage(sprite);
             });
         }
 
-        private void SetBorderColor(Color? color)
+        private void SetBorderColor()
         {
             if (!HasBorderOrBackground()) return;
 
             var image = GetBackgroundGraphic();
-            image.SetBorderColor(color ?? Color.clear);
+            image.SetBorderColor(Style.borderColor);
         }
 
         private void SetBorderSize()
@@ -294,16 +296,16 @@ namespace ReactUnity.Components
                 || Layout.BorderStartWidth > 0 || Layout.BorderEndWidth > 0;
             if (borderAny) return true;
 
-            var resolved = Style.resolved;
-            if (resolved.borderRadius > 0 && resolved.borderColor.HasValue) return true;
-            if (resolved.backgroundColor.HasValue) return true;
-            if (resolved.backgroundImage != null) return true;
+            if (Style.borderRadius > 0 && Style.borderColor.a > 0) return true;
+            if (Style.backgroundColor.a > 0) return true;
+            if (Style.backgroundImage != null) return true;
 
             return false;
         }
 
-        private void SetZOrder(int z)
+        private void SetZOrder()
         {
+            var z = Style.zOrder;
             Canvas canvas = Canvas;
             if (!canvas && z == 0) return;
             if (!canvas)

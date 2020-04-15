@@ -61,7 +61,7 @@ namespace ReactUnity.Editor
                 CurrentStyleDefaults = flex.Component?.DefaultStyle;
                 CurrentLayoutDefaults = flex.Component?.DefaultLayout;
 
-                CurrentStyle.ResolveStyle(flex.Component?.Parent?.Style.resolved, CurrentStyleDefaults);
+                CurrentStyle.Parent = flex.Component?.Parent?.Style;
 
                 PreviousFlex = flex;
             }
@@ -100,31 +100,27 @@ namespace ReactUnity.Editor
             GUILayout.Label("Rendering");
 
             // Opacity
-            DrawNullableRow(CurrentStyle.opacity.HasValue, (enabled) =>
+            DrawNullableRow("opacity", (enabled) =>
             {
-                var prop = EditorGUILayout.Slider("Opacity", CurrentStyle.opacity ?? CurrentStyle.resolved.opacity, 0, 1f);
-                CurrentStyle.opacity = enabled ? (float?)prop : null;
+                return EditorGUILayout.Slider("Opacity", CurrentStyle.opacity, 0, 1f);
             });
 
             // zOrder
-            DrawNullableRow(CurrentStyle.zOrder.HasValue, (enabled) =>
+            DrawNullableRow("zOrder", (enabled) =>
             {
-                var prop = EditorGUILayout.IntField("Z Order", CurrentStyle.zOrder ?? CurrentStyle.resolved.zOrder);
-                CurrentStyle.zOrder = enabled ? (int?)prop : null;
+                return EditorGUILayout.IntField("Z Order", CurrentStyle.zOrder);
             });
 
             // Opacity
-            DrawNullableRow(CurrentStyle.hidden.HasValue, (enabled) =>
+            DrawNullableRow("hidden", (enabled) =>
             {
-                var prop = EditorGUILayout.Toggle("Hidden", CurrentStyle.hidden ?? CurrentStyle.resolved.hidden);
-                CurrentStyle.hidden = enabled ? (bool?)prop : null;
+                return EditorGUILayout.Toggle("Hidden", CurrentStyle.hidden);
             });
 
             // Interaction
-            DrawNullableRow(CurrentStyle.interaction.HasValue, (enabled) =>
+            DrawNullableRow("interaction", (enabled) =>
             {
-                var prop = EditorGUILayout.EnumPopup("Interaction", CurrentStyle.interaction ?? CurrentStyle.resolved.interaction);
-                CurrentStyle.interaction = enabled ? (InteractionType?)prop : null;
+                return EditorGUILayout.EnumPopup("Interaction", CurrentStyle.interaction);
             });
 
 
@@ -132,22 +128,21 @@ namespace ReactUnity.Editor
             GUILayout.Space(14);
 
             // Box Shadow
-            DrawNullableRow(CurrentStyle.boxShadow != null, (enabled) =>
+            DrawNullableRow("boxShadow", (enabled) =>
             {
                 EditorGUILayout.BeginVertical();
                 GUILayout.Label("Box Shadow");
 
-                if (!enabled) CurrentStyle.boxShadow = null;
-                else CurrentStyle.boxShadow = CurrentStyle.boxShadow ?? new ShadowDefinition();
-
                 var tempShadow = CurrentStyle.boxShadow ?? new ShadowDefinition();
 
-                tempShadow.blur = EditorGUILayout.FloatField("Blur", CurrentStyle.boxShadow?.blur ?? 0);
-                tempShadow.offset = EditorGUILayout.Vector2Field("Offset", CurrentStyle.boxShadow?.offset ?? Vector2.zero);
-                tempShadow.spread = EditorGUILayout.Vector2Field("Spread", CurrentStyle.boxShadow?.spread ?? Vector2.zero);
-                tempShadow.color = EditorGUILayout.ColorField("Color", CurrentStyle.boxShadow?.color ?? Color.black);
+                tempShadow.blur = EditorGUILayout.FloatField("Blur", tempShadow.blur);
+                tempShadow.offset = EditorGUILayout.Vector2Field("Offset", tempShadow.offset);
+                tempShadow.spread = EditorGUILayout.Vector2Field("Spread", tempShadow.spread);
+                tempShadow.color = EditorGUILayout.ColorField("Color", tempShadow.color);
 
                 EditorGUILayout.EndVertical();
+
+                return tempShadow;
             });
 
 
@@ -156,11 +151,9 @@ namespace ReactUnity.Editor
 
 
             // Background color
-            DrawNullableRow(CurrentStyle.backgroundColor.HasValue, (enabled) =>
+            DrawNullableRow("backgroundColor", (enabled) =>
             {
-                var prop = EditorGUILayout.ColorField("Background color",
-                    CurrentStyle.backgroundColor ?? CurrentStyle.resolved.backgroundColor ?? Color.white);
-                CurrentStyle.backgroundColor = enabled ? (Color?)prop : null;
+                return EditorGUILayout.ColorField("Background color", CurrentStyle.backgroundColor);
             });
 
 
@@ -173,17 +166,15 @@ namespace ReactUnity.Editor
             });
 
             // Border color
-            DrawNullableRow(CurrentStyle.borderColor.HasValue, (enabled) =>
+            DrawNullableRow("borderColor", (enabled) =>
             {
-                var prop = EditorGUILayout.ColorField("Border color", CurrentStyle.borderColor ?? CurrentStyle.resolved.borderColor ?? Color.black);
-                CurrentStyle.borderColor = enabled ? (Color?)prop : null;
+                return EditorGUILayout.ColorField("Border color", CurrentStyle.borderColor);
             });
 
             // Border radius
-            DrawNullableRow(CurrentStyle.borderRadius.HasValue, (enabled) =>
+            DrawNullableRow("borderRadius", (enabled) =>
             {
-                var prop = EditorGUILayout.IntField("Border radius", CurrentStyle.borderRadius ?? CurrentStyle.resolved.borderRadius);
-                CurrentStyle.borderRadius = enabled ? (int?)prop : null;
+                return EditorGUILayout.IntField("Border radius", CurrentStyle.borderRadius);
             });
 
 
@@ -197,31 +188,27 @@ namespace ReactUnity.Editor
             GUILayout.EndHorizontal();
 
             // Font style
-            DrawNullableRow(CurrentStyle.fontStyle.HasValue, (enabled) =>
+            DrawNullableRow("fontStyle", (enabled) =>
             {
-                var prop = EditorGUILayout.EnumFlagsField("Font style", CurrentStyle.fontStyle ?? CurrentStyle.resolved.fontStyle);
-                CurrentStyle.fontStyle = enabled ? (FontStyles?)prop : null;
+                return EditorGUILayout.EnumFlagsField("Font style", CurrentStyle.fontStyle);
             });
 
             // Text Overflow
-            DrawNullableRow(CurrentStyle.textOverflow.HasValue, (enabled) =>
+            DrawNullableRow("textOverflow", (enabled) =>
             {
-                var prop = EditorGUILayout.EnumPopup("Text Overflow", CurrentStyle.textOverflow ?? CurrentStyle.resolved.textOverflow);
-                CurrentStyle.textOverflow = enabled ? (TextOverflowModes?)prop : null;
+                return EditorGUILayout.EnumPopup("Text Overflow", CurrentStyle.textOverflow);
             });
 
             // Font color
-            DrawNullableRow(CurrentStyle.fontColor.HasValue, (enabled) =>
+            DrawNullableRow("fontColor", (enabled) =>
             {
-                var prop = EditorGUILayout.ColorField("Font color", CurrentStyle.fontColor ?? CurrentStyle.resolved.fontColor);
-                CurrentStyle.fontColor = enabled ? (Color?)prop : null;
+                return EditorGUILayout.ColorField("Font color", CurrentStyle.fontColor);
             });
 
             // Text wrap
-            DrawNullableRow(CurrentStyle.textWrap.HasValue, (enabled) =>
+            DrawNullableRow("textWrap", (enabled) =>
             {
-                var prop = EditorGUILayout.Toggle("Text wrap", CurrentStyle.textWrap ?? CurrentStyle.resolved.textWrap);
-                CurrentStyle.textWrap = enabled ? (bool?)prop : null;
+                return EditorGUILayout.Toggle("Text wrap", CurrentStyle.textWrap);
             });
 
             // Direction
@@ -234,40 +221,34 @@ namespace ReactUnity.Editor
             GUILayout.Label("Transform");
 
             // Translate
-            DrawNullableRow(CurrentStyle.translate.HasValue, (enabled) =>
+            DrawNullableRow("translate", (enabled) =>
             {
-                var prop = EditorGUILayout.Vector2Field("Translate", CurrentStyle.translate ?? CurrentStyle.resolved.translate);
-                CurrentStyle.translate = enabled ? (Vector2?)prop : null;
+                return EditorGUILayout.Vector2Field("Translate", CurrentStyle.translate);
             });
 
             // Translate Relative
-            DrawNullableRow(CurrentStyle.translateRelative.HasValue, (enabled) =>
+            DrawNullableRow("translateRelative", (enabled) =>
             {
-                var prop = EditorGUILayout.Toggle("Translate relative", CurrentStyle.translateRelative ?? CurrentStyle.resolved.translateRelative);
-                CurrentStyle.translateRelative = enabled ? (bool?)prop : null;
+                return EditorGUILayout.Toggle("Translate relative", CurrentStyle.translateRelative);
             });
 
             // Pivot
-            DrawNullableRow(CurrentStyle.pivot.HasValue, (enabled) =>
+            DrawNullableRow("pivot", (enabled) =>
             {
-                var prop = EditorGUILayout.Vector2Field("Pivot", CurrentStyle.pivot ?? CurrentStyle.resolved.pivot);
-                CurrentStyle.pivot = enabled ? (Vector2?)prop : null;
+                return EditorGUILayout.Vector2Field("Pivot", CurrentStyle.pivot);
             });
 
             // Scale
-            DrawNullableRow(CurrentStyle.scale.HasValue, (enabled) =>
+            DrawNullableRow("scale", (enabled) =>
             {
-                var prop = EditorGUILayout.Vector2Field("Scale", CurrentStyle.scale ?? CurrentStyle.resolved.scale);
-                CurrentStyle.scale = enabled ? (Vector2?)prop : null;
+                return EditorGUILayout.Vector2Field("Scale", CurrentStyle.scale);
             });
 
             // Rotation
-            DrawNullableRow(CurrentStyle.rotate.HasValue, (enabled) =>
+            DrawNullableRow("rotate", (enabled) =>
             {
-                var prop = EditorGUILayout.FloatField("Rotation", CurrentStyle.rotate ?? CurrentStyle.resolved.rotate);
-                CurrentStyle.rotate = enabled ? (float?)prop : null;
+                return EditorGUILayout.FloatField("Rotation", CurrentStyle.rotate);
             });
-
         }
 
 
@@ -501,13 +482,16 @@ namespace ReactUnity.Editor
             return EditorGUILayout.Toggle(value, GUILayout.ExpandWidth(false), GUILayout.Width(20));
         }
 
-        void DrawNullableRow(bool value, Action<bool> draw)
+        void DrawNullableRow(string propertyName, Func<bool, object> draw)
         {
+            var exists = CurrentStyle.HasValue(propertyName);
+
             GUILayout.BeginHorizontal();
-            var enabled = Toggle(value);
+            var enabled = Toggle(exists);
             GUI.enabled = enabled;
 
-            draw(enabled);
+            var result = draw(enabled);
+            CurrentStyle.SetStyleValue(propertyName, enabled ? result : null);
 
             GUILayout.EndHorizontal();
             GUI.enabled = true;
@@ -551,13 +535,13 @@ namespace ReactUnity.Editor
             var str = new StringBuilder();
             str.Append("{\n");
 
-            var excludedProperties = new List<string>() { "resolved" };
+            var excludedProperties = new List<string>() { "StyleMap", "Changes", "HasInheritedChanges", "Parent", "DefaultStyle" };
             var styleType = typeof(NodeStyle);
 
             var properties = styleType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             return CopyObjectFor(
-                properties.Where(x => !excludedProperties.Contains(x.Name)),
+                properties.Where(x => !excludedProperties.Contains(x.Name) && x.CanWrite),
                 CurrentStyle,
                 CurrentStyleDefaults);
         }

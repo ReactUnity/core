@@ -13,7 +13,7 @@ namespace ReactUnity.Styling
 
         void Update()
         {
-            var enableLink = WatchedText.Style.resolved.textOverflow == TMPro.TextOverflowModes.Linked && WatchedText.Text.isTextOverflowing;
+            var enableLink = WatchedText.Style.textOverflow == TMPro.TextOverflowModes.Linked && WatchedText.Text.isTextOverflowing;
             var newOverflowIndex = WatchedText.Text.firstOverflowCharacterIndex;
             enableLink = enableLink && newOverflowIndex > 0;
 

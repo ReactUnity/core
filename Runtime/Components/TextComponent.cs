@@ -61,15 +61,15 @@ namespace ReactUnity.Components
         public override void ApplyStyles()
         {
             base.ApplyStyles();
-            Text.font = Style.resolved.font;
-            Text.fontSize = Style.resolved.fontSize;
-            Text.fontStyle = Style.resolved.fontStyle;
-            Text.fontWeight = Style.resolved.fontWeight;
-            Text.color = Style.resolved.fontColor;
-            Text.enableWordWrapping = Style.resolved.textWrap;
+            Text.font = Style.font;
+            Text.fontSize = Style.fontSizeActual;
+            Text.fontStyle = Style.fontStyle;
+            Text.fontWeight = Style.fontWeight;
+            Text.color = Style.fontColor;
+            Text.enableWordWrapping = Style.textWrap;
 
 
-            var isLinked = Style.resolved.textOverflow == TextOverflowModes.Linked;
+            var isLinked = Style.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)
             {
                 LinkedTextWatcher = GameObject.AddComponent<LinkedTextWatcher>();
@@ -84,7 +84,7 @@ namespace ReactUnity.Components
             }
 
             // Page is appropriate here because it calculates firstOverflowCharacterIndex and masks the text at the same time
-            Text.overflowMode = isLinked ? TextOverflowModes.Page : Style.resolved.textOverflow;
+            Text.overflowMode = isLinked ? TextOverflowModes.Page : Style.textOverflow;
         }
 
         public override void Destroy()

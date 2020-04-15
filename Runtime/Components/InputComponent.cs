@@ -19,6 +19,7 @@ namespace ReactUnity.Components
             MaxWidth = YogaValue.Percent(100),
             Overflow = YogaOverflow.Hidden
         };
+
         public static NodeStyle InputDefaultStyle { get; } = new NodeStyle()
         {
             backgroundColor = Color.white,
@@ -98,19 +99,19 @@ namespace ReactUnity.Components
             TextComponent.SelfControl.enabled = Layout.Width.Unit == YogaUnit.Auto;
         }
 
-        public override void ResolveStyle()
+        public override void ResolveStyle(bool recursive = false)
         {
             base.ResolveStyle();
 
-            var c = TextComponent.Style.resolved.fontColor;
-            Placeholder.Style.resolved.fontColor = new Color(c.r, c.g, c.b, c.a * 0.5f);
+            var c = TextComponent.Style.fontColor;
+            Placeholder.Style.fontColor = new Color(c.r, c.g, c.b, c.a * 0.5f);
             Placeholder.ApplyStyles();
         }
 
         public override void ApplyStyles()
         {
             base.ApplyStyles();
-            InputField.pointSize = Style.resolved.fontSize;
+            InputField.pointSize = Style.fontSizeActual;
         }
 
         public void Focus()

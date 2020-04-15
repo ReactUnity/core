@@ -4,7 +4,6 @@ using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace ReactUnity.Components

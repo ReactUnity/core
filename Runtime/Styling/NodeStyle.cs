@@ -1,5 +1,6 @@
 using Facebook.Yoga;
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -7,311 +8,238 @@ namespace ReactUnity.Styling
 {
     public class NodeStyle
     {
-        // Universal default style
-        public static ResolvedNodeStyle Default = new ResolvedNodeStyle();
-        public static YogaValue Undefined = YogaValue.Undefined();
+        Dictionary<string, object> StyleMap;
+        Dictionary<string, object> DefaultStyle;
+        HashSet<string> Changes = new HashSet<string>();
+        public bool HasInheritedChanges { get; private set; } = false;
 
-        public ResolvedNodeStyle resolved { get; } = new ResolvedNodeStyle();
+        public NodeStyle Parent;
 
-        #region Fields
-
-        private TMP_FontAsset _font;
-        private Color? _fontColor;
-        private FontWeight? _fontWeight;
-        private FontStyles? _fontStyle;
-        private YogaValue _fontSize;
-        private TextOverflowModes? _textOverflow;
-        private bool? _textWrap;
-
-        #endregion
-
-
-        #region Changes
-
-        public bool hasChanges = true;
-        public bool hasInteritedChanges = true;
-
-        public bool fontChanged = true;
-        public bool fontColorChanged = true;
-        public bool fontWeightChanged = true;
-        public bool fontStyleChanged = true;
-        public bool fontSizeChanged = true;
-        public bool textOverflowChanged = true;
-        public bool textWrapChanged = true;
-
-        #endregion
-
-
-        #region Changes
-
-        // Non-inherited styles
-        public float? opacity { get; set; }
-        public int? zOrder { get; set; }
-        public bool? hidden { get; set; }
-        public InteractionType? interaction { get; set; }
-
-        public Color? backgroundColor { get; set; }
-        public object backgroundImage { get; set; }
-
-        public int? borderRadius { get; set; }
-        public Color? borderColor { get; set; }
-
-        public ShadowDefinition boxShadow { get; set; }
-
-        public Vector2? translate { get; set; }
-        public bool? translateRelative { get; set; }
-        public Vector2? scale { get; set; }
-        public Vector2? pivot { get; set; }
-        public float? rotate { get; set; }
-
-        // Inherited styles
+        #region Set/Get
+        public float opacity
+        {
+            set => SetStyleValue("opacity", value);
+            get => GetStyleValue<float>("opacity");
+        }
+        public int zOrder
+        {
+            set => SetStyleValue("zOrder", value);
+            get => GetStyleValue<int>("zOrder");
+        }
+        public bool hidden
+        {
+            set => SetStyleValue("hidden", value);
+            get => GetStyleValue<bool>("hidden");
+        }
+        public InteractionType interaction
+        {
+            set => SetStyleValue("interaction", value);
+            get => GetStyleValue<InteractionType>("interaction");
+        }
+        public Color backgroundColor
+        {
+            set => SetStyleValue("backgroundColor", value);
+            get => GetStyleValue<Color>("backgroundColor");
+        }
+        public object backgroundImage
+        {
+            set => SetStyleValue("backgroundImage", value);
+            get => GetStyleValue("backgroundImage");
+        }
+        public int borderRadius
+        {
+            set => SetStyleValue("borderRadius", value);
+            get => GetStyleValue<int>("borderRadius");
+        }
+        public Color borderColor
+        {
+            set => SetStyleValue("borderColor", value);
+            get => GetStyleValue<Color>("borderColor");
+        }
+        public ShadowDefinition boxShadow
+        {
+            set => SetStyleValue("boxShadow", value);
+            get => GetStyleValue<ShadowDefinition>("boxShadow");
+        }
+        public Vector2 translate
+        {
+            set => SetStyleValue("translate", value);
+            get => GetStyleValue<Vector2>("translate");
+        }
+        public bool translateRelative
+        {
+            set => SetStyleValue("translateRelative", value);
+            get => GetStyleValue<bool>("translateRelative");
+        }
+        public Vector2 scale
+        {
+            set => SetStyleValue("scale", value);
+            get => GetStyleValue<Vector2>("scale");
+        }
+        public Vector2 pivot
+        {
+            set => SetStyleValue("pivot", value);
+            get => GetStyleValue<Vector2>("pivot");
+        }
+        public float rotate
+        {
+            set => SetStyleValue("rotate", value);
+            get => GetStyleValue<float>("rotate");
+        }
         public TMP_FontAsset font
         {
-            get => _font;
-            set
-            {
-                fontChanged = fontChanged || value != _font;
-                hasInteritedChanges = hasInteritedChanges || fontChanged;
-                hasChanges = hasChanges || fontChanged;
-                _font = value;
-            }
+            set => SetStyleValue("font", value);
+            get => GetStyleValue<TMP_FontAsset>("font");
         }
-
-        public Color? fontColor
+        public Color fontColor
         {
-            get => _fontColor;
-            set
-            {
-                fontColorChanged = fontColorChanged || value != _fontColor;
-                hasInteritedChanges = hasInteritedChanges || fontColorChanged;
-                hasChanges = hasChanges || fontColorChanged;
-                _fontColor = value;
-            }
+            set => SetStyleValue("fontColor", value);
+            get => GetStyleValue<Color>("fontColor");
         }
-
-        public FontWeight? fontWeight
+        public FontWeight fontWeight
         {
-            get => _fontWeight;
-            set
-            {
-                fontWeightChanged = fontWeightChanged || value != _fontWeight;
-                hasInteritedChanges = hasInteritedChanges || fontWeightChanged;
-                hasChanges = hasChanges || fontWeightChanged;
-                _fontWeight = value;
-            }
+            set => SetStyleValue("fontWeight", value);
+            get => GetStyleValue<FontWeight>("fontWeight");
         }
-
-        public FontStyles? fontStyle
+        public FontStyles fontStyle
         {
-            get => _fontStyle;
-            set
-            {
-                fontStyleChanged = fontStyleChanged || value != _fontStyle;
-                hasInteritedChanges = hasInteritedChanges || fontStyleChanged;
-                hasChanges = hasChanges || fontStyleChanged;
-                _fontStyle = value;
-            }
+            set => SetStyleValue("fontStyle", value);
+            get => GetStyleValue<FontStyles>("fontStyle");
         }
-
         public YogaValue fontSize
         {
-            get => _fontSize;
-            set
-            {
-                fontSizeChanged = fontSizeChanged || !value.Equals(_fontSize);
-                hasInteritedChanges = hasInteritedChanges || fontSizeChanged;
-                hasChanges = hasChanges || fontSizeChanged;
-                _fontSize = value;
-            }
+            set => SetStyleValue("fontSize", value);
+            get => GetStyleValue<YogaValue>("fontSize");
         }
-
-        public TextOverflowModes? textOverflow
+        public TextOverflowModes textOverflow
         {
-            get => _textOverflow;
-            set
-            {
-                textOverflowChanged = textOverflowChanged || value != _textOverflow;
-                hasInteritedChanges = hasInteritedChanges || textOverflowChanged;
-                hasChanges = hasChanges || textOverflowChanged;
-                _textOverflow = value;
-            }
+            set => SetStyleValue("textOverflow", value);
+            get => GetStyleValue<TextOverflowModes>("textOverflow");
         }
-
-        public bool? textWrap
+        public bool textWrap
         {
-            get => _textWrap;
-            set
-            {
-                textWrapChanged = textWrapChanged || value != _textWrap;
-                hasInteritedChanges = hasInteritedChanges || textWrapChanged;
-                hasChanges = hasChanges || textWrapChanged;
-                _textWrap = value;
-            }
+            set => SetStyleValue("textWrap", value);
+            get => GetStyleValue<bool>("textWrap");
         }
-
         #endregion
 
-
-
-        public ResolvedNodeStyle ResolveStyle(ResolvedNodeStyle resolvedParent, NodeStyle tagDefaults)
+        #region Resolved values
+        public float fontSizeActual
         {
-            resolved.opacity = opacity ?? tagDefaults?.opacity ?? Default.opacity;
-            resolved.zOrder = zOrder ?? tagDefaults?.zOrder ?? Default.zOrder;
-            resolved.hidden = hidden ?? tagDefaults?.hidden ?? Default.hidden;
-            resolved.interaction = interaction ?? tagDefaults?.interaction ?? Default.interaction;
+            get
+            {
+                if (HasValue("fontSize"))
+                {
+                    var fs = fontSize;
+                    var unit = fs.Unit;
 
-            resolved.backgroundColor = backgroundColor ?? tagDefaults?.backgroundColor ?? Default.backgroundColor;
-            resolved.backgroundImage = backgroundImage ?? tagDefaults?.backgroundImage ?? Default.backgroundImage;
-            resolved.borderRadius = borderRadius ?? tagDefaults?.borderRadius ?? Default.borderRadius;
-            resolved.borderColor = borderColor ?? tagDefaults?.borderColor ?? Default.borderColor;
-            resolved.boxShadow = boxShadow ?? tagDefaults?.boxShadow ?? Default.boxShadow;
+                    if (unit == YogaUnit.Undefined || unit == YogaUnit.Auto) return Parent?.fontSizeActual ?? 0;
+                    if (unit == YogaUnit.Point) return fs.Value;
+                    return (Parent?.fontSizeActual ?? 0) * fs.Value / 100;
+                }
 
-            resolved.translate = translate ?? tagDefaults?.translate ?? Default.translate;
-            resolved.translateRelative = translateRelative ?? tagDefaults?.translateRelative ?? Default.translateRelative;
-            resolved.scale = scale ?? tagDefaults?.scale ?? Default.scale;
-            resolved.pivot = pivot ?? tagDefaults?.pivot ?? Default.pivot;
-            resolved.rotate = rotate ?? tagDefaults?.rotate ?? Default.rotate;
+                return Parent?.fontSizeActual ?? 0;
+            }
+        }
+        #endregion
 
-            // Inherited styles
-            resolved.font = font ?? tagDefaults?.font ?? resolvedParent?.font ?? Default.font;
+        public NodeStyle()
+        {
+            StyleMap = new Dictionary<string, object>();
+        }
 
-            var fontColor = this.fontColor ?? tagDefaults?.fontColor;
-            if (!fontColor.HasValue) resolved.fontColor = resolvedParent?.fontColor ?? Default.fontColor;
-            else resolved.fontColor = fontColor.Value;
-
-            var fontWeight = this.fontWeight ?? tagDefaults?.fontWeight;
-            if (!fontWeight.HasValue) resolved.fontWeight = resolvedParent?.fontWeight ?? Default.fontWeight;
-            else resolved.fontWeight = fontWeight.Value;
-
-            var fontStyle = this.fontStyle ?? tagDefaults?.fontStyle;
-            if (!fontStyle.HasValue) resolved.fontStyle = resolvedParent?.fontStyle ?? Default.fontStyle;
-            else resolved.fontStyle = fontStyle.Value;
-
-            var textOverflow = this.textOverflow ?? tagDefaults?.textOverflow;
-            if (!textOverflow.HasValue) resolved.textOverflow = resolvedParent?.textOverflow ?? Default.textOverflow;
-            else resolved.textOverflow = textOverflow.Value;
-
-            var textWrap = this.textWrap ?? tagDefaults?.textWrap;
-            if (!textWrap.HasValue) resolved.textWrap = resolvedParent?.textWrap ?? Default.textWrap;
-            else resolved.textWrap = textWrap.Value;
-
-            var fontSize = Undefined.Equals(this.fontSize) ? (tagDefaults?.fontSize ?? Undefined) : this.fontSize;
-            if (Undefined.Equals(fontSize) || fontSize.Unit == YogaUnit.Auto)
-                resolved.fontSize = resolvedParent?.fontSize ?? Default.fontSize;
-            else if (fontSize.Unit == YogaUnit.Percent)
-                resolved.fontSize = (resolvedParent?.fontSize ?? Default.fontSize) * fontSize.Value;
-            else resolved.fontSize = fontSize.Value;
-
-            resolved.hasInteritedChanges = hasInteritedChanges || (resolvedParent?.hasInteritedChanges ?? false);
-
-            return resolved;
+        public NodeStyle(NodeStyle defaultStyle) : this()
+        {
+            DefaultStyle = defaultStyle.StyleMap;
         }
 
         public void CopyStyle(NodeStyle copyFrom)
         {
-            opacity = copyFrom.opacity;
-            zOrder = copyFrom.zOrder;
-            hidden = copyFrom.hidden;
-            interaction = copyFrom.interaction;
+            StyleMap = new Dictionary<string, object>(copyFrom.StyleMap);
+        }
 
-            backgroundImage = copyFrom.backgroundImage;
-            backgroundColor = copyFrom.backgroundColor;
-            borderRadius = copyFrom.borderRadius;
-            borderColor = copyFrom.borderColor;
-            boxShadow = copyFrom.boxShadow;
+        public object GetStyleValue(StyleProperty prop)
+        {
+            object value;
 
-            translate = copyFrom.translate;
-            translateRelative = copyFrom.translateRelative;
-            scale = copyFrom.scale;
-            pivot = copyFrom.pivot;
-            rotate = copyFrom.rotate;
+            if (!StyleMap.TryGetValue(prop.name, out value) && (DefaultStyle == null || !DefaultStyle.TryGetValue(prop.name, out value)))
+            {
+                if (prop.inherited)
+                {
+                    return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
+                }
 
-            font = copyFrom.font;
-            fontColor = copyFrom.fontColor;
-            fontWeight = copyFrom.fontWeight;
-            fontStyle = copyFrom.fontStyle;
-            fontSize = copyFrom.fontSize;
-            textOverflow = copyFrom.textOverflow;
-            textWrap = copyFrom.textWrap;
+                return prop?.defaultValue;
+            }
 
-            hasChanges = true;
-            hasInteritedChanges = true;
+            return value;
+        }
+
+        public object GetStyleValue(string name)
+        {
+            object value;
+
+            if (!StyleMap.TryGetValue(name, out value) && (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
+            {
+                var prop = StyleProperties.GetStyleProperty(name);
+
+                if (prop != null && prop.inherited)
+                {
+                    return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
+                }
+
+                return prop?.defaultValue;
+            }
+
+            return value;
+        }
+
+        public T GetStyleValue<T>(string name)
+        {
+            var value = GetStyleValue(name);
+            return value == null ? default : (T)value;
+        }
+
+        public void SetStyleValue(string name, object value)
+        {
+            object currentValue;
+
+            if (!StyleMap.TryGetValue(name, out currentValue))
+            {
+                if (value == null) return;
+            }
+
+            var changed = currentValue != value;
+            if (value == null)
+            {
+                StyleMap.Remove(name);
+            }
+            else
+            {
+                StyleMap[name] = value;
+            }
+
+            if (changed)
+            {
+                Changes.Add(name);
+                if (StyleProperties.GetStyleProperty(name).inherited) HasInheritedChanges = true;
+            }
         }
 
         public void MarkChangesSeen()
         {
-            hasChanges = false;
-            hasInteritedChanges = false;
-
-            fontChanged = false;
-            fontColorChanged = false;
-            fontWeightChanged = false;
-            fontStyleChanged = false;
-            fontSizeChanged = false;
-            textOverflowChanged = false;
-            textWrapChanged = false;
+            Changes.Clear();
+            HasInheritedChanges = false;
         }
-    }
 
-
-    public class ResolvedNodeStyle
-    {
-        public bool hasInteritedChanges { get; set; }
-
-        // Non-inherited styles
-        public float opacity { get; set; } = 1;
-        public int zOrder { get; set; } = 0;
-        public bool hidden { get; set; } = false;
-        public InteractionType interaction { get; set; } = InteractionType.WhenVisible;
-
-        public Color? backgroundColor { get; set; } = null;
-        public object backgroundImage { get; set; } = null;
-
-        public int borderRadius { get; set; } = 0;
-        public Color? borderColor { get; set; } = Color.black;
-
-        public ShadowDefinition boxShadow { get; set; } = null;
-
-        public Vector2 translate { get; set; } = Vector2.zero;
-        public bool translateRelative { get; set; } = false;
-        public Vector2 scale { get; set; } = Vector2.one;
-        public Vector2 pivot { get; set; } = Vector2.one / 2;
-        public float rotate { get; set; } = 0;
-
-        // Inherited styles
-        public TMP_FontAsset font { get; set; } = null;
-        public Color fontColor { get; set; } = Color.black;
-        public FontWeight fontWeight { get; set; } = FontWeight.Regular;
-        public FontStyles fontStyle { get; set; } = FontStyles.Normal;
-        public float fontSize { get; set; } = 24;
-        public TextOverflowModes textOverflow { get; set; } = TextOverflowModes.Overflow;
-        public bool textWrap { get; set; } = true;
-    }
-
-    public enum InteractionType
-    {
-        WhenVisible = 0,
-        Always = 1,
-        Ignore = 2,
-        Block = 3,
-    }
-
-    [Serializable]
-    public class ShadowDefinition
-    {
-        public Vector2 offset;
-        public Vector2 spread;
-        public Color color = Color.black;
-        public float blur;
-
-        public ShadowDefinition() { }
-
-        public ShadowDefinition(Vector2 offset, Vector2 spread, Color color, float blur)
+        public bool HasChange(string name)
         {
-            this.offset = offset;
-            this.spread = spread;
-            this.color = color;
-            this.blur = blur;
+            return Changes.Contains(name);
+        }
+
+        public bool HasValue(string name)
+        {
+            return StyleMap.ContainsKey(name) || DefaultStyle.ContainsKey(name);
         }
     }
 }

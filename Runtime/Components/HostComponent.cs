@@ -1,6 +1,6 @@
+using Facebook.Yoga;
 using ReactUnity.Layout;
-using System.Collections;
-using System.Collections.Generic;
+using ReactUnity.Styling;
 using UnityEngine;
 
 namespace ReactUnity.Components
@@ -10,6 +10,12 @@ namespace ReactUnity.Components
     {
         public float Width => RectTransform.rect.width;
         public float Height => RectTransform.rect.height;
+
+        public static NodeStyle HostDefaultStyle { get; } = new NodeStyle()
+        {
+            fontSize = YogaValue.Point(24),
+        };
+        public override NodeStyle DefaultStyle => HostDefaultStyle;
 
         public HostComponent(RectTransform host, UnityUGUIContext context) : base(host, context)
         {

@@ -23,8 +23,8 @@ namespace ReactUnity.Layout
 
         private void LateUpdate()
         {
-            var translate = Style.resolved.translate;
-            var relative = Style.resolved.translateRelative;
+            var translate = Style.translate;
+            var relative = Style.translateRelative;
             var sameTranslate = translate == previousTranslate;
             if (!Layout.HasNewLayout && sameTranslate && previousTranslateRelative == relative) return;
             if (float.IsNaN(Layout.LayoutWidth)) return;
