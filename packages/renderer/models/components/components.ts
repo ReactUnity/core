@@ -26,9 +26,19 @@ export interface Button extends View {
   onClick?: ActionCallback;
 }
 
+export enum ImageFitMode {
+  Center = 0,
+  CenterCrop = 1,
+  CenterInside = 2,
+  FitCenter = 3,
+  FitStart = 4,
+  FitEnd = 5,
+  Fill = 6,
+}
+
 export interface Image extends View {
   source?: AssetReference | UnityObject;
-  fit?: number;
+  fit?: ImageFitMode;
   tint?: Color;
 }
 
