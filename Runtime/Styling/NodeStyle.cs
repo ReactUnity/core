@@ -1,6 +1,9 @@
 using Facebook.Yoga;
+using ReactUnity.Components;
+using ReactUnity.StateHandlers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -14,6 +17,7 @@ namespace ReactUnity.Styling
         public bool HasInheritedChanges { get; private set; } = false;
 
         public NodeStyle Parent;
+        public StateStyles StateStyles;
 
         #region Set/Get
         public float opacity
@@ -148,9 +152,10 @@ namespace ReactUnity.Styling
             StyleMap = new Dictionary<string, object>();
         }
 
-        public NodeStyle(NodeStyle defaultStyle) : this()
+        public NodeStyle(NodeStyle defaultStyle, StateStyles stateStyles) : this()
         {
             DefaultStyle = defaultStyle.StyleMap;
+            StateStyles = stateStyles;
         }
 
         public void CopyStyle(NodeStyle copyFrom)
@@ -160,7 +165,8 @@ namespace ReactUnity.Styling
 
         public object GetStyleValue(StyleProperty prop)
         {
-            object value;
+            object value = StateStyles?.GetStyleValue(prop);
+            if (value != null) return value;
 
             if (!StyleMap.TryGetValue(prop.name, out value) && (DefaultStyle == null || !DefaultStyle.TryGetValue(prop.name, out value)))
             {
@@ -177,7 +183,8 @@ namespace ReactUnity.Styling
 
         public object GetStyleValue(string name)
         {
-            object value;
+            object value = StateStyles?.GetStyleValue(name);
+            if (value != null) return value;
 
             if (!StyleMap.TryGetValue(name, out value) && (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
             {
@@ -239,7 +246,7 @@ namespace ReactUnity.Styling
 
         public bool HasValue(string name)
         {
-            return StyleMap.ContainsKey(name) || DefaultStyle.ContainsKey(name);
+            return StyleMap.ContainsKey(name) || (DefaultStyle != null && DefaultStyle.ContainsKey(name));
         }
     }
 }

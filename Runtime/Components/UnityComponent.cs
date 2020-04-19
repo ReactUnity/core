@@ -2,14 +2,11 @@ using Facebook.Yoga;
 using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.EventHandlers;
-using ReactUnity.Helpers;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.Styling;
 using ReactUnity.Types;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -31,6 +28,7 @@ namespace ReactUnity.Components
         public FlexElement Flex { get; private set; }
         public YogaNode Layout;
         public NodeStyle Style;
+        public StateStyles StateStyles;
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
@@ -46,7 +44,8 @@ namespace ReactUnity.Components
             GameObject = existing.gameObject;
             RectTransform = existing;
 
-            Style = new NodeStyle(DefaultStyle);
+            StateStyles = new StateStyles(this);
+            Style = new NodeStyle(DefaultStyle, StateStyles);
             Layout = new YogaNode(DefaultLayout);
         }
 
@@ -61,7 +60,8 @@ namespace ReactUnity.Components
             RectTransform.pivot = Vector2.up;
 
 
-            Style = new NodeStyle(DefaultStyle);
+            StateStyles = new StateStyles(this);
+            Style = new NodeStyle(DefaultStyle, StateStyles);
             Layout = new YogaNode(DefaultLayout);
 
             Flex = GameObject.AddComponent<FlexElement>();
