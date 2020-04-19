@@ -37,6 +37,7 @@ namespace ReactUnity.Layout
             var scale = relative ? new Vector2(Layout.LayoutWidth, Layout.LayoutHeight) : Vector2.one;
             var tran = new Vector2(translate.x * scale.x, -translate.y * scale.y);
 
+            rt.localPosition = Vector2.zero;
             rt.anchoredPosition = new Vector2(posX, posY) + tran;
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
             rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);

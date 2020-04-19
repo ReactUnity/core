@@ -71,6 +71,11 @@ namespace ReactUnity
             engine.Execute(script);
         }
 
+        public void ExecuteScript(string script)
+        {
+            engine.Execute(script);
+        }
+
         void CreateEngine()
         {
             engine = new Engine();

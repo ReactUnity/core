@@ -109,7 +109,7 @@ namespace ReactUnity.Styling
 
         void FullStretch(RectTransform child, RectTransform parent)
         {
-            child.transform.SetParent(parent);
+            child.transform.SetParent(parent, false);
             child.anchorMin = new Vector2(0, 0);
             child.anchorMax = new Vector2(1, 1);
             child.anchoredPosition = Vector2.zero;
