@@ -10,14 +10,16 @@ import {
 const hostContext = {};
 const childContext = {};
 
-function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResult | Record<string, any>) {
-  if(!updatePayload) return false;
+function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResult | Record<string, any>, depth: number = 0) {
+  if (!updatePayload) return false;
 
   if (Array.isArray(updatePayload)) {
+
     for (let index = 0; index < updatePayload.length; index += 2) {
       const attr = updatePayload[index];
       const value = updatePayload[index + 1];
-      writeTo[attr] = value;
+      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);
+      else writeTo[attr] = value;
     }
 
     return updatePayload.length > 0;
@@ -44,11 +46,17 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
       }
       continue;
     }
-    if (!isAfterMount && (attr === 'style')) {
+    if (!isAfterMount && (attr === 'style' || attr === 'stateStyles')) {
       updateAfterMount = true;
       continue;
     }
 
+    if (attr === 'stateStyles') {
+      if (applyDiffedUpdate(instance.StateStyles, value, 1)) {
+        instance.ResolveStyle();
+      }
+      continue;
+    }
     if (attr === 'style') {
       if (applyDiffedUpdate(instance.Style, value)) {
         instance.ResolveStyle();
@@ -99,6 +107,15 @@ const hostConfig: ReactReconciler.HostConfig<InstanceTag, Props, NativeContainer
     return Unity.createElement(type, null, rootContainerInstance);
   },
 
+  createTextInstance(
+    text,
+    rootContainerInstance,
+    hostContext,
+    internalInstanceHandle,
+  ) {
+    return Unity.createText(text, rootContainerInstance);
+  },
+
   appendInitialChild: Unity.appendChild,
 
   finalizeInitialChildren(
@@ -124,26 +141,14 @@ const hostConfig: ReactReconciler.HostConfig<InstanceTag, Props, NativeContainer
   commitMount(instance, type, newProps, internalInstanceHandle) {
     const props = [];
     if ('style' in newProps) props.push('style', newProps.style);
+    if ('stateStyles' in newProps) props.push('stateStyles', diffProperties({}, newProps.stateStyles, 1));
 
     applyUpdate(instance, props, true);
   },
 
-  shouldSetTextContent(type, props) {
-    return type === 'text';
-  },
+  shouldSetTextContent(type, props) { return type === 'text'; },
 
-  shouldDeprioritizeSubtree(type, props) {
-    return false;
-  },
-
-  createTextInstance(
-    text,
-    rootContainerInstance,
-    hostContext,
-    internalInstanceHandle,
-  ) {
-    return Unity.createText(text, rootContainerInstance);
-  },
+  shouldDeprioritizeSubtree(type, props) { return false; },
 
   // -------------------
   //     Mutation
@@ -173,13 +178,9 @@ const hostConfig: ReactReconciler.HostConfig<InstanceTag, Props, NativeContainer
     applyUpdate(instance, updatePayload, true);
   },
 
-  resetTextContent(instance) {
-    console.log('resetTextContent');
-  },
+  resetTextContent(instance) { console.log('resetTextContent'); },
 
-  commitTextUpdate(textInstance, oldText, newText) {
-    Unity.setText(textInstance, newText);
-  },
+  commitTextUpdate(textInstance, oldText, newText) { Unity.setText(textInstance, newText); },
 
   appendChild: Unity.appendChild,
   appendChildToContainer: Unity.appendChildToContainer,
@@ -192,25 +193,17 @@ const hostConfig: ReactReconciler.HostConfig<InstanceTag, Props, NativeContainer
   //     Scheduling
   // -------------------
 
-  scheduleDeferredCallback(callback, options) {
-    return UnityScheduler.setTimeout(callback, options && options.timeout || 0);
-  },
-  cancelDeferredCallback(callBackID) {
-    UnityScheduler.clearTimeout(callBackID);
-  },
+  scheduleDeferredCallback(callback, options) { return UnityScheduler.setTimeout(callback, options?.timeout || 0); },
+  cancelDeferredCallback(callBackID) { UnityScheduler.clearTimeout(callBackID); },
 
   noTimeout: -1,
-  setTimeout(callback, timeout) {
-    return UnityScheduler.setTimeout(callback, timeout);
-  },
-  clearTimeout(handle) {
-    UnityScheduler.clearTimeout(handle);
-  },
+  setTimeout(callback, timeout) { return UnityScheduler.setTimeout(callback, timeout); },
+  clearTimeout(handle) { UnityScheduler.clearTimeout(handle); },
 };
 
 const ReactUnityReconciler = ReactReconciler(hostConfig);
 
-let hostRoot;
+let hostRoot: ReactReconciler.FiberRoot;
 export const ReactUnity = {
   render(element: React.ReactNode, hostContainer: NativeContainerInstance, callback: () => void) {
     if (!hostRoot) {

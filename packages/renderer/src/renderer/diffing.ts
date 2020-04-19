@@ -1,13 +1,17 @@
-import { NativeContainerInstance, NativeInstance, InstanceTag } from '../../models/renderer';
-
 export type DiffResult = null | Array<string | any>;
+
+const deepDiffProps = {
+  style: 1,
+  layout: 1,
+  stateStyles: 2,
+};
 
 export function diffProperties(
   lastRawProps: Record<string, any>,
   nextRawProps: Record<string, any>,
+  deepDiffing: number = 0,
 ): DiffResult {
   if (lastRawProps == nextRawProps) return null;
-
   let updatePayload: DiffResult = null;
 
   const lastProps = lastRawProps;
@@ -24,8 +28,9 @@ export function diffProperties(
     }
 
     let prop = null;
-    if (propKey === 'style' || propKey === 'layout') {
-      prop = diffProperties(lastProps[propKey], null);
+    const depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+    if (depth > 0) {
+      prop = diffProperties(lastProps[propKey], null, depth - 1);
       if (!prop) continue;
     }
 
@@ -45,9 +50,9 @@ export function diffProperties(
     }
 
     let prop = nextProp;
-
-    if (propKey === 'style' || propKey === 'layout') {
-      prop = diffProperties(lastProp, nextProp);
+    const depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+    if (depth > 0) {
+      prop = diffProperties(lastProp, nextProp, depth - 1);
       if (!prop) continue;
     }
 

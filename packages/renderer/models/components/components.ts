@@ -5,9 +5,17 @@ import { AssetReference } from '../values/asset-reference';
 import { UnityObject } from '../native/context';
 import { Color } from '../values/color';
 
+export interface StateStyles {
+  hover?: Style;
+  // focus?: Style;
+  // active?: Style;
+  // [key: string]: Style;
+}
+
 export interface StyleAndLayout {
-  layout?: Layout | boolean | null | undefined;
-  style?: Style | boolean | null | undefined;
+  layout?: Layout;
+  style?: Style;
+  stateStyles?: StateStyles;
 }
 
 export interface View extends Events, StyleAndLayout {
