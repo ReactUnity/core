@@ -85,6 +85,7 @@ namespace ReactUnity
                 .SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }))
                 .Execute("jlog = (x, replacer, space) => { log(JSON.stringify(x, replacer, space)); return x; };")
                 .Execute("__dirname = '';")
+                .Execute("WeakMap = Map;")
                 .Execute("global = this; module = { exports: {} };")
                 .Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;")
                 .Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
