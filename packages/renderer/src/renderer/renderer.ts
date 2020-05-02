@@ -1,6 +1,6 @@
 import * as objectAssign from 'object-assign';
 import * as ReactReconciler from 'react-reconciler';
-import * as React from 'react';
+import type * as React from 'react';
 import { diffProperties, DiffResult } from './diffing';
 import {
   NativeInstance, InstanceTag, NativeContainerInstance, NativeTextInstance, HydratableInstance,

@@ -26,15 +26,17 @@
   ],
   "dependencies": {
     "object-assign": "^4.1.1",
-    "react": "^16.13.1",
     "react-reconciler": "^0.25.1"
   },
+  "peerDependencies": {
+    "react": "^16.13.1"
+  },
   "devDependencies": {
-    "@types/node": "^13.11.0",
-    "@types/react": "^16.9.32",
+    "@types/node": "^13.13.4",
+    "@types/react": "^16.9.34",
     "@types/react-reconciler": "^0.18.0",
-    "@typescript-eslint/eslint-plugin": "^2.26.0",
-    "@typescript-eslint/parser": "^2.26.0",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
     "eslint": "^6.8.0",
     "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
