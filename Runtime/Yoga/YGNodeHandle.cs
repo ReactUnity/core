@@ -6,7 +6,7 @@
  */
 
 using System;
-#if UNITY_WEBGL && !UNITY_EDITOR
+#if (UNITY_WEBGL || UNITY_IOS) && !UNITY_EDITOR
 using System.Collections.Generic;
 #endif
 using System.Runtime.InteropServices;
@@ -15,7 +15,7 @@ namespace Facebook.Yoga
 {
     internal class YGNodeHandle : SafeHandle
     {
-#if !UNITY_WEBGL || UNITY_EDITOR
+#if !(UNITY_WEBGL || UNITY_IOS) || UNITY_EDITOR
         private GCHandle _managedNodeHandle;
 #else
         static Dictionary<IntPtr, YogaNode> contexts = new Dictionary<IntPtr, YogaNode>();
@@ -44,7 +44,7 @@ namespace Facebook.Yoga
             return true;
         }
 
-#if !UNITY_WEBGL || UNITY_EDITOR
+#if !(UNITY_WEBGL || UNITY_IOS) || UNITY_EDITOR
         public void SetContext(YogaNode node)
         {
             if (!_managedNodeHandle.IsAllocated)
