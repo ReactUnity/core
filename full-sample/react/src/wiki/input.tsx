@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ReactUnity } from 'react-unity-renderer';
 
-class App extends React.Component<{}, {}> {
+export class App extends React.Component<{}, {}> {
   render() {
     return (
       <view
@@ -13,4 +13,5 @@ class App extends React.Component<{}, {}> {
     );
   }
 }
-ReactUnity.render(<App />, RootContainer, null);
+
+export default () => ReactUnity.render(<App />, RootContainer, null);

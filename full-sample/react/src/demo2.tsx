@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ReactUnity, FlexDirection, YogaAlign, YogaJustify, Wrap } from 'react-unity-renderer';
 
-class App extends React.Component<{}, { names: string[], id: number }> {
+export class App extends React.Component<{}, { names: string[], id: number }> {
   onClickHandler = () => {
     this.setState(state => ({
       names: [...state.names, `Element <color=blue>${state.id}</color>`],
@@ -26,7 +26,7 @@ class App extends React.Component<{}, { names: string[], id: number }> {
 
     return <view layout={{ FlexDirection: FlexDirection.Column, Padding: '10%', Height: '100%', AlignItems: YogaAlign.Center, JustifyContent: YogaJustify.FlexStart }}>
 
-      <button onClick={canAdd && this.onClickHandler} style={canAdd || { backgroundColor: ColorNative.red }}>
+      <button onClick={canAdd && this.onClickHandler} style={canAdd ? {} : { backgroundColor: ColorNative.red }}>
         {canAdd ? 'Click to Add More' : 'Cannot add anymore'}
       </button>
 
@@ -43,4 +43,5 @@ class App extends React.Component<{}, { names: string[], id: number }> {
     </view>;
   }
 }
-ReactUnity.render(<App />, RootContainer, null);
+
+export default (root) => ReactUnity.render(<App />, root, null);

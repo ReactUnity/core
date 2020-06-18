@@ -21,6 +21,13 @@
     "paths": {
       "react-unity-renderer": [
         "node_modules/react-unity-renderer/index.ts"
+      ],
+      "src/*": [
+        "./src/*"
+      ],
+      "*": [
+        "./node_modules/*",
+        "./node_modules/@types/*"
       ]
     }
   },

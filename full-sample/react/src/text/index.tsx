@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ReactUnity, FlexDirection, Wrap, YogaAlign, Layout, PointerEventData, StyleAndLayout, PositionType } from 'react-unity-renderer';
 import lorem from './lorem';
 
-class App extends React.Component<{}, { ratio: number }> {
+export class App extends React.Component<{}, { ratio: number }> {
 
   scrollLayout: Layout = { FlexDirection: FlexDirection.Column, Wrap: Wrap.Wrap, AlignItems: YogaAlign.FlexStart, Padding: 20, PaddingRight: 0 };
 
@@ -51,4 +51,5 @@ class App extends React.Component<{}, { ratio: number }> {
     </>;
   }
 }
-ReactUnity.render(<App />, RootContainer, null);
+
+export default () => ReactUnity.render(<App />, RootContainer, null);

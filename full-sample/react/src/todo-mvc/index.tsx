@@ -6,7 +6,7 @@ import * as React from "react";
 import { ReactUnity, NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, PositionType } from "react-unity-renderer";
 import { IAppProps, IAppState, ITodo } from "./interfaces";
 
-class TodoApp extends React.Component<IAppProps, IAppState> {
+export class TodoApp extends React.Component<IAppProps, IAppState> {
   public state: IAppState;
   newTodoField = React.createRef<NativeInputInstance>();
   selectAllToggle = React.createRef<NativeToggleInstance>();
@@ -42,30 +42,35 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
 
   constructor(props: IAppProps) {
     super(props);
+
+    var model = new TodoModel('react-todos');
+    model.subscribe(() => this.setState({ model }));
+
     this.state = {
       nowShowing: ALL_TODOS,
-      editing: null
+      editing: null,
+      model,
     };
   }
 
   public addTodo(val: string) {
     if (val) {
-      this.props.model.addTodo(val);
+      this.state.model.addTodo(val);
       this.newTodoField.current.Value = '';
       setTimeout(() => this.newTodoField.current.Focus(), 0);
     }
   }
 
   public toggleAll = (checked: boolean) => {
-    this.props.model.toggleAll(checked);
+    this.state.model.toggleAll(checked);
   }
 
   public toggle(todoToToggle: ITodo) {
-    this.props.model.toggle(todoToToggle);
+    this.state.model.toggle(todoToToggle);
   }
 
   public destroy(todo: ITodo) {
-    this.props.model.destroy(todo);
+    this.state.model.destroy(todo);
   }
 
   public edit(todo: ITodo) {
@@ -73,7 +78,7 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
   }
 
   public save(todoToSave: ITodo, text: String) {
-    this.props.model.save(todoToSave, text);
+    this.state.model.save(todoToSave, text);
     this.setState({ editing: null });
   }
 
@@ -82,13 +87,13 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
   }
 
   public clearCompleted() {
-    this.props.model.clearCompleted();
+    this.state.model.clearCompleted();
   }
 
   public render() {
     var footer;
     var main;
-    const todos = this.props.model.todos;
+    const todos = this.state.model.todos;
 
     var shownTodos = todos.filter((todo) => {
       switch (this.state.nowShowing) {
@@ -168,11 +173,5 @@ class TodoApp extends React.Component<IAppProps, IAppState> {
   }
 }
 
-var model = new TodoModel('react-todos');
 
-function render() {
-  ReactUnity.render(<TodoApp model={model} />, RootContainer, null);
-}
-
-model.subscribe(render);
-render();
+export default () => ReactUnity.render(<TodoApp />, RootContainer, null);

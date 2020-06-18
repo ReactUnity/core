@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, ReactUnity, YogaAlign, TextOverflowModes, Vector2Native } from 'react-unity-renderer';
 
-class App extends React.Component<{}, { val: number, animateRadius: boolean }> {
+export class App extends React.Component<{}, { val: number, animateRadius: boolean }> {
   constructor(props) {
     super(props);
     this.state = { val: 0, animateRadius: true };
@@ -10,7 +10,7 @@ class App extends React.Component<{}, { val: number, animateRadius: boolean }> {
       duration: 1000,
       onTick: val => this.setState({ val }),
       easing: easing.easeInOutQuint,
-      delay: 1500,
+      delay: 500,
       loop: true,
       loopMode: 'ping-pong',
     });
@@ -81,4 +81,5 @@ class App extends React.Component<{}, { val: number, animateRadius: boolean }> {
     </view>;
   }
 }
-ReactUnity.render(<App />, RootContainer, null);
+
+export default () => ReactUnity.render(<App />, RootContainer, null);

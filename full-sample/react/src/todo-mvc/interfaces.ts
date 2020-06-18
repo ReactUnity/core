@@ -44,10 +44,10 @@ export interface ITodoModel {
 }
 
 export interface IAppProps {
-  model: ITodoModel;
 }
 
 export interface IAppState {
   editing?: string;
   nowShowing?: string
+  model: ITodoModel;
 }

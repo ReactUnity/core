@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ReactUnity, Dropdown, DropdownItem } from 'react-unity-renderer';
 
-class App extends React.Component<{}, {}> {
+export class App extends React.Component<{}, {}> {
   render() {
     return (
       <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>
@@ -21,4 +21,5 @@ class App extends React.Component<{}, {}> {
     );
   }
 }
-ReactUnity.render(<App />, RootContainer, null);
+
+export default () => ReactUnity.render(<App />, RootContainer, null);
