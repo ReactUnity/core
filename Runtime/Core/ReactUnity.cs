@@ -1,3 +1,4 @@
+using Esprima;
 using Jint;
 using Jint.Native;
 using Jint.Native.Object;
@@ -68,7 +69,21 @@ namespace ReactUnity
             engine.SetValue("Unity", typeof(ReactUnityAPI));
             engine.SetValue("RootContainer", unityContext.Host);
             engine.SetValue("NamedAssets", NamedAssets);
-            engine.Execute(script);
+            try
+            {
+                engine.Execute(script);
+            }
+            catch (ParserException ex)
+            {
+                Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
+                Debug.LogException(ex);
+            }
+            catch (Exception ex)
+            {
+                var lastNode = engine.GetLastSyntaxNode();
+                Debug.LogError($"Runtime exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
+                Debug.LogException(ex);
+            }
         }
 
         public void ExecuteScript(string script)
