@@ -1,4 +1,4 @@
-﻿var OpenWindowPlugin = {
+﻿var ReactUnityPlugin = {
   openWindow: function (link) {
     var url = Pointer_stringify(link);
 
@@ -10,7 +10,14 @@
 
     document.addEventListener('mouseup', openUrl);
     document.addEventListener('touchend', openUrl);
+  },
+
+  setCursor: function (cursor) {
+    var canvas = Module.canvas;
+    var cursorStyle = Pointer_stringify(cursor);
+
+    canvas.style.cursor = cursorStyle || null;
   }
 };
 
-mergeInto(LibraryManager.library, OpenWindowPlugin);
+mergeInto(LibraryManager.library, ReactUnityPlugin);

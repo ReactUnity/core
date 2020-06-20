@@ -12,13 +12,13 @@ namespace ReactUnity.Components
 {
     public class AnchorComponent : ContainerComponent
     {
-        public static NodeStyle AnchorDefaultStyle { get; } = new NodeStyle() { fontStyle = TMPro.FontStyles.Underline };
+        public static NodeStyle AnchorDefaultStyle { get; } = new NodeStyle() { fontStyle = TMPro.FontStyles.Underline, cursor = "pointer" };
         public override NodeStyle DefaultStyle => AnchorDefaultStyle;
 
         AnchorClickHandler clickHandler;
 
         public string url = "";
-        public bool openInNewTab = false;
+        public bool openInThisTab = false;
 
         public AnchorComponent(UnityUGUIContext context) : base(context)
         {
@@ -34,8 +34,8 @@ namespace ReactUnity.Components
                 case "url":
                     url = Convert.ToString(value);
                     return;
-                case "openInNewTab":
-                    openInNewTab = Convert.ToBoolean(value);
+                case "openInThisTab":
+                    openInThisTab = Convert.ToBoolean(value);
                     return;
                 default:
                     base.SetProperty(propertyName, value);
@@ -43,10 +43,15 @@ namespace ReactUnity.Components
             }
         }
 
-        private void OnClick(BaseEventData obj)
+        private void OnClick(BaseEventData ev)
         {
-            if (obj.used) return;
+            // TODO: middle-click has an interesting bug where all middle-clicks are used if Use is called on one
+            if (ev.used) return;
             if (string.IsNullOrWhiteSpace(url)) return;
+
+            var pe = ev as PointerEventData;
+
+            var openInNewTab = pe.button == PointerEventData.InputButton.Middle || !openInThisTab;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
             if(openInNewTab) {

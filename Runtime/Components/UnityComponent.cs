@@ -4,6 +4,7 @@ using Jint.Native.Function;
 using ReactUnity.EventHandlers;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
+using ReactUnity.StateHandlers;
 using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
@@ -161,6 +162,7 @@ namespace ReactUnity.Components
             SetBorderRadius();
             SetBorderColor();
             SetOverflow();
+            SetCursor();
         }
 
         protected void ResolveTransform()
@@ -238,6 +240,13 @@ namespace ReactUnity.Components
 
             mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
             mask.SetBorderRadius(Style.borderRadius);
+        }
+
+        private void SetCursor()
+        {
+            if (string.IsNullOrWhiteSpace(Style.cursor)) return;
+            var handler = GameObject.GetComponent<CursorHandler>() ?? GameObject.AddComponent<CursorHandler>();
+            handler.Cursor = Style.cursor;
         }
 
         private void SetBackground()

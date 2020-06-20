@@ -15,6 +15,7 @@ namespace ReactUnity.Components
         {
             backgroundColor = new Color(0.82f, 0.82f, 0.82f, 1),
             borderRadius = 6,
+            cursor = "pointer",
         };
         public static YogaNode ToggleDefaultLayout { get; } = new YogaNode()
         {

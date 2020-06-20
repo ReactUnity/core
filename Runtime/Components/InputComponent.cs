@@ -25,6 +25,7 @@ namespace ReactUnity.Components
             backgroundColor = Color.white,
             borderRadius = 8,
             fontSize = 24,
+            cursor = "text",
         };
 
         public override YogaNode DefaultLayout => InputDefaultLayout;

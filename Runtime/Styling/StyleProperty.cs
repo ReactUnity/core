@@ -43,6 +43,7 @@ namespace ReactUnity.Styling
         public static StyleProperty opacity = new StyleProperty("opacity", typeof(float), 1f, true);
         public static StyleProperty zOrder = new StyleProperty("zOrder", typeof(int), 0, false);
         public static StyleProperty hidden = new StyleProperty("hidden", typeof(bool), false, false);
+        public static StyleProperty cursor = new StyleProperty("cursor", typeof(string), null, false);
         public static StyleProperty interaction = new StyleProperty("interaction", typeof(InteractionType), InteractionType.WhenVisible, false);
         public static StyleProperty backgroundColor = new StyleProperty("backgroundColor", typeof(Color), new Color(0, 0, 0, 0), true);
         public static StyleProperty backgroundImage = new StyleProperty("backgroundImage", typeof(object), null, false);

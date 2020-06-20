@@ -35,6 +35,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue("hidden", value);
             get => GetStyleValue<bool>("hidden");
         }
+        public string cursor
+        {
+            set => SetStyleValue("cursor", value);
+            get => GetStyleValue<string>("cursor");
+        }
         public InteractionType interaction
         {
             set => SetStyleValue("interaction", value);
