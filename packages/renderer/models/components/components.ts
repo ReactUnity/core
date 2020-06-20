@@ -26,6 +26,13 @@ export interface Button extends View {
   onClick?: ActionCallback;
 }
 
+export interface Anchor extends View {
+  url?: string;
+
+  /** Works in WebGL only */
+  openInNewTab?: boolean;
+}
+
 export enum ImageFitMode {
   Center = 0,
   CenterCrop = 1,

@@ -21,6 +21,7 @@ declare module 'React' {
 
     interface IntrinsicElements {
       view: Components.View & rc.RefAttributes<NativeInstance> & Children;
+      anchor: Components.Anchor & rc.RefAttributes<NativeInstance> & Children;
       text: Components.View & rc.RefAttributes<NativeTextInstance> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<NativeInstance> & Children;
       input: Components.Input & rc.RefAttributes<NativeInputInstance> & Children<never>;

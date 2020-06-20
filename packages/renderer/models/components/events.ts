@@ -40,6 +40,9 @@ export interface RaycastResult {
 export interface BaseEventData {
   readonly currentInputModule: UnityObject;
   readonly selectedObject: UnityObject;
+  readonly used: boolean;
+  readonly Use: () => void;
+  readonly Reset: () => void;
 }
 
 export interface PointerEventData extends BaseEventData {
