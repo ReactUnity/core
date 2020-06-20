@@ -34,7 +34,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(359);
+/******/ 		return __webpack_require__(271);
 /******/ 	};
 /******/ 	// initialize runtime
 /******/ 	runtime(__webpack_require__);
@@ -474,7 +474,7 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
                     ? nonItems
                     : (((_a = selectedItem.props) === null || _a === void 0 ? void 0 : _a.triggerTemplate) || selectedItem),
                 this.state.opened && Object(react.createElement)("view", { layout: bottomEdge, style: { zOrder: 1000 } },
-                    Object(react.createElement)("button", { name: "<Dropdown Backdrop>", onClick: this.close, layout: fullScreen, style: { backgroundColor: transparentColor, cursor: '' } }),
+                    Object(react.createElement)("button", { name: "<Dropdown Backdrop>", onClick: this.close, layout: fullScreen, style: { backgroundColor: transparentColor, cursor: "default" /* Default */ } }),
                     Object(react.createElement)("view", { name: "<Dropdown Menu>", layout: dropdownBottom }, items.map(function (x, i) {
                         return Object(react.createElement)("button", { style: { backgroundColor: ColorNative.white, borderRadius: 0 }, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
                     }))))));
@@ -2647,36 +2647,7 @@ exports.version = ReactVersion;
 
 /***/ }),
 
-/***/ 303:
-/***/ (function(__unusedmodule, exports) {
-
-"use strict";
-/** @license React v0.19.1
- * scheduler.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var f,g,h,k,l;
-if("undefined"===typeof window||"function"!==typeof MessageChannel){var p=null,q=null,t=function(){if(null!==p)try{var a=exports.unstable_now();p(!0,a);p=null}catch(b){throw setTimeout(t,0),b;}},u=Date.now();exports.unstable_now=function(){return Date.now()-u};f=function(a){null!==p?setTimeout(f,0,a):(p=a,setTimeout(t,0))};g=function(a,b){q=setTimeout(a,b)};h=function(){clearTimeout(q)};k=function(){return!1};l=exports.unstable_forceFrameRate=function(){}}else{var w=window.performance,x=window.Date,
-y=window.setTimeout,z=window.clearTimeout;if("undefined"!==typeof console){var A=window.cancelAnimationFrame;"function"!==typeof window.requestAnimationFrame&&console.error("This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills");"function"!==typeof A&&console.error("This browser doesn't support cancelAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills")}if("object"===
-typeof w&&"function"===typeof w.now)exports.unstable_now=function(){return w.now()};else{var B=x.now();exports.unstable_now=function(){return x.now()-B}}var C=!1,D=null,E=-1,F=5,G=0;k=function(){return exports.unstable_now()>=G};l=function(){};exports.unstable_forceFrameRate=function(a){0>a||125<a?console.error("forceFrameRate takes a positive int between 0 and 125, forcing framerates higher than 125 fps is not unsupported"):F=0<a?Math.floor(1E3/a):5};var H=new MessageChannel,I=H.port2;H.port1.onmessage=
-function(){if(null!==D){var a=exports.unstable_now();G=a+F;try{D(!0,a)?I.postMessage(null):(C=!1,D=null)}catch(b){throw I.postMessage(null),b;}}else C=!1};f=function(a){D=a;C||(C=!0,I.postMessage(null))};g=function(a,b){E=y(function(){a(exports.unstable_now())},b)};h=function(){z(E);E=-1}}function J(a,b){var c=a.length;a.push(b);a:for(;;){var d=c-1>>>1,e=a[d];if(void 0!==e&&0<K(e,b))a[d]=b,a[c]=e,c=d;else break a}}function L(a){a=a[0];return void 0===a?null:a}
-function M(a){var b=a[0];if(void 0!==b){var c=a.pop();if(c!==b){a[0]=c;a:for(var d=0,e=a.length;d<e;){var m=2*(d+1)-1,n=a[m],v=m+1,r=a[v];if(void 0!==n&&0>K(n,c))void 0!==r&&0>K(r,n)?(a[d]=r,a[v]=c,d=v):(a[d]=n,a[m]=c,d=m);else if(void 0!==r&&0>K(r,c))a[d]=r,a[v]=c,d=v;else break a}}return b}return null}function K(a,b){var c=a.sortIndex-b.sortIndex;return 0!==c?c:a.id-b.id}var N=[],O=[],P=1,Q=null,R=3,S=!1,T=!1,U=!1;
-function V(a){for(var b=L(O);null!==b;){if(null===b.callback)M(O);else if(b.startTime<=a)M(O),b.sortIndex=b.expirationTime,J(N,b);else break;b=L(O)}}function W(a){U=!1;V(a);if(!T)if(null!==L(N))T=!0,f(X);else{var b=L(O);null!==b&&g(W,b.startTime-a)}}
-function X(a,b){T=!1;U&&(U=!1,h());S=!0;var c=R;try{V(b);for(Q=L(N);null!==Q&&(!(Q.expirationTime>b)||a&&!k());){var d=Q.callback;if(null!==d){Q.callback=null;R=Q.priorityLevel;var e=d(Q.expirationTime<=b);b=exports.unstable_now();"function"===typeof e?Q.callback=e:Q===L(N)&&M(N);V(b)}else M(N);Q=L(N)}if(null!==Q)var m=!0;else{var n=L(O);null!==n&&g(W,n.startTime-b);m=!1}return m}finally{Q=null,R=c,S=!1}}
-function Y(a){switch(a){case 1:return-1;case 2:return 250;case 5:return 1073741823;case 4:return 1E4;default:return 5E3}}var Z=l;exports.unstable_IdlePriority=5;exports.unstable_ImmediatePriority=1;exports.unstable_LowPriority=4;exports.unstable_NormalPriority=3;exports.unstable_Profiling=null;exports.unstable_UserBlockingPriority=2;exports.unstable_cancelCallback=function(a){a.callback=null};exports.unstable_continueExecution=function(){T||S||(T=!0,f(X))};
-exports.unstable_getCurrentPriorityLevel=function(){return R};exports.unstable_getFirstCallbackNode=function(){return L(N)};exports.unstable_next=function(a){switch(R){case 1:case 2:case 3:var b=3;break;default:b=R}var c=R;R=b;try{return a()}finally{R=c}};exports.unstable_pauseExecution=function(){};exports.unstable_requestPaint=Z;exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=R;R=a;try{return b()}finally{R=c}};
-exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();if("object"===typeof c&&null!==c){var e=c.delay;e="number"===typeof e&&0<e?d+e:d;c="number"===typeof c.timeout?c.timeout:Y(a)}else c=Y(a),e=d;c=e+c;a={id:P++,callback:b,priorityLevel:a,startTime:e,expirationTime:c,sortIndex:-1};e>d?(a.sortIndex=e,J(O,a),null===L(N)&&a===L(O)&&(U?h():U=!0,g(W,e-d))):(a.sortIndex=c,J(N,a),T||S||(T=!0,f(X)));return a};
-exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=L(N);return b!==Q&&null!==Q&&null!==b&&null!==b.callback&&b.startTime<=a&&b.expirationTime<Q.expirationTime||k()};exports.unstable_wrapCallback=function(a){var b=R;return function(){var c=R;R=b;try{return a.apply(this,arguments)}finally{R=c}}};
-
-
-/***/ }),
-
-/***/ 359:
+/***/ 271:
 /***/ (function(__unusedmodule, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2728,11 +2699,11 @@ var sample_gallery_App = /** @class */ (function (_super) {
 var SampleGallery = function (samples) { return Object(react.createElement)(sample_gallery_App, { samples: samples }); };
 /* harmony default export */ var sample_gallery = (function (samples) { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(sample_gallery_App, { samples: samples }), RootContainer, null); });
 
-// CONCATENATED MODULE: ./src/text/lorem.ts
+// CONCATENATED MODULE: ./src/lorem.ts
 /* harmony default export */ var lorem = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquam placerat orci sit amet molestie. Mauris vitae vulputate enim. Nullam maximus maximus libero eu bibendum. Cras quis sapien nibh. Aenean eu sapien justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus et sollicitudin massa. Pellentesque vulputate consequat leo, mattis facilisis leo convallis ac. Donec at malesuada nibh, nec elementum quam. Suspendisse leo nulla, congue sit amet lacus in, facilisis auctor odio. In placerat magna at eleifend luctus. Morbi est odio, finibus eget efficitur pharetra, maximus non urna.\n\nMaecenas et ex arcu. Donec maximus leo ac lacus ornare, quis efficitur dui bibendum. Suspendisse sit amet sodales enim, nec venenatis nisl. Vestibulum non iaculis tortor, et sodales ipsum. Sed tempus leo sit amet laoreet efficitur. Pellentesque eleifend volutpat turpis, eu facilisis sem ultrices eu. Proin nec orci tempor, luctus purus eget, sagittis enim. Integer massa magna, elementum id sapien vel, egestas rutrum elit. Nullam non pulvinar nulla. Donec dolor lacus, interdum id nunc nec, euismod pharetra sapien.\n\nProin viverra libero odio, in ultrices magna tempus quis. In vestibulum lacus non varius tincidunt. Mauris fringilla eu massa ac dictum. Aliquam ex tellus, luctus congue lorem eget, interdum sagittis tellus. Ut sagittis, felis sit amet viverra eleifend, orci quam ornare dui, a condimentum odio nisi sed enim. Phasellus malesuada, arcu quis condimentum euismod, risus ligula vehicula felis, ac venenatis nunc ipsum vel leo. Sed nec ex quis est vestibulum dignissim in tincidunt lacus. Sed eu luctus mauris. Nunc rhoncus fermentum dapibus. Vivamus lacinia mollis orci sed placerat. Integer ante libero, fermentum at risus ut, pretium fermentum lacus. Ut tempor ex mauris, sit amet blandit nisi fringilla id. Sed quam tellus, lacinia a tellus ac, ultrices vestibulum elit.\n\nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed venenatis pharetra dolor, vel dictum quam tristique non. Duis malesuada gravida urna vel ultrices. Integer fringilla arcu sit amet lacus hendrerit, quis lacinia quam rutrum. Donec rhoncus sagittis urna. Aenean consectetur pulvinar libero. Integer aliquam porta mi, at sodales metus cursus nec. Duis vel maximus erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sit amet fermentum nisl. In rutrum nibh a ultricies condimentum. Fusce finibus, mauris quis finibus viverra, felis ipsum euismod augue, vel malesuada urna ligula sit amet est.\n\n");
 
-// CONCATENATED MODULE: ./src/text/index.tsx
-var text_extends = (undefined && undefined.__extends) || (function () {
+// CONCATENATED MODULE: ./src/linked-text/index.tsx
+var linked_text_extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -2759,8 +2730,8 @@ var __assign = (undefined && undefined.__assign) || function () {
 
 
 
-var text_App = /** @class */ (function (_super) {
-    text_extends(App, _super);
+var linked_text_App = /** @class */ (function (_super) {
+    linked_text_extends(App, _super);
     function App(props) {
         var _this = _super.call(this, props) || this;
         _this.scrollLayout = { FlexDirection: 0 /* Column */, Wrap: 1 /* Wrap */, AlignItems: 1 /* FlexStart */, Padding: 20, PaddingRight: 0 };
@@ -2794,7 +2765,7 @@ var text_App = /** @class */ (function (_super) {
     return App;
 }(react.Component));
 
-/* harmony default export */ var src_text = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(text_App, null), RootContainer, null); });
+/* harmony default export */ var linked_text = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(linked_text_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/anim/index.tsx
 var anim_extends = (undefined && undefined.__extends) || (function () {
@@ -3026,8 +2997,8 @@ var input_App = /** @class */ (function (_super) {
 
 /* harmony default export */ var input = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(input_App, null), RootContainer, null); });
 
-// CONCATENATED MODULE: ./src/wiki/text.tsx
-var wiki_text_extends = (undefined && undefined.__extends) || (function () {
+// CONCATENATED MODULE: ./src/wiki/scroll.tsx
+var scroll_extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -3042,8 +3013,38 @@ var wiki_text_extends = (undefined && undefined.__extends) || (function () {
 })();
 
 
-var wiki_text_App = /** @class */ (function (_super) {
-    wiki_text_extends(App, _super);
+
+var scroll_App = /** @class */ (function (_super) {
+    scroll_extends(App, _super);
+    function App() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    App.prototype.render = function () {
+        return (Object(react.createElement)("scroll", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'FlexStart' } }, [lorem, lorem, lorem, lorem, lorem, lorem]));
+    };
+    return App;
+}(react.Component));
+
+/* harmony default export */ var wiki_scroll = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(scroll_App, null), RootContainer, null); });
+
+// CONCATENATED MODULE: ./src/wiki/text.tsx
+var text_extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var text_App = /** @class */ (function (_super) {
+    text_extends(App, _super);
     function App() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
@@ -3053,7 +3054,7 @@ var wiki_text_App = /** @class */ (function (_super) {
     return App;
 }(react.Component));
 
-/* harmony default export */ var wiki_text = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(wiki_text_App, null), RootContainer, null); });
+/* harmony default export */ var wiki_text = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(text_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/toggle.tsx
 var toggle_extends = (undefined && undefined.__extends) || (function () {
@@ -3516,13 +3517,15 @@ var todo_mvc_TodoApp = /** @class */ (function (_super) {
 
 
 
+
 var wikiPages = [
     { name: 'View', render: view_App },
+    { name: 'Scroll', render: scroll_App },
     { name: 'Button', render: button_App },
     { name: 'Image', render: image_App },
     { name: 'Input', render: input_App },
     { name: 'Anchor', render: anchor_App },
-    { name: 'Text', render: wiki_text_App },
+    { name: 'Text', render: text_App },
     { name: 'Toggle', render: toggle_App },
     { name: 'Tooltip', render: tooltip_App },
     { name: 'Dropdown', render: dropdown_App },
@@ -3530,9 +3533,38 @@ var wikiPages = [
 sample_gallery([
     { name: 'Components', render: function () { return SampleGallery(wikiPages); } },
     { name: 'Animation', render: anim_App },
-    { name: 'Linked Text', render: text_App },
+    { name: 'Linked Text', render: linked_text_App },
     { name: 'TodoApp', render: todo_mvc_TodoApp },
 ]);
+
+
+/***/ }),
+
+/***/ 303:
+/***/ (function(__unusedmodule, exports) {
+
+"use strict";
+/** @license React v0.19.1
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var f,g,h,k,l;
+if("undefined"===typeof window||"function"!==typeof MessageChannel){var p=null,q=null,t=function(){if(null!==p)try{var a=exports.unstable_now();p(!0,a);p=null}catch(b){throw setTimeout(t,0),b;}},u=Date.now();exports.unstable_now=function(){return Date.now()-u};f=function(a){null!==p?setTimeout(f,0,a):(p=a,setTimeout(t,0))};g=function(a,b){q=setTimeout(a,b)};h=function(){clearTimeout(q)};k=function(){return!1};l=exports.unstable_forceFrameRate=function(){}}else{var w=window.performance,x=window.Date,
+y=window.setTimeout,z=window.clearTimeout;if("undefined"!==typeof console){var A=window.cancelAnimationFrame;"function"!==typeof window.requestAnimationFrame&&console.error("This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills");"function"!==typeof A&&console.error("This browser doesn't support cancelAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills")}if("object"===
+typeof w&&"function"===typeof w.now)exports.unstable_now=function(){return w.now()};else{var B=x.now();exports.unstable_now=function(){return x.now()-B}}var C=!1,D=null,E=-1,F=5,G=0;k=function(){return exports.unstable_now()>=G};l=function(){};exports.unstable_forceFrameRate=function(a){0>a||125<a?console.error("forceFrameRate takes a positive int between 0 and 125, forcing framerates higher than 125 fps is not unsupported"):F=0<a?Math.floor(1E3/a):5};var H=new MessageChannel,I=H.port2;H.port1.onmessage=
+function(){if(null!==D){var a=exports.unstable_now();G=a+F;try{D(!0,a)?I.postMessage(null):(C=!1,D=null)}catch(b){throw I.postMessage(null),b;}}else C=!1};f=function(a){D=a;C||(C=!0,I.postMessage(null))};g=function(a,b){E=y(function(){a(exports.unstable_now())},b)};h=function(){z(E);E=-1}}function J(a,b){var c=a.length;a.push(b);a:for(;;){var d=c-1>>>1,e=a[d];if(void 0!==e&&0<K(e,b))a[d]=b,a[c]=e,c=d;else break a}}function L(a){a=a[0];return void 0===a?null:a}
+function M(a){var b=a[0];if(void 0!==b){var c=a.pop();if(c!==b){a[0]=c;a:for(var d=0,e=a.length;d<e;){var m=2*(d+1)-1,n=a[m],v=m+1,r=a[v];if(void 0!==n&&0>K(n,c))void 0!==r&&0>K(r,n)?(a[d]=r,a[v]=c,d=v):(a[d]=n,a[m]=c,d=m);else if(void 0!==r&&0>K(r,c))a[d]=r,a[v]=c,d=v;else break a}}return b}return null}function K(a,b){var c=a.sortIndex-b.sortIndex;return 0!==c?c:a.id-b.id}var N=[],O=[],P=1,Q=null,R=3,S=!1,T=!1,U=!1;
+function V(a){for(var b=L(O);null!==b;){if(null===b.callback)M(O);else if(b.startTime<=a)M(O),b.sortIndex=b.expirationTime,J(N,b);else break;b=L(O)}}function W(a){U=!1;V(a);if(!T)if(null!==L(N))T=!0,f(X);else{var b=L(O);null!==b&&g(W,b.startTime-a)}}
+function X(a,b){T=!1;U&&(U=!1,h());S=!0;var c=R;try{V(b);for(Q=L(N);null!==Q&&(!(Q.expirationTime>b)||a&&!k());){var d=Q.callback;if(null!==d){Q.callback=null;R=Q.priorityLevel;var e=d(Q.expirationTime<=b);b=exports.unstable_now();"function"===typeof e?Q.callback=e:Q===L(N)&&M(N);V(b)}else M(N);Q=L(N)}if(null!==Q)var m=!0;else{var n=L(O);null!==n&&g(W,n.startTime-b);m=!1}return m}finally{Q=null,R=c,S=!1}}
+function Y(a){switch(a){case 1:return-1;case 2:return 250;case 5:return 1073741823;case 4:return 1E4;default:return 5E3}}var Z=l;exports.unstable_IdlePriority=5;exports.unstable_ImmediatePriority=1;exports.unstable_LowPriority=4;exports.unstable_NormalPriority=3;exports.unstable_Profiling=null;exports.unstable_UserBlockingPriority=2;exports.unstable_cancelCallback=function(a){a.callback=null};exports.unstable_continueExecution=function(){T||S||(T=!0,f(X))};
+exports.unstable_getCurrentPriorityLevel=function(){return R};exports.unstable_getFirstCallbackNode=function(){return L(N)};exports.unstable_next=function(a){switch(R){case 1:case 2:case 3:var b=3;break;default:b=R}var c=R;R=b;try{return a()}finally{R=c}};exports.unstable_pauseExecution=function(){};exports.unstable_requestPaint=Z;exports.unstable_runWithPriority=function(a,b){switch(a){case 1:case 2:case 3:case 4:case 5:break;default:a=3}var c=R;R=a;try{return b()}finally{R=c}};
+exports.unstable_scheduleCallback=function(a,b,c){var d=exports.unstable_now();if("object"===typeof c&&null!==c){var e=c.delay;e="number"===typeof e&&0<e?d+e:d;c="number"===typeof c.timeout?c.timeout:Y(a)}else c=Y(a),e=d;c=e+c;a={id:P++,callback:b,priorityLevel:a,startTime:e,expirationTime:c,sortIndex:-1};e>d?(a.sortIndex=e,J(O,a),null===L(N)&&a===L(O)&&(U?h():U=!0,g(W,e-d))):(a.sortIndex=c,J(N,a),T||S||(T=!0,f(X)));return a};
+exports.unstable_shouldYield=function(){var a=exports.unstable_now();V(a);var b=L(N);return b!==Q&&null!==Q&&null!==b&&null!==b.callback&&b.startTime<=a&&b.expirationTime<Q.expirationTime||k()};exports.unstable_wrapCallback=function(a){var b=R;return function(){var c=R;R=b;try{return a.apply(this,arguments)}finally{R=c}}};
 
 
 /***/ }),
