@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>{{{ PRODUCT_NAME }}}</title>
+  <style>
+    html,
+    body {
+      font-size: 0;
+      margin: 0;
+      height: 100%;
+    }
+
+    #unity-canvas {
+      height: 100%;
+      width: 100%;
+    }
+
+    .loader-center {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 0;
+      overflow: visible;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .loader {
+      position: absolute;
+      height: 50px;
+      top: -25px;
+      left: 50px;
+      right: 50px;
+      background: #c5cae9;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .loader-bar {
+      height: 100%;
+      background: #3f51b5;
+    }
+
+  </style>
+</head>
+
+<body style="text-align: center">
+  <canvas id="unity-canvas"
+    style="background: {{{ BACKGROUND_FILENAME ? 'url(\'Build/' + BACKGROUND_FILENAME.replace(/'/g, '%27') + '\') center / cover' : BACKGROUND_COLOR }}}"></canvas>
+
+  <div class="loader-center" id="loader-root">
+    <div class="loader">
+      <div class="loader-bar" id="loader-bar"></div>
+    </div>
+  </div>
+
+  <script src="Build/{{{ LOADER_FILENAME }}}"></script>
+  <script>
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+      dataUrl: "Build/{{{ DATA_FILENAME }}}",
+      frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
+      codeUrl: "Build/{{{ CODE_FILENAME }}}",
+      #if MEMORY_FILENAME
+      memoryUrl: "Build/{{{ MEMORY_FILENAME }}}",
+      #endif
+      #if SYMBOLS_FILENAME
+      symbolsUrl: "Build/{{{ SYMBOLS_FILENAME }}}",
+      #endif
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "{{{ COMPANY_NAME }}}",
+      productName: "{{{ PRODUCT_NAME }}}",
+      productVersion: "{{{ PRODUCT_VERSION }}}",
+    }, function onProgress(progress) {
+      var bar = document.querySelector("#loader-bar");
+      if (bar) bar.style.width = (progress * 100) + '%';
+
+      var loader = document.querySelector("#loader-root");
+      loader.style.display = progress < 1 ? 'block' : 'none';
+    });
+  </script>
+</body>
+
+</html>

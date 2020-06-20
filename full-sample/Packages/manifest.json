@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.kurtgokhan.react-unity": "0.0.6",
+    "com.kurtgokhan.react-unity": "file:../../packages/react-unity",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ide.visualstudio": "2.0.2",
     "com.unity.ide.vscode": "1.2.1",
