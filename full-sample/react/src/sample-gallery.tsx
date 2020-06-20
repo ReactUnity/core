@@ -5,6 +5,8 @@ import { ReactUnity, FlexDirection, Wrap } from 'react-unity-renderer';
 export interface Sample {
   name: string;
   render: typeof React.Component | (() => React.ReactElement);
+  source?: string;
+  wiki?: string;
 }
 
 export class App extends React.Component<{ samples: Sample[] }, { selectedSample?: Sample }> {

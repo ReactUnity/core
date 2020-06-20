@@ -1,6 +1,7 @@
 import sampleGallery, { Sample, SampleGallery } from './src/sample-gallery';
 import { App as LinkedText } from './src/text';
 import { App as Anim } from './src/anim';
+import { App as Anchor } from './src/wiki/anchor';
 import { App as Button } from './src/wiki/button';
 import { App as Dropdown } from './src/wiki/dropdown';
 import { App as Image } from './src/wiki/image';
@@ -17,6 +18,7 @@ const wikiPages: Sample[] = [
   { name: 'Button', render: Button },
   { name: 'Image', render: Image },
   { name: 'Input', render: Input },
+  { name: 'Anchor', render: Anchor },
   { name: 'Text', render: Text },
   { name: 'Toggle', render: Toggle },
   { name: 'Tooltip', render: Tooltip },
