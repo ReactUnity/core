@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DropdownItem } from './dropdown-item';
 import { fullScreen, dropdownBottom, bottomEdge, transparentColor } from '../../helpers/common-layouts';
-import { View } from '../../../models/components';
+import { View, CursorType } from '../../../models/components';
 
 export interface DropdownProps {
   onChange?: (value: any, ind: number) => void;
@@ -53,7 +53,7 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
           }
 
           {this.state.opened && <view layout={bottomEdge} style={{ zOrder: 1000 }}>
-            <button name="<Dropdown Backdrop>" onClick={this.close} layout={fullScreen} style={{ backgroundColor: transparentColor }} />
+            <button name="<Dropdown Backdrop>" onClick={this.close} layout={fullScreen} style={{ backgroundColor: transparentColor, cursor: CursorType.Default }} />
 
             <view name="<Dropdown Menu>" layout={dropdownBottom}>
               {items.map((x, i) =>

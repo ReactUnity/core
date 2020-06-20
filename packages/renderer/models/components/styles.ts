@@ -1,5 +1,5 @@
 import {
-  FontWeight, InteractionType, FontStyles, TextOverflowModes,
+  FontWeight, InteractionType, FontStyles, TextOverflowModes, CursorType,
 } from './styles-enums';
 import { YogaValue } from './yoga';
 import { Color } from '../values/color';
@@ -12,6 +12,7 @@ export interface Style {
   opacity?: number;
   zOrder?: number;
   hidden?: boolean;
+  cursor?: EnumOrLiteral<typeof CursorType> | string;
   interaction?: EnumOrLiteral<typeof InteractionType>;
 
   backgroundColor?: Color;

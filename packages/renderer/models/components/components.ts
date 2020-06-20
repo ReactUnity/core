@@ -30,7 +30,7 @@ export interface Anchor extends View {
   url?: string;
 
   /** Works in WebGL only */
-  openInNewTab?: boolean;
+  openInThisTab?: boolean;
 }
 
 export enum ImageFitMode {
