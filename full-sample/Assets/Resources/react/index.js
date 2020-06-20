@@ -474,7 +474,7 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
                     ? nonItems
                     : (((_a = selectedItem.props) === null || _a === void 0 ? void 0 : _a.triggerTemplate) || selectedItem),
                 this.state.opened && Object(react.createElement)("view", { layout: bottomEdge, style: { zOrder: 1000 } },
-                    Object(react.createElement)("button", { name: "<Dropdown Backdrop>", onClick: this.close, layout: fullScreen, style: { backgroundColor: transparentColor } }),
+                    Object(react.createElement)("button", { name: "<Dropdown Backdrop>", onClick: this.close, layout: fullScreen, style: { backgroundColor: transparentColor, cursor: '' } }),
                     Object(react.createElement)("view", { name: "<Dropdown Menu>", layout: dropdownBottom }, items.map(function (x, i) {
                         return Object(react.createElement)("button", { style: { backgroundColor: ColorNative.white, borderRadius: 0 }, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
                     }))))));
@@ -2766,7 +2766,7 @@ var text_App = /** @class */ (function (_super) {
         _this.scrollLayout = { FlexDirection: 0 /* Column */, Wrap: 1 /* Wrap */, AlignItems: 1 /* FlexStart */, Padding: 20, PaddingRight: 0 };
         _this.separatorLayout = {
             layout: { Height: YogaValueNative.Percent(4) },
-            style: { backgroundColor: ColorNative.gray },
+            style: { backgroundColor: ColorNative.gray, cursor: "row-resize" /* RowResize */ },
         };
         _this.textProps = {
             layout: { MaxWidth: 300, MarginRight: 40, FlexShrink: 1, FlexGrow: 1, FlexBasis: YogaValueNative.Percent(60) },
@@ -2893,9 +2893,9 @@ var anchor_App = /** @class */ (function (_super) {
     }
     App.prototype.render = function () {
         return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: 0 /* Column */ } },
-            Object(react.createElement)("anchor", { href: "https://www.google.com.tr/" }, "Open Google in this tab"),
-            Object(react.createElement)("anchor", { href: "https://www.google.com.tr/", openInNewTab: true }, "Open Google in new tab"),
-            Object(react.createElement)("anchor", { href: "https://www.google.com.tr/", onPointerDown: function (e) { return e.Use(); } }, "Cancel event")));
+            Object(react.createElement)("anchor", { url: "https://www.google.com.tr/", openInThisTab: true }, "Open Google in this tab"),
+            Object(react.createElement)("anchor", { url: "https://www.google.com.tr/" }, "Open Google in new tab"),
+            Object(react.createElement)("anchor", { url: "https://www.google.com.tr/", style: { cursor: "not-allowed" /* NotAllowed */ }, onPointerDown: function (e) { return e.Use(); } }, "Cancel event")));
     };
     return App;
 }(react.Component));
@@ -19665,7 +19665,7 @@ function injectIntoDevTools(devToolsConfig) {
     // Enables DevTools to append owner stacks to error messages in DEV mode.
     getCurrentFiber:  function () {
       return current;
-    }
+    } 
   }));
 }
 var IsSomeRendererActing$1 = ReactSharedInternals.IsSomeRendererActing;
@@ -21763,7 +21763,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ },
 /******/ function(__webpack_require__) { // webpackRuntimeModules
 /******/ 	"use strict";
-/******/
+/******/ 
 /******/ 	/* webpack/runtime/define property getter */
 /******/ 	!function() {
 /******/ 		// define getter function for harmony exports
@@ -21774,7 +21774,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			}
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	!function() {
 /******/ 		__webpack_require__.nmd = function(module) {
@@ -21791,7 +21791,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	!function() {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -21803,7 +21803,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -21814,7 +21814,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/create fake namespace object */
 /******/ 	!function() {
 /******/ 		// create a fake namespace object
@@ -21833,6 +21833,6 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /******/ 			return ns;
 /******/ 		};
 /******/ 	}();
-/******/
+/******/ 	
 /******/ }
 );

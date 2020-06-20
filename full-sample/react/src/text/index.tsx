@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnity, FlexDirection, Wrap, YogaAlign, Layout, PointerEventData, StyleAndLayout, PositionType } from 'react-unity-renderer';
+import { ReactUnity, FlexDirection, Wrap, YogaAlign, Layout, PointerEventData, StyleAndLayout, PositionType, CursorType } from 'react-unity-renderer';
 import lorem from './lorem';
 
 export class App extends React.Component<{}, { ratio: number }> {
@@ -8,7 +8,7 @@ export class App extends React.Component<{}, { ratio: number }> {
 
   separatorLayout: StyleAndLayout = {
     layout: { Height: YogaValueNative.Percent(4) },
-    style: { backgroundColor: ColorNative.gray },
+    style: { backgroundColor: ColorNative.gray, cursor: CursorType.RowResize },
   };
 
   textProps: StyleAndLayout = {
