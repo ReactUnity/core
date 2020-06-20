@@ -12,6 +12,7 @@ namespace ReactUnity
             = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
             {
                 { "text", (type, text, context) => new TextComponent(text, context) },
+                { "anchor", (type, text, context) => new AnchorComponent(context) },
                 { "view", (type, text, context) => new ContainerComponent(context) },
                 { "button", (type, text, context) => new ButtonComponent(context) },
                 { "toggle", (type, text, context) => new ToggleComponent(context) },
