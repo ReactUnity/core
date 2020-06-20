@@ -2675,6 +2675,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
 })();
 
 
+var shadow = new ShadowDefinitionNative([0, 8], [10, 10], [0, 0, 0, 1], 10);
 var sample_gallery_App = /** @class */ (function (_super) {
     __extends(App, _super);
     function App(props) {
@@ -2685,13 +2686,34 @@ var sample_gallery_App = /** @class */ (function (_super) {
     App.prototype.render = function () {
         var _this = this;
         var selected = this.state.selectedSample;
-        var SelectedComponent = (selected === null || selected === void 0 ? void 0 : selected.render) || (function () { return null; });
-        return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Stretch', JustifyContent: 'Center', FlexDirection: 0 /* Column */ } },
-            Object(react.createElement)("view", { layout: { AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: 2 /* Row */, Wrap: 1 /* Wrap */, FlexShrink: 0 }, style: { backgroundColor: ColorNative.white } }, this.props.samples.map(function (sample) {
-                return Object(react.createElement)("button", { layout: { Margin: 10 }, style: { backgroundColor: selected === sample ? 0.7 : 0.9 }, onClick: function () { return _this.setState(function (s) { return ({ selectedSample: sample }); }); } }, sample.name);
-            })),
-            Object(react.createElement)("view", { layout: { FlexGrow: 1, FlexShrink: 1 } },
-                Object(react.createElement)(SelectedComponent, null)));
+        var homePage = function () { return Object(react.createElement)(react.Fragment, null); };
+        var drawButtonForSample = function (sample, depth) {
+            if (depth === void 0) { depth = 0; }
+            return Object(react.createElement)(react.Fragment, null,
+                Object(react.createElement)("button", { layout: { PaddingHorizontal: 20, PaddingVertical: 16, PaddingLeft: 20 + depth * 16, JustifyContent: 0 /* FlexStart */ }, style: { backgroundColor: selected === sample ? 0.7 : 'transparent', borderRadius: 0, borderColor: ColorNative.black }, stateStyles: { hover: { backgroundColor: 0.8 } }, onClick: sample.children
+                        ? function () { return null; }
+                        : function () { return _this.setState(function (s) { return ({ selectedSample: sample }); }); } }, sample.name),
+                !!sample.children && Object(react.createElement)("view", null, sample.children.map(function (x) { return drawButtonForSample(x, depth + 1); })));
+        };
+        var SelectedComponent = (selected === null || selected === void 0 ? void 0 : selected.render) || homePage;
+        return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Stretch', JustifyContent: 'FlexStart', FlexDirection: 0 /* Column */ }, style: { backgroundColor: '#fafafa' } },
+            Object(react.createElement)("view", { name: "<Header>", style: { backgroundColor: '#2e9151', fontColor: ColorNative.white, boxShadow: shadow, zOrder: 1 }, layout: { AlignItems: 'Center', JustifyContent: 'SpaceBetween', FlexDirection: 2 /* Row */, Wrap: 1 /* Wrap */, FlexShrink: 0, PaddingVertical: 20, PaddingHorizontal: 40 } },
+                Object(react.createElement)("view", { style: { fontStyle: 1 /* Bold */, fontSize: 26 } }, "React Unity"),
+                Object(react.createElement)("view", { layout: { FlexGrow: 1 } }),
+                Object(react.createElement)("anchor", { url: "https://github.com/KurtGokhan/react-unity" }, "Github")),
+            Object(react.createElement)("view", { layout: { FlexGrow: 1, FlexShrink: 1, FlexDirection: 2 /* Row */, AlignItems: 'Stretch' } },
+                Object(react.createElement)("scroll", { name: "<Sidebar>", layout: { AlignItems: 'Stretch', JustifyContent: 'FlexStart', FlexDirection: 0 /* Column */, Wrap: 0 /* NoWrap */, FlexShrink: 0, Width: 250, PaddingVertical: 20 }, style: { backgroundColor: '#dadada', boxShadow: shadow } }, this.props.samples.map(function (x) { return drawButtonForSample(x, 0); })),
+                Object(react.createElement)("view", { layout: { FlexGrow: 1, FlexShrink: 1, FlexDirection: 0 /* Column */, AlignItems: 4 /* Stretch */, JustifyContent: 0 /* FlexStart */ } },
+                    Object(react.createElement)(SelectedComponent, null),
+                    !!((selected === null || selected === void 0 ? void 0 : selected.source) || (selected === null || selected === void 0 ? void 0 : selected.wiki)) && Object(react.createElement)("view", { layout: { PositionType: 1 /* Absolute */, Right: 20, Top: 20, PaddingHorizontal: 30, PaddingVertical: 20 }, style: {
+                            backgroundColor: [0.1803922, 0.5686275, 0.3176471, 1],
+                            borderRadius: 5,
+                            boxShadow: shadow,
+                            fontColor: [1, 1, 1, 1],
+                            fontSize: 24,
+                        } },
+                        !!selected.source && Object(react.createElement)("anchor", { url: selected.source }, "Source"),
+                        !!selected.wiki && Object(react.createElement)("anchor", { url: selected.wiki }, "Wiki")))));
     };
     return App;
 }(react.Component));
@@ -2814,11 +2836,12 @@ var anim_App = /** @class */ (function (_super) {
     }
     App.prototype.render = function () {
         var val = this.state.val;
-        return Object(react.createElement)("view", { layout: { FlexDirection: 2 /* Row */, AlignItems: 4 /* Stretch */, Height: YogaValueNative.Percent(100), JustifyContent: 4 /* SpaceAround */ } },
+        return Object(react.createElement)("view", { layout: { FlexDirection: 2 /* Row */, Height: YogaValueNative.Percent(100), AlignItems: 4 /* Stretch */, JustifyContent: 4 /* SpaceAround */ } },
             Object(react.createElement)("view", { layout: {
                     Margin: 50,
+                    BorderWidth: 1,
                     Width: 300, FlexDirection: 0 /* Column */, AlignItems: 2 /* Center */, JustifyContent: 4 /* SpaceAround */
-                }, style: anim_assign({ backgroundColor: ColorNative.white }, (this.state.animateRadius && { borderRadius: val * 100 })) },
+                }, style: anim_assign({ backgroundColor: ColorNative.white, borderColor: ColorNative.black }, (this.state.animateRadius && { borderRadius: val * 100 })) },
                 Object(react.createElement)("button", { layout: { Width: Math.round((val * 150 + 130) / 2) * 2 } }, "Width"),
                 Object(react.createElement)("button", { style: { backgroundColor: [ColorNative.red, val, ColorNative.yellow] } }, "Color"),
                 Object(react.createElement)("button", { style: { rotate: 180 * val } }, "Rotate"),
@@ -3519,22 +3542,22 @@ var todo_mvc_TodoApp = /** @class */ (function (_super) {
 
 
 var wikiPages = [
-    { name: 'View', render: view_App },
-    { name: 'Scroll', render: scroll_App },
-    { name: 'Button', render: button_App },
-    { name: 'Image', render: image_App },
-    { name: 'Input', render: input_App },
-    { name: 'Anchor', render: anchor_App },
-    { name: 'Text', render: text_App },
-    { name: 'Toggle', render: toggle_App },
-    { name: 'Tooltip', render: tooltip_App },
-    { name: 'Dropdown', render: dropdown_App },
+    { name: 'View', render: view_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/view.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#view' },
+    { name: 'Scroll', render: scroll_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/scroll.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#scroll' },
+    { name: 'Button', render: button_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/button.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#button' },
+    { name: 'Image', render: image_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/image.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#image' },
+    { name: 'Input', render: input_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/input.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#input' },
+    { name: 'Anchor', render: anchor_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/anchor.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#anchor' },
+    { name: 'Text', render: text_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/text.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#text' },
+    { name: 'Toggle', render: toggle_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/toggle.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#toggle' },
+    { name: 'Tooltip', render: tooltip_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/tooltip.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/High-level-Components#tooltip' },
+    { name: 'Dropdown', render: dropdown_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/dropdown.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/High-level-Components#dropdown' },
 ];
 sample_gallery([
-    { name: 'Components', render: function () { return SampleGallery(wikiPages); } },
-    { name: 'Animation', render: anim_App },
-    { name: 'Linked Text', render: linked_text_App },
-    { name: 'TodoApp', render: todo_mvc_TodoApp },
+    { name: 'Components', render: function () { return SampleGallery(wikiPages); }, children: wikiPages },
+    { name: 'Animation', render: anim_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/anim/index.tsx' },
+    { name: 'Linked Text', render: linked_text_App, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/linked-text/index.tsx' },
+    { name: 'Todo App', render: todo_mvc_TodoApp, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/todo-mvc/index.tsx' },
 ]);
 
 

@@ -23,13 +23,15 @@ export class App extends React.Component<{}, { val: number, animateRadius: boole
   render() {
     const val = this.state.val;
 
-    return <view layout={{ FlexDirection: FlexDirection.Row, AlignItems: YogaAlign.Stretch, Height: YogaValueNative.Percent(100), JustifyContent: YogaJustify.SpaceAround }}>
+    return <view layout={{ FlexDirection: FlexDirection.Row, Height: YogaValueNative.Percent(100), AlignItems: YogaAlign.Stretch, JustifyContent: YogaJustify.SpaceAround }}>
       <view layout={{
         Margin: 50,
+        BorderWidth: 1,
         Width: 300, FlexDirection: FlexDirection.Column, AlignItems: YogaAlign.Center, JustifyContent: YogaJustify.SpaceAround
       }}
         style={{
           backgroundColor: ColorNative.white,
+          borderColor: ColorNative.black,
           ...(this.state.animateRadius && { borderRadius: val * 100 })
         }}>
 

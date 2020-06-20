@@ -1,12 +1,15 @@
 
 import * as React from 'react';
-import { ReactUnity, FlexDirection, Wrap } from 'react-unity-renderer';
+import { ReactUnity, FlexDirection, Wrap, YogaJustify, YogaAlign, FontStyles, PositionType } from 'react-unity-renderer';
+
+const shadow = new ShadowDefinitionNative([0, 8], [10, 10], [0, 0, 0, 1], 10);
 
 export interface Sample {
   name: string;
   render: typeof React.Component | (() => React.ReactElement);
   source?: string;
   wiki?: string;
+  children?: Sample[];
 }
 
 export class App extends React.Component<{ samples: Sample[] }, { selectedSample?: Sample }> {
@@ -17,20 +20,63 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
 
   render() {
     const selected = this.state.selectedSample;
-    const SelectedComponent = selected?.render || (() => null);
-    return <view layout={{ Height: '100%', AlignItems: 'Stretch', JustifyContent: 'Center', FlexDirection: FlexDirection.Column }}>
-      <view layout={{ AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: FlexDirection.Row, Wrap: Wrap.Wrap, FlexShrink: 0 }}
-        style={{ backgroundColor: ColorNative.white }}>
-        {this.props.samples.map(sample =>
-          <button layout={{ Margin: 10 }} style={{ backgroundColor: selected === sample ? 0.7 : 0.9 }}
-            onClick={() => this.setState(s => ({ selectedSample: sample }))}>{sample.name}</button>
-        )}
+
+    const homePage = () => <>
+
+    </>;
+
+    const drawButtonForSample = (sample: Sample, depth = 0) => <>
+      <button layout={{ PaddingHorizontal: 20, PaddingVertical: 16, PaddingLeft: 20 + depth * 16, JustifyContent: YogaJustify.FlexStart }}
+        style={{ backgroundColor: selected === sample ? 0.7 : 'transparent', borderRadius: 0, borderColor: ColorNative.black }}
+        stateStyles={{ hover: { backgroundColor: 0.8 } }}
+        onClick={sample.children
+          ? () => null
+          : () => this.setState(s => ({ selectedSample: sample }))}>
+        {sample.name}
+      </button>
+
+      {!!sample.children && <view>
+        {sample.children.map(x => drawButtonForSample(x, depth + 1))}
+      </view>}
+    </>;
+
+
+    const SelectedComponent = selected?.render || homePage;
+
+    return <view layout={{ Height: '100%', AlignItems: 'Stretch', JustifyContent: 'FlexStart', FlexDirection: FlexDirection.Column }}
+      style={{ backgroundColor: '#fafafa' }}>
+
+      <view name="<Header>"
+        style={{ backgroundColor: '#2e9151', fontColor: ColorNative.white, boxShadow: shadow, zOrder: 1 }}
+        layout={{ AlignItems: 'Center', JustifyContent: 'SpaceBetween', FlexDirection: FlexDirection.Row, Wrap: Wrap.Wrap, FlexShrink: 0, PaddingVertical: 20, PaddingHorizontal: 40 }}>
+        <view style={{ fontStyle: FontStyles.Bold, fontSize: 26 }}>React Unity</view>
+        <view layout={{ FlexGrow: 1 }}></view>
+        <anchor url="https://github.com/KurtGokhan/react-unity">Github</anchor>
       </view>
 
-      <view layout={{ FlexGrow: 1, FlexShrink: 1 }}>
-        <SelectedComponent />
+      <view layout={{ FlexGrow: 1, FlexShrink: 1, FlexDirection: FlexDirection.Row, AlignItems: 'Stretch' }}>
+        <scroll name="<Sidebar>"
+          layout={{ AlignItems: 'Stretch', JustifyContent: 'FlexStart', FlexDirection: FlexDirection.Column, Wrap: Wrap.NoWrap, FlexShrink: 0, Width: 250, PaddingVertical: 20 }}
+          style={{ backgroundColor: '#dadada', boxShadow: shadow }}>
+          {this.props.samples.map(x => drawButtonForSample(x, 0))}
+        </scroll>
+
+        <view layout={{ FlexGrow: 1, FlexShrink: 1, FlexDirection: FlexDirection.Column, AlignItems: YogaAlign.Stretch, JustifyContent: YogaJustify.FlexStart }}>
+          <SelectedComponent />
+          {!!(selected?.source || selected?.wiki) && <view layout={{ PositionType: PositionType.Absolute, Right: 20, Top: 20, PaddingHorizontal: 30, PaddingVertical: 20 }}
+            style={{
+              backgroundColor: [0.1803922, 0.5686275, 0.3176471, 1],
+              borderRadius: 5,
+              boxShadow: shadow,
+              fontColor: [1, 1, 1, 1],
+              fontSize: 24,
+            }}>
+            {!!selected.source && <anchor url={selected.source}>Source</anchor>}
+            {!!selected.wiki && <anchor url={selected.wiki}>Wiki</anchor>}
+          </view>}
+        </view>
       </view>
-    </view>;
+    </view >;
   }
 }
 
