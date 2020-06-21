@@ -2803,27 +2803,13 @@ var anim_extends = (undefined && undefined.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var anim_assign = (undefined && undefined.__assign) || function () {
-    anim_assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return anim_assign.apply(this, arguments);
-};
 
 
 var anim_App = /** @class */ (function (_super) {
     anim_extends(App, _super);
     function App(props) {
         var _this = _super.call(this, props) || this;
-        _this.toggleAnimateRadius = function () {
-            _this.setState(function (x) { return ({ animateRadius: !x.animateRadius }); });
-        };
-        _this.state = { val: 0, animateRadius: true };
+        _this.state = { val: 0 };
         Object(react_unity_renderer.startAnimation)({
             duration: 1000,
             onTick: function (val) { return _this.setState({ val: val }); },
@@ -2841,7 +2827,11 @@ var anim_App = /** @class */ (function (_super) {
                     Margin: 50,
                     BorderWidth: 1,
                     Width: 300, FlexDirection: 0 /* Column */, AlignItems: 2 /* Center */, JustifyContent: 4 /* SpaceAround */
-                }, style: anim_assign({ backgroundColor: ColorNative.white, borderColor: ColorNative.black }, (this.state.animateRadius && { borderRadius: val * 100 })) },
+                }, style: {
+                    backgroundColor: ColorNative.white,
+                    borderColor: ColorNative.black,
+                    borderRadius: val * 100,
+                } },
                 Object(react.createElement)("button", { layout: { Width: Math.round((val * 150 + 130) / 2) * 2 } }, "Width"),
                 Object(react.createElement)("button", { style: { backgroundColor: [ColorNative.red, val, ColorNative.yellow] } }, "Color"),
                 Object(react.createElement)("button", { style: { rotate: 180 * val } }, "Rotate"),
@@ -2865,309 +2855,99 @@ var anim_App = /** @class */ (function (_super) {
 /* harmony default export */ var anim = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(anim_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/anchor.tsx
-var anchor_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var anchor_App = /** @class */ (function (_super) {
-    anchor_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: 0 /* Column */ } },
-            Object(react.createElement)("anchor", { url: "https://www.google.com.tr/", openInThisTab: true }, "Open Google in this tab"),
-            Object(react.createElement)("anchor", { url: "https://www.google.com.tr/" }, "Open Google in new tab"),
-            Object(react.createElement)("anchor", { url: "https://www.google.com.tr/", style: { cursor: "not-allowed" /* NotAllowed */ }, onPointerDown: function (e) { return e.Use(); } }, "Cancel event")));
-    };
-    return App;
-}(react.Component));
-
+function anchor_App() {
+    return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: 0 /* Column */ } },
+        Object(react.createElement)("anchor", { url: "https://www.google.com.tr/", openInThisTab: true }, "Open Google in this tab"),
+        Object(react.createElement)("anchor", { url: "https://www.google.com.tr/" }, "Open Google in new tab"),
+        Object(react.createElement)("anchor", { url: "https://www.google.com.tr/", style: { cursor: "not-allowed" /* NotAllowed */ }, onPointerDown: function (e) { return e.Use(); } }, "Cancel event"));
+}
 /* harmony default export */ var wiki_anchor = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(anchor_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/button.tsx
-var button_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var button_App = /** @class */ (function (_super) {
-    button_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
-            Object(react.createElement)("button", { onClick: function () { return console.log('Clicked'); } }, "Click me!")));
-    };
-    return App;
-}(react.Component));
-
+function button_App() {
+    return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
+        Object(react.createElement)("button", { onClick: function () { return console.log('Clicked'); } }, "Click me!"));
+}
 /* harmony default export */ var wiki_button = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(button_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/dropdown.tsx
-var dropdown_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var dropdown_App = /** @class */ (function (_super) {
-    dropdown_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
-            Object(react.createElement)(react_unity_renderer.Dropdown, { autoClose: false, onChange: function (val) { return console.log(val); }, layout: { Width: 250 } },
-                "Select an option",
-                Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 5, triggerTemplate: Object(react.createElement)("view", { style: { fontColor: 'green' } }, "Option 1") }, "Option 1"),
-                Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 10 }, "Option 2"),
-                Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 15 }, "Option With Long Name"))));
-    };
-    return App;
-}(react.Component));
-
+function dropdown_App() {
+    return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
+        Object(react.createElement)(react_unity_renderer.Dropdown, { autoClose: false, onChange: function (val) { return console.log(val); }, layout: { Width: 250 } },
+            "Select an option",
+            Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 5, triggerTemplate: Object(react.createElement)("view", { style: { fontColor: 'green' } }, "Option 1") }, "Option 1"),
+            Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 10 }, "Option 2"),
+            Object(react.createElement)(react_unity_renderer.DropdownItem, { value: 15 }, "Option With Long Name")));
+}
 /* harmony default export */ var dropdown = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(dropdown_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/image.tsx
-var image_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var image_App = /** @class */ (function (_super) {
-    image_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
-            Object(react.createElement)("image", { source: NamedAssets.delete })));
-    };
-    return App;
-}(react.Component));
-
+function image_App() {
+    return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
+        Object(react.createElement)("image", { source: NamedAssets.delete }));
+}
 /* harmony default export */ var wiki_image = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(image_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/input.tsx
-var input_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var input_App = /** @class */ (function (_super) {
-    input_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
-            Object(react.createElement)("input", { placeholder: "Write something!", style: { backgroundColor: 'aqua' } })));
-    };
-    return App;
-}(react.Component));
-
+function input_App() {
+    return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
+        Object(react.createElement)("input", { placeholder: "Write something!", style: { backgroundColor: 'aqua' } }));
+}
 /* harmony default export */ var input = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(input_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/scroll.tsx
-var scroll_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
 
-var scroll_App = /** @class */ (function (_super) {
-    scroll_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("scroll", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'FlexStart' } }, [lorem, lorem, lorem, lorem, lorem, lorem]));
-    };
-    return App;
-}(react.Component));
-
+function scroll_App() {
+    return Object(react.createElement)("scroll", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'FlexStart' } }, [lorem, lorem, lorem, lorem, lorem, lorem]);
+}
 /* harmony default export */ var wiki_scroll = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(scroll_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/text.tsx
-var text_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var text_App = /** @class */ (function (_super) {
-    text_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("text", null, "Hello world!"));
-    };
-    return App;
-}(react.Component));
-
+function text_App() {
+    return Object(react.createElement)("text", null, "Hello world!");
+}
 /* harmony default export */ var wiki_text = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(text_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/toggle.tsx
-var toggle_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var toggle_App = /** @class */ (function (_super) {
-    toggle_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: 'Row' } },
-            Object(react.createElement)("toggle", null),
-            "Toggle me!"));
-    };
-    return App;
-}(react.Component));
-
+function toggle_App() {
+    return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: 'Row' } },
+        Object(react.createElement)("toggle", null),
+        " Toggle me!");
+}
 /* harmony default export */ var toggle = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(toggle_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/tooltip.tsx
-var tooltip_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var tooltip_App = /** @class */ (function (_super) {
-    tooltip_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        var tooltipContent = Object(react.createElement)("view", { layout: { Padding: 10 }, style: { backgroundColor: new ColorNative(0.4, 0.4, 0.4), fontColor: 'white' } }, "Cool tooltip");
-        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
-            Object(react.createElement)(react_unity_renderer.Tooltip, { tooltipContent: tooltipContent, position: 'bottom', offset: 20 }, "Hover to see cool tooltip.")));
-    };
-    return App;
-}(react.Component));
-
+function tooltip_App() {
+    var tooltipContent = Object(react.createElement)("view", { layout: { Padding: 10 }, style: { backgroundColor: new ColorNative(0.4, 0.4, 0.4), fontColor: 'white' } }, "Cool tooltip");
+    return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } },
+        Object(react.createElement)(react_unity_renderer.Tooltip, { tooltipContent: tooltipContent, position: 'bottom', offset: 20 }, "Hover to see cool tooltip."));
+}
 /* harmony default export */ var tooltip = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(tooltip_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/wiki/view.tsx
-var view_extends = (undefined && undefined.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 
 
-var view_App = /** @class */ (function (_super) {
-    view_extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    App.prototype.render = function () {
-        return (Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } }, "Hello world!"));
-    };
-    return App;
-}(react.Component));
-
+function view_App() {
+    return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' } }, "Hello world!");
+}
 /* harmony default export */ var view = (function () { return Object(react_unity_renderer.ReactUnity.render)(Object(react.createElement)(view_App, null), RootContainer, null); });
 
 // CONCATENATED MODULE: ./src/todo-mvc/utils.ts

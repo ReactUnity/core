@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, ReactUnity, YogaAlign, TextOverflowModes, Vector2Native } from 'react-unity-renderer';
 
-export class App extends React.Component<{}, { val: number, animateRadius: boolean }> {
+export class App extends React.Component<{}, { val: number }> {
   constructor(props) {
     super(props);
-    this.state = { val: 0, animateRadius: true };
+    this.state = { val: 0 };
 
     startAnimation({
       duration: 1000,
@@ -15,10 +15,6 @@ export class App extends React.Component<{}, { val: number, animateRadius: boole
       loopMode: 'ping-pong',
     });
   }
-
-  toggleAnimateRadius = () => {
-    this.setState(x => ({ animateRadius: !x.animateRadius }))
-  };
 
   render() {
     const val = this.state.val;
@@ -32,7 +28,7 @@ export class App extends React.Component<{}, { val: number, animateRadius: boole
         style={{
           backgroundColor: ColorNative.white,
           borderColor: ColorNative.black,
-          ...(this.state.animateRadius && { borderRadius: val * 100 })
+          borderRadius: val * 100,
         }}>
 
         <button layout={{ Width: Math.round((val * 150 + 130) / 2) * 2 }}>
