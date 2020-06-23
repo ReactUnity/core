@@ -13,6 +13,7 @@ import { App as Tooltip } from './src/wiki/tooltip';
 import { App as View } from './src/wiki/view';
 import { TodoApp } from './src/todo-mvc';
 
+import ViewSource from '!!raw-loader!./src/wiki/view';
 
 const wikiPages: Sample[] = [
   { name: 'View', render: View, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/view.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#view' },
@@ -33,4 +34,3 @@ sampleGallery([
   { name: 'Linked Text', render: LinkedText, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/linked-text/index.tsx' },
   { name: 'Todo App', render: TodoApp, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/todo-mvc/index.tsx' },
 ]);
-
