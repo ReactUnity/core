@@ -48,8 +48,7 @@ Please feel free to share all your questions, proposals and feedbacks by opening
 
 ## Resources and References
 
-- [Full Unity Project Sample](https://github.com/KurtGokhan/react-unity-full-sample)
-- [Sample React TODO App](https://github.com/KurtGokhan/react-unity-todo-sample) and [Demo](https://reactunity.github.io/)
+- [Full Unity Project Sample](https://github.com/KurtGokhan/react-unity-full-sample) and [Demo](https://reactunity.github.io/)
 - [React Unity Renderer (npm package)](https://github.com/KurtGokhan/react-unity-renderer)
 - [Create React Unity (npm project scaffold)](https://github.com/KurtGokhan/create-react-unity)
 - [React](https://reactjs.org/)
