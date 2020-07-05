@@ -27,9 +27,9 @@ namespace ReactUnity.Components
 
 
         public FlexElement Flex { get; private set; }
-        public YogaNode Layout;
-        public NodeStyle Style;
-        public StateStyles StateStyles;
+        public YogaNode Layout { get; private set; }
+        public NodeStyle Style { get; private set; }
+        public StateStyles StateStyles { get; private set; }
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
@@ -308,6 +308,7 @@ namespace ReactUnity.Components
             if (Style.borderRadius > 0 && Style.borderColor.a > 0) return true;
             if (Style.backgroundColor.a > 0) return true;
             if (Style.backgroundImage != null) return true;
+            if (Style.boxShadow != null) return true;
 
             return false;
         }

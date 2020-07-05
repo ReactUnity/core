@@ -199,6 +199,12 @@ namespace ReactUnity.Editor
                 return EditorGUILayout.EnumPopup("Text Overflow", CurrentStyle.textOverflow);
             });
 
+            // Text Overflow
+            DrawNullableRow("textAlign", (enabled) =>
+            {
+                return EditorGUILayout.EnumPopup("Text Align", CurrentStyle.textAlign);
+            });
+
             // Font color
             DrawNullableRow("fontColor", (enabled) =>
             {

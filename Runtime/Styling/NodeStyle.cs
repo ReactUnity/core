@@ -120,6 +120,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue("fontSize", value);
             get => GetStyleValue<YogaValue>("fontSize");
         }
+        public TextAlignmentOptions textAlign
+        {
+            set => SetStyleValue("textAlign", value);
+            get => GetStyleValue<TextAlignmentOptions>("textAlign");
+        }
         public TextOverflowModes textOverflow
         {
             set => SetStyleValue("textOverflow", value);

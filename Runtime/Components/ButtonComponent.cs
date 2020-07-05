@@ -16,6 +16,7 @@ namespace ReactUnity.Components
             backgroundColor = new Color(0.9f, 0.9f, 0.9f),
             borderRadius = 8,
             cursor = "pointer",
+            textAlign = TMPro.TextAlignmentOptions.Midline,
         };
         public static YogaNode ButtonDefaultLayout { get; } = new YogaNode()
         {

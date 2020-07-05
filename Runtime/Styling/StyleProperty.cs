@@ -61,6 +61,7 @@ namespace ReactUnity.Styling
         public static StyleProperty fontWeight = new StyleProperty("fontWeight", typeof(FontWeight), FontWeight.Regular, false, true);
         public static StyleProperty fontStyle = new StyleProperty("fontStyle", typeof(FontStyles), FontStyles.Normal, false, true);
         public static StyleProperty fontSize = new StyleProperty("fontSize", typeof(YogaValue), YogaValue.Undefined(), true, true);
+        public static StyleProperty textAlign = new StyleProperty("textAlign", typeof(TextAlignmentOptions), TextAlignmentOptions.TopLeft, false, true);
         public static StyleProperty textOverflow = new StyleProperty("textOverflow", typeof(TextOverflowModes), TextOverflowModes.Overflow, false, true);
         public static StyleProperty textWrap = new StyleProperty("textWrap", typeof(bool), true, false, true);
 

@@ -9,7 +9,7 @@ namespace ReactUnity.Components
 {
     public class TextComponent : UnityComponent
     {
-        public static YogaNode TextDefaultLayout { get; } = new YogaNode() { MaxWidth = YogaValue.Percent(100), MaxHeight = YogaValue.Percent(100) };
+        public static YogaNode TextDefaultLayout { get; } = new YogaNode() { };
         public override YogaNode DefaultLayout => TextDefaultLayout;
 
         public TextMeshProUGUI Text { get; private set; }
@@ -67,7 +67,7 @@ namespace ReactUnity.Components
             Text.fontWeight = Style.fontWeight;
             Text.color = Style.fontColor;
             Text.enableWordWrapping = Style.textWrap;
-
+            Text.alignment = Style.textAlign;
 
             var isLinked = Style.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)
