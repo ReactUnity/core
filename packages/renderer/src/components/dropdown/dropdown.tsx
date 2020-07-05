@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { DropdownItem } from './dropdown-item';
 import { fullScreen, dropdownBottom, bottomEdge, transparentColor } from '../../helpers/common-layouts';
-import { View, CursorType } from '../../../models/components';
+import { View, CursorType, Style } from '../../../models/components';
+
+const dropdownMenuStyle: Style = { boxShadow: new ShadowDefinitionNative([0, 3], [7, 6], ColorNative.black, 5) };
 
 export interface DropdownProps {
   onChange?: (value: any, ind: number) => void;
@@ -42,11 +44,11 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
     const items: DropdownItem[] = children.filter(x => x?.type === DropdownItem) as any;
     const selectedItem = items[this.state.selectedIndex];
 
-    const { autoClose, onChange, name, ...otherProps } = this.props;
+    const { autoClose, onChange, name, layout, ...otherProps } = this.props;
 
     return (
       <view name={name || '<Dropdown>'}>
-        <button name="<Dropdown Trigger>" onClick={this.toggle} {...otherProps}>
+        <button name="<Dropdown Trigger>" onClick={this.toggle} layout={{ FlexDirection: 'Column', AlignItems: 'Stretch', ...layout }} {...otherProps}>
           {this.state.selectedIndex < 0
             ? nonItems
             : (selectedItem.props?.triggerTemplate || selectedItem)
@@ -55,7 +57,7 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
           {this.state.opened && <view layout={bottomEdge} style={{ zOrder: 1000 }}>
             <button name="<Dropdown Backdrop>" onClick={this.close} layout={fullScreen} style={{ backgroundColor: transparentColor, cursor: CursorType.Default }} />
 
-            <view name="<Dropdown Menu>" layout={dropdownBottom}>
+            <view name="<Dropdown Menu>" layout={dropdownBottom} style={dropdownMenuStyle}>
               {items.map((x, i) =>
                 <button style={{ backgroundColor: ColorNative.white, borderRadius: 0 }} onClick={this.handleChildClick.bind(this, i, x.props.value)}>{x}</button>
               )}

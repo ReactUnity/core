@@ -64,4 +64,6 @@ export interface Input extends Omit<View, 'onSubmit'> {
   keyboardType?: TouchScreenKeyboardType;
   lineType?: LineType;
   validation?: CharacterValidation;
+
+  webSupport?: boolean;
 }
