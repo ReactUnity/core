@@ -187,6 +187,14 @@ namespace ReactUnity.Components
                 case "validation":
                     InputField.characterValidation = (TMP_InputField.CharacterValidation)System.Convert.ToInt32(value);
                     return;
+                case "webSupport":
+                    var enabled = System.Convert.ToBoolean(value);
+                    var cmp = GameObject.GetComponent<WebSupport.WebGLInput>();
+                    if (enabled && !cmp) GameObject.AddComponent<WebSupport.WebGLInput>();
+                    else if (!enabled && cmp) GameObject.Destroy(cmp);
+
+                    InputField.characterValidation = (TMP_InputField.CharacterValidation)System.Convert.ToInt32(value);
+                    return;
                 default:
                     base.SetProperty(propertyName, value);
                     break;

@@ -23,6 +23,8 @@ namespace ReactUnity
         public StringObjectDictionary NamedAssets = new StringObjectDictionary();
         public ReactScript Script;
 
+        public List<TextAsset> PreloadScripts = new List<TextAsset>();
+
         private IDisposable ScriptWatchDisposable;
 
         void OnEnable()
@@ -71,6 +73,7 @@ namespace ReactUnity
             engine.SetValue("NamedAssets", NamedAssets);
             try
             {
+                PreloadScripts.ForEach(x => engine.Execute(x.text));
                 engine.Execute(script);
             }
             catch (ParserException ex)
