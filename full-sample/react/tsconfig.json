@@ -14,6 +14,7 @@
     "strict": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
     "jsx": "react",
     "target": "ES5",
     "skipLibCheck": true,

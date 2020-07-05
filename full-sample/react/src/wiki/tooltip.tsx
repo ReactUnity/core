@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnity, Tooltip } from 'react-unity-renderer';
+import { Tooltip } from 'react-unity-renderer';
 
 export function App() {
   const tooltipContent =
@@ -13,5 +13,3 @@ export function App() {
     </Tooltip>
   </view>;
 }
-
-export default () => ReactUnity.render(<App />, RootContainer, null);

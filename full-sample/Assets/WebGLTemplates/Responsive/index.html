@@ -5,12 +5,16 @@
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>{{{ PRODUCT_NAME }}}</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+
   <style>
     html,
     body {
       font-size: 0;
       margin: 0;
       height: 100%;
+      overflow: hidden;
     }
 
     #unity-canvas {
@@ -45,6 +49,13 @@
     .loader-bar {
       height: 100%;
       background: #3f51b5;
+    }
+
+    .unity-webgl-support-input {
+      font-family: 'Roboto Mono', monospace;
+      cursor: text !important;
+      background-color: transparent !important;
+      overflow: hidden;
     }
 
   </style>

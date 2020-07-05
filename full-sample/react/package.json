@@ -13,6 +13,7 @@
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "monaco-editor-core": "^0.20.0",
     "react": "^16.13.1",
     "react-motion": "^0.5.2",
     "react-reconciler": "^0.25.1",

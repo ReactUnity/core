@@ -1,6 +1,7 @@
 
 import * as React from 'react';
 import { ReactUnity, FlexDirection, Wrap, YogaJustify, YogaAlign, FontStyles, PositionType } from 'react-unity-renderer';
+import { TextEditor } from './editor';
 
 const shadow = new ShadowDefinitionNative([0, 8], [10, 10], [0, 0, 0, 1], 10);
 
@@ -8,6 +9,7 @@ export interface Sample {
   name: string;
   render: typeof React.Component | (() => React.ReactElement);
   source?: string;
+  sourceCode?: string;
   wiki?: string;
   children?: Sample[];
 }
@@ -31,7 +33,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
         stateStyles={{ hover: { backgroundColor: 0.8 } }}
         onClick={sample.children
           ? () => null
-          : () => this.setState(s => ({ selectedSample: sample }))}>
+          : () => this.setState(() => ({ selectedSample: sample }))}>
         {sample.name}
       </button>
 
@@ -61,20 +63,32 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
           {this.props.samples.map(x => drawButtonForSample(x, 0))}
         </scroll>
 
-        <view layout={{ FlexGrow: 1, FlexShrink: 1, FlexDirection: FlexDirection.Column, AlignItems: YogaAlign.Stretch, JustifyContent: YogaJustify.FlexStart }}>
-          <SelectedComponent />
-          {!!(selected?.source || selected?.wiki) && <view layout={{ PositionType: PositionType.Absolute, Right: 20, Top: 20, PaddingHorizontal: 30, PaddingVertical: 20 }}
-            style={{
-              backgroundColor: [0.1803922, 0.5686275, 0.3176471, 1],
-              borderRadius: 5,
-              boxShadow: shadow,
-              fontColor: [1, 1, 1, 1],
-              fontSize: 24,
-            }}>
-            {!!selected.source && <anchor url={selected.source}>Source</anchor>}
-            {!!selected.wiki && <anchor url={selected.wiki}>Wiki</anchor>}
+        <scroll layout={{ FlexGrow: 1, FlexShrink: 1, FlexDirection: 'Column', AlignItems: 'Stretch', JustifyContent: 'FlexStart', Padding: 20 }}>
+
+
+          <view layout={{ FlexGrow: selected?.sourceCode ? 0 : 1, FlexShrink: 0, FlexDirection: 'Column', AlignItems: 'Stretch', JustifyContent: 'FlexStart', Height: 250 }}>
+            <SelectedComponent />
+          </view>
+
+          {selected?.sourceCode && <view layout={{ MarginTop: 20 }}>
+            Source Code:
+            <TextEditor text={selected.sourceCode} />
           </view>}
-        </view>
+
+
+          {!selected?.sourceCode && !!(selected?.source || selected?.wiki) &&
+            <view layout={{ PositionType: PositionType.Absolute, Right: 20, Top: 20, PaddingHorizontal: 30, PaddingVertical: 20 }}
+              style={{
+                backgroundColor: [0.1803922, 0.5686275, 0.3176471, 1],
+                borderRadius: 5,
+                boxShadow: shadow,
+                fontColor: [1, 1, 1, 1],
+                fontSize: 24,
+              }}>
+              {!!selected.source && <anchor url={selected.source}>Source</anchor>}
+              {!!selected.wiki && <anchor url={selected.wiki}>Wiki</anchor>}
+            </view>}
+        </scroll>
       </view>
     </view >;
   }

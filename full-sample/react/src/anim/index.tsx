@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, ReactUnity, YogaAlign, TextOverflowModes, Vector2Native } from 'react-unity-renderer';
+import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, YogaAlign, TextOverflowModes } from 'react-unity-renderer';
 
 export class App extends React.Component<{}, { val: number }> {
   constructor(props) {
@@ -79,5 +79,3 @@ export class App extends React.Component<{}, { val: number }> {
     </view>;
   }
 }
-
-export default () => ReactUnity.render(<App />, RootContainer, null);
