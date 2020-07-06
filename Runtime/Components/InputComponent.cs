@@ -102,7 +102,7 @@ namespace ReactUnity.Components
 
         public override void ResolveStyle(bool recursive = false)
         {
-            base.ResolveStyle();
+            base.ResolveStyle(recursive);
 
             var c = TextComponent.Style.fontColor;
             Placeholder.Style.fontColor = new Color(c.r, c.g, c.b, c.a * 0.5f);

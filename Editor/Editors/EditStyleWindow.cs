@@ -480,7 +480,7 @@ namespace ReactUnity.Editor
             flex.Style.CopyStyle(CurrentStyle);
             flex.Layout.CopyStyle(CurrentLayout);
             flex.Component.ScheduleLayout(flex.Component.ApplyLayoutStyles);
-            flex.Component.ResolveStyle();
+            flex.Component.ResolveStyle(true);
         }
 
         bool Toggle(bool value)
