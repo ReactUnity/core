@@ -4,6 +4,8 @@ import { fullScreen, dropdownBottom, bottomEdge, transparentColor } from '../../
 import { View, CursorType, Style } from '../../../models/components';
 
 const dropdownMenuStyle: Style = { boxShadow: new ShadowDefinitionNative([0, 3], [7, 6], ColorNative.black, 5) };
+const dropdownButtonStyle: Style = { backgroundColor: ColorNative.white, borderRadius: 0 };
+const dropdownBackdropStyle: Style = { backgroundColor: transparentColor, cursor: CursorType.Default };
 
 export interface DropdownProps {
   onChange?: (value: any, ind: number) => void;
@@ -33,10 +35,7 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
 
   toggle = () => this.setState(st => ({ opened: !st.opened }));
   open = () => this.setState({ opened: true });
-  close = () => {
-    console.log('Dropdown Closed');
-    this.setState({ opened: false });
-  }
+  close = () => this.setState({ opened: false });
 
   render() {
     const children = React.Children.toArray(this.props.children) as React.ReactElement[];
@@ -55,11 +54,11 @@ export class Dropdown extends React.Component<DropdownFullProps, { opened: boole
           }
 
           {this.state.opened && <view layout={bottomEdge} style={{ zOrder: 1000 }}>
-            <button name="<Dropdown Backdrop>" onClick={this.close} layout={fullScreen} style={{ backgroundColor: transparentColor, cursor: CursorType.Default }} />
+            <button name="<Dropdown Backdrop>" onClick={this.close} layout={fullScreen} style={dropdownBackdropStyle} />
 
             <view name="<Dropdown Menu>" layout={dropdownBottom} style={dropdownMenuStyle}>
               {items.map((x, i) =>
-                <button style={{ backgroundColor: ColorNative.white, borderRadius: 0 }} onClick={this.handleChildClick.bind(this, i, x.props.value)}>{x}</button>
+                <button style={dropdownButtonStyle} onClick={this.handleChildClick.bind(this, i, x.props.value)}>{x}</button>
               )}
             </view>
           </view>}
