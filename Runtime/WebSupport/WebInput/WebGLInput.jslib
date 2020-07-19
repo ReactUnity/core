@@ -150,6 +150,14 @@ var WebGLInput = {
     var input = instances[id];
     input.value = Pointer_stringify(text);
   },
+  WebGLInputSetReadOnly: function (id, readOnly) {
+    var input = instances[id];
+    input.readOnly = readOnly;
+  },
+  WebGLInputSetName: function (id, name) {
+    var input = instances[id];
+    input.name = Pointer_stringify(name);
+  },
   WebGLInputDelete: function (id) {
     var input = instances[id];
     input.parentNode.removeChild(input);

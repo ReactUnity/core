@@ -35,8 +35,8 @@ namespace ReactUnity.Components
             content.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
             content.gameObject.AddComponent<CalculateSizeFromContents>().Layout = Layout;
 
-            ScrollRect.horizontalScrollbar = CreateScrollbar(false, RectTransform);
-            ScrollRect.verticalScrollbar = CreateScrollbar(true, RectTransform);
+            ScrollRect.horizontalScrollbar = CreateScrollbar(false, viewport);
+            ScrollRect.verticalScrollbar = CreateScrollbar(true, viewport);
             ScrollRect.viewport = viewport;
             ScrollRect.content = content;
             ScrollRect.scrollSensitivity = 50;
@@ -64,6 +64,7 @@ namespace ReactUnity.Components
             hrt.sizeDelta = Vector2.zero;
 
             rt.SetParent(parent, false);
+            rt.SetAsFirstSibling();
             if (vertical)
             {
                 rt.anchorMin = Vector2.right;

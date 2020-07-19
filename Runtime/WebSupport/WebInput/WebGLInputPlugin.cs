@@ -56,9 +56,15 @@ namespace ReactUnity.WebSupport
 
         [DllImport("__Internal")]
         public static extern void WebGLInputDelete(int id);
-
+        
         [DllImport("__Internal")]
         public static extern void WebGLInputEnableTabText(int id, bool enable);
+        
+        [DllImport("__Internal")]
+        public static extern void WebGLInputSetReadOnly(int id, bool readOnly);
+
+        [DllImport("__Internal")]
+        public static extern void WebGLInputSetName(int id, string name);
 #else
 
         public static int WebGLInputCreate(int fontSize, string text, string placeholder, bool isMultiLine, bool isPassword, bool isHidden)
@@ -69,6 +75,7 @@ namespace ReactUnity.WebSupport
         {
             UnityEngine.Debug.Log($"Setting Web Input with x:{x}, y:{y}, width:{width}, height:{height}, lineHeight:{lineHeight}");
         }
+
         public static void WebGLInputEnterSubmit(int id, bool flag) { }
         public static void WebGLInputTab(int id, Action<int, int> cb) { }
         public static void WebGLInputFocus(int id) { }
@@ -85,6 +92,8 @@ namespace ReactUnity.WebSupport
         public static bool WebGLInputIsFocus(int id) { return false; }
         public static void WebGLInputDelete(int id) { }
         public static void WebGLInputEnableTabText(int id, bool enable) { }
+        public static void WebGLInputSetReadOnly(int id, bool readOnly) { }
+        public static void WebGLInputSetName(int id, string name) { }
 
 #endif
     }

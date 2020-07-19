@@ -59,6 +59,8 @@ namespace ReactUnity.WebSupport
             WebGLInputPlugin.WebGLInputMaxLength(id, (input.characterLimit > 0) ? input.characterLimit : 524288);
             WebGLInputPlugin.WebGLInputFocus(id);
             WebGLInputPlugin.WebGLInputEnableTabText(id, enableTabText);
+            WebGLInputPlugin.WebGLInputSetReadOnly(id, input.ReadOnly);
+            WebGLInputPlugin.WebGLInputSetName(id, name);
 
             if (input.OnFocusSelectAll)
             {

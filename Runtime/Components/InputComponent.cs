@@ -47,7 +47,6 @@ namespace ReactUnity.Components
         private TextComponent TextComponent { get; set; }
         private TextComponent Placeholder { get; set; }
 
-
         public InputComponent(string text, UnityUGUIContext context) : base(context)
         {
             // Input field's properties must be fully assigned before OnEnable is called
@@ -189,16 +188,20 @@ namespace ReactUnity.Components
                     return;
                 case "webSupport":
                     var enabled = System.Convert.ToBoolean(value);
-                    var cmp = GameObject.GetComponent<WebSupport.WebGLInput>();
-                    if (enabled && !cmp) GameObject.AddComponent<WebSupport.WebGLInput>();
-                    else if (!enabled && cmp) GameObject.Destroy(cmp);
-
-                    InputField.characterValidation = (TMP_InputField.CharacterValidation)System.Convert.ToInt32(value);
+                    var cmp = SetWebGLSupport(enabled);
+                    if (!enabled && cmp) Object.Destroy(cmp);
                     return;
                 default:
                     base.SetProperty(propertyName, value);
                     break;
             }
+        }
+
+        private WebSupport.WebGLInput SetWebGLSupport(bool createIfDoesNotExist)
+        {
+            var cmp = GameObject.GetComponent<WebSupport.WebGLInput>();
+            if (createIfDoesNotExist && !cmp) GameObject.AddComponent<WebSupport.WebGLInput>();
+            return cmp;
         }
     }
 }
