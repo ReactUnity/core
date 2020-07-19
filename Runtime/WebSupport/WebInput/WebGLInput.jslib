@@ -1,9 +1,38 @@
 var WebGLInput = {
   $instances: [],
 
-  WebGLInputCreate: function (canvasId, x, y, width, height, fontSize, lineHeight, text, placeholder, isMultiLine, isPassword, isHidden) {
+  WebGLInputCreate: function (fontSize, text, placeholder, isMultiLine, isPassword, isHidden) {
     var canvas = Module.canvas;
     var container = canvas.parentElement;
+    var input = document.createElement(isMultiLine ? "textarea" : "input");
+    input.className = 'unity-webgl-support-input';
+    input.style.position = "absolute";
+    input.style.overflow = 'hidden';
+
+    input.style.outlineWidth = 1 + 'px';
+    input.style.opacity = isHidden ? 0 : 1;
+    input.style.resize = 'none'; // for textarea
+    input.style.padding = '0px';
+    input.style.pointerEvents = 'all';
+
+    input.spellcheck = false;
+    input.value = Pointer_stringify(text);
+    input.placeholder = Pointer_stringify(placeholder);
+    input.style.fontSize = fontSize + "px";
+    input.style.lineHeight = fontSize + 'px';
+
+    if (isPassword) {
+      input.type = 'password';
+    }
+
+    container.appendChild(input);
+    return instances.push(input) - 1;
+  },
+  WebGLInputSetRect: function (id, x, y, width, height, lineHeight) {
+    var canvas = Module.canvas;
+    var container = canvas.parentElement;
+    var input = instances[id];
+
     if (canvas) {
       var scaleX = container.offsetWidth / canvas.width;
       var scaleY = container.offsetHeight / canvas.height;
@@ -19,41 +48,17 @@ var WebGLInput = {
     var scale = lineHeight >= 0 ? lineHeight : 1;
     height = height / scale;
 
-    var input = document.createElement(isMultiLine ? "textarea" : "input");
-    input.className = 'unity-webgl-support-input';
-    input.style.position = "absolute";
     input.style.top = y + "px";
     input.style.left = x + "px";
     input.style.width = width + "px";
     input.style.height = height + "px";
     input.style.maxWidth = width + "px";
     input.style.maxHeight = height + "px";
-    input.style.overflow = 'hidden';
-
-    input.style.outlineWidth = 1 + 'px';
-    input.style.opacity = isHidden ? 0 : 1;
-    input.style.resize = 'none'; // for textarea
-    input.style.padding = '0px 1px';
-    input.style.cursor = "default";
 
     if (lineHeight >= 0) {
-      input.style.lineHeight = fontSize + 'px';
       input.style.transformOrigin = 'top';
       input.style.transform = 'scaleY(' + lineHeight + ')';
     }
-
-    input.spellcheck = false;
-    input.value = Pointer_stringify(text);
-    input.placeholder = Pointer_stringify(placeholder);
-    input.style.fontSize = fontSize + "px";
-    //input.setSelectionRange(0, input.value.length);
-
-    if (isPassword) {
-      input.type = 'password';
-    }
-
-    container.appendChild(input);
-    return instances.push(input) - 1;
   },
   WebGLInputEnterSubmit: function (id, falg) {
     var input = instances[id];
@@ -90,7 +95,7 @@ var WebGLInput = {
   },
   WebGLInputFocus: function (id) {
     var input = instances[id];
-    input.focus();
+    input.focus({ preventScroll: true });
   },
   WebGLInputOnFocus: function (id, cb) {
     var input = instances[id];

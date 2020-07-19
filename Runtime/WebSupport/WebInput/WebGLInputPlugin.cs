@@ -7,7 +7,10 @@ namespace ReactUnity.WebSupport
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
         [DllImport("__Internal")]
-        public static extern int WebGLInputCreate(string canvasId, int x, int y, int width, int height, int fontSize, float lineHeight, string text, string placeholder, bool isMultiLine, bool isPassword, bool isHidden);
+        public static extern int WebGLInputCreate(int fontSize, string text, string placeholder, bool isMultiLine, bool isPassword, bool isHidden);
+
+        [DllImport("__Internal")]
+        public static extern void WebGLInputSetRect(int id, int x, int y, int width, int height, float lineHeight);
 
         [DllImport("__Internal")]
         public static extern void WebGLInputEnterSubmit(int id, bool flag);
@@ -58,10 +61,13 @@ namespace ReactUnity.WebSupport
         public static extern void WebGLInputEnableTabText(int id, bool enable);
 #else
 
-        public static int WebGLInputCreate(string canvasId, int x, int y, int width, int height, int fontSize, float lineHeight, string text, string placeholder, bool isMultiLine, bool isPassword, bool isHidden)
+        public static int WebGLInputCreate(int fontSize, string text, string placeholder, bool isMultiLine, bool isPassword, bool isHidden)
         {
-            UnityEngine.Debug.Log($"Creating Web Input with x:{x}, y:{y}, width:{width}, height:{height}, fontSize:{fontSize}, lineHeight:{lineHeight}");
             return 0;
+        }
+        public static void WebGLInputSetRect(int id, int x, int y, int width, int height, float lineHeight)
+        {
+            UnityEngine.Debug.Log($"Setting Web Input with x:{x}, y:{y}, width:{width}, height:{height}, lineHeight:{lineHeight}");
         }
         public static void WebGLInputEnterSubmit(int id, bool flag) { }
         public static void WebGLInputTab(int id, Action<int, int> cb) { }

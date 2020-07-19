@@ -10,19 +10,7 @@ namespace ReactUnity.WebSupport
     public class WebGLInput : MonoBehaviour, IComparable<WebGLInput>, IComparable
     {
         static Dictionary<int, WebGLInput> instances = new Dictionary<int, WebGLInput>();
-        public static string CanvasId { get; set; }
         public bool enableTabText = false;
-
-        static WebGLInput()
-        {
-#if UNITY_2020_1_OR_NEWER
-            WebGLInput.CanvasId = "unity-container";
-#elif UNITY_2019_1_OR_NEWER
-            WebGLInput.CanvasId = "unityContainer";
-#else
-            WebGLInput.CanvasId = "gameContainer";
-#endif
-        }
 
         int id = -1;
         IInputField input;
@@ -30,6 +18,8 @@ namespace ReactUnity.WebSupport
 
         [TooltipAttribute("show input element on canvas. this will make you select text by drag.")]
         public bool showHtmlElement = false;
+
+        private Rect PreviousRect;
 
         private IInputField Setup()
         {
@@ -52,12 +42,11 @@ namespace ReactUnity.WebSupport
         /// <param name="eventData"></param>
         public void OnSelect(/*BaseEventData eventData*/)
         {
-            var rect = GetScreenCoordinates(input.RectTransform());
             bool isPassword = input.contentType == ContentType.Password;
 
-            var x = (int)(rect.x);
-            var y = (int)(Screen.height - (rect.y + rect.height));
-            id = WebGLInputPlugin.WebGLInputCreate(CanvasId, x, y, (int)rect.width, (int)rect.height, input.fontSize, input.lineHeight, input.text, input.placeholder, input.lineType != LineType.SingleLine, isPassword, !showHtmlElement);
+            id = WebGLInputPlugin.WebGLInputCreate(input.fontSize, input.text, input.placeholder, input.lineType != LineType.SingleLine, isPassword, !showHtmlElement);
+            PreviousRect = GetScreenCoordinates(input.RectTransform());
+            SizeChanged();
 
             instances[id] = this;
             WebGLInputPlugin.WebGLInputEnterSubmit(id, input.lineType != LineType.MultiLineNewline);
@@ -77,6 +66,15 @@ namespace ReactUnity.WebSupport
             }
 
             WebGLWindow.OnBlurEvent += OnWindowBlur;
+        }
+
+        void SizeChanged()
+        {
+            if (id < 0) return;
+            var rect = PreviousRect;
+            var x = (int)(rect.x);
+            var y = (int)(Screen.height - (rect.y + rect.height));
+            WebGLInputPlugin.WebGLInputSetRect(id, x, y, (int)rect.width, (int)rect.height, input.lineHeight);
         }
 
         void OnWindowBlur()
@@ -201,6 +199,13 @@ namespace ReactUnity.WebSupport
         void Update()
         {
             if (input == null || !input.isFocused) return;
+
+            var rect = GetScreenCoordinates(input.RectTransform());
+            if (rect != PreviousRect)
+            {
+                PreviousRect = rect;
+                SizeChanged();
+            }
 
             if (!instances.ContainsKey(id))
             {
