@@ -12,6 +12,7 @@ import { App as Toggle } from './src/wiki/toggle';
 import { App as Tooltip } from './src/wiki/tooltip';
 import { App as View } from './src/wiki/view';
 import { TodoApp } from './src/todo-mvc';
+import { App as WebInputs } from './src/web-inputs';
 
 import ViewSource from '!!raw-loader!./src/wiki/view';
 import AnchorSource from '!!raw-loader!./src/wiki/anchor';
@@ -42,4 +43,5 @@ sampleGallery([
   { name: 'Animation', render: Anim, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/anim/index.tsx' },
   { name: 'Linked Text', render: LinkedText, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/linked-text/index.tsx' },
   { name: 'Todo App', render: TodoApp, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/todo-mvc/index.tsx' },
+  // { name: 'Web Inputs', render: WebInputs, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/web-inputs/index.tsx' },
 ]);

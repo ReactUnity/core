@@ -23,9 +23,10 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
   render() {
     const selected = this.state.selectedSample;
 
-    const homePage = () => <>
-
-    </>;
+    const homePage = () => <view layout={{ Padding: 20 }}>
+      This page exists to demonstrate features of React Unity. Everything on this page is built with React Unity.
+      You can navigate the examples using the left panel.
+    </view>;
 
     const drawButtonForSample = (sample: Sample, depth = 0) => <>
       <button layout={{ PaddingHorizontal: 20, PaddingVertical: 16, PaddingLeft: 20 + depth * 16, JustifyContent: YogaJustify.FlexStart }}

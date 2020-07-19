@@ -438,6 +438,8 @@ var __rest = (undefined && undefined.__rest) || function (s, e) {
 
 
 var dropdownMenuStyle = { boxShadow: new ShadowDefinitionNative([0, 3], [7, 6], ColorNative.black, 5) };
+var dropdownButtonStyle = { backgroundColor: ColorNative.white, borderRadius: 0 };
+var dropdownBackdropStyle = { backgroundColor: transparentColor, cursor: "default" /* Default */ };
 var dropdown_Dropdown = /** @class */ (function (_super) {
     dropdown_extends(Dropdown, _super);
     function Dropdown(props) {
@@ -451,10 +453,7 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
         };
         _this.toggle = function () { return _this.setState(function (st) { return ({ opened: !st.opened }); }); };
         _this.open = function () { return _this.setState({ opened: true }); };
-        _this.close = function () {
-            console.log('Dropdown Closed');
-            _this.setState({ opened: false });
-        };
+        _this.close = function () { return _this.setState({ opened: false }); };
         _this.state = {
             opened: false,
             selectedIndex: -1,
@@ -475,9 +474,9 @@ var dropdown_Dropdown = /** @class */ (function (_super) {
                     ? nonItems
                     : (((_a = selectedItem.props) === null || _a === void 0 ? void 0 : _a.triggerTemplate) || selectedItem),
                 this.state.opened && Object(react.createElement)("view", { layout: bottomEdge, style: { zOrder: 1000 } },
-                    Object(react.createElement)("button", { name: "<Dropdown Backdrop>", onClick: this.close, layout: fullScreen, style: { backgroundColor: transparentColor, cursor: "default" /* Default */ } }),
+                    Object(react.createElement)("button", { name: "<Dropdown Backdrop>", onClick: this.close, layout: fullScreen, style: dropdownBackdropStyle }),
                     Object(react.createElement)("view", { name: "<Dropdown Menu>", layout: dropdownBottom, style: dropdownMenuStyle }, items.map(function (x, i) {
-                        return Object(react.createElement)("button", { style: { backgroundColor: ColorNative.white, borderRadius: 0 }, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
+                        return Object(react.createElement)("button", { style: dropdownButtonStyle, onClick: _this.handleChildClick.bind(_this, i, x.props.value) }, x);
                     }))))));
     };
     Dropdown.defaultProps = {
@@ -30330,7 +30329,7 @@ var gallery_App = /** @class */ (function (_super) {
     App.prototype.render = function () {
         var _this = this;
         var selected = this.state.selectedSample;
-        var homePage = function () { return Object(react.createElement)(react.Fragment, null); };
+        var homePage = function () { return Object(react.createElement)("view", { layout: { Padding: 20 } }, "This page exists to demonstrate features of React Unity. Everything on this page is built with React Unity. You can navigate the examples using the left panel."); };
         var drawButtonForSample = function (sample, depth) {
             if (depth === void 0) { depth = 0; }
             return Object(react.createElement)(react.Fragment, null,
@@ -30504,9 +30503,9 @@ var anim_App = /** @class */ (function (_super) {
 
 function anchor_App() {
     return Object(react.createElement)("view", { layout: { Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: 0 /* Column */ } },
-        Object(react.createElement)("anchor", { url: "https://www.google.com.tr/", openInThisTab: true }, "Open Google in this tab"),
-        Object(react.createElement)("anchor", { url: "https://www.google.com.tr/" }, "Open Google in new tab"),
-        Object(react.createElement)("anchor", { url: "https://www.google.com.tr/", style: { cursor: "not-allowed" /* NotAllowed */ }, onPointerDown: function (e) { return e.Use(); } }, "Cancel event"));
+        Object(react.createElement)("anchor", { url: "https://www.google.com/", openInThisTab: true }, "Open Google in this tab"),
+        Object(react.createElement)("anchor", { url: "https://www.google.com/" }, "Open Google in new tab"),
+        Object(react.createElement)("anchor", { url: "https://www.google.com/", style: { cursor: "not-allowed" /* NotAllowed */ }, onPointerDown: function (e) { return e.Use(); } }, "Cancel event"));
 }
 
 // CONCATENATED MODULE: ./src/wiki/button.tsx
@@ -30547,7 +30546,7 @@ function input_App() {
 
 
 function scroll_App() {
-    return Object(react.createElement)("scroll", { layout: { Height: '100%', AlignItems: 'Stretch', JustifyContent: 'FlexStart' } }, [lorem, lorem, lorem, lorem, lorem, lorem]);
+    return Object(react.createElement)("scroll", { layout: { Height: '100%', AlignItems: 'Stretch', JustifyContent: 'FlexStart', Padding: 16, PaddingRight: 25, BorderWidth: 1 } }, [lorem, lorem, lorem]);
 }
 
 // CONCATENATED MODULE: ./src/wiki/text.tsx
@@ -30936,7 +30935,7 @@ var todo_mvc_TodoApp = /** @class */ (function (_super) {
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/view.tsx
 /* harmony default export */ var view = ("import * as React from 'react';\n\nexport const App = () =>\n  <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>\n    Hello world!\n  </view>;\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/anchor.tsx
-/* harmony default export */ var wiki_anchor = ("import * as React from 'react';\nimport { FlexDirection, CursorType } from 'react-unity-renderer';\n\nexport function App() {\n  return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: FlexDirection.Column }}>\n\n    <anchor url=\"https://www.google.com.tr/\" openInThisTab>Open Google in this tab</anchor>\n    <anchor url=\"https://www.google.com.tr/\">Open Google in new tab</anchor>\n    <anchor url=\"https://www.google.com.tr/\" style={{ cursor: CursorType.NotAllowed }} onPointerDown={(e) => e.Use()}>Cancel event</anchor>\n\n  </view>;\n}\n");
+/* harmony default export */ var wiki_anchor = ("import * as React from 'react';\nimport { FlexDirection, CursorType } from 'react-unity-renderer';\n\nexport function App() {\n  return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: FlexDirection.Column }}>\n\n    <anchor url=\"https://www.google.com/\" openInThisTab>Open Google in this tab</anchor>\n    <anchor url=\"https://www.google.com/\">Open Google in new tab</anchor>\n    <anchor url=\"https://www.google.com/\" style={{ cursor: CursorType.NotAllowed }} onPointerDown={(e) => e.Use()}>Cancel event</anchor>\n\n  </view>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/button.tsx
 /* harmony default export */ var wiki_button = ("import * as React from 'react';\n\nexport function App() {\n  return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>\n    <button onClick={() => console.log('Clicked')}>\n      Click me!\n    </button>\n  </view>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/dropdown.tsx
@@ -30946,7 +30945,7 @@ var todo_mvc_TodoApp = /** @class */ (function (_super) {
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/input.tsx
 /* harmony default export */ var input = ("import * as React from 'react';\n\nexport function App() {\n  return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>\n    <input placeholder=\"Write something!\" style={{ backgroundColor: 'aqua' }} />\n  </view>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/scroll.tsx
-/* harmony default export */ var wiki_scroll = ("import * as React from 'react';\nimport lorem from '../lorem';\n\nexport function App() {\n  return <scroll layout={{ Height: '100%', AlignItems: 'Stretch', JustifyContent: 'FlexStart' }}>\n    {[lorem, lorem, lorem, lorem, lorem, lorem]}\n  </scroll>;\n}\n");
+/* harmony default export */ var wiki_scroll = ("import * as React from 'react';\nimport lorem from '../lorem';\n\nexport function App() {\n  return <scroll layout={{ Height: '100%', AlignItems: 'Stretch', JustifyContent: 'FlexStart', Padding: 16, PaddingRight: 25, BorderWidth: 1 }}>\n    {[lorem, lorem, lorem]}\n  </scroll>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/text.tsx
 /* harmony default export */ var wiki_text = ("import * as React from 'react';\n\nexport function App() {\n  return <text>Hello world!</text>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/toggle.tsx
