@@ -64,7 +64,6 @@ namespace ReactUnity.Components
             hrt.sizeDelta = Vector2.zero;
 
             rt.SetParent(parent, false);
-            rt.SetAsFirstSibling();
             if (vertical)
             {
                 rt.anchorMin = Vector2.right;
