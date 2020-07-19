@@ -30238,7 +30238,10 @@ function tokenize(text) {
     return [lines, result];
 }
 function tokenizer_escape(code) {
-    return code.replace('<', '<<b></b>');
+    return fixLineWrapOpportunity(code.replace('<', '<<b></b>'));
+}
+function fixLineWrapOpportunity(code) {
+    return code.replace(/=/g, '=\u200B');
 }
 var specialNames = [''];
 var specialNameColor = '';
@@ -30295,7 +30298,7 @@ var TextEditor = function (_a) {
     var text = _a.text;
     var richText = colorizeRichtext.apply(void 0, tokenize(text));
     return Object(react.createElement)("view", { style: { font: NamedAssets.RobotoMono }, layout: { FlexGrow: 1, FlexShrink: 0 } },
-        Object(react.createElement)("input", { readonly: true, lineType: 2 /* MultiLineNewline */, webSupport: true, layout: { PositionType: 1 /* Absolute */, Height: '100%', Width: '100%', FlexShrink: 0, Padding: 11 }, style: { backgroundColor: 'transparent', font: NamedAssets.RobotoMono, fontColor: 'transparent' }, value: text }),
+        Object(react.createElement)("input", { readonly: true, lineType: 2 /* MultiLineNewline */, webSupport: true, layout: { PositionType: 1 /* Absolute */, Height: '100%', Width: '100%', FlexShrink: 0, Padding: 11 }, style: { backgroundColor: 'transparent', font: NamedAssets.RobotoMono, fontColor: 'transparent' }, value: fixLineWrapOpportunity(text) }),
         Object(react.createElement)("input", { richText: true, readonly: true, lineType: 2 /* MultiLineNewline */, layout: { FlexShrink: 0, Padding: 10, BorderWidth: 1 }, style: { backgroundColor: 0.94, borderColor: 0.8, font: NamedAssets.RobotoMono, interaction: 2 /* Ignore */ }, value: richText }));
 };
 

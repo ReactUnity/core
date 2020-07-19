@@ -23,8 +23,12 @@ export function tokenize(text: string): [string[], monaco.Token[][]] {
   return [lines, result];
 }
 
-function escape(code: string) {
-  return code.replace('<', '<<b></b>');
+export function escape(code: string) {
+  return fixLineWrapOpportunity(code.replace('<', '<<b></b>'));
+}
+
+export function fixLineWrapOpportunity(code: string) {
+  return code.replace(/=/g, '=\u200B');
 }
 
 
