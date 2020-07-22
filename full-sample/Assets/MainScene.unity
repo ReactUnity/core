@@ -447,12 +447,12 @@ PrefabInstance:
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
       propertyPath: Script.ScriptSource
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
       propertyPath: Script.SourcePath
-      value: http://192.168.1.50:8080/index.js
+      value: http://localhost:3000/react.js
       objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}

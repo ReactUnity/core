@@ -1,29 +1,31 @@
-import sampleGallery, { Sample, SampleGallery } from './src/gallery';
-import { App as LinkedText } from './src/linked-text';
-import { App as Anim } from './src/anim';
-import { App as Anchor } from './src/wiki/anchor';
-import { App as Button } from './src/wiki/button';
-import { App as Dropdown } from './src/wiki/dropdown';
-import { App as Image } from './src/wiki/image';
-import { App as Input } from './src/wiki/input';
-import { App as Scroll } from './src/wiki/scroll';
-import { App as Text } from './src/wiki/text';
-import { App as Toggle } from './src/wiki/toggle';
-import { App as Tooltip } from './src/wiki/tooltip';
-import { App as View } from './src/wiki/view';
-import { TodoApp } from './src/todo-mvc';
-import { App as WebInputs } from './src/web-inputs';
+/* eslint import/no-webpack-loader-syntax: off */
 
-import ViewSource from '!!raw-loader!./src/wiki/view';
-import AnchorSource from '!!raw-loader!./src/wiki/anchor';
-import ButtonSource from '!!raw-loader!./src/wiki/button';
-import DropdownSource from '!!raw-loader!./src/wiki/dropdown';
-import ImageSource from '!!raw-loader!./src/wiki/image';
-import InputSource from '!!raw-loader!./src/wiki/input';
-import ScrollSource from '!!raw-loader!./src/wiki/scroll';
-import TextSource from '!!raw-loader!./src/wiki/text';
-import ToggleSource from '!!raw-loader!./src/wiki/toggle';
-import TooltipSource from '!!raw-loader!./src/wiki/tooltip';
+import sampleGallery, { Sample, SampleGallery } from './gallery';
+import { App as LinkedText } from './linked-text';
+import { App as Anim } from './anim';
+import { App as Anchor } from './wiki/anchor';
+import { App as Button } from './wiki/button';
+import { App as Dropdown } from './wiki/dropdown';
+import { App as Image } from './wiki/image';
+import { App as Input } from './wiki/input';
+import { App as Scroll } from './wiki/scroll';
+import { App as Text } from './wiki/text';
+import { App as Toggle } from './wiki/toggle';
+import { App as Tooltip } from './wiki/tooltip';
+import { App as View } from './wiki/view';
+import { TodoApp } from './todo-mvc';
+import { App as WebInputs } from './web-inputs';
+
+import ViewSource from '!!raw-loader!./wiki/view';
+import AnchorSource from '!!raw-loader!./wiki/anchor';
+import ButtonSource from '!!raw-loader!./wiki/button';
+import DropdownSource from '!!raw-loader!./wiki/dropdown';
+import ImageSource from '!!raw-loader!./wiki/image';
+import InputSource from '!!raw-loader!./wiki/input';
+import ScrollSource from '!!raw-loader!./wiki/scroll';
+import TextSource from '!!raw-loader!./wiki/text';
+import ToggleSource from '!!raw-loader!./wiki/toggle';
+import TooltipSource from '!!raw-loader!./wiki/tooltip';
 
 const wikiPages: Sample[] = [
   { name: 'View', render: View, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/wiki/view.tsx', wiki: 'https://github.com/KurtGokhan/react-unity/wiki/Primitive-Components#view', sourceCode: ViewSource },

@@ -12,5 +12,8 @@
     {
       "path": "../packages/react-unity-renderer"
     },
+    {
+      "path": "../packages/react-unity-scripts"
+    }
   ]
 }

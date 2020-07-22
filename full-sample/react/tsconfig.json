@@ -7,7 +7,7 @@
     "allowJs": true,
     "pretty": true,
     "declaration": false,
-    "module": "ES2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "preserveSymlinks": true,
     "importHelpers": false,
@@ -19,25 +19,23 @@
     "target": "ES5",
     "skipLibCheck": true,
     "lib": [],
-    "paths": {
-      "react-unity-renderer": [
-        "node_modules/react-unity-renderer/index.ts"
-      ],
-      "src/*": [
-        "./src/*"
-      ],
-      "*": [
-        "./node_modules/*",
-        "./node_modules/@types/*"
-      ]
-    }
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
   "files": [
-    "./index.ts",
-    "./index.d.ts",
+    "./src/index.ts",
+    "./src/index.d.ts",
     "./typings.d.ts"
   ],
   "exclude": [
     "./dist/**/*.*"
+  ],
+  "include": [
+    "src"
   ]
 }

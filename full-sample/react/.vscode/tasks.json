@@ -2,8 +2,8 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Watch",
-      "command": "npm run watch",
+      "label": "Start",
+      "command": "npm run start",
       "type": "shell"
     },
     {
@@ -12,14 +12,21 @@
       "type": "shell"
     },
     {
-      "label": "Serve",
-      "command": "npm run serve",
-      "type": "shell"
-    },
-    {
       "label": "Link",
-      "command": "npm link ../../packages/react-unity-renderer",
-      "type": "shell"
+      "command": "npm link ../../packages/react-unity-${input:modulePick}",
+      "type": "shell",
+    }
+  ],
+  "inputs": [
+    {
+      "type": "pickString",
+      "id": "modulePick",
+      "description": "Which module do you want to link?",
+      "options": [
+        "renderer",
+        "scripts"
+      ],
+      "default": "component"
     }
   ]
 }

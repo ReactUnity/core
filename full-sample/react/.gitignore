@@ -38,6 +38,7 @@ jspm_packages/
 
 # Distribution directories
 dist/
+build/
 
 # Optional npm cache directory
 .npm

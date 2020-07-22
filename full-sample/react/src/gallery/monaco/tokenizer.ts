@@ -72,7 +72,7 @@ export function colorizeRichtext(lines: string[], lineTokens: monaco.Token[][]) 
       }
 
 
-      if (token.type == identifierType && specialNames.includes(tok))
+      if (token.type === identifierType && specialNames.includes(tok))
         text = `<color=${specialNameColor}>${text}</color>`;
 
       const color = typeColors[token.type];
