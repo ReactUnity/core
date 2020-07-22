@@ -14,7 +14,7 @@ import { App as Toggle } from './wiki/toggle';
 import { App as Tooltip } from './wiki/tooltip';
 import { App as View } from './wiki/view';
 import { TodoApp } from './todo-mvc';
-import { App as WebInputs } from './web-inputs';
+// import { App as WebInputs } from './web-inputs';
 
 import ViewSource from '!!raw-loader!./wiki/view';
 import AnchorSource from '!!raw-loader!./wiki/anchor';
