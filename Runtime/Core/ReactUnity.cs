@@ -126,7 +126,12 @@ namespace ReactUnity
             { "log", Debug.Log },
             { "info", Debug.Log },
             { "warn", Debug.LogWarning },
-            { "error", Debug.LogError },
+            { "error", x => {
+
+                var lastNode = engine.GetLastSyntaxNode();
+                Debug.LogError($"Runtime exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
+                Debug.LogError(x);
+            } },
         };
             engine.SetValue("console", console);
 
