@@ -1,12 +1,12 @@
 
-export const enum FlexDirection {
+export enum FlexDirection {
   Column = 0,
   ColumnReverse = 1,
   Row = 2,
   RowReverse = 3
 }
 
-export const enum YogaAlign {
+export enum YogaAlign {
   Auto = 0,
   FlexStart = 1,
   Center = 2,
@@ -17,36 +17,36 @@ export const enum YogaAlign {
   SpaceAround = 7
 }
 
-export const enum YogaJustify {
+export enum YogaJustify {
   FlexStart = 0,
   Center = 1,
   FlexEnd = 2,
   SpaceBetween = 3,
   SpaceAround = 4
 }
-export const enum Display {
+export enum Display {
   Flex = 0,
   None = 1
 }
 
-export const enum Wrap {
+export enum Wrap {
   NoWrap = 0,
   Wrap = 1,
   WrapReverse = 2
 }
 
-export const enum PositionType {
+export enum PositionType {
   Relative = 0,
   Absolute = 1
 }
 
-export const enum Overflow {
+export enum Overflow {
   Visible = 0,
   Hidden = 1,
   Scroll = 2
 }
 
-export const enum Direction {
+export enum Direction {
   Inherit = 0,
   LTR = 1,
   RTL = 2

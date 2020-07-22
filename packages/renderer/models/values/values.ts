@@ -7,7 +7,7 @@ export type RectOffset = number | Array4
   | { top?: number; right?: number; bottom?: number; left?: number; vertical?: number; horizontal?: number };
 
 
-export const enum TextAnchor {
+export enum TextAnchor {
   UpperLeft = 0,
   UpperCenter = 1,
   UpperRight = 2,

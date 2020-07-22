@@ -1,6 +1,6 @@
 import { View } from './components';
 
-export const enum TouchScreenKeyboardType {
+export enum TouchScreenKeyboardType {
   Default = 0,
   ASCIICapable = 1,
   NumbersAndPunctuation = 2,
@@ -15,7 +15,7 @@ export const enum TouchScreenKeyboardType {
   DecimalPad = 11
 }
 
-export const enum ContentType {
+export enum ContentType {
   Standard = 0,
   Autocorrected = 1,
   IntegerNumber = 2,
@@ -27,7 +27,7 @@ export const enum ContentType {
   Pin = 8,
   Custom = 9
 }
-export const enum CharacterValidation {
+export enum CharacterValidation {
   None = 0,
   Digit = 1,
   Integer = 2,
@@ -38,7 +38,7 @@ export const enum CharacterValidation {
   EmailAddress = 7,
   CustomValidator = 8
 }
-export const enum LineType {
+export enum LineType {
   SingleLine = 0,
   MultiLineSubmit = 1,
   MultiLineNewline = 2

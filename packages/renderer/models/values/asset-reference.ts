@@ -1,4 +1,4 @@
-export const enum AssetReferenceType {
+export enum AssetReferenceType {
   None = 0,
   File = 1,
   Url = 2,

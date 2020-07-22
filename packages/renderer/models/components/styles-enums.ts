@@ -1,4 +1,4 @@
-export const enum FontWeight {
+export enum FontWeight {
   Thin = 100,
   ExtraLight = 200,
   Light = 300,
@@ -10,7 +10,7 @@ export const enum FontWeight {
   Black = 900,
 }
 
-export const enum FontStyles {
+export enum FontStyles {
   Normal = 0,
   Bold = 1,
   Italic = 2,
@@ -25,7 +25,7 @@ export const enum FontStyles {
 }
 
 
-export const enum TextOverflowModes {
+export enum TextOverflowModes {
   Overflow = 0,
   Ellipsis = 1,
   // Masking = 2,
@@ -37,14 +37,14 @@ export const enum TextOverflowModes {
   Linked = 6
 }
 
-export const enum InteractionType {
+export enum InteractionType {
   WhenVisible = 0,
   Always = 1,
   Ignore = 2,
   Block = 3,
 }
 
-export const enum CursorType {
+export enum CursorType {
   Auto = 'auto',
   Default = 'default',
   None = 'none',
