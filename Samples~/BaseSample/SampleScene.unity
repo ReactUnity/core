@@ -43,7 +43,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 11
+  serializedVersion: 12
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 9eaf50d3d8d24f8429cc7acfa3d4a46a,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,6 +119,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -391,6 +394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: Script.SourceAsset
       value: 
-      objectReference: {fileID: 4900000, guid: 1974f2d2cadbc7b49bc7d6d03d63d66f, type: 3}
+      objectReference: {fileID: 4900000, guid: dd27d76ede1beaf41beb1a2601464901, type: 3}
+    - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
+        type: 3}
+      propertyPath: Script.UseDevServer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5db0dfe9f1a1f2446a241c6407efa1d3, type: 3}

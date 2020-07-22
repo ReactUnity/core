@@ -18,9 +18,9 @@
   },
   "samples": [
     {
-      "displayName": "Todo Sample",
-      "description": "A sample demonstrating simple configuration with a TODO app",
-      "path": "Samples~/TodoSample"
+      "displayName": "Base Sample",
+      "description": "A sample demonstrating simple components built with React Unity",
+      "path": "Samples~/BaseSample"
     }
   ]
 }
