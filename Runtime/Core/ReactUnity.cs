@@ -187,7 +187,7 @@ console.{item.Key} = (x, ...args) => old(x, args);
             var location = new ObjectInstance(engine);
             engine.SetValue("location", location);
 
-            var href = Script.SourcePath;
+            var href = Script.SourceLocation;
             var hrefSplit = href.Split(new string[] { "//" }, 2, StringSplitOptions.None);
 
             var protocol = hrefSplit.Length > 1 ? hrefSplit.First() : null;

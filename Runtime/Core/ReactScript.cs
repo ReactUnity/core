@@ -20,14 +20,29 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         private bool Watch = false;
 #pragma warning restore CS0414
 
+        public bool UseDevServer = true;
+        public string DevServer = "http://localhost:3000";
+        static string DevServerFilename = "/react.js";
+        public string DevServerFile => DevServer + DevServerFilename;
+
         private bool SourceIsTextAsset => ScriptSource == ScriptSource.TextAsset;
         private bool SourceIsPath => ScriptSource != ScriptSource.TextAsset && ScriptSource != ScriptSource.Text;
         private bool SourceIsText => ScriptSource == ScriptSource.Text;
         private bool SourceIsWatchable => ScriptSource != ScriptSource.Url && ScriptSource != ScriptSource.Text;
 
+        public string SourceLocation
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (UseDevServer && !string.IsNullOrWhiteSpace(DevServer)) return DevServerFile;
+#endif
+                return GetResolvedSourcePath();
+            }
+        }
 
-#if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
-        IDisposable StartWatching(Action<string> callback)
+
+        private string GetResolvedSourcePath()
         {
             string path = "";
 
@@ -39,7 +54,13 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
             else if (ScriptSource == ScriptSource.Resource)
                 path = UnityEditor.AssetDatabase.GetAssetPath(Resources.Load(SourcePath));
 #endif
+            return path;
+        }
 
+#if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
+        IDisposable StartWatching(Action<string> callback)
+        {
+            string path = GetResolvedSourcePath();
             if (string.IsNullOrWhiteSpace(path)) return null;
 
             return DetectChanges.WatchFileSystem(path, x => callback(System.IO.File.ReadAllText(path)));
@@ -48,6 +69,16 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 
         public IDisposable GetScript(Action<string> changeCallback, out string result)
         {
+#if UNITY_EDITOR
+            if (UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
+            {
+                result = null;
+                var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
+                return new Interop.MainThreadDispatcher.CoroutineHandle(
+                    Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, changeCallback)));
+            }
+#endif
+
             switch (ScriptSource)
             {
                 case ScriptSource.TextAsset:
