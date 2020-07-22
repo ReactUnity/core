@@ -1,6 +1,7 @@
 using Esprima;
 using Jint;
 using Jint.Native;
+using Jint.Native.Function;
 using Jint.Native.Object;
 using ReactUnity.Interop;
 using ReactUnity.Schedulers;
@@ -8,6 +9,7 @@ using ReactUnity.Styling;
 using ReactUnity.Types;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ReactUnity
@@ -98,16 +100,18 @@ namespace ReactUnity
         {
             engine = new Engine();
             engine.ClrTypeConverter = new NullableTypeConverter(engine);
+            engine.SetValue("WebSocket", typeof(WebSocketProxy));
 
             engine
                 .SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }))
                 .Execute("jlog = (x, replacer, space) => { log(JSON.stringify(x, replacer, space)); return x; };")
                 .Execute("__dirname = '';")
                 .Execute("WeakMap = Map;")
-                .Execute("global = this; module = { exports: {} };")
+                .Execute("global = window = this; module = { exports: {} };")
                 .Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;")
                 .Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
 
+            CreateLocation(engine);
             CreateConsole(engine);
             CreateLocalStorage(engine);
             CreateScheduler(engine);
@@ -176,6 +180,48 @@ console.{item.Key} = (x, ...args) => old(x, args);
             storage.FastAddProperty("getItem",
                 JsValue.FromObject(engine, new Func<string, string>(x => PlayerPrefs.GetString(x, ""))),
                 false, true, false);
+        }
+
+        void CreateLocation(Engine engine)
+        {
+            var location = new ObjectInstance(engine);
+            engine.SetValue("location", location);
+
+            var href = Script.SourcePath;
+            var hrefSplit = href.Split(new string[] { "//" }, 2, StringSplitOptions.None);
+
+            var protocol = hrefSplit.Length > 1 ? hrefSplit.First() : null;
+
+            var hrefWithoutProtocol = hrefSplit.Length > 1 ? string.Join("", hrefSplit.Skip(1)) : href;
+            var hrefWithoutProtocolSplit = hrefWithoutProtocol.Split(new string[] { "/" }, 2, StringSplitOptions.None);
+
+            var host = hrefWithoutProtocolSplit.FirstOrDefault();
+            var hostSplit = host.Split(new string[] { ":" }, 2, StringSplitOptions.None);
+            var hostName = hostSplit.First();
+            var port = hostSplit.ElementAtOrDefault(1);
+
+            var pathName = string.Join("", hrefWithoutProtocolSplit.Skip(1));
+
+            location.FastAddProperty("reload", JsValue.FromObject(engine, new Action(() => MainThreadDispatcher.OnUpdate(Restart))), false, true, false);
+            location.FastAddProperty("href", href, false, true, false);
+            location.FastAddProperty("protocol", protocol, false, true, false);
+            location.FastAddProperty("hostname", hostName, false, true, false);
+            location.FastAddProperty("host", host, false, true, false);
+            location.FastAddProperty("port", port, false, true, false);
+            location.FastAddProperty("pathname", pathName, false, true, false);
+        }
+    }
+
+    public class WebSocketProxy : WebSocketSharp.WebSocket
+    {
+        public WebSocketProxy(string url, params string[] protocols) : base(url, protocols)
+        {
+            Debug.Log("Connecting WebSocket at URL " + url);
+        }
+
+        public void SetOnMessage(FunctionInstance callback)
+        {
+            OnMessage += (sender, e) => callback.Invoke(JsValue.FromObject(callback.Engine, e));
         }
     }
 }
