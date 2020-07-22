@@ -67,15 +67,20 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         }
 #endif
 
-        public IDisposable GetScript(Action<string> changeCallback, out string result)
+        public IDisposable GetScript(Action<string> changeCallback, out string result, bool useDevServer = true)
         {
 #if UNITY_EDITOR
-            if (UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
+            if (useDevServer && UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
             {
                 result = null;
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
                 return new Interop.MainThreadDispatcher.CoroutineHandle(
-                    Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, changeCallback)));
+                    Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, changeCallback, err =>
+                    {
+                        Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
+                        GetScript(changeCallback, out var dummyResult, false);
+                        if (!string.IsNullOrWhiteSpace(dummyResult)) changeCallback(dummyResult);
+                    })));
             }
 #endif
 
@@ -131,10 +136,17 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         }
 
 #if UNITY_EDITOR || REACT_URL_API
-        private IEnumerator WatchWebRequest(UnityEngine.Networking.UnityWebRequest request, Action<string> callback)
+        private IEnumerator WatchWebRequest(
+            UnityEngine.Networking.UnityWebRequest request,
+            Action<string> callback,
+            Action<string> errorCallback = null
+        )
         {
             yield return request.SendWebRequest();
-            callback(request.downloadHandler.text);
+            if (!string.IsNullOrWhiteSpace(request.error))
+                errorCallback?.Invoke(request.error);
+            else
+                callback(request.downloadHandler.text);
         }
 #endif
     }
