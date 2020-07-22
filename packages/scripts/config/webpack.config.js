@@ -34,7 +34,7 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 const appPackageJson = require(paths.appPackageJson);
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP === 'true';
 
 const webpackDevClientEntry = require.resolve(
   './webpackHotDevClient'
@@ -147,7 +147,7 @@ module.exports = function (webpackEnv) {
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
-      filename: 'react.js',
+      filename: isEnvDevelopment ? 'react.js' : process.env.FILENAME || 'react.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // webpack uses `publicPath` to determine where the app is being served from.
