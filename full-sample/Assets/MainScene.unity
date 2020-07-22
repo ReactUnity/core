@@ -443,16 +443,16 @@ PrefabInstance:
         type: 3}
       propertyPath: Script.SourceAsset
       value: 
-      objectReference: {fileID: 4900000, guid: fccb613bf0facc142b86e5a3112d77b0, type: 3}
+      objectReference: {fileID: 4900000, guid: c93a159eef3cea341a21293899fddfa4, type: 3}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
       propertyPath: Script.ScriptSource
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
       propertyPath: Script.SourcePath
-      value: http://localhost:3000/react.js
+      value: react/react.js
       objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
@@ -548,6 +548,21 @@ PrefabInstance:
       propertyPath: PreloadScripts.Array.data[0]
       value: 
       objectReference: {fileID: 4900000, guid: e513496ee19404445a3dde237d1df7e1, type: 3}
+    - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
+        type: 3}
+      propertyPath: Script.Watch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
+        type: 3}
+      propertyPath: Script.DevServer
+      value: http://localhost:3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
+        type: 3}
+      propertyPath: Script.UseDevServer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 97318270827724989, guid: 5db0dfe9f1a1f2446a241c6407efa1d3, type: 3}
     - {fileID: 97318270827724988, guid: 5db0dfe9f1a1f2446a241c6407efa1d3, type: 3}
