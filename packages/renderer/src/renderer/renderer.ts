@@ -1,4 +1,3 @@
-import * as objectAssign from 'object-assign';
 import * as ReactReconciler from 'react-reconciler';
 import type * as React from 'react';
 import { diffProperties, DiffResult } from './diffing';
@@ -25,7 +24,7 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
     return updatePayload.length > 0;
   }
   else {
-    objectAssign(writeTo, updatePayload);
+    Object.assign(writeTo, updatePayload);
     return true;
   }
 }
