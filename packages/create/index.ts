@@ -40,8 +40,13 @@ async function create() {
     console.log("Starting NPM install");
     run_script(npm, ['install'], {
       cwd: newProjectPath,
-    }, () => {
-      console.log('Successfully created react-unity project at ' + newProjectPath);
+    }, (scriptOutput, code) => {
+      if (code === 0) {
+        console.log('Successfully created react-unity project at ' + newProjectPath);
+      } else {
+        console.log('Created react-unity project at ' + newProjectPath);
+        console.error('Some processes did not complete succesfully. Please manually confirm that everything is working.');
+      }
       process.exit();
     });
   } catch (err) {
@@ -73,6 +78,10 @@ function run_script(command: string, args: string[], options: cp.SpawnOptionsWit
 
     data = data.toString();
     scriptOutput += data;
+  });
+
+  child.on('error', function (err) {
+    callback(scriptOutput, err);
   });
 
   child.on('close', function (code) {
