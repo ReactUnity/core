@@ -11,5 +11,6 @@ Please refer to its documentation:
 - `FILENAME` - Name of the generated javascript file. `react.js` by default.
 - `BUILD_DIR` - Path to the generated output. Relative to the project. `build` by default.
 - `GENERATE_SOURCEMAP` - `false` by default.
+- `HARD_RELOAD` - Reload the entire UI instead of doing HMR. `false` by default.
 
 Environment variables can also be defined by having `.env`, `.env.local`, `.env.<development|production>` in project folder.

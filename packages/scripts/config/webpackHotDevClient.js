@@ -1,9 +1,10 @@
 'use strict';
 
-
 var stripAnsi = require('strip-ansi');
 var url = require('url');
 var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+
+var alwaysHardReload = process.env.HARD_RELOAD === 'true';
 
 // Connect to WebpackDevServer via a socket.
 var connection = new WebSocket(
@@ -17,6 +18,18 @@ var connection = new WebSocket(
     }), ['ws']
 );
 
+// Unlike WebpackDevServer client, we won't try to reconnect
+// to avoid spamming the console. Disconnect usually happens
+// when developer stops the server.
+connection.onclose = function (e) {
+    if (e.reason !== 'hardReload') {
+        if (typeof console !== 'undefined' && typeof console.info === 'function') {
+            console.info(
+                'The development server has disconnected.\nRestart the app if necessary.'
+            );
+        }
+    }
+};
 
 // Remember some state related to hot module replacement.
 var isFirstCompilation = true;
@@ -114,7 +127,7 @@ function handleAvailableHash(hash) {
 }
 
 // Handle messages from the server.
-connection.SetOnMessage(function (e) {
+connection.onmessage = function (e) {
     var message = JSON.parse(e.Data);
     switch (message.type) {
         case 'hash':
@@ -126,7 +139,7 @@ connection.SetOnMessage(function (e) {
             break;
         case 'content-changed':
             // Triggered when a file from `contentBase` changed.
-            window.location.reload();
+            hardReload();
             break;
         case 'warnings':
             handleWarnings(message.data);
@@ -137,8 +150,7 @@ connection.SetOnMessage(function (e) {
         default:
         // Do nothing.
     }
-});
-connection.ConnectAsync();
+};
 
 // Is there a newer version of this code available?
 function isUpdateAvailable() {
@@ -154,7 +166,54 @@ function canApplyUpdates() {
 }
 
 // Attempt to update code on the fly, fall back to a hard reload.
-function tryApplyUpdates() {
+function tryApplyUpdates(onHotUpdateSuccess) {
+    if (!module.hot || alwaysHardReload) {
+        // HotModuleReplacementPlugin is not in webpack configuration.
+        hardReload();
+        return;
+    }
+
+    if (!isUpdateAvailable() || !canApplyUpdates()) {
+        return;
+    }
+
+    function handleApplyUpdates(err, updatedModules) {
+        if (err || !updatedModules) {
+            hardReload();
+            return;
+        }
+
+        if (typeof onHotUpdateSuccess === 'function') {
+            // Maybe we want to do something.
+            onHotUpdateSuccess();
+        }
+
+        if (isUpdateAvailable()) {
+            // While we were updating, there was a new update! Do it again.
+            tryApplyUpdates();
+        }
+    }
+
+
+    // https://webpack.github.io/docs/hot-module-replacement.html#check
+    var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
+
+    // // webpack 2 returns a Promise instead of invoking a callback
+    if (result && result.then) {
+        result.then(
+            function (updatedModules) {
+                handleApplyUpdates(null, updatedModules);
+            },
+            function (err) {
+                console.error("Error happened when trying to apply hot updates");
+                console.error(err);
+                handleApplyUpdates(err, null);
+            }
+        );
+    }
+}
+
+function hardReload() {
+    connection.close(1000, "hardReload");
     window.location.reload();
-    return;
 }
