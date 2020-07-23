@@ -14,7 +14,6 @@ import { App as Toggle } from './wiki/toggle';
 import { App as Tooltip } from './wiki/tooltip';
 import { App as View } from './wiki/view';
 import { TodoApp } from './todo-mvc';
-// import { App as WebInputs } from './web-inputs';
 
 import ViewSource from '!!raw-loader!./wiki/view';
 import AnchorSource from '!!raw-loader!./wiki/anchor';
@@ -47,3 +46,5 @@ sampleGallery([
   { name: 'Todo App', render: TodoApp, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/todo-mvc/index.tsx' },
   // { name: 'Web Inputs', render: WebInputs, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/web-inputs/index.tsx' },
 ]);
+
+(module as any)?.hot?.accept();

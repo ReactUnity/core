@@ -14,14 +14,16 @@ export interface Sample {
   children?: Sample[];
 }
 
-export class App extends React.Component<{ samples: Sample[] }, { selectedSample?: Sample }> {
+export class App extends React.Component<{ samples: Sample[] }, { selectedSample?: string }> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const selected = this.state.selectedSample;
+    const selectedSample = this.state.selectedSample;
+    const allSamples = ([] as Sample[]).concat(this.props.samples, ...this.props.samples.map(x => x.children || [] as Sample[]));
+    const selected = allSamples.find(x => x.name === selectedSample);
 
     const homePage = () => <view layout={{ Padding: 20 }}>
       This page exists to demonstrate features of React Unity. Everything on this page is built with React Unity.
@@ -32,9 +34,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
       <button layout={{ PaddingHorizontal: 20, PaddingVertical: 16, PaddingLeft: 20 + depth * 16, JustifyContent: YogaJustify.FlexStart }}
         style={{ backgroundColor: selected === sample ? 0.7 : 'transparent', borderRadius: 0, borderColor: ColorNative.black }}
         stateStyles={{ hover: { backgroundColor: 0.8 } }}
-        onClick={sample.children
-          ? () => null
-          : () => this.setState(() => ({ selectedSample: sample }))}>
+        onClick={() => !sample.children && this.setState(() => ({ selectedSample: sample.name }))}>
         {sample.name}
       </button>
 

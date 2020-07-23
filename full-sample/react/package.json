@@ -23,7 +23,7 @@
     "@types/react-motion": "0.0.29",
     "@types/react-reconciler": "^0.18.0",
     "raw-loader": "^4.0.1",
-    "react-unity-scripts": "^0.0.9",
+    "react-unity-scripts": "^0.0.10",
     "typescript": "^3.9.7"
   }
 }

@@ -437,7 +437,7 @@ PrefabInstance:
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
       propertyPath: PreloadScripts.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
@@ -547,7 +547,7 @@ PrefabInstance:
         type: 3}
       propertyPath: PreloadScripts.Array.data[0]
       value: 
-      objectReference: {fileID: 4900000, guid: e513496ee19404445a3dde237d1df7e1, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
       propertyPath: Script.Watch
