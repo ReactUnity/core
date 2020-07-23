@@ -13,13 +13,11 @@ namespace ReactUnity.Schedulers
         }
         public int setTimeout(JsValue callback, int timeout)
         {
-            if (!Application.isPlaying) return -1;
             return MainThreadDispatcher.Timeout(() => callback.Invoke(), timeout / 1000f);
         }
 
         public int setInterval(JsValue callback, int timeout)
         {
-            if (!Application.isPlaying) return -1;
             return MainThreadDispatcher.Interval(() => callback.Invoke(), timeout / 1000f);
         }
 
@@ -36,7 +34,6 @@ namespace ReactUnity.Schedulers
 
         public int requestAnimationFrame(JsValue callback)
         {
-            if (!Application.isPlaying) return -1;
             return MainThreadDispatcher.AnimationFrame(() => callback.Invoke());
         }
 

@@ -67,7 +67,7 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         }
 #endif
 
-        public IDisposable GetScript(Action<string> changeCallback, out string result, bool useDevServer = true)
+        public IDisposable GetScript(Action<string> changeCallback, out string result, bool useDevServer = true, bool disableWarnings = false)
         {
 #if UNITY_EDITOR
             if (useDevServer && UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
@@ -97,7 +97,7 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
                 case ScriptSource.File:
 #if UNITY_EDITOR || REACT_FILE_API
 #if !REACT_FILE_API
-                    Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
+                    if(!disableWarnings) Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
 #endif
                     result = System.IO.File.ReadAllText(SourcePath);
                     break;
@@ -107,7 +107,7 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
                 case ScriptSource.Url:
 #if UNITY_EDITOR || REACT_URL_API
 #if !REACT_URL_API
-                    Debug.LogWarning("REACT_URL_API is not defined. Add REACT_URL_API to build symbols to if you want to use this feature outside editor.");
+                    if (!disableWarnings) Debug.LogWarning("REACT_URL_API is not defined. Add REACT_URL_API to build symbols to if you want to use this feature outside editor.");
 #endif
                     result = null;
                     var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
