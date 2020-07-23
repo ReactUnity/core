@@ -31,23 +31,51 @@ async function create() {
   const gitignoreDestPath = path.join(newProjectPath, '.gitignore');
   await fse.move(gitignoreSrcPath, gitignoreDestPath);
 
+  console.log('Successfully scaffolded the react project at ' + newProjectPath);
 
   // Install npm modules
   var npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
   try {
-    cp.spawnSync(npm, ['install'], {
-      cwd: newProjectPath
+    console.log("Starting NPM install");
+    run_script(npm, ['install'], {
+      cwd: newProjectPath,
+    }, () => {
+      console.log('Successfully created react-unity project at ' + newProjectPath);
+      process.exit();
     });
   } catch (err) {
     console.error('Could not install node modules. You need to manually go to the project folder and run `npm install`.');
     console.error(err);
   }
-
-
-  console.log('Successfully created react-unity project at ' + newProjectPath);
 }
 
 create().catch(err => {
   console.error(err);
 });
+
+function run_script(command: string, args: string[], options: cp.SpawnOptionsWithoutStdio, callback: (string, number) => any) {
+  var child = cp.spawn(command, args, options);
+
+  var scriptOutput = "";
+
+  child.stdout.setEncoding('utf8');
+  child.stdout.on('data', function (data) {
+    console.log(data);
+
+    data = data.toString();
+    scriptOutput += data;
+  });
+
+  child.stderr.setEncoding('utf8');
+  child.stderr.on('data', function (data) {
+    console.error(data);
+
+    data = data.toString();
+    scriptOutput += data;
+  });
+
+  child.on('close', function (code) {
+    callback(scriptOutput, code);
+  });
+}
