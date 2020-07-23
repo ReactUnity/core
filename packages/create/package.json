@@ -19,13 +19,13 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^9.0.1"
   },
   "devDependencies": {
-    "@types/fs-extra": "^8.1.0",
-    "@types/node": "^13.9.1",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "@types/fs-extra": "^9.0.1",
+    "@types/node": "^14.0.24",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   },
   "files": [
     "/index.js",
