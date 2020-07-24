@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FlexDirection, Wrap, YogaAlign, Layout, PointerEventData, StyleAndLayout, PositionType, CursorType } from 'react-unity-renderer';
-import lorem from '../lorem';
+import lorem from '../assets/lorem';
 
 export class App extends React.Component<{}, { ratio: number }> {
 

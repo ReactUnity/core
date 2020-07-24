@@ -2,11 +2,13 @@ import * as React from 'react';
 import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, YogaAlign, TextOverflowModes } from 'react-unity-renderer';
 
 export class App extends React.Component<{}, { val: number }> {
+  clearAnimation: () => void;
+
   constructor(props) {
     super(props);
     this.state = { val: 0 };
 
-    startAnimation({
+    this.clearAnimation = startAnimation({
       duration: 1000,
       onTick: val => this.setState({ val }),
       easing: easing.easeInOutQuint,
@@ -14,6 +16,10 @@ export class App extends React.Component<{}, { val: number }> {
       loop: true,
       loopMode: 'ping-pong',
     });
+  }
+
+  componentWillUnmount() {
+    this.clearAnimation?.();
   }
 
   render() {

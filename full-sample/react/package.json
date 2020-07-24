@@ -14,16 +14,13 @@
     "monaco-editor-core": "^0.20.0",
     "react": "^16.13.1",
     "react-motion": "^0.5.2",
-    "react-reconciler": "^0.25.1",
-    "react-unity-renderer": "^0.0.9"
+    "react-unity-renderer": "^0.0.10"
   },
   "devDependencies": {
-    "@types/node": "^14.0.24",
+    "@types/node": "^14.0.26",
     "@types/react": "^16.9.43",
     "@types/react-motion": "0.0.29",
-    "@types/react-reconciler": "^0.18.0",
-    "raw-loader": "^4.0.1",
-    "react-unity-scripts": "^0.0.10",
+    "react-unity-scripts": "^0.0.11",
     "typescript": "^3.9.7"
   }
 }
