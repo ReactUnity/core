@@ -8,9 +8,10 @@ Please refer to its documentation:
 
 ## Extra Environment Variables
 
-- `FILENAME` - Name of the generated javascript file. `react.js` by default.
+- `FILENAME` - Name of the generated javascript file. `index.js` by default.
 - `BUILD_DIR` - Path to the generated output. Relative to the project. `build` by default.
 - `GENERATE_SOURCEMAP` - `false` by default.
 - `HARD_RELOAD` - Reload the entire UI instead of doing HMR. `false` by default.
+- `IMAGE_INLINE_SIZE_LIMIT` - `0` by default. Because non-inlined images will be faster in Unity. However, users may still want to inline images.
 
 Environment variables can also be defined by having `.env`, `.env.local`, `.env.<development|production>` in project folder.

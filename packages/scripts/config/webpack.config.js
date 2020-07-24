@@ -43,7 +43,7 @@ const webpackDevClientEntry = require.resolve(
 const isExtendingEslintConfig = process.env.EXTEND_ESLINT === 'true';
 
 const imageInlineSizeLimit = parseInt(
-  process.env.IMAGE_INLINE_SIZE_LIMIT || '10000'
+  process.env.IMAGE_INLINE_SIZE_LIMIT || '0'
 );
 
 // Check if TypeScript is setup
@@ -77,7 +77,9 @@ module.exports = function (webpackEnv) {
   // common function to get style loaders
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
-      isEnvDevelopment && require.resolve('style-loader'),
+      // Always use style-loader in React Unity as we do not extract CSS files
+      // TODO: [React Unity] consider extracting CSS files
+      require.resolve('style-loader'),
 
       {
         loader: require.resolve('css-loader'),
@@ -147,7 +149,7 @@ module.exports = function (webpackEnv) {
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
-      filename: isEnvDevelopment ? 'react.js' : process.env.FILENAME || 'react.js',
+      filename: isEnvDevelopment ? 'index.js' : process.env.FILENAME || 'index.js',
       // TODO: remove this when upgrading to webpack 5
       futureEmitAssets: true,
       // webpack uses `publicPath` to determine where the app is being served from.
@@ -199,7 +201,7 @@ module.exports = function (webpackEnv) {
               inline: 2,
             },
             mangle: {
-              safari10: true,
+              safari10: false,
             },
             // Added for profiling in devtools
             keep_classnames: isEnvProductionProfile,
@@ -291,7 +293,6 @@ module.exports = function (webpackEnv) {
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
-        // TODO: [React Unity] temporarily disable eslint
         {
           test: /\.(js|mjs|jsx|ts|tsx)$/,
           enforce: 'pre',
@@ -330,7 +331,7 @@ module.exports = function (webpackEnv) {
               loader: require.resolve('url-loader'),
               options: {
                 limit: imageInlineSizeLimit,
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: 'static/media/[name].[ext]',
               },
             },
             // Process application JS with Babel.
@@ -515,7 +516,7 @@ module.exports = function (webpackEnv) {
               // by webpacks internal loaders.
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.json$/],
               options: {
-                name: 'static/media/[name].[hash:8].[ext]',
+                name: 'static/media/[name].[ext]',
               },
             },
             // ** STOP ** Are you adding a new loader?
