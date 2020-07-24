@@ -20,6 +20,7 @@ export interface StyleAndLayout {
 
 export interface View extends Events, StyleAndLayout {
   name?: string;
+  className?: string;
 }
 
 export interface Button extends View {
