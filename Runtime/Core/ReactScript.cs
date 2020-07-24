@@ -22,7 +22,7 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 
         public bool UseDevServer = true;
         public string DevServer = "http://localhost:3000";
-        static string DevServerFilename = "/react.js";
+        static string DevServerFilename = "";
         public string DevServerFile => DevServer + DevServerFilename;
 
         private bool SourceIsTextAsset => ScriptSource == ScriptSource.TextAsset;
