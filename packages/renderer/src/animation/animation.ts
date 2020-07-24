@@ -28,6 +28,8 @@ export function startAnimation(options: AnimationOptionsBase | AnimationOptionsE
   let normal = true;
   const intervalTime = options.interval == null ? 20 : (options.interval || 0);
 
+  let currentDefer;
+
   const start = () => {
     if (onStart) {
       options.onStart();
@@ -43,7 +45,7 @@ export function startAnimation(options: AnimationOptionsBase | AnimationOptionsE
 
     const easing = options.easing;
 
-    const interval = setInterval(() => {
+    const interval = currentDefer = setInterval(() => {
       const timeDiff = Date.now() - startTime;
 
       t = Math.min(timeDiff / options.duration, 1);
@@ -53,6 +55,7 @@ export function startAnimation(options: AnimationOptionsBase | AnimationOptionsE
 
       if (t >= 1) {
         clearInterval(interval);
+        currentDefer = null;
 
         if (loop == true || loopCount < loop) {
           if (loopMode === 'ping-pong') normal = !normal;
@@ -64,6 +67,8 @@ export function startAnimation(options: AnimationOptionsBase | AnimationOptionsE
     }, intervalTime);
   };
 
-  if (options.delay != null) setTimeout(start, options.delay);
+  if (options.delay != null) currentDefer = setTimeout(start, options.delay);
   else start();
+
+  return () => currentDefer && clearInterval(currentDefer);
 }
