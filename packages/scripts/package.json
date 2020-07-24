@@ -23,7 +23,7 @@
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
-  "types": "./lib/react-app.d.ts",
+  "types": "./lib/react-unity.d.ts",
   "dependencies": {
     "@babel/core": "7.10.5",
     "@pmmmwh/react-refresh-webpack-plugin": "0.3.3",
@@ -82,11 +82,7 @@
     "fsevents": "^2.1.3"
   },
   "peerDependencies": {
+    "react-unity-renderer": "*",
     "typescript": "^3.9.7"
-  },
-  "peerDependenciesMeta": {
-    "typescript": {
-      "optional": true
-    }
   }
 }

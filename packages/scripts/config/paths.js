@@ -78,7 +78,7 @@ module.exports = {
 // @remove-on-eject-begin
 const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 
-// config before eject: we're in ./node_modules/react-scripts/config/
+// config before eject: we're in ./node_modules/react-unity-scripts/config/
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
@@ -98,8 +98,8 @@ module.exports = {
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
-  appTypeDeclarations: resolveApp('src/react-app-env.d.ts'),
-  ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
+  appTypeDeclarations: resolveApp('src/react-unity.d.ts'),
+  ownTypeDeclarations: resolveOwn('lib/react-unity.d.ts'),
 };
 
 const ownPackageJson = require('../package.json');
@@ -108,10 +108,10 @@ const reactScriptsLinked =
   fs.existsSync(reactScriptsPath) &&
   fs.lstatSync(reactScriptsPath).isSymbolicLink();
 
-// config before publish: we're in ./packages/react-scripts/config/
+// config before publish: we're in ./packages/react-unity-scripts/config/
 if (
   !reactScriptsLinked &&
-  __dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
+  __dirname.indexOf(path.join('packages', 'react-unity-scripts', 'config')) !== -1
 ) {
   const templatePath = '../cra-template/template';
   module.exports = {
@@ -133,8 +133,8 @@ if (
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),
-    appTypeDeclarations: resolveOwn(`${templatePath}/src/react-app-env.d.ts`),
-    ownTypeDeclarations: resolveOwn('lib/react-app.d.ts'),
+    appTypeDeclarations: resolveOwn(`${templatePath}/src/react-unity.d.ts`),
+    ownTypeDeclarations: resolveOwn('lib/react-unity.d.ts'),
   };
 }
 // @remove-on-eject-end

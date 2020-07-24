@@ -95,20 +95,20 @@ module.exports = function (
     console.log('');
     console.error(
       `A template was not provided. This is likely because you're using an outdated version of ${chalk.cyan(
-        'create-react-app'
+        'create-react-unity'
       )}.`
     );
     console.error(
       `Please note that global installs of ${chalk.cyan(
-        'create-react-app'
+        'create-react-unity'
       )} are no longer supported.`
     );
     console.error(
       `You can fix this by running ${chalk.cyan(
-        'npm uninstall -g create-react-app'
+        'npm uninstall -g create-react-unity'
       )} or ${chalk.cyan(
-        'yarn global remove create-react-app'
-      )} before using ${chalk.cyan('create-react-app')} again.`
+        'yarn global remove create-react-unity'
+      )} before using ${chalk.cyan('create-react-unity')} again.`
     );
     return;
   }
@@ -191,10 +191,10 @@ module.exports = function (
   const templateScripts = templatePackage.scripts || {};
   appPackage.scripts = Object.assign(
     {
-      start: 'react-scripts start',
-      build: 'react-scripts build',
-      test: 'react-scripts test',
-      eject: 'react-scripts eject',
+      start: 'react-unity-scripts start',
+      build: 'react-unity-scripts build',
+      test: 'react-unity-scripts test',
+      eject: 'react-unity-scripts eject',
     },
     templateScripts
   );
@@ -314,7 +314,7 @@ module.exports = function (
   }
 
   // Install react and react-dom for backward compatibility with old CRA cli
-  // which doesn't install react and react-dom along with react-scripts
+  // which doesn't install react and react-dom along with react-unity-scripts
   if (!isReactInstalled(appPackage)) {
     args = args.concat(['react', 'react-dom']);
   }

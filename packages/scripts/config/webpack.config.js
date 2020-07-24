@@ -352,7 +352,7 @@ module.exports = function (webpackEnv) {
                 // side of caution.
                 // We remove this when the user ejects because the default
                 // is sane and uses Babel options. Instead of options, we use
-                // the react-scripts and babel-preset-react-app versions.
+                // the react-unity-scripts and babel-preset-react-app versions.
                 cacheIdentifier: getCacheIdentifier(
                   isEnvProduction
                     ? 'production'
@@ -361,7 +361,7 @@ module.exports = function (webpackEnv) {
                     'babel-plugin-named-asset-import',
                     'babel-preset-react-app',
                     'react-dev-utils',
-                    'react-scripts',
+                    'react-unity-scripts',
                   ]
                 ),
                 // @remove-on-eject-end
@@ -418,7 +418,7 @@ module.exports = function (webpackEnv) {
                     'babel-plugin-named-asset-import',
                     'babel-preset-react-app',
                     'react-dev-utils',
-                    'react-scripts',
+                    'react-unity-scripts',
                   ]
                 ),
                 // @remove-on-eject-end
