@@ -503,6 +503,11 @@ module.exports = function (webpackEnv) {
                 'sass-loader'
               ),
             },
+            // raw-loader is added by React Unity for its usefulness and for the sake of completion
+            {
+              test: /\.txt$/i,
+              use: 'raw-loader',
+            },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.

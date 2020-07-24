@@ -35,8 +35,8 @@ declare module '*.png' {
 }
 
 declare module '*.webp' {
-    const src: string;
-    export default src;
+  const src: string;
+  export default src;
 }
 
 declare module '*.svg' {
@@ -63,4 +63,19 @@ declare module '*.module.scss' {
 declare module '*.module.sass' {
   const classes: { readonly [key: string]: string };
   export default classes;
+}
+
+declare module '*.txt' {
+  const value: string;
+  export default value;
+}
+
+declare module '!!raw-loader!*' {
+  const value: string;
+  export default value;
+}
+
+declare module '!!file-loader!*' {
+  const value: string;
+  export default value;
 }
