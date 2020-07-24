@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as cp from 'child_process';
 
 const cwd = process.cwd();
+const skipInstall = process.argv.includes('--skip-install') || process.argv.includes('-s');
 
 async function isDirEmpty(dirname) {
   const files = await fse.readdir(dirname);
@@ -31,27 +32,37 @@ async function create() {
   const gitignoreDestPath = path.join(newProjectPath, '.gitignore');
   await fse.move(gitignoreSrcPath, gitignoreDestPath);
 
+  console.log();
   console.log('Successfully scaffolded the react project at ' + newProjectPath);
+  console.log();
 
-  // Install npm modules
-  var npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+  const successCallback = () => {
+    console.log('Successfully created react-unity project at ' + newProjectPath);
+  };
 
-  try {
-    console.log("Starting NPM install");
-    run_script(npm, ['install'], {
-      cwd: newProjectPath,
-    }, (scriptOutput, code) => {
-      if (code === 0) {
-        console.log('Successfully created react-unity project at ' + newProjectPath);
-      } else {
-        console.log('Created react-unity project at ' + newProjectPath);
-        console.error('Some processes did not complete succesfully. Please manually confirm that everything is working.');
-      }
-      process.exit();
-    });
-  } catch (err) {
-    console.error('Could not install node modules. You need to manually go to the project folder and run `npm install`.');
-    console.error(err);
+  if (skipInstall) {
+    console.error('Skipped installing node modules. You need to manually go to the project folder and run `npm install`.');
+  } else {
+    // Install npm modules
+    var npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+
+    try {
+      console.log("Starting NPM install");
+      run_script(npm, ['install'], {
+        cwd: newProjectPath,
+      }, (scriptOutput, code) => {
+        if (code === 0) {
+          successCallback();
+        } else {
+          console.log('Created react-unity project at ' + newProjectPath);
+          console.error('Some processes did not complete succesfully. Please manually confirm that everything is working.');
+        }
+        process.exit();
+      });
+    } catch (err) {
+      console.error('Could not install node modules. You need to manually go to the project folder and run `npm install`.');
+      console.error(err);
+    }
   }
 }
 
