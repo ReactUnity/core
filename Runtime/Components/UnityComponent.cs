@@ -38,6 +38,8 @@ namespace ReactUnity.Components
         public CanvasGroup CanvasGroup => GameObject.GetComponent<CanvasGroup>();
         public Canvas Canvas => GameObject.GetComponent<Canvas>();
 
+        public string Tag { get; set; } = "";
+        public string ClassName { get; set; } = "";
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
@@ -50,8 +52,9 @@ namespace ReactUnity.Components
             Layout = new YogaNode(DefaultLayout);
         }
 
-        public UnityComponent(UnityUGUIContext context)
+        public UnityComponent(UnityUGUIContext context, string tag)
         {
+            Tag = tag;
             Context = context;
             GameObject = new GameObject();
             RectTransform = GameObject.AddComponent<RectTransform>();
@@ -127,6 +130,9 @@ namespace ReactUnity.Components
             {
                 case "name":
                     GameObject.name = value?.ToString();
+                    return;
+                case "className":
+                    ClassName = value?.ToString();
                     return;
                 default:
                     throw new System.Exception($"Unknown property name specified, '{propertyName}'");

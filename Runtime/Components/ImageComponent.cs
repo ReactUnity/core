@@ -21,9 +21,9 @@ namespace ReactUnity.Components
 
         public ImageFitMode Fit { get; private set; }
 
-        public ImageComponent(UnityUGUIContext context) : base(context)
+        public ImageComponent(UnityUGUIContext context) : base(context, "image")
         {
-            ImageContainer = new ContainerComponent(context);
+            ImageContainer = new ContainerComponent(context, "");
             ImageContainer.GameObject.name = "[ImageContent]";
             Image = ImageContainer.GameObject.AddComponent<Image>();
             var measure = ImageContainer.GameObject.AddComponent<ImageNodeMeasure>();

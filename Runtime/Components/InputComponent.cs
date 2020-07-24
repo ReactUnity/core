@@ -47,14 +47,14 @@ namespace ReactUnity.Components
         private TextComponent TextComponent { get; set; }
         private TextComponent Placeholder { get; set; }
 
-        public InputComponent(string text, UnityUGUIContext context) : base(context)
+        public InputComponent(string text, UnityUGUIContext context) : base(context, "input")
         {
             // Input field's properties must be fully assigned before OnEnable is called
             GameObject.SetActive(false);
 
             Selectable = InputField = GameObject.AddComponent<TMP_InputField>();
 
-            TextViewport = new ContainerComponent(context);
+            TextViewport = new ContainerComponent(context, "");
             TextViewport.GameObject.name = "[Text Viewport]";
             TextViewport.SetParent(this);
             TextViewport.GameObject.AddComponent<RectMask2D>();

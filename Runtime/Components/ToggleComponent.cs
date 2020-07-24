@@ -40,7 +40,7 @@ namespace ReactUnity.Components
         public ImageComponent Check { get; private set; }
 
 
-        public ToggleComponent(UnityUGUIContext context) : base(context)
+        public ToggleComponent(UnityUGUIContext context) : base(context, "toggle")
         {
             Toggle = GameObject.AddComponent<Toggle>();
             Selectable = Toggle;

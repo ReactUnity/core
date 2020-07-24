@@ -11,14 +11,14 @@ namespace ReactUnity
         public static Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>> ComponentCreators
             = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
             {
-                { "text", (type, text, context) => new TextComponent(text, context) },
-                { "anchor", (type, text, context) => new AnchorComponent(context) },
-                { "view", (type, text, context) => new ContainerComponent(context) },
-                { "button", (type, text, context) => new ButtonComponent(context) },
-                { "toggle", (type, text, context) => new ToggleComponent(context) },
-                { "input", (type, text, context) => new InputComponent(text, context) },
-                { "scroll", (type, text, context) => new ScrollComponent(context) },
-                { "image", (type, text, context) => new ImageComponent(context) },
+                { "text", (tag, text, context) => new TextComponent(text, context) },
+                { "anchor", (tag, text, context) => new AnchorComponent(context) },
+                { "view", (tag, text, context) => new ContainerComponent(context, "view") },
+                { "button", (tag, text, context) => new ButtonComponent(context) },
+                { "toggle", (tag, text, context) => new ToggleComponent(context) },
+                { "input", (tag, text, context) => new InputComponent(text, context) },
+                { "scroll", (tag, text, context) => new ScrollComponent(context) },
+                { "image", (tag, text, context) => new ImageComponent(context) },
             };
 
         #region Creation
@@ -28,18 +28,18 @@ namespace ReactUnity
             return ComponentCreators["text"]("text", text, host.Context);
         }
 
-        public static UnityComponent createElement(string type, string text, HostComponent host)
+        public static UnityComponent createElement(string tag, string text, HostComponent host)
         {
             UnityComponent res = null;
-            if (ComponentCreators.TryGetValue(type, out var creator))
+            if (ComponentCreators.TryGetValue(tag, out var creator))
             {
-                res = creator(type, text, host.Context);
+                res = creator(tag, text, host.Context);
             }
             else
             {
-                throw new Exception($"Unknown component type '{type}' specified.");
+                throw new Exception($"Unknown component tag '{tag}' specified.");
             }
-            res.GameObject.name = $"<{type}>";
+            res.GameObject.name = $"<{tag}>";
             return res;
         }
 

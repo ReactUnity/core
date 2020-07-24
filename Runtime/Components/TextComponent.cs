@@ -21,7 +21,7 @@ namespace ReactUnity.Components
         public LinkedTextWatcher LinkedTextWatcher { get; private set; }
 
 
-        public TextComponent(string text, UnityUGUIContext context) : base(context)
+        public TextComponent(string text, UnityUGUIContext context) : base(context, "text")
         {
             GameObject.name = "TEXT";
             Text = GameObject.AddComponent<TextMeshProUGUI>();

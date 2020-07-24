@@ -18,7 +18,7 @@ namespace ReactUnity.Components
             Container = existing;
         }
 
-        public ContainerComponent(UnityUGUIContext context) : base(context)
+        public ContainerComponent(UnityUGUIContext context, string tag) : base(context, tag)
         {
             Container = RectTransform;
         }

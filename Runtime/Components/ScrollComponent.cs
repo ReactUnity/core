@@ -11,7 +11,7 @@ namespace ReactUnity.Components
 
         public ScrollRect ScrollRect { get; private set; }
 
-        public ScrollComponent(UnityUGUIContext Context) : base(Context)
+        public ScrollComponent(UnityUGUIContext Context) : base(Context, "scroll")
         {
             ScrollRect = GameObject.AddComponent<ScrollRect>();
 

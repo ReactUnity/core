@@ -20,7 +20,7 @@ namespace ReactUnity.Components
         public string url = "";
         public bool openInThisTab = false;
 
-        public AnchorComponent(UnityUGUIContext context) : base(context)
+        public AnchorComponent(UnityUGUIContext context) : base(context, "anchor")
         {
             clickHandler = GameObject.AddComponent<AnchorClickHandler>();
             clickHandler.OnEvent += OnClick;
