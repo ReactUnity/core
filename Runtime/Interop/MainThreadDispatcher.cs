@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace ReactUnity.Interop
@@ -48,7 +49,7 @@ namespace ReactUnity.Interop
 
         private static List<IEnumerator> ToStart = new List<IEnumerator>();
         private static List<Coroutine> Started = new List<Coroutine>();
-        private static List<int> ToStop = new List<int>();
+        private static HashSet<int> ToStop = new HashSet<int>();
         private static List<Action> CallOnLateUpdate = new List<Action>();
 
         static public void AddCallOnLateUpdate(Action call)
@@ -58,29 +59,45 @@ namespace ReactUnity.Interop
 
         static public int OnUpdate(Action callback)
         {
-            return StartDeferred(OnUpdateCoroutine(callback));
+            var handle = GetNextHandle();
+            return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
         static public int Timeout(Action callback, float timeSeconds)
         {
-            return StartDeferred(TimeoutCoroutine(callback, timeSeconds));
+            var handle = GetNextHandle();
+            return StartDeferred(TimeoutCoroutine(callback, timeSeconds, handle), handle);
         }
 
         static public int AnimationFrame(Action callback)
         {
-            return StartDeferred(AnimationFrameCoroutine(callback));
+            var handle = GetNextHandle();
+            return StartDeferred(AnimationFrameCoroutine(callback, handle), handle);
         }
 
         static public int Interval(Action callback, float intervalSeconds)
         {
-            return StartDeferred(IntervalCoroutine(callback, intervalSeconds));
+            var handle = GetNextHandle();
+            return StartDeferred(IntervalCoroutine(callback, intervalSeconds, handle), handle);
         }
 
         static public int StartDeferred(IEnumerator cr)
         {
-            var handle = Started.Count + ToStart.Count;
+            var handle = GetNextHandle();
             ToStart.Add(cr);
             return handle;
+        }
+
+        static public int StartDeferred(IEnumerator cr, int handle)
+        {
+            ToStart.Add(cr);
+            return handle;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static public int GetNextHandle()
+        {
+            return Started.Count + ToStart.Count;
         }
 
         static public void StopDeferred(int cr)
@@ -90,14 +107,15 @@ namespace ReactUnity.Interop
 
         void StartAndStopDeferreds()
         {
-            for (int i = 0; i < ToStop.Count; i++)
+            foreach (var cr in ToStop)
             {
-                var cr = ToStop[i];
                 var toStartIndex = cr - Started.Count;
 
+                // Stop coroutine before starting
                 if (toStartIndex >= 0) ToStart[toStartIndex] = null;
                 else
                 {
+                    // Coroutine was already started, so stop it
                     var coroutine = Started[cr];
                     if (coroutine != null) StopCoroutine(coroutine);
                     Started[cr] = null;
@@ -129,31 +147,31 @@ namespace ReactUnity.Interop
         }
 
 
-        private static IEnumerator OnUpdateCoroutine(Action callback)
+        private static IEnumerator OnUpdateCoroutine(Action callback, int handle)
         {
             yield return null;
-            callback();
+            if (!ToStop.Contains(handle)) callback();
         }
 
-        private static IEnumerator TimeoutCoroutine(Action callback, float time)
+        private static IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
         {
             yield return new WaitForSeconds(time);
-            callback();
+            if (!ToStop.Contains(handle)) callback();
         }
 
-        private static IEnumerator IntervalCoroutine(Action callback, float interval)
+        private static IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
         {
             while (true)
             {
                 yield return new WaitForSeconds(interval);
-                callback();
+                if (!ToStop.Contains(handle)) callback();
             }
         }
 
-        private static IEnumerator AnimationFrameCoroutine(Action callback)
+        private static IEnumerator AnimationFrameCoroutine(Action callback, int handle)
         {
             yield return null;
-            callback();
+            if (!ToStop.Contains(handle)) callback();
         }
 
     }
