@@ -66,4 +66,5 @@ dist/
 
 # Project specific
 /react
+/react-unity-project
 /index.js

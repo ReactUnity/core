@@ -19,6 +19,7 @@
     "prepare": "npm run build"
   },
   "dependencies": {
+    "chalk": "^4.1.0",
     "fs-extra": "^9.0.1"
   },
   "devDependencies": {
@@ -29,6 +30,7 @@
   },
   "files": [
     "/index.js",
-    "/scaffold"
+    "/scaffold",
+    "/unity-scaffold"
   ]
 }
