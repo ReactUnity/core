@@ -60,10 +60,6 @@ dist/
 # Typescript v1 declaration files
 # typings/
 
-# Unity specific
-*.meta
-
-
 # Project specific
 /react
 /react-unity-project
