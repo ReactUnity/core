@@ -69,6 +69,8 @@ namespace ReactUnity
 
             if (engine == null) CreateEngine();
             unityContext = new UnityUGUIContext(DocumentRoot, engine, NamedAssets);
+            CreateLocation(engine);
+
             engine.SetValue("Unity", typeof(ReactUnityAPI));
             engine.SetValue("RootContainer", unityContext.Host);
             engine.SetValue("NamedAssets", NamedAssets);
@@ -116,7 +118,6 @@ namespace ReactUnity
                 .Execute("btoa = atob = null;")
                 .Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
 
-            CreateLocation(engine);
             CreateConsole(engine);
             CreateLocalStorage(engine);
             CreateScheduler(engine);
@@ -228,7 +229,7 @@ console.{item.Key} = (x, ...args) => old(x, args);
   XMLHttpRequest = function() { return new oldXMLHttpRequest('" + origin + @"'); }
 })();");
 #endif
-            engine.SetValue("document", new DocumentProxy(ExecuteScript, origin));
+            engine.SetValue("document", new DocumentProxy(unityContext, this, origin));
         }
     }
 }

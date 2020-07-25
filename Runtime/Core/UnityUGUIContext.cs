@@ -5,8 +5,6 @@ using ReactUnity.Components;
 using ReactUnity.Types;
 using Facebook.Yoga;
 using ReactUnity.Interop;
-using System.Diagnostics;
-using System.Threading;
 
 namespace ReactUnity
 {
@@ -45,6 +43,14 @@ namespace ReactUnity
         {
             Scheduled = true;
             ScheduledCallbacks.Add(callback);
+        }
+
+        public void InsertStyle(string style)
+        {
+        }
+
+        public void RemoveStyle(string style)
+        {
         }
     }
 }
