@@ -6,12 +6,14 @@ Creates the Typescript project for React Unity.
 
 `npm init react-unity`
 
-CLI supports following arguments:
+#### Options:
 
-- `--skip-install` or `-s` - Skips `npm install`
-- `--unity` or `-u` - Creates Unity project from scratch and adds React project into it
+```
+  -s, --skip-install       Skips 'npm install'
+  -u, --unity              Creates Unity project from scratch and adds React project into it
+```
 
-### Commands
+## Commands
 
 After a project is created, following commands can be run in the `react` directory.
 
