@@ -20,13 +20,14 @@ namespace ReactUnity
         private UnityUGUIContext unityContext;
         private UnityScheduler scheduler;
 
-        public RectTransform DocumentRoot;
         public StringObjectDictionary NamedAssets = new StringObjectDictionary();
         public ReactScript Script;
 
         public List<TextAsset> PreloadScripts = new List<TextAsset>();
 
         private IDisposable ScriptWatchDisposable;
+
+        public RectTransform Root => transform as RectTransform;
 
         void OnEnable()
         {
@@ -41,7 +42,7 @@ namespace ReactUnity
 
         void Clean()
         {
-            foreach (Transform children in DocumentRoot)
+            foreach (Transform children in Root)
             {
                 DestroyImmediate(children.gameObject);
             }
@@ -68,7 +69,7 @@ namespace ReactUnity
             Clean();
 
             if (engine == null) CreateEngine();
-            unityContext = new UnityUGUIContext(DocumentRoot, engine, NamedAssets);
+            unityContext = new UnityUGUIContext(Root, engine, NamedAssets);
             CreateLocation(engine);
 
             engine.SetValue("Unity", typeof(ReactUnityAPI));
