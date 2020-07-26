@@ -21,7 +21,7 @@ namespace ReactUnity.Components
         public LinkedTextWatcher LinkedTextWatcher { get; private set; }
 
 
-        public TextComponent(string text, UnityUGUIContext context) : base(context, "text")
+        public TextComponent(string text, UnityUGUIContext context, string tag) : base(context, tag)
         {
             GameObject.name = "TEXT";
             Text = GameObject.AddComponent<TextMeshProUGUI>();
@@ -34,7 +34,7 @@ namespace ReactUnity.Components
             if (text != null) SetText(text);
         }
 
-        public TextComponent(TextComponent linkedTo) : this(null, linkedTo.Context)
+        public TextComponent(TextComponent linkedTo) : this(null, linkedTo.Context, "")
         {
             Layout.CopyStyle(linkedTo.Layout);
             Style.CopyStyle(linkedTo.Style);

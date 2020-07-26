@@ -1,7 +1,4 @@
 using Facebook.Yoga;
-using ReactUnity.Components;
-using ReactUnity.StateHandlers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -12,6 +9,7 @@ namespace ReactUnity.Styling
     public class NodeStyle
     {
         Dictionary<string, object> StyleMap;
+        public List<Dictionary<string, object>> CssStyles;
         Dictionary<string, object> DefaultStyle;
         HashSet<string> Changes = new HashSet<string>();
         public bool HasInheritedChanges { get; private set; } = false;
@@ -178,7 +176,10 @@ namespace ReactUnity.Styling
             object value = StateStyles?.GetStyleValue(prop);
             if (value != null) return value;
 
-            if (!StyleMap.TryGetValue(prop.name, out value) && (DefaultStyle == null || !DefaultStyle.TryGetValue(prop.name, out value)))
+            if (
+                !StyleMap.TryGetValue(prop.name, out value) &&
+                (CssStyles == null || !CssStyles.Any(x => x.TryGetValue(prop.name, out value))) &&
+                (DefaultStyle == null || !DefaultStyle.TryGetValue(prop.name, out value)))
             {
                 if (prop.inherited)
                 {
@@ -196,7 +197,10 @@ namespace ReactUnity.Styling
             object value = StateStyles?.GetStyleValue(name);
             if (value != null) return value;
 
-            if (!StyleMap.TryGetValue(name, out value) && (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
+            if (
+                !StyleMap.TryGetValue(name, out value) &&
+                (CssStyles == null || !CssStyles.Any(x => x.TryGetValue(name, out value))) &&
+                (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
             {
                 var prop = StyleProperties.GetStyleProperty(name);
 
@@ -256,7 +260,9 @@ namespace ReactUnity.Styling
 
         public bool HasValue(string name)
         {
-            return StyleMap.ContainsKey(name) || (DefaultStyle != null && DefaultStyle.ContainsKey(name));
+            return StyleMap.ContainsKey(name) ||
+                (CssStyles != null && CssStyles.Any(x => x.ContainsKey(name)))||
+                (DefaultStyle != null && DefaultStyle.ContainsKey(name));
         }
     }
 }

@@ -54,19 +54,22 @@ namespace ReactUnity.Components
 
             Selectable = InputField = GameObject.AddComponent<TMP_InputField>();
 
-            TextViewport = new ContainerComponent(context, "");
+            TextViewport = new ContainerComponent(context, "_viewport");
+            TextViewport.IsPseudoElement = true;
             TextViewport.GameObject.name = "[Text Viewport]";
             TextViewport.SetParent(this);
             TextViewport.GameObject.AddComponent<RectMask2D>();
 
 
-            Placeholder = new TextComponent("", context);
+            Placeholder = new TextComponent("", context, "_placeholder");
+            Placeholder.IsPseudoElement = true;
             Placeholder.GameObject.name = "[Placeholder]";
             Placeholder.Layout.PositionType = YogaPositionType.Absolute;
             Placeholder.SetParent(TextViewport);
 
 
-            TextComponent = new TextComponent(text, context);
+            TextComponent = new TextComponent(text, context, "_value");
+            TextComponent.IsPseudoElement = true;
             TextComponent.GameObject.name = "[Text]";
             TextComponent.SetParent(TextViewport);
             TextComponent.Flex.enabled = false;

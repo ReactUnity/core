@@ -7,6 +7,7 @@ using ReactUnity.Layout;
 using ReactUnity.StateHandlers;
 using ReactUnity.Styling;
 using ReactUnity.Types;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -38,8 +39,10 @@ namespace ReactUnity.Components
         public CanvasGroup CanvasGroup => GameObject.GetComponent<CanvasGroup>();
         public Canvas Canvas => GameObject.GetComponent<Canvas>();
 
+        public bool IsPseudoElement = false;
         public string Tag { get; set; } = "";
         public string ClassName { get; set; } = "";
+        public string[] ClassList { get; private set; }
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
@@ -93,7 +96,7 @@ namespace ReactUnity.Components
             }
             else
             {
-                var ind = insertBefore.RectTransform.GetSiblingIndex();
+                var ind = parent.Children.IndexOf(insertBefore);
                 if (insertAfter) ind++;
 
                 parent.Children.Insert(ind, this);
@@ -133,6 +136,7 @@ namespace ReactUnity.Components
                     return;
                 case "className":
                     ClassName = value?.ToString();
+                    ClassList = ClassName?.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
                     return;
                 default:
                     throw new System.Exception($"Unknown property name specified, '{propertyName}'");
@@ -147,6 +151,10 @@ namespace ReactUnity.Components
         public virtual void ResolveStyle(bool recursive = false)
         {
             if (Parent == null) return;
+
+            var matchingRules = Context.RuleTree.GetMatchingRules(this, IsPseudoElement).ToList();
+            Style.CssStyles = matchingRules.SelectMany(x => x.Rules.Select(y => y.ToDictionary(a => a.Key, a => YogaValue.Point(int.Parse(a.Value as string)) as object))).ToList();
+
             ApplyStyles();
             Style.MarkChangesSeen();
         }

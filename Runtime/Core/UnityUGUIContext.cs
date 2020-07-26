@@ -5,6 +5,7 @@ using ReactUnity.Components;
 using ReactUnity.Types;
 using Facebook.Yoga;
 using ReactUnity.Interop;
+using ExCSS;
 using System.Linq;
 using ReactUnity.StyleEngine;
 
@@ -20,12 +21,17 @@ namespace ReactUnity
         private bool Scheduled = false;
         private List<System.Action> ScheduledCallbacks = new List<System.Action>();
 
+        public RuleTree RuleTree;
+
         public UnityUGUIContext(RectTransform hostElement, Engine engine, StringObjectDictionary assets)
         {
             Engine = engine;
             NamedAssets = assets;
             Host = new HostComponent(hostElement, this);
             RootLayoutNode = Host.Layout;
+
+            var parser = new StylesheetParser(includeUnknownDeclarations: true);
+            RuleTree = new RuleTree(parser);
 
             MainThreadDispatcher.AddCallOnLateUpdate(() =>
             {
@@ -49,6 +55,12 @@ namespace ReactUnity
 
         public void InsertStyle(string style)
         {
+            var stylesheet = RuleTree.Parser.Parse(style);
+
+            foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
+            {
+                RuleTree.AddRule(rule);
+            }
         }
 
         public void RemoveStyle(string style)

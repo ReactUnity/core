@@ -11,7 +11,7 @@ namespace ReactUnity
         public static Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>> ComponentCreators
             = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
             {
-                { "text", (tag, text, context) => new TextComponent(text, context) },
+                { "text", (tag, text, context) => new TextComponent(text, context, tag) },
                 { "anchor", (tag, text, context) => new AnchorComponent(context) },
                 { "view", (tag, text, context) => new ContainerComponent(context, "view") },
                 { "button", (tag, text, context) => new ButtonComponent(context) },
@@ -25,7 +25,9 @@ namespace ReactUnity
 
         public static UnityComponent createText(string text, HostComponent host)
         {
-            return ComponentCreators["text"]("text", text, host.Context);
+            var cmp = ComponentCreators["text"]("_text", text, host.Context);
+            cmp.IsPseudoElement = true;
+            return cmp;
         }
 
         public static UnityComponent createElement(string tag, string text, HostComponent host)
