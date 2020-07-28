@@ -159,6 +159,10 @@ MonoBehaviour:
     Entries:
     - Key: delete
       Value: {fileID: 2800000, guid: 654cc8b477e5f12489a82af950133a1c, type: 3}
+    - Key: font
+      Value: {fileID: 11400000, guid: 6ade60ac7c7af78448f83b82be6b867d, type: 2}
+    - Key: RobotoMono
+      Value: {fileID: 11400000, guid: 0ed3d0b5e69ff7c4b9140ba641664792, type: 2}
   Script:
     ScriptSource: 0
     SourceAsset: {fileID: 4900000, guid: 1cea8ca938b8ac346ad799e56a0afa8b, type: 3}
