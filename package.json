@@ -3,18 +3,18 @@
   "author": "Gokhan Kurt",
   "displayName": "React Unity",
   "version": "0.0.11",
-  "unity": "2019.3",
+  "unity": "2020.1",
   "description": "React renderer for Unity",
   "keywords": [
     "React",
-    "UI",
     "Framework",
-    "Front-end"
+    "UI",
+    "UGUI"
   ],
   "category": "UI",
   "type": "library",
   "dependencies": {
-    "com.unity.textmeshpro": "2.0.1"
+    "com.unity.textmeshpro": "3.0.1"
   },
   "samples": [
     {
