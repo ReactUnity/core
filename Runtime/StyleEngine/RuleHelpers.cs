@@ -1,4 +1,8 @@
 using ExCSS;
+using Facebook.Yoga;
+using ReactUnity.Styling;
+using ReactUnity.Styling.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -114,13 +118,54 @@ namespace ReactUnity.StyleEngine
 
         public static Dictionary<string, object> GetRuleDic(StyleRule rule, bool important)
         {
-            return rule.Style.Where(x => !(important ^ x.IsImportant)).ToDictionary(x => x.Name, x => x.Value as object);
+            var dic = new Dictionary<string, object>();
+
+            foreach (var item in rule.Style.Where(x => !(important ^ x.IsImportant)))
+            {
+                var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
+                if (hasCssStyle)
+                {
+                    var specialName = GetSpecialName(item.Value);
+                    object value;
+                    if (specialName == SpecialNames.Initial)
+                        value = prop.defaultValue;
+                    else
+                        value = prop.parser.FromString(item.Value);
+
+                    if (!Equals(value, SpecialNames.CantParse))
+                        dic[prop.name] = value;
+                }
+            }
+            return dic;
+        }
+
+        public static YogaNode GetLayoutDic(StyleRule rule, bool important)
+        {
+            var dic = new YogaNode();
+
+            foreach (var item in rule.Style.Where(x => !(important ^ x.IsImportant)))
+            {
+                var hasCssStyle = LayoutProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
+                if (hasCssStyle)
+                {
+                    prop.propInfo.SetValue(dic, prop.parser.FromString(item.Value));
+                }
+            }
+            return dic;
         }
 
 
         public static string NormalizeSelector(string selector)
         {
             return SplitSelectorRegex.Replace(selector.Replace(">", " > ").Replace("+", " + ").Replace("~", " ~ ").Trim(), " ");
+        }
+
+
+        public static SpecialNames GetSpecialName(string value)
+        {
+            var parsed = Enum.TryParse<SpecialNames>(value, true, out var res);
+            if (parsed) return res;
+            return SpecialNames.NoSpecialName;
         }
     }
 }

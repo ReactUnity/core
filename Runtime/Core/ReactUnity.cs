@@ -5,12 +5,12 @@ using Jint.Native.Object;
 using ReactUnity.Interop;
 using ReactUnity.DomProxies;
 using ReactUnity.Schedulers;
-using ReactUnity.Styling;
 using ReactUnity.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using ReactUnity.Styling.Types;
 
 namespace ReactUnity
 {

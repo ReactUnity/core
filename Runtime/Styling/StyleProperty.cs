@@ -1,4 +1,6 @@
 using Facebook.Yoga;
+using ReactUnity.Styling.Parsers;
+using ReactUnity.Styling.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,30 +13,23 @@ namespace ReactUnity.Styling
     public class StyleProperty
     {
         public string name;
-        public Type[] types;
+        public Type type;
         public object defaultValue;
         public bool transitionable;
         public bool inherited;
         public bool proxy;
+        public IStyleParser parser;
 
-        public StyleProperty(string name, Type type, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false)
+        public StyleProperty(string name, Type type, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleParser parser = null)
         {
             this.name = name;
-            this.types = new Type[] { type };
+            this.type = type;
             this.defaultValue = defaultValue;
             this.transitionable = transitionable;
             this.inherited = inherited;
             this.proxy = proxy;
-        }
 
-        public StyleProperty(string name, Type[] types, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false)
-        {
-            this.name = name;
-            this.types = types;
-            this.defaultValue = defaultValue;
-            this.transitionable = transitionable;
-            this.inherited = inherited;
-            this.proxy = proxy;
+            this.parser = parser ?? ParserMap.GetParser(type);
         }
     }
 
@@ -42,7 +37,7 @@ namespace ReactUnity.Styling
     {
         public static StyleProperty opacity = new StyleProperty("opacity", typeof(float), 1f, true);
         public static StyleProperty zOrder = new StyleProperty("zOrder", typeof(int), 0, false);
-        public static StyleProperty hidden = new StyleProperty("hidden", typeof(bool), false, false);
+        public static StyleProperty hidden = new StyleProperty("hidden", typeof(bool), false, parser: new BoolParser(new string[] { "hidden" }, new string[] { "visible" }));
         public static StyleProperty cursor = new StyleProperty("cursor", typeof(string), null, false);
         public static StyleProperty interaction = new StyleProperty("interaction", typeof(InteractionType), InteractionType.WhenVisible, false);
         public static StyleProperty backgroundColor = new StyleProperty("backgroundColor", typeof(Color), new Color(0, 0, 0, 0), true);
@@ -63,9 +58,31 @@ namespace ReactUnity.Styling
         public static StyleProperty fontSize = new StyleProperty("fontSize", typeof(YogaValue), YogaValue.Undefined(), true, true);
         public static StyleProperty textAlign = new StyleProperty("textAlign", typeof(TextAlignmentOptions), TextAlignmentOptions.TopLeft, false, true);
         public static StyleProperty textOverflow = new StyleProperty("textOverflow", typeof(TextOverflowModes), TextOverflowModes.Overflow, false, true);
-        public static StyleProperty textWrap = new StyleProperty("textWrap", typeof(bool), true, false, true);
+        public static StyleProperty textWrap = new StyleProperty("textWrap", typeof(bool), true, inherited: true,
+            parser: new BoolParser(new string[] { "wrap" }, new string[] { "nowrap" }));
 
         public static Dictionary<string, StyleProperty> PropertyMap = new Dictionary<string, StyleProperty>();
+        public static Dictionary<string, StyleProperty> CssPropertyMap = new Dictionary<string, StyleProperty>()
+        {
+            { "z-order", zOrder },
+            { "visibility", hidden },
+            { "background-color", backgroundColor },
+            { "background", backgroundImage },
+            { "background-image", backgroundImage },
+            { "border-radius", borderRadius },
+            { "border-color", borderColor },
+            { "box-shadow", boxShadow },
+            { "color", fontColor },
+            { "font-color", fontColor },
+            { "font-weight", fontWeight },
+            { "font-style", fontStyle },
+            { "text-decoration", fontStyle },
+            { "font-size", fontSize },
+            { "text-align", textAlign },
+            { "text-overflow", textOverflow },
+            { "text-wrap", textWrap },
+            { "white-space", textWrap },
+        };
         public static StyleProperty[] AllProperties;
 
         static StyleProperties()
@@ -77,6 +94,7 @@ namespace ReactUnity.Styling
             foreach (var style in styleFields)
             {
                 PropertyMap[style.Name] = style.GetValue(type) as StyleProperty;
+                CssPropertyMap[style.Name] = style.GetValue(type) as StyleProperty;
             }
 
             AllProperties = PropertyMap.Values.ToArray();

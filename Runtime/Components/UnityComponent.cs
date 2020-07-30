@@ -6,6 +6,7 @@ using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.StateHandlers;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Types;
 using ReactUnity.Types;
 using System.Linq;
 using UnityEngine;
@@ -153,7 +154,7 @@ namespace ReactUnity.Components
             if (Parent == null) return;
 
             var matchingRules = Context.RuleTree.GetMatchingRules(this, IsPseudoElement).ToList();
-            Style.CssStyles = matchingRules.SelectMany(x => x.Rules.Select(y => y.ToDictionary(a => a.Key, a => YogaValue.Point(int.Parse(a.Value as string)) as object))).ToList();
+            Style.CssStyles = matchingRules.SelectMany(x => x.Rules).ToList();
 
             ApplyStyles();
             Style.MarkChangesSeen();

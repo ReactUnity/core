@@ -38,8 +38,9 @@ namespace ReactUnity.StyleEngine
                 added.Add(leaf);
                 LeafNodes.InsertIntoSortedList(leaf);
 
-                var pseudoSelector = leaf.ParsedSelector.Count > 0 && leaf.ParsedSelector.All(x => x.Type == RuleSelectorPartType.Tag);
-                if (pseudoSelector) LeafNodesForPseudos.InsertIntoSortedList(leaf);
+                var canBePseudo = leaf.ParsedSelector.Count > 0 && leaf.ParsedSelector.All(x => x.Type == RuleSelectorPartType.Tag);
+                if (canBePseudo) LeafNodesForPseudos.InsertIntoSortedList(leaf);
+
 
                 var importantDic = RuleHelpers.GetRuleDic(rule, true);
                 if (importantDic.Count > 0)
@@ -51,7 +52,7 @@ namespace ReactUnity.StyleEngine
 
                     added.Add(importantLeaf);
                     LeafNodes.InsertIntoSortedList(importantLeaf);
-                    if (pseudoSelector) LeafNodesForPseudos.InsertIntoSortedList(importantLeaf);
+                    if (canBePseudo) LeafNodesForPseudos.InsertIntoSortedList(importantLeaf);
                 }
 
             }
