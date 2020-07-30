@@ -159,7 +159,7 @@ namespace ReactUnity.StyleEngine
         public bool Negated = false;
         public RuleSelectorPartType Type = RuleSelectorPartType.None;
         public string Name = null;
-        public string Parameter = null;
+        public object Parameter = null;
 
         public bool Matches(UnityComponent component)
         {
@@ -189,8 +189,9 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.LastChild:
                     return component.Parent.Children[component.Parent.Children.Count - 1] == component;
                 case RuleSelectorPartType.NthChild:
+                    return ((NthChildParameter)Parameter).Matches(component.Parent.Children.IndexOf(component) + 1);
                 case RuleSelectorPartType.NthLastChild:
-                    return false;
+                    return ((NthChildParameter)Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
                 case RuleSelectorPartType.Empty:
                     var cmp = component as ContainerComponent;
                     return cmp == null || cmp.Children.Count == 0;
@@ -215,6 +216,48 @@ namespace ReactUnity.StyleEngine
             }
 
             return false;
+        }
+    }
+
+    public struct NthChildParameter
+    {
+        // An + B
+
+        public int A;
+        public int B;
+
+        public NthChildParameter(string value)
+        {
+            if (value == "odd")
+            {
+                A = 2;
+                B = 1;
+            }
+            else if (value == "even")
+            {
+                A = 2;
+                B = 0;
+            }
+            else
+            {
+                var splits = value.Replace(" ", "").Split(new char[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
+
+                A = 0;
+                B = 0;
+                foreach (var split in splits)
+                {
+                    if (split.Contains("n")) int.TryParse(split.Replace("n", ""), out A);
+                    else int.TryParse(split, out B);
+                }
+            }
+        }
+
+        public bool Matches(int index)
+        {
+            var offset = index - B;
+            if (A > 0) return offset >= 0 && offset % A == 0;
+            else if (A < 0) return offset <= 0 && offset % A == 0;
+            else return offset == 0;
         }
     }
 }

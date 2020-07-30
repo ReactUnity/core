@@ -13,6 +13,7 @@ namespace ReactUnity.StyleEngine
     public static class RuleHelpers
     {
         public static Regex SplitSelectorRegex = new Regex("\\s+");
+        public static Regex NthChildRegex = new Regex(@"\((-?\d+n)\s*\+\s*(\d+)\)");
 
         public static List<RuleSelectorPart> ParseSelector(string selector, bool negated = false)
         {
@@ -39,7 +40,8 @@ namespace ReactUnity.StyleEngine
 
                     if (type == RuleSelectorPartType.Special)
                     {
-                        if (nm == "not") list.AddRange(ParseSelector(paranContent.ToString(), !negated));
+                        var paran = paranContent.ToString();
+                        if (nm == "not") list.AddRange(ParseSelector(paran, !negated));
                         else if (nm == "first-child") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.FirstChild, Negated = negated });
                         else if (nm == "last-child") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.LastChild, Negated = negated });
                         else if (nm == "before") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Before, Negated = negated });
@@ -50,13 +52,13 @@ namespace ReactUnity.StyleEngine
                         {
                             Type = RuleSelectorPartType.NthChild,
                             Negated = negated,
-                            Parameter = paranContent.ToString()
+                            Parameter = new NthChildParameter(paran),
                         });
                         else if (nm == "nth-last-child") list.Add(new RuleSelectorPart()
                         {
                             Type = RuleSelectorPartType.NthLastChild,
                             Negated = negated,
-                            Parameter = paranContent.ToString()
+                            Parameter = new NthChildParameter(paran),
                         });
                         else list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.State, Negated = negated, Parameter = nm });
                     }
@@ -157,7 +159,9 @@ namespace ReactUnity.StyleEngine
 
         public static string NormalizeSelector(string selector)
         {
-            return SplitSelectorRegex.Replace(selector.Replace(">", " > ").Replace("+", " + ").Replace("~", " ~ ").Trim(), " ");
+            return NthChildRegex.Replace(
+                SplitSelectorRegex.Replace(selector.Replace(">", " > ").Replace("+", " + ").Replace("~", " ~ ").Trim(), " "),
+                "($1+$2)");
         }
 
 
