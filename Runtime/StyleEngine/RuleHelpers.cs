@@ -1,5 +1,4 @@
 using ExCSS;
-using Facebook.Yoga;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Types;
 using System;
@@ -13,7 +12,7 @@ namespace ReactUnity.StyleEngine
     public static class RuleHelpers
     {
         public static Regex SplitSelectorRegex = new Regex("\\s+");
-        public static Regex NthChildRegex = new Regex(@"\((-?\d+n)\s*\+\s*(\d+)\)");
+        public static Regex NthChildRegex = new Regex(@"\((\-?\d*n)\s*\+\s*(\d+)\)");
 
         public static List<RuleSelectorPart> ParseSelector(string selector, bool negated = false)
         {
@@ -47,7 +46,7 @@ namespace ReactUnity.StyleEngine
                         else if (nm == "before") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Before, Negated = negated });
                         else if (nm == "after") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.After, Negated = negated });
                         else if (nm == "empty") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Empty, Negated = negated });
-                        else if (nm == "root") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Root, Negated = negated });
+                        else if (nm == "root" || nm == "scope") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Root, Negated = negated });
                         else if (nm == "nth-child") list.Add(new RuleSelectorPart()
                         {
                             Type = RuleSelectorPartType.NthChild,
@@ -141,17 +140,17 @@ namespace ReactUnity.StyleEngine
             return dic;
         }
 
-        public static YogaNode GetLayoutDic(StyleRule rule, bool important)
+        public static List<LayoutValue> GetLayoutDic(StyleRule rule, bool important)
         {
-            YogaNode dic = null;
+            List<LayoutValue> dic = null;
 
             foreach (var item in rule.Style.Where(x => !(important ^ x.IsImportant)))
             {
                 var hasCssStyle = LayoutProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
                 if (hasCssStyle)
                 {
-                    if (dic == null) dic = new YogaNode();
-                    prop.propInfo.SetValue(dic, prop.parser.FromString(item.Value));
+                    if (dic == null) dic = new List<LayoutValue>();
+                    dic.Add(new LayoutValue(prop, prop.Parse(item.Value)));
                 }
             }
             return dic;

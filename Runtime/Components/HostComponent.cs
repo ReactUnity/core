@@ -25,8 +25,6 @@ namespace ReactUnity.Components
             var responsive = GameObject.GetComponent<ResponsiveElement>() ?? GameObject.AddComponent<ResponsiveElement>();
             responsive.Layout = Layout;
             responsive.Context = context;
-
-            ResolveStyle();
         }
 
         public override void ApplyStyles()

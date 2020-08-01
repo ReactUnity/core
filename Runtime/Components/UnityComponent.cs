@@ -8,6 +8,7 @@ using ReactUnity.StateHandlers;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Types;
 using ReactUnity.Types;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,6 +18,8 @@ namespace ReactUnity.Components
 {
     public class UnityComponent
     {
+        private static HashSet<string> EmptyClassList = new HashSet<string>();
+
         public UnityUGUIContext Context { get; }
         public static NodeStyle TagDefaultStyle { get; } = new NodeStyle();
         public static YogaNode TagDefaultLayout { get; } = new YogaNode();
@@ -43,7 +46,7 @@ namespace ReactUnity.Components
         public bool IsPseudoElement = false;
         public string Tag { get; set; } = "";
         public string ClassName { get; set; } = "";
-        public string[] ClassList { get; private set; }
+        public HashSet<string> ClassList { get; private set; }
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
@@ -137,7 +140,8 @@ namespace ReactUnity.Components
                     return;
                 case "className":
                     ClassName = value?.ToString();
-                    ClassList = ClassName?.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
+                    ClassList = string.IsNullOrWhiteSpace(ClassName) ? EmptyClassList :
+                        new HashSet<string>(ClassName.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries));
                     return;
                 default:
                     throw new System.Exception($"Unknown property name specified, '{propertyName}'");
@@ -151,40 +155,33 @@ namespace ReactUnity.Components
 
         public virtual void ResolveStyle(bool recursive = false)
         {
-            if (Parent == null) return;
-
             var matchingRules = Context.RuleTree.GetMatchingRules(this, IsPseudoElement).ToList();
             Style.CssStyles = matchingRules.SelectMany(x => x.Rules).ToList();
+
+            if (Style.CssLayouts != null)
+                foreach (var item in Style.CssLayouts) item.SetDefault(Layout);
             Style.CssLayouts = matchingRules.Where(x => x.Layouts != null).SelectMany(x => x.Layouts).ToList();
+            foreach (var item in Style.CssLayouts) item.Set(Layout);
 
             ApplyStyles();
-            foreach (var item in Style.CssLayouts)
-            {
-                Layout.CopyStyle(item);
-            }
-
-
             Style.MarkChangesSeen();
         }
 
         public virtual void ApplyLayoutStyles()
         {
             ResolveOpacityAndInteractable();
-            SetBorderSize();
             SetOverflow();
+            UpdateBackgroundGraphic(true, false);
         }
 
         public virtual void ApplyStyles()
         {
             ResolveTransform();
             ResolveOpacityAndInteractable();
-            SetBackground();
-            SetBoxShadow();
             SetZOrder();
-            SetBorderRadius();
-            SetBorderColor();
             SetOverflow();
             SetCursor();
+            UpdateBackgroundGraphic(false, true);
         }
 
         protected void ResolveTransform()
@@ -239,18 +236,6 @@ namespace ReactUnity.Components
             else group.blocksRaycasts = true;
         }
 
-
-        public virtual BorderAndBackground GetBackgroundGraphic()
-        {
-            if (BorderAndBackground != null) return BorderAndBackground;
-
-            var image = new BorderAndBackground(RectTransform);
-
-            if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
-
-            return BorderAndBackground = image;
-        }
-
         private void SetOverflow()
         {
             var mask = MaskAndImage;
@@ -271,53 +256,6 @@ namespace ReactUnity.Components
             handler.Cursor = Style.cursor;
         }
 
-        private void SetBackground()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            var sprite = AssetReference.GetSpriteFromObject(Style.backgroundImage, Context);
-            image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
-        }
-
-        private void SetBoxShadow()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBoxShadow(Style.boxShadow);
-        }
-
-        private void SetBorderRadius()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-
-            MainThreadDispatcher.OnUpdate(() =>
-            {
-                if (!GameObject) return;
-                var sprite = BorderGraphic.CreateBorderSprite(Style.borderRadius);
-                image.SetBorderImage(sprite);
-            });
-        }
-
-        private void SetBorderColor()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBorderColor(Style.borderColor);
-        }
-
-        private void SetBorderSize()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBorderSize(Layout);
-        }
-
         protected bool HasBorderOrBackground()
         {
             if (BorderAndBackground != null) return true;
@@ -333,6 +271,45 @@ namespace ReactUnity.Components
             if (Style.boxShadow != null) return true;
 
             return false;
+        }
+
+        public virtual BorderAndBackground UpdateBackgroundGraphic(bool updateLayout, bool updateStyle)
+        {
+            if (!HasBorderOrBackground()) return null;
+
+            BorderAndBackground image = BorderAndBackground;
+
+            if (image == null)
+            {
+                updateStyle = true;
+                updateLayout = true;
+                image = new BorderAndBackground(RectTransform);
+
+                if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
+                BorderAndBackground = image;
+            }
+
+            if (updateLayout)
+            {
+                image.SetBorderSize(Layout);
+            }
+            if (updateStyle)
+            {
+                var sprite = AssetReference.GetSpriteFromObject(Style.backgroundImage, Context);
+                image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
+                image.SetBoxShadow(Style.boxShadow);
+
+                MainThreadDispatcher.OnUpdate(() =>
+                {
+                    if (!GameObject) return;
+                    var borderSprite = BorderGraphic.CreateBorderSprite(Style.borderRadius);
+                    image.SetBorderImage(borderSprite);
+                });
+
+                image.SetBorderColor(Style.borderColor);
+            }
+
+            return image;
         }
 
         private void SetZOrder()

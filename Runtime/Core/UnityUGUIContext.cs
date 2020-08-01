@@ -27,11 +27,14 @@ namespace ReactUnity
         {
             Engine = engine;
             NamedAssets = assets;
-            Host = new HostComponent(hostElement, this);
-            RootLayoutNode = Host.Layout;
 
             var parser = new StylesheetParser(includeUnknownDeclarations: true);
             RuleTree = new RuleTree(parser);
+
+            Host = new HostComponent(hostElement, this);
+            Host.Tag = "_root";
+            RootLayoutNode = Host.Layout;
+            Host.ResolveStyle(true);
 
             MainThreadDispatcher.AddCallOnLateUpdate(() =>
             {
@@ -61,6 +64,7 @@ namespace ReactUnity
             {
                 RuleTree.AddRule(rule);
             }
+            Host.ResolveStyle(true);
         }
 
         public void RemoveStyle(string style)

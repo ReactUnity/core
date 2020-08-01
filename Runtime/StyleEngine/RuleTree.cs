@@ -1,6 +1,6 @@
 using ExCSS;
-using Facebook.Yoga;
 using ReactUnity.Components;
+using ReactUnity.Styling;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,8 +39,8 @@ namespace ReactUnity.StyleEngine
                 var lay = RuleHelpers.GetLayoutDic(rule, false);
                 if (lay != null)
                 {
-                    if (leaf.Layouts == null) leaf.Layouts = new List<YogaNode>();
-                    leaf.Layouts.Add(lay);
+                    if (leaf.Layouts == null) leaf.Layouts = new List<LayoutValue>();
+                    leaf.Layouts.AddRange(lay);
                 }
 
                 added.Add(leaf);
@@ -61,8 +61,8 @@ namespace ReactUnity.StyleEngine
 
                     if (importantLay != null)
                     {
-                        if (importantLeaf.Layouts == null) importantLeaf.Layouts = new List<YogaNode>();
-                        importantLeaf.Layouts.Add(importantLay);
+                        if (importantLeaf.Layouts == null) importantLeaf.Layouts = new List<LayoutValue>();
+                        importantLeaf.Layouts.AddRange(importantLay);
                     }
 
                     added.Add(importantLeaf);

@@ -1,6 +1,5 @@
-using ExCSS;
-using Facebook.Yoga;
 using ReactUnity.Components;
+using ReactUnity.Styling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace ReactUnity.StyleEngine
 
         public RuleRelationType RelationType = RuleRelationType.Parent;
         public List<Dictionary<string, object>> Rules;
-        public List<YogaNode> Layouts;
+        public List<LayoutValue> Layouts;
 
 
         public int Specifity { get; set; }
