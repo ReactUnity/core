@@ -12,6 +12,11 @@
       "type": "shell"
     },
     {
+      "label": "Test",
+      "command": "npm run test",
+      "type": "shell"
+    },
+    {
       "label": "Link",
       "command": "npm link ../../packages/react-unity-${input:modulePick} --force",
       "type": "shell",

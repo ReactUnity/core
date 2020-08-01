@@ -30,9 +30,6 @@
   "files": [
     "./src/index.ts"
   ],
-  "exclude": [
-    "./dist/**/*.*"
-  ],
   "include": [
     "src"
   ]
