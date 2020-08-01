@@ -4,7 +4,8 @@ window.__karma__.setupContext(window);
 var mappings = %MAPPINGS%
 
 var scripts = Object.keys(mappings).filter(function(x) {
-  return !x.includes('node_modules/karma-mocha/lib/adapter.js') && !x.includes('node_modules/mocha/mocha.js');
+  return !x.includes('node_modules/karma-mocha/lib/adapter.js') && !x.includes('node_modules/mocha/mocha.js')
+    && !x.includes('node_modules/karma-chai/lib/adapter.js') && !x.includes('node_modules/chai/chai.js');
 });
 var scriptIndex = 0;
 

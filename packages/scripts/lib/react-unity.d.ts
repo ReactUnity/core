@@ -1,6 +1,10 @@
 /// <reference types="node" />
 /// <reference types="react" />
 /// <reference types="react-unity-renderer" />
+/// <reference types="mocha" />
+/// <reference types="chai" />
+
+declare var expect: Chai.ExpectStatic;
 
 declare namespace NodeJS {
   interface ProcessEnv {

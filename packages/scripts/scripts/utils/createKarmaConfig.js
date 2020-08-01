@@ -5,18 +5,12 @@ const paths = require('../../config/paths')
 module.exports = (extraConfig) => {
   return {
     browsers: [],
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'chai'],
     files: [
-      { pattern: 'src/setupTests.js' },
-      { pattern: 'src/setupTests.ts' },
-      { pattern: 'src/**/*.spec.js' },
-      { pattern: 'src/**/*.spec.ts' },
+      { pattern: 'src/test.ts' },
     ],
     preprocessors: {
-      'src/setupTests.js': ['webpack'],
-      'src/**/*.spec.js': ['webpack'],
-      'src/setupTests.ts': ['webpack'],
-      'src/**/*.spec.ts': ['webpack'],
+      'src/test.ts': ['webpack'],
     },
     reporters: ['mocha'],
     webpack: extraConfig,
