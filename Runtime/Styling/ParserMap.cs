@@ -35,6 +35,14 @@ namespace ReactUnity.Styling
             { typeof(TextAlignmentOptions), new EnumParser<TextAlignmentOptions>() },
             { typeof(FontWeight), new EnumParser<FontWeight>() },
             { typeof(FontStyles), new EnumParser<FontStyles>() },
+            { typeof(YogaOverflow), new EnumParser<YogaOverflow>() },
+            { typeof(YogaPositionType), new EnumParser<YogaPositionType>() },
+            { typeof(YogaDirection), new EnumParser<YogaDirection>() },
+            { typeof(YogaFlexDirection), new EnumParser<YogaFlexDirection>() },
+            { typeof(YogaDisplay), new EnumParser<YogaDisplay>() },
+            { typeof(YogaJustify), new EnumParser<YogaJustify>() },
+            { typeof(YogaAlign), new EnumParser<YogaAlign>() },
+            { typeof(YogaWrap), new EnumParser<YogaWrap>() },
         };
 
 

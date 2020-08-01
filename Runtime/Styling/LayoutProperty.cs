@@ -2,6 +2,7 @@ using Facebook.Yoga;
 using ReactUnity.Styling.Parsers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -17,13 +18,15 @@ namespace ReactUnity.Styling
         public PropertyInfo propInfo;
         public IStyleParser parser;
 
+        public Action<YogaNode, object> setter;
+
         public LayoutProperty(string name, bool transitionable = false)
         {
             this.name = name;
             this.transitionable = transitionable;
 
             var ygType = typeof(YogaNode);
-            propInfo = ygType.GetProperty(name, BindingFlags.Public);
+            propInfo = ygType.GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
 
             type = propInfo.PropertyType;
             parser = ParserMap.GetParser(type);
@@ -90,12 +93,12 @@ namespace ReactUnity.Styling
         public static LayoutProperty BorderBottomWidth = new LayoutProperty("BorderBottomWidth", true);
         public static LayoutProperty BorderStartWidth = new LayoutProperty("BorderStartWidth", true);
         public static LayoutProperty BorderEndWidth = new LayoutProperty("BorderEndWidth", true);
-        public static LayoutProperty BorderHorizontalWidth = new LayoutProperty("BorderHorizontalWidth", true);
-        public static LayoutProperty BorderVerticalWidth = new LayoutProperty("BorderVerticalWidth", true);
 
         public static Dictionary<string, LayoutProperty> PropertyMap = new Dictionary<string, LayoutProperty>();
         public static Dictionary<string, LayoutProperty> CssPropertyMap = new Dictionary<string, LayoutProperty>()
         {
+            { "direction", StyleDirection },
+            { "flex-wrap", Wrap },
         };
         public static LayoutProperty[] AllProperties;
 

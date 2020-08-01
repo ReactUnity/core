@@ -1,4 +1,5 @@
 using ExCSS;
+using Facebook.Yoga;
 using ReactUnity.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,13 @@ namespace ReactUnity.StyleEngine
                 var dic = RuleHelpers.GetRuleDic(rule, false);
                 leaf.Rules.Add(dic);
 
+                var lay = RuleHelpers.GetLayoutDic(rule, false);
+                if (lay != null)
+                {
+                    if (leaf.Layouts == null) leaf.Layouts = new List<YogaNode>();
+                    leaf.Layouts.Add(lay);
+                }
+
                 added.Add(leaf);
                 LeafNodes.InsertIntoSortedList(leaf);
 
@@ -43,12 +51,19 @@ namespace ReactUnity.StyleEngine
 
 
                 var importantDic = RuleHelpers.GetRuleDic(rule, true);
-                if (importantDic.Count > 0)
+                var importantLay = RuleHelpers.GetLayoutDic(rule, true);
+                if (importantDic.Count > 0 || importantLay != null)
                 {
                     var importantLeaf = leaf.AddChildCascading("** !");
                     importantLeaf.Specifity = specificity + (1 << 30);
                     if (importantLeaf.Rules == null) importantLeaf.Rules = new List<Dictionary<string, object>>();
                     importantLeaf.Rules.Add(importantDic);
+
+                    if (importantLay != null)
+                    {
+                        if (importantLeaf.Layouts == null) importantLeaf.Layouts = new List<YogaNode>();
+                        importantLeaf.Layouts.Add(importantLay);
+                    }
 
                     added.Add(importantLeaf);
                     LeafNodes.InsertIntoSortedList(importantLeaf);

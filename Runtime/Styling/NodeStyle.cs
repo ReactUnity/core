@@ -11,6 +11,7 @@ namespace ReactUnity.Styling
     {
         Dictionary<string, object> StyleMap;
         public List<Dictionary<string, object>> CssStyles;
+        public List<YogaNode> CssLayouts;
         Dictionary<string, object> DefaultStyle;
         HashSet<string> Changes = new HashSet<string>();
         public bool HasInheritedChanges { get; private set; } = false;

@@ -155,8 +155,15 @@ namespace ReactUnity.Components
 
             var matchingRules = Context.RuleTree.GetMatchingRules(this, IsPseudoElement).ToList();
             Style.CssStyles = matchingRules.SelectMany(x => x.Rules).ToList();
+            Style.CssLayouts = matchingRules.Where(x => x.Layouts != null).SelectMany(x => x.Layouts).ToList();
 
             ApplyStyles();
+            foreach (var item in Style.CssLayouts)
+            {
+                Layout.CopyStyle(item);
+            }
+
+
             Style.MarkChangesSeen();
         }
 

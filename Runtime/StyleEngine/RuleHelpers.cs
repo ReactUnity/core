@@ -143,13 +143,14 @@ namespace ReactUnity.StyleEngine
 
         public static YogaNode GetLayoutDic(StyleRule rule, bool important)
         {
-            var dic = new YogaNode();
+            YogaNode dic = null;
 
             foreach (var item in rule.Style.Where(x => !(important ^ x.IsImportant)))
             {
                 var hasCssStyle = LayoutProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
                 if (hasCssStyle)
                 {
+                    if (dic == null) dic = new YogaNode();
                     prop.propInfo.SetValue(dic, prop.parser.FromString(item.Value));
                 }
             }

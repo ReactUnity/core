@@ -6,7 +6,7 @@ namespace ReactUnity.Styling.Parsers
     {
         public object FromString(string value)
         {
-            return Enum.Parse(typeof(T), value, true);
+            return Enum.Parse(typeof(T), value.Replace("-", ""), true);
         }
     }
 }
