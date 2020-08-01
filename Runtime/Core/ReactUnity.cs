@@ -21,7 +21,8 @@ namespace ReactUnity
         private UnityScheduler scheduler;
 
         public StringObjectDictionary NamedAssets = new StringObjectDictionary();
-        public ReactScript Script;
+        public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index.js" };
+        private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
 
         public List<TextAsset> PreloadScripts = new List<TextAsset>();
 
@@ -31,7 +32,6 @@ namespace ReactUnity
 
         void OnEnable()
         {
-            MainThreadDispatcher.Initialize();
             Restart();
         }
 
@@ -50,19 +50,52 @@ namespace ReactUnity
             scheduler?.clearAllTimeouts();
         }
 
+        private void LoadAndRun(ReactScript script, List<TextAsset> preload, Action callback = null, bool disableWarnings = false)
+        {
+            MainThreadDispatcher.Initialize();
+            int debounce = -1;
+            ScriptWatchDisposable = script.GetScript((code) =>
+            {
+                if (debounce >= 0) MainThreadDispatcher.StopDeferred(debounce);
+                debounce = MainThreadDispatcher.Timeout(() => RunScript(code, script, preload, callback), 0.5f);
+            }, out var result, true, disableWarnings);
+            RunScript(result, script, preload, callback);
+        }
+
         [ContextMenu("Restart")]
         public void Restart()
         {
-            int debounce = -1;
-            ScriptWatchDisposable = Script.GetScript((script) =>
-            {
-                if (debounce >= 0) MainThreadDispatcher.StopDeferred(debounce);
-                debounce = MainThreadDispatcher.Timeout(() => RunScript(script), 0.5f);
-            }, out var result);
-            RunScript(result);
+            LoadAndRun(Script, PreloadScripts, null, false);
         }
 
-        void RunScript(string script)
+        private void Test(bool debug = false)
+        {
+            var preload = new List<TextAsset>(PreloadScripts);
+            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/socket"));
+            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/karma"));
+            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/context"));
+            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/mocha"));
+            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/mocha-adapter"));
+            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/chai"));
+            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/chai-adapter"));
+            if (debug) preload.Add(Resources.Load<TextAsset>("ReactUnity/test/debug"));
+
+            LoadAndRun(TestScript, preload, null, true);
+        }
+
+        [ContextMenu("Test")]
+        public void Test()
+        {
+            Test(false);
+        }
+
+        [ContextMenu("TestDebug")]
+        public void TestDebug()
+        {
+            Test(true);
+        }
+
+        void RunScript(string script, ReactScript scriptObj, List<TextAsset> preload = null, Action callback = null)
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
@@ -70,15 +103,16 @@ namespace ReactUnity
 
             if (engine == null) CreateEngine();
             unityContext = new UnityUGUIContext(Root, engine, NamedAssets);
-            CreateLocation(engine);
+            CreateLocation(engine, scriptObj);
 
             engine.SetValue("Unity", typeof(ReactUnityAPI));
             engine.SetValue("RootContainer", unityContext.Host);
             engine.SetValue("NamedAssets", NamedAssets);
             try
             {
-                PreloadScripts.ForEach(x => engine.Execute(x.text));
+                if (preload != null) preload.ForEach(x => engine.Execute(x.text));
                 engine.Execute(script);
+                callback?.Invoke();
             }
             catch (ParserException ex)
             {
@@ -105,7 +139,7 @@ namespace ReactUnity
                 var lastNode = engine.GetLastSyntaxNode();
                 Debug.LogError($"CLR exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
                 Debug.LogError(ex);
-                return false;
+                return true;
             }));
             engine.ClrTypeConverter = new NullableTypeConverter(engine);
 
@@ -114,7 +148,7 @@ namespace ReactUnity
                 .Execute("jlog = (x, replacer, space) => { log(JSON.stringify(x, replacer, space)); return x; };")
                 .Execute("__dirname = '';")
                 .Execute("WeakMap = Map;")
-                .Execute("global = window = this; module = { exports: {} };")
+                .Execute("global = window = parent = this;")
                 .Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;")
                 .Execute("btoa = atob = null;")
                 .Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
@@ -172,10 +206,10 @@ console.{item.Key} = (x, ...args) => old(x, args);
             engine.SetValue("UnityScheduler", scheduler);
             engine.SetValue("setTimeout", new Func<JsValue, int, int>(scheduler.setTimeout));
             engine.SetValue("setInterval", new Func<JsValue, int, int>(scheduler.setInterval));
-            engine.SetValue("clearTimeout", new Action<int>(scheduler.clearTimeout));
-            engine.SetValue("clearInterval", new Action<int>(scheduler.clearInterval));
+            engine.SetValue("clearTimeout", new Action<int?>(scheduler.clearTimeout));
+            engine.SetValue("clearInterval", new Action<int?>(scheduler.clearInterval));
             engine.SetValue("requestAnimationFrame", new Func<JsValue, int>(scheduler.requestAnimationFrame));
-            engine.SetValue("cancelAnimationFrame", new Action<int>(scheduler.cancelAnimationFrame));
+            engine.SetValue("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
         }
 
         void CreateLocalStorage(Engine engine)
@@ -192,12 +226,12 @@ console.{item.Key} = (x, ...args) => old(x, args);
                 false, true, false);
         }
 
-        void CreateLocation(Engine engine)
+        void CreateLocation(Engine engine, ReactScript script)
         {
             var location = new ObjectInstance(engine);
             engine.SetValue("location", location);
 
-            var href = Script.SourceLocation;
+            var href = script.SourceLocation;
             var hrefSplit = href.Split(new string[] { "//" }, 2, StringSplitOptions.None);
 
             var protocol = hrefSplit.Length > 1 ? hrefSplit.First() : null;
@@ -208,7 +242,7 @@ console.{item.Key} = (x, ...args) => old(x, args);
             var host = hrefWithoutProtocolSplit.FirstOrDefault();
             var hostSplit = host.Split(new string[] { ":" }, 2, StringSplitOptions.None);
             var hostName = hostSplit.First();
-            var port = hostSplit.ElementAtOrDefault(1);
+            var port = hostSplit.ElementAtOrDefault(1) ?? "";
 
             var origin = protocol + "//" + host;
             var pathName = string.Join("", hrefWithoutProtocolSplit.Skip(1));
@@ -220,6 +254,7 @@ console.{item.Key} = (x, ...args) => old(x, args);
             location.FastAddProperty("origin", origin, false, true, false);
             location.FastAddProperty("host", host, false, true, false);
             location.FastAddProperty("port", port, false, true, false);
+            location.FastAddProperty("search", "", false, true, false);
             location.FastAddProperty("pathname", pathName, false, true, false);
 
 #if UNITY_EDITOR

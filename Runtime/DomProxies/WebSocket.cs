@@ -6,6 +6,13 @@ namespace ReactUnity.DomProxies
 {
     public class WebSocketProxy : WebSocketSharp.WebSocket
     {
+        public static int CONNECTING = 0;
+        public static int OPEN = 1;
+        public static int CLOSING = 2;
+        public static int CLOSED = 3;
+
+        public string binaryType = "blob";
+
         public Action<WebSocketSharp.MessageEventArgs> onmessage
         {
             set { OnMessage += (sender, e) => value?.Invoke(e); }

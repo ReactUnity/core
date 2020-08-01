@@ -54,6 +54,11 @@ namespace ReactUnity.DomProxies
             if (query == "head") return head;
             return null;
         }
+
+        public object getElementById(string query)
+        {
+            return null;
+        }
     }
 
     public interface IDomElementProxy
@@ -75,6 +80,8 @@ namespace ReactUnity.DomProxies
         public string charset = null;
         public string crossOrigin = null;
 
+        public Action<ScriptProxy> onload = null;
+
         public DocumentProxy document;
         public DocumentProxy.HeadProxy parentNode;
 
@@ -92,7 +99,11 @@ namespace ReactUnity.DomProxies
 
             src.GetScript((sc) =>
             {
-                MainThreadDispatcher.OnUpdate(() => document.execute(sc));
+                MainThreadDispatcher.OnUpdate(() =>
+                {
+                    document.execute(sc);
+                    onload?.Invoke(this);
+                });
             }, out var result, false, true);
         }
 

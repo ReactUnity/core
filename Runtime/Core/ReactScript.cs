@@ -46,7 +46,7 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         {
             string path = "";
 
-            if (ScriptSource == ScriptSource.File)
+            if (ScriptSource == ScriptSource.File || ScriptSource == ScriptSource.Url)
                 path = SourcePath;
 #if UNITY_EDITOR
             else if (ScriptSource == ScriptSource.TextAsset)

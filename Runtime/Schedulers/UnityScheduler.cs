@@ -21,14 +21,14 @@ namespace ReactUnity.Schedulers
             return MainThreadDispatcher.Interval(() => callback.Invoke(), timeout / 1000f);
         }
 
-        public void clearTimeout(int handle)
+        public void clearTimeout(int? handle)
         {
-            MainThreadDispatcher.StopDeferred(handle);
+            if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
         }
 
-        public void clearInterval(int handle)
+        public void clearInterval(int? handle)
         {
-            MainThreadDispatcher.StopDeferred(handle);
+            if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
         }
 
 
@@ -37,9 +37,9 @@ namespace ReactUnity.Schedulers
             return MainThreadDispatcher.AnimationFrame(() => callback.Invoke());
         }
 
-        public void cancelAnimationFrame(int handle)
+        public void cancelAnimationFrame(int? handle)
         {
-            MainThreadDispatcher.StopDeferred(handle);
+            if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
         }
 
         public void clearAllTimeouts()

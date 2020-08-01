@@ -14,7 +14,7 @@ namespace ReactUnity.DomProxies
 
         public Action onreadystatechange { get; set; }
         public bool withCredentials { get; set; }
-        public int timeout { get; set; }
+        public int? timeout { get; set; }
         public int status { get; private set; }
 
         public static string[] dispatches = new string[]
@@ -69,7 +69,7 @@ namespace ReactUnity.DomProxies
         {
             openParameters = new Hashtable();
             openParameters["method"] = method;
-            openParameters["url"] = url;
+            openParameters["url"] = url.Replace(origin, "");
             openParameters["async"] = async;
 
         }
