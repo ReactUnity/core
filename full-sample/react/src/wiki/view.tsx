@@ -1,6 +1,7 @@
 import * as React from 'react';
+import style from './index.module.scss';
 
 export const App = () =>
-  <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>
+  <view className={style.app}>
     Hello world!
   </view>;

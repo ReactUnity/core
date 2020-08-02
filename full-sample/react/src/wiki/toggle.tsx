@@ -1,7 +1,8 @@
 import * as React from 'react';
+import style from './index.module.scss';
 
 export function App() {
-  return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center', FlexDirection: 'Row' }}>
+  return <view className={style.app} layout={{ FlexDirection: 'Row' }}>
     <toggle /> Toggle me!
   </view>;
 }

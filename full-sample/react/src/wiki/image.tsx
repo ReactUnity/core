@@ -1,7 +1,8 @@
 import * as React from 'react';
+import style from './index.module.scss';
 
 export function App() {
-  return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>
+  return <view className={style.app}>
     <image source={NamedAssets.delete} />
   </view>;
 }

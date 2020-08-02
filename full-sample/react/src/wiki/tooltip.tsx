@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Tooltip } from 'react-unity-renderer';
+import style from './index.module.scss';
 
 export function App() {
   const tooltipContent =
@@ -7,7 +8,7 @@ export function App() {
       Cool tooltip
     </view>;
 
-  return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>
+  return <view className={style.app}>
     <Tooltip tooltipContent={tooltipContent} position='bottom' offset={20}>
       Hover to see cool tooltip.
     </Tooltip>

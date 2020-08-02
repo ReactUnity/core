@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Dropdown, DropdownItem } from 'react-unity-renderer';
+import style from './index.module.scss';
 
 export function App() {
   const triggerTemplate = <view style={{ fontColor: 'green' }}>Option 1</view>;
 
-  return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>
-
+  return <view className={style.app}>
     <Dropdown onChange={val => console.log(val)} layout={{ Width: 250 }}>
       Select an option
 

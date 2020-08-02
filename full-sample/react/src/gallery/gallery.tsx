@@ -10,6 +10,7 @@ export interface Sample {
   render: typeof React.Component | (() => React.ReactElement);
   source?: string;
   sourceCode?: string;
+  styleCode?: string;
   wiki?: string;
   children?: Sample[];
 }
