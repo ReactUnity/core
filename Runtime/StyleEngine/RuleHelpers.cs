@@ -131,7 +131,7 @@ namespace ReactUnity.StyleEngine
                     if (specialName == SpecialNames.Initial)
                         value = prop.defaultValue;
                     else
-                        value = prop.parser.FromString(item.Value);
+                        value = prop.parser != null ? prop.parser.FromString(item.Value) : SpecialNames.CantParse;
 
                     if (!Equals(value, SpecialNames.CantParse))
                         dic[prop.name] = value;

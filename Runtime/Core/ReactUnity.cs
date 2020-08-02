@@ -105,6 +105,13 @@ namespace ReactUnity
             unityContext = new UnityUGUIContext(Root, engine, NamedAssets);
             CreateLocation(engine, scriptObj);
 
+            List<Action> callbacks = new List<Action>() { callback };
+
+            engine.SetValue("addEventListener", JsValue.FromObject(engine, new Action<string, Action>((e, f) =>
+            {
+                if (e == "DOMContentLoaded") callbacks.Add(f);
+            })));
+
             engine.SetValue("Unity", typeof(ReactUnityAPI));
             engine.SetValue("RootContainer", unityContext.Host);
             engine.SetValue("NamedAssets", NamedAssets);
@@ -112,7 +119,7 @@ namespace ReactUnity
             {
                 if (preload != null) preload.ForEach(x => engine.Execute(x.text));
                 engine.Execute(script);
-                callback?.Invoke();
+                callbacks.ForEach(x => x?.Invoke());
             }
             catch (ParserException ex)
             {
@@ -145,10 +152,9 @@ namespace ReactUnity
 
             engine
                 .SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }))
-                .Execute("jlog = (x, replacer, space) => { log(JSON.stringify(x, replacer, space)); return x; };")
                 .Execute("__dirname = '';")
                 .Execute("WeakMap = Map;")
-                .Execute("global = window = parent = this;")
+                .Execute("globalThis = global = window = parent = this;")
                 .Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;")
                 .Execute("btoa = atob = null;")
                 .Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
@@ -164,40 +170,22 @@ namespace ReactUnity
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
         }
 
-        ObjectInstance CreateConsole(Engine engine)
+        void CreateConsole(Engine engine)
         {
-            var console = new ObjectInstance(engine);
+            var console = new ConsoleProxy(engine);
 
-            var methods = new Dictionary<string, Action<object>>
-        {
-            { "debug", Debug.Log },
-            { "log", Debug.Log },
-            { "info", Debug.Log },
-            { "warn", Debug.LogWarning },
-            { "error", x => {
-
-                var lastNode = engine.GetLastSyntaxNode();
-                Debug.LogError($"Runtime exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
-                Debug.LogError(x);
-            } },
-        };
             engine.SetValue("console", console);
+            var methods = new List<string> { "log", "info", "error", "warn", "debug" };
 
-            foreach (var item in methods)
-            {
-                console.FastAddProperty(item.Key, JsValue.FromObject(engine,
-                    new Func<object, object[], object>((x, args) => { item.Value(x + "\n" + string.Join(",", args)); return x; })), true, true, false);
-
-                engine.Execute($@"(function() {{
-var old = console.{item.Key};
-console.{item.Key} = (x, ...args) => old(x, args);
-        }})()");
-            }
-
-            console.FastAddProperty("assert", JsValue.FromObject(engine, new Action<bool>((x) => { Debug.Assert(x); })), false, true, false);
-            console.FastAddProperty("clear", JsValue.FromObject(engine, new Action(() => { Debug.ClearDeveloperConsole(); })), false, true, false);
-
-            return console;
+            engine.Execute($@"(function() {{
+var old = console;
+console = {{}};
+console.clear = () => old.clear();
+console.assert = () => old.clear();
+console.dir = (obj) => console.log(JSON.stringify(obj));
+{
+                string.Join("\n", methods.Select(item => $"console.{item} = (x, ...args) => old.{item}(x, args)"))
+}}})()");
         }
 
         void CreateScheduler(Engine engine)
