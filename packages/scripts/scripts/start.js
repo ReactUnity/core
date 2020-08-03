@@ -8,6 +8,10 @@
 // @remove-on-eject-end
 'use strict';
 
+const argv = process.argv.slice(2);
+const isTest = argv.indexOf('--test') !== -1;
+const defaultConf = isTest ? 'test' : 'development';
+
 // Do this as the first thing so that any code reading it knows the right env.
 process.env.BABEL_ENV = process.env.BABEL_ENV || process.env.NODE_ENV || 'development';
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -78,7 +82,7 @@ choosePort(HOST, DEFAULT_PORT)
       return;
     }
 
-    const config = configFactory('development');
+    const config = configFactory(defaultConf);
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
     const useTypeScript = fs.existsSync(paths.appTsConfig);

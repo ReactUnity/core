@@ -61,6 +61,7 @@ module.exports = function (webpackEnv) {
   const isEnvTest = webpackEnv === 'test';
   const isEnvDevelopment = isEnvTest || webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+  const entryFile = isEnvTest ? paths.appTestJs : paths.appIndexJs;
 
   // Variable used for enabling profiling in Production
   // passed into alias object. Uses a flag if passed into the build command
@@ -137,12 +138,12 @@ module.exports = function (webpackEnv) {
           // the webpack plugin takes care of injecting the dev client for us.
           webpackDevClientEntry,
           // Finally, this is your app's code:
-          paths.appIndexJs,
+          entryFile,
           // We include the app code last so that if there is a runtime error during
           // initialization, it doesn't blow up the WebpackDevServer client, and
           // changing JS code would still trigger a refresh.
         ]
-        : paths.appIndexJs,
+        : entryFile,
     output: {
       // The build folder.
       path: isEnvProduction ? paths.appBuild : undefined,
@@ -288,6 +289,7 @@ module.exports = function (webpackEnv) {
     },
     module: {
       strictExportPresence: true,
+      exprContextCritical: false,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
