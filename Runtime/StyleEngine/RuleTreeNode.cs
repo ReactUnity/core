@@ -6,21 +6,19 @@ using System.Linq;
 
 namespace ReactUnity.StyleEngine
 {
-    public class RuleTreeNode : IComparable<RuleTreeNode>
+    public class RuleTreeNode<T> : IComparable<RuleTreeNode<T>>
     {
-        public RuleTreeNode Parent;
+        public RuleTreeNode<T> Parent;
         public string Selector;
         public List<RuleSelectorPart> ParsedSelector;
-        public LinkedList<RuleTreeNode> Children;
+        public LinkedList<RuleTreeNode<T>> Children;
 
         public RuleRelationType RelationType = RuleRelationType.Parent;
-        public List<Dictionary<string, object>> Rules;
-        public List<LayoutValue> Layouts;
-
+        public T Data;
 
         public int Specifity { get; set; }
 
-        public RuleTreeNode AddChildCascading(string selector)
+        public RuleTreeNode<T> AddChildCascading(string selector)
         {
             var directParent = selector[0] == '>';
             var directSibling = selector[0] == '+';
@@ -55,18 +53,18 @@ namespace ReactUnity.StyleEngine
             }
             else
             {
-                if (Children == null) Children = new LinkedList<RuleTreeNode>();
+                if (Children == null) Children = new LinkedList<RuleTreeNode<T>>();
 
-                var child = new RuleTreeNode();
+                var child = new RuleTreeNode<T>();
                 Children.AddLast(child);
                 child.Parent = this;
                 return child.AddChildCascading(selectorOther);
             }
         }
 
-        public bool Matches(UnityComponent component)
+        public bool Matches(UnityComponent component, UnityComponent scope)
         {
-            if (!ThisMatches(component)) return false;
+            if (!ThisMatches(component, scope)) return false;
 
             // We are at root, all rules matched
             if (Parent == null) return true;
@@ -85,7 +83,7 @@ namespace ReactUnity.StyleEngine
                     relative = relative.Parent.Children[ind - 1];
                 }
 
-                if (Parent.Matches(relative)) return true;
+                if (Parent.Matches(relative, scope)) return true;
                 if (runOnce) return false;
             }
 
@@ -93,7 +91,7 @@ namespace ReactUnity.StyleEngine
         }
 
 
-        private bool ThisMatches(UnityComponent component)
+        private bool ThisMatches(UnityComponent component, UnityComponent scope)
         {
             // We are at root, all rules matched
             if (ParsedSelector == null) return true;
@@ -102,10 +100,10 @@ namespace ReactUnity.StyleEngine
             // This means the matching is incomplete
             if (component == null) return false;
 
-            return ParsedSelector.All(x => x.Negated ^ x.Matches(component));
+            return ParsedSelector.All(x => x.Negated ^ x.Matches(component, scope));
         }
 
-        public int CompareTo(RuleTreeNode other)
+        public int CompareTo(RuleTreeNode<T> other)
         {
             return other.Specifity.CompareTo(Specifity);
         }
@@ -142,6 +140,7 @@ namespace ReactUnity.StyleEngine
         OnlyChild = 25,
         Empty = 26,
         Root = 27,
+        Scope = 28,
 
         Hover = 100,
         Focus = 101,
@@ -155,14 +154,21 @@ namespace ReactUnity.StyleEngine
         State = 2000,
     }
 
-    public class RuleSelectorPart
+    public class RuleSelectorPart: IComparable<RuleSelectorPart>
     {
         public bool Negated = false;
         public RuleSelectorPartType Type = RuleSelectorPartType.None;
         public string Name = null;
         public object Parameter = null;
 
-        public bool Matches(UnityComponent component)
+        public int CompareTo(RuleSelectorPart other)
+        {
+            if (Negated && !other.Negated) return 1;
+            if (!Negated && other.Negated) return -1;
+            return Type.CompareTo(other.Type);
+        }
+
+        public bool Matches(UnityComponent component, UnityComponent scope = null)
         {
             switch (Type)
             {
@@ -200,6 +206,8 @@ namespace ReactUnity.StyleEngine
                     return component.Parent.Children.Count == 1;
                 case RuleSelectorPartType.Root:
                     return component is HostComponent;
+                case RuleSelectorPartType.Scope:
+                    return scope != null && component == scope;
                 case RuleSelectorPartType.Before:
                 case RuleSelectorPartType.After:
                     return false;

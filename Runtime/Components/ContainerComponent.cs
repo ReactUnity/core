@@ -4,6 +4,7 @@ using System.Linq;
 using ReactUnity.Interop;
 using UnityEngine;
 using UnityEngine.UI;
+using ReactUnity.Visitors;
 
 namespace ReactUnity.Components
 {
@@ -44,6 +45,16 @@ namespace ReactUnity.Components
             foreach (var child in Children)
             {
                 child.ApplyLayoutStyles();
+            }
+        }
+
+        public override void Accept(UnityComponentVisitor visitor)
+        {
+            base.Accept(visitor);
+
+            foreach (var child in Children)
+            {
+                child.Accept(visitor);
             }
         }
     }

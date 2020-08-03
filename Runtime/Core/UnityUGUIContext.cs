@@ -21,15 +21,16 @@ namespace ReactUnity
         private bool Scheduled = false;
         private List<System.Action> ScheduledCallbacks = new List<System.Action>();
 
-        public RuleTree RuleTree;
+        public StylesheetParser Parser;
+        public StyleTree StyleTree;
 
         public UnityUGUIContext(RectTransform hostElement, Engine engine, StringObjectDictionary assets)
         {
             Engine = engine;
             NamedAssets = assets;
 
-            var parser = new StylesheetParser(includeUnknownDeclarations: true);
-            RuleTree = new RuleTree(parser);
+            Parser = new StylesheetParser(includeUnknownDeclarations: true);
+            StyleTree = new StyleTree(Parser);
 
             Host = new HostComponent(hostElement, this);
             Host.Tag = "_root";
@@ -58,11 +59,11 @@ namespace ReactUnity
 
         public void InsertStyle(string style)
         {
-            var stylesheet = RuleTree.Parser.Parse(style);
+            var stylesheet = StyleTree.Parser.Parse(style);
 
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
             {
-                RuleTree.AddRule(rule);
+                StyleTree.AddStyle(rule);
             }
             Host.ResolveStyle(true);
         }

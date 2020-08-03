@@ -46,7 +46,8 @@ namespace ReactUnity.StyleEngine
                         else if (nm == "before") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Before, Negated = negated });
                         else if (nm == "after") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.After, Negated = negated });
                         else if (nm == "empty") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Empty, Negated = negated });
-                        else if (nm == "root" || nm == "scope") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Root, Negated = negated });
+                        else if (nm == "root") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Root, Negated = negated });
+                        else if (nm == "scope") list.Add(new RuleSelectorPart() { Type = RuleSelectorPartType.Scope, Negated = negated });
                         else if (nm == "nth-child") list.Add(new RuleSelectorPart()
                         {
                             Type = RuleSelectorPartType.NthChild,
@@ -109,6 +110,7 @@ namespace ReactUnity.StyleEngine
             }
             end(RuleSelectorPartType.None);
 
+            list.Sort();
             return list;
         }
 

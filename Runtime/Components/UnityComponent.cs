@@ -5,9 +5,11 @@ using ReactUnity.EventHandlers;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.StateHandlers;
+using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Types;
 using ReactUnity.Types;
+using ReactUnity.Visitors;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -47,6 +49,8 @@ namespace ReactUnity.Components
         public string Tag { get; set; } = "";
         public string ClassName { get; set; } = "";
         public HashSet<string> ClassList { get; private set; }
+
+        public string TextContent => new TextContentVisitor().Get(this);
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
@@ -155,12 +159,12 @@ namespace ReactUnity.Components
 
         public virtual void ResolveStyle(bool recursive = false)
         {
-            var matchingRules = Context.RuleTree.GetMatchingRules(this, IsPseudoElement).ToList();
-            Style.CssStyles = matchingRules.SelectMany(x => x.Rules).ToList();
+            var matchingRules = Context.StyleTree.GetMatchingRules(this, IsPseudoElement).ToList();
+            Style.CssStyles = matchingRules.SelectMany(x => x.Data?.Rules).ToList();
 
             if (Style.CssLayouts != null)
                 foreach (var item in Style.CssLayouts) item.SetDefault(Layout);
-            Style.CssLayouts = matchingRules.Where(x => x.Layouts != null).SelectMany(x => x.Layouts).ToList();
+            Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).ToList();
             foreach (var item in Style.CssLayouts) item.Set(Layout);
 
             ApplyStyles();
@@ -325,6 +329,25 @@ namespace ReactUnity.Components
 
             canvas.overrideSorting = true;
             canvas.sortingOrder = z;
+        }
+
+        public UnityComponent QuerySelector(string query)
+        {
+            var tree = new RuleTree<string>(Context.Parser);
+            tree.AddSelector(query);
+            return tree.GetMatchingChild(this);
+        }
+
+        public List<UnityComponent> QuerySelectorAll(string query)
+        {
+            var tree = new RuleTree<string>(Context.Parser);
+            tree.AddSelector(query);
+            return tree.GetMatchingChildren(this);
+        }
+
+        public virtual void Accept(UnityComponentVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }
