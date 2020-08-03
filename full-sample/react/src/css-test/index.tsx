@@ -48,4 +48,4 @@ export function App() {
   </scroll>;
 }
 
-ReactUnity.render(<App />, RootContainer, null);
+ReactUnity.render(<App />);

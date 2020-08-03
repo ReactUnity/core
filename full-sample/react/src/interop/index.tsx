@@ -19,4 +19,4 @@ class App extends React.Component<{}, {}> {
     );
   }
 }
-ReactUnity.render(<App />, RootContainer, null);
+ReactUnity.render(<App />);

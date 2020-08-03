@@ -1,9 +1,12 @@
-import { App } from 'src/wiki/view';
+// import { App } from 'src/wiki/view';
+import { testRender } from 'react-unity-renderer';
+import * as React from 'react';
 
 describe('Sample Test', () => {
   it('should pass', async () => {
-    const res = await (new Promise(resolve => setTimeout(() => resolve(5), 400)));
-    expect(res).to.equal(5);
-    expect(App).to.be.a('function');
+    const cmp = await testRender(<view><view className='hello'>MyTestContent</view> OtherTestContent</view>);
+    expect(cmp.QuerySelector(':scope > view > .hello').TextContent).to.equal('MyTestContent');
+    expect(cmp.QuerySelector('view').TextContent).to.equal('MyTestContent OtherTestContent');
+    expect(cmp.QuerySelector(':scope > view').TextContent).to.equal('MyTestContent OtherTestContent');
   });
 });
