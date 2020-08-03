@@ -9,7 +9,7 @@
   "scripts": {
     "start": "react-unity-scripts start",
     "build": "react-unity-scripts build",
-    "test": "react-unity-scripts test"
+    "test": "react-unity-scripts start --test"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -18,7 +18,7 @@
     "react-unity-renderer": "^0.0.10"
   },
   "devDependencies": {
-    "react-unity-scripts": "^0.0.12",
+    "react-unity-scripts": "0.0.13",
     "typescript": "^3.9.7"
   }
 }

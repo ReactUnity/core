@@ -7,7 +7,7 @@ const shadow = new ShadowDefinitionNative([0, 8], [10, 10], [0, 0, 0, 1], 10);
 
 export interface Sample {
   name: string;
-  render: typeof React.Component | (() => React.ReactElement);
+  render: typeof React.Component | React.FC<any> | (() => React.ReactElement);
   source?: string;
   sourceCode?: string;
   styleCode?: string;
