@@ -5,6 +5,7 @@ export * from './src/components/dropdown';
 export * from './src/components/radio/radio';
 export * from './src/components/tooltip/tooltip';
 export * from './src/asset-reference';
+export * from './src/tester/tester';
 export * from './models/components';
 export * from './models/native';
 export * from './models/values';

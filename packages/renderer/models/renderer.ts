@@ -11,6 +11,10 @@ export type NativeCommonProps = {
   ResolveStyle: () => void;
   ScheduleLayout: () => void;
   ApplyLayoutStyles: () => void;
+
+  QuerySelector: (query: string) => NativeInstance;
+  QuerySelectorAll: (query: string) => NativeInstance[];
+  TextContent: string;
 };
 
 export type NativeTextInstance = Unique<NativeCommonProps, 'text'>;

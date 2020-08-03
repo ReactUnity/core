@@ -204,7 +204,13 @@ const ReactUnityReconciler = ReactReconciler(hostConfig);
 
 let hostRoot: ReactReconciler.FiberRoot;
 export const ReactUnity = {
-  render(element: React.ReactNode, hostContainer: NativeContainerInstance, callback: () => void) {
+  render(
+    element: React.ReactNode,
+    hostContainer?: NativeContainerInstance,
+    callback?: () => void,
+  ) {
+    if (!hostContainer) hostContainer = RootContainer;
+
     if (!hostRoot) {
       hostRoot = ReactUnityReconciler.createContainer(hostContainer, false, false);
     }
