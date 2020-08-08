@@ -1,11 +1,11 @@
 {
   "dependencies": {
-    "com.kurtgokhan.react-unity": {
-      "version": "0.0.11",
+    "com.reactunity.core": {
+      "version": "0.0.13",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.textmeshpro": "2.0.1"
+        "com.unity.textmeshpro": "3.0.1"
       },
       "url": "https://package.openupm.com"
     },

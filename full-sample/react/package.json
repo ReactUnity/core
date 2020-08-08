@@ -1,5 +1,5 @@
 {
-  "name": "react-unity-full-sample",
+  "name": "reactunity-sample",
   "version": "0.0.1",
   "description": "",
   "main": "src/index.ts",
@@ -15,10 +15,10 @@
     "classnames": "^2.2.6",
     "monaco-editor-core": "^0.20.0",
     "react": "^16.13.1",
-    "react-unity-renderer": "^0.0.10"
+    "@reactunity/renderer": "^0.0.13"
   },
   "devDependencies": {
-    "react-unity-scripts": "0.0.13",
+    "@reactunity/scripts": "^0.0.15",
     "typescript": "^3.9.7"
   }
 }

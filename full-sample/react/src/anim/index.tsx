@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, YogaAlign, TextOverflowModes } from 'react-unity-renderer';
+import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, YogaAlign, TextOverflowModes } from '@reactunity/renderer';
 
 export class App extends React.Component<{}, { val: number }> {
   clearAnimation: () => void;

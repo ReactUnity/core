@@ -1,7 +1,7 @@
 import { Utils } from "./utils";
 import * as React from 'react';
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from "./constants";
-import { FlexDirection, YogaJustify, YogaAlign } from "react-unity-renderer";
+import { FlexDirection, YogaJustify, YogaAlign } from "@reactunity/renderer";
 import { ITodoFooterProps } from "./interfaces";
 
 class TodoFooter extends React.Component<ITodoFooterProps, {}> {

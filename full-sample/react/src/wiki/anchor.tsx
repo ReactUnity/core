@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { CursorType } from 'react-unity-renderer';
 import style from './index.module.scss';
+import { CursorType } from '@reactunity/renderer';
 
 export function App() {
   return <view className={style.app}>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnity, ContentType } from 'react-unity-renderer';
+import { ReactUnity, ContentType } from '@reactunity/renderer';
 
 class App extends React.Component<{}, {}> {
   onInputChange = (val: string) => {

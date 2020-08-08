@@ -1,1 +1,1 @@
-/// <reference types="react-unity-scripts" />
+/// <reference types="@reactunity/scripts" />

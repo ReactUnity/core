@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NativeInputInstance, FlexDirection, YogaAlign, Display, PositionType, InteractionType } from "react-unity-renderer";
+import { NativeInputInstance, FlexDirection, YogaAlign, Display, PositionType, InteractionType } from "@reactunity/renderer";
 
 import { ITodoItemProps, ITodoItemState } from './interfaces';
 

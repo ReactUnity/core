@@ -3,7 +3,7 @@ import { TodoFooter } from "./footer";
 import { TodoItem } from "./todoItem";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from "./constants";
 import * as React from "react";
-import { NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, PositionType } from "react-unity-renderer";
+import { NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, PositionType } from "@reactunity/renderer";
 import { IAppProps, IAppState, ITodo } from "./interfaces";
 
 export class TodoApp extends React.Component<IAppProps, IAppState> {

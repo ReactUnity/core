@@ -18,7 +18,7 @@
     },
     {
       "label": "Link",
-      "command": "npm link ../../packages/react-unity-${input:modulePick} --force",
+      "command": "npm link ../${input:modulePick} --force",
       "type": "shell",
     }
   ],

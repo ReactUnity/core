@@ -41,7 +41,7 @@ const wikiPages: Sample[] = [
 
 sampleGallery([
   { name: 'Components', render: () => SampleGallery(wikiPages), children: wikiPages },
-  { name: 'Animation', render: Anim, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/anim/index.tsx' },
-  { name: 'Text Columns', render: TextColumns, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/text-columns/index.tsx' },
-  { name: 'Todo App', render: TodoApp, source: 'https://github.com/KurtGokhan/react-unity-full-sample/blob/master/react/src/todo-mvc/index.tsx' },
+  { name: 'Animation', render: Anim, source: 'https://github.com/ReactUnity/full-sample/blob/master/react/src/anim/index.tsx' },
+  { name: 'Text Columns', render: TextColumns, source: 'https://github.com/ReactUnity/full-sample/blob/master/react/src/text-columns/index.tsx' },
+  { name: 'Todo App', render: TodoApp, source: 'https://github.com/ReactUnity/full-sample/blob/master/react/src/todo-mvc/index.tsx' },
 ]);

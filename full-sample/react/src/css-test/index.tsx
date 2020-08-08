@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnity } from 'react-unity-renderer';
+import { ReactUnity } from '@reactunity/renderer';
 import ind from './index.module.scss';
 import png from './images/delete.png';
 import png2 from './images/bg.png';
