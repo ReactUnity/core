@@ -1,6 +1,6 @@
 {
   "name": "react-unity-renderer",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "React renderer for Unity3D",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
