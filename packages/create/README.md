@@ -1,10 +1,16 @@
 # Create React Unity App
 
-Creates the Typescript project for React Unity.
+Creates the Typescript project for React Unity. See [core library](https://github.com/ReactUnity/core) for details.
 
 ## Usage
 
-`npm init react-unity`
+If you want to add ReactUnity to an existing Unity project:
+
+`npm init @reactunity`
+
+If you want to create full Unity app from scratch:
+
+`npm init @reactunity -u`
 
 #### Options:
 
