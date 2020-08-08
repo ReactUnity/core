@@ -1,5 +1,5 @@
 {
-  "name": "react-unity-renderer",
+  "name": "@reactunity/renderer",
   "version": "0.0.12",
   "description": "React renderer for Unity3D",
   "typings": "dist/index.d.ts",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KurtGokhan/react-unity-renderer"
+    "url": "https://github.com/ReactUnity/renderer"
   },
   "keywords": [
     "react",
