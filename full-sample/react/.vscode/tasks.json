@@ -13,7 +13,7 @@
     },
     {
       "label": "Link",
-      "command": "npm link ../../packages/reactunity/${input:modulePick} --force",
+      "command": "npm link ../${input:modulePick} --force",
       "type": "shell",
     }
   ],
