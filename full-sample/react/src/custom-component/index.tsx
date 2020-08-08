@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnity, Button, NativeInstance } from 'react-unity-renderer';
+import { ReactUnity, Button, NativeInstance } from '@reactunity/renderer';
 
 
 // Add strong typing for customButton component

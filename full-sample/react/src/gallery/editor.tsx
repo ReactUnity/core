@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PositionType, LineType, InteractionType } from 'react-unity-renderer';
+import { PositionType, LineType, InteractionType } from '@reactunity/renderer';
 import { colorizeRichtext, tokenize, fixLineWrapOpportunity } from './monaco/tokenizer';
 
 

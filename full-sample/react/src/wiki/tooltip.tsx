@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tooltip } from 'react-unity-renderer';
+import { Tooltip } from '@reactunity/renderer';
 
 export function App() {
   const tooltipContent =

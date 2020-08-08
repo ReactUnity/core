@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { ReactUnity, FlexDirection, Wrap, YogaJustify, FontStyles, PositionType } from 'react-unity-renderer';
+import { ReactUnity, FlexDirection, Wrap, YogaJustify, FontStyles, PositionType } from '@reactunity/renderer';
 import { TextEditor } from './editor';
 
 const shadow = new ShadowDefinitionNative([0, 8], [10, 10], [0, 0, 0, 1], 10);

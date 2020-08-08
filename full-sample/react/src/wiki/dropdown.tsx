@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dropdown, DropdownItem } from 'react-unity-renderer';
+import { Dropdown, DropdownItem } from '@reactunity/renderer';
 
 export function App() {
   const triggerTemplate = <view style={{ fontColor: 'green' }}>Option 1</view>;

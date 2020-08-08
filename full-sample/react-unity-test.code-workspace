@@ -7,13 +7,13 @@
       "path": "./react"
     },
     {
-      "path": "../packages/react-unity"
+      "path": "../packages/reactunity/core"
     },
     {
-      "path": "../packages/react-unity-renderer"
+      "path": "../packages/reactunity/renderer"
     },
     {
-      "path": "../packages/react-unity-scripts"
+      "path": "../packages/reactunity/scripts"
     }
   ]
 }

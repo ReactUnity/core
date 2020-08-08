@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ContentType } from 'react-unity-renderer';
+import { ContentType } from '@reactunity/renderer';
 
 export class App extends React.Component<{}, {}> {
 
