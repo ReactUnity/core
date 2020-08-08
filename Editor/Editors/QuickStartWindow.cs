@@ -119,7 +119,7 @@ namespace ReactUnity.Editor
 
         void CreateProject()
         {
-            creatingProcess = RunCommand("npm", "init react-unity");
+            creatingProcess = RunCommand("npm", "init @reactunity");
 
         }
 
