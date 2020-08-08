@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnity, FlexDirection, Wrap, YogaAlign } from 'react-unity-renderer';
+import { ReactUnity, FlexDirection, Wrap, YogaAlign } from '@reactunity/renderer';
 
 class App extends React.Component<{}, {}> {
 

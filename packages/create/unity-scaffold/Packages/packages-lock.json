@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.kurtgokhan.react-unity": {
-      "version": "0.0.10",
+    "com.reactunity.core": {
+      "version": "0.0.12",
       "depth": 0,
       "source": "registry",
       "dependencies": {

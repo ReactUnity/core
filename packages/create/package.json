@@ -1,13 +1,13 @@
 {
-  "name": "create-react-unity",
+  "name": "@reactunity/create",
   "version": "0.0.12",
-  "description": "Scaffold a react-unity app using npm init",
+  "description": "Scaffold a ReactUnity app using npm init",
   "license": "MIT",
   "main": "index.js",
   "bin": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KurtGokhan/create-react-unity"
+    "url": "https://github.com/ReactUnity/create"
   },
   "author": {
     "name": "Gokhan Kurt",
