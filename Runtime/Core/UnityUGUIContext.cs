@@ -18,16 +18,18 @@ namespace ReactUnity
         public StringObjectDictionary NamedAssets { get; private set; }
         public YogaNode RootLayoutNode { get; }
 
+        public ReactScript Script;
         private bool Scheduled = false;
         private List<System.Action> ScheduledCallbacks = new List<System.Action>();
 
         public StylesheetParser Parser;
         public StyleTree StyleTree;
 
-        public UnityUGUIContext(RectTransform hostElement, Engine engine, StringObjectDictionary assets)
+        public UnityUGUIContext(RectTransform hostElement, Engine engine, StringObjectDictionary assets, ReactScript script)
         {
             Engine = engine;
             NamedAssets = assets;
+            Script = script;
 
             Parser = new StylesheetParser(includeUnknownDeclarations: true);
             StyleTree = new StyleTree(Parser);

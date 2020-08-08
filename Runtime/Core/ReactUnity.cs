@@ -102,7 +102,7 @@ namespace ReactUnity
             Clean();
 
             if (engine == null) CreateEngine();
-            unityContext = new UnityUGUIContext(Root, engine, NamedAssets);
+            unityContext = new UnityUGUIContext(Root, engine, NamedAssets, scriptObj);
             CreateLocation(engine, scriptObj);
 
             List<Action> callbacks = new List<Action>() { callback };
