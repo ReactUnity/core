@@ -1,6 +1,6 @@
-# react-unity-scripts
+# React Unity Scripts
 
-This package includes scripts and configuration used by [React Unity](https://github.com/KurtGokhan/react-unity).<br>
+This package includes scripts and configuration used by [React Unity](https://github.com/ReactUnity/core).<br>
 Please refer to its documentation:
 
 - [Getting Started](https://facebook.github.io/create-react-app/docs/getting-started) – How to create a new app.

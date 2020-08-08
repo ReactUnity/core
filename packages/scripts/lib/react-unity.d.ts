@@ -1,6 +1,6 @@
 /// <reference types="node" />
 /// <reference types="react" />
-/// <reference types="react-unity-renderer" />
+/// <reference types="@reactunity/renderer" />
 /// <reference types="mocha" />
 /// <reference types="chai" />
 
