@@ -1,5 +1,7 @@
 # React Unity Scripts
 
+![npm version](https://badge.fury.io/js/%40reactunity%2Fscripts.svg)
+
 This package includes scripts and configuration used by [React Unity](https://github.com/ReactUnity/core).
 
 ## Installation
