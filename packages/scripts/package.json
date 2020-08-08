@@ -1,17 +1,17 @@
 {
-  "name": "react-unity-scripts",
+  "name": "@reactunity/scripts",
   "version": "0.0.13",
   "description": "Configuration and scripts for React Unity.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/KurtGokhan/react-unity-scripts.git"
+    "url": "https://github.com/ReactUnity/scripts.git"
   },
   "license": "MIT",
   "engines": {
     "node": "^10.12.0 || >=12.0.0"
   },
   "bugs": {
-    "url": "https://github.com/KurtGokhan/react-unity-scripts/issues"
+    "url": "https://github.com/ReactUnity/scripts/issues"
   },
   "files": [
     "bin",
@@ -87,7 +87,7 @@
     "node-sass": "^4.14.1"
   },
   "peerDependencies": {
-    "react-unity-renderer": "*",
+    "@reactunity/renderer": "*",
     "typescript": "^3.9.7"
   }
 }
