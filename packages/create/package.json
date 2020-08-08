@@ -1,6 +1,6 @@
 {
   "name": "@reactunity/create",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Scaffold a ReactUnity app using npm init",
   "license": "MIT",
   "main": "index.js",
