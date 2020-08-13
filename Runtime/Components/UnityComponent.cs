@@ -299,7 +299,7 @@ namespace ReactUnity.Components
             }
             if (updateStyle)
             {
-                var sprite = AssetReference.GetSpriteFromObject(Style.backgroundImage, Context);
+                var sprite = AssetReference<object>.GetSpriteFromObject(Style.backgroundImage, Context);
                 image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
                 image.SetBoxShadow(Style.boxShadow);
 

@@ -58,7 +58,7 @@ namespace ReactUnity.Components
 
         private void SetSource(object source)
         {
-            Image.sprite = AssetReference.GetSpriteFromObject(source, Context);
+            Image.sprite = AssetReference<object>.GetSpriteFromObject(source, Context);
         }
 
 

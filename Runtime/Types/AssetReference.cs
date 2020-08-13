@@ -16,11 +16,14 @@ namespace ReactUnity.Types
         Object = 6,
     }
 
-    public class AssetReference
+    public class AssetReference<AssetType> where AssetType : class
     {
+        static public AssetReference<object> None = new AssetReference<object>(AssetReferenceType.None, null);
+
         public AssetReferenceType type { get; private set; } = AssetReferenceType.None;
         public JsValue value { get; private set; }
 
+        private AssetType CachedValue;
 
         public AssetReference(AssetReferenceType type, JsValue value)
         {
@@ -28,8 +31,7 @@ namespace ReactUnity.Types
             this.value = value;
         }
 
-        static public AssetReference None = new AssetReference(AssetReferenceType.None, null);
-        static public AssetReference FromJsValue(JsValue obj)
+        static public AssetReference<object> FromJsValue(JsValue obj)
         {
             if (obj == null || obj.IsNull() || obj.IsUndefined()) return None;
 
@@ -41,19 +43,24 @@ namespace ReactUnity.Types
 
                 var type = (AssetReferenceType)v0.AsNumber();
 
-                return new AssetReference(type, value);
+                return new AssetReference<object>(type, value);
             }
             else
             {
                 var ob = obj.ToObject();
 
-                if (ob is Object) return new AssetReference(AssetReferenceType.Object, obj);
+                if (ob is Object) return new AssetReference<object>(AssetReferenceType.Object, obj);
 
-                return new AssetReference(AssetReferenceType.Procedural, obj);
+                return new AssetReference<object>(AssetReferenceType.Procedural, obj);
             }
         }
 
-        public T Get<T>(StringObjectDictionary NamedAssets) where T : class
+        public AssetType Get(UnityUGUIContext context)
+        {
+            return CachedValue ?? (CachedValue = Get<AssetType>(context));
+        }
+
+        public T Get<T>(UnityUGUIContext context) where T : class
         {
             switch (type)
             {
@@ -64,7 +71,7 @@ namespace ReactUnity.Types
                 case AssetReferenceType.Resource:
                     return Resources.Load(value.AsString()) as T;
                 case AssetReferenceType.NamedAsset:
-                    return NamedAssets.GetValueOrDefault(value.AsString()) as T;
+                    return context.NamedAssets.GetValueOrDefault(value.AsString()) as T;
                 case AssetReferenceType.Procedural:
                     return GetProcedural<T>();
                 case AssetReferenceType.Object:
@@ -127,10 +134,12 @@ namespace ReactUnity.Types
                     return s;
                 case Texture2D s:
                     return Sprite.Create(s, new Rect(0, 0, s.width, s.height), Vector2.one / 2);
-                case AssetReference a:
-                    return a.Get<Sprite>(Context.NamedAssets);
+                case AssetReference<Sprite> a:
+                    return a.Get(Context);
+                case AssetReference<object> a:
+                    return a.Get<Sprite>(Context);
                 case string s:
-                    return new AssetReference(AssetReferenceType.Procedural, s).Get<Sprite>(Context.NamedAssets);
+                    return new AssetReference<Sprite>(AssetReferenceType.Procedural, s).Get(Context);
                 default:
                     break;
             }
