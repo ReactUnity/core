@@ -13,9 +13,6 @@
   ],
   "category": "UI",
   "type": "library",
-  "dependencies": {
-    "com.unity.textmeshpro": "3.0.1"
-  },
   "samples": [
     {
       "displayName": "Base Sample",
