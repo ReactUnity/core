@@ -171,6 +171,7 @@ namespace ReactUnity
 
             // Load polyfills
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
+            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
         }
 
         void CreateConsole(Engine engine)
