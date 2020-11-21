@@ -98,4 +98,6 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
 
 export const SampleGallery = (samples: Sample[]) => <App samples={samples} />;
 
-export default (samples: Sample[]) => ReactUnity.render(<App samples={samples} />);
+
+const renderGallery = (samples: Sample[]) => ReactUnity.render(<App samples={samples} />);
+export default renderGallery;

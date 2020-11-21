@@ -1,5 +1,5 @@
 // import { App } from 'src/wiki/view';
-import { testRender } from 'react-unity-renderer';
+import { testRender } from '@reactunity/renderer';
 import * as React from 'react';
 
 describe('Sample Test', () => {

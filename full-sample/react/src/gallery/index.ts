@@ -1,6 +1,6 @@
 /* eslint import/no-webpack-loader-syntax: off */
 
-import sampleGallery, { Sample, SampleGallery } from './gallery';
+import renderGallery, { Sample, SampleGallery } from './gallery';
 import { App as TextColumns } from '../text-columns';
 import { App as Anim } from '../anim';
 import { App as Anchor } from '../wiki/anchor';
@@ -39,7 +39,7 @@ const wikiPages: Sample[] = [
   { name: 'Dropdown', render: Dropdown, sourceCode: DropdownSource },
 ]
 
-sampleGallery([
+renderGallery([
   { name: 'Components', render: () => SampleGallery(wikiPages), children: wikiPages },
   { name: 'Animation', render: Anim, source: 'https://github.com/ReactUnity/full-sample/blob/master/react/src/anim/index.tsx' },
   { name: 'Text Columns', render: TextColumns, source: 'https://github.com/ReactUnity/full-sample/blob/master/react/src/text-columns/index.tsx' },
