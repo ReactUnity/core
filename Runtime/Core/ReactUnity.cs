@@ -141,14 +141,17 @@ namespace ReactUnity
 
         void CreateEngine()
         {
-            engine = new Engine(e => e.CatchClrExceptions(ex =>
+            engine = new Engine(e =>
             {
-                var lastNode = engine.GetLastSyntaxNode();
-                Debug.LogError($"CLR exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
-                Debug.LogError(ex);
-                return true;
-            }));
-            engine.ClrTypeConverter = new NullableTypeConverter(engine);
+                e.CatchClrExceptions(ex =>
+                {
+                    var lastNode = engine.GetLastSyntaxNode();
+                    Debug.LogError($"CLR exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
+                    Debug.LogError(ex);
+                    return true;
+                });
+                e.SetTypeConverter(x => new NullableTypeConverter(x));
+            });
 
             engine
                 .SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }))
@@ -184,7 +187,7 @@ console.clear = () => old.clear();
 console.assert = () => old.clear();
 console.dir = (obj) => console.log(JSON.stringify(obj));
 {
-                string.Join("\n", methods.Select(item => $"console.{item} = (x, ...args) => old.{item}(x, args)"))
+                string.Join("\n", methods.Select(item => $"console.{item} = (msg, ...args) => old.{item}(msg, args)"))
 }}})()");
         }
 
