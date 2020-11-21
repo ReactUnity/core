@@ -77,12 +77,15 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
   return updateAfterMount;
 }
 
-const hostConfig: ReactReconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout> = {
+type Config = ReactReconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
+
+const hostConfig: Config & { clearContainer: () => void } = {
   getRootHostContext(rootContainerInstance) { return hostContext; },
   getChildHostContext(parentHostContext, type, rootContainerInstance) { return childContext; },
   getPublicInstance(instance: NativeInstance | NativeTextInstance) { return instance; },
   prepareForCommit(containerInfo) { },
   resetAfterCommit(containerInfo) { },
+  clearContainer() { },
   now: Date.now,
   supportsHydration: false,
   supportsPersistence: false,
@@ -208,7 +211,7 @@ export const ReactUnity = {
     element: React.ReactNode,
     hostContainer?: NativeContainerInstance,
     callback?: () => void,
-  ) {
+  ): number {
     if (!hostContainer) hostContainer = RootContainer;
 
     if (!hostRoot) {
