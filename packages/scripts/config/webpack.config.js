@@ -152,8 +152,6 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvDevelopment ? 'index.js' : process.env.FILENAME || 'index.js',
-      // TODO: remove this when upgrading to webpack 5
-      futureEmitAssets: true,
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -166,12 +164,15 @@ module.exports = function (webpackEnv) {
             .replace(/\\/g, '/')
         : isEnvDevelopment &&
         (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
-      // Prevents conflicts when multiple webpack runtimes (from different apps)
-      // are used on the same page.
-      jsonpFunction: `webpackJsonp${appPackageJson.name}`,
       // this defaults to 'window', but by setting it to 'this' then
       // module chunks which are built will work in web workers as well.
       globalObject: 'this',
+      // TODO: remove this when upgrading to webpack 5
+      futureEmitAssets: true,
+      // Prevents conflicts when multiple webpack runtimes (from different apps)
+      // are used on the same page.
+      // TODO: remove this when upgrading to webpack 5
+      jsonpFunction: `webpackJsonp${appPackageJson.name}`,
     },
     optimization: {
       // TODO: [React Unity] determine if need to minimize
@@ -216,7 +217,6 @@ module.exports = function (webpackEnv) {
               ascii_only: true,
             },
           },
-          sourceMap: shouldUseSourceMap,
         }),
         // This is only used in production mode
         new OptimizeCSSAssetsPlugin({
@@ -604,18 +604,6 @@ module.exports = function (webpackEnv) {
         formatter: isEnvProduction ? typescriptFormatter : undefined,
       }),
     ].filter(Boolean),
-    // Some libraries import Node modules but don't use them in the browser.
-    // Tell webpack to provide empty mocks for them so importing them works.
-    node: {
-      module: 'empty',
-      dgram: 'empty',
-      dns: 'mock',
-      fs: 'empty',
-      http2: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    },
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
