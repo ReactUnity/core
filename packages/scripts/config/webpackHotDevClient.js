@@ -21,7 +21,7 @@ var connection = new WebSocket(
 // Unlike WebpackDevServer client, we won't try to reconnect
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
-connection.onclose = function (e) {
+connection.onclose = Callback(function (e) {
   if (e.reason !== 'hardReload') {
     if (typeof console !== 'undefined' && typeof console.info === 'function') {
       console.info(
@@ -29,7 +29,7 @@ connection.onclose = function (e) {
       );
     }
   }
-};
+});
 
 // Remember some state related to hot module replacement.
 var isFirstCompilation = true;
@@ -127,7 +127,7 @@ function handleAvailableHash(hash) {
 }
 
 // Handle messages from the server.
-connection.onmessage = function (e) {
+connection.onmessage = Callback(function (e) {
   var message = JSON.parse(e.Data);
   switch (message.type) {
     case 'hash':
@@ -150,7 +150,7 @@ connection.onmessage = function (e) {
     default:
     // Do nothing.
   }
-};
+});
 
 // Is there a newer version of this code available?
 function isUpdateAvailable() {
