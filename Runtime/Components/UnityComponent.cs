@@ -94,6 +94,7 @@ namespace ReactUnity.Components
             GameObject.DestroyImmediate(GameObject);
             Parent.Children.Remove(this);
             Parent.Layout.RemoveChild(Layout);
+            Parent.ScheduleLayout();
         }
 
         public virtual void SetParent(ContainerComponent parent, UnityComponent insertBefore = null, bool insertAfter = false)
@@ -118,6 +119,8 @@ namespace ReactUnity.Components
 
             Style.Parent = parent.Style;
             ResolveStyle(true);
+
+            Parent.ScheduleLayout();
         }
 
 
@@ -135,7 +138,7 @@ namespace ReactUnity.Components
 
             if (handler == null) handler = GameObject.AddComponent(eventType) as IEventHandler;
 
-            System.Action<BaseEventData> callAction = (e) => fun.Call(e);
+            Action<BaseEventData> callAction = (e) => fun.Call(e);
             handler.OnEvent += callAction;
         }
 

@@ -51,28 +51,32 @@ namespace ReactUnity
 
         #region Layout
 
-        public static void appendChild(dynamic parent, dynamic child)
+        public static void appendChild(object parent, object child)
         {
-            child.SetParent(parent);
-            parent.ScheduleLayout();
+            if (parent is ContainerComponent p)
+                if (child is UnityComponent c)
+                    c.SetParent(p);
         }
 
-        public static void appendChildToContainer(dynamic parent, dynamic child)
+        public static void appendChildToContainer(object parent, object child)
         {
-            child.SetParent(parent);
-            parent.ScheduleLayout();
+            if (parent is HostComponent p)
+                if (child is UnityComponent c)
+                    c.SetParent(p);
         }
 
-        public static void insertBefore(dynamic parent, dynamic child, dynamic beforeChild)
+        public static void insertBefore(object parent, object child, object beforeChild)
         {
-            child.SetParent(parent, beforeChild);
-            parent.ScheduleLayout();
+            if (parent is ContainerComponent p)
+                if (child is UnityComponent c)
+                    if (beforeChild is UnityComponent b)
+                        c.SetParent(p, b);
         }
 
-        public static void removeChild(dynamic parent, dynamic child)
+        public static void removeChild(object parent, object child)
         {
-            child.Destroy();
-            parent.ScheduleLayout();
+            if (child is UnityComponent c)
+                c.Destroy();
         }
 
         #endregion
@@ -80,24 +84,24 @@ namespace ReactUnity
 
         #region Properties
 
-        public static void setText(dynamic instance, string text)
+        public static void setText(object instance, string text)
         {
-            instance.SetText(text);
-            instance.ScheduleLayout();
+            if (instance is TextComponent c)
+                c.SetText(text);
         }
 
-        public static void setProperty(dynamic element, string property, object value)
+        public static void setProperty(object element, string property, object value)
         {
-            element.SetProperty(property, value);
+            if (element is UnityComponent c)
+                c.SetProperty(property, value);
         }
 
-        public static void setEventListener(dynamic element, string eventType, Callback value)
+        public static void setEventListener(object element, string eventType, Callback value)
         {
-            element.SetEventListener(eventType, value);
+            if (element is UnityComponent c)
+                c.SetEventListener(eventType, value);
         }
 
         #endregion
-
-
     }
 }

@@ -50,6 +50,7 @@ namespace ReactUnity.Components
         public void SetText(string text)
         {
             Text.text = text;
+            ScheduleLayout();
         }
 
         public override void ApplyLayoutStyles()

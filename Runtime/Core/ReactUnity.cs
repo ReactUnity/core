@@ -193,7 +193,7 @@ namespace ReactUnity
 
             engine.EmbedHostObject("Engine", engine);
             engine.EmbedHostType("RealCallback", typeof(Callback));
-            engine.Execute("Callback = function(fun) { return new RealCallback(Engine, args => fun(...(args || []))); }");
+            engine.Execute("Callback = function(fun) { return new RealCallback(Engine, fun); }");
 
 
             CreateConsole(engine);
@@ -217,18 +217,6 @@ namespace ReactUnity
             var console = new ConsoleProxy(engine);
 
             engine.EmbedHostObject("console", console);
-            var methods = new List<string> { "log", "info", "error", "warn", "debug" };
-
-            engine.Execute($@"(function() {{
-var old = console;
-var console = {{}};
-console.clear = () => old.clear();
-console.assert = () => old.clear();
-console.dir = (obj) => console.log(JSON.stringify(obj));
-global.console = console;
-{
-                string.Join("\n", methods.Select(item => $"console.{item} = (msg, ...args) => old.{item}(msg, args)"))
-}}})()");
         }
 
         void CreateScheduler(IJsEngine engine)

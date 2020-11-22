@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 
-using System;
+using ReactUnity.Interop;
 
 namespace ReactUnity.DomProxies
 {
@@ -13,27 +13,27 @@ namespace ReactUnity.DomProxies
 
         public string binaryType = "blob";
 
-        public dynamic onmessage
+        public Callback onmessage
         {
-            set { OnError += (sender, e) => { if (value != null) value(e); }; }
+            set { OnError += (sender, e) => { if (value != null) value.Call(e); }; }
             get => null;
         }
 
-        public dynamic onclose
+        public Callback onclose
         {
-            set { OnError += (sender, e) => { if (value != null) value(e); }; }
+            set { OnError += (sender, e) => { if (value != null) value.Call(e); }; }
             get => null;
         }
 
-        public dynamic onopen
+        public Callback onopen
         {
-            set { OnError += (sender, e) => { if (value != null) value(e); }; }
+            set { OnError += (sender, e) => { if (value != null) value.Call(e); }; }
             get => null;
         }
 
-        public dynamic onerror
+        public Callback onerror
         {
-            set { OnError += (sender, e) => { if (value != null) value(e); }; }
+            set { OnError += (sender, e) => { if (value != null) value.Call(e); }; }
             get => null;
         }
 

@@ -1,37 +1,32 @@
 using JavaScriptEngineSwitcher.Core;
-using System.Collections;
-using System.Collections.Generic;
-using System.Dynamic;
-using UnityEngine;
 
 namespace ReactUnity.Interop
 {
-    public class Callback : DynamicObject
+    public class Callback
     {
         private IJsEngine engine;
-        private dynamic callback;
+        public object callback;
 
-        public Callback(IJsEngine engine, dynamic callback)
+        public Callback(IJsEngine engine, object callback)
         {
             this.engine = engine;
             this.callback = callback;
         }
 
-        public dynamic Call(params object[] args)
+        public object Call()
         {
-            //var cbName = "$callback_interop_dont_touch_cb";
-            //var argsName = "$callback_interop_dont_touch_args";
-            //engine.EmbedHostObject(cbName, callback);
-            return callback(args);
-            //engine.EmbedHostObject(argsName, args);
-            //return engine.Evaluate(cbName + "(..." + argsName + ")");
+            var cbName = "$callback_interop_dont_touch_cb";
+            engine.EmbedHostObject(cbName, this);
+            return engine.Evaluate(cbName + ".callback()");
         }
 
-
-        public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+        public object Call(params object[] args)
         {
-            result = Call(args);
-            return true;
+            var cbName = "$callback_interop_dont_touch_cb";
+            var argsName = "$args_interop_dont_touch";
+            engine.EmbedHostObject(cbName, this);
+            engine.EmbedHostObject(argsName, args ?? new object[0]);
+            return engine.Evaluate(cbName + ".callback(..." + argsName + ")");
         }
     }
 }

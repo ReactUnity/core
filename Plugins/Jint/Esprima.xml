@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Esprima</name>
+    </assembly>
+    <members>
+        <member name="T:Esprima.ArrayList`1.Enumerator">
+            <remarks>
+            This implementation does not detect changes to the list
+            during iteration and therefore the behaviour is undefined
+            under those conditions.
+            </remarks>
+        </member>
+        <member name="T:Esprima.Ast.Expression">
+            <summary>
+            A JavaScript expression. 
+            </summary>
+        </member>
+        <member name="T:Esprima.Ast.GenericChildNodeYield">
+            <summary>
+                Helps to succinctly implement <see cref="P:Esprima.Ast.Node.ChildNodes" /> for subclasses of <see cref="T:Esprima.Ast.Node" />.
+            </summary>
+        </member>
+        <member name="T:Esprima.Ast.IFunction">
+            <summary>
+            Represents either a <see cref="T:Esprima.Ast.FunctionDeclaration"/> or a <see cref="T:Esprima.Ast.FunctionExpression"/>
+            </summary>
+        </member>
+        <member name="T:Esprima.Ast.NodeCollection">
+            <summary>
+            Collection that enumerates nodes and node lists.
+            </summary>
+        </member>
+        <member name="T:Esprima.Ast.NodeList`1.Enumerator">
+            <remarks>
+            This implementation does not detect changes to the list
+            during iteration and therefore the behaviour is undefined
+            under those conditions.
+            </remarks>
+        </member>
+        <member name="T:Esprima.JavaScriptParser">
+            <summary>
+            Provides JavaScript parsing capabilities.
+            </summary>
+            <remarks>
+            Use the <see cref="M:Esprima.JavaScriptParser.ParseScript(System.Boolean)" />, <see cref="M:Esprima.JavaScriptParser.ParseModule" /> or <see cref="M:Esprima.JavaScriptParser.ParseExpression" /> methods to parse the JavaScript code.
+            </remarks>
+        </member>
+        <member name="P:Esprima.JavaScriptParser.Tokens">
+            <summary>
+            Returns the list of tokens that were parsed.
+            </summary>
+            <remarks>
+            It requires the parser options to be configured to generate to tokens.
+            </remarks>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.#ctor(System.String)">
+            <summary>
+            Creates a new <see cref="T:Esprima.JavaScriptParser" /> instance.
+            </summary>
+            <param name="code">The JavaScript code to parse.</param>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.#ctor(System.String,Esprima.ParserOptions)">
+            <summary>
+            Creates a new <see cref="T:Esprima.JavaScriptParser" /> instance.
+            </summary>
+            <param name="code">The JavaScript code to parse.</param>
+            <param name="options">The parser options.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.#ctor(System.String,Esprima.ParserOptions,System.Action{Esprima.Ast.Node})">
+            <summary>
+            Creates a new <see cref="T:Esprima.JavaScriptParser" /> instance.
+            </summary>
+            <param name="code">The JavaScript code to parse.</param>
+            <param name="options">The parser options.</param>
+            <param name="action">Action to execute on each parsed node.</param>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.ParseModule">
+            <summary>
+            Parses the code as a JavaScript module.
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.ParseScript(System.Boolean)">
+            <summary>
+            Parses the code as a JavaScript script.
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.GetTokenRaw(Esprima.Token)">
+            <summary>
+            From internal representation to an external structure
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.Expect(System.String)">
+            <summary>
+            Expect the next token to match the specified punctuator.
+            If not, an exception will be thrown.
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.ExpectCommaSeparator">
+            <summary>
+            Quietly expect a comma when in tolerant mode, otherwise delegates to Expect().
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.ExpectKeyword(System.String)">
+            <summary>
+            Expect the next token to match the specified keyword.
+            If not, an exception will be thrown.
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.Match(System.String)">
+            <summary>
+            Return true if the next token matches the specified punctuator.
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.MatchKeyword(System.String)">
+            <summary>
+            Return true if the next token matches the specified keyword
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.IsLeftHandSide(Esprima.Ast.Expression)">
+            <summary>
+            Return true if provided expression is LeftHandSideExpression
+            </summary>
+        </member>
+        <member name="M:Esprima.JavaScriptParser.ParseExpression">
+            <summary>
+            Parses the code as a JavaScript expression.
+            </summary>
+        </member>
+        <member name="T:Esprima.ParserOptions">
+            <summary>
+            Parser options.
+            </summary>
+        </member>
+        <member name="M:Esprima.ParserOptions.#ctor">
+            <summary>
+            Create a new <see cref="T:Esprima.ParserOptions" /> instance.
+            </summary>
+        </member>
+        <member name="M:Esprima.ParserOptions.#ctor(System.String)">
+            <summary>
+            Create a new <see cref="T:Esprima.ParserOptions" /> instance.
+            </summary>
+            <param name="source">A string representing where the code is coming from, if an error occurs.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Esprima.ParserOptions.#ctor(Esprima.IErrorHandler)">
+            <summary>
+            Create a new <see cref="T:Esprima.ParserOptions" /> instance.
+            </summary>
+            <param name="errorHandler">The <see cref="T:Esprima.IErrorHandler" /> to use to handle errors.</param>
+        </member>
+        <member name="P:Esprima.ParserOptions.Range">
+            <summary>
+            Gets or sets whether each node should have their range included.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:Esprima.ParserOptions.Loc">
+            <summary>
+            Gets or sets whether the parsed elements have their location included.
+            </summary>
+        </member>
+        <member name="P:Esprima.ParserOptions.Tokens">
+            <summary>
+            Gets or sets whether the tokens are included in the parsed tree.
+            </summary>
+        </member>
+        <member name="P:Esprima.ParserOptions.Comment">
+            <summary>
+            Gets or sets whether the comments are included in the parsed tree.
+            </summary>
+        </member>
+        <member name="P:Esprima.ParserOptions.Tolerant">
+            <summary>
+            Gets or sets whether the parser is tolerant to errors.
+            </summary>
+        </member>
+        <member name="P:Esprima.ParserOptions.ErrorHandler">
+            <summary>
+            Gets or sets the <see cref="T:Esprima.IErrorHandler"/> to use.
+            </summary>
+        </member>
+        <member name="P:Esprima.ParserOptions.AdaptRegexp">
+            <summary>
+            Gets or sets whether the Regular Expression syntax should be converted to a .NET compatible one.
+            </summary>
+        </member>
+        <member name="T:Esprima.Position">
+            <summary>
+            Represents a source position as line number and column offset, where
+            the first line is 1 and first column is 0.
+            </summary>
+            <remarks>
+            A position where <see cref="P:Esprima.Position.Line"/> and <see cref="P:Esprima.Position.Column"/> are zero
+            is an allowed (and the default) value but considered an invalid
+            position.
+            </remarks>
+        </member>
+        <member name="T:Esprima.Utils.AstVisitorEventSource">
+            <summary>
+            An AST visitor that raises events before and after visiting each node
+            and its descendants.
+            </summary>
+        </member>
+        <member name="T:Esprima.Utils.JsonTextWriter">
+            <summary>
+            Represents a writer that provides a fast, non-cached, forward-only
+            way of generating streams or files containing JSON Text according
+            to the grammar rules laid out in
+            <a href="http://www.ietf.org/rfc/rfc4627.txt">RFC 4627</a>.
+            </summary>
+        </member>
+    </members>
+</doc>
