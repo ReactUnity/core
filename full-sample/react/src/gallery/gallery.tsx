@@ -3,7 +3,7 @@ import * as React from 'react';
 import { ReactUnity, FlexDirection, Wrap, YogaJustify, FontStyles, PositionType } from '@reactunity/renderer';
 import { TextEditor } from './editor';
 
-const shadow = new ShadowDefinitionNative([0, 8], [10, 10], [0, 0, 0, 1], 10);
+const shadow = '0 8 10 10 black 10';
 
 export interface Sample {
   name: string;
@@ -35,7 +35,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
       <button layout={{ PaddingHorizontal: 20, PaddingVertical: 16, PaddingLeft: 20 + depth * 16, JustifyContent: YogaJustify.FlexStart }}
         style={{ backgroundColor: selected === sample ? 0.7 : 'transparent', borderRadius: 0, borderColor: ColorNative.black }}
         stateStyles={{ hover: { backgroundColor: 0.8 } }}
-        onClick={() => !sample.children && this.setState(() => ({ selectedSample: sample.name }))}>
+        onClick={() => !sample.children && this.setState({ selectedSample: sample.name })}>
         {sample.name}
       </button>
 

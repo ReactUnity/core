@@ -172,6 +172,8 @@ MonoBehaviour:
     UseDevServer: 1
     DevServer: http://localhost:3000
   PreloadScripts: []
+  JsEngine: V8
+  AwaitDebuggerAndPauseOnStart: 0
 --- !u!114 &314699163
 MonoBehaviour:
   m_ObjectHideFlags: 0

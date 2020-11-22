@@ -4,7 +4,10 @@
     {
       "label": "Start",
       "command": "npm run start",
-      "type": "shell"
+      "type": "shell",
+      "presentation": {
+        "group": "dev",
+      }
     },
     {
       "label": "Build",
@@ -18,8 +21,8 @@
     },
     {
       "label": "Link",
-      "command": "npm link ../../${input:modulePick}",
-      "type": "shell",
+      "command": "npm link ../../${input:modulePick} --force",
+      "type": "shell"
     }
   ],
   "inputs": [

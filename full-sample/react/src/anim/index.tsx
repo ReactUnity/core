@@ -50,7 +50,7 @@ export class App extends React.Component<{}, { val: number }> {
           Rotate
         </button>
 
-        <button style={{ boxShadow: new ShadowDefinitionNative(1, [14 * val, 8 * val], ColorNative.black, 4 + 6 * val), scale: 1.2 + val * 0.1, backgroundColor: 0.97 }}>
+        <button style={{ boxShadow: `1 1 ${14 * val} ${8 * val} black ${4 + 6 * val}`, scale: 1.2 + val * 0.1, backgroundColor: 0.97 }}>
           Shadow
         </button>
       </view>
@@ -82,6 +82,6 @@ export class App extends React.Component<{}, { val: number }> {
         </button>
 
       </view>
-    </view>;
+    </view >;
   }
 }

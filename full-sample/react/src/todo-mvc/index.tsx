@@ -37,7 +37,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
     borderColor: '#cecece',
     zOrder: 1,
     backgroundColor: [1, 1, 1, 1],
-    boxShadow: new ShadowDefinitionNative([0, 8], [10, 10], [0, 0, 0, 1], 10),
+    boxShadow: '0 8 10 10 black 10',
   };
 
   constructor(props: IAppProps) {
@@ -149,7 +149,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
           todos
         </view>
 
-        <view style={{ backgroundColor: 'white', boxShadow: new ShadowDefinitionNative(6, 22, ColorNative.black, 16) }} layout={{ FlexShrink: 1 }}>
+        <view style={{ backgroundColor: 'white', boxShadow: '6 6 22 22 black 16' }} layout={{ FlexShrink: 1 }}>
 
           <view name="Header" layout={{ FlexDirection: FlexDirection.Row, AlignItems: YogaAlign.Center, BorderBottomWidth: 2 }} style={this.headerInputStyle}>
             <input
