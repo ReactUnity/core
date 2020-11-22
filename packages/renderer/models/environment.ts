@@ -7,6 +7,7 @@ declare global {
   const RootContainer: NativeContainerInstance;
   const NamedAssets: ObjectDictionary;
   const UnityScheduler: UnitySchedulerContext;
+  const Callback: <T, R>(callback: (...args: T[]) => R) => (...args: T[]) => R;
 
   const localStorage: {
     getItem(key: string): string;

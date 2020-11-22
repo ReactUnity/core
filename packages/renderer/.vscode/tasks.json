@@ -4,7 +4,10 @@
     {
       "label": "Renderer",
       "command": "npm run ${input:script}",
-      "type": "shell"
+      "type": "shell",
+      "presentation": {
+        "group": "dev",
+      }
     }
   ],
   "inputs": [

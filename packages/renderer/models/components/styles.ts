@@ -19,7 +19,7 @@ export interface Style {
   backgroundImage?: AssetReference | UnityObject;
   borderRadius?: number;
   borderColor?: Color;
-  boxShadow?: ShadowDefinitionNative;
+  boxShadow?: string;
 
   translate?: Vector2;
   translateRelative?: boolean;

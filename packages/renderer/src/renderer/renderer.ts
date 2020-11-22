@@ -9,7 +9,7 @@ import {
 const hostContext = {};
 const childContext = {};
 
-function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResult | Record<string, any>, depth: number = 0) {
+function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResult | Record<string, any>, depth = 0) {
   if (!updatePayload) return false;
 
   if (Array.isArray(updatePayload)) {
@@ -18,13 +18,18 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
       const attr = updatePayload[index];
       const value = updatePayload[index + 1];
       if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);
-      else writeTo[attr] = value;
+      else writeTo[attr] = value != null ? value + '' : null;
     }
 
     return updatePayload.length > 0;
   }
   else {
-    Object.assign(writeTo, updatePayload);
+    for (const attr in updatePayload) {
+      if (Object.prototype.hasOwnProperty.call(updatePayload, attr)) {
+        const value = updatePayload[attr];
+        writeTo[attr] = value != null ? value + '' : null;
+      }
+    }
     return true;
   }
 }
@@ -39,7 +44,8 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     if (attr === 'key') continue;
     if (attr === 'ref') continue;
     if (attr === 'layout') {
-      if (applyDiffedUpdate(instance.Layout, value)) {
+      if (applyDiffedUpdate(instance.Inline, value)) {
+        instance.ResolveStyle();
         instance.ScheduleLayout();
         instance.ApplyLayoutStyles();
       }
@@ -51,13 +57,14 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     }
 
     if (attr === 'stateStyles') {
-      if (applyDiffedUpdate(instance.StateStyles, value, 1)) {
-        instance.ResolveStyle();
-      }
+      // TODO:
+      // if (applyDiffedUpdate(instance.StateStyles, value, 1)) {
+      //   instance.ResolveStyle();
+      // }
       continue;
     }
     if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Style, value)) {
+      if (applyDiffedUpdate(instance.Inline, value)) {
         instance.ResolveStyle();
       }
       continue;
@@ -68,7 +75,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     }
 
     if (attr.substring(0, 2) === 'on') {
-      Unity.setEventListener(instance, attr, value);
+      Unity.setEventListener(instance, attr, Callback(value));
     } else {
       Unity.setProperty(instance, attr, value);
     }
@@ -83,9 +90,9 @@ const hostConfig: Config & { clearContainer: () => void } = {
   getRootHostContext(rootContainerInstance) { return hostContext; },
   getChildHostContext(parentHostContext, type, rootContainerInstance) { return childContext; },
   getPublicInstance(instance: NativeInstance | NativeTextInstance) { return instance; },
-  prepareForCommit(containerInfo) { },
-  resetAfterCommit(containerInfo) { },
-  clearContainer() { },
+  prepareForCommit(containerInfo) { return null; },
+  resetAfterCommit(containerInfo) { return null; },
+  clearContainer() { return null; },
   now: Date.now,
   supportsHydration: false,
   supportsPersistence: false,
@@ -165,19 +172,19 @@ const hostConfig: Config & { clearContainer: () => void } = {
     newProps,
     rootContainerInstance,
     hostContext,
-  ): DiffResult {
-    return diffProperties(oldProps, newProps);
+  ) {
+    return diffProperties(oldProps, newProps) as any;
   },
 
   commitUpdate(
     instance,
-    updatePayload: DiffResult,
+    updatePayload,
     type,
     oldProps,
     newProps,
     internalInstanceHandle,
   ) {
-    applyUpdate(instance, updatePayload, true);
+    applyUpdate(instance, updatePayload as any, true);
   },
 
   resetTextContent(instance) { console.log('resetTextContent'); },

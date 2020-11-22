@@ -7,6 +7,7 @@ export type NativeCommonProps = {
   Layout: Layout;
   Style: Style;
   StateStyles: StateStyles;
+  Inline: Record<string, string>;
 
   ResolveStyle: () => void;
   ScheduleLayout: () => void;
@@ -37,11 +38,11 @@ export type Props = React.RefAttributes<NativeInstance> & {
   children?: React.ReactNode;
 };
 
-export type HydratableInstance = Unique<{}, 'hydratable'>;
+export type HydratableInstance = Unique<Record<string, unknown>, 'hydratable'>;
 export type PublicInstance = any;
 
-export type HostContext = {};
-export type UpdatePayload = {};
-export type ChildSet = {};
+export type HostContext = Record<string, unknown>;
+export type UpdatePayload = Record<string, unknown>;
+export type ChildSet = Record<string, unknown>;
 export type TimeoutHandle = number;
 export type NoTimeout = -1;

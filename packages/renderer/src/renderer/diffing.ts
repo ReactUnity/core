@@ -9,7 +9,7 @@ const deepDiffProps = {
 export function diffProperties(
   lastRawProps: Record<string, any>,
   nextRawProps: Record<string, any>,
-  deepDiffing: number = 0,
+  deepDiffing = 0,
 ): DiffResult {
   if (lastRawProps == nextRawProps) return null;
   let updatePayload: DiffResult = null;
