@@ -1,7 +1,5 @@
 using Esprima;
-using Jint;
 using Jint.Native;
-using Jint.Native.Object;
 using ReactUnity.Interop;
 using ReactUnity.DomProxies;
 using ReactUnity.Schedulers;
@@ -11,12 +9,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using ReactUnity.Styling.Types;
+using JavaScriptEngineSwitcher.Core;
+using JavaScriptEngineSwitcher.Jint;
+using JavaScriptEngineSwitcher.V8;
+using JavaScriptEngineSwitcher.ChakraCore;
 
 namespace ReactUnity
 {
     public class ReactUnity : MonoBehaviour
     {
-        private Engine engine;
+        private IJsEngine engine;
         private UnityUGUIContext unityContext;
         private UnityScheduler scheduler;
 
@@ -30,9 +32,44 @@ namespace ReactUnity
 
         public RectTransform Root => transform as RectTransform;
 
+        public string JsEngine = "Jint";
+        public string EngineName => JsEngine + "JsEngine";
+        public bool AwaitDebuggerAndPauseOnStart = false;
+
         void OnEnable()
         {
+            CreateSwitcher();
             Restart();
+        }
+
+        void CreateSwitcher()
+        {
+            var engineSwitcher = JsEngineSwitcher.Current;
+            engineSwitcher.EngineFactories
+                .AddJint(x =>
+                {
+                    //e.CatchClrExceptions(ex =>
+                    //{
+                    //    var lastNode = engine.GetLastSyntaxNode();
+                    //    Debug.LogError($"CLR exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
+                    //    Debug.LogError(ex);
+                    //    return true;
+                    //});
+                    //e.SetTypeConverter(x => new NullableTypeConverter(x));
+                })
+                .AddV8(x =>
+                {
+                    x.DebugPort = 9222;
+                    x.EnableDebugging = true;
+                    x.EnableRemoteDebugging = true;
+                    x.AwaitDebuggerAndPauseOnStart = AwaitDebuggerAndPauseOnStart;
+                })
+                .AddChakraCore(x =>
+                {
+                    x.EnableExperimentalFeatures = true;
+                });
+
+            engineSwitcher.DefaultEngineName = EngineName;
         }
 
         void OnDisable()
@@ -107,18 +144,18 @@ namespace ReactUnity
 
             List<Action> callbacks = new List<Action>() { callback };
 
-            engine.SetValue("addEventListener", JsValue.FromObject(engine, new Action<string, Action>((e, f) =>
+            engine.EmbedHostObject("addEventListener", new Action<string, Action>((e, f) =>
             {
                 if (e == "DOMContentLoaded") callbacks.Add(f);
-            })));
+            }));
 
-            engine.SetValue("Unity", typeof(ReactUnityAPI));
-            engine.SetValue("RootContainer", unityContext.Host);
-            engine.SetValue("NamedAssets", NamedAssets);
+            engine.EmbedHostType("Unity", typeof(ReactUnityAPI));
+            engine.EmbedHostObject("RootContainer", unityContext.Host);
+            engine.EmbedHostObject("NamedAssets", NamedAssets);
             try
             {
                 if (preload != null) preload.ForEach(x => engine.Execute(x.text));
-                engine.Execute(script);
+                engine.Execute(script, "react.js");
                 callbacks.ForEach(x => x?.Invoke());
             }
             catch (ParserException ex)
@@ -126,10 +163,12 @@ namespace ReactUnity
                 Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
                 Debug.LogException(ex);
             }
+            catch (JsException ex)
+            {
+                Debug.LogError(ex.Message);
+            }
             catch (Exception ex)
             {
-                var lastNode = engine.GetLastSyntaxNode();
-                Debug.LogError($"Runtime exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
                 Debug.LogException(ex);
             }
         }
@@ -141,89 +180,127 @@ namespace ReactUnity
 
         void CreateEngine()
         {
-            engine = new Engine(e =>
-            {
-                e.CatchClrExceptions(ex =>
-                {
-                    var lastNode = engine.GetLastSyntaxNode();
-                    Debug.LogError($"CLR exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
-                    Debug.LogError(ex);
-                    return true;
-                });
-                e.SetTypeConverter(x => new NullableTypeConverter(x));
-            });
+            engine = JsEngineSwitcher.Current.CreateEngine(EngineName);
 
-            engine
-                .SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }))
-                .Execute("__dirname = '';")
-                .Execute("WeakMap = Map;")
-                .Execute("globalThis = global = window = parent = this;")
-                .Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;")
-                .Execute("btoa = atob = null;")
-                .Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
+            engine.EmbedHostObject("log", new Func<object, object>((x) => { Debug.Log(x); return x; }));
+            engine.Execute("__dirname = '';");
+            engine.Execute("WeakMap = Map;");
+            engine.Execute("globalThis = global = window = parent = this;");
+            engine.Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;");
+            engine.Execute("btoa = atob = null;");
+            engine.Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };"); ;
+
+
+            engine.EmbedHostObject("Engine", engine);
+            engine.EmbedHostType("RealCallback", typeof(Callback));
+            engine.Execute("Callback = function(fun) { return new RealCallback(Engine, args => fun(...(args || []))); }");
+
 
             CreateConsole(engine);
             CreateLocalStorage(engine);
             CreateScheduler(engine);
-            engine.SetValue("YogaValueNative", typeof(Facebook.Yoga.YogaValue));
-            engine.SetValue("ColorNative", typeof(Color));
-            engine.SetValue("ShadowDefinitionNative", typeof(ShadowDefinition));
+            engine.EmbedHostType("YogaValueNative", typeof(Facebook.Yoga.YogaValue));
+            engine.EmbedHostType("ColorNative", typeof(Color));
+            engine.EmbedHostType("ShadowDefinitionNative", typeof(ShadowDefinition));
+            engine.EmbedHostType("Vector2", typeof(Vector2));
+            engine.EmbedHostType("Vector3", typeof(Vector3));
+            engine.EmbedHostType("Rect", typeof(Rect));
+            engine.EmbedHostType("Action", typeof(Action));
 
             // Load polyfills
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
         }
 
-        void CreateConsole(Engine engine)
+        void CreateConsole(IJsEngine engine)
         {
             var console = new ConsoleProxy(engine);
 
-            engine.SetValue("console", console);
+            engine.EmbedHostObject("console", console);
             var methods = new List<string> { "log", "info", "error", "warn", "debug" };
 
             engine.Execute($@"(function() {{
 var old = console;
-console = {{}};
+var console = {{}};
 console.clear = () => old.clear();
 console.assert = () => old.clear();
 console.dir = (obj) => console.log(JSON.stringify(obj));
+global.console = console;
 {
                 string.Join("\n", methods.Select(item => $"console.{item} = (msg, ...args) => old.{item}(msg, args)"))
 }}})()");
         }
 
-        void CreateScheduler(Engine engine)
+        void CreateScheduler(IJsEngine engine)
         {
             scheduler = new UnityScheduler();
-            engine.SetValue("UnityScheduler", scheduler);
-            engine.SetValue("setTimeout", new Func<JsValue, int, int>(scheduler.setTimeout));
-            engine.SetValue("setInterval", new Func<JsValue, int, int>(scheduler.setInterval));
-            engine.SetValue("clearTimeout", new Action<int?>(scheduler.clearTimeout));
-            engine.SetValue("clearInterval", new Action<int?>(scheduler.clearInterval));
-            engine.SetValue("requestAnimationFrame", new Func<JsValue, int>(scheduler.requestAnimationFrame));
-            engine.SetValue("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
+            engine.EmbedHostObject("UnityScheduler", scheduler);
+            engine.EmbedHostType("TimeoutCallback", typeof(Func<Callback, int, int>));
+            //engine.EmbedHostObject("setTimeout", new Func<Callback, int, int>(scheduler.setTimeout));
+            //engine.EmbedHostObject("setInterval", new Func<Callback, int, int>(scheduler.setInterval));
+            engine.Execute("global.setTimeout = function setTimeout(fun, delay) { return UnityScheduler.setTimeout(Callback(fun), delay); }");
+            engine.Execute("global.setInterval = function setTimeout(fun, delay) { return UnityScheduler.setInterval(Callback(fun), delay); }");
+            engine.EmbedHostObject("clearTimeout", new Action<int?>(scheduler.clearTimeout));
+            engine.EmbedHostObject("clearInterval", new Action<int?>(scheduler.clearInterval));
+            engine.EmbedHostObject("requestAnimationFrame", new Func<Callback, int>(scheduler.requestAnimationFrame));
+            engine.EmbedHostObject("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
         }
 
-        void CreateLocalStorage(Engine engine)
+        void CreateLocalStorage(IJsEngine engine)
         {
-            var storage = new ObjectInstance(engine);
-            engine.SetValue("localStorage", storage);
-
-
-            storage.FastAddProperty("setItem",
-                JsValue.FromObject(engine, new Action<string, string>(PlayerPrefs.SetString)),
-                false, true, false);
-            storage.FastAddProperty("getItem",
-                JsValue.FromObject(engine, new Func<string, string>(x => PlayerPrefs.GetString(x, ""))),
-                false, true, false);
+            var storage = new LocalStorage();
+            engine.EmbedHostObject("localStorage", storage);
         }
 
-        void CreateLocation(Engine engine, ReactScript script)
+        void CreateLocation(IJsEngine engine, ReactScript script)
         {
-            var location = new ObjectInstance(engine);
-            engine.SetValue("location", location);
+            var location = new Location(script.SourceLocation, Restart);
+            engine.EmbedHostObject("location", location);
 
-            var href = script.SourceLocation;
+#if UNITY_EDITOR
+            engine.EmbedHostType("WebSocket", typeof(WebSocketProxy));
+            engine.EmbedHostType("XMLHttpRequest", typeof(XMLHttpRequest));
+            engine.Execute(@"(function() {
+  var oldXMLHttpRequest = XMLHttpRequest;
+  XMLHttpRequest = function() { return new oldXMLHttpRequest('" + location.origin + @"'); }
+})();");
+#endif
+            engine.EmbedHostObject("document", new DocumentProxy(unityContext, this, location.origin));
+        }
+    }
+
+    public class LocalStorage
+    {
+        public LocalStorage()
+        {
+        }
+
+        public void setItem(string x, string value)
+        {
+            PlayerPrefs.SetString(x, value);
+        }
+
+        public void getItem(string x)
+        {
+            PlayerPrefs.GetString(x, "");
+        }
+    }
+
+    public class Location
+    {
+        public string href { get; }
+        public string protocol { get; }
+        public string hostname { get; }
+        public string origin { get; }
+        public string host { get; }
+        public string port { get; }
+        public string search { get; }
+        public string pathname { get; }
+        private Action restart { get; }
+
+        public Location(string sourceLocation, Action restart)
+        {
+            var href = sourceLocation;
             var hrefSplit = href.Split(new string[] { "//" }, 2, StringSplitOptions.None);
 
             var protocol = hrefSplit.Length > 1 ? hrefSplit.First() : null;
@@ -239,25 +316,20 @@ console.dir = (obj) => console.log(JSON.stringify(obj));
             var origin = protocol + "//" + host;
             var pathName = string.Join("", hrefWithoutProtocolSplit.Skip(1));
 
-            location.FastAddProperty("reload", JsValue.FromObject(engine, new Action(() => MainThreadDispatcher.OnUpdate(Restart))), false, true, false);
-            location.FastAddProperty("href", href, false, true, false);
-            location.FastAddProperty("protocol", protocol, false, true, false);
-            location.FastAddProperty("hostname", hostName, false, true, false);
-            location.FastAddProperty("origin", origin, false, true, false);
-            location.FastAddProperty("host", host, false, true, false);
-            location.FastAddProperty("port", port, false, true, false);
-            location.FastAddProperty("search", "", false, true, false);
-            location.FastAddProperty("pathname", pathName, false, true, false);
+            this.href = href;
+            this.protocol = protocol;
+            this.hostname = hostName;
+            this.origin = origin;
+            this.host = host;
+            this.port = port;
+            this.search = "";
+            this.pathname = pathName;
+            this.restart = restart;
+        }
 
-#if UNITY_EDITOR
-            engine.SetValue("WebSocket", typeof(WebSocketProxy));
-            engine.SetValue("XMLHttpRequest", typeof(XMLHttpRequest));
-            engine.Execute(@"(function() {
-  var oldXMLHttpRequest = XMLHttpRequest;
-  XMLHttpRequest = function() { return new oldXMLHttpRequest('" + origin + @"'); }
-})();");
-#endif
-            engine.SetValue("document", new DocumentProxy(unityContext, this, origin));
+        public void reload()
+        {
+            MainThreadDispatcher.OnUpdate(restart);
         }
     }
 }

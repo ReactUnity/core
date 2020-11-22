@@ -1,7 +1,9 @@
 using Facebook.Yoga;
 using Jint.Native.Function;
 using ReactUnity.Helpers;
+using ReactUnity.Interop;
 using ReactUnity.Styling;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -59,13 +61,13 @@ namespace ReactUnity.Components
         }
 
 
-        public override void SetEventListener(string eventName, FunctionInstance callback)
+        public override void SetEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onChange":
                     Toggle.onValueChanged.RemoveAllListeners();
-                    if (callback != null) Toggle.onValueChanged.AddListener(new UnityAction<bool>((x) => callback.Invoke(x)));
+                    if (callback != null) Toggle.onValueChanged.AddListener(new UnityAction<bool>((x) => callback.Call(x)));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);

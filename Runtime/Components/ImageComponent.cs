@@ -46,7 +46,7 @@ namespace ReactUnity.Components
                     SetFit((ImageFitMode)System.Convert.ToInt32(value));
                     return;
                 case "tint":
-                    Image.color = ColorConverter.FromJsValue(JsValue.FromObject(Context.Engine, value)) ?? Color.white;
+                    //Image.color = ColorConverter.FromJsValue(JsValue.FromObject(Context.Engine, value)) ?? Color.white;
                     return;
                 default:
                     base.SetProperty(propertyName, value);

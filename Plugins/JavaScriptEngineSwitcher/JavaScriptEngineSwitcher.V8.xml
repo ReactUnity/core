@@ -1,0 +1,322 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JavaScriptEngineSwitcher.V8</name>
+    </assembly>
+    <members>
+        <member name="T:JavaScriptEngineSwitcher.V8.JsEngineFactoryCollectionExtensions">
+            <summary>
+            JS engine factory collection extensions
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.JsEngineFactoryCollectionExtensions.AddV8(JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection)">
+            <summary>
+            Adds a instance of <see cref="T:JavaScriptEngineSwitcher.V8.V8JsEngineFactory"/> to
+            the specified <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" />
+            </summary>
+            <param name="source">Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></param>
+            <returns>Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.JsEngineFactoryCollectionExtensions.AddV8(JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection,System.Action{JavaScriptEngineSwitcher.V8.V8Settings})">
+            <summary>
+            Adds a instance of <see cref="T:JavaScriptEngineSwitcher.V8.V8JsEngineFactory"/> to
+            the specified <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" />
+            </summary>
+            <param name="source">Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></param>
+            <param name="configure">The delegate to configure the provided <see cref="T:JavaScriptEngineSwitcher.V8.V8Settings"/></param>
+            <returns>Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.JsEngineFactoryCollectionExtensions.AddV8(JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection,JavaScriptEngineSwitcher.V8.V8Settings)">
+            <summary>
+            Adds a instance of <see cref="T:JavaScriptEngineSwitcher.V8.V8JsEngineFactory"/> to
+            the specified <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" />
+            </summary>
+            <param name="source">Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></param>
+            <param name="settings">Settings of the V8 JS engine</param>
+            <returns>Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.V8.Resources.Strings">
+            <summary>
+            A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.Resources.Strings.ResourceManager">
+            <summary>
+            Returns a cached ResourceManager instance used by this class
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.Resources.Strings.Culture">
+            <summary>
+            Overrides a current thread's CurrentUICulture property for all
+            resource lookups using this strongly typed resource class
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.Resources.Strings.Usage_PrecompiledScriptNotAccepted">
+            <summary>
+            Looks up a localized string similar to "Pre-compiled script is not accepted. To be accepted, the pre-compiled script must have been created..."
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.V8.V8JsEngine">
+            <summary>
+            Adapter for the V8 JS engine (Microsoft ClearScript.V8)
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.V8.V8JsEngine.EngineName">
+            <summary>
+            Name of JS engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.V8.V8JsEngine.EngineVersion">
+            <summary>
+            Version of original JS engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.V8.V8JsEngine._jsEngine">
+            <summary>
+            V8 JS engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.V8.V8JsEngine._errorMessageWithTypeRegex">
+            <summary>
+            Regular expression for working with the error message with type
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.V8.V8JsEngine._libraryLoadErrorMessage">
+            <summary>
+            Regular expression for working with the library load error message
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.V8.V8JsEngine._nativeAssemblyPackageMap">
+            <summary>
+            Mapping of native assemblies and NuGet packages
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8JsEngine.#ctor">
+            <summary>
+            Constructs an instance of adapter for the V8 JS engine (Microsoft ClearScript.V8)
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8JsEngine.#ctor(JavaScriptEngineSwitcher.V8.V8Settings)">
+            <summary>
+            Constructs an instance of adapter for the V8 JS engine (Microsoft ClearScript.V8)
+            </summary>
+            <param name="settings">Settings of the V8 JS engine</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8JsEngine.MapToScriptType(System.Object)">
+            <summary>
+            Makes a mapping of value from the host type to a script type
+            </summary>
+            <param name="value">The source value</param>
+            <returns>The mapped value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8JsEngine.MapToHostType(System.Object)">
+            <summary>
+            Makes a mapping of value from the script type to a host type
+            </summary>
+            <param name="value">The source value</param>
+            <returns>The mapped value</returns>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8JsEngine.Name">
+            <summary>
+            Gets a name of JS engine
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8JsEngine.Version">
+            <summary>
+            Gets a version of original JS engine
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8JsEngine.SupportsScriptPrecompilation">
+            <summary>
+            Gets a value that indicates if the JS engine supports script pre-compilation
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8JsEngine.SupportsScriptInterruption">
+            <summary>
+            Gets a value that indicates if the JS engine supports script interruption
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8JsEngine.SupportsGarbageCollection">
+            <summary>
+            Gets a value that indicates if the JS engine supports garbage collection
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.V8.V8JsEngineFactory">
+            <summary>
+            V8 JS engine factory
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.V8.V8JsEngineFactory._settings">
+            <summary>
+            Settings of the V8 JS engine
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8JsEngineFactory.#ctor">
+            <summary>
+            Constructs an instance of the V8 JS engine factory
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8JsEngineFactory.#ctor(JavaScriptEngineSwitcher.V8.V8Settings)">
+            <summary>
+            Constructs an instance of the V8 JS engine factory
+            </summary>
+            <param name="settings">Settings of the V8 JS engine</param>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8JsEngineFactory.EngineName">
+            <summary>
+            Gets a name of JS engine
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8JsEngineFactory.CreateEngine">
+            <summary>
+            Creates a instance of the V8 JS engine
+            </summary>
+            <returns>Instance of the V8 JS engine</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.V8.V8PrecompiledScript">
+            <summary>
+            Represents a pre-compiled script that can be executed by different instances of the V8 JS engine
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8PrecompiledScript.Code">
+            <summary>
+            Gets a source code of the script
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8PrecompiledScript.CacheKind">
+            <summary>
+            Gets a kind of cache data to be generated
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8PrecompiledScript.CachedBytes">
+            <summary>
+            Gets a cached data for accelerated recompilation
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8PrecompiledScript.DocumentName">
+            <summary>
+            Gets a document name
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8PrecompiledScript.#ctor(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.String)">
+            <summary>
+            Constructs an instance of pre-compiled script
+            </summary>
+            <param name="code">The source code of the script</param>
+            <param name="cacheKind">The kind of cache data to be generated</param>
+            <param name="cachedBytes">Cached data for accelerated recompilation</param>
+            <param name="documentName">Document name</param>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8PrecompiledScript.EngineName">
+            <summary>
+            Gets a name of JS engine for which the pre-compiled script was created
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.V8.V8Settings">
+            <summary>
+            Settings of the V8 JS engine
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.AwaitDebuggerAndPauseOnStart">
+            <summary>
+            Gets or sets a flag for whether to the script engine is to wait for a debugger connection
+            and schedule a pause before executing the first line of application script code.
+            This property is ignored if value of the <see cref="P:JavaScriptEngineSwitcher.V8.V8Settings.EnableDebugging"/> property is false.
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.EnableDebugging">
+            <summary>
+            Gets or sets a flag for whether to enable script debugging features
+            (allows a TCP-based debugging)
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.EnableRemoteDebugging">
+            <summary>
+            Gets or sets a flag for whether to enable remote script debugging.
+            This property is ignored if value of the <see cref="P:JavaScriptEngineSwitcher.V8.V8Settings.EnableDebugging"/>
+            property is false.
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.DebugPort">
+            <summary>
+            Gets or sets a TCP port on which to listen for a debugger connection
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.DisableGlobalMembers">
+            <summary>
+            Gets or sets a flag for whether to disable global members
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.HeapSizeSampleInterval">
+            <summary>
+            Gets or sets a minimum time interval between consecutive heap size samples
+            </summary>
+            <remarks>
+            <para>
+            This property is effective only when heap size monitoring is enabled (see
+            <see cref="P:JavaScriptEngineSwitcher.V8.V8Settings.MaxHeapSize"/> property)
+            </para>
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.MaxExecutableSize">
+            <summary>
+            Gets or sets a maximum size of the executable code heap in mebibytes
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.MaxHeapSize">
+            <summary>
+            Gets or sets a soft limit for the size of the V8 runtime's heap in bytes
+            </summary>
+            <remarks>
+            <para>
+            When it is set to the default value, heap size monitoring is disabled, and
+            scripts with memory leaks or excessive memory usage can cause unrecoverable
+            errors and process termination.
+            </para>
+            <para>
+            A V8 runtime unconditionally terminates the process when it exceeds its resource
+            constraints. This property enables external heap size monitoring that can prevent
+            termination in some scenarios. To be effective, it should be set to a value that
+            is significantly lower than <see cref="P:JavaScriptEngineSwitcher.V8.V8Settings.MaxOldSpaceSize"/> property. Note that
+            enabling heap size monitoring results in slower script execution.
+            </para>
+            <para>
+            Exceeding this limit causes the V8 runtime to interrupt script execution and throw
+            an exception.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.MaxNewSpaceSize">
+            <summary>
+            Gets or sets a maximum size of the new object heap in mebibytes
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.MaxOldSpaceSize">
+            <summary>
+            Gets or sets a maximum size of the old object heap in mebibytes
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.V8.V8Settings.MaxStackUsage">
+            <summary>
+            Gets or sets a maximum amount by which the V8 runtime is permitted to grow
+            the stack during script execution in bytes
+            </summary>
+            <remarks>
+            <para>
+            When it is set to the default value, no stack usage limit is enforced, and
+            scripts with unchecked recursion or other excessive stack usage can cause
+            unrecoverable errors and process termination.
+            </para>
+            <para>
+            Note that the V8 runtime does not monitor stack usage while a host call is in progress.
+            Monitoring is resumed when control returns to the runtime.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.V8.V8Settings.#ctor">
+            <summary>
+            Constructs an instance of the V8 settings
+            </summary>
+        </member>
+    </members>
+</doc>

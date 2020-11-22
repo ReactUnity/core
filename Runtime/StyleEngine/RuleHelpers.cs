@@ -119,11 +119,11 @@ namespace ReactUnity.StyleEngine
             return (priority.Inlines << 24) + (priority.Ids << 16) + (priority.Classes * 8) + priority.Tags;
         }
 
-        public static Dictionary<string, object> GetRuleDic(StyleRule rule, bool important)
+        public static Dictionary<string, object> GetRuleDic(StyleDeclaration rule, bool important)
         {
             var dic = new Dictionary<string, object>();
 
-            foreach (var item in rule.Style.Where(x => !(important ^ x.IsImportant)))
+            foreach (var item in rule.Where(x => !(important ^ x.IsImportant)))
             {
                 var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
                 if (hasCssStyle)
@@ -142,17 +142,55 @@ namespace ReactUnity.StyleEngine
             return dic;
         }
 
-        public static List<LayoutValue> GetLayoutDic(StyleRule rule, bool important)
+        public static List<LayoutValue> GetLayoutDic(StyleDeclaration rule, bool important)
         {
             List<LayoutValue> dic = null;
 
-            foreach (var item in rule.Style.Where(x => !(important ^ x.IsImportant)))
+            foreach (var item in rule.Where(x => !(important ^ x.IsImportant)))
             {
                 var hasCssStyle = LayoutProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
                 if (hasCssStyle)
                 {
                     if (dic == null) dic = new List<LayoutValue>();
                     dic.Add(new LayoutValue(prop, prop.Parse(item.Value)));
+                }
+            }
+            return dic;
+        }
+
+        public static Dictionary<string, object> GetRuleDic(IEnumerable<KeyValuePair<string, object>> rule)
+        {
+            var dic = new Dictionary<string, object>();
+
+            foreach (var item in rule)
+            {
+                var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Key, out var prop);
+                if (hasCssStyle)
+                {
+                    var specialName = GetSpecialName(item.Value as string);
+                    object value;
+                    if (specialName == SpecialNames.Initial)
+                        value = prop.defaultValue;
+                    else
+                        value = prop.parser != null ? prop.parser.FromString(item.Value as string) : SpecialNames.CantParse;
+
+                    if (!Equals(value, SpecialNames.CantParse))
+                        dic[prop.name] = value;
+                }
+            }
+            return dic;
+        }
+        public static List<LayoutValue> GetLayoutDic(IEnumerable<KeyValuePair<string, object>> rule)
+        {
+            List<LayoutValue> dic = null;
+
+            foreach (var item in rule)
+            {
+                var hasCssStyle = LayoutProperties.CssPropertyMap.TryGetValue(item.Key, out var prop);
+                if (hasCssStyle)
+                {
+                    if (dic == null) dic = new List<LayoutValue>();
+                    dic.Add(new LayoutValue(prop, prop.Parse(item.Value as string)));
                 }
             }
             return dic;

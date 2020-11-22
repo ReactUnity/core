@@ -1,4 +1,5 @@
 
+using JavaScriptEngineSwitcher.Core;
 using Jint;
 using ReactUnity.Interop;
 using System;
@@ -10,10 +11,10 @@ namespace ReactUnity.DomProxies
 {
     public class ConsoleProxy
     {
-        Engine engine;
+        IJsEngine engine;
         static Regex replaceRegex = new Regex("%[dso]");
 
-        public ConsoleProxy(Engine engine)
+        public ConsoleProxy(IJsEngine engine)
         {
             this.engine = engine;
         }
@@ -63,8 +64,8 @@ namespace ReactUnity.DomProxies
         {
             GenericLog(msg, Debug.LogError, subs);
 
-            var lastNode = engine.GetLastSyntaxNode();
-            Debug.LogError($"Runtime exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
+            //var lastNode = engine.GetLastSyntaxNode();
+            //Debug.LogError($"Runtime exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
         }
 
         public void clear()

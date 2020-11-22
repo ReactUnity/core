@@ -22,11 +22,12 @@ namespace ReactUnity.StyleEngine
             var addedList = added.ToList();
             foreach (var leaf in addedList)
             {
+                var style = rule.Style;
                 if (leaf.Data == null) leaf.Data = new StyleData();
-                var dic = RuleHelpers.GetRuleDic(rule, false);
+                var dic = RuleHelpers.GetRuleDic(style, false);
                 leaf.Data.Rules.Add(dic);
 
-                var lay = RuleHelpers.GetLayoutDic(rule, false);
+                var lay = RuleHelpers.GetLayoutDic(style, false);
                 if (lay != null)
                 {
                     leaf.Data.Layouts.AddRange(lay);
@@ -36,8 +37,8 @@ namespace ReactUnity.StyleEngine
                 if (canBePseudo) LeafNodesForPseudos.InsertIntoSortedList(leaf);
 
 
-                var importantDic = RuleHelpers.GetRuleDic(rule, true);
-                var importantLay = RuleHelpers.GetLayoutDic(rule, true);
+                var importantDic = RuleHelpers.GetRuleDic(style, true);
+                var importantLay = RuleHelpers.GetLayoutDic(style, true);
                 if (importantDic.Count > 0 || importantLay != null)
                 {
                     var importantLeaf = leaf.AddChildCascading("** !");

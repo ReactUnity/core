@@ -1,6 +1,8 @@
 using Facebook.Yoga;
 using Jint.Native.Function;
+using ReactUnity.Interop;
 using ReactUnity.Styling;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -39,13 +41,13 @@ namespace ReactUnity.Components
         }
 
 
-        public override void SetEventListener(string eventName, FunctionInstance callback)
+        public override void SetEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onClick":
                     Button.onClick.RemoveAllListeners();
-                    if (callback != null) Button.onClick.AddListener(new UnityAction(() => callback.Invoke()));
+                    if (callback != null) Button.onClick.AddListener(new UnityAction(() => callback.Call(null)));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);

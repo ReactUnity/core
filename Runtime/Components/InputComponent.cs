@@ -1,7 +1,9 @@
 using Facebook.Yoga;
 using Jint.Native;
 using Jint.Native.Function;
+using ReactUnity.Interop;
 using ReactUnity.Styling;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -123,31 +125,31 @@ namespace ReactUnity.Components
         }
 
 
-        public override void SetEventListener(string eventName, FunctionInstance callback)
+        public override void SetEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onEndEdit":
                     InputField.onEndEdit.RemoveAllListeners();
-                    if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Call(x)));
                     return;
                 case "onSubmit":
                     InputField.onSubmit.RemoveAllListeners();
-                    if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Call(x)));
                     return;
                 case "onChange":
                     InputField.onValueChanged.RemoveAllListeners();
-                    if (callback != null) InputField.onValueChanged.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    if (callback != null) InputField.onValueChanged.AddListener(new UnityAction<string>(x => callback.Call(x)));
                     return;
                 case "onTextSelection":
                     InputField.onTextSelection.RemoveAllListeners();
                     if (callback != null) InputField.onTextSelection.AddListener(
-                        new UnityAction<string, int, int>((x, i, j) => callback.Invoke(x, i, j)));
+                        new UnityAction<string, int, int>((x, i, j) => callback.Call(new { x, i, j })));
                     return;
                 case "onEndTextSelection":
                     InputField.onEndTextSelection.RemoveAllListeners();
                     if (callback != null) InputField.onEndTextSelection.AddListener(
-                        new UnityAction<string, int, int>((x, i, j) => callback.Invoke(x, i, j)));
+                        new UnityAction<string, int, int>((x, i, j) => callback.Call(new { x, i, j })));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);
@@ -178,21 +180,21 @@ namespace ReactUnity.Components
                     InputField.richText = System.Convert.ToBoolean(value);
                     return;
                 case "contentType":
-                    InputField.contentType = (TMP_InputField.ContentType)System.Convert.ToInt32(value);
+                    InputField.contentType = (TMP_InputField.ContentType) System.Convert.ToInt32(value);
                     return;
                 case "keyboardType":
-                    InputField.keyboardType = (TouchScreenKeyboardType)System.Convert.ToInt32(value);
+                    InputField.keyboardType = (TouchScreenKeyboardType) System.Convert.ToInt32(value);
                     return;
                 case "lineType":
-                    InputField.lineType = (TMP_InputField.LineType)System.Convert.ToInt32(value);
+                    InputField.lineType = (TMP_InputField.LineType) System.Convert.ToInt32(value);
                     return;
                 case "validation":
-                    InputField.characterValidation = (TMP_InputField.CharacterValidation)System.Convert.ToInt32(value);
+                    InputField.characterValidation = (TMP_InputField.CharacterValidation) System.Convert.ToInt32(value);
                     return;
                 case "webSupport":
                     var enabled = System.Convert.ToBoolean(value);
                     var cmp = SetWebGLSupport(enabled);
-                    if (!enabled && cmp) Object.Destroy(cmp);
+                    if (!enabled && cmp) UnityEngine.Object.Destroy(cmp);
                     return;
                 default:
                     base.SetProperty(propertyName, value);

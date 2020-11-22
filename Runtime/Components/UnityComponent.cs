@@ -1,3 +1,4 @@
+using ExCSS;
 using Facebook.Yoga;
 using Jint.Native;
 using Jint.Native.Function;
@@ -10,7 +11,9 @@ using ReactUnity.Styling;
 using ReactUnity.Styling.Types;
 using ReactUnity.Types;
 using ReactUnity.Visitors;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,6 +40,7 @@ namespace ReactUnity.Components
         public YogaNode Layout { get; private set; }
         public NodeStyle Style { get; private set; }
         public StateStyles StateStyles { get; private set; }
+        public ExpandoObject Inline { get; private set; } = new ExpandoObject();
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
@@ -117,7 +121,7 @@ namespace ReactUnity.Components
         }
 
 
-        public virtual void SetEventListener(string eventName, FunctionInstance fun)
+        public virtual void SetEventListener(string eventName, Callback fun)
         {
             var eventType = EventHandlerMap.GetEventType(eventName);
             if (eventType == null) throw new System.Exception($"Unknown event name specified, '{eventName}'");
@@ -131,7 +135,7 @@ namespace ReactUnity.Components
 
             if (handler == null) handler = GameObject.AddComponent(eventType) as IEventHandler;
 
-            System.Action<BaseEventData> callAction = (e) => fun.Invoke(JsValue.FromObject(Context.Engine, e));
+            System.Action<BaseEventData> callAction = (e) => fun.Call(e);
             handler.OnEvent += callAction;
         }
 
@@ -159,12 +163,16 @@ namespace ReactUnity.Components
 
         public virtual void ResolveStyle(bool recursive = false)
         {
+            var inlineStyles = RuleHelpers.GetRuleDic(Inline);
+            var inlineLayouts = RuleHelpers.GetLayoutDic(Inline) ?? new List<LayoutValue>();
+
             var matchingRules = Context.StyleTree.GetMatchingRules(this, IsPseudoElement).ToList();
-            Style.CssStyles = matchingRules.SelectMany(x => x.Data?.Rules).ToList();
+            Style.CssStyles = matchingRules.SelectMany(x => x.Data?.Rules).Append(inlineStyles).ToList();
+
 
             if (Style.CssLayouts != null)
                 foreach (var item in Style.CssLayouts) item.SetDefault(Layout);
-            Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).ToList();
+            Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
             foreach (var item in Style.CssLayouts) item.Set(Layout);
 
             ApplyStyles();

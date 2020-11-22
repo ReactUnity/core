@@ -13,28 +13,33 @@ namespace ReactUnity.DomProxies
 
         public string binaryType = "blob";
 
-        public Action<WebSocketSharp.MessageEventArgs> onmessage
+        public dynamic onmessage
         {
-            set { OnMessage += (sender, e) => value?.Invoke(e); }
+            set { OnError += (sender, e) => { if (value != null) value(e); }; }
             get => null;
         }
 
-        public Action<WebSocketSharp.CloseEventArgs> onclose
+        public dynamic onclose
         {
-            set { OnClose += (sender, e) => value?.Invoke(e); }
+            set { OnError += (sender, e) => { if (value != null) value(e); }; }
             get => null;
         }
 
-        public Action<EventArgs> onopen
+        public dynamic onopen
         {
-            set { OnOpen += (sender, e) => value?.Invoke(e); }
+            set { OnError += (sender, e) => { if (value != null) value(e); }; }
             get => null;
         }
 
-        public Action<WebSocketSharp.ErrorEventArgs> onerror
+        public dynamic onerror
         {
-            set { OnError += (sender, e) => value?.Invoke(e); }
+            set { OnError += (sender, e) => { if (value != null) value(e); }; }
             get => null;
+        }
+
+        public WebSocketProxy(string url) : base(url, new string[] { "ws" })
+        {
+            ConnectAsync();
         }
 
         public WebSocketProxy(string url, params string[] protocols) : base(url, protocols)

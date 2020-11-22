@@ -16,6 +16,7 @@ namespace ReactUnity.Styling
         void SetDefault(YogaNode node);
         object Get(YogaNode node);
         object Parse(string value);
+        string Serialize(object value);
     }
 
     public class LayoutValue
@@ -68,8 +69,8 @@ namespace ReactUnity.Styling
             parser = ParserMap.GetParser(type);
 
             this.defaultValue = defaultValue;
-            setter = (Action<YogaNode, T>)propInfo.GetSetMethod().CreateDelegate(typeof(Action<YogaNode, T>));
-            getter = (Func<YogaNode, T>)propInfo.GetGetMethod().CreateDelegate(typeof(Func<YogaNode, T>));
+            setter = (Action<YogaNode, T>) propInfo.GetSetMethod().CreateDelegate(typeof(Action<YogaNode, T>));
+            getter = (Func<YogaNode, T>) propInfo.GetGetMethod().CreateDelegate(typeof(Func<YogaNode, T>));
         }
 
         public object Parse(string value)
@@ -79,7 +80,7 @@ namespace ReactUnity.Styling
 
         public void Set(YogaNode node, object value)
         {
-            setter(node, (T)value);
+            setter(node, (T) value);
         }
 
         public void SetDefault(YogaNode node)
@@ -90,6 +91,15 @@ namespace ReactUnity.Styling
         public object Get(YogaNode node)
         {
             return getter(node);
+        }
+
+        public string Serialize(object value)
+        {
+            if (value is string s)
+            {
+                return s;
+            }
+            return "";
         }
     }
 
@@ -154,8 +164,8 @@ namespace ReactUnity.Styling
         public static ILayoutProperty BorderStartWidth = new LayoutProperty<float>("BorderStartWidth", true);
         public static ILayoutProperty BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true);
 
-        public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>();
-        public static Dictionary<string, ILayoutProperty> CssPropertyMap = new Dictionary<string, ILayoutProperty>()
+        public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.OrdinalIgnoreCase);
+        public static Dictionary<string, ILayoutProperty> CssPropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.OrdinalIgnoreCase)
         {
             { "direction", StyleDirection },
             { "flex-wrap", Wrap },
@@ -173,6 +183,7 @@ namespace ReactUnity.Styling
             {
                 var prop = style.GetValue(type) as ILayoutProperty;
                 PropertyMap[style.Name] = prop;
+                CssPropertyMap[style.Name] = prop;
                 CssPropertyMap[PascalToKebabCase(style.Name)] = prop;
             }
 

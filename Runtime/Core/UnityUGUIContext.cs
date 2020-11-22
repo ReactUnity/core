@@ -8,12 +8,13 @@ using ReactUnity.Interop;
 using ExCSS;
 using System.Linq;
 using ReactUnity.StyleEngine;
+using JavaScriptEngineSwitcher.Core;
 
 namespace ReactUnity
 {
     public class UnityUGUIContext
     {
-        public Engine Engine { get; }
+        public IJsEngine Engine { get; }
         public HostComponent Host { get; }
         public StringObjectDictionary NamedAssets { get; private set; }
         public YogaNode RootLayoutNode { get; }
@@ -25,7 +26,7 @@ namespace ReactUnity
         public StylesheetParser Parser;
         public StyleTree StyleTree;
 
-        public UnityUGUIContext(RectTransform hostElement, Engine engine, StringObjectDictionary assets, ReactScript script)
+        public UnityUGUIContext(RectTransform hostElement, IJsEngine engine, StringObjectDictionary assets, ReactScript script)
         {
             Engine = engine;
             NamedAssets = assets;

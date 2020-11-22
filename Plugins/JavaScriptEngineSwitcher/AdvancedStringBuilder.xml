@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AdvancedStringBuilder</name>
+    </assembly>
+    <members>
+        <member name="T:AdvancedStringBuilder.DefaultStringBuilderPool">
+            <summary>
+            Provides a default implementation of the string builder pool.
+            </summary>
+        </member>
+        <member name="F:AdvancedStringBuilder.DefaultStringBuilderPool.DefaultInitialBuilderCapacity">
+            <summary>
+            The default initial capacity of builder.
+            </summary>
+        </member>
+        <member name="F:AdvancedStringBuilder.DefaultStringBuilderPool.DefaultMaxBuilderCapacity">
+            <summary>
+            The default maximum capacity of builder.
+            </summary>
+        </member>
+        <member name="F:AdvancedStringBuilder.DefaultStringBuilderPool.BuilderCountPerProcessor">
+            <summary>
+            Number of builders per processor.
+            </summary>
+        </member>
+        <member name="F:AdvancedStringBuilder.DefaultStringBuilderPool._initialBuilderCapacity">
+            <summary>
+            Initial capacity of builder.
+            </summary>
+        </member>
+        <member name="F:AdvancedStringBuilder.DefaultStringBuilderPool._maxBuilderCapacity">
+            <summary>
+            Maximum capacity of builder.
+            </summary>
+        </member>
+        <member name="F:AdvancedStringBuilder.DefaultStringBuilderPool._firstBuilder">
+            <summary>
+            First builder.
+            </summary>
+            <remarks>
+            The first builder is stored in a dedicated field, because we expect to be able to satisfy
+            most requests from it.
+            </remarks>
+        </member>
+        <member name="F:AdvancedStringBuilder.DefaultStringBuilderPool._builders">
+            <summary>
+            Array of the retained builders.
+            </summary>
+        </member>
+        <member name="M:AdvancedStringBuilder.DefaultStringBuilderPool.#ctor">
+            <summary>
+            Constructs an instance of the default pool of string builders using the default configuration settings.
+            </summary>
+        </member>
+        <member name="M:AdvancedStringBuilder.DefaultStringBuilderPool.#ctor(System.Int32)">
+            <summary>
+            Constructs an instance of the default pool of string builders using the specified pool size.
+            </summary>
+            <param name="poolSize">Maximum number of builders stored in the pool.</param>
+        </member>
+        <member name="M:AdvancedStringBuilder.DefaultStringBuilderPool.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Constructs an instance of the default pool of string builders using the specified capacity settings.
+            </summary>
+            <param name="initialBuilderCapacity">Initial capacity of builder.</param>
+            <param name="maxBuilderCapacity">Maximum capacity of builder.</param>
+        </member>
+        <member name="M:AdvancedStringBuilder.DefaultStringBuilderPool.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Constructs an instance of the default pool of string builders using the specified capacity settings and
+            pool size.
+            </summary>
+            <param name="initialBuilderCapacity">Initial capacity of builder.</param>
+            <param name="maxBuilderCapacity">Maximum capacity of builder.</param>
+            <param name="poolSize">Maximum number of builders stored in the pool.</param>
+        </member>
+        <member name="T:AdvancedStringBuilder.Resources.Strings">
+            <summary>
+            A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:AdvancedStringBuilder.Resources.Strings.ResourceManager">
+            <summary>
+            Returns a cached ResourceManager instance used by this class
+            </summary>
+        </member>
+        <member name="P:AdvancedStringBuilder.Resources.Strings.Culture">
+            <summary>
+            Overrides a current thread's CurrentUICulture property for all
+            resource lookups using this strongly typed resource class
+            </summary>
+        </member>
+        <member name="P:AdvancedStringBuilder.Resources.Strings.ArgumentOutOfRange_InitialBuilderCapacityGreaterThanMaxBuilderCapacity">
+            <summary>
+            Looks up a localized string similar to "Initial capacity of builder must be less than or equal to the maximum capacity - {0}."
+            </summary>
+        </member>
+        <member name="P:AdvancedStringBuilder.Resources.Strings.ArgumentOutOfRange_InitialBuilderCapacityNonPositive">
+            <summary>
+            Looks up a localized string similar to "Initial capacity of builder must be a positive value."
+            </summary>
+        </member>
+        <member name="P:AdvancedStringBuilder.Resources.Strings.ArgumentOutOfRange_MaxBuilderCapacityNonPositive">
+            <summary>
+            Looks up a localized string similar to "Maximum capacity of builder must be a positive value."
+            </summary>
+        </member>
+        <member name="P:AdvancedStringBuilder.Resources.Strings.ArgumentOutOfRange_PoolSizeNonPositive">
+            <summary>
+            Looks up a localized string similar to "Pool size must be a positive value."
+            </summary>
+        </member>
+        <member name="T:AdvancedStringBuilder.StringBuilderExtensions">
+            <summary>
+            Extensions for StringBuilder
+            </summary>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.String,System.Object)">
+            <summary>
+            Appends the string returned by processing a composite format string, which contains zero or more
+            format items, with default line terminator to this instance.
+            Each format item is replaced by the string representation of a single argument.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">An object to format.</param>
+            <returns>A reference to this instance with <paramref name="format"/> and default line terminator
+            appended. Each format item in <paramref name="format"/> is replaced by the string representation
+            of <paramref name="arg0"/>.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.String,System.Object,System.Object)">
+            <summary>
+            Appends the string returned by processing a composite format string, which contains zero or more
+            format items, with default line terminator to this instance. Each format item is replaced by the
+            string representation of either of two arguments.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">The first object to format.</param>
+            <param name="arg1">The second object to format.</param>
+            <returns>A reference to this instance with <paramref name="format"/> and default line terminator
+            appended. Each format item in <paramref name="format"/> is replaced by the string representation
+            of the corresponding object argument.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Appends the string returned by processing a composite format string, which contains zero or more
+            format items, with default line terminator to this instance. Each format item is replaced by the
+            string representation of either of three arguments.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">The first object to format.</param>
+            <param name="arg1">The second object to format.</param>
+            <param name="arg2">The third object to format.</param>
+            <returns>A reference to this instance with <paramref name="format"/> and default line terminator
+            appended. Each format item in <paramref name="format"/> is replaced by the string representation
+            of the corresponding object argument.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.String,System.Object[])">
+            <summary>
+            Appends the string returned by processing a composite format string, which contains zero or more
+            format items, with default line terminator to this instance.
+            Each format item is replaced by the string representation of a corresponding argument in a
+            parameter array.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">An array of objects to format.</param>
+            <returns>A reference to this instance with <paramref name="format"/> and default line terminator
+            appended. Each format item in <paramref name="format"/> is replaced by the string representation
+            of the corresponding object argument.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.IFormatProvider,System.String,System.Object)">
+            <summary>
+            Appends the string returned by processing a composite format string, which contains zero or more
+            format items, with default line terminator to this instance. Each format item is replaced by the
+            string representation of a single argument using a specified format provider.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <param name="provider">An object that supplies culture-specific formatting information.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">The object to format.</param>
+            <returns>A reference to this instance after the append operation has completed. After the append
+            operation, this instance contains any data that existed before the operation, suffixed by a copy
+            of <paramref name="format"/> in which any format specification is replaced by the string
+            representation of <paramref name="arg0"/>, and default line terminator.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.IFormatProvider,System.String,System.Object,System.Object)">
+            <summary>
+            Appends the string returned by processing a composite format string, which contains zero or more
+            format items, with default line terminator to this instance. Each format item is replaced by the
+            string representation of either of two arguments using a specified format provider.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <param name="provider">An object that supplies culture-specific formatting information.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">The first object to format.</param>
+            <param name="arg1">The second object to format.</param>
+            <returns>A reference to this instance after the append operation has completed. After the append
+            operation, this instance contains any data that existed before the operation, suffixed by a copy
+            of <paramref name="format"/> where any format specification is replaced by the string representation
+            of the corresponding object argument, and default line terminator.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.IFormatProvider,System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Appends the string returned by processing a composite format string, which contains zero or more
+            format items, with default line terminator to this instance. Each format item is replaced by the
+            string representation of either of three arguments using a specified format provider.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <param name="provider">An object that supplies culture-specific formatting information.</param>
+            <param name="format">A composite format string.</param>
+            <param name="arg0">The first object to format.</param>
+            <param name="arg1">The second object to format.</param>
+            <param name="arg2">The third object to format.</param>
+            <returns>A reference to this instance after the append operation has completed. After the append
+            operation, this instance contains any data that existed before the operation, suffixed by a copy
+            of <paramref name="format"/> where any format specification is replaced by the string representation
+            of the corresponding object argument, and default line terminator.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.AppendFormatLine(System.Text.StringBuilder,System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Appends the string returned by processing a composite format string, which contains zero or more
+            format items, with default line terminator to this instance. Each format item is replaced by the
+            string representation of a corresponding argument in a parameter array using a specified format
+            provider.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <param name="provider">An object that supplies culture-specific formatting information.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">An array of objects to format.</param>
+            <returns>A reference to this instance after the append operation has completed. After the append
+            operation, this instance contains any data that existed before the operation, suffixed by a copy
+            of <paramref name="format"/> where any format specification is replaced by the string representation
+            of the corresponding object argument, and default line terminator.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.TrimStart(System.Text.StringBuilder)">
+            <summary>
+            Removes the all leading white-space characters from the current <see cref="T:System.Text.StringBuilder"/> instance.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <returns>Instance of <see cref="T:System.Text.StringBuilder"/> without leading white-space characters.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderExtensions.TrimEnd(System.Text.StringBuilder)">
+            <summary>
+            Removes the all trailing white-space characters from the current <see cref="T:System.Text.StringBuilder"/> instance.
+            </summary>
+            <param name="source">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+            <returns>Instance of <see cref="T:System.Text.StringBuilder"/> without trailing white-space characters.</returns>
+        </member>
+        <member name="T:AdvancedStringBuilder.StringBuilderPool">
+            <summary>
+            Provides a resource pool that enables reusing instances of type <see cref="T:System.Text.StringBuilder"/>.
+            </summary>
+        </member>
+        <member name="F:AdvancedStringBuilder.StringBuilderPool.s_sharedInstance">
+            <summary>
+            The lazily-initialized shared pool instance.
+            </summary>
+        </member>
+        <member name="P:AdvancedStringBuilder.StringBuilderPool.Shared">
+            <summary>
+            Retrieves a shared <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance.
+            </summary>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderPool.EnsureSharedCreated">
+            <summary>
+            Ensures that <see cref="F:AdvancedStringBuilder.StringBuilderPool.s_sharedInstance"/> has been initialized to a pool and returns it.
+            </summary>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderPool.Create">
+            <summary>
+            Creates a new <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance using the default configuration settings.
+            </summary>
+            <returns>A new <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderPool.Create(System.Int32)">
+            <summary>
+            Creates a new <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance using the specified pool size.
+            </summary>
+            <param name="poolSize">Maximum number of builders stored in the pool.</param>
+            <returns>A new <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance with the specified pool size.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderPool.Create(System.Int32,System.Int32)">
+            <summary>
+            Creates a new <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance using the specified capacity settings.
+            </summary>
+            <param name="initialBuilderCapacity">Initial capacity of builder.</param>
+            <param name="maxBuilderCapacity">Maximum capacity of builder.</param>
+            <returns>A new <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance with the specified capacity settings.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderPool.Create(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance using the specified capacity settings and
+            pool size.
+            </summary>
+            <param name="initialBuilderCapacity">Initial capacity of builder.</param>
+            <param name="maxBuilderCapacity">Maximum capacity of builder.</param>
+            <param name="poolSize">Maximum number of builders stored in the pool.</param>
+            <returns>A new <see cref="T:AdvancedStringBuilder.StringBuilderPool"/> instance with the specified capacity settings and
+            pool size.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderPool.Rent">
+            <summary>
+            Retrieves a instance of <see cref="T:System.Text.StringBuilder"/> from the pool.
+            </summary>
+            <returns>Instance of <see cref="T:System.Text.StringBuilder"/>.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderPool.Rent(System.Int32)">
+            <summary>
+            Retrieves a instance of <see cref="T:System.Text.StringBuilder"/> with at least the given capacity from the pool.
+            </summary>
+            <remarks>
+            If the capacity is less than or equal to our maximum capacity, then return builder from the pool.
+            Otherwise create a new string builder, that will just get discarded when released.
+            </remarks>
+            <param name="capacity">Capacity of string builder.</param>
+            <returns>Instance of <see cref="T:System.Text.StringBuilder"/>.</returns>
+        </member>
+        <member name="M:AdvancedStringBuilder.StringBuilderPool.Return(System.Text.StringBuilder)">
+            <summary>
+            Returns a instance of <see cref="T:System.Text.StringBuilder"/> to the pool.
+            </summary>
+            <param name="builder">Instance of <see cref="T:System.Text.StringBuilder"/>.</param>
+        </member>
+    </members>
+</doc>

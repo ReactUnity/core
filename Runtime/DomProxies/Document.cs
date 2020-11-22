@@ -9,19 +9,6 @@ namespace ReactUnity.DomProxies
 {
     public class DocumentProxy
     {
-        public class HeadProxy
-        {
-            public void appendChild(IDomElementProxy child)
-            {
-                child.OnAppend();
-            }
-
-            public void removeChild(IDomElementProxy child)
-            {
-                child.OnRemove();
-            }
-        }
-
         public HeadProxy head;
         public string origin;
         public Action<string> execute;
@@ -65,13 +52,31 @@ namespace ReactUnity.DomProxies
     {
         void OnAppend();
         void OnRemove();
+
+        void setAttribute(object key, object value);
+        void removeAttribute(object key);
+
+        void appendChild(string text);
+        void removeChild(string text);
     }
 
     public abstract class DomElementProxyBase
     {
         public void setAttribute(object key, object value) { }
-
         public void removeAttribute(object key) { }
+    }
+
+    public class HeadProxy : DomElementProxyBase
+    {
+        public void appendChild(IDomElementProxy child)
+        {
+            child.OnAppend();
+        }
+
+        public void removeChild(IDomElementProxy child)
+        {
+            child.OnRemove();
+        }
     }
 
     public class ScriptProxy : DomElementProxyBase, IDomElementProxy
@@ -83,12 +88,17 @@ namespace ReactUnity.DomProxies
         public Action<ScriptProxy> onload = null;
 
         public DocumentProxy document;
-        public DocumentProxy.HeadProxy parentNode;
+        public HeadProxy parentNode;
 
         public ScriptProxy(DocumentProxy document)
         {
             this.document = document;
             parentNode = document.head;
+        }
+
+        public void appendChild(string text)
+        {
+            throw new NotImplementedException();
         }
 
         public void OnAppend()
@@ -111,6 +121,11 @@ namespace ReactUnity.DomProxies
         {
             Debug.LogError("Trying to remove script but I don't know what to do");
         }
+
+        public void removeChild(string text)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class StyleProxy : DomElementProxyBase, IDomElementProxy
@@ -123,7 +138,7 @@ namespace ReactUnity.DomProxies
         public bool enabled;
 
         public DocumentProxy document;
-        public DocumentProxy.HeadProxy parentNode;
+        public HeadProxy parentNode;
 
         public StyleProxy(DocumentProxy document)
         {

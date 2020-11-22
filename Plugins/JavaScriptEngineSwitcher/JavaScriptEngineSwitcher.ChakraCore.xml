@@ -1,0 +1,3125 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JavaScriptEngineSwitcher.ChakraCore</name>
+    </assembly>
+    <members>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine">
+            <summary>
+            Adapter for the ChakraCore JS engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.EngineName">
+            <summary>
+            Name of JS engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.EngineVersion">
+            <summary>
+            Version of original JS engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine._jsRuntime">
+            <summary>
+            Instance of JS runtime
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine._jsContext">
+            <summary>
+            Instance of JS context
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine._jsSourceContext">
+            <summary>
+            JS source context
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine._typeMapper">
+            <summary>
+            Type mapper
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine._promiseContinuationCallback">
+            <summary>
+            Callback for continuation of promise
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine._dispatcher">
+            <summary>
+            Script dispatcher
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine._documentNameManager">
+            <summary>
+            Unique document name manager
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.#ctor">
+            <summary>
+            Constructs an instance of adapter for the ChakraCore JS engine
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.#ctor(JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings)">
+            <summary>
+            Constructs an instance of adapter for the ChakraCore JS engine
+            </summary>
+            <param name="settings">Settings of the ChakraCore JS engine</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.Finalize">
+            <summary>
+            Destructs an instance of adapter for the ChakraCore JS engine
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.AddReferenceToValue(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Adds a reference to the value
+            </summary>
+            <param name="value">The value</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.RemoveReferenceToValue(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Removes a reference to the value
+            </summary>
+            <param name="value">The value</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.CanHaveReferences(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Checks whether the value can have references
+            </summary>
+            <param name="value">The value</param>
+            <returns>Result of check (true - may have; false - may not have)</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.PromiseContinuationCallback(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.IntPtr)">
+            <summary>
+            The promise continuation callback
+            </summary>
+            <param name="task">The task, represented as a JavaScript function</param>
+            <param name="callbackState">The data argument to be passed to the callback</param>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.Name">
+            <summary>
+            Gets a name of JS engine
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.Version">
+            <summary>
+            Gets a version of original JS engine
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.SupportsScriptPrecompilation">
+            <summary>
+            Gets a value that indicates if the JS engine supports script pre-compilation
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.SupportsScriptInterruption">
+            <summary>
+            Gets a value that indicates if the JS engine supports script interruption
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.SupportsGarbageCollection">
+            <summary>
+            Gets a value that indicates if the JS engine supports garbage collection
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.Dispose">
+            <summary>
+            Destroys object
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngine.Dispose(System.Boolean)">
+            <summary>
+            Destroys object
+            </summary>
+            <param name="disposing">Flag, allowing destruction of
+            managed objects contained in fields of class</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory">
+            <summary>
+            ChakraCore JS engine factory
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory._settings">
+            <summary>
+            Settings of the ChakraCore JS engine
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory.#ctor">
+            <summary>
+            Constructs an instance of the ChakraCore JS engine factory
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory.#ctor(JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings)">
+            <summary>
+            Constructs an instance of the ChakraCore JS engine factory
+            </summary>
+            <param name="settings">Settings of the ChakraCore JS engine</param>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory.EngineName">
+            <summary>
+            Gets a name of JS engine
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory.CreateEngine">
+            <summary>
+            Creates a instance of the ChakraCore JS engine
+            </summary>
+            <returns>Instance of the ChakraCore JS engine</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript">
+            <summary>
+            Represents a pre-compiled script that can be executed by different instances of the ChakraCore JS engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript._code">
+            <summary>
+            Source code of the script
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript._parseAttributes">
+            <summary>
+            Attribute mask for parsing the script
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript._cachedBytes">
+            <summary>
+            Cached data for accelerated recompilation
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript._documentName">
+            <summary>
+            Document name
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript._loadScriptSourceCodeCallback">
+            <summary>
+            Callback to load the source code of the serialized script
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript._codeBytes">
+            <summary>
+            Source code of the script as an array of bytes
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript._scriptLoadingSynchronizer">
+            <summary>
+            Synchronizer of the script source code loading
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript.Code">
+            <summary>
+            Gets a source code of the script
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript.ParseAttributes">
+            <summary>
+            Gets a attribute mask for parsing the script
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript.CachedBytes">
+            <summary>
+            Gets a cached data for accelerated recompilation
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript.DocumentName">
+            <summary>
+            Gets a document name
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript.LoadScriptSourceCodeCallback">
+            <summary>
+            Gets a callback to load the source code of the serialized script
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript.#ctor(System.String,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes,System.Byte[],System.String)">
+            <summary>
+            Constructs an instance of pre-compiled script
+            </summary>
+            <param name="code">The source code of the script</param>
+            <param name="parseAttributes">Attribute mask for parsing the script</param>
+            <param name="cachedBytes">Cached data for accelerated recompilation</param>
+            <param name="documentName">Document name</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript.LoadScriptSourceCode(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue@,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes@)">
+            <summary>
+            Loads a source code of the serialized script
+            </summary>
+            <param name="sourceContext">A cookie identifying the script that can be used
+            by debuggable script contexts</param>
+            <param name="value">The script returned</param>
+            <param name="parseAttributes">Attribute mask for parsing the script</param>
+            <returns>true if the operation succeeded, false otherwise</returns>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCorePrecompiledScript.EngineName">
+            <summary>
+            Gets a name of JS engine for which the pre-compiled script was created
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings">
+            <summary>
+            Settings of the ChakraCore JS engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.STACK_SIZE_32">
+            <summary>
+            The stack size is sufficient to run the code of modern JavaScript libraries in 32-bit process
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.STACK_SIZE_64">
+            <summary>
+            The stack size is sufficient to run the code of modern JavaScript libraries in 64-bit process
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings._maxStackSize">
+            <summary>
+            The maximum stack size in bytes
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.DisableBackgroundWork">
+            <summary>
+            Gets or sets a flag for whether to disable any background work (such as garbage collection)
+            on background threads
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.DisableEval">
+            <summary>
+            Gets or sets a flag for whether to disable calls of <code>eval</code> function
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.DisableExecutablePageAllocation">
+            <summary>
+            Gets or sets a flag for whether to disable executable page allocation
+            </summary>
+            <remarks>
+            <para>
+            This also implies that Native Code generation will be turned off.
+            </para>
+            <para>
+            Note that this will break JavaScript stack decoding in tools like WPA since they
+            rely on allocation of unique thunks to interpret each function and allocation of
+            those thunks will be disabled as well.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.DisableFatalOnOOM">
+            <summary>
+            Gets or sets a flag for whether to disable Failfast fatal error on OOM
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.DisableNativeCodeGeneration">
+            <summary>
+            Gets or sets a flag for whether to disable native code generation
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.EnableExperimentalFeatures">
+            <summary>
+            Gets or sets a flag for whether to enable all experimental features
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.MaxStackSize">
+            <summary>
+            Gets or sets a maximum stack size in bytes
+            </summary>
+            <remarks>
+            <para>Set a <code>0</code> to use the default maximum stack size specified in the header
+            for the executable.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.MemoryLimit">
+            <summary>
+            Gets or sets a current memory limit for a runtime in bytes
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings.#ctor">
+            <summary>
+            Constructs an instance of the ChakraCore settings
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.Constants.DllName">
+            <summary>
+            DLL names
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.Helpers.EncodingHelpers">
+            <summary>
+            Encoding helpers
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.Helpers.NumericHelpers">
+            <summary>
+            Numeric helpers
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.Helpers.NumericHelpers.IsNumericType(System.Type)">
+            <summary>
+            Gets a value indicating whether the specified type is one of the numeric types
+            </summary>
+            <param name="type">The type</param>
+            <returns>true if the specified type is one of the numeric types; otherwise, false</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.Helpers.NumericHelpers.CastDoubleValueToCorrectType(System.Double)">
+            <summary>
+            Casts a double value to the correct type
+            </summary>
+            <param name="value">Double value</param>
+            <returns>Numeric value with the correct type</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.Helpers.ReflectionHelpers">
+            <summary>
+            Reflection helpers
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Helpers.ReflectionHelpers.MethodWithMetadata.CompatibilityScore">
+            TODO: In future will need to change type to <code>double</code>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsEngineFactoryCollectionExtensions">
+            <summary>
+            JS engine factory collection extensions
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsEngineFactoryCollectionExtensions.AddChakraCore(JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection)">
+            <summary>
+            Adds a instance of <see cref="T:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory"/> to
+            the specified <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" />
+            </summary>
+            <param name="source">Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></param>
+            <returns>Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsEngineFactoryCollectionExtensions.AddChakraCore(JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection,System.Action{JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings})">
+            <summary>
+            Adds a instance of <see cref="T:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory"/> to
+            the specified <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" />
+            </summary>
+            <param name="source">Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></param>
+            <param name="configure">The delegate to configure the provided <see cref="T:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings"/></param>
+            <returns>Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsEngineFactoryCollectionExtensions.AddChakraCore(JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection,JavaScriptEngineSwitcher.ChakraCore.ChakraCoreSettings)">
+            <summary>
+            Adds a instance of <see cref="T:JavaScriptEngineSwitcher.ChakraCore.ChakraCoreJsEngineFactory"/> to
+            the specified <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" />
+            </summary>
+            <param name="source">Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></param>
+            <param name="settings">Settings of the ChakraCore JS engine</param>
+            <returns>Instance of <see cref="T:JavaScriptEngineSwitcher.Core.JsEngineFactoryCollection" /></returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.DefaultExternalBufferFinalizeCallback">
+            <summary>
+            Default callback for finalization of external buffer
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.DefaultExternalBufferFinalizeCallback.Instance">
+            <summary>
+            Gets a instance of default callback for finalization of external buffer
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem">
+            <summary>
+            Embedded item
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem._hostType">
+            <summary>
+            Host type
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem._hostObject">
+            <summary>
+            Instance of host type
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem._scriptValue">
+            <summary>
+            JavaScript value created from an host item
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem._nativeFunctions">
+            <summary>
+            List of native functions, that used to access to members of host item
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem._disposedFlag">
+            <summary>
+            Flag indicating whether this object is disposed
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem.HostType">
+            <summary>
+            Gets a host type
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem.HostObject">
+            <summary>
+            Gets a instance of host type
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem.ScriptValue">
+            <summary>
+            Gets a JavaScript value created from an host item
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem.NativeFunctions">
+            <summary>
+            Gets a list of native functions, that used to access to members of host item
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem.IsInstance">
+            <summary>
+            Gets a value that indicates if the host item is an instance
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem.#ctor(System.Type,System.Object,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.Collections.Generic.IList{JavaScriptEngineSwitcher.ChakraCore.JsRt.JsNativeFunction})">
+            <summary>
+            Constructs an instance of the embedded item
+            </summary>
+            <param name="hostType">Host type</param>
+            <param name="hostObject">Instance of host type</param>
+            <param name="scriptValue">JavaScript value created from an host item</param>
+            <param name="nativeFunctions">List of native functions, that used to access to members of host item</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedItem.Dispose">
+            <summary>
+            Disposes the embedded item
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedObject">
+            <summary>
+            Embedded object
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedObject.#ctor(System.Object,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Constructs an instance of the embedded object
+            </summary>
+            <param name="hostObject">Instance of host type</param>
+            <param name="scriptValue">JavaScript value created from an host object</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedObject.#ctor(System.Object,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.Collections.Generic.IList{JavaScriptEngineSwitcher.ChakraCore.JsRt.JsNativeFunction})">
+            <summary>
+            Constructs an instance of the embedded object
+            </summary>
+            <param name="hostObject">Instance of host type</param>
+            <param name="scriptValue">JavaScript value created from an host object</param>
+            <param name="nativeFunctions">List of native functions, that used to access to members of host object</param>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedObject.IsInstance">
+            <summary>
+            Gets a value that indicates if the host item is an instance
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedObjectKey">
+            <summary>
+            Key for storage of embedded objects
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedObjectKey.HostTypeName">
+            <summary>
+            Name of host type
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedObjectKey.HostObject">
+            <summary>
+            Instance of host type
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedObjectKey.#ctor(System.Object)">
+            <summary>
+            Constructs an instance of the key for storage of embedded objects
+            </summary>
+            <param name="hostObject">Instance of host type</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedType">
+            <summary>
+            Embedded type
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedType.#ctor(System.Type,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Constructs an instance of the embedded type
+            </summary>
+            <param name="hostType">Host type</param>
+            <param name="scriptValue">JavaScript value created from an host type</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedType.#ctor(System.Type,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.Collections.Generic.IList{JavaScriptEngineSwitcher.ChakraCore.JsRt.JsNativeFunction})">
+            <summary>
+            Constructs an instance of the embedded type
+            </summary>
+            <param name="hostType">Host type</param>
+            <param name="scriptValue">JavaScript value created from an host type</param>
+            <param name="nativeFunctions">List of native functions, that used to access to members of type</param>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.Embedding.EmbeddedType.IsInstance">
+            <summary>
+            Gets a value that indicates if the host item is an instance
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsBackgroundWorkItemCallback">
+            <summary>
+            The background work item callback
+            </summary>
+            <remarks>
+            This is passed to the host's thread service (if provided) to allow the host to
+            invoke the work item callback on the background thread of its choice.
+            </remarks>
+            <param name="callbackData">Data argument passed to the thread service</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsBeforeCollectCallback">
+            <summary>
+            The callback called before collection
+            </summary>
+            <param name="callbackState">The state passed to SetBeforeCollectCallback</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext">
+            <summary>
+            The script context
+            </summary>
+            <remarks>
+            <para>
+            Each script context contains its own global object, distinct from the global object in
+            other script contexts.
+            </para>
+            <para>
+            Many Chakra hosting APIs require an "active" script context, which can be set using
+            Current. Chakra hosting APIs that require a current context to be set will note
+            that explicitly in their documentation.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext._reference">
+            <summary>
+            The reference
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.Invalid">
+            <summary>
+            Gets a invalid context
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.Current">
+            <summary>
+            Gets or sets a current script context on the thread
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.HasException">
+            <summary>
+            Gets a value indicating whether the runtime of the current context is in an exception state
+            </summary>
+            <remarks>
+            <para>
+            If a call into the runtime results in an exception (either as the result of running a
+            script or due to something like a conversion failure), the runtime is placed into an
+            "exception state." All calls into any context created by the runtime (except for the
+            exception APIs) will fail with <c>InExceptionState</c> until the exception is
+            cleared.
+            </para>
+            <para>
+            If the runtime of the current context is in the exception state when a callback returns
+            into the engine, the engine will automatically rethrow the exception.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.Runtime">
+            <summary>
+            Gets a runtime that the context belongs to
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.IsValid">
+            <summary>
+            Gets a value indicating whether the context is a valid context or not
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.#ctor(System.IntPtr)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext"/> struct
+            </summary>
+            <param name="reference">The reference</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.Idle">
+            <summary>
+            Tells the runtime to do any idle processing it need to do
+            </summary>
+            <remarks>
+            <para>
+            If idle processing has been enabled for the current runtime, calling <c>Idle</c> will
+            inform the current runtime that the host is idle and that the runtime can perform
+            memory cleanup tasks.
+            </para>
+            <para>
+            <c>Idle</c> will also return the number of system ticks until there will be more idle work
+            for the runtime to do. Calling <c>Idle</c> before this number of ticks has passed will do
+            no work.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <returns>
+            The next system tick when there will be more idle work to do. Returns the
+            maximum number of ticks if there no upcoming idle work to do.
+            </returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.ParseScript(System.String,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,System.String,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes@)">
+            <summary>
+            Parses a script and returns a function representing the script
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="script">The script to parse</param>
+            <param name="sourceContext">A cookie identifying the script that can be used
+            by debuggable script contexts</param>
+            <param name="sourceUrl">The location the script came from</param>
+            <param name="parseAttributes">Attribute mask for parsing the script</param>
+            <returns>A function representing the script code</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.ParseSerializedScript(System.String,System.Byte[],JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSerializedLoadScriptCallback,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,System.String)">
+            <summary>
+            Parses a serialized script and returns a function representing the script
+            </summary>
+            <remarks>
+            <para>Requires an active script context.</para>
+            <para>The runtime will hold on to the buffer until all instances of any functions created from
+            the buffer are garbage collected.</para>
+            </remarks>
+            <param name="script">The script to parse</param>
+            <param name="buffer">The serialized script</param>
+            <param name="scriptLoadCallback">Callback to load the source code of the serialized script</param>
+            <param name="sourceContext">A cookie identifying the script that can be used
+            by debuggable script contexts</param>
+            <param name="sourceUrl">The location the script came from</param>
+            <returns>A function representing the script code</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.RunScript(System.String,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,System.String,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes@)">
+            <summary>
+            Executes a script
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="script">The script to run</param>
+            <param name="sourceContext">A cookie identifying the script that can be used
+            by debuggable script contexts</param>
+            <param name="sourceUrl">The location the script came from</param>
+            <param name="parseAttributes">Attribute mask for parsing the script</param>
+            <returns>The result of the script, if any</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.RunSerializedScript(System.String,System.Byte[],JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSerializedLoadScriptCallback,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,System.String)">
+            <summary>
+            Runs a serialized script
+            </summary>
+            <remarks>
+            <para>Requires an active script context.</para>
+            <para>The runtime will detach the data from the buffer and hold on to it until all
+            instances of any functions created from the buffer are garbage collected.</para>
+            </remarks>
+            <param name="script">The source code of the serialized script</param>
+            <param name="buffer">The serialized script</param>
+            <param name="scriptLoadCallback">Callback to load the source code of the serialized script</param>
+            <param name="sourceContext">A cookie identifying the script that can be used
+            by debuggable script contexts</param>
+            <param name="sourceUrl">The location the script came from</param>
+            <returns>The result of running the script, if any</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.SerializeScript(System.String,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes@)">
+            <summary>
+            Serializes a parsed script to a buffer than can be reused
+            </summary>
+            <remarks>
+            <para>
+            <c>SerializeScript</c> parses a script and then stores the parsed form of the script in a
+            runtime-independent format. The serialized script then can be deserialized in any
+            runtime without requiring the script to be re-parsed.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <param name="script">The script to serialize</param>
+            <param name="parseAttributes">Attribute mask for parsing the script</param>
+            <returns>The buffer to put the serialized script into</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.GetAndClearException">
+            <summary>
+            Returns a exception that caused the runtime of the current context to be in the
+            exception state and resets the exception state for that runtime
+            </summary>
+            <remarks>
+            <para>
+            If the runtime of the current context is not in an exception state, this API will throw
+            <see cref="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InvalidArgument"/>. If the runtime is disabled, this will return
+            an exception indicating that the script was terminated, but it will not clear the exception
+            (the exception will be cleared if the runtime is re-enabled using
+            <c>JsEnableRuntimeExecution</c>).
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <returns>The exception for the runtime of the current context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.GetAndClearExceptionWithMetadata">
+            <summary>
+            Returns a metadata relating to the exception that caused the runtime of the current context
+            to be in the exception state and resets the exception state for that runtime. The metadata
+            includes a reference to the exception itself.
+            </summary>
+            <remarks>
+            <para>
+            If the runtime of the current context is not in an exception state, this API will throw
+            <see cref="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InvalidArgument"/>. If the runtime is disabled, this will return
+            an exception indicating that the script was terminated, but it will not clear the exception
+            (the exception will be cleared if the runtime is re-enabled using
+            <c>JsEnableRuntimeExecution</c>).
+            </para>
+            <para>
+            The metadata value is a javascript object with the following properties: <c>exception</c>, the
+            thrown exception object; <c>line</c>, the 0 indexed line number where the exception was thrown;
+            <c>column</c>, the 0 indexed column number where the exception was thrown; <c>length</c>, the
+            source-length of the cause of the exception; <c>source</c>, a string containing the line of
+            source code where the exception was thrown; and <c>url</c>, a string containing the name of
+            the script file containing the code that threw the exception.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <returns>The exception metadata for the runtime of the current context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.SetException(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Sets a runtime of the current context to an exception state
+            </summary>
+            <remarks>
+            <para>
+            If the runtime of the current context is already in an exception state, this API will
+            throw <c>JsErrorInExceptionState</c>.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <param name="exception">The JavaScript exception to set for the runtime of the current context</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.SetPromiseContinuationCallback(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPromiseContinuationCallback,System.IntPtr)">
+            <summary>
+            Sets a promise continuation callback function that is called by the context when a task
+            needs to be queued for future execution
+            </summary>
+            <remarks>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <param name="promiseContinuationCallback">The callback function being set</param>
+            <param name="callbackState">User provided state that will be passed back to the callback</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.AddRef">
+            <summary>
+            Adds a reference to a script context
+            </summary>
+            <remarks>
+            Calling AddRef ensures that the context will not be freed until Release is called.
+            </remarks>
+            <returns>The object's new reference count</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext.Release">
+            <summary>
+            Releases a reference to a script context
+            </summary>
+            <remarks>
+            Removes a reference to a context that was created by AddRef.
+            </remarks>
+            <returns>The object's new reference count</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsEngineException">
+            <summary>
+            The exception that occurred in the workings of the JavaScript engine itself
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsEngineException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsEngineException"/> class
+            </summary>
+            <param name="errorCode">The error code returned</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsEngineException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsEngineException"/> class
+            with a specified error message
+            </summary>
+            <param name="errorCode">The error code returned</param>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsEngineException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsEngineException"/> class with serialized data
+            </summary>
+            <param name="info">The object that holds the serialized data</param>
+            <param name="context">The contextual information about the source or destination</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode">
+            <summary>
+            The error code returned from a Chakra hosting API
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.NoError">
+            <summary>
+            Success error code
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CategoryUsage">
+            <summary>
+            Category of errors that relates to incorrect usage of the API itself
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InvalidArgument">
+            <summary>
+            An argument to a hosting API was invalid
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.NullArgument">
+            <summary>
+            An argument to a hosting API was null in a context where null is not allowed
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.NoCurrentContext">
+            <summary>
+            The hosting API requires that a context be current, but there is no current context
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InExceptionState">
+            <summary>
+            The engine is in an exception state and no APIs can be called until the exception is
+            cleared
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.NotImplemented">
+            <summary>
+            A hosting API is not yet implemented
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.WrongThread">
+            <summary>
+            A hosting API was called on the wrong thread
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.RuntimeInUse">
+            <summary>
+            A runtime that is still in use cannot be disposed
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.BadSerializedScript">
+            <summary>
+            A bad serialized script was used, or the serialized script was serialized by a
+            different version of the Chakra engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InDisabledState">
+            <summary>
+            The runtime is in a disabled state
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CannotDisableExecution">
+            <summary>
+            Runtime does not support reliable script interruption
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.HeapEnumInProgress">
+            <summary>
+            A heap enumeration is currently underway in the script context
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.ArgumentNotObject">
+            <summary>
+            A hosting API that operates on object values was called with a non-object value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InProfileCallback">
+            <summary>
+            A script context is in the middle of a profile callback
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InThreadServiceCallback">
+            <summary>
+            A thread service callback is currently underway
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CannotSerializeDebugScript">
+            <summary>
+            Scripts cannot be serialized in debug contexts
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.AlreadyDebuggingContext">
+            <summary>
+            The context cannot be put into a debug state because it is already in a debug state
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.AlreadyProfilingContext">
+            <summary>
+            The context cannot start profiling because it is already profiling
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.IdleNotEnabled">
+            <summary>
+            Idle notification given when the host did not enable idle processing
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CannotSetProjectionEnqueueCallback">
+            <summary>
+            The context did not accept the enqueue callback
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CannotStartProjection">
+            <summary>
+            Failed to start projection
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InObjectBeforeCollectCallback">
+            <summary>
+            The operation is not supported in an object before collect callback
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.ObjectNotInspectable">
+            <summary>
+            Object cannot be unwrapped to IInspectable pointer
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.PropertyNotSymbol">
+            <summary>
+            A hosting API that operates on symbol property ids but was called with a non-symbol property id.
+            The error code is returned by JsGetSymbolFromPropertyId if the function is called with non-symbol property id.
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.PropertyNotString">
+            <summary>
+            A hosting API that operates on string property ids but was called with a non-string property id.
+            The error code is returned by existing JsGetPropertyNamefromId if the function is called with non-string property id.
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InvalidContext">
+            <summary>
+            Module evaluation is called in wrong context
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.InvalidModuleHostInfoKind">
+            <summary>
+            Module evaluation is called in wrong context
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.ModuleParsed">
+            <summary>
+            Module was parsed already when JsParseModuleSource is called
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.NoWeakRefRequired">
+            <summary>
+            Argument passed to JsCreateWeakReference is a primitive that is not managed by the GC.
+            No weak reference is required, the value will never be collected.
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.PromisePending">
+            <summary>
+            The <c>Promise</c> object is still in the pending state
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.ModuleNotEvaluated">
+            <summary>
+            Module was not yet evaluated when <c>JsGetModuleNamespace</c> was called
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CategoryEngine">
+            <summary>
+            Category of errors that relates to errors occurring within the engine itself
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.OutOfMemory">
+            <summary>
+            The Chakra engine has run out of memory
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.BadFPUState">
+            <summary>
+            The Chakra engine failed to set the Floating Point Unit state
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CategoryScript">
+            <summary>
+            Category of errors that relates to errors in a script
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.ScriptException">
+            <summary>
+            A JavaScript exception occurred while running a script
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.ScriptCompile">
+            <summary>
+            JavaScript failed to compile
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.ScriptTerminated">
+            <summary>
+            A script was terminated due to a request to suspend a runtime
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.ScriptEvalDisabled">
+            <summary>
+            A script was terminated because it tried to use <c>eval</c> or <c>function</c> and eval
+            was disabled
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CategoryFatal">
+            <summary>
+            Category of errors that are fatal and signify failure of the engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.Fatal">
+            <summary>
+            A fatal error in the engine has occurred
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.WrongRuntime">
+            <summary>
+            A hosting API was called with object created on different javascript runtime
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.CategoryDiagError">
+            <summary>
+            Category of errors that are related to failures during diagnostic operations
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.DiagAlreadyInDebugMode">
+            <summary>
+            The object for which the debugging API was called was not found
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.DiagNotInDebugMode">
+            <summary>
+            The debugging API can only be called when VM is in debug mode
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.DiagNotAtBreak">
+            <summary>
+            The debugging API can only be called when VM is at a break
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.DiagInvalidHandle">
+            <summary>
+            Debugging API was called with an invalid handle.
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.DiagObjectNotFound">
+            <summary>
+            The object for which the debugging API was called was not found
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode.DiagUnableToPerformAction">
+            <summary>
+            VM was unable to perform the request action
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorHelpers">
+            <summary>
+            Error helpers
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorHelpers.ThrowIfError(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode)">
+            <summary>
+            Throws if a native method returns an error code
+            </summary>
+            <param name="errorCode">The error code</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorHelpers.CreateError(System.String)">
+            <summary>
+            Creates a new JavaScript error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">The message that describes the error</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorHelpers.CreateRangeError(System.String)">
+            <summary>
+            Creates a new JavaScript RangeError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">The message that describes the error</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorHelpers.CreateReferenceError(System.String)">
+            <summary>
+            Creates a new JavaScript ReferenceError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">The message that describes the error</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorHelpers.CreateSyntaxError(System.String)">
+            <summary>
+            Creates a new JavaScript SyntaxError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">The message that describes the error</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorHelpers.CreateTypeError(System.String)">
+            <summary>
+            Creates a new JavaScript TypeError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">The message that describes the error</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorHelpers.CreateUriError(System.String)">
+            <summary>
+            Creates a new JavaScript URIError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">The message that describes the error</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException">
+            <summary>
+            The exception returned from the Chakra engine
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException._errorCode">
+            <summary>
+            The error code
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException.ErrorCode">
+            <summary>
+            Gets a error code
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException"/> class
+            </summary>
+            <param name="errorCode">The error code returned</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException"/> class
+            with a specified error message
+            </summary>
+            <param name="errorCode">The error code returned</param>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException"/> class with serialized data
+            </summary>
+            <param name="info">The object that holds the serialized data</param>
+            <param name="context">The contextual information about the source or destination</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data</param>
+            <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFatalException">
+            <summary>
+            The fatal exception occurred
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFatalException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFatalException"/> class
+            </summary>
+            <param name="errorCode">The error code returned</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFatalException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFatalException"/> class
+            with a specified error message
+            </summary>
+            <param name="errorCode">The error code returned</param>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFatalException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFatalException"/> class with serialized data
+            </summary>
+            <param name="info">The object that holds the serialized data</param>
+            <param name="context">The contextual information about the source or destination</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFinalizeCallback">
+            <summary>
+            A finalizer callback
+            </summary>
+            <param name="data">The external data that was passed in when creating the object being finalized</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsMemoryAllocationCallback">
+            <summary>
+            User implemented callback routine for memory allocation events
+            </summary>
+            <param name="callbackState">The state passed to SetRuntimeMemoryAllocationCallback</param>
+            <param name="allocationEvent">The type of type allocation event</param>
+            <param name="allocationSize">The size of the allocation</param>
+            <returns>For the Allocate event, returning true allows the runtime to continue with
+            allocation. Returning false indicates the allocation request is rejected. The return value
+            is ignored for other allocation events.</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsMemoryEventType">
+            <summary>
+            Allocation callback event type
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsMemoryEventType.Allocate">
+            <summary>
+            Indicates a request for memory allocation
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsMemoryEventType.Free">
+            <summary>
+            Indicates a memory freeing event
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsMemoryEventType.Failure">
+            <summary>
+            Indicates a failed allocation event
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsNativeFunction">
+            <summary>
+            The function callback
+            </summary>
+            <param name="callee">The <c>Function</c> object that represents the function being invoked</param>
+            <param name="isConstructCall">Indicates whether this is a regular call or a 'new' call</param>
+            <param name="arguments">The arguments to the call</param>
+            <param name="argumentCount">The number of arguments</param>
+            <param name="callbackData">Callback data, if any</param>
+            <returns>The result of the call, if any</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsObjectBeforeCollectCallback">
+            <summary>
+            The callback called before collecting an object
+            </summary>
+            <remarks>
+            Use <c>JsSetObjectBeforeCollectCallback</c> to register this callback
+            </remarks>
+            <param name="reference">The object to be collected</param>
+            <param name="callbackState">The state passed to <c>JsSetObjectBeforeCollectCallback</c></param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes">
+            <summary>
+            Attribute mask for JsParseScriptWithAttributes
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes.None">
+            <summary>
+            Default attribute
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes.LibraryCode">
+            <summary>
+            Specified script is internal and non-user code.
+            Hidden from debugger.
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsParseScriptAttributes.ArrayBufferIsUtf16Encoded">
+            <summary>
+            ChakraCore assumes ExternalArrayBuffer is Utf8 by default.
+            This one needs to be set for Utf16.
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPromiseContinuationCallback">
+            <summary>
+            The promise continuation callback
+            </summary>
+            <remarks>
+            The host can specify a promise continuation callback in <c>JsSetPromiseContinuationCallback</c>. If
+            a script creates a task to be run later, then the promise continuation callback will be called with
+            the task and the task should be put in a FIFO queue, to be run when the current script is
+            done executing.
+            </remarks>
+            <param name="task">The task, represented as a JavaScript function</param>
+            <param name="callbackState">The data argument to be passed to the callback</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId">
+            <summary>
+            The property identifier
+            </summary>
+            <remarks>
+            Property identifiers are used to refer to properties of JavaScript objects instead of using
+            strings.
+            </remarks>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId._id">
+            <summary>
+            The id
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.Invalid">
+            <summary>
+            Gets a invalid ID
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.Name">
+            <summary>
+            Gets a name associated with the property ID
+            </summary>
+            <remarks>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.#ctor(System.IntPtr)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId"/> struct
+            </summary>
+            <param name="id">The ID</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.FromString(System.String)">
+            <summary>
+            Gets a property ID associated with the name
+            </summary>
+            <remarks>
+            <para>
+            Property IDs are specific to a context and cannot be used across contexts.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <param name="name">The name of the property ID to get or create.
+            The name may consist of only digits.</param>
+            <returns>The property ID in this runtime for the given name</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.op_Equality(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId)">
+            <summary>
+            The equality operator for property IDs
+            </summary>
+            <param name="left">The first property ID to compare</param>
+            <param name="right">The second property ID to compare</param>
+            <returns>Whether the two property IDs are the same</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.op_Inequality(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId)">
+            <summary>
+            The inequality operator for property IDs
+            </summary>
+            <param name="left">The first property ID to compare</param>
+            <param name="right">The second property ID to compare</param>
+            <returns>Whether the two property IDs are not the same</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.Equals(System.Object)">
+            <summary>
+            Checks for equality between property IDs
+            </summary>
+            <param name="obj">The other property ID to compare</param>
+            <returns>Whether the two property IDs are the same</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.GetHashCode">
+            <summary>
+            The hash code
+            </summary>
+            <returns>The hash code of the property ID</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.ToString">
+            <summary>
+            Converts the property ID to a string
+            </summary>
+            <returns>The name of the property ID</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId.Equals(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId)">
+            <summary>
+            Checks for equality between property IDs
+            </summary>
+            <param name="other">The other property ID to compare</param>
+            <returns>Whether the two property IDs are the same</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyIdType">
+            <summary>
+            Type enumeration of a JavaScript property
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyIdType.String">
+            <summary>
+            String property
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyIdType.Symbol">
+            <summary>
+            Symbol property
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime">
+            <summary>
+            The Chakra runtime
+            </summary>
+            <remarks>
+            <para>
+            Each Chakra runtime has its own independent execution engine, JIT compiler, and garbage
+            collected heap. As such, each runtime is completely isolated from other runtimes.
+            </para>
+            <para>
+            Runtimes can be used on any thread, but only one thread can call into a runtime at any
+            time.
+            </para>
+            <para>
+            NOTE: A JavaScriptRuntime, unlike other objects in the Chakra hosting API, is not
+            garbage collected since it contains the garbage collected heap itself. A runtime will
+            continue to exist until Dispose is called.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime._handle">
+            <summary>
+            The handle
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.IsValid">
+            <summary>
+            Gets a value indicating whether the runtime is valid
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.MemoryUsage">
+            <summary>
+            Gets a current memory usage for a runtime
+            </summary>
+            <remarks>
+            Memory usage can be always be retrieved, regardless of whether or not the runtime is active
+            on another thread.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.MemoryLimit">
+            <summary>
+            Gets or sets a current memory limit for a runtime
+            </summary>
+            <remarks>
+            The memory limit of a runtime can be always be retrieved, regardless of whether or not the
+            runtime is active on another thread.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.Disabled">
+            <summary>
+            Gets or sets a value indicating whether script execution is disabled in the runtime
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.Create">
+            <summary>
+            Creates a new runtime
+            </summary>
+            <returns>The runtime created</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.Create(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes)">
+            <summary>
+            Creates a new runtime
+            </summary>
+            <param name="attributes">The attributes of the runtime to be created</param>
+            <returns>The runtime created</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.Create(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsThreadServiceCallback)">
+            <summary>
+            Creates a new runtime
+            </summary>
+            <param name="attributes">The attributes of the runtime to be created</param>
+            <param name="threadServiceCallback">The thread service for the runtime. Can be null</param>
+            <returns>The runtime created</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.CollectGarbage">
+            <summary>
+            Performs a full garbage collection
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.SetMemoryAllocationCallback(System.IntPtr,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsMemoryAllocationCallback)">
+            <summary>
+            Sets a memory allocation callback for specified runtime
+            </summary>
+            <remarks>
+            <para>
+            Registering a memory allocation callback will cause the runtime to call back to the host
+            whenever it acquires memory from, or releases memory to, the OS. The callback routine is
+            called before the runtime memory manager allocates a block of memory. The allocation will
+            be rejected if the callback returns false. The runtime memory manager will also invoke the
+            callback routine after freeing a block of memory, as well as after allocation failures.
+            </para>
+            <para>
+            The callback is invoked on the current runtime execution thread, therefore execution is
+            blocked until the callback completes.
+            </para>
+            <para>
+            The return value of the callback is not stored; previously rejected allocations will not
+            prevent the runtime from invoking the callback again later for new memory allocations.
+            </para>
+            </remarks>
+            <param name="callbackState">
+            User provided state that will be passed back to the callback.
+            </param>
+            <param name="allocationCallback">
+            Memory allocation callback to be called for memory allocation events.
+            </param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.SetBeforeCollectCallback(System.IntPtr,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsBeforeCollectCallback)">
+            <summary>
+            Sets a callback function that is called by the runtime before garbage collection
+            </summary>
+            <remarks>
+            <para>
+            The callback is invoked on the current runtime execution thread, therefore execution is
+            blocked until the callback completes.
+            </para>
+            <para>
+            The callback can be used by hosts to prepare for garbage collection. For example, by
+            releasing unnecessary references on Chakra objects.
+            </para>
+            </remarks>
+            <param name="callbackState">User provided state that will be passed back to the callback</param>
+            <param name="beforeCollectCallback">The callback function being set</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.CreateContext">
+            <summary>
+            Creates a script context for running scripts
+            </summary>
+            <remarks>
+            Each script context has its own global object that is isolated from all other script
+            contexts.
+            </remarks>
+            <returns>The created script context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntime.Dispose">
+            <summary>
+            Disposes a runtime
+            </summary>
+            <remarks>
+            Once a runtime has been disposed, all resources owned by it are invalid and cannot be used.
+            If the runtime is active (i.e. it is set to be current on a particular thread), it cannot
+            be disposed.
+            </remarks>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes">
+            <summary>
+            Attributes of a runtime
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.None">
+            <summary>
+            No special attributes
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.DisableBackgroundWork">
+            <summary>
+            The runtime will not do any work (such as garbage collection) on background threads
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.AllowScriptInterrupt">
+            <summary>
+            The runtime should support reliable script interruption. This increases the number of
+            places where the runtime will check for a script interrupt request at the cost of a
+            small amount of runtime performance.
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.EnableIdleProcessing">
+            <summary>
+            Host will call Idle, so enable idle processing. Otherwise, the runtime will manage
+            memory slightly more aggressively.
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.DisableNativeCodeGeneration">
+            <summary>
+            Runtime will not generate native code
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.DisableEval">
+            <summary>
+            Using Eval or Function constructor will throw an exception
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.EnableExperimentalFeatures">
+            <summary>
+            Runtime will enable all experimental features
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.DispatchSetExceptionsToDebugger">
+            <summary>
+            Calling <c>JsSetException</c> will also dispatch the exception to the script debugger
+            (if any) giving the debugger a chance to break on the exception
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.DisableFatalOnOOM">
+            <summary>
+            Disable Failfast fatal error on OOM
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsRuntimeAttributes.DisableExecutablePageAllocation">
+            <summary>
+            Runtime will not allocate executable code pages.
+            This also implies that Native Code generation will be turned off.
+            Note that this will break JavaScript stack decoding in tools like WPA since they
+            rely on allocation of unique thunks to interpret each function and allocation of
+            those thunks will be disabled as well.
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScope">
+            <summary>
+            The scope automatically sets a context to current and resets the original context
+            when disposed
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScope._previousContext">
+            <summary>
+            The previous context
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScope._disposed">
+            <summary>
+            Whether the structure has been disposed
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScope.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScope"/> struct
+            </summary>
+            <param name="context">The context to create the scope for</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScope.Dispose">
+            <summary>
+            Disposes the scope and sets the previous context to current
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException">
+            <summary>
+            The script exception
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException._metadata">
+            <summary>
+            The error metadata
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException.Metadata">
+            <summary>
+            Gets a JavaScript object representing the error metadata
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException"/> class
+            </summary>
+            <param name="errorCode">The error code returned</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException"/> class
+            </summary>
+            <param name="errorCode">The error code returned</param>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException"/> class
+            with a specified error message
+            </summary>
+            <param name="errorCode">The error code returned</param>
+            <param name="metadata">The JavaScript error metadata</param>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsScriptException"/> class with serialized data
+            </summary>
+            <param name="info">The object that holds the serialized data</param>
+            <param name="context">The contextual information about the source or destination</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSerializedLoadScriptCallback">
+            <summary>
+            Called by the runtime to load the source code of the serialized script
+            </summary>
+            <param name="sourceContext">A cookie identifying the script that can be used
+            by debuggable script contexts</param>
+            <param name="value">The script returned</param>
+            <param name="parseAttributes">Attribute mask for parsing the script</param>
+            <returns>true if the operation succeeded, false otherwise</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSerializedScriptLoadSourceCallback">
+            <summary>
+            Called by the runtime to load the source code of the serialized script.
+            The caller must keep the script buffer valid until the JsSerializedScriptUnloadCallback.
+            </summary>
+            <param name="sourceContext">The context passed to Js[Parse|Run]SerializedScriptWithCallback</param>
+            <param name="scriptBuffer">The script returned</param>
+            <returns>true if the operation succeeded, false otherwise</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSerializedScriptUnloadCallback">
+            <summary>
+            Called by the runtime when it is finished with all resources related to the script execution.
+            The caller should free the source if loaded, the byte code, and the context at this time.
+            </summary>
+            <param name="sourceContext">The context passed to Js[Parse|Run]SerializedScriptWithCallback</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext">
+            <summary>
+            The cookie that identifies a script for debugging purposes
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext._context">
+            <summary>
+            The context
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.None">
+            <summary>
+            Gets a empty source context
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.#ctor(System.IntPtr)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext"/> struct
+            </summary>
+            <param name="context">The context</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.op_Equality(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext)">
+            <summary>
+            The equality operator for source contexts
+            </summary>
+            <param name="left">The first source context to compare</param>
+            <param name="right">The second source context to compare</param>
+            <returns>Whether the two source contexts are the same</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.op_Inequality(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext)">
+            <summary>
+            The inequality operator for source contexts
+            </summary>
+            <param name="left">The first source context to compare</param>
+            <param name="right">The second source context to compare</param>
+            <returns>Whether the two source contexts are not the same</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.op_Subtraction(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,System.Int32)">
+            <summary>
+            Subtracts a offset from the value of the source context
+            </summary>
+            <param name="context">The source context to subtract the offset from</param>
+            <param name="offset">The offset to subtract</param>
+            <returns>The new source context that reflects the subtraction of the offset from the context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.Subtract(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,System.Int32)">
+            <summary>
+            Subtracts a offset from the value of the source context
+            </summary>
+            <param name="left">The source context to subtract the offset from</param>
+            <param name="right">The offset to subtract</param>
+            <returns>The new source context that reflects the subtraction of the offset from the context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.op_Decrement(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext)">
+            <summary>
+            Decrements a value of the source context
+            </summary>
+            <param name="context">The source context to decrement</param>
+            <returns>The new source context that reflects the decrementing of the context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.Decrement(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext)">
+            <summary>
+            Decrements a value of the source context
+            </summary>
+            <param name="left">The source context to decrement</param>
+            <returns>The new source context that reflects the decrementing of the context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.op_Addition(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,System.Int32)">
+            <summary>
+            Adds a offset from the value of the source context
+            </summary>
+            <param name="context">The source context to add the offset to</param>
+            <param name="offset">The offset to add</param>
+            <returns>The new source context that reflects the addition of the offset to the context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.Add(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext,System.Int32)">
+            <summary>
+            Adds a offset from the value of the source context
+            </summary>
+            <param name="left">The source context to add the offset to</param>
+            <param name="right">The offset to add</param>
+            <returns>The new source context that reflects the addition of the offset to the context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.op_Increment(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext)">
+            <summary>
+            Increments a value of the source context
+            </summary>
+            <param name="context">The source context to increment</param>
+            <returns>A new source context that reflects the incrementing of the context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.Increment(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext)">
+            <summary>
+            Increments a value of the source context
+            </summary>
+            <param name="left">The source context to increment</param>
+            <returns>The new source context that reflects the incrementing of the context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.FromIntPtr(System.IntPtr)">
+            <summary>
+            Creates a new source context
+            </summary>
+            <param name="cookie">The cookie for the source context</param>
+            <returns>The new source context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.Equals(System.Object)">
+            <summary>
+            Checks for equality between source contexts
+            </summary>
+            <param name="obj">The other source context to compare</param>
+            <returns>Whether the two source contexts are the same</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.GetHashCode">
+            <summary>
+            The hash code
+            </summary>
+            <returns>The hash code of the source context</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext.Equals(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsSourceContext)">
+            <summary>
+            Checks for equality between source contexts
+            </summary>
+            <param name="other">The other source context to compare</param>
+            <returns>Whether the two source contexts are the same</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsThreadServiceCallback">
+            <summary>
+            The thread service callback
+            </summary>
+            <remarks>
+            The host can specify a background thread service when creating a runtime. If
+            specified, then background work items will be passed to the host using this callback. The
+            host is expected to either begin executing the background work item immediately and return
+            true or return false and the runtime will handle the work item in-thread.
+            </remarks>
+            <param name="callbackFunction">The callback for the background work item</param>
+            <param name="callbackData">The data argument to be passed to the callback</param>
+            <returns>Whether the thread service will execute the callback</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType">
+            <summary>
+            The type of a typed JavaScript array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Int8">
+            <summary>
+            An int8 array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Uint8">
+            <summary>
+            An uint8 array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Uint8Clamped">
+            <summary>
+            An uint8 clamped array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Int16">
+            <summary>
+            An int16 array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Uint16">
+            <summary>
+            An uint16 array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Int32">
+            <summary>
+            An int32 array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Uint32">
+            <summary>
+            An uint32 array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Float32">
+            <summary>
+            A float32 array
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsTypedArrayType.Float64">
+            <summary>
+            A float64 array
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsUsageException">
+            <summary>
+            The API usage exception occurred
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsUsageException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsUsageException"/> class
+            </summary>
+            <param name="errorCode">The error code returned</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsUsageException.#ctor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsErrorCode,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsUsageException"/> class
+            with a specified error message
+            </summary>
+            <param name="errorCode">The error code returned</param>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsUsageException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsUsageException"/> class with serialized data
+            </summary>
+            <param name="info">The object that holds the serialized data</param>
+            <param name="context">The contextual information about the source or destination</param>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue">
+            <summary>
+            The JavaScript value
+            </summary>
+            <remarks>
+            The JavaScript value is one of the following types of values: Undefined, Null, Boolean,
+            String, Number, or Object.
+            </remarks>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue._reference">
+            <summary>
+            The reference
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.Invalid">
+            <summary>
+            Gets a invalid value
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.Undefined">
+            <summary>
+            Gets a value of <c>undefined</c> in the current script context
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.Null">
+            <summary>
+            Gets a value of <c>null</c> in the current script context
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.True">
+            <summary>
+            Gets a value of <c>true</c> in the current script context
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.False">
+            <summary>
+            Gets a value of <c>false</c> in the current script context
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.GlobalObject">
+            <summary>
+            Gets a global object in the current script context
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.IsValid">
+            <summary>
+            Gets a value indicating whether the value is valid
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ValueType">
+            <summary>
+            Gets a JavaScript type of the value
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>The type of the value</returns>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.StringLength">
+            <summary>
+            Gets a length of a <c>String</c> value
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>The length of the string</returns>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.Prototype">
+            <summary>
+            Gets or sets a prototype of an object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.IsExtensionAllowed">
+            <summary>
+            Gets a value indicating whether an object is extensible or not
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.HasExternalData">
+            <summary>
+            Gets a value indicating whether an object is an external object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ExternalData">
+            <summary>
+            Gets or sets a data in an external object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ArrayBufferBytes">
+            <summary>
+            Gets a bytes from an <c>ArrayBuffer</c>
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.#ctor(System.IntPtr)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue"/> struct
+            </summary>
+            <param name="reference">The reference</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.FromBoolean(System.Boolean)">
+            <summary>
+            Creates a <c>Boolean</c> value from a <c>bool</c> value
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="value">The value to be converted</param>
+            <returns>The converted value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.FromDouble(System.Double)">
+            <summary>
+            Creates a <c>Number</c> value from a <c>double</c> value
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="value">The value to be converted</param>
+            <returns>The new <c>Number</c> value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.FromInt32(System.Int32)">
+            <summary>
+            Creates a <c>Number</c> value from a <c>int</c> value
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="value">The value to be converted</param>
+            <returns>The new <c>Number</c> value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.FromString(System.String)">
+            <summary>
+            Creates a <c>String</c> value from a string pointer
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="value">The string to convert to a <c>String</c> value</param>
+            <returns>The new <c>String</c> value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateObject">
+            <summary>
+            Creates a new <c>Object</c>
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>The new <c>Object</c></returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateExternalObject(System.IntPtr,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsFinalizeCallback)">
+            <summary>
+            Creates a new <c>Object</c> that stores some external data
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="data">External data that the object will represent. May be null.</param>
+            <param name="finalizer">The callback for when the object is finalized. May be null.</param>
+            <returns>The new <c>Object</c></returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateFunction(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsNativeFunction)">
+            <summary>
+            Creates a new JavaScript function
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="function">The method to call when the function is invoked</param>
+            <returns>The new function object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateFunction(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsNativeFunction,System.IntPtr)">
+            <summary>
+            Creates a new JavaScript function
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="function">The method to call when the function is invoked</param>
+            <param name="callbackData">Data to be provided to all function callbacks</param>
+            <returns>The new function object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateArray(System.UInt32)">
+            <summary>
+            Creates a JavaScript array object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="length">The initial length of the array</param>
+            <returns>The new array object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateExternalArrayBuffer(System.Byte[])">
+            <summary>
+            Creates a Javascript <c>ArrayBuffer</c> object to access external memory
+            </summary>
+            <remarks>Requires an active script context.</remarks>
+            <param name="buffer">Buffer for an external memory</param>
+            <returns>The new <c>ArrayBuffer</c> object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateError(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Creates a new JavaScript error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">Message for the error object</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateRangeError(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Creates a new JavaScript RangeError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">Message for the error object</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateReferenceError(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Creates a new JavaScript ReferenceError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">Message for the error object</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateSyntaxError(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Creates a new JavaScript SyntaxError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">Message for the error object</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateTypeError(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Creates a new JavaScript TypeError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">Message for the error object</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CreateUriError(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Creates a new JavaScript URIError error object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="message">Message for the error object</param>
+            <returns>The new error object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.AddRef">
+            <summary>
+            Adds a reference to the object
+            </summary>
+            <remarks>
+            This only needs to be called on objects that are not going to be stored somewhere on
+            the stack. Calling AddRef ensures that the JavaScript object the value refers to will not be freed
+            until Release is called
+            </remarks>
+            <returns>The object's new reference count</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.Release">
+            <summary>
+            Releases a reference to the object
+            </summary>
+            <remarks>
+            Removes a reference that was created by AddRef.
+            </remarks>
+            <returns>The object's new reference count</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ToBoolean">
+            <summary>
+            Retrieves a <c>bool</c> value of a <c>Boolean</c> value
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>The converted value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ToDouble">
+            <summary>
+            Retrieves a <c>double</c> value of a <c>Number</c> value
+            </summary>
+            <remarks>
+            <para>
+            This function retrieves the value of a Number value. It will fail with
+            <c>InvalidArgument</c> if the type of the value is not <c>Number</c>.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <returns>The <c>double</c> value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ToInt32">
+            <summary>
+            Retrieves a <c>int</c> value of a <c>Number</c> value
+            </summary>
+            <remarks>
+            <para>
+            This function retrieves the value of a Number value. It will fail with
+            <c>InvalidArgument</c> if the type of the value is not <c>Number</c>.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <returns>The <c>int</c> value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ToString">
+            <summary>
+            Retrieves a string pointer of a <c>String</c> value
+            </summary>
+            <remarks>
+            <para>
+            This function retrieves the string pointer of a <c>String</c> value. It will fail with
+            <c>InvalidArgument</c> if the type of the value is not <c>String</c>.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <returns>The string</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ConvertToBoolean">
+            <summary>
+            Converts a value to <c>Boolean</c> using regular JavaScript semantics
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>The converted value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ConvertToNumber">
+            <summary>
+            Converts a value to <c>Number</c> using regular JavaScript semantics
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>The converted value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ConvertToString">
+            <summary>
+            Converts a value to <c>String</c> using regular JavaScript semantics
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>The converted value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ConvertToObject">
+            <summary>
+            Converts a value to <c>Object</c> using regular JavaScript semantics
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>The converted value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.PreventExtension">
+            <summary>
+            Sets an object to not be extensible
+            </summary>
+            <remarks>
+            Requires an active script context
+            </remarks>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.GetOwnPropertyDescriptor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId)">
+            <summary>
+            Gets a property descriptor for an object's own property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="propertyId">The ID of the property</param>
+            <returns>The property descriptor</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.GetOwnPropertyNames">
+            <summary>
+            Gets a list of all properties on the object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <returns>An array of property names</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.HasProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId)">
+            <summary>
+            Determines whether an object has a property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="propertyId">The ID of the property</param>
+            <returns>Whether the object (or a prototype) has the property</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.HasOwnProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId)">
+            <summary>
+            Determines whether an object has a non-inherited property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="propertyId">The ID of the property</param>
+            <returns>Whether the object has the non-inherited property</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.GetProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId)">
+            <summary>
+            Gets an object's property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="id">The ID of the property</param>
+            <returns>The value of the property</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.SetProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.Boolean)">
+            <summary>
+            Sets an object's property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="id">The ID of the property</param>
+            <param name="value">The new value of the property</param>
+            <param name="useStrictRules">The property set should follow strict mode rules</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.DeleteProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId,System.Boolean)">
+            <summary>
+            Deletes an object's property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="propertyId">The ID of the property</param>
+            <param name="useStrictRules">The property set should follow strict mode rules</param>
+            <returns>Whether the property was deleted</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.DefineProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsPropertyId,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Defines a new object's own property from a property descriptor
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="propertyId">The ID of the property</param>
+            <param name="propertyDescriptor">The property descriptor</param>
+            <returns>Whether the property was defined</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.HasIndexedProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Test if an object has a value at the specified index
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="index">The index to test</param>
+            <returns>Whether the object has an value at the specified index</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.GetIndexedProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Retrieves a value at the specified index of an object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="index">The index to retrieve</param>
+            <returns>The retrieved value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.SetIndexedProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Sets a value at the specified index of an object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="index">The index to set</param>
+            <param name="value">The value to set</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.DeleteIndexedProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Deletes d value at the specified index of an object
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="index">The index to delete</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.Equals(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Compare two JavaScript values for equality
+            </summary>
+            <remarks>
+            <para>
+            This function is equivalent to the "==" operator in JavaScript.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <param name="other">The object to compare</param>
+            <returns>Whether the values are equal</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.StrictEquals(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Compare two JavaScript values for strict equality
+            </summary>
+            <remarks>
+            <para>
+            This function is equivalent to the "===" operator in JavaScript.
+            </para>
+            <para>
+            Requires an active script context.
+            </para>
+            </remarks>
+            <param name="other">The object to compare</param>
+            <returns>Whether the values are strictly equal</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.CallFunction(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue[])">
+            <summary>
+            Invokes a function
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="arguments">The arguments to the call</param>
+            <returns>The <c>Value</c> returned from the function invocation, if any</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue.ConstructObject(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue[])">
+            <summary>
+            Invokes a function as a constructor
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="arguments">The arguments to the call</param>
+            <returns>The <c>Value</c> returned from the function invocation</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueExtensions">
+            <summary>
+            Extensions for the JavaScript value
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueExtensions.GetOwnPropertyDescriptor(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.String)">
+            <summary>
+            Gets a property descriptor for an object's own property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="source">The JavaScript value</param>
+            <param name="propertyName">The name of the property</param>
+            <returns>The property descriptor</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueExtensions.HasProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.String)">
+            <summary>
+            Determines whether an object has a property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="source">The JavaScript value</param>
+            <param name="propertyName">The name of the property</param>
+            <returns>Whether the object (or a prototype) has the property</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueExtensions.HasOwnProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.String)">
+            <summary>
+            Determines whether an object has a non-inherited property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="source">The JavaScript value</param>
+            <param name="propertyName">The name of the property</param>
+            <returns>Whether the object has the non-inherited property</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueExtensions.GetProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.String)">
+            <summary>
+            Gets an object's property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="source">The JavaScript value</param>
+            <param name="name">The name of the property</param>
+            <returns>The value of the property</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueExtensions.SetProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.String,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.Boolean)">
+            <summary>
+            Sets an object's property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="source">The JavaScript value</param>
+            <param name="name">The name of the property</param>
+            <param name="value">The new value of the property</param>
+            <param name="useStrictRules">The property set should follow strict mode rules</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueExtensions.DeleteProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.String,System.Boolean)">
+            <summary>
+            Deletes an object's property
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="source">The JavaScript value</param>
+            <param name="propertyName">The name of the property</param>
+            <param name="useStrictRules">The property set should follow strict mode rules</param>
+            <returns>Whether the property was deleted</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueExtensions.DefineProperty(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue,System.String,JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Defines a new object's own property from a property descriptor
+            </summary>
+            <remarks>
+            Requires an active script context.
+            </remarks>
+            <param name="source">The JavaScript value</param>
+            <param name="propertyName">The name of the property</param>
+            <param name="propertyDescriptor">The property descriptor</param>
+            <returns>Whether the property was defined</returns>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType">
+            <summary>
+            The JavaScript type of a JavaScriptValue
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Undefined">
+            <summary>
+            The value is the <c>undefined</c> value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Null">
+            <summary>
+            The value is the <c>null</c> value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Number">
+            <summary>
+            The value is a JavaScript number value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.String">
+            <summary>
+            The value is a JavaScript string value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Boolean">
+            <summary>
+            The value is a JavaScript Boolean value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Object">
+            <summary>
+            The value is a JavaScript object value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Function">
+            <summary>
+            The value is a JavaScript function object value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Error">
+            <summary>
+            The value is a JavaScript error object value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Array">
+            <summary>
+            The value is a JavaScript array object value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.Symbol">
+            <summary>
+            The value is a JavaScript array object value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.ArrayBuffer">
+            <summary>
+            The value is a JavaScript ArrayBuffer object value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.TypedArray">
+            <summary>
+            The value is a JavaScript typed array object value
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValueType.DataView">
+            <summary>
+            The value is a JavaScript DataView object value
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.NativeMethods">
+            <summary>
+            Native methods
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper">
+            <summary>
+            Type mapper
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper.ExternalObjectPropertyName">
+            <summary>
+            Name of property to store the external object
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._lazyEmbeddedObjects">
+            <summary>
+            Storage for lazy-initialized embedded objects
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._embeddedObjectFinalizeCallback">
+            <summary>
+            Callback for finalization of embedded object
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._embeddedObjectStorageInitializationSynchronizer">
+            <summary>
+            Synchronizer of embedded object storage's initialization
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._embeddedObjectStorageInitialized">
+            <summary>
+            Flag indicating whether the embedded object storage is initialized
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._lazyEmbeddedTypes">
+            <summary>
+            Storage for lazy-initialized embedded types
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._embeddedTypeFinalizeCallback">
+            <summary>
+            Callback for finalization of embedded type
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._embeddedTypeStorageInitializationSynchronizer">
+            <summary>
+            Synchronizer of embedded type storage's initialization
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._embeddedTypeStorageInitialized">
+            <summary>
+            Flag indicating whether the embedded type storage is initialized
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper._disposedFlag">
+            <summary>
+            Flag indicating whether this object is disposed
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper.#ctor">
+            <summary>
+            Constructs an instance of type mapper
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper.GetOrCreateScriptObject(System.Object)">
+            <summary>
+            Creates a JavaScript value from an host object if the it does not already exist
+            </summary>
+            <param name="obj">Instance of host type</param>
+            <returns>JavaScript value created from an host object</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper.GetOrCreateScriptType(System.Type)">
+            <summary>
+            Creates a JavaScript value from an host type if the it does not already exist
+            </summary>
+            <param name="type">Host type</param>
+            <returns>JavaScript value created from an host type</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper.MapToScriptType(System.Object)">
+            <summary>
+            Makes a mapping of value from the host type to a script type
+            </summary>
+            <param name="value">The source value</param>
+            <returns>The mapped value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper.MapToHostType(JavaScriptEngineSwitcher.ChakraCore.JsRt.JsValue)">
+            <summary>
+            Makes a mapping of value from the script type to a host type
+            </summary>
+            <param name="value">The source value</param>
+            <returns>The mapped value</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.JsRt.TypeMapper.Dispose">
+            <summary>
+            Disposes a type mapper
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings">
+            <summary>
+            A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.ResourceManager">
+            <summary>
+            Returns a cached ResourceManager instance used by this class
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Culture">
+            <summary>
+            Overrides a current thread's CurrentUICulture property for all
+            resource lookups using this strongly typed resource class
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Engines_AddingDirectoryToDllSearchPathFailed">
+            <summary>
+            Looks up a localized string similar to "Failed to add the '{0}' directory to the search path used to locate DLLs for the application."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostDelegateInvocationFailed">
+            <summary>
+            Looks up a localized string similar to "During invocation of the host delegate an error has occurred - “{0}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostObjectFieldGettingFailed">
+            <summary>
+            Looks up a localized string similar to "During getting value of '{0}' field of the host object an error has occurred - “{1}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostObjectFieldSettingFailed">
+            <summary>
+            Looks up a localized string similar to "During setting value of '{0}' field of the host object an error has occurred - “{1}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostObjectMethodInvocationFailed">
+            <summary>
+            Looks up a localized string similar to "During invocation of '{0}' method of the host object an error has occurred - “{1}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostObjectPropertyGettingFailed">
+            <summary>
+            Looks up a localized string similar to "During getting value of '{0}' property of the host object an error has occurred - “{1}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostObjectPropertySettingFailed">
+            <summary>
+            Looks up a localized string similar to "During setting value of '{0}' property of the host object an error has occurred - “{1}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostTypeConstructorInvocationFailed">
+            <summary>
+            Looks up a localized string similar to "During invocation of constructor of the `{0}` host type an error has occurred - “{1}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostTypeConstructorNotFound">
+            <summary>
+            Looks up a localized string similar to "Could not create instance of the `{0}` host type, because it does not have any public constructor."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostTypeFieldGettingFailed">
+            <summary>
+            Looks up a localized string similar to "During getting value of '{0}' field of the `{1}` host type an error has occurred - “{2}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostTypeFieldSettingFailed">
+            <summary>
+            Looks up a localized string similar to "During setting value of '{0}' field of the `{1}` host type an error has occurred - “{2}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostTypeMethodInvocationFailed">
+            <summary>
+            Looks up a localized string similar to "During invocation of '{0}' method of the `{1}` host type an error has occurred - “{2}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostTypePropertyGettingFailed">
+            <summary>
+            Looks up a localized string similar to "During getting value of '{0}' property of the `{1}` host type an error has occurred - “{2}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_HostTypePropertySettingFailed">
+            <summary>
+            Looks up a localized string similar to "During setting value of '{0}' property of the host type `{1}` an error has occurred - “{2}”."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_InvalidThisContextForHostObjectField">
+            <summary>
+            Looks up a localized string similar to "Could not retrieve field '{0}' of the host object, because there was an invalid `this` context."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_InvalidThisContextForHostObjectMethod">
+            <summary>
+            Looks up a localized string similar to "Could not call method '{0}' of the host object, because there was an invalid `this` context."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_InvalidThisContextForHostObjectProperty">
+            <summary>
+            Looks up a localized string similar to "Could not retrieve property '{0}' of the host object, because there was an invalid `this` context."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_SuitableConstructorOfHostTypeNotFound">
+            <summary>
+            Looks up a localized string similar to "Could not find suitable constructor or not enough arguments to invoke of constructor of the `{0}`..."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Runtime_SuitableMethodOfHostObjectNotFound">
+            <summary>
+            Looks up a localized string similar to "Could not find suitable method or not enough arguments to invoke of '{0}' method of the host object."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Engine_ManualInstallationUnderMonoRequired">
+            <summary>
+            Looks up a localized string similar to "{0} packages do not support installation under Mono, but you can to install the native assembly..."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Engine_BuildNativeAssemblyForCurrentProcessorArchitecture">
+            <summary>
+            Looks up a localized string similar to "You can build the '{0}' assembly for the current processor architecture by using following..."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Engine_MaxStackSizeMustBeNonNegative">
+            <summary>
+            Looks up a localized string similar to "Maximum stack size must be non-negative."
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.Resources.Strings.Common_ArgumentHasIncorrectType">
+            <summary>
+            Looks up a localized string similar to "The parameter '{0}' must have a `{1}` type."
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher">
+            <summary>
+            Provides services for managing the queue of script tasks on the thread with modified stack size
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher._thread">
+            <summary>
+            The thread with modified stack size
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher._waitHandle">
+            <summary>
+            Event to signal when the new script task entered to the queue
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher._taskQueue">
+            <summary>
+            Queue of script tasks
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher._taskQueueSynchronizer">
+            <summary>
+            Synchronizer of script task queue
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher._disposedFlag">
+            <summary>
+            Flag that object is destroyed
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.#ctor(System.Int32)">
+            <summary>
+            Constructs an instance of script dispatcher
+            </summary>
+            <param name="maxStackSize">The maximum stack size, in bytes, to be used by the thread,
+            or 0 to use the default maximum stack size specified in the header for the executable.</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.StartThread">
+            <summary>
+            Starts a thread with modified stack size.
+            Loops forever, processing script tasks from the queue.
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.EnqueueTask(JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask)">
+            <summary>
+            Adds a script task to the end of the queue
+            </summary>
+            <param name="task">Script task</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ExecuteTask(JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask)">
+            <summary>
+            Executes a script task
+            </summary>
+            <param name="task">Script task</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.Invoke``1(System.Func{``0})">
+            <summary>
+            Runs a specified delegate on the thread with modified stack size,
+            and returns its result as an <typeparamref name="T" />.
+            Blocks until the invocation of delegate is completed.
+            </summary>
+            <typeparam name="T">The type of the return value of the method,
+            that specified delegate encapsulates</typeparam>
+            <param name="func">Delegate to invocation</param>
+            <returns>Result of the delegate invocation</returns>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.Invoke(System.Action)">
+            <summary>
+            Runs a specified delegate on the thread with modified stack size.
+            Blocks until the invocation of delegate is completed.
+            </summary>
+            <param name="action">Delegate to invocation</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.Dispose">
+            <summary>
+            Destroys a script dispatcher
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask">
+            <summary>
+            Represents a script task, that must be executed on separate thread
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask._waitHandle">
+            <summary>
+            Event to signal when the invocation of delegate has completed
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask._exception">
+            <summary>
+            Exception, that occurred during the invocation of delegate
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask._disposedFlag">
+            <summary>
+            Flag that object is destroyed
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask.Exception">
+            <summary>
+            Gets a exception, that occurred during the invocation of delegate.
+            If no exception has occurred, this will be null.
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask.Run">
+            <summary>
+            Runs a script task
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask.Wait">
+            <summary>
+            Waits for the script task to complete execution
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTask.Dispose">
+            <summary>
+            Destroys a script task
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithResult`1">
+            <summary>
+            Represents a script task with result, that must be executed on separate thread
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithResult`1._func">
+            <summary>
+            Delegate to invocation
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithResult`1._result">
+            <summary>
+            Result of the delegate invocation
+            </summary>
+        </member>
+        <member name="P:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithResult`1.Result">
+            <summary>
+            Gets a result of the delegate invocation
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithResult`1.#ctor(System.Func{`0})">
+            <summary>
+            Constructs an instance of script task with result
+            </summary>
+            <param name="func">Delegate to invocation</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithResult`1.Run">
+            <summary>
+            Runs a script task
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithResult`1.Dispose">
+            <summary>
+            Destroys a script task
+            </summary>
+        </member>
+        <member name="T:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithoutResult">
+            <summary>
+            Represents a script task without result, that must be executed on separate thread
+            </summary>
+        </member>
+        <member name="F:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithoutResult._action">
+            <summary>
+            Delegate to invocation
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithoutResult.#ctor(System.Action)">
+            <summary>
+            Constructs an instance of script task without result
+            </summary>
+            <param name="action">Delegate to invocation</param>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithoutResult.Run">
+            <summary>
+            Runs a script task
+            </summary>
+        </member>
+        <member name="M:JavaScriptEngineSwitcher.ChakraCore.ScriptDispatcher.ScriptTaskWithoutResult.Dispose">
+            <summary>
+            Destroys a script task
+            </summary>
+        </member>
+    </members>
+</doc>

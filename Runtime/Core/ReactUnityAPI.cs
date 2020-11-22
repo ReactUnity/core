@@ -1,6 +1,7 @@
 using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.Components;
+using ReactUnity.Interop;
 using System;
 using System.Collections.Generic;
 
@@ -50,25 +51,25 @@ namespace ReactUnity
 
         #region Layout
 
-        public static void appendChild(ContainerComponent parent, UnityComponent child)
+        public static void appendChild(dynamic parent, dynamic child)
         {
             child.SetParent(parent);
             parent.ScheduleLayout();
         }
 
-        public static void appendChildToContainer(HostComponent parent, UnityComponent child)
+        public static void appendChildToContainer(dynamic parent, dynamic child)
         {
             child.SetParent(parent);
             parent.ScheduleLayout();
         }
 
-        public static void insertBefore(ContainerComponent parent, UnityComponent child, UnityComponent beforeChild)
+        public static void insertBefore(dynamic parent, dynamic child, dynamic beforeChild)
         {
             child.SetParent(parent, beforeChild);
             parent.ScheduleLayout();
         }
 
-        public static void removeChild(ContainerComponent parent, UnityComponent child)
+        public static void removeChild(dynamic parent, dynamic child)
         {
             child.Destroy();
             parent.ScheduleLayout();
@@ -79,24 +80,20 @@ namespace ReactUnity
 
         #region Properties
 
-        public static void setText(TextComponent instance, string text)
+        public static void setText(dynamic instance, string text)
         {
             instance.SetText(text);
             instance.ScheduleLayout();
         }
 
-        public static void setProperty(UnityComponent element, string property, object value)
+        public static void setProperty(dynamic element, string property, object value)
         {
             element.SetProperty(property, value);
         }
 
-        public static void setEventListener(UnityComponent element, string eventType, JsValue value)
+        public static void setEventListener(dynamic element, string eventType, Callback value)
         {
-            var hasValue = value != null && !value.IsNull() && !value.IsUndefined() && !value.IsBoolean();
-            var callback = value.As<FunctionInstance>();
-            if (hasValue && callback == null) throw new System.Exception("The callback for an event must be a function.");
-
-            element.SetEventListener(eventType, callback);
+            element.SetEventListener(eventType, value);
         }
 
         #endregion
