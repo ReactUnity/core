@@ -18,6 +18,11 @@ namespace ReactUnity.Schedulers
             return -1;
         }
 
+        public int setImmediate(Callback callback)
+        {
+            return -1;
+        }
+
         public int requestAnimationFrame(Callback callback)
         {
             return -1;
@@ -25,6 +30,7 @@ namespace ReactUnity.Schedulers
 
         public void clearTimeout(int? handle) { }
         public void clearInterval(int? handle) { }
+        public void clearImmediate(int? handle) { }
         public void cancelAnimationFrame(int? handle) { }
         public void clearAllTimeouts() { }
     }

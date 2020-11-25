@@ -28,6 +28,11 @@ namespace ReactUnity.Schedulers
             if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
         }
 
+        public int setImmediate(Callback callback)
+        {
+            return MainThreadDispatcher.Immediate(() => callback.Call());
+        }
+
 
         public int requestAnimationFrame(Callback callback)
         {
@@ -35,6 +40,11 @@ namespace ReactUnity.Schedulers
         }
 
         public void cancelAnimationFrame(int? handle)
+        {
+            if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
+        }
+
+        public void clearImmediate(int? handle)
         {
             if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
         }

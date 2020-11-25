@@ -223,14 +223,13 @@ namespace ReactUnity
         {
             scheduler = new UnityScheduler();
             engine.EmbedHostObject("UnityScheduler", scheduler);
-            engine.EmbedHostType("TimeoutCallback", typeof(Func<Callback, int, int>));
-            //engine.EmbedHostObject("setTimeout", new Func<Callback, int, int>(scheduler.setTimeout));
-            //engine.EmbedHostObject("setInterval", new Func<Callback, int, int>(scheduler.setInterval));
             engine.Execute("global.setTimeout = function setTimeout(fun, delay) { return UnityScheduler.setTimeout(Callback(fun), delay); }");
-            engine.Execute("global.setInterval = function setTimeout(fun, delay) { return UnityScheduler.setInterval(Callback(fun), delay); }");
+            engine.Execute("global.setInterval = function setInterval(fun, delay) { return UnityScheduler.setInterval(Callback(fun), delay); }");
+            engine.Execute("global.setImmediate = function setImmediate(fun) { return UnityScheduler.setImmediate(Callback(fun)); }");
+            engine.Execute("global.requestAnimationFrame = function requestAnimationFrame(fun) { return UnityScheduler.requestAnimationFrame(Callback(fun)); }");
             engine.EmbedHostObject("clearTimeout", new Action<int?>(scheduler.clearTimeout));
             engine.EmbedHostObject("clearInterval", new Action<int?>(scheduler.clearInterval));
-            engine.EmbedHostObject("requestAnimationFrame", new Func<Callback, int>(scheduler.requestAnimationFrame));
+            engine.EmbedHostObject("clearImmediate", new Action<int?>(scheduler.clearImmediate));
             engine.EmbedHostObject("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
         }
 
