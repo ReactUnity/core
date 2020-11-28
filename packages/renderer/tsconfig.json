@@ -22,6 +22,9 @@
   "files": [
     "index.ts"
   ],
+  "include": [
+    "models/**/*.ts"
+  ],
   "exclude": [
     "./dist/**/*.*"
   ]

@@ -1,9 +1,9 @@
 
-export type Vector2 = number | [] | [number] | [number, number] | { x: number; y: number };
+export type Vector2Aux = number | [] | [number] | [number, number] | { x: number; y: number };
 
-export type Array4 = [] | [number] | [number, number] | [number, number, number] | [number, number, number, number];
+export type Array4Aux = [] | [number] | [number, number] | [number, number, number] | [number, number, number, number];
 
-export type RectOffset = number | Array4
+export type RectOffsetAux = number | Array4Aux
   | { top?: number; right?: number; bottom?: number; left?: number; vertical?: number; horizontal?: number };
 
 

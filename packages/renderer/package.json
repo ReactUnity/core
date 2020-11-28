@@ -2,6 +2,7 @@
   "name": "@reactunity/renderer",
   "version": "0.0.14",
   "description": "React renderer for Unity3D",
+  "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
   "scripts": {

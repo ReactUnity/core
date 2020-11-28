@@ -8,11 +8,11 @@ import { EnumOrLiteral } from '../values/enum';
 // boolean, null and undefined are all mapped to undefined
 // pt, px and no unit is mapped to Point unit, e.g. 50px -> 50 Points
 // % is mapped to percentage, e.g. 50% -> 50 Percent
-export type YogaValue = 'auto' | string | number | null | undefined | boolean | YogaValueNative;
+export type YogaValueAux = 'auto' | string | number | null | undefined | boolean | YogaValue;
 
 
 export interface Layout {
-  Data?: object;
+  Data?: Record<string, unknown>;
   Overflow?: EnumOrLiteral<typeof Overflow>;
   StyleDirection?: EnumOrLiteral<typeof Direction>;
   Display?: EnumOrLiteral<typeof Display>;
@@ -33,35 +33,35 @@ export interface Layout {
   FlexDirection?: EnumOrLiteral<typeof FlexDirection>;
   FlexShrink?: number;
   FlexGrow?: number;
-  FlexBasis?: YogaValue;
-  MinHeight?: YogaValue;
-  MinWidth?: YogaValue;
-  MaxHeight?: YogaValue;
-  MaxWidth?: YogaValue;
-  Height?: YogaValue;
-  Width?: YogaValue;
-  Left?: YogaValue;
-  Top?: YogaValue;
-  Right?: YogaValue;
-  Start?: YogaValue;
-  End?: YogaValue;
-  MarginLeft?: YogaValue;
-  MarginTop?: YogaValue;
-  MarginRight?: YogaValue;
-  MarginBottom?: YogaValue;
-  MarginStart?: YogaValue;
-  MarginEnd?: YogaValue;
-  MarginHorizontal?: YogaValue;
-  Bottom?: YogaValue;
-  Margin?: YogaValue;
-  MarginVertical?: YogaValue;
-  Padding?: YogaValue;
-  PaddingVertical?: YogaValue;
-  PaddingHorizontal?: YogaValue;
-  PaddingStart?: YogaValue;
-  PaddingBottom?: YogaValue;
-  PaddingRight?: YogaValue;
-  PaddingTop?: YogaValue;
-  PaddingEnd?: YogaValue;
-  PaddingLeft?: YogaValue;
+  FlexBasis?: YogaValueAux;
+  MinHeight?: YogaValueAux;
+  MinWidth?: YogaValueAux;
+  MaxHeight?: YogaValueAux;
+  MaxWidth?: YogaValueAux;
+  Height?: YogaValueAux;
+  Width?: YogaValueAux;
+  Left?: YogaValueAux;
+  Top?: YogaValueAux;
+  Right?: YogaValueAux;
+  Start?: YogaValueAux;
+  End?: YogaValueAux;
+  MarginLeft?: YogaValueAux;
+  MarginTop?: YogaValueAux;
+  MarginRight?: YogaValueAux;
+  MarginBottom?: YogaValueAux;
+  MarginStart?: YogaValueAux;
+  MarginEnd?: YogaValueAux;
+  MarginHorizontal?: YogaValueAux;
+  Bottom?: YogaValueAux;
+  Margin?: YogaValueAux;
+  MarginVertical?: YogaValueAux;
+  Padding?: YogaValueAux;
+  PaddingVertical?: YogaValueAux;
+  PaddingHorizontal?: YogaValueAux;
+  PaddingStart?: YogaValueAux;
+  PaddingBottom?: YogaValueAux;
+  PaddingRight?: YogaValueAux;
+  PaddingTop?: YogaValueAux;
+  PaddingEnd?: YogaValueAux;
+  PaddingLeft?: YogaValueAux;
 }

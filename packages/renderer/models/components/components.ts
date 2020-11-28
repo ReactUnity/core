@@ -3,7 +3,7 @@ import { Layout } from './yoga';
 import { Events, ActionCallback } from './events';
 import { AssetReference } from '../values/asset-reference';
 import { UnityObject } from '../native/context';
-import { Color } from '../values/color';
+import { ColorAux } from '../values/color';
 
 export interface StateStyles {
   hover?: Style;
@@ -47,7 +47,7 @@ export enum ImageFitMode {
 export interface Image extends View {
   source?: AssetReference | UnityObject;
   fit?: ImageFitMode;
-  tint?: Color;
+  tint?: ColorAux;
 }
 
 

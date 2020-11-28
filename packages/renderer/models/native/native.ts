@@ -1,55 +1,52 @@
-import { Color } from '../values/color';
-import { Vector2Native } from './vectors';
-import { Vector2 } from '../values/values';
+import { ColorAux } from '../values/color';
+import { Vector2Aux } from '../values/values';
 
 declare global {
-  class YogaValueNative {
-    static Auto: () => YogaValueNative;
+  class YogaValue {
+    static Auto: () => YogaValue;
 
-    static Percent(value: number): YogaValueNative;
+    static Percent(value: number): YogaValue;
 
-    static Point(value: number): YogaValueNative;
+    static Point(value: number): YogaValue;
 
-    static Undefined(): YogaValueNative;
-
-    static readonly '': unique symbol;
+    static Undefined(): YogaValue;
   }
 
-  class ColorNative {
+  class Color {
     constructor(r: number, g: number, b: number, a?: number);
 
-    static get cyan(): Color;
+    static get cyan(): ColorAux;
 
-    static get clear(): Color;
+    static get clear(): ColorAux;
 
-    static get grey(): Color;
+    static get grey(): ColorAux;
 
-    static get gray(): Color;
+    static get gray(): ColorAux;
 
-    static get magenta(): Color;
+    static get magenta(): ColorAux;
 
-    static get red(): Color;
+    static get red(): ColorAux;
 
-    static get yellow(): Color;
+    static get yellow(): ColorAux;
 
-    static get black(): Color;
+    static get black(): ColorAux;
 
-    static get white(): Color;
+    static get white(): ColorAux;
 
-    static get green(): Color;
+    static get green(): ColorAux;
 
-    static get blue(): Color;
+    static get blue(): ColorAux;
   }
 
-  class ShadowDefinitionNative {
+  class ShadowDefinition {
     offset: Vector2Native;
 
     spread: Vector2Native;
 
-    color: ColorNative;
+    color: Color;
 
     blur: number;
 
-    constructor(offset: Vector2, spread: Vector2, color: Color, blur: number);
+    constructor(offset: Vector2Aux, spread: Vector2Aux, color: ColorAux, blur: number);
   }
 }

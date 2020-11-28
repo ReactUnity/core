@@ -1,11 +1,11 @@
 import {
   FontWeight, InteractionType, FontStyles, TextOverflowModes, CursorType,
 } from './styles-enums';
-import { YogaValue } from './yoga';
-import { Color } from '../values/color';
+import { YogaValueAux } from './yoga';
+import { ColorAux } from '../values/color';
 import { AssetReference } from '../values/asset-reference';
 import { UnityObject } from '../native/context';
-import { Vector2 } from '../values/values';
+import { Vector2Aux } from '../values/values';
 import { EnumOrLiteral } from '../values/enum';
 
 export interface Style {
@@ -15,23 +15,23 @@ export interface Style {
   cursor?: EnumOrLiteral<typeof CursorType> | string;
   interaction?: EnumOrLiteral<typeof InteractionType>;
 
-  backgroundColor?: Color;
+  backgroundColor?: ColorAux;
   backgroundImage?: AssetReference | UnityObject;
   borderRadius?: number;
-  borderColor?: Color;
-  boxShadow?: string;
+  borderColor?: ColorAux;
+  boxShadow?: ShadowDefinition | string;
 
-  translate?: Vector2;
+  translate?: Vector2Aux;
   translateRelative?: boolean;
-  pivot?: Vector2;
-  scale?: Vector2;
+  pivot?: Vector2Aux;
+  scale?: Vector2Aux;
   rotate?: number;
 
   // Inherited styles
   font?: UnityObject;
-  fontColor?: Color;
+  fontColor?: ColorAux;
   fontWeight?: EnumOrLiteral<typeof FontWeight>;
   fontStyle?: EnumOrLiteral<typeof FontStyles>;
-  fontSize?: YogaValue;
+  fontSize?: YogaValueAux;
   textOverflow?: EnumOrLiteral<typeof TextOverflowModes>;
 }

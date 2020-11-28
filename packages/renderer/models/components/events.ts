@@ -1,5 +1,4 @@
 import { UnityObject } from '../native/context';
-import { Vector3Native, Vector2Native } from '../native/vectors';
 
 export enum InputButton {
   Left = 0,

@@ -4,7 +4,7 @@ import { fullScreen, dropdownBottom, bottomEdge, transparentColor } from '../../
 import { View, CursorType, Style } from '../../../models/components';
 
 const dropdownMenuStyle: Style = { boxShadow: '0 3 7 6 black 5' };
-const dropdownButtonStyle: Style = { backgroundColor: ColorNative.white, borderRadius: 0 };
+const dropdownButtonStyle: Style = { backgroundColor: Color.white, borderRadius: 0 };
 const dropdownBackdropStyle: Style = { backgroundColor: transparentColor, cursor: CursorType.Default };
 
 export interface DropdownProps<T = any> {

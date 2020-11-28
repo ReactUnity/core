@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { PositionType, View, YogaValue } from '../../../models/components';
+import { PositionType, View, YogaValueAux } from '../../../models/components';
 
 export type TooltipPosition = 'left' | 'right' | 'top' | 'bottom';
 
 export interface TooltipProps {
   tooltipContent?: React.ReactNode;
   position?: TooltipPosition;
-  offset?: YogaValue;
+  offset?: YogaValueAux;
 }
 
 export type TooltipFullProps = TooltipProps & View;
@@ -31,7 +31,7 @@ export class Tooltip extends React.Component<TooltipFullProps, { opened: boolean
     right: 'Left',
   };
 
-  static yogaZeroPercent = YogaValueNative.Point(0);
+  static yogaZeroPercent = YogaValue.Point(0);
 
   constructor(props) {
     super(props);
