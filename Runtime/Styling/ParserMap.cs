@@ -16,6 +16,7 @@ namespace ReactUnity.Styling
         static public IStyleParser YogaValueParser = new YogaValueParser();
         static public IStyleParser FontSizeParser = new YogaValueParser();
         static public IStyleParser FloatParser = new FloatParser();
+        static public IStyleParser Vector2Parser = new Vector2Parser();
         static public IStyleParser IntParser = new IntParser();
         static public IStyleParser ColorParser = new ColorParser();
         static public IStyleParser ShadowDefinitionParser = new ShadowDefinitionParser();
@@ -23,6 +24,7 @@ namespace ReactUnity.Styling
 
         private static Dictionary<Type, IStyleParser> Map = new Dictionary<Type, IStyleParser>()
         {
+            { typeof(Vector2), Vector2Parser },
             { typeof(YogaValue), YogaValueParser },
             { typeof(float), FloatParser },
             { typeof(int), IntParser },

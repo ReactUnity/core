@@ -150,7 +150,7 @@ namespace ReactUnity
                 if (e == "DOMContentLoaded") callbacks.Add(f);
             }));
 
-            engine.EmbedHostType("Unity", typeof(ReactUnityAPI));
+            engine.EmbedHostObject("Unity", new ReactUnityAPI(engine));
             engine.EmbedHostObject("RootContainer", unityContext.Host);
             engine.EmbedHostObject("NamedAssets", NamedAssets);
             try
@@ -194,7 +194,7 @@ namespace ReactUnity
 
             engine.EmbedHostObject("Engine", engine);
             engine.EmbedHostType("RealCallback", typeof(Callback));
-            engine.Execute("Callback = function(fun) { return new RealCallback(Engine, fun); }");
+            engine.Execute("Callback = function(fun) { return new RealCallback(fun, Engine); }");
 
 
             CreateConsole(engine);
@@ -225,10 +225,10 @@ namespace ReactUnity
         {
             scheduler = new UnityScheduler();
             engine.EmbedHostObject("UnityScheduler", scheduler);
-            engine.Execute("global.setTimeout = function setTimeout(fun, delay) { return UnityScheduler.setTimeout(Callback(fun), delay); }");
-            engine.Execute("global.setInterval = function setInterval(fun, delay) { return UnityScheduler.setInterval(Callback(fun), delay); }");
-            engine.Execute("global.setImmediate = function setImmediate(fun) { return UnityScheduler.setImmediate(Callback(fun)); }");
-            engine.Execute("global.requestAnimationFrame = function requestAnimationFrame(fun) { return UnityScheduler.requestAnimationFrame(Callback(fun)); }");
+            engine.Execute("global.setTimeout = function setTimeout(fun, delay) { return UnityScheduler.setTimeout(new Callback(fun), delay); }");
+            engine.Execute("global.setInterval = function setInterval(fun, delay) { return UnityScheduler.setInterval(new Callback(fun), delay); }");
+            engine.Execute("global.setImmediate = function setImmediate(fun) { return UnityScheduler.setImmediate(new Callback(fun)); }");
+            engine.Execute("global.requestAnimationFrame = function requestAnimationFrame(fun) { return UnityScheduler.requestAnimationFrame(new Callback(fun)); }");
             engine.EmbedHostObject("clearTimeout", new Action<int?>(scheduler.clearTimeout));
             engine.EmbedHostObject("clearInterval", new Action<int?>(scheduler.clearInterval));
             engine.EmbedHostObject("clearImmediate", new Action<int?>(scheduler.clearImmediate));

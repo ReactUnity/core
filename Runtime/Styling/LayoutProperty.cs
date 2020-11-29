@@ -1,6 +1,8 @@
 using Facebook.Yoga;
 using Jint.Runtime.Interop;
+using ReactUnity.StyleEngine;
 using ReactUnity.Styling.Parsers;
+using ReactUnity.Styling.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +17,7 @@ namespace ReactUnity.Styling
         void Set(YogaNode node, object value);
         void SetDefault(YogaNode node);
         object Get(YogaNode node);
-        object Parse(string value);
+        object Parse(object value);
         string Serialize(object value);
     }
 
@@ -73,14 +75,33 @@ namespace ReactUnity.Styling
             getter = (Func<YogaNode, T>) propInfo.GetGetMethod().CreateDelegate(typeof(Func<YogaNode, T>));
         }
 
-        public object Parse(string value)
+        public object Parse(object value)
         {
-            return parser.FromString(value);
+            if (value is T t) return t;
+            if (!(value is string)) value = value?.ToString();
+
+            var s = value as string;
+            if (parser != null)
+            {
+                var val = parser.FromString(s);
+                if (!Equals(val, SpecialNames.CantParse) && val != null) return val;
+            }
+
+            var special = RuleHelpers.GetSpecialName(s);
+            if (special != SpecialNames.NoSpecialName) return special;
+            return SpecialNames.CantParse;
         }
 
         public void Set(YogaNode node, object value)
         {
-            setter(node, (T) value);
+            if (Equals(value, SpecialNames.CantParse)) return;
+            else if (Equals(value, SpecialNames.Initial) || Equals(value, SpecialNames.Unset)) SetDefault(node);
+            else if (Equals(value, SpecialNames.Inherit))
+            {
+                if (node.Parent != null) setter(node, getter(node.Parent));
+                else SetDefault(node);
+            }
+            else setter(node, (T) value);
         }
 
         public void SetDefault(YogaNode node)

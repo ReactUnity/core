@@ -173,7 +173,7 @@ namespace ReactUnity.Styling
             StyleMap = new Dictionary<string, object>(copyFrom.StyleMap);
         }
 
-        public object GetStyleValue(StyleProperty prop)
+        public object GetStyleValue(IStyleProperty prop)
         {
             object value = StateStyles?.GetStyleValue(prop);
             if (value != null) return value;

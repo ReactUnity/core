@@ -4,10 +4,6 @@ namespace ReactUnity.Schedulers
 {
     public class UnityScheduler : IUnityScheduler
     {
-        public int setTimeout(Callback callback)
-        {
-            return setTimeout(callback, 0);
-        }
         public int setTimeout(Callback callback, int timeout)
         {
             return MainThreadDispatcher.Timeout(() => callback.Call(), timeout / 1000f);

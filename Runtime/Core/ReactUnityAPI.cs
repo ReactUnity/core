@@ -1,3 +1,4 @@
+using JavaScriptEngineSwitcher.Core;
 using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.Components;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 
 namespace ReactUnity
 {
-    public static class ReactUnityAPI
+    public class ReactUnityAPI
     {
         public static Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>> ComponentCreators
             = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
@@ -22,16 +23,23 @@ namespace ReactUnity
                 { "image", (tag, text, context) => new ImageComponent(context) },
             };
 
+        IJsEngine Engine;
+
+        public ReactUnityAPI(IJsEngine engine)
+        {
+            Engine = engine;
+        }
+
         #region Creation
 
-        public static UnityComponent createText(string text, HostComponent host)
+        public UnityComponent createText(string text, HostComponent host)
         {
             var cmp = ComponentCreators["text"]("_text", text, host.Context);
             cmp.IsPseudoElement = true;
             return cmp;
         }
 
-        public static UnityComponent createElement(string tag, string text, HostComponent host)
+        public UnityComponent createElement(string tag, string text, HostComponent host)
         {
             UnityComponent res = null;
             if (ComponentCreators.TryGetValue(tag, out var creator))
@@ -51,21 +59,21 @@ namespace ReactUnity
 
         #region Layout
 
-        public static void appendChild(object parent, object child)
+        public void appendChild(object parent, object child)
         {
             if (parent is ContainerComponent p)
                 if (child is UnityComponent c)
                     c.SetParent(p);
         }
 
-        public static void appendChildToContainer(object parent, object child)
+        public void appendChildToContainer(object parent, object child)
         {
             if (parent is HostComponent p)
                 if (child is UnityComponent c)
                     c.SetParent(p);
         }
 
-        public static void insertBefore(object parent, object child, object beforeChild)
+        public void insertBefore(object parent, object child, object beforeChild)
         {
             if (parent is ContainerComponent p)
                 if (child is UnityComponent c)
@@ -73,7 +81,7 @@ namespace ReactUnity
                         c.SetParent(p, b);
         }
 
-        public static void removeChild(object parent, object child)
+        public void removeChild(object parent, object child)
         {
             if (child is UnityComponent c)
                 c.Destroy();
@@ -84,22 +92,31 @@ namespace ReactUnity
 
         #region Properties
 
-        public static void setText(object instance, string text)
+        public void setText(object instance, string text)
         {
             if (instance is TextComponent c)
                 c.SetText(text);
         }
 
-        public static void setProperty(object element, string property, object value)
+        public void setProperty(object element, string property, object value)
         {
             if (element is UnityComponent c)
                 c.SetProperty(property, value);
         }
 
-        public static void setEventListener(object element, string eventType, Callback value)
+        public void setEventListener(UnityComponent element, string eventType, JsValue value)
         {
-            if (element is UnityComponent c)
-                c.SetEventListener(eventType, value);
+            var hasValue = value != null && !value.IsNull() && !value.IsUndefined() && !value.IsBoolean();
+            var callback = value.As<FunctionInstance>();
+            if (hasValue && callback == null) throw new Exception("The callback for an event must be a function.");
+
+            element.SetEventListener(eventType, new Callback(callback, Engine));
+        }
+
+        public void setEventListener(object element, string eventType, object value)
+        {
+            if (element is UnityComponent c && value != null)
+                c.SetEventListener(eventType, new Callback(value, Engine));
         }
 
         #endregion

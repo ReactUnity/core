@@ -133,7 +133,7 @@ namespace ReactUnity.StyleEngine
                     if (specialName == SpecialNames.Initial)
                         value = prop.defaultValue;
                     else
-                        value = prop.parser != null ? prop.parser.FromString(item.Value) : SpecialNames.CantParse;
+                        value = prop.Parse(item.Value);
 
                     if (!Equals(value, SpecialNames.CantParse))
                         dic[prop.name] = value;
@@ -172,7 +172,7 @@ namespace ReactUnity.StyleEngine
                     if (specialName == SpecialNames.Initial)
                         value = prop.defaultValue;
                     else
-                        value = prop.parser != null ? prop.parser.FromString(item.Value as string) : SpecialNames.CantParse;
+                        value = prop.Parse(item.Value);
 
                     if (!Equals(value, SpecialNames.CantParse))
                         dic[prop.name] = value;
@@ -190,7 +190,7 @@ namespace ReactUnity.StyleEngine
                 if (hasCssStyle)
                 {
                     if (dic == null) dic = new List<LayoutValue>();
-                    dic.Add(new LayoutValue(prop, prop.Parse(item.Value as string)));
+                    dic.Add(new LayoutValue(prop, prop.Parse(item.Value)));
                 }
             }
             return dic;
@@ -207,6 +207,7 @@ namespace ReactUnity.StyleEngine
 
         public static SpecialNames GetSpecialName(string value)
         {
+            if (value == null) return SpecialNames.CantParse;
             var parsed = Enum.TryParse<SpecialNames>(value, true, out var res);
             if (parsed) return res;
             return SpecialNames.NoSpecialName;

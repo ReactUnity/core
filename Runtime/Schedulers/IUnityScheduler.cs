@@ -6,7 +6,6 @@ namespace ReactUnity.Schedulers
 {
     public interface IUnityScheduler
     {
-        int setTimeout(Callback callback);
         int setImmediate(Callback callback);
         int setTimeout(Callback callback, int timeout);
         int setInterval(Callback callback, int timeout);

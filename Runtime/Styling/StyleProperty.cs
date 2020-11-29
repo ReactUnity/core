@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using ReactUnity.StyleEngine;
 using ReactUnity.Styling.Parsers;
 using ReactUnity.Styling.Types;
 using System;
@@ -10,20 +11,32 @@ using UnityEngine;
 
 namespace ReactUnity.Styling
 {
-    public class StyleProperty
+    public interface IStyleProperty
     {
-        public string name;
-        public Type type;
-        public object defaultValue;
-        public bool transitionable;
-        public bool inherited;
-        public bool proxy;
+        object Parse(object value);
+
+         string name { get; }
+         Type type { get; }
+         object defaultValue { get; }
+         bool transitionable { get; }
+         bool inherited { get; }
+         bool proxy { get; }
+    }
+
+    public class StyleProperty<T> : IStyleProperty
+    {
+        public string name { get; private set; }
+        public Type type { get; private set; }
+        public object defaultValue { get; private set; }
+        public bool transitionable { get; private set; }
+        public bool inherited { get; private set; }
+        public bool proxy { get; private set; }
         public IStyleParser parser;
 
-        public StyleProperty(string name, Type type, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleParser parser = null)
+        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleParser parser = null)
         {
+            this.type = typeof(T);
             this.name = name;
-            this.type = type;
             this.defaultValue = defaultValue;
             this.transitionable = transitionable;
             this.inherited = inherited;
@@ -31,38 +44,53 @@ namespace ReactUnity.Styling
 
             this.parser = parser ?? ParserMap.GetParser(type);
         }
+
+        public object Parse(object value)
+        {
+            if (value is T t) return t;
+            if (!(value is string)) value = value?.ToString();
+
+            var s = value as string;
+            if (parser != null)
+            {
+                var val = parser.FromString(s);
+                if (!Equals(val, SpecialNames.CantParse) && val != null) return val;
+            }
+
+            var special = RuleHelpers.GetSpecialName(s);
+            if (special != SpecialNames.NoSpecialName) return special;
+            return SpecialNames.CantParse;
+        }
     }
 
     public static class StyleProperties
     {
-        public static StyleProperty opacity = new StyleProperty("opacity", typeof(float), 1f, true);
-        public static StyleProperty zOrder = new StyleProperty("zOrder", typeof(int), 0, false);
-        public static StyleProperty hidden = new StyleProperty("hidden", typeof(bool), false, parser: new BoolParser(new string[] { "hidden" }, new string[] { "visible" }));
-        public static StyleProperty cursor = new StyleProperty("cursor", typeof(string), null, false);
-        public static StyleProperty interaction = new StyleProperty("interaction", typeof(InteractionType), InteractionType.WhenVisible, false);
-        public static StyleProperty backgroundColor = new StyleProperty("backgroundColor", typeof(Color), new Color(0, 0, 0, 0), true);
-        public static StyleProperty backgroundImage = new StyleProperty("backgroundImage", typeof(object), null, false);
-        public static StyleProperty borderRadius = new StyleProperty("borderRadius", typeof(int), 0, true);
-        public static StyleProperty borderColor = new StyleProperty("borderColor", typeof(Color), Color.black, true);
-        public static StyleProperty boxShadow = new StyleProperty("boxShadow", typeof(ShadowDefinition), null, true);
-        public static StyleProperty translate = new StyleProperty("translate", typeof(Vector2), Vector2.zero, true);
-        public static StyleProperty translateRelative = new StyleProperty("translateRelative", typeof(bool), false, true);
-        public static StyleProperty scale = new StyleProperty("scale", typeof(Vector2), Vector2.one, true);
-        public static StyleProperty pivot = new StyleProperty("pivot", typeof(Vector2), Vector2.one / 2, true);
-        public static StyleProperty rotate = new StyleProperty("rotate", typeof(float), 0f, true);
+        public static IStyleProperty opacity = new StyleProperty<float>("opacity", 1f, true);
+        public static IStyleProperty zOrder = new StyleProperty<int>("zOrder", 0, false);
+        public static IStyleProperty hidden = new StyleProperty<bool>("hidden", false, parser: new BoolParser(new string[] { "hidden" }, new string[] { "visible" }));
+        public static IStyleProperty cursor = new StyleProperty<string>("cursor", null, false);
+        public static IStyleProperty interaction = new StyleProperty<InteractionType>("interaction", InteractionType.WhenVisible, false);
+        public static IStyleProperty backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
+        public static IStyleProperty backgroundImage = new StyleProperty<object>("backgroundImage", null, false);
+        public static IStyleProperty borderRadius = new StyleProperty<int>("borderRadius", 0, true);
+        public static IStyleProperty borderColor = new StyleProperty<Color>("borderColor", Color.black, true);
+        public static IStyleProperty boxShadow = new StyleProperty<ShadowDefinition>("boxShadow", null, true);
+        public static IStyleProperty translate = new StyleProperty<Vector2>("translate", Vector2.zero, true);
+        public static IStyleProperty translateRelative = new StyleProperty<bool>("translateRelative", false, true);
+        public static IStyleProperty scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
+        public static IStyleProperty pivot = new StyleProperty<Vector2>("pivot", Vector2.one / 2, true);
+        public static IStyleProperty rotate = new StyleProperty<float>("rotate", 0f, true);
+        public static IStyleProperty font = new StyleProperty<TMP_FontAsset>("font", null, false, true);
+        public static IStyleProperty fontColor = new StyleProperty<Color>("fontColor", Color.black, true, true);
+        public static IStyleProperty fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
+        public static IStyleProperty fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true);
+        public static IStyleProperty fontSize = new StyleProperty<YogaValue>("fontSize", YogaValue.Undefined(), true, true);
+        public static IStyleProperty textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
+        public static IStyleProperty textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
+        public static IStyleProperty textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, parser: new BoolParser(new string[] { "wrap" }, new string[] { "nowrap" }));
 
-        public static StyleProperty font = new StyleProperty("font", typeof(TMP_FontAsset), null, false, true);
-        public static StyleProperty fontColor = new StyleProperty("fontColor", typeof(Color), Color.black, true, true);
-        public static StyleProperty fontWeight = new StyleProperty("fontWeight", typeof(FontWeight), FontWeight.Regular, false, true);
-        public static StyleProperty fontStyle = new StyleProperty("fontStyle", typeof(FontStyles), FontStyles.Normal, false, true);
-        public static StyleProperty fontSize = new StyleProperty("fontSize", typeof(YogaValue), YogaValue.Undefined(), true, true);
-        public static StyleProperty textAlign = new StyleProperty("textAlign", typeof(TextAlignmentOptions), TextAlignmentOptions.TopLeft, false, true);
-        public static StyleProperty textOverflow = new StyleProperty("textOverflow", typeof(TextOverflowModes), TextOverflowModes.Overflow, false, true);
-        public static StyleProperty textWrap = new StyleProperty("textWrap", typeof(bool), true, inherited: true,
-            parser: new BoolParser(new string[] { "wrap" }, new string[] { "nowrap" }));
-
-        public static Dictionary<string, StyleProperty> PropertyMap = new Dictionary<string, StyleProperty>();
-        public static Dictionary<string, StyleProperty> CssPropertyMap = new Dictionary<string, StyleProperty>()
+        public static Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();
+        public static Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>()
         {
             { "z-order", zOrder },
             { "visibility", hidden },
@@ -83,27 +111,27 @@ namespace ReactUnity.Styling
             { "text-wrap", textWrap },
             { "white-space", textWrap },
         };
-        public static StyleProperty[] AllProperties;
+        public static IStyleProperty[] AllProperties;
 
         static StyleProperties()
         {
             var type = typeof(StyleProperties);
             var fields = type.GetFields(BindingFlags.Static | BindingFlags.Public);
-            var styleFields = fields.Where(x => x.FieldType == typeof(StyleProperty));
+            var styleFields = fields.Where(x => x.FieldType == typeof(IStyleProperty));
 
             foreach (var style in styleFields)
             {
-                PropertyMap[style.Name] = style.GetValue(type) as StyleProperty;
-                CssPropertyMap[style.Name] = style.GetValue(type) as StyleProperty;
+                PropertyMap[style.Name] = style.GetValue(type) as IStyleProperty;
+                CssPropertyMap[style.Name] = style.GetValue(type) as IStyleProperty;
             }
 
             AllProperties = PropertyMap.Values.ToArray();
         }
 
 
-        public static StyleProperty GetStyleProperty(string name)
+        public static IStyleProperty GetStyleProperty(string name)
         {
-            StyleProperty style;
+            IStyleProperty style;
             PropertyMap.TryGetValue(name, out style);
             return style;
         }

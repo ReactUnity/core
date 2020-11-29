@@ -4,10 +4,6 @@ namespace ReactUnity.Schedulers
 {
     public class NoScheduler : IUnityScheduler
     {
-        public int setTimeout(Callback callback)
-        {
-            return -1;
-        }
         public int setTimeout(Callback callback, int timeout)
         {
             return -1;
