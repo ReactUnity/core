@@ -25,15 +25,15 @@ export class App extends React.Component<{}, { val: number }> {
   render() {
     const val = this.state.val;
 
-    return <view layout={{ FlexDirection: FlexDirection.Row, Height: YogaValueNative.Percent(100), AlignItems: YogaAlign.Stretch, JustifyContent: YogaJustify.SpaceAround }}>
+    return <view layout={{ FlexDirection: FlexDirection.Row, Height: YogaValue.Percent(100), AlignItems: YogaAlign.Stretch, JustifyContent: YogaJustify.SpaceAround }}>
       <view layout={{
         Margin: 50,
         BorderWidth: 1,
         Width: 300, FlexDirection: FlexDirection.Column, AlignItems: YogaAlign.Center, JustifyContent: YogaJustify.SpaceAround
       }}
         style={{
-          backgroundColor: ColorNative.white,
-          borderColor: ColorNative.black,
+          backgroundColor: Color.white,
+          borderColor: Color.black,
           borderRadius: val * 100,
         }}>
 
@@ -41,7 +41,7 @@ export class App extends React.Component<{}, { val: number }> {
           Width
         </button>
 
-        <button style={{ backgroundColor: [ColorNative.red, val, ColorNative.yellow] }}>
+        <button style={{ backgroundColor: [Color.red, val, Color.yellow] }}>
           Color
         </button>
 
@@ -61,8 +61,8 @@ export class App extends React.Component<{}, { val: number }> {
         BorderWidth: val * 10 + 2,
       }}
         style={{
-          backgroundColor: ColorNative.white,
-          borderColor: [ColorNative.red, val, ColorNative.green],
+          backgroundColor: Color.white,
+          borderColor: [Color.red, val, Color.green],
         }}>
 
         <button layout={{ PositionType: PositionType.Absolute, Top: 50 + val * 150 }}>

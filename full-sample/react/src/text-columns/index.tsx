@@ -7,12 +7,12 @@ export class App extends React.Component<{}, { ratio: number }> {
   scrollLayout: Layout = { FlexDirection: FlexDirection.Column, Wrap: Wrap.Wrap, AlignItems: YogaAlign.FlexStart, Padding: 20, PaddingRight: 0 };
 
   separatorLayout: StyleAndLayout = {
-    layout: { Height: YogaValueNative.Percent(4) },
-    style: { backgroundColor: ColorNative.gray, cursor: CursorType.RowResize },
+    layout: { Height: YogaValue.Percent(4) },
+    style: { backgroundColor: Color.gray, cursor: CursorType.RowResize },
   };
 
   textProps: StyleAndLayout = {
-    layout: { MaxWidth: 300, MarginRight: 40, FlexShrink: 1, FlexGrow: 1, FlexBasis: YogaValueNative.Percent(60) },
+    layout: { MaxWidth: 300, MarginRight: 40, FlexShrink: 1, FlexGrow: 1, FlexBasis: YogaValue.Percent(60) },
     style: { textOverflow: 'Linked' },
   }
 
@@ -29,7 +29,7 @@ export class App extends React.Component<{}, { ratio: number }> {
 
   render() {
     return <>
-      <view layout={{ Height: YogaValueNative.Percent(96 * this.state.ratio), PositionType: PositionType.Absolute, Top: 0, Left: 0, Right: 0 }}>
+      <view layout={{ Height: YogaValue.Percent(96 * this.state.ratio), PositionType: PositionType.Absolute, Top: 0, Left: 0, Right: 0 }}>
         <scroll layout={this.scrollLayout}>
           <text {...this.textProps}>
             {lorem}
@@ -37,11 +37,11 @@ export class App extends React.Component<{}, { ratio: number }> {
         </scroll>
       </view>
 
-      <view layout={{ PositionType: PositionType.Absolute, Top: YogaValueNative.Percent(96 * this.state.ratio), Left: 0, Right: 0 }}>
+      <view layout={{ PositionType: PositionType.Absolute, Top: YogaValue.Percent(96 * this.state.ratio), Left: 0, Right: 0 }}>
         <button onDrag={this.dragSeparator} {...this.separatorLayout}></button>
       </view>
 
-      <view layout={{ Height: YogaValueNative.Percent(96 * (1 - this.state.ratio)), PositionType: PositionType.Absolute, Bottom: 0, Left: 0, Right: 0 }}>
+      <view layout={{ Height: YogaValue.Percent(96 * (1 - this.state.ratio)), PositionType: PositionType.Absolute, Bottom: 0, Left: 0, Right: 0 }}>
         <scroll layout={this.scrollLayout}>
           <text {...this.textProps}>
             {lorem}

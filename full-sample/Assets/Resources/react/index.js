@@ -8661,18 +8661,17 @@ function applyDiffedUpdate(writeTo, updatePayload, depth) {
     for (var index = 0; index < updatePayload.length; index += 2) {
       var attr = updatePayload[index];
       var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetPropertyValue(attr, value + '');
+      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo[attr] = value != null ? value + '' : null;
     }
 
     return updatePayload.length > 0;
   } else {
-    for (var key in updatePayload) {
-      if (Object.prototype.hasOwnProperty.call(updatePayload, key)) {
-        var element = updatePayload[key];
-        writeTo.SetPropertyValue(key, element + '');
+    for (var attr in updatePayload) {
+      if (Object.prototype.hasOwnProperty.call(updatePayload, attr)) {
+        var value = updatePayload[attr];
+        writeTo[attr] = value != null ? value + '' : null;
       }
-    } // Object.assign(writeTo, updatePayload);
-
+    }
 
     return true;
   }
@@ -8690,6 +8689,7 @@ function applyUpdate(instance, updatePayload, isAfterMount) {
 
     if (attr === 'layout') {
       if (applyDiffedUpdate(instance.Inline, value)) {
+        instance.ResolveStyle();
         instance.ScheduleLayout();
         instance.ApplyLayoutStyles();
       }
@@ -8703,6 +8703,7 @@ function applyUpdate(instance, updatePayload, isAfterMount) {
     }
 
     if (attr === 'stateStyles') {
+      // TODO:
       // if (applyDiffedUpdate(instance.StateStyles, value, 1)) {
       //   instance.ResolveStyle();
       // }
@@ -8741,9 +8742,15 @@ var hostConfig = {
   getPublicInstance: function getPublicInstance(instance) {
     return instance;
   },
-  prepareForCommit: function prepareForCommit(containerInfo) {},
-  resetAfterCommit: function resetAfterCommit(containerInfo) {},
-  clearContainer: function clearContainer() {},
+  prepareForCommit: function prepareForCommit(containerInfo) {
+    return null;
+  },
+  resetAfterCommit: function resetAfterCommit(containerInfo) {
+    return null;
+  },
+  clearContainer: function clearContainer() {
+    return null;
+  },
   now: Date.now,
   supportsHydration: false,
   supportsPersistence: false,
@@ -9264,67 +9271,41 @@ var Direction;
 
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/src/helpers/common-layouts.js
 
-var transparentColor = new ColorNative(0, 0, 0, 0);
+var transparentColor = new Color(0, 0, 0, 0);
 var fullScreen = {
   PositionType: PositionType.Absolute,
-  Top: YogaValueNative.Point(-5000),
-  Right: YogaValueNative.Point(-5000),
-  Bottom: YogaValueNative.Point(-5000),
-  Left: YogaValueNative.Point(-5000)
+  Top: YogaValue.Point(-5000),
+  Right: YogaValue.Point(-5000),
+  Bottom: YogaValue.Point(-5000),
+  Left: YogaValue.Point(-5000)
 };
 var fullCover = {
   PositionType: PositionType.Absolute,
-  Top: YogaValueNative.Point(0),
-  Right: YogaValueNative.Point(0),
-  Bottom: YogaValueNative.Point(0),
-  Left: YogaValueNative.Point(0)
+  Top: YogaValue.Point(0),
+  Right: YogaValue.Point(0),
+  Bottom: YogaValue.Point(0),
+  Left: YogaValue.Point(0)
 };
 var dropdownBottom = {
   PositionType: PositionType.Absolute,
-  Top: YogaValueNative.Percent(100),
-  Left: YogaValueNative.Point(0),
-  MinWidth: YogaValueNative.Percent(100)
+  Top: YogaValue.Percent(100),
+  Left: YogaValue.Point(0),
+  MinWidth: YogaValue.Percent(100)
 };
 var dropdownTop = {
   PositionType: PositionType.Absolute,
-  Bottom: YogaValueNative.Percent(100),
-  Left: YogaValueNative.Point(0),
-  MinWidth: YogaValueNative.Percent(100)
+  Bottom: YogaValue.Percent(100),
+  Left: YogaValue.Point(0),
+  MinWidth: YogaValue.Percent(100)
 };
 var bottomEdge = {
   PositionType: PositionType.Absolute,
-  Left: YogaValueNative.Point(0),
-  Right: YogaValueNative.Point(0),
-  Bottom: YogaValueNative.Point(0),
-  Height: YogaValueNative.Point(0)
+  Left: YogaValue.Point(0),
+  Right: YogaValue.Point(0),
+  Bottom: YogaValue.Point(0),
+  Height: YogaValue.Point(0)
 };
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/src/components/dropdown/dropdown.js
-var dropdown_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -9362,117 +9343,91 @@ var dropdownMenuStyle = {
   boxShadow: '0 3 7 6 black 5'
 };
 var dropdownButtonStyle = {
-  backgroundColor: ColorNative.white,
+  backgroundColor: Color.white,
   borderRadius: 0
 };
 var dropdownBackdropStyle = {
   backgroundColor: transparentColor,
   cursor: CursorType.Default
 };
+function Dropdown(_a) {
+  var _b;
 
-var dropdown_Dropdown =
-/** @class */
-function (_super) {
-  dropdown_extends(Dropdown, _super);
+  var _c = _a.autoClose,
+      autoClose = _c === void 0 ? true : _c,
+      onChange = _a.onChange,
+      name = _a.name,
+      layout = _a.layout,
+      children = _a.children,
+      otherProps = __rest(_a, ["autoClose", "onChange", "name", "layout", "children"]);
 
-  function Dropdown(props) {
-    var _this = _super.call(this, props) || this;
+  var childrenArray = react["Children"].toArray(children);
+  var nonItems = childrenArray.filter(function (x) {
+    return (x === null || x === void 0 ? void 0 : x.type) !== DropdownItem;
+  });
+  var items = childrenArray.filter(function (x) {
+    return (x === null || x === void 0 ? void 0 : x.type) === DropdownItem;
+  });
 
-    _this.handleChildClick = function (ind, value) {
-      if (_this.props.onChange) _this.props.onChange(value, ind);
-      if (_this.props.autoClose) _this.close();
+  var _d = react["useState"](false),
+      opened = _d[0],
+      setOpened = _d[1];
 
-      _this.setState({
-        selectedIndex: ind
-      });
-    };
+  var _e = react["useState"](-1),
+      selectedIndex = _e[0],
+      setSelectedIndex = _e[1];
 
-    _this.toggle = function () {
-      return _this.setState(function (st) {
-        return {
-          opened: !st.opened
-        };
-      });
-    };
+  var selectedItem = items[selectedIndex];
 
-    _this.open = function () {
-      return _this.setState({
-        opened: true
-      });
-    };
-
-    _this.close = function () {
-      return _this.setState({
-        opened: false
-      });
-    };
-
-    _this.state = {
-      opened: false,
-      selectedIndex: -1
-    };
-    return _this;
-  }
-
-  Dropdown.prototype.render = function () {
-    var _this = this;
-
-    var _a;
-
-    var children = react["Children"].toArray(this.props.children);
-    var nonItems = children.filter(function (x) {
-      return (x === null || x === void 0 ? void 0 : x.type) !== DropdownItem;
+  var toggle = function toggle() {
+    return setOpened(function (st) {
+      return !st;
     });
-    var items = children.filter(function (x) {
-      return (x === null || x === void 0 ? void 0 : x.type) === DropdownItem;
-    });
-    var selectedItem = items[this.state.selectedIndex];
+  };
 
-    var _b = this.props,
-        autoClose = _b.autoClose,
-        onChange = _b.onChange,
-        name = _b.name,
-        layout = _b.layout,
-        otherProps = __rest(_b, ["autoClose", "onChange", "name", "layout"]);
+  var close = function close() {
+    return setOpened(false);
+  };
 
-    return react["createElement"]("view", {
-      name: name || '<Dropdown>'
-    }, react["createElement"]("button", __assign({
-      name: "<Dropdown Trigger>",
-      onClick: this.toggle,
-      layout: __assign({
-        FlexDirection: 'Column',
-        AlignItems: 'Stretch'
-      }, layout)
-    }, otherProps), this.state.selectedIndex < 0 ? nonItems : ((_a = selectedItem.props) === null || _a === void 0 ? void 0 : _a.triggerTemplate) || selectedItem, this.state.opened && react["createElement"]("view", {
-      layout: bottomEdge,
-      style: {
-        zOrder: 1000
+  var handleChildClick = function handleChildClick(ind, value) {
+    onChange === null || onChange === void 0 ? void 0 : onChange(value, ind);
+    if (autoClose) close();
+    setSelectedIndex(ind);
+  };
+
+  return react["createElement"]("view", {
+    name: name || '<Dropdown>'
+  }, react["createElement"]("button", __assign({
+    name: "<Dropdown Trigger>",
+    onClick: toggle,
+    layout: __assign({
+      FlexDirection: 'Column',
+      AlignItems: 'Stretch'
+    }, layout)
+  }, otherProps), selectedIndex < 0 ? nonItems : ((_b = selectedItem.props) === null || _b === void 0 ? void 0 : _b.triggerTemplate) || selectedItem, opened && react["createElement"]("view", {
+    layout: bottomEdge,
+    style: {
+      zOrder: 1000
+    }
+  }, react["createElement"]("button", {
+    name: "<Dropdown Backdrop>",
+    onClick: close,
+    layout: fullScreen,
+    style: dropdownBackdropStyle
+  }), react["createElement"]("view", {
+    name: "<Dropdown Menu>",
+    layout: dropdownBottom,
+    style: dropdownMenuStyle
+  }, items.map(function (x, i) {
+    return react["createElement"]("button", {
+      key: i,
+      style: dropdownButtonStyle,
+      onClick: function onClick() {
+        return handleChildClick(i, x.props.value);
       }
-    }, react["createElement"]("button", {
-      name: "<Dropdown Backdrop>",
-      onClick: this.close,
-      layout: fullScreen,
-      style: dropdownBackdropStyle
-    }), react["createElement"]("view", {
-      name: "<Dropdown Menu>",
-      layout: dropdownBottom,
-      style: dropdownMenuStyle
-    }, items.map(function (x, i) {
-      return react["createElement"]("button", {
-        style: dropdownButtonStyle,
-        onClick: _this.handleChildClick.bind(_this, i, x.props.value)
-      }, x);
-    })))));
-  };
-
-  Dropdown.defaultProps = {
-    autoClose: true
-  };
-  return Dropdown;
-}(react["Component"]);
-
-
+    }, x);
+  })))));
+}
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/src/components/dropdown/index.js
 
 
@@ -9749,7 +9704,7 @@ function (_super) {
     left: 'Right',
     right: 'Left'
   };
-  Tooltip.yogaZeroPercent = YogaValueNative.Point(0);
+  Tooltip.yogaZeroPercent = YogaValue.Point(0);
   return Tooltip;
 }(react["Component"]);
 
@@ -9848,38 +9803,7 @@ function testRender(element) {
 
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/native/native.js
 
-// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/native/vectors.js
-var Vector2Native =
-/** @class */
-function () {
-  function Vector2Native() {}
-
-  return Vector2Native;
-}();
-
-
-
-var Vector3Native =
-/** @class */
-function () {
-  function Vector3Native() {}
-
-  return Vector3Native;
-}();
-
-
-
-var Vector4Native =
-/** @class */
-function () {
-  function Vector4Native() {}
-
-  return Vector4Native;
-}();
-
-
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/native/index.js
-
 
 
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/renderer.js
@@ -24659,13 +24583,13 @@ var tokenizer_languageId='typescript';var tokenizer_lexer=compile(tokenizer_lang
 // CONCATENATED MODULE: ./src/gallery/editor.tsx
 var editor_TextEditor=function TextEditor(_ref){var text=_ref.text;var richText=colorizeRichtext.apply(void 0,_toConsumableArray(tokenize(text)));return/*#__PURE__*/react["createElement"]("view",{style:{font:NamedAssets.RobotoMono},layout:{FlexGrow:1,FlexShrink:0}},/*#__PURE__*/react["createElement"]("input",{readonly:true,lineType:LineType.MultiLineNewline,webSupport:true,layout:{PositionType:PositionType.Absolute,Height:'100%',Width:'100%',FlexShrink:0,Padding:11},style:{backgroundColor:'transparent',font:NamedAssets.RobotoMono,fontColor:'transparent'},value:fixLineWrapOpportunity(text)}),/*#__PURE__*/react["createElement"]("input",{richText:true,readonly:true,lineType:LineType.MultiLineNewline,layout:{FlexShrink:0,Padding:10,BorderWidth:1},style:{backgroundColor:0.94,borderColor:0.8,font:NamedAssets.RobotoMono,interaction:InteractionType.Ignore},value:richText}));};
 // CONCATENATED MODULE: ./src/gallery/gallery.tsx
-var shadow='0 8 10 10 black 10';var gallery_App=/*#__PURE__*/function(_React$Component){_inherits(App,_React$Component);var _super=_createSuper(App);function App(props){var _this;_classCallCheck(this,App);_this=_super.call(this,props);_this.state={};return _this;}_createClass(App,[{key:"render",value:function render(){var _ref,_this2=this;var selectedSample=this.state.selectedSample;var allSamples=(_ref=[]).concat.apply(_ref,[this.props.samples].concat(_toConsumableArray(this.props.samples.map(function(x){return x.children||[];}))));var selected=allSamples.find(function(x){return x.name===selectedSample;});var homePage=function homePage(){return/*#__PURE__*/react["createElement"]("view",{layout:{Padding:20}},"This page exists to demonstrate features of React Unity. Everything on this page is built with React Unity. You can navigate the examples using the left panel.");};var drawButtonForSample=function drawButtonForSample(sample){var depth=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var key=arguments.length>2?arguments[2]:undefined;return/*#__PURE__*/react["createElement"]("view",{key:key},/*#__PURE__*/react["createElement"]("button",{layout:{PaddingHorizontal:20,PaddingVertical:16,PaddingLeft:20+depth*16,JustifyContent:YogaJustify.FlexStart},style:{backgroundColor:selected===sample?0.7:'transparent',borderRadius:0,borderColor:ColorNative.black},stateStyles:{hover:{backgroundColor:0.8}},onClick:function onClick(){return!sample.children&&_this2.setState(function(){return{selectedSample:sample.name};});}},sample.name),!!sample.children&&/*#__PURE__*/react["createElement"]("view",null,sample.children.map(function(x,i){return drawButtonForSample(x,depth+1,"".concat(key,"_").concat(i));})));};var SelectedComponent=(selected===null||selected===void 0?void 0:selected.render)||homePage;return/*#__PURE__*/react["createElement"]("view",{layout:{Height:'100%',AlignItems:'Stretch',JustifyContent:'FlexStart',FlexDirection:FlexDirection.Column},style:{backgroundColor:'#fafafa'}},/*#__PURE__*/react["createElement"]("view",{name:"<Header>",style:{backgroundColor:'#2e9151',fontColor:ColorNative.white,boxShadow:shadow,zOrder:1},layout:{AlignItems:'Center',JustifyContent:'SpaceBetween',FlexDirection:FlexDirection.Row,Wrap:Wrap.Wrap,FlexShrink:0,PaddingVertical:20,PaddingHorizontal:40}},/*#__PURE__*/react["createElement"]("view",{style:{fontStyle:FontStyles.Bold,fontSize:26}},"React Unity"),/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:1}}),/*#__PURE__*/react["createElement"]("anchor",{url:"https://github.com/KurtGokhan/react-unity"},"Github")),/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:1,FlexShrink:1,FlexDirection:FlexDirection.Row,AlignItems:'Stretch'}},/*#__PURE__*/react["createElement"]("scroll",{name:"<Sidebar>",layout:{AlignItems:'Stretch',JustifyContent:'FlexStart',FlexDirection:FlexDirection.Column,Wrap:Wrap.NoWrap,FlexShrink:0,Width:250,PaddingVertical:20},style:{backgroundColor:'#dadada',boxShadow:shadow}},this.props.samples.map(function(x,i){return drawButtonForSample(x,0,"".concat(i));})),/*#__PURE__*/react["createElement"]("scroll",{layout:{FlexGrow:1,FlexShrink:1,FlexDirection:'Column',AlignItems:'Stretch',JustifyContent:'FlexStart',Padding:20}},/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:(selected===null||selected===void 0?void 0:selected.sourceCode)?0:1,FlexShrink:0,FlexDirection:'Column',AlignItems:'Stretch',JustifyContent:'FlexStart',Height:250}},/*#__PURE__*/react["createElement"](SelectedComponent,null)),(selected===null||selected===void 0?void 0:selected.sourceCode)&&/*#__PURE__*/react["createElement"]("view",{layout:{MarginTop:20}},"Source Code:",/*#__PURE__*/react["createElement"](editor_TextEditor,{text:selected.sourceCode})),!(selected===null||selected===void 0?void 0:selected.sourceCode)&&!!((selected===null||selected===void 0?void 0:selected.source)||(selected===null||selected===void 0?void 0:selected.wiki))&&/*#__PURE__*/react["createElement"]("view",{layout:{PositionType:PositionType.Absolute,Right:20,Top:20,PaddingHorizontal:30,PaddingVertical:20},style:{backgroundColor:[0.1803922,0.5686275,0.3176471,1],borderRadius:5,boxShadow:shadow,fontColor:[1,1,1,1],fontSize:24}},!!selected.source&&/*#__PURE__*/react["createElement"]("anchor",{url:selected.source},"Source"),!!selected.wiki&&/*#__PURE__*/react["createElement"]("anchor",{url:selected.wiki},"Wiki")))));}}]);return App;}(react["Component"]);var gallery_SampleGallery=function SampleGallery(samples){return/*#__PURE__*/react["createElement"](gallery_App,{samples:samples});};var gallery_renderGallery=function renderGallery(samples){return ReactUnity.render(/*#__PURE__*/react["createElement"](gallery_App,{samples:samples}));};/* harmony default export */ var gallery = (gallery_renderGallery);
+var shadow='0 8 10 10 black 10';var gallery_App=/*#__PURE__*/function(_React$Component){_inherits(App,_React$Component);var _super=_createSuper(App);function App(props){var _this;_classCallCheck(this,App);_this=_super.call(this,props);_this.state={};return _this;}_createClass(App,[{key:"render",value:function render(){var _ref,_this2=this;var selectedSample=this.state.selectedSample;var allSamples=(_ref=[]).concat.apply(_ref,[this.props.samples].concat(_toConsumableArray(this.props.samples.map(function(x){return x.children||[];}))));var selected=allSamples.find(function(x){return x.name===selectedSample;});var homePage=function homePage(){return/*#__PURE__*/react["createElement"]("view",{layout:{Padding:20}},"This page exists to demonstrate features of React Unity. Everything on this page is built with React Unity. You can navigate the examples using the left panel.");};var drawButtonForSample=function drawButtonForSample(sample){var depth=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var key=arguments.length>2?arguments[2]:undefined;return/*#__PURE__*/react["createElement"]("view",{key:key},/*#__PURE__*/react["createElement"]("button",{layout:{PaddingHorizontal:20,PaddingVertical:16,PaddingLeft:20+depth*16,JustifyContent:YogaJustify.FlexStart},style:{backgroundColor:selected===sample?0.7:'transparent',borderRadius:0,borderColor:Color.black},stateStyles:{hover:{backgroundColor:0.8}},onClick:function onClick(){return!sample.children&&_this2.setState({selectedSample:sample.name});}},sample.name),!!sample.children&&/*#__PURE__*/react["createElement"]("view",null,sample.children.map(function(x,i){return drawButtonForSample(x,depth+1,"".concat(key,"_").concat(i));})));};var SelectedComponent=(selected===null||selected===void 0?void 0:selected.render)||homePage;return/*#__PURE__*/react["createElement"]("view",{layout:{Height:'100%',AlignItems:'Stretch',JustifyContent:'FlexStart',FlexDirection:FlexDirection.Column},style:{backgroundColor:'#fafafa'}},/*#__PURE__*/react["createElement"]("view",{name:"<Header>",style:{backgroundColor:'#2e9151',fontColor:Color.white,boxShadow:shadow,zOrder:1},layout:{AlignItems:'Center',JustifyContent:'SpaceBetween',FlexDirection:FlexDirection.Row,Wrap:Wrap.Wrap,FlexShrink:0,PaddingVertical:20,PaddingHorizontal:40}},/*#__PURE__*/react["createElement"]("view",{style:{fontStyle:FontStyles.Bold,fontSize:26}},"React Unity"),/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:1}}),/*#__PURE__*/react["createElement"]("anchor",{url:"https://github.com/KurtGokhan/react-unity"},"Github")),/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:1,FlexShrink:1,FlexDirection:FlexDirection.Row,AlignItems:'Stretch'}},/*#__PURE__*/react["createElement"]("scroll",{name:"<Sidebar>",layout:{AlignItems:'Stretch',JustifyContent:'FlexStart',FlexDirection:FlexDirection.Column,Wrap:Wrap.NoWrap,FlexShrink:0,Width:250,PaddingVertical:20},style:{backgroundColor:'#dadada',boxShadow:shadow}},this.props.samples.map(function(x,i){return drawButtonForSample(x,0,"".concat(i));})),/*#__PURE__*/react["createElement"]("scroll",{layout:{FlexGrow:1,FlexShrink:1,FlexDirection:'Column',AlignItems:'Stretch',JustifyContent:'FlexStart',Padding:20}},/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:(selected===null||selected===void 0?void 0:selected.sourceCode)?0:1,FlexShrink:0,FlexDirection:'Column',AlignItems:'Stretch',JustifyContent:'FlexStart',Height:250}},/*#__PURE__*/react["createElement"](SelectedComponent,null)),(selected===null||selected===void 0?void 0:selected.sourceCode)&&/*#__PURE__*/react["createElement"]("view",{layout:{MarginTop:20}},"Source Code:",/*#__PURE__*/react["createElement"](editor_TextEditor,{text:selected.sourceCode})),!(selected===null||selected===void 0?void 0:selected.sourceCode)&&!!((selected===null||selected===void 0?void 0:selected.source)||(selected===null||selected===void 0?void 0:selected.wiki))&&/*#__PURE__*/react["createElement"]("view",{layout:{PositionType:PositionType.Absolute,Right:20,Top:20,PaddingHorizontal:30,PaddingVertical:20},style:{backgroundColor:[0.1803922,0.5686275,0.3176471,1],borderRadius:5,boxShadow:shadow,fontColor:[1,1,1,1],fontSize:24}},!!selected.source&&/*#__PURE__*/react["createElement"]("anchor",{url:selected.source},"Source"),!!selected.wiki&&/*#__PURE__*/react["createElement"]("anchor",{url:selected.wiki},"Wiki")))));}}]);return App;}(react["Component"]);var gallery_SampleGallery=function SampleGallery(samples){return/*#__PURE__*/react["createElement"](gallery_App,{samples:samples});};var gallery_renderGallery=function renderGallery(samples){return ReactUnity.render(/*#__PURE__*/react["createElement"](gallery_App,{samples:samples}));};/* harmony default export */ var gallery = (gallery_renderGallery);
 // CONCATENATED MODULE: ./src/assets/lorem.ts
 var lorem="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquam placerat orci sit amet molestie. Mauris vitae vulputate enim. Nullam maximus maximus libero eu bibendum. Cras quis sapien nibh. Aenean eu sapien justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus et sollicitudin massa. Pellentesque vulputate consequat leo, mattis facilisis leo convallis ac. Donec at malesuada nibh, nec elementum quam. Suspendisse leo nulla, congue sit amet lacus in, facilisis auctor odio. In placerat magna at eleifend luctus. Morbi est odio, finibus eget efficitur pharetra, maximus non urna.\n\nMaecenas et ex arcu. Donec maximus leo ac lacus ornare, quis efficitur dui bibendum. Suspendisse sit amet sodales enim, nec venenatis nisl. Vestibulum non iaculis tortor, et sodales ipsum. Sed tempus leo sit amet laoreet efficitur. Pellentesque eleifend volutpat turpis, eu facilisis sem ultrices eu. Proin nec orci tempor, luctus purus eget, sagittis enim. Integer massa magna, elementum id sapien vel, egestas rutrum elit. Nullam non pulvinar nulla. Donec dolor lacus, interdum id nunc nec, euismod pharetra sapien.\n\nProin viverra libero odio, in ultrices magna tempus quis. In vestibulum lacus non varius tincidunt. Mauris fringilla eu massa ac dictum. Aliquam ex tellus, luctus congue lorem eget, interdum sagittis tellus. Ut sagittis, felis sit amet viverra eleifend, orci quam ornare dui, a condimentum odio nisi sed enim. Phasellus malesuada, arcu quis condimentum euismod, risus ligula vehicula felis, ac venenatis nunc ipsum vel leo. Sed nec ex quis est vestibulum dignissim in tincidunt lacus. Sed eu luctus mauris. Nunc rhoncus fermentum dapibus. Vivamus lacinia mollis orci sed placerat. Integer ante libero, fermentum at risus ut, pretium fermentum lacus. Ut tempor ex mauris, sit amet blandit nisi fringilla id. Sed quam tellus, lacinia a tellus ac, ultrices vestibulum elit.\n\nClass aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed venenatis pharetra dolor, vel dictum quam tristique non. Duis malesuada gravida urna vel ultrices. Integer fringilla arcu sit amet lacus hendrerit, quis lacinia quam rutrum. Donec rhoncus sagittis urna. Aenean consectetur pulvinar libero. Integer aliquam porta mi, at sodales metus cursus nec. Duis vel maximus erat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sit amet fermentum nisl. In rutrum nibh a ultricies condimentum. Fusce finibus, mauris quis finibus viverra, felis ipsum euismod augue, vel malesuada urna ligula sit amet est.\n\n";/* harmony default export */ var assets_lorem = (lorem);
 // CONCATENATED MODULE: ./src/text-columns/index.tsx
-var text_columns_App=/*#__PURE__*/function(_React$Component){_inherits(App,_React$Component);var _super=_createSuper(App);function App(props){var _this;_classCallCheck(this,App);_this=_super.call(this,props);_this.scrollLayout={FlexDirection:FlexDirection.Column,Wrap:Wrap.Wrap,AlignItems:YogaAlign.FlexStart,Padding:20,PaddingRight:0};_this.separatorLayout={layout:{Height:YogaValueNative.Percent(4)},style:{backgroundColor:ColorNative.gray,cursor:CursorType.RowResize}};_this.textProps={layout:{MaxWidth:300,MarginRight:40,FlexShrink:1,FlexGrow:1,FlexBasis:YogaValueNative.Percent(60)},style:{textOverflow:'Linked'}};_this.dragSeparator=function(ev){_this.setState(function(state){return{ratio:state.ratio-ev.delta.y/1000};});};_this.state={ratio:0.5};return _this;}_createClass(App,[{key:"render",value:function render(){return/*#__PURE__*/react["createElement"](react["Fragment"],null,/*#__PURE__*/react["createElement"]("view",{layout:{Height:YogaValueNative.Percent(96*this.state.ratio),PositionType:PositionType.Absolute,Top:0,Left:0,Right:0}},/*#__PURE__*/react["createElement"]("scroll",{layout:this.scrollLayout},/*#__PURE__*/react["createElement"]("text",this.textProps,assets_lorem))),/*#__PURE__*/react["createElement"]("view",{layout:{PositionType:PositionType.Absolute,Top:YogaValueNative.Percent(96*this.state.ratio),Left:0,Right:0}},/*#__PURE__*/react["createElement"]("button",Object.assign({onDrag:this.dragSeparator},this.separatorLayout))),/*#__PURE__*/react["createElement"]("view",{layout:{Height:YogaValueNative.Percent(96*(1-this.state.ratio)),PositionType:PositionType.Absolute,Bottom:0,Left:0,Right:0}},/*#__PURE__*/react["createElement"]("scroll",{layout:this.scrollLayout},/*#__PURE__*/react["createElement"]("text",this.textProps,assets_lorem))));}}]);return App;}(react["Component"]);
+var text_columns_App=/*#__PURE__*/function(_React$Component){_inherits(App,_React$Component);var _super=_createSuper(App);function App(props){var _this;_classCallCheck(this,App);_this=_super.call(this,props);_this.scrollLayout={FlexDirection:FlexDirection.Column,Wrap:Wrap.Wrap,AlignItems:YogaAlign.FlexStart,Padding:20,PaddingRight:0};_this.separatorLayout={layout:{Height:YogaValue.Percent(4)},style:{backgroundColor:Color.gray,cursor:CursorType.RowResize}};_this.textProps={layout:{MaxWidth:300,MarginRight:40,FlexShrink:1,FlexGrow:1,FlexBasis:YogaValue.Percent(60)},style:{textOverflow:'Linked'}};_this.dragSeparator=function(ev){_this.setState(function(state){return{ratio:state.ratio-ev.delta.y/1000};});};_this.state={ratio:0.5};return _this;}_createClass(App,[{key:"render",value:function render(){return/*#__PURE__*/react["createElement"](react["Fragment"],null,/*#__PURE__*/react["createElement"]("view",{layout:{Height:YogaValue.Percent(96*this.state.ratio),PositionType:PositionType.Absolute,Top:0,Left:0,Right:0}},/*#__PURE__*/react["createElement"]("scroll",{layout:this.scrollLayout},/*#__PURE__*/react["createElement"]("text",this.textProps,assets_lorem))),/*#__PURE__*/react["createElement"]("view",{layout:{PositionType:PositionType.Absolute,Top:YogaValue.Percent(96*this.state.ratio),Left:0,Right:0}},/*#__PURE__*/react["createElement"]("button",Object.assign({onDrag:this.dragSeparator},this.separatorLayout))),/*#__PURE__*/react["createElement"]("view",{layout:{Height:YogaValue.Percent(96*(1-this.state.ratio)),PositionType:PositionType.Absolute,Bottom:0,Left:0,Right:0}},/*#__PURE__*/react["createElement"]("scroll",{layout:this.scrollLayout},/*#__PURE__*/react["createElement"]("text",this.textProps,assets_lorem))));}}]);return App;}(react["Component"]);
 // CONCATENATED MODULE: ./src/anim/index.tsx
-var anim_App=/*#__PURE__*/function(_React$Component){_inherits(App,_React$Component);var _super=_createSuper(App);function App(props){var _this;_classCallCheck(this,App);_this=_super.call(this,props);_this.clearAnimation=void 0;_this.state={val:0};_this.clearAnimation=startAnimation({duration:1000,onTick:function onTick(val){return _this.setState({val:val});},easing:easing.easeInOutQuint,delay:500,loop:true,loopMode:'ping-pong'});return _this;}_createClass(App,[{key:"componentWillUnmount",value:function componentWillUnmount(){var _this$clearAnimation;(_this$clearAnimation=this.clearAnimation)===null||_this$clearAnimation===void 0?void 0:_this$clearAnimation.call(this);}},{key:"render",value:function render(){var val=this.state.val;return/*#__PURE__*/react["createElement"]("view",{layout:{FlexDirection:FlexDirection.Row,Height:YogaValueNative.Percent(100),AlignItems:YogaAlign.Stretch,JustifyContent:YogaJustify.SpaceAround}},/*#__PURE__*/react["createElement"]("view",{layout:{Margin:50,BorderWidth:1,Width:300,FlexDirection:FlexDirection.Column,AlignItems:YogaAlign.Center,JustifyContent:YogaJustify.SpaceAround},style:{backgroundColor:ColorNative.white,borderColor:ColorNative.black,borderRadius:val*100}},/*#__PURE__*/react["createElement"]("button",{layout:{Width:Math.round((val*150+130)/2)*2}},"Width"),/*#__PURE__*/react["createElement"]("button",{style:{backgroundColor:[ColorNative.red,val,ColorNative.yellow]}},"Color"),/*#__PURE__*/react["createElement"]("button",{style:{rotate:180*val}},"Rotate"),/*#__PURE__*/react["createElement"]("button",{style:{boxShadow:"1 1 ".concat(14*val," ").concat(8*val," black ").concat(4+6*val),scale:1.2+val*0.1,backgroundColor:0.97}},"Shadow")),/*#__PURE__*/react["createElement"]("view",{layout:{Margin:50,Width:300,FlexDirection:FlexDirection.Column,AlignItems:YogaAlign.Center,JustifyContent:YogaJustify.SpaceAround,BorderWidth:val*10+2},style:{backgroundColor:ColorNative.white,borderColor:[ColorNative.red,val,ColorNative.green]}},/*#__PURE__*/react["createElement"]("button",{layout:{PositionType:PositionType.Absolute,Top:50+val*150}},"Position"),/*#__PURE__*/react["createElement"]("button",{style:{fontSize:Math.round(val*24+12),textOverflow:TextOverflowModes.Truncate},layout:{PaddingHorizontal:30}},"Font size"),/*#__PURE__*/react["createElement"]("button",{style:{scale:val*2}},"Scale"),/*#__PURE__*/react["createElement"]("button",{style:{translate:[Math.random()*10,Math.random()*10]}},"Noise")));}}]);return App;}(react["Component"]);
+var anim_App=/*#__PURE__*/function(_React$Component){_inherits(App,_React$Component);var _super=_createSuper(App);function App(props){var _this;_classCallCheck(this,App);_this=_super.call(this,props);_this.clearAnimation=void 0;_this.state={val:0};_this.clearAnimation=startAnimation({duration:1000,onTick:function onTick(val){return _this.setState({val:val});},easing:easing.easeInOutQuint,delay:500,loop:true,loopMode:'ping-pong'});return _this;}_createClass(App,[{key:"componentWillUnmount",value:function componentWillUnmount(){var _this$clearAnimation;(_this$clearAnimation=this.clearAnimation)===null||_this$clearAnimation===void 0?void 0:_this$clearAnimation.call(this);}},{key:"render",value:function render(){var val=this.state.val;return/*#__PURE__*/react["createElement"]("view",{layout:{FlexDirection:FlexDirection.Row,Height:YogaValue.Percent(100),AlignItems:YogaAlign.Stretch,JustifyContent:YogaJustify.SpaceAround}},/*#__PURE__*/react["createElement"]("view",{layout:{Margin:50,BorderWidth:1,Width:300,FlexDirection:FlexDirection.Column,AlignItems:YogaAlign.Center,JustifyContent:YogaJustify.SpaceAround},style:{backgroundColor:Color.white,borderColor:Color.black,borderRadius:val*100}},/*#__PURE__*/react["createElement"]("button",{layout:{Width:Math.round((val*150+130)/2)*2}},"Width"),/*#__PURE__*/react["createElement"]("button",{style:{backgroundColor:[Color.red,val,Color.yellow]}},"Color"),/*#__PURE__*/react["createElement"]("button",{style:{rotate:180*val}},"Rotate"),/*#__PURE__*/react["createElement"]("button",{style:{boxShadow:"1 1 ".concat(14*val," ").concat(8*val," black ").concat(4+6*val),scale:1.2+val*0.1,backgroundColor:0.97}},"Shadow")),/*#__PURE__*/react["createElement"]("view",{layout:{Margin:50,Width:300,FlexDirection:FlexDirection.Column,AlignItems:YogaAlign.Center,JustifyContent:YogaJustify.SpaceAround,BorderWidth:val*10+2},style:{backgroundColor:Color.white,borderColor:[Color.red,val,Color.green]}},/*#__PURE__*/react["createElement"]("button",{layout:{PositionType:PositionType.Absolute,Top:50+val*150}},"Position"),/*#__PURE__*/react["createElement"]("button",{style:{fontSize:Math.round(val*24+12),textOverflow:TextOverflowModes.Truncate},layout:{PaddingHorizontal:30}},"Font size"),/*#__PURE__*/react["createElement"]("button",{style:{scale:val*2}},"Scale"),/*#__PURE__*/react["createElement"]("button",{style:{translate:[Math.random()*10,Math.random()*10]}},"Noise")));}}]);return App;}(react["Component"]);
 // EXTERNAL MODULE: D:/Documents/UnityProjects/packages/reactunity/scripts/node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(4);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -24692,7 +24616,7 @@ function anchor_App(){return/*#__PURE__*/react["createElement"]("view",{classNam
 // CONCATENATED MODULE: ./src/wiki/button.tsx
 function button_App(){return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"]("button",{onClick:function onClick(){return console.log('Clicked');}},"Click me!"));}
 // CONCATENATED MODULE: ./src/wiki/dropdown.tsx
-function dropdown_App(){var triggerTemplate=/*#__PURE__*/react["createElement"]("view",{style:{fontColor:'green'}},"Option 1");return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"](dropdown_Dropdown,{onChange:function onChange(val){return console.log(val);},layout:{Width:250}},"Select an option",/*#__PURE__*/react["createElement"](DropdownItem,{value:5,triggerTemplate:triggerTemplate},"Option 1"),/*#__PURE__*/react["createElement"](DropdownItem,{value:10},"Option 2"),/*#__PURE__*/react["createElement"](DropdownItem,{value:15},"Option With Long Name")));}
+function dropdown_App(){var triggerTemplate=/*#__PURE__*/react["createElement"]("view",{style:{fontColor:'green'}},"Option 1");return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"](Dropdown,{onChange:function onChange(val){return console.log(val);},layout:{Width:250}},"Select an option",/*#__PURE__*/react["createElement"](DropdownItem,{value:5,triggerTemplate:triggerTemplate},"Option 1"),/*#__PURE__*/react["createElement"](DropdownItem,{value:10},"Option 2"),/*#__PURE__*/react["createElement"](DropdownItem,{value:15},"Option With Long Name")));}
 // CONCATENATED MODULE: ./src/wiki/image.tsx
 function image_App(){return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"]("image",{source:NamedAssets["delete"]}));}
 // CONCATENATED MODULE: ./src/wiki/input.tsx
@@ -24721,7 +24645,7 @@ function text_App(){return/*#__PURE__*/react["createElement"]("text",null,"Hello
 // CONCATENATED MODULE: ./src/wiki/toggle.tsx
 function toggle_App(){return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app,layout:{FlexDirection:'Row'}},/*#__PURE__*/react["createElement"]("toggle",null)," Toggle me!");}
 // CONCATENATED MODULE: ./src/wiki/tooltip.tsx
-function tooltip_App(){var tooltipContent=/*#__PURE__*/react["createElement"]("view",{layout:{Padding:10},style:{backgroundColor:new ColorNative(0.4,0.4,0.4),fontColor:'white'}},"Cool tooltip");return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"](tooltip_Tooltip,{tooltipContent:tooltipContent,position:"bottom",offset:20},"Hover to see cool tooltip."));}
+function tooltip_App(){var tooltipContent=/*#__PURE__*/react["createElement"]("view",{layout:{Padding:10},style:{backgroundColor:new Color(0.4,0.4,0.4),fontColor:'white'}},"Cool tooltip");return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"](tooltip_Tooltip,{tooltipContent:tooltipContent,position:"bottom",offset:20},"Hover to see cool tooltip."));}
 // CONCATENATED MODULE: ./src/wiki/view.tsx
 var view_App=function App(){return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},"Hello world!");};
 // CONCATENATED MODULE: ./src/todo-mvc/utils.ts
@@ -24764,7 +24688,7 @@ var todo_mvc_TodoApp=/*#__PURE__*/function(_React$Component){_inherits(TodoApp,_
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/toggle.tsx
 /* harmony default export */ var wiki_toggle = ("import * as React from 'react';\nimport style from './index.module.scss';\n\nexport function App() {\n  return <view className={style.app} layout={{ FlexDirection: 'Row' }}>\n    <toggle /> Toggle me!\n  </view>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/tooltip.tsx
-/* harmony default export */ var tooltip = ("import * as React from 'react';\nimport style from './index.module.scss';\nimport { Tooltip } from '@reactunity/renderer';\n\nexport function App() {\n  const tooltipContent =\n    <view layout={{ Padding: 10 }} style={{ backgroundColor: new ColorNative(0.4, 0.4, 0.4), fontColor: 'white' }}>\n      Cool tooltip\n    </view>;\n\n  return <view className={style.app}>\n    <Tooltip tooltipContent={tooltipContent} position='bottom' offset={20}>\n      Hover to see cool tooltip.\n    </Tooltip>\n  </view>;\n}\n");
+/* harmony default export */ var tooltip = ("import * as React from 'react';\nimport style from './index.module.scss';\nimport { Tooltip } from '@reactunity/renderer';\n\nexport function App() {\n  const tooltipContent =\n    <view layout={{ Padding: 10 }} style={{ backgroundColor: new Color(0.4, 0.4, 0.4), fontColor: 'white' }}>\n      Cool tooltip\n    </view>;\n\n  return <view className={style.app}>\n    <Tooltip tooltipContent={tooltipContent} position='bottom' offset={20}>\n      Hover to see cool tooltip.\n    </Tooltip>\n  </view>;\n}\n");
 // CONCATENATED MODULE: ./src/gallery/index.ts
 /* eslint import/no-webpack-loader-syntax: off */var wikiPages=[{name:'View',render:view_App,sourceCode:view},{name:'Scroll',render:scroll_App,sourceCode:wiki_scroll},{name:'Button',render:button_App,sourceCode:wiki_button},{name:'Image',render:image_App,sourceCode:wiki_image},{name:'Input',render:input_App,sourceCode:input},{name:'Anchor',render:anchor_App,sourceCode:wiki_anchor},{name:'Text',render:text_App,sourceCode:wiki_text},{name:'Toggle',render:toggle_App,sourceCode:wiki_toggle},{name:'Tooltip',render:tooltip_App,sourceCode:tooltip},{name:'Dropdown',render:dropdown_App,sourceCode:dropdown}];gallery([{name:'Components',render:function render(){return gallery_SampleGallery(wikiPages);},children:wikiPages},{name:'Animation',render:anim_App,source:'https://github.com/ReactUnity/full-sample/blob/master/react/src/anim/index.tsx'},{name:'Text Columns',render:text_columns_App,source:'https://github.com/ReactUnity/full-sample/blob/master/react/src/text-columns/index.tsx'},{name:'Todo App',render:todo_mvc_TodoApp,source:'https://github.com/ReactUnity/full-sample/blob/master/react/src/todo-mvc/index.tsx'}]);
 

@@ -33,7 +33,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
 
     const drawButtonForSample = (sample: Sample, depth = 0, key: string) => <view key={key}>
       <button layout={{ PaddingHorizontal: 20, PaddingVertical: 16, PaddingLeft: 20 + depth * 16, JustifyContent: YogaJustify.FlexStart }}
-        style={{ backgroundColor: selected === sample ? 0.7 : 'transparent', borderRadius: 0, borderColor: ColorNative.black }}
+        style={{ backgroundColor: selected === sample ? 0.7 : 'transparent', borderRadius: 0, borderColor: Color.black }}
         stateStyles={{ hover: { backgroundColor: 0.8 } }}
         onClick={() => !sample.children && this.setState({ selectedSample: sample.name })}>
         {sample.name}
@@ -51,7 +51,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
       style={{ backgroundColor: '#fafafa' }}>
 
       <view name="<Header>"
-        style={{ backgroundColor: '#2e9151', fontColor: ColorNative.white, boxShadow: shadow, zOrder: 1 }}
+        style={{ backgroundColor: '#2e9151', fontColor: Color.white, boxShadow: shadow, zOrder: 1 }}
         layout={{ AlignItems: 'Center', JustifyContent: 'SpaceBetween', FlexDirection: FlexDirection.Row, Wrap: Wrap.Wrap, FlexShrink: 0, PaddingVertical: 20, PaddingHorizontal: 40 }}>
         <view style={{ fontStyle: FontStyles.Bold, fontSize: 26 }}>React Unity</view>
         <view layout={{ FlexGrow: 1 }}></view>
