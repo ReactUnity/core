@@ -18,7 +18,7 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
       const attr = updatePayload[index];
       const value = updatePayload[index + 1];
       if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);
-      else writeTo[attr] = value != null ? value + '' : null;
+      else writeTo[attr] = value;
     }
 
     return updatePayload.length > 0;
@@ -27,7 +27,7 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
     for (const attr in updatePayload) {
       if (Object.prototype.hasOwnProperty.call(updatePayload, attr)) {
         const value = updatePayload[attr];
-        writeTo[attr] = value != null ? value + '' : null;
+        writeTo[attr] = value;
       }
     }
     return true;
@@ -75,7 +75,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     }
 
     if (attr.substring(0, 2) === 'on') {
-      Unity.setEventListener(instance, attr, Callback(value));
+      Unity.setEventListener(instance, attr, value);
     } else {
       Unity.setProperty(instance, attr, value);
     }
@@ -125,7 +125,7 @@ const hostConfig: Config & { clearContainer: () => void } = {
     return Unity.createText(text, rootContainerInstance);
   },
 
-  appendInitialChild: Unity.appendChild,
+  appendInitialChild(parent, child) { Unity.appendChild(parent, child); },
 
   finalizeInitialChildren(
     instance,
@@ -191,12 +191,12 @@ const hostConfig: Config & { clearContainer: () => void } = {
 
   commitTextUpdate(textInstance, oldText, newText) { Unity.setText(textInstance, newText); },
 
-  appendChild: Unity.appendChild,
-  appendChildToContainer: Unity.appendChildToContainer,
-  insertBefore: Unity.insertBefore,
-  insertInContainerBefore: Unity.insertBefore,
-  removeChild: Unity.removeChild,
-  removeChildFromContainer: Unity.removeChild,
+  appendChild(parent, child) { return Unity.appendChild(parent, child); },
+  appendChildToContainer(parent, child) { return Unity.appendChildToContainer(parent, child); },
+  insertBefore(parent, child, beforeChild) { return Unity.insertBefore(parent, child, beforeChild); },
+  insertInContainerBefore(parent, child, beforeChild) { return Unity.insertBefore(parent, child, beforeChild); },
+  removeChild(parent, child) { return Unity.removeChild(parent, child); },
+  removeChildFromContainer(parent, child) { return Unity.removeChild(parent, child); },
 
   // -------------------
   //     Scheduling
