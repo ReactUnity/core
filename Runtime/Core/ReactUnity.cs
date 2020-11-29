@@ -34,6 +34,7 @@ namespace ReactUnity
 
         public string JsEngine = "Jint";
         public string EngineName => JsEngine + "JsEngine";
+        public bool EnableDebugging = false;
         public bool AwaitDebuggerAndPauseOnStart = false;
 
         void OnEnable()
@@ -60,8 +61,8 @@ namespace ReactUnity
                 .AddV8(x =>
                 {
                     x.DebugPort = 9222;
-                    x.EnableDebugging = true;
-                    x.EnableRemoteDebugging = true;
+                    x.EnableDebugging = EnableDebugging;
+                    x.EnableRemoteDebugging = EnableDebugging;
                     x.AwaitDebuggerAndPauseOnStart = AwaitDebuggerAndPauseOnStart;
                 })
                 .AddChakraCore(x =>
@@ -199,12 +200,13 @@ namespace ReactUnity
             CreateConsole(engine);
             CreateLocalStorage(engine);
             CreateScheduler(engine);
-            engine.EmbedHostType("YogaValueNative", typeof(Facebook.Yoga.YogaValue));
-            engine.EmbedHostType("ColorNative", typeof(Color));
-            engine.EmbedHostType("ShadowDefinitionNative", typeof(ShadowDefinition));
+            engine.EmbedHostType("YogaValue", typeof(Facebook.Yoga.YogaValue));
+            engine.EmbedHostType("Color", typeof(Color));
+            engine.EmbedHostType("ShadowDefinition", typeof(ShadowDefinition));
             engine.EmbedHostType("Vector2", typeof(Vector2));
             engine.EmbedHostType("Vector3", typeof(Vector3));
             engine.EmbedHostType("Rect", typeof(Rect));
+            engine.EmbedHostType("RectOffset", typeof(RectOffset));
             engine.EmbedHostType("Action", typeof(Action));
 
             // Load polyfills
@@ -267,9 +269,9 @@ namespace ReactUnity
             PlayerPrefs.SetString(x, value);
         }
 
-        public void getItem(string x)
+        public string getItem(string x)
         {
-            PlayerPrefs.GetString(x, "");
+            return PlayerPrefs.GetString(x, "");
         }
     }
 

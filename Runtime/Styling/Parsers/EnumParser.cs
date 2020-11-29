@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Parsers
     {
         public object FromString(string value)
         {
-            if (Enum.TryParse<T>(value.Replace("-", ""), true, out var res)) return res;
+            if (value != null && Enum.TryParse<T>(value.Replace("-", ""), true, out var res)) return res;
             return SpecialNames.CantParse;
         }
     }
