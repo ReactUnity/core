@@ -11,15 +11,17 @@ namespace ReactUnity.Styling.Types
         public Vector2 spread;
         public Color color = Color.black;
         public float blur;
+        public bool inset;
 
         public ShadowDefinition() { }
 
-        public ShadowDefinition(Vector2 offset, Vector2 spread, Color color, float blur)
+        public ShadowDefinition(Vector2 offset, Vector2 spread, Color color, float blur, bool inset = false)
         {
             this.offset = offset;
             this.spread = spread;
             this.color = color;
             this.blur = blur;
+            this.inset = inset;
         }
     }
 }

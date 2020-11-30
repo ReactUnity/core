@@ -15,12 +15,12 @@ namespace ReactUnity.Styling
     {
         object Parse(object value);
 
-         string name { get; }
-         Type type { get; }
-         object defaultValue { get; }
-         bool transitionable { get; }
-         bool inherited { get; }
-         bool proxy { get; }
+        string name { get; }
+        Type type { get; }
+        object defaultValue { get; }
+        bool transitionable { get; }
+        bool inherited { get; }
+        bool proxy { get; }
     }
 
     public class StyleProperty<T> : IStyleProperty
@@ -32,6 +32,7 @@ namespace ReactUnity.Styling
         public bool inherited { get; private set; }
         public bool proxy { get; private set; }
         public IStyleParser parser;
+        public IStyleConverter converter;
 
         public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleParser parser = null)
         {
@@ -43,11 +44,19 @@ namespace ReactUnity.Styling
             this.proxy = proxy;
 
             this.parser = parser ?? ParserMap.GetParser(type);
+            this.converter = ParserMap.GetConverter(type);
         }
 
         public object Parse(object value)
         {
             if (value is T t) return t;
+
+            if (converter != null)
+            {
+                var val = converter.Convert(value);
+                if (!Equals(val, SpecialNames.CantParse) && val != null) return val;
+            }
+
             if (!(value is string)) value = value?.ToString();
 
             var s = value as string;

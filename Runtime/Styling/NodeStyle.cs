@@ -13,7 +13,6 @@ namespace ReactUnity.Styling
         public List<Dictionary<string, object>> CssStyles;
         public List<LayoutValue> CssLayouts;
         Dictionary<string, object> DefaultStyle;
-        HashSet<string> Changes = new HashSet<string>();
         public bool HasInheritedChanges { get; private set; } = false;
 
         public NodeStyle Parent;
@@ -173,8 +172,10 @@ namespace ReactUnity.Styling
             StyleMap = new Dictionary<string, object>(copyFrom.StyleMap);
         }
 
-        public object GetStyleValue(IStyleProperty prop)
+        public object GetStyleValue(IStyleProperty prop, bool fromChild = false)
         {
+            if (fromChild) HasInheritedChanges = true;
+
             object value = StateStyles?.GetStyleValue(prop);
             if (value != null) return value;
 
@@ -185,7 +186,7 @@ namespace ReactUnity.Styling
             {
                 if (prop.inherited)
                 {
-                    return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
+                    return Parent?.GetStyleValue(prop, true) ?? prop?.defaultValue;
                 }
 
                 return prop?.defaultValue;
@@ -196,15 +197,15 @@ namespace ReactUnity.Styling
 
         public object GetStyleValue(string name)
         {
+            var prop = StyleProperties.GetStyleProperty(name);
             object value = StateStyles?.GetStyleValue(name);
-            if (value != null) return value;
+            if (value != null) return GetStyleValueSpecial(value, prop);
 
             if (
                 !StyleMap.TryGetValue(name, out value) &&
                 (CssStyles == null || !CssStyles.Any(x => x.TryGetValue(name, out value))) &&
                 (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
             {
-                var prop = StyleProperties.GetStyleProperty(name);
 
                 if (prop != null && prop.inherited)
                 {
@@ -214,13 +215,21 @@ namespace ReactUnity.Styling
                 return prop?.defaultValue;
             }
 
+            return GetStyleValueSpecial(value, prop);
+        }
+
+        private object GetStyleValueSpecial(object value, IStyleProperty prop)
+        {
+            if (Equals(value, SpecialNames.CantParse)) return null;
+            else if (Equals(value, SpecialNames.Initial) || Equals(value, SpecialNames.Unset)) return prop?.defaultValue;
+            else if (Equals(value, SpecialNames.Inherit)) return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
             return value;
         }
 
         public T GetStyleValue<T>(string name)
         {
             var value = GetStyleValue(name);
-            return value == null ? default : (T)value;
+            return value == null ? default : (T) value;
         }
 
         public void SetStyleValue(string name, object value)
@@ -244,26 +253,19 @@ namespace ReactUnity.Styling
 
             if (changed)
             {
-                Changes.Add(name);
                 if (StyleProperties.GetStyleProperty(name).inherited) HasInheritedChanges = true;
             }
         }
 
         public void MarkChangesSeen()
         {
-            Changes.Clear();
             HasInheritedChanges = false;
-        }
-
-        public bool HasChange(string name)
-        {
-            return Changes.Contains(name);
         }
 
         public bool HasValue(string name)
         {
             return StyleMap.ContainsKey(name) ||
-                (CssStyles != null && CssStyles.Any(x => x.ContainsKey(name)))||
+                (CssStyles != null && CssStyles.Any(x => x.ContainsKey(name))) ||
                 (DefaultStyle != null && DefaultStyle.ContainsKey(name));
         }
     }

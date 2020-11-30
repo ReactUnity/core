@@ -21,6 +21,11 @@ namespace ReactUnity.Styling
         static public IStyleParser ColorParser = new ColorParser();
         static public IStyleParser ShadowDefinitionParser = new ShadowDefinitionParser();
 
+        static public IStyleConverter IntConverter = new IntConverter();
+        static public IStyleConverter FloatConverter = new FloatConverter();
+        static public IStyleConverter Vector2Converter = new Vector2Converter();
+        static public IStyleConverter YogaValueConverter = new YogaValueConverter();
+
 
         private static Dictionary<Type, IStyleParser> Map = new Dictionary<Type, IStyleParser>()
         {
@@ -47,11 +52,24 @@ namespace ReactUnity.Styling
             { typeof(YogaWrap), new EnumParser<YogaWrap>() },
         };
 
+        private static Dictionary<Type, IStyleConverter> ConverterMap = new Dictionary<Type, IStyleConverter>()
+        {
+            { typeof(int), IntConverter },
+            { typeof(float), FloatConverter },
+            { typeof(Vector2), Vector2Converter },
+            { typeof(YogaValue), YogaValueConverter },
+        };
 
         public static IStyleParser GetParser(Type type)
         {
             Map.TryGetValue(type, out var parser);
             return parser;
+        }
+
+        public static IStyleConverter GetConverter(Type type)
+        {
+            ConverterMap.TryGetValue(type, out var converter);
+            return converter;
         }
     }
 }

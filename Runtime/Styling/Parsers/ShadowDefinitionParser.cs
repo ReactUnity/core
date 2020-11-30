@@ -42,7 +42,7 @@ namespace ReactUnity.Styling.Parsers
             var spready = sizes.ElementAtOrDefault(4);
             if (sizes.Count < 5) spready = spreadx;
 
-            return new ShadowDefinition(new Vector2(dx, dy), new Vector2(spreadx, spready), color, blur);
+            return new ShadowDefinition(new Vector2(dx, dy), new Vector2(spreadx, spready), color, blur, isInset);
         }
     }
 }

@@ -167,15 +167,7 @@ namespace ReactUnity.StyleEngine
                 var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Key, out var prop);
                 if (hasCssStyle)
                 {
-                    var specialName = GetSpecialName(item.Value as string);
-                    object value;
-                    if (specialName == SpecialNames.Initial)
-                        value = prop.defaultValue;
-                    else
-                        value = prop.Parse(item.Value);
-
-                    if (!Equals(value, SpecialNames.CantParse))
-                        dic[prop.name] = value;
+                    dic[prop.name] = prop.Parse(item.Value);
                 }
             }
             return dic;

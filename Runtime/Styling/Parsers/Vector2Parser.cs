@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Parsers
     public class Vector2Parser : IStyleParser
     {
         public FloatParser FloatParser = new FloatParser();
-        char[] splitters = new char[] { ' ' };
+        char[] splitters = new char[] { ' ', ',' };
 
         public object FromString(string value)
         {
@@ -28,6 +28,17 @@ namespace ReactUnity.Styling.Parsers
                         return new Vector2(fl1, fl2);
             }
 
+            return SpecialNames.CantParse;
+        }
+    }
+
+    public class Vector2Converter : IStyleConverter
+    {
+        public object Convert(object value)
+        {
+            if (value is double d) return new Vector2((float) d, (float) d);
+            if (value is float f) return new Vector2(f, f);
+            if (value is int i) return new Vector2(i, i);
             return SpecialNames.CantParse;
         }
     }

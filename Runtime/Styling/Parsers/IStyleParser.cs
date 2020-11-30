@@ -8,4 +8,9 @@ namespace ReactUnity.Styling.Parsers
     {
         object FromString(string value);
     }
+
+    public interface IStyleConverter
+    {
+        object Convert(object value);
+    }
 }
