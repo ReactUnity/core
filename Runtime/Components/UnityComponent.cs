@@ -170,13 +170,15 @@ namespace ReactUnity.Components
             var inlineLayouts = RuleHelpers.GetLayoutDic(Inline) ?? new List<LayoutValue>();
 
             var matchingRules = Context.StyleTree.GetMatchingRules(this, IsPseudoElement).ToList();
-            Style.CssStyles = matchingRules.SelectMany(x => x.Data?.Rules).Append(inlineStyles).ToList();
+            var cssStyles = new List<Dictionary<string, object>> { inlineStyles };
+            cssStyles.AddRange(matchingRules.SelectMany(x => x.Data?.Rules));
+            Style.CssStyles = cssStyles;
 
 
             if (Style.CssLayouts != null)
-                foreach (var item in Style.CssLayouts) item.SetDefault(Layout);
+                foreach (var item in Style.CssLayouts) item.SetDefault(Layout, DefaultLayout);
             Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
-            foreach (var item in Style.CssLayouts) item.Set(Layout);
+            foreach (var item in Style.CssLayouts) item.Set(Layout, DefaultLayout);
 
             ApplyStyles();
             Style.MarkChangesSeen();

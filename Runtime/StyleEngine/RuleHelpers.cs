@@ -123,7 +123,7 @@ namespace ReactUnity.StyleEngine
         {
             var dic = new Dictionary<string, object>();
 
-            foreach (var item in rule.Where(x => !(important ^ x.IsImportant)))
+            foreach (var item in rule.Where(x => important == x.IsImportant))
             {
                 var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
                 if (hasCssStyle)
@@ -146,7 +146,7 @@ namespace ReactUnity.StyleEngine
         {
             List<LayoutValue> dic = null;
 
-            foreach (var item in rule.Where(x => !(important ^ x.IsImportant)))
+            foreach (var item in rule.Where(x => important == x.IsImportant))
             {
                 var hasCssStyle = LayoutProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
                 if (hasCssStyle)

@@ -6,6 +6,7 @@ using ReactUnity.Styling.Types;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,8 +15,9 @@ namespace ReactUnity.Styling
 {
     public interface ILayoutProperty
     {
-        void Set(YogaNode node, object value);
+        void Set(YogaNode node, object value, YogaNode defaultNode);
         void SetDefault(YogaNode node);
+        void SetDefault(YogaNode node, YogaNode defaultNode);
         object Get(YogaNode node);
         object Parse(object value);
         string Serialize(object value);
@@ -36,13 +38,17 @@ namespace ReactUnity.Styling
         {
             return prop.Get(node);
         }
-        public void Set(YogaNode node)
+        public void Set(YogaNode node, YogaNode defaultNode)
         {
-            prop.Set(node, value);
+            prop.Set(node, value, defaultNode);
         }
         public void SetDefault(YogaNode node)
         {
             prop.SetDefault(node);
+        }
+        public void SetDefault(YogaNode node, YogaNode defaultNode)
+        {
+            prop.SetDefault(node, defaultNode);
         }
     }
 
@@ -92,14 +98,15 @@ namespace ReactUnity.Styling
             return SpecialNames.CantParse;
         }
 
-        public void Set(YogaNode node, object value)
+        public void Set(YogaNode node, object value, YogaNode defaultNode)
         {
             if (Equals(value, SpecialNames.CantParse)) return;
-            else if (Equals(value, SpecialNames.Initial) || Equals(value, SpecialNames.Unset)) SetDefault(node);
+            else if (Equals(value, SpecialNames.Initial)) SetDefault(node, defaultNode);
+            else if (Equals(value, SpecialNames.Unset)) SetDefault(node);
             else if (Equals(value, SpecialNames.Inherit))
             {
                 if (node.Parent != null) setter(node, getter(node.Parent));
-                else SetDefault(node);
+                else SetDefault(node, defaultNode);
             }
             else setter(node, (T) value);
         }
@@ -107,6 +114,11 @@ namespace ReactUnity.Styling
         public void SetDefault(YogaNode node)
         {
             setter(node, defaultValue);
+        }
+
+        public void SetDefault(YogaNode node, YogaNode defaultNode)
+        {
+            setter(node, defaultNode != null ? getter(defaultNode) : defaultValue);
         }
 
         public object Get(YogaNode node)
@@ -193,6 +205,8 @@ namespace ReactUnity.Styling
         };
         public static ILayoutProperty[] AllProperties;
 
+        private static CultureInfo cultureInfo = new CultureInfo("en-US");
+
         static LayoutProperties()
         {
             var type = typeof(LayoutProperties);
@@ -225,14 +239,14 @@ namespace ReactUnity.Styling
                 return string.Empty;
 
             var builder = new StringBuilder();
-            builder.Append(char.ToLower(str.First()));
+            builder.Append(char.ToLower(str.First(), cultureInfo));
 
             foreach (var c in str.Skip(1))
             {
                 if (char.IsUpper(c))
                 {
                     builder.Append('-');
-                    builder.Append(char.ToLower(c));
+                    builder.Append(char.ToLower(c, cultureInfo));
                 }
                 else
                 {

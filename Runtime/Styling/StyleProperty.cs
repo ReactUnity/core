@@ -104,7 +104,7 @@ namespace ReactUnity.Styling
             { "z-order", zOrder },
             { "visibility", hidden },
             { "background-color", backgroundColor },
-            { "background", backgroundImage },
+            { "background", backgroundColor },
             { "background-image", backgroundImage },
             { "border-radius", borderRadius },
             { "border-color", borderColor },
