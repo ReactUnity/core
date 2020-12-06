@@ -9,7 +9,7 @@ namespace ReactUnity.Styling.Parsers
         {
             if (value == null) return SpecialNames.CantParse;
             if (value is T t) return t;
-            if (value is int i) return System.Convert.ChangeType(i, typeof(T));
+            if (value is int i) return Enum.ToObject(typeof(T), i);
             return FromString(value?.ToString());
         }
 
