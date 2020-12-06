@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Parsers
 {
-    public class IntParser : IStyleParser
+    public class IntConverter : IStyleParser, IStyleConverter
     {
-        public FloatParser FloatParser = new FloatParser();
+        public FloatConverter FloatParser = new FloatConverter();
 
         public object FromString(string value)
         {
@@ -14,17 +14,12 @@ namespace ReactUnity.Styling.Parsers
             if (pr is float f) return Mathf.RoundToInt(f);
             return SpecialNames.CantParse;
         }
-    }
-
-    public class IntConverter : IStyleConverter
-    {
-        IntParser parser = new IntParser();
 
         public object Convert(object value)
         {
             if (value is float f) return Mathf.RoundToInt(f);
             if (value is double d) return (int) Math.Round(d);
-            return parser.FromString(value?.ToString());
+            return FromString(value?.ToString());
         }
     }
 }

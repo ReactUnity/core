@@ -50,10 +50,10 @@ namespace ReactUnity.Interop
             }
             else return null;
 
-            engine.Execute(argsName + "=[]");
-            engine.EmbedHostObject(cbName, this);
-            engine.EmbedHostObject(argsName, args);
-            return engine.Evaluate(cbName + ".callback(..." + argsName + ")");
+            //engine.Execute(argsName + "=[]");
+            //engine.EmbedHostObject(cbName, this);
+            //engine.EmbedHostObject(argsName, args);
+            //return engine.Evaluate(cbName + ".callback(..." + argsName + ")");
         }
     }
 }

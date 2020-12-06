@@ -59,7 +59,7 @@ namespace ReactUnity.Styling
         public bool transitionable;
 
         public PropertyInfo propInfo;
-        public IStyleParser parser;
+        public IStyleConverter converter;
 
         T defaultValue;
         public Action<YogaNode, T> setter;
@@ -74,7 +74,12 @@ namespace ReactUnity.Styling
             propInfo = ygType.GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
 
             type = propInfo.PropertyType;
-            parser = ParserMap.GetParser(type);
+            converter = ParserMap.GetConverter(type);
+
+            if (converter == null)
+            {
+                UnityEngine.Debug.LogError("There is no converter for the type: " + type.Name);
+            }
 
             this.defaultValue = defaultValue;
             setter = (Action<YogaNode, T>) propInfo.GetSetMethod().CreateDelegate(typeof(Action<YogaNode, T>));
@@ -83,25 +88,13 @@ namespace ReactUnity.Styling
 
         public object Parse(object value)
         {
-            if (value is T t) return t;
-            if (!(value is string)) value = value?.ToString();
-
-            var s = value as string;
-            if (parser != null)
-            {
-                var val = parser.FromString(s);
-                if (!Equals(val, SpecialNames.CantParse) && val != null) return val;
-            }
-
-            var special = RuleHelpers.GetSpecialName(s);
-            if (special != SpecialNames.NoSpecialName) return special;
-            return SpecialNames.CantParse;
+            return converter.Convert(value);
         }
 
         public void Set(YogaNode node, object value, YogaNode defaultNode)
         {
-            if (Equals(value, SpecialNames.CantParse)) return;
-            else if (Equals(value, SpecialNames.Initial)) SetDefault(node, defaultNode);
+            if (Equals(value, SpecialNames.CantParse) || Equals(value, SpecialNames.None) || Equals(value, SpecialNames.NoSpecialName)) return;
+            else if (Equals(value, SpecialNames.Initial) || Equals(value, SpecialNames.Auto)) SetDefault(node, defaultNode);
             else if (Equals(value, SpecialNames.Unset)) SetDefault(node);
             else if (Equals(value, SpecialNames.Inherit))
             {

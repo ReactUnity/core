@@ -11,65 +11,49 @@ namespace ReactUnity.Styling
 {
     internal class ParserMap
     {
-        static public IStyleParser DefaultParser = new StringParser();
-        static public IStyleParser StringParser = new StringParser();
-        static public IStyleParser YogaValueParser = new YogaValueParser();
-        static public IStyleParser FontSizeParser = new YogaValueParser();
-        static public IStyleParser FloatParser = new FloatParser();
-        static public IStyleParser Vector2Parser = new Vector2Parser();
-        static public IStyleParser IntParser = new IntParser();
-        static public IStyleParser ColorParser = new ColorParser();
-        static public IStyleParser ShadowDefinitionParser = new ShadowDefinitionParser();
-
-        static public IStyleConverter IntConverter = new IntConverter();
+        static public IStyleConverter DefaultConverter = new StringConverter();
+        static public IStyleConverter StringConverter = new StringConverter();
+        static public IStyleConverter GeneralConverter = new GeneralConverter();
+        static public IStyleConverter YogaValueConverter = new YogaValueConverter();
         static public IStyleConverter FloatConverter = new FloatConverter();
         static public IStyleConverter Vector2Converter = new Vector2Converter();
-        static public IStyleConverter YogaValueConverter = new YogaValueConverter();
+        static public IStyleConverter IntConverter = new IntConverter();
+        static public IStyleConverter BoolConverter = new BoolConverter(new string[] { "true" }, new string[] { "false" });
+        static public IStyleConverter ColorConverter = new ColorConverter();
+        static public IStyleConverter ShadowDefinitionConverter = new ShadowDefinitionConverter();
 
 
-        private static Dictionary<Type, IStyleParser> Map = new Dictionary<Type, IStyleParser>()
+        private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()
         {
-            { typeof(Vector2), Vector2Parser },
-            { typeof(YogaValue), YogaValueParser },
-            { typeof(float), FloatParser },
-            { typeof(int), IntParser },
-            { typeof(string), StringParser },
-            { typeof(object), DefaultParser },
-            { typeof(Color), ColorParser },
-            { typeof(ShadowDefinition), ShadowDefinitionParser },
-            { typeof(InteractionType), new EnumParser<InteractionType>() },
-            { typeof(TextOverflowModes), new EnumParser<TextOverflowModes>() },
-            { typeof(TextAlignmentOptions), new EnumParser<TextAlignmentOptions>() },
-            { typeof(FontWeight), new EnumParser<FontWeight>() },
-            { typeof(FontStyles), new EnumParser<FontStyles>() },
-            { typeof(YogaOverflow), new EnumParser<YogaOverflow>() },
-            { typeof(YogaPositionType), new EnumParser<YogaPositionType>() },
-            { typeof(YogaDirection), new EnumParser<YogaDirection>() },
-            { typeof(YogaFlexDirection), new EnumParser<YogaFlexDirection>() },
-            { typeof(YogaDisplay), new EnumParser<YogaDisplay>() },
-            { typeof(YogaJustify), new EnumParser<YogaJustify>() },
-            { typeof(YogaAlign), new EnumParser<YogaAlign>() },
-            { typeof(YogaWrap), new EnumParser<YogaWrap>() },
-        };
-
-        private static Dictionary<Type, IStyleConverter> ConverterMap = new Dictionary<Type, IStyleConverter>()
-        {
-            { typeof(int), IntConverter },
-            { typeof(float), FloatConverter },
             { typeof(Vector2), Vector2Converter },
             { typeof(YogaValue), YogaValueConverter },
+            { typeof(float), FloatConverter },
+            { typeof(double), FloatConverter },
+            { typeof(int), IntConverter },
+            { typeof(string), StringConverter },
+            { typeof(object), DefaultConverter },
+            { typeof(Color), ColorConverter },
+            { typeof(bool), BoolConverter },
+            { typeof(ShadowDefinition), ShadowDefinitionConverter },
+            { typeof(InteractionType), new EnumConverter<InteractionType>() },
+            { typeof(TextOverflowModes), new EnumConverter<TextOverflowModes>() },
+            { typeof(TextAlignmentOptions), new EnumConverter<TextAlignmentOptions>() },
+            { typeof(FontWeight), new EnumConverter<FontWeight>() },
+            { typeof(FontStyles), new EnumConverter<FontStyles>() },
+            { typeof(YogaOverflow), new EnumConverter<YogaOverflow>() },
+            { typeof(YogaPositionType), new EnumConverter<YogaPositionType>() },
+            { typeof(YogaDirection), new EnumConverter<YogaDirection>() },
+            { typeof(YogaFlexDirection), new EnumConverter<YogaFlexDirection>() },
+            { typeof(YogaDisplay), new EnumConverter<YogaDisplay>() },
+            { typeof(YogaJustify), new EnumConverter<YogaJustify>() },
+            { typeof(YogaAlign), new EnumConverter<YogaAlign>() },
+            { typeof(YogaWrap), new EnumConverter<YogaWrap>() },
         };
-
-        public static IStyleParser GetParser(Type type)
-        {
-            Map.TryGetValue(type, out var parser);
-            return parser;
-        }
 
         public static IStyleConverter GetConverter(Type type)
         {
-            ConverterMap.TryGetValue(type, out var converter);
-            return converter;
+            Map.TryGetValue(type, out var converter);
+            return new GeneralConverter(converter);
         }
     }
 }

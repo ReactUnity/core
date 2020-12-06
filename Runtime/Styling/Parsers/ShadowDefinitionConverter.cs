@@ -4,10 +4,16 @@ using UnityEngine;
 
 namespace ReactUnity.Styling.Parsers
 {
-    public class ShadowDefinitionParser : IStyleParser
+    public class ShadowDefinitionConverter : IStyleParser, IStyleConverter
     {
-        public ColorParser ColorParser = new ColorParser();
-        public FloatParser FloatParser = new FloatParser();
+        public ColorConverter ColorParser = new ColorConverter();
+        public FloatConverter FloatParser = new FloatConverter();
+
+        public object Convert(object value)
+        {
+            if (value is ShadowDefinition t) return t;
+            return FromString(value?.ToString());
+        }
 
         public object FromString(string value)
         {
@@ -24,7 +30,7 @@ namespace ReactUnity.Styling.Parsers
             var last = splits[splits.Count - 1];
             var lastSegmentFirstChar = last.FirstOrDefault();
             var lastIsNumber = char.IsDigit(lastSegmentFirstChar) || lastSegmentFirstChar == '-';
-            var color = lastIsNumber ? Color.black : (Color?)ColorParser.FromString(last) ?? Color.black;
+            var color = lastIsNumber ? Color.black : (Color?) ColorParser.FromString(last) ?? Color.black;
 
             if (!lastIsNumber) splits.RemoveAt(splits.Count - 1);
 

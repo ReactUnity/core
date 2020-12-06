@@ -176,8 +176,7 @@ namespace ReactUnity.Styling
         {
             if (fromChild) HasInheritedChanges = true;
 
-            object value = StateStyles?.GetStyleValue(prop);
-            if (value != null) return value;
+            object value;
 
             if (
                 !StyleMap.TryGetValue(prop.name, out value) &&
@@ -192,14 +191,13 @@ namespace ReactUnity.Styling
                 return prop?.defaultValue;
             }
 
-            return value;
+            return GetStyleValueSpecial(value, prop);
         }
 
         public object GetStyleValue(string name)
         {
             var prop = StyleProperties.GetStyleProperty(name);
-            object value = StateStyles?.GetStyleValue(name);
-            if (value != null) return GetStyleValueSpecial(value, prop);
+            object value;
 
             if (
                 !StyleMap.TryGetValue(name, out value) &&

@@ -31,10 +31,9 @@ namespace ReactUnity.Styling
         public bool transitionable { get; private set; }
         public bool inherited { get; private set; }
         public bool proxy { get; private set; }
-        public IStyleParser parser;
         public IStyleConverter converter;
 
-        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleParser parser = null)
+        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleConverter converter = null)
         {
             this.type = typeof(T);
             this.name = name;
@@ -43,32 +42,12 @@ namespace ReactUnity.Styling
             this.inherited = inherited;
             this.proxy = proxy;
 
-            this.parser = parser ?? ParserMap.GetParser(type);
-            this.converter = ParserMap.GetConverter(type);
+            this.converter = converter ?? ParserMap.GetConverter(type);
         }
 
         public object Parse(object value)
         {
-            if (value is T t) return t;
-
-            if (converter != null)
-            {
-                var val = converter.Convert(value);
-                if (!Equals(val, SpecialNames.CantParse) && val != null) return val;
-            }
-
-            if (!(value is string)) value = value?.ToString();
-
-            var s = value as string;
-            if (parser != null)
-            {
-                var val = parser.FromString(s);
-                if (!Equals(val, SpecialNames.CantParse) && val != null) return val;
-            }
-
-            var special = RuleHelpers.GetSpecialName(s);
-            if (special != SpecialNames.NoSpecialName) return special;
-            return SpecialNames.CantParse;
+            return converter.Convert(value);
         }
     }
 
@@ -76,7 +55,7 @@ namespace ReactUnity.Styling
     {
         public static IStyleProperty opacity = new StyleProperty<float>("opacity", 1f, true);
         public static IStyleProperty zOrder = new StyleProperty<int>("zOrder", 0, false);
-        public static IStyleProperty hidden = new StyleProperty<bool>("hidden", false, parser: new BoolParser(new string[] { "hidden" }, new string[] { "visible" }));
+        public static IStyleProperty hidden = new StyleProperty<bool>("hidden", false, converter: new BoolConverter(new string[] { "hidden" }, new string[] { "visible" }));
         public static IStyleProperty cursor = new StyleProperty<string>("cursor", null, false);
         public static IStyleProperty interaction = new StyleProperty<InteractionType>("interaction", InteractionType.WhenVisible, false);
         public static IStyleProperty backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
@@ -96,7 +75,7 @@ namespace ReactUnity.Styling
         public static IStyleProperty fontSize = new StyleProperty<YogaValue>("fontSize", YogaValue.Undefined(), true, true);
         public static IStyleProperty textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
         public static IStyleProperty textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
-        public static IStyleProperty textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, parser: new BoolParser(new string[] { "wrap" }, new string[] { "nowrap" }));
+        public static IStyleProperty textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap" }, new string[] { "nowrap" }));
 
         public static Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();
         public static Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>()

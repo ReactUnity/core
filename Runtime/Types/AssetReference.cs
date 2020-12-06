@@ -1,6 +1,7 @@
 using Jint;
 using Jint.Native;
 using ReactUnity.Converters;
+using ReactUnity.Styling.Parsers;
 using UnityEngine;
 
 namespace ReactUnity.Types
@@ -107,14 +108,6 @@ namespace ReactUnity.Types
             if (typeof(T) == typeof(Texture2D))
             {
                 var texture = new Texture2D(1, 1);
-
-                var color = ColorConverter.FromJsValue(value);
-
-                if (color.HasValue)
-                {
-                    texture.SetPixel(0, 0, color.Value);
-                    texture.Apply();
-                }
                 return texture as T;
             }
 
