@@ -19,124 +19,127 @@ namespace ReactUnity.Styling
         public StateStyles StateStyles;
 
         #region Set/Get
+
         public float opacity
         {
-            set => SetStyleValue("opacity", value);
-            get => GetStyleValue<float>("opacity");
+            set => SetStyleValue(StyleProperties.opacity, value);
+            get => GetStyleValue<float>(StyleProperties.opacity);
         }
         public int zOrder
         {
-            set => SetStyleValue("zOrder", value);
-            get => GetStyleValue<int>("zOrder");
+            set => SetStyleValue(StyleProperties.zOrder, value);
+            get => GetStyleValue<int>(StyleProperties.zOrder);
         }
         public bool hidden
         {
-            set => SetStyleValue("hidden", value);
-            get => GetStyleValue<bool>("hidden");
+            set => SetStyleValue(StyleProperties.hidden, value);
+            get => GetStyleValue<bool>(StyleProperties.hidden);
         }
         public string cursor
         {
-            set => SetStyleValue("cursor", value);
-            get => GetStyleValue<string>("cursor");
+            set => SetStyleValue(StyleProperties.cursor, value);
+            get => GetStyleValue<string>(StyleProperties.cursor);
         }
         public InteractionType interaction
         {
-            set => SetStyleValue("interaction", value);
-            get => GetStyleValue<InteractionType>("interaction");
+            set => SetStyleValue(StyleProperties.interaction, value);
+            get => GetStyleValue<InteractionType>(StyleProperties.interaction);
         }
         public Color backgroundColor
         {
-            set => SetStyleValue("backgroundColor", value);
-            get => GetStyleValue<Color>("backgroundColor");
+            set => SetStyleValue(StyleProperties.backgroundColor, value);
+            get => GetStyleValue<Color>(StyleProperties.backgroundColor);
         }
         public object backgroundImage
         {
-            set => SetStyleValue("backgroundImage", value);
-            get => GetStyleValue("backgroundImage");
+            set => SetStyleValue(StyleProperties.backgroundImage, value);
+            get => GetStyleValue(StyleProperties.backgroundImage);
         }
         public int borderRadius
         {
-            set => SetStyleValue("borderRadius", value);
-            get => GetStyleValue<int>("borderRadius");
+            set => SetStyleValue(StyleProperties.borderRadius, value);
+            get => GetStyleValue<int>(StyleProperties.borderRadius);
         }
         public Color borderColor
         {
-            set => SetStyleValue("borderColor", value);
-            get => GetStyleValue<Color>("borderColor");
+            set => SetStyleValue(StyleProperties.borderColor, value);
+            get => GetStyleValue<Color>(StyleProperties.borderColor);
         }
         public ShadowDefinition boxShadow
         {
-            set => SetStyleValue("boxShadow", value);
-            get => GetStyleValue<ShadowDefinition>("boxShadow");
+            set => SetStyleValue(StyleProperties.boxShadow, value);
+            get => GetStyleValue<ShadowDefinition>(StyleProperties.boxShadow);
         }
         public Vector2 translate
         {
-            set => SetStyleValue("translate", value);
-            get => GetStyleValue<Vector2>("translate");
+            set => SetStyleValue(StyleProperties.translate, value);
+            get => GetStyleValue<Vector2>(StyleProperties.translate);
         }
         public bool translateRelative
         {
-            set => SetStyleValue("translateRelative", value);
-            get => GetStyleValue<bool>("translateRelative");
+            set => SetStyleValue(StyleProperties.translateRelative, value);
+            get => GetStyleValue<bool>(StyleProperties.translateRelative);
         }
         public Vector2 scale
         {
-            set => SetStyleValue("scale", value);
-            get => GetStyleValue<Vector2>("scale");
+            set => SetStyleValue(StyleProperties.scale, value);
+            get => GetStyleValue<Vector2>(StyleProperties.scale);
         }
         public Vector2 pivot
         {
-            set => SetStyleValue("pivot", value);
-            get => GetStyleValue<Vector2>("pivot");
+            set => SetStyleValue(StyleProperties.pivot, value);
+            get => GetStyleValue<Vector2>(StyleProperties.pivot);
         }
         public float rotate
         {
-            set => SetStyleValue("rotate", value);
-            get => GetStyleValue<float>("rotate");
+            set => SetStyleValue(StyleProperties.rotate, value);
+            get => GetStyleValue<float>(StyleProperties.rotate);
         }
         public TMP_FontAsset font
         {
-            set => SetStyleValue("font", value);
-            get => GetStyleValue<TMP_FontAsset>("font");
+            set => SetStyleValue(StyleProperties.font, value);
+            get => GetStyleValue<TMP_FontAsset>(StyleProperties.font);
         }
         public Color fontColor
         {
-            set => SetStyleValue("fontColor", value);
-            get => GetStyleValue<Color>("fontColor");
+            set => SetStyleValue(StyleProperties.fontColor, value);
+            get => GetStyleValue<Color>(StyleProperties.fontColor);
         }
         public FontWeight fontWeight
         {
-            set => SetStyleValue("fontWeight", value);
-            get => GetStyleValue<FontWeight>("fontWeight");
+            set => SetStyleValue(StyleProperties.fontWeight, value);
+            get => GetStyleValue<FontWeight>(StyleProperties.fontWeight);
         }
         public FontStyles fontStyle
         {
-            set => SetStyleValue("fontStyle", value);
-            get => GetStyleValue<FontStyles>("fontStyle");
+            set => SetStyleValue(StyleProperties.fontStyle, value);
+            get => GetStyleValue<FontStyles>(StyleProperties.fontStyle);
         }
         public YogaValue fontSize
         {
-            set => SetStyleValue("fontSize", value);
-            get => GetStyleValue<YogaValue>("fontSize");
+            set => SetStyleValue(StyleProperties.fontSize, value);
+            get => GetStyleValue<YogaValue>(StyleProperties.fontSize);
         }
         public TextAlignmentOptions textAlign
         {
-            set => SetStyleValue("textAlign", value);
-            get => GetStyleValue<TextAlignmentOptions>("textAlign");
+            set => SetStyleValue(StyleProperties.textAlign, value);
+            get => GetStyleValue<TextAlignmentOptions>(StyleProperties.textAlign);
         }
         public TextOverflowModes textOverflow
         {
-            set => SetStyleValue("textOverflow", value);
-            get => GetStyleValue<TextOverflowModes>("textOverflow");
+            set => SetStyleValue(StyleProperties.textOverflow, value);
+            get => GetStyleValue<TextOverflowModes>(StyleProperties.textOverflow);
         }
         public bool textWrap
         {
-            set => SetStyleValue("textWrap", value);
-            get => GetStyleValue<bool>("textWrap");
+            set => SetStyleValue(StyleProperties.textWrap, value);
+            get => GetStyleValue<bool>(StyleProperties.textWrap);
         }
+
         #endregion
 
         #region Resolved values
+
         public float fontSizeActual
         {
             get
@@ -154,6 +157,7 @@ namespace ReactUnity.Styling
                 return Parent?.fontSizeActual ?? 0;
             }
         }
+
         #endregion
 
         public NodeStyle()
@@ -177,37 +181,16 @@ namespace ReactUnity.Styling
             if (fromChild) HasInheritedChanges = true;
 
             object value;
-
-            if (
-                !StyleMap.TryGetValue(prop.name, out value) &&
-                (CssStyles == null || !CssStyles.Any(x => x.TryGetValue(prop.name, out value))) &&
-                (DefaultStyle == null || !DefaultStyle.TryGetValue(prop.name, out value)))
-            {
-                if (prop.inherited)
-                {
-                    return Parent?.GetStyleValue(prop, true) ?? prop?.defaultValue;
-                }
-
-                return prop?.defaultValue;
-            }
-
-            return GetStyleValueSpecial(value, prop);
-        }
-
-        public object GetStyleValue(string name)
-        {
-            var prop = StyleProperties.GetStyleProperty(name);
-            object value;
+            var name = prop.name;
 
             if (
                 !StyleMap.TryGetValue(name, out value) &&
                 (CssStyles == null || !CssStyles.Any(x => x.TryGetValue(name, out value))) &&
                 (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
             {
-
-                if (prop != null && prop.inherited)
+                if (prop.inherited)
                 {
-                    return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
+                    return Parent?.GetStyleValue(prop, true) ?? prop?.defaultValue;
                 }
 
                 return prop?.defaultValue;
@@ -224,14 +207,16 @@ namespace ReactUnity.Styling
             return value;
         }
 
-        public T GetStyleValue<T>(string name)
+        public T GetStyleValue<T>(IStyleProperty prop)
         {
-            var value = GetStyleValue(name);
+            var value = GetStyleValue(prop);
             return value == null ? default : (T) value;
         }
 
-        public void SetStyleValue(string name, object value)
+
+        public void SetStyleValue(IStyleProperty prop, object value)
         {
+            var name = prop.name;
             object currentValue;
 
             if (!StyleMap.TryGetValue(name, out currentValue))

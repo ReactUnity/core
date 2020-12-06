@@ -497,7 +497,7 @@ namespace ReactUnity.Editor
             GUI.enabled = enabled;
 
             var result = draw(enabled);
-            CurrentStyle.SetStyleValue(propertyName, enabled ? result : null);
+            CurrentStyle.SetStyleValue(StyleProperties.GetStyleProperty(propertyName), enabled ? result : null);
 
             GUILayout.EndHorizontal();
             GUI.enabled = true;
