@@ -6,6 +6,8 @@
 React Unity is a way to build interactive UI in Unity3D using the popular React framework and Typescript. 
 It is designed to support CSS-like features and Flex layout system. 
 
+**WIP: Upcoming breaking changes and API improvements**
+
 ## Requirements
 
 - Node.js version 12 is required on the development machine
