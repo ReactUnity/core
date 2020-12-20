@@ -18,6 +18,12 @@ namespace ReactUnity
 {
     public class ReactUnity : MonoBehaviour
     {
+        public enum EngineType
+        {
+            Jint = 0,
+            V8 = 1,
+        }
+
         private IJsEngine engine;
         private UnityUGUIContext unityContext;
         private UnityScheduler scheduler;
@@ -32,10 +38,10 @@ namespace ReactUnity
 
         public RectTransform Root => transform as RectTransform;
 
-        public string JsEngine = "Jint";
+        public EngineType JsEngine = EngineType.Jint;
         public string EngineName => JsEngine + "JsEngine";
         public bool EnableDebugging = false;
-        public bool AwaitDebuggerAndPauseOnStart = false;
+        public bool PauseDebuggerOnStart = false;
 
         void OnEnable()
         {
@@ -63,7 +69,7 @@ namespace ReactUnity
                     x.DebugPort = 9222;
                     x.EnableDebugging = EnableDebugging;
                     x.EnableRemoteDebugging = EnableDebugging;
-                    x.AwaitDebuggerAndPauseOnStart = AwaitDebuggerAndPauseOnStart;
+                    x.AwaitDebuggerAndPauseOnStart = PauseDebuggerOnStart;
                 })
                 .AddChakraCore(x =>
                 {

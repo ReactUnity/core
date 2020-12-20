@@ -21,6 +21,7 @@ namespace ReactUnity.Styling.Parsers
 
         public object Convert(object value)
         {
+            if (value is float f) return f;
             if (value is int i) return (float) i;
             if (value is double d) return (float) d;
             return FromString(value?.ToString());
