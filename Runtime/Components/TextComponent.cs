@@ -70,6 +70,7 @@ namespace ReactUnity.Components
             Text.color = Style.fontColor;
             Text.enableWordWrapping = Style.textWrap;
             Text.alignment = Style.textAlign;
+            Text.overflowMode = Style.textOverflow;
 
             var isLinked = Style.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)
@@ -84,9 +85,6 @@ namespace ReactUnity.Components
                     LinkedTextWatcher.LinkedText.Destroy();
                 LinkedTextWatcher = null;
             }
-
-            //Page is appropriate here because it calculates firstOverflowCharacterIndex and masks the text at the same time
-            Text.overflowMode = isLinked ? TextOverflowModes.Page : Style.textOverflow;
         }
 
         public override void Destroy()
