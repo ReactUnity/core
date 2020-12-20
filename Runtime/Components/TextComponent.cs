@@ -38,6 +38,7 @@ namespace ReactUnity.Components
         {
             Layout.CopyStyle(linkedTo.Layout);
             Style.CopyStyle(linkedTo.Style);
+            Inline = linkedTo.Inline;
 
             SetParent(linkedTo.Parent, linkedTo, true);
 
@@ -84,7 +85,7 @@ namespace ReactUnity.Components
                 LinkedTextWatcher = null;
             }
 
-            // Page is appropriate here because it calculates firstOverflowCharacterIndex and masks the text at the same time
+            //Page is appropriate here because it calculates firstOverflowCharacterIndex and masks the text at the same time
             Text.overflowMode = isLinked ? TextOverflowModes.Page : Style.textOverflow;
         }
 

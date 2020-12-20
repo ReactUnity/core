@@ -40,7 +40,7 @@ namespace ReactUnity.Components
         public YogaNode Layout { get; private set; }
         public NodeStyle Style { get; private set; }
         public StateStyles StateStyles { get; private set; }
-        public ExpandoObject Inline { get; private set; } = new ExpandoObject();
+        public ExpandoObject Inline { get; protected set; } = new ExpandoObject();
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
