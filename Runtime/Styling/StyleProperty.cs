@@ -76,6 +76,7 @@ namespace ReactUnity.Styling
         public static IStyleProperty textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
         public static IStyleProperty textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
         public static IStyleProperty textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap" }, new string[] { "nowrap" }));
+        public static IStyleProperty content = new StyleProperty<string>("content", null, false);
 
         public static Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();
         public static Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>()

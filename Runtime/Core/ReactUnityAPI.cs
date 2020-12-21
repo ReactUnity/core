@@ -3,6 +3,7 @@ using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.Components;
 using ReactUnity.Interop;
+using ReactUnity.StateHandlers;
 using System;
 using System.Collections.Generic;
 
@@ -21,6 +22,12 @@ namespace ReactUnity
                 { "input", (tag, text, context) => new InputComponent(text, context) },
                 { "scroll", (tag, text, context) => new ScrollComponent(context) },
                 { "image", (tag, text, context) => new ImageComponent(context) },
+            };
+
+        public static Dictionary<string, Type> StateHandlers
+            = new Dictionary<string, Type>()
+            {
+                { "hover", typeof(HoverStateHandler) }
             };
 
         IJsEngine Engine;

@@ -33,10 +33,6 @@ namespace ReactUnity.StyleEngine
                     leaf.Data.Layouts.AddRange(lay);
                 }
 
-                var canBePseudo = leaf.ParsedSelector.Count > 0 && leaf.ParsedSelector.All(x => x.Type == RuleSelectorPartType.Tag);
-                if (canBePseudo) LeafNodesForPseudos.InsertIntoSortedList(leaf);
-
-
                 var importantDic = RuleHelpers.GetRuleDic(style, true);
                 var importantLay = RuleHelpers.GetLayoutDic(style, true);
                 if (importantDic.Count > 0 || importantLay != null)
@@ -53,7 +49,6 @@ namespace ReactUnity.StyleEngine
 
                     added.Add(importantLeaf);
                     LeafNodes.InsertIntoSortedList(importantLeaf);
-                    if (canBePseudo) LeafNodesForPseudos.InsertIntoSortedList(importantLeaf);
                 }
             }
 
@@ -66,45 +61,54 @@ namespace ReactUnity.StyleEngine
     {
 
         public List<RuleTreeNode<T>> LeafNodes = new List<RuleTreeNode<T>>();
-        public List<RuleTreeNode<T>> LeafNodesForPseudos = new List<RuleTreeNode<T>>();
+        public List<RuleTreeNode<T>> BeforeNodes = new List<RuleTreeNode<T>>();
+        public List<RuleTreeNode<T>> AfterNodes = new List<RuleTreeNode<T>>();
         public StylesheetParser Parser { get; private set; }
 
         public RuleTree(StylesheetParser parser)
         {
             Parser = parser;
+            Tree = this;
         }
 
-        public IEnumerable<RuleTreeNode<T>> GetMatchingRules(UnityComponent component, bool pseudoElement = false)
+        public IEnumerable<RuleTreeNode<T>> GetMatchingRules(UnityComponent component)
         {
-            return (pseudoElement ? LeafNodesForPseudos : LeafNodes).Where(x => x.Matches(component, null));
+            return LeafNodes.Where(x => x.Matches(component, null));
+        }
+        public IEnumerable<RuleTreeNode<T>> GetMatchingBefore(UnityComponent component)
+        {
+            return BeforeNodes.Where(x => x.Matches(component, null));
+        }
+        public IEnumerable<RuleTreeNode<T>> GetMatchingAfter(UnityComponent component)
+        {
+            return AfterNodes.Where(x => x.Matches(component, null));
         }
 
         public UnityComponent GetMatchingChild(UnityComponent component, bool pseudoElement = false)
         {
             var list = new List<UnityComponent>();
-            GetMatchingChildrenInner(component, pseudoElement, list, component, true);
+            GetMatchingChildrenInner(component, pseudoElement, list, component, true, LeafNodes);
             return list.FirstOrDefault();
         }
 
         public List<UnityComponent> GetMatchingChildren(UnityComponent component, bool pseudoElement = false)
         {
             var list = new List<UnityComponent>();
-
-            GetMatchingChildrenInner(component, pseudoElement, list, component, false);
+            GetMatchingChildrenInner(component, pseudoElement, list, component, false, LeafNodes);
             return list;
         }
 
         private bool GetMatchingChildrenInner(
-            UnityComponent component, bool pseudoElement, List<UnityComponent> list, UnityComponent scope, bool singleItem)
+            UnityComponent component, bool pseudoElement, List<UnityComponent> list, UnityComponent scope, bool singleItem, List<RuleTreeNode<T>> leafList)
         {
-            var matches = (pseudoElement ? LeafNodesForPseudos : LeafNodes).Any(x => x.Matches(component, scope));
+            var matches = leafList.Any(x => x.Matches(component, scope));
             if (matches) list.Add(component);
             if (matches && singleItem) return true;
 
             if (component is ContainerComponent cmp)
                 foreach (var child in cmp.Children)
                 {
-                    var childMatches = GetMatchingChildrenInner(child, pseudoElement, list, scope, singleItem);
+                    var childMatches = GetMatchingChildrenInner(child, pseudoElement, list, scope, singleItem, leafList);
                     if (childMatches && singleItem) return true;
                 }
 
@@ -119,14 +123,17 @@ namespace ReactUnity.StyleEngine
             foreach (var split in splits)
             {
                 var selector = RuleHelpers.NormalizeSelector(split);
-                var sl = Parser.ParseSelector(selector);
+                var sl = Tree.Parser.ParseSelector(selector);
                 var specificity = RuleHelpers.GetSpecificity(sl.Specifity);
 
+                var list = LeafNodes;
+                if (selector.EndsWith(":before")) list = BeforeNodes;
+                if (selector.EndsWith(":after")) list = AfterNodes;
                 var leaf = AddChildCascading("** " + selector);
                 leaf.Specifity = specificity;
 
                 added.Add(leaf);
-                LeafNodes.InsertIntoSortedList(leaf);
+                list.InsertIntoSortedList(leaf);
             }
 
             return added;

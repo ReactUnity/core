@@ -102,6 +102,8 @@ namespace ReactUnity.Components
             Parent = parent;
             RectTransform.SetParent(parent.Container, false);
 
+            insertBefore = insertBefore ?? (insertAfter ? null : parent.AfterPseudo);
+
             if (insertBefore == null)
             {
                 parent.Children.Add(this);
@@ -169,7 +171,11 @@ namespace ReactUnity.Components
             var inlineStyles = RuleHelpers.GetRuleDic(Inline);
             var inlineLayouts = RuleHelpers.GetLayoutDic(Inline) ?? new List<LayoutValue>();
 
-            var matchingRules = Context.StyleTree.GetMatchingRules(this, IsPseudoElement).ToList();
+            List<RuleTreeNode<StyleData>> matchingRules;
+            if (Tag == "_before") matchingRules = Parent.BeforeRules;
+            else if (Tag == "_after") matchingRules = Parent.AfterRules;
+            else matchingRules = Context.StyleTree.GetMatchingRules(this).ToList();
+
             var cssStyles = new List<Dictionary<string, object>> { inlineStyles };
             cssStyles.AddRange(matchingRules.SelectMany(x => x.Data?.Rules));
             Style.CssStyles = cssStyles;

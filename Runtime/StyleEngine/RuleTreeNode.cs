@@ -8,6 +8,7 @@ namespace ReactUnity.StyleEngine
 {
     public class RuleTreeNode<T> : IComparable<RuleTreeNode<T>>
     {
+        public RuleTree<T> Tree;
         public RuleTreeNode<T> Parent;
         public string Selector;
         public List<RuleSelectorPart> ParsedSelector;
@@ -78,6 +79,7 @@ namespace ReactUnity.StyleEngine
                     relative = relative.Parent;
                 else if (RelationType == RuleRelationType.Sibling || RelationType == RuleRelationType.DirectSibling)
                 {
+                    if (relative.Parent == null) return false;
                     var ind = relative.Parent.Children.IndexOf(relative);
                     if (ind == 0) return false;
                     relative = relative.Parent.Children[ind - 1];
@@ -154,7 +156,7 @@ namespace ReactUnity.StyleEngine
         State = 2000,
     }
 
-    public class RuleSelectorPart: IComparable<RuleSelectorPart>
+    public class RuleSelectorPart : IComparable<RuleSelectorPart>
     {
         public bool Negated = false;
         public RuleSelectorPartType Type = RuleSelectorPartType.None;
@@ -170,6 +172,8 @@ namespace ReactUnity.StyleEngine
 
         public bool Matches(UnityComponent component, UnityComponent scope = null)
         {
+            if (component.IsPseudoElement) return Type == RuleSelectorPartType.Tag && Name == component.Tag;
+
             switch (Type)
             {
                 case RuleSelectorPartType.None:
@@ -196,9 +200,9 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.LastChild:
                     return component.Parent.Children[component.Parent.Children.Count - 1] == component;
                 case RuleSelectorPartType.NthChild:
-                    return ((NthChildParameter)Parameter).Matches(component.Parent.Children.IndexOf(component) + 1);
+                    return ((NthChildParameter) Parameter).Matches(component.Parent.Children.IndexOf(component) + 1);
                 case RuleSelectorPartType.NthLastChild:
-                    return ((NthChildParameter)Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
+                    return ((NthChildParameter) Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
                 case RuleSelectorPartType.Empty:
                     var cmp = component as ContainerComponent;
                     return cmp == null || cmp.Children.Count == 0;
@@ -210,7 +214,7 @@ namespace ReactUnity.StyleEngine
                     return scope != null && component == scope;
                 case RuleSelectorPartType.Before:
                 case RuleSelectorPartType.After:
-                    return false;
+                    return true;
                 case RuleSelectorPartType.Hover:
                 case RuleSelectorPartType.Focus:
                 case RuleSelectorPartType.Active:
@@ -219,7 +223,7 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.Special:
                     return true;
                 case RuleSelectorPartType.State:
-                    return false;
+                    return component.StateStyles.GetStateValue(Parameter as string);
                 default:
                     break;
             }

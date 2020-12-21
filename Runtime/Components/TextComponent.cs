@@ -20,6 +20,9 @@ namespace ReactUnity.Components
         public FlexSelfControlledElement SelfControl { get; private set; }
         public LinkedTextWatcher LinkedTextWatcher { get; private set; }
 
+        private string TextInside;
+        private bool TextSetByStyle = false;
+
 
         public TextComponent(string text, UnityUGUIContext context, string tag) : base(context, tag)
         {
@@ -50,7 +53,8 @@ namespace ReactUnity.Components
 
         public void SetText(string text)
         {
-            Text.text = text;
+            if (!TextSetByStyle) Text.text = text;
+            TextInside = text;
             ScheduleLayout();
         }
 
@@ -71,6 +75,16 @@ namespace ReactUnity.Components
             Text.enableWordWrapping = Style.textWrap;
             Text.alignment = Style.textAlign;
             Text.overflowMode = Style.textOverflow;
+            if (Style.content != null)
+            {
+                Text.text = Style.content;
+                TextSetByStyle = true;
+            }
+            else if (TextSetByStyle)
+            {
+                Text.text = TextInside;
+                TextSetByStyle = false;
+            }
 
             var isLinked = Style.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)

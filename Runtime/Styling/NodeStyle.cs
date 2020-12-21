@@ -135,6 +135,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.textWrap, value);
             get => GetStyleValue<bool>(StyleProperties.textWrap);
         }
+        public string content
+        {
+            set => SetStyleValue(StyleProperties.content, value);
+            get => GetStyleValue<string>(StyleProperties.content);
+        }
 
         #endregion
 
