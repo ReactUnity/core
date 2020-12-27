@@ -235,15 +235,15 @@ namespace ReactUnity.Components
             var opacity = Style.opacity;
             var hidden = Style.hidden;
             var none = Layout.Display == YogaDisplay.None;
-            var interaction = Style.interaction;
+            var interaction = Style.pointerEvents;
 
             if (hidden || none) opacity = 0;
-            if (none) interaction = InteractionType.Ignore;
+            if (none) interaction = PointerEvents.None;
 
             var isTransparent = opacity < 1;
             var isInvisible = opacity == 0;
 
-            var hasInteraction = interaction == InteractionType.Always || (!isInvisible && interaction == InteractionType.WhenVisible);
+            var hasInteraction = interaction == PointerEvents.All || (!isInvisible && interaction == PointerEvents.Visible);
 
 
             var group = CanvasGroup;
@@ -254,8 +254,8 @@ namespace ReactUnity.Components
             group.alpha = opacity;
             group.interactable = hasInteraction;
 
-            if (interaction == InteractionType.Ignore) group.blocksRaycasts = false;
-            else if (isInvisible && interaction == InteractionType.WhenVisible) group.blocksRaycasts = false;
+            if (interaction == PointerEvents.None) group.blocksRaycasts = false;
+            else if (isInvisible && interaction == PointerEvents.Visible) group.blocksRaycasts = false;
             else group.blocksRaycasts = true;
         }
 

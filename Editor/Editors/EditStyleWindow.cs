@@ -117,10 +117,10 @@ namespace ReactUnity.Editor
                 return EditorGUILayout.Toggle("Hidden", CurrentStyle.hidden);
             });
 
-            // Interaction
-            DrawNullableRow("interaction", (enabled) =>
+            // Pointer Events
+            DrawNullableRow("pointerEvents", (enabled) =>
             {
-                return EditorGUILayout.EnumPopup("Interaction", CurrentStyle.interaction);
+                return EditorGUILayout.EnumPopup("PointerEvents", CurrentStyle.pointerEvents);
             });
 
 

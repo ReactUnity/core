@@ -36,7 +36,7 @@ namespace ReactUnity.Styling
             { typeof(bool), BoolConverter },
             { typeof(ShadowDefinition), ShadowDefinitionConverter },
             { typeof(Appearance), new EnumConverter<Appearance>() },
-            { typeof(InteractionType), new EnumConverter<InteractionType>() },
+            { typeof(PointerEvents), new EnumConverter<PointerEvents>() },
             { typeof(TextOverflowModes), new EnumConverter<TextOverflowModes>() },
             { typeof(TextAlignmentOptions), new EnumConverter<TextAlignmentOptions>() },
             { typeof(FontWeight), new EnumConverter<FontWeight>() },

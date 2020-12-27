@@ -12,10 +12,6 @@ namespace ReactUnity.Interop
         private IJsEngine engine;
         public object callback;
 
-
-        static readonly string cbName = "$callback_interop_dont_touch_cb";
-        static readonly string argsName = "$args_interop_dont_touch";
-
         public Callback(object callback, IJsEngine engine = null)
         {
             this.engine = engine;
@@ -49,11 +45,6 @@ namespace ReactUnity.Interop
                 return s.Invoke(false, args);
             }
             else return null;
-
-            //engine.Execute(argsName + "=[]");
-            //engine.EmbedHostObject(cbName, this);
-            //engine.EmbedHostObject(argsName, args);
-            //return engine.Evaluate(cbName + ".callback(..." + argsName + ")");
         }
     }
 }

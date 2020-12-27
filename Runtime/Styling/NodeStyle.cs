@@ -40,10 +40,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.cursor, value);
             get => GetStyleValue<string>(StyleProperties.cursor);
         }
-        public InteractionType interaction
+        public PointerEvents pointerEvents
         {
-            set => SetStyleValue(StyleProperties.interaction, value);
-            get => GetStyleValue<InteractionType>(StyleProperties.interaction);
+            set => SetStyleValue(StyleProperties.pointerEvents, value);
+            get => GetStyleValue<PointerEvents>(StyleProperties.pointerEvents);
         }
         public Color backgroundColor
         {
