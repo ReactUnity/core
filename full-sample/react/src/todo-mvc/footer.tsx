@@ -10,7 +10,7 @@ class TodoFooter extends React.Component<ITodoFooterProps, {}> {
     var activeTodoWord = Utils.pluralize(this.props.count, 'item');
 
     var clearButton = (
-      <button style={{ hidden: this.props.completedCount === 0 }}
+      <button style={{ visibility: this.props.completedCount !== 0 }}
         layout={{ Width: 150 }}
         onClick={this.props.onClearCompleted}>
         Clear completed

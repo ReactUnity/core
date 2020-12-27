@@ -62,7 +62,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
           style={{ translate: [0, -0.5], translateRelative: true }}></toggle>
 
         <button onClick={this.props.onDestroy}
-          style={{ backgroundColor: 'clear', fontColor: '#cc9a9a', hidden: !this.state.hovered, pointerEvents: PointerEvents.All }}
+          style={{ backgroundColor: 'clear', fontColor: '#cc9a9a', visibility: this.state.hovered, pointerEvents: PointerEvents.All }}
           layout={{ MarginRight: 20 }}>
           ×
         </button>
