@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PositionType, LineType, InteractionType } from '@reactunity/renderer';
+import { PositionType, LineType, PointerEvents } from '@reactunity/renderer';
 import { colorizeRichtext, tokenize, fixLineWrapOpportunity } from './monaco/tokenizer';
 
 
@@ -13,7 +13,7 @@ export const TextEditor = ({ text }: { text: string }) => {
       value={fixLineWrapOpportunity(text)} />
     <input richText readonly lineType={LineType.MultiLineNewline}
       layout={{ FlexShrink: 0, Padding: 10, BorderWidth: 1 }}
-      style={{ backgroundColor: 0.94, borderColor: 0.8, font: NamedAssets.RobotoMono, interaction: InteractionType.Ignore }}
+      style={{ backgroundColor: 0.94, borderColor: 0.8, font: NamedAssets.RobotoMono, pointerEvents: PointerEvents.None }}
       value={richText} />
   </view>;
 }

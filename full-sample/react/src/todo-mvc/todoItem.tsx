@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NativeInputInstance, FlexDirection, YogaAlign, Display, PositionType, InteractionType } from "@reactunity/renderer";
+import { NativeInputInstance, FlexDirection, YogaAlign, Display, PositionType, PointerEvents } from "@reactunity/renderer";
 
 import { ITodoItemProps, ITodoItemState } from './interfaces';
 
@@ -62,7 +62,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
           style={{ translate: [0, -0.5], translateRelative: true }}></toggle>
 
         <button onClick={this.props.onDestroy}
-          style={{ backgroundColor: 'clear', fontColor: '#cc9a9a', hidden: !this.state.hovered, interaction: InteractionType.Always }}
+          style={{ backgroundColor: 'clear', fontColor: '#cc9a9a', hidden: !this.state.hovered, pointerEvents: PointerEvents.All }}
           layout={{ MarginRight: 20 }}>
           ×
         </button>
