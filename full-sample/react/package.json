@@ -15,8 +15,7 @@
     "@reactunity/renderer": "^0.0.14",
     "classnames": "^2.2.6",
     "monaco-editor-core": "^0.21.2",
-    "react": "^17.0.1",
-    "react-error-boundary": "^3.0.2"
+    "react": "^17.0.1"
   },
   "devDependencies": {
     "@reactunity/scripts": "^0.0.16",

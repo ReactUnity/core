@@ -41,7 +41,7 @@ export class App extends React.Component<{}, { val: number }> {
           Width
         </button>
 
-        <button style={{ backgroundColor: [Color.red, val, Color.yellow] }}>
+        <button style={{ backgroundColor: [Color.blue, val, Color.yellow] }}>
           Color
         </button>
 
@@ -50,7 +50,7 @@ export class App extends React.Component<{}, { val: number }> {
           Rotate
         </button>
 
-        <button style={{ boxShadow: `1 1 ${14 * val} ${8 * val} black ${4 + 6 * val}`, scale: 1.2 + val * 0.1, backgroundColor: 0.97 }}>
+        <button style={{ boxShadow: `1 1 ${4 + 6 * val} ${14 * val} ${8 * val} black`, scale: 1.2 + val * 0.1, backgroundColor: 0.97 }}>
           Shadow
         </button>
       </view>
@@ -77,7 +77,7 @@ export class App extends React.Component<{}, { val: number }> {
           Scale
         </button>
 
-        <button style={{ translate: [Math.random() * 10, Math.random() * 10] }}>
+        <button style={{ translate: [Math.random() * 10, Math.random() * 10].join() }}>
           Noise
         </button>
 

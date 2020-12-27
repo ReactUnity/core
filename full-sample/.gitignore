@@ -60,3 +60,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 BuildReports*
+debug.log
+
