@@ -1,6 +1,4 @@
-import {
-  FontWeight, InteractionType, FontStyles, TextOverflowModes, CursorType,
-} from './styles-enums';
+import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents } from './styles-enums';
 import { YogaValueAux } from './yoga';
 import { ColorAux } from '../values/color';
 import { AssetReference } from '../values/asset-reference';
@@ -13,7 +11,7 @@ export interface Style {
   zOrder?: number;
   hidden?: boolean;
   cursor?: EnumOrLiteral<typeof CursorType> | string;
-  interaction?: EnumOrLiteral<typeof InteractionType>;
+  pointerEvents?: EnumOrLiteral<typeof PointerEvents>;
 
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference | UnityObject;

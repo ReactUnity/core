@@ -34,14 +34,14 @@ export enum TextOverflowModes {
   // Page = 5,
 
   /** @experimental */
-  Linked = 6
+  Linked = 6,
 }
 
-export enum InteractionType {
-  WhenVisible = 0,
-  Always = 1,
-  Ignore = 2,
-  Block = 3,
+export enum PointerEvents {
+  Auto = 0,
+  Visible = 0,
+  All = 1,
+  None = 2,
 }
 
 export enum CursorType {
