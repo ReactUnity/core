@@ -44,6 +44,11 @@ export enum PointerEvents {
   None = 2,
 }
 
+export enum Visibility {
+  Visible = 'visible',
+  Hidden = 'hidden',
+}
+
 export enum CursorType {
   Auto = 'auto',
   Default = 'default',

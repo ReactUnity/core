@@ -1,4 +1,4 @@
-import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents } from './styles-enums';
+import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents, Visibility } from './styles-enums';
 import { YogaValueAux } from './yoga';
 import { ColorAux } from '../values/color';
 import { AssetReference } from '../values/asset-reference';
@@ -9,7 +9,7 @@ import { EnumOrLiteral } from '../values/enum';
 export interface Style {
   opacity?: number;
   zOrder?: number;
-  hidden?: boolean;
+  visibility?: EnumOrLiteral<typeof Visibility> | boolean;
   cursor?: EnumOrLiteral<typeof CursorType> | string;
   pointerEvents?: EnumOrLiteral<typeof PointerEvents>;
 
