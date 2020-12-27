@@ -3,7 +3,7 @@ export enum AssetReferenceType {
   File = 1,
   Url = 2,
   Resource = 3,
-  NamedAsset = 4,
+  Global = 4,
   Procedural = 5,
 }
 

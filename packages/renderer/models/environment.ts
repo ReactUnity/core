@@ -5,7 +5,7 @@ import { UnityContext, ObjectDictionary, UnitySchedulerContext } from './native'
 declare global {
   const Unity: UnityContext;
   const RootContainer: NativeContainerInstance;
-  const NamedAssets: ObjectDictionary;
+  const Globals: ObjectDictionary;
   const UnityScheduler: UnitySchedulerContext;
   const Callback: <T, R>(callback: (...args: T[]) => R) => (...args: T[]) => R;
 
