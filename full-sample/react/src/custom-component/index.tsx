@@ -14,7 +14,7 @@ declare module 'React' {
 
 class App extends React.Component<{}, {}> {
   onInputChange = (val: string) => {
-    NamedAssets.CubeMove["Speed"] = parseFloat(val) || 0;
+    Globals.CubeMove["Speed"] = parseFloat(val) || 0;
   };
 
   render() {

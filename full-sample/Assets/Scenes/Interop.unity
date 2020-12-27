@@ -366,23 +366,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
-      propertyPath: NamedAssets.Entries.Array.size
+      propertyPath: Globals.Entries.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
-      propertyPath: NamedAssets.Entries.Array.data[0].Value
-      value: 
+      propertyPath: Globals.Entries.Array.data[0].Value
+      value:
       objectReference: {fileID: 2023844851}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
-      propertyPath: NamedAssets.Entries.Array.data[0].Key
+      propertyPath: Globals.Entries.Array.data[0].Key
       value: CubeMove
       objectReference: {fileID: 0}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
       propertyPath: Script.SourceAsset
-      value: 
+      value:
       objectReference: {fileID: 4900000, guid: 1ce6bbba336ac9a43aef47430ebc8ff3, type: 3}
     - target: {fileID: 97318270827724990, guid: 5db0dfe9f1a1f2446a241c6407efa1d3,
         type: 3}
@@ -511,8 +511,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -530,8 +530,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
@@ -655,6 +655,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a30636a4acfbd0c4c8b3400e904aa313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   Speed: 5

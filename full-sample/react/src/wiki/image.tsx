@@ -3,6 +3,6 @@ import style from './index.module.scss';
 
 export function App() {
   return <view className={style.app}>
-    <image source={NamedAssets.delete} />
+    <image source={Globals.delete} />
   </view>;
 }

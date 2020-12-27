@@ -144,7 +144,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
     }
 
     return (
-      <view layout={this.pageLayout} style={{ font: NamedAssets.font }}>
+      <view layout={this.pageLayout} style={{ font: Globals.font }}>
         <view style={this.headerStyle} layout={this.headerLayout}>
           todos
         </view>
