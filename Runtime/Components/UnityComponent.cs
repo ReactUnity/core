@@ -298,6 +298,8 @@ namespace ReactUnity.Components
 
         public virtual BorderAndBackground UpdateBackgroundGraphic(bool updateLayout, bool updateStyle)
         {
+            if (Selectable) Selectable.transition = Style.appearance == Appearance.None ? Selectable.Transition.None : Selectable.Transition.ColorTint;
+
             if (!HasBorderOrBackground()) return null;
 
             BorderAndBackground image = BorderAndBackground;

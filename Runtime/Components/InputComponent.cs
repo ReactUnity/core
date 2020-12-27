@@ -28,6 +28,7 @@ namespace ReactUnity.Components
             borderRadius = 8,
             fontSize = 24,
             cursor = "text",
+            appearance = Styling.Types.Appearance.Input,
         };
 
         public override YogaNode DefaultLayout => InputDefaultLayout;

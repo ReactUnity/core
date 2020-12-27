@@ -19,6 +19,7 @@ namespace ReactUnity.Components
             borderRadius = 8,
             cursor = "pointer",
             textAlign = TMPro.TextAlignmentOptions.Midline,
+            appearance = Styling.Types.Appearance.Button,
         };
         public static YogaNode ButtonDefaultLayout { get; } = new YogaNode()
         {

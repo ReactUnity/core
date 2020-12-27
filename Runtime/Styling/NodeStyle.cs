@@ -140,7 +140,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.content, value);
             get => GetStyleValue<string>(StyleProperties.content);
         }
-
+        public Appearance appearance
+        {
+            set => SetStyleValue(StyleProperties.appearance, value);
+            get => GetStyleValue<Appearance>(StyleProperties.appearance);
+        }
         #endregion
 
         #region Resolved values
