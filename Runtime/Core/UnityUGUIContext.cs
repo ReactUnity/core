@@ -16,7 +16,7 @@ namespace ReactUnity
     {
         public IJsEngine Engine { get; }
         public HostComponent Host { get; }
-        public StringObjectDictionary NamedAssets { get; private set; }
+        public StringObjectDictionary Globals { get; private set; }
         public YogaNode RootLayoutNode { get; }
 
         public ReactScript Script;
@@ -29,7 +29,7 @@ namespace ReactUnity
         public UnityUGUIContext(RectTransform hostElement, IJsEngine engine, StringObjectDictionary assets, ReactScript script)
         {
             Engine = engine;
-            NamedAssets = assets;
+            Globals = assets;
             Script = script;
 
             Parser = new StylesheetParser(includeUnknownDeclarations: true);

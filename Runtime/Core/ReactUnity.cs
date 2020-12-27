@@ -28,7 +28,7 @@ namespace ReactUnity
         private UnityUGUIContext unityContext;
         private UnityScheduler scheduler;
 
-        public StringObjectDictionary NamedAssets = new StringObjectDictionary();
+        public StringObjectDictionary Globals = new StringObjectDictionary();
         public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index.js" };
         private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
 
@@ -146,7 +146,7 @@ namespace ReactUnity
             Clean();
 
             if (engine == null) CreateEngine();
-            unityContext = new UnityUGUIContext(Root, engine, NamedAssets, scriptObj);
+            unityContext = new UnityUGUIContext(Root, engine, Globals, scriptObj);
             CreateLocation(engine, scriptObj);
 
             List<Action> callbacks = new List<Action>() { callback };
@@ -158,7 +158,7 @@ namespace ReactUnity
 
             engine.EmbedHostObject("Unity", new ReactUnityAPI(engine));
             engine.EmbedHostObject("RootContainer", unityContext.Host);
-            engine.EmbedHostObject("NamedAssets", NamedAssets);
+            engine.EmbedHostObject("Globals", Globals);
             try
             {
                 if (preload != null) preload.ForEach(x => engine.Execute(x.text));
