@@ -146,7 +146,9 @@ namespace ReactUnity.StyleEngine
 
         Hover = 100,
         Focus = 101,
-        Active = 102,
+        FocusVisible = 102,
+        FocusWithin = 103,
+        Active = 104,
 
         Before = 500,
         After = 501,
@@ -217,6 +219,8 @@ namespace ReactUnity.StyleEngine
                     return true;
                 case RuleSelectorPartType.Hover:
                 case RuleSelectorPartType.Focus:
+                case RuleSelectorPartType.FocusVisible:
+                case RuleSelectorPartType.FocusWithin:
                 case RuleSelectorPartType.Active:
                     return true;
                 case RuleSelectorPartType.Important:

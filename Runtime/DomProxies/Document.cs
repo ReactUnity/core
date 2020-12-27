@@ -174,9 +174,6 @@ namespace ReactUnity.DomProxies
 
         void ProcessNodes()
         {
-            Debug.Log("React Unity does not support CSS yet. But it may be implemented in the future. For now, here is the inserted CSS:");
-            pendingNodes.ForEach(x => Debug.Log(x));
-
             pendingNodes.ForEach(x => document.context.InsertStyle(x));
             pendingNodes.Clear();
 

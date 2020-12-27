@@ -27,7 +27,11 @@ namespace ReactUnity
         public static Dictionary<string, Type> StateHandlers
             = new Dictionary<string, Type>()
             {
-                { "hover", typeof(HoverStateHandler) }
+                { "active", typeof(ActiveStateHandler) },
+                { "focus", typeof(FocusStateHandler) },
+                { "focus-within", typeof(FocusWithinStateHandler) },
+                { "focus-visible", typeof(FocusVisibleStateHandler) },
+                { "hover", typeof(HoverStateHandler) },
             };
 
         IJsEngine Engine;

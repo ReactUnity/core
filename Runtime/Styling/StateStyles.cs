@@ -2,6 +2,7 @@ using ReactUnity.Components;
 using ReactUnity.StateHandlers;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace ReactUnity.Styling
 {
@@ -34,11 +35,18 @@ namespace ReactUnity.Styling
 
         public void SubscribeToState(string state)
         {
-            if (state == "hover")
+            if (ReactUnityAPI.StateHandlers.TryGetValue(state, out var handlerClass))
             {
-                var handler = Component.GameObject.AddComponent<HoverStateHandler>();
-                handler.OnStateStart += (e) => StartState(state);
-                handler.OnStateEnd += (e) => EndState(state);
+                var existingHandler = Component.GameObject.GetComponent(handlerClass);
+                if (existingHandler != null) return;
+
+                var handler = Component.GameObject.AddComponent(handlerClass) as IStateHandler;
+                if (handler != null)
+                {
+                    handler.OnStateStart += (e) => StartState(state);
+                    handler.OnStateEnd += (e) => EndState(state);
+                }
+                else Debug.LogError($"The class {handlerClass.Name} does not implement IStateHandler");
             }
         }
 
