@@ -30,10 +30,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.zOrder, value);
             get => GetStyleValue<int>(StyleProperties.zOrder);
         }
-        public bool hidden
+        public bool visibility
         {
-            set => SetStyleValue(StyleProperties.hidden, value);
-            get => GetStyleValue<bool>(StyleProperties.hidden);
+            set => SetStyleValue(StyleProperties.visibility, value);
+            get => GetStyleValue<bool>(StyleProperties.visibility);
         }
         public string cursor
         {

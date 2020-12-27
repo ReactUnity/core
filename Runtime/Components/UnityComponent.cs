@@ -233,11 +233,11 @@ namespace ReactUnity.Components
         protected void ResolveOpacityAndInteractable()
         {
             var opacity = Style.opacity;
-            var hidden = Style.hidden;
+            var visibility = Style.visibility;
             var none = Layout.Display == YogaDisplay.None;
             var interaction = Style.pointerEvents;
 
-            if (hidden || none) opacity = 0;
+            if (!visibility || none) opacity = 0;
             if (none) interaction = PointerEvents.None;
 
             var isTransparent = opacity < 1;

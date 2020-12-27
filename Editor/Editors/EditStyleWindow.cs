@@ -111,10 +111,10 @@ namespace ReactUnity.Editor
                 return EditorGUILayout.IntField("Z Order", CurrentStyle.zOrder);
             });
 
-            // Opacity
-            DrawNullableRow("hidden", (enabled) =>
+            // Visibility
+            DrawNullableRow("visibility", (enabled) =>
             {
-                return EditorGUILayout.Toggle("Hidden", CurrentStyle.hidden);
+                return EditorGUILayout.Toggle("Visibility", CurrentStyle.visibility);
             });
 
             // Pointer Events
