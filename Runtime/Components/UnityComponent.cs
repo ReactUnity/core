@@ -320,10 +320,12 @@ namespace ReactUnity.Components
             }
             if (updateStyle)
             {
-                var sprite = AssetReference<object>.GetSpriteFromObject(Style.backgroundImage, Context);
-                image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
+                Style.backgroundImage.Get(Context, (res) =>
+                {
+                    Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
+                    image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
+                });
                 image.SetBoxShadow(Style.boxShadow);
-
                 MainThreadDispatcher.OnUpdate(() =>
                 {
                     if (!GameObject) return;

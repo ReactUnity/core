@@ -98,12 +98,12 @@ namespace ReactUnity
         {
             MainThreadDispatcher.Initialize();
             int debounce = -1;
-            ScriptWatchDisposable = script.GetScript((code) =>
+            ScriptWatchDisposable = script.GetScript((code, isDevServer) =>
             {
                 if (debounce >= 0) MainThreadDispatcher.StopDeferred(debounce);
-                debounce = MainThreadDispatcher.Timeout(() => RunScript(code, script, preload, callback), 0.5f);
+                debounce = MainThreadDispatcher.Timeout(() => RunScript(code, isDevServer, script, preload, callback), 0.5f);
             }, out var result, true, disableWarnings);
-            RunScript(result, script, preload, callback);
+            RunScript(result, false, script, preload, callback);
         }
 
         [ContextMenu("Restart")]
@@ -139,14 +139,14 @@ namespace ReactUnity
             Test(true);
         }
 
-        void RunScript(string script, ReactScript scriptObj, List<TextAsset> preload = null, Action callback = null)
+        void RunScript(string script, bool isDevServer, ReactScript scriptObj, List<TextAsset> preload = null, Action callback = null)
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
             Clean();
 
             if (engine == null) CreateEngine();
-            unityContext = new UnityUGUIContext(Root, engine, Globals, scriptObj);
+            unityContext = new UnityUGUIContext(Root, engine, Globals, scriptObj, isDevServer);
             CreateLocation(engine, scriptObj);
 
             List<Action> callbacks = new List<Action>() { callback };

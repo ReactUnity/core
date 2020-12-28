@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using ReactUnity.Styling.Types;
 using TMPro;
+using ReactUnity.Types;
 
 namespace ReactUnity.Styling
 {
@@ -21,6 +22,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter BoolConverter = new BoolConverter(new string[] { "true" }, new string[] { "false" });
         static public IStyleConverter ColorConverter = new ColorConverter();
         static public IStyleConverter ShadowDefinitionConverter = new ShadowDefinitionConverter();
+        static public IStyleConverter ImageReferenceConverter = new ImageReferenceConverter();
 
 
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()
@@ -35,6 +37,7 @@ namespace ReactUnity.Styling
             { typeof(Color), ColorConverter },
             { typeof(bool), BoolConverter },
             { typeof(ShadowDefinition), ShadowDefinitionConverter },
+            { typeof(ImageReference), ImageReferenceConverter },
             { typeof(Appearance), new EnumConverter<Appearance>() },
             { typeof(PointerEvents), new EnumConverter<PointerEvents>() },
             { typeof(TextOverflowModes), new EnumConverter<TextOverflowModes>() },

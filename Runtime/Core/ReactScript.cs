@@ -12,6 +12,7 @@ namespace ReactUnity
         public TextAsset SourceAsset;
         public string SourcePath;
         public string SourceText;
+        public string ResourcesPath;
 
 #pragma warning disable CS0414
         [SerializeField]
@@ -42,32 +43,30 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         }
 
 
-        private string GetResolvedSourcePath()
+        public string GetResolvedSourcePath()
         {
             string path = "";
 
             if (ScriptSource == ScriptSource.File || ScriptSource == ScriptSource.Url)
                 path = SourcePath;
-#if UNITY_EDITOR
             else if (ScriptSource == ScriptSource.TextAsset)
-                path = UnityEditor.AssetDatabase.GetAssetPath(SourceAsset);
+                path = ResourcesPath ?? "Assets/Resources/react/index.js";
             else if (ScriptSource == ScriptSource.Resource)
-                path = UnityEditor.AssetDatabase.GetAssetPath(Resources.Load(SourcePath));
-#endif
+                path = SourcePath;
             return path;
         }
 
 #if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
-        IDisposable StartWatching(Action<string> callback)
+        IDisposable StartWatching(Action<string, bool> callback)
         {
             string path = GetResolvedSourcePath();
             if (string.IsNullOrWhiteSpace(path)) return null;
 
-            return DetectChanges.WatchFileSystem(path, x => callback(System.IO.File.ReadAllText(path)));
+            return DetectChanges.WatchFileSystem(path, x => callback(System.IO.File.ReadAllText(path), false));
         }
 #endif
 
-        public IDisposable GetScript(Action<string> changeCallback, out string result, bool useDevServer = true, bool disableWarnings = false)
+        public IDisposable GetScript(Action<string, bool> changeCallback, out string result, bool useDevServer = true, bool disableWarnings = false)
         {
 #if UNITY_EDITOR
             if (useDevServer && UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
@@ -79,8 +78,8 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
                     {
                         Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
                         GetScript(changeCallback, out var dummyResult, false);
-                        if (!string.IsNullOrWhiteSpace(dummyResult)) changeCallback(dummyResult);
-                    })));
+                        if (!string.IsNullOrWhiteSpace(dummyResult)) changeCallback(dummyResult, false);
+                    }, true)));
             }
 #endif
 
@@ -138,15 +137,16 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 #if UNITY_EDITOR || REACT_URL_API
         private IEnumerator WatchWebRequest(
             UnityEngine.Networking.UnityWebRequest request,
-            Action<string> callback,
-            Action<string> errorCallback = null
+            Action<string, bool> callback,
+            Action<string> errorCallback = null,
+            bool isDevServer = false
         )
         {
             yield return request.SendWebRequest();
             if (!string.IsNullOrWhiteSpace(request.error))
                 errorCallback?.Invoke(request.error);
             else
-                callback(request.downloadHandler.text);
+                callback(request.downloadHandler.text, isDevServer);
         }
 #endif
     }

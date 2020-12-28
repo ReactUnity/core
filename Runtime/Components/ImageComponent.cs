@@ -40,13 +40,10 @@ namespace ReactUnity.Components
             switch (propertyName)
             {
                 case "source":
-                    SetSource(value);
+                    SetSource(ParserMap.ImageReferenceConverter.Convert(value) as ImageReference);
                     return;
                 case "fit":
-                    SetFit((ImageFitMode)System.Convert.ToInt32(value));
-                    return;
-                case "tint":
-                    //Image.color = ColorConverter.FromJsValue(JsValue.FromObject(Context.Engine, value)) ?? Color.white;
+                    SetFit((ImageFitMode) System.Convert.ToInt32(value));
                     return;
                 default:
                     base.SetProperty(propertyName, value);
@@ -56,9 +53,12 @@ namespace ReactUnity.Components
 
 
 
-        private void SetSource(object source)
+        private void SetSource(ImageReference source)
         {
-            Image.sprite = AssetReference<object>.GetSpriteFromObject(source, Context);
+            source.Get(Context, (res) =>
+            {
+                Image.sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
+            });
         }
 
 

@@ -9,6 +9,7 @@ using ExCSS;
 using System.Linq;
 using ReactUnity.StyleEngine;
 using JavaScriptEngineSwitcher.Core;
+using System.IO;
 
 namespace ReactUnity
 {
@@ -18,6 +19,7 @@ namespace ReactUnity
         public HostComponent Host { get; }
         public StringObjectDictionary Globals { get; private set; }
         public YogaNode RootLayoutNode { get; }
+        public bool IsDevServer { get; }
 
         public ReactScript Script;
         private bool Scheduled = false;
@@ -26,11 +28,12 @@ namespace ReactUnity
         public StylesheetParser Parser;
         public StyleTree StyleTree;
 
-        public UnityUGUIContext(RectTransform hostElement, IJsEngine engine, StringObjectDictionary assets, ReactScript script)
+        public UnityUGUIContext(RectTransform hostElement, IJsEngine engine, StringObjectDictionary assets, ReactScript script, bool isDevServer)
         {
             Engine = engine;
             Globals = assets;
             Script = script;
+            IsDevServer = isDevServer;
 
             Parser = new StylesheetParser(includeUnknownDeclarations: true);
             StyleTree = new StyleTree(Parser);
@@ -73,6 +76,12 @@ namespace ReactUnity
 
         public void RemoveStyle(string style)
         {
+        }
+
+        public string ResolvePath(string path)
+        {
+            if (IsDevServer) return Script.DevServerFile + path;
+            return Path.GetDirectoryName(Script.GetResolvedSourcePath()) + path;
         }
     }
 }

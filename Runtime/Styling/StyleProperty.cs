@@ -2,6 +2,7 @@ using Facebook.Yoga;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling.Parsers;
 using ReactUnity.Styling.Types;
+using ReactUnity.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ namespace ReactUnity.Styling
         public static IStyleProperty cursor = new StyleProperty<string>("cursor", null, false);
         public static IStyleProperty pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
         public static IStyleProperty backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
-        public static IStyleProperty backgroundImage = new StyleProperty<object>("backgroundImage", null, false);
+        public static IStyleProperty backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None);
         public static IStyleProperty borderRadius = new StyleProperty<int>("borderRadius", 0, true);
         public static IStyleProperty borderColor = new StyleProperty<Color>("borderColor", Color.black, true);
         public static IStyleProperty boxShadow = new StyleProperty<ShadowDefinition>("boxShadow", null, true);

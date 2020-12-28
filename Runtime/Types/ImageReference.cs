@@ -1,142 +1,67 @@
-using Jint;
-using Jint.Native;
-using ReactUnity.Converters;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Interop;
+using System;
+using System.Collections;
+using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace ReactUnity.Types
 {
-    public enum AssetReferenceType
+    public class ImageReference : AssetReference<Texture2D>
     {
-        None = 0,
-        File = 1,
-        Url = 2,
-        Resource = 3,
-        Global = 4,
-        Procedural = 5,
-        Object = 6,
-    }
+        static public new ImageReference None = new ImageReference(AssetReferenceType.None, null);
 
-    public class AssetReference<AssetType> where AssetType : class
-    {
-        static public AssetReference<object> None = new AssetReference<object>(AssetReferenceType.None, null);
+        private int webDeferred = -1;
 
-        public AssetReferenceType type { get; private set; } = AssetReferenceType.None;
-        public JsValue value { get; private set; }
+        public ImageReference(AssetReferenceType type, object value) : base(type, value) { }
 
-        private AssetType CachedValue;
-
-        public AssetReference(AssetReferenceType type, JsValue value)
+        protected override void Get(UnityUGUIContext context, AssetReferenceType realType, object realValue, Action<Texture2D> callback)
         {
-            this.type = type;
-            this.value = value;
-        }
-
-        static public AssetReference<object> FromJsValue(JsValue obj)
-        {
-            if (obj == null || obj.IsNull() || obj.IsUndefined()) return None;
-
-            if (obj.IsObject())
+            if (realType == AssetReferenceType.Url)
             {
-                var ob = obj.AsObject();
-                var v0 = ob.Get("type");
-                var value = ob.Get("value");
+                webDeferred = MainThreadDispatcher.StartDeferred(GetTexture(realValue as string, callback));
+            }
+            else if (realType == AssetReferenceType.Data)
+            {
+                var base64 = realValue as string;
+                byte[] fileData = Convert.FromBase64String(base64);
+                var texture = new Texture2D(1, 1);
+                texture.LoadImage(fileData);
+                callback(texture);
+            }
+            else if (realType == AssetReferenceType.File)
+            {
+                var filePath = realValue as string;
+                Texture2D texture = null;
+                byte[] fileData;
 
-                var type = (AssetReferenceType) v0.AsNumber();
-
-                return new AssetReference<object>(type, value);
+                if (File.Exists(filePath))
+                {
+                    fileData = File.ReadAllBytes(filePath);
+                    texture = new Texture2D(1, 1);
+                    texture.LoadImage(fileData);
+                }
+                callback(texture);
             }
             else
             {
-                var ob = obj.ToObject();
-
-                if (ob is Object) return new AssetReference<object>(AssetReferenceType.Object, obj);
-
-                return new AssetReference<object>(AssetReferenceType.Procedural, obj);
+                base.Get(context, realType, realValue, callback);
             }
         }
 
-        public AssetType Get(UnityUGUIContext context)
+        IEnumerator GetTexture(string realValue, Action<Texture2D> callback)
         {
-            return CachedValue ?? (CachedValue = Get<AssetType>(context));
+            var www = UnityWebRequestTexture.GetTexture(realValue);
+            yield return www.SendWebRequest();
+
+            var resultTexture = DownloadHandlerTexture.GetContent(www);
+            callback(resultTexture);
         }
 
-        public T Get<T>(UnityUGUIContext context) where T : class
+        public override void Dispose()
         {
-            switch (type)
-            {
-                case AssetReferenceType.File:
-                    return GetFromFile<T>();
-                case AssetReferenceType.Url:
-                    return GetFromUrl<T>();
-                case AssetReferenceType.Resource:
-                    return Resources.Load(value.AsString()) as T;
-                case AssetReferenceType.Global:
-                    return context.Globals.GetValueOrDefault(value.AsString()) as T;
-                case AssetReferenceType.Procedural:
-                    return GetProcedural<T>();
-                case AssetReferenceType.Object:
-                    return value.ToObject() as T;
-                case AssetReferenceType.None:
-                default:
-                    return null;
-            }
-        }
-
-        public T GetFromUrl<T>() where T : class
-        {
-            return null;
-        }
-
-        public T GetFromFile<T>() where T : class
-        {
-            return null;
-        }
-
-        public T GetProcedural<T>() where T : class
-        {
-            if (typeof(T) == typeof(string))
-            {
-                return value.ToString() as T;
-            }
-
-            if (typeof(T) == typeof(TextAsset))
-            {
-                return new TextAsset(value.ToString()) as T;
-            }
-
-            if (typeof(T) == typeof(Texture2D))
-            {
-                var texture = new Texture2D(1, 1);
-                return texture as T;
-            }
-
-            return default(T);
-        }
-
-        public bool IsNone()
-        {
-            return type == AssetReferenceType.None;
-        }
-
-        static public Sprite GetSpriteFromObject(object source, UnityUGUIContext Context)
-        {
-            switch (source)
-            {
-                case Sprite s:
-                    return s;
-                case Texture2D s:
-                    return Sprite.Create(s, new Rect(0, 0, s.width, s.height), Vector2.one / 2);
-                case AssetReference<Sprite> a:
-                    return a.Get(Context);
-                case AssetReference<object> a:
-                    return a.Get<Sprite>(Context);
-                case string s:
-                    return new AssetReference<Sprite>(AssetReferenceType.Procedural, s).Get(Context);
-                default:
-                    break;
-            }
-            return null;
+            base.Dispose();
+            if (webDeferred >= 0) MainThreadDispatcher.StopDeferred(webDeferred);
         }
     }
 }

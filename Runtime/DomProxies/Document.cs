@@ -107,7 +107,7 @@ namespace ReactUnity.DomProxies
             src.ScriptSource = ScriptSource.Url;
             src.SourcePath = document.origin + this.src;
 
-            src.GetScript((sc) =>
+            src.GetScript((sc, isDevServer) =>
             {
                 MainThreadDispatcher.OnUpdate(() =>
                 {

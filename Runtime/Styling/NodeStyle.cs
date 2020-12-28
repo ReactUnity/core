@@ -1,5 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Styling.Types;
+using ReactUnity.Types;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -50,10 +51,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.backgroundColor, value);
             get => GetStyleValue<Color>(StyleProperties.backgroundColor);
         }
-        public object backgroundImage
+        public ImageReference backgroundImage
         {
             set => SetStyleValue(StyleProperties.backgroundImage, value);
-            get => GetStyleValue(StyleProperties.backgroundImage);
+            get => GetStyleValue<ImageReference>(StyleProperties.backgroundImage);
         }
         public int borderRadius
         {
