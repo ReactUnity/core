@@ -45,9 +45,8 @@ export enum ImageFitMode {
 }
 
 export interface Image extends View {
-  source?: AssetReference | UnityObject;
+  source?: AssetReference;
   fit?: ImageFitMode;
-  tint?: ColorAux;
 }
 
 
@@ -55,6 +54,5 @@ export type ToggleEvent = (val: boolean) => void;
 
 export interface Toggle extends View {
   onChange?: ToggleEvent;
-
   value?: boolean;
 }

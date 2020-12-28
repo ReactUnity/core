@@ -14,7 +14,7 @@ export interface Style {
   pointerEvents?: EnumOrLiteral<typeof PointerEvents>;
 
   backgroundColor?: ColorAux;
-  backgroundImage?: AssetReference | UnityObject;
+  backgroundImage?: AssetReference;
   borderRadius?: number;
   borderColor?: ColorAux;
   boxShadow?: ShadowDefinition | string;
@@ -27,6 +27,7 @@ export interface Style {
 
   // Inherited styles
   font?: UnityObject;
+  fontFamily?: AssetReference;
   fontColor?: ColorAux;
   fontWeight?: EnumOrLiteral<typeof FontWeight>;
   fontStyle?: EnumOrLiteral<typeof FontStyles>;

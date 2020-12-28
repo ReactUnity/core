@@ -1,3 +1,5 @@
+import { UnityObject } from "../native";
+
 export enum AssetReferenceType {
   None = 0,
   File = 1,
@@ -7,7 +9,4 @@ export enum AssetReferenceType {
   Procedural = 5,
 }
 
-export interface AssetReference<T = any> {
-  type: AssetReferenceType;
-  value: T;
-}
+export type AssetReference = string | UnityObject;
