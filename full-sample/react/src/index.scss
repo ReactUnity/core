@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "Roboto";
+  src: "resource://RobotoRegular SDF";
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: "resource://RobotoMono SDF";
+}
+
+* {
+  fontFamily: Roboto;
+}

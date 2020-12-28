@@ -650,7 +650,7 @@ module.exports = function (cssWithMappingToString) {
 
 var ___CSS_LOADER_EXPORT___ = _scripts_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, "", ""]);
+___CSS_LOADER_EXPORT___.push([module.i, "@font-face{font-family:\"Roboto\";src:\"resource://RobotoRegular SDF\"}@font-face{font-family:\"Roboto Mono\";src:\"resource://RobotoMono SDF\"}*{fontFamily:Roboto}\n", ""]);
 // Exports
 /* harmony default export */ __webpack_exports__["a"] = (___CSS_LOADER_EXPORT___);
 
@@ -666,7 +666,7 @@ ___CSS_LOADER_EXPORT___.push([module.i, "", ""]);
 
 var ___CSS_LOADER_EXPORT___ = _scripts_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".wiki_app__NMiJh{height:100%;flex-direction:column;align-items:center;justify-content:center}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.i, ".wiki_app__NMiJh{height:100%;flex-direction:column;align-items:center;justify-content:center}.wiki_app__NMiJh>*{margin-bottom:10px}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"app": "wiki_app__NMiJh"
@@ -9193,14 +9193,21 @@ var TextOverflowModes;
   TextOverflowModes[TextOverflowModes["Linked"] = 6] = "Linked";
 })(TextOverflowModes || (TextOverflowModes = {}));
 
-var InteractionType;
+var PointerEvents;
 
-(function (InteractionType) {
-  InteractionType[InteractionType["WhenVisible"] = 0] = "WhenVisible";
-  InteractionType[InteractionType["Always"] = 1] = "Always";
-  InteractionType[InteractionType["Ignore"] = 2] = "Ignore";
-  InteractionType[InteractionType["Block"] = 3] = "Block";
-})(InteractionType || (InteractionType = {}));
+(function (PointerEvents) {
+  PointerEvents[PointerEvents["Auto"] = 0] = "Auto";
+  PointerEvents[PointerEvents["Visible"] = 0] = "Visible";
+  PointerEvents[PointerEvents["All"] = 1] = "All";
+  PointerEvents[PointerEvents["None"] = 2] = "None";
+})(PointerEvents || (PointerEvents = {}));
+
+var Visibility;
+
+(function (Visibility) {
+  Visibility["Visible"] = "visible";
+  Visibility["Hidden"] = "hidden";
+})(Visibility || (Visibility = {}));
 
 var CursorType;
 
@@ -9762,75 +9769,6 @@ function (_super) {
 }(react["Component"]);
 
 
-// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/asset-reference.js
-var AssetReferenceType;
-
-(function (AssetReferenceType) {
-  AssetReferenceType[AssetReferenceType["None"] = 0] = "None";
-  AssetReferenceType[AssetReferenceType["File"] = 1] = "File";
-  AssetReferenceType[AssetReferenceType["Url"] = 2] = "Url";
-  AssetReferenceType[AssetReferenceType["Resource"] = 3] = "Resource";
-  AssetReferenceType[AssetReferenceType["NamedAsset"] = 4] = "NamedAsset";
-  AssetReferenceType[AssetReferenceType["Procedural"] = 5] = "Procedural";
-})(AssetReferenceType || (AssetReferenceType = {}));
-// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/color.js
-
-// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/enum.js
-
-// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/values.js
-var TextAnchor;
-
-(function (TextAnchor) {
-  TextAnchor[TextAnchor["UpperLeft"] = 0] = "UpperLeft";
-  TextAnchor[TextAnchor["UpperCenter"] = 1] = "UpperCenter";
-  TextAnchor[TextAnchor["UpperRight"] = 2] = "UpperRight";
-  TextAnchor[TextAnchor["MiddleLeft"] = 3] = "MiddleLeft";
-  TextAnchor[TextAnchor["MiddleCenter"] = 4] = "MiddleCenter";
-  TextAnchor[TextAnchor["MiddleRight"] = 5] = "MiddleRight";
-  TextAnchor[TextAnchor["LowerLeft"] = 6] = "LowerLeft";
-  TextAnchor[TextAnchor["LowerCenter"] = 7] = "LowerCenter";
-  TextAnchor[TextAnchor["LowerRight"] = 8] = "LowerRight";
-})(TextAnchor || (TextAnchor = {}));
-// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/index.js
-
-
-
-
-// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/src/asset-reference.js
-
-var asset = {
-  none: null,
-  url: function url(_url) {
-    return {
-      type: AssetReferenceType.Url,
-      value: _url
-    };
-  },
-  file: function file(path) {
-    return {
-      type: AssetReferenceType.File,
-      value: path
-    };
-  },
-  resource: function resource(path) {
-    return {
-      type: AssetReferenceType.Resource,
-      value: path
-    };
-  },
-  named: function named(name) {
-    return {
-      type: AssetReferenceType.NamedAsset,
-      value: name
-    };
-  },
-  procedural: function procedural(value) {
-    return {
-      type: AssetReferenceType.Procedural,
-      value: value
-    };
-  }
-};
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/src/tester/test-view.js
 
 var TestView = react["forwardRef"](function (props, ref) {
@@ -9859,6 +9797,40 @@ function testRender(element) {
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/native/index.js
 
 
+// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/asset-reference.js
+var AssetReferenceType;
+
+(function (AssetReferenceType) {
+  AssetReferenceType[AssetReferenceType["None"] = 0] = "None";
+  AssetReferenceType[AssetReferenceType["File"] = 1] = "File";
+  AssetReferenceType[AssetReferenceType["Url"] = 2] = "Url";
+  AssetReferenceType[AssetReferenceType["Resource"] = 3] = "Resource";
+  AssetReferenceType[AssetReferenceType["Global"] = 4] = "Global";
+  AssetReferenceType[AssetReferenceType["Procedural"] = 5] = "Procedural";
+})(AssetReferenceType || (AssetReferenceType = {}));
+// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/color.js
+
+// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/enum.js
+
+// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/values.js
+var TextAnchor;
+
+(function (TextAnchor) {
+  TextAnchor[TextAnchor["UpperLeft"] = 0] = "UpperLeft";
+  TextAnchor[TextAnchor["UpperCenter"] = 1] = "UpperCenter";
+  TextAnchor[TextAnchor["UpperRight"] = 2] = "UpperRight";
+  TextAnchor[TextAnchor["MiddleLeft"] = 3] = "MiddleLeft";
+  TextAnchor[TextAnchor["MiddleCenter"] = 4] = "MiddleCenter";
+  TextAnchor[TextAnchor["MiddleRight"] = 5] = "MiddleRight";
+  TextAnchor[TextAnchor["LowerLeft"] = 6] = "LowerLeft";
+  TextAnchor[TextAnchor["LowerCenter"] = 7] = "LowerCenter";
+  TextAnchor[TextAnchor["LowerRight"] = 8] = "LowerRight";
+})(TextAnchor || (TextAnchor = {}));
+// CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/values/index.js
+
+
+
+
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/renderer.js
 
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/jsx.js
@@ -9866,7 +9838,6 @@ function testRender(element) {
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/models/environment.js
 
 // CONCATENATED MODULE: D:/Documents/UnityProjects/packages/reactunity/renderer/dist/index.js
-
 
 
 
@@ -24634,7 +24605,7 @@ function compile(languageId, json) {
 // CONCATENATED MODULE: ./src/gallery/monaco/tokenizer.ts
 var tokenizer_languageId='typescript';var tokenizer_lexer=compile(tokenizer_languageId,language_language);var tokenizer=createTokenizationSupport('','',tokenizer_languageId,tokenizer_lexer);function tokenize(text){var lines=text.split(/\r\n|\r|\n/);var result=[];var state=tokenizer.getInitialState();for(var i=0,len=lines.length;i<len;i++){var line=lines[i];var tokenizationResult=tokenizer.tokenize(line,state,0);result[i]=tokenizationResult.tokens;state=tokenizationResult.endState;}return[lines,result];}function tokenizer_escape(code){return fixLineWrapOpportunity(code.replace('<','<<b></b>'));}function fixLineWrapOpportunity(code){return code.replace(/=/g,"=\u200B");}var specialNames=[''];var specialNameColor='';var identifierType='identifier.ts';var typeColors={'':null,'keyword.ts':'blue','literal.ts':'blue','number.ts':'blue','string.ts':'red','Keyword':'#16410A','regexp.ts':'purple','template.ts':'red','type.identifier.ts':'#16410A'};function colorizeRichtext(lines,lineTokens){var sb=[];for(var lineIndex=0;lineIndex<lines.length;lineIndex++){var line=lines[lineIndex];var tokens=lineTokens[lineIndex];var ind=0;for(var index=0;index<tokens.length;index++){var token=tokens[index];var nextToken=tokens[index+1];var start=token.offset;var end=(nextToken===null||nextToken===void 0?void 0:nextToken.offset)||line.length;var tok=line.substr(start,end-start);var text=tokenizer_escape(tok);if(start>ind){sb.push(tokenizer_escape(line.substr(ind,start-ind)));}if(token.type===identifierType&&specialNames.includes(tok))text="<color=".concat(specialNameColor,">").concat(text,"</color>");var color=typeColors[token.type];if(color){text="<color=".concat(color,">").concat(text,"</color>");}sb.push(text);ind=end;}if(ind<line.length){sb.push(tokenizer_escape(line.substring(ind)));}if(lineIndex<lines.length-1)sb.push('\n');}return sb.join('');}
 // CONCATENATED MODULE: ./src/gallery/editor.tsx
-var editor_TextEditor=function TextEditor(_ref){var text=_ref.text;var richText=colorizeRichtext.apply(void 0,_toConsumableArray(tokenize(text)));return/*#__PURE__*/react["createElement"]("view",{style:{font:NamedAssets.RobotoMono},layout:{FlexGrow:1,FlexShrink:0}},/*#__PURE__*/react["createElement"]("input",{readonly:true,lineType:LineType.MultiLineNewline,webSupport:true,layout:{PositionType:PositionType.Absolute,Height:'100%',Width:'100%',FlexShrink:0,Padding:11},style:{backgroundColor:'transparent',font:NamedAssets.RobotoMono,fontColor:'transparent'},value:fixLineWrapOpportunity(text)}),/*#__PURE__*/react["createElement"]("input",{richText:true,readonly:true,lineType:LineType.MultiLineNewline,layout:{FlexShrink:0,Padding:10,BorderWidth:1},style:{backgroundColor:0.94,borderColor:0.8,font:NamedAssets.RobotoMono,interaction:InteractionType.Ignore},value:richText}));};
+var editor_TextEditor=function TextEditor(_ref){var text=_ref.text;var richText=colorizeRichtext.apply(void 0,_toConsumableArray(tokenize(text)));return/*#__PURE__*/react["createElement"]("view",{style:{fontFamily:'Roboto Mono'},layout:{FlexGrow:1,FlexShrink:0}},/*#__PURE__*/react["createElement"]("input",{readonly:true,lineType:LineType.MultiLineNewline,webSupport:true,layout:{PositionType:PositionType.Absolute,Height:'100%',Width:'100%',FlexShrink:0,Padding:11},style:{backgroundColor:'transparent',fontFamily:'Roboto Mono',fontColor:'transparent'},value:fixLineWrapOpportunity(text)}),/*#__PURE__*/react["createElement"]("input",{richText:true,readonly:true,lineType:LineType.MultiLineNewline,layout:{FlexShrink:0,Padding:10,BorderWidth:1},style:{backgroundColor:0.94,borderColor:0.8,fontFamily:'Roboto Mono',pointerEvents:PointerEvents.None},value:richText}));};
 // CONCATENATED MODULE: ./src/gallery/gallery.tsx
 var shadow='0 8 10 10 black 10';var gallery_App=/*#__PURE__*/function(_React$Component){_inherits(App,_React$Component);var _super=_createSuper(App);function App(props){var _this;_classCallCheck(this,App);_this=_super.call(this,props);_this.state={};return _this;}_createClass(App,[{key:"render",value:function render(){var _ref,_this2=this;var selectedSample=this.state.selectedSample;var allSamples=(_ref=[]).concat.apply(_ref,[this.props.samples].concat(_toConsumableArray(this.props.samples.map(function(x){return x.children||[];}))));var selected=allSamples.find(function(x){return x.name===selectedSample;});var homePage=function homePage(){return/*#__PURE__*/react["createElement"]("view",{layout:{Padding:20}},"This page exists to demonstrate features of React Unity. Everything on this page is built with React Unity. You can navigate the examples using the left panel.");};var drawButtonForSample=function drawButtonForSample(sample){var depth=arguments.length>1&&arguments[1]!==undefined?arguments[1]:0;var key=arguments.length>2?arguments[2]:undefined;return/*#__PURE__*/react["createElement"]("view",{key:key},/*#__PURE__*/react["createElement"]("button",{layout:{PaddingHorizontal:20,PaddingVertical:16,PaddingLeft:20+depth*16,JustifyContent:YogaJustify.FlexStart},style:{backgroundColor:selected===sample?0.7:'transparent',borderRadius:0,borderColor:Color.black},stateStyles:{hover:{backgroundColor:0.8}},onClick:function onClick(){return!sample.children&&_this2.setState({selectedSample:sample.name});}},sample.name),!!sample.children&&/*#__PURE__*/react["createElement"]("view",null,sample.children.map(function(x,i){return drawButtonForSample(x,depth+1,"".concat(key,"_").concat(i));})));};var SelectedComponent=(selected===null||selected===void 0?void 0:selected.render)||homePage;return/*#__PURE__*/react["createElement"]("view",{layout:{Height:'100%',AlignItems:'Stretch',JustifyContent:'FlexStart',FlexDirection:FlexDirection.Column},style:{backgroundColor:'#fafafa'}},/*#__PURE__*/react["createElement"]("view",{name:"<Header>",style:{backgroundColor:'#2e9151',fontColor:Color.white,boxShadow:shadow,zOrder:1},layout:{AlignItems:'Center',JustifyContent:'SpaceBetween',FlexDirection:FlexDirection.Row,Wrap:Wrap.Wrap,FlexShrink:0,PaddingVertical:20,PaddingHorizontal:40}},/*#__PURE__*/react["createElement"]("view",{style:{fontStyle:FontStyles.Bold,fontSize:26}},"React Unity"),/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:1}}),/*#__PURE__*/react["createElement"]("anchor",{url:"https://github.com/KurtGokhan/react-unity"},"Github")),/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:1,FlexShrink:1,FlexDirection:FlexDirection.Row,AlignItems:'Stretch'}},/*#__PURE__*/react["createElement"]("scroll",{name:"<Sidebar>",layout:{AlignItems:'Stretch',JustifyContent:'FlexStart',FlexDirection:FlexDirection.Column,Wrap:Wrap.NoWrap,FlexShrink:0,Width:250,PaddingVertical:20},style:{backgroundColor:'#dadada',boxShadow:shadow}},this.props.samples.map(function(x,i){return drawButtonForSample(x,0,"".concat(i));})),/*#__PURE__*/react["createElement"]("scroll",{layout:{FlexGrow:1,FlexShrink:1,FlexDirection:'Column',AlignItems:'Stretch',JustifyContent:'FlexStart',Padding:20}},/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:(selected===null||selected===void 0?void 0:selected.sourceCode)?0:1,FlexShrink:0,FlexDirection:'Column',AlignItems:'Stretch',JustifyContent:'FlexStart',Height:250}},/*#__PURE__*/react["createElement"](SelectedComponent,null)),(selected===null||selected===void 0?void 0:selected.sourceCode)&&/*#__PURE__*/react["createElement"]("view",{layout:{MarginTop:20}},"Source Code:",/*#__PURE__*/react["createElement"](editor_TextEditor,{text:selected.sourceCode})),!(selected===null||selected===void 0?void 0:selected.sourceCode)&&!!((selected===null||selected===void 0?void 0:selected.source)||(selected===null||selected===void 0?void 0:selected.wiki))&&/*#__PURE__*/react["createElement"]("view",{layout:{PositionType:PositionType.Absolute,Right:20,Top:20,PaddingHorizontal:30,PaddingVertical:20},style:{backgroundColor:[0.1803922,0.5686275,0.3176471,1],borderRadius:5,boxShadow:shadow,fontColor:[1,1,1,1],fontSize:24}},!!selected.source&&/*#__PURE__*/react["createElement"]("anchor",{url:selected.source},"Source"),!!selected.wiki&&/*#__PURE__*/react["createElement"]("anchor",{url:selected.wiki},"Wiki")))));}}]);return App;}(react["Component"]);var gallery_SampleGallery=function SampleGallery(samples){return/*#__PURE__*/react["createElement"](gallery_App,{samples:samples});};var gallery_renderGallery=function renderGallery(samples){return ReactUnity.render(/*#__PURE__*/react["createElement"](gallery_App,{samples:samples}));};/* harmony default export */ var gallery = (gallery_renderGallery);
 // CONCATENATED MODULE: ./src/assets/lorem.ts
@@ -24670,8 +24641,10 @@ function anchor_App(){return/*#__PURE__*/react["createElement"]("view",{classNam
 function button_App(){return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"]("button",{onClick:function onClick(){return console.log('Clicked');}},"Click me!"));}
 // CONCATENATED MODULE: ./src/wiki/dropdown.tsx
 function dropdown_App(){var triggerTemplate=/*#__PURE__*/react["createElement"]("view",{style:{fontColor:'green'}},"Option 1");return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"](Dropdown,{onChange:function onChange(val){return console.log(val);},layout:{Width:250}},"Select an option",/*#__PURE__*/react["createElement"](DropdownItem,{value:5,triggerTemplate:triggerTemplate},"Option 1"),/*#__PURE__*/react["createElement"](DropdownItem,{value:10},"Option 2"),/*#__PURE__*/react["createElement"](DropdownItem,{value:15},"Option With Long Name")));}
+// CONCATENATED MODULE: ./src/css-test/images/bg.png
+/* harmony default export */ var bg = (__webpack_require__.p + "static/media/bg.png");
 // CONCATENATED MODULE: ./src/wiki/image.tsx
-function image_App(){return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"]("image",{source:NamedAssets["delete"]}));}
+var base64="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";function image_App(){return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"]("image",{source:base64}),/*#__PURE__*/react["createElement"]("image",{source:bg,layout:{Height:40}}),/*#__PURE__*/react["createElement"]("image",{source:'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png'}));}
 // CONCATENATED MODULE: ./src/wiki/input.tsx
 function input_App(){return/*#__PURE__*/react["createElement"]("view",{className:wiki_index_module.app},/*#__PURE__*/react["createElement"]("input",{placeholder:"Write something!",style:{backgroundColor:0.9}}));}
 // EXTERNAL MODULE: D:/Documents/UnityProjects/packages/reactunity/scripts/node_modules/css-loader/dist/cjs.js??ref--6-oneOf-6-1!D:/Documents/UnityProjects/packages/reactunity/scripts/node_modules/resolve-url-loader??ref--6-oneOf-6-2!D:/Documents/UnityProjects/packages/reactunity/scripts/node_modules/sass-loader/dist/cjs.js??ref--6-oneOf-6-3!./src/wiki/scroll/index.module.scss
@@ -24717,11 +24690,11 @@ this.todos=this.todos.map(function(todo){return utils_Utils.extend({},todo,{comp
 // CONCATENATED MODULE: ./src/todo-mvc/constants.ts
 var ALL_TODOS='all';var ACTIVE_TODOS='active';var COMPLETED_TODOS='completed';var ENTER_KEY=13;var ESCAPE_KEY=27;
 // CONCATENATED MODULE: ./src/todo-mvc/footer.tsx
-var footer_TodoFooter=/*#__PURE__*/function(_React$Component){_inherits(TodoFooter,_React$Component);var _super=_createSuper(TodoFooter);function TodoFooter(){_classCallCheck(this,TodoFooter);return _super.apply(this,arguments);}_createClass(TodoFooter,[{key:"render",value:function render(){var _this=this;var activeTodoWord=utils_Utils.pluralize(this.props.count,'item');var clearButton=/*#__PURE__*/react["createElement"]("button",{style:{hidden:this.props.completedCount===0},layout:{Width:150},onClick:this.props.onClearCompleted},"Clear completed");var nowShowing=this.props.nowShowing;var TabButton=function TabButton(props){return/*#__PURE__*/react["createElement"]("button",{onClick:function onClick(){return _this.props.onSwitch(props.id);},layout:{BorderWidth:1,MarginHorizontal:5,PaddingHorizontal:7,PaddingVertical:3},style:{backgroundColor:props.id===nowShowing?'#cecece':'transparent',borderColor:['#af2f2f',0.2]}},props.children);};return/*#__PURE__*/react["createElement"]("view",{name:"Footer",style:{fontSize:14,borderColor:'#cecece'},layout:{BorderTopWidth:2,FlexDirection:FlexDirection.Row,JustifyContent:YogaJustify.SpaceBetween,AlignItems:YogaAlign.Center,PaddingHorizontal:16,PaddingVertical:4}},/*#__PURE__*/react["createElement"]("view",{layout:{Width:150}},"<b>".concat(this.props.count,"</b> ").concat(activeTodoWord," left")),/*#__PURE__*/react["createElement"]("view",{layout:{FlexDirection:'Row'}},/*#__PURE__*/react["createElement"](TabButton,{id:ALL_TODOS},"All"),/*#__PURE__*/react["createElement"](TabButton,{id:ACTIVE_TODOS},"Active"),/*#__PURE__*/react["createElement"](TabButton,{id:COMPLETED_TODOS},"Completed")),clearButton);}}]);return TodoFooter;}(react["Component"]);
+var footer_TodoFooter=/*#__PURE__*/function(_React$Component){_inherits(TodoFooter,_React$Component);var _super=_createSuper(TodoFooter);function TodoFooter(){_classCallCheck(this,TodoFooter);return _super.apply(this,arguments);}_createClass(TodoFooter,[{key:"render",value:function render(){var _this=this;var activeTodoWord=utils_Utils.pluralize(this.props.count,'item');var clearButton=/*#__PURE__*/react["createElement"]("button",{style:{visibility:this.props.completedCount!==0},layout:{Width:150},onClick:this.props.onClearCompleted},"Clear completed");var nowShowing=this.props.nowShowing;var TabButton=function TabButton(props){return/*#__PURE__*/react["createElement"]("button",{onClick:function onClick(){return _this.props.onSwitch(props.id);},layout:{BorderWidth:1,MarginHorizontal:5,PaddingHorizontal:7,PaddingVertical:3},style:{backgroundColor:props.id===nowShowing?'#cecece':'transparent',borderColor:['#af2f2f',0.2]}},props.children);};return/*#__PURE__*/react["createElement"]("view",{name:"Footer",style:{fontSize:14,borderColor:'#cecece'},layout:{BorderTopWidth:2,FlexDirection:FlexDirection.Row,JustifyContent:YogaJustify.SpaceBetween,AlignItems:YogaAlign.Center,PaddingHorizontal:16,PaddingVertical:4}},/*#__PURE__*/react["createElement"]("view",{layout:{Width:150}},"<b>".concat(this.props.count,"</b> ").concat(activeTodoWord," left")),/*#__PURE__*/react["createElement"]("view",{layout:{FlexDirection:'Row'}},/*#__PURE__*/react["createElement"](TabButton,{id:ALL_TODOS},"All"),/*#__PURE__*/react["createElement"](TabButton,{id:ACTIVE_TODOS},"Active"),/*#__PURE__*/react["createElement"](TabButton,{id:COMPLETED_TODOS},"Completed")),clearButton);}}]);return TodoFooter;}(react["Component"]);
 // CONCATENATED MODULE: ./src/todo-mvc/todoItem.tsx
-var todoItem_TodoItem=/*#__PURE__*/function(_React$Component){_inherits(TodoItem,_React$Component);var _super=_createSuper(TodoItem);function TodoItem(props){var _this;_classCallCheck(this,TodoItem);_this=_super.call(this,props);_this.state=void 0;_this.editField=void 0;_this.setHover=function(x){return _this.setState({hovered:x});};_this.pointerEnter=function(){return _this.setHover(true);};_this.pointerExit=function(){return _this.setHover(false);};_this.state={editText:_this.props.todo.title,hovered:false};return _this;}_createClass(TodoItem,[{key:"handleSubmit",value:function handleSubmit(){var val=this.state.editText.trim();if(val){this.props.onSave(val);this.setState({editText:val});}else{this.props.onDestroy();}}},{key:"handleEdit",value:function handleEdit(){this.props.onEdit();this.setState({editText:this.props.todo.title});}},{key:"shouldComponentUpdate",value:function shouldComponentUpdate(nextProps,nextState){return nextProps.todo!==this.props.todo||nextProps.editing!==this.props.editing||nextState.editText!==this.state.editText||nextState.hovered!==this.state.hovered;}},{key:"render",value:function render(){var completed=this.props.todo.completed;return/*#__PURE__*/react["createElement"]("view",{name:"<TodoItem>",onPointerEnter:this.pointerEnter,onPointerExit:this.pointerExit,layout:{FlexDirection:FlexDirection.Row,AlignItems:YogaAlign.Center,BorderBottomWidth:1},style:{borderColor:'#dedede',fontStyle:completed?'Strikethrough':null,opacity:completed?0.4:1}},/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:1,FlexShrink:1,Padding:16,PaddingLeft:64}},this.props.todo.title),/*#__PURE__*/react["createElement"]("input",{layout:{Display:Display.None},ref:this.editField}),/*#__PURE__*/react["createElement"]("toggle",{onChange:this.props.onToggle,value:this.props.todo.completed,layout:{PositionType:PositionType.Absolute,Left:8,Top:'50%'},style:{translate:[0,-0.5],translateRelative:true}}),/*#__PURE__*/react["createElement"]("button",{onClick:this.props.onDestroy,style:{backgroundColor:'clear',fontColor:'#cc9a9a',hidden:!this.state.hovered,interaction:InteractionType.Always},layout:{MarginRight:20}},"\xD7"));}}]);return TodoItem;}(react["Component"]);
+var todoItem_TodoItem=/*#__PURE__*/function(_React$Component){_inherits(TodoItem,_React$Component);var _super=_createSuper(TodoItem);function TodoItem(props){var _this;_classCallCheck(this,TodoItem);_this=_super.call(this,props);_this.state=void 0;_this.editField=void 0;_this.setHover=function(x){return _this.setState({hovered:x});};_this.pointerEnter=function(){return _this.setHover(true);};_this.pointerExit=function(){return _this.setHover(false);};_this.state={editText:_this.props.todo.title,hovered:false};return _this;}_createClass(TodoItem,[{key:"handleSubmit",value:function handleSubmit(){var val=this.state.editText.trim();if(val){this.props.onSave(val);this.setState({editText:val});}else{this.props.onDestroy();}}},{key:"handleEdit",value:function handleEdit(){this.props.onEdit();this.setState({editText:this.props.todo.title});}},{key:"shouldComponentUpdate",value:function shouldComponentUpdate(nextProps,nextState){return nextProps.todo!==this.props.todo||nextProps.editing!==this.props.editing||nextState.editText!==this.state.editText||nextState.hovered!==this.state.hovered;}},{key:"render",value:function render(){var completed=this.props.todo.completed;return/*#__PURE__*/react["createElement"]("view",{name:"<TodoItem>",onPointerEnter:this.pointerEnter,onPointerExit:this.pointerExit,layout:{FlexDirection:FlexDirection.Row,AlignItems:YogaAlign.Center,BorderBottomWidth:1},style:{borderColor:'#dedede',fontStyle:completed?'Strikethrough':null,opacity:completed?0.4:1}},/*#__PURE__*/react["createElement"]("view",{layout:{FlexGrow:1,FlexShrink:1,Padding:16,PaddingLeft:64}},this.props.todo.title),/*#__PURE__*/react["createElement"]("input",{layout:{Display:Display.None},ref:this.editField}),/*#__PURE__*/react["createElement"]("toggle",{onChange:this.props.onToggle,value:this.props.todo.completed,layout:{PositionType:PositionType.Absolute,Left:8,Top:'50%'},style:{translate:[0,-0.5],translateRelative:true}}),/*#__PURE__*/react["createElement"]("button",{onClick:this.props.onDestroy,style:{backgroundColor:'clear',fontColor:'#cc9a9a',visibility:this.state.hovered,pointerEvents:PointerEvents.All},layout:{MarginRight:20}},"\xD7"));}}]);return TodoItem;}(react["Component"]);
 // CONCATENATED MODULE: ./src/todo-mvc/index.tsx
-var todo_mvc_TodoApp=/*#__PURE__*/function(_React$Component){_inherits(TodoApp,_React$Component);var _super=_createSuper(TodoApp);function TodoApp(props){var _this;_classCallCheck(this,TodoApp);_this=_super.call(this,props);_this.state=void 0;_this.newTodoField=/*#__PURE__*/react["createRef"]();_this.selectAllToggle=/*#__PURE__*/react["createRef"]();_this.pageLayout={AlignSelf:YogaAlign.Center,Width:'100%',MaxWidth:640,FlexShrink:1,Padding:30};_this.headerStyle={fontColor:[1,0.5235849,0.5235849,1],fontSize:100};_this.headerLayout={PaddingBottom:20,AlignSelf:YogaAlign.Center,MinWidth:'auto',MinHeight:'auto'};_this.setShowing=function(nowShowing){return _this.setState(function(state){return{nowShowing:nowShowing};});};_this.headerInputStyle={borderColor:'#cecece',zOrder:1,backgroundColor:[1,1,1,1],boxShadow:'0 8 10 10 black 10'};_this.toggleAll=function(checked){_this.state.model.toggleAll(checked);};var model=new todoModel_TodoModel('react-todos');model.subscribe(function(){return _this.setState({model:model});});_this.state={nowShowing:ALL_TODOS,editing:null,model:model};return _this;}_createClass(TodoApp,[{key:"addTodo",value:function addTodo(val){var _this2=this;if(val){this.state.model.addTodo(val);this.newTodoField.current.Value='';setTimeout(function(){return _this2.newTodoField.current.Focus();},0);}}},{key:"toggle",value:function toggle(todoToToggle){this.state.model.toggle(todoToToggle);}},{key:"destroy",value:function destroy(todo){this.state.model.destroy(todo);}},{key:"edit",value:function edit(todo){this.setState({editing:todo.id});}},{key:"save",value:function save(todoToSave,text){this.state.model.save(todoToSave,text);this.setState({editing:null});}},{key:"cancel",value:function cancel(){this.setState({editing:null});}},{key:"clearCompleted",value:function clearCompleted(){this.state.model.clearCompleted();}},{key:"render",value:function render(){var _this3=this;var footer;var main;var todos=this.state.model.todos;var shownTodos=todos.filter(function(todo){switch(_this3.state.nowShowing){case ACTIVE_TODOS:return!todo.completed;case COMPLETED_TODOS:return todo.completed;default:return true;}});var todoItems=shownTodos.map(function(todo){return/*#__PURE__*/react["createElement"](todoItem_TodoItem,{key:todo.id,todo:todo,onToggle:_this3.toggle.bind(_this3,todo),onDestroy:_this3.destroy.bind(_this3,todo),onEdit:_this3.edit.bind(_this3,todo),editing:_this3.state.editing===todo.id,onSave:_this3.save.bind(_this3,todo),onCancel:function onCancel(e){return _this3.cancel();}});});var activeTodoCount=todos.filter(function(x){return!x.completed;}).length;var completedCount=todos.length-activeTodoCount;if(activeTodoCount||completedCount){footer=/*#__PURE__*/react["createElement"](footer_TodoFooter,{count:activeTodoCount,completedCount:completedCount,nowShowing:this.state.nowShowing,onSwitch:this.setShowing,onClearCompleted:function onClearCompleted(e){return _this3.clearCompleted();}});}if(todos.length){main=/*#__PURE__*/react["createElement"]("scroll",{name:"<Main>"},todoItems);}return/*#__PURE__*/react["createElement"]("view",{layout:this.pageLayout,style:{font:NamedAssets.font}},/*#__PURE__*/react["createElement"]("view",{style:this.headerStyle,layout:this.headerLayout},"todos"),/*#__PURE__*/react["createElement"]("view",{style:{backgroundColor:'white',boxShadow:'6 6 22 22 black 16'},layout:{FlexShrink:1}},/*#__PURE__*/react["createElement"]("view",{name:"Header",layout:{FlexDirection:FlexDirection.Row,AlignItems:YogaAlign.Center,BorderBottomWidth:2},style:this.headerInputStyle},/*#__PURE__*/react["createElement"]("input",{layout:{Padding:16,PaddingLeft:64,FlexGrow:1},style:{borderRadius:0},ref:this.newTodoField,placeholder:"What needs to be done?",onSubmit:function onSubmit(value){return _this3.addTodo(value);}}),/*#__PURE__*/react["createElement"]("toggle",{ref:this.selectAllToggle,onChange:this.toggleAll,value:activeTodoCount===0&&completedCount>0,layout:{PositionType:PositionType.Absolute,Left:8,Top:'50%'},style:{translate:[0,-0.5],translateRelative:true}})),main,footer));}}]);return TodoApp;}(react["Component"]);
+var todo_mvc_TodoApp=/*#__PURE__*/function(_React$Component){_inherits(TodoApp,_React$Component);var _super=_createSuper(TodoApp);function TodoApp(props){var _this;_classCallCheck(this,TodoApp);_this=_super.call(this,props);_this.state=void 0;_this.newTodoField=/*#__PURE__*/react["createRef"]();_this.selectAllToggle=/*#__PURE__*/react["createRef"]();_this.pageLayout={AlignSelf:YogaAlign.Center,Width:'100%',MaxWidth:640,FlexShrink:1,Padding:30};_this.headerStyle={fontColor:[1,0.5235849,0.5235849,1],fontSize:100};_this.headerLayout={PaddingBottom:20,AlignSelf:YogaAlign.Center,MinWidth:'auto',MinHeight:'auto'};_this.setShowing=function(nowShowing){return _this.setState(function(state){return{nowShowing:nowShowing};});};_this.headerInputStyle={borderColor:'#cecece',zOrder:1,backgroundColor:[1,1,1,1],boxShadow:'0 8 10 10 black 10'};_this.toggleAll=function(checked){_this.state.model.toggleAll(checked);};var model=new todoModel_TodoModel('react-todos');model.subscribe(function(){return _this.setState({model:model});});_this.state={nowShowing:ALL_TODOS,editing:null,model:model};return _this;}_createClass(TodoApp,[{key:"addTodo",value:function addTodo(val){var _this2=this;if(val){this.state.model.addTodo(val);this.newTodoField.current.Value='';setTimeout(function(){return _this2.newTodoField.current.Focus();},0);}}},{key:"toggle",value:function toggle(todoToToggle){this.state.model.toggle(todoToToggle);}},{key:"destroy",value:function destroy(todo){this.state.model.destroy(todo);}},{key:"edit",value:function edit(todo){this.setState({editing:todo.id});}},{key:"save",value:function save(todoToSave,text){this.state.model.save(todoToSave,text);this.setState({editing:null});}},{key:"cancel",value:function cancel(){this.setState({editing:null});}},{key:"clearCompleted",value:function clearCompleted(){this.state.model.clearCompleted();}},{key:"render",value:function render(){var _this3=this;var footer;var main;var todos=this.state.model.todos;var shownTodos=todos.filter(function(todo){switch(_this3.state.nowShowing){case ACTIVE_TODOS:return!todo.completed;case COMPLETED_TODOS:return todo.completed;default:return true;}});var todoItems=shownTodos.map(function(todo){return/*#__PURE__*/react["createElement"](todoItem_TodoItem,{key:todo.id,todo:todo,onToggle:_this3.toggle.bind(_this3,todo),onDestroy:_this3.destroy.bind(_this3,todo),onEdit:_this3.edit.bind(_this3,todo),editing:_this3.state.editing===todo.id,onSave:_this3.save.bind(_this3,todo),onCancel:function onCancel(e){return _this3.cancel();}});});var activeTodoCount=todos.filter(function(x){return!x.completed;}).length;var completedCount=todos.length-activeTodoCount;if(activeTodoCount||completedCount){footer=/*#__PURE__*/react["createElement"](footer_TodoFooter,{count:activeTodoCount,completedCount:completedCount,nowShowing:this.state.nowShowing,onSwitch:this.setShowing,onClearCompleted:function onClearCompleted(e){return _this3.clearCompleted();}});}if(todos.length){main=/*#__PURE__*/react["createElement"]("scroll",{name:"<Main>"},todoItems);}return/*#__PURE__*/react["createElement"]("view",{layout:this.pageLayout},/*#__PURE__*/react["createElement"]("view",{style:this.headerStyle,layout:this.headerLayout},"todos"),/*#__PURE__*/react["createElement"]("view",{style:{backgroundColor:'white',boxShadow:'6 6 22 22 black 16'},layout:{FlexShrink:1}},/*#__PURE__*/react["createElement"]("view",{name:"Header",layout:{FlexDirection:FlexDirection.Row,AlignItems:YogaAlign.Center,BorderBottomWidth:2},style:this.headerInputStyle},/*#__PURE__*/react["createElement"]("input",{layout:{Padding:16,PaddingLeft:64,FlexGrow:1},style:{borderRadius:0},ref:this.newTodoField,placeholder:"What needs to be done?",onSubmit:function onSubmit(value){return _this3.addTodo(value);}}),/*#__PURE__*/react["createElement"]("toggle",{ref:this.selectAllToggle,onChange:this.toggleAll,value:activeTodoCount===0&&completedCount>0,layout:{PositionType:PositionType.Absolute,Left:8,Top:'50%'},style:{translate:[0,-0.5],translateRelative:true}})),main,footer));}}]);return TodoApp;}(react["Component"]);
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/view.tsx
 /* harmony default export */ var view = ("import * as React from 'react';\nimport style from './index.module.scss';\n\nexport const App = () =>\n  <view className={style.app}>\n    Hello world!\n  </view>;\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/anchor.tsx
@@ -24731,7 +24704,7 @@ var todo_mvc_TodoApp=/*#__PURE__*/function(_React$Component){_inherits(TodoApp,_
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/dropdown.tsx
 /* harmony default export */ var dropdown = ("import * as React from 'react';\nimport style from './index.module.scss';\nimport { Dropdown, DropdownItem } from '@reactunity/renderer';\n\nexport function App() {\n  const triggerTemplate = <view style={{ fontColor: 'green' }}>Option 1</view>;\n\n  return <view className={style.app}>\n    <Dropdown onChange={val => console.log(val)} layout={{ Width: 250 }}>\n      Select an option\n\n      <DropdownItem value={5} triggerTemplate={triggerTemplate}>Option 1</DropdownItem>\n      <DropdownItem value={10}>Option 2</DropdownItem>\n      <DropdownItem value={15}>Option With Long Name</DropdownItem>\n    </Dropdown>\n  </view>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/image.tsx
-/* harmony default export */ var wiki_image = ("import * as React from 'react';\nimport style from './index.module.scss';\n\nexport function App() {\n  return <view className={style.app}>\n    <image source={NamedAssets.delete} />\n  </view>;\n}\n");
+/* harmony default export */ var wiki_image = ("import * as React from 'react';\nimport style from './index.module.scss';\nimport image from 'src/css-test/images/bg.png';\n\nconst base64 = `data:image/png;base64,iVBORw0KGgoAAA\\\nANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4\\\n//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU\\\n5ErkJggg==`\n\nexport function App() {\n  return <view className={style.app}>\n    <image source={base64} />\n    <image source={image} layout={{ Height: 40 }} />\n    <image source={'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png' as any} />\n  </view>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/input.tsx
 /* harmony default export */ var input = ("import * as React from 'react';\nimport style from './index.module.scss';\n\nexport function App() {\n  return <view className={style.app}>\n    <input placeholder=\"Write something!\" style={{ backgroundColor: 0.9 }} />\n  </view>;\n}\n");
 // CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/wiki/scroll/index.tsx
