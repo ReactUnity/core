@@ -1,26 +1,14 @@
 import { Style } from './styles';
 import { Layout } from './yoga';
 import { Events, ActionCallback } from './events';
-import { AssetReference } from '../values/asset-reference';
-import { UnityObject } from '../native/context';
-import { ColorAux } from '../values/color';
+import { AssetReference } from '../values';
 
-export interface StateStyles {
-  hover?: Style;
-  // focus?: Style;
-  // active?: Style;
-  // [key: string]: Style;
-}
+export type StyleAndLayout = Style & Layout;
 
-export interface StyleAndLayout {
-  layout?: Layout;
-  style?: Style;
-  stateStyles?: StateStyles;
-}
-
-export interface View extends Events, StyleAndLayout {
+export interface View extends Events {
   name?: string;
   className?: string;
+  style?: StyleAndLayout;
 }
 
 export interface Button extends View {
@@ -29,7 +17,6 @@ export interface Button extends View {
 
 export interface Anchor extends View {
   url?: string;
-
   /** Works in WebGL only */
   openInThisTab?: boolean;
 }

@@ -16,8 +16,7 @@ declare module 'React' {
     }
 
     interface ElementChildrenAttribute {
-      // eslint-disable-next-line @typescript-eslint/ban-types
-      children: {};
+      children;
     }
 
     interface IntrinsicElements {

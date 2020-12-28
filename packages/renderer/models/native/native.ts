@@ -1,52 +1,22 @@
-import { ColorAux } from '../values/color';
-import { Vector2Aux } from '../values/values';
+export default '';
 
 declare global {
-  class YogaValue {
-    static Auto: () => YogaValue;
+  class ColorNative {
+    readonly r: number;
+    readonly g: number;
+    readonly b: number;
+    readonly a: number;
 
-    static Percent(value: number): YogaValue;
-
-    static Point(value: number): YogaValue;
-
-    static Undefined(): YogaValue;
-  }
-
-  class Color {
-    constructor(r: number, g: number, b: number, a?: number);
-
-    static get cyan(): ColorAux;
-
-    static get clear(): ColorAux;
-
-    static get grey(): ColorAux;
-
-    static get gray(): ColorAux;
-
-    static get magenta(): ColorAux;
-
-    static get red(): ColorAux;
-
-    static get yellow(): ColorAux;
-
-    static get black(): ColorAux;
-
-    static get white(): ColorAux;
-
-    static get green(): ColorAux;
-
-    static get blue(): ColorAux;
-  }
-
-  class ShadowDefinition {
-    offset: Vector2Native;
-
-    spread: Vector2Native;
-
-    color: Color;
-
-    blur: number;
-
-    constructor(offset: Vector2Aux, spread: Vector2Aux, color: ColorAux, blur: number);
+    static get cyan(): ColorNative;
+    static get clear(): ColorNative;
+    static get grey(): ColorNative;
+    static get gray(): ColorNative;
+    static get magenta(): ColorNative;
+    static get red(): ColorNative;
+    static get yellow(): ColorNative;
+    static get black(): ColorNative;
+    static get white(): ColorNative;
+    static get green(): ColorNative;
+    static get blue(): ColorNative;
   }
 }

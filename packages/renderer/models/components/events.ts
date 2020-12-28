@@ -10,7 +10,7 @@ export enum FramePressState {
   Pressed = 0,
   Released = 1,
   PressedAndReleased = 2,
-  NotChanged = 3
+  NotChanged = 3,
 }
 
 export enum MoveDirection {

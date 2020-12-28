@@ -12,7 +12,7 @@ export enum TouchScreenKeyboardType {
   NintendoNetworkAccount = 8,
   Social = 9,
   Search = 10,
-  DecimalPad = 11
+  DecimalPad = 11,
 }
 
 export enum ContentType {
@@ -25,7 +25,7 @@ export enum ContentType {
   EmailAddress = 6,
   Password = 7,
   Pin = 8,
-  Custom = 9
+  Custom = 9,
 }
 export enum CharacterValidation {
   None = 0,
@@ -36,12 +36,12 @@ export enum CharacterValidation {
   Name = 5,
   Regex = 6,
   EmailAddress = 7,
-  CustomValidator = 8
+  CustomValidator = 8,
 }
 export enum LineType {
   SingleLine = 0,
   MultiLineSubmit = 1,
-  MultiLineNewline = 2
+  MultiLineNewline = 2,
 }
 
 export type InputEvent = (val: string) => void;

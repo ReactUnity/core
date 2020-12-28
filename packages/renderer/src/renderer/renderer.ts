@@ -43,29 +43,17 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     if (attr === 'children') continue;
     if (attr === 'key') continue;
     if (attr === 'ref') continue;
-    if (attr === 'layout') {
-      if (applyDiffedUpdate(instance.Inline, value)) {
-        instance.ResolveStyle();
-        instance.ScheduleLayout();
-        instance.ApplyLayoutStyles();
-      }
-      continue;
-    }
-    if (!isAfterMount && (attr === 'style' || attr === 'stateStyles')) {
+    if (!isAfterMount && attr === 'style') {
       updateAfterMount = true;
       continue;
     }
 
-    if (attr === 'stateStyles') {
-      // TODO:
-      // if (applyDiffedUpdate(instance.StateStyles, value, 1)) {
-      //   instance.ResolveStyle();
-      // }
-      continue;
-    }
     if (attr === 'style') {
       if (applyDiffedUpdate(instance.Inline, value)) {
+        // TODO: find better way to determine if this element needs layout/style recalculation
         instance.ResolveStyle();
+        instance.ScheduleLayout();
+        instance.ApplyLayoutStyles();
       }
       continue;
     }
@@ -150,7 +138,6 @@ const hostConfig: Config & { clearContainer: () => void } = {
   commitMount(instance, type, newProps, internalInstanceHandle) {
     const props = [];
     if ('style' in newProps) props.push('style', newProps.style);
-    if ('stateStyles' in newProps) props.push('stateStyles', diffProperties({}, newProps.stateStyles, 1));
 
     applyUpdate(instance, props, true);
   },

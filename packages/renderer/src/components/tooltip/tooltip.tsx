@@ -18,20 +18,20 @@ export class Tooltip extends React.Component<TooltipFullProps, { opened: boolean
   };
 
   static containerPositionProp = {
-    top: 'Top',
-    bottom: 'Bottom',
-    left: 'Left',
-    right: 'Right',
+    top: 'top',
+    bottom: 'bottom',
+    left: 'left',
+    right: 'right',
   };
 
   static childPositionProp = {
-    top: 'Bottom',
-    bottom: 'Top',
-    left: 'Right',
-    right: 'Left',
+    top: 'bottom',
+    bottom: 'top',
+    left: 'right',
+    right: 'left',
   };
 
-  static yogaZeroPercent = YogaValue.Point(0);
+  static yogaZeroPercent = 0;
 
   constructor(props) {
     super(props);
@@ -55,9 +55,8 @@ export class Tooltip extends React.Component<TooltipFullProps, { opened: boolean
         {this.props.children}
 
         {this.state.opened && tooltipContent &&
-          <view layout={{ PositionType: PositionType.Absolute, [containerProp]: Tooltip.yogaZeroPercent }}>
-            <view name="<Tooltip>" layout={{ PositionType: PositionType.Absolute, [childProp]: offset }}
-              style={{ zOrder: 1003 }}>
+          <view style={{ positionType: PositionType.Absolute, [containerProp]: Tooltip.yogaZeroPercent }}>
+            <view name="<Tooltip>" style={{ positionType: PositionType.Absolute, zOrder: 1003, [childProp]: offset }}>
               {tooltipContent}
             </view>
           </view>

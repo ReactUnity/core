@@ -1,10 +1,9 @@
 import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents, Visibility } from './styles-enums';
 import { YogaValueAux } from './yoga';
 import { ColorAux } from '../values/color';
-import { AssetReference } from '../values/asset-reference';
 import { UnityObject } from '../native/context';
 import { Vector2Aux } from '../values/values';
-import { EnumOrLiteral } from '../values/enum';
+import { EnumOrLiteral, AssetReference } from '../values';
 
 export interface Style {
   opacity?: number;
@@ -17,7 +16,7 @@ export interface Style {
   backgroundImage?: AssetReference;
   borderRadius?: number;
   borderColor?: ColorAux;
-  boxShadow?: ShadowDefinition | string;
+  boxShadow?: string;
 
   translate?: Vector2Aux;
   translateRelative?: boolean;

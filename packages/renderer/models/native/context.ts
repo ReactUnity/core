@@ -11,6 +11,7 @@ export type ObjectDictionary = {
 
 export interface UnityContext {
   Host: NativeContainerInstance;
+  IsDevServer: boolean;
 
   // Creating
   createText(text: string, root: NativeContainerInstance): NativeTextInstance;

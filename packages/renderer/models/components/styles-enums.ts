@@ -26,22 +26,20 @@ export enum FontStyles {
 
 
 export enum TextOverflowModes {
-  Overflow = 0,
-  Ellipsis = 1,
-  // Masking = 2,
-  Truncate = 3,
-  // ScrollRect = 4,
-  // Page = 5,
-
-  /** @experimental */
-  Linked = 6,
+  Overflow = 'overflow',
+  Ellipsis = 'ellipsis',
+  Masking = 'masking',
+  Truncate = 'truncate',
+  ScrollRect = 'scroll-rect',
+  Page = 'page',
+  Linked = 'linked',
 }
 
 export enum PointerEvents {
-  Auto = 0,
-  Visible = 0,
-  All = 1,
-  None = 2,
+  Auto = 'auto',
+  Visible = 'visible',
+  All = 'all',
+  None = 'none',
 }
 
 export enum Visibility {

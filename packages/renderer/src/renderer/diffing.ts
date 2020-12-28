@@ -3,7 +3,6 @@ export type DiffResult = null | Array<string | any>;
 const deepDiffProps = {
   style: 1,
   layout: 1,
-  stateStyles: 2,
 };
 
 export function diffProperties(

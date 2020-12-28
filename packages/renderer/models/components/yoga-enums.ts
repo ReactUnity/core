@@ -18,36 +18,36 @@ export enum YogaAlign {
 }
 
 export enum YogaJustify {
-  FlexStart = 0,
-  Center = 1,
-  FlexEnd = 2,
-  SpaceBetween = 3,
-  SpaceAround = 4
+  FlexStart = 'flex-start',
+  Center = 'center',
+  FlexEnd = 'flex-end',
+  SpaceBetween = 'space-between',
+  SpaceAround = 'space-around',
 }
 export enum Display {
-  Flex = 0,
-  None = 1
+  Flex = 'flex',
+  None = 'none',
 }
 
 export enum Wrap {
-  NoWrap = 0,
-  Wrap = 1,
-  WrapReverse = 2
+  NoWrap = 'no-wrap',
+  Wrap = 'wrap',
+  WrapReverse = 'wrap-reverse',
 }
 
 export enum PositionType {
-  Relative = 0,
-  Absolute = 1
+  Relative = 'relative',
+  Absolute = 'absolute',
 }
 
 export enum Overflow {
-  Visible = 0,
-  Hidden = 1,
-  Scroll = 2
+  Visible = 'visible',
+  Hidden = 'hidden',
+  Scroll = 'scroll',
 }
 
 export enum Direction {
-  Inherit = 0,
-  LTR = 1,
-  RTL = 2
+  Inherit = 'inherit',
+  LTR = 'ltr',
+  RTL = 'rtl',
 }

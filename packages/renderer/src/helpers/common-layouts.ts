@@ -1,41 +1,41 @@
 import { Layout, PositionType } from "../../models/components";
 
-export const transparentColor = new Color(0, 0, 0, 0);
+export const transparentColor = 'clear';
 
 export const fullScreen: Layout = {
-  PositionType: PositionType.Absolute,
-  Top: YogaValue.Point(-5000),
-  Right: YogaValue.Point(-5000),
-  Bottom: YogaValue.Point(-5000),
-  Left: YogaValue.Point(-5000),
+  positionType: PositionType.Absolute,
+  top: -5000,
+  right: -5000,
+  bottom: -5000,
+  left: -5000,
 };
 
 export const fullCover: Layout = {
-  PositionType: PositionType.Absolute,
-  Top: YogaValue.Point(0),
-  Right: YogaValue.Point(0),
-  Bottom: YogaValue.Point(0),
-  Left: YogaValue.Point(0),
+  positionType: PositionType.Absolute,
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0,
 };
 
 export const dropdownBottom: Layout = {
-  PositionType: PositionType.Absolute,
-  Top: YogaValue.Percent(100),
-  Left: YogaValue.Point(0),
-  MinWidth: YogaValue.Percent(100),
+  positionType: PositionType.Absolute,
+  top: '100%',
+  left: 0,
+  minWidth: '100%',
 }
 
 export const dropdownTop: Layout = {
-  PositionType: PositionType.Absolute,
-  Bottom: YogaValue.Percent(100),
-  Left: YogaValue.Point(0),
-  MinWidth: YogaValue.Percent(100),
+  positionType: PositionType.Absolute,
+  bottom: '100%',
+  left: 0,
+  minWidth: '100%',
 }
 
 export const bottomEdge: Layout = {
-  PositionType: PositionType.Absolute,
-  Left: YogaValue.Point(0),
-  Right: YogaValue.Point(0),
-  Bottom: YogaValue.Point(0),
-  Height: YogaValue.Point(0),
+  positionType: PositionType.Absolute,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height: 0,
 }
