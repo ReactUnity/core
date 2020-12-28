@@ -69,7 +69,7 @@ namespace ReactUnity.Styling
         public static IStyleProperty scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
         public static IStyleProperty pivot = new StyleProperty<Vector2>("pivot", Vector2.one / 2, true);
         public static IStyleProperty rotate = new StyleProperty<float>("rotate", 0f, true);
-        public static IStyleProperty font = new StyleProperty<TMP_FontAsset>("font", null, false, true);
+        public static IStyleProperty fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static IStyleProperty fontColor = new StyleProperty<Color>("fontColor", Color.black, true, true);
         public static IStyleProperty fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
         public static IStyleProperty fontStyle = new StyleProperty<FontStyles>("fontStyle", FontStyles.Normal, false, true);
@@ -92,6 +92,7 @@ namespace ReactUnity.Styling
             { "border-color", borderColor },
             { "box-shadow", boxShadow },
             { "color", fontColor },
+            { "font-family", fontFamily },
             { "font-color", fontColor },
             { "font-weight", fontWeight },
             { "font-style", fontStyle },

@@ -14,6 +14,7 @@ namespace ReactUnity.Styling
     {
         static public IStyleConverter DefaultConverter = new StringConverter();
         static public IStyleConverter StringConverter = new StringConverter();
+        static public IStyleConverter UrlConverter = new UrlConverter();
         static public IStyleConverter GeneralConverter = new GeneralConverter();
         static public IStyleConverter YogaValueConverter = new YogaValueConverter();
         static public IStyleConverter FloatConverter = new FloatConverter();
@@ -23,6 +24,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter ColorConverter = new ColorConverter();
         static public IStyleConverter ShadowDefinitionConverter = new ShadowDefinitionConverter();
         static public IStyleConverter ImageReferenceConverter = new ImageReferenceConverter();
+        static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
 
 
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()
@@ -38,6 +40,7 @@ namespace ReactUnity.Styling
             { typeof(bool), BoolConverter },
             { typeof(ShadowDefinition), ShadowDefinitionConverter },
             { typeof(ImageReference), ImageReferenceConverter },
+            { typeof(FontReference), FontReferenceConverter},
             { typeof(Appearance), new EnumConverter<Appearance>() },
             { typeof(PointerEvents), new EnumConverter<PointerEvents>() },
             { typeof(TextOverflowModes), new EnumConverter<TextOverflowModes>() },

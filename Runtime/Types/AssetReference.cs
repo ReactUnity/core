@@ -1,7 +1,3 @@
-using Jint;
-using Jint.Native;
-using ReactUnity.Converters;
-using ReactUnity.Styling.Parsers;
 using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -32,8 +28,8 @@ namespace ReactUnity.Types
         public AssetReferenceType type { get; private set; } = AssetReferenceType.None;
         public object value { get; private set; }
 
-        private bool IsCached;
-        private AssetType CachedValue;
+        protected bool IsCached;
+        protected AssetType CachedValue;
 
         public AssetReference(AssetReferenceType type, object value)
         {

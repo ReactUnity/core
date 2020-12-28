@@ -96,10 +96,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.rotate, value);
             get => GetStyleValue<float>(StyleProperties.rotate);
         }
-        public TMP_FontAsset font
+        public FontReference fontFamily
         {
-            set => SetStyleValue(StyleProperties.font, value);
-            get => GetStyleValue<TMP_FontAsset>(StyleProperties.font);
+            set => SetStyleValue(StyleProperties.fontFamily, value);
+            get => GetStyleValue<FontReference>(StyleProperties.fontFamily);
         }
         public Color fontColor
         {

@@ -1,15 +1,7 @@
-using ReactUnity.Styling.Types;
-using System.Text.RegularExpressions;
-
 namespace ReactUnity.Styling.Parsers
 {
-    public class UrlParser : IStyleParser, IStyleConverter
+    public class UrlConverter : IStyleParser, IStyleConverter
     {
-        public static Regex ResourceRegex = new Regex("^resource\\((.*)\\)");
-        public static Regex FileRegex = new Regex("^file\\((.*)\\)");
-        public static Regex UrlRegex = new Regex("^url\\((.*)\\)");
-        public static ColorConverter ColorParser = new ColorConverter();
-
         public object Convert(object value)
         {
             return FromString(value?.ToString());
@@ -17,7 +9,12 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
-            return SpecialNames.CantParse;
+            if (string.IsNullOrWhiteSpace(value)) return value;
+            if (value.StartsWith("\"") && value.EndsWith("\"")) return value.Substring(1, value.Length - 2);
+            if (value.StartsWith("'") && value.EndsWith("'")) return value.Substring(1, value.Length - 2);
+            if (value.StartsWith("`") && value.EndsWith("`")) return value.Substring(1, value.Length - 2);
+            if (value.StartsWith("url(") && value.EndsWith(")")) return value.Substring(4, value.Length - 5);
+            return value;
         }
     }
 }

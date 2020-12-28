@@ -17,11 +17,10 @@ namespace ReactUnity.Styling.Parsers
         public object Convert(object value)
         {
             if (value == null) return ImageReference.None;
-            if (value is string st) FromString(st);
             if (value is Texture2D t) return new ImageReference(AssetReferenceType.Object, t);
             if (value is Sprite s) return new ImageReference(AssetReferenceType.Object, s.texture);
             if (value is Object o) return new ImageReference(AssetReferenceType.Object, o);
-            return FromString(value?.ToString());
+            return FromString(ParserMap.UrlConverter.Convert(value) as string);
         }
 
         public object FromString(string value)

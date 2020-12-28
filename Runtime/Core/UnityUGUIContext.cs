@@ -10,6 +10,7 @@ using System.Linq;
 using ReactUnity.StyleEngine;
 using JavaScriptEngineSwitcher.Core;
 using System.IO;
+using ReactUnity.Styling;
 
 namespace ReactUnity
 {
@@ -27,6 +28,8 @@ namespace ReactUnity
 
         public StylesheetParser Parser;
         public StyleTree StyleTree;
+
+        public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
 
         public UnityUGUIContext(RectTransform hostElement, IJsEngine engine, StringObjectDictionary assets, ReactScript script, bool isDevServer)
         {
@@ -70,6 +73,12 @@ namespace ReactUnity
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
             {
                 StyleTree.AddStyle(rule);
+            }
+
+            foreach (var rule in stylesheet.FontfaceSetRules)
+            {
+                FontFamilies[(ParserMap.StringConverter.Convert(rule.Family) as string).ToLowerInvariant()] =
+                    ParserMap.FontReferenceConverter.Convert(rule.Source) as FontReference;
             }
             Host.ResolveStyle(true);
         }
