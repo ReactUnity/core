@@ -1,6 +1,4 @@
 using Facebook.Yoga;
-using Jint.Native;
-using ReactUnity.Converters;
 using ReactUnity.Layout;
 using ReactUnity.Styling;
 using ReactUnity.Types;

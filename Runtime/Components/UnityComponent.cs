@@ -1,7 +1,5 @@
 using ExCSS;
 using Facebook.Yoga;
-using Jint.Native;
-using Jint.Native.Function;
 using ReactUnity.EventHandlers;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
@@ -9,7 +7,6 @@ using ReactUnity.StateHandlers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Types;
-using ReactUnity.Types;
 using ReactUnity.Visitors;
 using System;
 using System.Collections.Generic;

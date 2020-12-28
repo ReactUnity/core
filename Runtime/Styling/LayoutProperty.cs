@@ -194,11 +194,10 @@ namespace ReactUnity.Styling
         public static Dictionary<string, ILayoutProperty> CssPropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.OrdinalIgnoreCase)
         {
             { "direction", StyleDirection },
+            { "position", PositionType },
             { "flex-wrap", Wrap },
         };
         public static ILayoutProperty[] AllProperties;
-
-        private static CultureInfo cultureInfo = new CultureInfo("en-US");
 
         static LayoutProperties()
         {
@@ -232,14 +231,14 @@ namespace ReactUnity.Styling
                 return string.Empty;
 
             var builder = new StringBuilder();
-            builder.Append(char.ToLower(str.First(), cultureInfo));
+            builder.Append(char.ToLowerInvariant(str.First()));
 
             foreach (var c in str.Skip(1))
             {
                 if (char.IsUpper(c))
                 {
                     builder.Append('-');
-                    builder.Append(char.ToLower(c, cultureInfo));
+                    builder.Append(char.ToLowerInvariant(c));
                 }
                 else
                 {
