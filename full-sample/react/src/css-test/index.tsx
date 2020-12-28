@@ -42,7 +42,7 @@ export function App() {
       <view className={ind.not2}>50</view>
     </view>
 
-    <view className={ind.testNth} layout={{ MaxWidth: 250 }}>
+    <view className={ind.testNth} style={{ maxWidth: 250 }}>
       {Array(50).fill(0).map((x, i) => <view key={i}>{i + 1}</view>)}
     </view>
   </scroll>;

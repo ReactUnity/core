@@ -10,8 +10,7 @@ class TodoFooter extends React.Component<ITodoFooterProps, {}> {
     var activeTodoWord = Utils.pluralize(this.props.count, 'item');
 
     var clearButton = (
-      <button style={{ visibility: this.props.completedCount !== 0 }}
-        layout={{ Width: 150 }}
+      <button style={{ visibility: this.props.completedCount !== 0, width: 150 }}
         onClick={this.props.onClearCompleted}>
         Clear completed
       </button>
@@ -20,25 +19,27 @@ class TodoFooter extends React.Component<ITodoFooterProps, {}> {
     const nowShowing = this.props.nowShowing;
     const TabButton = (props) =>
       <button onClick={() => this.props.onSwitch(props.id)}
-        layout={{ BorderWidth: 1, MarginHorizontal: 5, PaddingHorizontal: 7, PaddingVertical: 3 }}
-        style={{ backgroundColor: props.id === nowShowing ? '#cecece' : 'transparent', borderColor: ['#af2f2f', 0.2] }}>
+        style={{
+          borderWidth: 1, marginHorizontal: 5, paddingHorizontal: 7, paddingVertical: 3,
+          backgroundColor: props.id === nowShowing ? '#cecece' : 'transparent', borderColor: ['#af2f2f', 0.2],
+        }}>
         {props.children}
       </button>;
 
     return (
       <view
         name="Footer"
-        style={{ fontSize: 14, borderColor: '#cecece' }}
-        layout={{
-          BorderTopWidth: 2,
-          FlexDirection: FlexDirection.Row, JustifyContent: YogaJustify.SpaceBetween,
-          AlignItems: YogaAlign.Center, PaddingHorizontal: 16, PaddingVertical: 4
+        style={{
+          fontSize: 14, borderColor: '#cecece',
+          borderTopWidth: 2,
+          flexDirection: FlexDirection.Row, justifyContent: YogaJustify.SpaceBetween,
+          alignItems: YogaAlign.Center, paddingHorizontal: 16, paddingVertical: 4
         }}>
-        <view layout={{ Width: 150 }}>
+        <view style={{ width: 150 }}>
           {`<b>${this.props.count}</b> ${activeTodoWord} left`}
         </view>
 
-        <view layout={{ FlexDirection: 'Row' }}>
+        <view style={{ flexDirection: 'Row' }}>
           <TabButton id={ALL_TODOS}>
             All
           </TabButton >

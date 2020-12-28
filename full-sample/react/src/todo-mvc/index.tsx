@@ -3,7 +3,7 @@ import { TodoFooter } from "./footer";
 import { TodoItem } from "./todoItem";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from "./constants";
 import * as React from "react";
-import { NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, PositionType } from "@reactunity/renderer";
+import { NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, PositionType, ColorAux } from "@reactunity/renderer";
 import { IAppProps, IAppState, ITodo } from "./interfaces";
 
 export class TodoApp extends React.Component<IAppProps, IAppState> {
@@ -12,11 +12,11 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
   selectAllToggle = React.createRef<NativeToggleInstance>();
 
   pageLayout: Layout = {
-    AlignSelf: YogaAlign.Center,
-    Width: '100%',
-    MaxWidth: 640,
-    FlexShrink: 1,
-    Padding: 30,
+    alignSelf: YogaAlign.Center,
+    width: '100%',
+    maxWidth: 640,
+    flexShrink: 1,
+    padding: 30,
   };
 
   headerStyle: Style = {
@@ -25,16 +25,16 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
   };
 
   headerLayout: Layout = {
-    PaddingBottom: 20,
-    AlignSelf: YogaAlign.Center,
-    MinWidth: 'auto',
-    MinHeight: 'auto',
+    paddingBottom: 20,
+    alignSelf: YogaAlign.Center,
+    minWidth: 'auto',
+    minHeight: 'auto',
   };
 
   setShowing = (nowShowing: string) => this.setState(state => ({ nowShowing }));
 
   private readonly headerInputStyle = {
-    borderColor: '#cecece',
+    borderColor: '#cecece' as ColorAux,
     zOrder: 1,
     backgroundColor: [1, 1, 1, 1],
     boxShadow: '0 8 10 10 black 10',
@@ -144,25 +144,23 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
     }
 
     return (
-      <view layout={this.pageLayout}>
-        <view style={this.headerStyle} layout={this.headerLayout}>
+      <view style={this.pageLayout}>
+        <view style={{ ...this.headerStyle, ...this.headerLayout }}>
           todos
         </view>
 
-        <view style={{ backgroundColor: 'white', boxShadow: '6 6 22 22 black 16' }} layout={{ FlexShrink: 1 }}>
+        <view style={{ backgroundColor: 'white', boxShadow: '6 6 22 22 black 16', flexShrink: 1 }}>
 
-          <view name="Header" layout={{ FlexDirection: FlexDirection.Row, AlignItems: YogaAlign.Center, BorderBottomWidth: 2 }} style={this.headerInputStyle}>
+          <view name="Header" style={{ flexDirection: FlexDirection.Row, alignItems: YogaAlign.Center, borderBottomWidth: 2, ...this.headerInputStyle }}>
             <input
-              layout={{ Padding: 16, PaddingLeft: 64, FlexGrow: 1 }}
-              style={{ borderRadius: 0 }}
+              style={{ padding: 16, paddingLeft: 64, flexGrow: 1, borderRadius: 0 }}
               ref={this.newTodoField}
               placeholder="What needs to be done?"
               onSubmit={value => this.addTodo(value)}
             />
 
             <toggle ref={this.selectAllToggle} onChange={this.toggleAll} value={activeTodoCount === 0 && completedCount > 0}
-              layout={{ PositionType: PositionType.Absolute, Left: 8, Top: '50%' }}
-              style={{ translate: [0, -0.5], translateRelative: true }} />
+              style={{ positionType: PositionType.Absolute, left: 8, top: '50%', translate: [0, -0.5], translateRelative: true }} />
           </view>
 
           {main}

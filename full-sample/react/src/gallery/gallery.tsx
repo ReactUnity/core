@@ -26,15 +26,16 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
     const allSamples = ([] as Sample[]).concat(this.props.samples, ...this.props.samples.map(x => x.children || [] as Sample[]));
     const selected = allSamples.find(x => x.name === selectedSample);
 
-    const homePage = () => <view layout={{ Padding: 20 }}>
+    const homePage = () => <view style={{ padding: 20 }}>
       This page exists to demonstrate features of React Unity. Everything on this page is built with React Unity.
       You can navigate the examples using the left panel.
     </view>;
 
     const drawButtonForSample = (sample: Sample, depth = 0, key: string) => <view key={key}>
-      <button layout={{ PaddingHorizontal: 20, PaddingVertical: 16, PaddingLeft: 20 + depth * 16, JustifyContent: YogaJustify.FlexStart }}
-        style={{ backgroundColor: selected === sample ? 0.7 : 'transparent', borderRadius: 0, borderColor: Color.black }}
-        stateStyles={{ hover: { backgroundColor: 0.8 } }}
+      <button style={{
+        paddingHorizontal: 20, paddingVertical: 16, paddingLeft: 20 + depth * 16, justifyContent: YogaJustify.FlexStart,
+        backgroundColor: selected === sample ? 0.7 : 'transparent', borderRadius: 0, borderColor: 'black',
+      }}
         onClick={() => !sample.children && this.setState({ selectedSample: sample.name })}>
         {sample.name}
       </button>
@@ -47,46 +48,51 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
 
     const SelectedComponent = selected?.render || homePage;
 
-    return <view layout={{ Height: '100%', AlignItems: 'Stretch', JustifyContent: 'FlexStart', FlexDirection: FlexDirection.Column }}
-      style={{ backgroundColor: '#fafafa' }}>
+    return <view style={{ height: '100%', alignItems: 'Stretch', justifyContent: 'FlexStart', flexDirection: FlexDirection.Column, backgroundColor: '#fafafa' }}>
 
       <view name="<Header>"
-        style={{ backgroundColor: '#2e9151', fontColor: Color.white, boxShadow: shadow, zOrder: 1 }}
-        layout={{ AlignItems: 'Center', JustifyContent: 'SpaceBetween', FlexDirection: FlexDirection.Row, Wrap: Wrap.Wrap, FlexShrink: 0, PaddingVertical: 20, PaddingHorizontal: 40 }}>
+        style={{
+          backgroundColor: '#2e9151', fontColor: 'white', boxShadow: shadow, zOrder: 1,
+          alignItems: 'Center', justifyContent: 'SpaceBetween', flexDirection: FlexDirection.Row,
+          wrap: Wrap.Wrap, flexShrink: 0, paddingVertical: 20, paddingHorizontal: 40,
+        }}>
         <view style={{ fontStyle: FontStyles.Bold, fontSize: 26 }}>React Unity</view>
-        <view layout={{ FlexGrow: 1 }}></view>
+        <view style={{ flexGrow: 1 }}></view>
         <anchor url="https://github.com/KurtGokhan/react-unity">Github</anchor>
       </view>
 
-      <view layout={{ FlexGrow: 1, FlexShrink: 1, FlexDirection: FlexDirection.Row, AlignItems: 'Stretch' }}>
+      <view style={{ flexGrow: 1, flexShrink: 1, flexDirection: FlexDirection.Row, alignItems: 'Stretch' }}>
         <scroll name="<Sidebar>"
-          layout={{ AlignItems: 'Stretch', JustifyContent: 'FlexStart', FlexDirection: FlexDirection.Column, Wrap: Wrap.NoWrap, FlexShrink: 0, Width: 250, PaddingVertical: 20 }}
-          style={{ backgroundColor: '#dadada', boxShadow: shadow }}>
+          style={{
+            alignItems: 'Stretch', justifyContent: 'FlexStart', flexDirection: FlexDirection.Column,
+            wrap: Wrap.NoWrap, flexShrink: 0, width: 250, paddingVertical: 20,
+            backgroundColor: '#dadada', boxShadow: shadow
+          }}>
           {this.props.samples.map((x, i) => drawButtonForSample(x, 0, `${i}`))}
         </scroll>
 
-        <scroll layout={{ FlexGrow: 1, FlexShrink: 1, FlexDirection: 'Column', AlignItems: 'Stretch', JustifyContent: 'FlexStart', Padding: 20 }}>
+        <scroll style={{ flexGrow: 1, flexShrink: 1, flexDirection: 'Column', alignItems: 'Stretch', justifyContent: 'FlexStart', padding: 20 }}>
 
 
-          <view layout={{ FlexGrow: selected?.sourceCode ? 0 : 1, FlexShrink: 0, FlexDirection: 'Column', AlignItems: 'Stretch', JustifyContent: 'FlexStart', Height: 250 }}>
+          <view style={{ flexGrow: selected?.sourceCode ? 0 : 1, flexShrink: 0, flexDirection: 'Column', alignItems: 'Stretch', justifyContent: 'FlexStart', height: 250 }}>
             <SelectedComponent />
           </view>
 
-          {selected?.sourceCode && <view layout={{ MarginTop: 20 }}>
+          {selected?.sourceCode && <view style={{ marginTop: 20 }}>
             Source Code:
             <TextEditor text={selected.sourceCode} />
           </view>}
 
 
           {!selected?.sourceCode && !!(selected?.source || selected?.wiki) &&
-            <view layout={{ PositionType: PositionType.Absolute, Right: 20, Top: 20, PaddingHorizontal: 30, PaddingVertical: 20 }}
-              style={{
-                backgroundColor: [0.1803922, 0.5686275, 0.3176471, 1],
-                borderRadius: 5,
-                boxShadow: shadow,
-                fontColor: [1, 1, 1, 1],
-                fontSize: 24,
-              }}>
+            <view style={{
+              positionType: PositionType.Absolute, right: 20, top: 20, paddingHorizontal: 30, paddingVertical: 20,
+              backgroundColor: [0.1803922, 0.5686275, 0.3176471, 1],
+              borderRadius: 5,
+              boxShadow: shadow,
+              fontColor: [1, 1, 1, 1],
+              fontSize: 24,
+            }}>
               {!!selected.source && <anchor url={selected.source}>Source</anchor>}
               {!!selected.wiki && <anchor url={selected.wiki}>Wiki</anchor>}
             </view>}

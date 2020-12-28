@@ -10,9 +10,9 @@ export class App extends React.Component<{}, {}> {
 
 
   render() {
-    return <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>
-      <input webSupport placeholder="Email" name="email" layout={{ MarginBottom: 20, MinWidth: 300 }} />
-      <input webSupport placeholder="Password" name="password" contentType={ContentType.Password} layout={{ MinWidth: 300 }} />
+    return <view style={{ height: '100%', alignItems: 'Center', justifyContent: 'Center' }}>
+      <input webSupport placeholder="Email" name="email" style={{ marginBottom: 20, minWidth: 300 }} />
+      <input webSupport placeholder="Password" name="password" contentType={ContentType.Password} style={{ minWidth: 300 }} />
     </view>;
   }
 }

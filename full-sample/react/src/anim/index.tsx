@@ -25,23 +25,24 @@ export class App extends React.Component<{}, { val: number }> {
   render() {
     const val = this.state.val;
 
-    return <view layout={{ FlexDirection: FlexDirection.Row, Height: YogaValue.Percent(100), AlignItems: YogaAlign.Stretch, JustifyContent: YogaJustify.SpaceAround }}>
-      <view layout={{
-        Margin: 50,
-        BorderWidth: 1,
-        Width: 300, FlexDirection: FlexDirection.Column, AlignItems: YogaAlign.Center, JustifyContent: YogaJustify.SpaceAround
-      }}
-        style={{
-          backgroundColor: Color.white,
-          borderColor: Color.black,
-          borderRadius: val * 100,
-        }}>
+    return <view style={{ flexDirection: FlexDirection.Row, height: '100%', alignItems: YogaAlign.Stretch, justifyContent: YogaJustify.SpaceAround }}>
+      <view style={{
+        margin: 50,
+        width: 300,
+        flexDirection: FlexDirection.Column,
+        alignItems: YogaAlign.Center,
+        justifyContent: YogaJustify.SpaceAround,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: 'black',
+        borderRadius: val * 100,
+      }}>
 
-        <button layout={{ Width: Math.round((val * 150 + 130) / 2) * 2 }}>
+        <button style={{ width: Math.round((val * 150 + 130) / 2) * 2 }}>
           Width
         </button>
 
-        <button style={{ backgroundColor: [Color.blue, val, Color.yellow] }}>
+        <button style={{ backgroundColor: ['blue', val, 'yellow'] }}>
           Color
         </button>
 
@@ -55,21 +56,22 @@ export class App extends React.Component<{}, { val: number }> {
         </button>
       </view>
 
-      <view layout={{
-        Margin: 50,
-        Width: 300, FlexDirection: FlexDirection.Column, AlignItems: YogaAlign.Center, JustifyContent: YogaJustify.SpaceAround,
-        BorderWidth: val * 10 + 2,
-      }}
-        style={{
-          backgroundColor: Color.white,
-          borderColor: [Color.red, val, Color.green],
-        }}>
+      <view style={{
+        margin: 50,
+        width: 300,
+        flexDirection: FlexDirection.Column,
+        alignItems: YogaAlign.Center,
+        justifyContent: YogaJustify.SpaceAround,
+        backgroundColor: 'white',
+        borderWidth: val * 10 + 2,
+        borderColor: ['red', val, 'green'],
+      }}>
 
-        <button layout={{ PositionType: PositionType.Absolute, Top: 50 + val * 150 }}>
+        <button style={{ positionType: PositionType.Absolute, top: 50 + val * 150 }}>
           Position
         </button>
 
-        <button style={{ fontSize: Math.round(val * 24 + 12), textOverflow: TextOverflowModes.Truncate }} layout={{ PaddingHorizontal: 30 }}>
+        <button style={{ fontSize: Math.round(val * 24 + 12), textOverflow: TextOverflowModes.Truncate, paddingHorizontal: 30 }}>
           Font size
         </button>
 

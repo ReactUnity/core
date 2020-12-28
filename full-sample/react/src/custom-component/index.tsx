@@ -21,14 +21,14 @@ class App extends React.Component<{}, {}> {
     const ElementName: string = 'customButton';
 
     return (
-      <view layout={{ Height: '100%', AlignItems: 'Center', JustifyContent: 'Center' }}>
+      <view style={{ height: '100%', alignItems: 'Center', justifyContent: 'Center' }}>
 
-        <button layout={{ MarginBottom: 20 }} style={{ fontColor: 'white' }}>
+        <button style={{ marginBottom: 20, fontColor: 'white' }}>
           Normal Button
         </button>
 
         {/* Recommended - Strong typed */}
-        <customButton layout={{ MarginBottom: 20 }} style={{ fontColor: 'white' }}>
+        <customButton style={{ marginBottom: 20, fontColor: 'white' }}>
           Custom Button
         </customButton>
 

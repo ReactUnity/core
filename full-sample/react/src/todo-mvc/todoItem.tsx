@@ -46,24 +46,21 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
 
     return (
       <view name="<TodoItem>" onPointerEnter={this.pointerEnter} onPointerExit={this.pointerExit}
-        layout={{ FlexDirection: FlexDirection.Row, AlignItems: YogaAlign.Center, BorderBottomWidth: 1 }}
-        style={{ borderColor: '#dedede', fontStyle: completed ? 'Strikethrough' : null, opacity: completed ? 0.4 : 1 }}>
+        style={{ flexDirection: FlexDirection.Row, alignItems: YogaAlign.Center, borderBottomWidth: 1, borderColor: '#dedede', fontStyle: completed ? 'Strikethrough' : null, opacity: completed ? 0.4 : 1 }}>
 
-        <view layout={{ FlexGrow: 1, FlexShrink: 1, Padding: 16, PaddingLeft: 64 }}>
+        <view style={{ flexGrow: 1, flexShrink: 1, padding: 16, paddingLeft: 64 }}>
           {this.props.todo.title}
         </view>
 
-        <input layout={{ Display: Display.None }}
+        <input style={{ display: Display.None }}
           ref={this.editField}
         />
 
         <toggle onChange={this.props.onToggle} value={this.props.todo.completed}
-          layout={{ PositionType: PositionType.Absolute, Left: 8, Top: '50%' }}
-          style={{ translate: [0, -0.5], translateRelative: true }}></toggle>
+          style={{ positionType: PositionType.Absolute, left: 8, top: '50%', translate: [0, -0.5], translateRelative: true }} />
 
         <button onClick={this.props.onDestroy}
-          style={{ backgroundColor: 'clear', fontColor: '#cc9a9a', visibility: this.state.hovered, pointerEvents: PointerEvents.All }}
-          layout={{ MarginRight: 20 }}>
+          style={{ backgroundColor: 'clear', fontColor: '#cc9a9a', visibility: this.state.hovered, pointerEvents: PointerEvents.All, marginRight: 20 }}>
           ×
         </button>
       </view>

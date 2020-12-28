@@ -6,7 +6,7 @@ export function App() {
   const triggerTemplate = <view style={{ fontColor: 'green' }}>Option 1</view>;
 
   return <view className={style.app}>
-    <Dropdown onChange={val => console.log(val)} layout={{ Width: 250 }}>
+    <Dropdown onChange={val => console.log(val)} style={{ width: 250 }}>
       Select an option
 
       <DropdownItem value={5} triggerTemplate={triggerTemplate}>Option 1</DropdownItem>

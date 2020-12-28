@@ -1,19 +1,24 @@
 import * as React from 'react';
-import { FlexDirection, Wrap, YogaAlign, Layout, PointerEventData, StyleAndLayout, PositionType, CursorType } from '@reactunity/renderer';
+import { FlexDirection, Wrap, YogaAlign, PointerEventData, StyleAndLayout, PositionType, CursorType } from '@reactunity/renderer';
 import lorem from '../assets/lorem';
 
 export class App extends React.Component<{}, { ratio: number }> {
 
-  scrollLayout: Layout = { FlexDirection: FlexDirection.Column, Wrap: Wrap.Wrap, AlignItems: YogaAlign.FlexStart, Padding: 20, PaddingRight: 0 };
+  scrollLayout: StyleAndLayout = { flexDirection: FlexDirection.Column, wrap: Wrap.Wrap, alignItems: YogaAlign.FlexStart, padding: 20, paddingRight: 0 };
 
   separatorLayout: StyleAndLayout = {
-    layout: { Height: `${4}%` },
-    style: { backgroundColor: Color.gray, cursor: CursorType.RowResize },
+    height: `${4}%`,
+    backgroundColor: 'grey',
+    cursor: CursorType.RowResize,
   };
 
   textProps: StyleAndLayout = {
-    layout: { MaxWidth: 300, MarginRight: 40, FlexShrink: 1, FlexGrow: 1, FlexBasis: `${60}%` },
-    style: { textOverflow: 'Linked' },
+    maxWidth: 300,
+    marginRight: 40,
+    flexShrink: 1,
+    flexGrow: 1,
+    flexBasis: `${60}%`,
+    textOverflow: 'linked',
   }
 
   constructor(props) {
@@ -29,21 +34,21 @@ export class App extends React.Component<{}, { ratio: number }> {
 
   render() {
     return <>
-      <view layout={{ Height: `${96 * this.state.ratio}%`, PositionType: PositionType.Absolute, Top: 0, Left: 0, Right: 0 }}>
-        <scroll layout={this.scrollLayout}>
-          <text {...this.textProps}>
+      <view style={{ height: `${96 * this.state.ratio}%`, positionType: PositionType.Absolute, top: 0, left: 0, right: 0 }}>
+        <scroll style={this.scrollLayout}>
+          <text style={this.textProps}>
             {lorem}
           </text>
         </scroll>
       </view>
 
-      <view layout={{ PositionType: PositionType.Absolute, Top: `${96 * this.state.ratio}%`, Left: 0, Right: 0 }}>
-        <button onDrag={this.dragSeparator} {...this.separatorLayout}></button>
+      <view style={{ positionType: PositionType.Absolute, top: `${96 * this.state.ratio}%`, left: 0, right: 0 }}>
+        <button onDrag={this.dragSeparator} style={this.separatorLayout}></button>
       </view>
 
-      <view layout={{ Height: `${96 * (1 - this.state.ratio)}%`, PositionType: PositionType.Absolute, Bottom: 0, Left: 0, Right: 0 }}>
-        <scroll layout={this.scrollLayout}>
-          <text {...this.textProps}>
+      <view style={{ height: `${96 * (1 - this.state.ratio)}%`, positionType: PositionType.Absolute, bottom: 0, left: 0, right: 0 }}>
+        <scroll style={this.scrollLayout}>
+          <text style={this.textProps}>
             {lorem}
           </text>
         </scroll>
