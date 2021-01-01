@@ -261,6 +261,9 @@ module.exports = function (webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        // react-redux will normally try to access react-dom but will error.
+        // This is a different entry point for custom renderers
+        'react-redux': 'react-redux/es/alternate-renderers',
         // Allows for better profiling with ReactDevTools
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
