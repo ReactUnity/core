@@ -64,8 +64,7 @@ namespace ReactUnity.Styling
         public static IStyleProperty borderRadius = new StyleProperty<int>("borderRadius", 0, true);
         public static IStyleProperty borderColor = new StyleProperty<Color>("borderColor", Color.black, true);
         public static IStyleProperty boxShadow = new StyleProperty<ShadowDefinition>("boxShadow", null, true);
-        public static IStyleProperty translate = new StyleProperty<Vector2>("translate", Vector2.zero, true);
-        public static IStyleProperty translateRelative = new StyleProperty<bool>("translateRelative", false, true);
+        public static IStyleProperty translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
         public static IStyleProperty scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
         public static IStyleProperty pivot = new StyleProperty<Vector2>("pivot", Vector2.one / 2, true);
         public static IStyleProperty rotate = new StyleProperty<float>("rotate", 0f, true);

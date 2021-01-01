@@ -226,17 +226,11 @@ namespace ReactUnity.Editor
             GUILayout.Space(14);
             GUILayout.Label("Transform");
 
-            // Translate
-            DrawNullableRow("translate", (enabled) =>
-            {
-                return EditorGUILayout.Vector2Field("Translate", CurrentStyle.translate);
-            });
-
-            // Translate Relative
-            DrawNullableRow("translateRelative", (enabled) =>
-            {
-                return EditorGUILayout.Toggle("Translate relative", CurrentStyle.translateRelative);
-            });
+            //// Translate
+            //DrawNullableRow("translate", (enabled) =>
+            //{
+            //    return EditorGUILayout.Vector2Field("Translate", CurrentStyle.translate);
+            //});
 
             // Pivot
             DrawNullableRow("pivot", (enabled) =>

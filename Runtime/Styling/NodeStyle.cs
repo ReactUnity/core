@@ -71,15 +71,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.boxShadow, value);
             get => GetStyleValue<ShadowDefinition>(StyleProperties.boxShadow);
         }
-        public Vector2 translate
+        public YogaValue2 translate
         {
             set => SetStyleValue(StyleProperties.translate, value);
-            get => GetStyleValue<Vector2>(StyleProperties.translate);
-        }
-        public bool translateRelative
-        {
-            set => SetStyleValue(StyleProperties.translateRelative, value);
-            get => GetStyleValue<bool>(StyleProperties.translateRelative);
+            get => GetStyleValue<YogaValue2>(StyleProperties.translate);
         }
         public Vector2 scale
         {

@@ -2,6 +2,7 @@ using UnityEngine;
 using Facebook.Yoga;
 using ReactUnity.Styling;
 using ReactUnity.Components;
+using ReactUnity.Types;
 
 namespace ReactUnity.Layout
 {
@@ -13,8 +14,7 @@ namespace ReactUnity.Layout
         public NodeStyle Style { get; internal set; }
         public UnityComponent Component { get; internal set; }
 
-        private Vector2 previousTranslate;
-        private bool previousTranslateRelative;
+        private YogaValue2 previousTranslate = YogaValue2.Zero;
 
         private void OnEnable()
         {
@@ -24,9 +24,8 @@ namespace ReactUnity.Layout
         private void LateUpdate()
         {
             var translate = Style.translate;
-            var relative = Style.translateRelative;
             var sameTranslate = translate == previousTranslate;
-            if (!Layout.HasNewLayout && sameTranslate && previousTranslateRelative == relative) return;
+            if (!Layout.HasNewLayout && sameTranslate) return;
             if (float.IsNaN(Layout.LayoutWidth)) return;
 
             var pivotDiff = rt.pivot - Vector2.up;
@@ -34,8 +33,8 @@ namespace ReactUnity.Layout
             var posX = Layout.LayoutX + pivotDiff.x * Layout.LayoutWidth;
             var posY = -Layout.LayoutY + pivotDiff.y * Layout.LayoutHeight;
 
-            var scale = relative ? new Vector2(Layout.LayoutWidth, Layout.LayoutHeight) : Vector2.one;
-            var tran = new Vector2(translate.x * scale.x, -translate.y * scale.y);
+            var scale = new Vector2(translate.X.Unit == YogaUnit.Percent ? Layout.LayoutWidth / 100 : 1, translate.Y.Unit == YogaUnit.Percent ? Layout.LayoutHeight / 100 : 1);
+            var tran = new Vector2(translate.X.Value * scale.x, -translate.Y.Value * scale.y);
 
             rt.localPosition = Vector2.zero;
             rt.anchoredPosition = new Vector2(posX, posY) + tran;
@@ -44,7 +43,6 @@ namespace ReactUnity.Layout
 
             Layout.MarkLayoutSeen();
             previousTranslate = translate;
-            previousTranslateRelative = relative;
         }
     }
 }

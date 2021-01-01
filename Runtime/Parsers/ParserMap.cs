@@ -17,6 +17,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter UrlConverter = new UrlConverter();
         static public IStyleConverter GeneralConverter = new GeneralConverter();
         static public IStyleConverter YogaValueConverter = new YogaValueConverter();
+        static public IStyleConverter YogaValue2Converter = new YogaValue2Converter();
         static public IStyleConverter FloatConverter = new FloatConverter();
         static public IStyleConverter Vector2Converter = new Vector2Converter();
         static public IStyleConverter IntConverter = new IntConverter();
@@ -31,6 +32,7 @@ namespace ReactUnity.Styling
         {
             { typeof(Vector2), Vector2Converter },
             { typeof(YogaValue), YogaValueConverter },
+            { typeof(YogaValue2), YogaValue2Converter },
             { typeof(float), FloatConverter },
             { typeof(double), FloatConverter },
             { typeof(int), IntConverter },
