@@ -47,6 +47,18 @@ export enum Visibility {
   Hidden = 'hidden',
 }
 
+export enum Appearance {
+  None = 'none',
+  Button = 'button',
+  Input = 'input',
+  Toggle = 'toggle',
+}
+
+export enum WhiteSpace {
+  Normal = 'normal',
+  NoWrap = 'nowrap',
+}
+
 export enum CursorType {
   Auto = 'auto',
   Default = 'default',

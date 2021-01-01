@@ -41,7 +41,7 @@ export function Dropdown<T = any>({ autoClose = true, onChange, name, style, chi
         : (selectedItem.props?.triggerTemplate || selectedItem)
       }
 
-      {opened && <view style={{ zOrder: 1000, ...bottomEdge }}>
+      {opened && <view style={{ zIndex: 1000, ...bottomEdge }}>
         <button name="<Dropdown Backdrop>" onClick={close} style={{ ...dropdownBackdropStyle, ...fullScreen }} />
 
         <view name="<Dropdown Menu>" style={{ ...dropdownMenuStyle, ...dropdownBottom }}>

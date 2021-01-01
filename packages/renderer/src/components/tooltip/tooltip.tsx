@@ -56,7 +56,7 @@ export class Tooltip extends React.Component<TooltipFullProps, { opened: boolean
 
         {this.state.opened && tooltipContent &&
           <view style={{ positionType: PositionType.Absolute, [containerProp]: Tooltip.yogaZeroPercent }}>
-            <view name="<Tooltip>" style={{ positionType: PositionType.Absolute, zOrder: 1003, [childProp]: offset }}>
+            <view name="<Tooltip>" style={{ positionType: PositionType.Absolute, zIndex: 1003, [childProp]: offset }}>
               {tooltipContent}
             </view>
           </view>

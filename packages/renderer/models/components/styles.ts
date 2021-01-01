@@ -1,5 +1,5 @@
-import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents, Visibility } from './styles-enums';
-import { YogaValueAux } from './yoga';
+import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents, Visibility, Appearance, WhiteSpace } from './styles-enums';
+import { YogaValue2Aux, YogaValueAux } from './yoga';
 import { ColorAux } from '../values/color';
 import { UnityObject } from '../native/context';
 import { Vector2Aux } from '../values/values';
@@ -7,10 +7,12 @@ import { EnumOrLiteral, AssetReference } from '../values';
 
 export interface Style {
   opacity?: number;
-  zOrder?: number;
+  zIndex?: number;
   visibility?: EnumOrLiteral<typeof Visibility> | boolean;
   cursor?: EnumOrLiteral<typeof CursorType> | string;
   pointerEvents?: EnumOrLiteral<typeof PointerEvents>;
+  content?: string;
+  appearance?: EnumOrLiteral<typeof Appearance>;
 
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference;
@@ -18,9 +20,8 @@ export interface Style {
   borderColor?: ColorAux;
   boxShadow?: string;
 
-  translate?: Vector2Aux;
-  translateRelative?: boolean;
-  pivot?: Vector2Aux;
+  transformOrigin?: Vector2Aux;
+  translate?: YogaValue2Aux;
   scale?: Vector2Aux;
   rotate?: number;
 
@@ -32,4 +33,5 @@ export interface Style {
   fontStyle?: EnumOrLiteral<typeof FontStyles>;
   fontSize?: YogaValueAux;
   textOverflow?: EnumOrLiteral<typeof TextOverflowModes>;
+  whiteSpace?: EnumOrLiteral<typeof WhiteSpace>;
 }

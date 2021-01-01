@@ -2,13 +2,15 @@
 import {
   Overflow, Direction, Display, Wrap, YogaJustify, PositionType, YogaAlign, FlexDirection,
 } from './yoga-enums';
-import { EnumOrLiteral } from '../values';
+import { Array2Aux, Array4Aux, EnumOrLiteral, PositioningLiteral } from '../values';
 
 
 // boolean, null and undefined are all mapped to undefined
 // pt, px and no unit is mapped to Point unit, e.g. 50px -> 50 Points
 // % is mapped to percentage, e.g. 50% -> 50 Percent
 export type YogaValueAux = 'auto' | string | number | null | undefined | boolean;
+export type YogaValue2Aux = Array2Aux<YogaValueAux> | PositioningLiteral;
+export type YogaValue4Aux = Array4Aux<YogaValueAux>;
 
 
 export interface Layout {
