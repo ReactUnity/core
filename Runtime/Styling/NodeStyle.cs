@@ -81,10 +81,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.scale, value);
             get => GetStyleValue<Vector2>(StyleProperties.scale);
         }
-        public Vector2 pivot
+        public YogaValue2 transformOrigin
         {
-            set => SetStyleValue(StyleProperties.pivot, value);
-            get => GetStyleValue<Vector2>(StyleProperties.pivot);
+            set => SetStyleValue(StyleProperties.transformOrigin, value);
+            get => GetStyleValue<YogaValue2>(StyleProperties.transformOrigin);
         }
         public float rotate
         {

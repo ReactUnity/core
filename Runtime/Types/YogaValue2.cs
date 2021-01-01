@@ -9,6 +9,7 @@ namespace ReactUnity.Types
     {
         public static YogaValue2 Zero = new YogaValue2(YogaValue.Point(0), YogaValue.Point(0));
         public static YogaValue2 Auto = new YogaValue2(YogaValue.Auto(), YogaValue.Auto());
+        public static YogaValue2 Center = new YogaValue2(YogaValue.Percent(50), YogaValue.Percent(50));
 
         public YogaValue X { get; private set; }
         public YogaValue Y { get; private set; }
