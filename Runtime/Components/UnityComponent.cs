@@ -198,7 +198,7 @@ namespace ReactUnity.Components
         {
             ResolveTransform();
             ResolveOpacityAndInteractable();
-            SetZOrder();
+            SetZIndex();
             SetOverflow();
             SetCursor();
             UpdateBackgroundGraphic(false, true);
@@ -336,9 +336,9 @@ namespace ReactUnity.Components
             return image;
         }
 
-        private void SetZOrder()
+        private void SetZIndex()
         {
-            var z = Style.zOrder;
+            var z = Style.zIndex;
             Canvas canvas = Canvas;
             if (!canvas && z == 0) return;
             if (!canvas)

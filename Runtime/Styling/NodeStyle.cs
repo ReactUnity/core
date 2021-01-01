@@ -26,10 +26,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.opacity, value);
             get => GetStyleValue<float>(StyleProperties.opacity);
         }
-        public int zOrder
+        public int zIndex
         {
-            set => SetStyleValue(StyleProperties.zOrder, value);
-            get => GetStyleValue<int>(StyleProperties.zOrder);
+            set => SetStyleValue(StyleProperties.zIndex, value);
+            get => GetStyleValue<int>(StyleProperties.zIndex);
         }
         public bool visibility
         {

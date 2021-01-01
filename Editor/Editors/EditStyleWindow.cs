@@ -105,10 +105,10 @@ namespace ReactUnity.Editor
                 return EditorGUILayout.Slider("Opacity", CurrentStyle.opacity, 0, 1f);
             });
 
-            // zOrder
-            DrawNullableRow("zOrder", (enabled) =>
+            // zIndex
+            DrawNullableRow("zIndex", (enabled) =>
             {
-                return EditorGUILayout.IntField("Z Order", CurrentStyle.zOrder);
+                return EditorGUILayout.IntField("Z Index", CurrentStyle.zIndex);
             });
 
             // Visibility
@@ -233,10 +233,10 @@ namespace ReactUnity.Editor
             //});
 
             // Pivot
-            DrawNullableRow("pivot", (enabled) =>
-            {
-                return EditorGUILayout.Vector2Field("Pivot", CurrentStyle.pivot);
-            });
+            //DrawNullableRow("pivot", (enabled) =>
+            //{
+            //    return EditorGUILayout.Vector2Field("Pivot", CurrentStyle.pivot);
+            //});
 
             // Scale
             DrawNullableRow("scale", (enabled) =>

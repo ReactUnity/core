@@ -55,7 +55,7 @@ namespace ReactUnity.Styling
     public static class StyleProperties
     {
         public static IStyleProperty opacity = new StyleProperty<float>("opacity", 1f, true);
-        public static IStyleProperty zOrder = new StyleProperty<int>("zOrder", 0, false);
+        public static IStyleProperty zIndex = new StyleProperty<int>("zIndex", 0, false);
         public static IStyleProperty visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static IStyleProperty cursor = new StyleProperty<string>("cursor", null, false);
         public static IStyleProperty pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
@@ -82,7 +82,7 @@ namespace ReactUnity.Styling
         public static Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();
         public static Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>()
         {
-            { "z-order", zOrder },
+            { "z-index", zIndex },
             { "pointer-events", pointerEvents },
             { "background-color", backgroundColor },
             { "background", backgroundColor },
@@ -90,6 +90,7 @@ namespace ReactUnity.Styling
             { "border-radius", borderRadius },
             { "border-color", borderColor },
             { "box-shadow", boxShadow },
+            { "transform-origin", pivot },
             { "color", fontColor },
             { "font-family", fontFamily },
             { "font-color", fontColor },
