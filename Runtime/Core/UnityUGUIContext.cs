@@ -38,7 +38,7 @@ namespace ReactUnity
             Script = script;
             IsDevServer = isDevServer;
 
-            Parser = new StylesheetParser(includeUnknownDeclarations: true);
+            Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
 
             Host = new HostComponent(hostElement, this);

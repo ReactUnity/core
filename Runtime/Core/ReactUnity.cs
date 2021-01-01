@@ -12,7 +12,6 @@ using ReactUnity.Styling.Types;
 using JavaScriptEngineSwitcher.Core;
 using JavaScriptEngineSwitcher.Jint;
 using JavaScriptEngineSwitcher.V8;
-using JavaScriptEngineSwitcher.ChakraCore;
 
 namespace ReactUnity
 {
@@ -70,10 +69,6 @@ namespace ReactUnity
                     x.EnableDebugging = EnableDebugging;
                     x.EnableRemoteDebugging = EnableDebugging;
                     x.AwaitDebuggerAndPauseOnStart = PauseDebuggerOnStart;
-                })
-                .AddChakraCore(x =>
-                {
-                    x.EnableExperimentalFeatures = true;
                 });
 
             engineSwitcher.DefaultEngineName = EngineName;
@@ -190,6 +185,7 @@ namespace ReactUnity
             engine = JsEngineSwitcher.Current.CreateEngine(EngineName);
 
             engine.EmbedHostObject("log", new Func<object, object>((x) => { Debug.Log(x); return x; }));
+            engine.Execute("Proxy = undefined;"); // TODO: try to find why immer fails with Jint's Proxy implementation
             engine.Execute("__dirname = '';");
             engine.Execute("WeakMap = Map;");
             engine.Execute("globalThis = global = window = parent = this;");
@@ -278,6 +274,11 @@ namespace ReactUnity
         public string getItem(string x)
         {
             return PlayerPrefs.GetString(x, "");
+        }
+
+        public void removeItem(string x)
+        {
+            PlayerPrefs.DeleteKey(x);
         }
     }
 
