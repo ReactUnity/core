@@ -15,6 +15,11 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
+            if (string.IsNullOrWhiteSpace(value)) return SpecialNames.CantParse;
+
+            var sp = ParseFromPositioningLiteral(value);
+            if (sp is Vector2 s) return s;
+
             var values = value.Split(splitters);
 
             if (values.Length == 1)
@@ -62,6 +67,50 @@ namespace ReactUnity.Styling.Parsers
             var g = v1f as float? ?? 0;
 
             return new Vector2(r, g);
+        }
+
+        private object ParseFromPositioningLiteral(string str)
+        {
+            var x = 0f;
+            var y = 0f;
+
+            if (str.Contains("top"))
+            {
+                x = 0.5f;
+                y = 1;
+                if (str.Contains("left")) x = 0;
+                if (str.Contains("right")) x = 1;
+            }
+            else if (str.Contains("bottom"))
+            {
+                x = 0.5f;
+                y = 0;
+                if (str.Contains("left")) x = 0;
+                if (str.Contains("right")) x = 1;
+            }
+            else if (str.Contains("center"))
+            {
+                x = 0.5f;
+                y = 0.5f;
+                if (str.Contains("left")) x = 0;
+                if (str.Contains("right")) x = 1;
+            }
+            else if (str.Contains("left"))
+            {
+                x = 0;
+                y = 0.5f;
+            }
+            else if (str.Contains("right"))
+            {
+                x = 1;
+                y = 0.5f;
+            }
+            else
+            {
+                return SpecialNames.CantParse;
+            }
+
+            return new Vector2(x, y);
         }
     }
 }

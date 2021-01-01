@@ -75,7 +75,7 @@ namespace ReactUnity.Styling
         public static IStyleProperty fontSize = new StyleProperty<YogaValue>("fontSize", YogaValue.Undefined(), true, true);
         public static IStyleProperty textAlign = new StyleProperty<TextAlignmentOptions>("textAlign", TextAlignmentOptions.TopLeft, false, true);
         public static IStyleProperty textOverflow = new StyleProperty<TextOverflowModes>("textOverflow", TextOverflowModes.Overflow, false, true);
-        public static IStyleProperty textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap" }, new string[] { "nowrap" }));
+        public static IStyleProperty textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));
         public static IStyleProperty content = new StyleProperty<string>("content", null, false);
         public static IStyleProperty appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
 
