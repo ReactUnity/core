@@ -57,7 +57,7 @@ class TodoItem extends React.Component<ITodoItemProps, ITodoItemState> {
         />
 
         <toggle onChange={this.props.onToggle} value={this.props.todo.completed}
-          style={{ positionType: PositionType.Absolute, left: 8, top: '50%', translate: [0, -0.5], translateRelative: true }} />
+          style={{ positionType: PositionType.Absolute, left: 8, top: '50%', translate: [0, '-50%'] }} />
 
         <button onClick={this.props.onDestroy}
           style={{ backgroundColor: 'clear', fontColor: '#cc9a9a', visibility: this.state.hovered, pointerEvents: PointerEvents.All, marginRight: 20 }}>

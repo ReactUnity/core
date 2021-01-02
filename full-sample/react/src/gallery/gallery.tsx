@@ -52,7 +52,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
 
       <view name="<Header>"
         style={{
-          backgroundColor: '#2e9151', fontColor: 'white', boxShadow: shadow, zOrder: 1,
+          backgroundColor: '#2e9151', fontColor: 'white', boxShadow: shadow, zIndex: 1,
           alignItems: 'Center', justifyContent: 'SpaceBetween', flexDirection: FlexDirection.Row,
           wrap: Wrap.Wrap, flexShrink: 0, paddingVertical: 20, paddingHorizontal: 40,
         }}>

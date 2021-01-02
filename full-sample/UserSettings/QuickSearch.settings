@@ -16,7 +16,7 @@ filters = {
 	settings = true
 }
 scopes = {
-	"last_search.AB59B443" = "urlco"
+	"last_search.AB59B443" = "docum"
 }
 providers = {
 	asset = {

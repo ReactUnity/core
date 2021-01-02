@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, YogaAlign, TextOverflowModes } from '@reactunity/renderer';
+import style from './index.module.scss';
 
 export class App extends React.Component<{}, { val: number }> {
   clearAnimation: () => void;
@@ -26,18 +27,7 @@ export class App extends React.Component<{}, { val: number }> {
     const val = this.state.val;
 
     return <view style={{ flexDirection: FlexDirection.Row, height: '100%', alignItems: YogaAlign.Stretch, justifyContent: YogaJustify.SpaceAround }}>
-      <view style={{
-        margin: 50,
-        width: 300,
-        flexDirection: FlexDirection.Column,
-        alignItems: YogaAlign.Center,
-        justifyContent: YogaJustify.SpaceAround,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: 'black',
-        borderRadius: val * 100,
-      }}>
-
+      <view className={style.box1} style={{ borderRadius: val * 100 }}>
         <button style={{ width: Math.round((val * 150 + 130) / 2) * 2 }}>
           Width
         </button>
@@ -56,17 +46,7 @@ export class App extends React.Component<{}, { val: number }> {
         </button>
       </view>
 
-      <view style={{
-        margin: 50,
-        width: 300,
-        flexDirection: FlexDirection.Column,
-        alignItems: YogaAlign.Center,
-        justifyContent: YogaJustify.SpaceAround,
-        backgroundColor: 'white',
-        borderWidth: val * 10 + 2,
-        borderColor: ['red', val, 'green'],
-      }}>
-
+      <view className={style.box2} style={{ borderWidth: val * 10 + 2, borderColor: ['red', val, 'green'] }}>
         <button style={{ positionType: PositionType.Absolute, top: 50 + val * 150 }}>
           Position
         </button>
@@ -82,7 +62,6 @@ export class App extends React.Component<{}, { val: number }> {
         <button style={{ translate: [Math.random() * 10, Math.random() * 10].join() }}>
           Noise
         </button>
-
       </view>
     </view >;
   }

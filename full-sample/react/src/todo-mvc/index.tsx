@@ -35,7 +35,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
 
   private readonly headerInputStyle = {
     borderColor: '#cecece' as ColorAux,
-    zOrder: 1,
+    zIndex: 1,
     backgroundColor: [1, 1, 1, 1],
     boxShadow: '0 8 10 10 black 10',
   };
@@ -160,7 +160,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
             />
 
             <toggle ref={this.selectAllToggle} onChange={this.toggleAll} value={activeTodoCount === 0 && completedCount > 0}
-              style={{ positionType: PositionType.Absolute, left: 8, top: '50%', translate: [0, -0.5], translateRelative: true }} />
+              style={{ positionType: PositionType.Absolute, left: 8, top: '50%', translate: [0, '-50%'] }} />
           </view>
 
           {main}
