@@ -357,14 +357,7 @@ module.exports = function (webpackEnv) {
                 plugins: [
                   [
                     require.resolve('babel-plugin-named-asset-import'),
-                    {
-                      loaderMap: {
-                        svg: {
-                          ReactComponent:
-                            '@svgr/webpack?-svgo,+titleProp,+ref![path]',
-                        },
-                      },
-                    },
+                    { loaderMap: {} },
                   ],
                   isEnvDevelopment &&
                   shouldUseReactRefresh &&
@@ -496,6 +489,14 @@ module.exports = function (webpackEnv) {
             {
               test: /\.txt$/i,
               use: 'raw-loader',
+            },
+            // svgr loader is disabled and SVGs are converted to PNG in React Unity
+            {
+              test: /\.svg$/i,
+              loader: 'svg-to-png-loader',
+              options: {
+                name: 'static/svg/[name]-[height]x[width].png',
+              },
             },
             // "file" loader makes sure those assets get served by WebpackDevServer.
             // When you `import` an asset, you get its (virtual) filename.
