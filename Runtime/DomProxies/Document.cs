@@ -81,11 +81,11 @@ namespace ReactUnity.DomProxies
 
     public class ScriptProxy : DomElementProxyBase, IDomElementProxy
     {
-        public string src = null;
-        public string charset = null;
-        public string crossOrigin = null;
+        public string src { get; set; }
+        public string charset { get; set; }
+        public string crossOrigin { get; set; }
 
-        public Action<ScriptProxy> onload = null;
+        public Action<ScriptProxy> onload { get; set; }
 
         public DocumentProxy document;
         public HeadProxy parentNode;

@@ -15,29 +15,29 @@ namespace ReactUnity.DomProxies
 
         public Callback onmessage
         {
-            set { OnError += (sender, e) => { if (value != null) value.Call(e); }; }
+            set { OnMessage += (sender, e) => value?.Call(e); }
             get => null;
         }
 
         public Callback onclose
         {
-            set { OnError += (sender, e) => { if (value != null) value.Call(e); }; }
+            set { OnClose += (sender, e) => value?.Call(e); }
             get => null;
         }
 
         public Callback onopen
         {
-            set { OnError += (sender, e) => { if (value != null) value.Call(e); }; }
+            set { OnOpen += (sender, e) => value?.Call(e); }
             get => null;
         }
 
         public Callback onerror
         {
-            set { OnError += (sender, e) => { if (value != null) value.Call(e); }; }
+            set { OnError += (sender, e) => value?.Call(e); }
             get => null;
         }
 
-        public WebSocketProxy(string url) : base(url, new string[] { "ws" })
+        public WebSocketProxy(string url) : base(url, "ws")
         {
             ConnectAsync();
         }
@@ -47,9 +47,9 @@ namespace ReactUnity.DomProxies
             ConnectAsync();
         }
 
-        public void close(WebSocketSharp.CloseStatusCode code = WebSocketSharp.CloseStatusCode.Normal, string reason = null)
+        public void close(int code = (int)WebSocketSharp.CloseStatusCode.Normal, string reason = null)
         {
-            CloseAsync(code, reason);
+            CloseAsync((WebSocketSharp.CloseStatusCode) code, reason);
         }
     }
 }

@@ -1,6 +1,8 @@
 #if UNITY_EDITOR
 
 using Jint;
+using Jint.Native;
+using ReactUnity.Interop;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +14,15 @@ namespace ReactUnity.DomProxies
     {
         public string origin { get; private set; }
 
-        public Action onreadystatechange { get; set; }
+        public JsValue Onload { set => onload = value; }
+        public object onload;
+
+        public JsValue Onreadystatechange { set => onreadystatechange = value; }
+        public object onreadystatechange;
+
+        public object onerror { get; set; }
+        public object ontimeout { get; set; }
+        public object onabort { get; set; }
         public bool withCredentials { get; set; }
         public int? timeout { get; set; }
         public int status { get; private set; }
@@ -39,8 +49,8 @@ namespace ReactUnity.DomProxies
         private System.Net.HttpWebRequest req;
         private static System.Net.CookieContainer cookieContainer = new System.Net.CookieContainer();
 
-        public int readyState { get { return 4; } }
-        public string DONE { get { return "complete"; } }
+        public int readyState => 4;
+        public string DONE => "complete";
         public string responseText { get; set; }
 
 
@@ -49,7 +59,7 @@ namespace ReactUnity.DomProxies
             Reset();
         }
 
-        public XMLHttpRequest(string origin): this()
+        public XMLHttpRequest(string origin) : this()
         {
             this.origin = origin;
         }
@@ -69,27 +79,27 @@ namespace ReactUnity.DomProxies
         {
             openParameters = new Hashtable();
             openParameters["method"] = method;
-            openParameters["url"] = url.Replace(origin, "");
+            openParameters["url"] = string.IsNullOrWhiteSpace(origin) ? url : url.Replace(origin, "");
             openParameters["async"] = async;
 
         }
 
         public void setRequestHeader(object name, object value)
         {
-            headers.Add((string)name, (string)value);
+            headers.Add((string) name, (string) value);
         }
 
         public void append(object name, object value)
         {
             List<string> postList;
-            if (!postData.TryGetValue((string)name, out postList))
+            if (!postData.TryGetValue((string) name, out postList))
             {
                 postList = new List<string>();
             }
-            postList.Add((string)value);
+            postList.Add((string) value);
 
-            postData.Remove((string)name);
-            postData.Add((string)name, postList);
+            postData.Remove((string) name);
+            postData.Add((string) name, postList);
         }
 
         public void abort()
@@ -107,11 +117,11 @@ namespace ReactUnity.DomProxies
 
             if (options["transport"] == "browser")
             {
-                req = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
+                req = (System.Net.HttpWebRequest) System.Net.WebRequest.Create(url);
             }
             else
             {
-                req = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
+                req = (System.Net.HttpWebRequest) System.Net.WebRequest.Create(url);
                 req.CookieContainer = cookieContainer;
                 // disable buffering (this only works for ClientHttp version)
                 //_req.AllowWriteStreamBuffering = false; // causes silent crash on Mac OS X 10.8.x
@@ -151,14 +161,14 @@ namespace ReactUnity.DomProxies
                             break;
 
                         case "accept":
-                            req.Accept = (string)headers[key];
+                            req.Accept = (string) headers[key];
                             break;
 
                         case "content-type":
                             req.ContentType = headers[key];
                             break;
                         default:
-                            req.Headers[key] = (string)headers[key];
+                            req.Headers[key] = (string) headers[key];
                             break;
                     }
                 }
@@ -186,12 +196,12 @@ namespace ReactUnity.DomProxies
         private void responseCallback(IAsyncResult asynchronousResult)
         {
 
-            var req = (System.Net.HttpWebRequest)asynchronousResult.AsyncState;
+            var req = (System.Net.HttpWebRequest) asynchronousResult.AsyncState;
 
 
-            using (var response = (System.Net.HttpWebResponse)req.EndGetResponse(asynchronousResult))
+            using (var response = (System.Net.HttpWebResponse) req.EndGetResponse(asynchronousResult))
             {
-                status = (int)response.StatusCode; // 4xx-5xx can throw WebException, we handle it below
+                status = (int) response.StatusCode; // 4xx-5xx can throw WebException, we handle it below
                 statusText = response.StatusDescription;
 
                 if (response.SupportsHeaders && response.Headers is System.Net.WebHeaderCollection)
@@ -209,7 +219,8 @@ namespace ReactUnity.DomProxies
                 }
             }
 
-            onreadystatechange?.Invoke();
+            if (onload != null) new Callback(onload).Call();
+            if (onreadystatechange != null) new Callback(onreadystatechange).Call();
         }
 
         private Dictionary<string, string> extractOptions(Jint.Native.Object.ObjectInstance args)

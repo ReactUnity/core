@@ -185,7 +185,7 @@ namespace ReactUnity
             engine = JsEngineSwitcher.Current.CreateEngine(EngineName);
 
             engine.EmbedHostObject("log", new Func<object, object>((x) => { Debug.Log(x); return x; }));
-            engine.Execute("Proxy = undefined;"); // TODO: try to find why immer fails with Jint's Proxy implementation
+            engine.Execute("Proxy = undefined;"); // TODO: remove after Jint is updated with latest PR
             engine.Execute("__dirname = '';");
             engine.Execute("WeakMap = Map;");
             engine.Execute("globalThis = global = window = parent = this;");
@@ -214,6 +214,7 @@ namespace ReactUnity
             // Load polyfills
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
+            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
         }
 
         void CreateConsole(IJsEngine engine)
@@ -245,87 +246,15 @@ namespace ReactUnity
 
         void CreateLocation(IJsEngine engine, ReactScript script)
         {
-            var location = new Location(script.SourceLocation, Restart);
+            var location = new DomProxies.Location(script.SourceLocation, Restart);
             engine.EmbedHostObject("location", location);
 
 #if UNITY_EDITOR
             engine.EmbedHostType("WebSocket", typeof(WebSocketProxy));
-            engine.EmbedHostType("XMLHttpRequest", typeof(XMLHttpRequest));
-            engine.Execute(@"(function() {
-  var oldXMLHttpRequest = XMLHttpRequest;
-  XMLHttpRequest = function() { return new oldXMLHttpRequest('" + location.origin + @"'); }
-})();");
+            engine.EmbedHostType("oldXMLHttpRequest", typeof(XMLHttpRequest));
+            engine.Execute(@"XMLHttpRequest = function() { return new oldXMLHttpRequest('" + location.origin + @"'); }");
 #endif
             engine.EmbedHostObject("document", new DocumentProxy(unityContext, this, location.origin));
-        }
-    }
-
-    public class LocalStorage
-    {
-        public LocalStorage()
-        {
-        }
-
-        public void setItem(string x, string value)
-        {
-            PlayerPrefs.SetString(x, value);
-        }
-
-        public string getItem(string x)
-        {
-            return PlayerPrefs.GetString(x, "");
-        }
-
-        public void removeItem(string x)
-        {
-            PlayerPrefs.DeleteKey(x);
-        }
-    }
-
-    public class Location
-    {
-        public string href { get; }
-        public string protocol { get; }
-        public string hostname { get; }
-        public string origin { get; }
-        public string host { get; }
-        public string port { get; }
-        public string search { get; }
-        public string pathname { get; }
-        private Action restart { get; }
-
-        public Location(string sourceLocation, Action restart)
-        {
-            var href = sourceLocation;
-            var hrefSplit = href.Split(new string[] { "//" }, 2, StringSplitOptions.None);
-
-            var protocol = hrefSplit.Length > 1 ? hrefSplit.First() : null;
-
-            var hrefWithoutProtocol = hrefSplit.Length > 1 ? string.Join("", hrefSplit.Skip(1)) : href;
-            var hrefWithoutProtocolSplit = hrefWithoutProtocol.Split(new string[] { "/" }, 2, StringSplitOptions.None);
-
-            var host = hrefWithoutProtocolSplit.FirstOrDefault();
-            var hostSplit = host.Split(new string[] { ":" }, 2, StringSplitOptions.None);
-            var hostName = hostSplit.First();
-            var port = hostSplit.ElementAtOrDefault(1) ?? "";
-
-            var origin = protocol + "//" + host;
-            var pathName = string.Join("", hrefWithoutProtocolSplit.Skip(1));
-
-            this.href = href;
-            this.protocol = protocol;
-            this.hostname = hostName;
-            this.origin = origin;
-            this.host = host;
-            this.port = port;
-            this.search = "";
-            this.pathname = pathName;
-            this.restart = restart;
-        }
-
-        public void reload()
-        {
-            MainThreadDispatcher.OnUpdate(restart);
         }
     }
 }

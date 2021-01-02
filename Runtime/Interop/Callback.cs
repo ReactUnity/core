@@ -12,6 +12,12 @@ namespace ReactUnity.Interop
         private IJsEngine engine;
         public object callback;
 
+        public Callback(FunctionInstance callback, IJsEngine engine = null)
+        {
+            this.engine = engine;
+            this.callback = callback;
+        }
+
         public Callback(object callback, IJsEngine engine = null)
         {
             this.engine = engine;
@@ -25,6 +31,7 @@ namespace ReactUnity.Interop
 
         public object Call(params object[] args)
         {
+            if (callback == null) return null;
             if (args == null) args = new object[0];
 
             if (callback is JsValue v)
@@ -34,15 +41,20 @@ namespace ReactUnity.Interop
             }
             else if (callback is Delegate d)
             {
-                var argCount = d.Method.GetParameters().Length;
+                var parameters = d.Method.GetParameters();
+                var argCount = parameters.Length;
+
                 if (args.Length < argCount) args = args.Concat(new object[argCount - args.Length]).ToArray();
                 if (args.Length > argCount) args = args.Take(argCount).ToArray();
-
                 return d.DynamicInvoke(args);
             }
             else if (callback is ScriptObject s)
             {
                 return s.Invoke(false, args);
+            }
+            else if (callback is Callback c)
+            {
+                return c.Call(args);
             }
             else return null;
         }
