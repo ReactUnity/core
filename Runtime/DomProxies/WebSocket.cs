@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using Jint.Native;
 using ReactUnity.Interop;
 
 namespace ReactUnity.DomProxies
@@ -13,27 +14,32 @@ namespace ReactUnity.DomProxies
 
         public string binaryType = "blob";
 
-        public Callback onmessage
+
+        public JsValue Onmessage { set => onmessage = value; }
+        public object onmessage
         {
-            set { OnMessage += (sender, e) => value?.Call(e); }
+            set { OnMessage += (sender, e) => new Callback(value)?.Call(e); }
             get => null;
         }
 
-        public Callback onclose
+        public JsValue Onclose { set => onclose = value; }
+        public object onclose
         {
-            set { OnClose += (sender, e) => value?.Call(e); }
+            set { OnClose += (sender, e) => new Callback(value)?.Call(e); }
             get => null;
         }
 
-        public Callback onopen
+        public JsValue Onopen { set => onopen = value; }
+        public object onopen
         {
-            set { OnOpen += (sender, e) => value?.Call(e); }
+            set { OnOpen += (sender, e) => new Callback(value)?.Call(e); }
             get => null;
         }
 
-        public Callback onerror
+        public JsValue Onerror { set => onerror = value; }
+        public object onerror
         {
-            set { OnError += (sender, e) => value?.Call(e); }
+            set { OnError += (sender, e) => new Callback(value)?.Call(e); }
             get => null;
         }
 
@@ -47,7 +53,7 @@ namespace ReactUnity.DomProxies
             ConnectAsync();
         }
 
-        public void close(int code = (int)WebSocketSharp.CloseStatusCode.Normal, string reason = null)
+        public void close(int code = (int) WebSocketSharp.CloseStatusCode.Normal, string reason = null)
         {
             CloseAsync((WebSocketSharp.CloseStatusCode) code, reason);
         }
