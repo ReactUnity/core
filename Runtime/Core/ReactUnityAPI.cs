@@ -1,4 +1,3 @@
-using JavaScriptEngineSwitcher.Core;
 using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.Components;
@@ -34,9 +33,9 @@ namespace ReactUnity
                 { "hover", typeof(HoverStateHandler) },
             };
 
-        IJsEngine Engine;
+        Jint.Engine Engine;
 
-        public ReactUnityAPI(IJsEngine engine)
+        public ReactUnityAPI(Jint.Engine engine)
         {
             Engine = engine;
         }
@@ -121,13 +120,13 @@ namespace ReactUnity
             var callback = value.As<FunctionInstance>();
             if (hasValue && callback == null) throw new Exception("The callback for an event must be a function.");
 
-            element.SetEventListener(eventType, new Callback(callback, Engine));
+            element.SetEventListener(eventType, new Callback(callback));
         }
 
         public void setEventListener(object element, string eventType, object value)
         {
             if (element is UnityComponent c && value != null)
-                c.SetEventListener(eventType, new Callback(value, Engine));
+                c.SetEventListener(eventType, new Callback(value));
         }
 
         #endregion

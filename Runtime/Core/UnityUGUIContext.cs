@@ -8,7 +8,6 @@ using ReactUnity.Interop;
 using ExCSS;
 using System.Linq;
 using ReactUnity.StyleEngine;
-using JavaScriptEngineSwitcher.Core;
 using System.IO;
 using ReactUnity.Styling;
 using System.Text.RegularExpressions;
@@ -20,7 +19,7 @@ namespace ReactUnity
         private static Regex ExtensionRegex = new Regex(@"\.\w+$");
         private static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
 
-        public IJsEngine Engine { get; }
+        public Jint.Engine Engine { get; }
         public HostComponent Host { get; }
         public StringObjectDictionary Globals { get; private set; }
         public YogaNode RootLayoutNode { get; }
@@ -35,7 +34,7 @@ namespace ReactUnity
 
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
 
-        public UnityUGUIContext(RectTransform hostElement, IJsEngine engine, StringObjectDictionary assets, ReactScript script, bool isDevServer)
+        public UnityUGUIContext(RectTransform hostElement, Jint.Engine engine, StringObjectDictionary assets, ReactScript script, bool isDevServer)
         {
             Engine = engine;
             Globals = assets;

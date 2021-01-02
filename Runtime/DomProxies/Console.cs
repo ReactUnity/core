@@ -1,5 +1,4 @@
 
-using JavaScriptEngineSwitcher.Core;
 using Jint;
 using ReactUnity.Interop;
 using System;
@@ -11,10 +10,10 @@ namespace ReactUnity.DomProxies
 {
     public class ConsoleProxy
     {
-        IJsEngine engine;
+        Jint.Engine engine;
         static Regex replaceRegex = new Regex("%[dso]");
 
-        public ConsoleProxy(IJsEngine engine)
+        public ConsoleProxy(Jint.Engine engine)
         {
             this.engine = engine;
         }

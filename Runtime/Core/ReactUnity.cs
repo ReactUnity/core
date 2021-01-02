@@ -9,21 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using ReactUnity.Styling.Types;
-using JavaScriptEngineSwitcher.Core;
-using JavaScriptEngineSwitcher.Jint;
-using JavaScriptEngineSwitcher.V8;
 
 namespace ReactUnity
 {
     public class ReactUnity : MonoBehaviour
     {
-        public enum EngineType
-        {
-            Jint = 0,
-            V8 = 1,
-        }
-
-        private IJsEngine engine;
+        private Jint.Engine engine;
         private UnityUGUIContext unityContext;
         private UnityScheduler scheduler;
 
@@ -37,41 +28,12 @@ namespace ReactUnity
 
         public RectTransform Root => transform as RectTransform;
 
-        public EngineType JsEngine = EngineType.Jint;
-        public string EngineName => JsEngine + "JsEngine";
         public bool EnableDebugging = false;
         public bool PauseDebuggerOnStart = false;
 
         void OnEnable()
         {
-            CreateSwitcher();
             Restart();
-        }
-
-        void CreateSwitcher()
-        {
-            var engineSwitcher = JsEngineSwitcher.Current;
-            engineSwitcher.EngineFactories
-                .AddJint(x =>
-                {
-                    //e.CatchClrExceptions(ex =>
-                    //{
-                    //    var lastNode = engine.GetLastSyntaxNode();
-                    //    Debug.LogError($"CLR exception in {lastNode.Location.Start.Line}:{lastNode.Location.Start.Column} - {lastNode.Location.End.Line}:{lastNode.Location.End.Column}");
-                    //    Debug.LogError(ex);
-                    //    return true;
-                    //});
-                    //e.SetTypeConverter(x => new NullableTypeConverter(x));
-                })
-                .AddV8(x =>
-                {
-                    x.DebugPort = 9222;
-                    x.EnableDebugging = EnableDebugging;
-                    x.EnableRemoteDebugging = EnableDebugging;
-                    x.AwaitDebuggerAndPauseOnStart = PauseDebuggerOnStart;
-                });
-
-            engineSwitcher.DefaultEngineName = EngineName;
         }
 
         void OnDisable()
@@ -146,18 +108,18 @@ namespace ReactUnity
 
             List<Action> callbacks = new List<Action>() { callback };
 
-            engine.EmbedHostObject("addEventListener", new Action<string, Action>((e, f) =>
+            engine.SetValue("addEventListener", new Action<string, Action>((e, f) =>
             {
                 if (e == "DOMContentLoaded") callbacks.Add(f);
             }));
 
-            engine.EmbedHostObject("Unity", new ReactUnityAPI(engine));
-            engine.EmbedHostObject("RootContainer", unityContext.Host);
-            engine.EmbedHostObject("Globals", Globals);
+            engine.SetValue("Unity", new ReactUnityAPI(engine));
+            engine.SetValue("RootContainer", unityContext.Host);
+            engine.SetValue("Globals", Globals);
             try
             {
                 if (preload != null) preload.ForEach(x => engine.Execute(x.text));
-                engine.Execute(script, "react.js");
+                engine.Execute(script);
                 callbacks.ForEach(x => x?.Invoke());
             }
             catch (ParserException ex)
@@ -165,7 +127,7 @@ namespace ReactUnity
                 Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
                 Debug.LogException(ex);
             }
-            catch (JsException ex)
+            catch (Jint.Runtime.JavaScriptException ex)
             {
                 Debug.LogError(ex.Message);
             }
@@ -182,10 +144,9 @@ namespace ReactUnity
 
         void CreateEngine()
         {
-            engine = JsEngineSwitcher.Current.CreateEngine(EngineName);
+            engine = new Jint.Engine();
 
-            engine.EmbedHostObject("log", new Func<object, object>((x) => { Debug.Log(x); return x; }));
-            engine.Execute("Proxy = undefined;"); // TODO: remove after Jint is updated with latest PR
+            engine.SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }));
             engine.Execute("__dirname = '';");
             engine.Execute("WeakMap = Map;");
             engine.Execute("globalThis = global = window = parent = this;");
@@ -194,22 +155,20 @@ namespace ReactUnity
             engine.Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };"); ;
 
 
-            engine.EmbedHostObject("Engine", engine);
-            engine.EmbedHostType("RealCallback", typeof(Callback));
-            engine.Execute("Callback = function(fun) { return new RealCallback(fun, Engine); }");
-
+            engine.SetValue("Engine", engine);
+            engine.SetValue("Callback", typeof(Callback));
 
             CreateConsole(engine);
             CreateLocalStorage(engine);
             CreateScheduler(engine);
-            engine.EmbedHostType("YogaValue", typeof(Facebook.Yoga.YogaValue));
-            engine.EmbedHostType("Color", typeof(Color));
-            engine.EmbedHostType("ShadowDefinition", typeof(ShadowDefinition));
-            engine.EmbedHostType("Vector2", typeof(Vector2));
-            engine.EmbedHostType("Vector3", typeof(Vector3));
-            engine.EmbedHostType("Rect", typeof(Rect));
-            engine.EmbedHostType("RectOffset", typeof(RectOffset));
-            engine.EmbedHostType("Action", typeof(Action));
+            engine.SetValue("YogaValue", typeof(Facebook.Yoga.YogaValue));
+            engine.SetValue("Color", typeof(Color));
+            engine.SetValue("ShadowDefinition", typeof(ShadowDefinition));
+            engine.SetValue("Vector2", typeof(Vector2));
+            engine.SetValue("Vector3", typeof(Vector3));
+            engine.SetValue("Rect", typeof(Rect));
+            engine.SetValue("RectOffset", typeof(RectOffset));
+            engine.SetValue("Action", typeof(Action));
 
             // Load polyfills
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
@@ -217,44 +176,44 @@ namespace ReactUnity
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
         }
 
-        void CreateConsole(IJsEngine engine)
+        void CreateConsole(Jint.Engine engine)
         {
             var console = new ConsoleProxy(engine);
 
-            engine.EmbedHostObject("console", console);
+            engine.SetValue("console", console);
         }
 
-        void CreateScheduler(IJsEngine engine)
+        void CreateScheduler(Jint.Engine engine)
         {
             scheduler = new UnityScheduler();
-            engine.EmbedHostObject("UnityScheduler", scheduler);
+            engine.SetValue("UnityScheduler", scheduler);
             engine.Execute("global.setTimeout = function setTimeout(fun, delay) { return UnityScheduler.setTimeout(new Callback(fun), delay); }");
             engine.Execute("global.setInterval = function setInterval(fun, delay) { return UnityScheduler.setInterval(new Callback(fun), delay); }");
             engine.Execute("global.setImmediate = function setImmediate(fun) { return UnityScheduler.setImmediate(new Callback(fun)); }");
             engine.Execute("global.requestAnimationFrame = function requestAnimationFrame(fun) { return UnityScheduler.requestAnimationFrame(new Callback(fun)); }");
-            engine.EmbedHostObject("clearTimeout", new Action<int?>(scheduler.clearTimeout));
-            engine.EmbedHostObject("clearInterval", new Action<int?>(scheduler.clearInterval));
-            engine.EmbedHostObject("clearImmediate", new Action<int?>(scheduler.clearImmediate));
-            engine.EmbedHostObject("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
+            engine.SetValue("clearTimeout", new Action<int?>(scheduler.clearTimeout));
+            engine.SetValue("clearInterval", new Action<int?>(scheduler.clearInterval));
+            engine.SetValue("clearImmediate", new Action<int?>(scheduler.clearImmediate));
+            engine.SetValue("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
         }
 
-        void CreateLocalStorage(IJsEngine engine)
+        void CreateLocalStorage(Jint.Engine engine)
         {
             var storage = new LocalStorage();
-            engine.EmbedHostObject("localStorage", storage);
+            engine.SetValue("localStorage", storage);
         }
 
-        void CreateLocation(IJsEngine engine, ReactScript script)
+        void CreateLocation(Jint.Engine engine, ReactScript script)
         {
             var location = new DomProxies.Location(script.SourceLocation, Restart);
-            engine.EmbedHostObject("location", location);
+            engine.SetValue("location", location);
 
 #if UNITY_EDITOR
-            engine.EmbedHostType("WebSocket", typeof(WebSocketProxy));
-            engine.EmbedHostType("oldXMLHttpRequest", typeof(XMLHttpRequest));
+            engine.SetValue("WebSocket", typeof(WebSocketProxy));
+            engine.SetValue("oldXMLHttpRequest", typeof(XMLHttpRequest));
             engine.Execute(@"XMLHttpRequest = function() { return new oldXMLHttpRequest('" + location.origin + @"'); }");
 #endif
-            engine.EmbedHostObject("document", new DocumentProxy(unityContext, this, location.origin));
+            engine.SetValue("document", new DocumentProxy(unityContext, this, location.origin));
         }
     }
 }

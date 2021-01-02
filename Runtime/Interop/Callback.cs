@@ -1,7 +1,5 @@
-using JavaScriptEngineSwitcher.Core;
 using Jint.Native;
 using Jint.Native.Function;
-using Microsoft.ClearScript;
 using System;
 using System.Linq;
 
@@ -9,18 +7,15 @@ namespace ReactUnity.Interop
 {
     public class Callback
     {
-        private IJsEngine engine;
         public object callback;
 
-        public Callback(FunctionInstance callback, IJsEngine engine = null)
+        public Callback(FunctionInstance callback)
         {
-            this.engine = engine;
             this.callback = callback;
         }
 
-        public Callback(object callback, IJsEngine engine = null)
+        public Callback(object callback)
         {
-            this.engine = engine;
             this.callback = callback;
         }
 
@@ -47,10 +42,6 @@ namespace ReactUnity.Interop
                 if (args.Length < argCount) args = args.Concat(new object[argCount - args.Length]).ToArray();
                 if (args.Length > argCount) args = args.Take(argCount).ToArray();
                 return d.DynamicInvoke(args);
-            }
-            else if (callback is ScriptObject s)
-            {
-                return s.Invoke(false, args);
             }
             else if (callback is Callback c)
             {
