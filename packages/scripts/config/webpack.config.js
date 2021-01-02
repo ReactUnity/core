@@ -20,6 +20,7 @@ const safePostCssParser = require('postcss-safe-parser');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const paths = require('./paths');
 const modules = require('./modules');
 const getClientEnvironment = require('./env');
@@ -31,16 +32,12 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 
-const appPackageJson = require(paths.appPackageJson);
-
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP === 'true';
 
 const webpackDevClientEntry = require.resolve(
   './webpackHotDevClient'
 );
-
-const isExtendingEslintConfig = process.env.EXTEND_ESLINT === 'true';
 
 const imageInlineSizeLimit = parseInt(
   process.env.IMAGE_INLINE_SIZE_LIMIT || '0'
@@ -54,6 +51,19 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+
+const hasJsxRuntime = (() => {
+  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+    return false;
+  }
+
+  try {
+    require.resolve('react/jsx-runtime');
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -80,7 +90,6 @@ module.exports = function (webpackEnv) {
   const getStyleLoaders = (cssOptions, preProcessor) => {
     const loaders = [
       // Always use style-loader in React Unity as we do not extract CSS files
-      // TODO: [React Unity] consider extracting CSS files
       require.resolve('style-loader'),
 
       {
@@ -152,6 +161,7 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvDevelopment ? 'index.js' : process.env.FILENAME || 'index.js',
+      chunkFilename: 'static/js/[name].chunk.js',
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
@@ -167,12 +177,6 @@ module.exports = function (webpackEnv) {
       // this defaults to 'window', but by setting it to 'this' then
       // module chunks which are built will work in web workers as well.
       globalObject: 'this',
-      // TODO: remove this when upgrading to webpack 5
-      futureEmitAssets: true,
-      // Prevents conflicts when multiple webpack runtimes (from different apps)
-      // are used on the same page.
-      // TODO: remove this when upgrading to webpack 5
-      jsonpFunction: `webpackJsonp${appPackageJson.name}`,
     },
     optimization: {
       // TODO: [React Unity] determine if need to minimize
@@ -296,34 +300,6 @@ module.exports = function (webpackEnv) {
       rules: [
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
-
-        // First, run the linter.
-        // It's important to do this before Babel processes the JS.
-        {
-          test: /\.(js|mjs|jsx|ts|tsx)$/,
-          enforce: 'pre',
-          use: [
-            {
-              options: {
-                cache: true,
-                formatter: require.resolve('react-dev-utils/eslintFormatter'),
-                eslintPath: require.resolve('eslint'),
-                resolvePluginsRelativeTo: __dirname,
-                // @remove-on-eject-begin
-                ignore: isExtendingEslintConfig,
-                baseConfig: isExtendingEslintConfig
-                  ? undefined
-                  : {
-                    extends: [require.resolve('eslint-config-react-app')],
-                  },
-                useEslintrc: isExtendingEslintConfig,
-                // @remove-on-eject-end
-              },
-              loader: require.resolve('eslint-loader'),
-            },
-          ],
-          include: paths.appSrc,
-        },
         {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
@@ -350,10 +326,17 @@ module.exports = function (webpackEnv) {
                 customize: require.resolve(
                   'babel-preset-react-app/webpack-overrides'
                 ),
+                presets: [
+                  [
+                    require.resolve('babel-preset-react-app'),
+                    {
+                      runtime: hasJsxRuntime ? 'automatic' : 'classic',
+                    },
+                  ],
+                ],
                 // @remove-on-eject-begin
                 babelrc: false,
                 configFile: false,
-                presets: [require.resolve('babel-preset-react-app')],
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
                 // We remove this when the user ejects because the default
@@ -546,7 +529,7 @@ module.exports = function (webpackEnv) {
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
-      // This is necessary to emit hot updates (currently CSS only):
+      // This is necessary to emit hot updates (CSS and Fast Refresh):
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/master/packages/react-refresh
@@ -606,7 +589,42 @@ module.exports = function (webpackEnv) {
         // The formatter is invoked directly in WebpackDevServerUtils during development
         formatter: isEnvProduction ? typescriptFormatter : undefined,
       }),
+      new ESLintPlugin({
+        // Plugin options
+        extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+        formatter: require.resolve('react-dev-utils/eslintFormatter'),
+        eslintPath: require.resolve('eslint'),
+        context: paths.appSrc,
+        cache: true,
+        cacheLocation: path.resolve(
+          paths.appNodeModules,
+          '.cache/.eslintcache'
+        ),
+        // ESLint class options
+        cwd: paths.appPath,
+        resolvePluginsRelativeTo: __dirname,
+        baseConfig: {
+          extends: [require.resolve('eslint-config-react-app')],
+          rules: {
+            ...(!hasJsxRuntime && {
+              'react/react-in-jsx-scope': 'error',
+            }),
+          },
+        },
+      }),
     ].filter(Boolean),
+    // Some libraries import Node modules but don't use them in the browser.
+    // Tell webpack to provide empty mocks for them so importing them works.
+    node: {
+      module: 'empty',
+      dgram: 'empty',
+      dns: 'mock',
+      fs: 'empty',
+      http2: 'empty',
+      net: 'empty',
+      tls: 'empty',
+      child_process: 'empty',
+    },
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,

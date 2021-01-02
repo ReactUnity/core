@@ -1,4 +1,20 @@
+/**
+ * Copyright (c) 2015-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 'use strict';
+
+// This alternative WebpackDevServer combines the functionality of:
+// https://github.com/webpack/webpack-dev-server/blob/webpack-1/client/index.js
+// https://github.com/webpack/webpack/blob/webpack-1/hot/dev-server.js
+
+// It only supports their simplest configuration (hot updates on same server).
+// It makes some opinionated choices on top, like adding a syntax error overlay
+// that looks similar to our console output. The error overlay is inspired by:
+// https://github.com/glenjamin/webpack-hot-middleware
 
 var stripAnsi = require('strip-ansi');
 var url = require('url');
@@ -21,7 +37,7 @@ var connection = new WebSocket(
 // Unlike WebpackDevServer client, we won't try to reconnect
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
-connection.onclose = Callback(function (e) {
+connection.onclose = function () {
   if (e.reason !== 'hardReload') {
     if (typeof console !== 'undefined' && typeof console.info === 'function') {
       console.info(
@@ -29,7 +45,7 @@ connection.onclose = Callback(function (e) {
       );
     }
   }
-});
+};
 
 // Remember some state related to hot module replacement.
 var isFirstCompilation = true;
@@ -127,7 +143,7 @@ function handleAvailableHash(hash) {
 }
 
 // Handle messages from the server.
-connection.onmessage = Callback(function (e) {
+connection.onmessage = function (e) {
   var message = JSON.parse(e.Data);
   switch (message.type) {
     case 'hash':
@@ -150,7 +166,7 @@ connection.onmessage = Callback(function (e) {
     default:
     // Do nothing.
   }
-});
+};
 
 // Is there a newer version of this code available?
 function isUpdateAvailable() {
@@ -178,7 +194,11 @@ function tryApplyUpdates(onHotUpdateSuccess) {
   }
 
   function handleApplyUpdates(err, updatedModules) {
-    if (err || !updatedModules) {
+    // NOTE: This var is injected by Webpack's DefinePlugin, and is a boolean instead of string.
+    const hasReactRefresh = process.env.FAST_REFRESH;
+    const wantsForcedReload = err || !updatedModules || hadRuntimeError;
+    // React refresh can handle hot-reloading over errors.
+    if (!hasReactRefresh && wantsForcedReload) {
       hardReload();
       return;
     }
@@ -194,7 +214,6 @@ function tryApplyUpdates(onHotUpdateSuccess) {
     }
   }
 
-
   // https://webpack.github.io/docs/hot-module-replacement.html#check
   var result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
@@ -205,8 +224,6 @@ function tryApplyUpdates(onHotUpdateSuccess) {
         handleApplyUpdates(null, updatedModules);
       },
       function (err) {
-        console.error("Error happened when trying to apply hot updates");
-        console.error(err);
         handleApplyUpdates(err, null);
       }
     );
