@@ -74,7 +74,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
 
 type Config = ReactReconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
 
-const hostConfig: Config & { clearContainer: () => void } = {
+const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any } = {
   getRootHostContext(rootContainerInstance) { return hostContext; },
   getChildHostContext(parentHostContext, type, rootContainerInstance) { return childContext; },
   getPublicInstance(instance: NativeInstance | NativeTextInstance) { return instance; },
@@ -184,6 +184,21 @@ const hostConfig: Config & { clearContainer: () => void } = {
   insertInContainerBefore(parent, child, beforeChild) { return Unity.insertBefore(parent, child, beforeChild); },
   removeChild(parent, child) { return Unity.removeChild(parent, child); },
   removeChildFromContainer(parent, child) { return Unity.removeChild(parent, child); },
+
+  // Required for Suspense
+  // TODO: implement
+
+  hideInstance(instance) {
+  },
+
+  hideTextInstance(textInstance) {
+  },
+
+  unhideInstance(instance, props) {
+  },
+
+  unhideTextInstance(textInstance, text) {
+  },
 
   // -------------------
   //     Scheduling
