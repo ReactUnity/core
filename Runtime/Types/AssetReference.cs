@@ -20,10 +20,7 @@ namespace ReactUnity.Types
     public class AssetReference<AssetType> : IDisposable where AssetType : class
     {
         public static AssetReference<AssetType> None = new AssetReference<AssetType>(AssetReferenceType.None, null);
-        private static Regex FirstSlashRegex = new Regex("^/");
-        private static Regex ExtensionRegex = new Regex(@"\.\w+$");
         private static Regex HttpRegex = new Regex("^https?://");
-        private static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
 
         public AssetReferenceType type { get; private set; } = AssetReferenceType.None;
         public object value { get; private set; }
@@ -77,7 +74,7 @@ namespace ReactUnity.Types
             switch (realType)
             {
                 case AssetReferenceType.Resource:
-                    callback(Resources.Load(GetResourceUrl(realValue as string), typeof(AssetType)) as AssetType);
+                    callback(Resources.Load(realValue as string, typeof(AssetType)) as AssetType);
                     break;
                 case AssetReferenceType.Global:
                     callback(context.Globals.GetValueOrDefault(realValue as string) as AssetType);
@@ -98,14 +95,6 @@ namespace ReactUnity.Types
 
         public virtual void Dispose()
         {
-        }
-
-        private string GetResourceUrl(string fullUrl)
-        {
-            var splits = ResourcesRegex.Split(fullUrl);
-            var url = splits[splits.Length - 1];
-
-            return ExtensionRegex.Replace(url, "");
         }
     }
 }

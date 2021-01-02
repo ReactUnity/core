@@ -84,8 +84,10 @@ namespace ReactUnity.DomProxies
         public string src { get; set; }
         public string charset { get; set; }
         public string crossOrigin { get; set; }
+        public float timeout { get; set; }
 
         public Action<ScriptProxy> onload { get; set; }
+        public Action<ScriptProxy> onerror { get; set; }
 
         public DocumentProxy document;
         public HeadProxy parentNode;
@@ -103,18 +105,17 @@ namespace ReactUnity.DomProxies
 
         public void OnAppend()
         {
-            var src = new ReactScript();
-            src.ScriptSource = ScriptSource.Url;
-            src.SourcePath = document.origin + this.src;
+            var script = document.context.CreateStaticScript(src);
 
-            src.GetScript((sc, isDevServer) =>
+            Action<string> callback = (sc) => MainThreadDispatcher.OnUpdate(() =>
             {
-                MainThreadDispatcher.OnUpdate(() =>
-                {
-                    document.execute(sc);
-                    onload?.Invoke(this);
-                });
-            }, out var result, false, true);
+                document.execute(sc);
+                onload?.Invoke(this);
+            });
+
+            script.GetScript((sc, isDevServer) => callback(sc), out var result, false, true);
+
+            if (!string.IsNullOrWhiteSpace(result)) callback(result);
         }
 
         public void OnRemove()

@@ -11,11 +11,15 @@ using ReactUnity.StyleEngine;
 using JavaScriptEngineSwitcher.Core;
 using System.IO;
 using ReactUnity.Styling;
+using System.Text.RegularExpressions;
 
 namespace ReactUnity
 {
     public class UnityUGUIContext
     {
+        private static Regex ExtensionRegex = new Regex(@"\.\w+$");
+        private static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
+
         public IJsEngine Engine { get; }
         public HostComponent Host { get; }
         public StringObjectDictionary Globals { get; private set; }
@@ -90,7 +94,27 @@ namespace ReactUnity
         public string ResolvePath(string path)
         {
             if (IsDevServer) return Script.DevServerFile + path;
-            return Path.GetDirectoryName(Script.GetResolvedSourcePath()) + path;
+            var res = Path.GetDirectoryName(Script.GetResolvedSourcePath()) + path;
+            if (Script.ScriptSource == ScriptSource.Resource) return GetResourceUrl(res);
+            return res;
+        }
+
+        public ReactScript CreateStaticScript(string path)
+        {
+            var src = new ReactScript();
+            src.ScriptSource = IsDevServer ? ScriptSource.Url : Script.ScriptSource;
+            src.UseDevServer = IsDevServer;
+            src.SourcePath = ResolvePath(path);
+
+            return src;
+        }
+
+        private string GetResourceUrl(string fullUrl)
+        {
+            var splits = ResourcesRegex.Split(fullUrl);
+            var url = splits[splits.Length - 1];
+
+            return ExtensionRegex.Replace(url, "");
         }
     }
 }
