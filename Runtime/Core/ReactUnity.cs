@@ -129,7 +129,12 @@ namespace ReactUnity
             }
             catch (Jint.Runtime.JavaScriptException ex)
             {
-                Debug.LogError(ex.Message);
+                Debug.LogError($"JS exception in line {ex.LineNumber} column {ex.Column}");
+                Debug.LogException(ex);
+            }
+            catch (Jint.Runtime.JintException ex)
+            {
+                Debug.LogException(ex);
             }
             catch (Exception ex)
             {
@@ -144,7 +149,14 @@ namespace ReactUnity
 
         void CreateEngine()
         {
-            engine = new Jint.Engine();
+            engine = new Jint.Engine(x => {
+                x.AllowClr();
+                x.CatchClrExceptions(ex =>
+                {
+                    Debug.LogException(ex);
+                    return true;
+                });
+            });
 
             engine.SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }));
             engine.Execute("__dirname = '';");
