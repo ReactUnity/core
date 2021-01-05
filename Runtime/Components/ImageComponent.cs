@@ -14,6 +14,7 @@ namespace ReactUnity.Components
         public override NodeStyle DefaultStyle => ImageDefaultStyle;
         public override YogaNode DefaultLayout => ImageDefaultLayout;
 
+        public ImageMeasurer Measurer { get; private set; }
         public ContainerComponent ImageContainer { get; private set; }
         public Image Image { get; private set; }
 
@@ -24,11 +25,12 @@ namespace ReactUnity.Components
             ImageContainer = new ContainerComponent(context, "");
             ImageContainer.GameObject.name = "[ImageContent]";
             Image = ImageContainer.GameObject.AddComponent<Image>();
-            var measure = ImageContainer.GameObject.AddComponent<ImageNodeMeasure>();
-            ImageContainer.Layout.SetMeasureFunction(measure.Measure);
-            measure.Context = context;
-            measure.Layout = ImageContainer.Layout;
-            measure.Component = this;
+
+            Measurer = ImageContainer.GameObject.AddComponent<ImageMeasurer>();
+            Measurer.Context = context;
+            Measurer.Layout = ImageContainer.Layout;
+            Measurer.Component = this;
+            ImageContainer.Layout.SetMeasureFunction(Measurer.Measure);
 
             ImageContainer.SetParent(this);
         }

@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace ReactUnity.Editor
 {
-    [CustomEditor(typeof(FlexElement))]
-    public class FlexElementDrawer : UnityEditor.Editor
+    [CustomEditor(typeof(ReactElement))]
+    public class ReactElementDrawer : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

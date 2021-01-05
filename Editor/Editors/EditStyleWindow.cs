@@ -15,7 +15,7 @@ namespace ReactUnity.Editor
 {
     public class EditStyleWindow : EditorWindow
     {
-        public FlexElement PreviousFlex { get; set; }
+        public ReactElement PreviousComponent { get; set; }
 
         public NodeStyle CurrentStyle { get; set; }
         public YogaNode CurrentLayout { get; set; }
@@ -45,25 +45,25 @@ namespace ReactUnity.Editor
             if (CurrentStyle == null) CurrentStyle = new NodeStyle();
             if (CurrentLayout == null) CurrentLayout = new YogaNode();
 
-            var flex = Selection.activeGameObject?.GetComponent<FlexElement>();
-            if (!flex)
+            var cmp = Selection.activeGameObject?.GetComponent<ReactElement>();
+            if (!cmp)
             {
-                PreviousFlex = null;
+                PreviousComponent = null;
                 GUILayout.Label("Select an element to start editing");
                 return;
             }
 
-            if (PreviousFlex != flex)
+            if (PreviousComponent != cmp)
             {
-                if (flex.Style != null) CurrentStyle.CopyStyle(flex.Style);
-                if (flex.Layout != null) CurrentLayout.CopyStyle(flex.Layout);
+                if (cmp.Style != null) CurrentStyle.CopyStyle(cmp.Style);
+                if (cmp.Layout != null) CurrentLayout.CopyStyle(cmp.Layout);
 
-                CurrentStyleDefaults = flex.Component?.DefaultStyle;
-                CurrentLayoutDefaults = flex.Component?.DefaultLayout;
+                CurrentStyleDefaults = cmp.Component?.DefaultStyle;
+                CurrentLayoutDefaults = cmp.Component?.DefaultLayout;
 
-                CurrentStyle.Parent = flex.Component?.Parent?.Style;
+                CurrentStyle.Parent = cmp.Component?.Parent?.Style;
 
-                PreviousFlex = flex;
+                PreviousComponent = cmp;
             }
 
 
@@ -161,7 +161,7 @@ namespace ReactUnity.Editor
             // Border Width
             DrawFloatRowWithNaN(CurrentLayout.BorderWidth, 0, (enabled, appropriateValue) =>
             {
-                var prop2 = EditorGUILayout.IntField("Border Width", (int)appropriateValue);
+                var prop2 = EditorGUILayout.IntField("Border Width", (int) appropriateValue);
                 CurrentLayout.BorderWidth = enabled ? prop2 : float.NaN;
             });
 
@@ -219,7 +219,7 @@ namespace ReactUnity.Editor
 
             // Direction
             var prop1 = EditorGUILayout.EnumPopup("Direction", CurrentLayout.StyleDirection);
-            CurrentLayout.StyleDirection = (YogaDirection)prop1;
+            CurrentLayout.StyleDirection = (YogaDirection) prop1;
 
 
 
@@ -259,14 +259,14 @@ namespace ReactUnity.Editor
 
             // Display
             var position = EditorGUILayout.EnumPopup("Position", CurrentLayout.PositionType);
-            CurrentLayout.PositionType = (YogaPositionType)position;
+            CurrentLayout.PositionType = (YogaPositionType) position;
 
             var display = EditorGUILayout.EnumPopup("Display", CurrentLayout.Display);
-            CurrentLayout.Display = (YogaDisplay)display;
+            CurrentLayout.Display = (YogaDisplay) display;
 
             // Overflow
             var ovf = EditorGUILayout.EnumPopup("Overflow", CurrentLayout.Overflow);
-            CurrentLayout.Overflow = (YogaOverflow)ovf;
+            CurrentLayout.Overflow = (YogaOverflow) ovf;
 
 
             GUILayout.Space(14);
@@ -274,7 +274,7 @@ namespace ReactUnity.Editor
 
             // Flex direction
             var prop1 = EditorGUILayout.EnumPopup("Flex Direction", CurrentLayout.FlexDirection);
-            CurrentLayout.FlexDirection = (YogaFlexDirection)prop1;
+            CurrentLayout.FlexDirection = (YogaFlexDirection) prop1;
 
 
             // Flex grow
@@ -294,7 +294,7 @@ namespace ReactUnity.Editor
 
             // Wrap
             var prop6 = EditorGUILayout.EnumPopup("Wrap", CurrentLayout.Wrap);
-            CurrentLayout.Wrap = (YogaWrap)prop6;
+            CurrentLayout.Wrap = (YogaWrap) prop6;
 
 
             GUILayout.Space(14);
@@ -302,19 +302,19 @@ namespace ReactUnity.Editor
 
             // Align Items
             var prop2 = EditorGUILayout.EnumPopup("Align Items", CurrentLayout.AlignItems);
-            CurrentLayout.AlignItems = (YogaAlign)prop2;
+            CurrentLayout.AlignItems = (YogaAlign) prop2;
 
             // Align Content
             var prop3 = EditorGUILayout.EnumPopup("Align Content", CurrentLayout.AlignContent);
-            CurrentLayout.AlignContent = (YogaAlign)prop3;
+            CurrentLayout.AlignContent = (YogaAlign) prop3;
 
             // Align Self
             var prop4 = EditorGUILayout.EnumPopup("Align Self", CurrentLayout.AlignSelf);
-            CurrentLayout.AlignSelf = (YogaAlign)prop4;
+            CurrentLayout.AlignSelf = (YogaAlign) prop4;
 
             // Justify Content
             var prop5 = EditorGUILayout.EnumPopup("Justify Content", CurrentLayout.JustifyContent);
-            CurrentLayout.JustifyContent = (YogaJustify)prop5;
+            CurrentLayout.JustifyContent = (YogaJustify) prop5;
 
 
 
@@ -468,7 +468,7 @@ namespace ReactUnity.Editor
 
         void ApplyStyles()
         {
-            var flex = Selection.activeGameObject?.GetComponent<FlexElement>();
+            var flex = Selection.activeGameObject?.GetComponent<ReactElement>();
             if (!flex) return;
 
             flex.Style.CopyStyle(CurrentStyle);

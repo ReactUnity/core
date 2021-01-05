@@ -75,7 +75,7 @@ namespace ReactUnity.Components
             TextComponent.IsPseudoElement = true;
             TextComponent.GameObject.name = "[Text]";
             TextComponent.SetParent(TextViewport);
-            TextComponent.Flex.enabled = false;
+            TextComponent.Component.enabled = false;
             var textRect = TextComponent.RectTransform;
             textRect.pivot = Vector2.one / 2;
             textRect.anchorMin = Vector2.zero;
@@ -102,7 +102,7 @@ namespace ReactUnity.Components
         public override void ApplyLayoutStyles()
         {
             base.ApplyLayoutStyles();
-            TextComponent.SelfControl.enabled = Layout.Width.Unit == YogaUnit.Auto;
+            TextComponent.Measurer.enabled = Layout.Width.Unit == YogaUnit.Auto;
         }
 
         public override void ResolveStyle(bool recursive = false)

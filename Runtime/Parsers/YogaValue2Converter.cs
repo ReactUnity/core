@@ -72,8 +72,7 @@ namespace ReactUnity.Styling.Parsers
 
         private object ParseFromPositioningLiteral(string str)
         {
-            var x = 0f;
-            var y = 0f;
+            float x, y;
 
             if (str.Contains("top"))
             {
@@ -89,13 +88,6 @@ namespace ReactUnity.Styling.Parsers
                 if (str.Contains("left")) x = 0;
                 if (str.Contains("right")) x = 1;
             }
-            else if (str.Contains("center"))
-            {
-                x = 0.5f;
-                y = 0.5f;
-                if (str.Contains("left")) x = 0;
-                if (str.Contains("right")) x = 1;
-            }
             else if (str.Contains("left"))
             {
                 x = 0;
@@ -104,6 +96,11 @@ namespace ReactUnity.Styling.Parsers
             else if (str.Contains("right"))
             {
                 x = 1;
+                y = 0.5f;
+            }
+            else if (str.Contains("center"))
+            {
+                x = 0.5f;
                 y = 0.5f;
             }
             else

@@ -6,7 +6,8 @@ using ReactUnity.Types;
 
 namespace ReactUnity.Layout
 {
-    public class FlexElement : MonoBehaviour
+    [SelectionBase]
+    public class ReactElement : MonoBehaviour
     {
         private RectTransform rt;
 

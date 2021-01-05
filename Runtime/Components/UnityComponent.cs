@@ -33,7 +33,7 @@ namespace ReactUnity.Components
         public ContainerComponent Parent { get; private set; }
 
 
-        public FlexElement Flex { get; private set; }
+        public ReactElement Component { get; private set; }
         public YogaNode Layout { get; private set; }
         public NodeStyle Style { get; private set; }
         public StateStyles StateStyles { get; private set; }
@@ -80,10 +80,10 @@ namespace ReactUnity.Components
             Style = new NodeStyle(DefaultStyle, StateStyles);
             Layout = new YogaNode(DefaultLayout);
 
-            Flex = GameObject.AddComponent<FlexElement>();
-            Flex.Layout = Layout;
-            Flex.Style = Style;
-            Flex.Component = this;
+            Component = GameObject.AddComponent<ReactElement>();
+            Component.Layout = Layout;
+            Component.Style = Style;
+            Component.Component = this;
         }
 
         public virtual void Destroy()

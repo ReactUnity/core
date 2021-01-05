@@ -5,7 +5,7 @@ using TMPro;
 
 namespace ReactUnity.Layout
 {
-    public class FlexSelfControlledElement : MonoBehaviour, ILayoutSelfController
+    public class TextMeasurer : MonoBehaviour, ILayoutSelfController
     {
         private TextMeshProUGUI tmpro;
         private RectTransform rt;

@@ -17,7 +17,7 @@ namespace ReactUnity.Components
         public float Width => LayoutUtility.GetPreferredWidth(RectTransform);
         public float Height => LayoutUtility.GetPreferredHeight(RectTransform);
 
-        public FlexSelfControlledElement SelfControl { get; private set; }
+        public TextMeasurer Measurer { get; private set; }
         public LinkedTextWatcher LinkedTextWatcher { get; private set; }
 
         private string TextInside;
@@ -29,10 +29,10 @@ namespace ReactUnity.Components
             GameObject.name = "TEXT";
             Text = GameObject.AddComponent<TextMeshProUGUI>();
 
-            SelfControl = GameObject.AddComponent<FlexSelfControlledElement>();
-            SelfControl.Layout = Layout;
-            SelfControl.Context = context;
-            Layout.SetMeasureFunction(SelfControl.Measure);
+            Measurer = GameObject.AddComponent<TextMeasurer>();
+            Measurer.Layout = Layout;
+            Measurer.Context = context;
+            Layout.SetMeasureFunction(Measurer.Measure);
 
             if (text != null) SetText(text);
         }

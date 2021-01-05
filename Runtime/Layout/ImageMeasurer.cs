@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Layout
 {
-    public class ImageNodeMeasure : MonoBehaviour, ILayoutSelfController
+    public class ImageMeasurer : MonoBehaviour, ILayoutSelfController
     {
         private Image image;
-        private RectTransform rt;
 
         public YogaNode Layout;
         public ImageComponent Component;
@@ -16,7 +15,6 @@ namespace ReactUnity.Layout
 
         private void Awake()
         {
-            rt = GetComponent<RectTransform>();
             image = GetComponent<Image>();
         }
 
@@ -35,7 +33,6 @@ namespace ReactUnity.Layout
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            //return new YogaSize() { width = width, height = height };
             var sprite = image.sprite;
             var mode = Component.Fit;
             var ow = sprite ? sprite.rect.width : 0;
