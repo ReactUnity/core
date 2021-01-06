@@ -13,7 +13,7 @@
     "strict": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "target": "ES5",
     "skipLibCheck": true,
     "preserveConstEnums": true,

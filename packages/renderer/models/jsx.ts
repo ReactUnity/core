@@ -9,14 +9,14 @@ type Children<T = any> = { children?: T };
 
 type Textable = string | number | boolean | null | undefined;
 
-declare module 'React' {
+declare module 'react/jsx-runtime' {
   namespace JSX {
     interface ElementAttributesProperty {
-      props;
+      props: any;
     }
 
     interface ElementChildrenAttribute {
-      children;
+      children: any;
     }
 
     interface IntrinsicElements {
