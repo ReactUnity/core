@@ -167,7 +167,7 @@ MonoBehaviour:
     UseDevServer: 1
     DevServer: http://localhost:3000
   PreloadScripts: []
-  EnableDebugging: 1
+  EnableDebugging: 0
   PauseDebuggerOnStart: 0
 --- !u!114 &314699163
 MonoBehaviour:

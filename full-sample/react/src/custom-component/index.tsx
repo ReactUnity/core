@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { ReactUnity, Button, NativeInstance } from '@reactunity/renderer';
+import { RefAttributes } from 'react';
 
 
 // Add strong typing for customButton component
-declare module 'React' {
+declare module 'react/jsx-runtime' {
   namespace JSX {
     interface IntrinsicElements {
       customButton: Button & RefAttributes<NativeInstance> & { children?: any };

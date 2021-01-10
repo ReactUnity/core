@@ -15,7 +15,7 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "allowSyntheticDefaultImports": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "target": "ES5",
     "skipLibCheck": true,
     "lib": [],
@@ -28,7 +28,7 @@
     "noEmit": true
   },
   "files": [
-    "./src/index.ts"
+    "./src/index.tsx"
   ],
   "include": [
     "src"
