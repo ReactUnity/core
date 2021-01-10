@@ -46,6 +46,11 @@ namespace ReactUnity.DomProxies
         {
             return null;
         }
+
+        public List<IDomElementProxy> getElementsByTagName(string tagName)
+        {
+            return new List<IDomElementProxy>();
+        }
     }
 
     public interface IDomElementProxy
@@ -98,11 +103,6 @@ namespace ReactUnity.DomProxies
             parentNode = document.head;
         }
 
-        public void appendChild(string text)
-        {
-            throw new NotImplementedException();
-        }
-
         public void OnAppend()
         {
             var script = document.context.CreateStaticScript(src);
@@ -120,7 +120,11 @@ namespace ReactUnity.DomProxies
 
         public void OnRemove()
         {
-            Debug.LogError("Trying to remove script but I don't know what to do");
+        }
+
+        public void appendChild(string text)
+        {
+            throw new NotImplementedException();
         }
 
         public void removeChild(string text)
