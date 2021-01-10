@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-#if REACT_VECTOR_GRAPHICS
+#if !(!REACT_VECTOR_GRAPHICS || UNITY_WEBGL)
 using Unity.VectorGraphics;
 #endif
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace ReactUnity.Styling
     {
         public static Dictionary<int, Sprite> SpriteCache = new Dictionary<int, Sprite>();
 
-#if !REACT_VECTOR_GRAPHICS
+#if !REACT_VECTOR_GRAPHICS || UNITY_WEBGL
         private static bool ShowVectorGraphicsMessage = true;
 #endif
 
@@ -32,7 +32,7 @@ namespace ReactUnity.Styling
             }
 
 
-#if !REACT_VECTOR_GRAPHICS
+#if !REACT_VECTOR_GRAPHICS || UNITY_WEBGL
             if (ShowVectorGraphicsMessage)
             {
                 Debug.LogError("To use the 'borderRadius' feeature, 'Unity.VectorGraphics' package must be installed.");

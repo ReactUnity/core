@@ -28,9 +28,6 @@ namespace ReactUnity
 
         public RectTransform Root => transform as RectTransform;
 
-        public bool EnableDebugging = false;
-        public bool PauseDebuggerOnStart = false;
-
         void OnEnable()
         {
             Restart();
