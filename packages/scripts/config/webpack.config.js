@@ -161,7 +161,7 @@ module.exports = function (webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvDevelopment ? 'index.js' : process.env.FILENAME || 'index.js',
-      chunkFilename: 'static/js/[name].chunk.js',
+      chunkFilename: 'static/chunk/[name].js',
       // webpack uses `publicPath` to determine where the app is being served from.
       // It requires a trailing slash, or the file assets will get an incorrect path.
       // We inferred the "public path" (such as / or /my-project) from homepage.
