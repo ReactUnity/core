@@ -36,6 +36,7 @@ namespace ReactUnity.Interop
         private void OnDestroy()
         {
             if (Instance == this) Instance = null;
+            StopAll();
         }
 
         public static void Initialize()
@@ -151,6 +152,19 @@ namespace ReactUnity.Interop
                 if (cr != null) Started.Add(StartCoroutine(cr));
             }
             ToStart.Clear();
+        }
+
+        void StopAll()
+        {
+            for (int cr = 0; cr < Started.Count; cr++)
+            {
+                var coroutine = Started[cr];
+                if (coroutine != null) StopCoroutine(coroutine);
+                Started[cr] = null;
+            }
+            ToStart.Clear();
+            ToStop.Clear();
+            CallOnLateUpdate.Clear();
         }
 
         public void Awake()

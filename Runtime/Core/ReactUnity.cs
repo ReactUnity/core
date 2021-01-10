@@ -39,10 +39,18 @@ namespace ReactUnity
         void OnDisable()
         {
             if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
+            Clean();
+        }
+
+        private void OnDestroy()
+        {
+            Clean();
         }
 
         void Clean()
         {
+            if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
+
             foreach (Transform children in Root)
             {
                 DestroyImmediate(children.gameObject);
@@ -149,7 +157,8 @@ namespace ReactUnity
 
         void CreateEngine()
         {
-            engine = new Jint.Engine(x => {
+            engine = new Jint.Engine(x =>
+            {
                 x.AllowClr();
                 x.CatchClrExceptions(ex =>
                 {
