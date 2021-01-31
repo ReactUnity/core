@@ -33,6 +33,7 @@ namespace ReactUnity.Components
         public ContainerComponent Parent { get; private set; }
 
 
+        public Dictionary<string, object> Data { get; private set; } = new Dictionary<string, object>();
         public ReactElement Component { get; private set; }
         public YogaNode Layout { get; private set; }
         public NodeStyle Style { get; private set; }
@@ -42,7 +43,16 @@ namespace ReactUnity.Components
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
 
-        public Selectable Selectable { get; protected set; }
+        private Selectable selectable;
+        public Selectable Selectable
+        {
+            get => selectable;
+            internal set
+            {
+                selectable = value;
+                UpdateBackgroundGraphic(false, true);
+            }
+        }
         public CanvasGroup CanvasGroup => GameObject.GetComponent<CanvasGroup>();
         public Canvas Canvas => GameObject.GetComponent<Canvas>();
 
@@ -141,6 +151,12 @@ namespace ReactUnity.Components
             handler.OnEvent += callAction;
         }
 
+        public virtual void SetData(string propertyName, object value)
+        {
+            Data[propertyName] = value;
+            ResolveStyle(true);
+        }
+
         public virtual void SetProperty(string propertyName, object value)
         {
             switch (propertyName)
@@ -173,15 +189,24 @@ namespace ReactUnity.Components
             else if (Tag == "_after") matchingRules = Parent.AfterRules;
             else matchingRules = Context.StyleTree.GetMatchingRules(this).ToList();
 
-            var cssStyles = new List<Dictionary<string, object>> { inlineStyles };
-            cssStyles.AddRange(matchingRules.SelectMany(x => x.Data?.Rules));
+            var importantIndex = Math.Max(0, matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity));
+            var cssStyles = new List<Dictionary<string, object>> { };
+
+            for (int i = 0; i < importantIndex; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
+            cssStyles.Add(inlineStyles);
+            for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
+
             Style.CssStyles = cssStyles;
 
 
             if (Style.CssLayouts != null)
                 foreach (var item in Style.CssLayouts) item.SetDefault(Layout, DefaultLayout);
             Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
-            foreach (var item in Style.CssLayouts) item.Set(Layout, DefaultLayout);
+            //foreach (var item in Style.CssLayouts) item.Set(Layout, DefaultLayout);
+
+            for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
+            inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
+            for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
 
             ApplyStyles();
             Style.MarkChangesSeen();
@@ -299,7 +324,12 @@ namespace ReactUnity.Components
 
         public virtual BorderAndBackground UpdateBackgroundGraphic(bool updateLayout, bool updateStyle)
         {
-            if (Selectable) Selectable.transition = Style.appearance == Appearance.None ? Selectable.Transition.None : Selectable.Transition.ColorTint;
+            if (Selectable)
+            {
+                Selectable.transition = Style.appearance == Appearance.None ? Selectable.Transition.None : Selectable.Transition.ColorTint;
+                if (Style.navigation != Navigation.Mode.Automatic)
+                    Selectable.navigation = new Navigation() { mode = Style.navigation };
+            }
 
             if (!HasBorderOrBackground()) return null;
 
@@ -372,6 +402,13 @@ namespace ReactUnity.Components
         public virtual void Accept(UnityComponentVisitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public Vector2 GetRelativePosition(float x, float y)
+        {
+            var screenPoint = new Vector2(x, y);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(GameObject.transform as RectTransform, screenPoint, Context.Host.Canvas.worldCamera, out var pos);
+            return pos;
         }
     }
 }

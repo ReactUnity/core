@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using ReactUnity.Styling.Types;
 using TMPro;
 using ReactUnity.Types;
+using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
@@ -44,6 +45,7 @@ namespace ReactUnity.Styling
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
             { typeof(Appearance), new EnumConverter<Appearance>() },
+            { typeof(Navigation.Mode), new EnumConverter<Navigation.Mode>() },
             { typeof(PointerEvents), new EnumConverter<PointerEvents>() },
             { typeof(TextOverflowModes), new EnumConverter<TextOverflowModes>() },
             { typeof(TextAlignmentOptions), new EnumConverter<TextAlignmentOptions>() },

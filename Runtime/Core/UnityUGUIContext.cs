@@ -11,6 +11,7 @@ using ReactUnity.StyleEngine;
 using System.IO;
 using ReactUnity.Styling;
 using System.Text.RegularExpressions;
+using ReactUnity.Helpers;
 
 namespace ReactUnity
 {
@@ -47,6 +48,8 @@ namespace ReactUnity
             Host = new HostComponent(hostElement, this);
             Host.Tag = "_root";
             RootLayoutNode = Host.Layout;
+
+            InsertStyle(ResourcesHelper.UseragentStylesheet?.text);
             Host.ResolveStyle(true);
 
             MainThreadDispatcher.AddCallOnLateUpdate(() =>
@@ -71,6 +74,8 @@ namespace ReactUnity
 
         public void InsertStyle(string style)
         {
+            if (string.IsNullOrWhiteSpace(style)) return;
+
             var stylesheet = StyleTree.Parser.Parse(style);
 
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())

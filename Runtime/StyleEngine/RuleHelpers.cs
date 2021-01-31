@@ -11,6 +11,7 @@ namespace ReactUnity.StyleEngine
 {
     public static class RuleHelpers
     {
+        public static int ImportantSpecifity = 1 << 30;
         public static Regex SplitSelectorRegex = new Regex("\\s+");
         public static Regex NthChildRegex = new Regex(@"\((\-?\d*n)\s*\+\s*(\d+)\)");
 
@@ -31,7 +32,7 @@ namespace ReactUnity.StyleEngine
 
             void end(RuleSelectorPartType nextType)
             {
-                var nm = acc.ToString();
+                var nm = acc.ToString().Trim('"');
                 var ignore = type == RuleSelectorPartType.None || string.IsNullOrWhiteSpace(nm)
                     || nm == "*" || nm == ">" || nm == "~" || nm == "+" || nm == "!";
                 if (!ignore)
@@ -69,8 +70,7 @@ namespace ReactUnity.StyleEngine
                         {
                             var splits = nm.Split(new char[] { '=' }, 2);
                             nm = splits[0].Trim();
-                            parameter = splits.Length > 1 ? splits[1].Trim() : null;
-
+                            parameter = splits.Length > 1 ? splits[1].Trim().Trim('"') : null;
                         }
                         list.Add(new RuleSelectorPart() { Name = nm, Type = type, Negated = negated, Parameter = parameter });
                     }
@@ -99,6 +99,12 @@ namespace ReactUnity.StyleEngine
                 else if (paranCount > 0) paranContent.Append(ch);
                 else if (ch == '.') end(RuleSelectorPartType.ClassName);
                 else if (ch == '#') end(RuleSelectorPartType.Id);
+                else if (ch == '_' && i == 0)
+                {
+                    // Special case for pseudo-elements
+                    end(RuleSelectorPartType.Id);
+                    acc.Append(ch);
+                }
                 else if (ch == '[') end(RuleSelectorPartType.Attribute);
                 else if (ch == ']') end(RuleSelectorPartType.Tag);
                 else if (ch == ':') end(RuleSelectorPartType.Special);

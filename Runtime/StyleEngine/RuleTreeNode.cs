@@ -183,13 +183,15 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.All:
                     return true;
                 case RuleSelectorPartType.Tag:
+                    if (Name != null && Name.StartsWith("_"))
+                        return component.GameObject.name == Name;
                     return Name == component.Tag;
                 case RuleSelectorPartType.Id:
                     return Name == component.GameObject.name;
                 case RuleSelectorPartType.ClassName:
                     return component.ClassList != null && component.ClassList.Contains(Name);
                 case RuleSelectorPartType.Attribute:
-                    throw new Exception("Attribute selectors are not supported.");
+                    return component.Data.TryGetValue(Name, out var val) && Equals(val, Parameter);
                 case RuleSelectorPartType.DirectDescendant:
                 case RuleSelectorPartType.AdjacentSibling:
                 case RuleSelectorPartType.Sibling:
@@ -227,7 +229,7 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.Special:
                     return true;
                 case RuleSelectorPartType.State:
-                    return component.StateStyles.GetStateValue(Parameter as string);
+                    return component.StateStyles.GetState(Parameter as string);
                 default:
                     break;
             }

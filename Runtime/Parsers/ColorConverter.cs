@@ -21,8 +21,12 @@ namespace ReactUnity.Styling.Parsers
         public object Convert(object value)
         {
             if (value is Color c) return c;
-            if (value is string s) return FromString(s);
-            if (value is IEnumerable en) return FromArray(en);
+            if (value is string s)
+            {
+                var res = FromString(s);
+                if (res is Color) return res;
+            }
+            else if (value is IEnumerable en) return FromArray(en);
 
             if (value == null) return SpecialNames.CantParse;
             var fl = floatDs.Convert(value);

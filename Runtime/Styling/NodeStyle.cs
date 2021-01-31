@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
@@ -140,6 +141,11 @@ namespace ReactUnity.Styling
         {
             set => SetStyleValue(StyleProperties.appearance, value);
             get => GetStyleValue<Appearance>(StyleProperties.appearance);
+        }
+        public Navigation.Mode navigation
+        {
+            set => SetStyleValue(StyleProperties.navigation, value);
+            get => GetStyleValue<Navigation.Mode>(StyleProperties.navigation);
         }
         #endregion
 

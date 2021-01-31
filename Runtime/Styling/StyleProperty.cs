@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
@@ -78,6 +79,7 @@ namespace ReactUnity.Styling
         public static IStyleProperty textWrap = new StyleProperty<bool>("textWrap", true, inherited: true, converter: new BoolConverter(new string[] { "wrap", "normal" }, new string[] { "nowrap" }));
         public static IStyleProperty content = new StyleProperty<string>("content", null, false);
         public static IStyleProperty appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
+        public static IStyleProperty navigation = new StyleProperty<Navigation.Mode>("navigation", Navigation.Mode.Automatic);
 
         public static Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();
         public static Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>()

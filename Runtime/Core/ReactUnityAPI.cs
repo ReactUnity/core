@@ -10,6 +10,9 @@ namespace ReactUnity
 {
     public class ReactUnityAPI
     {
+        public static Func<string, string, UnityUGUIContext, UnityComponent> defaultCreator =
+            (tag, text, context) => new ContainerComponent(context, tag);
+
         public static Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>> ComponentCreators
             = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
             {
@@ -58,7 +61,7 @@ namespace ReactUnity
             }
             else
             {
-                throw new Exception($"Unknown component tag '{tag}' specified.");
+                res = defaultCreator(tag, text, host.Context);
             }
             res.GameObject.name = $"<{tag}>";
             return res;
@@ -112,6 +115,12 @@ namespace ReactUnity
         {
             if (element is UnityComponent c)
                 c.SetProperty(property, value);
+        }
+
+        public void setData(object element, string property, object value)
+        {
+            if (element is UnityComponent c)
+                c.SetData(property, value);
         }
 
         public void setEventListener(UnityComponent element, string eventType, JsValue value)

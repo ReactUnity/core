@@ -3,6 +3,7 @@ using ReactUnity.StateHandlers;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
@@ -45,6 +46,9 @@ namespace ReactUnity.Styling
                 {
                     handler.OnStateStart += (e) => StartState(state);
                     handler.OnStateEnd += (e) => EndState(state);
+                    // TODO: consider the case when handler adds a Selectable component
+                    var selectable = Component.GameObject.GetComponent<Selectable>();
+                    if (selectable) Component.Selectable = selectable;
                 }
                 else Debug.LogError($"The class {handlerClass.Name} does not implement IStateHandler");
             }
@@ -58,7 +62,7 @@ namespace ReactUnity.Styling
             {
                 ActiveStates = States.Where(x => Dic.ContainsKey(x)).Select(x => Dic[x]).ToList();
                 // TODO: handle sibling selectors (+ and ~)
-                Component.ResolveStyle(true);
+                Component.Parent.ResolveStyle(true);
             }
             return res;
         }
@@ -71,7 +75,7 @@ namespace ReactUnity.Styling
             {
                 ActiveStates = States.Where(x => Dic.ContainsKey(x)).Select(x => Dic[x]).ToList();
                 // TODO: handle sibling selectors (+ and ~)
-                Component.ResolveStyle(true);
+                Component.Parent.ResolveStyle(true);
             }
             return res;
         }
@@ -81,7 +85,7 @@ namespace ReactUnity.Styling
             return ActiveStates.Find(x => x.HasValue(prop.name))?.GetStyleValue(prop);
         }
 
-        public bool GetStateValue(string state)
+        public bool GetState(string state)
         {
             if (!Dic.ContainsKey(state)) SubscribeToState(state);
             return States.Contains(state);
