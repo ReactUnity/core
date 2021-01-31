@@ -134,7 +134,7 @@ namespace ReactUnity.Components
                     InputField.onEndEdit.RemoveAllListeners();
                     if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Call(x)));
                     return;
-                case "onSubmit":
+                case "onReturn":
                     InputField.onSubmit.RemoveAllListeners();
                     if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Call(x)));
                     return;
