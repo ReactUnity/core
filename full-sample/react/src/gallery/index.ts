@@ -6,6 +6,7 @@ import { App as Anim } from '../anim';
 import { App as Anchor } from '../wiki/anchor';
 import { App as Button } from '../wiki/button';
 import { App as Dropdown } from '../wiki/dropdown';
+import { App as Slider } from '../wiki/slider';
 import { App as Image } from '../wiki/image';
 import { App as Input } from '../wiki/input';
 import { App as Scroll } from '../wiki/scroll';
@@ -19,6 +20,7 @@ import ViewSource from '!!raw-loader!../wiki/view';
 import AnchorSource from '!!raw-loader!../wiki/anchor';
 import ButtonSource from '!!raw-loader!../wiki/button';
 import DropdownSource from '!!raw-loader!../wiki/dropdown';
+import SliderSource from '!!raw-loader!../wiki/slider';
 import ImageSource from '!!raw-loader!../wiki/image';
 import InputSource from '!!raw-loader!../wiki/input';
 import ScrollSource from '!!raw-loader!../wiki/scroll';
@@ -37,6 +39,7 @@ const wikiPages: Sample[] = [
   { name: 'Toggle', render: Toggle, sourceCode: ToggleSource },
   { name: 'Tooltip', render: Tooltip, sourceCode: TooltipSource },
   { name: 'Dropdown', render: Dropdown, sourceCode: DropdownSource },
+  { name: 'Slider', render: Slider, sourceCode: SliderSource },
 ]
 
 renderGallery([

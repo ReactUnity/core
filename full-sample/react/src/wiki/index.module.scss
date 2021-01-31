@@ -7,4 +7,24 @@
   > * {
     margin-bottom: 10px;
   }
+
+  slider[orientation="horizontal"] {
+    height: 10px;
+    margin-bottom: 40px;
+
+    _thumb {
+      height: 40px;
+      border-radius: 4px;
+    }
+  }
+
+  slider {
+    &:active _thumb {
+      background: red;
+    }
+
+    &:focus _track {
+      background: yellow;
+    }
+  }
 }
