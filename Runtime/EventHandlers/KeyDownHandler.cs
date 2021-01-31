@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+#if REACT_INPUT_SYSTEM
+using UnityEngine.InputSystem;
+#endif
 
 namespace ReactUnity.EventHandlers
 {
@@ -12,11 +15,29 @@ namespace ReactUnity.EventHandlers
 
         private bool selected = false;
 
-        public void ClearListeners()
+#if REACT_INPUT_SYSTEM
+        private InputAction action;
+
+        private void OnEnable()
         {
-            OnEvent = null;
+            if (action == null)
+            {
+                action = new InputAction(binding: "/*/<button>");
+                action.performed += (ctx) =>
+                {
+                    if (selected) OnEvent(new KeyEventData(EventSystem.current, ctx));
+                };
+            }
+            action.Enable();
         }
 
+        private void OnDisable()
+        {
+            action?.Disable();
+        }
+#endif
+
+#if !REACT_INPUT_SYSTEM
         private void Update()
         {
             if (selected && Input.anyKeyDown)
@@ -24,6 +45,7 @@ namespace ReactUnity.EventHandlers
                 OnEvent(new KeyEventData(EventSystem.current));
             }
         }
+#endif
 
         public void OnSelect(BaseEventData eventData)
         {
@@ -34,17 +56,38 @@ namespace ReactUnity.EventHandlers
         {
             selected = false;
         }
+
+        public void ClearListeners()
+        {
+            OnEvent = null;
+        }
     }
 
     public class KeyEventData : BaseEventData
     {
         public string key;
         public Type input;
+        public bool inputSystem;
 
-        public KeyEventData(EventSystem eventSystem) : base(eventSystem)
+        public InputAction.CallbackContext ctx;
+
+
+        public KeyEventData(EventSystem eventSystem, bool inputSystem = false) : base(eventSystem)
         {
-            input = typeof(Input);
-            key = Input.inputString;
+            this.inputSystem = inputSystem;
+
+            if (!inputSystem)
+            {
+                input = typeof(Input);
+                key = Input.inputString;
+            }
+        }
+
+        public KeyEventData(EventSystem eventSystem, InputAction.CallbackContext ctx) : base(eventSystem)
+        {
+            this.inputSystem = true;
+            this.ctx = ctx;
+            key = ctx.control.name;
         }
     }
 }
