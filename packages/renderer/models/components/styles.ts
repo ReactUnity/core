@@ -29,7 +29,7 @@ export interface RenderStyle {
   // Inherited styles
   font?: UnityObject;
   fontFamily?: AssetReference;
-  fontColor?: ColorAux;
+  color?: ColorAux;
   fontWeight?: EnumOrLiteral<typeof FontWeight>;
   fontStyle?: EnumOrLiteral<typeof FontStyles>;
   fontSize?: YogaValueAux;
