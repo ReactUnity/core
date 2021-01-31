@@ -3,7 +3,7 @@ import style from './index.module.scss';
 import { Dropdown, DropdownItem } from '@reactunity/renderer';
 
 export function App() {
-  const triggerTemplate = <view style={{ fontColor: 'green' }}>Option 1</view>;
+  const triggerTemplate = <view style={{ color: 'green' }}>Option 1</view>;
 
   return <view className={style.app}>
     <Dropdown onChange={val => console.log(val)} style={{ width: 250 }}>

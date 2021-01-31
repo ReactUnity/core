@@ -20,7 +20,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
   };
 
   headerStyle: Style = {
-    fontColor: [1, 0.5235849, 0.5235849, 1],
+    color: [1, 0.5235849, 0.5235849, 1],
     fontSize: 100,
   };
 

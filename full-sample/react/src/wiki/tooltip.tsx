@@ -4,7 +4,7 @@ import { Tooltip } from '@reactunity/renderer';
 
 export function App() {
   const tooltipContent =
-    <view style={{ padding: 10, backgroundColor: 0.4, fontColor: 'white' }}>
+    <view style={{ padding: 10, backgroundColor: 0.4, color: 'white' }}>
       Cool tooltip
     </view>;
 

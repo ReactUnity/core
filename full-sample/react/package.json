@@ -24,7 +24,7 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.0.16",
+    "@reactunity/scripts": "^0.1.0",
     "@types/react-redux": "^7.1.15",
     "node-sass": "^5.0.0",
     "svg-to-png-loader": "^3.0.0",

@@ -8,16 +8,34 @@
   h1 {
     font-size: 36px;
     color: #3d3342;
+    margin-bottom: 12px;
   }
 
   h2 {
     font-size: 30px;
     text-decoration: underline;
     color: #4d4153;
+    margin-bottom: 8px;
   }
 
   section {
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+
+  row {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  column {
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+
+  slider {
+    margin: 10px;
   }
 }

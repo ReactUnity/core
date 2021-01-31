@@ -10,7 +10,7 @@ export const TextEditor = ({ text }: { text: string }) => {
     <input readonly lineType={LineType.MultiLineNewline} webSupport
       style={{
         position: Position.Absolute, height: '100%', width: '100%', flexShrink: 0, padding: 11,
-        backgroundColor: 'transparent', fontColor: 'transparent',
+        backgroundColor: 'transparent', color: 'transparent',
       }}
       value={fixLineWrapOpportunity(text)} />
     <input richText readonly lineType={LineType.MultiLineNewline}

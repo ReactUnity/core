@@ -24,17 +24,17 @@ class App extends React.Component<{}, {}> {
     return (
       <view style={{ height: '100%', alignItems: 'Center', justifyContent: 'Center' }}>
 
-        <button style={{ marginBottom: 20, fontColor: 'white' }}>
+        <button style={{ marginBottom: 20, color: 'white' }}>
           Normal Button
         </button>
 
         {/* Recommended - Strong typed */}
-        <customButton style={{ marginBottom: 20, fontColor: 'white' }}>
+        <customButton style={{ marginBottom: 20, color: 'white' }}>
           Custom Button
         </customButton>
 
         {/* Not Recommended - Not strong typed */}
-        <ElementName style={{ fontColor: 'white' }}>
+        <ElementName style={{ color: 'white' }}>
           Custom Button - Value Based
         </ElementName>
 

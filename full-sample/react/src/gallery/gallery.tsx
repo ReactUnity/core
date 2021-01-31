@@ -52,7 +52,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
 
       <view name="<Header>"
         style={{
-          backgroundColor: '#2e9151', fontColor: 'white', boxShadow: shadow, zIndex: 1,
+          backgroundColor: '#2e9151', color: 'white', boxShadow: shadow, zIndex: 1,
           alignItems: 'Center', justifyContent: 'SpaceBetween', flexDirection: FlexDirection.Row,
           flexWrap: Wrap.Wrap, flexShrink: 0, paddingVertical: 20, paddingHorizontal: 40,
         }}>
@@ -90,7 +90,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
               backgroundColor: [0.1803922, 0.5686275, 0.3176471, 1],
               borderRadius: 5,
               boxShadow: shadow,
-              fontColor: [1, 1, 1, 1],
+              color: [1, 1, 1, 1],
               fontSize: 24,
             }}>
               {!!selected.source && <anchor url={selected.source}>Source</anchor>}
