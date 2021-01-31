@@ -3,7 +3,7 @@ import type * as React from 'react';
 import { diffProperties, DiffResult } from './diffing';
 import {
   NativeInstance, InstanceTag, NativeContainerInstance, NativeTextInstance, HydratableInstance,
-  PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout, Props,
+  PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout, Props
 } from '../../models/renderer';
 
 const hostContext = {};

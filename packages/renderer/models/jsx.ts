@@ -1,9 +1,7 @@
 
 import * as rc from 'react';
 import * as Components from './components';
-import {
-  NativeInstance, NativeTextInstance, NativeInputInstance, NativeToggleInstance,
-} from './renderer';
+import { NativeInstance, NativeTextInstance, NativeInputInstance, NativeToggleInstance } from './renderer';
 
 type Children<T = any> = { children?: T };
 

@@ -41,11 +41,7 @@ export class Radio extends React.Component<RadioProps, any, RadioContext> {
 export class RadioGroup extends React.Component<RadioGroupProps> {
   getChildContext() {
     const { selectedValue, onChange } = this.props;
-    return {
-      radioGroup: {
-        selectedValue, onChange
-      }
-    }
+    return { radioGroup: { selectedValue, onChange } };
   }
 
   render() {

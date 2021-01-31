@@ -57,7 +57,7 @@ export function startAnimation(options: AnimationOptionsBase | AnimationOptionsE
         clearInterval(interval);
         currentDefer = null;
 
-        if (loop == true || loopCount < loop) {
+        if (loop === true || loopCount < loop) {
           if (loopMode === 'ping-pong') normal = !normal;
           start();
         } else {

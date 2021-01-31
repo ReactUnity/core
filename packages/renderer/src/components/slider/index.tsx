@@ -17,13 +17,6 @@ export interface SliderProps extends View {
   children?: ReactNode | ((val: number) => ReactNode);
 }
 
-const positionProps = {
-  'horizontal': 'left',
-  'horizontal-reverse': 'end',
-  'vertical': 'bottom',
-  'vertical-reverse': 'top',
-};
-
 export function Slider({
   onChange, name, children, initialValue, value, direction = 'horizontal',
   mode = 'normal', min = 0, max = 1, step = 0, keyStep = null, ...otherProps
@@ -37,10 +30,11 @@ export function Slider({
   const sizeProp = orientation === 'horizontal' ? 'width' : 'height';
   const coordProp = orientation === 'horizontal' ? 'x' : 'y';
   const crossCoordProp = orientation === 'horizontal' ? 'y' : 'x';
+  const range = max - min;
 
   const ref = useRef<any>();
 
-  const moveStep = keyStep || step || 1;
+  const moveStep = keyStep || step || (range / 10);
   const setValWithStep = useCallback((val: number) => {
     val = Math.max(min, Math.min(max, val));
     setInnerValue(val);
@@ -50,7 +44,6 @@ export function Slider({
 
   const dragCallback: PointerEventCallback = useCallback(ev => {
     const mul = isReverse ? -1 : 1;
-    const range = max - min;
     let val = innerValue;
 
     if (mode === 'diff' || mode === 'falloff') {
@@ -70,7 +63,7 @@ export function Slider({
     }
 
     setValWithStep(val);
-  }, [innerValue, setValWithStep, mode, coordProp, crossCoordProp, sizeProp, isReverse]);
+  }, [innerValue, setValWithStep, mode, coordProp, crossCoordProp, sizeProp, isReverse, range, min]);
 
   const moveCallback: AxisEventCallback = useCallback((ev) => {
     let diff = ev.moveVector[coordProp] * moveStep;
@@ -86,7 +79,7 @@ export function Slider({
     if (onChange) onChange(curValue);
   }, [onChange, curValue]);
 
-  const ratio = (curValue - min) / (max - min);
+  const ratio = (curValue - min) / range;
 
   return <view tag="slider" name={name || '<Slider>'} {...otherProps} ref={ref} data-direction={direction} data-orientation={orientation}
     onDrag={dragCallback} onPointerClick={dragCallback} onPotentialDrag={dragCallback} onMove={moveCallback}>

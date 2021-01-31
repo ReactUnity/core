@@ -1,4 +1,4 @@
-import { Position, Style } from "../../models/components";
+import { Position, Style } from '../../models/components';
 
 export const transparentColor = 'clear';
 
@@ -23,14 +23,14 @@ export const dropdownBottom: Style = {
   top: '100%',
   left: 0,
   minWidth: '100%',
-}
+};
 
 export const dropdownTop: Style = {
   position: Position.Absolute,
   bottom: '100%',
   left: 0,
   minWidth: '100%',
-}
+};
 
 export const bottomEdge: Style = {
   position: Position.Absolute,
@@ -38,4 +38,4 @@ export const bottomEdge: Style = {
   right: 0,
   bottom: 0,
   height: 0,
-}
+};

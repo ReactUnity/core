@@ -1,6 +1,4 @@
-import {
-  NativeContainerInstance, NativeTextInstance, InstanceTag, NativeInstance, TimeoutHandle, NoTimeout, Props,
-} from '../renderer';
+import { NativeContainerInstance, NativeTextInstance, InstanceTag, NativeInstance, TimeoutHandle, NoTimeout, Props } from '../renderer';
 
 export type UnityObject = { readonly $type: 'UnityObject' };
 

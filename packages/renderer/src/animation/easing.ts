@@ -26,5 +26,5 @@ export const easing = {
   // decelerating to zero velocity
   easeOutQuint: t => 1 + (--t) * t * t * t * t,
   // acceleration until halfway, then deceleration
-  easeInOutQuint: t => t < .5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t
+  easeInOutQuint: t => t < .5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t,
 };

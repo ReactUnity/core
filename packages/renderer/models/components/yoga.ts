@@ -1,7 +1,5 @@
 
-import {
-  Overflow, Direction, Display, Wrap, YogaJustify, Position, YogaAlign, FlexDirection,
-} from './yoga-enums';
+import { Overflow, Direction, Display, Wrap, YogaJustify, Position, YogaAlign, FlexDirection } from './yoga-enums';
 import { Array2Aux, Array4Aux, EnumOrLiteral, PositioningLiteral } from '../values';
 
 

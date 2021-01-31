@@ -1,4 +1,4 @@
-export default '';
+export { };
 
 declare global {
   class Vector2Native {

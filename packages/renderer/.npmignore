@@ -21,6 +21,7 @@ tslint.json
 tsconfig.json
 .editorconfig
 .eslintrc
+.eslintignore
 wallaby.js
 .travis.yml
 .gitignore

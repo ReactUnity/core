@@ -32,7 +32,7 @@ export function Dropdown<T = any>({ autoClose = true, onChange, name, style, chi
     onChange?.(value, ind);
     if (autoClose) close();
     setSelectedIndex(ind);
-  }
+  };
 
   return <view name={name || '<Dropdown>'}>
     <button name="<Dropdown Trigger>" onClick={toggle} style={{ flexDirection: 'Column', alignItems: 'Stretch', ...style }} {...otherProps}>
