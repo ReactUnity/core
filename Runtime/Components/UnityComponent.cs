@@ -20,18 +20,18 @@ namespace ReactUnity.Components
 {
     public class UnityComponent
     {
-        private static HashSet<string> EmptyClassList = new HashSet<string>();
-
-        public UnityUGUIContext Context { get; }
-        public static NodeStyle TagDefaultStyle { get; } = new NodeStyle();
-        public static YogaNode TagDefaultLayout { get; } = new YogaNode();
+        #region Statics / Defaults
+        private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
+        public static readonly NodeStyle TagDefaultStyle = new NodeStyle();
+        public static readonly YogaNode TagDefaultLayout = new YogaNode();
         public virtual NodeStyle DefaultStyle => TagDefaultStyle;
         public virtual YogaNode DefaultLayout => TagDefaultLayout;
+        #endregion
 
+        public UnityUGUIContext Context { get; }
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
         public ContainerComponent Parent { get; private set; }
-
 
         public Dictionary<string, object> Data { get; private set; } = new Dictionary<string, object>();
         public ReactElement Component { get; private set; }
@@ -59,7 +59,7 @@ namespace ReactUnity.Components
         public bool IsPseudoElement = false;
         public string Tag { get; set; } = "";
         public string ClassName { get; set; } = "";
-        public HashSet<string> ClassList { get; private set; }
+        public HashSet<string> ClassList { get; private set; } = EmptyClassList;
 
         public string TextContent => new TextContentVisitor().Get(this);
 
@@ -132,7 +132,6 @@ namespace ReactUnity.Components
             Parent.ScheduleLayout();
         }
 
-
         public virtual void SetEventListener(string eventName, Callback fun)
         {
             var eventType = EventHandlerMap.GetEventType(eventName);
@@ -149,46 +148,6 @@ namespace ReactUnity.Components
 
             Action<BaseEventData> callAction = (e) => fun.Call(e);
             handler.OnEvent += callAction;
-        }
-
-        public CType GetComponent<CType>() where CType : Component
-        {
-            return GameObject.GetComponent<CType>();
-        }
-
-        public Component GetComponent(Type type)
-        {
-            return GameObject.GetComponent(type);
-        }
-
-        public CType GetOrAddComponent<CType>() where CType : Component
-        {
-            return GameObject.GetComponent<CType>() ?? GameObject.AddComponent<CType>();
-        }
-
-        public CType AddComponent<CType>() where CType : Component
-        {
-            return AddComponent(typeof(CType)) as CType;
-        }
-
-        public Component AddComponent(Type type)
-        {
-            if (type == null) return null;
-
-            var requiredComponents = type.GetCustomAttributes(typeof(RequireComponent), true).OfType<RequireComponent>();
-
-            foreach (var req in requiredComponents)
-            {
-                if (req.m_Type0 != null && !GameObject.GetComponent(req.m_Type0)) AddComponent(req.m_Type0);
-                if (req.m_Type1 != null && !GameObject.GetComponent(req.m_Type1)) AddComponent(req.m_Type1);
-                if (req.m_Type2 != null && !GameObject.GetComponent(req.m_Type2)) AddComponent(req.m_Type2);
-            }
-
-            var res = GameObject.AddComponent(type);
-
-            if (typeof(Selectable).IsAssignableFrom(type) && !Selectable) Selectable = res as Selectable;
-
-            return res;
         }
 
         public virtual void SetData(string propertyName, object value)
@@ -268,6 +227,9 @@ namespace ReactUnity.Components
             SetCursor();
             UpdateBackgroundGraphic(false, true);
         }
+
+
+        #region Style Functions
 
         protected void ResolveTransform()
         {
@@ -425,6 +387,11 @@ namespace ReactUnity.Components
             canvas.sortingOrder = z;
         }
 
+        #endregion 
+
+
+        #region Component Tree Functions
+
         public UnityComponent QuerySelector(string query)
         {
             var tree = new RuleTree<string>(Context.Parser);
@@ -444,11 +411,63 @@ namespace ReactUnity.Components
             visitor.Visit(this);
         }
 
+        #endregion
+
+
+        #region UI/Event Utilities
+
         public Vector2 GetRelativePosition(float x, float y)
         {
             var screenPoint = new Vector2(x, y);
             RectTransformUtility.ScreenPointToLocalPointInRectangle(GameObject.transform as RectTransform, screenPoint, Context.Host.Canvas.worldCamera, out var pos);
             return pos;
         }
+
+        #endregion
+
+
+        #region Add/Get Component Utilities
+
+        public CType GetComponent<CType>() where CType : Component
+        {
+            return GameObject.GetComponent<CType>();
+        }
+
+        public Component GetComponent(Type type)
+        {
+            return GameObject.GetComponent(type);
+        }
+
+        public CType GetOrAddComponent<CType>() where CType : Component
+        {
+            return GameObject.GetComponent<CType>() ?? GameObject.AddComponent<CType>();
+        }
+
+        public CType AddComponent<CType>() where CType : Component
+        {
+            return AddComponent(typeof(CType)) as CType;
+        }
+
+        public Component AddComponent(Type type)
+        {
+            if (type == null) return null;
+
+            var requiredComponents = type.GetCustomAttributes(typeof(RequireComponent), true).OfType<RequireComponent>();
+
+            foreach (var req in requiredComponents)
+            {
+                if (req.m_Type0 != null && !GameObject.GetComponent(req.m_Type0)) AddComponent(req.m_Type0);
+                if (req.m_Type1 != null && !GameObject.GetComponent(req.m_Type1)) AddComponent(req.m_Type1);
+                if (req.m_Type2 != null && !GameObject.GetComponent(req.m_Type2)) AddComponent(req.m_Type2);
+            }
+
+            var res = GameObject.AddComponent(type);
+
+            if (typeof(Selectable).IsAssignableFrom(type) && !Selectable) Selectable = res as Selectable;
+
+            return res;
+        }
+
+        #endregion
     }
 }
