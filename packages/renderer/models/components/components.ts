@@ -1,14 +1,14 @@
-import { Style } from './styles';
-import { Layout } from './yoga';
+import { RenderStyle } from './styles';
+import { LayoutCssCompatible } from './yoga';
 import { Events, ActionCallback } from './events';
 import { AssetReference } from '../values';
 
-export type StyleAndLayout = Style & Layout;
+export type Style = RenderStyle & LayoutCssCompatible;
 
 export interface View extends Events {
   name?: string;
   className?: string;
-  style?: StyleAndLayout;
+  style?: Style;
 }
 
 export interface Button extends View {

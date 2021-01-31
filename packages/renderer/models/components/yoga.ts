@@ -1,6 +1,6 @@
 
 import {
-  Overflow, Direction, Display, Wrap, YogaJustify, PositionType, YogaAlign, FlexDirection,
+  Overflow, Direction, Display, Wrap, YogaJustify, Position, YogaAlign, FlexDirection,
 } from './yoga-enums';
 import { Array2Aux, Array4Aux, EnumOrLiteral, PositioningLiteral } from '../values';
 
@@ -19,7 +19,7 @@ export interface Layout {
   styleDirection?: EnumOrLiteral<typeof Direction>;
   display?: EnumOrLiteral<typeof Display>;
   wrap?: EnumOrLiteral<typeof Wrap>;
-  positionType?: EnumOrLiteral<typeof PositionType>;
+  positionType?: EnumOrLiteral<typeof Position>;
   justifyContent?: EnumOrLiteral<typeof YogaJustify>;
   alignContent?: EnumOrLiteral<typeof YogaAlign>;
   alignSelf?: EnumOrLiteral<typeof YogaAlign>;
@@ -69,8 +69,9 @@ export interface Layout {
 }
 
 export interface LayoutExtended {
-  position: EnumOrLiteral<typeof PositionType>;
-  direction: EnumOrLiteral<typeof Direction>;
+  position?: EnumOrLiteral<typeof Position>;
+  direction?: EnumOrLiteral<typeof Direction>;
+  flexWrap?: EnumOrLiteral<typeof Wrap>;
 }
 
-export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'positionType'> & LayoutExtended;
+export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'position' | 'wrap'> & LayoutExtended;

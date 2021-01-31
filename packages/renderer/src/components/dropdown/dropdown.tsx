@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { DropdownItem } from './dropdown-item';
 import { fullScreen, dropdownBottom, bottomEdge, transparentColor } from '../../helpers/common-layouts';
-import { View, CursorType, Style } from '../../../models/components';
+import { View, CursorType, RenderStyle } from '../../../models/components';
 
-const dropdownMenuStyle: Style = { boxShadow: '0 3 7 6 black 5' };
-const dropdownButtonStyle: Style = { backgroundColor: 'white', borderRadius: 0 };
-const dropdownBackdropStyle: Style = { backgroundColor: transparentColor, cursor: CursorType.Default };
+const dropdownMenuStyle: RenderStyle = { boxShadow: '0 3 7 6 black 5' };
+const dropdownButtonStyle: RenderStyle = { backgroundColor: 'white', borderRadius: 0 };
+const dropdownBackdropStyle: RenderStyle = { backgroundColor: transparentColor, cursor: CursorType.Default };
 
 export interface DropdownProps<T = any> {
   onChange?: (value: T, ind: number) => void;

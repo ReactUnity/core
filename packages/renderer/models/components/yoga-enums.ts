@@ -35,7 +35,7 @@ export enum Wrap {
   WrapReverse = 'wrap-reverse',
 }
 
-export enum PositionType {
+export enum Position {
   Relative = 'relative',
   Absolute = 'absolute',
 }

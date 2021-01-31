@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PositionType, View, YogaValueAux } from '../../../models/components';
+import { Position, View, YogaValueAux } from '../../../models/components';
 
 export type TooltipPosition = 'left' | 'right' | 'top' | 'bottom';
 
@@ -55,8 +55,8 @@ export class Tooltip extends React.Component<TooltipFullProps, { opened: boolean
         {this.props.children}
 
         {this.state.opened && tooltipContent &&
-          <view style={{ positionType: PositionType.Absolute, [containerProp]: Tooltip.yogaZeroPercent }}>
-            <view name="<Tooltip>" style={{ positionType: PositionType.Absolute, zIndex: 1003, [childProp]: offset }}>
+          <view style={{ position: Position.Absolute, [containerProp]: Tooltip.yogaZeroPercent }}>
+            <view name="<Tooltip>" style={{ position: Position.Absolute, zIndex: 1003, [childProp]: offset }}>
               {tooltipContent}
             </view>
           </view>

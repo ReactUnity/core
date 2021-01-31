@@ -5,7 +5,7 @@ import { UnityObject } from '../native/context';
 import { Vector2Aux } from '../values/values';
 import { EnumOrLiteral, AssetReference } from '../values';
 
-export interface Style {
+export interface RenderStyle {
   opacity?: number;
   zIndex?: number;
   visibility?: EnumOrLiteral<typeof Visibility> | boolean;

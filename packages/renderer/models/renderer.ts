@@ -1,11 +1,11 @@
-import { Layout, Style } from './components';
+import { Layout, RenderStyle } from './components';
 
 export type Unique<T, K> = T & { $type: K };
 
 
 export type NativeCommonProps = {
   Layout: Layout;
-  Style: Style;
+  Style: RenderStyle;
   Inline: Record<string, string>;
 
   ResolveStyle: () => void;
