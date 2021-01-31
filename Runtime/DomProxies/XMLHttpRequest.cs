@@ -71,8 +71,6 @@ namespace ReactUnity.DomProxies
             options = new Dictionary<string, string>();
             headers = new Dictionary<string, string>();
             postData = new Dictionary<string, List<string>>();
-
-
         }
 
         public void open(string method, string url, bool async)
@@ -221,6 +219,11 @@ namespace ReactUnity.DomProxies
 
             if (onload != null) new Callback(onload).Call();
             if (onreadystatechange != null) new Callback(onreadystatechange).Call();
+        }
+
+        public string getAllResponseHeaders()
+        {
+            return responseHeaders;
         }
 
         private Dictionary<string, string> extractOptions(Jint.Native.Object.ObjectInstance args)

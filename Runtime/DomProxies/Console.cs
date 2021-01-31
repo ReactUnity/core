@@ -84,6 +84,15 @@ namespace ReactUnity.DomProxies
             GenericLog(msg, Debug.LogError, subs);
         }
 
+        public void dir(object msg)
+        {
+            GenericLog(msg, Debug.Log);
+        }
+        public void dir(object msg, params object[] subs)
+        {
+            GenericLog(msg, Debug.Log, subs);
+        }
+
         public void clear()
         {
             MainThreadDispatcher.OnUpdate(() => Debug.ClearDeveloperConsole());
