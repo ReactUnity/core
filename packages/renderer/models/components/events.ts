@@ -78,7 +78,8 @@ export interface AxisEventData extends BaseEventData {
 
 export interface KeyEventData extends BaseEventData {
   readonly key: string;
-  readonly input: any;
+  readonly input?: any;
+  readonly inputSystem: boolean;
 }
 
 export type ActionCallback = () => void;

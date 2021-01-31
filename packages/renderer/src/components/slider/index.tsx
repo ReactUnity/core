@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, ReactNode, ReactElement, useRef } from 'react';
-import { KeyEventCallback, PointerEventCallback, View } from '../../../models/components';
+import { AxisEventCallback, PointerEventCallback, View } from '../../../models/components';
 
 export type SliderDirection = 'horizontal' | 'vertical' | 'horizontal-reverse' | 'vertical-reverse';
 export type SliderMode = 'normal' | 'diff' | 'falloff';
@@ -72,17 +72,11 @@ export function Slider({
     setValWithStep(val);
   }, [innerValue, setValWithStep, mode, coordProp, crossCoordProp, sizeProp, isReverse]);
 
-  const keyCallback: KeyEventCallback = useCallback((ev) => {
-    let diff = 0;
-    if (orientation === 'vertical' && ev.input.GetKeyDown(273)) diff = moveStep;
-    else if (orientation === 'vertical' && ev.input.GetKeyDown(274)) diff = -moveStep;
-    else if (orientation === 'horizontal' && ev.input.GetKeyDown(275)) diff = moveStep;
-    else if (orientation === 'horizontal' && ev.input.GetKeyDown(276)) diff = -moveStep;
-    else return;
-
+  const moveCallback: AxisEventCallback = useCallback((ev) => {
+    let diff = ev.moveVector[coordProp] * moveStep;
     if (isReverse) diff = -diff;
     setValWithStep(curValue + diff);
-  }, [curValue, setValWithStep, moveStep, isReverse, orientation]);
+  }, [coordProp, moveStep, isReverse, curValue, setValWithStep]);
 
   useEffect(() => {
     if (typeof value == 'number') setCurValue(value);
@@ -95,7 +89,7 @@ export function Slider({
   const ratio = (curValue - min) / (max - min);
 
   return <view tag="slider" name={name || '<Slider>'} {...otherProps} ref={ref} data-direction={direction} data-orientation={orientation}
-    onKeyDown={keyCallback} onDrag={dragCallback} onPointerClick={dragCallback} onPotentialDrag={dragCallback}>
+    onDrag={dragCallback} onPointerClick={dragCallback} onPotentialDrag={dragCallback} onMove={moveCallback}>
     <view name="_track" />
     <view name="_fill" style={{ [sizeProp]: (ratio * 100) + '%' }}>
       <view name="_thumbContainer">
