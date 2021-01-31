@@ -67,3 +67,10 @@ export interface Layout {
   paddingEnd?: YogaValueAux;
   paddingLeft?: YogaValueAux;
 }
+
+export interface LayoutExtended {
+  position: EnumOrLiteral<typeof PositionType>;
+  direction: EnumOrLiteral<typeof Direction>;
+}
+
+export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'positionType'> & LayoutExtended;

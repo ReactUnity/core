@@ -23,9 +23,7 @@
     "index.ts"
   ],
   "include": [
-    "models/**/*.ts"
-  ],
-  "exclude": [
-    "./dist/**/*.*"
+    "models",
+    "src"
   ]
 }

@@ -54,6 +54,14 @@ export enum Appearance {
   Toggle = 'toggle',
 }
 
+export enum NavigationMode {
+  None = 'none',
+  Horizontal = 'horizontal',
+  Vertical = 'vertical',
+  Automatic = 'automatic',
+  Explicit = 'explicit',
+}
+
 export enum WhiteSpace {
   Normal = 'normal',
   NoWrap = 'nowrap',

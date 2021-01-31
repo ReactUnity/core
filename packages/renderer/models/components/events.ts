@@ -76,9 +76,16 @@ export interface AxisEventData extends BaseEventData {
   readonly moveDir: MoveDirection;
 }
 
+export interface KeyEventData extends BaseEventData {
+  readonly key: string;
+  readonly input: any;
+}
+
 export type ActionCallback = () => void;
 export type BaseEventCallback = (e: BaseEventData) => void;
 export type PointerEventCallback = (e: PointerEventData) => void;
+export type AxisEventCallback = (e: AxisEventData) => void;
+export type KeyEventCallback = (e: KeyEventData) => void;
 
 export type Events = {
   onPointerClick?: PointerEventCallback;
@@ -90,7 +97,7 @@ export type Events = {
   onCancel?: BaseEventCallback;
   onSelect?: BaseEventCallback;
   onDeselect?: BaseEventCallback;
-  onMove?: AxisEventData;
+  onMove?: AxisEventCallback;
   onUpdateSelected?: BaseEventCallback;
   onScroll?: BaseEventCallback;
   onDrag?: PointerEventCallback;
@@ -98,4 +105,5 @@ export type Events = {
   onEndDrag?: PointerEventCallback;
   onPotentialDrag?: PointerEventCallback;
   onDrop?: PointerEventCallback;
+  onKeyDown?: KeyEventCallback;
 };

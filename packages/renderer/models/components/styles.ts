@@ -1,4 +1,4 @@
-import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents, Visibility, Appearance, WhiteSpace } from './styles-enums';
+import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents, Visibility, Appearance, WhiteSpace, NavigationMode } from './styles-enums';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 import { ColorAux } from '../values/color';
 import { UnityObject } from '../native/context';
@@ -13,6 +13,7 @@ export interface Style {
   pointerEvents?: EnumOrLiteral<typeof PointerEvents>;
   content?: string;
   appearance?: EnumOrLiteral<typeof Appearance>;
+  navigation?: EnumOrLiteral<typeof NavigationMode>;
 
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference;

@@ -51,5 +51,5 @@ export function Dropdown<T = any>({ autoClose = true, onChange, name, style, chi
         </view>
       </view>}
     </button>
-  </view>
+  </view>;
 }

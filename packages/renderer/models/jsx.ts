@@ -20,7 +20,7 @@ declare module 'react/jsx-runtime' {
     }
 
     interface IntrinsicElements {
-      view: Components.View & rc.RefAttributes<NativeInstance> & Children;
+      view: Components.View & rc.RefAttributes<NativeInstance> & { tag?: string } & Children;
       anchor: Components.Anchor & rc.RefAttributes<NativeInstance> & Children;
       text: Components.View & rc.RefAttributes<NativeTextInstance> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<NativeInstance> & Children;

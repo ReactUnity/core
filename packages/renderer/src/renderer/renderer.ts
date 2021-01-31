@@ -43,6 +43,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     if (attr === 'children') continue;
     if (attr === 'key') continue;
     if (attr === 'ref') continue;
+    if (attr === 'tag') continue;
     if (!isAfterMount && attr === 'style') {
       updateAfterMount = true;
       continue;
@@ -62,7 +63,9 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
       throw new Error('Component attributes must be string.');
     }
 
-    if (attr.substring(0, 2) === 'on') {
+    if (attr.substring(0, 5) === 'data-') {
+      Unity.setData(instance, attr.substring(5), value);
+    } else if (attr.substring(0, 2) === 'on') {
       Unity.setEventListener(instance, attr, value);
     } else {
       Unity.setProperty(instance, attr, value);
@@ -101,7 +104,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
       return Unity.createElement(type, text, rootContainerInstance);
     }
 
-    return Unity.createElement(type, null, rootContainerInstance);
+    return Unity.createElement(props.tag || type, null, rootContainerInstance);
   },
 
   createTextInstance(

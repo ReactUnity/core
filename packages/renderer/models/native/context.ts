@@ -26,6 +26,7 @@ export interface UnityContext {
   // Attributes
   setText(instance: NativeTextInstance, text: string): void;
   setProperty(instance: NativeInstance, property: string, value: any);
+  setData(instance: NativeInstance, property: string, value: any);
   setEventListener(instance: NativeInstance, eventType: string, listener: any);
 }
 
