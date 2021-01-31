@@ -13,7 +13,7 @@ namespace ReactUnity.Components
 
         public ScrollComponent(UnityUGUIContext Context) : base(Context, "scroll")
         {
-            ScrollRect = GameObject.AddComponent<ScrollRect>();
+            ScrollRect = AddComponent<ScrollRect>();
 
             var viewport = new GameObject("[Scroll Viewport]").AddComponent<RectTransform>();
             viewport.gameObject.AddComponent<RectMask2D>();

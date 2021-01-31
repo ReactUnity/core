@@ -1,14 +1,15 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace ReactUnity.EventHandlers
 {
+    [RequireComponent(typeof(Selectable))]
     public class KeyDownHandler : MonoBehaviour, ISelectHandler, IDeselectHandler, IEventHandler
     {
         public event Action<BaseEventData> OnEvent = default;
 
-        private BaseEventData lastEventData;
         private bool selected = false;
 
         public void ClearListeners()
@@ -27,13 +28,11 @@ namespace ReactUnity.EventHandlers
         public void OnSelect(BaseEventData eventData)
         {
             selected = true;
-            lastEventData = eventData;
         }
 
         public void OnDeselect(BaseEventData eventData)
         {
             selected = false;
-            lastEventData = eventData;
         }
     }
 

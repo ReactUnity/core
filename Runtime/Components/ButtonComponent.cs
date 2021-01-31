@@ -37,8 +37,7 @@ namespace ReactUnity.Components
 
         public ButtonComponent(UnityUGUIContext context) : base(context, "button")
         {
-            Button = GameObject.AddComponent<Button>();
-            Selectable = Button;
+            Button = AddComponent<Button>();
         }
 
 

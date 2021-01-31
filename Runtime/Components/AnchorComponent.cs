@@ -22,7 +22,7 @@ namespace ReactUnity.Components
 
         public AnchorComponent(UnityUGUIContext context) : base(context, "anchor")
         {
-            clickHandler = GameObject.AddComponent<AnchorClickHandler>();
+            clickHandler = AddComponent<AnchorClickHandler>();
             clickHandler.OnEvent += OnClick;
         }
 

@@ -53,8 +53,8 @@ namespace ReactUnity.Components
                 UpdateBackgroundGraphic(false, true);
             }
         }
-        public CanvasGroup CanvasGroup => GameObject.GetComponent<CanvasGroup>();
-        public Canvas Canvas => GameObject.GetComponent<Canvas>();
+        public CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
+        public Canvas Canvas => GetComponent<Canvas>();
 
         public bool IsPseudoElement = false;
         public string Tag { get; set; } = "";
@@ -79,7 +79,7 @@ namespace ReactUnity.Components
             Tag = tag;
             Context = context;
             GameObject = new GameObject();
-            RectTransform = GameObject.AddComponent<RectTransform>();
+            RectTransform = AddComponent<RectTransform>();
 
             RectTransform.anchorMin = Vector2.up;
             RectTransform.anchorMax = Vector2.up;
@@ -90,7 +90,7 @@ namespace ReactUnity.Components
             Style = new NodeStyle(DefaultStyle, StateStyles);
             Layout = new YogaNode(DefaultLayout);
 
-            Component = GameObject.AddComponent<ReactElement>();
+            Component = AddComponent<ReactElement>();
             Component.Layout = Layout;
             Component.Style = Style;
             Component.Component = this;
@@ -145,10 +145,50 @@ namespace ReactUnity.Components
             // No event to add
             if (fun == null) return;
 
-            if (handler == null) handler = GameObject.AddComponent(eventType) as IEventHandler;
+            if (handler == null) handler = AddComponent(eventType) as IEventHandler;
 
             Action<BaseEventData> callAction = (e) => fun.Call(e);
             handler.OnEvent += callAction;
+        }
+
+        public CType GetComponent<CType>() where CType : Component
+        {
+            return GameObject.GetComponent<CType>();
+        }
+
+        public Component GetComponent(Type type)
+        {
+            return GameObject.GetComponent(type);
+        }
+
+        public CType GetOrAddComponent<CType>() where CType : Component
+        {
+            return GameObject.GetComponent<CType>() ?? GameObject.AddComponent<CType>();
+        }
+
+        public CType AddComponent<CType>() where CType : Component
+        {
+            return AddComponent(typeof(CType)) as CType;
+        }
+
+        public Component AddComponent(Type type)
+        {
+            if (type == null) return null;
+
+            var requiredComponents = type.GetCustomAttributes(typeof(RequireComponent), true).OfType<RequireComponent>();
+
+            foreach (var req in requiredComponents)
+            {
+                if (req.m_Type0 != null && !GameObject.GetComponent(req.m_Type0)) AddComponent(req.m_Type0);
+                if (req.m_Type1 != null && !GameObject.GetComponent(req.m_Type1)) AddComponent(req.m_Type1);
+                if (req.m_Type2 != null && !GameObject.GetComponent(req.m_Type2)) AddComponent(req.m_Type2);
+            }
+
+            var res = GameObject.AddComponent(type);
+
+            if (typeof(Selectable).IsAssignableFrom(type) && !Selectable) Selectable = res as Selectable;
+
+            return res;
         }
 
         public virtual void SetData(string propertyName, object value)
@@ -275,7 +315,7 @@ namespace ReactUnity.Components
             var group = CanvasGroup;
             // Group does not exist and there is no need for it, quit early
             if (!group && !isTransparent && hasInteraction) return;
-            if (!group) group = GameObject.AddComponent<CanvasGroup>();
+            if (!group) group = AddComponent<CanvasGroup>();
 
             group.alpha = opacity;
             group.interactable = hasInteraction;
@@ -301,7 +341,7 @@ namespace ReactUnity.Components
         private void SetCursor()
         {
             if (string.IsNullOrWhiteSpace(Style.cursor)) return;
-            var handler = GameObject.GetComponent<CursorHandler>() ?? GameObject.AddComponent<CursorHandler>();
+            var handler = GetOrAddComponent<CursorHandler>();
             handler.Cursor = Style.cursor;
         }
 
@@ -377,8 +417,8 @@ namespace ReactUnity.Components
             if (!canvas && z == 0) return;
             if (!canvas)
             {
-                canvas = GameObject.AddComponent<Canvas>();
-                GameObject.AddComponent<GraphicRaycaster>();
+                canvas = AddComponent<Canvas>();
+                AddComponent<GraphicRaycaster>();
             }
 
             canvas.overrideSorting = true;

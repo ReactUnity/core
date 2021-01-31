@@ -24,9 +24,9 @@ namespace ReactUnity.Components
         {
             ImageContainer = new ContainerComponent(context, "");
             ImageContainer.GameObject.name = "[ImageContent]";
-            Image = ImageContainer.GameObject.AddComponent<Image>();
+            Image = ImageContainer.AddComponent<Image>();
 
-            Measurer = ImageContainer.GameObject.AddComponent<ImageMeasurer>();
+            Measurer = ImageContainer.AddComponent<ImageMeasurer>();
             Measurer.Context = context;
             Measurer.Layout = ImageContainer.Layout;
             Measurer.Component = this;

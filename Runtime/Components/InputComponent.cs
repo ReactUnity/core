@@ -55,13 +55,13 @@ namespace ReactUnity.Components
             // Input field's properties must be fully assigned before OnEnable is called
             GameObject.SetActive(false);
 
-            Selectable = InputField = GameObject.AddComponent<TMP_InputField>();
+            InputField = AddComponent<TMP_InputField>();
 
             TextViewport = new ContainerComponent(context, "_viewport");
             TextViewport.IsPseudoElement = true;
             TextViewport.GameObject.name = "[Text Viewport]";
             TextViewport.SetParent(this);
-            TextViewport.GameObject.AddComponent<RectMask2D>();
+            TextViewport.AddComponent<RectMask2D>();
 
 
             Placeholder = new TextComponent("", context, "_placeholder");
@@ -205,8 +205,8 @@ namespace ReactUnity.Components
 
         private WebSupport.WebGLInput SetWebGLSupport(bool createIfDoesNotExist)
         {
-            var cmp = GameObject.GetComponent<WebSupport.WebGLInput>();
-            if (createIfDoesNotExist && !cmp) GameObject.AddComponent<WebSupport.WebGLInput>();
+            var cmp = GetComponent<WebSupport.WebGLInput>();
+            if (createIfDoesNotExist && !cmp) AddComponent<WebSupport.WebGLInput>();
             return cmp;
         }
     }

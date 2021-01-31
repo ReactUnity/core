@@ -45,8 +45,7 @@ namespace ReactUnity.Components
 
         public ToggleComponent(UnityUGUIContext context) : base(context, "toggle")
         {
-            Toggle = GameObject.AddComponent<Toggle>();
-            Selectable = Toggle;
+            Toggle = AddComponent<Toggle>();
 
             Check = new ImageComponent(context);
             Check.SetProperty("source", ResourcesHelper.CheckSprite);

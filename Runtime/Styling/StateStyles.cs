@@ -38,17 +38,14 @@ namespace ReactUnity.Styling
         {
             if (ReactUnityAPI.StateHandlers.TryGetValue(state, out var handlerClass))
             {
-                var existingHandler = Component.GameObject.GetComponent(handlerClass);
+                var existingHandler = Component.GetComponent(handlerClass);
                 if (existingHandler != null) return;
 
-                var handler = Component.GameObject.AddComponent(handlerClass) as IStateHandler;
+                var handler = Component.AddComponent(handlerClass) as IStateHandler;
                 if (handler != null)
                 {
                     handler.OnStateStart += (e) => StartState(state);
                     handler.OnStateEnd += (e) => EndState(state);
-                    // TODO: consider the case when handler adds a Selectable component
-                    var selectable = Component.GameObject.GetComponent<Selectable>();
-                    if (selectable) Component.Selectable = selectable;
                 }
                 else Debug.LogError($"The class {handlerClass.Name} does not implement IStateHandler");
             }

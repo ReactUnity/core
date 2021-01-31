@@ -27,9 +27,9 @@ namespace ReactUnity.Components
         public TextComponent(string text, UnityUGUIContext context, string tag) : base(context, tag)
         {
             GameObject.name = "TEXT";
-            Text = GameObject.AddComponent<TextMeshProUGUI>();
+            Text = AddComponent<TextMeshProUGUI>();
 
-            Measurer = GameObject.AddComponent<TextMeasurer>();
+            Measurer = AddComponent<TextMeasurer>();
             Measurer.Layout = Layout;
             Measurer.Context = context;
             Layout.SetMeasureFunction(Measurer.Measure);
@@ -92,7 +92,7 @@ namespace ReactUnity.Components
             var isLinked = Style.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)
             {
-                LinkedTextWatcher = GameObject.AddComponent<LinkedTextWatcher>();
+                LinkedTextWatcher = AddComponent<LinkedTextWatcher>();
                 LinkedTextWatcher.WatchedText = this;
             }
             else if (!isLinked && LinkedTextWatcher)
