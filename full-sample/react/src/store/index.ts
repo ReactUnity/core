@@ -1,4 +1,4 @@
-import { Action, configureStore, createSlice, getDefaultMiddleware, ThunkAction } from "@reduxjs/toolkit";
+import { Action, configureStore, createSlice, getDefaultMiddleware, ThunkAction } from '@reduxjs/toolkit';
 import { FLUSH, PAUSE, PERSIST, PersistConfig, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 
 const persistConfig: PersistConfig<{ count: number }> = {

@@ -15,7 +15,7 @@ declare module 'react/jsx-runtime' {
 
 class App extends React.Component<{}, {}> {
   onInputChange = (val: string) => {
-    Globals.CubeMove["Speed"] = parseFloat(val) || 0;
+    Globals.CubeMove['Speed'] = parseFloat(val) || 0;
   };
 
   render() {

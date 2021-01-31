@@ -1,8 +1,8 @@
-import { Utils } from "./utils";
+import { Utils } from './utils';
 import * as React from 'react';
-import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from "./constants";
-import { FlexDirection, YogaJustify, YogaAlign } from "@reactunity/renderer";
-import { ITodoFooterProps } from "./interfaces";
+import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from './constants';
+import { FlexDirection, YogaJustify, YogaAlign } from '@reactunity/renderer';
+import { ITodoFooterProps } from './interfaces';
 
 class TodoFooter extends React.Component<ITodoFooterProps, {}> {
 
@@ -33,7 +33,7 @@ class TodoFooter extends React.Component<ITodoFooterProps, {}> {
           fontSize: 14, borderColor: '#cecece',
           borderTopWidth: 2,
           flexDirection: FlexDirection.Row, justifyContent: YogaJustify.SpaceBetween,
-          alignItems: YogaAlign.Center, paddingHorizontal: 16, paddingVertical: 4
+          alignItems: YogaAlign.Center, paddingHorizontal: 16, paddingVertical: 4,
         }}>
         <view style={{ width: 150 }}>
           {`<b>${this.props.count}</b> ${activeTodoWord} left`}

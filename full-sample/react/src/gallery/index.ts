@@ -40,7 +40,7 @@ const wikiPages: Sample[] = [
   { name: 'Tooltip', render: Tooltip, sourceCode: TooltipSource },
   { name: 'Dropdown', render: Dropdown, sourceCode: DropdownSource },
   { name: 'Slider', render: Slider, sourceCode: SliderSource },
-]
+];
 
 renderGallery([
   { name: 'Components', render: () => SampleGallery(wikiPages), children: wikiPages },

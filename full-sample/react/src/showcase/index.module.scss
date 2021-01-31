@@ -1,0 +1,23 @@
+.app {
+  padding: 20px;
+  max-width: 960px;
+  width: 100%;
+  align-self: center;
+  align-items: stretch;
+
+  h1 {
+    font-size: 36px;
+    color: #3d3342;
+  }
+
+  h2 {
+    font-size: 30px;
+    text-decoration: underline;
+    color: #4d4153;
+  }
+
+  section {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}

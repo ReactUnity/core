@@ -3,7 +3,7 @@ import { ReactUnity, ContentType } from '@reactunity/renderer';
 
 class App extends React.Component<{}, {}> {
   onInputChange = (val: string) => {
-    Globals.CubeMove["Speed"] = parseFloat(val) || 0;
+    Globals.CubeMove['Speed'] = parseFloat(val) || 0;
   };
 
   render() {
@@ -12,7 +12,7 @@ class App extends React.Component<{}, {}> {
 
         Cube Speed:
 
-        <input value={Globals.CubeMove["Speed"]} onChange={this.onInputChange} contentType={ContentType.DecimalNumber} />
+        <input value={Globals.CubeMove['Speed']} onChange={this.onInputChange} contentType={ContentType.DecimalNumber} />
 
       </view>
     );

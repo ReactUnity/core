@@ -19,7 +19,7 @@ export class App extends React.Component<{}, { ratio: number }> {
     flexGrow: 1,
     flexBasis: `${60}%`,
     textOverflow: 'linked',
-  }
+  };
 
   constructor(props) {
     super(props);

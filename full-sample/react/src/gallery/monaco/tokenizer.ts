@@ -42,7 +42,7 @@ const typeColors = {
   'literal.ts': 'blue',
   'number.ts': 'blue',
   'string.ts': 'red',
-  'Keyword': '#16410A',
+  Keyword: '#16410A',
   'regexp.ts': 'purple',
   'template.ts': 'red',
   'type.identifier.ts': '#16410A',

@@ -9,6 +9,7 @@
   "scripts": {
     "start": "react-unity-scripts start",
     "build": "react-unity-scripts build",
+    "lint": "eslint --ext js,ts,tsx src",
     "test": "react-unity-scripts start --test"
   },
   "dependencies": {

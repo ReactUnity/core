@@ -1,11 +1,11 @@
 export interface ITodo {
-  id: string,
-  title: string,
-  completed: boolean
+  id: string;
+  title: string;
+  completed: boolean;
 }
 
 export interface ITodoItemProps {
-  key: string,
+  key: string;
   todo: ITodo;
   editing?: boolean;
   onSave: (val: any) => void;
@@ -48,6 +48,6 @@ export interface IAppProps {
 
 export interface IAppState {
   editing?: string;
-  nowShowing?: string
+  nowShowing?: string;
   model: ITodoModel;
 }

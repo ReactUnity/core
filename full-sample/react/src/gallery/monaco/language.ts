@@ -13,13 +13,13 @@ export const conf: IRichLanguageConfiguration = {
 
   comments: {
     lineComment: '//',
-    blockComment: ['/*', '*/']
+    blockComment: ['/*', '*/'],
   },
 
   brackets: [
     ['{', '}'],
     ['[', ']'],
-    ['(', ')']
+    ['(', ')'],
   ],
 
   onEnterRules: [
@@ -27,23 +27,23 @@ export const conf: IRichLanguageConfiguration = {
       // e.g. /** | */
       beforeText: /^\s*\/\*\*(?!\/)([^\*]|\*(?!\/))*$/,
       afterText: /^\s*\*\/$/,
-      action: { indentAction: 2, appendText: ' * ' }
+      action: { indentAction: 2, appendText: ' * ' },
     },
     {
       // e.g. /** ...|
       beforeText: /^\s*\/\*\*(?!\/)([^\*]|\*(?!\/))*$/,
-      action: { indentAction: 0, appendText: ' * ' }
+      action: { indentAction: 0, appendText: ' * ' },
     },
     {
       // e.g.  * ...|
       beforeText: /^(\t|(\ \ ))*\ \*(\ ([^\*]|\*(?!\/))*)?$/,
-      action: { indentAction: 0, appendText: '* ' }
+      action: { indentAction: 0, appendText: '* ' },
     },
     {
       // e.g.  */|
       beforeText: /^(\t|(\ \ ))*\ \*\/\s*$/,
-      action: { indentAction: 0, removeText: 1 }
-    }
+      action: { indentAction: 0, removeText: 1 },
+    },
   ],
 
   autoClosingPairs: [
@@ -53,15 +53,15 @@ export const conf: IRichLanguageConfiguration = {
     { open: '"', close: '"', notIn: ['string'] },
     { open: '\'', close: '\'', notIn: ['string', 'comment'] },
     { open: '`', close: '`', notIn: ['string', 'comment'] },
-    { open: "/**", close: " */", notIn: ["string"] }
+    { open: '/**', close: ' */', notIn: ['string'] },
   ],
 
   folding: {
     markers: {
-      start: new RegExp("^\\s*//\\s*#?region\\b"),
-      end: new RegExp("^\\s*//\\s*#?endregion\\b")
-    }
-  }
+      start: new RegExp('^\\s*//\\s*#?region\\b'),
+      end: new RegExp('^\\s*//\\s*#?endregion\\b'),
+    },
+  },
 };
 
 export const language = {
@@ -78,11 +78,11 @@ export const language = {
     'private', 'protected', 'public', 'readonly', 'require', 'global', 'return',
     'set', 'static', 'super', 'switch', 'symbol', 'this', 'throw', 'true', 'try',
     'type', 'typeof', 'unique', 'var', 'void', 'while', 'with', 'yield', 'async',
-    'await', 'of'
+    'await', 'of',
   ],
 
   typeKeywords: [
-    'any', 'boolean', 'number', 'object', 'string', 'undefined'
+    'any', 'boolean', 'number', 'object', 'string', 'undefined',
   ],
 
   operators: [
@@ -108,7 +108,7 @@ export const language = {
   tokenizer: {
     root: [
       [/[{}]/, 'delimiter.bracket'],
-      { include: 'common' }
+      { include: 'common' },
     ],
 
     common: [
@@ -117,8 +117,8 @@ export const language = {
         cases: {
           '@typeKeywords': 'keyword',
           '@keywords': 'keyword',
-          '@default': 'identifier'
-        }
+          '@default': 'identifier',
+        },
       }],
       [/[A-Z][\w\$]*/, 'type.identifier'],  // to show class names nicely
       // [/[A-Z][\w\$]*/, 'identifier'],
@@ -136,8 +136,8 @@ export const language = {
       [/@symbols/, {
         cases: {
           '@operators': 'delimiter',
-          '@default': ''
-        }
+          '@default': '',
+        },
       }],
 
       // numbers
@@ -169,13 +169,13 @@ export const language = {
     comment: [
       [/[^\/*]+/, 'comment'],
       [/\*\//, 'comment', '@pop'],
-      [/[\/*]/, 'comment']
+      [/[\/*]/, 'comment'],
     ],
 
     jsdoc: [
       [/[^\/*]+/, 'comment.doc'],
       [/\*\//, 'comment.doc', '@pop'],
-      [/[\/*]/, 'comment.doc']
+      [/[\/*]/, 'comment.doc'],
     ],
 
     // We match regular expression quite precisely
@@ -196,21 +196,21 @@ export const language = {
       [/\^/, 'regexp.invalid'],
       [/@regexpesc/, 'regexp.escape'],
       [/[^\]]/, 'regexp'],
-      [/\]/, { token: 'regexp.escape.control', next: '@pop', bracket: '@close' }]
+      [/\]/, { token: 'regexp.escape.control', next: '@pop', bracket: '@close' }],
     ],
 
     string_double: [
       [/[^\\"]+/, 'string'],
       [/@escapes/, 'string.escape'],
       [/\\./, 'string.escape.invalid'],
-      [/"/, 'string', '@pop']
+      [/"/, 'string', '@pop'],
     ],
 
     string_single: [
       [/[^\\']+/, 'string'],
       [/@escapes/, 'string.escape'],
       [/\\./, 'string.escape.invalid'],
-      [/'/, 'string', '@pop']
+      [/'/, 'string', '@pop'],
     ],
 
     string_backtick: [
@@ -218,13 +218,13 @@ export const language = {
       [/[^\\`$]+/, 'string'],
       [/@escapes/, 'string.escape'],
       [/\\./, 'string.escape.invalid'],
-      [/`/, 'string', '@pop']
+      [/`/, 'string', '@pop'],
     ],
 
     bracketCounting: [
       [/\{/, 'delimiter.bracket', '@bracketCounting'],
       [/\}/, 'delimiter.bracket', '@pop'],
-      { include: 'common' }
+      { include: 'common' },
     ],
   },
 };

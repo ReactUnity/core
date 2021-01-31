@@ -1,5 +1,5 @@
-import { Utils } from "./utils";
-import { ITodoModel, ITodo } from "./interfaces";
+import { Utils } from './utils';
+import { ITodoModel, ITodo } from './interfaces';
 
 // Generic "model" object. You can use whatever
 // framework you want. For this application it
@@ -31,7 +31,7 @@ class TodoModel implements ITodoModel {
     this.todos = this.todos.concat({
       id: Utils.uuid(),
       title: title,
-      completed: false
+      completed: false,
     });
 
     this.inform();

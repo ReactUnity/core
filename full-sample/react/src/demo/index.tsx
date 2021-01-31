@@ -1,12 +1,12 @@
 /* eslint import/no-webpack-loader-syntax: off */
 
-import { ReactUnity } from "@reactunity/renderer";
+import { ReactUnity } from '@reactunity/renderer';
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router';
-import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "src/store";
-import { Redux } from "./redux";
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from 'src/store';
+import { Redux } from './redux';
 import check from './check.svg';
 
 function App() {

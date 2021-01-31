@@ -1,11 +1,10 @@
-import * as React from 'react';
 import style from './index.module.scss';
 import image from 'src/css-test/images/bg.png';
 
-const base64 = `data:image/png;base64,iVBORw0KGgoAAA\
-ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4\
-//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU\
-5ErkJggg==`
+const base64 = 'data:image/png;base64,iVBORw0KGgoAAA' +
+  'ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4' +
+  '//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU' +
+  '5ErkJggg==';
 
 export function App() {
   return <view className={style.app}>

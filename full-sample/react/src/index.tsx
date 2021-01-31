@@ -1,4 +1,3 @@
-import './index.scss';
-import './gallery';
+import './showcase';
 
 (module as any)?.hot?.accept();

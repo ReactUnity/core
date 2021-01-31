@@ -17,4 +17,4 @@ export const TextEditor = ({ text }: { text: string }) => {
       style={{ flexShrink: 0, padding: 10, borderWidth: 1, backgroundColor: 0.94, borderColor: 0.8, pointerEvents: PointerEvents.None }}
       value={richText} />
   </view>;
-}
+};

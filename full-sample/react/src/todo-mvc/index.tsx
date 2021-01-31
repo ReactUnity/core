@@ -1,10 +1,10 @@
-import { TodoModel } from "./todoModel";
-import { TodoFooter } from "./footer";
-import { TodoItem } from "./todoItem";
-import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from "./constants";
-import * as React from "react";
-import { NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, Position, ColorAux } from "@reactunity/renderer";
-import { IAppProps, IAppState, ITodo } from "./interfaces";
+import { TodoModel } from './todoModel';
+import { TodoFooter } from './footer';
+import { TodoItem } from './todoItem';
+import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from './constants';
+import * as React from 'react';
+import { NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, Position, ColorAux } from '@reactunity/renderer';
+import { IAppProps, IAppState, ITodo } from './interfaces';
 
 export class TodoApp extends React.Component<IAppProps, IAppState> {
   public state: IAppState;
@@ -63,7 +63,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
 
   public toggleAll = (checked: boolean) => {
     this.state.model.toggleAll(checked);
-  }
+  };
 
   public toggle(todoToToggle: ITodo) {
     this.state.model.toggle(todoToToggle);
@@ -156,7 +156,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
               style={{ padding: 16, paddingLeft: 64, flexGrow: 1, borderRadius: 0 }}
               ref={this.newTodoField}
               placeholder="What needs to be done?"
-              onSubmit={value => this.addTodo(value)}
+              onReturn={value => this.addTodo(value)}
             />
 
             <toggle ref={this.selectAllToggle} onChange={this.toggleAll} value={activeTodoCount === 0 && completedCount > 0}

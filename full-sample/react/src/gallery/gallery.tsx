@@ -66,7 +66,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
           style={{
             alignItems: 'Stretch', justifyContent: 'FlexStart', flexDirection: FlexDirection.Column,
             flexWrap: Wrap.NoWrap, flexShrink: 0, width: 250, paddingVertical: 20,
-            backgroundColor: '#dadada', boxShadow: shadow
+            backgroundColor: '#dadada', boxShadow: shadow,
           }}>
           {this.props.samples.map((x, i) => drawButtonForSample(x, 0, `${i}`))}
         </scroll>
