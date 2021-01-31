@@ -56,7 +56,7 @@ export function Slider({
       }
       else val += mul * diff;
     } else {
-      const relPos = ref.current.GetRelativePosition(ev.position[coordProp], ev.position[crossCoordProp]);
+      const relPos = ref.current.GetRelativePosition(ev.position.x, ev.position.y);
       let relRatio = (relPos[coordProp] / ref.current.GameObject.transform.rect[sizeProp]);
       if (isReverse) relRatio = -relRatio;
       val = (relRatio + 0.5) * range + min;
