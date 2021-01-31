@@ -17,8 +17,8 @@ export type NativeCommonProps = {
   TextContent: string;
 };
 
+export type NativeInstance = NativeCommonProps;
 export type NativeTextInstance = Unique<NativeCommonProps, 'text'>;
-export type NativeInstance = Unique<NativeCommonProps, 'instance'>;
 export type NativeContainerInstance = Unique<NativeCommonProps, 'container'>;
 
 export type NativeInputInstance = NativeInstance & {

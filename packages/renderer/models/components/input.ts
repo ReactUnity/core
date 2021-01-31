@@ -47,8 +47,8 @@ export enum LineType {
 export type InputEvent = (val: string) => void;
 export type TextSelectionEvent = (val: string, start: number, end: number) => void;
 
-export interface Input extends Omit<View, 'onSubmit'> {
-  onSubmit?: InputEvent;
+export interface Input extends View {
+  onReturn?: InputEvent;
   onEndEdit?: InputEvent;
   onChange?: InputEvent;
   onTextSelection?: TextSelectionEvent;
