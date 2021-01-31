@@ -74,7 +74,7 @@ namespace ReactUnity.Components
             Text.fontSize = Style.fontSizeActual;
             Text.fontStyle = Style.fontStyle;
             Text.fontWeight = Style.fontWeight;
-            Text.color = Style.fontColor;
+            Text.color = Style.color;
             Text.enableWordWrapping = Style.textWrap;
             Text.alignment = Style.textAlign;
             Text.overflowMode = Style.textOverflow;

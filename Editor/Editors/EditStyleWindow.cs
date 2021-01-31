@@ -206,9 +206,9 @@ namespace ReactUnity.Editor
             });
 
             // Font color
-            DrawNullableRow("fontColor", (enabled) =>
+            DrawNullableRow("color", (enabled) =>
             {
-                return EditorGUILayout.ColorField("Font color", CurrentStyle.fontColor);
+                return EditorGUILayout.ColorField("Font color", CurrentStyle.color);
             });
 
             // Text wrap

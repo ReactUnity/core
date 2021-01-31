@@ -97,10 +97,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.fontFamily, value);
             get => GetStyleValue<FontReference>(StyleProperties.fontFamily);
         }
-        public Color fontColor
+        public Color color
         {
-            set => SetStyleValue(StyleProperties.fontColor, value);
-            get => GetStyleValue<Color>(StyleProperties.fontColor);
+            set => SetStyleValue(StyleProperties.color, value);
+            get => GetStyleValue<Color>(StyleProperties.color);
         }
         public FontWeight fontWeight
         {

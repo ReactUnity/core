@@ -109,8 +109,8 @@ namespace ReactUnity.Components
         {
             base.ResolveStyle(recursive);
 
-            var c = TextComponent.Style.fontColor;
-            Placeholder.Style.fontColor = new Color(c.r, c.g, c.b, c.a * 0.5f);
+            var c = TextComponent.Style.color;
+            Placeholder.Style.color = new Color(c.r, c.g, c.b, c.a * 0.5f);
             Placeholder.ApplyStyles();
         }
 
