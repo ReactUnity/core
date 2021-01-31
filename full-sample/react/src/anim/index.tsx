@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { startAnimation, easing, PositionType, FlexDirection, YogaJustify, YogaAlign, TextOverflowModes } from '@reactunity/renderer';
+import { startAnimation, easing, Position, FlexDirection, YogaJustify, YogaAlign, TextOverflowModes } from '@reactunity/renderer';
 import style from './index.module.scss';
 
 export class App extends React.Component<{}, { val: number }> {
@@ -47,7 +47,7 @@ export class App extends React.Component<{}, { val: number }> {
       </view>
 
       <view className={style.box2} style={{ borderWidth: val * 10 + 2, borderColor: ['red', val, 'green'] }}>
-        <button style={{ positionType: PositionType.Absolute, top: 50 + val * 150 }}>
+        <button style={{ position: Position.Absolute, top: 50 + val * 150 }}>
           Position
         </button>
 

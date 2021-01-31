@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { ReactUnity, FlexDirection, Wrap, YogaJustify, FontStyles, PositionType } from '@reactunity/renderer';
+import { ReactUnity, FlexDirection, Wrap, YogaJustify, FontStyles, Position } from '@reactunity/renderer';
 import { TextEditor } from './editor';
 
 const shadow = '0 8 10 10 black 10';
@@ -54,7 +54,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
         style={{
           backgroundColor: '#2e9151', fontColor: 'white', boxShadow: shadow, zIndex: 1,
           alignItems: 'Center', justifyContent: 'SpaceBetween', flexDirection: FlexDirection.Row,
-          wrap: Wrap.Wrap, flexShrink: 0, paddingVertical: 20, paddingHorizontal: 40,
+          flexWrap: Wrap.Wrap, flexShrink: 0, paddingVertical: 20, paddingHorizontal: 40,
         }}>
         <view style={{ fontStyle: FontStyles.Bold, fontSize: 26 }}>React Unity</view>
         <view style={{ flexGrow: 1 }}></view>
@@ -65,7 +65,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
         <scroll name="<Sidebar>"
           style={{
             alignItems: 'Stretch', justifyContent: 'FlexStart', flexDirection: FlexDirection.Column,
-            wrap: Wrap.NoWrap, flexShrink: 0, width: 250, paddingVertical: 20,
+            flexWrap: Wrap.NoWrap, flexShrink: 0, width: 250, paddingVertical: 20,
             backgroundColor: '#dadada', boxShadow: shadow
           }}>
           {this.props.samples.map((x, i) => drawButtonForSample(x, 0, `${i}`))}
@@ -86,7 +86,7 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
 
           {!selected?.sourceCode && !!(selected?.source || selected?.wiki) &&
             <view style={{
-              positionType: PositionType.Absolute, right: 20, top: 20, paddingHorizontal: 30, paddingVertical: 20,
+              position: Position.Absolute, right: 20, top: 20, paddingHorizontal: 30, paddingVertical: 20,
               backgroundColor: [0.1803922, 0.5686275, 0.3176471, 1],
               borderRadius: 5,
               boxShadow: shadow,

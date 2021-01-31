@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { FlexDirection, Wrap, YogaAlign, PointerEventData, StyleAndLayout, PositionType, CursorType } from '@reactunity/renderer';
+import { FlexDirection, Wrap, YogaAlign, PointerEventData, Style, Position, CursorType } from '@reactunity/renderer';
 import lorem from '../assets/lorem';
 
 export class App extends React.Component<{}, { ratio: number }> {
 
-  scrollLayout: StyleAndLayout = { flexDirection: FlexDirection.Column, wrap: Wrap.Wrap, alignItems: YogaAlign.FlexStart, padding: 20, paddingRight: 0 };
+  scrollLayout: Style = { flexDirection: FlexDirection.Column, flexWrap: Wrap.Wrap, alignItems: YogaAlign.FlexStart, padding: 20, paddingRight: 0 };
 
-  separatorLayout: StyleAndLayout = {
+  separatorLayout: Style = {
     height: `${4}%`,
     backgroundColor: 'grey',
     cursor: CursorType.RowResize,
   };
 
-  textProps: StyleAndLayout = {
+  textProps: Style = {
     maxWidth: 300,
     marginRight: 40,
     flexShrink: 1,
@@ -34,7 +34,7 @@ export class App extends React.Component<{}, { ratio: number }> {
 
   render() {
     return <>
-      <view style={{ height: `${96 * this.state.ratio}%`, positionType: PositionType.Absolute, top: 0, left: 0, right: 0 }}>
+      <view style={{ height: `${96 * this.state.ratio}%`, position: Position.Absolute, top: 0, left: 0, right: 0 }}>
         <scroll style={this.scrollLayout}>
           <text style={this.textProps}>
             {lorem}
@@ -42,11 +42,11 @@ export class App extends React.Component<{}, { ratio: number }> {
         </scroll>
       </view>
 
-      <view style={{ positionType: PositionType.Absolute, top: `${96 * this.state.ratio}%`, left: 0, right: 0 }}>
+      <view style={{ position: Position.Absolute, top: `${96 * this.state.ratio}%`, left: 0, right: 0 }}>
         <button onDrag={this.dragSeparator} style={this.separatorLayout}></button>
       </view>
 
-      <view style={{ height: `${96 * (1 - this.state.ratio)}%`, positionType: PositionType.Absolute, bottom: 0, left: 0, right: 0 }}>
+      <view style={{ height: `${96 * (1 - this.state.ratio)}%`, position: Position.Absolute, bottom: 0, left: 0, right: 0 }}>
         <scroll style={this.scrollLayout}>
           <text style={this.textProps}>
             {lorem}

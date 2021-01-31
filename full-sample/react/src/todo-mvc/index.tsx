@@ -3,7 +3,7 @@ import { TodoFooter } from "./footer";
 import { TodoItem } from "./todoItem";
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from "./constants";
 import * as React from "react";
-import { NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, PositionType, ColorAux } from "@reactunity/renderer";
+import { NativeInputInstance, NativeToggleInstance, Layout, YogaAlign, Style, FlexDirection, Position, ColorAux } from "@reactunity/renderer";
 import { IAppProps, IAppState, ITodo } from "./interfaces";
 
 export class TodoApp extends React.Component<IAppProps, IAppState> {
@@ -160,7 +160,7 @@ export class TodoApp extends React.Component<IAppProps, IAppState> {
             />
 
             <toggle ref={this.selectAllToggle} onChange={this.toggleAll} value={activeTodoCount === 0 && completedCount > 0}
-              style={{ positionType: PositionType.Absolute, left: 8, top: '50%', translate: [0, '-50%'] }} />
+              style={{ position: Position.Absolute, left: 8, top: '50%', translate: [0, '-50%'] }} />
           </view>
 
           {main}

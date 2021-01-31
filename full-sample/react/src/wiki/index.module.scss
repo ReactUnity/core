@@ -17,14 +17,4 @@
       border-radius: 4px;
     }
   }
-
-  slider {
-    &:active _thumb {
-      background: red;
-    }
-
-    &:focus _track {
-      background: yellow;
-    }
-  }
 }

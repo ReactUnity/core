@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PositionType, LineType, PointerEvents } from '@reactunity/renderer';
+import { Position, LineType, PointerEvents } from '@reactunity/renderer';
 import { colorizeRichtext, tokenize, fixLineWrapOpportunity } from './monaco/tokenizer';
 
 
@@ -9,7 +9,7 @@ export const TextEditor = ({ text }: { text: string }) => {
   return <view style={{ fontFamily: 'monospace', flexGrow: 1, flexShrink: 0 }}>
     <input readonly lineType={LineType.MultiLineNewline} webSupport
       style={{
-        positionType: PositionType.Absolute, height: '100%', width: '100%', flexShrink: 0, padding: 11,
+        position: Position.Absolute, height: '100%', width: '100%', flexShrink: 0, padding: 11,
         backgroundColor: 'transparent', fontColor: 'transparent',
       }}
       value={fixLineWrapOpportunity(text)} />
