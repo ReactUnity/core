@@ -1,0 +1,117 @@
+@font-face {
+  font-family: sans-serif;
+  src: "resource://ReactUnity/fonts/sans-serif";
+}
+
+@font-face {
+  font-family: monospace;
+  src: "resource://ReactUnity/fonts/monospace";
+}
+
+:root {
+  font-family: sans-serif;
+}
+
+slider {
+  height: 20px;
+  width: 200px;
+  transform-origin: 50% 50%;
+  navigation: vertical;
+  cursor: pointer;
+}
+
+slider[orientation="vertical"] {
+  width: 20px;
+  height: 200px;
+  navigation: horizontal;
+}
+
+slider _track {
+  position: absolute;
+  start: 0;
+  end: 0;
+  top: 25%;
+  bottom: 25%;
+  background: 0.92;
+}
+
+slider[orientation="vertical"] _track {
+  start: 25%;
+  end: 25%;
+  top: 0;
+  bottom: 0;
+}
+
+slider _fill {
+  background: 0.8;
+  position: absolute;
+}
+
+slider[direction="horizontal"] _fill {
+  top: 25%;
+  bottom: 25%;
+  start: 0;
+}
+
+slider[direction="horizontal-reverse"] _fill {
+  top: 25%;
+  bottom: 25%;
+  end: 0;
+}
+
+slider[direction="vertical"] _fill {
+  start: 25%;
+  end: 25%;
+  bottom: 0;
+}
+
+slider[direction="vertical-reverse"] _fill {
+  start: 25%;
+  end: 25%;
+  top: 0;
+}
+
+slider _thumbContainer {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+slider[direction="horizontal"] _thumbContainer {
+  top: 50%;
+  end: 0;
+}
+
+slider[direction="horizontal-reverse"] _thumbContainer {
+  top: 50%;
+  start: 0;
+}
+
+slider[direction="vertical"] _thumbContainer {
+  start: 50%;
+  top: 0;
+}
+
+slider[direction="vertical-reverse"] _thumbContainer {
+  start: 50%;
+  bottom: 0;
+}
+
+slider _thumb {
+  align-items: center;
+  background: 0.6;
+  border-radius: 20;
+  height: 20;
+  width: 20;
+  position: absolute;
+  transform-origin: center;
+  translate: -50% -50%;
+}
+
+slider[orientation="horizontal"] _thumb {
+  flex-direction: column;
+}
+
+slider[orientation="vertical"] _thumb {
+  flex-direction: row;
+}
