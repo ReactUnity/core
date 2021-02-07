@@ -83,11 +83,12 @@ export function Slider({
 
   return <view tag="slider" name={name || '<Slider>'} {...otherProps} ref={ref} data-direction={direction} data-orientation={orientation}
     onDrag={dragCallback} onPointerClick={dragCallback} onPotentialDrag={dragCallback} onMove={moveCallback}>
-    <view name="_track" />
-    <view name="_fill" style={{ [sizeProp]: (ratio * 100) + '%' }}>
-      <view name="_thumbContainer">
-        <view name="_thumb">
-          {typeof children === 'function' ? children(curValue) : children}
+    <view name="_track">
+      <view name="_fill" style={{ [sizeProp]: (ratio * 100) + '%' }}>
+        <view name="_thumbContainer">
+          <view name="_thumb">
+            {typeof children === 'function' ? children(curValue) : children}
+          </view>
         </view>
       </view>
     </view>
