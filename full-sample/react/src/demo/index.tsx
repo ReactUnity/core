@@ -1,6 +1,6 @@
 /* eslint import/no-webpack-loader-syntax: off */
 
-import { ReactUnityRenderer } from '@reactunity/renderer';
+import { Renderer } from '@reactunity/renderer';
 import React, { Suspense } from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes, useNavigate } from 'react-router';
@@ -32,7 +32,7 @@ function Root() {
   </>;
 }
 
-ReactUnityRenderer.render(
+Renderer.render(
   <Suspense fallback={<view>Loading</view>}>
     <Provider store={store}>
       <PersistGate persistor={persistor}>

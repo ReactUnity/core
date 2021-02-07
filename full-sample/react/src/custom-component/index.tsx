@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnityRenderer, Button, NativeInstance } from '@reactunity/renderer';
+import { Renderer, Button, NativeInstance } from '@reactunity/renderer';
 import { RefAttributes } from 'react';
 
 
@@ -42,4 +42,4 @@ class App extends React.Component<{}, {}> {
     );
   }
 }
-ReactUnityRenderer.render(<App />);
+Renderer.render(<App />);

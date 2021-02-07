@@ -1,4 +1,4 @@
-import { Dropdown, DropdownItem, ImageFitMode, NativeVideoInstance, ReactUnity, Slider, Tooltip } from '@reactunity/renderer';
+import { Dropdown, DropdownItem, ImageFitMode, NativeVideoInstance, Renderer, Slider, Tooltip } from '@reactunity/renderer';
 import style from './index.module.scss';
 import pngImage from 'src/assets/bg.png';
 import base64Image from 'src/assets/base64Image.txt';
@@ -135,4 +135,4 @@ export function App() {
   </scroll>;
 };
 
-ReactUnityRenderer.render(<App />);
+Renderer.render(<App />);

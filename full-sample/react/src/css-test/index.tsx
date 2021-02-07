@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnityRenderer } from '@reactunity/renderer';
+import { Renderer } from '@reactunity/renderer';
 import ind from './index.module.scss';
 import png from './images/delete.png';
 import png2 from './images/bg.png';
@@ -48,4 +48,4 @@ export function App() {
   </scroll>;
 }
 
-ReactUnityRenderer.render(<App />);
+Renderer.render(<App />);
