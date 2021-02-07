@@ -218,7 +218,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
 const ReactUnityReconciler = ReactReconciler(hostConfig);
 
 let hostRoot: ReactReconciler.FiberRoot;
-export const ReactUnity = {
+export const ReactUnityRenderer = {
   render(
     element: React.ReactNode,
     hostContainer?: NativeContainerInstance,

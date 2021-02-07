@@ -1,4 +1,4 @@
-export { ReactUnity } from './src/renderer/renderer';
+export { ReactUnityRenderer } from './src/renderer/renderer';
 export * from './src/animation/animation';
 export * from './src/animation/easing';
 export * from './src/components/dropdown';
@@ -12,3 +12,4 @@ export * from './models/values';
 export * from './models/renderer';
 export * from './models/jsx';
 export * from './models/environment';
+export * from './models/generated';
