@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity
-// Generated 7.02.2021 15:52:40
+// Generated 7.02.2021 16:00:44
 //
 import { UnityEngine } from './unity';
 
@@ -115,7 +115,7 @@ export namespace ReactUnity {
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
-    scheduleLayout: ((callback: any) => void);
+    scheduleLayout: ((callback?: any) => void);
     InsertStyle: ((style: string) => void);
     RemoveStyle: ((style: string) => void);
     ResolvePath: ((path: string) => string);
@@ -206,7 +206,7 @@ export namespace ReactUnity {
       openInThisTab: boolean;
       IsPseudoElement: boolean;
       SetProperty: ((propertyName: string, value: any) => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
       AddBefore: (() => void);
@@ -214,10 +214,10 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
@@ -261,7 +261,7 @@ export namespace ReactUnity {
       TextContent: string;
       IsPseudoElement: boolean;
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
       AddBefore: (() => void);
@@ -269,10 +269,10 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
@@ -314,7 +314,7 @@ export namespace ReactUnity {
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
       IsPseudoElement: boolean;
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
       AddBefore: (() => void);
@@ -322,11 +322,11 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
@@ -371,7 +371,7 @@ export namespace ReactUnity {
       TextContent: string;
       IsPseudoElement: boolean;
       ApplyStyles: (() => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
       AddBefore: (() => void);
@@ -379,11 +379,11 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
       QuerySelectorAll: ((query: string) => any);
@@ -429,7 +429,7 @@ export namespace ReactUnity {
       TextContent: string;
       IsPseudoElement: boolean;
       SetProperty: ((propertyName: string, value: any) => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
       AddBefore: (() => void);
@@ -437,10 +437,10 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
@@ -494,7 +494,7 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       SetText: ((text: string) => void);
       ApplyLayoutStyles: (() => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyStyles: (() => void);
       Focus: (() => void);
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
@@ -505,9 +505,9 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
       QuerySelectorAll: ((query: string) => any);
@@ -549,7 +549,7 @@ export namespace ReactUnity {
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
       IsPseudoElement: boolean;
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
       AddBefore: (() => void);
@@ -557,11 +557,11 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
@@ -606,12 +606,12 @@ export namespace ReactUnity {
       ApplyLayoutStyles: (() => void);
       ApplyStyles: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ScheduleLayout: ((callback?: any) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
       QuerySelectorAll: ((query: string) => any);
@@ -659,7 +659,7 @@ export namespace ReactUnity {
       Focus: (() => void);
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
       SetProperty: ((propertyName: string, value: any) => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
       AddBefore: (() => void);
@@ -667,9 +667,9 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
@@ -706,12 +706,12 @@ export namespace ReactUnity {
       TextContent: string;
       IsPseudoElement: boolean;
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ScheduleLayout: ((callback?: any) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
@@ -762,7 +762,7 @@ export namespace ReactUnity {
       RenderTexture: UnityEngine.RenderTexture;
       IsPseudoElement: boolean;
       SetProperty: ((propertyName: string, value: any) => void);
-      ResolveStyle: ((recursive: boolean) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
       AddBefore: (() => void);
@@ -770,10 +770,10 @@ export namespace ReactUnity {
       AddAfter: (() => void);
       RemoveAfter: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore: ReactUnity.Components.UnityComponent, insertAfter: boolean) => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
@@ -939,7 +939,7 @@ export namespace ReactUnity {
       Url: any; // System.Uri
       WaitTime: any; // System.TimeSpan
       binaryType: string;
-      close: ((code: number, reason: string) => void);
+      close: ((code?: number, reason?: string) => void);
       Accept: (() => void);
       AcceptAsync: (() => void);
       Close: (() => void) | ((code: any) => void) | ((code: any) => void) | ((code: any, reason: string) => void) | ((code: any, reason: string) => void);
@@ -2655,8 +2655,8 @@ export namespace ReactUnity {
       GetMatchingRules: ((component: ReactUnity.Components.UnityComponent) => any);
       GetMatchingBefore: ((component: ReactUnity.Components.UnityComponent) => any);
       GetMatchingAfter: ((component: ReactUnity.Components.UnityComponent) => any);
-      GetMatchingChild: ((component: ReactUnity.Components.UnityComponent, pseudoElement: boolean) => ReactUnity.Components.UnityComponent);
-      GetMatchingChildren: ((component: ReactUnity.Components.UnityComponent, pseudoElement: boolean) => any);
+      GetMatchingChild: ((component: ReactUnity.Components.UnityComponent, pseudoElement?: boolean) => ReactUnity.Components.UnityComponent);
+      GetMatchingChildren: ((component: ReactUnity.Components.UnityComponent, pseudoElement?: boolean) => any);
       AddSelector: ((selectorText: string) => any);
       AddChildCascading: ((selector: string) => any);
       Matches: ((component: ReactUnity.Components.UnityComponent, scope: ReactUnity.Components.UnityComponent) => boolean);
@@ -2710,7 +2710,7 @@ export namespace ReactUnity {
       Name: string;
       Parameter: any; // System.Object
       CompareTo: ((other: ReactUnity.StyleEngine.RuleSelectorPart) => number);
-      Matches: ((component: ReactUnity.Components.UnityComponent, scope: ReactUnity.Components.UnityComponent) => boolean);
+      Matches: ((component: ReactUnity.Components.UnityComponent, scope?: ReactUnity.Components.UnityComponent) => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -3105,7 +3105,7 @@ export namespace ReactUnity {
       Parent: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       CopyStyle: ((copyFrom: ReactUnity.Styling.NodeStyle) => void);
-      GetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, fromChild: boolean) => any);
+      GetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean) => any);
       SetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, value: any) => void);
       MarkChangesSeen: (() => void);
       HasValue: ((name: string) => boolean);

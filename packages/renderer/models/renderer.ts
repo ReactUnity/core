@@ -1,35 +1,13 @@
-import { Layout, RenderStyle } from './components';
+import { ReactUnity } from './generated';
 
 export type Unique<T, K> = T & { $type: K };
 
-
-export type NativeCommonProps = {
-  Layout: Layout;
-  Style: RenderStyle;
-  Inline: Record<string, string>;
-
-  ResolveStyle: () => void;
-  ScheduleLayout: () => void;
-  ApplyLayoutStyles: () => void;
-
-  QuerySelector: (query: string) => NativeInstance;
-  QuerySelectorAll: (query: string) => NativeInstance[];
-  TextContent: string;
-};
-
-export type NativeInstance = NativeCommonProps;
-export type NativeTextInstance = Unique<NativeCommonProps, 'text'>;
-export type NativeContainerInstance = Unique<NativeCommonProps, 'container'>;
-
-export type NativeInputInstance = NativeInstance & {
-  Value: string;
-  Focus: () => void;
-};
-
-export type NativeToggleInstance = NativeInstance & {
-  Value: boolean;
-  Focus: () => void;
-};
+export type NativeInstance = ReactUnity.Components.UnityComponent;
+export type NativeTextInstance = ReactUnity.Components.TextComponent;
+export type NativeContainerInstance = ReactUnity.Components.HostComponent;
+export type NativeVideoInstance = ReactUnity.Components.VideoComponent;
+export type NativeInputInstance = ReactUnity.Components.InputComponent;
+export type NativeToggleInstance = ReactUnity.Components.ToggleComponent;
 
 export type InstanceTag = string;
 export type Props = React.RefAttributes<NativeInstance> & {

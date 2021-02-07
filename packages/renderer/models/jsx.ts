@@ -1,7 +1,7 @@
 
 import * as rc from 'react';
 import * as Components from './components';
-import { NativeInstance, NativeTextInstance, NativeInputInstance, NativeToggleInstance } from './renderer';
+import { NativeInstance, NativeTextInstance, NativeInputInstance, NativeToggleInstance, NativeVideoInstance } from './renderer';
 
 type Children<T = any> = { children?: T };
 
@@ -26,6 +26,7 @@ declare module 'react/jsx-runtime' {
       input: Components.Input & rc.RefAttributes<NativeInputInstance> & Children<never>;
       scroll: Components.View & rc.RefAttributes<NativeInstance> & Children;
       image: Components.Image & rc.RefAttributes<NativeInstance> & Children<never>;
+      video: Components.Video & rc.RefAttributes<NativeVideoInstance> & Children<never>;
       toggle: Components.Toggle & rc.RefAttributes<NativeToggleInstance> & Children<never>;
     }
   }

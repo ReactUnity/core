@@ -1,6 +1,6 @@
 //
 // Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule
-// Generated 7.02.2021 15:51:22
+// Generated 7.02.2021 16:00:38
 //
 
 
@@ -386,7 +386,7 @@ export namespace Unity {
       Stop: (() => void);
       Reset: (() => void);
       GetSample: ((index: number) => Unity.Profiling.ProfilerRecorderSample);
-      CopyTo: ((outSamples: any, reset: boolean) => void);
+      CopyTo: ((outSamples: any, reset?: boolean) => void);
       ToArray: (() => Unity.Profiling.ProfilerRecorderSample[]);
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
@@ -1851,7 +1851,7 @@ export namespace UnityEngine {
     SetBoneWeights: ((bonesPerVertex: any, weights: any) => void);
     GetAllBoneWeights: (() => any);
     GetBonesPerVertex: (() => any);
-    SetSubMesh: ((index: number, desc: UnityEngine.Rendering.SubMeshDescriptor, flags: UnityEngine.Rendering.MeshUpdateFlags) => void);
+    SetSubMesh: ((index: number, desc: UnityEngine.Rendering.SubMeshDescriptor, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void);
     GetSubMesh: ((index: number) => UnityEngine.Rendering.SubMeshDescriptor);
     MarkModified: (() => void);
     GetUVDistributionMetric: ((uvSetIndex: number) => number);
@@ -1867,22 +1867,22 @@ export namespace UnityEngine {
     GetUVs: ((channel: number, uvs: any) => void) | ((channel: number, uvs: any) => void) | ((channel: number, uvs: any) => void);
     GetVertexAttributes: (() => UnityEngine.Rendering.VertexAttributeDescriptor[]) | ((attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => number) | ((attributes: any) => number);
     SetVertexBufferParams: ((vertexCount: number, attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => void) | ((vertexCount: number, attributes: any) => void);
-    GetTriangles: ((submesh: number) => any) | ((submesh: number, applyBaseVertex: boolean) => any) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, applyBaseVertex: boolean) => void) | ((triangles: any, submesh: number, applyBaseVertex: boolean) => void);
-    GetIndices: ((submesh: number) => any) | ((submesh: number, applyBaseVertex: boolean) => any) | ((indices: any, submesh: number) => void) | ((indices: any, submesh: number, applyBaseVertex: boolean) => void) | ((indices: any, submesh: number, applyBaseVertex: boolean) => void);
+    GetTriangles: ((submesh: number) => any) | ((submesh: number, applyBaseVertex: boolean) => any) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, applyBaseVertex: boolean) => void) | ((triangles: any, submesh: number, applyBaseVertex?: boolean) => void);
+    GetIndices: ((submesh: number) => any) | ((submesh: number, applyBaseVertex: boolean) => any) | ((indices: any, submesh: number) => void) | ((indices: any, submesh: number, applyBaseVertex: boolean) => void) | ((indices: any, submesh: number, applyBaseVertex?: boolean) => void);
     GetIndexStart: ((submesh: number) => any);
     GetIndexCount: ((submesh: number) => any);
     GetBaseVertex: ((submesh: number) => any);
-    SetTriangles: ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds: boolean, baseVertex: number) => void);
-    SetIndices: ((indices: any, topology: UnityEngine.MeshTopology, submesh: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void);
-    SetSubMeshes: ((desc: UnityEngine.Rendering.SubMeshDescriptor[], start: number, count: number, flags: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: UnityEngine.Rendering.SubMeshDescriptor[], flags: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: any, start: number, count: number, flags: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: any, flags: UnityEngine.Rendering.MeshUpdateFlags) => void);
+    SetTriangles: ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void);
+    SetIndices: ((indices: any, topology: UnityEngine.MeshTopology, submesh: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void);
+    SetSubMeshes: ((desc: UnityEngine.Rendering.SubMeshDescriptor[], start: number, count: number, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: UnityEngine.Rendering.SubMeshDescriptor[], flags?: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: any, start: number, count: number, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: any, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void);
     GetBindposes: ((bindposes: any) => void);
     GetBoneWeights: ((boneWeights: any) => void);
     Clear: ((keepVertexLayout: boolean) => void) | (() => void);
     RecalculateBounds: (() => void) | ((flags: UnityEngine.Rendering.MeshUpdateFlags) => void);
     RecalculateNormals: (() => void) | ((flags: UnityEngine.Rendering.MeshUpdateFlags) => void);
     RecalculateTangents: (() => void) | ((flags: UnityEngine.Rendering.MeshUpdateFlags) => void);
-    RecalculateUVDistributionMetric: ((uvSetIndex: number, uvAreaThreshold: number) => void);
-    RecalculateUVDistributionMetrics: ((uvAreaThreshold: number) => void);
+    RecalculateUVDistributionMetric: ((uvSetIndex: number, uvAreaThreshold?: number) => void);
+    RecalculateUVDistributionMetrics: ((uvAreaThreshold?: number) => void);
     MarkDynamic: (() => void);
     UploadMeshData: ((markNoLongerReadable: boolean) => void);
     Optimize: (() => void);
@@ -1911,9 +1911,9 @@ export namespace UnityEngine {
     GetUVs: ((channel: number, outUVs: any) => void) | ((channel: number, outUVs: any) => void) | ((channel: number, outUVs: any) => void);
     SetVertexBufferParams: ((vertexCount: number, attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => void) | ((vertexCount: number, attributes: any) => void);
     SetIndexBufferParams: ((indexCount: number, format: UnityEngine.Rendering.IndexFormat) => void);
-    GetIndices: ((outIndices: any, submesh: number, applyBaseVertex: boolean) => void) | ((outIndices: any, submesh: number, applyBaseVertex: boolean) => void);
+    GetIndices: ((outIndices: any, submesh: number, applyBaseVertex?: boolean) => void) | ((outIndices: any, submesh: number, applyBaseVertex?: boolean) => void);
     GetSubMesh: ((index: number) => UnityEngine.Rendering.SubMeshDescriptor);
-    SetSubMesh: ((index: number, desc: UnityEngine.Rendering.SubMeshDescriptor, flags: UnityEngine.Rendering.MeshUpdateFlags) => void);
+    SetSubMesh: ((index: number, desc: UnityEngine.Rendering.SubMeshDescriptor, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
@@ -2157,7 +2157,7 @@ export namespace UnityEngine {
     SetPosition: ((index: number, position: UnityEngine.Vector3) => void);
     GetPosition: ((index: number) => UnityEngine.Vector3);
     Clear: (() => void);
-    BakeMesh: ((mesh: UnityEngine.Mesh, useTransform: boolean) => void) | ((mesh: UnityEngine.Mesh, camera: UnityEngine.Camera, useTransform: boolean) => void);
+    BakeMesh: ((mesh: UnityEngine.Mesh, useTransform?: boolean) => void) | ((mesh: UnityEngine.Mesh, camera: UnityEngine.Camera, useTransform?: boolean) => void);
     GetPositions: ((positions: UnityEngine.Vector3[]) => number) | ((positions: any) => number) | ((positions: any) => number);
     SetPositions: ((positions: UnityEngine.Vector3[]) => void) | ((positions: any) => void) | ((positions: any) => void);
     AddPosition: ((position: UnityEngine.Vector3) => void);
@@ -2260,7 +2260,7 @@ export namespace UnityEngine {
     SetPosition: ((index: number, position: UnityEngine.Vector3) => void);
     GetPosition: ((index: number) => UnityEngine.Vector3);
     Simplify: ((tolerance: number) => void);
-    BakeMesh: ((mesh: UnityEngine.Mesh, useTransform: boolean) => void) | ((mesh: UnityEngine.Mesh, camera: UnityEngine.Camera, useTransform: boolean) => void);
+    BakeMesh: ((mesh: UnityEngine.Mesh, useTransform?: boolean) => void) | ((mesh: UnityEngine.Mesh, camera: UnityEngine.Camera, useTransform?: boolean) => void);
     GetPositions: ((positions: UnityEngine.Vector3[]) => number) | ((positions: any) => number) | ((positions: any) => number);
     SetPositions: ((positions: UnityEngine.Vector3[]) => void) | ((positions: any) => void) | ((positions: any) => void);
     HasPropertyBlock: (() => boolean);
@@ -3824,7 +3824,7 @@ export namespace UnityEngine {
     Release: (() => void);
     IsCreated: (() => boolean);
     GenerateMips: (() => void);
-    ConvertToEquirect: ((equirect: UnityEngine.RenderTexture, eye: UnityEngine.Camera_MonoOrStereoscopicEye) => void);
+    ConvertToEquirect: ((equirect: UnityEngine.RenderTexture, eye?: UnityEngine.Camera_MonoOrStereoscopicEye) => void);
     SetBorderColor: ((color: UnityEngine.Color) => void);
     GetTexelOffset: (() => UnityEngine.Vector2);
     GetNativeTexturePtr: (() => any);
@@ -3915,7 +3915,7 @@ export namespace UnityEngine {
     Release: (() => void);
     IsCreated: (() => boolean);
     GenerateMips: (() => void);
-    ConvertToEquirect: ((equirect: UnityEngine.RenderTexture, eye: UnityEngine.Camera_MonoOrStereoscopicEye) => void);
+    ConvertToEquirect: ((equirect: UnityEngine.RenderTexture, eye?: UnityEngine.Camera_MonoOrStereoscopicEye) => void);
     SetBorderColor: ((color: UnityEngine.Color) => void);
     GetTexelOffset: (() => UnityEngine.Vector2);
     GetNativeTexturePtr: (() => any);
@@ -10915,7 +10915,7 @@ export namespace UnityEngine {
         Release: (() => void);
         Build: (() => void) | ((relativeOrigin: UnityEngine.Vector3) => void);
         Update: (() => void) | ((relativeOrigin: UnityEngine.Vector3) => void);
-        AddInstance: ((targetRenderer: UnityEngine.Renderer, subMeshMask: any, subMeshTransparencyFlags: any, enableTriangleCulling: boolean, frontTriangleCounterClockwise: boolean, mask: any) => void) | ((aabbBuffer: UnityEngine.GraphicsBuffer, numElements: any, material: UnityEngine.Material, isCutOff: boolean, enableTriangleCulling: boolean, frontTriangleCounterClockwise: boolean, mask: any, reuseBounds: boolean) => void) | ((aabbBuffer: UnityEngine.GraphicsBuffer, numElements: any, material: UnityEngine.Material, instanceTransform: UnityEngine.Matrix4x4, isCutOff: boolean, enableTriangleCulling: boolean, frontTriangleCounterClockwise: boolean, mask: any, reuseBounds: boolean) => void);
+        AddInstance: ((targetRenderer: UnityEngine.Renderer, subMeshMask?: any, subMeshTransparencyFlags?: any, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any) => void) | ((aabbBuffer: UnityEngine.GraphicsBuffer, numElements: any, material: UnityEngine.Material, isCutOff: boolean, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any, reuseBounds?: boolean) => void) | ((aabbBuffer: UnityEngine.GraphicsBuffer, numElements: any, material: UnityEngine.Material, instanceTransform: UnityEngine.Matrix4x4, isCutOff: boolean, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any, reuseBounds?: boolean) => void);
         UpdateInstanceTransform: ((renderer: UnityEngine.Renderer) => void);
         GetSize: (() => any);
         Equals: ((obj: any) => boolean);
@@ -10971,7 +10971,7 @@ export namespace UnityEngine {
         SetAccelerationStructure: ((nameID: number, accelerationStructure: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure) => void) | ((name: string, accelerationStructure: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure) => void);
         SetShaderPass: ((passName: string) => void);
         SetTextureFromGlobal: ((nameID: number, globalTextureNameID: number) => void) | ((name: string, globalTextureName: string) => void);
-        Dispatch: ((rayGenFunctionName: string, width: number, height: number, depth: number, camera: UnityEngine.Camera) => void);
+        Dispatch: ((rayGenFunctionName: string, width: number, height: number, depth: number, camera?: UnityEngine.Camera) => void);
         SetFloats: ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
         SetInts: ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
         SetBool: ((name: string, val: boolean) => void) | ((nameID: number, val: boolean) => void);
@@ -13165,15 +13165,15 @@ export namespace UnityEngine {
       SetRayTracingVectorArrayParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: UnityEngine.Vector4[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: UnityEngine.Vector4[]) => void);
       SetRayTracingMatrixParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: UnityEngine.Matrix4x4) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: UnityEngine.Matrix4x4) => void);
       SetRayTracingMatrixArrayParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: UnityEngine.Matrix4x4[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: UnityEngine.Matrix4x4[]) => void);
-      DispatchRays: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, rayGenName: string, width: any, height: any, depth: any, camera: UnityEngine.Camera) => void);
+      DispatchRays: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, rayGenName: string, width: any, height: any, depth: any, camera?: UnityEngine.Camera) => void);
       GenerateMips: ((rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((rt: UnityEngine.RenderTexture) => void);
-      ResolveAntiAliasedSurface: ((rt: UnityEngine.RenderTexture, target: UnityEngine.RenderTexture) => void);
+      ResolveAntiAliasedSurface: ((rt: UnityEngine.RenderTexture, target?: UnityEngine.RenderTexture) => void);
       DrawMesh: ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, submeshIndex: number, shaderPass: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, submeshIndex: number, shaderPass: number) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, submeshIndex: number) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material) => void);
       DrawRenderer: ((renderer: UnityEngine.Renderer, material: UnityEngine.Material, submeshIndex: number, shaderPass: number) => void) | ((renderer: UnityEngine.Renderer, material: UnityEngine.Material, submeshIndex: number) => void) | ((renderer: UnityEngine.Renderer, material: UnityEngine.Material) => void);
       DrawProcedural: ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, vertexCount: number, instanceCount: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, vertexCount: number, instanceCount: number) => void) | ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, vertexCount: number) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, indexCount: number, instanceCount: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, indexCount: number, instanceCount: number) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, indexCount: number) => void);
       DrawProceduralIndirect: ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset: number) => void) | ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset: number) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer) => void) | ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset: number) => void) | ((matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.GraphicsBuffer) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset: number) => void) | ((indexBuffer: UnityEngine.GraphicsBuffer, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, shaderPass: number, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.GraphicsBuffer) => void);
       DrawMeshInstanced: ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, matrices: UnityEngine.Matrix4x4[], count: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, matrices: UnityEngine.Matrix4x4[], count: number) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, matrices: UnityEngine.Matrix4x4[]) => void);
-      DrawMeshInstancedProcedural: ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, count: number, properties: UnityEngine.MaterialPropertyBlock) => void);
+      DrawMeshInstancedProcedural: ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, count: number, properties?: UnityEngine.MaterialPropertyBlock) => void);
       DrawMeshInstancedIndirect: ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset: number) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, bufferWithArgs: UnityEngine.ComputeBuffer) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset: number) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, shaderPass: number, bufferWithArgs: UnityEngine.GraphicsBuffer) => void);
       DrawOcclusionMesh: ((normalizedCamViewport: UnityEngine.RectInt) => void);
       SetRandomWriteTarget: ((index: number, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((index: number, buffer: UnityEngine.ComputeBuffer, preserveCounterValue: boolean) => void) | ((index: number, buffer: UnityEngine.ComputeBuffer) => void) | ((index: number, buffer: UnityEngine.GraphicsBuffer, preserveCounterValue: boolean) => void) | ((index: number, buffer: UnityEngine.GraphicsBuffer) => void);
@@ -13295,7 +13295,7 @@ export namespace UnityEngine {
       clearStencil: any; // System.UInt32
       ConfigureTarget: ((target: UnityEngine.Rendering.RenderTargetIdentifier, loadExistingContents: boolean, storeResults: boolean) => void);
       ConfigureResolveTarget: ((target: UnityEngine.Rendering.RenderTargetIdentifier) => void);
-      ConfigureClear: ((clearColor: UnityEngine.Color, clearDepth: number, clearStencil: any) => void);
+      ConfigureClear: ((clearColor: UnityEngine.Color, clearDepth?: number, clearStencil?: any) => void);
       Equals: ((other: UnityEngine.Rendering.AttachmentDescriptor) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -13558,16 +13558,16 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export interface ScriptableRenderContext {
-      BeginRenderPass: ((width: number, height: number, samples: number, attachments: any, depthAttachmentIndex: number) => void);
-      BeginScopedRenderPass: ((width: number, height: number, samples: number, attachments: any, depthAttachmentIndex: number) => UnityEngine.Rendering.ScopedRenderPass);
-      BeginSubPass: ((colors: any, inputs: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => void) | ((colors: any, inputs: any, isDepthStencilReadOnly: boolean) => void) | ((colors: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => void) | ((colors: any, isDepthStencilReadOnly: boolean) => void);
-      BeginScopedSubPass: ((colors: any, inputs: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => UnityEngine.Rendering.ScopedSubPass) | ((colors: any, inputs: any, isDepthStencilReadOnly: boolean) => UnityEngine.Rendering.ScopedSubPass) | ((colors: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => UnityEngine.Rendering.ScopedSubPass) | ((colors: any, isDepthStencilReadOnly: boolean) => UnityEngine.Rendering.ScopedSubPass);
+      BeginRenderPass: ((width: number, height: number, samples: number, attachments: any, depthAttachmentIndex?: number) => void);
+      BeginScopedRenderPass: ((width: number, height: number, samples: number, attachments: any, depthAttachmentIndex?: number) => UnityEngine.Rendering.ScopedRenderPass);
+      BeginSubPass: ((colors: any, inputs: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => void) | ((colors: any, inputs: any, isDepthStencilReadOnly?: boolean) => void) | ((colors: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => void) | ((colors: any, isDepthStencilReadOnly?: boolean) => void);
+      BeginScopedSubPass: ((colors: any, inputs: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => UnityEngine.Rendering.ScopedSubPass) | ((colors: any, inputs: any, isDepthStencilReadOnly?: boolean) => UnityEngine.Rendering.ScopedSubPass) | ((colors: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => UnityEngine.Rendering.ScopedSubPass) | ((colors: any, isDepthStencilReadOnly?: boolean) => UnityEngine.Rendering.ScopedSubPass);
       EndSubPass: (() => void);
       EndRenderPass: (() => void);
       Submit: (() => void);
       ExecuteCommandBuffer: ((commandBuffer: UnityEngine.Rendering.CommandBuffer) => void);
       ExecuteCommandBufferAsync: ((commandBuffer: UnityEngine.Rendering.CommandBuffer, queueType: UnityEngine.Rendering.ComputeQueueType) => void);
-      SetupCameraProperties: ((camera: UnityEngine.Camera, stereoSetup: boolean) => void) | ((camera: UnityEngine.Camera, stereoSetup: boolean, eye: number) => void);
+      SetupCameraProperties: ((camera: UnityEngine.Camera, stereoSetup?: boolean) => void) | ((camera: UnityEngine.Camera, stereoSetup: boolean, eye: number) => void);
       StereoEndRender: ((camera: UnityEngine.Camera) => void) | ((camera: UnityEngine.Camera, eye: number) => void) | ((camera: UnityEngine.Camera, eye: number, isFinalPass: boolean) => void);
       StartMultiEye: ((camera: UnityEngine.Camera) => void) | ((camera: UnityEngine.Camera, eye: number) => void);
       StopMultiEye: ((camera: UnityEngine.Camera) => void);
@@ -16198,14 +16198,14 @@ export namespace UnityEngine {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      NotifyToggleOn: ((toggle: UnityEngine.UI.Toggle, sendCallback: boolean) => void);
+      NotifyToggleOn: ((toggle: UnityEngine.UI.Toggle, sendCallback?: boolean) => void);
       UnregisterToggle: ((toggle: UnityEngine.UI.Toggle) => void);
       RegisterToggle: ((toggle: UnityEngine.UI.Toggle) => void);
       EnsureValidState: (() => void);
       AnyTogglesOn: (() => boolean);
       ActiveToggles: (() => any);
       GetFirstActiveToggle: (() => UnityEngine.UI.Toggle);
-      SetAllTogglesOff: ((sendCallback: boolean) => void);
+      SetAllTogglesOff: ((sendCallback?: boolean) => void);
       IsActive: (() => boolean);
       IsDestroyed: (() => boolean);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);

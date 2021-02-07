@@ -3,7 +3,7 @@ export enum FlexDirection {
   Column = 0,
   ColumnReverse = 1,
   Row = 2,
-  RowReverse = 3
+  RowReverse = 3,
 }
 
 export enum YogaAlign {
@@ -14,7 +14,7 @@ export enum YogaAlign {
   Stretch = 4,
   Baseline = 5,
   SpaceBetween = 6,
-  SpaceAround = 7
+  SpaceAround = 7,
 }
 
 export enum YogaJustify {

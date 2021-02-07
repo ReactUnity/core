@@ -36,6 +36,9 @@ export interface Image extends View {
   fit?: ImageFitMode;
 }
 
+export interface Video extends Image {
+}
+
 
 export type ToggleEvent = (val: boolean) => void;
 
