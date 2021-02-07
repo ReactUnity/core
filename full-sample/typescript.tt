@@ -1,0 +1,132 @@
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<# // 1. Insert your own assemblies here (+ they need to be referenced from your project) #>
+<#@ assembly name="D:\Program Files\Unity\2020.2.1f1\Editor\Data\Managed\UnityEngine.dll" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Web" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Threading.Tasks" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".d.ts" #>
+<#
+
+//
+// Get the assembly of one of the types:
+//
+var assembly = typeof(UnityEngine.GameObject).Assembly;
+var types = assembly.GetTypes().Where(filterType);
+var objectMethods = typeof(object).GetMembers(BindingFlags.Instance | BindingFlags.Public).Select(x => x.Name).ToList();
+#>
+//
+// Types in assembly: <#= assembly.FullName #>
+// Generated <#= DateTime.Now #>
+//
+export module UnityEngine {
+<# foreach (var type in types) { #>
+  //
+  // Type: <#= type.FullName #>
+  //
+  export interface <#= getTypesScriptType(type) #> {
+<# foreach (var property in type.GetProperties(BindingFlags.Static | BindingFlags.Public))	{ #>
+    <#= "// " + getTypeScriptString(property) #>
+<# } #>
+<# foreach (var property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x => x.GetIndexParameters().Length == 0))	{ #>
+    <#= getTypeScriptString(property) #>
+<# } #>
+<# foreach (var property in type.GetFields(BindingFlags.Instance | BindingFlags.Public)
+    .Where(x => !objectMethods.Contains(x.Name) && !x.IsSpecialName))	{ #>
+    <#= getTypeScriptString(property) #>
+<# } #>
+<# foreach (var property in type.GetMethods(BindingFlags.Instance | BindingFlags.Public)
+  .Where(x => !objectMethods.Contains(x.Name) && !x.IsSpecialName)
+  .GroupBy(x => x.Name).Select(x => x.First()))	{ #>
+    <#= getTypeScriptString(property) #>
+<# } #>
+  }
+<# } // types #>
+}
+<#+
+bool filterType(Type t) {
+  return t != null &&
+    (t.FullName.StartsWith("UnityEngine.") || filterType(t.DeclaringType)) &&
+    (t.IsPublic || t.IsNestedPublic) &&
+    !typeof(Attribute).IsAssignableFrom(t) &&
+    !t.FullName.Contains("<") &&
+    (!t.IsGenericType || t.IsEnum);
+}
+
+string getTypeScriptString(PropertyInfo info) {
+  var typeString = getTypesScriptType(info.PropertyType);
+  var isNullable = info.PropertyType.ToString().Contains("Nullable");
+  var isStatic = info.GetAccessors(true)[0].IsStatic;
+
+  return string.Format("{3}{0}{4}: {1};{2}",
+    info.Name,
+    typeString,
+    typeString == "any" ? " // " + info.PropertyType : "",
+    isStatic ? "static " : "",
+    isNullable ? "?" : ""
+  );
+}
+string getTypeScriptString(FieldInfo info) {
+  var typeString = getTypesScriptType(info.FieldType);
+  var isNullable = info.FieldType.ToString().Contains("Nullable");
+  var isStatic = info.IsStatic;
+
+  return string.Format("{3}{0}{4}: {1};{2}",
+    info.Name,
+    typeString,
+    typeString == "any" ? " // " + info.FieldType : "",
+    isStatic ? "static " : "",
+    isNullable ? "?" : ""
+  );
+}
+string getTypeScriptString(MethodInfo info) {
+  var typeString = getTypesScriptType(info.ReturnType);
+  var isStatic = info.IsStatic;
+
+  return string.Format("{3}{0}: ({1}) => {2};",
+    info.Name,
+    "",
+    typeString,
+    isStatic ? "static " : ""
+  );
+}
+string getTypesScriptType(Type type) {
+    if(type == null) return "void";
+
+    var propertyType = type.ToString();
+
+    switch (propertyType)
+    {
+        case "System.String":
+            return "string";
+
+        case "System.Single":
+        case "System.Double":
+        case "System.Int32":
+            return "number";
+
+        case "System.Boolean":
+            return "boolean";
+
+        case "System.Nullable`1[System.Boolean]":
+            return "boolean";
+
+        case "System.Nullable`1[System.Double]":
+        case "System.Nullable`1[System.Single]":
+        case "System.Nullable`1[System.Int32]":
+            return "number";
+
+        default:
+            break;
+    }
+    if (!type.IsEnum && propertyType.Contains("`")) return "any";
+    if (!type.IsEnum && type.ContainsGenericParameters) return "any";
+    if (type.DeclaringType != null) return getTypesScriptType(type.DeclaringType) + "_" + type.Name;
+    if (propertyType.StartsWith("UnityEngine.")) return type.Name;
+
+    return "any";
+}
+#>

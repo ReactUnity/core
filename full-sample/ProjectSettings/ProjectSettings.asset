@@ -641,7 +641,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    1: REACT_WATCH_OUTSIDE_EDITOR;REACT_FILE_API
+    1: REACT_WATCH_OUTSIDE_EDITOR;REACT_FILE_API;REACT_UNITY_DEVELOPER
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

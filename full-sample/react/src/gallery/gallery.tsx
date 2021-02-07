@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { ReactUnity, FlexDirection, Wrap, YogaJustify, FontStyles, Position } from '@reactunity/renderer';
+import { ReactUnityRenderer, FlexDirection, Wrap, YogaJustify, FontStyles, Position } from '@reactunity/renderer';
 import { TextEditor } from './editor';
 
 const shadow = '0 8 10 10 black 10';
@@ -105,5 +105,5 @@ export class App extends React.Component<{ samples: Sample[] }, { selectedSample
 export const SampleGallery = (samples: Sample[]) => <App samples={samples} />;
 
 
-const renderGallery = (samples: Sample[]) => ReactUnity.render(<App samples={samples} />);
+const renderGallery = (samples: Sample[]) => ReactUnityRenderer.render(<App samples={samples} />);
 export default renderGallery;

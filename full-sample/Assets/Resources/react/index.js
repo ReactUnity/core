@@ -1,11 +1,81 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 160:
+/***/ 130:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
+
+/***/ }),
+
+/***/ 607:
 /***/ ((module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
 
+;// CONCATENATED MODULE: ../../scripts/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+;// CONCATENATED MODULE: ../../scripts/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+;// CONCATENATED MODULE: ../../scripts/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+;// CONCATENATED MODULE: ../../scripts/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+;// CONCATENATED MODULE: ../../scripts/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+;// CONCATENATED MODULE: ../../scripts/node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+
+
+
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(950);
 // EXTERNAL MODULE: ../../renderer/node_modules/react-reconciler/index.js
@@ -1346,6 +1416,7 @@ function testRender(element) {
 
 
 
+
 // EXTERNAL MODULE: ../../scripts/node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(361);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -1365,8 +1436,15 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
 
 /* harmony default export */ const showcase_index_module = (index_module/* default.locals */.Z.locals || {});
+;// CONCATENATED MODULE: ./src/assets/bg.png
+/* harmony default export */ const bg = (__webpack_require__.p + "static/media/bg.png");
+;// CONCATENATED MODULE: ./src/assets/base64Image.txt
+/* harmony default export */ const base64Image = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAcElEQVR4AezOsREAIAjFUAs3dgAGYkj8C3g2oBTJXfo3iD419dJ2eOn5EuM6LnsFynQkb4AKQP2zlBOLpAEBAgQIECBAgAA1Au29p6aDrlPBQd3UdJA7yIcUho4KA5UBBxDHk9GwzwdiGQY6gVEwCgC3bcAZ+oXojwAAAABJRU5ErkJggg==\n");
+// EXTERNAL MODULE: ./src/assets/check.svg
+var check = __webpack_require__(130);
+var check_default = /*#__PURE__*/__webpack_require__.n(check);
 ;// CONCATENATED MODULE: ./src/showcase/index.tsx
-function App(){var tooltipContent=/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{padding:10,backgroundColor:0.4,color:'white'},children:"Cool tooltip"});return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:showcase_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{children:"Click"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Tooltip"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Tooltip,{tooltipContent:tooltipContent,position:"bottom",offset:20,children:"Hover to see cool tooltip."})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Dropdown"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Dropdown,{children:["Select an option",/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{children:"Normal Option"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'green'},children:"Green Option"}),children:"Green Option \uD83D\uDC9A"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'red'},children:"Red Option"}),children:"Red Option \uD83E\uDDE1"})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Slider"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Horizontal",/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',top:24,color:value>0.5?'red':'black'},children:value.toFixed(3)});}})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Vertical",/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical",children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',left:24},children:value.toFixed(3)});}})]})]})]})]})]});};renderer_ReactUnity.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';var webVideo='https://media.w3.org/2010/05/sintel/trailer.mp4';function App(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),videoRef=_useState2[0],setVideoRef=_useState2[1];(0,react.useEffect)(function(){if(videoRef){videoRef.VideoPlayer.Pause();}},[videoRef]);var toggleVideo=function toggleVideo(){var vp=videoRef.VideoPlayer;if(vp.isPlaying)vp.Pause();else vp.Play();};var tooltipContent=/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{padding:10,backgroundColor:0.4,color:'white'},children:"Cool tooltip"});return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:showcase_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{children:"Click"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"}),/*#__PURE__*/(0,jsx_runtime.jsx)("input",{})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Tooltip"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Tooltip,{tooltipContent:tooltipContent,position:"bottom",offset:20,children:"Hover to see cool tooltip."})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Dropdown"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Dropdown,{children:["Select an option",/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{children:"Normal Option"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'green'},children:"Green Option"}),children:"Green Option \uD83D\uDC9A"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'red'},children:"Red Option"}),children:"Red Option \uD83E\uDDE1"})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:bg}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:base64Image}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:webImage}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:(check_default())["0x0"]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Video"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("video",{fit:ImageFitMode.CenterInside,source:webVideo,ref:setVideoRef,onPointerClick:toggleVideo})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Slider"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Horizontal",/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',top:24,color:value>0.5?'red':'black'},children:value.toFixed(3)});}})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Vertical",/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical",children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',left:24},children:value.toFixed(3)});}})]})]})]})]})]});};renderer_ReactUnity.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.tsx
 /* module decorator */ module = __webpack_require__.hmd(module);
 var _module,_module$hot;(_module=module)===null||_module===void 0?void 0:(_module$hot=_module.hot)===null||_module$hot===void 0?void 0:_module$hot.accept();
@@ -8263,7 +8341,7 @@ module.exports = function (cssWithMappingToString) {
 
 var ___CSS_LOADER_EXPORT___ = _scripts_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".showcase_app__1V96P{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.showcase_app__1V96P h1{font-size:36px;font-style:smallcaps, bold;color:#582a9c;margin-bottom:12px}.showcase_app__1V96P h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.showcase_app__1V96P section{margin-top:10px;margin-bottom:10px}.showcase_app__1V96P row{flex-direction:row;align-items:center}.showcase_app__1V96P column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.showcase_app__1V96P slider{margin:10px}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".showcase_app__1V96P{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.showcase_app__1V96P h1{font-size:36px;font-style:smallcaps, bold;color:#582a9c;margin-bottom:12px}.showcase_app__1V96P h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.showcase_app__1V96P section{margin-top:10px;margin-bottom:10px}.showcase_app__1V96P row{flex-direction:row;align-items:center}.showcase_app__1V96P column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.showcase_app__1V96P slider{margin:10px}.showcase_app__1V96P image{flex-grow:1;flex-shrink:1;flex-basis:0}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"app": "showcase_app__1V96P"
@@ -8631,10 +8709,15 @@ module.exports = function (list, options) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		__webpack_require__.p = "/";
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 /******/ 	// startup
 /******/ 	// Load entry module
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	__webpack_require__(160);
+/******/ 	__webpack_require__(607);
 /******/ })()
 ;

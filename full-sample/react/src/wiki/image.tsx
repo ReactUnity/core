@@ -1,5 +1,5 @@
 import style from './index.module.scss';
-import image from 'src/css-test/images/bg.png';
+import image from 'src/assets/bg.png';
 
 const base64 = 'data:image/png;base64,iVBORw0KGgoAAA' +
   'ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4' +

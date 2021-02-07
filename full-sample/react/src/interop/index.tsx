@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactUnity, ContentType } from '@reactunity/renderer';
+import { ReactUnityRenderer, ContentType } from '@reactunity/renderer';
 
 class App extends React.Component<{}, {}> {
   onInputChange = (val: string) => {
@@ -18,4 +18,4 @@ class App extends React.Component<{}, {}> {
     );
   }
 }
-ReactUnity.render(<App />);
+ReactUnityRenderer.render(<App />);

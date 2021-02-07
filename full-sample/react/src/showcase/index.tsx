@@ -1,13 +1,35 @@
-import { Dropdown, DropdownItem, ReactUnity, Slider, Tooltip } from '@reactunity/renderer';
+import { Dropdown, DropdownItem, ImageFitMode, NativeVideoInstance, ReactUnity, Slider, Tooltip } from '@reactunity/renderer';
 import style from './index.module.scss';
+import pngImage from 'src/assets/bg.png';
+import base64Image from 'src/assets/base64Image.txt';
+import svgImage from 'src/assets/check.svg';
+import { useEffect, useState } from 'react';
+
+const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
+const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
 
 export function App() {
+  const [videoRef, setVideoRef] = useState<NativeVideoInstance>();
+
+  useEffect(() => {
+    if (videoRef) {
+      videoRef.VideoPlayer.Pause();
+    }
+  }, [videoRef]);
+
+  const toggleVideo = () => {
+    const vp = videoRef.VideoPlayer;
+    if (vp.isPlaying) vp.Pause();
+    else vp.Play();
+  };
+
+
   const tooltipContent =
     <view style={{ padding: 10, backgroundColor: 0.4, color: 'white' }}>
       Cool tooltip
     </view>;
 
-  return <view className={style.app}>
+  return <scroll className={style.app}>
     <h1>React Unity Showcase</h1>
 
 
@@ -15,6 +37,20 @@ export function App() {
       <h2>Button</h2>
 
       <button>Click</button>
+    </section>
+
+
+    <section>
+      <h2>Anchor</h2>
+
+      <anchor url="https://www.google.com">Open Google</anchor>
+    </section>
+
+
+    <section>
+      <h2>Input</h2>
+
+      <input />
     </section>
 
 
@@ -27,6 +63,7 @@ export function App() {
       </row>
     </section>
 
+
     <section>
       <h2>Tooltip</h2>
 
@@ -34,6 +71,7 @@ export function App() {
         Hover to see cool tooltip.
       </Tooltip>
     </section>
+
 
     <section>
       <h2>Dropdown</h2>
@@ -45,6 +83,27 @@ export function App() {
         <DropdownItem triggerTemplate={<view style={{ color: 'green' }}>Green Option</view>}>Green Option 💚</DropdownItem>
         <DropdownItem triggerTemplate={<view style={{ color: 'red' }}>Red Option</view>}>Red Option 🧡</DropdownItem>
       </Dropdown>
+    </section>
+
+
+    <section>
+      <h2>Image</h2>
+
+      <row>
+        <image fit={ImageFitMode.CenterInside} source={pngImage} />
+        <image fit={ImageFitMode.CenterInside} source={base64Image} />
+        <image fit={ImageFitMode.CenterInside} source={webImage} />
+        <image fit={ImageFitMode.CenterInside} source={svgImage['0x0']} />
+      </row>
+    </section>
+
+
+    <section>
+      <h2>Video</h2>
+
+      <row>
+        <video fit={ImageFitMode.CenterInside} source={webVideo} ref={setVideoRef} onPointerClick={toggleVideo} />
+      </row>
     </section>
 
 
@@ -73,7 +132,7 @@ export function App() {
         </column>
       </row>
     </section>
-  </view>;
+  </scroll>;
 };
 
-ReactUnity.render(<App />);
+ReactUnityRenderer.render(<App />);
