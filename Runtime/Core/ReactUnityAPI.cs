@@ -24,6 +24,7 @@ namespace ReactUnity
                 { "input", (tag, text, context) => new InputComponent(text, context) },
                 { "scroll", (tag, text, context) => new ScrollComponent(context) },
                 { "image", (tag, text, context) => new ImageComponent(context) },
+                { "video", (tag, text, context) => new VideoComponent(context) },
             };
 
         public static Dictionary<string, Type> StateHandlers

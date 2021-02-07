@@ -27,7 +27,7 @@ namespace ReactUnity.Styling.Parsers
         {
             if (string.IsNullOrWhiteSpace(value)) return ImageReference.None;
             if (FileRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.File, FileRegex.Replace(value, ""));
-            if (HttpRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Url, HttpRegex.Replace(value, ""));
+            if (HttpRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Url, value);
             if (GlobalRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Global, GlobalRegex.Replace(value, ""));
             if (ProceduralRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Procedural, ProceduralRegex.Replace(value, ""));
             if (ResourceRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Resource, ResourceRegex.Replace(value, ""));

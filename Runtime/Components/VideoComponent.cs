@@ -4,29 +4,38 @@ using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace ReactUnity.Components
 {
-    public class ImageComponent : ContainerComponent
+    public class VideoComponent : ContainerComponent
     {
         public static NodeStyle ImageDefaultStyle { get; } = new NodeStyle() { };
         public static YogaNode ImageDefaultLayout { get; } = new YogaNode() { Overflow = YogaOverflow.Hidden, AlignItems = YogaAlign.Center, JustifyContent = YogaJustify.Center };
         public override NodeStyle DefaultStyle => ImageDefaultStyle;
         public override YogaNode DefaultLayout => ImageDefaultLayout;
 
-        public ImageMeasurer Measurer { get; private set; }
+        public RawImageMeasurer Measurer { get; private set; }
         public ContainerComponent ImageContainer { get; private set; }
-        public Image Image { get; private set; }
+        public RawImage Image { get; private set; }
 
         public ImageFitMode Fit { get; private set; }
 
-        public ImageComponent(UnityUGUIContext context, string tag = "image") : base(context, tag)
+        public VideoPlayer VideoPlayer;
+        public RenderTexture RenderTexture;
+
+        public VideoComponent(UnityUGUIContext context) : base(context, "video")
         {
+            VideoPlayer = AddComponent<VideoPlayer>();
+            VideoPlayer.renderMode = VideoRenderMode.RenderTexture;
+
+            VideoPlayer.prepareCompleted += PrepareCompleted;
+
             ImageContainer = new ContainerComponent(context, "");
             ImageContainer.GameObject.name = "[ImageContent]";
-            Image = ImageContainer.AddComponent<Image>();
+            Image = ImageContainer.AddComponent<RawImage>();
 
-            Measurer = ImageContainer.AddComponent<ImageMeasurer>();
+            Measurer = ImageContainer.AddComponent<RawImageMeasurer>();
             Measurer.Context = context;
             Measurer.Layout = ImageContainer.Layout;
             Measurer.Component = this;
@@ -35,12 +44,21 @@ namespace ReactUnity.Components
             ImageContainer.SetParent(this);
         }
 
+        private void PrepareCompleted(VideoPlayer source)
+        {
+            RenderTexture = new RenderTexture((int) source.width, (int) source.height, 1);
+            Image.texture = RenderTexture;
+            VideoPlayer.targetTexture = RenderTexture;
+            ImageContainer.Layout.MarkDirty();
+            ScheduleLayout();
+        }
+
         public override void SetProperty(string propertyName, object value)
         {
             switch (propertyName)
             {
                 case "source":
-                    SetSource(ParserMap.ImageReferenceConverter.Convert(value) as ImageReference);
+                    SetSource(ParserMap.VideoReferenceConverter.Convert(value) as VideoReference);
                     return;
                 case "fit":
                     SetFit((ImageFitMode) System.Convert.ToInt32(value));
@@ -53,11 +71,22 @@ namespace ReactUnity.Components
 
 
 
-        private void SetSource(ImageReference source)
+        private void SetSource(VideoReference source)
         {
             source.Get(Context, (res) =>
             {
-                Image.sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
+                if (res == null)
+                {
+                    VideoPlayer.clip = null;
+                    VideoPlayer.url = null;
+                    VideoPlayer.source = VideoSource.Url;
+                }
+                else
+                {
+                    VideoPlayer.clip = res.Clip;
+                    VideoPlayer.url = res.Url;
+                    VideoPlayer.source = res.Type;
+                }
             });
         }
 
@@ -79,14 +108,10 @@ namespace ReactUnity.Components
         }
     }
 
-    public enum ImageFitMode
+    public class VideoComponentSource
     {
-        Center = 0,
-        CenterCrop = 1,
-        CenterInside = 2,
-        FitCenter = 3,
-        FitStart = 4,
-        FitEnd = 5,
-        Fill = 6,
+        public string Url;
+        public VideoClip Clip;
+        public VideoSource Type;
     }
 }

@@ -26,6 +26,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter ColorConverter = new ColorConverter();
         static public IStyleConverter ShadowDefinitionConverter = new ShadowDefinitionConverter();
         static public IStyleConverter ImageReferenceConverter = new ImageReferenceConverter();
+        static public IStyleConverter VideoReferenceConverter = new VideoReferenceConverter();
         static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
 
 

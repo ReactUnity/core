@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Layout
 {
-    public class ImageMeasurer : MonoBehaviour, ILayoutSelfController
+    public class RawImageMeasurer : MonoBehaviour, ILayoutSelfController
     {
-        private Image image;
+        private RawImage image;
 
         public YogaNode Layout;
-        public ImageComponent Component;
+        public VideoComponent Component;
         public UnityUGUIContext Context;
 
         private void Awake()
         {
-            image = GetComponent<Image>();
+            image = GetComponent<RawImage>();
         }
 
         void ILayoutController.SetLayoutHorizontal()
@@ -33,10 +33,10 @@ namespace ReactUnity.Layout
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            var sprite = image.sprite;
+            var texture = image.texture;
             var mode = Component != null ? Component.Fit : ImageFitMode.CenterInside;
-            var ow = sprite ? sprite.rect.width : 0;
-            var oh = sprite ? sprite.rect.height : 0;
+            var ow = texture ? texture.width : 0f;
+            var oh = texture ? texture.height : 0f;
 
             var rw = ow;
             var rh = oh;
