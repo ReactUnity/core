@@ -15,6 +15,7 @@ namespace ReactUnity.Styling.Parsers
         {
             if (value == null) return SpecialNames.CantParse;
             if (ColorUtility.TryParseHtmlString(value, out var color)) return color;
+            if (value.Contains(",")) return FromArray(value.Split(','));
             return SpecialNames.CantParse;
         }
 

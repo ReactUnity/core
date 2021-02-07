@@ -15,7 +15,7 @@ namespace ReactUnity.Styling
 {
     public interface IStyleProperty
     {
-        object Parse(object value);
+        object Convert(object value);
 
         string name { get; }
         Type type { get; }
@@ -47,7 +47,7 @@ namespace ReactUnity.Styling
             this.converter = converter ?? ParserMap.GetConverter(type);
         }
 
-        public object Parse(object value)
+        public object Convert(object value)
         {
             return converter.Convert(value);
         }
@@ -87,7 +87,7 @@ namespace ReactUnity.Styling
             { "z-index", zIndex },
             { "pointer-events", pointerEvents },
             { "background-color", backgroundColor },
-            { "background", backgroundColor },
+            { "background", backgroundImage },
             { "background-image", backgroundImage },
             { "border-radius", borderRadius },
             { "border-color", borderColor },

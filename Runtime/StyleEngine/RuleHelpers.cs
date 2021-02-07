@@ -138,8 +138,12 @@ namespace ReactUnity.StyleEngine
                     object value;
                     if (specialName == SpecialNames.Initial)
                         value = prop.defaultValue;
+                    if (specialName == SpecialNames.None)
+                        value = null;
+                    else if (specialName != SpecialNames.NoSpecialName && specialName != SpecialNames.CantParse)
+                        value = specialName;
                     else
-                        value = prop.Parse(item.Value);
+                        value = prop.Convert(item.Value);
 
                     if (!Equals(value, SpecialNames.CantParse))
                         dic[prop.name] = value;
@@ -173,7 +177,7 @@ namespace ReactUnity.StyleEngine
                 var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Key, out var prop);
                 if (hasCssStyle)
                 {
-                    dic[prop.name] = prop.Parse(item.Value);
+                    dic[prop.name] = prop.Convert(item.Value);
                 }
             }
             return dic;

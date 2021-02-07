@@ -1,4 +1,5 @@
 using ReactUnity.Interop;
+using ReactUnity.Styling;
 using System;
 using System.Collections;
 using System.IO;
@@ -42,6 +43,23 @@ namespace ReactUnity.Types
                     texture.LoadImage(fileData);
                 }
                 callback(texture);
+            }
+            else if (realType == AssetReferenceType.Procedural)
+            {
+                var color = ParserMap.ColorConverter.Convert(realValue);
+
+                if (color is Color c)
+                {
+                    var t = new Texture2D(1, 1);
+                    t.SetPixel(0, 0, c);
+                    t.Apply();
+                    callback(t);
+                }
+                else
+                {
+                    callback(null);
+                }
+
             }
             else
             {

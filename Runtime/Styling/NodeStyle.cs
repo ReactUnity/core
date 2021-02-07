@@ -247,7 +247,7 @@ namespace ReactUnity.Styling
 
             if (changed)
             {
-                if (StyleProperties.GetStyleProperty(name).inherited) HasInheritedChanges = true;
+                if (prop.inherited) HasInheritedChanges = true;
             }
         }
 

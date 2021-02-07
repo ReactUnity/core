@@ -13,6 +13,7 @@ namespace ReactUnity.Styling.Parsers
         private static Regex ResourceRegex = new Regex("^res(ources?)?://");
         private static Regex FileRegex = new Regex("^file://");
         private static Regex HttpRegex = new Regex("^https?://");
+        private static IStyleConverter ColorConverter = ParserMap.ColorConverter;
 
         public object Convert(object value)
         {
@@ -40,6 +41,9 @@ namespace ReactUnity.Styling.Parsers
                 var data = dataMatch.Groups["data"].Value;
                 return new ImageReference(AssetReferenceType.Data, data);
             }
+
+            var color = ColorConverter.Convert(value);
+            if (color is Color c) return new ImageReference(AssetReferenceType.Procedural, c);
 
             return new ImageReference(AssetReferenceType.Auto, value);
         }
