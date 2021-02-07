@@ -5,9 +5,6 @@ export type Unique<T, K> = T & { $type: K };
 export type NativeInstance = ReactUnity.Components.UnityComponent;
 export type NativeTextInstance = ReactUnity.Components.TextComponent;
 export type NativeContainerInstance = ReactUnity.Components.HostComponent;
-export type NativeVideoInstance = ReactUnity.Components.VideoComponent;
-export type NativeInputInstance = ReactUnity.Components.InputComponent;
-export type NativeToggleInstance = ReactUnity.Components.ToggleComponent;
 
 export type InstanceTag = string;
 export type Props = React.RefAttributes<NativeInstance> & {

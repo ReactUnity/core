@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity
-// Generated 7.02.2021 16:00:44
+// Generated 7.02.2021 17:05:53
 //
 import { UnityEngine } from './unity';
 
@@ -401,7 +401,7 @@ export namespace ReactUnity {
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
       Image: UnityEngine.UI.Image;
-      Fit: ReactUnity.Components.ImageFitMode;
+      Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
       Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
@@ -453,15 +453,6 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export enum ImageFitMode {
-      Center = 0,
-      CenterCrop = 1,
-      CenterInside = 2,
-      FitCenter = 3,
-      FitStart = 4,
-      FitEnd = 5,
-      Fill = 6,
-    }
     export interface InputComponent {
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultStyle: ReactUnity.Styling.NodeStyle;
@@ -508,6 +499,123 @@ export namespace ReactUnity {
       SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
       SetData: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
+      UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
+      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelectorAll: ((query: string) => any);
+      GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
+      GetComponent: ((type: any) => UnityEngine.Component);
+      AddComponent: ((type: any) => UnityEngine.Component);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface RawImageComponent {
+      DefaultStyle: ReactUnity.Styling.NodeStyle;
+      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      Measurer: ReactUnity.Layout.ImageMeasurer;
+      ImageContainer: ReactUnity.Components.ContainerComponent;
+      Image: UnityEngine.UI.RawImage;
+      Fit: ReactUnity.Types.ImageFitMode;
+      Container: UnityEngine.RectTransform;
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      BeforePseudo: ReactUnity.Components.UnityComponent;
+      AfterPseudo: ReactUnity.Components.UnityComponent;
+      Context: ReactUnity.UnityUGUIContext;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Parent: ReactUnity.Components.ContainerComponent;
+      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Component: ReactUnity.Layout.ReactElement;
+      Layout: any; // Facebook.Yoga.YogaNode
+      Style: ReactUnity.Styling.NodeStyle;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Inline: any; // System.Dynamic.ExpandoObject
+      BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
+      MaskAndImage: ReactUnity.Styling.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Tag: string;
+      ClassName: string;
+      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      TextContent: string;
+      IsPseudoElement: boolean;
+      SetProperty: ((propertyName: string, value: any) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
+      ApplyLayoutStyles: (() => void);
+      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      AddBefore: (() => void);
+      RemoveBefore: (() => void);
+      AddAfter: (() => void);
+      RemoveAfter: (() => void);
+      Destroy: (() => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
+      SetData: ((propertyName: string, value: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
+      ApplyStyles: (() => void);
+      UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
+      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelectorAll: ((query: string) => any);
+      GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
+      GetComponent: ((type: any) => UnityEngine.Component);
+      AddComponent: ((type: any) => UnityEngine.Component);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface RenderTextureComponent {
+      DefaultStyle: ReactUnity.Styling.NodeStyle;
+      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      Measurer: ReactUnity.Layout.ImageMeasurer;
+      ImageContainer: ReactUnity.Components.ContainerComponent;
+      Image: UnityEngine.UI.RawImage;
+      Fit: ReactUnity.Types.ImageFitMode;
+      Container: UnityEngine.RectTransform;
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      BeforePseudo: ReactUnity.Components.UnityComponent;
+      AfterPseudo: ReactUnity.Components.UnityComponent;
+      Context: ReactUnity.UnityUGUIContext;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Parent: ReactUnity.Components.ContainerComponent;
+      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Component: ReactUnity.Layout.ReactElement;
+      Layout: any; // Facebook.Yoga.YogaNode
+      Style: ReactUnity.Styling.NodeStyle;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Inline: any; // System.Dynamic.ExpandoObject
+      BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
+      MaskAndImage: ReactUnity.Styling.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      Tag: string;
+      ClassName: string;
+      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      TextContent: string;
+      RenderTexture: UnityEngine.RenderTexture;
+      IsPseudoElement: boolean;
+      SetProperty: ((propertyName: string, value: any) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
+      ApplyLayoutStyles: (() => void);
+      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      AddBefore: (() => void);
+      RemoveBefore: (() => void);
+      AddAfter: (() => void);
+      RemoveAfter: (() => void);
+      Destroy: (() => void);
+      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
+      SetData: ((propertyName: string, value: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
+      ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
       QuerySelectorAll: ((query: string) => any);
@@ -729,10 +837,10 @@ export namespace ReactUnity {
     export interface VideoComponent {
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
-      Measurer: ReactUnity.Layout.RawImageMeasurer;
+      Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
       Image: UnityEngine.UI.RawImage;
-      Fit: ReactUnity.Components.ImageFitMode;
+      Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
       Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
@@ -2026,6 +2134,9 @@ export namespace ReactUnity {
   }
   export namespace Layout {
     export interface ImageMeasurer {
+      FitMode: ReactUnity.Types.ImageFitMode;
+      Sprite: UnityEngine.Sprite;
+      Texture: UnityEngine.Texture;
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2049,59 +2160,8 @@ export namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       Layout: any; // Facebook.Yoga.YogaNode
-      Component: ReactUnity.Components.ImageComponent;
       Context: ReactUnity.UnityUGUIContext;
-      Measure: ((node: any, width: number, widthMode: any, height: number, heightMode: any) => any);
-      IsInvoking: (() => boolean) | ((methodName: string) => boolean);
-      CancelInvoke: (() => void) | ((methodName: string) => void);
-      Invoke: ((methodName: string, time: number) => void);
-      InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
-      StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
-      CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      GetInstanceID: (() => number);
-      GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
-      ToString: (() => string);
-      GetType: (() => any);
-    }
-    export interface RawImageMeasurer {
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      Layout: any; // Facebook.Yoga.YogaNode
-      Component: ReactUnity.Components.VideoComponent;
-      Context: ReactUnity.UnityUGUIContext;
+      MarkDirty: (() => void);
       Measure: ((node: any, width: number, widthMode: any, height: number, heightMode: any) => any);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
@@ -3325,6 +3385,15 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
+    export enum ImageFitMode {
+      Center = 0,
+      CenterCrop = 1,
+      CenterInside = 2,
+      FitCenter = 3,
+      FitStart = 4,
+      FitEnd = 5,
+      Fill = 6,
+    }
     export interface ImageReference {
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
@@ -3497,4 +3566,3 @@ export namespace ReactUnity {
     }
   }
 }
-
