@@ -122,7 +122,7 @@ namespace ReactUnity.StyleEngine
 
         public static int GetSpecificity(Priority priority)
         {
-            return (priority.Inlines << 24) + (priority.Ids << 16) + (priority.Classes * 8) + priority.Tags;
+            return (priority.Inlines << 24) + (priority.Ids << 16) + (priority.Classes << 8) + priority.Tags;
         }
 
         public static Dictionary<string, object> GetRuleDic(StyleDeclaration rule, bool important)

@@ -16,9 +16,9 @@ namespace ReactUnity.StyleEngine
     {
         public StyleTree(StylesheetParser parser) : base(parser) { }
 
-        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule)
+        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0)
         {
-            var added = AddSelector(rule.SelectorText);
+            var added = AddSelector(rule.SelectorText, importanceOffset);
             var addedList = added.ToList();
             foreach (var leaf in addedList)
             {
@@ -38,7 +38,7 @@ namespace ReactUnity.StyleEngine
                 if (importantDic.Count > 0 || importantLay != null)
                 {
                     var importantLeaf = leaf.AddChildCascading("** !");
-                    importantLeaf.Specifity = leaf.Specifity + (1 << 30);
+                    importantLeaf.Specifity = leaf.Specifity + RuleHelpers.ImportantSpecifity;
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
                     importantLeaf.Data.Rules.Add(importantDic);
 
@@ -115,7 +115,7 @@ namespace ReactUnity.StyleEngine
             return false;
         }
 
-        public List<RuleTreeNode<T>> AddSelector(string selectorText)
+        public List<RuleTreeNode<T>> AddSelector(string selectorText, int importanceOffset = 0)
         {
             var splits = selectorText.Split(',');
 
@@ -130,7 +130,7 @@ namespace ReactUnity.StyleEngine
                 if (selector.EndsWith(":before")) list = BeforeNodes;
                 if (selector.EndsWith(":after")) list = AfterNodes;
                 var leaf = AddChildCascading("** " + selector);
-                leaf.Specifity = specificity;
+                leaf.Specifity = specificity + (1 << (29 + importanceOffset));
 
                 added.Add(leaf);
                 list.InsertIntoSortedList(leaf);

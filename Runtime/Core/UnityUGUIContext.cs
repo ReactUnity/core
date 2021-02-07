@@ -49,7 +49,7 @@ namespace ReactUnity
             Host.Tag = "_root";
             RootLayoutNode = Host.Layout;
 
-            InsertStyle(ResourcesHelper.UseragentStylesheet?.text);
+            InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
 
             MainThreadDispatcher.AddCallOnLateUpdate(() =>
@@ -72,22 +72,23 @@ namespace ReactUnity
             ScheduledCallbacks.Add(callback);
         }
 
-        public void InsertStyle(string style)
+        public void InsertStyle(string style, int importanceOffset = 0)
         {
             if (string.IsNullOrWhiteSpace(style)) return;
 
             var stylesheet = StyleTree.Parser.Parse(style);
-
-            foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
-            {
-                StyleTree.AddStyle(rule);
-            }
 
             foreach (var rule in stylesheet.FontfaceSetRules)
             {
                 FontFamilies[(ParserMap.StringConverter.Convert(rule.Family) as string).ToLowerInvariant()] =
                     ParserMap.FontReferenceConverter.Convert(rule.Source) as FontReference;
             }
+
+            foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
+            {
+                StyleTree.AddStyle(rule, importanceOffset);
+            }
+
             Host.ResolveStyle(true);
         }
 
