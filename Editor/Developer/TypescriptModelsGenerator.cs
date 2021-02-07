@@ -1,32 +1,30 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using System.Reflection;
 using System;
 using System.Text;
 using UnityEditor;
 using System.IO;
-using UnityEngine.Video;
-using UnityEngine.UI;
 
 namespace ReactUnity.Editor.Developer
 {
     public static class TypescriptModelsGenerator
     {
+#if REACT_UNITY_DEVELOPER
         [MenuItem("React/Developer/Generate Unity Typescript Models", priority = 0)]
         public static void GenerateUnity()
         {
             Generate(
                 new List<Assembly> {
-                    typeof(GameObject).Assembly,
-                    typeof(VideoPlayer).Assembly,
-                    typeof(AudioSource).Assembly,
-                    typeof(CanvasGroup).Assembly,
-                    typeof(Selectable).Assembly,
-                    typeof(UIVertex).Assembly,
-                    typeof(Input).Assembly,
-                    typeof(Animator).Assembly,
-                    typeof(Event).Assembly,
+                    typeof(UnityEngine.GameObject).Assembly,
+                    typeof(UnityEngine.Video.VideoPlayer).Assembly,
+                    typeof(UnityEngine.AudioSource).Assembly,
+                    typeof(UnityEngine.CanvasGroup).Assembly,
+                    typeof(UnityEngine.UI.Selectable).Assembly,
+                    typeof(UnityEngine.UIVertex).Assembly,
+                    typeof(UnityEngine.Input).Assembly,
+                    typeof(UnityEngine.Animator).Assembly,
+                    typeof(UnityEngine.Event).Assembly,
 //#if REACT_INPUT_SYSTEM
 //                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
 //                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
@@ -51,6 +49,7 @@ namespace ReactUnity.Editor.Developer
                 new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" } }
             );
         }
+#endif
 
         static List<string> IncludedNamespaces;
         static List<string> ExcludedNamespaces;
@@ -70,7 +69,7 @@ namespace ReactUnity.Editor.Developer
             var res = GetTypescript(assemblies);
             File.WriteAllText(filePath, res);
 
-            Debug.Log("Saved typescript models to: " + filePath);
+            UnityEngine.Debug.Log("Saved typescript models to: " + filePath);
         }
 
         static string GetTypescript(List<Assembly> assemblies)
@@ -262,7 +261,7 @@ namespace ReactUnity.Editor.Developer
                 case byte b:
                     return val.ToString();
                 default:
-                    return JsonUtility.ToJson(val);
+                    return "{}";
             }
         }
 
