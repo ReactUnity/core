@@ -1,6 +1,0 @@
-import style from './index.module.scss';
-
-export const App = () =>
-  <view className={style.app}>
-    Hello world!
-  </view>;

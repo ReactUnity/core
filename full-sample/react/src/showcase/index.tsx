@@ -1,4 +1,4 @@
-import { Dropdown, DropdownItem, ImageFitMode, NativeVideoInstance, Renderer, Slider, Tooltip } from '@reactunity/renderer';
+import { Dropdown, DropdownItem, ImageFitMode, ReactUnity, Renderer, Slider, Tooltip } from '@reactunity/renderer';
 import style from './index.module.scss';
 import pngImage from 'src/assets/bg.png';
 import base64Image from 'src/assets/base64Image.txt';
@@ -9,7 +9,7 @@ const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/google
 const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
 
 export function App() {
-  const [videoRef, setVideoRef] = useState<NativeVideoInstance>();
+  const [videoRef, setVideoRef] = useState<ReactUnity.Components.VideoComponent>();
 
   useEffect(() => {
     if (videoRef) {
@@ -29,109 +29,111 @@ export function App() {
       Cool tooltip
     </view>;
 
-  return <scroll className={style.app}>
-    <h1>React Unity Showcase</h1>
+  return <scroll>
+    <view className={style.app}>
+      <h1>React Unity Showcase</h1>
 
 
-    <section>
-      <h2>Button</h2>
+      <section>
+        <h2>Button</h2>
 
-      <button>Click</button>
-    </section>
-
-
-    <section>
-      <h2>Anchor</h2>
-
-      <anchor url="https://www.google.com">Open Google</anchor>
-    </section>
+        <button>Click</button>
+      </section>
 
 
-    <section>
-      <h2>Input</h2>
+      <section>
+        <h2>Anchor</h2>
 
-      <input />
-    </section>
+        <anchor url="https://www.google.com">Open Google</anchor>
+      </section>
 
 
-    <section>
-      <h2>Toggle</h2>
+      <section>
+        <h2>Input</h2>
 
-      <row>
-        <toggle />
+        <input />
+      </section>
+
+
+      <section>
+        <h2>Toggle</h2>
+
+        <row>
+          <toggle />
         Toggle
       </row>
-    </section>
+      </section>
 
 
-    <section>
-      <h2>Tooltip</h2>
+      <section>
+        <h2>Tooltip</h2>
 
-      <Tooltip tooltipContent={tooltipContent} position='bottom' offset={20}>
-        Hover to see cool tooltip.
+        <Tooltip tooltipContent={tooltipContent} position='bottom' offset={20}>
+          Hover to see cool tooltip.
       </Tooltip>
-    </section>
+      </section>
 
 
-    <section>
-      <h2>Dropdown</h2>
+      <section>
+        <h2>Dropdown</h2>
 
-      <Dropdown>
-        Select an option
+        <Dropdown>
+          Select an option
 
         <DropdownItem>Normal Option</DropdownItem>
-        <DropdownItem triggerTemplate={<view style={{ color: 'green' }}>Green Option</view>}>Green Option 💚</DropdownItem>
-        <DropdownItem triggerTemplate={<view style={{ color: 'red' }}>Red Option</view>}>Red Option 🧡</DropdownItem>
-      </Dropdown>
-    </section>
+          <DropdownItem triggerTemplate={<view style={{ color: 'green' }}>Green Option</view>}>Green Option 💚</DropdownItem>
+          <DropdownItem triggerTemplate={<view style={{ color: 'red' }}>Red Option</view>}>Red Option 🧡</DropdownItem>
+        </Dropdown>
+      </section>
 
 
-    <section>
-      <h2>Image</h2>
+      <section>
+        <h2>Image</h2>
 
-      <row>
-        <image fit={ImageFitMode.CenterInside} source={pngImage} />
-        <image fit={ImageFitMode.CenterInside} source={base64Image} />
-        <image fit={ImageFitMode.CenterInside} source={webImage} />
-        <image fit={ImageFitMode.CenterInside} source={svgImage['0x0']} />
-      </row>
-    </section>
-
-
-    <section>
-      <h2>Video</h2>
-
-      <row>
-        <video fit={ImageFitMode.CenterInside} source={webVideo} ref={setVideoRef} onPointerClick={toggleVideo} />
-      </row>
-    </section>
+        <row>
+          <image fit={ImageFitMode.CenterInside} source={pngImage} />
+          <image fit={ImageFitMode.CenterInside} source={base64Image} />
+          <image fit={ImageFitMode.CenterInside} source={webImage} />
+          <image fit={ImageFitMode.CenterInside} source={svgImage['0x0']} />
+        </row>
+      </section>
 
 
-    <section>
-      <h2>Slider</h2>
+      <section>
+        <h2>Video</h2>
 
-      <row>
-        <column>
-          Horizontal
-          <Slider />
+        <row>
+          <video fit={ImageFitMode.CenterInside} source={webVideo} ref={setVideoRef} onPointerClick={toggleVideo} />
+        </row>
+      </section>
 
-          <Slider>
-            {(value) => <view style={{ position: 'absolute', top: 24, color: value > 0.5 ? 'red' : 'black' }}>{value.toFixed(3)}</view>}
-          </Slider>
-        </column>
 
-        <column>
-          Vertical
-          <row>
-            <Slider direction="vertical" />
+      <section>
+        <h2>Slider</h2>
 
-            <Slider direction="vertical">
-              {(value) => <view style={{ position: 'absolute', left: 24 }}>{value.toFixed(3)}</view>}
+        <row>
+          <column>
+            Horizontal
+            <Slider direction="horizontal-reverse" />
+
+            <Slider>
+              {(value) => <view style={{ position: 'absolute', top: 24, color: value > 0.5 ? 'red' : 'black' }}>{value.toFixed(3)}</view>}
             </Slider>
-          </row>
-        </column>
-      </row>
-    </section>
+          </column>
+
+          <column>
+            Vertical
+          <row>
+              <Slider direction="vertical-reverse" />
+
+              <Slider direction="vertical">
+                {(value) => <view style={{ position: 'absolute', left: 24 }}>{value.toFixed(3)}</view>}
+              </Slider>
+            </row>
+          </column>
+        </row>
+      </section>
+    </view>
   </scroll>;
 };
 
