@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {
-    public class ImageComponent : ContainerComponent
+    public class RawImageComponent : ContainerComponent
     {
         public static NodeStyle ImageDefaultStyle { get; } = new NodeStyle() { };
         public static YogaNode ImageDefaultLayout { get; } = new YogaNode() { Overflow = YogaOverflow.Hidden, AlignItems = YogaAlign.Center, JustifyContent = YogaJustify.Center };
@@ -16,20 +16,20 @@ namespace ReactUnity.Components
 
         public ImageMeasurer Measurer { get; private set; }
         public ContainerComponent ImageContainer { get; private set; }
-        public Image Image { get; private set; }
+        public RawImage Image { get; private set; }
 
         public ImageFitMode Fit { get; private set; }
 
-        public ImageComponent(UnityUGUIContext context, string tag = "image") : base(context, tag)
+        public RawImageComponent(UnityUGUIContext context, string tag = "rawimage") : base(context, tag)
         {
             ImageContainer = new ContainerComponent(context, "");
-            ImageContainer.GameObject.name = "[ImageContent]";
-            Image = ImageContainer.AddComponent<Image>();
+            ImageContainer.GameObject.name = "[RawImageContent]";
+            Image = ImageContainer.AddComponent<RawImage>();
 
             Measurer = ImageContainer.AddComponent<ImageMeasurer>();
             Measurer.Context = context;
             Measurer.Layout = ImageContainer.Layout;
-            Measurer.Sprite = Image.sprite;
+            Measurer.Texture = Image.texture;
             ImageContainer.Layout.SetMeasureFunction(Measurer.Measure);
 
             ImageContainer.SetParent(this);
@@ -57,14 +57,14 @@ namespace ReactUnity.Components
         {
             source.Get(Context, (res) =>
             {
-                SetSprite(res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2));
+                SetTexture(res);
             });
         }
 
-        private void SetSprite(Sprite sprite)
+        protected void SetTexture(Texture texture)
         {
-            Image.sprite = sprite;
-            Measurer.Sprite = sprite;
+            Image.texture = texture;
+            Measurer.Texture = texture;
         }
 
         private void SetFit(ImageFitMode fit)

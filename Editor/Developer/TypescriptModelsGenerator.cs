@@ -79,7 +79,7 @@ namespace ReactUnity.Editor.Developer
             var sb = new StringBuilder();
 
             var nsStack = new Stack<string>();
-            var n = Environment.NewLine;
+            var n = "\n";
 
             string spaces(int depth = 0)
             {
@@ -123,15 +123,15 @@ namespace ReactUnity.Editor.Developer
 
                 if (type.IsEnum)
                 {
-                    sb.Append(@$"{bl}export enum {getTypesScriptType(type, false)} {{{n}");
+                    sb.Append($"{bl}export enum {getTypesScriptType(type, false)} {{{n}");
                     var fields = type.GetFields().Where(x => x.Name != "value__");
 
                     foreach (var info in fields)
-                        sb.Append($@"{bl1}{info.Name} = {getTypeScriptValue(info.GetRawConstantValue())},{n}");
+                        sb.Append($"{bl1}{info.Name} = {getTypeScriptValue(info.GetRawConstantValue())},{n}");
                 }
                 else
                 {
-                    sb.Append(@$"{bl}export interface {getTypesScriptType(type, false)} {{{n}");
+                    sb.Append($"{bl}export interface {getTypesScriptType(type, false)} {{{n}");
 
                     var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(x => !x.IsSpecialName && x.GetIndexParameters().Length == 0);
                     var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public).Where(x => !x.IsSpecialName);
@@ -142,28 +142,27 @@ namespace ReactUnity.Editor.Developer
                         .GroupBy(x => x.Name);
 
                     foreach (var info in props)
-                        sb.Append($@"{bl1}{getTypeScriptString(info)}{n}");
+                        sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
 
                     foreach (var info in fields)
-                        sb.Append($@"{bl1}{getTypeScriptString(info)}{n}");
+                        sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
 
                     foreach (var info in methods)
-                        sb.Append($@"{bl1}{getTypeScriptString(info)}{n}");
+                        sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
                 }
 
-                sb.Append($@"{bl}}}{n}");
+                sb.Append($"{bl}}}{n}");
             }
 
             var importGroups = Imports.GroupBy(x => ImportNamespaces[x]);
 
-            return $@"//
-// Types in assemblies: {string.Join(", ", assemblies.Select(x => x.GetName().Name))}
-// Generated {DateTime.Now}
-//
-{string.Join(n, importGroups.Select(x => $"import {{ {string.Join(",", x)} }} from './{x.Key}';"))}
-
-{sb}
-";
+            return $"//{n}" +
+                $"// Types in assemblies: {string.Join(", ", assemblies.Select(x => x.GetName().Name))}{n}" +
+                $"// Generated {DateTime.Now}{n}" +
+                $"//{n}" +
+                $"{string.Join(n, importGroups.Select(x => $"import {{ {string.Join(",", x)} }} from './{x.Key}';"))}{n}" +
+                n +
+                sb;
         }
 
         static bool filterType(Type t)

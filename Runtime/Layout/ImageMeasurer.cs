@@ -1,5 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Components;
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,41 +8,79 @@ namespace ReactUnity.Layout
 {
     public class ImageMeasurer : MonoBehaviour, ILayoutSelfController
     {
-        private Image image;
-
         public YogaNode Layout;
-        public ImageComponent Component;
         public UnityUGUIContext Context;
 
-        private void Awake()
+        private ImageFitMode fitMode;
+        public ImageFitMode FitMode
         {
-            image = GetComponent<Image>();
+            get => fitMode;
+            set
+            {
+                fitMode = value;
+                MarkDirty();
+            }
+        }
+
+        private Sprite sprite;
+        public Sprite Sprite
+        {
+            get => sprite;
+            set
+            {
+                sprite = value;
+                MarkDirty();
+            }
+        }
+
+        private Texture texture;
+        public Texture Texture
+        {
+            get => texture;
+            set
+            {
+                texture = value;
+                MarkDirty();
+            }
         }
 
         void ILayoutController.SetLayoutHorizontal()
         {
-            Layout.MarkDirty();
-            Context.scheduleLayout();
+            MarkDirty();
         }
 
         void ILayoutController.SetLayoutVertical()
         {
-            Layout.MarkDirty();
+            MarkDirty();
+        }
+
+        public void MarkDirty()
+        {
+            if(Layout.Parent != null) Layout.MarkDirty();
             Context.scheduleLayout();
         }
 
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            var sprite = image.sprite;
-            var mode = Component != null ? Component.Fit : ImageFitMode.CenterInside;
-            var ow = sprite ? sprite.rect.width : 0;
-            var oh = sprite ? sprite.rect.height : 0;
+            float ow = 0;
+            float oh = 0;
+            if (sprite != null)
+            {
+                ow = sprite.rect.width;
+                oh = sprite.rect.height;
+            }
+            else if (texture != null)
+            {
+                ow = texture.width;
+                oh = texture.height;
+            }
+
 
             var rw = ow;
             var rh = oh;
 
-            if (mode == ImageFitMode.CenterCrop)
+            if (fitMode == ImageFitMode.CenterCrop)
             {
                 if (rw < width)
                 {
@@ -57,7 +96,7 @@ namespace ReactUnity.Layout
                     rw *= scale;
                 }
             }
-            else if (mode == ImageFitMode.CenterInside)
+            else if (fitMode == ImageFitMode.CenterInside)
             {
                 if (rw > width)
                 {
@@ -73,12 +112,12 @@ namespace ReactUnity.Layout
                     rw *= scale;
                 }
             }
-            else if (mode == ImageFitMode.Fill)
+            else if (fitMode == ImageFitMode.Fill)
             {
                 rw = width;
                 rh = height;
             }
-            else if (mode == ImageFitMode.FitCenter || mode == ImageFitMode.FitEnd || mode == ImageFitMode.FitStart)
+            else if (fitMode == ImageFitMode.FitCenter || fitMode == ImageFitMode.FitEnd || fitMode == ImageFitMode.FitStart)
             {
                 if (rw != width)
                 {

@@ -24,6 +24,8 @@ namespace ReactUnity
                 { "input", (tag, text, context) => new InputComponent(text, context) },
                 { "scroll", (tag, text, context) => new ScrollComponent(context) },
                 { "image", (tag, text, context) => new ImageComponent(context) },
+                { "rawimage", (tag, text, context) => new RawImageComponent(context) },
+                { "render", (tag, text, context) => new RenderTextureComponent(context) },
                 { "video", (tag, text, context) => new VideoComponent(context) },
             };
 
