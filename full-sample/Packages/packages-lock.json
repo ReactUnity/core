@@ -1,12 +1,10 @@
 {
   "dependencies": {
     "com.reactunity.core": {
-      "version": "0.0.13",
+      "version": "0.0.15",
       "depth": 0,
       "source": "registry",
-      "dependencies": {
-        "com.unity.textmeshpro": "3.0.1"
-      },
+      "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.unity.2d.sprite": {
@@ -24,6 +22,20 @@
     },
     "com.unity.ide.vscode": {
       "version": "1.2.3",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.inputsystem": {
+      "version": "1.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.quicksearch": {
+      "version": "2.0.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -48,7 +60,7 @@
       }
     },
     "com.unity.vectorgraphics": {
-      "version": "2.0.0-preview.13",
+      "version": "2.0.0-preview.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
