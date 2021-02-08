@@ -1,8 +1,11 @@
 {
     "name": "ReactUnity.Editor",
+    "rootNamespace": "",
     "references": [
         "GUID:ed4a920eac98dc342ba18a6baa202849",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:68550284b645f4b9894995579f34290a"
     ],
     "includePlatforms": [
         "Editor"
@@ -13,6 +16,17 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.vectorgraphics",
+            "expression": "",
+            "define": "REACT_VECTOR_GRAPHICS"
+        },
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "",
+            "define": "REACT_INPUT_SYSTEM"
+        }
+    ],
     "noEngineReferences": false
 }

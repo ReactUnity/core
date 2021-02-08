@@ -1,7 +1,10 @@
 using Facebook.Yoga;
 using Jint.Native.Function;
 using ReactUnity.Helpers;
+using ReactUnity.Interop;
 using ReactUnity.Styling;
+using ReactUnity.Types;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,6 +19,7 @@ namespace ReactUnity.Components
             backgroundColor = new Color(0.82f, 0.82f, 0.82f, 1),
             borderRadius = 6,
             cursor = "pointer",
+            appearance = Styling.Types.Appearance.Toggle,
         };
         public static YogaNode ToggleDefaultLayout { get; } = new YogaNode()
         {
@@ -42,8 +46,7 @@ namespace ReactUnity.Components
 
         public ToggleComponent(UnityUGUIContext context) : base(context, "toggle")
         {
-            Toggle = GameObject.AddComponent<Toggle>();
-            Selectable = Toggle;
+            Toggle = AddComponent<Toggle>();
 
             Check = new ImageComponent(context);
             Check.SetProperty("source", ResourcesHelper.CheckSprite);
@@ -59,13 +62,13 @@ namespace ReactUnity.Components
         }
 
 
-        public override void SetEventListener(string eventName, FunctionInstance callback)
+        public override void SetEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onChange":
                     Toggle.onValueChanged.RemoveAllListeners();
-                    if (callback != null) Toggle.onValueChanged.AddListener(new UnityAction<bool>((x) => callback.Invoke(x)));
+                    if (callback != null) Toggle.onValueChanged.AddListener(new UnityAction<bool>((x) => callback.Call(x)));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);

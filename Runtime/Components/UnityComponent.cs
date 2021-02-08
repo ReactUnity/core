@@ -1,12 +1,17 @@
+using ExCSS;
 using Facebook.Yoga;
-using Jint.Native;
-using Jint.Native.Function;
 using ReactUnity.EventHandlers;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.StateHandlers;
+using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using ReactUnity.Types;
+using ReactUnity.Styling.Types;
+using ReactUnity.Visitors;
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,31 +20,48 @@ namespace ReactUnity.Components
 {
     public class UnityComponent
     {
-        public UnityUGUIContext Context { get; }
-        public static NodeStyle TagDefaultStyle { get; } = new NodeStyle();
-        public static YogaNode TagDefaultLayout { get; } = new YogaNode();
+        #region Statics / Defaults
+        private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
+        public static readonly NodeStyle TagDefaultStyle = new NodeStyle();
+        public static readonly YogaNode TagDefaultLayout = new YogaNode();
         public virtual NodeStyle DefaultStyle => TagDefaultStyle;
         public virtual YogaNode DefaultLayout => TagDefaultLayout;
+        #endregion
 
+        public UnityUGUIContext Context { get; }
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
         public ContainerComponent Parent { get; private set; }
 
-
-        public FlexElement Flex { get; private set; }
+        public Dictionary<string, object> Data { get; private set; } = new Dictionary<string, object>();
+        public ReactElement Component { get; private set; }
         public YogaNode Layout { get; private set; }
         public NodeStyle Style { get; private set; }
         public StateStyles StateStyles { get; private set; }
+        public ExpandoObject Inline { get; protected set; } = new ExpandoObject();
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
 
-        public Selectable Selectable { get; protected set; }
-        public CanvasGroup CanvasGroup => GameObject.GetComponent<CanvasGroup>();
-        public Canvas Canvas => GameObject.GetComponent<Canvas>();
+        private Selectable selectable;
+        public Selectable Selectable
+        {
+            get => selectable;
+            internal set
+            {
+                selectable = value;
+                UpdateBackgroundGraphic(false, true);
+            }
+        }
+        public CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
+        public Canvas Canvas => GetComponent<Canvas>();
 
+        public bool IsPseudoElement = false;
         public string Tag { get; set; } = "";
         public string ClassName { get; set; } = "";
+        public HashSet<string> ClassList { get; private set; } = EmptyClassList;
+
+        public string TextContent => new TextContentVisitor().Get(this);
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
@@ -57,7 +79,7 @@ namespace ReactUnity.Components
             Tag = tag;
             Context = context;
             GameObject = new GameObject();
-            RectTransform = GameObject.AddComponent<RectTransform>();
+            RectTransform = AddComponent<RectTransform>();
 
             RectTransform.anchorMin = Vector2.up;
             RectTransform.anchorMax = Vector2.up;
@@ -68,10 +90,10 @@ namespace ReactUnity.Components
             Style = new NodeStyle(DefaultStyle, StateStyles);
             Layout = new YogaNode(DefaultLayout);
 
-            Flex = GameObject.AddComponent<FlexElement>();
-            Flex.Layout = Layout;
-            Flex.Style = Style;
-            Flex.Component = this;
+            Component = AddComponent<ReactElement>();
+            Component.Layout = Layout;
+            Component.Style = Style;
+            Component.Component = this;
         }
 
         public virtual void Destroy()
@@ -79,12 +101,15 @@ namespace ReactUnity.Components
             GameObject.DestroyImmediate(GameObject);
             Parent.Children.Remove(this);
             Parent.Layout.RemoveChild(Layout);
+            Parent.ScheduleLayout();
         }
 
         public virtual void SetParent(ContainerComponent parent, UnityComponent insertBefore = null, bool insertAfter = false)
         {
             Parent = parent;
             RectTransform.SetParent(parent.Container, false);
+
+            insertBefore = insertBefore ?? (insertAfter ? null : parent.AfterPseudo);
 
             if (insertBefore == null)
             {
@@ -93,7 +118,7 @@ namespace ReactUnity.Components
             }
             else
             {
-                var ind = insertBefore.RectTransform.GetSiblingIndex();
+                var ind = parent.Children.IndexOf(insertBefore);
                 if (insertAfter) ind++;
 
                 parent.Children.Insert(ind, this);
@@ -103,10 +128,11 @@ namespace ReactUnity.Components
 
             Style.Parent = parent.Style;
             ResolveStyle(true);
+
+            Parent.ScheduleLayout();
         }
 
-
-        public virtual void SetEventListener(string eventName, FunctionInstance fun)
+        public virtual void SetEventListener(string eventName, Callback fun)
         {
             var eventType = EventHandlerMap.GetEventType(eventName);
             if (eventType == null) throw new System.Exception($"Unknown event name specified, '{eventName}'");
@@ -118,10 +144,16 @@ namespace ReactUnity.Components
             // No event to add
             if (fun == null) return;
 
-            if (handler == null) handler = GameObject.AddComponent(eventType) as IEventHandler;
+            if (handler == null) handler = AddComponent(eventType) as IEventHandler;
 
-            System.Action<BaseEventData> callAction = (e) => fun.Invoke(JsValue.FromObject(Context.Engine, e));
+            Action<BaseEventData> callAction = (e) => fun.Call(e);
             handler.OnEvent += callAction;
+        }
+
+        public virtual void SetData(string propertyName, object value)
+        {
+            Data[propertyName] = value;
+            ResolveStyle(true);
         }
 
         public virtual void SetProperty(string propertyName, object value)
@@ -133,6 +165,8 @@ namespace ReactUnity.Components
                     return;
                 case "className":
                     ClassName = value?.ToString();
+                    ClassList = string.IsNullOrWhiteSpace(ClassName) ? EmptyClassList :
+                        new HashSet<string>(ClassName.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries));
                     return;
                 default:
                     throw new System.Exception($"Unknown property name specified, '{propertyName}'");
@@ -146,7 +180,33 @@ namespace ReactUnity.Components
 
         public virtual void ResolveStyle(bool recursive = false)
         {
-            if (Parent == null) return;
+            var inlineStyles = RuleHelpers.GetRuleDic(Inline);
+            var inlineLayouts = RuleHelpers.GetLayoutDic(Inline) ?? new List<LayoutValue>();
+
+            List<RuleTreeNode<StyleData>> matchingRules;
+            if (Tag == "_before") matchingRules = Parent.BeforeRules;
+            else if (Tag == "_after") matchingRules = Parent.AfterRules;
+            else matchingRules = Context.StyleTree.GetMatchingRules(this).ToList();
+
+            var importantIndex = Math.Max(0, matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity));
+            var cssStyles = new List<Dictionary<string, object>> { };
+
+            for (int i = 0; i < importantIndex; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
+            cssStyles.Add(inlineStyles);
+            for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
+
+            Style.CssStyles = cssStyles;
+
+
+            if (Style.CssLayouts != null)
+                foreach (var item in Style.CssLayouts) item.SetDefault(Layout, DefaultLayout);
+            Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
+            //foreach (var item in Style.CssLayouts) item.Set(Layout, DefaultLayout);
+
+            for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
+            inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
+            for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
+
             ApplyStyles();
             Style.MarkChangesSeen();
         }
@@ -154,22 +214,22 @@ namespace ReactUnity.Components
         public virtual void ApplyLayoutStyles()
         {
             ResolveOpacityAndInteractable();
-            SetBorderSize();
             SetOverflow();
+            UpdateBackgroundGraphic(true, false);
         }
 
         public virtual void ApplyStyles()
         {
             ResolveTransform();
             ResolveOpacityAndInteractable();
-            SetBackground();
-            SetBoxShadow();
-            SetZOrder();
-            SetBorderRadius();
-            SetBorderColor();
+            SetZIndex();
             SetOverflow();
             SetCursor();
+            UpdateBackgroundGraphic(false, true);
         }
+
+
+        #region Style Functions
 
         protected void ResolveTransform()
         {
@@ -178,7 +238,11 @@ namespace ReactUnity.Components
             RectTransform.localRotation = Quaternion.identity;
 
 
-            var pivot = Style.pivot;
+            var origin = Style.transformOrigin;
+            var rect = RectTransform.sizeDelta;
+            var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (origin.X.Value / rect.x) : 0.5f;
+            var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
+            var pivot = new Vector2(pivotX, pivotY);
             Vector3 deltaPosition = RectTransform.pivot - pivot;    // get change in pivot
             deltaPosition.Scale(RectTransform.rect.size);           // apply sizing
             deltaPosition.Scale(RectTransform.localScale);          // apply scaling
@@ -197,42 +261,30 @@ namespace ReactUnity.Components
         protected void ResolveOpacityAndInteractable()
         {
             var opacity = Style.opacity;
-            var hidden = Style.hidden;
+            var visibility = Style.visibility;
             var none = Layout.Display == YogaDisplay.None;
-            var interaction = Style.interaction;
+            var interaction = Style.pointerEvents;
 
-            if (hidden || none) opacity = 0;
-            if (none) interaction = InteractionType.Ignore;
+            if (!visibility || none) opacity = 0;
+            if (none) interaction = PointerEvents.None;
 
             var isTransparent = opacity < 1;
             var isInvisible = opacity == 0;
 
-            var hasInteraction = interaction == InteractionType.Always || (!isInvisible && interaction == InteractionType.WhenVisible);
+            var hasInteraction = interaction == PointerEvents.All || (!isInvisible && interaction == PointerEvents.Visible);
 
 
             var group = CanvasGroup;
             // Group does not exist and there is no need for it, quit early
             if (!group && !isTransparent && hasInteraction) return;
-            if (!group) group = GameObject.AddComponent<CanvasGroup>();
+            if (!group) group = AddComponent<CanvasGroup>();
 
             group.alpha = opacity;
             group.interactable = hasInteraction;
 
-            if (interaction == InteractionType.Ignore) group.blocksRaycasts = false;
-            else if (isInvisible && interaction == InteractionType.WhenVisible) group.blocksRaycasts = false;
+            if (interaction == PointerEvents.None) group.blocksRaycasts = false;
+            else if (isInvisible && interaction == PointerEvents.Visible) group.blocksRaycasts = false;
             else group.blocksRaycasts = true;
-        }
-
-
-        public virtual BorderAndBackground GetBackgroundGraphic()
-        {
-            if (BorderAndBackground != null) return BorderAndBackground;
-
-            var image = new BorderAndBackground(RectTransform);
-
-            if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
-
-            return BorderAndBackground = image;
         }
 
         private void SetOverflow()
@@ -251,55 +303,8 @@ namespace ReactUnity.Components
         private void SetCursor()
         {
             if (string.IsNullOrWhiteSpace(Style.cursor)) return;
-            var handler = GameObject.GetComponent<CursorHandler>() ?? GameObject.AddComponent<CursorHandler>();
+            var handler = GetOrAddComponent<CursorHandler>();
             handler.Cursor = Style.cursor;
-        }
-
-        private void SetBackground()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            var sprite = AssetReference.GetSpriteFromObject(Style.backgroundImage, Context);
-            image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
-        }
-
-        private void SetBoxShadow()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBoxShadow(Style.boxShadow);
-        }
-
-        private void SetBorderRadius()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-
-            MainThreadDispatcher.OnUpdate(() =>
-            {
-                if (!GameObject) return;
-                var sprite = BorderGraphic.CreateBorderSprite(Style.borderRadius);
-                image.SetBorderImage(sprite);
-            });
-        }
-
-        private void SetBorderColor()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBorderColor(Style.borderColor);
-        }
-
-        private void SetBorderSize()
-        {
-            if (!HasBorderOrBackground()) return;
-
-            var image = GetBackgroundGraphic();
-            image.SetBorderSize(Layout);
         }
 
         protected bool HasBorderOrBackground()
@@ -319,19 +324,150 @@ namespace ReactUnity.Components
             return false;
         }
 
-        private void SetZOrder()
+        public virtual BorderAndBackground UpdateBackgroundGraphic(bool updateLayout, bool updateStyle)
         {
-            var z = Style.zOrder;
+            if (Selectable)
+            {
+                Selectable.transition = Style.appearance == Appearance.None ? Selectable.Transition.None : Selectable.Transition.ColorTint;
+                if (Style.navigation != Navigation.Mode.Automatic)
+                    Selectable.navigation = new Navigation() { mode = Style.navigation };
+            }
+
+            if (!HasBorderOrBackground()) return null;
+
+            BorderAndBackground image = BorderAndBackground;
+
+            if (image == null)
+            {
+                updateStyle = true;
+                updateLayout = true;
+                image = new BorderAndBackground(RectTransform);
+
+                if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
+                BorderAndBackground = image;
+            }
+
+            if (updateLayout)
+            {
+                image.SetBorderSize(Layout);
+            }
+            if (updateStyle)
+            {
+                Style.backgroundImage.Get(Context, (res) =>
+                {
+                    Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
+                    image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
+                });
+                image.SetBoxShadow(Style.boxShadow);
+                MainThreadDispatcher.OnUpdate(() =>
+                {
+                    if (!GameObject) return;
+                    var borderSprite = BorderGraphic.CreateBorderSprite(Style.borderRadius);
+                    image.SetBorderImage(borderSprite);
+                });
+
+                image.SetBorderColor(Style.borderColor);
+            }
+
+            return image;
+        }
+
+        private void SetZIndex()
+        {
+            var z = Style.zIndex;
             Canvas canvas = Canvas;
             if (!canvas && z == 0) return;
             if (!canvas)
             {
-                canvas = GameObject.AddComponent<Canvas>();
-                GameObject.AddComponent<GraphicRaycaster>();
+                canvas = AddComponent<Canvas>();
+                AddComponent<GraphicRaycaster>();
             }
 
             canvas.overrideSorting = true;
             canvas.sortingOrder = z;
         }
+
+        #endregion 
+
+
+        #region Component Tree Functions
+
+        public UnityComponent QuerySelector(string query)
+        {
+            var tree = new RuleTree<string>(Context.Parser);
+            tree.AddSelector(query);
+            return tree.GetMatchingChild(this);
+        }
+
+        public List<UnityComponent> QuerySelectorAll(string query)
+        {
+            var tree = new RuleTree<string>(Context.Parser);
+            tree.AddSelector(query);
+            return tree.GetMatchingChildren(this);
+        }
+
+        public virtual void Accept(UnityComponentVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
+
+        #endregion
+
+
+        #region UI/Event Utilities
+
+        public Vector2 GetRelativePosition(float x, float y)
+        {
+            var screenPoint = new Vector2(x, y);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(GameObject.transform as RectTransform, screenPoint, Context.Host.Canvas.worldCamera, out var pos);
+            return pos;
+        }
+
+        #endregion
+
+
+        #region Add/Get Component Utilities
+
+        public CType GetComponent<CType>() where CType : Component
+        {
+            return GameObject.GetComponent<CType>();
+        }
+
+        public Component GetComponent(Type type)
+        {
+            return GameObject.GetComponent(type);
+        }
+
+        public CType GetOrAddComponent<CType>() where CType : Component
+        {
+            return GameObject.GetComponent<CType>() ?? GameObject.AddComponent<CType>();
+        }
+
+        public CType AddComponent<CType>() where CType : Component
+        {
+            return AddComponent(typeof(CType)) as CType;
+        }
+
+        public Component AddComponent(Type type)
+        {
+            if (type == null) return null;
+
+            var requiredComponents = type.GetCustomAttributes(typeof(RequireComponent), true).OfType<RequireComponent>();
+
+            foreach (var req in requiredComponents)
+            {
+                if (req.m_Type0 != null && !GameObject.GetComponent(req.m_Type0)) AddComponent(req.m_Type0);
+                if (req.m_Type1 != null && !GameObject.GetComponent(req.m_Type1)) AddComponent(req.m_Type1);
+                if (req.m_Type2 != null && !GameObject.GetComponent(req.m_Type2)) AddComponent(req.m_Type2);
+            }
+
+            var res = GameObject.AddComponent(type);
+
+            if (typeof(Selectable).IsAssignableFrom(type) && !Selectable) Selectable = res as Selectable;
+
+            return res;
+        }
+
+        #endregion
     }
 }

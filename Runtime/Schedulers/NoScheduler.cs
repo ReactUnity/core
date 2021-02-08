@@ -1,32 +1,33 @@
-using Jint.Native;
-using UnityEngine;
+using ReactUnity.Interop;
 
 namespace ReactUnity.Schedulers
 {
     public class NoScheduler : IUnityScheduler
     {
-        public int setTimeout(JsValue callback)
-        {
-            return -1;
-        }
-        public int setTimeout(JsValue callback, int timeout)
+        public int setTimeout(Callback callback, int timeout)
         {
             return -1;
         }
 
-        public int setInterval(JsValue callback, int timeout)
+        public int setInterval(Callback callback, int timeout)
         {
             return -1;
         }
 
-        public int requestAnimationFrame(JsValue callback)
+        public int setImmediate(Callback callback)
         {
             return -1;
         }
 
-        public void clearTimeout(int handle) { }
-        public void clearInterval(int handle) { }
-        public void cancelAnimationFrame(int handle) { }
+        public int requestAnimationFrame(Callback callback)
+        {
+            return -1;
+        }
+
+        public void clearTimeout(int? handle) { }
+        public void clearInterval(int? handle) { }
+        public void clearImmediate(int? handle) { }
+        public void cancelAnimationFrame(int? handle) { }
         public void clearAllTimeouts() { }
     }
 }

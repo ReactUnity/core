@@ -24,6 +24,7 @@ namespace ReactUnity.EventHandlers
             { "onEndDrag", typeof(EndDragHandler) },
             { "onPotentialDrag", typeof(PotentialDragHandler) },
             { "onDrop", typeof(DropHandler) },
+            { "onKeyDown", typeof(KeyDownHandler) }
         };
 
         public static Type GetEventType(string eventName)

@@ -1,6 +1,5 @@
-using Jint;
-using Jint.Native;
-using ReactUnity.Converters;
+using System;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace ReactUnity.Types
@@ -8,133 +7,94 @@ namespace ReactUnity.Types
     public enum AssetReferenceType
     {
         None = 0,
-        File = 1,
-        Url = 2,
+        Auto = 1,
+        Object = 2,
         Resource = 3,
-        NamedAsset = 4,
-        Procedural = 5,
-        Object = 6,
+        File = 4,
+        Url = 5,
+        Global = 6,
+        Procedural = 7,
+        Data = 8,
     }
 
-    public class AssetReference
+    public class AssetReference<AssetType> : IDisposable where AssetType : class
     {
+        public static AssetReference<AssetType> None = new AssetReference<AssetType>(AssetReferenceType.None, null);
+        private static Regex HttpRegex = new Regex("^https?://");
+
         public AssetReferenceType type { get; private set; } = AssetReferenceType.None;
-        public JsValue value { get; private set; }
+        public object value { get; private set; }
 
+        protected bool IsCached;
+        protected AssetType CachedValue;
 
-        public AssetReference(AssetReferenceType type, JsValue value)
+        public AssetReference(AssetReferenceType type, object value)
         {
             this.type = type;
             this.value = value;
         }
 
-        static public AssetReference None = new AssetReference(AssetReferenceType.None, null);
-        static public AssetReference FromJsValue(JsValue obj)
+        public void Get(UnityUGUIContext context, System.Action<AssetType> callback)
         {
-            if (obj == null || obj.IsNull() || obj.IsUndefined()) return None;
-
-            if (obj.IsObject())
+            if (IsCached)
             {
-                var ob = obj.AsObject();
-                var v0 = ob.Get("type");
-                var value = ob.Get("value");
-
-                var type = (AssetReferenceType)v0.AsNumber();
-
-                return new AssetReference(type, value);
-            }
-            else
-            {
-                var ob = obj.ToObject();
-
-                if (ob is Object) return new AssetReference(AssetReferenceType.Object, obj);
-
-                return new AssetReference(AssetReferenceType.Procedural, obj);
-            }
-        }
-
-        public T Get<T>(StringObjectDictionary NamedAssets) where T : class
-        {
-            switch (type)
-            {
-                case AssetReferenceType.File:
-                    return GetFromFile<T>();
-                case AssetReferenceType.Url:
-                    return GetFromUrl<T>();
-                case AssetReferenceType.Resource:
-                    return Resources.Load(value.AsString()) as T;
-                case AssetReferenceType.NamedAsset:
-                    return NamedAssets.GetValueOrDefault(value.AsString()) as T;
-                case AssetReferenceType.Procedural:
-                    return GetProcedural<T>();
-                case AssetReferenceType.Object:
-                    return value.ToObject() as T;
-                case AssetReferenceType.None:
-                default:
-                    return null;
-            }
-        }
-
-        public T GetFromUrl<T>() where T : class
-        {
-            return null;
-        }
-
-        public T GetFromFile<T>() where T : class
-        {
-            return null;
-        }
-
-        public T GetProcedural<T>() where T : class
-        {
-            if (typeof(T) == typeof(string))
-            {
-                return value.ToString() as T;
+                callback(CachedValue);
+                return;
             }
 
-            if (typeof(T) == typeof(TextAsset))
+
+            var realType = type;
+            var realValue = value;
+            if (realType == AssetReferenceType.Auto)
             {
-                return new TextAsset(value.ToString()) as T;
-            }
-
-            if (typeof(T) == typeof(Texture2D))
-            {
-                var texture = new Texture2D(1, 1);
-
-                var color = ColorConverter.FromJsValue(value);
-
-                if (color.HasValue)
+                var path = context.ResolvePath(realValue as string);
+                if (HttpRegex.IsMatch(path))
                 {
-                    texture.SetPixel(0, 0, color.Value);
-                    texture.Apply();
+                    realType = AssetReferenceType.Url;
+                    realValue = path;
                 }
-                return texture as T;
+                else
+                {
+                    realType = AssetReferenceType.Resource;
+                    realValue = path;
+                }
             }
 
-            return default(T);
-        }
 
-        public bool IsNone()
-        {
-            return type == AssetReferenceType.None;
-        }
-
-        static public Sprite GetSpriteFromObject(object source, UnityUGUIContext Context)
-        {
-            switch (source)
+            Get(context, realType, realValue, (val) =>
             {
-                case Sprite s:
-                    return s;
-                case Texture2D s:
-                    return Sprite.Create(s, new Rect(0, 0, s.width, s.height), Vector2.one / 2);
-                case AssetReference a:
-                    return a.Get<Sprite>(Context.NamedAssets);
-                case string s:
-                    return new AssetReference(AssetReferenceType.Procedural, s).Get<Sprite>(Context.NamedAssets);
+                IsCached = true;
+                CachedValue = val;
+                callback(val);
+            });
+        }
+
+        protected virtual void Get(UnityUGUIContext context, AssetReferenceType realType, object realValue, Action<AssetType> callback)
+        {
+            switch (realType)
+            {
+                case AssetReferenceType.Resource:
+                    callback(Resources.Load(realValue as string, typeof(AssetType)) as AssetType);
+                    break;
+                case AssetReferenceType.Global:
+                    callback(context.Globals.GetValueOrDefault(realValue as string) as AssetType);
+                    break;
+                case AssetReferenceType.Object:
+                    callback(realValue as AssetType);
+                    break;
+                case AssetReferenceType.File:
+                case AssetReferenceType.Url:
+                case AssetReferenceType.None:
+                case AssetReferenceType.Procedural:
+                case AssetReferenceType.Data:
                 default:
+                    callback(null);
                     break;
             }
-            return null;
+        }
+
+        public virtual void Dispose()
+        {
         }
     }
 }

@@ -9,19 +9,6 @@ namespace ReactUnity.DomProxies
 {
     public class DocumentProxy
     {
-        public class HeadProxy
-        {
-            public void appendChild(IDomElementProxy child)
-            {
-                child.OnAppend();
-            }
-
-            public void removeChild(IDomElementProxy child)
-            {
-                child.OnRemove();
-            }
-        }
-
         public HeadProxy head;
         public string origin;
         public Action<string> execute;
@@ -54,29 +41,61 @@ namespace ReactUnity.DomProxies
             if (query == "head") return head;
             return null;
         }
+
+        public object getElementById(string query)
+        {
+            return null;
+        }
+
+        public List<IDomElementProxy> getElementsByTagName(string tagName)
+        {
+            return new List<IDomElementProxy>();
+        }
     }
 
     public interface IDomElementProxy
     {
         void OnAppend();
         void OnRemove();
+
+        void setAttribute(object key, object value);
+        void removeAttribute(object key);
+
+        void appendChild(string text);
+        void removeChild(string text);
     }
 
     public abstract class DomElementProxyBase
     {
         public void setAttribute(object key, object value) { }
-
         public void removeAttribute(object key) { }
+    }
+
+    public class HeadProxy : DomElementProxyBase
+    {
+        public void appendChild(IDomElementProxy child)
+        {
+            child.OnAppend();
+        }
+
+        public void removeChild(IDomElementProxy child)
+        {
+            child.OnRemove();
+        }
     }
 
     public class ScriptProxy : DomElementProxyBase, IDomElementProxy
     {
-        public string src = null;
-        public string charset = null;
-        public string crossOrigin = null;
+        public string src { get; set; }
+        public string charset { get; set; }
+        public string crossOrigin { get; set; }
+        public float timeout { get; set; }
+
+        public Action<ScriptProxy> onload { get; set; }
+        public Action<ScriptProxy> onerror { get; set; }
 
         public DocumentProxy document;
-        public DocumentProxy.HeadProxy parentNode;
+        public HeadProxy parentNode;
 
         public ScriptProxy(DocumentProxy document)
         {
@@ -86,19 +105,31 @@ namespace ReactUnity.DomProxies
 
         public void OnAppend()
         {
-            var src = new ReactScript();
-            src.ScriptSource = ScriptSource.Url;
-            src.SourcePath = document.origin + this.src;
+            var script = document.context.CreateStaticScript(src);
 
-            src.GetScript((sc) =>
+            Action<string> callback = (sc) => MainThreadDispatcher.OnUpdate(() =>
             {
-                MainThreadDispatcher.OnUpdate(() => document.execute(sc));
-            }, out var result, false, true);
+                document.execute(sc);
+                onload?.Invoke(this);
+            });
+
+            script.GetScript((sc, isDevServer) => callback(sc), out var result, false, true);
+
+            if (!string.IsNullOrWhiteSpace(result)) callback(result);
         }
 
         public void OnRemove()
         {
-            Debug.LogError("Trying to remove script but I don't know what to do");
+        }
+
+        public void appendChild(string text)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void removeChild(string text)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -112,7 +143,7 @@ namespace ReactUnity.DomProxies
         public bool enabled;
 
         public DocumentProxy document;
-        public DocumentProxy.HeadProxy parentNode;
+        public HeadProxy parentNode;
 
         public StyleProxy(DocumentProxy document)
         {
@@ -148,9 +179,6 @@ namespace ReactUnity.DomProxies
 
         void ProcessNodes()
         {
-            Debug.Log("React Unity does not support CSS yet. But it may be implemented in the future. For now, here is the inserted CSS:");
-            pendingNodes.ForEach(x => Debug.Log(x));
-
             pendingNodes.ForEach(x => document.context.InsertStyle(x));
             pendingNodes.Clear();
 

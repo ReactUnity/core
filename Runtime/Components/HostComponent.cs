@@ -22,11 +22,9 @@ namespace ReactUnity.Components
             Layout.Width = Width;
             Layout.Height = Height;
 
-            var responsive = GameObject.GetComponent<ResponsiveElement>() ?? GameObject.AddComponent<ResponsiveElement>();
+            var responsive = GetOrAddComponent<ResponsiveElement>();
             responsive.Layout = Layout;
             responsive.Context = context;
-
-            ResolveStyle();
         }
 
         public override void ApplyStyles()

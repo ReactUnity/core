@@ -22,6 +22,8 @@ namespace ReactUnity.Interop
             }
         }
 
+        System.Threading.Thread mainThread;
+
         #region Singleton stuff
         private static MainThreadDispatcher Instance { get; set; }
 
@@ -34,6 +36,7 @@ namespace ReactUnity.Interop
         private void OnDestroy()
         {
             if (Instance == this) Instance = null;
+            StopAll();
         }
 
         public static void Initialize()
@@ -81,6 +84,25 @@ namespace ReactUnity.Interop
             return StartDeferred(IntervalCoroutine(callback, intervalSeconds, handle), handle);
         }
 
+        static public int Immediate(Action callback)
+        {
+            if (IsMainThread())
+            {
+                callback();
+                return -1;
+            }
+            else
+            {
+                var handle = GetNextHandle();
+                return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
+            }
+        }
+
+        static public bool IsMainThread()
+        {
+            return Instance?.mainThread?.Equals(System.Threading.Thread.CurrentThread) ?? false;
+        }
+
         static public int StartDeferred(IEnumerator cr)
         {
             var handle = GetNextHandle();
@@ -94,15 +116,15 @@ namespace ReactUnity.Interop
             return handle;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static public int GetNextHandle()
-        {
-            return Started.Count + ToStart.Count;
-        }
-
         static public void StopDeferred(int cr)
         {
             ToStop.Add(cr);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static private int GetNextHandle()
+        {
+            return Started.Count + ToStart.Count;
         }
 
         void StartAndStopDeferreds()
@@ -113,7 +135,7 @@ namespace ReactUnity.Interop
 
                 // Stop coroutine before starting
                 if (toStartIndex >= 0) ToStart[toStartIndex] = null;
-                else
+                else if (cr >= 0 && cr < Started.Count)
                 {
                     // Coroutine was already started, so stop it
                     var coroutine = Started[cr];
@@ -130,6 +152,24 @@ namespace ReactUnity.Interop
                 if (cr != null) Started.Add(StartCoroutine(cr));
             }
             ToStart.Clear();
+        }
+
+        void StopAll()
+        {
+            for (int cr = 0; cr < Started.Count; cr++)
+            {
+                var coroutine = Started[cr];
+                if (coroutine != null) StopCoroutine(coroutine);
+                Started[cr] = null;
+            }
+            ToStart.Clear();
+            ToStop.Clear();
+            CallOnLateUpdate.Clear();
+        }
+
+        public void Awake()
+        {
+            mainThread = System.Threading.Thread.CurrentThread;
         }
 
         void Update()

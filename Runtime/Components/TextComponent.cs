@@ -17,27 +17,31 @@ namespace ReactUnity.Components
         public float Width => LayoutUtility.GetPreferredWidth(RectTransform);
         public float Height => LayoutUtility.GetPreferredHeight(RectTransform);
 
-        public FlexSelfControlledElement SelfControl { get; private set; }
+        public TextMeasurer Measurer { get; private set; }
         public LinkedTextWatcher LinkedTextWatcher { get; private set; }
 
+        private string TextInside;
+        private bool TextSetByStyle = false;
 
-        public TextComponent(string text, UnityUGUIContext context) : base(context, "text")
+
+        public TextComponent(string text, UnityUGUIContext context, string tag) : base(context, tag)
         {
             GameObject.name = "TEXT";
-            Text = GameObject.AddComponent<TextMeshProUGUI>();
+            Text = AddComponent<TextMeshProUGUI>();
 
-            SelfControl = GameObject.AddComponent<FlexSelfControlledElement>();
-            SelfControl.Layout = Layout;
-            SelfControl.Context = context;
-            Layout.SetMeasureFunction(SelfControl.Measure);
+            Measurer = AddComponent<TextMeasurer>();
+            Measurer.Layout = Layout;
+            Measurer.Context = context;
+            Layout.SetMeasureFunction(Measurer.Measure);
 
             if (text != null) SetText(text);
         }
 
-        public TextComponent(TextComponent linkedTo) : this(null, linkedTo.Context)
+        public TextComponent(TextComponent linkedTo) : this(null, linkedTo.Context, "")
         {
             Layout.CopyStyle(linkedTo.Layout);
             Style.CopyStyle(linkedTo.Style);
+            Inline = linkedTo.Inline;
 
             SetParent(linkedTo.Parent, linkedTo, true);
 
@@ -49,7 +53,9 @@ namespace ReactUnity.Components
 
         public void SetText(string text)
         {
-            Text.text = text;
+            if (!TextSetByStyle) Text.text = text;
+            TextInside = text;
+            ScheduleLayout();
         }
 
         public override void ApplyLayoutStyles()
@@ -61,18 +67,32 @@ namespace ReactUnity.Components
         public override void ApplyStyles()
         {
             base.ApplyStyles();
-            Text.font = Style.font;
+            Style.fontFamily.Get(Context, font =>
+            {
+                Text.font = font;
+            });
             Text.fontSize = Style.fontSizeActual;
             Text.fontStyle = Style.fontStyle;
             Text.fontWeight = Style.fontWeight;
-            Text.color = Style.fontColor;
+            Text.color = Style.color;
             Text.enableWordWrapping = Style.textWrap;
             Text.alignment = Style.textAlign;
+            Text.overflowMode = Style.textOverflow;
+            if (Style.content != null)
+            {
+                Text.text = Style.content;
+                TextSetByStyle = true;
+            }
+            else if (TextSetByStyle)
+            {
+                Text.text = TextInside;
+                TextSetByStyle = false;
+            }
 
             var isLinked = Style.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)
             {
-                LinkedTextWatcher = GameObject.AddComponent<LinkedTextWatcher>();
+                LinkedTextWatcher = AddComponent<LinkedTextWatcher>();
                 LinkedTextWatcher.WatchedText = this;
             }
             else if (!isLinked && LinkedTextWatcher)
@@ -82,9 +102,6 @@ namespace ReactUnity.Components
                     LinkedTextWatcher.LinkedText.Destroy();
                 LinkedTextWatcher = null;
             }
-
-            // Page is appropriate here because it calculates firstOverflowCharacterIndex and masks the text at the same time
-            Text.overflowMode = isLinked ? TextOverflowModes.Page : Style.textOverflow;
         }
 
         public override void Destroy()

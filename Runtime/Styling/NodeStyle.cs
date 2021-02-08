@@ -1,143 +1,156 @@
 using Facebook.Yoga;
-using ReactUnity.Components;
-using ReactUnity.StateHandlers;
-using System;
+using ReactUnity.Styling.Types;
+using ReactUnity.Types;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
     public class NodeStyle
     {
         Dictionary<string, object> StyleMap;
+        public List<Dictionary<string, object>> CssStyles;
+        public List<LayoutValue> CssLayouts;
         Dictionary<string, object> DefaultStyle;
-        HashSet<string> Changes = new HashSet<string>();
         public bool HasInheritedChanges { get; private set; } = false;
 
         public NodeStyle Parent;
         public StateStyles StateStyles;
 
         #region Set/Get
+
         public float opacity
         {
-            set => SetStyleValue("opacity", value);
-            get => GetStyleValue<float>("opacity");
+            set => SetStyleValue(StyleProperties.opacity, value);
+            get => GetStyleValue<float>(StyleProperties.opacity);
         }
-        public int zOrder
+        public int zIndex
         {
-            set => SetStyleValue("zOrder", value);
-            get => GetStyleValue<int>("zOrder");
+            set => SetStyleValue(StyleProperties.zIndex, value);
+            get => GetStyleValue<int>(StyleProperties.zIndex);
         }
-        public bool hidden
+        public bool visibility
         {
-            set => SetStyleValue("hidden", value);
-            get => GetStyleValue<bool>("hidden");
+            set => SetStyleValue(StyleProperties.visibility, value);
+            get => GetStyleValue<bool>(StyleProperties.visibility);
         }
         public string cursor
         {
-            set => SetStyleValue("cursor", value);
-            get => GetStyleValue<string>("cursor");
+            set => SetStyleValue(StyleProperties.cursor, value);
+            get => GetStyleValue<string>(StyleProperties.cursor);
         }
-        public InteractionType interaction
+        public PointerEvents pointerEvents
         {
-            set => SetStyleValue("interaction", value);
-            get => GetStyleValue<InteractionType>("interaction");
+            set => SetStyleValue(StyleProperties.pointerEvents, value);
+            get => GetStyleValue<PointerEvents>(StyleProperties.pointerEvents);
         }
         public Color backgroundColor
         {
-            set => SetStyleValue("backgroundColor", value);
-            get => GetStyleValue<Color>("backgroundColor");
+            set => SetStyleValue(StyleProperties.backgroundColor, value);
+            get => GetStyleValue<Color>(StyleProperties.backgroundColor);
         }
-        public object backgroundImage
+        public ImageReference backgroundImage
         {
-            set => SetStyleValue("backgroundImage", value);
-            get => GetStyleValue("backgroundImage");
+            set => SetStyleValue(StyleProperties.backgroundImage, value);
+            get => GetStyleValue<ImageReference>(StyleProperties.backgroundImage);
         }
         public int borderRadius
         {
-            set => SetStyleValue("borderRadius", value);
-            get => GetStyleValue<int>("borderRadius");
+            set => SetStyleValue(StyleProperties.borderRadius, value);
+            get => GetStyleValue<int>(StyleProperties.borderRadius);
         }
         public Color borderColor
         {
-            set => SetStyleValue("borderColor", value);
-            get => GetStyleValue<Color>("borderColor");
+            set => SetStyleValue(StyleProperties.borderColor, value);
+            get => GetStyleValue<Color>(StyleProperties.borderColor);
         }
         public ShadowDefinition boxShadow
         {
-            set => SetStyleValue("boxShadow", value);
-            get => GetStyleValue<ShadowDefinition>("boxShadow");
+            set => SetStyleValue(StyleProperties.boxShadow, value);
+            get => GetStyleValue<ShadowDefinition>(StyleProperties.boxShadow);
         }
-        public Vector2 translate
+        public YogaValue2 translate
         {
-            set => SetStyleValue("translate", value);
-            get => GetStyleValue<Vector2>("translate");
-        }
-        public bool translateRelative
-        {
-            set => SetStyleValue("translateRelative", value);
-            get => GetStyleValue<bool>("translateRelative");
+            set => SetStyleValue(StyleProperties.translate, value);
+            get => GetStyleValue<YogaValue2>(StyleProperties.translate);
         }
         public Vector2 scale
         {
-            set => SetStyleValue("scale", value);
-            get => GetStyleValue<Vector2>("scale");
+            set => SetStyleValue(StyleProperties.scale, value);
+            get => GetStyleValue<Vector2>(StyleProperties.scale);
         }
-        public Vector2 pivot
+        public YogaValue2 transformOrigin
         {
-            set => SetStyleValue("pivot", value);
-            get => GetStyleValue<Vector2>("pivot");
+            set => SetStyleValue(StyleProperties.transformOrigin, value);
+            get => GetStyleValue<YogaValue2>(StyleProperties.transformOrigin);
         }
         public float rotate
         {
-            set => SetStyleValue("rotate", value);
-            get => GetStyleValue<float>("rotate");
+            set => SetStyleValue(StyleProperties.rotate, value);
+            get => GetStyleValue<float>(StyleProperties.rotate);
         }
-        public TMP_FontAsset font
+        public FontReference fontFamily
         {
-            set => SetStyleValue("font", value);
-            get => GetStyleValue<TMP_FontAsset>("font");
+            set => SetStyleValue(StyleProperties.fontFamily, value);
+            get => GetStyleValue<FontReference>(StyleProperties.fontFamily);
         }
-        public Color fontColor
+        public Color color
         {
-            set => SetStyleValue("fontColor", value);
-            get => GetStyleValue<Color>("fontColor");
+            set => SetStyleValue(StyleProperties.color, value);
+            get => GetStyleValue<Color>(StyleProperties.color);
         }
         public FontWeight fontWeight
         {
-            set => SetStyleValue("fontWeight", value);
-            get => GetStyleValue<FontWeight>("fontWeight");
+            set => SetStyleValue(StyleProperties.fontWeight, value);
+            get => GetStyleValue<FontWeight>(StyleProperties.fontWeight);
         }
         public FontStyles fontStyle
         {
-            set => SetStyleValue("fontStyle", value);
-            get => GetStyleValue<FontStyles>("fontStyle");
+            set => SetStyleValue(StyleProperties.fontStyle, value);
+            get => GetStyleValue<FontStyles>(StyleProperties.fontStyle);
         }
         public YogaValue fontSize
         {
-            set => SetStyleValue("fontSize", value);
-            get => GetStyleValue<YogaValue>("fontSize");
+            set => SetStyleValue(StyleProperties.fontSize, value);
+            get => GetStyleValue<YogaValue>(StyleProperties.fontSize);
         }
         public TextAlignmentOptions textAlign
         {
-            set => SetStyleValue("textAlign", value);
-            get => GetStyleValue<TextAlignmentOptions>("textAlign");
+            set => SetStyleValue(StyleProperties.textAlign, value);
+            get => GetStyleValue<TextAlignmentOptions>(StyleProperties.textAlign);
         }
         public TextOverflowModes textOverflow
         {
-            set => SetStyleValue("textOverflow", value);
-            get => GetStyleValue<TextOverflowModes>("textOverflow");
+            set => SetStyleValue(StyleProperties.textOverflow, value);
+            get => GetStyleValue<TextOverflowModes>(StyleProperties.textOverflow);
         }
         public bool textWrap
         {
-            set => SetStyleValue("textWrap", value);
-            get => GetStyleValue<bool>("textWrap");
+            set => SetStyleValue(StyleProperties.textWrap, value);
+            get => GetStyleValue<bool>(StyleProperties.textWrap);
+        }
+        public string content
+        {
+            set => SetStyleValue(StyleProperties.content, value);
+            get => GetStyleValue<string>(StyleProperties.content);
+        }
+        public Appearance appearance
+        {
+            set => SetStyleValue(StyleProperties.appearance, value);
+            get => GetStyleValue<Appearance>(StyleProperties.appearance);
+        }
+        public Navigation.Mode navigation
+        {
+            set => SetStyleValue(StyleProperties.navigation, value);
+            get => GetStyleValue<Navigation.Mode>(StyleProperties.navigation);
         }
         #endregion
 
         #region Resolved values
+
         public float fontSizeActual
         {
             get
@@ -155,6 +168,7 @@ namespace ReactUnity.Styling
                 return Parent?.fontSizeActual ?? 0;
             }
         }
+
         #endregion
 
         public NodeStyle()
@@ -173,52 +187,47 @@ namespace ReactUnity.Styling
             StyleMap = new Dictionary<string, object>(copyFrom.StyleMap);
         }
 
-        public object GetStyleValue(StyleProperty prop)
+        public object GetStyleValue(IStyleProperty prop, bool fromChild = false)
         {
-            object value = StateStyles?.GetStyleValue(prop);
-            if (value != null) return value;
+            if (fromChild) HasInheritedChanges = true;
 
-            if (!StyleMap.TryGetValue(prop.name, out value) && (DefaultStyle == null || !DefaultStyle.TryGetValue(prop.name, out value)))
+            object value;
+            var name = prop.name;
+
+            if (
+                !StyleMap.TryGetValue(name, out value) &&
+                (CssStyles == null || !CssStyles.Any(x => x.TryGetValue(name, out value))) &&
+                (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
             {
                 if (prop.inherited)
                 {
-                    return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
+                    return Parent?.GetStyleValue(prop, true) ?? prop?.defaultValue;
                 }
 
                 return prop?.defaultValue;
             }
 
+            return GetStyleValueSpecial(value, prop);
+        }
+
+        private object GetStyleValueSpecial(object value, IStyleProperty prop)
+        {
+            if (Equals(value, SpecialNames.CantParse)) return null;
+            else if (Equals(value, SpecialNames.Initial) || Equals(value, SpecialNames.Unset)) return prop?.defaultValue;
+            else if (Equals(value, SpecialNames.Inherit)) return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
             return value;
         }
 
-        public object GetStyleValue(string name)
+        public T GetStyleValue<T>(IStyleProperty prop)
         {
-            object value = StateStyles?.GetStyleValue(name);
-            if (value != null) return value;
-
-            if (!StyleMap.TryGetValue(name, out value) && (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
-            {
-                var prop = StyleProperties.GetStyleProperty(name);
-
-                if (prop != null && prop.inherited)
-                {
-                    return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
-                }
-
-                return prop?.defaultValue;
-            }
-
-            return value;
+            var value = GetStyleValue(prop);
+            return value == null ? default : (T) value;
         }
 
-        public T GetStyleValue<T>(string name)
-        {
-            var value = GetStyleValue(name);
-            return value == null ? default : (T)value;
-        }
 
-        public void SetStyleValue(string name, object value)
+        public void SetStyleValue(IStyleProperty prop, object value)
         {
+            var name = prop.name;
             object currentValue;
 
             if (!StyleMap.TryGetValue(name, out currentValue))
@@ -238,25 +247,20 @@ namespace ReactUnity.Styling
 
             if (changed)
             {
-                Changes.Add(name);
-                if (StyleProperties.GetStyleProperty(name).inherited) HasInheritedChanges = true;
+                if (prop.inherited) HasInheritedChanges = true;
             }
         }
 
         public void MarkChangesSeen()
         {
-            Changes.Clear();
             HasInheritedChanges = false;
-        }
-
-        public bool HasChange(string name)
-        {
-            return Changes.Contains(name);
         }
 
         public bool HasValue(string name)
         {
-            return StyleMap.ContainsKey(name) || (DefaultStyle != null && DefaultStyle.ContainsKey(name));
+            return StyleMap.ContainsKey(name) ||
+                (CssStyles != null && CssStyles.Any(x => x.ContainsKey(name))) ||
+                (DefaultStyle != null && DefaultStyle.ContainsKey(name));
         }
     }
 }

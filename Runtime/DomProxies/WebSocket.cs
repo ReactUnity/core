@@ -1,33 +1,51 @@
 #if UNITY_EDITOR
 
-using System;
+using Jint.Native;
+using ReactUnity.Interop;
 
 namespace ReactUnity.DomProxies
 {
     public class WebSocketProxy : WebSocketSharp.WebSocket
     {
-        public Action<WebSocketSharp.MessageEventArgs> onmessage
+        public static int CONNECTING = 0;
+        public static int OPEN = 1;
+        public static int CLOSING = 2;
+        public static int CLOSED = 3;
+
+        public string binaryType = "blob";
+
+
+        public JsValue Onmessage { set => onmessage = value; }
+        public object onmessage
         {
-            set { OnMessage += (sender, e) => value?.Invoke(e); }
+            set { OnMessage += (sender, e) => new Callback(value)?.Call(e); }
             get => null;
         }
 
-        public Action<WebSocketSharp.CloseEventArgs> onclose
+        public JsValue Onclose { set => onclose = value; }
+        public object onclose
         {
-            set { OnClose += (sender, e) => value?.Invoke(e); }
+            set { OnClose += (sender, e) => new Callback(value)?.Call(e); }
             get => null;
         }
 
-        public Action<EventArgs> onopen
+        public JsValue Onopen { set => onopen = value; }
+        public object onopen
         {
-            set { OnOpen += (sender, e) => value?.Invoke(e); }
+            set { OnOpen += (sender, e) => new Callback(value)?.Call(e); }
             get => null;
         }
 
-        public Action<WebSocketSharp.ErrorEventArgs> onerror
+        public JsValue Onerror { set => onerror = value; }
+        public object onerror
         {
-            set { OnError += (sender, e) => value?.Invoke(e); }
+            set { OnError += (sender, e) => new Callback(value)?.Call(e); }
             get => null;
+        }
+
+        public WebSocketProxy(string url) : base(url, "ws")
+        {
+            ConnectAsync();
         }
 
         public WebSocketProxy(string url, params string[] protocols) : base(url, protocols)
@@ -35,9 +53,9 @@ namespace ReactUnity.DomProxies
             ConnectAsync();
         }
 
-        public void close(WebSocketSharp.CloseStatusCode code = WebSocketSharp.CloseStatusCode.Normal, string reason = null)
+        public void close(int code = (int) WebSocketSharp.CloseStatusCode.Normal, string reason = null)
         {
-            CloseAsync(code, reason);
+            CloseAsync((WebSocketSharp.CloseStatusCode) code, reason);
         }
     }
 }

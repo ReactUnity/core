@@ -1,7 +1,9 @@
 using Facebook.Yoga;
 using Jint.Native;
 using Jint.Native.Function;
+using ReactUnity.Interop;
 using ReactUnity.Styling;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -26,6 +28,7 @@ namespace ReactUnity.Components
             borderRadius = 8,
             fontSize = 24,
             cursor = "text",
+            appearance = Styling.Types.Appearance.Input,
         };
 
         public override YogaNode DefaultLayout => InputDefaultLayout;
@@ -52,24 +55,27 @@ namespace ReactUnity.Components
             // Input field's properties must be fully assigned before OnEnable is called
             GameObject.SetActive(false);
 
-            Selectable = InputField = GameObject.AddComponent<TMP_InputField>();
+            InputField = AddComponent<TMP_InputField>();
 
-            TextViewport = new ContainerComponent(context, "");
+            TextViewport = new ContainerComponent(context, "_viewport");
+            TextViewport.IsPseudoElement = true;
             TextViewport.GameObject.name = "[Text Viewport]";
             TextViewport.SetParent(this);
-            TextViewport.GameObject.AddComponent<RectMask2D>();
+            TextViewport.AddComponent<RectMask2D>();
 
 
-            Placeholder = new TextComponent("", context);
+            Placeholder = new TextComponent("", context, "_placeholder");
+            Placeholder.IsPseudoElement = true;
             Placeholder.GameObject.name = "[Placeholder]";
             Placeholder.Layout.PositionType = YogaPositionType.Absolute;
             Placeholder.SetParent(TextViewport);
 
 
-            TextComponent = new TextComponent(text, context);
+            TextComponent = new TextComponent(text, context, "_value");
+            TextComponent.IsPseudoElement = true;
             TextComponent.GameObject.name = "[Text]";
             TextComponent.SetParent(TextViewport);
-            TextComponent.Flex.enabled = false;
+            TextComponent.Component.enabled = false;
             var textRect = TextComponent.RectTransform;
             textRect.pivot = Vector2.one / 2;
             textRect.anchorMin = Vector2.zero;
@@ -96,15 +102,15 @@ namespace ReactUnity.Components
         public override void ApplyLayoutStyles()
         {
             base.ApplyLayoutStyles();
-            TextComponent.SelfControl.enabled = Layout.Width.Unit == YogaUnit.Auto;
+            TextComponent.Measurer.enabled = Layout.Width.Unit == YogaUnit.Auto;
         }
 
         public override void ResolveStyle(bool recursive = false)
         {
             base.ResolveStyle(recursive);
 
-            var c = TextComponent.Style.fontColor;
-            Placeholder.Style.fontColor = new Color(c.r, c.g, c.b, c.a * 0.5f);
+            var c = TextComponent.Style.color;
+            Placeholder.Style.color = new Color(c.r, c.g, c.b, c.a * 0.5f);
             Placeholder.ApplyStyles();
         }
 
@@ -120,31 +126,31 @@ namespace ReactUnity.Components
         }
 
 
-        public override void SetEventListener(string eventName, FunctionInstance callback)
+        public override void SetEventListener(string eventName, Callback callback)
         {
             switch (eventName)
             {
                 case "onEndEdit":
                     InputField.onEndEdit.RemoveAllListeners();
-                    if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Call(x)));
                     return;
-                case "onSubmit":
+                case "onReturn":
                     InputField.onSubmit.RemoveAllListeners();
-                    if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Call(x)));
                     return;
                 case "onChange":
                     InputField.onValueChanged.RemoveAllListeners();
-                    if (callback != null) InputField.onValueChanged.AddListener(new UnityAction<string>(x => callback.Invoke(x)));
+                    if (callback != null) InputField.onValueChanged.AddListener(new UnityAction<string>(x => callback.Call(x)));
                     return;
                 case "onTextSelection":
                     InputField.onTextSelection.RemoveAllListeners();
                     if (callback != null) InputField.onTextSelection.AddListener(
-                        new UnityAction<string, int, int>((x, i, j) => callback.Invoke(x, i, j)));
+                        new UnityAction<string, int, int>((x, i, j) => callback.Call(new { x, i, j })));
                     return;
                 case "onEndTextSelection":
                     InputField.onEndTextSelection.RemoveAllListeners();
                     if (callback != null) InputField.onEndTextSelection.AddListener(
-                        new UnityAction<string, int, int>((x, i, j) => callback.Invoke(x, i, j)));
+                        new UnityAction<string, int, int>((x, i, j) => callback.Call(new { x, i, j })));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);
@@ -175,21 +181,21 @@ namespace ReactUnity.Components
                     InputField.richText = System.Convert.ToBoolean(value);
                     return;
                 case "contentType":
-                    InputField.contentType = (TMP_InputField.ContentType)System.Convert.ToInt32(value);
+                    InputField.contentType = (TMP_InputField.ContentType) System.Convert.ToInt32(value);
                     return;
                 case "keyboardType":
-                    InputField.keyboardType = (TouchScreenKeyboardType)System.Convert.ToInt32(value);
+                    InputField.keyboardType = (TouchScreenKeyboardType) System.Convert.ToInt32(value);
                     return;
                 case "lineType":
-                    InputField.lineType = (TMP_InputField.LineType)System.Convert.ToInt32(value);
+                    InputField.lineType = (TMP_InputField.LineType) System.Convert.ToInt32(value);
                     return;
                 case "validation":
-                    InputField.characterValidation = (TMP_InputField.CharacterValidation)System.Convert.ToInt32(value);
+                    InputField.characterValidation = (TMP_InputField.CharacterValidation) System.Convert.ToInt32(value);
                     return;
                 case "webSupport":
                     var enabled = System.Convert.ToBoolean(value);
                     var cmp = SetWebGLSupport(enabled);
-                    if (!enabled && cmp) Object.Destroy(cmp);
+                    if (!enabled && cmp) UnityEngine.Object.Destroy(cmp);
                     return;
                 default:
                     base.SetProperty(propertyName, value);
@@ -199,8 +205,8 @@ namespace ReactUnity.Components
 
         private WebSupport.WebGLInput SetWebGLSupport(bool createIfDoesNotExist)
         {
-            var cmp = GameObject.GetComponent<WebSupport.WebGLInput>();
-            if (createIfDoesNotExist && !cmp) GameObject.AddComponent<WebSupport.WebGLInput>();
+            var cmp = GetComponent<WebSupport.WebGLInput>();
+            if (createIfDoesNotExist && !cmp) AddComponent<WebSupport.WebGLInput>();
             return cmp;
         }
     }

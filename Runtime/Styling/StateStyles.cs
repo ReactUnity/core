@@ -2,6 +2,8 @@ using ReactUnity.Components;
 using ReactUnity.StateHandlers;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
@@ -34,11 +36,18 @@ namespace ReactUnity.Styling
 
         public void SubscribeToState(string state)
         {
-            if (state == "hover")
+            if (ReactUnityAPI.StateHandlers.TryGetValue(state, out var handlerClass))
             {
-                var handler = Component.GameObject.AddComponent<HoverStateHandler>();
-                handler.OnStateStart += (e) => StartState(state);
-                handler.OnStateEnd += (e) => EndState(state);
+                var existingHandler = Component.GetComponent(handlerClass);
+                if (existingHandler != null) return;
+
+                var handler = Component.AddComponent(handlerClass) as IStateHandler;
+                if (handler != null)
+                {
+                    handler.OnStateStart += (e) => StartState(state);
+                    handler.OnStateEnd += (e) => EndState(state);
+                }
+                else Debug.LogError($"The class {handlerClass.Name} does not implement IStateHandler");
             }
         }
 
@@ -49,7 +58,8 @@ namespace ReactUnity.Styling
             if (res)
             {
                 ActiveStates = States.Where(x => Dic.ContainsKey(x)).Select(x => Dic[x]).ToList();
-                Component.ResolveStyle();
+                // TODO: handle sibling selectors (+ and ~)
+                Component.Parent.ResolveStyle(true);
             }
             return res;
         }
@@ -61,19 +71,21 @@ namespace ReactUnity.Styling
             if (res)
             {
                 ActiveStates = States.Where(x => Dic.ContainsKey(x)).Select(x => Dic[x]).ToList();
-                Component.ResolveStyle();
+                // TODO: handle sibling selectors (+ and ~)
+                Component.Parent.ResolveStyle(true);
             }
             return res;
         }
 
-        public object GetStyleValue(string name)
-        {
-            return ActiveStates.Find(x => x.HasValue(name))?.GetStyleValue(name);
-        }
-
-        public object GetStyleValue(StyleProperty prop)
+        public object GetStyleValue(IStyleProperty prop)
         {
             return ActiveStates.Find(x => x.HasValue(prop.name))?.GetStyleValue(prop);
+        }
+
+        public bool GetState(string state)
+        {
+            if (!Dic.ContainsKey(state)) SubscribeToState(state);
+            return States.Contains(state);
         }
     }
 }
