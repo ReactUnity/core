@@ -23,9 +23,6 @@
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
-  "scripts": {
-    "postinstall": "node config/fixWebpack5.js"
-  },
   "types": "./lib/react-unity.d.ts",
   "dependencies": {
     "@babel/core": "7.12.13",

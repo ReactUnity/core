@@ -18,7 +18,7 @@
 
 var stripAnsi = require('strip-ansi');
 var url = require('url');
-var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+var formatWebpackMessages = require('./formatWebpackMessages');
 
 var alwaysHardReload = process.env.HARD_RELOAD === 'true';
 
