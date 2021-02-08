@@ -1,0 +1,6 @@
+scroll {
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 40px;
+}
