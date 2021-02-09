@@ -11,7 +11,7 @@ It is designed to support CSS-like features and Flex layout system.
 ## Requirements
 
 - Node.js version 12 is required on the development machine
-- Tested in Unity 2019.3 and 2020.1
+- Tested in Unity 2020.2 and 2021.1
 
 
 ## Installing
