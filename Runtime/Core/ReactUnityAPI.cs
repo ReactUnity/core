@@ -10,11 +10,11 @@ namespace ReactUnity
 {
     public class ReactUnityAPI
     {
-        public static Func<string, string, UGUIContext, UnityComponent> defaultCreator =
+        public static Func<string, string, UGUIContext, ReactComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);
 
-        public static Dictionary<string, Func<string, string, UGUIContext, UnityComponent>> ComponentCreators
-            = new Dictionary<string, Func<string, string, UGUIContext, UnityComponent>>()
+        public static Dictionary<string, Func<string, string, UGUIContext, ReactComponent>> ComponentCreators
+            = new Dictionary<string, Func<string, string, UGUIContext, ReactComponent>>()
             {
                 { "text", (tag, text, context) => new TextComponent(text, context, tag) },
                 { "anchor", (tag, text, context) => new AnchorComponent(context) },
@@ -29,8 +29,8 @@ namespace ReactUnity
                 { "video", (tag, text, context) => new VideoComponent(context) },
             };
 
-        public static Dictionary<string, Func<string, string, UGUIContext, UnityComponent>> EditorComponentCreators
-            = new Dictionary<string, Func<string, string, UGUIContext, UnityComponent>>()
+        public static Dictionary<string, Func<string, string, UGUIContext, ReactComponent>> EditorComponentCreators
+            = new Dictionary<string, Func<string, string, UGUIContext, ReactComponent>>()
             {
             };
 
@@ -62,7 +62,7 @@ namespace ReactUnity
 
         public IReactComponent createElement(string tag, string text, HostComponent host)
         {
-            UnityComponent res = null;
+            ReactComponent res = null;
             if (ComponentCreators.TryGetValue(tag, out var creator))
             {
                 res = creator(tag, text, host.Context);

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {
-    public class TextComponent : UnityComponent, ITextComponent
+    public class TextComponent : ReactComponent, ITextComponent
     {
         public static YogaNode TextDefaultLayout { get; } = new YogaNode() { };
         public override YogaNode DefaultLayout => TextDefaultLayout;

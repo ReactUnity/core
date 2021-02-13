@@ -10,7 +10,7 @@ using ReactUnity.StyleEngine;
 namespace ReactUnity.Components
 {
 
-    public class ContainerComponent : UnityComponent, IContainerComponent
+    public class ContainerComponent : ReactComponent, IContainerComponent
     {
         public RectTransform Container { get; protected set; }
         public List<IReactComponent> Children { get; private set; } = new List<IReactComponent>();
@@ -106,7 +106,7 @@ namespace ReactUnity.Components
 
         public void RegisterChild(IReactComponent child)
         {
-            if (child is UnityComponent u)
+            if (child is ReactComponent u)
                 u.RectTransform.SetParent(Container, false);
         }
     }

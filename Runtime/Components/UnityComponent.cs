@@ -18,7 +18,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {
-    public class UnityComponent : IReactComponent
+    public class ReactComponent : IReactComponent
     {
         #region Statics / Defaults
         private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
@@ -64,7 +64,7 @@ namespace ReactUnity.Components
         public string TextContent => new TextContentVisitor().Get(this);
         public string Name => GameObject.name;
 
-        protected UnityComponent(RectTransform existing, UGUIContext context)
+        protected ReactComponent(RectTransform existing, UGUIContext context)
         {
             Context = context;
             GameObject = existing.gameObject;
@@ -75,7 +75,7 @@ namespace ReactUnity.Components
             Layout = new YogaNode(DefaultLayout);
         }
 
-        public UnityComponent(UGUIContext context, string tag)
+        public ReactComponent(UGUIContext context, string tag)
         {
             Tag = tag;
             Context = context;

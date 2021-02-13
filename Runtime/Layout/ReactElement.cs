@@ -13,7 +13,7 @@ namespace ReactUnity.Layout
 
         public YogaNode Layout { get; internal set; }
         public NodeStyle Style { get; internal set; }
-        public UnityComponent Component { get; internal set; }
+        public ReactComponent Component { get; internal set; }
 
         private YogaValue2 previousTranslate = YogaValue2.Zero;
 
