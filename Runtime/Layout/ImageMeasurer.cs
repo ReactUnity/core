@@ -9,7 +9,7 @@ namespace ReactUnity.Layout
     public class ImageMeasurer : MonoBehaviour, ILayoutSelfController
     {
         public YogaNode Layout;
-        public UnityUGUIContext Context;
+        public UGUIContext Context;
 
         private ImageFitMode fitMode;
         public ImageFitMode FitMode

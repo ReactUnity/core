@@ -35,7 +35,7 @@ namespace ReactUnity.Components
         public Button Button { get; private set; }
 
 
-        public ButtonComponent(UnityUGUIContext context) : base(context, "button")
+        public ButtonComponent(UGUIContext context) : base(context, "button")
         {
             Button = AddComponent<Button>();
         }

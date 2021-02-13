@@ -9,7 +9,7 @@ namespace ReactUnity.Components
     {
         public VideoPlayer VideoPlayer;
 
-        public VideoComponent(UnityUGUIContext context) : base(context, "video")
+        public VideoComponent(UGUIContext context) : base(context, "video")
         {
             VideoPlayer = AddComponent<VideoPlayer>();
             VideoPlayer.renderMode = VideoRenderMode.RenderTexture;

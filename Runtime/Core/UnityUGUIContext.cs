@@ -15,7 +15,7 @@ using ReactUnity.Helpers;
 
 namespace ReactUnity
 {
-    public class UnityUGUIContext
+    public class UGUIContext
     {
         private static Regex ExtensionRegex = new Regex(@"\.\w+$");
         private static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
@@ -35,7 +35,7 @@ namespace ReactUnity
 
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
 
-        public UnityUGUIContext(RectTransform hostElement, Jint.Engine engine, StringObjectDictionary assets, ReactScript script, bool isDevServer)
+        public UGUIContext(RectTransform hostElement, Jint.Engine engine, StringObjectDictionary assets, ReactScript script, bool isDevServer)
         {
             Engine = engine;
             Globals = assets;

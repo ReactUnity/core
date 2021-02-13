@@ -11,7 +11,7 @@ namespace ReactUnity.Layout
         private RectTransform rt;
 
         public YogaNode Layout;
-        public UnityUGUIContext Context;
+        public UGUIContext Context;
 
         private void Awake()
         {

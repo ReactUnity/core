@@ -20,12 +20,12 @@ namespace ReactUnity.Components
         public IReactComponent BeforePseudo { get; protected set; }
         public IReactComponent AfterPseudo { get; protected set; }
 
-        protected ContainerComponent(RectTransform existing, UnityUGUIContext context) : base(existing, context)
+        protected ContainerComponent(RectTransform existing, UGUIContext context) : base(existing, context)
         {
             Container = existing;
         }
 
-        public ContainerComponent(UnityUGUIContext context, string tag) : base(context, tag)
+        public ContainerComponent(UGUIContext context, string tag) : base(context, tag)
         {
             Container = RectTransform;
         }

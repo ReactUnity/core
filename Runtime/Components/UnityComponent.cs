@@ -28,7 +28,7 @@ namespace ReactUnity.Components
         public virtual YogaNode DefaultLayout => TagDefaultLayout;
         #endregion
 
-        public UnityUGUIContext Context { get; }
+        public UGUIContext Context { get; }
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
         public IContainerComponent Parent { get; private set; }
@@ -64,7 +64,7 @@ namespace ReactUnity.Components
         public string TextContent => new TextContentVisitor().Get(this);
         public string Name => GameObject.name;
 
-        protected UnityComponent(RectTransform existing, UnityUGUIContext context)
+        protected UnityComponent(RectTransform existing, UGUIContext context)
         {
             Context = context;
             GameObject = existing.gameObject;
@@ -75,7 +75,7 @@ namespace ReactUnity.Components
             Layout = new YogaNode(DefaultLayout);
         }
 
-        public UnityComponent(UnityUGUIContext context, string tag)
+        public UnityComponent(UGUIContext context, string tag)
         {
             Tag = tag;
             Context = context;

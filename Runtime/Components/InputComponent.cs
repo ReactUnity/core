@@ -50,7 +50,7 @@ namespace ReactUnity.Components
         private TextComponent TextComponent { get; set; }
         private TextComponent Placeholder { get; set; }
 
-        public InputComponent(string text, UnityUGUIContext context) : base(context, "input")
+        public InputComponent(string text, UGUIContext context) : base(context, "input")
         {
             // Input field's properties must be fully assigned before OnEnable is called
             GameObject.SetActive(false);

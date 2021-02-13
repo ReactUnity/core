@@ -6,7 +6,7 @@ namespace ReactUnity.Components
     {
         public RenderTexture RenderTexture;
 
-        public RenderTextureComponent(UnityUGUIContext context, string tag = "render") : base(context, tag)
+        public RenderTextureComponent(UGUIContext context, string tag = "render") : base(context, tag)
         {
             RenderTexture = new RenderTexture(1, 1, 1);
             SetTexture(RenderTexture);

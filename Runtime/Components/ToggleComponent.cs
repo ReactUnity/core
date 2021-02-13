@@ -44,7 +44,7 @@ namespace ReactUnity.Components
         public ImageComponent Check { get; private set; }
 
 
-        public ToggleComponent(UnityUGUIContext context) : base(context, "toggle")
+        public ToggleComponent(UGUIContext context) : base(context, "toggle")
         {
             Toggle = AddComponent<Toggle>();
 

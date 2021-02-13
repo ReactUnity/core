@@ -10,11 +10,11 @@ namespace ReactUnity
 {
     public class ReactUnityAPI
     {
-        public static Func<string, string, UnityUGUIContext, UnityComponent> defaultCreator =
+        public static Func<string, string, UGUIContext, UnityComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);
 
-        public static Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>> ComponentCreators
-            = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
+        public static Dictionary<string, Func<string, string, UGUIContext, UnityComponent>> ComponentCreators
+            = new Dictionary<string, Func<string, string, UGUIContext, UnityComponent>>()
             {
                 { "text", (tag, text, context) => new TextComponent(text, context, tag) },
                 { "anchor", (tag, text, context) => new AnchorComponent(context) },
@@ -29,8 +29,8 @@ namespace ReactUnity
                 { "video", (tag, text, context) => new VideoComponent(context) },
             };
 
-        public static Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>> EditorComponentCreators
-            = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
+        public static Dictionary<string, Func<string, string, UGUIContext, UnityComponent>> EditorComponentCreators
+            = new Dictionary<string, Func<string, string, UGUIContext, UnityComponent>>()
             {
             };
 

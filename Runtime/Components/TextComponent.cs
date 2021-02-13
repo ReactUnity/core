@@ -24,7 +24,7 @@ namespace ReactUnity.Components
         private bool TextSetByStyle = false;
 
 
-        public TextComponent(string text, UnityUGUIContext context, string tag) : base(context, tag)
+        public TextComponent(string text, UGUIContext context, string tag) : base(context, tag)
         {
             GameObject.name = "TEXT";
             Text = AddComponent<TextMeshProUGUI>();

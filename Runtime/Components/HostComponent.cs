@@ -17,7 +17,7 @@ namespace ReactUnity.Components
         };
         public override NodeStyle DefaultStyle => HostDefaultStyle;
 
-        public HostComponent(RectTransform host, UnityUGUIContext context) : base(host, context)
+        public HostComponent(RectTransform host, UGUIContext context) : base(host, context)
         {
             Layout.Width = Width;
             Layout.Height = Height;

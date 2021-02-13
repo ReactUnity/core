@@ -15,7 +15,7 @@ namespace ReactUnity
     public class ReactUnity : MonoBehaviour
     {
         private Jint.Engine engine;
-        private UnityUGUIContext unityContext;
+        private UGUIContext unityContext;
         private UnityScheduler scheduler;
 
         public StringObjectDictionary Globals = new StringObjectDictionary();
@@ -108,7 +108,7 @@ namespace ReactUnity
             Clean();
 
             if (engine == null) CreateEngine();
-            unityContext = new UnityUGUIContext(Root, engine, Globals, scriptObj, isDevServer);
+            unityContext = new UGUIContext(Root, engine, Globals, scriptObj, isDevServer);
             CreateLocation(engine, scriptObj);
 
             List<Action> callbacks = new List<Action>() { callback };
