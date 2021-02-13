@@ -2,11 +2,11 @@ using ReactUnity.Components;
 
 namespace ReactUnity.Visitors
 {
-    public class TextContentVisitor : UnityComponentVisitor
+    public class TextContentVisitor : ReactComponentVisitor
     {
         string Text = "";
 
-        public override void Visit(UnityComponent component)
+        public override void Visit(IReactComponent component)
         {
             switch (component)
             {
@@ -18,7 +18,7 @@ namespace ReactUnity.Visitors
             }
         }
 
-        public string Get(UnityComponent component)
+        public string Get(IReactComponent component)
         {
             Text = "";
             component.Accept(this);

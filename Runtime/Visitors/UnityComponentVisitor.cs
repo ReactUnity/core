@@ -1,9 +1,7 @@
-using ReactUnity.Components;
-
 namespace ReactUnity.Visitors
 {
-    public abstract class UnityComponentVisitor
+    public abstract class ReactComponentVisitor
     {
-        public abstract void Visit(UnityComponent component);
+        public abstract void Visit(IReactComponent component);
     }
 }

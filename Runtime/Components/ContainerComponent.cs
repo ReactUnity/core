@@ -10,15 +10,15 @@ using ReactUnity.StyleEngine;
 namespace ReactUnity.Components
 {
 
-    public class ContainerComponent : UnityComponent
+    public class ContainerComponent : UnityComponent, IContainerComponent
     {
         public RectTransform Container { get; protected set; }
-        public List<UnityComponent> Children { get; private set; } = new List<UnityComponent>();
+        public List<IReactComponent> Children { get; private set; } = new List<IReactComponent>();
 
         public List<RuleTreeNode<StyleData>> BeforeRules { get; protected set; }
         public List<RuleTreeNode<StyleData>> AfterRules { get; protected set; }
-        public UnityComponent BeforePseudo { get; protected set; }
-        public UnityComponent AfterPseudo { get; protected set; }
+        public IReactComponent BeforePseudo { get; protected set; }
+        public IReactComponent AfterPseudo { get; protected set; }
 
         protected ContainerComponent(RectTransform existing, UnityUGUIContext context) : base(existing, context)
         {
@@ -62,7 +62,7 @@ namespace ReactUnity.Components
             AfterPseudo?.ApplyLayoutStyles();
         }
 
-        public override void Accept(UnityComponentVisitor visitor)
+        public override void Accept(ReactComponentVisitor visitor)
         {
             base.Accept(visitor);
 
@@ -75,10 +75,11 @@ namespace ReactUnity.Components
         public void AddBefore()
         {
             if (BeforePseudo != null) return;
-            BeforePseudo = new TextComponent("", Context, "_before");
-            BeforePseudo.IsPseudoElement = true;
-            BeforePseudo.GameObject.name = "[Before]";
-            BeforePseudo.SetParent(this, Children.FirstOrDefault());
+            var tc = new TextComponent("", Context, "_before"); ;
+            BeforePseudo = tc;
+            tc.IsPseudoElement = true;
+            tc.GameObject.name = "[Before]";
+            tc.SetParent(this, Children.FirstOrDefault());
         }
 
         public void RemoveBefore()
@@ -90,16 +91,23 @@ namespace ReactUnity.Components
         public void AddAfter()
         {
             if (AfterPseudo != null) return;
-            AfterPseudo = new TextComponent("", Context, "_after");
-            AfterPseudo.IsPseudoElement = true;
-            AfterPseudo.GameObject.name = "[After]";
-            AfterPseudo.SetParent(this, Children.LastOrDefault(), true);
+            var tc = new TextComponent("", Context, "_after");
+            AfterPseudo = tc;
+            tc.IsPseudoElement = true;
+            tc.GameObject.name = "[After]";
+            tc.SetParent(this, Children.LastOrDefault(), true);
         }
 
         public void RemoveAfter()
         {
             AfterPseudo?.Destroy();
             AfterPseudo = null;
+        }
+
+        public void RegisterChild(IReactComponent child)
+        {
+            if (child is UnityComponent u)
+                u.RectTransform.SetParent(Container, false);
         }
     }
 }

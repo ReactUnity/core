@@ -29,6 +29,11 @@ namespace ReactUnity
                 { "video", (tag, text, context) => new VideoComponent(context) },
             };
 
+        public static Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>> EditorComponentCreators
+            = new Dictionary<string, Func<string, string, UnityUGUIContext, UnityComponent>>()
+            {
+            };
+
         public static Dictionary<string, Type> StateHandlers
             = new Dictionary<string, Type>()
             {
@@ -48,14 +53,14 @@ namespace ReactUnity
 
         #region Creation
 
-        public UnityComponent createText(string text, HostComponent host)
+        public IReactComponent createText(string text, HostComponent host)
         {
             var cmp = ComponentCreators["text"]("_text", text, host.Context);
             cmp.IsPseudoElement = true;
             return cmp;
         }
 
-        public UnityComponent createElement(string tag, string text, HostComponent host)
+        public IReactComponent createElement(string tag, string text, HostComponent host)
         {
             UnityComponent res = null;
             if (ComponentCreators.TryGetValue(tag, out var creator))
@@ -77,29 +82,29 @@ namespace ReactUnity
 
         public void appendChild(object parent, object child)
         {
-            if (parent is ContainerComponent p)
-                if (child is UnityComponent c)
+            if (parent is IContainerComponent p)
+                if (child is IReactComponent c)
                     c.SetParent(p);
         }
 
         public void appendChildToContainer(object parent, object child)
         {
-            if (parent is HostComponent p)
-                if (child is UnityComponent c)
+            if (parent is IHostComponent p)
+                if (child is IReactComponent c)
                     c.SetParent(p);
         }
 
         public void insertBefore(object parent, object child, object beforeChild)
         {
-            if (parent is ContainerComponent p)
-                if (child is UnityComponent c)
-                    if (beforeChild is UnityComponent b)
+            if (parent is IContainerComponent p)
+                if (child is IReactComponent c)
+                    if (beforeChild is IReactComponent b)
                         c.SetParent(p, b);
         }
 
         public void removeChild(object parent, object child)
         {
-            if (child is UnityComponent c)
+            if (child is IReactComponent c)
                 c.Destroy();
         }
 
@@ -110,23 +115,23 @@ namespace ReactUnity
 
         public void setText(object instance, string text)
         {
-            if (instance is TextComponent c)
+            if (instance is ITextComponent c)
                 c.SetText(text);
         }
 
         public void setProperty(object element, string property, object value)
         {
-            if (element is UnityComponent c)
+            if (element is IReactComponent c)
                 c.SetProperty(property, value);
         }
 
         public void setData(object element, string property, object value)
         {
-            if (element is UnityComponent c)
+            if (element is IReactComponent c)
                 c.SetData(property, value);
         }
 
-        public void setEventListener(UnityComponent element, string eventType, JsValue value)
+        public void setEventListener(IReactComponent element, string eventType, JsValue value)
         {
             var hasValue = value != null && !value.IsNull() && !value.IsUndefined() && !value.IsBoolean();
             var callback = value.As<FunctionInstance>();
@@ -137,7 +142,7 @@ namespace ReactUnity
 
         public void setEventListener(object element, string eventType, object value)
         {
-            if (element is UnityComponent c && value != null)
+            if (element is IReactComponent c && value != null)
                 c.SetEventListener(eventType, new Callback(value));
         }
 

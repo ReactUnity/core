@@ -63,7 +63,7 @@ namespace ReactUnity.StyleEngine
             }
         }
 
-        public bool Matches(UnityComponent component, UnityComponent scope)
+        public bool Matches(IReactComponent component, IReactComponent scope)
         {
             if (!ThisMatches(component, scope)) return false;
 
@@ -93,7 +93,7 @@ namespace ReactUnity.StyleEngine
         }
 
 
-        private bool ThisMatches(UnityComponent component, UnityComponent scope)
+        private bool ThisMatches(IReactComponent component, IReactComponent scope)
         {
             // We are at root, all rules matched
             if (ParsedSelector == null) return true;
@@ -172,7 +172,7 @@ namespace ReactUnity.StyleEngine
             return Type.CompareTo(other.Type);
         }
 
-        public bool Matches(UnityComponent component, UnityComponent scope = null)
+        public bool Matches(IReactComponent component, IReactComponent scope = null)
         {
             if (component.IsPseudoElement) return Type == RuleSelectorPartType.Tag && Name == component.Tag;
 
@@ -184,10 +184,10 @@ namespace ReactUnity.StyleEngine
                     return true;
                 case RuleSelectorPartType.Tag:
                     if (Name != null && Name.StartsWith("_"))
-                        return component.GameObject.name == Name;
+                        return component.Name == Name;
                     return Name == component.Tag;
                 case RuleSelectorPartType.Id:
-                    return Name == component.GameObject.name;
+                    return Name == component.Name;
                 case RuleSelectorPartType.ClassName:
                     return component.ClassList != null && component.ClassList.Contains(Name);
                 case RuleSelectorPartType.Attribute:

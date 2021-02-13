@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ReactUnity.Components
 {
 
-    public class HostComponent : ContainerComponent
+    public class HostComponent : ContainerComponent, IHostComponent
     {
         public float Width => RectTransform.rect.width;
         public float Height => RectTransform.rect.height;

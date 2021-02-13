@@ -71,35 +71,35 @@ namespace ReactUnity.StyleEngine
             Tree = this;
         }
 
-        public IEnumerable<RuleTreeNode<T>> GetMatchingRules(UnityComponent component)
+        public IEnumerable<RuleTreeNode<T>> GetMatchingRules(IReactComponent component)
         {
             return LeafNodes.Where(x => x.Matches(component, null));
         }
-        public IEnumerable<RuleTreeNode<T>> GetMatchingBefore(UnityComponent component)
+        public IEnumerable<RuleTreeNode<T>> GetMatchingBefore(IReactComponent component)
         {
             return BeforeNodes.Where(x => x.Matches(component, null));
         }
-        public IEnumerable<RuleTreeNode<T>> GetMatchingAfter(UnityComponent component)
+        public IEnumerable<RuleTreeNode<T>> GetMatchingAfter(IReactComponent component)
         {
             return AfterNodes.Where(x => x.Matches(component, null));
         }
 
-        public UnityComponent GetMatchingChild(UnityComponent component, bool pseudoElement = false)
+        public IReactComponent GetMatchingChild(IReactComponent component, bool pseudoElement = false)
         {
-            var list = new List<UnityComponent>();
+            var list = new List<IReactComponent>();
             GetMatchingChildrenInner(component, pseudoElement, list, component, true, LeafNodes);
             return list.FirstOrDefault();
         }
 
-        public List<UnityComponent> GetMatchingChildren(UnityComponent component, bool pseudoElement = false)
+        public List<IReactComponent> GetMatchingChildren(IReactComponent component, bool pseudoElement = false)
         {
-            var list = new List<UnityComponent>();
+            var list = new List<IReactComponent>();
             GetMatchingChildrenInner(component, pseudoElement, list, component, false, LeafNodes);
             return list;
         }
 
         private bool GetMatchingChildrenInner(
-            UnityComponent component, bool pseudoElement, List<UnityComponent> list, UnityComponent scope, bool singleItem, List<RuleTreeNode<T>> leafList)
+            IReactComponent component, bool pseudoElement, List<IReactComponent> list, IReactComponent scope, bool singleItem, List<RuleTreeNode<T>> leafList)
         {
             var matches = leafList.Any(x => x.Matches(component, scope));
             if (matches) list.Add(component);

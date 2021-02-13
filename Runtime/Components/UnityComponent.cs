@@ -18,7 +18,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {
-    public class UnityComponent
+    public class UnityComponent : IReactComponent
     {
         #region Statics / Defaults
         private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
@@ -31,7 +31,7 @@ namespace ReactUnity.Components
         public UnityUGUIContext Context { get; }
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
-        public ContainerComponent Parent { get; private set; }
+        public IContainerComponent Parent { get; private set; }
 
         public Dictionary<string, object> Data { get; private set; } = new Dictionary<string, object>();
         public ReactElement Component { get; private set; }
@@ -56,12 +56,13 @@ namespace ReactUnity.Components
         public CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
         public Canvas Canvas => GetComponent<Canvas>();
 
-        public bool IsPseudoElement = false;
+        public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; set; } = "";
         public string ClassName { get; set; } = "";
         public HashSet<string> ClassList { get; private set; } = EmptyClassList;
 
         public string TextContent => new TextContentVisitor().Get(this);
+        public string Name => GameObject.name;
 
         protected UnityComponent(RectTransform existing, UnityUGUIContext context)
         {
@@ -104,10 +105,10 @@ namespace ReactUnity.Components
             Parent.ScheduleLayout();
         }
 
-        public virtual void SetParent(ContainerComponent parent, UnityComponent insertBefore = null, bool insertAfter = false)
+        public virtual void SetParent(IContainerComponent parent, IReactComponent insertBefore = null, bool insertAfter = false)
         {
             Parent = parent;
-            RectTransform.SetParent(parent.Container, false);
+            parent.RegisterChild(this);
 
             insertBefore = insertBefore ?? (insertAfter ? null : parent.AfterPseudo);
 
@@ -392,21 +393,21 @@ namespace ReactUnity.Components
 
         #region Component Tree Functions
 
-        public UnityComponent QuerySelector(string query)
+        public IReactComponent QuerySelector(string query)
         {
             var tree = new RuleTree<string>(Context.Parser);
             tree.AddSelector(query);
             return tree.GetMatchingChild(this);
         }
 
-        public List<UnityComponent> QuerySelectorAll(string query)
+        public List<IReactComponent> QuerySelectorAll(string query)
         {
             var tree = new RuleTree<string>(Context.Parser);
             tree.AddSelector(query);
             return tree.GetMatchingChildren(this);
         }
 
-        public virtual void Accept(UnityComponentVisitor visitor)
+        public virtual void Accept(ReactComponentVisitor visitor)
         {
             visitor.Visit(this);
         }

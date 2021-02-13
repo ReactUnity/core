@@ -42,10 +42,13 @@ namespace ReactUnity.Interop
         public static void Initialize()
         {
             if (Instance) return;
-            var go = new GameObject("React Unity Main Thread Dispatcher");
-            var dispatcher = go.AddComponent<MainThreadDispatcher>();
-            DontDestroyOnLoad(go);
-            Instance = dispatcher;
+            if (Application.isPlaying)
+            {
+                var go = new GameObject("React Unity Main Thread Dispatcher");
+                var dispatcher = go.AddComponent<MainThreadDispatcher>();
+                DontDestroyOnLoad(go);
+                Instance = dispatcher;
+            }
         }
         #endregion
 
