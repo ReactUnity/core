@@ -35,9 +35,7 @@ namespace ReactUnity.EventHandlers
         {
             action?.Disable();
         }
-#endif
-
-#if !REACT_INPUT_SYSTEM
+#else
         private void Update()
         {
             if (selected && Input.anyKeyDown)
@@ -69,8 +67,16 @@ namespace ReactUnity.EventHandlers
         public Type input;
         public bool inputSystem;
 
+#if REACT_INPUT_SYSTEM
         public InputAction.CallbackContext ctx;
 
+        public KeyEventData(EventSystem eventSystem, InputAction.CallbackContext ctx) : base(eventSystem)
+        {
+            this.inputSystem = true;
+            this.ctx = ctx;
+            key = ctx.control.name;
+        }
+#endif
 
         public KeyEventData(EventSystem eventSystem, bool inputSystem = false) : base(eventSystem)
         {
@@ -81,13 +87,6 @@ namespace ReactUnity.EventHandlers
                 input = typeof(Input);
                 key = Input.inputString;
             }
-        }
-
-        public KeyEventData(EventSystem eventSystem, InputAction.CallbackContext ctx) : base(eventSystem)
-        {
-            this.inputSystem = true;
-            this.ctx = ctx;
-            key = ctx.control.name;
         }
     }
 }
