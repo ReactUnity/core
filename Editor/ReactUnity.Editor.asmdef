@@ -5,7 +5,8 @@
         "GUID:ed4a920eac98dc342ba18a6baa202849",
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:68550284b645f4b9894995579f34290a"
+        "GUID:68550284b645f4b9894995579f34290a",
+        "GUID:478a2357cc57436488a56e564b08d223"
     ],
     "includePlatforms": [
         "Editor"
@@ -26,6 +27,11 @@
             "name": "com.unity.inputsystem",
             "expression": "",
             "define": "REACT_INPUT_SYSTEM"
+        },
+        {
+            "name": "com.unity.editorcoroutines",
+            "expression": "",
+            "define": "REACT_EDITOR_COROUTINES"
         }
     ],
     "noEngineReferences": false
