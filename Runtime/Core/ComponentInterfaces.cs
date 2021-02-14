@@ -3,6 +3,7 @@ using ReactUnity.Interop;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Visitors;
+using System;
 using System.Collections.Generic;
 
 namespace ReactUnity
@@ -24,7 +25,7 @@ namespace ReactUnity
         Dictionary<string, object> Data { get; }
 
         void ApplyLayoutStyles();
-        void ScheduleLayout(System.Action callback = null);
+        void ScheduleLayout(Action callback = null);
         void ResolveStyle(bool recursive = false);
 
         void Accept(ReactComponentVisitor visitor);
@@ -32,6 +33,10 @@ namespace ReactUnity
         void SetProperty(string property, object value);
         void SetData(string property, object value);
         void SetEventListener(string eventType, Callback callback);
+
+        public object GetComponent(Type type);
+        public object AddComponent(Type type);
+
     }
 
     public interface IContainerComponent : IReactComponent

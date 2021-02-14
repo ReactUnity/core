@@ -25,11 +25,11 @@ namespace ReactUnity.Styling
             set => Dic[state] = value;
         }
 
-        public ReactComponent Component;
+        public IReactComponent Component;
         public HashSet<string> States = new HashSet<string>();
         public List<NodeStyle> ActiveStates = new List<NodeStyle>();
 
-        public StateStyles(ReactComponent cmp)
+        public StateStyles(IReactComponent cmp)
         {
             Component = cmp;
         }

@@ -14,18 +14,13 @@ namespace ReactUnity
 {
     public class ReactUnity : MonoBehaviour
     {
-        private Jint.Engine engine;
-        private UGUIContext unityContext;
-        private UnityScheduler scheduler;
-
         public StringObjectDictionary Globals = new StringObjectDictionary();
-        public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index.js" };
+        public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index" };
         private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
-
         public List<TextAsset> PreloadScripts = new List<TextAsset>();
 
+        private UGUIContext ctx;
         private IDisposable ScriptWatchDisposable;
-
         public RectTransform Root => transform as RectTransform;
 
         void OnEnable()
@@ -53,24 +48,34 @@ namespace ReactUnity
                 DestroyImmediate(children.gameObject);
             }
 
-            scheduler?.clearAllTimeouts();
+            ctx?.Scheduler.clearAllTimeouts();
         }
 
-        private void LoadAndRun(ReactScript script, List<TextAsset> preload, Action callback = null, bool disableWarnings = false)
+        private IDisposable LoadAndRun(ReactScript script, List<TextAsset> preload, Action callback = null, bool disableWarnings = false)
         {
+            var ru = new ReactUnityRunner();
             MainThreadDispatcher.Initialize();
             int debounce = -1;
-            ScriptWatchDisposable = script.GetScript((code, isDevServer) =>
+            var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
                 if (debounce >= 0) MainThreadDispatcher.StopDeferred(debounce);
-                debounce = MainThreadDispatcher.Timeout(() => RunScript(code, isDevServer, script, preload, callback), 0.5f);
+                ctx = new UGUIContext(Root, Globals, script, new UnityScheduler(), isDevServer);
+                debounce = MainThreadDispatcher.Timeout(() => ru.RunScript(code, isDevServer, script, ctx, preload, callback), 0.5f);
             }, out var result, true, disableWarnings);
-            RunScript(result, false, script, preload, callback);
+
+            if (!string.IsNullOrWhiteSpace(result))
+            {
+                ctx = new UGUIContext(Root, Globals, script, new UnityScheduler(), false);
+                ru.RunScript(result, false, script, ctx, preload, callback);
+            }
+
+            return watcherDisposable;
         }
 
         [ContextMenu("Restart")]
         public void Restart()
         {
+            Clean();
             LoadAndRun(Script, PreloadScripts, null, false);
         }
 
@@ -86,6 +91,7 @@ namespace ReactUnity
             preload.Add(Resources.Load<TextAsset>("ReactUnity/test/chai-adapter"));
             if (debug) preload.Add(Resources.Load<TextAsset>("ReactUnity/test/debug"));
 
+            Clean();
             LoadAndRun(TestScript, preload, null, true);
         }
 
@@ -100,15 +106,19 @@ namespace ReactUnity
         {
             Test(true);
         }
+    }
 
-        void RunScript(string script, bool isDevServer, ReactScript scriptObj, List<TextAsset> preload = null, Action callback = null)
+    public class ReactUnityRunner
+    {
+        private Jint.Engine engine;
+        private ReactContext context;
+
+        public void RunScript(string script, bool isDevServer, ReactScript scriptObj, ReactContext ctx, List<TextAsset> preload = null, Action callback = null)
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
-            Clean();
-
+            context = ctx;
             if (engine == null) CreateEngine();
-            unityContext = new UGUIContext(Root, engine, Globals, scriptObj, isDevServer);
             CreateLocation(engine, scriptObj);
 
             List<Action> callbacks = new List<Action>() { callback };
@@ -119,8 +129,8 @@ namespace ReactUnity
             }));
 
             engine.SetValue("Unity", new ReactUnityAPI(engine));
-            engine.SetValue("RootContainer", unityContext.Host);
-            engine.SetValue("Globals", Globals);
+            engine.SetValue("RootContainer", context.Host);
+            engine.SetValue("Globals", context.Globals);
             try
             {
                 if (preload != null) preload.ForEach(x => engine.Execute(x.text));
@@ -178,7 +188,7 @@ namespace ReactUnity
 
             CreateConsole(engine);
             CreateLocalStorage(engine);
-            CreateScheduler(engine);
+            CreateScheduler(engine, context);
             engine.SetValue("YogaValue", typeof(Facebook.Yoga.YogaValue));
             engine.SetValue("Color", typeof(Color));
             engine.SetValue("ShadowDefinition", typeof(ShadowDefinition));
@@ -201,9 +211,9 @@ namespace ReactUnity
             engine.SetValue("console", console);
         }
 
-        void CreateScheduler(Jint.Engine engine)
+        void CreateScheduler(Jint.Engine engine, ReactContext context)
         {
-            scheduler = new UnityScheduler();
+            var scheduler = context.Scheduler;
             engine.SetValue("UnityScheduler", scheduler);
             engine.Execute("global.setTimeout = function setTimeout(fun, delay) { return UnityScheduler.setTimeout(new Callback(fun), delay); }");
             engine.Execute("global.setInterval = function setInterval(fun, delay) { return UnityScheduler.setInterval(new Callback(fun), delay); }");
@@ -223,7 +233,7 @@ namespace ReactUnity
 
         void CreateLocation(Jint.Engine engine, ReactScript script)
         {
-            var location = new DomProxies.Location(script.SourceLocation, Restart);
+            var location = new DomProxies.Location(script.SourceLocation, () => { }); // TODO: restart script
             engine.SetValue("location", location);
 
 #if UNITY_EDITOR
@@ -231,7 +241,7 @@ namespace ReactUnity
             engine.SetValue("oldXMLHttpRequest", typeof(XMLHttpRequest));
             engine.Execute(@"XMLHttpRequest = function() { return new oldXMLHttpRequest('" + location.origin + @"'); }");
 #endif
-            engine.SetValue("document", new DocumentProxy(unityContext, this, location.origin));
+            engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, location.origin));
         }
     }
 }

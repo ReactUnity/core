@@ -12,57 +12,39 @@ using System.IO;
 using ReactUnity.Styling;
 using System.Text.RegularExpressions;
 using ReactUnity.Helpers;
+using ReactUnity.Schedulers;
 
 namespace ReactUnity
 {
-    public class UGUIContext
+    public class ReactContext
     {
-        private static Regex ExtensionRegex = new Regex(@"\.\w+$");
-        private static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
+        protected static Regex ExtensionRegex = new Regex(@"\.\w+$");
+        protected static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
 
-        public Jint.Engine Engine { get; }
-        public HostComponent Host { get; }
+        public IHostComponent Host { get; protected set; }
         public StringObjectDictionary Globals { get; private set; }
-        public YogaNode RootLayoutNode { get; }
         public bool IsDevServer { get; }
 
-        public ReactScript Script;
-        private bool Scheduled = false;
-        private List<System.Action> ScheduledCallbacks = new List<System.Action>();
+        public ReactScript Script { get; }
+        public IUnityScheduler Scheduler { get; }
+
+        protected bool Scheduled = false;
+        protected List<System.Action> ScheduledCallbacks = new List<System.Action>();
 
         public StylesheetParser Parser;
         public StyleTree StyleTree;
 
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
 
-        public UGUIContext(RectTransform hostElement, Jint.Engine engine, StringObjectDictionary assets, ReactScript script, bool isDevServer)
+        public ReactContext(StringObjectDictionary assets, ReactScript script, IUnityScheduler scheduler, bool isDevServer)
         {
-            Engine = engine;
             Globals = assets;
             Script = script;
             IsDevServer = isDevServer;
+            Scheduler = scheduler;
 
             Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
-
-            Host = new HostComponent(hostElement, this);
-            Host.Tag = "_root";
-            RootLayoutNode = Host.Layout;
-
-            InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
-            Host.ResolveStyle(true);
-
-            MainThreadDispatcher.AddCallOnLateUpdate(() =>
-            {
-                if (Scheduled)
-                {
-                    RootLayoutNode.CalculateLayout();
-                    Scheduled = false;
-
-                    for (int i = 0; i < ScheduledCallbacks.Count; i++)
-                        ScheduledCallbacks[i]?.Invoke();
-                }
-            });
         }
 
 
@@ -120,6 +102,33 @@ namespace ReactUnity
             var url = splits[splits.Length - 1];
 
             return ExtensionRegex.Replace(url, "");
+        }
+    }
+
+    public class UGUIContext : ReactContext
+    {
+        public YogaNode RootLayoutNode { get; }
+
+        public UGUIContext(RectTransform hostElement, StringObjectDictionary assets, ReactScript script, IUnityScheduler scheduler, bool isDevServer)
+            : base(assets, script, scheduler, isDevServer)
+        {
+            Host = new HostComponent(hostElement, this);
+            RootLayoutNode = Host.Layout;
+
+            InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
+            Host.ResolveStyle(true);
+
+            MainThreadDispatcher.AddCallOnLateUpdate(() =>
+            {
+                if (Scheduled)
+                {
+                    RootLayoutNode.CalculateLayout();
+                    Scheduled = false;
+
+                    for (int i = 0; i < ScheduledCallbacks.Count; i++)
+                        ScheduledCallbacks[i]?.Invoke();
+                }
+            });
         }
     }
 }

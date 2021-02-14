@@ -176,6 +176,11 @@ namespace ReactUnity.Styling
             StyleMap = new Dictionary<string, object>();
         }
 
+        public NodeStyle(StateStyles stateStyles) : this()
+        {
+            StateStyles = stateStyles;
+        }
+
         public NodeStyle(NodeStyle defaultStyle, StateStyles stateStyles) : this()
         {
             DefaultStyle = defaultStyle.StyleMap;

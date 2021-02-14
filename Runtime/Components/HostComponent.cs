@@ -19,6 +19,7 @@ namespace ReactUnity.Components
 
         public HostComponent(RectTransform host, UGUIContext context) : base(host, context)
         {
+            Tag = "_root";
             Layout.Width = Width;
             Layout.Height = Height;
 

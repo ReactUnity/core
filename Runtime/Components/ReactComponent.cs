@@ -105,6 +105,8 @@ namespace ReactUnity.Components
             Parent.ScheduleLayout();
         }
 
+        #region Setters
+
         public virtual void SetParent(IContainerComponent parent, IReactComponent insertBefore = null, bool insertAfter = false)
         {
             Parent = parent;
@@ -174,6 +176,10 @@ namespace ReactUnity.Components
             }
         }
 
+        #endregion
+
+        #region Style / Layout
+
         public void ScheduleLayout(System.Action callback = null)
         {
             Context.scheduleLayout(callback);
@@ -228,6 +234,8 @@ namespace ReactUnity.Components
             SetCursor();
             UpdateBackgroundGraphic(false, true);
         }
+
+        #endregion
 
 
         #region Style Functions
@@ -420,7 +428,7 @@ namespace ReactUnity.Components
         public Vector2 GetRelativePosition(float x, float y)
         {
             var screenPoint = new Vector2(x, y);
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(GameObject.transform as RectTransform, screenPoint, Context.Host.Canvas.worldCamera, out var pos);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(GameObject.transform as RectTransform, screenPoint, RectTransform.GetComponentInParent<Canvas>().worldCamera, out var pos);
             return pos;
         }
 
@@ -434,7 +442,7 @@ namespace ReactUnity.Components
             return GameObject.GetComponent<CType>();
         }
 
-        public Component GetComponent(Type type)
+        public object GetComponent(Type type)
         {
             return GameObject.GetComponent(type);
         }
@@ -449,7 +457,7 @@ namespace ReactUnity.Components
             return AddComponent(typeof(CType)) as CType;
         }
 
-        public Component AddComponent(Type type)
+        public object AddComponent(Type type)
         {
             if (type == null) return null;
 

@@ -12,16 +12,14 @@ namespace ReactUnity.DomProxies
         public HeadProxy head;
         public string origin;
         public Action<string> execute;
-        public UGUIContext context;
-        public ReactUnity root;
+        public ReactContext context;
 
-        public DocumentProxy(UGUIContext context, ReactUnity root, string origin)
+        public DocumentProxy(ReactContext context, Action<string> execute, string origin)
         {
             head = new HeadProxy();
-            execute = root.ExecuteScript;
+            this.execute = execute;
             this.origin = origin;
             this.context = context;
-            this.root = root;
         }
 
         public IDomElementProxy createElement(string type)
