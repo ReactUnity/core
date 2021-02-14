@@ -8,8 +8,8 @@ namespace ReactUnity.Editor.Renderer
 {
     public class EditorContext : ReactContext
     {
-        public EditorContext(VisualElement hostElement, StringObjectDictionary assets, ReactScript script, IUnityScheduler scheduler, bool isDevServer)
-            : base(assets, script, scheduler, isDevServer)
+        public EditorContext(VisualElement hostElement, StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer)
+            : base(globals, script, scheduler, isDevServer)
         {
             Host = new EditorReactComponent(hostElement, this, "_root");
             Host.ResolveStyle(true);
