@@ -48,13 +48,13 @@ namespace ReactUnity
         }
 
 
-        public void scheduleLayout(System.Action callback = null)
+        public virtual void scheduleLayout(System.Action callback = null)
         {
             Scheduled = true;
             ScheduledCallbacks.Add(callback);
         }
 
-        public void InsertStyle(string style, int importanceOffset = 0)
+        public virtual void InsertStyle(string style, int importanceOffset = 0)
         {
             if (string.IsNullOrWhiteSpace(style)) return;
 
@@ -74,11 +74,11 @@ namespace ReactUnity
             Host.ResolveStyle(true);
         }
 
-        public void RemoveStyle(string style)
+        public virtual void RemoveStyle(string style)
         {
         }
 
-        public string ResolvePath(string path)
+        public virtual string ResolvePath(string path)
         {
             if (IsDevServer) return Script.DevServerFile + path;
             var res = Path.GetDirectoryName(Script.GetResolvedSourcePath()) + path;
@@ -86,7 +86,7 @@ namespace ReactUnity
             return res;
         }
 
-        public ReactScript CreateStaticScript(string path)
+        public virtual ReactScript CreateStaticScript(string path)
         {
             var src = new ReactScript();
             src.ScriptSource = IsDevServer ? ScriptSource.Url : Script.ScriptSource;

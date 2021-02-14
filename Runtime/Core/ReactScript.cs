@@ -66,19 +66,17 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         }
 #endif
 
-        public IDisposable GetScript(Action<string, bool> changeCallback, out string result, bool useDevServer = true, bool disableWarnings = false)
+        public IDisposable GetScript(Action<string, bool> callback, bool useDevServer = true, bool disableWarnings = false)
         {
 #if UNITY_EDITOR
             if (useDevServer && UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
             {
-                result = null;
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
                 return new Interop.MainThreadDispatcher.CoroutineHandle(
-                    Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, changeCallback, err =>
+                    Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, callback, err =>
                     {
                         Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
-                        GetScript(changeCallback, out var dummyResult, false);
-                        if (!string.IsNullOrWhiteSpace(dummyResult)) changeCallback(dummyResult, false);
+                        GetScript(callback, false);
                     }, true)));
             }
 #endif
@@ -86,11 +84,11 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
             switch (ScriptSource)
             {
                 case ScriptSource.TextAsset:
-                    if (!SourceAsset) result = null;
+                    if (!SourceAsset) callback(null, false);
 #if UNITY_EDITOR
-                    else result = System.IO.File.ReadAllText(UnityEditor.AssetDatabase.GetAssetPath(SourceAsset));
+                    else callback(System.IO.File.ReadAllText(UnityEditor.AssetDatabase.GetAssetPath(SourceAsset)), false);
 #else
-                    else result = SourceAsset.text;
+                    else callback(SourceAsset.text, false);
 #endif
                     break;
                 case ScriptSource.File:
@@ -98,7 +96,7 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 #if !REACT_FILE_API
                     if(!disableWarnings) Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
 #endif
-                    result = System.IO.File.ReadAllText(SourcePath);
+                    callback(System.IO.File.ReadAllText(SourcePath), false);
                     break;
 #else
                     throw new Exception("REACT_FILE_API must be defined to use File API outside the editor. Add REACT_FILE_API to build symbols to use this feature.");
@@ -108,28 +106,27 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 #if !REACT_URL_API
                     if (!disableWarnings) Debug.LogWarning("REACT_URL_API is not defined. Add REACT_URL_API to build symbols to if you want to use this feature outside editor.");
 #endif
-                    result = null;
                     var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
                     return new Interop.MainThreadDispatcher.CoroutineHandle(
-                        Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, changeCallback)));
+                        Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, callback)));
 #else
                     throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
 #endif
                 case ScriptSource.Resource:
                     var asset = Resources.Load(SourcePath) as TextAsset;
-                    if (asset) result = asset.text;
-                    else result = null;
+                    if (asset) callback(asset.text, false);
+                    else callback(null, false);
                     break;
                 case ScriptSource.Text:
-                    result = SourceText;
+                    callback(SourceText, false);
                     break;
                 default:
-                    result = null;
+                    callback(null, false);
                     break;
             }
 
 #if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
-            if (Watch && SourceIsWatchable) return StartWatching(changeCallback);
+            if (Watch && SourceIsWatchable) return StartWatching(callback);
 #endif
             return null;
         }

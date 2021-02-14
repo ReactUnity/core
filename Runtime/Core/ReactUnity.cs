@@ -55,19 +55,11 @@ namespace ReactUnity
         {
             var ru = new ReactUnityRunner();
             MainThreadDispatcher.Initialize();
-            int debounce = -1;
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
-                if (debounce >= 0) MainThreadDispatcher.StopDeferred(debounce);
                 ctx = new UGUIContext(Root, Globals, script, new UnityScheduler(), isDevServer);
-                debounce = MainThreadDispatcher.Timeout(() => ru.RunScript(code, isDevServer, script, ctx, preload, callback), 0.5f);
-            }, out var result, true, disableWarnings);
-
-            if (!string.IsNullOrWhiteSpace(result))
-            {
-                ctx = new UGUIContext(Root, Globals, script, new UnityScheduler(), false);
-                ru.RunScript(result, false, script, ctx, preload, callback);
-            }
+                ru.RunScript(code, isDevServer, script, ctx, preload, callback);
+            }, true, disableWarnings);
 
             return watcherDisposable;
         }

@@ -111,9 +111,7 @@ namespace ReactUnity.DomProxies
                 onload?.Invoke(this);
             });
 
-            script.GetScript((sc, isDevServer) => callback(sc), out var result, false, true);
-
-            if (!string.IsNullOrWhiteSpace(result)) callback(result);
+            script.GetScript((sc, isDevServer) => callback(sc), false, true);
         }
 
         public void OnRemove()
