@@ -20,7 +20,10 @@ namespace ReactUnity
         public List<TextAsset> PreloadScripts = new List<TextAsset>();
 
         private UGUIContext ctx;
-        private IDisposable ScriptWatchDisposable;
+#pragma warning disable IDE0052 // Remove unread private members
+        private IDisposable ScriptWatchDisposable { get; set; }
+        private ReactUnityRunner Runner { get; set; }
+#pragma warning restore IDE0052 // Remove unread private members
         public RectTransform Root => transform as RectTransform;
 
         void OnEnable()
@@ -30,7 +33,6 @@ namespace ReactUnity
 
         void OnDisable()
         {
-            if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
             Clean();
         }
 
@@ -48,7 +50,10 @@ namespace ReactUnity
                 DestroyImmediate(children.gameObject);
             }
 
-            ctx?.Scheduler.clearAllTimeouts();
+            ctx?.Dispose();
+            Runner = null;
+            ctx = null;
+            ScriptWatchDisposable = null;
         }
 
         private IDisposable LoadAndRun(ReactScript script, List<TextAsset> preload, Action callback = null, bool disableWarnings = false)
@@ -68,7 +73,7 @@ namespace ReactUnity
         public void Restart()
         {
             Clean();
-            LoadAndRun(Script, PreloadScripts, null, false);
+            ScriptWatchDisposable = LoadAndRun(Script, PreloadScripts, null, false);
         }
 
         private void Test(bool debug = false)
@@ -84,7 +89,7 @@ namespace ReactUnity
             if (debug) preload.Add(Resources.Load<TextAsset>("ReactUnity/test/debug"));
 
             Clean();
-            LoadAndRun(TestScript, preload, null, true);
+            ScriptWatchDisposable = LoadAndRun(TestScript, preload, null, true);
         }
 
         [ContextMenu("Test")]

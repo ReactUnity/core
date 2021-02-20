@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace ReactUnity
 {
-    public abstract class ReactContext
+    public abstract class ReactContext : IDisposable
     {
         protected static Regex ExtensionRegex = new Regex(@"\.\w+$");
         protected static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
@@ -29,6 +29,8 @@ namespace ReactUnity
         public StylesheetParser Parser;
         public StyleTree StyleTree;
         public Action OnRestart;
+
+        public List<IDisposable> Disposables = new List<IDisposable>();
 
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
 
@@ -103,5 +105,14 @@ namespace ReactUnity
 
         public abstract ITextComponent CreateText(string text);
         public abstract IReactComponent CreateComponent(string tag, string text);
+
+        public void Dispose()
+        {
+            Scheduler?.clearAllTimeouts();
+            foreach (var dp in Disposables)
+            {
+                dp.Dispose();
+            }
+        }
     }
 }

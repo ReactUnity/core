@@ -43,13 +43,15 @@ namespace ReactUnity.DomProxies
             get => null;
         }
 
-        public WebSocketProxy(string url) : base(url, "ws")
+        public WebSocketProxy(ReactContext context, string url) : base(url, "ws")
         {
+            context.Disposables.Add(this);
             ConnectAsync();
         }
 
-        public WebSocketProxy(string url, params string[] protocols) : base(url, protocols)
+        public WebSocketProxy(ReactContext context, string url, params string[] protocols) : base(url, protocols)
         {
+            context.Disposables.Add(this);
             ConnectAsync();
         }
 

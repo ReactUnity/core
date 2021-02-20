@@ -138,7 +138,9 @@ namespace ReactUnity
             engine.SetValue("location", location);
 
 #if UNITY_EDITOR
-            engine.SetValue("WebSocket", typeof(WebSocketProxy));
+            engine.SetValue("ctx", context);
+            engine.SetValue("oldWebSocket", typeof(WebSocketProxy));
+            engine.Execute(@"WebSocket = function() { return new oldWebSocket(ctx, ...arguments); }");
             engine.SetValue("oldXMLHttpRequest", typeof(XMLHttpRequest));
             engine.Execute(@"XMLHttpRequest = function() { return new oldXMLHttpRequest('" + location.origin + @"'); }");
 #endif
