@@ -24,6 +24,13 @@
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
   "types": "./lib/react-unity.d.ts",
+  "typesVersions": {
+    "*": {
+      "editor": [
+        "./lib/react-unity-editor.d.ts"
+      ]
+    }
+  },
   "dependencies": {
     "@babel/core": "7.12.13",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
