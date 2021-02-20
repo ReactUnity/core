@@ -49,7 +49,7 @@ namespace ReactUnity
         public List<RuleTreeNode<StyleData>> BeforeRules { get; }
         public List<RuleTreeNode<StyleData>> AfterRules { get; }
 
-        void RegisterChild(IReactComponent child);
+        void RegisterChild(IReactComponent child, int index = -1);
     }
 
     public interface ITextComponent : IReactComponent
@@ -59,5 +59,6 @@ namespace ReactUnity
 
     public interface IHostComponent : IContainerComponent
     {
+        ReactContext Context { get; }
     }
 }

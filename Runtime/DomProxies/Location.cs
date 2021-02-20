@@ -1,6 +1,7 @@
 using ReactUnity.Interop;
 using System;
 using System.Linq;
+using UnityEngine;
 
 namespace ReactUnity.DomProxies
 {
@@ -47,7 +48,8 @@ namespace ReactUnity.DomProxies
 
         public void reload()
         {
-            MainThreadDispatcher.OnUpdate(restart);
+            if (Application.isPlaying) MainThreadDispatcher.OnUpdate(restart);
+            else EditorDispatcher.OnUpdate(restart);
         }
     }
 }

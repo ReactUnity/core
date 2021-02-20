@@ -110,12 +110,12 @@ namespace ReactUnity.Components
         public virtual void SetParent(IContainerComponent parent, IReactComponent insertBefore = null, bool insertAfter = false)
         {
             Parent = parent;
-            parent.RegisterChild(this);
 
             insertBefore = insertBefore ?? (insertAfter ? null : parent.AfterPseudo);
 
             if (insertBefore == null)
             {
+                parent.RegisterChild(this);
                 parent.Children.Add(this);
                 parent.Layout.AddChild(Layout);
             }
@@ -124,9 +124,9 @@ namespace ReactUnity.Components
                 var ind = parent.Children.IndexOf(insertBefore);
                 if (insertAfter) ind++;
 
+                parent.RegisterChild(this, ind);
                 parent.Children.Insert(ind, this);
                 parent.Layout.Insert(ind, Layout);
-                RectTransform.SetSiblingIndex(ind);
             }
 
             Style.Parent = parent.Style;
@@ -208,7 +208,6 @@ namespace ReactUnity.Components
             if (Style.CssLayouts != null)
                 foreach (var item in Style.CssLayouts) item.SetDefault(Layout, DefaultLayout);
             Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
-            //foreach (var item in Style.CssLayouts) item.Set(Layout, DefaultLayout);
 
             for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
             inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));

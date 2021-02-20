@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-#if REACT_EDITOR_COROUTINES
+#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
 using Unity.EditorCoroutines.Editor;
 #endif
 
-namespace ReactUnity.Editor.Renderer
+namespace ReactUnity.Interop
 {
     public static class EditorDispatcher
     {
@@ -28,7 +28,7 @@ namespace ReactUnity.Editor.Renderer
         private static HashSet<int> ToStop = new HashSet<int>();
         private static List<Action> CallOnLateUpdate = new List<Action>();
 
-#if REACT_EDITOR_COROUTINES
+#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
         private static List<EditorCoroutine> Started = new List<EditorCoroutine>();
 #else
         private static List<object> Started = new List<object>();
@@ -37,7 +37,7 @@ namespace ReactUnity.Editor.Renderer
         static EditorDispatcher()
         {
             var handle = GetNextHandle();
-            StartCoroutine(OnUpdateCoroutine(Update, handle));
+            StartCoroutine(OnEveryUpdateCoroutine(Update, handle));
         }
 
         static public void AddCallOnLateUpdate(Action call)
@@ -126,7 +126,7 @@ namespace ReactUnity.Editor.Renderer
             ToStart.Clear();
         }
 
-        static void StopAll()
+        static public void StopAll()
         {
             for (int cr = 0; cr < Started.Count; cr++)
             {
@@ -148,7 +148,7 @@ namespace ReactUnity.Editor.Renderer
                 CallOnLateUpdate[i].Invoke();
         }
 
-#if REACT_EDITOR_COROUTINES
+#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
         static EditorCoroutine StartCoroutine(IEnumerator cr)
         {
             return EditorCoroutineUtility.StartCoroutineOwnerless(cr);
@@ -176,6 +176,15 @@ namespace ReactUnity.Editor.Renderer
         {
             yield return null;
             if (!ToStop.Contains(handle)) callback();
+        }
+
+        private static IEnumerator OnEveryUpdateCoroutine(Action callback, int handle)
+        {
+            while (true)
+            {
+                yield return null;
+                if (!ToStop.Contains(handle)) callback();
+            }
         }
 
         private static IEnumerator TimeoutCoroutine(Action callback, float time, int handle)

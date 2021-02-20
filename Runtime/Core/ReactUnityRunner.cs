@@ -14,13 +14,13 @@ namespace ReactUnity
         private Jint.Engine engine;
         private ReactContext context;
 
-        public void RunScript(string script, bool isDevServer, ReactScript scriptObj, ReactContext ctx, List<TextAsset> preload = null, Action callback = null)
+        public void RunScript(string script, ReactContext ctx, List<TextAsset> preload = null, Action callback = null)
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
             context = ctx;
             if (engine == null) CreateEngine();
-            CreateLocation(engine, scriptObj);
+            CreateLocation(engine, ctx.Script);
 
             List<Action> callbacks = new List<Action>() { callback };
 
@@ -134,7 +134,7 @@ namespace ReactUnity
 
         void CreateLocation(Jint.Engine engine, ReactScript script)
         {
-            var location = new DomProxies.Location(script.SourceLocation, () => { }); // TODO: restart script
+            var location = new DomProxies.Location(script.SourceLocation, context.OnRestart);
             engine.SetValue("location", location);
 
 #if UNITY_EDITOR

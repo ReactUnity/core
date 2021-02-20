@@ -25,13 +25,14 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.Input).Assembly,
                     typeof(UnityEngine.Animator).Assembly,
                     typeof(UnityEngine.Event).Assembly,
-//#if REACT_INPUT_SYSTEM
-//                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
-//                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
-//#endif
-//#if REACT_VECTOR_GRAPHICS
-//                    typeof(Unity.VectorGraphics.VectorUtils).Assembly,
-//#endif
+                    typeof(UnityEngine.UIElements.VisualElement).Assembly,
+                    //#if REACT_INPUT_SYSTEM
+                    //                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
+                    //                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
+                    //#endif
+                    //#if REACT_VECTOR_GRAPHICS
+                    //                    typeof(Unity.VectorGraphics.VectorUtils).Assembly,
+                    //#endif
                 },
                 new List<string> { "Unity", "UnityEngine" },
                 new List<string> { },
@@ -43,7 +44,7 @@ namespace ReactUnity.Editor.Developer
         public static void GenerateReactUnity()
         {
             Generate(
-                new List<Assembly> { typeof(ReactUnity).Assembly },
+                new List<Assembly> { typeof(ReactUnity).Assembly, typeof(TypescriptModelsGenerator).Assembly },
                 new List<string> { "ReactUnity" },
                 new List<string> { "UnityEngine.InputSystem" },
                 new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" } }
@@ -297,6 +298,8 @@ namespace ReactUnity.Editor.Developer
                 default:
                     break;
             }
+
+            if (typeof(Attribute).IsAssignableFrom(type)) return "any";
             if (!type.IsEnum && propertyType.Contains("`")) return "any";
             if (type.DeclaringType != null)
             {

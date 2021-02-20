@@ -105,11 +105,17 @@ namespace ReactUnity.DomProxies
         {
             var script = document.context.CreateStaticScript(src);
 
-            Action<string> callback = (sc) => MainThreadDispatcher.OnUpdate(() =>
+            Action<string> action = (sc) =>
             {
                 document.execute(sc);
                 onload?.Invoke(this);
-            });
+            };
+
+            Action<string> callback = (sc) =>
+            {
+                if (Application.isPlaying) MainThreadDispatcher.OnUpdate(() => action(sc));
+                else EditorDispatcher.OnUpdate(() => action(sc));
+            };
 
             script.GetScript((sc, isDevServer) => callback(sc), false, true);
         }

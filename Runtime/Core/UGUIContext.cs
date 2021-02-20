@@ -13,15 +13,38 @@ using ReactUnity.Styling;
 using System.Text.RegularExpressions;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
+using System;
 
 namespace ReactUnity
 {
     public class UGUIContext : ReactContext
     {
+        static public Dictionary<string, Func<string, string, UGUIContext, ReactComponent>> ComponentCreators { get; }
+            = new Dictionary<string, Func<string, string, UGUIContext, ReactComponent>>
+            {
+                { "text", (tag, text, context) => new TextComponent(text, context, tag) },
+                { "anchor", (tag, text, context) => new AnchorComponent(context) },
+                { "view", (tag, text, context) => new ContainerComponent(context, "view") },
+                { "button", (tag, text, context) => new ButtonComponent(context) },
+                { "toggle", (tag, text, context) => new ToggleComponent(context) },
+                { "input", (tag, text, context) => new InputComponent(text, context) },
+                { "scroll", (tag, text, context) => new ScrollComponent(context) },
+                { "image", (tag, text, context) => new ImageComponent(context) },
+                { "rawimage", (tag, text, context) => new RawImageComponent(context) },
+                { "render", (tag, text, context) => new RenderTextureComponent(context) },
+                { "video", (tag, text, context) => new VideoComponent(context) },
+            };
+
+        public static Func<string, string, UGUIContext, ReactComponent> defaultCreator =
+            (tag, text, context) => new ContainerComponent(context, tag);
+
+        public static Func<string, UGUIContext, ITextComponent> textCreator =
+            (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
+
         public YogaNode RootLayoutNode { get; }
 
-        public UGUIContext(RectTransform hostElement, StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer)
-            : base(globals, script, scheduler, isDevServer)
+        public UGUIContext(RectTransform hostElement, StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
+            : base(globals, script, scheduler, isDevServer, onRestart)
         {
             Host = new HostComponent(hostElement, this);
             RootLayoutNode = Host.Layout;
@@ -40,6 +63,21 @@ namespace ReactUnity
                         ScheduledCallbacks[i]?.Invoke();
                 }
             });
+        }
+
+        public override IReactComponent CreateComponent(string tag, string text)
+        {
+            ReactComponent res = null;
+            if (ComponentCreators.TryGetValue(tag, out var creator))
+                res = creator(tag, text, this);
+            else res = defaultCreator(tag, text, this);
+            res.GameObject.name = $"<{tag}>";
+            return res;
+        }
+
+        public override ITextComponent CreateText(string text)
+        {
+            return textCreator(text, this);
         }
     }
 }

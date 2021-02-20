@@ -20,6 +20,7 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public static readonly YogaNode DefaultLayout = new YogaNode();
 
+        ReactContext IHostComponent.Context => Context;
         public EditorContext Context { get; }
         public IContainerComponent Parent { get; private set; }
         public VisualElement Element { get; protected set; }
@@ -44,6 +45,7 @@ namespace ReactUnity.Editor.Renderer.Components
         public List<RuleTreeNode<StyleData>> BeforeRules { get; protected set; }
         public List<RuleTreeNode<StyleData>> AfterRules { get; protected set; }
 
+
         public EditorReactComponent(VisualElement element, EditorContext context, string tag)
         {
             Tag = tag;
@@ -59,6 +61,7 @@ namespace ReactUnity.Editor.Renderer.Components
         {
             Tag = tag;
             Context = context;
+            Element = new Box();
 
             StateStyles = new StateStyles(this);
             Style = new NodeStyle(StateStyles);
@@ -77,6 +80,10 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public virtual void ApplyStyles()
         {
+            Element.style.backgroundColor = Style.backgroundColor;
+            Element.style.color = Style.color;
+            Element.style.width = Layout.LayoutWidth;
+            Element.style.height = Layout.LayoutHeight;
         }
 
         public void Destroy()
@@ -110,7 +117,6 @@ namespace ReactUnity.Editor.Renderer.Components
             if (Style.CssLayouts != null)
                 foreach (var item in Style.CssLayouts) item.SetDefault(Layout, DefaultLayout);
             Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
-            //foreach (var item in Style.CssLayouts) item.Set(Layout, DefaultLayout);
 
             for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
             inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
@@ -149,12 +155,12 @@ namespace ReactUnity.Editor.Renderer.Components
         public void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false)
         {
             Parent = parent;
-            parent.RegisterChild(this);
 
             relativeTo = relativeTo ?? (insertAfter ? null : parent.AfterPseudo);
 
             if (relativeTo == null)
             {
+                parent.RegisterChild(this);
                 parent.Children.Add(this);
                 parent.Layout.AddChild(Layout);
             }
@@ -163,9 +169,9 @@ namespace ReactUnity.Editor.Renderer.Components
                 var ind = parent.Children.IndexOf(relativeTo);
                 if (insertAfter) ind++;
 
+                parent.RegisterChild(this, ind);
                 parent.Children.Insert(ind, this);
                 parent.Layout.Insert(ind, Layout);
-                //RectTransform.SetSiblingIndex(ind);
             }
 
             Style.Parent = parent.Style;
@@ -214,10 +220,13 @@ namespace ReactUnity.Editor.Renderer.Components
             throw new NotImplementedException();
         }
 
-        public void RegisterChild(IReactComponent child)
+        public void RegisterChild(IReactComponent child, int index = -1)
         {
             if (child is EditorReactComponent u)
-                Element.Add(u.Element);
+            {
+                if(index >= 0) Element.Insert(index, u.Element);
+                else Element.Add(u.Element);
+            }
         }
     }
 }

@@ -57,8 +57,8 @@ namespace ReactUnity
             MainThreadDispatcher.Initialize();
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
-                ctx = new UGUIContext(Root, Globals, script, new UnityScheduler(), isDevServer);
-                ru.RunScript(code, isDevServer, script, ctx, preload, callback);
+                ctx = new UGUIContext(Root, Globals, script, new UnityScheduler(), isDevServer, Restart);
+                ru.RunScript(code, ctx, preload, callback);
             }, true, disableWarnings);
 
             return watcherDisposable;

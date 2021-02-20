@@ -4,9 +4,11 @@ namespace ReactUnity.Editor.Renderer.Components
 {
     public class EditorTextComponent : EditorReactComponent, ITextComponent
     {
-        public EditorTextComponent(EditorContext context) : base(context, "text")
+        public EditorTextComponent(string text, EditorContext context, string tag) : base(context, tag)
         {
-            Element = new Label();
+            var lb = new Label();
+            Element = lb;
+            lb.text = text;
         }
 
         public void SetText(string text)

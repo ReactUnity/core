@@ -3,6 +3,7 @@ using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Types;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace ReactUnity
 {
-    public class ReactContext
+    public abstract class ReactContext
     {
         protected static Regex ExtensionRegex = new Regex(@"\.\w+$");
         protected static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
@@ -27,15 +28,17 @@ namespace ReactUnity
 
         public StylesheetParser Parser;
         public StyleTree StyleTree;
+        public Action OnRestart;
 
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
 
-        public ReactContext(StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer)
+        public ReactContext(StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
         {
             Globals = globals;
             Script = script;
             IsDevServer = isDevServer;
             Scheduler = scheduler;
+            OnRestart = onRestart ?? (() => { });
 
             Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
@@ -97,5 +100,8 @@ namespace ReactUnity
 
             return ExtensionRegex.Replace(url, "");
         }
+
+        public abstract ITextComponent CreateText(string text);
+        public abstract IReactComponent CreateComponent(string tag, string text);
     }
 }

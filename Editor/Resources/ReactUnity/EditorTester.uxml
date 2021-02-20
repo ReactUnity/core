@@ -1,0 +1,15 @@
+<UXML xmlns:ui="UnityEngine.Experimental.UIElements">
+  <ui:TextField label="Source File" name="source" text="react-editor/index" />
+
+  <ui:VisualElement style="flex-shrink:0; flex-direction:row;">
+    <ui:Toggle name="useDevServer" text="Use Dev Server" />
+    <ui:TextField name="devServer" text="http://localhost:3000" style="flex-grow:1;" />
+  </ui:VisualElement>
+
+  <ui:VisualElement style="flex-shrink:0;">
+    <ui:Button name="run" text="Run" />
+  </ui:VisualElement>
+
+  <ui:VisualElement name="root">
+  </ui:VisualElement>
+</UXML>

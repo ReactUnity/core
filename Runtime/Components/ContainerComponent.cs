@@ -104,10 +104,13 @@ namespace ReactUnity.Components
             AfterPseudo = null;
         }
 
-        public void RegisterChild(IReactComponent child)
+        public void RegisterChild(IReactComponent child, int index = -1)
         {
             if (child is ReactComponent u)
+            {
                 u.RectTransform.SetParent(Container, false);
+                if (index >= 0) u.RectTransform.SetSiblingIndex(index);
+            }
         }
     }
 }

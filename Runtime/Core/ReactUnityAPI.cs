@@ -10,30 +10,6 @@ namespace ReactUnity
 {
     public class ReactUnityAPI
     {
-        public static Func<string, string, UGUIContext, ReactComponent> defaultCreator =
-            (tag, text, context) => new ContainerComponent(context, tag);
-
-        public static Dictionary<string, Func<string, string, UGUIContext, ReactComponent>> ComponentCreators
-            = new Dictionary<string, Func<string, string, UGUIContext, ReactComponent>>()
-            {
-                { "text", (tag, text, context) => new TextComponent(text, context, tag) },
-                { "anchor", (tag, text, context) => new AnchorComponent(context) },
-                { "view", (tag, text, context) => new ContainerComponent(context, "view") },
-                { "button", (tag, text, context) => new ButtonComponent(context) },
-                { "toggle", (tag, text, context) => new ToggleComponent(context) },
-                { "input", (tag, text, context) => new InputComponent(text, context) },
-                { "scroll", (tag, text, context) => new ScrollComponent(context) },
-                { "image", (tag, text, context) => new ImageComponent(context) },
-                { "rawimage", (tag, text, context) => new RawImageComponent(context) },
-                { "render", (tag, text, context) => new RenderTextureComponent(context) },
-                { "video", (tag, text, context) => new VideoComponent(context) },
-            };
-
-        public static Dictionary<string, Func<string, string, UGUIContext, ReactComponent>> EditorComponentCreators
-            = new Dictionary<string, Func<string, string, UGUIContext, ReactComponent>>()
-            {
-            };
-
         public static Dictionary<string, Type> StateHandlers
             = new Dictionary<string, Type>()
             {
@@ -53,26 +29,14 @@ namespace ReactUnity
 
         #region Creation
 
-        public IReactComponent createText(string text, HostComponent host)
+        public IReactComponent createText(string text, IHostComponent host)
         {
-            var cmp = ComponentCreators["text"]("_text", text, host.Context);
-            cmp.IsPseudoElement = true;
-            return cmp;
+            return host.Context.CreateText(text);
         }
 
-        public IReactComponent createElement(string tag, string text, HostComponent host)
+        public IReactComponent createElement(string tag, string text, IHostComponent host)
         {
-            ReactComponent res = null;
-            if (ComponentCreators.TryGetValue(tag, out var creator))
-            {
-                res = creator(tag, text, host.Context);
-            }
-            else
-            {
-                res = defaultCreator(tag, text, host.Context);
-            }
-            res.GameObject.name = $"<{tag}>";
-            return res;
+            return host.Context.CreateComponent(tag, text);
         }
 
         #endregion

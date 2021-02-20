@@ -72,8 +72,15 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
             if (useDevServer && UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
             {
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
-                return new Interop.MainThreadDispatcher.CoroutineHandle(
+
+                if (Application.isPlaying) return new Interop.MainThreadDispatcher.CoroutineHandle(
                     Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, callback, err =>
+                    {
+                        Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
+                        GetScript(callback, false);
+                    }, true)));
+                else return new Interop.EditorDispatcher.CoroutineHandle(
+                    Interop.EditorDispatcher.StartDeferred(WatchWebRequest(request, callback, err =>
                     {
                         Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
                         GetScript(callback, false);
@@ -107,8 +114,11 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
                     if (!disableWarnings) Debug.LogWarning("REACT_URL_API is not defined. Add REACT_URL_API to build symbols to if you want to use this feature outside editor.");
 #endif
                     var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
-                    return new Interop.MainThreadDispatcher.CoroutineHandle(
+
+                    if (Application.isPlaying) return new Interop.MainThreadDispatcher.CoroutineHandle(
                         Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, callback)));
+                    else return new Interop.EditorDispatcher.CoroutineHandle(
+                        Interop.EditorDispatcher.StartDeferred(WatchWebRequest(request, callback)));
 #else
                     throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
 #endif
