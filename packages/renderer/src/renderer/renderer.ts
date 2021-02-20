@@ -34,13 +34,18 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
   }
 }
 
-function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfterMount: boolean) {
+function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfterMount: boolean, type?: string) {
   let updateAfterMount = false;
   for (let index = 0; index < updatePayload.length; index += 2) {
     const attr = updatePayload[index];
     const value = updatePayload[index + 1];
 
-    if (attr === 'children') continue;
+    if (attr === 'children') {
+      if (type === 'text') {
+        Unity.setText(instance as NativeTextInstance, value ? value.join('') : '');
+      }
+      continue;
+    }
     if (attr === 'key') continue;
     if (attr === 'ref') continue;
     if (attr === 'tag') continue;
@@ -174,7 +179,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     newProps,
     internalInstanceHandle,
   ) {
-    applyUpdate(instance, updatePayload as any, true);
+    applyUpdate(instance, updatePayload as any, true, type);
   },
 
   resetTextContent(instance) { console.log('resetTextContent'); },
