@@ -1,6 +1,6 @@
 //
-// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule
-// Generated 7.02.2021 17:05:39
+// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.UIElementsModule
+// Generated 20.02.2021 21:19:34
 //
 
 
@@ -16798,6 +16798,5192 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
+    }
+  }
+  export namespace UIElements {
+    export interface BindableElement {
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface BindableElement_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface BindableElement_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Clickable {
+      lastMousePosition: UnityEngine.Vector2;
+      activators: any; // System.Collections.Generic.List`1[UnityEngine.UIElements.ManipulatorActivationFilter]
+      target: UnityEngine.UIElements.VisualElement;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ContextualMenuManager {
+      DisplayMenuIfEventMatches: ((evt: UnityEngine.UIElements.EventBase, eventHandler: UnityEngine.UIElements.IEventHandler) => void);
+      DisplayMenu: ((triggerEvent: UnityEngine.UIElements.EventBase, target: UnityEngine.UIElements.IEventHandler) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ContextualMenuManipulator {
+      activators: any; // System.Collections.Generic.List`1[UnityEngine.UIElements.ManipulatorActivationFilter]
+      target: UnityEngine.UIElements.VisualElement;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Cursor {
+      texture: UnityEngine.Texture2D;
+      hotspot: UnityEngine.Vector2;
+      Equals: ((obj: any) => boolean) | ((other: UnityEngine.UIElements.Cursor) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface DropdownMenuEventInfo {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface DropdownMenuItem {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface DropdownMenuSeparator {
+      subMenuPath: string;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface DropdownMenuAction {
+      name: string;
+      status: UnityEngine.UIElements.DropdownMenuAction_Status;
+      eventInfo: UnityEngine.UIElements.DropdownMenuEventInfo;
+      userData: any; // System.Object
+      UpdateActionStatus: ((eventInfo: UnityEngine.UIElements.DropdownMenuEventInfo) => void);
+      Execute: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum DropdownMenuAction_Status {
+      None = 0,
+      Normal = 1,
+      Disabled = 2,
+      Checked = 4,
+      Hidden = 8,
+    }
+    export interface DropdownMenu {
+      MenuItems: (() => any);
+      AppendAction: ((actionName: string, action: any, actionStatusCallback: any, userData?: any) => void) | ((actionName: string, action: any, status?: UnityEngine.UIElements.DropdownMenuAction_Status) => void);
+      InsertAction: ((atIndex: number, actionName: string, action: any, actionStatusCallback: any, userData?: any) => void) | ((atIndex: number, actionName: string, action: any, status?: UnityEngine.UIElements.DropdownMenuAction_Status) => void);
+      AppendSeparator: ((subMenuPath?: string) => void);
+      InsertSeparator: ((subMenuPath: string, atIndex: number) => void);
+      RemoveItemAt: ((index: number) => void);
+      PrepareForDisplay: ((e: UnityEngine.UIElements.EventBase) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface EventDispatcherGate {
+      Dispose: (() => void);
+      Equals: ((other: UnityEngine.UIElements.EventDispatcherGate) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface EventDispatcher {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Focusable {
+      focusController: UnityEngine.UIElements.FocusController;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      canGrabFocus: boolean;
+      Focus: (() => void);
+      Blur: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface FocusChangeDirection {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IFocusRing {
+      GetFocusChangeDirection: ((currentFocusable: UnityEngine.UIElements.Focusable, e: UnityEngine.UIElements.EventBase) => UnityEngine.UIElements.FocusChangeDirection);
+      GetNextFocusable: ((currentFocusable: UnityEngine.UIElements.Focusable, direction: UnityEngine.UIElements.FocusChangeDirection) => UnityEngine.UIElements.Focusable);
+    }
+    export interface FocusController {
+      focusedElement: UnityEngine.UIElements.Focusable;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IMGUIContainer {
+      onGUIHandler: any; // System.Action
+      cullingEnabled: boolean;
+      contextType: UnityEngine.UIElements.ContextType;
+      canGrabFocus: boolean;
+      viewDataKey: string;
+      userData: any; // System.Object
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      MarkDirtyLayout: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      Dispose: (() => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface IMGUIContainer_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IMGUIContainer_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ImmediateModeElement {
+      cullingEnabled: boolean;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export enum SelectionType {
+      None = 0,
+      Single = 1,
+      Multiple = 2,
+    }
+    export interface ITransform {
+      position: UnityEngine.Vector3;
+      rotation: UnityEngine.Quaternion;
+      scale: UnityEngine.Vector3;
+      matrix: UnityEngine.Matrix4x4;
+    }
+    export interface ManipulatorActivationFilter {
+      button: UnityEngine.UIElements.MouseButton;
+      modifiers: UnityEngine.EventModifiers;
+      clickCount: number;
+      Equals: ((obj: any) => boolean) | ((other: UnityEngine.UIElements.ManipulatorActivationFilter) => boolean);
+      GetHashCode: (() => number);
+      Matches: ((e: UnityEngine.UIElements.IMouseEvent) => boolean) | ((e: UnityEngine.UIElements.IPointerEvent) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface IManipulator {
+      target: UnityEngine.UIElements.VisualElement;
+    }
+    export interface Manipulator {
+      target: UnityEngine.UIElements.VisualElement;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum MouseButton {
+      LeftMouse = 0,
+      RightMouse = 1,
+      MiddleMouse = 2,
+    }
+    export interface MouseCaptureController {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseManipulator {
+      activators: any; // System.Collections.Generic.List`1[UnityEngine.UIElements.ManipulatorActivationFilter]
+      target: UnityEngine.UIElements.VisualElement;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum ContextType {
+      Player = 0,
+      Editor = 1,
+    }
+    export enum UsageHints {
+      None = 0,
+      DynamicTransform = 1,
+      GroupTransform = 2,
+    }
+    export interface IPanel {
+      visualTree: UnityEngine.UIElements.VisualElement;
+      dispatcher: UnityEngine.UIElements.EventDispatcher;
+      contextType: UnityEngine.UIElements.ContextType;
+      focusController: UnityEngine.UIElements.FocusController;
+      contextualMenuManager: UnityEngine.UIElements.ContextualMenuManager;
+      Pick: ((point: UnityEngine.Vector2) => UnityEngine.UIElements.VisualElement);
+      PickAll: ((point: UnityEngine.Vector2, picked: any) => UnityEngine.UIElements.VisualElement);
+    }
+    export interface PointerCaptureHelper {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerManipulator {
+      activators: any; // System.Collections.Generic.List`1[UnityEngine.UIElements.ManipulatorActivationFilter]
+      target: UnityEngine.UIElements.VisualElement;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TimerState {
+      start: any; // System.Int64
+      now: any; // System.Int64
+      deltaTime: any; // System.Int64
+      Equals: ((obj: any) => boolean) | ((other: UnityEngine.UIElements.TimerState) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export enum Position {
+      Relative = 0,
+      Absolute = 1,
+    }
+    export enum Overflow {
+      Visible = 0,
+      Hidden = 1,
+    }
+    export enum OverflowClipBox {
+      PaddingBox = 0,
+      ContentBox = 1,
+    }
+    export enum FlexDirection {
+      Column = 0,
+      ColumnReverse = 1,
+      Row = 2,
+      RowReverse = 3,
+    }
+    export enum Wrap {
+      NoWrap = 0,
+      Wrap = 1,
+      WrapReverse = 2,
+    }
+    export enum Align {
+      Auto = 0,
+      FlexStart = 1,
+      Center = 2,
+      FlexEnd = 3,
+      Stretch = 4,
+    }
+    export enum Justify {
+      FlexStart = 0,
+      Center = 1,
+      FlexEnd = 2,
+      SpaceBetween = 3,
+      SpaceAround = 4,
+    }
+    export enum TextOverflowPosition {
+      End = 0,
+      Start = 1,
+      Middle = 2,
+    }
+    export enum TextOverflow {
+      Clip = 0,
+      Ellipsis = 1,
+    }
+    export enum Visibility {
+      Visible = 0,
+      Hidden = 1,
+    }
+    export enum WhiteSpace {
+      Normal = 0,
+      NoWrap = 1,
+    }
+    export enum DisplayStyle {
+      Flex = 0,
+      None = 1,
+    }
+    export interface TemplateContainer {
+      templateId: string;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface TemplateContainer_UxmlFactory {
+      uxmlName: string;
+      uxmlQualifiedName: string;
+      uxmlNamespace: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TemplateContainer_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TextElement {
+      text: string;
+      displayTooltipWhenElided: boolean;
+      isElided: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface TextElement_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TextElement_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UQuery {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UQueryExtensions {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum PickingMode {
+      Position = 0,
+      Ignore = 1,
+    }
+    export interface VisualElement {
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface VisualElement_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface VisualElement_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum VisualElement_MeasureMode {
+      Undefined = 0,
+      Exactly = 1,
+      AtMost = 2,
+    }
+    export interface VisualElement_Hierarchy {
+      parent: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, child: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((child: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      Equals: ((other: UnityEngine.UIElements.VisualElement_Hierarchy) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface VisualElementExtensions {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IExperimentalFeatures {
+      animation: UnityEngine.UIElements.Experimental.ITransitionAnimations;
+    }
+    export interface VisualElementFocusChangeDirection {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface VisualElementFocusRing {
+      defaultFocusOrder: UnityEngine.UIElements.VisualElementFocusRing_DefaultFocusOrder;
+      GetFocusChangeDirection: ((currentFocusable: UnityEngine.UIElements.Focusable, e: UnityEngine.UIElements.EventBase) => UnityEngine.UIElements.FocusChangeDirection);
+      GetNextFocusable: ((currentFocusable: UnityEngine.UIElements.Focusable, direction: UnityEngine.UIElements.FocusChangeDirection) => UnityEngine.UIElements.Focusable);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum VisualElementFocusRing_DefaultFocusOrder {
+      ChildOrder = 0,
+      PositionXY = 1,
+      PositionYX = 2,
+    }
+    export interface IVisualElementScheduledItem {
+      element: UnityEngine.UIElements.VisualElement;
+      isActive: boolean;
+      Resume: (() => void);
+      Pause: (() => void);
+      ExecuteLater: ((delayMs: any) => void);
+      StartingIn: ((delayMs: any) => UnityEngine.UIElements.IVisualElementScheduledItem);
+      Every: ((intervalMs: any) => UnityEngine.UIElements.IVisualElementScheduledItem);
+      Until: ((stopCondition: any) => UnityEngine.UIElements.IVisualElementScheduledItem);
+      ForDuration: ((durationMs: any) => UnityEngine.UIElements.IVisualElementScheduledItem);
+    }
+    export interface IVisualElementScheduler {
+      Execute: ((timerUpdateEvent: any) => UnityEngine.UIElements.IVisualElementScheduledItem) | ((updateEvent: any) => UnityEngine.UIElements.IVisualElementScheduledItem);
+    }
+    export interface VisualElementStyleSheetSet {
+      count: number;
+      Add: ((styleSheet: UnityEngine.UIElements.StyleSheet) => void);
+      Clear: (() => void);
+      Remove: ((styleSheet: UnityEngine.UIElements.StyleSheet) => boolean);
+      Contains: ((styleSheet: UnityEngine.UIElements.StyleSheet) => boolean);
+      Equals: ((other: UnityEngine.UIElements.VisualElementStyleSheetSet) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export enum SliderDirection {
+      Horizontal = 0,
+      Vertical = 1,
+    }
+    export interface IBindable {
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+    }
+    export interface IBinding {
+      PreUpdate: (() => void);
+      Update: (() => void);
+      Release: (() => void);
+    }
+    export interface IBindingExtensions {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Box {
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface Box_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Button {
+      clickable: UnityEngine.UIElements.Clickable;
+      text: string;
+      displayTooltipWhenElided: boolean;
+      isElided: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface Button_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Button_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Foldout {
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      text: string;
+      value: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetValueWithoutNotify: ((newValue: boolean) => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface Foldout_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Foldout_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum HelpBoxMessageType {
+      None = 0,
+      Info = 1,
+      Warning = 2,
+      Error = 3,
+    }
+    export interface HelpBox {
+      text: string;
+      messageType: UnityEngine.UIElements.HelpBoxMessageType;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface HelpBox_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface HelpBox_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Image {
+      image: UnityEngine.Texture;
+      vectorImage: UnityEngine.UIElements.VectorImage;
+      sourceRect: UnityEngine.Rect;
+      uv: UnityEngine.Rect;
+      scaleMode: UnityEngine.ScaleMode;
+      tintColor: UnityEngine.Color;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface Image_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Image_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface INotifyValueChangedExtensions {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Label {
+      text: string;
+      displayTooltipWhenElided: boolean;
+      isElided: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface Label_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Label_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum AlternatingRowBackground {
+      None = 0,
+      ContentOnly = 1,
+      All = 2,
+    }
+    export interface ListView {
+      itemsSource: any; // System.Collections.IList
+      makeItem: any; // System.Func`1[UnityEngine.UIElements.VisualElement]
+      unbindItem: any; // System.Action`2[UnityEngine.UIElements.VisualElement,System.Int32]
+      bindItem: any; // System.Action`2[UnityEngine.UIElements.VisualElement,System.Int32]
+      resolvedItemHeight: number;
+      itemHeight: number;
+      showBorder: boolean;
+      reorderable: boolean;
+      selectedIndex: number;
+      selectedIndices: any; // System.Collections.Generic.IEnumerable`1[System.Int32]
+      selectedItem: any; // System.Object
+      selectedItems: any; // System.Collections.Generic.IEnumerable`1[System.Object]
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      selectionType: UnityEngine.UIElements.SelectionType;
+      showAlternatingRowBackgrounds: UnityEngine.UIElements.AlternatingRowBackground;
+      showBoundCollectionSize: boolean;
+      horizontalScrollingEnabled: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      OnKeyDown: ((evt: UnityEngine.UIElements.KeyDownEvent) => void);
+      ScrollToItem: ((index: number) => void);
+      AddToSelection: ((index: number) => void);
+      RemoveFromSelection: ((index: number) => void);
+      SetSelection: ((index: number) => void) | ((indices: any) => void);
+      SetSelectionWithoutNotify: ((indices: any) => void);
+      ClearSelection: (() => void);
+      ScrollTo: ((visualElement: UnityEngine.UIElements.VisualElement) => void);
+      Refresh: (() => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface ListView_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ListView_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MinMaxSlider {
+      minValue: number;
+      maxValue: number;
+      value: UnityEngine.Vector2;
+      range: number;
+      lowLimit: number;
+      highLimit: number;
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetValueWithoutNotify: ((newValue: UnityEngine.Vector2) => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface MinMaxSlider_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MinMaxSlider_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PopupWindow {
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      text: string;
+      displayTooltipWhenElided: boolean;
+      isElided: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface PopupWindow_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PopupWindow_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface RepeatButton {
+      text: string;
+      displayTooltipWhenElided: boolean;
+      isElided: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetAction: ((clickEvent: any, delay: any, interval: any) => void);
+      MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface RepeatButton_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface RepeatButton_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Scroller {
+      slider: UnityEngine.UIElements.Slider;
+      lowButton: UnityEngine.UIElements.RepeatButton;
+      highButton: UnityEngine.UIElements.RepeatButton;
+      value: number;
+      lowValue: number;
+      highValue: number;
+      direction: UnityEngine.UIElements.SliderDirection;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      Adjust: ((factor: number) => void);
+      ScrollPageUp: (() => void) | ((factor: number) => void);
+      ScrollPageDown: (() => void) | ((factor: number) => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface Scroller_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Scroller_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum ScrollViewMode {
+      Vertical = 0,
+      Horizontal = 1,
+      VerticalAndHorizontal = 2,
+    }
+    export interface ScrollView {
+      showHorizontal: boolean;
+      showVertical: boolean;
+      scrollOffset: UnityEngine.Vector2;
+      horizontalPageSize: number;
+      verticalPageSize: number;
+      scrollDecelerationRate: number;
+      elasticity: number;
+      touchScrollBehavior: UnityEngine.UIElements.ScrollView_TouchScrollBehavior;
+      contentViewport: UnityEngine.UIElements.VisualElement;
+      horizontalScroller: UnityEngine.UIElements.Scroller;
+      verticalScroller: UnityEngine.UIElements.Scroller;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      ScrollTo: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface ScrollView_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ScrollView_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum ScrollView_TouchScrollBehavior {
+      Unrestricted = 0,
+      Elastic = 1,
+      Clamped = 2,
+    }
+    export interface Slider {
+      lowValue: number;
+      highValue: number;
+      range: number;
+      pageSize: number;
+      showInputField: boolean;
+      value: number;
+      direction: UnityEngine.UIElements.SliderDirection;
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetValueWithoutNotify: ((newValue: number) => void);
+      AdjustDragElement: ((factor: number) => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface Slider_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Slider_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface SliderInt {
+      pageSize: number;
+      lowValue: number;
+      highValue: number;
+      range: number;
+      showInputField: boolean;
+      value: number;
+      direction: UnityEngine.UIElements.SliderDirection;
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetValueWithoutNotify: ((newValue: number) => void);
+      AdjustDragElement: ((factor: number) => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface SliderInt_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface SliderInt_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TextField {
+      multiline: boolean;
+      value: string;
+      text: string;
+      isReadOnly: boolean;
+      isPasswordField: boolean;
+      selectionColor: UnityEngine.Color;
+      cursorColor: UnityEngine.Color;
+      cursorIndex: number;
+      selectIndex: number;
+      maxLength: number;
+      doubleClickSelectsWord: boolean;
+      tripleClickSelectsLine: boolean;
+      isDelayed: boolean;
+      maskChar: any; // System.Char
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SelectRange: ((rangeCursorIndex: number, selectionIndex: number) => void);
+      SetValueWithoutNotify: ((newValue: string) => void);
+      SelectAll: (() => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface TextField_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TextField_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Toggle {
+      text: string;
+      value: boolean;
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetValueWithoutNotify: ((newValue: boolean) => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface Toggle_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Toggle_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TwoPaneSplitView {
+      fixedPane: UnityEngine.UIElements.VisualElement;
+      flexedPane: UnityEngine.UIElements.VisualElement;
+      fixedPaneIndex: number;
+      fixedPaneInitialDimension: number;
+      orientation: UnityEngine.UIElements.TwoPaneSplitViewOrientation;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      viewDataKey: string;
+      userData: any; // System.Object
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: any; // System.Action`1[UnityEngine.UIElements.MeshGenerationContext]
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      CollapseChild: ((index: number) => void);
+      UnCollapse: (() => void);
+      Focus: (() => void);
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      SetEnabled: ((value: boolean) => void);
+      MarkDirtyRepaint: (() => void);
+      ContainsPoint: ((localPoint: UnityEngine.Vector2) => boolean);
+      Overlaps: ((rectangle: UnityEngine.Rect) => boolean);
+      ToString: (() => string);
+      GetClasses: (() => any);
+      ClearClassList: (() => void);
+      AddToClassList: ((className: string) => void);
+      RemoveFromClassList: ((className: string) => void);
+      ToggleInClassList: ((className: string) => void);
+      EnableInClassList: ((className: string, enable: boolean) => void);
+      ClassListContains: ((cls: string) => boolean);
+      FindAncestorUserData: (() => any);
+      Add: ((child: UnityEngine.UIElements.VisualElement) => void);
+      Insert: ((index: number, element: UnityEngine.UIElements.VisualElement) => void);
+      Remove: ((element: UnityEngine.UIElements.VisualElement) => void);
+      RemoveAt: ((index: number) => void);
+      Clear: (() => void);
+      ElementAt: ((index: number) => UnityEngine.UIElements.VisualElement);
+      IndexOf: ((element: UnityEngine.UIElements.VisualElement) => number);
+      Children: (() => any);
+      Sort: ((comp: any) => void);
+      BringToFront: (() => void);
+      SendToBack: (() => void);
+      PlaceBehind: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      PlaceInFront: ((sibling: UnityEngine.UIElements.VisualElement) => void);
+      RemoveFromHierarchy: (() => void);
+      Contains: ((child: UnityEngine.UIElements.VisualElement) => boolean);
+      FindCommonAncestor: ((other: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement);
+      Blur: (() => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+    }
+    export interface TwoPaneSplitView_UxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TwoPaneSplitView_UxmlTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum TwoPaneSplitViewOrientation {
+      Horizontal = 0,
+      Vertical = 1,
+    }
+    export interface IPointerCaptureEvent {
+    }
+    export interface PointerCaptureOutEvent {
+      relatedTarget: UnityEngine.UIElements.IEventHandler;
+      pointerId: number;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerCaptureEvent {
+      relatedTarget: UnityEngine.UIElements.IEventHandler;
+      pointerId: number;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IMouseCaptureEvent {
+    }
+    export interface MouseCaptureOutEvent {
+      relatedTarget: UnityEngine.UIElements.IEventHandler;
+      pointerId: number;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseCaptureEvent {
+      relatedTarget: UnityEngine.UIElements.IEventHandler;
+      pointerId: number;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IChangeEvent {
+    }
+    export interface ICommandEvent {
+      commandName: string;
+    }
+    export interface ValidateCommandEvent {
+      commandName: string;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ExecuteCommandEvent {
+      commandName: string;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IDragAndDropEvent {
+    }
+    export interface DragExitedEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface DragEnterEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface DragLeaveEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface DragUpdatedEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface DragPerformEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface EventBase {
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Dispose: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum TrickleDown {
+      NoTrickleDown = 0,
+      TrickleDown = 1,
+    }
+    export interface IEventHandler {
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+    }
+    export interface CallbackEventHandler {
+      SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
+      HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
+      HasTrickleDownHandlers: (() => boolean);
+      HasBubbleUpHandlers: (() => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IFocusEvent {
+      relatedTarget: UnityEngine.UIElements.Focusable;
+      direction: UnityEngine.UIElements.FocusChangeDirection;
+    }
+    export interface FocusOutEvent {
+      relatedTarget: UnityEngine.UIElements.Focusable;
+      direction: UnityEngine.UIElements.FocusChangeDirection;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface BlurEvent {
+      relatedTarget: UnityEngine.UIElements.Focusable;
+      direction: UnityEngine.UIElements.FocusChangeDirection;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface FocusInEvent {
+      relatedTarget: UnityEngine.UIElements.Focusable;
+      direction: UnityEngine.UIElements.FocusChangeDirection;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface FocusEvent {
+      relatedTarget: UnityEngine.UIElements.Focusable;
+      direction: UnityEngine.UIElements.FocusChangeDirection;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum PropagationPhase {
+      None = 0,
+      TrickleDown = 1,
+      AtTarget = 2,
+      DefaultActionAtTarget = 5,
+      BubbleUp = 3,
+      DefaultAction = 4,
+    }
+    export interface InputEvent {
+      previousData: string;
+      newData: string;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IKeyboardEvent {
+      modifiers: UnityEngine.EventModifiers;
+      character: any; // System.Char
+      keyCode: UnityEngine.KeyCode;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+    }
+    export interface KeyDownEvent {
+      modifiers: UnityEngine.EventModifiers;
+      character: any; // System.Char
+      keyCode: UnityEngine.KeyCode;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface KeyUpEvent {
+      modifiers: UnityEngine.EventModifiers;
+      character: any; // System.Char
+      keyCode: UnityEngine.KeyCode;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface GeometryChangedEvent {
+      oldRect: UnityEngine.Rect;
+      newRect: UnityEngine.Rect;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IMouseEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+    }
+    export interface MouseDownEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseUpEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseMoveEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ContextClickEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface WheelEvent {
+      delta: UnityEngine.Vector3;
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseEnterEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseLeaveEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseEnterWindowEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseLeaveWindowEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseOverEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MouseOutEvent {
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ContextualMenuPopulateEvent {
+      menu: UnityEngine.UIElements.DropdownMenu;
+      triggerEvent: UnityEngine.UIElements.EventBase;
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IPanelChangedEvent {
+    }
+    export interface AttachToPanelEvent {
+      originPanel: UnityEngine.UIElements.IPanel;
+      destinationPanel: UnityEngine.UIElements.IPanel;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface DetachFromPanelEvent {
+      originPanel: UnityEngine.UIElements.IPanel;
+      destinationPanel: UnityEngine.UIElements.IPanel;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerType {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerId {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IPointerEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+    }
+    export interface PointerDownEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerMoveEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerStationaryEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerUpEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerCancelEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ClickEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerEnterEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerLeaveEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerOverEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface PointerOutEvent {
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface CustomStyleResolvedEvent {
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface TooltipEvent {
+      tooltip: string;
+      rect: UnityEngine.Rect;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IMGUIEvent {
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Vertex {
+      position: UnityEngine.Vector3;
+      tint: UnityEngine.Color32;
+      uv: UnityEngine.Vector2;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface MeshWriteData {
+      vertexCount: number;
+      indexCount: number;
+      uvRegion: UnityEngine.Rect;
+      SetNextVertex: ((vertex: UnityEngine.UIElements.Vertex) => void);
+      SetNextIndex: ((index: any) => void);
+      SetAllVertices: ((vertices: UnityEngine.UIElements.Vertex[]) => void) | ((vertices: any) => void);
+      SetAllIndices: ((indices: any) => void) | ((indices: any) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface MeshGenerationContext {
+      visualElement: UnityEngine.UIElements.VisualElement;
+      Allocate: ((vertexCount: number, indexCount: number, texture?: UnityEngine.Texture) => UnityEngine.UIElements.MeshWriteData);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface Background {
+      texture: UnityEngine.Texture2D;
+      vectorImage: UnityEngine.UIElements.VectorImage;
+      Equals: ((other: UnityEngine.UIElements.Background) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface ICustomStyle {
+    }
+    export enum LengthUnit {
+      Pixel = 0,
+      Percent = 1,
+    }
+    export interface Length {
+      value: number;
+      unit: UnityEngine.UIElements.LengthUnit;
+      Equals: ((other: UnityEngine.UIElements.Length) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface StyleBackground {
+      value: UnityEngine.UIElements.Background;
+      keyword: UnityEngine.UIElements.StyleKeyword;
+      Equals: ((other: UnityEngine.UIElements.StyleBackground) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface StyleColor {
+      value: UnityEngine.Color;
+      keyword: UnityEngine.UIElements.StyleKeyword;
+      Equals: ((other: UnityEngine.UIElements.StyleColor) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface StyleCursor {
+      value: UnityEngine.UIElements.Cursor;
+      keyword: UnityEngine.UIElements.StyleKeyword;
+      Equals: ((other: UnityEngine.UIElements.StyleCursor) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface StyleFloat {
+      value: number;
+      keyword: UnityEngine.UIElements.StyleKeyword;
+      Equals: ((other: UnityEngine.UIElements.StyleFloat) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface StyleFont {
+      value: UnityEngine.Font;
+      keyword: UnityEngine.UIElements.StyleKeyword;
+      Equals: ((other: UnityEngine.UIElements.StyleFont) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface StyleInt {
+      value: number;
+      keyword: UnityEngine.UIElements.StyleKeyword;
+      Equals: ((other: UnityEngine.UIElements.StyleInt) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface StyleLength {
+      value: UnityEngine.UIElements.Length;
+      keyword: UnityEngine.UIElements.StyleKeyword;
+      Equals: ((other: UnityEngine.UIElements.StyleLength) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export enum StyleKeyword {
+      Undefined = 0,
+      Null = 1,
+      Auto = 2,
+      None = 3,
+      Initial = 4,
+    }
+    export interface IResolvedStyle {
+      alignContent: UnityEngine.UIElements.Align;
+      alignItems: UnityEngine.UIElements.Align;
+      alignSelf: UnityEngine.UIElements.Align;
+      backgroundColor: UnityEngine.Color;
+      backgroundImage: UnityEngine.UIElements.Background;
+      borderBottomColor: UnityEngine.Color;
+      borderBottomLeftRadius: number;
+      borderBottomRightRadius: number;
+      borderBottomWidth: number;
+      borderLeftColor: UnityEngine.Color;
+      borderLeftWidth: number;
+      borderRightColor: UnityEngine.Color;
+      borderRightWidth: number;
+      borderTopColor: UnityEngine.Color;
+      borderTopLeftRadius: number;
+      borderTopRightRadius: number;
+      borderTopWidth: number;
+      bottom: number;
+      color: UnityEngine.Color;
+      display: UnityEngine.UIElements.DisplayStyle;
+      flexBasis: UnityEngine.UIElements.StyleFloat;
+      flexDirection: UnityEngine.UIElements.FlexDirection;
+      flexGrow: number;
+      flexShrink: number;
+      flexWrap: UnityEngine.UIElements.Wrap;
+      fontSize: number;
+      height: number;
+      justifyContent: UnityEngine.UIElements.Justify;
+      left: number;
+      marginBottom: number;
+      marginLeft: number;
+      marginRight: number;
+      marginTop: number;
+      maxHeight: UnityEngine.UIElements.StyleFloat;
+      maxWidth: UnityEngine.UIElements.StyleFloat;
+      minHeight: UnityEngine.UIElements.StyleFloat;
+      minWidth: UnityEngine.UIElements.StyleFloat;
+      opacity: number;
+      paddingBottom: number;
+      paddingLeft: number;
+      paddingRight: number;
+      paddingTop: number;
+      position: UnityEngine.UIElements.Position;
+      right: number;
+      textOverflow: UnityEngine.UIElements.TextOverflow;
+      top: number;
+      unityBackgroundImageTintColor: UnityEngine.Color;
+      unityBackgroundScaleMode: UnityEngine.ScaleMode;
+      unityFont: UnityEngine.Font;
+      unityFontStyleAndWeight: UnityEngine.FontStyle;
+      unitySliceBottom: number;
+      unitySliceLeft: number;
+      unitySliceRight: number;
+      unitySliceTop: number;
+      unityTextAlign: UnityEngine.TextAnchor;
+      unityTextOverflowPosition: UnityEngine.UIElements.TextOverflowPosition;
+      visibility: UnityEngine.UIElements.Visibility;
+      whiteSpace: UnityEngine.UIElements.WhiteSpace;
+      width: number;
+    }
+    export interface IStyle {
+      alignContent: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Align]
+      alignItems: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Align]
+      alignSelf: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Align]
+      backgroundColor: UnityEngine.UIElements.StyleColor;
+      backgroundImage: UnityEngine.UIElements.StyleBackground;
+      borderBottomColor: UnityEngine.UIElements.StyleColor;
+      borderBottomLeftRadius: UnityEngine.UIElements.StyleLength;
+      borderBottomRightRadius: UnityEngine.UIElements.StyleLength;
+      borderBottomWidth: UnityEngine.UIElements.StyleFloat;
+      borderLeftColor: UnityEngine.UIElements.StyleColor;
+      borderLeftWidth: UnityEngine.UIElements.StyleFloat;
+      borderRightColor: UnityEngine.UIElements.StyleColor;
+      borderRightWidth: UnityEngine.UIElements.StyleFloat;
+      borderTopColor: UnityEngine.UIElements.StyleColor;
+      borderTopLeftRadius: UnityEngine.UIElements.StyleLength;
+      borderTopRightRadius: UnityEngine.UIElements.StyleLength;
+      borderTopWidth: UnityEngine.UIElements.StyleFloat;
+      bottom: UnityEngine.UIElements.StyleLength;
+      color: UnityEngine.UIElements.StyleColor;
+      cursor: UnityEngine.UIElements.StyleCursor;
+      display: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.DisplayStyle]
+      flexBasis: UnityEngine.UIElements.StyleLength;
+      flexDirection: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.FlexDirection]
+      flexGrow: UnityEngine.UIElements.StyleFloat;
+      flexShrink: UnityEngine.UIElements.StyleFloat;
+      flexWrap: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Wrap]
+      fontSize: UnityEngine.UIElements.StyleLength;
+      height: UnityEngine.UIElements.StyleLength;
+      justifyContent: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Justify]
+      left: UnityEngine.UIElements.StyleLength;
+      marginBottom: UnityEngine.UIElements.StyleLength;
+      marginLeft: UnityEngine.UIElements.StyleLength;
+      marginRight: UnityEngine.UIElements.StyleLength;
+      marginTop: UnityEngine.UIElements.StyleLength;
+      maxHeight: UnityEngine.UIElements.StyleLength;
+      maxWidth: UnityEngine.UIElements.StyleLength;
+      minHeight: UnityEngine.UIElements.StyleLength;
+      minWidth: UnityEngine.UIElements.StyleLength;
+      opacity: UnityEngine.UIElements.StyleFloat;
+      overflow: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Overflow]
+      paddingBottom: UnityEngine.UIElements.StyleLength;
+      paddingLeft: UnityEngine.UIElements.StyleLength;
+      paddingRight: UnityEngine.UIElements.StyleLength;
+      paddingTop: UnityEngine.UIElements.StyleLength;
+      position: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Position]
+      right: UnityEngine.UIElements.StyleLength;
+      textOverflow: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.TextOverflow]
+      top: UnityEngine.UIElements.StyleLength;
+      unityBackgroundImageTintColor: UnityEngine.UIElements.StyleColor;
+      unityBackgroundScaleMode: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.ScaleMode]
+      unityFont: UnityEngine.UIElements.StyleFont;
+      unityFontStyleAndWeight: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.FontStyle]
+      unityOverflowClipBox: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.OverflowClipBox]
+      unitySliceBottom: UnityEngine.UIElements.StyleInt;
+      unitySliceLeft: UnityEngine.UIElements.StyleInt;
+      unitySliceRight: UnityEngine.UIElements.StyleInt;
+      unitySliceTop: UnityEngine.UIElements.StyleInt;
+      unityTextAlign: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.TextAnchor]
+      unityTextOverflowPosition: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.TextOverflowPosition]
+      visibility: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Visibility]
+      whiteSpace: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.WhiteSpace]
+      width: UnityEngine.UIElements.StyleLength;
+    }
+    export interface StyleSheet {
+      contentHash: number;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      SetDirty: (() => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface ThemeStyleSheet {
+      contentHash: number;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      SetDirty: (() => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface IUxmlAttributes {
+    }
+    export interface UxmlRootElementFactory {
+      uxmlName: string;
+      uxmlQualifiedName: string;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      uxmlNamespace: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlRootElementTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlStyleFactory {
+      uxmlName: string;
+      uxmlQualifiedName: string;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      uxmlNamespace: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlStyleTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlTemplateFactory {
+      uxmlName: string;
+      uxmlQualifiedName: string;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      uxmlNamespace: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlTemplateTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlAttributeOverridesFactory {
+      uxmlName: string;
+      uxmlQualifiedName: string;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      uxmlNamespace: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlAttributeOverridesTraits {
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlAttributeDescription {
+      name: string;
+      obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      type: string;
+      typeNamespace: string;
+      defaultValueAsString: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum UxmlAttributeDescription_Use {
+      None = 0,
+      Optional = 1,
+      Prohibited = 2,
+      Required = 3,
+    }
+    export interface UxmlStringAttributeDescription {
+      defaultValueAsString: string;
+      defaultValue: string;
+      name: string;
+      obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      type: string;
+      typeNamespace: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      GetValueFromBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => string);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlFloatAttributeDescription {
+      defaultValueAsString: string;
+      defaultValue: number;
+      name: string;
+      obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      type: string;
+      typeNamespace: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      GetValueFromBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => number);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlDoubleAttributeDescription {
+      defaultValueAsString: string;
+      defaultValue: number;
+      name: string;
+      obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      type: string;
+      typeNamespace: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      GetValueFromBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => number);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlIntAttributeDescription {
+      defaultValueAsString: string;
+      defaultValue: number;
+      name: string;
+      obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      type: string;
+      typeNamespace: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      GetValueFromBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => number);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlLongAttributeDescription {
+      defaultValueAsString: string;
+      defaultValue: any; // System.Int64
+      name: string;
+      obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      type: string;
+      typeNamespace: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      GetValueFromBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => any);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlBoolAttributeDescription {
+      defaultValueAsString: string;
+      defaultValue: boolean;
+      name: string;
+      obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      type: string;
+      typeNamespace: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      GetValueFromBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlColorAttributeDescription {
+      defaultValueAsString: string;
+      defaultValue: UnityEngine.Color;
+      name: string;
+      obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      type: string;
+      typeNamespace: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      GetValueFromBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.Color);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlChildElementDescription {
+      elementName: string;
+      elementNamespace: string;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlTraits {
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      Init: ((ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface IUxmlFactory {
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
+      uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
+      Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
+    }
+    export interface UxmlTypeRestriction {
+      Equals: ((other: UnityEngine.UIElements.UxmlTypeRestriction) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlValueMatches {
+      regex: string;
+      Equals: ((other: UnityEngine.UIElements.UxmlTypeRestriction) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlValueBounds {
+      min: string;
+      max: string;
+      excludeMin: boolean;
+      excludeMax: boolean;
+      Equals: ((other: UnityEngine.UIElements.UxmlTypeRestriction) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface UxmlEnumeration {
+      values: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      Equals: ((other: UnityEngine.UIElements.UxmlTypeRestriction) => boolean) | ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface VectorImage {
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      SetDirty: (() => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface VisualTreeAsset {
+      templateDependencies: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.VisualTreeAsset]
+      stylesheets: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.StyleSheet]
+      contentHash: number;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      Instantiate: (() => UnityEngine.UIElements.TemplateContainer) | ((bindingPath: string) => UnityEngine.UIElements.TemplateContainer);
+      CloneTree: (() => UnityEngine.UIElements.TemplateContainer) | ((bindingPath: string) => UnityEngine.UIElements.TemplateContainer) | ((target: UnityEngine.UIElements.VisualElement) => void);
+      SetDirty: (() => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface CreationContext {
+      target: UnityEngine.UIElements.VisualElement;
+      visualTreeAsset: UnityEngine.UIElements.VisualTreeAsset;
+      slotInsertionPoints: any; // System.Collections.Generic.Dictionary`2[System.String,UnityEngine.UIElements.VisualElement]
+      Equals: ((obj: any) => boolean) | ((other: UnityEngine.UIElements.CreationContext) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export namespace Experimental {
+      export interface Easing {
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => any);
+        ToString: (() => string);
+      }
+      export interface StyleValues {
+        top: number;
+        left: number;
+        width: number;
+        height: number;
+        right: number;
+        bottom: number;
+        color: UnityEngine.Color;
+        backgroundColor: UnityEngine.Color;
+        unityBackgroundImageTintColor: UnityEngine.Color;
+        borderColor: UnityEngine.Color;
+        marginLeft: number;
+        marginTop: number;
+        marginRight: number;
+        marginBottom: number;
+        paddingLeft: number;
+        paddingTop: number;
+        paddingRight: number;
+        paddingBottom: number;
+        borderLeftWidth: number;
+        borderRightWidth: number;
+        borderTopWidth: number;
+        borderBottomWidth: number;
+        borderTopLeftRadius: number;
+        borderTopRightRadius: number;
+        borderBottomLeftRadius: number;
+        borderBottomRightRadius: number;
+        opacity: number;
+        flexGrow: number;
+        flexShrink: number;
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => any);
+      }
+      export interface ITransitionAnimations {
+        Start: ((from: number, to: number, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Rect, to: UnityEngine.Rect, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Color, to: UnityEngine.Color, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Vector3, to: UnityEngine.Vector3, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Vector2, to: UnityEngine.Vector2, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.UIElements.Experimental.StyleValues, to: UnityEngine.UIElements.Experimental.StyleValues, durationMs: number) => any) | ((to: UnityEngine.UIElements.Experimental.StyleValues, durationMs: number) => any) | ((fromValueGetter: any, to: number, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Rect, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Color, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Vector3, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Vector2, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Quaternion, durationMs: number, onValueChanged: any) => any);
+        Layout: ((to: UnityEngine.Rect, durationMs: number) => any);
+        TopLeft: ((to: UnityEngine.Vector2, durationMs: number) => any);
+        Size: ((to: UnityEngine.Vector2, durationMs: number) => any);
+        Scale: ((to: number, duration: number) => any);
+        Position: ((to: UnityEngine.Vector3, duration: number) => any);
+        Rotation: ((to: UnityEngine.Quaternion, duration: number) => any);
+      }
+      export interface IValueAnimation {
+        isRunning: boolean;
+        durationMs: number;
+        Start: (() => void);
+        Stop: (() => void);
+        Recycle: (() => void);
+      }
     }
   }
   export namespace Video {

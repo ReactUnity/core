@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "files": [
+    "editor.ts"
+  ],
+  "include": [
+    "models",
+    "src"
+  ],
+  "exclude": [
+    "models/jsx.ts",
+    "src/components",
+    "src/tester"
+  ]
+}

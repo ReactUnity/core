@@ -17,6 +17,7 @@
       "type": "pickString",
       "options": [
         "build",
+        "build:editor",
         "watch",
         "lint",
         "pack"

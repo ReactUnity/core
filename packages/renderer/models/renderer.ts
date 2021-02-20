@@ -2,7 +2,7 @@ import { ReactUnity } from './generated';
 
 export type Unique<T, K> = T & { $type: K };
 
-export type NativeInstance = ReactUnity.Components.UnityComponent;
+export type NativeInstance = ReactUnity.Components.ReactComponent;
 export type NativeTextInstance = ReactUnity.Components.TextComponent;
 export type NativeContainerInstance = ReactUnity.Components.HostComponent;
 

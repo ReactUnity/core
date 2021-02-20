@@ -1,10 +1,69 @@
 //
-// Types in assemblies: ReactUnity
-// Generated 7.02.2021 17:05:53
+// Types in assemblies: ReactUnity, ReactUnity.Editor
+// Generated 20.02.2021 21:21:34
 //
 import { UnityEngine } from './unity';
 
 export namespace ReactUnity {
+  export interface IReactComponent {
+    Parent: ReactUnity.IContainerComponent;
+    IsPseudoElement: boolean;
+    Layout: any; // Facebook.Yoga.YogaNode
+    Style: ReactUnity.Styling.NodeStyle;
+    Name: string;
+    Tag: string;
+    ClassName: string;
+    ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+    StateStyles: ReactUnity.Styling.StateStyles;
+    Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+    Destroy: (() => void);
+    ApplyLayoutStyles: (() => void);
+    ScheduleLayout: ((callback?: any) => void);
+    ResolveStyle: ((recursive?: boolean) => void);
+    Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+    SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+    SetProperty: ((property: string, value: any) => void);
+    SetData: ((property: string, value: any) => void);
+    SetEventListener: ((eventType: string, callback: ReactUnity.Interop.Callback) => void);
+    GetComponent: ((type: any) => any);
+    AddComponent: ((type: any) => any);
+  }
+  export interface IContainerComponent {
+    Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+    BeforePseudo: ReactUnity.IReactComponent;
+    AfterPseudo: ReactUnity.IReactComponent;
+    BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+    AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+    RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+  }
+  export interface ITextComponent {
+    SetText: ((text: string) => void);
+  }
+  export interface IHostComponent {
+    Context: ReactUnity.ReactContext;
+  }
+  export interface ReactContext {
+    Host: ReactUnity.IHostComponent;
+    Globals: ReactUnity.Types.StringObjectDictionary;
+    IsDevServer: boolean;
+    Script: ReactUnity.ReactScript;
+    Scheduler: ReactUnity.Schedulers.IUnityScheduler;
+    Parser: any; // ExCSS.StylesheetParser
+    StyleTree: ReactUnity.StyleEngine.StyleTree;
+    OnRestart: any; // System.Action
+    FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
+    scheduleLayout: ((callback?: any) => void);
+    InsertStyle: ((style: string, importanceOffset?: number) => void);
+    RemoveStyle: ((style: string) => void);
+    ResolvePath: ((path: string) => string);
+    CreateStaticScript: ((path: string) => ReactUnity.ReactScript);
+    CreateText: ((text: string) => ReactUnity.ITextComponent);
+    CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => any);
+    ToString: (() => string);
+  }
   export interface ReactScript {
     DevServerFile: string;
     SourceLocation: string;
@@ -16,6 +75,7 @@ export namespace ReactUnity {
     UseDevServer: boolean;
     DevServer: string;
     GetResolvedSourcePath: (() => string);
+    GetScript: ((callback: any, useDevServer?: boolean, disableWarnings?: boolean) => any);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -64,7 +124,6 @@ export namespace ReactUnity {
     Restart: (() => void);
     Test: (() => void);
     TestDebug: (() => void);
-    ExecuteScript: ((script: string) => void);
     IsInvoking: (() => boolean) | ((methodName: string) => boolean);
     CancelInvoke: (() => void) | ((methodName: string) => void);
     Invoke: ((methodName: string, time: number) => void);
@@ -90,8 +149,8 @@ export namespace ReactUnity {
     GetType: (() => any);
   }
   export interface ReactUnityAPI {
-    createText: ((text: string, host: ReactUnity.Components.HostComponent) => ReactUnity.Components.UnityComponent);
-    createElement: ((tag: string, text: string, host: ReactUnity.Components.HostComponent) => ReactUnity.Components.UnityComponent);
+    createText: ((text: string, host: ReactUnity.IHostComponent) => ReactUnity.IReactComponent);
+    createElement: ((tag: string, text: string, host: ReactUnity.IHostComponent) => ReactUnity.IReactComponent);
     appendChild: ((parent: any, child: any) => void);
     appendChildToContainer: ((parent: any, child: any) => void);
     insertBefore: ((parent: any, child: any, beforeChild: any) => void);
@@ -99,24 +158,35 @@ export namespace ReactUnity {
     setText: ((instance: any, text: string) => void);
     setProperty: ((element: any, property: string, value: any) => void);
     setData: ((element: any, property: string, value: any) => void);
-    setEventListener: ((element: ReactUnity.Components.UnityComponent, eventType: string, value: any) => void) | ((element: any, eventType: string, value: any) => void);
+    setEventListener: ((element: ReactUnity.IReactComponent, eventType: string, value: any) => void) | ((element: any, eventType: string, value: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface UnityUGUIContext {
-    Engine: any; // Jint.Engine
-    Host: ReactUnity.Components.HostComponent;
-    Globals: ReactUnity.Types.StringObjectDictionary;
+  export interface ReactUnityRunner {
+    RunScript: ((script: string, ctx: ReactUnity.ReactContext, preload?: any, callback?: any) => void);
+    ExecuteScript: ((script: string) => void);
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => any);
+    ToString: (() => string);
+  }
+  export interface UGUIContext {
     RootLayoutNode: any; // Facebook.Yoga.YogaNode
+    Host: ReactUnity.IHostComponent;
+    Globals: ReactUnity.Types.StringObjectDictionary;
     IsDevServer: boolean;
     Script: ReactUnity.ReactScript;
+    Scheduler: ReactUnity.Schedulers.IUnityScheduler;
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
+    OnRestart: any; // System.Action
     FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
+    CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
+    CreateText: ((text: string) => ReactUnity.ITextComponent);
     scheduleLayout: ((callback?: any) => void);
-    InsertStyle: ((style: string) => void);
+    InsertStyle: ((style: string, importanceOffset?: number) => void);
     RemoveStyle: ((style: string) => void);
     ResolvePath: ((path: string) => string);
     CreateStaticScript: ((path: string) => ReactUnity.ReactScript);
@@ -177,16 +247,16 @@ export namespace ReactUnity {
     export interface AnchorComponent {
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
-      Context: ReactUnity.UnityUGUIContext;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -198,33 +268,35 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
+      Name: string;
       url: string;
       openInThisTab: boolean;
-      IsPseudoElement: boolean;
       SetProperty: ((propertyName: string, value: any) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -235,15 +307,15 @@ export namespace ReactUnity {
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Button: UnityEngine.UI.Button;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
-      Context: ReactUnity.UnityUGUIContext;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -255,31 +327,33 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -287,17 +361,17 @@ export namespace ReactUnity {
     }
     export interface ContainerComponent {
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
-      Context: ReactUnity.UnityUGUIContext;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -309,31 +383,33 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -344,16 +420,16 @@ export namespace ReactUnity {
       Height: number;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
-      Context: ReactUnity.UnityUGUIContext;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -365,31 +441,33 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       ApplyStyles: (() => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -403,15 +481,15 @@ export namespace ReactUnity {
       Image: UnityEngine.UI.Image;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
-      Context: ReactUnity.UnityUGUIContext;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -423,31 +501,33 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       SetProperty: ((propertyName: string, value: any) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -458,15 +538,15 @@ export namespace ReactUnity {
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Value: string;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
-      Context: ReactUnity.UnityUGUIContext;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -478,11 +558,12 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       SetText: ((text: string) => void);
       ApplyLayoutStyles: (() => void);
       ResolveStyle: ((recursive?: boolean) => void);
@@ -490,21 +571,22 @@ export namespace ReactUnity {
       Focus: (() => void);
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
       SetProperty: ((propertyName: string, value: any) => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetData: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -518,15 +600,15 @@ export namespace ReactUnity {
       Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
-      Context: ReactUnity.UnityUGUIContext;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -538,31 +620,78 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       SetProperty: ((propertyName: string, value: any) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface ReactComponent {
+      DefaultStyle: ReactUnity.Styling.NodeStyle;
+      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      Context: ReactUnity.UGUIContext;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Parent: ReactUnity.IContainerComponent;
+      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Component: ReactUnity.Layout.ReactElement;
+      Layout: any; // Facebook.Yoga.YogaNode
+      Style: ReactUnity.Styling.NodeStyle;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Inline: any; // System.Dynamic.ExpandoObject
+      BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
+      MaskAndImage: ReactUnity.Styling.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
+      Tag: string;
+      ClassName: string;
+      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      TextContent: string;
+      Name: string;
+      Destroy: (() => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+      SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
+      SetData: ((propertyName: string, value: any) => void);
+      SetProperty: ((propertyName: string, value: any) => void);
+      ScheduleLayout: ((callback?: any) => void);
+      ResolveStyle: ((recursive?: boolean) => void);
+      ApplyLayoutStyles: (() => void);
+      ApplyStyles: (() => void);
+      UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
+      QuerySelectorAll: ((query: string) => any);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+      GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -576,15 +705,15 @@ export namespace ReactUnity {
       Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
-      Context: ReactUnity.UnityUGUIContext;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -596,32 +725,34 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
+      Name: string;
       RenderTexture: UnityEngine.RenderTexture;
-      IsPseudoElement: boolean;
       SetProperty: ((propertyName: string, value: any) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -631,16 +762,16 @@ export namespace ReactUnity {
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       ScrollRect: UnityEngine.UI.ScrollRect;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      Context: ReactUnity.UnityUGUIContext;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -652,31 +783,33 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -690,10 +823,10 @@ export namespace ReactUnity {
       Measurer: ReactUnity.Layout.TextMeasurer;
       LinkedTextWatcher: ReactUnity.Styling.LinkedTextWatcher;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      Context: ReactUnity.UnityUGUIContext;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -705,28 +838,29 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       SetText: ((text: string) => void);
       ApplyLayoutStyles: (() => void);
       ApplyStyles: (() => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       SetProperty: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -739,15 +873,15 @@ export namespace ReactUnity {
       Toggle: UnityEngine.UI.Toggle;
       Check: ReactUnity.Components.ImageComponent;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
-      Context: ReactUnity.UnityUGUIContext;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -759,76 +893,34 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
-      IsPseudoElement: boolean;
+      Name: string;
       Focus: (() => void);
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
       SetProperty: ((propertyName: string, value: any) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetData: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
-      Equals: ((obj: any) => boolean);
-      GetHashCode: (() => number);
-      GetType: (() => any);
-      ToString: (() => string);
-    }
-    export interface UnityComponent {
-      DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
-      Context: ReactUnity.UnityUGUIContext;
-      GameObject: UnityEngine.GameObject;
-      RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
-      Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
-      Style: ReactUnity.Styling.NodeStyle;
-      StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
-      BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
-      MaskAndImage: ReactUnity.Styling.MaskAndImage;
-      Selectable: UnityEngine.UI.Selectable;
-      CanvasGroup: UnityEngine.CanvasGroup;
-      Canvas: UnityEngine.Canvas;
-      Tag: string;
-      ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
-      TextContent: string;
-      IsPseudoElement: boolean;
-      Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
-      SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
-      ResolveStyle: ((recursive?: boolean) => void);
-      ApplyLayoutStyles: (() => void);
-      ApplyStyles: (() => void);
-      UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
-      QuerySelectorAll: ((query: string) => any);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
-      GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -842,15 +934,15 @@ export namespace ReactUnity {
       Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.Components.UnityComponent]
+      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforePseudo: ReactUnity.Components.UnityComponent;
-      AfterPseudo: ReactUnity.Components.UnityComponent;
-      Context: ReactUnity.UnityUGUIContext;
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
-      Parent: ReactUnity.Components.ContainerComponent;
+      Parent: ReactUnity.IContainerComponent;
       Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
@@ -862,33 +954,35 @@ export namespace ReactUnity {
       Selectable: UnityEngine.UI.Selectable;
       CanvasGroup: UnityEngine.CanvasGroup;
       Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
+      Name: string;
       VideoPlayer: UnityEngine.Video.VideoPlayer;
       RenderTexture: UnityEngine.RenderTexture;
-      IsPseudoElement: boolean;
       SetProperty: ((propertyName: string, value: any) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
-      Accept: ((visitor: ReactUnity.Visitors.UnityComponentVisitor) => void);
+      Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
       AddAfter: (() => void);
       RemoveAfter: (() => void);
+      RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
-      SetParent: ((parent: ReactUnity.Components.ContainerComponent, insertBefore?: ReactUnity.Components.UnityComponent, insertAfter?: boolean) => void);
+      SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
       SetData: ((propertyName: string, value: any) => void);
       ScheduleLayout: ((callback?: any) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
-      QuerySelector: ((query: string) => ReactUnity.Components.UnityComponent);
+      QuerySelector: ((query: string) => ReactUnity.IReactComponent);
       QuerySelectorAll: ((query: string) => any);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => UnityEngine.Component);
-      AddComponent: ((type: any) => UnityEngine.Component);
+      GetComponent: ((type: any) => any);
+      AddComponent: ((type: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -923,8 +1017,7 @@ export namespace ReactUnity {
       head: ReactUnity.DomProxies.HeadProxy;
       origin: string;
       execute: any; // System.Action`1[System.String]
-      context: ReactUnity.UnityUGUIContext;
-      root: ReactUnity.ReactUnity;
+      context: ReactUnity.ReactContext;
       createElement: ((type: string) => ReactUnity.DomProxies.IDomElementProxy);
       createTextNode: ((text: string) => string);
       querySelector: ((query: string) => any);
@@ -1092,6 +1185,339 @@ export namespace ReactUnity {
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
+    }
+  }
+  export namespace Editor {
+    export interface ReactElementDrawer {
+      target: UnityEngine.Object;
+      targets: UnityEngine.Object[];
+      serializedObject: any; // UnityEditor.SerializedObject
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      OnInspectorGUI: (() => void);
+      DrawDefaultInspector: (() => boolean);
+      Repaint: (() => void);
+      CreateInspectorGUI: (() => UnityEngine.UIElements.VisualElement);
+      RequiresConstantRepaint: (() => boolean);
+      DrawHeader: (() => void);
+      HasPreviewGUI: (() => boolean);
+      GetPreviewTitle: (() => UnityEngine.GUIContent);
+      RenderStaticPreview: ((assetPath: string, subAssets: UnityEngine.Object[], width: number, height: number) => UnityEngine.Texture2D);
+      OnPreviewGUI: ((r: UnityEngine.Rect, background: UnityEngine.GUIStyle) => void);
+      OnInteractivePreviewGUI: ((r: UnityEngine.Rect, background: UnityEngine.GUIStyle) => void);
+      OnPreviewSettings: (() => void);
+      GetInfoString: (() => string);
+      DrawPreview: ((previewArea: UnityEngine.Rect) => void);
+      ReloadPreviewInstances: (() => void);
+      UseDefaultMargins: (() => boolean);
+      Initialize: ((targets: UnityEngine.Object[]) => void);
+      MoveNextTarget: (() => boolean);
+      ResetTarget: (() => void);
+      SetDirty: (() => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface ReactScriptDrawer {
+      attribute: any; // UnityEngine.PropertyAttribute
+      fieldInfo: any; // System.Reflection.FieldInfo
+      OnGUI: ((position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent) => void);
+      GetPropertyHeight: ((property: any, label: UnityEngine.GUIContent) => number);
+      CreatePropertyGUI: ((property: any) => UnityEngine.UIElements.VisualElement);
+      CanCacheInspectorGUI: ((property: any) => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface StringObjectPairDrawer {
+      attribute: any; // UnityEngine.PropertyAttribute
+      fieldInfo: any; // System.Reflection.FieldInfo
+      OnGUI: ((position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent) => void);
+      GetPropertyHeight: ((property: any, label: UnityEngine.GUIContent) => number);
+      CreatePropertyGUI: ((property: any) => UnityEngine.UIElements.VisualElement);
+      CanCacheInspectorGUI: ((property: any) => boolean);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export interface EditStyleWindow {
+      PreviousComponent: ReactUnity.Layout.ReactElement;
+      CurrentStyle: ReactUnity.Styling.NodeStyle;
+      CurrentLayout: any; // Facebook.Yoga.YogaNode
+      CurrentStyleDefaults: ReactUnity.Styling.NodeStyle;
+      CurrentLayoutDefaults: any; // Facebook.Yoga.YogaNode
+      rootVisualElement: UnityEngine.UIElements.VisualElement;
+      wantsMouseMove: boolean;
+      wantsMouseEnterLeaveWindow: boolean;
+      wantsLessLayoutEvents: boolean;
+      autoRepaintOnSceneChange: boolean;
+      maximized: boolean;
+      hasFocus: boolean;
+      docked: boolean;
+      hasUnsavedChanges: boolean;
+      saveChangesMessage: string;
+      minSize: UnityEngine.Vector2;
+      maxSize: UnityEngine.Vector2;
+      title: string;
+      titleContent: UnityEngine.GUIContent;
+      depthBufferBits: number;
+      antiAlias: number;
+      position: UnityEngine.Rect;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      AutoApply: boolean;
+      BeginWindows: (() => void);
+      EndWindows: (() => void);
+      ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
+      RemoveNotification: (() => void);
+      ShowTab: (() => void);
+      Focus: (() => void);
+      ShowUtility: (() => void);
+      ShowPopup: (() => void);
+      ShowModalUtility: (() => void);
+      ShowAsDropDown: ((buttonRect: UnityEngine.Rect, windowSize: UnityEngine.Vector2) => void);
+      Show: (() => void) | ((immediateDisplay: boolean) => void);
+      ShowAuxWindow: (() => void);
+      ShowModal: (() => void);
+      SaveChanges: (() => void);
+      Close: (() => void);
+      Repaint: (() => void);
+      SendEvent: ((e: UnityEngine.Event) => boolean);
+      GetExtraPaneTypes: (() => any);
+      SetDirty: (() => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface QuickStartWindow {
+      rootVisualElement: UnityEngine.UIElements.VisualElement;
+      wantsMouseMove: boolean;
+      wantsMouseEnterLeaveWindow: boolean;
+      wantsLessLayoutEvents: boolean;
+      autoRepaintOnSceneChange: boolean;
+      maximized: boolean;
+      hasFocus: boolean;
+      docked: boolean;
+      hasUnsavedChanges: boolean;
+      saveChangesMessage: string;
+      minSize: UnityEngine.Vector2;
+      maxSize: UnityEngine.Vector2;
+      title: string;
+      titleContent: UnityEngine.GUIContent;
+      depthBufferBits: number;
+      antiAlias: number;
+      position: UnityEngine.Rect;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      BeginWindows: (() => void);
+      EndWindows: (() => void);
+      ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
+      RemoveNotification: (() => void);
+      ShowTab: (() => void);
+      Focus: (() => void);
+      ShowUtility: (() => void);
+      ShowPopup: (() => void);
+      ShowModalUtility: (() => void);
+      ShowAsDropDown: ((buttonRect: UnityEngine.Rect, windowSize: UnityEngine.Vector2) => void);
+      Show: (() => void) | ((immediateDisplay: boolean) => void);
+      ShowAuxWindow: (() => void);
+      ShowModal: (() => void);
+      SaveChanges: (() => void);
+      Close: (() => void);
+      Repaint: (() => void);
+      SendEvent: ((e: UnityEngine.Event) => boolean);
+      GetExtraPaneTypes: (() => any);
+      SetDirty: (() => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export interface EmscriptenBuildFlags {
+      callbackOrder: number;
+      OnPreprocessBuild: ((report: any) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export namespace Developer {
+      export interface TypescriptModelsGenerator {
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => any);
+        ToString: (() => string);
+      }
+    }
+    export namespace Renderer {
+      export interface EditorContext {
+        Host: ReactUnity.IHostComponent;
+        Globals: ReactUnity.Types.StringObjectDictionary;
+        IsDevServer: boolean;
+        Script: ReactUnity.ReactScript;
+        Scheduler: ReactUnity.Schedulers.IUnityScheduler;
+        Parser: any; // ExCSS.StylesheetParser
+        StyleTree: ReactUnity.StyleEngine.StyleTree;
+        OnRestart: any; // System.Action
+        FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
+        CreateText: ((text: string) => ReactUnity.ITextComponent);
+        CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
+        scheduleLayout: ((callback?: any) => void);
+        InsertStyle: ((style: string, importanceOffset?: number) => void);
+        RemoveStyle: ((style: string) => void);
+        ResolvePath: ((path: string) => string);
+        CreateStaticScript: ((path: string) => ReactUnity.ReactScript);
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => any);
+        ToString: (() => string);
+      }
+      export interface EditorScheduler {
+        setTimeout: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
+        setInterval: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
+        clearTimeout: ((handle: number) => void);
+        clearInterval: ((handle: number) => void);
+        setImmediate: ((callback: ReactUnity.Interop.Callback) => number);
+        requestAnimationFrame: ((callback: ReactUnity.Interop.Callback) => number);
+        cancelAnimationFrame: ((handle: number) => void);
+        clearImmediate: ((handle: number) => void);
+        clearAllTimeouts: (() => void);
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => any);
+        ToString: (() => string);
+      }
+      export interface ReactEditorTester {
+        rootVisualElement: UnityEngine.UIElements.VisualElement;
+        wantsMouseMove: boolean;
+        wantsMouseEnterLeaveWindow: boolean;
+        wantsLessLayoutEvents: boolean;
+        autoRepaintOnSceneChange: boolean;
+        maximized: boolean;
+        hasFocus: boolean;
+        docked: boolean;
+        hasUnsavedChanges: boolean;
+        saveChangesMessage: string;
+        minSize: UnityEngine.Vector2;
+        maxSize: UnityEngine.Vector2;
+        title: string;
+        titleContent: UnityEngine.GUIContent;
+        depthBufferBits: number;
+        antiAlias: number;
+        position: UnityEngine.Rect;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        Restart: (() => void);
+        OnEnable: (() => void);
+        BeginWindows: (() => void);
+        EndWindows: (() => void);
+        ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
+        RemoveNotification: (() => void);
+        ShowTab: (() => void);
+        Focus: (() => void);
+        ShowUtility: (() => void);
+        ShowPopup: (() => void);
+        ShowModalUtility: (() => void);
+        ShowAsDropDown: ((buttonRect: UnityEngine.Rect, windowSize: UnityEngine.Vector2) => void);
+        Show: (() => void) | ((immediateDisplay: boolean) => void);
+        ShowAuxWindow: (() => void);
+        ShowModal: (() => void);
+        SaveChanges: (() => void);
+        Close: (() => void);
+        Repaint: (() => void);
+        SendEvent: ((e: UnityEngine.Event) => boolean);
+        GetExtraPaneTypes: (() => any);
+        SetDirty: (() => void);
+        GetInstanceID: (() => number);
+        GetHashCode: (() => number);
+        Equals: ((other: any) => boolean);
+        ToString: (() => string);
+        GetType: (() => any);
+      }
+      export namespace Components {
+        export interface EditorReactComponent {
+          Context: ReactUnity.Editor.Renderer.EditorContext;
+          Parent: ReactUnity.IContainerComponent;
+          Element: UnityEngine.UIElements.VisualElement;
+          Layout: any; // Facebook.Yoga.YogaNode
+          Style: ReactUnity.Styling.NodeStyle;
+          Inline: any; // System.Dynamic.ExpandoObject
+          IsPseudoElement: boolean;
+          Name: string;
+          Tag: string;
+          ClassName: string;
+          ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+          StateStyles: ReactUnity.Styling.StateStyles;
+          Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+          Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+          BeforePseudo: ReactUnity.IReactComponent;
+          AfterPseudo: ReactUnity.IReactComponent;
+          BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+          ApplyLayoutStyles: (() => void);
+          ApplyStyles: (() => void);
+          Destroy: (() => void);
+          ResolveStyle: ((recursive?: boolean) => void);
+          ScheduleLayout: ((callback?: any) => void);
+          SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+          SetData: ((property: string, value: any) => void);
+          SetEventListener: ((eventType: string, callback: ReactUnity.Interop.Callback) => void);
+          SetProperty: ((property: string, value: any) => void);
+          GetComponent: ((type: any) => any);
+          AddComponent: ((type: any) => any);
+          RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          Equals: ((obj: any) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => any);
+          ToString: (() => string);
+        }
+        export interface EditorTextComponent {
+          Context: ReactUnity.Editor.Renderer.EditorContext;
+          Parent: ReactUnity.IContainerComponent;
+          Element: UnityEngine.UIElements.VisualElement;
+          Layout: any; // Facebook.Yoga.YogaNode
+          Style: ReactUnity.Styling.NodeStyle;
+          Inline: any; // System.Dynamic.ExpandoObject
+          IsPseudoElement: boolean;
+          Name: string;
+          Tag: string;
+          ClassName: string;
+          ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+          StateStyles: ReactUnity.Styling.StateStyles;
+          Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+          Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+          BeforePseudo: ReactUnity.IReactComponent;
+          AfterPseudo: ReactUnity.IReactComponent;
+          BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          SetText: ((text: string) => void);
+          Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+          ApplyLayoutStyles: (() => void);
+          ApplyStyles: (() => void);
+          Destroy: (() => void);
+          ResolveStyle: ((recursive?: boolean) => void);
+          ScheduleLayout: ((callback?: any) => void);
+          SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+          SetData: ((property: string, value: any) => void);
+          SetEventListener: ((eventType: string, callback: ReactUnity.Interop.Callback) => void);
+          SetProperty: ((property: string, value: any) => void);
+          GetComponent: ((type: any) => any);
+          AddComponent: ((type: any) => any);
+          RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          Equals: ((obj: any) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => any);
+          ToString: (() => string);
+        }
+      }
     }
   }
   export namespace EventHandlers {
@@ -2075,6 +2501,12 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
+    export interface EditorDispatcher {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
     export interface MainThreadDispatcher {
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2123,6 +2555,14 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
+    export interface EditorDispatcher_CoroutineHandle {
+      Handle: number;
+      Dispose: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
     export interface MainThreadDispatcher_CoroutineHandle {
       Handle: number;
       Dispose: (() => void);
@@ -2160,7 +2600,7 @@ export namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       Layout: any; // Facebook.Yoga.YogaNode
-      Context: ReactUnity.UnityUGUIContext;
+      Context: ReactUnity.UGUIContext;
       MarkDirty: (() => void);
       Measure: ((node: any, width: number, widthMode: any, height: number, heightMode: any) => any);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
@@ -2190,7 +2630,7 @@ export namespace ReactUnity {
     export interface ReactElement {
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
-      Component: ReactUnity.Components.UnityComponent;
+      Component: ReactUnity.Components.ReactComponent;
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2261,7 +2701,7 @@ export namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       Layout: any; // Facebook.Yoga.YogaNode
-      Context: ReactUnity.UnityUGUIContext;
+      Context: ReactUnity.UGUIContext;
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
@@ -2310,7 +2750,7 @@ export namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       Layout: any; // Facebook.Yoga.YogaNode
-      Context: ReactUnity.UnityUGUIContext;
+      Context: ReactUnity.UGUIContext;
       Measure: ((node: any, width: number, widthMode: any, height: number, heightMode: any) => any);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
@@ -2711,15 +3151,15 @@ export namespace ReactUnity {
       Children: any; // System.Collections.Generic.LinkedList`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: ReactUnity.StyleEngine.StyleData;
-      AddStyle: ((rule: any) => any);
-      GetMatchingRules: ((component: ReactUnity.Components.UnityComponent) => any);
-      GetMatchingBefore: ((component: ReactUnity.Components.UnityComponent) => any);
-      GetMatchingAfter: ((component: ReactUnity.Components.UnityComponent) => any);
-      GetMatchingChild: ((component: ReactUnity.Components.UnityComponent, pseudoElement?: boolean) => ReactUnity.Components.UnityComponent);
-      GetMatchingChildren: ((component: ReactUnity.Components.UnityComponent, pseudoElement?: boolean) => any);
-      AddSelector: ((selectorText: string) => any);
+      AddStyle: ((rule: any, importanceOffset?: number) => any);
+      GetMatchingRules: ((component: ReactUnity.IReactComponent) => any);
+      GetMatchingBefore: ((component: ReactUnity.IReactComponent) => any);
+      GetMatchingAfter: ((component: ReactUnity.IReactComponent) => any);
+      GetMatchingChild: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => ReactUnity.IReactComponent);
+      GetMatchingChildren: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => any);
+      AddSelector: ((selectorText: string, importanceOffset?: number) => any);
       AddChildCascading: ((selector: string) => any);
-      Matches: ((component: ReactUnity.Components.UnityComponent, scope: ReactUnity.Components.UnityComponent) => boolean);
+      Matches: ((component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent) => boolean);
       CompareTo: ((other: any) => number);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -2770,7 +3210,7 @@ export namespace ReactUnity {
       Name: string;
       Parameter: any; // System.Object
       CompareTo: ((other: ReactUnity.StyleEngine.RuleSelectorPart) => number);
-      Matches: ((component: ReactUnity.Components.UnityComponent, scope?: ReactUnity.Components.UnityComponent) => boolean);
+      Matches: ((component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent) => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -3176,7 +3616,7 @@ export namespace ReactUnity {
     }
     export interface StateStyles {
       Dic: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.NodeStyle]
-      Component: ReactUnity.Components.UnityComponent;
+      Component: ReactUnity.IReactComponent;
       States: any; // System.Collections.Generic.HashSet`1[System.String]
       ActiveStates: any; // System.Collections.Generic.List`1[ReactUnity.Styling.NodeStyle]
       SubscribeToState: ((state: string) => void);
@@ -3196,7 +3636,7 @@ export namespace ReactUnity {
       transitionable: boolean;
       inherited: boolean;
       proxy: boolean;
-      Parse: ((value: any) => any);
+      Convert: ((value: any) => any);
     }
     export interface StyleProperties {
       Equals: ((obj: any) => boolean);
@@ -3378,7 +3818,7 @@ export namespace ReactUnity {
     export interface FontReference {
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
-      Get: ((context: ReactUnity.UnityUGUIContext, callback: any) => void);
+      Get: ((context: ReactUnity.UGUIContext, callback: any) => void);
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -3398,7 +3838,7 @@ export namespace ReactUnity {
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
       Dispose: (() => void);
-      Get: ((context: ReactUnity.UnityUGUIContext, callback: any) => void);
+      Get: ((context: ReactUnity.UGUIContext, callback: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -3437,7 +3877,7 @@ export namespace ReactUnity {
     export interface VideoReference {
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
-      Get: ((context: ReactUnity.UnityUGUIContext, callback: any) => void);
+      Get: ((context: ReactUnity.UGUIContext, callback: any) => void);
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -3454,16 +3894,16 @@ export namespace ReactUnity {
     }
   }
   export namespace Visitors {
-    export interface TextContentVisitor {
-      Visit: ((component: ReactUnity.Components.UnityComponent) => void);
-      Get: ((component: ReactUnity.Components.UnityComponent) => string);
+    export interface ReactComponentVisitor {
+      Visit: ((component: ReactUnity.IReactComponent) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UnityComponentVisitor {
-      Visit: ((component: ReactUnity.Components.UnityComponent) => void);
+    export interface TextContentVisitor {
+      Visit: ((component: ReactUnity.IReactComponent) => void);
+      Get: ((component: ReactUnity.IReactComponent) => string);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);

@@ -5,12 +5,24 @@
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./editor": "./dist/editor.js"
+  },
+  "typesVersions": {
+    "*": {
+      "editor": [
+        "./dist/editor.js"
+      ]
+    }
+  },
   "scripts": {
     "build": "tsc -d",
+    "build:editor": "tsc -d -p tsconfig.editor.json",
     "watch": "tsc -d --watch",
     "build:clean": "rimraf dist",
     "lint": "eslint --ext js,ts,tsx src models",
-    "prepare": "npm run build:clean && npm run build",
+    "prepare": "npm run build:clean && npm run build && npm run build:editor",
     "pack": "npm pack"
   },
   "author": "Gokhan Kurt <krtgkn@gmail.com>",

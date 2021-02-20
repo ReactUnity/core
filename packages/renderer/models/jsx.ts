@@ -18,7 +18,7 @@ declare module 'react/jsx-runtime' {
     }
 
     interface IntrinsicElements {
-      [key: string]: Components.View & rc.RefAttributes<ReactUnity.Components.UnityComponent> & Children;
+      [key: string]: Components.View & rc.RefAttributes<ReactUnity.Components.ReactComponent> & Children;
       view: Components.View & rc.RefAttributes<ReactUnity.Components.ContainerComponent> & { tag?: string } & Children;
       anchor: Components.Anchor & rc.RefAttributes<ReactUnity.Components.AnchorComponent> & Children;
       text: Components.View & rc.RefAttributes<ReactUnity.Components.TextComponent> & Children<Textable | Textable[]>;

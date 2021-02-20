@@ -25,5 +25,8 @@
   "include": [
     "models",
     "src"
+  ],
+  "exclude": [
+    "models/editor.ts"
   ]
 }
