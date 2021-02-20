@@ -11,23 +11,24 @@ namespace ReactUnity.Editor.Renderer
 {
     public class EditorContext : ReactContext
     {
-        public static Func<string, string, EditorContext, EditorReactComponent> defaultCreator =
-            (tag, text, context) => new EditorReactComponent(context, tag);
+        public static Func<string, string, EditorContext, IEditorReactComponent<VisualElement>> defaultCreator =
+            (tag, text, context) => new EditorReactComponent<Box>(context, tag);
 
         public static Func<string, EditorContext, ITextComponent> textCreator =
             (text, context) => new EditorTextComponent(text, context, "_text");
 
-        public static Dictionary<string, Func<string, string, EditorContext, EditorReactComponent>> ComponentCreators
-            = new Dictionary<string, Func<string, string, EditorContext, EditorReactComponent>>()
+        public static Dictionary<string, Func<string, string, EditorContext, IEditorReactComponent<VisualElement>>> ComponentCreators
+            = new Dictionary<string, Func<string, string, EditorContext, IEditorReactComponent<VisualElement>>>()
             {
                 { "text", (tag, text, context) => new EditorTextComponent(text, context, tag) },
-                { "view", (tag, text, context) => new EditorReactComponent(context, "view") },
+                { "button", (tag, text, context) => new EditorButtonComponent(context) },
+                { "view", (tag, text, context) => new EditorReactComponent<Box>(context, "view") },
             };
 
         public EditorContext(VisualElement hostElement, StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
             : base(globals, script, scheduler, isDevServer, onRestart)
         {
-            Host = new EditorReactComponent(hostElement, this, "_root");
+            Host = new EditorReactComponent<VisualElement>(hostElement, this, "_root");
             Host.ResolveStyle(true);
 
             EditorDispatcher.AddCallOnLateUpdate(() =>
@@ -49,7 +50,7 @@ namespace ReactUnity.Editor.Renderer
 
         public override IReactComponent CreateComponent(string tag, string text)
         {
-            EditorReactComponent res = null;
+            IEditorReactComponent<VisualElement> res = null;
             if (ComponentCreators.TryGetValue(tag, out var creator))
                 res = creator(tag, text, this);
             else res = defaultCreator(tag, text, this);

@@ -14,7 +14,12 @@ using Label = UnityEngine.UIElements.Label;
 
 namespace ReactUnity.Editor.Renderer.Components
 {
-    public class EditorReactComponent : IReactComponent, IHostComponent, IContainerComponent
+    public interface IEditorReactComponent<out T> : IReactComponent
+    {
+        T Element { get; }
+    }
+
+    public class EditorReactComponent<T> : IEditorReactComponent<T>, IHostComponent, IContainerComponent where T : VisualElement, new()
     {
         private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
 
@@ -23,7 +28,7 @@ namespace ReactUnity.Editor.Renderer.Components
         ReactContext IHostComponent.Context => Context;
         public EditorContext Context { get; }
         public IContainerComponent Parent { get; private set; }
-        public VisualElement Element { get; protected set; }
+        public T Element { get; protected set; }
 
         public YogaNode Layout { get; private set; }
         public NodeStyle Style { get; private set; }
@@ -46,7 +51,7 @@ namespace ReactUnity.Editor.Renderer.Components
         public List<RuleTreeNode<StyleData>> AfterRules { get; protected set; }
 
 
-        public EditorReactComponent(VisualElement element, EditorContext context, string tag)
+        public EditorReactComponent(T element, EditorContext context, string tag)
         {
             Tag = tag;
             Context = context;
@@ -61,7 +66,7 @@ namespace ReactUnity.Editor.Renderer.Components
         {
             Tag = tag;
             Context = context;
-            Element = new Box();
+            Element = new T();
 
             StateStyles = new StateStyles(this);
             Style = new NodeStyle(StateStyles);
@@ -75,7 +80,10 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public void ApplyLayoutStyles()
         {
-            throw new NotImplementedException();
+            //Element.style.width = Layout.Width;
+            //Element.style.height = Layout.Height;
+            Element.style.flexDirection = (FlexDirection) Layout.FlexDirection;
+            Element.style.flexWrap = (Wrap) Layout.Wrap;
         }
 
         public virtual void ApplyStyles()
@@ -123,6 +131,7 @@ namespace ReactUnity.Editor.Renderer.Components
             for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
 
             ApplyStyles();
+            ApplyLayoutStyles();
             Style.MarkChangesSeen();
 
 
@@ -186,9 +195,15 @@ namespace ReactUnity.Editor.Renderer.Components
             ResolveStyle(true);
         }
 
-        public void SetEventListener(string eventType, Callback callback)
+        public virtual void SetEventListener(string eventName, Callback callback)
         {
-            throw new NotImplementedException();
+            switch (eventName)
+            {
+                case "onClick":
+                    return;
+                default:
+                    throw new System.Exception($"Unknown event name specified, '{eventName}'");
+            }
         }
 
         public void SetProperty(string property, object value)
@@ -222,9 +237,9 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public void RegisterChild(IReactComponent child, int index = -1)
         {
-            if (child is EditorReactComponent u)
+            if (child is IEditorReactComponent<VisualElement> u)
             {
-                if(index >= 0) Element.Insert(index, u.Element);
+                if (index >= 0) Element.Insert(index, u.Element);
                 else Element.Add(u.Element);
             }
         }
