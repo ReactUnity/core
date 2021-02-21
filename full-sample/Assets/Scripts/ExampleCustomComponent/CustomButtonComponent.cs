@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class CustomButtonComponent : ButtonComponent
 {
-    public CustomButtonComponent(UnityUGUIContext context, Color backgroundColor) : base(context)
+    public CustomButtonComponent(UGUIContext context, Color backgroundColor) : base(context)
     {
         Style.backgroundColor = backgroundColor;
     }

@@ -8,8 +8,8 @@ public class CustomComponentInitializer : MonoBehaviour
 
     void Start()
     {
-        ReactUnityAPI.ComponentCreators["button"] = (type, text, context) => new CustomButtonComponent(context, Color.red);
-        ReactUnityAPI.ComponentCreators["customButton"] = (type, text, context) => new CustomButtonComponent(context, customButtonColor);
+        UGUIContext.ComponentCreators["button"] = (type, text, context) => new CustomButtonComponent(context, Color.red);
+        UGUIContext.ComponentCreators["customButton"] = (type, text, context) => new CustomButtonComponent(context, customButtonColor);
 
         reactUnity.enabled = true;
     }

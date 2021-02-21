@@ -1,0 +1,13 @@
+view {
+  background-color: 0, 0, 0, 0.2;
+  color: white;
+
+  view {
+    color: red;
+  }
+}
+
+.text {
+  flex-direction: row;
+  flex-wrap: wrap;
+}

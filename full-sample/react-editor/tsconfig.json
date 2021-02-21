@@ -1,0 +1,36 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "sourceMap": false,
+    "allowJs": true,
+    "pretty": true,
+    "declaration": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "preserveSymlinks": true,
+    "importHelpers": false,
+    "strict": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
+    "target": "ES5",
+    "skipLibCheck": true,
+    "lib": [],
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "files": [
+    "./src/index.ts"
+  ],
+  "include": [
+    "src"
+  ]
+}
