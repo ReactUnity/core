@@ -10,7 +10,7 @@ namespace ReactUnity.Editor.Renderer.Events
     {
         static Dictionary<string, Type> EventMap = new Dictionary<string, Type>
         {
-            { "onPointerClick", typeof(ClickEvent) },
+            { "onClick", typeof(ClickEvent) },
             { "onPointerUp", typeof(PointerUpEvent) },
             { "onPointerDown", typeof(PointerDownEvent) },
             { "onPointerEnter", typeof(PointerEnterEvent) },
@@ -38,9 +38,9 @@ namespace ReactUnity.Editor.Renderer.Events
             { "onContextClick", typeof(ContextClickEvent) },
 
             { "onFocus", typeof(FocusEvent) },
-            { "onBeforeFocus", typeof(FocusInEvent) },
+            { "onFocusIn", typeof(FocusInEvent) },
             { "onBlur", typeof(BlurEvent) },
-            { "onBeforeBlur", typeof(FocusOutEvent) },
+            { "onFocusOut", typeof(FocusOutEvent) },
             { "onWheel", typeof(WheelEvent) },
             { "onKeyDown", typeof(KeyDownEvent) },
             { "onKeyUp", typeof(KeyUpEvent) },

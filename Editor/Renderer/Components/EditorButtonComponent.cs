@@ -17,7 +17,7 @@ namespace ReactUnity.Editor.Renderer.Components
         {
             switch (eventName)
             {
-                case "onClick":
+                case "onButtonClick":
                     if (previousClickEvent != null)
                     {
                         Element.clicked -= previousClickEvent;
