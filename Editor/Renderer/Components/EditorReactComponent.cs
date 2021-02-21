@@ -89,6 +89,10 @@ namespace ReactUnity.Editor.Renderer.Components
             //Element.style.height = Layout.Height;
             Element.style.flexDirection = (FlexDirection) Layout.FlexDirection;
             Element.style.flexWrap = (Wrap) Layout.Wrap;
+            Element.style.flexGrow = Layout.FlexGrow;
+            Element.style.flexShrink = Layout.FlexShrink;
+            //Element.style.flexBasis = Layout.FlexBasis;
+
             Element.style.display = (DisplayStyle) Layout.Display;
             Element.style.position = (Position) Layout.PositionType;
             Element.style.overflow = (Overflow) Layout.Overflow;
