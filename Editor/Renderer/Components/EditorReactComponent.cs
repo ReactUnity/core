@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using ReactUnity.Editor.Renderer.Events;
 using ReactUnity.Interop;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
@@ -38,7 +39,7 @@ namespace ReactUnity.Editor.Renderer.Components
         public string Name => Element.name;
         public string Tag { get; private set; }
         public string ClassName { get; private set; }
-        public HashSet<string> ClassList { get; private set; }
+        public HashSet<string> ClassList { get; private set; } = EmptyClassList;
 
         public StateStyles StateStyles { get; private set; }
         public Dictionary<string, object> Data { get; private set; } = new Dictionary<string, object>();
@@ -51,11 +52,14 @@ namespace ReactUnity.Editor.Renderer.Components
         public List<RuleTreeNode<StyleData>> AfterRules { get; protected set; }
 
 
+        Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
+
         public EditorReactComponent(T element, EditorContext context, string tag)
         {
             Tag = tag;
             Context = context;
             Element = element;
+            Element.userData = Data;
 
             StateStyles = new StateStyles(this);
             Style = new NodeStyle(StateStyles);
@@ -67,6 +71,7 @@ namespace ReactUnity.Editor.Renderer.Components
             Tag = tag;
             Context = context;
             Element = new T();
+            Element.userData = Data;
 
             StateStyles = new StateStyles(this);
             Style = new NodeStyle(StateStyles);
@@ -84,14 +89,20 @@ namespace ReactUnity.Editor.Renderer.Components
             //Element.style.height = Layout.Height;
             Element.style.flexDirection = (FlexDirection) Layout.FlexDirection;
             Element.style.flexWrap = (Wrap) Layout.Wrap;
+            Element.style.display = (DisplayStyle) Layout.Display;
+            Element.style.position = (Position) Layout.PositionType;
+            Element.style.overflow = (Overflow) Layout.Overflow;
         }
 
         public virtual void ApplyStyles()
         {
             Element.style.backgroundColor = Style.backgroundColor;
             Element.style.color = Style.color;
-            Element.style.width = Layout.LayoutWidth;
-            Element.style.height = Layout.LayoutHeight;
+            Element.style.textOverflow = (TextOverflow) Style.textOverflow;
+            Element.style.visibility = Style.visibility ? Visibility.Visible : Visibility.Hidden;
+            Element.style.opacity = Style.opacity;
+            Element.style.fontSize = Style.fontSizeActual;
+            Element.style.whiteSpace = Style.textWrap ? WhiteSpace.Normal : WhiteSpace.NoWrap;
         }
 
         public void Destroy()
@@ -195,28 +206,44 @@ namespace ReactUnity.Editor.Renderer.Components
             ResolveStyle(true);
         }
 
-        public virtual void SetEventListener(string eventName, Callback callback)
+        public virtual void SetEventListener(string eventName, Callback fun)
         {
-            switch (eventName)
+            var (register, unregister) = EditorEventHandlerMap.GetEventMethods(eventName);
+
+            // Remove
+            if (EventHandlers.TryGetValue(eventName, out var existingHandler))
             {
-                case "onClick":
-                    return;
-                default:
-                    throw new System.Exception($"Unknown event name specified, '{eventName}'");
+                unregister.Invoke(Element, new object[] { existingHandler, TrickleDown.NoTrickleDown });
+                EventHandlers.Remove(eventName);
             }
+
+            // No event to add
+            if (fun == null) return;
+
+            EventCallback<EventBase> callAction = (e) => fun.Call(e);
+
+            register.Invoke(Element, new object[] { callAction, TrickleDown.NoTrickleDown });
+            EventHandlers[eventName] = callAction;
         }
 
-        public void SetProperty(string property, object value)
+        public virtual void SetProperty(string property, object value)
         {
             switch (property)
             {
                 case "name":
                     Element.name = value?.ToString();
                     return;
+                case "focusable":
+                    Element.focusable = Convert.ToBoolean(value);
+                    return;
                 case "className":
+                    foreach (var cls in ClassList) Element.RemoveFromClassList(cls);
+
                     ClassName = value?.ToString();
                     ClassList = string.IsNullOrWhiteSpace(ClassName) ? EmptyClassList :
                         new HashSet<string>(ClassName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+
+                    foreach (var cls in ClassList) Element.AddToClassList(cls);
                     return;
                 default:
                     throw new Exception($"Unknown property name specified, '{property}'");
