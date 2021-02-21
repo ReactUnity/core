@@ -23,6 +23,8 @@
   ],
   "exclude": [
     "./dist/**/*.*",
+    "./editor-scaffold/**/*.*",
+    "./unity-scaffold/**/*.*",
     "./scaffold/**/*.*"
   ]
 }
