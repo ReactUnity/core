@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, ReactNode, ReactElement, useRef } from 'react';
-import { AxisEventCallback, PointerEventCallback, View } from '../../../models/components';
+import { AxisEventCallback, PointerEventCallback, View } from '../../../models/runtime';
 
 export type SliderDirection = 'horizontal' | 'vertical' | 'horizontal-reverse' | 'vertical-reverse';
 export type SliderMode = 'normal' | 'diff' | 'falloff';

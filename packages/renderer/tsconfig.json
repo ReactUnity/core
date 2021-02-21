@@ -27,6 +27,6 @@
     "src"
   ],
   "exclude": [
-    "models/editor.ts"
+    "models/editor"
   ]
 }

@@ -1,10 +1,8 @@
 export { Renderer } from './src/renderer/renderer';
 export * from './src/animation/animation';
 export * from './src/animation/easing';
-export * from './models/components';
-export * from './models/native';
-export * from './models/values';
+export * from './models/properties';
 export * from './models/renderer';
-export * from './models/editor';
 export * from './models/environment';
 export * from './models/generated';
+export * from './models/editor';

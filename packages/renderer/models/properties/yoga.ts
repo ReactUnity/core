@@ -1,6 +1,6 @@
 
 import { Overflow, Direction, Display, Wrap, YogaJustify, Position, YogaAlign, FlexDirection } from './yoga-enums';
-import { Array2Aux, Array4Aux, EnumOrLiteral, PositioningLiteral } from '../values';
+import { Array2Aux, Array4Aux, EnumOrLiteral, PositioningLiteral } from './values';
 
 
 // boolean, null and undefined are all mapped to undefined
