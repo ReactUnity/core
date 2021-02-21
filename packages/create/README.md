@@ -12,11 +12,16 @@ If you want to create full Unity app from scratch:
 
 `npm init @reactunity -u`
 
+Create the React project in a custom folder:
+
+`npm init @reactunity custom/folder/path`
+
 #### Options:
 
 ```
   -s, --skip-install       Skips 'npm install'
   -u, --unity              Creates Unity project from scratch and adds React project into it
+  -e, --editor             Create React Unity Editor project
 ```
 
 ## Commands

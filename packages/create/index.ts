@@ -13,16 +13,30 @@ const chalkError = chalk.red
 const cwd = process.cwd();
 const skipInstall = process.argv.includes('--skip-install') || process.argv.includes('-s');
 const createUnity = process.argv.includes('--unity') || process.argv.includes('-u');
+const createEditor = process.argv.includes('--editor') || process.argv.includes('-e');
+
+let targetDir = 'react';
+
+console.log(process.argv.join('\n'));
+
+for (let index = 2; index < process.argv.length; index++) {
+  const el = process.argv[index];
+
+  if (!el.startsWith('-')) {
+    targetDir = el;
+    break;
+  }
+}
 
 const unityFolderName = 'react-unity-project';
-const reactFolderName = 'react';
+const reactFolderName = targetDir;
 
 const unityDir = createUnity ? path.resolve(cwd, unityFolderName) : cwd;
 const reactDir = path.resolve(unityDir, reactFolderName);
 const createdDir = createUnity ? unityDir : reactDir;
 
 const unityScaffold = path.join(__dirname, 'unity-scaffold');
-const reactScaffold = path.join(__dirname, 'scaffold');
+const reactScaffold = path.join(__dirname, createEditor ? 'editor-scaffold' : 'scaffold');
 
 async function isDirEmpty(dirname) {
   const files = await fse.readdir(dirname);
