@@ -8,7 +8,7 @@
     "src"
   ],
   "exclude": [
-    "models/jsx.ts",
+    "models/runtime",
     "src/components",
     "src/tester"
   ]

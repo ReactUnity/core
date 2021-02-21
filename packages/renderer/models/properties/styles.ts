@@ -1,9 +1,9 @@
 import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents, Visibility, Appearance, WhiteSpace, NavigationMode } from './styles-enums';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
-import { ColorAux } from '../values/color';
-import { UnityObject } from '../native/context';
-import { Vector2Aux } from '../values/values';
-import { EnumOrLiteral, AssetReference } from '../values';
+import { ColorAux } from './values';
+import { UnityObject } from '../context';
+import { Vector2Aux } from './values';
+import { EnumOrLiteral, AssetReference } from './values';
 
 export interface RenderStyle {
   opacity?: number;

@@ -1,4 +1,4 @@
-import { Position, Style } from '../../models/components';
+import { Position, Style } from '../../models/properties';
 
 export const transparentColor = 'clear';
 

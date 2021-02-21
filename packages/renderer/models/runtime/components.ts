@@ -1,9 +1,7 @@
-import { RenderStyle } from './styles';
-import { LayoutCssCompatible } from './yoga';
 import { Events, ActionCallback } from './events';
-import { AssetReference } from '../values';
+import { AssetReference } from '../properties/values';
+import { Style } from '../properties';
 
-export type Style = RenderStyle & LayoutCssCompatible;
 
 export interface View extends Events {
   name?: string;

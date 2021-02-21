@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Position, View, YogaValueAux } from '../../../models/components';
+import { Position, YogaValueAux } from '../../../models/properties';
+import { View } from '../../../models/runtime';
 
 export type TooltipPosition = 'left' | 'right' | 'top' | 'bottom';
 

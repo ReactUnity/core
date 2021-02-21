@@ -1,7 +1,7 @@
 
 import * as rc from 'react';
 import * as Components from './components';
-import { ReactUnity } from './generated';
+import { ReactUnity } from '../generated';
 
 type Children<T = any> = { children?: T };
 
@@ -26,7 +26,6 @@ declare module 'react/jsx-runtime' {
       anchor: Components.Anchor & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
       text: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
-      input: Components.Input & rc.RefAttributes<Cmp.EditorReactComponent> & Children<never>;
       scroll: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
       image: Components.Image & rc.RefAttributes<Cmp.EditorReactComponent> & Children<never>;
       toggle: Components.Toggle & rc.RefAttributes<Cmp.EditorReactComponent> & Children<never>;

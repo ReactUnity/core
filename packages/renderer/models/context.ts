@@ -1,6 +1,7 @@
-import { NativeContainerInstance, NativeTextInstance, InstanceTag, NativeInstance, TimeoutHandle, NoTimeout, Props } from '../renderer';
+import { UnityEngine } from './generated';
+import { NativeContainerInstance, NativeTextInstance, InstanceTag, NativeInstance, TimeoutHandle, NoTimeout, Props } from './renderer';
 
-export type UnityObject = { readonly $type: 'UnityObject' };
+export type UnityObject = UnityEngine.Object;
 
 export type ObjectDictionary = {
   [key: string]: UnityObject;

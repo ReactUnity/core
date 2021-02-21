@@ -1,7 +1,8 @@
 
 import * as rc from 'react';
 import * as Components from './components';
-import { ReactUnity } from './generated';
+import { ReactUnity } from '../generated';
+import { Input } from './input';
 
 type Children<T = any> = { children?: T };
 
@@ -23,7 +24,7 @@ declare module 'react/jsx-runtime' {
       anchor: Components.Anchor & rc.RefAttributes<ReactUnity.Components.AnchorComponent> & Children;
       text: Components.View & rc.RefAttributes<ReactUnity.Components.TextComponent> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<ReactUnity.Components.ButtonComponent> & Children;
-      input: Components.Input & rc.RefAttributes<ReactUnity.Components.InputComponent> & Children<never>;
+      input: Input & rc.RefAttributes<ReactUnity.Components.InputComponent> & Children<never>;
       scroll: Components.View & rc.RefAttributes<ReactUnity.Components.ScrollComponent> & Children;
       image: Components.Image & rc.RefAttributes<ReactUnity.Components.ImageComponent> & Children<never>;
       rawimage: Components.Image & rc.RefAttributes<ReactUnity.Components.RawImageComponent> & Children<never>;

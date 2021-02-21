@@ -1,6 +1,6 @@
 
+import { ObjectDictionary, UnityContext, UnitySchedulerContext } from './context';
 import { NativeContainerInstance } from './renderer';
-import { UnityContext, ObjectDictionary, UnitySchedulerContext } from './native';
 
 declare global {
   const Unity: UnityContext;
