@@ -189,7 +189,11 @@ namespace ReactUnity.Interop
 
         private static IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
         {
+#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
             yield return new EditorWaitForSeconds(time);
+#else
+            yield return null;
+#endif
             if (!ToStop.Contains(handle)) callback();
         }
 
@@ -197,7 +201,11 @@ namespace ReactUnity.Interop
         {
             while (true)
             {
+#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
                 yield return new EditorWaitForSeconds(interval);
+#else
+                yield return null;
+#endif
                 if (!ToStop.Contains(handle)) callback();
             }
         }
