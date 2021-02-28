@@ -1,5 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Editor.Renderer.Events;
+using ReactUnity.Editor.Renderer.Styling;
 using ReactUnity.Interop;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
@@ -85,17 +86,48 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public void ApplyLayoutStyles()
         {
-            //Element.style.width = Layout.Width;
-            //Element.style.height = Layout.Height;
             Element.style.flexDirection = (FlexDirection) Layout.FlexDirection;
             Element.style.flexWrap = (Wrap) Layout.Wrap;
             Element.style.flexGrow = Layout.FlexGrow;
             Element.style.flexShrink = Layout.FlexShrink;
-            //Element.style.flexBasis = Layout.FlexBasis;
+
+            Element.style.width = StylingHelpers.YogaValueToStyleLength(Layout.Width);
+            Element.style.height = StylingHelpers.YogaValueToStyleLength(Layout.Height);
+            Element.style.flexBasis = StylingHelpers.YogaValueToStyleLength(Layout.FlexBasis);
+
+            Element.style.minWidth = StylingHelpers.YogaValueToStyleLength(Layout.MinWidth);
+            Element.style.minHeight = StylingHelpers.YogaValueToStyleLength(Layout.MinHeight);
+            Element.style.maxWidth = StylingHelpers.YogaValueToStyleLength(Layout.MaxWidth);
+            Element.style.maxHeight = StylingHelpers.YogaValueToStyleLength(Layout.MaxHeight);
+
+            Element.style.paddingBottom = StylingHelpers.YogaValueToStyleLength(Layout.PaddingBottom);
+            Element.style.paddingTop = StylingHelpers.YogaValueToStyleLength(Layout.PaddingTop);
+            Element.style.paddingLeft = StylingHelpers.YogaValueToStyleLength(Layout.PaddingLeft);
+            Element.style.paddingRight = StylingHelpers.YogaValueToStyleLength(Layout.PaddingRight);
+
+            Element.style.marginBottom = StylingHelpers.YogaValueToStyleLength(Layout.MarginBottom);
+            Element.style.marginTop = StylingHelpers.YogaValueToStyleLength(Layout.MarginTop);
+            Element.style.marginLeft = StylingHelpers.YogaValueToStyleLength(Layout.MarginLeft);
+            Element.style.marginRight = StylingHelpers.YogaValueToStyleLength(Layout.MarginRight);
+
+            Element.style.left = StylingHelpers.YogaValueToStyleLength(Layout.Left);
+            Element.style.right = StylingHelpers.YogaValueToStyleLength(Layout.Right);
+            Element.style.top = StylingHelpers.YogaValueToStyleLength(Layout.Top);
+            Element.style.bottom = StylingHelpers.YogaValueToStyleLength(Layout.Bottom);
+
+            Element.style.borderLeftWidth = StylingHelpers.NormalizeFloat(Layout.BorderLeftWidth);
+            Element.style.borderRightWidth = StylingHelpers.NormalizeFloat(Layout.BorderRightWidth);
+            Element.style.borderTopWidth = StylingHelpers.NormalizeFloat(Layout.BorderTopWidth);
+            Element.style.borderBottomWidth = StylingHelpers.NormalizeFloat(Layout.BorderBottomWidth);
 
             Element.style.display = (DisplayStyle) Layout.Display;
             Element.style.position = (Position) Layout.PositionType;
             Element.style.overflow = (Overflow) Layout.Overflow;
+
+            Element.style.alignContent = (Align) Layout.AlignContent;
+            Element.style.alignItems = (Align) Layout.AlignItems;
+            Element.style.alignSelf = (Align) Layout.AlignSelf;
+            Element.style.justifyContent = (Justify) Layout.JustifyContent;
         }
 
         public virtual void ApplyStyles()
@@ -107,6 +139,18 @@ namespace ReactUnity.Editor.Renderer.Components
             Element.style.opacity = Style.opacity;
             Element.style.fontSize = Style.fontSizeActual;
             Element.style.whiteSpace = Style.textWrap ? WhiteSpace.Normal : WhiteSpace.NoWrap;
+
+            Element.style.borderBottomLeftRadius = Element.style.borderBottomRightRadius = Element.style.borderTopLeftRadius = Element.style.borderTopRightRadius = Style.borderRadius;
+            Element.style.borderBottomColor = Element.style.borderTopColor = Element.style.borderLeftColor = Element.style.borderRightColor = Style.borderColor;
+
+            Style.backgroundImage?.Get(Context, tx => Element.style.backgroundImage = tx);
+            Element.style.unityFontStyleAndWeight = StylingHelpers.ConvertFontStyle(Style.fontStyle, Style.fontWeight);
+
+            if (StylingHelpers.TextAlignMap.TryGetValue(Style.textAlign, out var value)) Element.style.unityTextAlign = value;
+            else Element.style.unityTextAlign = TextAnchor.MiddleCenter;
+
+            Element.style.unityBackgroundImageTintColor = Style.backgroundColor;
+            //if (Style.fontFamily != null) Style.fontFamily?.Get(Context, x => Element.style.unityFont = x?.sourceFontFile ?? Context.DefaultFont);
         }
 
         public void Destroy()

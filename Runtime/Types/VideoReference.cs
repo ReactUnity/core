@@ -9,7 +9,7 @@ namespace ReactUnity.Types
 
         public VideoReference(AssetReferenceType type, object value) : base(type, value) { }
 
-        protected override void Get(UGUIContext context, AssetReferenceType realType, object realValue, Action<VideoComponentSource> callback)
+        protected override void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<VideoComponentSource> callback)
         {
             if (realType == AssetReferenceType.Url)
             {

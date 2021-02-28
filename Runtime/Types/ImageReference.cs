@@ -16,7 +16,7 @@ namespace ReactUnity.Types
 
         public ImageReference(AssetReferenceType type, object value) : base(type, value) { }
 
-        protected override void Get(UGUIContext context, AssetReferenceType realType, object realValue, Action<Texture2D> callback)
+        protected override void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<Texture2D> callback)
         {
             if (realType == AssetReferenceType.Url)
             {

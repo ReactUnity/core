@@ -34,7 +34,7 @@ namespace ReactUnity.Types
             this.value = value;
         }
 
-        public void Get(UGUIContext context, System.Action<AssetType> callback)
+        public void Get(ReactContext context, System.Action<AssetType> callback)
         {
             if (IsCached)
             {
@@ -69,7 +69,7 @@ namespace ReactUnity.Types
             });
         }
 
-        protected virtual void Get(UGUIContext context, AssetReferenceType realType, object realValue, Action<AssetType> callback)
+        protected virtual void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<AssetType> callback)
         {
             switch (realType)
             {

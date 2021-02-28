@@ -9,7 +9,7 @@ namespace ReactUnity.Types
 
         public FontReference(AssetReferenceType type, object value) : base(type, value) { }
 
-        protected override void Get(UGUIContext context, AssetReferenceType realType, object realValue, Action<TMP_FontAsset> callback)
+        protected override void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<TMP_FontAsset> callback)
         {
             if (realType == AssetReferenceType.Procedural)
             {
