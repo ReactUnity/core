@@ -1,0 +1,24 @@
+@font-face {
+  font-family: sans-serif;
+  src: "resource://ReactUnity/fonts/sans-serif";
+}
+
+@font-face {
+  font-family: monospace;
+  src: "resource://ReactUnity/fonts/monospace";
+}
+
+:root {
+  font-family: sans-serif;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+button {
+  border-left-width: 5px;
+  background: 0.5;
+}
+
+/* button:hover {
+  background-color: 0.1;
+} */

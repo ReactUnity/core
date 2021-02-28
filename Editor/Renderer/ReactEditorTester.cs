@@ -1,3 +1,4 @@
+using ReactUnity.Editor.Renderer.Styling;
 using ReactUnity.Interop;
 using ReactUnity.Types;
 using System;
@@ -23,10 +24,10 @@ namespace ReactUnity.Editor.Renderer
 
         public void OnEnable()
         {
-            var uiAsset = Resources.Load<VisualTreeAsset>("ReactUnity/EditorTester");
+            var uiAsset = EditorResourcesHelper.EditorTester;
             var ui = uiAsset.CloneTree();
 
-            var stylesheet = Resources.Load<StyleSheet>("ReactUnity/EditorTesterStyles");
+            var stylesheet = EditorResourcesHelper.EditorTesterStyles;
 
             ui.style.height = Length.Percent(100);
             rootVisualElement.Add(ui);

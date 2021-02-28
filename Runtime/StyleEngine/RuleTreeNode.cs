@@ -208,12 +208,12 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.NthLastChild:
                     return ((NthChildParameter) Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
                 case RuleSelectorPartType.Empty:
-                    var cmp = component as ContainerComponent;
+                    var cmp = component as IContainerComponent;
                     return cmp == null || cmp.Children.Count == 0;
                 case RuleSelectorPartType.OnlyChild:
                     return component.Parent.Children.Count == 1;
                 case RuleSelectorPartType.Root:
-                    return component is HostComponent;
+                    return component is IHostComponent;
                 case RuleSelectorPartType.Scope:
                     return scope != null && component == scope;
                 case RuleSelectorPartType.Before:

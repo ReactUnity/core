@@ -21,13 +21,12 @@ namespace ReactUnity.Editor.Renderer.Components
         T Element { get; }
     }
 
-    public class EditorReactComponent<T> : IEditorReactComponent<T>, IHostComponent, IContainerComponent where T : VisualElement, new()
+    public class EditorReactComponent<T> : IEditorReactComponent<T>, IContainerComponent where T : VisualElement, new()
     {
         private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
 
         public static readonly YogaNode DefaultLayout = new YogaNode();
 
-        ReactContext IHostComponent.Context => Context;
         public EditorContext Context { get; }
         public IContainerComponent Parent { get; private set; }
         public T Element { get; protected set; }
@@ -150,7 +149,11 @@ namespace ReactUnity.Editor.Renderer.Components
             else Element.style.unityTextAlign = TextAnchor.MiddleCenter;
 
             Element.style.unityBackgroundImageTintColor = Style.backgroundColor;
-            //if (Style.fontFamily != null) Style.fontFamily?.Get(Context, x => Element.style.unityFont = x?.sourceFontFile ?? Context.DefaultFont);
+            if (Style.fontFamily != null) Style.fontFamily?.Get(Context, x =>
+            {
+                if (x?.sourceFontFile) Element.style.unityFont = x?.sourceFontFile;
+                else Element.style.unityFont = EditorResourcesHelper.DefaultFont;
+            });
         }
 
         public void Destroy()
