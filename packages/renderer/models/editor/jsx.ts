@@ -28,7 +28,18 @@ declare module 'react/jsx-runtime' {
       button: Components.Button & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
       scroll: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
       image: Components.Image & rc.RefAttributes<Cmp.EditorReactComponent> & Children<never>;
-      toggle: Components.Toggle & rc.RefAttributes<Cmp.EditorReactComponent> & Children<never>;
+      toggle: Components.Toggle & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      helpbox: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      foldout: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      popup: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      slider: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      stepper: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      range: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      repeat: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      scroller: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      list: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      imgui: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
+      template: Components.View & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
     }
   }
 }

@@ -25,7 +25,7 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
   }
   else {
     for (const attr in updatePayload) {
-      if (Object.prototype.hasOwnProperty.call(updatePayload, attr)) {
+      if (updatePayload.hasOwnProperty(attr)) {
         const value = updatePayload[attr];
         writeTo[attr] = value;
       }
