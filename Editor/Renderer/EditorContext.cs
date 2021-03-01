@@ -25,6 +25,21 @@ namespace ReactUnity.Editor.Renderer
                 { "text", (tag, text, context) => new EditorTextComponent(text, context, tag) },
                 { "button", (tag, text, context) => new EditorButtonComponent(context) },
                 { "view", (tag, text, context) => new EditorReactComponent<Box>(context, "view") },
+                { "toggle", (tag, text, context) => new EditorReactComponent<Toggle>(context, "toggle") },
+                { "image", (tag, text, context) => new EditorReactComponent<Image>(context, "image") },
+                { "scroll", (tag, text, context) => new EditorReactComponent<ScrollView>(context, "scroll") },
+                { "input", (tag, text, context) => new EditorReactComponent<TextField>(context, "input") },
+                { "helpbox", (tag, text, context) => new EditorReactComponent<HelpBox>(context, "helpbox") },
+                { "foldout", (tag, text, context) => new EditorReactComponent<Foldout>(context, "foldout") },
+                { "popup", (tag, text, context) => new EditorReactComponent<PopupWindow>(context, "popup") },
+                { "slider", (tag, text, context) => new EditorReactComponent<Slider>(context, "slider") },
+                { "stepper", (tag, text, context) => new EditorReactComponent<SliderInt>(context, "stepper") },
+                { "range", (tag, text, context) => new EditorReactComponent<MinMaxSlider>(context, "range") },
+                { "repeat", (tag, text, context) => new EditorReactComponent<RepeatButton>(context, "repeat") },
+                { "scroller", (tag, text, context) => new EditorReactComponent<Scroller>(context, "scroller") },
+                { "list", (tag, text, context) => new EditorReactComponent<ListView>(context, "list") },
+                { "imgui", (tag, text, context) => new EditorReactComponent<IMGUIContainer>(context, "imgui") },
+                { "template", (tag, text, context) => new EditorReactComponent<TemplateContainer>(context, "template") },
             };
 
         public EditorContext(VisualElement hostElement, StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)

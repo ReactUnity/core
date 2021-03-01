@@ -19,6 +19,11 @@ button {
   background: 0.5;
 }
 
+toggle {
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 /* button:hover {
   background-color: 0.1;
 } */
