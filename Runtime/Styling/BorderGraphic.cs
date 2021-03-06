@@ -1,8 +1,9 @@
+using ReactUnity.Helpers;
 using System.Collections.Generic;
+using UnityEngine;
 #if !(!REACT_VECTOR_GRAPHICS || UNITY_WEBGL)
 using Unity.VectorGraphics;
 #endif
-using UnityEngine;
 
 namespace ReactUnity.Styling
 {
@@ -10,13 +11,8 @@ namespace ReactUnity.Styling
     {
         public static Dictionary<int, Sprite> SpriteCache = new Dictionary<int, Sprite>();
 
-#if !REACT_VECTOR_GRAPHICS || UNITY_WEBGL
-        private static bool ShowVectorGraphicsMessage = true;
-#endif
-
         static public Sprite CreateBorderSprite(int borderRadius)
         {
-            if (!Application.isPlaying) return null;
             borderRadius = Mathf.Max(borderRadius, 0);
             if (SpriteCache.ContainsKey(borderRadius)) return SpriteCache[borderRadius];
 
@@ -31,13 +27,9 @@ namespace ReactUnity.Styling
                     Sprite.Create(smallTexture, new Rect(0, 0, 4, 4), Vector2.one / 2, 1, 0, SpriteMeshType.FullRect, Vector4.one);
             }
 
+            if (!FeatureGuards.VectorGraphics) return null;
 
 #if !REACT_VECTOR_GRAPHICS || UNITY_WEBGL
-            if (ShowVectorGraphicsMessage)
-            {
-                Debug.LogError("To use the 'borderRadius' feeature, 'Unity.VectorGraphics' package must be installed.");
-                ShowVectorGraphicsMessage = false;
-            }
             return null;
 #else
             var svg = new Scene() { Root = new SceneNode() { Shapes = new List<Shape>() } };

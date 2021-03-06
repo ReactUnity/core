@@ -1,3 +1,4 @@
+using ReactUnity.Interop;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -14,28 +15,17 @@ namespace ReactUnity
         public string SourceText;
         public string ResourcesPath;
 
-#pragma warning disable CS0414
-        [SerializeField]
-        [Tooltip(@"Editor only. Watches file for changes and refreshes the view on change.
-Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_EDITOR to build.")]
-        private bool Watch = false;
-#pragma warning restore CS0414
-
         public bool UseDevServer = true;
         public string DevServer = "http://localhost:3000";
         static string DevServerFilename = "";
         public string DevServerFile => DevServer + DevServerFilename;
 
-        private bool SourceIsTextAsset => ScriptSource == ScriptSource.TextAsset;
-        private bool SourceIsPath => ScriptSource != ScriptSource.TextAsset && ScriptSource != ScriptSource.Text;
-        private bool SourceIsText => ScriptSource == ScriptSource.Text;
-        private bool SourceIsWatchable => ScriptSource != ScriptSource.Url && ScriptSource != ScriptSource.Text;
 
         public string SourceLocation
         {
             get
             {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || REACT_DEV_SERVER_API
                 if (UseDevServer && !string.IsNullOrWhiteSpace(DevServer)) return DevServerFile;
 #endif
                 return GetResolvedSourcePath();
@@ -56,35 +46,20 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
             return path;
         }
 
-#if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
-        IDisposable StartWatching(Action<string, bool> callback)
-        {
-            string path = GetResolvedSourcePath();
-            if (string.IsNullOrWhiteSpace(path)) return null;
-
-            return DetectChanges.WatchFileSystem(path, x => callback(System.IO.File.ReadAllText(path), false));
-        }
-#endif
-
         public IDisposable GetScript(Action<string, bool> callback, bool useDevServer = true, bool disableWarnings = false)
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR || REACT_DEV_SERVER_API
             if (useDevServer && UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
             {
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
 
-                if (Application.isPlaying) return new Interop.MainThreadDispatcher.CoroutineHandle(
-                    Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, callback, err =>
-                    {
-                        Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
-                        GetScript(callback, false);
-                    }, true)));
-                else return new Interop.EditorDispatcher.CoroutineHandle(
-                    Interop.EditorDispatcher.StartDeferred(WatchWebRequest(request, callback, err =>
-                    {
-                        Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
-                        GetScript(callback, false);
-                    }, true)));
+                return new AdaptiveDispatcher.CoroutineHandle(
+                    AdaptiveDispatcher.StartDeferred(
+                        WatchWebRequest(request, callback, err =>
+                        {
+                            Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
+                            GetScript(callback, false);
+                        }, true)));
             }
 #endif
 
@@ -92,11 +67,7 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
             {
                 case ScriptSource.TextAsset:
                     if (!SourceAsset) callback(null, false);
-#if UNITY_EDITOR
-                    else callback(System.IO.File.ReadAllText(UnityEditor.AssetDatabase.GetAssetPath(SourceAsset)), false);
-#else
                     else callback(SourceAsset.text, false);
-#endif
                     break;
                 case ScriptSource.File:
 #if UNITY_EDITOR || REACT_FILE_API
@@ -115,10 +86,8 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
 #endif
                     var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
 
-                    if (Application.isPlaying) return new Interop.MainThreadDispatcher.CoroutineHandle(
-                        Interop.MainThreadDispatcher.StartDeferred(WatchWebRequest(request, callback)));
-                    else return new Interop.EditorDispatcher.CoroutineHandle(
-                        Interop.EditorDispatcher.StartDeferred(WatchWebRequest(request, callback)));
+                    return new AdaptiveDispatcher.CoroutineHandle(
+                        AdaptiveDispatcher.StartDeferred(WatchWebRequest(request, callback)));
 #else
                     throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
 #endif
@@ -135,13 +104,10 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
                     break;
             }
 
-#if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
-            if (Watch && SourceIsWatchable) return StartWatching(callback);
-#endif
             return null;
         }
 
-#if UNITY_EDITOR || REACT_URL_API
+#if UNITY_EDITOR || REACT_URL_API || REACT_DEV_SERVER_API
         private IEnumerator WatchWebRequest(
             UnityEngine.Networking.UnityWebRequest request,
             Action<string, bool> callback,
@@ -166,24 +132,4 @@ Can be enabled outside the editor by adding define symbol REACT_WATCH_OUTSIDE_ED
         Resource = 3,
         Text = 4,
     }
-
-
-#if UNITY_EDITOR || REACT_WATCH_OUTSIDE_EDITOR
-    public class DetectChanges
-    {
-        public static IDisposable WatchFileSystem(string path, Action<string> callback)
-        {
-            System.IO.FileSystemWatcher fileSystemWatcher = new System.IO.FileSystemWatcher();
-
-            fileSystemWatcher.Path = System.IO.Path.GetDirectoryName(path);
-            fileSystemWatcher.Filter = System.IO.Path.GetFileName(path);
-            fileSystemWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite | System.IO.NotifyFilters.Size;
-
-            fileSystemWatcher.Changed += (x, y) => callback(y.FullPath);
-            fileSystemWatcher.EnableRaisingEvents = true;
-
-            return fileSystemWatcher;
-        }
-    }
-#endif
 }

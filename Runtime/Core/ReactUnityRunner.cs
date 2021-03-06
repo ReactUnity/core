@@ -137,7 +137,7 @@ namespace ReactUnity
             var location = new DomProxies.Location(script.SourceLocation, context.OnRestart);
             engine.SetValue("location", location);
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || REACT_DEV_SERVER_API
             engine.SetValue("ctx", context);
             engine.SetValue("oldWebSocket", typeof(WebSocketProxy));
             engine.Execute(@"WebSocket = function() { return new oldWebSocket(ctx, ...arguments); }");
