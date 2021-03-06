@@ -63,7 +63,15 @@ namespace ReactUnity.Styling
         public static IStyleProperty backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static IStyleProperty backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None);
         public static IStyleProperty borderRadius = new StyleProperty<int>("borderRadius", 0, true);
+        public static IStyleProperty borderTopLeftRadius = new StyleProperty<int>("borderTopLeftRadius", 0, true);
+        public static IStyleProperty borderTopRightRadius = new StyleProperty<int>("borderTopRightRadius", 0, true);
+        public static IStyleProperty borderBottomLeftRadius = new StyleProperty<int>("borderBottomLeftRadius", 0, true);
+        public static IStyleProperty borderBottomRightRadius = new StyleProperty<int>("borderBottomRightRadius", 0, true);
         public static IStyleProperty borderColor = new StyleProperty<Color>("borderColor", Color.black, true);
+        public static IStyleProperty borderLeftColor = new StyleProperty<Color>("borderLeftColor", Color.black, true);
+        public static IStyleProperty borderRightColor = new StyleProperty<Color>("borderRightColor", Color.black, true);
+        public static IStyleProperty borderTopColor = new StyleProperty<Color>("borderTopColor", Color.black, true);
+        public static IStyleProperty borderBottomColor = new StyleProperty<Color>("borderBottomColor", Color.black, true);
         public static IStyleProperty boxShadow = new StyleProperty<ShadowDefinition>("boxShadow", null, true);
         public static IStyleProperty transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static IStyleProperty translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
@@ -90,7 +98,15 @@ namespace ReactUnity.Styling
             { "background", backgroundImage },
             { "background-image", backgroundImage },
             { "border-radius", borderRadius },
+            { "border-top-left-radius", borderTopLeftRadius },
+            { "border-top-right-radius", borderTopRightRadius },
+            { "border-bottom-left-radius", borderBottomLeftRadius },
+            { "border-bottom-right-radius", borderBottomRightRadius },
             { "border-color", borderColor },
+            { "border-left-color", borderLeftColor },
+            { "border-right-color", borderRightColor },
+            { "border-top-color", borderTopColor },
+            { "border-bottom-color", borderBottomColor },
             { "box-shadow", boxShadow },
             { "transform-origin", transformOrigin },
             { "font-family", fontFamily },

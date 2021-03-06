@@ -305,7 +305,7 @@ namespace ReactUnity.Components
             if (mask == null) mask = MaskAndImage = new MaskAndImage(RectTransform);
 
             mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
-            mask.SetBorderRadius(Style.borderRadius);
+            mask.SetBorderRadius(Style.borderTopLeftRadius, Style.borderTopRightRadius, Style.borderBottomLeftRadius, Style.borderBottomRightRadius);
         }
 
         private void SetCursor()
@@ -370,7 +370,7 @@ namespace ReactUnity.Components
                 AdaptiveDispatcher.OnUpdate(() =>
                 {
                     if (!GameObject) return;
-                    var borderSprite = BorderGraphic.CreateBorderSprite(Style.borderRadius);
+                    var borderSprite = BorderGraphic.CreateBorderSprite(Style.borderTopLeftRadius, Style.borderTopRightRadius, Style.borderBottomLeftRadius, Style.borderBottomRightRadius);
                     image.SetBorderImage(borderSprite);
                 });
 

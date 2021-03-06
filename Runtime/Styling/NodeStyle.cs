@@ -62,10 +62,50 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.borderRadius, value);
             get => GetStyleValue<int>(StyleProperties.borderRadius);
         }
+        public int borderTopLeftRadius
+        {
+            set => SetStyleValue(StyleProperties.borderTopLeftRadius, value);
+            get => HasValue(StyleProperties.borderTopLeftRadius.name) ? GetStyleValue<int>(StyleProperties.borderTopLeftRadius) : GetStyleValue<int>(StyleProperties.borderRadius);
+        }
+        public int borderTopRightRadius
+        {
+            set => SetStyleValue(StyleProperties.borderTopRightRadius, value);
+            get => HasValue(StyleProperties.borderTopRightRadius.name) ? GetStyleValue<int>(StyleProperties.borderTopRightRadius) : GetStyleValue<int>(StyleProperties.borderRadius);
+        }
+        public int borderBottomLeftRadius
+        {
+            set => SetStyleValue(StyleProperties.borderBottomLeftRadius, value);
+            get => HasValue(StyleProperties.borderBottomLeftRadius.name) ? GetStyleValue<int>(StyleProperties.borderBottomLeftRadius) : GetStyleValue<int>(StyleProperties.borderRadius);
+        }
+        public int borderBottomRightRadius
+        {
+            set => SetStyleValue(StyleProperties.borderBottomRightRadius, value);
+            get => HasValue(StyleProperties.borderBottomRightRadius.name) ? GetStyleValue<int>(StyleProperties.borderBottomRightRadius) : GetStyleValue<int>(StyleProperties.borderRadius);
+        }
         public Color borderColor
         {
             set => SetStyleValue(StyleProperties.borderColor, value);
             get => GetStyleValue<Color>(StyleProperties.borderColor);
+        }
+        public Color borderLeftColor
+        {
+            set => SetStyleValue(StyleProperties.borderLeftColor, value);
+            get => HasValue(StyleProperties.borderLeftColor.name) ? GetStyleValue<Color>(StyleProperties.borderLeftColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+        }
+        public Color borderRightColor
+        {
+            set => SetStyleValue(StyleProperties.borderRightColor, value);
+            get => HasValue(StyleProperties.borderRightColor.name) ? GetStyleValue<Color>(StyleProperties.borderRightColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+        }
+        public Color borderTopColor
+        {
+            set => SetStyleValue(StyleProperties.borderTopColor, value);
+            get => HasValue(StyleProperties.borderTopColor.name) ? GetStyleValue<Color>(StyleProperties.borderTopColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+        }
+        public Color borderBottomColor
+        {
+            set => SetStyleValue(StyleProperties.borderBottomColor, value);
+            get => HasValue(StyleProperties.borderBottomColor.name) ? GetStyleValue<Color>(StyleProperties.borderBottomColor) : GetStyleValue<Color>(StyleProperties.borderColor);
         }
         public ShadowDefinition boxShadow
         {

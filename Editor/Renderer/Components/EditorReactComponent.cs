@@ -139,8 +139,15 @@ namespace ReactUnity.Editor.Renderer.Components
             Element.style.fontSize = Style.fontSizeActual;
             Element.style.whiteSpace = Style.textWrap ? WhiteSpace.Normal : WhiteSpace.NoWrap;
 
-            Element.style.borderBottomLeftRadius = Element.style.borderBottomRightRadius = Element.style.borderTopLeftRadius = Element.style.borderTopRightRadius = Style.borderRadius;
-            Element.style.borderBottomColor = Element.style.borderTopColor = Element.style.borderLeftColor = Element.style.borderRightColor = Style.borderColor;
+            Element.style.borderBottomLeftRadius = Style.borderBottomLeftRadius;
+            Element.style.borderBottomRightRadius = Style.borderBottomRightRadius;
+            Element.style.borderTopLeftRadius = Style.borderTopLeftRadius;
+            Element.style.borderTopRightRadius = Style.borderTopRightRadius;
+
+            Element.style.borderBottomColor = Style.borderBottomColor;
+            Element.style.borderTopColor = Style.borderTopColor;
+            Element.style.borderLeftColor = Style.borderLeftColor;
+            Element.style.borderRightColor = Style.borderRightColor;
 
             Style.backgroundImage?.Get(Context, tx => Element.style.backgroundImage = tx);
             Element.style.unityFontStyleAndWeight = StylingHelpers.ConvertFontStyle(Style.fontStyle, Style.fontWeight);

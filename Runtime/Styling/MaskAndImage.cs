@@ -27,11 +27,11 @@ namespace ReactUnity.Styling
             Mask.enabled = enabled;
         }
 
-        internal void SetBorderRadius(int borderRadius)
+        internal void SetBorderRadius(int tl, int tr, int bl, int br)
         {
             AdaptiveDispatcher.OnUpdate(() =>
             {
-                if (Image) Image.sprite = BorderGraphic.CreateBorderSprite(borderRadius);
+                if (Image) Image.sprite = BorderGraphic.CreateBorderSprite(tl, tr, bl, br);
             });
         }
     }
