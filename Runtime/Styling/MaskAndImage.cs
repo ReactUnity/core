@@ -29,7 +29,7 @@ namespace ReactUnity.Styling
 
         internal void SetBorderRadius(int borderRadius)
         {
-            MainThreadDispatcher.OnUpdate(() =>
+            AdaptiveDispatcher.OnUpdate(() =>
             {
                 if (Image) Image.sprite = BorderGraphic.CreateBorderSprite(borderRadius);
             });

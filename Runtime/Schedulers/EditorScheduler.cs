@@ -1,7 +1,7 @@
 using ReactUnity.Interop;
 using ReactUnity.Schedulers;
 
-namespace ReactUnity.Editor.Renderer
+namespace ReactUnity.Schedulers
 {
     public class EditorScheduler : IUnityScheduler
     {

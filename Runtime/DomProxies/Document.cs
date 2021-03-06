@@ -113,8 +113,7 @@ namespace ReactUnity.DomProxies
 
             Action<string> callback = (sc) =>
             {
-                if (Application.isPlaying) MainThreadDispatcher.OnUpdate(() => action(sc));
-                else EditorDispatcher.OnUpdate(() => action(sc));
+                AdaptiveDispatcher.OnUpdate(() => action(sc));
             };
 
             script.GetScript((sc, isDevServer) => callback(sc), false, true);

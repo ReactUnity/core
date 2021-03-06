@@ -20,7 +20,7 @@ namespace ReactUnity.Types
         {
             if (realType == AssetReferenceType.Url)
             {
-                webDeferred = MainThreadDispatcher.StartDeferred(GetTexture(realValue as string, callback));
+                webDeferred = AdaptiveDispatcher.StartDeferred(GetTexture(realValue as string, callback));
             }
             else if (realType == AssetReferenceType.Data)
             {
@@ -79,7 +79,7 @@ namespace ReactUnity.Types
         public override void Dispose()
         {
             base.Dispose();
-            if (webDeferred >= 0) MainThreadDispatcher.StopDeferred(webDeferred);
+            if (webDeferred >= 0) AdaptiveDispatcher.StopDeferred(webDeferred);
         }
     }
 }

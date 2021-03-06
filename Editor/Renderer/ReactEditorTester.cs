@@ -1,5 +1,6 @@
 using ReactUnity.Editor.Renderer.Styling;
 using ReactUnity.Interop;
+using ReactUnity.Schedulers;
 using ReactUnity.Types;
 using System;
 using UnityEditor;

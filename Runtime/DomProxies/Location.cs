@@ -48,8 +48,7 @@ namespace ReactUnity.DomProxies
 
         public void reload()
         {
-            if (Application.isPlaying) MainThreadDispatcher.OnUpdate(restart);
-            else EditorDispatcher.OnUpdate(restart);
+            AdaptiveDispatcher.OnUpdate(restart);
         }
     }
 }

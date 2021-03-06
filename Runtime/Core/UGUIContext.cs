@@ -52,7 +52,7 @@ namespace ReactUnity
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
 
-            MainThreadDispatcher.AddCallOnLateUpdate(() =>
+            Action callback = () =>
             {
                 if (Scheduled)
                 {
@@ -62,7 +62,8 @@ namespace ReactUnity
                     for (int i = 0; i < ScheduledCallbacks.Count; i++)
                         ScheduledCallbacks[i]?.Invoke();
                 }
-            });
+            };
+            AdaptiveDispatcher.AddCallOnLateUpdate(callback);
         }
 
         public override IReactComponent CreateComponent(string tag, string text)

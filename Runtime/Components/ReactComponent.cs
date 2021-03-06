@@ -367,7 +367,7 @@ namespace ReactUnity.Components
                     image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
                 });
                 image.SetBoxShadow(Style.boxShadow);
-                MainThreadDispatcher.OnUpdate(() =>
+                AdaptiveDispatcher.OnUpdate(() =>
                 {
                     if (!GameObject) return;
                     var borderSprite = BorderGraphic.CreateBorderSprite(Style.borderRadius);

@@ -59,10 +59,10 @@ namespace ReactUnity
         private IDisposable LoadAndRun(ReactScript script, List<TextAsset> preload, Action callback = null, bool disableWarnings = false)
         {
             var ru = new ReactUnityRunner();
-            MainThreadDispatcher.Initialize();
+            AdaptiveDispatcher.Initialize();
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
-                ctx = new UGUIContext(Root, Globals, script, new UnityScheduler(), isDevServer, Restart);
+                ctx = new UGUIContext(Root, Globals, script, Application.isPlaying ? new UnityScheduler() : new EditorScheduler() as IUnityScheduler, isDevServer, Restart);
                 ru.RunScript(code, ctx, preload, callback);
             }, true, disableWarnings);
 

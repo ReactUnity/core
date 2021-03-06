@@ -95,8 +95,7 @@ namespace ReactUnity.DomProxies
 
         public void clear()
         {
-            if(Application.isPlaying) MainThreadDispatcher.OnUpdate(() => Debug.ClearDeveloperConsole());
-            EditorDispatcher.OnUpdate(() => Debug.ClearDeveloperConsole());
+            AdaptiveDispatcher.OnUpdate(() => Debug.ClearDeveloperConsole());
         }
 
         public void assert(bool val)

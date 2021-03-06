@@ -8,16 +8,11 @@ namespace ReactUnity.Layout
     public class TextMeasurer : MonoBehaviour, ILayoutSelfController
     {
         private TextMeshProUGUI tmpro;
-        private RectTransform rt;
+
+        TextMeshProUGUI Text { get => tmpro ??= GetComponent<TextMeshProUGUI>(); }
 
         public YogaNode Layout;
         public UGUIContext Context;
-
-        private void Awake()
-        {
-            rt = GetComponent<RectTransform>();
-            tmpro = GetComponent<TextMeshProUGUI>();
-        }
 
         void ILayoutController.SetLayoutHorizontal()
         {
@@ -33,7 +28,7 @@ namespace ReactUnity.Layout
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)
         {
-            var values = tmpro.GetPreferredValues(width, height);
+            var values = Text.GetPreferredValues(width, height);
 
             return new YogaSize
             {

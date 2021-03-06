@@ -16,7 +16,7 @@ namespace ReactUnity.Styling
 
         static public Sprite CreateBorderSprite(int borderRadius)
         {
-
+            if (!Application.isPlaying) return null;
             borderRadius = Mathf.Max(borderRadius, 0);
             if (SpriteCache.ContainsKey(borderRadius)) return SpriteCache[borderRadius];
 

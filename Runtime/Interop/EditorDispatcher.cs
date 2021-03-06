@@ -24,6 +24,10 @@ namespace ReactUnity.Interop
             }
         }
 
+        public static void Initialize()
+        {
+        }
+
         private static List<IEnumerator> ToStart = new List<IEnumerator>();
         private static HashSet<int> ToStop = new HashSet<int>();
         private static List<Action> CallOnLateUpdate = new List<Action>();
