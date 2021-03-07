@@ -1,5 +1,6 @@
 
 import { ObjectDictionary, UnityContext, UnitySchedulerContext } from './context';
+import { ReactUnity } from './generated';
 import { NativeContainerInstance } from './renderer';
 
 declare global {
@@ -7,7 +8,7 @@ declare global {
   const RootContainer: NativeContainerInstance;
   const Globals: ObjectDictionary;
   const UnityScheduler: UnitySchedulerContext;
-  const Callback: <T, R>(callback: (...args: T[]) => R) => (...args: T[]) => R;
+  const Callback: <T, R>(callback: (...args: T[]) => R) => ReactUnity.Interop.Callback;
 
   const localStorage: {
     getItem(key: string): string;
