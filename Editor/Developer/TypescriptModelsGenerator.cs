@@ -208,14 +208,18 @@ namespace ReactUnity.Editor.Developer
                         .Where(x => !x.IsSpecialName &&
                                     !(x.ReturnType.IsByRef || x.ReturnType.IsPointer) &&
                                     !x.GetParameters().Any(p => p.ParameterType.IsByRef || p.ParameterType.IsPointer) &&
-                                    !x.IsGenericMethod)
-                        .GroupBy(x => x.Name);
+                                    !x.IsGenericMethod);
+
+                    var methodsGrouped = methods.GroupBy(x => x.Name);
 
                     foreach (var info in props)
                         sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
 
                     foreach (var info in fields)
                         sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
+
+                    //foreach (var info in methodsGrouped)
+                    //    sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
 
                     foreach (var info in methods)
                         sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
@@ -281,7 +285,7 @@ namespace ReactUnity.Editor.Developer
         {
             var info = list.First();
             var isStatic = info.IsStatic;
-            var types = string.Join(" | ", list.Select(x => "(" + getTypeScriptString(x) + ")"));
+            var types = string.Join(" | ", list.Select(x => "(" + getTypeScriptStringForArgs(x) + ")"));
 
             return string.Format("{0}{1}: {2};",
               isStatic ? "static " : "",
@@ -291,6 +295,22 @@ namespace ReactUnity.Editor.Developer
         }
 
         static string getTypeScriptString(MethodInfo info)
+        {
+            var isStatic = info.IsStatic;
+            var types = getTypeScriptStringForArgs(info);
+
+            var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
+            var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
+
+            return string.Format("{0}{1}({2}): {3};",
+              isStatic ? "static " : "",
+              info.Name,
+              args,
+              retType
+            );
+        }
+
+        static string getTypeScriptStringForArgs(MethodInfo info)
         {
             var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
             var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
