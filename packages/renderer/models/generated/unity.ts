@@ -1,6 +1,6 @@
 //
 // Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.UIElementsModule
-// Generated 20.02.2021 21:19:34
+// Generated 7.03.2021 17:06:06
 //
 
 
@@ -19,7 +19,7 @@ export namespace Unity {
       Enabled = 2,
       Disabled = 1,
     }
-    export interface NativeLeakDetection {
+    export declare class NativeLeakDetection {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -29,7 +29,7 @@ export namespace Unity {
       UninitializedMemory = 0,
       ClearMemory = 1,
     }
-    export interface NativeSliceExtensions {
+    export declare class NativeSliceExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -47,31 +47,31 @@ export namespace Unity {
           DeallocatedFromJob = 1,
           NotAllocatedFromJob = 2,
         }
-        export interface AtomicSafetyHandle {
+        export declare class AtomicSafetyHandle {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
           GetType: (() => any);
         }
-        export interface DisposeSentinel {
+        export declare class DisposeSentinel {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface NativeArrayUnsafeUtility {
+        export declare class NativeArrayUnsafeUtility {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface NativeSliceUnsafeUtility {
+        export declare class NativeSliceUnsafeUtility {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface UnsafeUtility {
+        export declare class UnsafeUtility {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -83,8 +83,7 @@ export namespace Unity {
   export namespace IO {
     export namespace LowLevel {
       export namespace Unsafe {
-        export interface ReadCommand {
-          Buffer: any; // System.Void*
+        export declare class ReadCommand {
           Offset: any; // System.Int64
           Size: any; // System.Int64
           Equals: ((obj: any) => boolean);
@@ -111,7 +110,7 @@ export namespace Unity {
           PriorityLow = 0,
           PriorityHigh = 1,
         }
-        export interface ReadHandle {
+        export declare class ReadHandle {
           JobHandle: Unity.Jobs.JobHandle;
           Status: Unity.IO.LowLevel.Unsafe.ReadStatus;
           IsValid: (() => boolean);
@@ -121,7 +120,7 @@ export namespace Unity {
           ToString: (() => string);
           GetType: (() => any);
         }
-        export interface AsyncReadManager {
+        export declare class AsyncReadManager {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -139,7 +138,7 @@ export namespace Unity {
           Sync = 0,
           Async = 1,
         }
-        export interface AsyncReadManagerRequestMetric {
+        export declare class AsyncReadManagerRequestMetric {
           AssetName: string;
           FileName: string;
           OffsetBytes: any; // System.UInt64
@@ -160,7 +159,7 @@ export namespace Unity {
           ToString: (() => string);
           GetType: (() => any);
         }
-        export interface AsyncReadManagerMetrics {
+        export declare class AsyncReadManagerMetrics {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -170,7 +169,8 @@ export namespace Unity {
           None = 0,
           ClearOnRead = 1,
         }
-        export interface AsyncReadManagerSummaryMetrics {
+        export declare class AsyncReadManagerSummaryMetrics {
+          constructor();
           TotalBytesRead: any; // System.UInt64
           AverageBandwidthMBPerSecond: number;
           AverageReadSizeInBytes: number;
@@ -198,8 +198,20 @@ export namespace Unity {
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface AsyncReadManagerMetricsFilters {
-          SetTypeIDFilter: ((_typeIDs: any) => void) | ((_typeID: any) => void);
+        export declare class AsyncReadManagerMetricsFilters {
+          constructor();
+          constructor(typeID: any);
+          constructor(state: Unity.IO.LowLevel.Unsafe.ProcessingState);
+          constructor(readType: Unity.IO.LowLevel.Unsafe.FileReadType);
+          constructor(priorityLevel: Unity.IO.LowLevel.Unsafe.Priority);
+          constructor(subsystem: Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem);
+          constructor(typeIDs: any[]);
+          constructor(states: Unity.IO.LowLevel.Unsafe.ProcessingState[]);
+          constructor(readTypes: Unity.IO.LowLevel.Unsafe.FileReadType[]);
+          constructor(priorityLevels: Unity.IO.LowLevel.Unsafe.Priority[]);
+          constructor(subsystems: Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem[]);
+          constructor(typeIDs: any[], states: Unity.IO.LowLevel.Unsafe.ProcessingState[], readTypes: Unity.IO.LowLevel.Unsafe.FileReadType[], priorityLevels: Unity.IO.LowLevel.Unsafe.Priority[], subsystems: Unity.IO.LowLevel.Unsafe.AssetLoadingSubsystem[]);
+          SetTypeIDFilter: ((_typeIDs: any[]) => void) | ((_typeID: any) => void);
           SetStateFilter: ((_states: Unity.IO.LowLevel.Unsafe.ProcessingState[]) => void) | ((_state: Unity.IO.LowLevel.Unsafe.ProcessingState) => void);
           SetReadTypeFilter: ((_readTypes: Unity.IO.LowLevel.Unsafe.FileReadType[]) => void) | ((_readType: Unity.IO.LowLevel.Unsafe.FileReadType) => void);
           SetPriorityFilter: ((_priorityLevels: Unity.IO.LowLevel.Unsafe.Priority[]) => void) | ((_priorityLevel: Unity.IO.LowLevel.Unsafe.Priority) => void);
@@ -215,7 +227,7 @@ export namespace Unity {
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface VirtualFileSystem {
+        export declare class VirtualFileSystem {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -225,34 +237,34 @@ export namespace Unity {
     }
   }
   export namespace Jobs {
-    export interface IJob {
+    export declare class IJob {
       Execute: (() => void);
     }
-    export interface IJobExtensions {
+    export declare class IJobExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IJobFor {
+    export declare class IJobFor {
       Execute: ((index: number) => void);
     }
-    export interface IJobForExtensions {
+    export declare class IJobForExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IJobParallelFor {
+    export declare class IJobParallelFor {
       Execute: ((index: number) => void);
     }
-    export interface IJobParallelForExtensions {
+    export declare class IJobParallelForExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface JobHandle {
+    export declare class JobHandle {
       IsCompleted: boolean;
       Complete: (() => void);
       Equals: ((obj: any) => boolean);
@@ -262,13 +274,13 @@ export namespace Unity {
     }
     export namespace LowLevel {
       export namespace Unsafe {
-        export interface JobHandleUnsafeUtility {
+        export declare class JobHandleUnsafeUtility {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface JobRanges {
+        export declare class JobRanges {
           TotalIterationCount: number;
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
@@ -285,13 +297,14 @@ export namespace Unity {
           Single = 0,
           ParallelFor = 1,
         }
-        export interface JobsUtility {
+        export declare class JobsUtility {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface JobsUtility_JobScheduleParameters {
+        export declare class JobsUtility_JobScheduleParameters {
+          constructor(i_jobData: any, i_reflectionData: any, i_dependency: Unity.Jobs.JobHandle, i_scheduleMode: Unity.Jobs.LowLevel.Unsafe.ScheduleMode);
           Dependency: Unity.Jobs.JobHandle;
           ScheduleMode: number;
           ReflectionData: any; // System.IntPtr
@@ -305,7 +318,8 @@ export namespace Unity {
     }
   }
   export namespace Profiling {
-    export interface ProfilerCategory {
+    export declare class ProfilerCategory {
+      constructor(categoryName: string);
       Name: string;
       Color: UnityEngine.Color32;
       ToString: (() => string);
@@ -317,7 +331,11 @@ export namespace Unity {
       None = 0,
       Builtin = 1,
     }
-    export interface ProfilerMarker {
+    export declare class ProfilerMarker {
+      constructor(name: string);
+      constructor(name: any, nameLen: number);
+      constructor(category: Unity.Profiling.ProfilerCategory, name: string);
+      constructor(category: Unity.Profiling.ProfilerCategory, name: any, nameLen: number);
       Handle: any; // System.IntPtr
       Begin: (() => void) | ((contextUnityObject: UnityEngine.Object) => void);
       End: (() => void);
@@ -327,7 +345,7 @@ export namespace Unity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ProfilerMarker_AutoScope {
+    export declare class ProfilerMarker_AutoScope {
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -362,7 +380,7 @@ export namespace Unity {
       SumAllSamplesInFrame = 16,
       Default = 24,
     }
-    export interface ProfilerRecorderSample {
+    export declare class ProfilerRecorderSample {
       Value: any; // System.Int64
       Count: any; // System.Int64
       Equals: ((obj: any) => boolean);
@@ -370,7 +388,13 @@ export namespace Unity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ProfilerRecorder {
+    export declare class ProfilerRecorder {
+      constructor(statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
+      constructor(categoryName: string, statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
+      constructor(category: Unity.Profiling.ProfilerCategory, statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
+      constructor(category: Unity.Profiling.ProfilerCategory, statName: any, statNameLen: number, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
+      constructor(marker: Unity.Profiling.ProfilerMarker, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
+      constructor(statHandle: Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
       Valid: boolean;
       DataType: Unity.Profiling.LowLevel.ProfilerMarkerDataType;
       UnitType: Unity.Profiling.ProfilerMarkerDataUnit;
@@ -415,53 +439,50 @@ export namespace Unity {
         Blob8 = 11,
       }
       export namespace Unsafe {
-        export interface ProfilerRecorderDescription {
+        export declare class ProfilerRecorderDescription {
           Category: Unity.Profiling.ProfilerCategory;
           Flags: Unity.Profiling.LowLevel.MarkerFlags;
           DataType: Unity.Profiling.LowLevel.ProfilerMarkerDataType;
           UnitType: Unity.Profiling.ProfilerMarkerDataUnit;
           NameUtf8Len: number;
-          NameUtf8: any; // System.Byte*
           Name: string;
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
           GetType: (() => any);
         }
-        export interface ProfilerRecorderHandle {
+        export declare class ProfilerRecorderHandle {
           Valid: boolean;
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
           GetType: (() => any);
         }
-        export interface ProfilerMarkerData {
+        export declare class ProfilerMarkerData {
           Type: any; // System.Byte
           Size: any; // System.UInt32
-          Ptr: any; // System.Void*
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
           GetType: (() => any);
         }
-        export interface ProfilerCategoryDescription {
+        export declare class ProfilerCategoryDescription {
           Name: string;
           Id: any; // System.UInt16
           Color: UnityEngine.Color32;
           NameUtf8Len: number;
-          NameUtf8: any; // System.Byte*
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
           GetType: (() => any);
         }
-        export interface ProfilerUnsafeUtility {
+        export declare class ProfilerUnsafeUtility {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface ProfilerUnsafeUtility_TimestampConversionRatio {
+        export declare class ProfilerUnsafeUtility_TimestampConversionRatio {
           Numerator: any; // System.Int64
           Denominator: any; // System.Int64
           Equals: ((obj: any) => boolean);
@@ -474,7 +495,7 @@ export namespace Unity {
   }
   export namespace Rendering {
     export namespace HybridV2 {
-      export interface DOTSInstancingCbuffer {
+      export declare class DOTSInstancingCbuffer {
         NameID: number;
         CbufferIndex: number;
         SizeBytes: number;
@@ -493,7 +514,7 @@ export namespace Unity {
         Bool = 6,
         Struct = 7,
       }
-      export interface DOTSInstancingProperty {
+      export declare class DOTSInstancingProperty {
         MetadataNameID: number;
         ConstantNameID: number;
         CbufferIndex: number;
@@ -507,7 +528,8 @@ export namespace Unity {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface HybridV2ShaderReflection {
+      export declare class HybridV2ShaderReflection {
+        constructor();
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -635,7 +657,7 @@ export namespace UnityEngine {
     Normal = 2,
     High = 4,
   }
-  export interface SortingLayer {
+  export declare class SortingLayer {
     id: number;
     name: string;
     value: number;
@@ -650,7 +672,10 @@ export namespace UnityEngine {
     Out = 2,
     Both = 3,
   }
-  export interface Keyframe {
+  export declare class Keyframe {
+    constructor(time: number, value: number);
+    constructor(time: number, value: number, inTangent: number, outTangent: number);
+    constructor(time: number, value: number, inTangent: number, outTangent: number, inWeight: number, outWeight: number);
     time: number;
     value: number;
     inTangent: number;
@@ -672,7 +697,9 @@ export namespace UnityEngine {
     ClampForever = 8,
     Clamp = 1,
   }
-  export interface AnimationCurve {
+  export declare class AnimationCurve {
+    constructor(keys: UnityEngine.Keyframe[]);
+    constructor();
     keys: UnityEngine.Keyframe[];
     length: number;
     preWrapMode: UnityEngine.WrapMode;
@@ -687,13 +714,15 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Application {
+  export declare class Application {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Application_AdvertisingIdentifierCallback {
+  export declare class Application_AdvertisingIdentifierCallback {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: ((advertisingId: string, trackingEnabled: boolean, errorMsg: string) => void);
@@ -702,13 +731,14 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Application_LowMemoryCallback {
+  export declare class Application_LowMemoryCallback {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: (() => void);
@@ -717,13 +747,14 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Application_LogCallback {
+  export declare class Application_LogCallback {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: ((condition: string, stackTrace: string, type: UnityEngine.LogType) => void);
@@ -732,8 +763,8 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -781,7 +812,8 @@ export namespace UnityEngine {
     VAG = 23,
     AUDIOQUEUE = 24,
   }
-  export interface CachedAssetBundle {
+  export declare class CachedAssetBundle {
+    constructor(name: string, hash: UnityEngine.Hash128);
     name: string;
     hash: UnityEngine.Hash128;
     Equals: ((obj: any) => boolean);
@@ -789,7 +821,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Cache {
+  export declare class Cache {
     valid: boolean;
     ready: boolean;
     readOnly: boolean;
@@ -805,7 +837,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CacheIndex {
+  export declare class CacheIndex {
     name: string;
     bytesUsed: number;
     expires: number;
@@ -814,13 +846,15 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Caching {
+  export declare class Caching {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Camera {
+  export declare class Camera {
+    constructor();
     nearClipPlane: number;
     farClipPlane: number;
     fieldOfView: number;
@@ -843,7 +877,7 @@ export namespace UnityEngine {
     layerCullSpherical: boolean;
     cameraType: UnityEngine.CameraType;
     overrideSceneCullingMask: any; // System.UInt64
-    layerCullDistances: any; // System.Single[]
+    layerCullDistances: number[];
     useOcclusionCulling: boolean;
     cullingMatrix: UnityEngine.Matrix4x4;
     backgroundColor: UnityEngine.Color;
@@ -980,7 +1014,8 @@ export namespace UnityEngine {
     Vertical = 0,
     Horizontal = 1,
   }
-  export interface Camera_GateFitParameters {
+  export declare class Camera_GateFitParameters {
+    constructor(mode: UnityEngine.Camera_GateFitMode, aspect: number);
     mode: UnityEngine.Camera_GateFitMode;
     aspect: number;
     Equals: ((obj: any) => boolean);
@@ -1025,7 +1060,9 @@ export namespace UnityEngine {
     UV7 = 7,
     UV8 = 8,
   }
-  export interface Camera_RenderRequest {
+  export declare class Camera_RenderRequest {
+    constructor(mode: UnityEngine.Camera_RenderRequestMode, rt: UnityEngine.RenderTexture);
+    constructor(mode: UnityEngine.Camera_RenderRequestMode, space: UnityEngine.Camera_RenderRequestOutputSpace, rt: UnityEngine.RenderTexture);
     isValid: boolean;
     mode: UnityEngine.Camera_RenderRequestMode;
     result: UnityEngine.RenderTexture;
@@ -1035,7 +1072,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Camera_CameraCallback {
+  export declare class Camera_CameraCallback {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: ((cam: UnityEngine.Camera) => void);
@@ -1044,13 +1082,15 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface BoundingSphere {
+  export declare class BoundingSphere {
+    constructor(pos: UnityEngine.Vector3, rad: number);
+    constructor(packedSphere: UnityEngine.Vector4);
     position: UnityEngine.Vector3;
     radius: number;
     Equals: ((obj: any) => boolean);
@@ -1058,7 +1098,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CullingGroupEvent {
+  export declare class CullingGroupEvent {
     index: number;
     isVisible: boolean;
     wasVisible: boolean;
@@ -1071,7 +1111,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CullingGroup {
+  export declare class CullingGroup {
+    constructor();
     onStateChanged: UnityEngine.CullingGroup_StateChanged;
     enabled: boolean;
     targetCamera: UnityEngine.Camera;
@@ -1079,17 +1120,18 @@ export namespace UnityEngine {
     SetBoundingSpheres: ((array: UnityEngine.BoundingSphere[]) => void);
     SetBoundingSphereCount: ((count: number) => void);
     EraseSwapBack: ((index: number) => void);
-    QueryIndices: ((visible: boolean, result: any, firstIndex: number) => number) | ((distanceIndex: number, result: any, firstIndex: number) => number) | ((visible: boolean, distanceIndex: number, result: any, firstIndex: number) => number);
+    QueryIndices: ((visible: boolean, result: number[], firstIndex: number) => number) | ((distanceIndex: number, result: number[], firstIndex: number) => number) | ((visible: boolean, distanceIndex: number, result: number[], firstIndex: number) => number);
     IsVisible: ((index: number) => boolean);
     GetDistance: ((index: number) => number);
-    SetBoundingDistances: ((distances: any) => void);
+    SetBoundingDistances: ((distances: number[]) => void);
     SetDistanceReferencePoint: ((point: UnityEngine.Vector3) => void) | ((transform: UnityEngine.Transform) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface CullingGroup_StateChanged {
+  export declare class CullingGroup_StateChanged {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: ((sphere: UnityEngine.CullingGroupEvent) => void);
@@ -1098,13 +1140,13 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface FlareLayer {
+  export declare class FlareLayer {
     enabled: boolean;
     isActiveAndEnabled: boolean;
     transform: UnityEngine.Transform;
@@ -1141,7 +1183,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface ReflectionProbe {
+  export declare class ReflectionProbe {
+    constructor();
     type: UnityEngine.Rendering.ReflectionProbeType;
     size: UnityEngine.Vector3;
     center: UnityEngine.Vector3;
@@ -1210,7 +1253,7 @@ export namespace UnityEngine {
     ReflectionProbeAdded = 0,
     ReflectionProbeRemoved = 1,
   }
-  export interface CrashReport {
+  export declare class CrashReport {
     time: any; // System.DateTime
     text: string;
     Remove: (() => void);
@@ -1219,29 +1262,32 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Debug {
+  export declare class Debug {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ExposedPropertyResolver {
+  export declare class ExposedPropertyResolver {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface IExposedPropertyTable {
+  export declare class IExposedPropertyTable {
     SetReferenceValue: ((id: UnityEngine.PropertyName, value: UnityEngine.Object) => void);
     ClearReferenceValue: ((id: UnityEngine.PropertyName) => void);
   }
-  export interface EventProvider {
+  export declare class EventProvider {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Bounds {
+  export declare class Bounds {
+    constructor(center: UnityEngine.Vector3, size: UnityEngine.Vector3);
     center: UnityEngine.Vector3;
     size: UnityEngine.Vector3;
     extents: UnityEngine.Vector3;
@@ -1260,7 +1306,9 @@ export namespace UnityEngine {
     ClosestPoint: ((point: UnityEngine.Vector3) => UnityEngine.Vector3);
     GetType: (() => any);
   }
-  export interface BoundsInt {
+  export declare class BoundsInt {
+    constructor(xMin: number, yMin: number, zMin: number, sizeX: number, sizeY: number, sizeZ: number);
+    constructor(position: UnityEngine.Vector3Int, size: UnityEngine.Vector3Int);
     x: number;
     y: number;
     z: number;
@@ -1284,7 +1332,8 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface BoundsInt_PositionEnumerator {
+  export declare class BoundsInt_PositionEnumerator {
+    constructor(min: UnityEngine.Vector3Int, max: UnityEngine.Vector3Int);
     Current: UnityEngine.Vector3Int;
     GetEnumerator: (() => UnityEngine.BoundsInt_PositionEnumerator);
     MoveNext: (() => boolean);
@@ -1294,13 +1343,17 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface GeometryUtility {
+  export declare class GeometryUtility {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Plane {
+  export declare class Plane {
+    constructor(inNormal: UnityEngine.Vector3, inPoint: UnityEngine.Vector3);
+    constructor(inNormal: UnityEngine.Vector3, d: number);
+    constructor(a: UnityEngine.Vector3, b: UnityEngine.Vector3, c: UnityEngine.Vector3);
     normal: UnityEngine.Vector3;
     distance: number;
     flipped: UnityEngine.Plane;
@@ -1317,7 +1370,8 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface Ray {
+  export declare class Ray {
+    constructor(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3);
     origin: UnityEngine.Vector3;
     direction: UnityEngine.Vector3;
     GetPoint: ((distance: number) => UnityEngine.Vector3);
@@ -1326,7 +1380,8 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface Ray2D {
+  export declare class Ray2D {
+    constructor(origin: UnityEngine.Vector2, direction: UnityEngine.Vector2);
     origin: UnityEngine.Vector2;
     direction: UnityEngine.Vector2;
     GetPoint: ((distance: number) => UnityEngine.Vector2);
@@ -1335,7 +1390,10 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface Rect {
+  export declare class Rect {
+    constructor(x: number, y: number, width: number, height: number);
+    constructor(position: UnityEngine.Vector2, size: UnityEngine.Vector2);
+    constructor(source: UnityEngine.Rect);
     x: number;
     y: number;
     position: UnityEngine.Vector2;
@@ -1361,7 +1419,9 @@ export namespace UnityEngine {
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     GetType: (() => any);
   }
-  export interface RectInt {
+  export declare class RectInt {
+    constructor(xMin: number, yMin: number, width: number, height: number);
+    constructor(position: UnityEngine.Vector2Int, size: UnityEngine.Vector2Int);
     x: number;
     y: number;
     center: UnityEngine.Vector2;
@@ -1385,7 +1445,8 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface RectInt_PositionEnumerator {
+  export declare class RectInt_PositionEnumerator {
+    constructor(min: UnityEngine.Vector2Int, max: UnityEngine.Vector2Int);
     Current: UnityEngine.Vector2Int;
     GetEnumerator: (() => UnityEngine.RectInt_PositionEnumerator);
     MoveNext: (() => boolean);
@@ -1395,7 +1456,9 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface RectOffset {
+  export declare class RectOffset {
+    constructor();
+    constructor(left: number, right: number, top: number, bottom: number);
     left: number;
     right: number;
     top: number;
@@ -1409,13 +1472,15 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface DynamicGI {
+  export declare class DynamicGI {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface LightingSettings {
+  export declare class LightingSettings {
+    constructor();
     bakedGI: boolean;
     realtimeGI: boolean;
     realtimeEnvironmentLighting: boolean;
@@ -1496,13 +1561,15 @@ export namespace UnityEngine {
     ATrous = 1,
     None = 2,
   }
-  export interface Gizmos {
+  export declare class Gizmos {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface BillboardAsset {
+  export declare class BillboardAsset {
+    constructor();
     width: number;
     height: number;
     bottom: number;
@@ -1516,15 +1583,16 @@ export namespace UnityEngine {
     SetImageTexCoords: ((imageTexCoords: any) => void) | ((imageTexCoords: UnityEngine.Vector4[]) => void);
     GetVertices: ((vertices: any) => void) | (() => UnityEngine.Vector2[]);
     SetVertices: ((vertices: any) => void) | ((vertices: UnityEngine.Vector2[]) => void);
-    GetIndices: ((indices: any) => void) | (() => any);
-    SetIndices: ((indices: any) => void) | ((indices: any) => void);
+    GetIndices: ((indices: any) => void) | (() => any[]);
+    SetIndices: ((indices: any) => void) | ((indices: any[]) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface BillboardRenderer {
+  export declare class BillboardRenderer {
+    constructor();
     billboard: UnityEngine.BillboardAsset;
     lightmapTilingOffset: UnityEngine.Vector4;
     lightProbeAnchor: UnityEngine.Transform;
@@ -1600,13 +1668,13 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CustomRenderTextureManager {
+  export declare class CustomRenderTextureManager {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Display {
+  export declare class Display {
     renderingWidth: number;
     renderingHeight: number;
     systemWidth: number;
@@ -1624,7 +1692,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Display_DisplaysUpdatedDelegate {
+  export declare class Display_DisplaysUpdatedDelegate {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: (() => void);
@@ -1633,8 +1702,8 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -1645,19 +1714,21 @@ export namespace UnityEngine {
     MaximizedWindow = 2,
     Windowed = 3,
   }
-  export interface SleepTimeout {
+  export declare class SleepTimeout {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Screen {
+  export declare class Screen {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface RenderBuffer {
+  export declare class RenderBuffer {
     GetNativeRenderBufferPtr: (() => any);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
@@ -1671,25 +1742,27 @@ export namespace UnityEngine {
     StreamOut = 3,
     SubUpdates = 4,
   }
-  export interface Graphics {
+  export declare class Graphics {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GL {
+  export declare class GL {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ScalableBufferManager {
+  export declare class ScalableBufferManager {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface FrameTiming {
+  export declare class FrameTiming {
     cpuTimePresentCalled: any; // System.UInt64
     cpuFrameTime: number;
     cpuTimeFrameComplete: any; // System.UInt64
@@ -1702,13 +1775,14 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface FrameTimingManager {
+  export declare class FrameTimingManager {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface LightmapData {
+  export declare class LightmapData {
+    constructor();
     lightmapLight: UnityEngine.Texture2D;
     lightmapColor: UnityEngine.Texture2D;
     lightmapDir: UnityEngine.Texture2D;
@@ -1721,7 +1795,7 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface LightmapSettings {
+  export declare class LightmapSettings {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
@@ -1730,15 +1804,15 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface LightProbes {
+  export declare class LightProbes {
     positions: UnityEngine.Vector3[];
     bakedProbes: UnityEngine.Rendering.SphericalHarmonicsL2[];
     count: number;
     cellCount: number;
-    coefficients: any; // System.Single[]
+    coefficients: number[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    GetInterpolatedLightProbe: ((position: UnityEngine.Vector3, renderer: UnityEngine.Renderer, coefficients: any) => void);
+    GetInterpolatedLightProbe: ((position: UnityEngine.Vector3, renderer: UnityEngine.Renderer, coefficients: number[]) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
@@ -1749,7 +1823,7 @@ export namespace UnityEngine {
     D3DHDRDisplayBitDepth10 = 0,
     D3DHDRDisplayBitDepth16 = 1,
   }
-  export interface HDROutputSettings {
+  export declare class HDROutputSettings {
     active: boolean;
     available: boolean;
     automaticHDRTonemapping: boolean;
@@ -1767,7 +1841,7 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Resolution {
+  export declare class Resolution {
     width: number;
     height: number;
     refreshRate: number;
@@ -1776,7 +1850,15 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface RenderTargetSetup {
+  export declare class RenderTargetSetup {
+    constructor(color: UnityEngine.RenderBuffer[], depth: UnityEngine.RenderBuffer, mip: number, face: UnityEngine.CubemapFace, colorLoad: UnityEngine.Rendering.RenderBufferLoadAction[], colorStore: UnityEngine.Rendering.RenderBufferStoreAction[], depthLoad: UnityEngine.Rendering.RenderBufferLoadAction, depthStore: UnityEngine.Rendering.RenderBufferStoreAction);
+    constructor(color: UnityEngine.RenderBuffer, depth: UnityEngine.RenderBuffer);
+    constructor(color: UnityEngine.RenderBuffer, depth: UnityEngine.RenderBuffer, mipLevel: number);
+    constructor(color: UnityEngine.RenderBuffer, depth: UnityEngine.RenderBuffer, mipLevel: number, face: UnityEngine.CubemapFace);
+    constructor(color: UnityEngine.RenderBuffer, depth: UnityEngine.RenderBuffer, mipLevel: number, face: UnityEngine.CubemapFace, depthSlice: number);
+    constructor(color: UnityEngine.RenderBuffer[], depth: UnityEngine.RenderBuffer);
+    constructor(color: UnityEngine.RenderBuffer[], depth: UnityEngine.RenderBuffer, mipLevel: number);
+    constructor(color: UnityEngine.RenderBuffer[], depth: UnityEngine.RenderBuffer, mip: number, face: UnityEngine.CubemapFace);
     color: UnityEngine.RenderBuffer[];
     depth: UnityEngine.RenderBuffer;
     mipLevel: number;
@@ -1791,7 +1873,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface QualitySettings {
+  export declare class QualitySettings {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
@@ -1800,13 +1882,14 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface RendererExtensions {
+  export declare class RendererExtensions {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Mesh {
+  export declare class Mesh {
+    constructor();
     uv1: UnityEngine.Vector2[];
     indexFormat: UnityEngine.Rendering.IndexFormat;
     vertexBufferCount: number;
@@ -1830,7 +1913,7 @@ export namespace UnityEngine {
     colors: UnityEngine.Color[];
     colors32: UnityEngine.Color32[];
     vertexAttributeCount: number;
-    triangles: any; // System.Int32[]
+    triangles: number[];
     boneWeights: UnityEngine.BoneWeight[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -1867,13 +1950,13 @@ export namespace UnityEngine {
     GetUVs: ((channel: number, uvs: any) => void) | ((channel: number, uvs: any) => void) | ((channel: number, uvs: any) => void);
     GetVertexAttributes: (() => UnityEngine.Rendering.VertexAttributeDescriptor[]) | ((attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => number) | ((attributes: any) => number);
     SetVertexBufferParams: ((vertexCount: number, attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => void) | ((vertexCount: number, attributes: any) => void);
-    GetTriangles: ((submesh: number) => any) | ((submesh: number, applyBaseVertex: boolean) => any) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, applyBaseVertex: boolean) => void) | ((triangles: any, submesh: number, applyBaseVertex?: boolean) => void);
-    GetIndices: ((submesh: number) => any) | ((submesh: number, applyBaseVertex: boolean) => any) | ((indices: any, submesh: number) => void) | ((indices: any, submesh: number, applyBaseVertex: boolean) => void) | ((indices: any, submesh: number, applyBaseVertex?: boolean) => void);
+    GetTriangles: ((submesh: number) => number[]) | ((submesh: number, applyBaseVertex: boolean) => number[]) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, applyBaseVertex: boolean) => void) | ((triangles: any, submesh: number, applyBaseVertex?: boolean) => void);
+    GetIndices: ((submesh: number) => number[]) | ((submesh: number, applyBaseVertex: boolean) => number[]) | ((indices: any, submesh: number) => void) | ((indices: any, submesh: number, applyBaseVertex: boolean) => void) | ((indices: any, submesh: number, applyBaseVertex?: boolean) => void);
     GetIndexStart: ((submesh: number) => any);
     GetIndexCount: ((submesh: number) => any);
     GetBaseVertex: ((submesh: number) => any);
-    SetTriangles: ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void);
-    SetIndices: ((indices: any, topology: UnityEngine.MeshTopology, submesh: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void);
+    SetTriangles: ((triangles: number[], submesh: number) => void) | ((triangles: number[], submesh: number, calculateBounds: boolean) => void) | ((triangles: number[], submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: number[], trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any[], submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any[], trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, calculateBounds: boolean) => void) | ((triangles: any, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((triangles: any, trianglesStart: number, trianglesLength: number, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void);
+    SetIndices: ((indices: number[], topology: UnityEngine.MeshTopology, submesh: number) => void) | ((indices: number[], topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean) => void) | ((indices: number[], topology: UnityEngine.MeshTopology, submesh: number, calculateBounds: boolean, baseVertex: number) => void) | ((indices: number[], indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any[], topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any[], indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void) | ((indices: any, indicesStart: number, indicesLength: number, topology: UnityEngine.MeshTopology, submesh: number, calculateBounds?: boolean, baseVertex?: number) => void);
     SetSubMeshes: ((desc: UnityEngine.Rendering.SubMeshDescriptor[], start: number, count: number, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: UnityEngine.Rendering.SubMeshDescriptor[], flags?: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: any, start: number, count: number, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((desc: any, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void);
     GetBindposes: ((bindposes: any) => void);
     GetBoneWeights: ((boneWeights: any) => void);
@@ -1896,7 +1979,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Mesh_MeshData {
+  export declare class Mesh_MeshData {
     vertexCount: number;
     vertexBufferCount: number;
     indexFormat: UnityEngine.Rendering.IndexFormat;
@@ -1919,7 +2002,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Mesh_MeshDataArray {
+  export declare class Mesh_MeshDataArray {
     Length: number;
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
@@ -1927,7 +2010,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Renderer {
+  export declare class Renderer {
+    constructor();
     lightmapTilingOffset: UnityEngine.Vector4;
     lightProbeAnchor: UnityEngine.Transform;
     castShadows: boolean;
@@ -2002,7 +2086,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Projector {
+  export declare class Projector {
+    constructor();
     isOrthoGraphic: boolean;
     orthoGraphicSize: number;
     nearClipPlane: number;
@@ -2049,7 +2134,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Shader {
+  export declare class Shader {
     maximumLOD: number;
     isSupported: boolean;
     renderQueue: number;
@@ -2065,7 +2150,7 @@ export namespace UnityEngine {
     GetPropertyType: ((propertyIndex: number) => UnityEngine.Rendering.ShaderPropertyType);
     GetPropertyDescription: ((propertyIndex: number) => string);
     GetPropertyFlags: ((propertyIndex: number) => UnityEngine.Rendering.ShaderPropertyFlags);
-    GetPropertyAttributes: ((propertyIndex: number) => any);
+    GetPropertyAttributes: ((propertyIndex: number) => string[]);
     GetPropertyDefaultFloatValue: ((propertyIndex: number) => number);
     GetPropertyDefaultVectorValue: ((propertyIndex: number) => UnityEngine.Vector4);
     GetPropertyRangeLimits: ((propertyIndex: number) => UnityEngine.Vector2);
@@ -2082,7 +2167,8 @@ export namespace UnityEngine {
     Dual = 1,
     Directional = 2,
   }
-  export interface TrailRenderer {
+  export declare class TrailRenderer {
+    constructor();
     numPositions: number;
     time: number;
     startWidth: number;
@@ -2184,7 +2270,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface LineRenderer {
+  export declare class LineRenderer {
+    constructor();
     numPositions: number;
     startWidth: number;
     endWidth: number;
@@ -2285,7 +2372,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface MaterialPropertyBlock {
+  export declare class MaterialPropertyBlock {
+    constructor();
     isEmpty: boolean;
     AddFloat: ((name: string, value: number) => void) | ((nameID: number, value: number) => void);
     AddVector: ((name: string, value: UnityEngine.Vector4) => void) | ((nameID: number, value: UnityEngine.Vector4) => void);
@@ -2301,7 +2389,7 @@ export namespace UnityEngine {
     SetBuffer: ((name: string, value: UnityEngine.ComputeBuffer) => void) | ((nameID: number, value: UnityEngine.ComputeBuffer) => void) | ((name: string, value: UnityEngine.GraphicsBuffer) => void) | ((nameID: number, value: UnityEngine.GraphicsBuffer) => void);
     SetTexture: ((name: string, value: UnityEngine.Texture) => void) | ((nameID: number, value: UnityEngine.Texture) => void) | ((name: string, value: UnityEngine.RenderTexture, element: UnityEngine.Rendering.RenderTextureSubElement) => void) | ((nameID: number, value: UnityEngine.RenderTexture, element: UnityEngine.Rendering.RenderTextureSubElement) => void);
     SetConstantBuffer: ((name: string, value: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((nameID: number, value: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((name: string, value: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((nameID: number, value: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
-    SetFloatArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
+    SetFloatArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
     SetVectorArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: UnityEngine.Vector4[]) => void) | ((nameID: number, values: UnityEngine.Vector4[]) => void);
     SetMatrixArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: UnityEngine.Matrix4x4[]) => void) | ((nameID: number, values: UnityEngine.Matrix4x4[]) => void);
     GetFloat: ((name: string) => number) | ((nameID: number) => number);
@@ -2310,7 +2398,7 @@ export namespace UnityEngine {
     GetColor: ((name: string) => UnityEngine.Color) | ((nameID: number) => UnityEngine.Color);
     GetMatrix: ((name: string) => UnityEngine.Matrix4x4) | ((nameID: number) => UnityEngine.Matrix4x4);
     GetTexture: ((name: string) => UnityEngine.Texture) | ((nameID: number) => UnityEngine.Texture);
-    GetFloatArray: ((name: string) => any) | ((nameID: number) => any) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
+    GetFloatArray: ((name: string) => number[]) | ((nameID: number) => number[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
     GetVectorArray: ((name: string) => UnityEngine.Vector4[]) | ((nameID: number) => UnityEngine.Vector4[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
     GetMatrixArray: ((name: string) => UnityEngine.Matrix4x4[]) | ((nameID: number) => UnityEngine.Matrix4x4[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
     CopySHCoefficientArraysFrom: ((lightProbes: any) => void) | ((lightProbes: UnityEngine.Rendering.SphericalHarmonicsL2[]) => void) | ((lightProbes: any, sourceStart: number, destStart: number, count: number) => void) | ((lightProbes: UnityEngine.Rendering.SphericalHarmonicsL2[], sourceStart: number, destStart: number, count: number) => void);
@@ -2320,7 +2408,7 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface RenderSettings {
+  export declare class RenderSettings {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
@@ -2329,7 +2417,10 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Material {
+  export declare class Material {
+    constructor(shader: UnityEngine.Shader);
+    constructor(source: UnityEngine.Material);
+    constructor(contents: string);
     shader: UnityEngine.Shader;
     color: UnityEngine.Color;
     mainTexture: UnityEngine.Texture;
@@ -2340,7 +2431,7 @@ export namespace UnityEngine {
     doubleSidedGI: boolean;
     enableInstancing: boolean;
     passCount: number;
-    shaderKeywords: any; // System.String[]
+    shaderKeywords: string[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
     HasProperty: ((nameID: number) => boolean) | ((name: string) => boolean);
@@ -2357,8 +2448,8 @@ export namespace UnityEngine {
     SetPass: ((pass: number) => boolean);
     CopyPropertiesFromMaterial: ((mat: UnityEngine.Material) => void);
     ComputeCRC: (() => number);
-    GetTexturePropertyNames: (() => any) | ((outNames: any) => void);
-    GetTexturePropertyNameIDs: (() => any) | ((outNames: any) => void);
+    GetTexturePropertyNames: (() => string[]) | ((outNames: any) => void);
+    GetTexturePropertyNameIDs: (() => number[]) | ((outNames: any) => void);
     SetFloat: ((name: string, value: number) => void) | ((nameID: number, value: number) => void);
     SetInt: ((name: string, value: number) => void) | ((nameID: number, value: number) => void);
     SetColor: ((name: string, value: UnityEngine.Color) => void) | ((nameID: number, value: UnityEngine.Color) => void);
@@ -2367,7 +2458,7 @@ export namespace UnityEngine {
     SetTexture: ((name: string, value: UnityEngine.Texture) => void) | ((nameID: number, value: UnityEngine.Texture) => void) | ((name: string, value: UnityEngine.RenderTexture, element: UnityEngine.Rendering.RenderTextureSubElement) => void) | ((nameID: number, value: UnityEngine.RenderTexture, element: UnityEngine.Rendering.RenderTextureSubElement) => void);
     SetBuffer: ((name: string, value: UnityEngine.ComputeBuffer) => void) | ((nameID: number, value: UnityEngine.ComputeBuffer) => void) | ((name: string, value: UnityEngine.GraphicsBuffer) => void) | ((nameID: number, value: UnityEngine.GraphicsBuffer) => void);
     SetConstantBuffer: ((name: string, value: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((nameID: number, value: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((name: string, value: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((nameID: number, value: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
-    SetFloatArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
+    SetFloatArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
     SetColorArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: UnityEngine.Color[]) => void) | ((nameID: number, values: UnityEngine.Color[]) => void);
     SetVectorArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: UnityEngine.Vector4[]) => void) | ((nameID: number, values: UnityEngine.Vector4[]) => void);
     SetMatrixArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: UnityEngine.Matrix4x4[]) => void) | ((nameID: number, values: UnityEngine.Matrix4x4[]) => void);
@@ -2377,7 +2468,7 @@ export namespace UnityEngine {
     GetVector: ((name: string) => UnityEngine.Vector4) | ((nameID: number) => UnityEngine.Vector4);
     GetMatrix: ((name: string) => UnityEngine.Matrix4x4) | ((nameID: number) => UnityEngine.Matrix4x4);
     GetTexture: ((name: string) => UnityEngine.Texture) | ((nameID: number) => UnityEngine.Texture);
-    GetFloatArray: ((name: string) => any) | ((nameID: number) => any) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
+    GetFloatArray: ((name: string) => number[]) | ((nameID: number) => number[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
     GetColorArray: ((name: string) => UnityEngine.Color[]) | ((nameID: number) => UnityEngine.Color[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
     GetVectorArray: ((name: string) => UnityEngine.Vector4[]) | ((nameID: number) => UnityEngine.Vector4[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
     GetMatrixArray: ((name: string) => UnityEngine.Matrix4x4[]) | ((nameID: number) => UnityEngine.Matrix4x4[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
@@ -2391,7 +2482,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface GraphicsBuffer {
+  export declare class GraphicsBuffer {
+    constructor(target: UnityEngine.GraphicsBuffer_Target, count: number, stride: number);
     count: number;
     stride: number;
     Dispose: (() => void);
@@ -2416,7 +2508,8 @@ export namespace UnityEngine {
     IndirectArguments = 256,
     Constant = 512,
   }
-  export interface OcclusionPortal {
+  export declare class OcclusionPortal {
+    constructor();
     open: boolean;
     transform: UnityEngine.Transform;
     gameObject: UnityEngine.GameObject;
@@ -2452,7 +2545,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface OcclusionArea {
+  export declare class OcclusionArea {
+    constructor();
     center: UnityEngine.Vector3;
     size: UnityEngine.Vector3;
     transform: UnityEngine.Transform;
@@ -2489,7 +2583,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Flare {
+  export declare class Flare {
+    constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
@@ -2498,7 +2593,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface LensFlare {
+  export declare class LensFlare {
+    constructor();
     brightness: number;
     fadeSpeed: number;
     color: UnityEngine.Color;
@@ -2539,7 +2635,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface LightBakingOutput {
+  export declare class LightBakingOutput {
     probeOcclusionLightIndex: number;
     occlusionMaskChannel: number;
     lightmapBakeType: UnityEngine.LightmapBakeType;
@@ -2555,7 +2651,8 @@ export namespace UnityEngine {
     NonLightmappedOnly = 1,
     Everything = 2,
   }
-  export interface Light {
+  export declare class Light {
+    constructor();
     type: UnityEngine.LightType;
     shape: UnityEngine.LightShape;
     spotAngle: number;
@@ -2587,7 +2684,7 @@ export namespace UnityEngine {
     shadowResolution: UnityEngine.Rendering.LightShadowResolution;
     shadowSoftness: number;
     shadowSoftnessFade: number;
-    layerShadowCullDistances: any; // System.Single[]
+    layerShadowCullDistances: number[];
     cookieSize: number;
     cookie: UnityEngine.Texture;
     renderMode: UnityEngine.LightRenderMode;
@@ -2645,7 +2742,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Skybox {
+  export declare class Skybox {
+    constructor();
     material: UnityEngine.Material;
     enabled: boolean;
     isActiveAndEnabled: boolean;
@@ -2683,7 +2781,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface MeshFilter {
+  export declare class MeshFilter {
+    constructor();
     sharedMesh: UnityEngine.Mesh;
     mesh: UnityEngine.Mesh;
     transform: UnityEngine.Transform;
@@ -3081,7 +3180,8 @@ export namespace UnityEngine {
     EmissiveIsBlack = 4,
     AnyEmissive = 3,
   }
-  export interface LightProbeProxyVolume {
+  export declare class LightProbeProxyVolume {
+    constructor();
     boundsGlobal: UnityEngine.Bounds;
     sizeCustom: UnityEngine.Vector3;
     originCustom: UnityEngine.Vector3;
@@ -3187,7 +3287,8 @@ export namespace UnityEngine {
     Local = 1,
     TransformZ = 1,
   }
-  export interface SkinnedMeshRenderer {
+  export declare class SkinnedMeshRenderer {
+    constructor();
     quality: UnityEngine.SkinQuality;
     updateWhenOffscreen: boolean;
     forceMatrixRecalculationPerRender: boolean;
@@ -3273,7 +3374,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface MeshRenderer {
+  export declare class MeshRenderer {
+    constructor();
     additionalVertexStreams: UnityEngine.Mesh;
     enlightenVertexStream: UnityEngine.Mesh;
     subMeshStartIndex: number;
@@ -3359,7 +3461,8 @@ export namespace UnityEngine {
     Baked = 2,
     Mixed = 1,
   }
-  export interface LightProbeGroup {
+  export declare class LightProbeGroup {
+    constructor();
     probePositions: UnityEngine.Vector3[];
     dering: boolean;
     enabled: boolean;
@@ -3398,7 +3501,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface LineUtility {
+  export declare class LineUtility {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -3409,7 +3513,8 @@ export namespace UnityEngine {
     CrossFade = 1,
     SpeedTree = 2,
   }
-  export interface LOD {
+  export declare class LOD {
+    constructor(screenRelativeTransitionHeight: number, renderers: UnityEngine.Renderer[]);
     screenRelativeTransitionHeight: number;
     fadeTransitionWidth: number;
     renderers: UnityEngine.Renderer[];
@@ -3418,7 +3523,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface LODGroup {
+  export declare class LODGroup {
+    constructor();
     localReferencePoint: UnityEngine.Vector3;
     size: number;
     lodCount: number;
@@ -3464,7 +3570,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface BoneWeight {
+  export declare class BoneWeight {
     weight0: number;
     weight1: number;
     weight2: number;
@@ -3478,7 +3584,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface BoneWeight1 {
+  export declare class BoneWeight1 {
     weight: number;
     boneIndex: number;
     Equals: ((other: any) => boolean) | ((other: UnityEngine.BoneWeight1) => boolean);
@@ -3486,7 +3592,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CombineInstance {
+  export declare class CombineInstance {
     mesh: UnityEngine.Mesh;
     subMeshIndex: number;
     transform: UnityEngine.Matrix4x4;
@@ -3497,7 +3603,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Texture {
+  export declare class Texture {
     mipmapCount: number;
     graphicsFormat: UnityEngine.Experimental.Rendering.GraphicsFormat;
     width: number;
@@ -3525,7 +3631,14 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Texture2D {
+  export declare class Texture2D {
+    constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, mipCount: number, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, height: number, textureFormat: UnityEngine.TextureFormat, mipCount: number, linear: boolean);
+    constructor(width: number, height: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean, linear: boolean);
+    constructor(width: number, height: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean);
+    constructor(width: number, height: number);
     format: UnityEngine.TextureFormat;
     isReadable: boolean;
     vtOnly: boolean;
@@ -3560,7 +3673,7 @@ export namespace UnityEngine {
     IsRequestedMipmapLevelLoaded: (() => boolean);
     ClearMinimumMipmapLevel: (() => void);
     UpdateExternalTexture: ((nativeTex: any) => void);
-    GetRawTextureData: (() => any);
+    GetRawTextureData: (() => any[]);
     GetPixels: ((x: number, y: number, blockWidth: number, blockHeight: number, miplevel: number) => UnityEngine.Color[]) | ((x: number, y: number, blockWidth: number, blockHeight: number) => UnityEngine.Color[]) | ((miplevel: number) => UnityEngine.Color[]) | (() => UnityEngine.Color[]);
     GetPixels32: ((miplevel: number) => UnityEngine.Color32[]) | (() => UnityEngine.Color32[]);
     PackTextures: ((textures: UnityEngine.Texture2D[], padding: number, maximumAtlasSize: number, makeNoLongerReadable: boolean) => UnityEngine.Rect[]) | ((textures: UnityEngine.Texture2D[], padding: number, maximumAtlasSize: number) => UnityEngine.Rect[]) | ((textures: UnityEngine.Texture2D[], padding: number) => UnityEngine.Rect[]);
@@ -3568,7 +3681,7 @@ export namespace UnityEngine {
     SetPixels: ((x: number, y: number, blockWidth: number, blockHeight: number, colors: UnityEngine.Color[], miplevel: number) => void) | ((x: number, y: number, blockWidth: number, blockHeight: number, colors: UnityEngine.Color[]) => void) | ((colors: UnityEngine.Color[], miplevel: number) => void) | ((colors: UnityEngine.Color[]) => void);
     GetPixel: ((x: number, y: number) => UnityEngine.Color) | ((x: number, y: number, mipLevel: number) => UnityEngine.Color);
     GetPixelBilinear: ((u: number, v: number) => UnityEngine.Color) | ((u: number, v: number, mipLevel: number) => UnityEngine.Color);
-    LoadRawTextureData: ((data: any, size: number) => void) | ((data: any) => void);
+    LoadRawTextureData: ((data: any, size: number) => void) | ((data: any[]) => void);
     Apply: ((updateMipmaps: boolean, makeNoLongerReadable: boolean) => void) | ((updateMipmaps: boolean) => void) | (() => void);
     Resize: ((width: number, height: number) => boolean) | ((width: number, height: number, format: UnityEngine.TextureFormat, hasMipMap: boolean) => boolean) | ((width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, hasMipMap: boolean) => boolean);
     ReadPixels: ((source: UnityEngine.Rect, destX: number, destY: number, recalculateMipMaps: boolean) => void) | ((source: UnityEngine.Rect, destX: number, destY: number) => void);
@@ -3589,7 +3702,12 @@ export namespace UnityEngine {
     CompressRLE = 4,
     CompressPIZ = 8,
   }
-  export interface Cubemap {
+  export declare class Cubemap {
+    constructor(width: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, format: UnityEngine.TextureFormat, mipCount: number);
+    constructor(width: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags, mipCount: number);
+    constructor(width: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean);
     format: UnityEngine.TextureFormat;
     isReadable: boolean;
     streamingMipmaps: boolean;
@@ -3633,7 +3751,14 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Texture3D {
+  export declare class Texture3D {
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags, mipCount: number);
+    constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipCount: number);
+    constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipCount: number, nativeTex: any);
+    constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean);
+    constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean, nativeTex: any);
     depth: number;
     format: UnityEngine.TextureFormat;
     isReadable: boolean;
@@ -3672,7 +3797,13 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Texture2DArray {
+  export declare class Texture2DArray {
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags, mipCount: number);
+    constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipCount: number, linear: boolean);
+    constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean, linear: boolean);
+    constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean);
     depth: number;
     format: UnityEngine.TextureFormat;
     isReadable: boolean;
@@ -3707,7 +3838,13 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CubemapArray {
+  export declare class CubemapArray {
+    constructor(width: number, cubemapCount: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, cubemapCount: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
+    constructor(width: number, cubemapCount: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags, mipCount: number);
+    constructor(width: number, cubemapCount: number, textureFormat: UnityEngine.TextureFormat, mipCount: number, linear: boolean);
+    constructor(width: number, cubemapCount: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean, linear: boolean);
+    constructor(width: number, cubemapCount: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean);
     cubemapCount: number;
     format: UnityEngine.TextureFormat;
     isReadable: boolean;
@@ -3742,7 +3879,11 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface SparseTexture {
+  export declare class SparseTexture {
+    constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, mipCount: number);
+    constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, mipCount: number);
+    constructor(width: number, height: number, textureFormat: UnityEngine.TextureFormat, mipCount: number);
+    constructor(width: number, height: number, textureFormat: UnityEngine.TextureFormat, mipCount: number, linear: boolean);
     tileWidth: number;
     tileHeight: number;
     isCreated: boolean;
@@ -3765,7 +3906,7 @@ export namespace UnityEngine {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     UpdateTile: ((tileX: number, tileY: number, miplevel: number, data: UnityEngine.Color32[]) => void);
-    UpdateTileRaw: ((tileX: number, tileY: number, miplevel: number, data: any) => void);
+    UpdateTileRaw: ((tileX: number, tileY: number, miplevel: number, data: any[]) => void);
     UnloadTile: ((tileX: number, tileY: number, miplevel: number) => void);
     GetNativeTexturePtr: (() => any);
     GetNativeTextureID: (() => number);
@@ -3776,7 +3917,16 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface RenderTexture {
+  export declare class RenderTexture {
+    constructor(desc: UnityEngine.RenderTextureDescriptor);
+    constructor(textureToCopy: UnityEngine.RenderTexture);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.DefaultFormat);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, mipCount: number);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.RenderTextureFormat);
+    constructor(width: number, height: number, depth: number);
+    constructor(width: number, height: number, depth: number, format: UnityEngine.RenderTextureFormat, mipCount: number);
     width: number;
     height: number;
     dimension: UnityEngine.Rendering.TextureDimension;
@@ -3836,7 +3986,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CustomRenderTextureUpdateZone {
+  export declare class CustomRenderTextureUpdateZone {
     updateZoneCenter: UnityEngine.Vector3;
     updateZoneSize: UnityEngine.Vector3;
     rotation: number;
@@ -3847,7 +3997,12 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CustomRenderTexture {
+  export declare class CustomRenderTexture {
+    constructor(width: number, height: number, format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite);
+    constructor(width: number, height: number, format: UnityEngine.RenderTextureFormat);
+    constructor(width: number, height: number);
+    constructor(width: number, height: number, defaultFormat: UnityEngine.Experimental.Rendering.DefaultFormat);
+    constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat);
     material: UnityEngine.Material;
     initializationMaterial: UnityEngine.Material;
     initializationTexture: UnityEngine.Texture;
@@ -3927,7 +4082,13 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface RenderTextureDescriptor {
+  export declare class RenderTextureDescriptor {
+    constructor(width: number, height: number);
+    constructor(width: number, height: number, colorFormat: UnityEngine.RenderTextureFormat);
+    constructor(width: number, height: number, colorFormat: UnityEngine.RenderTextureFormat, depthBufferBits: number);
+    constructor(width: number, height: number, colorFormat: UnityEngine.Experimental.Rendering.GraphicsFormat, depthBufferBits: number);
+    constructor(width: number, height: number, colorFormat: UnityEngine.RenderTextureFormat, depthBufferBits: number, mipCount: number);
+    constructor(width: number, height: number, colorFormat: UnityEngine.Experimental.Rendering.GraphicsFormat, depthBufferBits: number, mipCount: number);
     width: number;
     height: number;
     msaaSamples: number;
@@ -3972,13 +4133,16 @@ export namespace UnityEngine {
     Small = 2,
     InversedSmall = 3,
   }
-  export interface Handheld {
+  export declare class Handheld {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Hash128 {
+  export declare class Hash128 {
+    constructor(u32_0: any, u32_1: any, u32_2: any, u32_3: any);
+    constructor(u64_0: any, u64_1: any);
     isValid: boolean;
     CompareTo: ((rhs: UnityEngine.Hash128) => number) | ((obj: any) => number);
     ToString: (() => string);
@@ -3987,13 +4151,13 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface HashUtilities {
+  export declare class HashUtilities {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface HashUnsafeUtilities {
+  export declare class HashUnsafeUtilities {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4008,7 +4172,8 @@ export namespace UnityEngine {
     Locked = 1,
     Confined = 2,
   }
-  export interface Cursor {
+  export declare class Cursor {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4380,7 +4545,8 @@ export namespace UnityEngine {
     iPadUnknown = 20,
     iPodTouchUnknown = 21,
   }
-  export interface iPhoneSettings {
+  export declare class iPhoneSettings {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4393,7 +4559,7 @@ export namespace UnityEngine {
     Ended = 3,
     Canceled = 4,
   }
-  export interface iPhoneTouch {
+  export declare class iPhoneTouch {
     positionDelta: UnityEngine.Vector2;
     timeDelta: number;
     fingerId: number;
@@ -4420,7 +4586,8 @@ export namespace UnityEngine {
     AspectFill = 2,
     Fill = 3,
   }
-  export interface iPhoneUtils {
+  export declare class iPhoneUtils {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4436,7 +4603,8 @@ export namespace UnityEngine {
     NamePhonePad = 6,
     EmailAddress = 7,
   }
-  export interface iPhoneKeyboard {
+  export declare class iPhoneKeyboard {
+    constructor();
     text: string;
     active: boolean;
     done: boolean;
@@ -4445,7 +4613,7 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface iPhoneAccelerationEvent {
+  export declare class iPhoneAccelerationEvent {
     timeDelta: number;
     acceleration: UnityEngine.Vector3;
     deltaTime: number;
@@ -4463,13 +4631,15 @@ export namespace UnityEngine {
     FaceUp = 5,
     FaceDown = 6,
   }
-  export interface iPhoneInput {
+  export declare class iPhoneInput {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface iPhone {
+  export declare class iPhone {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4507,7 +4677,8 @@ export namespace UnityEngine {
     WeekdayOrdinal = 9,
     Quarter = 10,
   }
-  export interface LocalNotification {
+  export declare class LocalNotification {
+    constructor();
     fireDate: any; // System.DateTime
     timeZone: string;
     repeatInterval: UnityEngine.CalendarUnit;
@@ -4524,7 +4695,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface RemoteNotification {
+  export declare class RemoteNotification {
+    constructor();
     alertBody: string;
     hasAction: boolean;
     applicationIconBadgeNumber: number;
@@ -4541,13 +4713,15 @@ export namespace UnityEngine {
     Sound = 2,
     Alert = 3,
   }
-  export interface NotificationServices {
+  export declare class NotificationServices {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ADBannerView {
+  export declare class ADBannerView {
+    constructor(type: UnityEngine.ADBannerView_Type, layout: UnityEngine.ADBannerView_Layout);
     loaded: boolean;
     visible: boolean;
     layout: UnityEngine.ADBannerView_Layout;
@@ -4576,7 +4750,8 @@ export namespace UnityEngine {
     Banner = 0,
     MediumRect = 1,
   }
-  export interface ADBannerView_BannerWasClickedDelegate {
+  export declare class ADBannerView_BannerWasClickedDelegate {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: (() => void);
@@ -4585,13 +4760,14 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ADBannerView_BannerWasLoadedDelegate {
+  export declare class ADBannerView_BannerWasLoadedDelegate {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: (() => void);
@@ -4600,13 +4776,15 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ADInterstitialAd {
+  export declare class ADInterstitialAd {
+    constructor(autoReload: boolean);
+    constructor();
     loaded: boolean;
     Show: (() => void);
     ReloadAd: (() => void);
@@ -4615,7 +4793,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ADInterstitialAd_InterstitialWasLoadedDelegate {
+  export declare class ADInterstitialAd_InterstitialWasLoadedDelegate {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: (() => void);
@@ -4624,13 +4803,13 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ILogger {
+  export declare class ILogger {
     logHandler: UnityEngine.ILogHandler;
     logEnabled: boolean;
     filterLogType: UnityEngine.LogType;
@@ -4638,14 +4817,15 @@ export namespace UnityEngine {
     Log: ((logType: UnityEngine.LogType, message: any) => void) | ((logType: UnityEngine.LogType, message: any, context: UnityEngine.Object) => void) | ((logType: UnityEngine.LogType, tag: string, message: any) => void) | ((logType: UnityEngine.LogType, tag: string, message: any, context: UnityEngine.Object) => void) | ((message: any) => void) | ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
     LogWarning: ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
     LogError: ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
-    LogFormat: ((logType: UnityEngine.LogType, format: string, args: any) => void);
+    LogFormat: ((logType: UnityEngine.LogType, format: string, args: any[]) => void);
     LogException: ((exception: any) => void);
   }
-  export interface ILogHandler {
-    LogFormat: ((logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, args: any) => void);
+  export declare class ILogHandler {
+    LogFormat: ((logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, args: any[]) => void);
     LogException: ((exception: any, context: UnityEngine.Object) => void);
   }
-  export interface Logger {
+  export declare class Logger {
+    constructor(logHandler: UnityEngine.ILogHandler);
     logHandler: UnityEngine.ILogHandler;
     logEnabled: boolean;
     filterLogType: UnityEngine.LogType;
@@ -4653,14 +4833,16 @@ export namespace UnityEngine {
     Log: ((logType: UnityEngine.LogType, message: any) => void) | ((logType: UnityEngine.LogType, message: any, context: UnityEngine.Object) => void) | ((logType: UnityEngine.LogType, tag: string, message: any) => void) | ((logType: UnityEngine.LogType, tag: string, message: any, context: UnityEngine.Object) => void) | ((message: any) => void) | ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
     LogWarning: ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
     LogError: ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
-    LogFormat: ((logType: UnityEngine.LogType, format: string, args: any) => void) | ((logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, args: any) => void);
+    LogFormat: ((logType: UnityEngine.LogType, format: string, args: any[]) => void) | ((logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, args: any[]) => void);
     LogException: ((exception: any) => void) | ((exception: any, context: UnityEngine.Object) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Color {
+  export declare class Color {
+    constructor(r: number, g: number, b: number, a: number);
+    constructor(r: number, g: number, b: number);
     grayscale: number;
     linear: UnityEngine.Color;
     gamma: UnityEngine.Color;
@@ -4674,7 +4856,8 @@ export namespace UnityEngine {
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Color) => boolean);
     GetType: (() => any);
   }
-  export interface Color32 {
+  export declare class Color32 {
+    constructor(r: any, g: any, b: any, a: any);
     r: any; // System.Byte
     g: any; // System.Byte
     b: any; // System.Byte
@@ -4684,13 +4867,15 @@ export namespace UnityEngine {
     GetHashCode: (() => number);
     GetType: (() => any);
   }
-  export interface ColorUtility {
+  export declare class ColorUtility {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GradientColorKey {
+  export declare class GradientColorKey {
+    constructor(col: UnityEngine.Color, time: number);
     color: UnityEngine.Color;
     time: number;
     Equals: ((obj: any) => boolean);
@@ -4698,7 +4883,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface GradientAlphaKey {
+  export declare class GradientAlphaKey {
+    constructor(alpha: number, time: number);
     alpha: number;
     time: number;
     Equals: ((obj: any) => boolean);
@@ -4710,7 +4896,8 @@ export namespace UnityEngine {
     Blend = 0,
     Fixed = 1,
   }
-  export interface Gradient {
+  export declare class Gradient {
+    constructor();
     colorKeys: UnityEngine.GradientColorKey[];
     alphaKeys: UnityEngine.GradientAlphaKey[];
     mode: UnityEngine.GradientMode;
@@ -4721,7 +4908,7 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface FrustumPlanes {
+  export declare class FrustumPlanes {
     left: number;
     right: number;
     bottom: number;
@@ -4733,7 +4920,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Matrix4x4 {
+  export declare class Matrix4x4 {
+    constructor(column0: UnityEngine.Vector4, column1: UnityEngine.Vector4, column2: UnityEngine.Vector4, column3: UnityEngine.Vector4);
     rotation: UnityEngine.Quaternion;
     lossyScale: UnityEngine.Vector3;
     isIdentity: boolean;
@@ -4772,7 +4960,9 @@ export namespace UnityEngine {
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     GetType: (() => any);
   }
-  export interface Vector3 {
+  export declare class Vector3 {
+    constructor(x: number, y: number, z: number);
+    constructor(x: number, y: number);
     normalized: UnityEngine.Vector3;
     magnitude: number;
     sqrMagnitude: number;
@@ -4787,7 +4977,8 @@ export namespace UnityEngine {
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     GetType: (() => any);
   }
-  export interface Quaternion {
+  export declare class Quaternion {
+    constructor(x: number, y: number, z: number, w: number);
     eulerAngles: UnityEngine.Vector3;
     normalized: UnityEngine.Quaternion;
     x: number;
@@ -4808,13 +4999,14 @@ export namespace UnityEngine {
     SetAxisAngle: ((axis: UnityEngine.Vector3, angle: number) => void);
     GetType: (() => any);
   }
-  export interface Mathf {
+  export declare class Mathf {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Vector2 {
+  export declare class Vector2 {
+    constructor(x: number, y: number);
     normalized: UnityEngine.Vector2;
     magnitude: number;
     sqrMagnitude: number;
@@ -4829,7 +5021,8 @@ export namespace UnityEngine {
     SqrMagnitude: (() => number);
     GetType: (() => any);
   }
-  export interface Vector2Int {
+  export declare class Vector2Int {
+    constructor(x: number, y: number);
     x: number;
     y: number;
     magnitude: number;
@@ -4842,7 +5035,8 @@ export namespace UnityEngine {
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     GetType: (() => any);
   }
-  export interface Vector3Int {
+  export declare class Vector3Int {
+    constructor(x: number, y: number, z: number);
     x: number;
     y: number;
     z: number;
@@ -4856,7 +5050,10 @@ export namespace UnityEngine {
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     GetType: (() => any);
   }
-  export interface Vector4 {
+  export declare class Vector4 {
+    constructor(x: number, y: number, z: number, w: number);
+    constructor(x: number, y: number, z: number);
+    constructor(x: number, y: number);
     normalized: UnityEngine.Vector4;
     magnitude: number;
     sqrMagnitude: number;
@@ -4889,7 +5086,8 @@ export namespace UnityEngine {
   }
   export enum NetworkLogLevel {
   }
-  export interface NetworkPlayer {
+  export declare class NetworkPlayer {
+    constructor(ip: string, port: number);
     ipAddress: string;
     port: number;
     guid: string;
@@ -4900,7 +5098,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface NetworkViewID {
+  export declare class NetworkViewID {
     isMine: boolean;
     owner: UnityEngine.NetworkPlayer;
     Equals: ((obj: any) => boolean);
@@ -4908,7 +5106,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface NetworkView {
+  export declare class NetworkView {
+    constructor();
     observed: UnityEngine.Component;
     stateSynchronization: UnityEngine.NetworkStateSynchronization;
     viewID: UnityEngine.NetworkViewID;
@@ -4935,7 +5134,7 @@ export namespace UnityEngine {
     particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    RPC: ((name: string, mode: UnityEngine.RPCMode, args: any) => void) | ((name: string, target: UnityEngine.NetworkPlayer, args: any) => void);
+    RPC: ((name: string, mode: UnityEngine.RPCMode, args: any[]) => void) | ((name: string, target: UnityEngine.NetworkPlayer, args: any[]) => void);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
     GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
@@ -4952,13 +5151,15 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Network {
+  export declare class Network {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface BitStream {
+  export declare class BitStream {
+    constructor();
     isReading: boolean;
     isWriting: boolean;
     Equals: ((obj: any) => boolean);
@@ -4966,13 +5167,14 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface HostData {
+  export declare class HostData {
+    constructor();
     useNat: boolean;
     gameType: string;
     gameName: string;
     connectedPlayers: number;
     playerLimit: number;
-    ip: any; // System.String[]
+    ip: string[];
     port: number;
     passwordProtected: boolean;
     comment: string;
@@ -4982,13 +5184,14 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface MasterServer {
+  export declare class MasterServer {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface NetworkMessageInfo {
+  export declare class NetworkMessageInfo {
     timestamp: number;
     sender: UnityEngine.NetworkPlayer;
     networkView: UnityEngine.NetworkView;
@@ -4997,7 +5200,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Ping {
+  export declare class Ping {
+    constructor(address: string);
     isDone: boolean;
     time: number;
     ip: string;
@@ -5007,7 +5211,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface PlayerPrefsException {
+  export declare class PlayerPrefsException {
+    constructor(error: string);
     Message: string;
     Data: any; // System.Collections.IDictionary
     InnerException: any; // System.Exception
@@ -5023,31 +5228,36 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
   }
-  export interface PlayerPrefs {
+  export declare class PlayerPrefs {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface PropertyName {
+  export declare class PropertyName {
+    constructor(name: string);
+    constructor(other: UnityEngine.PropertyName);
+    constructor(id: number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.PropertyName) => boolean);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Random {
+  export declare class Random {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Random_State {
+  export declare class Random_State {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface ResourceRequest {
+  export declare class ResourceRequest {
+    constructor();
     asset: UnityEngine.Object;
     isDone: boolean;
     progress: number;
@@ -5058,19 +5268,21 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ResourcesAPI {
+  export declare class ResourcesAPI {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Resources {
+  export declare class Resources {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AsyncOperation {
+  export declare class AsyncOperation {
+    constructor();
     isDone: boolean;
     progress: number;
     priority: number;
@@ -5080,7 +5292,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Behaviour {
+  export declare class Behaviour {
+    constructor();
     enabled: boolean;
     isActiveAndEnabled: boolean;
     transform: UnityEngine.Transform;
@@ -5117,7 +5330,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Component {
+  export declare class Component {
+    constructor();
     transform: UnityEngine.Transform;
     gameObject: UnityEngine.GameObject;
     tag: string;
@@ -5152,13 +5366,13 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Coroutine {
+  export declare class Coroutine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface CustomYieldInstruction {
+  export declare class CustomYieldInstruction {
     keepWaiting: boolean;
     Current: any; // System.Object
     MoveNext: (() => boolean);
@@ -5168,7 +5382,10 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GameObject {
+  export declare class GameObject {
+    constructor(name: string);
+    constructor();
+    constructor(name: string, components: any[]);
     transform: UnityEngine.Transform;
     layer: number;
     active: boolean;
@@ -5216,14 +5433,15 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface LayerMask {
+  export declare class LayerMask {
     value: number;
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface MonoBehaviour {
+  export declare class MonoBehaviour {
+    constructor();
     useGUILayout: boolean;
     runInEditMode: boolean;
     enabled: boolean;
@@ -5270,7 +5488,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface RangeInt {
+  export declare class RangeInt {
+    constructor(start: number, length: number);
     end: number;
     start: number;
     length: number;
@@ -5286,7 +5505,8 @@ export namespace UnityEngine {
     BeforeSplashScreen = 3,
     SubsystemRegistration = 4,
   }
-  export interface ScriptableObject {
+  export declare class ScriptableObject {
+    constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
     SetDirty: (() => void);
@@ -5296,13 +5516,16 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface StackTraceUtility {
+  export declare class StackTraceUtility {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface UnityException {
+  export declare class UnityException {
+    constructor();
+    constructor(message: string);
+    constructor(message: string, innerException: any);
     Message: string;
     Data: any; // System.Collections.IDictionary
     InnerException: any; // System.Exception
@@ -5318,7 +5541,10 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
   }
-  export interface MissingComponentException {
+  export declare class MissingComponentException {
+    constructor();
+    constructor(message: string);
+    constructor(message: string, innerException: any);
     Message: string;
     Data: any; // System.Collections.IDictionary
     InnerException: any; // System.Exception
@@ -5334,7 +5560,10 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
   }
-  export interface UnassignedReferenceException {
+  export declare class UnassignedReferenceException {
+    constructor();
+    constructor(message: string);
+    constructor(message: string, innerException: any);
     Message: string;
     Data: any; // System.Collections.IDictionary
     InnerException: any; // System.Exception
@@ -5350,7 +5579,10 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
   }
-  export interface MissingReferenceException {
+  export declare class MissingReferenceException {
+    constructor();
+    constructor(message: string);
+    constructor(message: string, innerException: any);
     Message: string;
     Data: any; // System.Collections.IDictionary
     InnerException: any; // System.Exception
@@ -5366,8 +5598,10 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
   }
-  export interface TextAsset {
-    bytes: any; // System.Byte[]
+  export declare class TextAsset {
+    constructor();
+    constructor(text: string);
+    bytes: any[];
     text: string;
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -5377,7 +5611,7 @@ export namespace UnityEngine {
     Equals: ((other: any) => boolean);
     GetType: (() => any);
   }
-  export interface TrackedReference {
+  export declare class TrackedReference {
     Equals: ((o: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5394,7 +5628,8 @@ export namespace UnityEngine {
     DontSave = 52,
     HideAndDontSave = 61,
   }
-  export interface Object {
+  export declare class Object {
+    constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
@@ -5403,25 +5638,29 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface WaitForEndOfFrame {
+  export declare class WaitForEndOfFrame {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface WaitForFixedUpdate {
+  export declare class WaitForFixedUpdate {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface WaitForSeconds {
+  export declare class WaitForSeconds {
+    constructor(seconds: number);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface WaitForSecondsRealtime {
+  export declare class WaitForSecondsRealtime {
+    constructor(time: number);
     waitTime: number;
     keepWaiting: boolean;
     Current: any; // System.Object
@@ -5432,7 +5671,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface WaitUntil {
+  export declare class WaitUntil {
+    constructor(predicate: any);
     keepWaiting: boolean;
     Current: any; // System.Object
     MoveNext: (() => boolean);
@@ -5442,7 +5682,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface WaitWhile {
+  export declare class WaitWhile {
+    constructor(predicate: any);
     keepWaiting: boolean;
     Current: any; // System.Object
     MoveNext: (() => boolean);
@@ -5452,29 +5693,34 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface YieldInstruction {
+  export declare class YieldInstruction {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Security {
+  export declare class Security {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Types {
+  export declare class Types {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ISerializationCallbackReceiver {
+  export declare class ISerializationCallbackReceiver {
     OnBeforeSerialize: (() => void);
     OnAfterDeserialize: (() => void);
   }
-  export interface ComputeBuffer {
+  export declare class ComputeBuffer {
+    constructor(count: number, stride: number);
+    constructor(count: number, stride: number, type: UnityEngine.ComputeBufferType);
+    constructor(count: number, stride: number, type: UnityEngine.ComputeBufferType, usage: UnityEngine.ComputeBufferMode);
     count: number;
     stride: number;
     name: string;
@@ -5490,7 +5736,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ShaderVariantCollection {
+  export declare class ShaderVariantCollection {
+    constructor();
     shaderCount: number;
     variantCount: number;
     isWarmedUp: boolean;
@@ -5507,17 +5754,18 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface ShaderVariantCollection_ShaderVariant {
+  export declare class ShaderVariantCollection_ShaderVariant {
+    constructor(shader: UnityEngine.Shader, passType: UnityEngine.Rendering.PassType, keywords: string[]);
     shader: UnityEngine.Shader;
     passType: UnityEngine.Rendering.PassType;
-    keywords: any; // System.String[]
+    keywords: string[];
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface ComputeShader {
-    shaderKeywords: any; // System.String[]
+  export declare class ComputeShader {
+    shaderKeywords: string[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
     FindKernel: ((name: string) => number);
@@ -5535,8 +5783,8 @@ export namespace UnityEngine {
     EnableKeyword: ((keyword: string) => void);
     DisableKeyword: ((keyword: string) => void);
     IsKeywordEnabled: ((keyword: string) => boolean);
-    SetFloats: ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
-    SetInts: ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
+    SetFloats: ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
+    SetInts: ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
     SetBool: ((name: string, val: boolean) => void) | ((nameID: number, val: boolean) => void);
     SetConstantBuffer: ((nameID: number, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((name: string, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((nameID: number, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((name: string, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
     DispatchIndirect: ((kernelIndex: number, argsBuffer: UnityEngine.ComputeBuffer, argsOffset: any) => void) | ((kernelIndex: number, argsBuffer: UnityEngine.ComputeBuffer) => void) | ((kernelIndex: number, argsBuffer: UnityEngine.GraphicsBuffer, argsOffset: any) => void) | ((kernelIndex: number, argsBuffer: UnityEngine.GraphicsBuffer) => void);
@@ -5553,13 +5801,14 @@ export namespace UnityEngine {
     Z = 4,
     All = 7,
   }
-  export interface Snapping {
+  export declare class Snapping {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface StaticBatchingUtility {
+  export declare class StaticBatchingUtility {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5584,19 +5833,22 @@ export namespace UnityEngine {
     Console = 2,
     Desktop = 3,
   }
-  export interface SystemInfo {
+  export declare class SystemInfo {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Time {
+  export declare class Time {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface TouchScreenKeyboard {
+  export declare class TouchScreenKeyboard {
+    constructor(text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean, multiline: boolean, secure: boolean, alert: boolean, textPlaceholder: string, characterLimit: number);
     text: string;
     active: boolean;
     done: boolean;
@@ -5634,13 +5886,15 @@ export namespace UnityEngine {
     DecimalPad = 11,
     OneTimeCode = 12,
   }
-  export interface UnityEventQueueSystem {
+  export declare class UnityEventQueueSystem {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Pose {
+  export declare class Pose {
+    constructor(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion);
     forward: UnityEngine.Vector3;
     right: UnityEngine.Vector3;
     up: UnityEngine.Vector3;
@@ -5679,7 +5933,7 @@ export namespace UnityEngine {
     SizeDelta = 12288,
     Pivot = 49152,
   }
-  export interface DrivenRectTransformTracker {
+  export declare class DrivenRectTransformTracker {
     Add: ((driver: UnityEngine.Object, rectTransform: UnityEngine.RectTransform, drivenProperties: UnityEngine.DrivenTransformProperties) => void);
     Clear: ((revertValues: boolean) => void) | (() => void);
     Equals: ((obj: any) => boolean);
@@ -5687,7 +5941,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface RectTransform {
+  export declare class RectTransform {
+    constructor();
     rect: UnityEngine.Rect;
     anchorMin: UnityEngine.Vector2;
     anchorMax: UnityEngine.Vector2;
@@ -5789,7 +6044,8 @@ export namespace UnityEngine {
     Horizontal = 0,
     Vertical = 1,
   }
-  export interface RectTransform_ReapplyDrivenProperties {
+  export declare class RectTransform_ReapplyDrivenProperties {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: ((driven: UnityEngine.RectTransform) => void);
@@ -5798,13 +6054,13 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Transform {
+  export declare class Transform {
     position: UnityEngine.Vector3;
     localPosition: UnityEngine.Vector3;
     eulerAngles: UnityEngine.Vector3;
@@ -5896,7 +6152,8 @@ export namespace UnityEngine {
     VisibleInsideMask = 1,
     VisibleOutsideMask = 2,
   }
-  export interface SpriteRenderer {
+  export declare class SpriteRenderer {
+    constructor();
     sprite: UnityEngine.Sprite;
     drawMode: UnityEngine.SpriteDrawMode;
     size: UnityEngine.Vector2;
@@ -6012,7 +6269,7 @@ export namespace UnityEngine {
     Center = 0,
     Pivot = 1,
   }
-  export interface SecondarySpriteTexture {
+  export declare class SecondarySpriteTexture {
     name: string;
     texture: UnityEngine.Texture2D;
     Equals: ((obj: any) => boolean);
@@ -6020,7 +6277,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Sprite {
+  export declare class Sprite {
     bounds: UnityEngine.Bounds;
     rect: UnityEngine.Rect;
     border: UnityEngine.Vector4;
@@ -6035,7 +6292,7 @@ export namespace UnityEngine {
     textureRect: UnityEngine.Rect;
     textureRectOffset: UnityEngine.Vector2;
     vertices: UnityEngine.Vector2[];
-    triangles: any; // System.UInt16[]
+    triangles: any[];
     uv: UnityEngine.Vector2[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -6043,20 +6300,22 @@ export namespace UnityEngine {
     GetPhysicsShapePointCount: ((shapeIdx: number) => number);
     GetPhysicsShape: ((shapeIdx: number, physicsShape: any) => number);
     OverridePhysicsShape: ((physicsShapes: any) => void);
-    OverrideGeometry: ((vertices: UnityEngine.Vector2[], triangles: any) => void);
+    OverrideGeometry: ((vertices: UnityEngine.Vector2[], triangles: any[]) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioSettings {
+  export declare class AudioSettings {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AudioSettings_AudioConfigurationChangeHandler {
+  export declare class AudioSettings_AudioConfigurationChangeHandler {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: ((deviceWasChanged: boolean) => void);
@@ -6065,19 +6324,20 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AudioSettings_Mobile {
+  export declare class AudioSettings_Mobile {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AudioSource {
+  export declare class AudioSource {
+    constructor();
     panLevel: number;
     pan: number;
     volume: number;
@@ -6142,8 +6402,8 @@ export namespace UnityEngine {
     UnPause: (() => void);
     SetCustomCurve: ((type: UnityEngine.AudioSourceCurveType, curve: UnityEngine.AnimationCurve) => void);
     GetCustomCurve: ((type: UnityEngine.AudioSourceCurveType) => UnityEngine.AnimationCurve);
-    GetOutputData: ((numSamples: number, channel: number) => any) | ((samples: any, channel: number) => void);
-    GetSpectrumData: ((numSamples: number, channel: number, window: UnityEngine.FFTWindow) => any) | ((samples: any, channel: number, window: UnityEngine.FFTWindow) => void);
+    GetOutputData: ((numSamples: number, channel: number) => number[]) | ((samples: number[], channel: number) => void);
+    GetSpectrumData: ((numSamples: number, channel: number, window: UnityEngine.FFTWindow) => number[]) | ((samples: number[], channel: number, window: UnityEngine.FFTWindow) => void);
     SetSpatializerFloat: ((index: number, value: number) => boolean);
     SetAmbisonicDecoderFloat: ((index: number, value: number) => boolean);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
@@ -6162,7 +6422,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioLowPassFilter {
+  export declare class AudioLowPassFilter {
+    constructor();
     lowpassResonaceQ: number;
     customCutoffCurve: UnityEngine.AnimationCurve;
     cutoffFrequency: number;
@@ -6203,7 +6464,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioHighPassFilter {
+  export declare class AudioHighPassFilter {
+    constructor();
     highpassResonaceQ: number;
     cutoffFrequency: number;
     highpassResonanceQ: number;
@@ -6243,7 +6505,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioReverbFilter {
+  export declare class AudioReverbFilter {
+    constructor();
     lFReference: number;
     reverbPreset: UnityEngine.AudioReverbPreset;
     dryLevel: number;
@@ -6313,7 +6576,7 @@ export namespace UnityEngine {
     Loaded = 2,
     Failed = 3,
   }
-  export interface AudioConfiguration {
+  export declare class AudioConfiguration {
     speakerMode: UnityEngine.AudioSpeakerMode;
     dspBufferSize: number;
     sampleRate: number;
@@ -6395,7 +6658,7 @@ export namespace UnityEngine {
     Psychotic = 26,
     User = 27,
   }
-  export interface AudioClip {
+  export declare class AudioClip {
     length: number;
     samples: number;
     channels: number;
@@ -6410,30 +6673,32 @@ export namespace UnityEngine {
     hideFlags: UnityEngine.HideFlags;
     LoadAudioData: (() => boolean);
     UnloadAudioData: (() => boolean);
-    GetData: ((data: any, offsetSamples: number) => boolean);
-    SetData: ((data: any, offsetSamples: number) => boolean);
+    GetData: ((data: number[], offsetSamples: number) => boolean);
+    SetData: ((data: number[], offsetSamples: number) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioClip_PCMReaderCallback {
+  export declare class AudioClip_PCMReaderCallback {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
-    Invoke: ((data: any) => void);
-    BeginInvoke: ((data: any, callback: any, object: any) => any);
+    Invoke: ((data: number[]) => void);
+    BeginInvoke: ((data: number[], callback: any, object: any) => any);
     EndInvoke: ((result: any) => void);
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AudioClip_PCMSetPositionCallback {
+  export declare class AudioClip_PCMSetPositionCallback {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: ((position: number) => void);
@@ -6442,13 +6707,14 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AudioBehaviour {
+  export declare class AudioBehaviour {
+    constructor();
     enabled: boolean;
     isActiveAndEnabled: boolean;
     transform: UnityEngine.Transform;
@@ -6485,7 +6751,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioListener {
+  export declare class AudioListener {
+    constructor();
     velocityUpdateMode: UnityEngine.AudioVelocityUpdateMode;
     enabled: boolean;
     isActiveAndEnabled: boolean;
@@ -6523,7 +6790,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioReverbZone {
+  export declare class AudioReverbZone {
+    constructor();
     minDistance: number;
     maxDistance: number;
     reverbPreset: UnityEngine.AudioReverbPreset;
@@ -6577,7 +6845,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioDistortionFilter {
+  export declare class AudioDistortionFilter {
+    constructor();
     distortionLevel: number;
     enabled: boolean;
     isActiveAndEnabled: boolean;
@@ -6615,7 +6884,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioEchoFilter {
+  export declare class AudioEchoFilter {
+    constructor();
     delay: number;
     decayRatio: number;
     dryMix: number;
@@ -6656,7 +6926,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AudioChorusFilter {
+  export declare class AudioChorusFilter {
+    constructor();
     dryMix: number;
     wetMix1: number;
     wetMix2: number;
@@ -6701,19 +6972,21 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Microphone {
+  export declare class Microphone {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AudioRenderer {
+  export declare class AudioRenderer {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface MovieTexture {
+  export declare class MovieTexture {
     audioClip: UnityEngine.AudioClip;
     loop: boolean;
     isPlaying: boolean;
@@ -6759,7 +7032,7 @@ export namespace UnityEngine {
     ColorAndDepth = 3,
     UltraWideAngle = 4,
   }
-  export interface WebCamDevice {
+  export declare class WebCamDevice {
     name: string;
     isFrontFacing: boolean;
     kind: UnityEngine.WebCamKind;
@@ -6771,7 +7044,13 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface WebCamTexture {
+  export declare class WebCamTexture {
+    constructor(deviceName: string, requestedWidth: number, requestedHeight: number, requestedFPS: number);
+    constructor(deviceName: string, requestedWidth: number, requestedHeight: number);
+    constructor(deviceName: string);
+    constructor(requestedWidth: number, requestedHeight: number, requestedFPS: number);
+    constructor(requestedWidth: number, requestedHeight: number);
+    constructor();
     isPlaying: boolean;
     deviceName: string;
     requestedFPS: number;
@@ -6815,10 +7094,11 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface ICanvasRaycastFilter {
+  export declare class ICanvasRaycastFilter {
     IsRaycastLocationValid: ((sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera) => boolean);
   }
-  export interface CanvasGroup {
+  export declare class CanvasGroup {
+    constructor();
     alpha: number;
     interactable: boolean;
     blocksRaycasts: boolean;
@@ -6860,7 +7140,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CanvasRenderer {
+  export declare class CanvasRenderer {
+    constructor();
     hasPopInstruction: boolean;
     materialCount: number;
     popMaterialCount: number;
@@ -6922,7 +7203,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CanvasRenderer_OnRequestRebuild {
+  export declare class CanvasRenderer_OnRequestRebuild {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: (() => void);
@@ -6931,13 +7213,13 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface RectTransformUtility {
+  export declare class RectTransformUtility {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -6956,7 +7238,8 @@ export namespace UnityEngine {
     Normal = 8,
     Tangent = 16,
   }
-  export interface Canvas {
+  export declare class Canvas {
+    constructor();
     renderMode: UnityEngine.RenderMode;
     isRootCanvas: boolean;
     pixelRect: UnityEngine.Rect;
@@ -7013,7 +7296,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Canvas_WillRenderCanvases {
+  export declare class Canvas_WillRenderCanvases {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: (() => void);
@@ -7022,13 +7306,13 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface UISystemProfilerApi {
+  export declare class UISystemProfilerApi {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -7044,7 +7328,8 @@ export namespace UnityEngine {
     Italic = 2,
     BoldAndItalic = 3,
   }
-  export interface GUIText {
+  export declare class GUIText {
+    constructor();
     text: boolean;
     material: UnityEngine.Material;
     font: UnityEngine.Font;
@@ -7062,7 +7347,7 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface TextGenerationSettings {
+  export declare class TextGenerationSettings {
     font: UnityEngine.Font;
     color: UnityEngine.Color;
     fontSize: number;
@@ -7086,7 +7371,9 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface TextGenerator {
+  export declare class TextGenerator {
+    constructor();
+    constructor(initialCapacity: number);
     characterCountVisible: number;
     verts: any; // System.Collections.Generic.IList`1[UnityEngine.UIVertex]
     characters: any; // System.Collections.Generic.IList`1[UnityEngine.UICharInfo]
@@ -7136,7 +7423,8 @@ export namespace UnityEngine {
     Truncate = 0,
     Overflow = 1,
   }
-  export interface TextMesh {
+  export declare class TextMesh {
+    constructor();
     text: string;
     font: UnityEngine.Font;
     fontSize: number;
@@ -7183,7 +7471,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface CharacterInfo {
+  export declare class CharacterInfo {
     advance: number;
     glyphWidth: number;
     glyphHeight: number;
@@ -7208,7 +7496,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface UICharInfo {
+  export declare class UICharInfo {
     cursorPos: UnityEngine.Vector2;
     charWidth: number;
     Equals: ((obj: any) => boolean);
@@ -7216,7 +7504,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface UILineInfo {
+  export declare class UILineInfo {
     startCharIdx: number;
     height: number;
     topY: number;
@@ -7226,7 +7514,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface UIVertex {
+  export declare class UIVertex {
     position: UnityEngine.Vector3;
     normal: UnityEngine.Vector3;
     tangent: UnityEngine.Vector4;
@@ -7240,9 +7528,11 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Font {
+  export declare class Font {
+    constructor();
+    constructor(name: string);
     material: UnityEngine.Material;
-    fontNames: any; // System.String[]
+    fontNames: string[];
     dynamic: boolean;
     ascent: number;
     fontSize: number;
@@ -7259,7 +7549,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Font_FontTextureRebuildCallback {
+  export declare class Font_FontTextureRebuildCallback {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: (() => void);
@@ -7268,13 +7559,13 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AndroidInput {
+  export declare class AndroidInput {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -7297,7 +7588,7 @@ export namespace UnityEngine {
     Indirect = 1,
     Stylus = 2,
   }
-  export interface Touch {
+  export declare class Touch {
     fingerId: number;
     position: UnityEngine.Vector2;
     rawPosition: UnityEngine.Vector2;
@@ -7326,7 +7617,7 @@ export namespace UnityEngine {
     FaceUp = 5,
     FaceDown = 6,
   }
-  export interface AccelerationEvent {
+  export declare class AccelerationEvent {
     acceleration: UnityEngine.Vector3;
     deltaTime: number;
     Equals: ((obj: any) => boolean);
@@ -7334,7 +7625,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Gyroscope {
+  export declare class Gyroscope {
     rotationRate: UnityEngine.Vector3;
     rotationRateUnbiased: UnityEngine.Vector3;
     gravity: UnityEngine.Vector3;
@@ -7347,7 +7638,7 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface LocationInfo {
+  export declare class LocationInfo {
     latitude: number;
     longitude: number;
     altitude: number;
@@ -7365,7 +7656,8 @@ export namespace UnityEngine {
     Running = 2,
     Failed = 3,
   }
-  export interface LocationService {
+  export declare class LocationService {
+    constructor();
     isEnabledByUser: boolean;
     status: UnityEngine.LocationServiceStatus;
     lastData: UnityEngine.LocationInfo;
@@ -7376,7 +7668,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Compass {
+  export declare class Compass {
+    constructor();
     magneticHeading: number;
     trueHeading: number;
     headingAccuracy: number;
@@ -7388,13 +7681,14 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Input {
+  export declare class Input {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AnimationInfo {
+  export declare class AnimationInfo {
     clip: UnityEngine.AnimationClip;
     weight: number;
     Equals: ((obj: any) => boolean);
@@ -7402,7 +7696,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Animator {
+  export declare class Animator {
+    constructor();
     isOptimizable: boolean;
     isHuman: boolean;
     hasRootMotion: boolean;
@@ -7548,10 +7843,10 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface IAnimationClipSource {
+  export declare class IAnimationClipSource {
     GetAnimationClips: ((results: any) => void);
   }
-  export interface StateMachineBehaviour {
+  export declare class StateMachineBehaviour {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     OnStateEnter: ((animator: UnityEngine.Animator, stateInfo: UnityEngine.AnimatorStateInfo, layerIndex: number) => void) | ((animator: UnityEngine.Animator, stateInfo: UnityEngine.AnimatorStateInfo, layerIndex: number, controller: UnityEngine.Animations.AnimatorControllerPlayable) => void);
@@ -7591,7 +7886,8 @@ export namespace UnityEngine {
     BasedOnClipBounds = 2,
     BasedOnUserBounds = 3,
   }
-  export interface Animation {
+  export declare class Animation {
+    constructor();
     clip: UnityEngine.AnimationClip;
     playAutomatically: boolean;
     wrapMode: UnityEngine.WrapMode;
@@ -7651,7 +7947,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AnimationState {
+  export declare class AnimationState {
+    constructor();
     enabled: boolean;
     weight: number;
     wrapMode: UnityEngine.WrapMode;
@@ -7671,7 +7968,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AnimationEvent {
+  export declare class AnimationEvent {
+    constructor();
     data: string;
     stringParameter: string;
     floatParameter: number;
@@ -7690,7 +7988,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AnimationClip {
+  export declare class AnimationClip {
+    constructor();
     length: number;
     frameRate: number;
     wrapMode: UnityEngine.WrapMode;
@@ -7770,7 +8069,7 @@ export namespace UnityEngine {
     AnimatePhysics = 1,
     UnscaledTime = 2,
   }
-  export interface AnimatorClipInfo {
+  export declare class AnimatorClipInfo {
     clip: UnityEngine.AnimationClip;
     weight: number;
     Equals: ((obj: any) => boolean);
@@ -7778,7 +8077,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AnimatorStateInfo {
+  export declare class AnimatorStateInfo {
     fullPathHash: number;
     nameHash: number;
     shortNameHash: number;
@@ -7795,7 +8094,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AnimatorTransitionInfo {
+  export declare class AnimatorTransitionInfo {
     fullPathHash: number;
     nameHash: number;
     userNameHash: number;
@@ -7810,7 +8109,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface MatchTargetWeightMask {
+  export declare class MatchTargetWeightMask {
+    constructor(positionXYZWeight: UnityEngine.Vector3, rotationWeight: number);
     positionXYZWeight: UnityEngine.Vector3;
     rotationWeight: number;
     Equals: ((obj: any) => boolean);
@@ -7818,7 +8118,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AnimatorControllerParameter {
+  export declare class AnimatorControllerParameter {
+    constructor();
     name: string;
     nameHash: number;
     type: UnityEngine.AnimatorControllerParameterType;
@@ -7830,7 +8131,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AnimationClipPair {
+  export declare class AnimationClipPair {
+    constructor();
     originalClip: UnityEngine.AnimationClip;
     overrideClip: UnityEngine.AnimationClip;
     Equals: ((obj: any) => boolean);
@@ -7838,7 +8140,9 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface AnimatorOverrideController {
+  export declare class AnimatorOverrideController {
+    constructor();
+    constructor(controller: UnityEngine.RuntimeAnimatorController);
     runtimeAnimatorController: UnityEngine.RuntimeAnimatorController;
     overridesCount: number;
     clips: UnityEngine.AnimationClipPair[];
@@ -7853,7 +8157,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AnimatorUtility {
+  export declare class AnimatorUtility {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -7993,7 +8298,7 @@ export namespace UnityEngine {
     RightLittleDistal = 53,
     LastBone = 55,
   }
-  export interface Avatar {
+  export declare class Avatar {
     isValid: boolean;
     isHuman: boolean;
     humanDescription: UnityEngine.HumanDescription;
@@ -8005,7 +8310,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface SkeletonBone {
+  export declare class SkeletonBone {
     transformModified: number;
     name: string;
     position: UnityEngine.Vector3;
@@ -8016,7 +8321,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface HumanLimit {
+  export declare class HumanLimit {
     useDefaultValues: boolean;
     min: UnityEngine.Vector3;
     max: UnityEngine.Vector3;
@@ -8027,7 +8332,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface HumanBone {
+  export declare class HumanBone {
     boneName: string;
     humanName: string;
     limit: UnityEngine.HumanLimit;
@@ -8036,7 +8341,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface HumanDescription {
+  export declare class HumanDescription {
     upperArmTwist: number;
     lowerArmTwist: number;
     upperLegTwist: number;
@@ -8052,7 +8357,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface AvatarBuilder {
+  export declare class AvatarBuilder {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8074,7 +8380,8 @@ export namespace UnityEngine {
     RightHandIK = 12,
     LastBodyPart = 13,
   }
-  export interface AvatarMask {
+  export declare class AvatarMask {
+    constructor();
     humanoidBodyPartCount: number;
     transformCount: number;
     name: string;
@@ -8093,16 +8400,18 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface HumanPose {
+  export declare class HumanPose {
     bodyPosition: UnityEngine.Vector3;
     bodyRotation: UnityEngine.Quaternion;
-    muscles: any; // System.Single[]
+    muscles: number[];
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface HumanPoseHandler {
+  export declare class HumanPoseHandler {
+    constructor(avatar: UnityEngine.Avatar, root: UnityEngine.Transform);
+    constructor(avatar: UnityEngine.Avatar, jointPaths: string[]);
     Dispose: (() => void);
     GetInternalAvatarPose: ((avatarPose: any) => void);
     SetInternalAvatarPose: ((avatarPose: any) => void);
@@ -8111,13 +8420,14 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface HumanTrait {
+  export declare class HumanTrait {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface Motion {
+  export declare class Motion {
     averageDuration: number;
     averageAngularSpeed: number;
     averageSpeed: UnityEngine.Vector3;
@@ -8135,7 +8445,7 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface RuntimeAnimatorController {
+  export declare class RuntimeAnimatorController {
     animationClips: UnityEngine.AnimationClip[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -8145,7 +8455,10 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface Event {
+  export declare class Event {
+    constructor();
+    constructor(displayIndex: number);
+    constructor(other: UnityEngine.Event);
     rawType: UnityEngine.EventType;
     mousePosition: UnityEngine.Vector2;
     delta: UnityEngine.Vector2;
@@ -8232,7 +8545,8 @@ export namespace UnityEngine {
     Touch = 1,
     Pen = 2,
   }
-  export interface GUI {
+  export declare class GUI {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8242,7 +8556,8 @@ export namespace UnityEngine {
     Fixed = 0,
     FitToContents = 1,
   }
-  export interface GUI_WindowFunction {
+  export declare class GUI_WindowFunction {
+    constructor(object: any, method: any);
     Method: any; // System.Reflection.MethodInfo
     Target: any; // System.Object
     Invoke: ((id: number) => void);
@@ -8251,27 +8566,38 @@ export namespace UnityEngine {
     GetObjectData: ((info: any, context: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any);
-    DynamicInvoke: ((args: any) => any);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUI_Scope {
+  export declare class GUI_Scope {
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUI_GroupScope {
+  export declare class GUI_GroupScope {
+    constructor(position: UnityEngine.Rect);
+    constructor(position: UnityEngine.Rect, text: string);
+    constructor(position: UnityEngine.Rect, image: UnityEngine.Texture);
+    constructor(position: UnityEngine.Rect, content: UnityEngine.GUIContent);
+    constructor(position: UnityEngine.Rect, style: UnityEngine.GUIStyle);
+    constructor(position: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle);
+    constructor(position: UnityEngine.Rect, image: UnityEngine.Texture, style: UnityEngine.GUIStyle);
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUI_ScrollViewScope {
+  export declare class GUI_ScrollViewScope {
+    constructor(position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect);
+    constructor(position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean);
+    constructor(position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle);
+    constructor(position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle);
     scrollPosition: UnityEngine.Vector2;
     handleScrollWheel: boolean;
     Dispose: (() => void);
@@ -8280,14 +8606,23 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUI_ClipScope {
+  export declare class GUI_ClipScope {
+    constructor(position: UnityEngine.Rect);
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUIContent {
+  export declare class GUIContent {
+    constructor();
+    constructor(text: string);
+    constructor(image: UnityEngine.Texture);
+    constructor(text: string, image: UnityEngine.Texture);
+    constructor(text: string, tooltip: string);
+    constructor(image: UnityEngine.Texture, tooltip: string);
+    constructor(text: string, image: UnityEngine.Texture, tooltip: string);
+    constructor(src: UnityEngine.GUIContent);
     text: string;
     image: UnityEngine.Texture;
     tooltip: string;
@@ -8296,7 +8631,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUIElement {
+  export declare class GUIElement {
+    constructor();
     HitTest: ((screenPosition: UnityEngine.Vector3) => boolean) | ((screenPosition: UnityEngine.Vector3, camera: UnityEngine.Camera) => boolean);
     GetScreenRect: ((camera: UnityEngine.Camera) => UnityEngine.Rect) | (() => UnityEngine.Rect);
     Equals: ((obj: any) => boolean);
@@ -8314,41 +8650,66 @@ export namespace UnityEngine {
     Keyboard = 1,
     Passive = 2,
   }
-  export interface GUILayer {
+  export declare class GUILayer {
+    constructor();
     HitTest: ((screenPosition: UnityEngine.Vector3) => UnityEngine.GUIElement);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUILayout {
+  export declare class GUILayout {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUILayout_HorizontalScope {
+  export declare class GUILayout_HorizontalScope {
+    constructor(options: UnityEngine.GUILayoutOption[]);
+    constructor(style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(text: string, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(image: UnityEngine.Texture, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUILayout_VerticalScope {
+  export declare class GUILayout_VerticalScope {
+    constructor(options: UnityEngine.GUILayoutOption[]);
+    constructor(style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(text: string, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(image: UnityEngine.Texture, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUILayout_AreaScope {
+  export declare class GUILayout_AreaScope {
+    constructor(screenRect: UnityEngine.Rect);
+    constructor(screenRect: UnityEngine.Rect, text: string);
+    constructor(screenRect: UnityEngine.Rect, image: UnityEngine.Texture);
+    constructor(screenRect: UnityEngine.Rect, content: UnityEngine.GUIContent);
+    constructor(screenRect: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle);
+    constructor(screenRect: UnityEngine.Rect, image: UnityEngine.Texture, style: UnityEngine.GUIStyle);
+    constructor(screenRect: UnityEngine.Rect, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle);
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUILayout_ScrollViewScope {
+  export declare class GUILayout_ScrollViewScope {
+    constructor(scrollPosition: UnityEngine.Vector2, options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, background: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
     scrollPosition: UnityEngine.Vector2;
     handleScrollWheel: boolean;
     Dispose: (() => void);
@@ -8357,19 +8718,21 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUILayoutOption {
+  export declare class GUILayoutOption {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUILayoutUtility {
+  export declare class GUILayoutUtility {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUISettings {
+  export declare class GUISettings {
+    constructor();
     doubleClickSelectsWord: boolean;
     tripleClickSelectsLine: boolean;
     cursorColor: UnityEngine.Color;
@@ -8380,7 +8743,8 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUISkin {
+  export declare class GUISkin {
+    constructor();
     font: UnityEngine.Font;
     box: UnityEngine.GUIStyle;
     label: UnityEngine.GUIStyle;
@@ -8416,7 +8780,8 @@ export namespace UnityEngine {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface GUIStyleState {
+  export declare class GUIStyleState {
+    constructor();
     background: UnityEngine.Texture2D;
     textColor: UnityEngine.Color;
     scaledBackgrounds: UnityEngine.Texture2D[];
@@ -8425,7 +8790,9 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUIStyle {
+  export declare class GUIStyle {
+    constructor();
+    constructor(other: UnityEngine.GUIStyle);
     font: UnityEngine.Font;
     imagePosition: UnityEngine.ImagePosition;
     alignment: UnityEngine.TextAnchor;
@@ -8478,7 +8845,8 @@ export namespace UnityEngine {
     Overflow = 0,
     Clip = 1,
   }
-  export interface GUITexture {
+  export declare class GUITexture {
+    constructor();
     color: UnityEngine.Color;
     texture: UnityEngine.Texture;
     pixelInset: UnityEngine.Rect;
@@ -8488,13 +8856,15 @@ export namespace UnityEngine {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface GUIUtility {
+  export declare class GUIUtility {
+    constructor();
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ExitGUIException {
+  export declare class ExitGUIException {
+    constructor();
     Message: string;
     Data: any; // System.Collections.IDictionary
     InnerException: any; // System.Exception
@@ -8510,7 +8880,8 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
   }
-  export interface TextEditor {
+  export declare class TextEditor {
+    constructor();
     content: UnityEngine.GUIContent;
     text: string;
     position: UnityEngine.Rect;
@@ -8603,25 +8974,25 @@ export namespace UnityEngine {
     PARAGRAPHS = 1,
   }
   export namespace Animations {
-    export interface AnimationPlayableBinding {
+    export declare class AnimationPlayableBinding {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IAnimationJob {
+    export declare class IAnimationJob {
       ProcessAnimation: ((stream: UnityEngine.Animations.AnimationStream) => void);
       ProcessRootMotion: ((stream: UnityEngine.Animations.AnimationStream) => void);
     }
-    export interface IAnimationJobPlayable {
+    export declare class IAnimationJobPlayable {
     }
-    export interface IAnimationWindowPreview {
+    export declare class IAnimationWindowPreview {
       StartPreview: (() => void);
       StopPreview: (() => void);
       UpdatePreviewGraph: ((graph: UnityEngine.Playables.PlayableGraph) => void);
       BuildPreviewGraph: ((graph: UnityEngine.Playables.PlayableGraph, inputPlayable: UnityEngine.Playables.Playable) => UnityEngine.Playables.Playable);
     }
-    export interface AimConstraint {
+    export declare class AimConstraint {
       weight: number;
       constraintActive: boolean;
       locked: boolean;
@@ -8683,7 +9054,7 @@ export namespace UnityEngine {
       Vector = 3,
       None = 4,
     }
-    export interface AnimationClipPlayable {
+    export declare class AnimationClipPlayable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Animations.AnimationClipPlayable) => boolean) | ((obj: any) => boolean);
       GetAnimationClip: (() => UnityEngine.AnimationClip);
@@ -8695,7 +9066,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AnimationHumanStream {
+    export declare class AnimationHumanStream {
       isValid: boolean;
       humanScale: number;
       leftFootHeight: number;
@@ -8738,7 +9109,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AnimationLayerMixerPlayable {
+    export declare class AnimationLayerMixerPlayable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Animations.AnimationLayerMixerPlayable) => boolean) | ((obj: any) => boolean);
       IsLayerAdditive: ((layerIndex: any) => boolean);
@@ -8748,20 +9119,20 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AnimationMixerPlayable {
+    export declare class AnimationMixerPlayable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Animations.AnimationMixerPlayable) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AnimationPlayableExtensions {
+    export declare class AnimationPlayableExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface AnimationPlayableOutput {
+    export declare class AnimationPlayableOutput {
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
       GetTarget: (() => UnityEngine.Animator);
       SetTarget: ((value: UnityEngine.Animator) => void);
@@ -8770,7 +9141,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AnimationScriptPlayable {
+    export declare class AnimationScriptPlayable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Animations.AnimationScriptPlayable) => boolean) | ((obj: any) => boolean);
       SetProcessInputs: ((value: boolean) => void);
@@ -8779,7 +9150,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AnimationStream {
+    export declare class AnimationStream {
       isValid: boolean;
       deltaTime: number;
       velocity: UnityEngine.Vector3;
@@ -8797,7 +9168,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface TransformStreamHandle {
+    export declare class TransformStreamHandle {
       IsValid: ((stream: UnityEngine.Animations.AnimationStream) => boolean);
       Resolve: ((stream: UnityEngine.Animations.AnimationStream) => void);
       IsResolved: ((stream: UnityEngine.Animations.AnimationStream) => boolean);
@@ -8821,7 +9192,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PropertyStreamHandle {
+    export declare class PropertyStreamHandle {
       IsValid: ((stream: UnityEngine.Animations.AnimationStream) => boolean);
       Resolve: ((stream: UnityEngine.Animations.AnimationStream) => void);
       IsResolved: ((stream: UnityEngine.Animations.AnimationStream) => boolean);
@@ -8837,7 +9208,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface TransformSceneHandle {
+    export declare class TransformSceneHandle {
       IsValid: ((stream: UnityEngine.Animations.AnimationStream) => boolean);
       GetPosition: ((stream: UnityEngine.Animations.AnimationStream) => UnityEngine.Vector3);
       SetPosition: ((stream: UnityEngine.Animations.AnimationStream, position: UnityEngine.Vector3) => void);
@@ -8854,7 +9225,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PropertySceneHandle {
+    export declare class PropertySceneHandle {
       IsValid: ((stream: UnityEngine.Animations.AnimationStream) => boolean);
       Resolve: ((stream: UnityEngine.Animations.AnimationStream) => void);
       IsResolved: ((stream: UnityEngine.Animations.AnimationStream) => boolean);
@@ -8869,19 +9240,19 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AnimationSceneHandleUtility {
+    export declare class AnimationSceneHandleUtility {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface AnimationStreamHandleUtility {
+    export declare class AnimationStreamHandleUtility {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface AnimatorControllerPlayable {
+    export declare class AnimatorControllerPlayable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       SetHandle: ((handle: UnityEngine.Playables.PlayableHandle) => void);
       Equals: ((other: UnityEngine.Animations.AnimatorControllerPlayable) => boolean) | ((obj: any) => boolean);
@@ -8923,7 +9294,7 @@ export namespace UnityEngine {
       Bool = 6,
       Int = 10,
     }
-    export interface AnimatorJobExtensions {
+    export declare class AnimatorJobExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -8935,7 +9306,7 @@ export namespace UnityEngine {
       Y = 2,
       Z = 4,
     }
-    export interface ConstraintSource {
+    export declare class ConstraintSource {
       sourceTransform: UnityEngine.Transform;
       weight: number;
       Equals: ((obj: any) => boolean);
@@ -8943,7 +9314,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface IConstraint {
+    export declare class IConstraint {
       weight: number;
       constraintActive: boolean;
       locked: boolean;
@@ -8955,7 +9326,7 @@ export namespace UnityEngine {
       GetSources: ((sources: any) => void);
       SetSources: ((sources: any) => void);
     }
-    export interface PositionConstraint {
+    export declare class PositionConstraint {
       weight: number;
       translationAtRest: UnityEngine.Vector3;
       translationOffset: UnityEngine.Vector3;
@@ -9005,7 +9376,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface RotationConstraint {
+    export declare class RotationConstraint {
       weight: number;
       rotationAtRest: UnityEngine.Vector3;
       rotationOffset: UnityEngine.Vector3;
@@ -9055,7 +9426,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ScaleConstraint {
+    export declare class ScaleConstraint {
       weight: number;
       scaleAtRest: UnityEngine.Vector3;
       scaleOffset: UnityEngine.Vector3;
@@ -9105,7 +9476,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface LookAtConstraint {
+    export declare class LookAtConstraint {
       weight: number;
       roll: number;
       constraintActive: boolean;
@@ -9157,7 +9528,12 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface MuscleHandle {
+    export declare class MuscleHandle {
+      constructor(bodyDof: UnityEngine.BodyDof);
+      constructor(headDof: UnityEngine.HeadDof);
+      constructor(partDof: UnityEngine.HumanPartDof, legDof: UnityEngine.LegDof);
+      constructor(partDof: UnityEngine.HumanPartDof, armDof: UnityEngine.ArmDof);
+      constructor(partDof: UnityEngine.HumanPartDof, fingerDof: UnityEngine.FingerDof);
       humanPartDof: UnityEngine.HumanPartDof;
       dof: number;
       name: string;
@@ -9166,7 +9542,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ParentConstraint {
+    export declare class ParentConstraint {
       weight: number;
       constraintActive: boolean;
       locked: boolean;
@@ -9229,20 +9605,21 @@ export namespace UnityEngine {
       DevTools = 1,
       GPUTraceDocument = 2,
     }
-    export interface FrameCapture {
+    export declare class FrameCapture {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export namespace ReplayKit {
-      export interface ReplayKit {
+      export declare class ReplayKit {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface ReplayKit_BroadcastStatusCallback {
+      export declare class ReplayKit_BroadcastStatusCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((hasStarted: boolean, errorMessage: string) => void);
@@ -9251,15 +9628,16 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
     }
     export namespace TV {
-      export interface Remote {
+      export declare class Remote {
+        constructor();
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -9268,13 +9646,14 @@ export namespace UnityEngine {
     }
   }
   export namespace Assertions {
-    export interface Assert {
+    export declare class Assert {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface AssertionException {
+    export declare class AssertionException {
+      constructor(message: string, userMessage: string);
       Message: string;
       Data: any; // System.Collections.IDictionary
       InnerException: any; // System.Exception
@@ -9291,7 +9670,11 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
     }
     export namespace Comparers {
-      export interface FloatComparer {
+      export declare class FloatComparer {
+        constructor();
+        constructor(relative: boolean);
+        constructor(error: number);
+        constructor(error: number, relative: boolean);
         Equals: ((a: number, b: number) => boolean) | ((obj: any) => boolean);
         GetHashCode: ((obj: number) => number) | (() => number);
         GetType: (() => any);
@@ -9299,7 +9682,7 @@ export namespace UnityEngine {
       }
     }
     export namespace Must {
-      export interface MustExtensions {
+      export declare class MustExtensions {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -9308,7 +9691,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Audio {
-    export interface AudioClipPlayable {
+    export declare class AudioClipPlayable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Audio.AudioClipPlayable) => boolean) | ((obj: any) => boolean);
       GetClip: (() => UnityEngine.AudioClip);
@@ -9328,14 +9711,14 @@ export namespace UnityEngine {
       Normal = 0,
       UnscaledTime = 1,
     }
-    export interface AudioMixer {
+    export declare class AudioMixer {
       outputAudioMixerGroup: UnityEngine.Audio.AudioMixerGroup;
       updateMode: UnityEngine.Audio.AudioMixerUpdateMode;
       name: string;
       hideFlags: UnityEngine.HideFlags;
       FindSnapshot: ((name: string) => UnityEngine.Audio.AudioMixerSnapshot);
       FindMatchingGroups: ((subPath: string) => UnityEngine.Audio.AudioMixerGroup[]);
-      TransitionToSnapshots: ((snapshots: UnityEngine.Audio.AudioMixerSnapshot[], weights: any, timeToReach: number) => void);
+      TransitionToSnapshots: ((snapshots: UnityEngine.Audio.AudioMixerSnapshot[], weights: number[], timeToReach: number) => void);
       SetFloat: ((name: string, value: number) => boolean);
       ClearFloat: ((name: string) => boolean);
       GetInstanceID: (() => number);
@@ -9344,7 +9727,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AudioMixerGroup {
+    export declare class AudioMixerGroup {
       audioMixer: UnityEngine.Audio.AudioMixer;
       name: string;
       hideFlags: UnityEngine.HideFlags;
@@ -9354,14 +9737,14 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AudioMixerPlayable {
+    export declare class AudioMixerPlayable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Audio.AudioMixerPlayable) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AudioMixerSnapshot {
+    export declare class AudioMixerSnapshot {
       audioMixer: UnityEngine.Audio.AudioMixer;
       name: string;
       hideFlags: UnityEngine.HideFlags;
@@ -9372,13 +9755,13 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AudioPlayableBinding {
+    export declare class AudioPlayableBinding {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface AudioPlayableOutput {
+    export declare class AudioPlayableOutput {
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
       GetTarget: (() => UnityEngine.AudioSource);
       SetTarget: ((value: UnityEngine.AudioSource) => void);
@@ -9398,13 +9781,13 @@ export namespace UnityEngine {
       PureVirtualFunction = 3,
       MonoAbort = 4,
     }
-    export interface Utils {
+    export declare class Utils {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PlayerConnection {
+    export declare class PlayerConnection {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -9426,7 +9809,7 @@ export namespace UnityEngine {
       EditorAndRuntime = 1,
       RuntimeOnly = 2,
     }
-    export interface UnityEventBase {
+    export declare class UnityEventBase {
       GetPersistentEventCount: (() => number);
       GetPersistentTarget: ((index: number) => UnityEngine.Object);
       GetPersistentMethodName: ((index: number) => string);
@@ -9437,7 +9820,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface UnityAction {
+    export declare class UnityAction {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: (() => void);
@@ -9446,13 +9830,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UnityEvent {
+    export declare class UnityEvent {
+      constructor();
       AddListener: ((call: UnityEngine.Events.UnityAction) => void);
       RemoveListener: ((call: UnityEngine.Events.UnityAction) => void);
       Invoke: (() => void);
@@ -9468,7 +9853,8 @@ export namespace UnityEngine {
     }
   }
   export namespace EventSystems {
-    export interface AxisEventData {
+    export declare class AxisEventData {
+      constructor(eventSystem: UnityEngine.EventSystems.EventSystem);
       moveVector: UnityEngine.Vector2;
       moveDir: UnityEngine.EventSystems.MoveDirection;
       currentInputModule: UnityEngine.EventSystems.BaseInputModule;
@@ -9481,7 +9867,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface AbstractEventData {
+    export declare class AbstractEventData {
       used: boolean;
       Reset: (() => void);
       Use: (() => void);
@@ -9490,7 +9876,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface BaseEventData {
+    export declare class BaseEventData {
+      constructor(eventSystem: UnityEngine.EventSystems.EventSystem);
       currentInputModule: UnityEngine.EventSystems.BaseInputModule;
       selectedObject: UnityEngine.GameObject;
       used: boolean;
@@ -9501,7 +9888,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerEventData {
+    export declare class PointerEventData {
+      constructor(eventSystem: UnityEngine.EventSystems.EventSystem);
       pointerEnter: UnityEngine.GameObject;
       lastPress: UnityEngine.GameObject;
       rawPointerPress: UnityEngine.GameObject;
@@ -9542,60 +9930,60 @@ export namespace UnityEngine {
       Unused = 0,
       Used = 1,
     }
-    export interface IEventSystemHandler {
+    export declare class IEventSystemHandler {
     }
-    export interface IPointerEnterHandler {
+    export declare class IPointerEnterHandler {
       OnPointerEnter: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IPointerExitHandler {
+    export declare class IPointerExitHandler {
       OnPointerExit: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IPointerDownHandler {
+    export declare class IPointerDownHandler {
       OnPointerDown: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IPointerUpHandler {
+    export declare class IPointerUpHandler {
       OnPointerUp: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IPointerClickHandler {
+    export declare class IPointerClickHandler {
       OnPointerClick: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IBeginDragHandler {
+    export declare class IBeginDragHandler {
       OnBeginDrag: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IInitializePotentialDragHandler {
+    export declare class IInitializePotentialDragHandler {
       OnInitializePotentialDrag: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IDragHandler {
+    export declare class IDragHandler {
       OnDrag: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IEndDragHandler {
+    export declare class IEndDragHandler {
       OnEndDrag: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IDropHandler {
+    export declare class IDropHandler {
       OnDrop: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IScrollHandler {
+    export declare class IScrollHandler {
       OnScroll: ((eventData: UnityEngine.EventSystems.PointerEventData) => void);
     }
-    export interface IUpdateSelectedHandler {
+    export declare class IUpdateSelectedHandler {
       OnUpdateSelected: ((eventData: UnityEngine.EventSystems.BaseEventData) => void);
     }
-    export interface ISelectHandler {
+    export declare class ISelectHandler {
       OnSelect: ((eventData: UnityEngine.EventSystems.BaseEventData) => void);
     }
-    export interface IDeselectHandler {
+    export declare class IDeselectHandler {
       OnDeselect: ((eventData: UnityEngine.EventSystems.BaseEventData) => void);
     }
-    export interface IMoveHandler {
+    export declare class IMoveHandler {
       OnMove: ((eventData: UnityEngine.EventSystems.AxisEventData) => void);
     }
-    export interface ISubmitHandler {
+    export declare class ISubmitHandler {
       OnSubmit: ((eventData: UnityEngine.EventSystems.BaseEventData) => void);
     }
-    export interface ICancelHandler {
+    export declare class ICancelHandler {
       OnCancel: ((eventData: UnityEngine.EventSystems.BaseEventData) => void);
     }
-    export interface EventSystem {
+    export declare class EventSystem {
       sendNavigationEvents: boolean;
       pixelDragThreshold: number;
       currentInputModule: UnityEngine.EventSystems.BaseInputModule;
@@ -9656,7 +10044,7 @@ export namespace UnityEngine {
       Equals: ((other: any) => boolean);
       GetType: (() => any);
     }
-    export interface EventTrigger {
+    export declare class EventTrigger {
       delegates: any; // System.Collections.Generic.List`1[UnityEngine.EventSystems.EventTrigger+Entry]
       triggers: any; // System.Collections.Generic.List`1[UnityEngine.EventSystems.EventTrigger+Entry]
       useGUILayout: boolean;
@@ -9741,13 +10129,14 @@ export namespace UnityEngine {
       Submit = 15,
       Cancel = 16,
     }
-    export interface ExecuteEvents {
+    export declare class ExecuteEvents {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface BaseInput {
+    export declare class BaseInput {
+      constructor();
       compositionString: string;
       imeCompositionMode: UnityEngine.IMECompositionMode;
       compositionCursorPos: UnityEngine.Vector2;
@@ -9810,7 +10199,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface BaseInputModule {
+    export declare class BaseInputModule {
       input: UnityEngine.EventSystems.BaseInput;
       inputOverride: UnityEngine.EventSystems.BaseInput;
       useGUILayout: boolean;
@@ -9868,7 +10257,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PointerInputModule {
+    export declare class PointerInputModule {
       input: UnityEngine.EventSystems.BaseInput;
       inputOverride: UnityEngine.EventSystems.BaseInput;
       useGUILayout: boolean;
@@ -9926,7 +10315,7 @@ export namespace UnityEngine {
       Equals: ((other: any) => boolean);
       GetType: (() => any);
     }
-    export interface StandaloneInputModule {
+    export declare class StandaloneInputModule {
       inputMode: UnityEngine.EventSystems.StandaloneInputModule_InputMode;
       allowActivationOnMobileDevice: boolean;
       forceModuleActive: boolean;
@@ -9993,7 +10382,7 @@ export namespace UnityEngine {
       Equals: ((other: any) => boolean);
       GetType: (() => any);
     }
-    export interface TouchInputModule {
+    export declare class TouchInputModule {
       allowActivationOnStandalone: boolean;
       forceModuleActive: boolean;
       input: UnityEngine.EventSystems.BaseInput;
@@ -10060,7 +10449,7 @@ export namespace UnityEngine {
       Down = 3,
       None = 4,
     }
-    export interface RaycastResult {
+    export declare class RaycastResult {
       gameObject: UnityEngine.GameObject;
       isValid: boolean;
       module: UnityEngine.EventSystems.BaseRaycaster;
@@ -10079,7 +10468,7 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface BaseRaycaster {
+    export declare class BaseRaycaster {
       eventCamera: UnityEngine.Camera;
       priority: number;
       sortOrderPriority: number;
@@ -10134,66 +10523,7 @@ export namespace UnityEngine {
       Equals: ((other: any) => boolean);
       GetType: (() => any);
     }
-    export interface Physics2DRaycaster {
-      eventCamera: UnityEngine.Camera;
-      depth: number;
-      finalEventMask: number;
-      eventMask: UnityEngine.LayerMask;
-      maxRayIntersections: number;
-      priority: number;
-      sortOrderPriority: number;
-      renderOrderPriority: number;
-      rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      Raycast: ((eventData: UnityEngine.EventSystems.PointerEventData, resultAppendList: any) => void);
-      ToString: (() => string);
-      IsActive: (() => boolean);
-      IsDestroyed: (() => boolean);
-      IsInvoking: (() => boolean) | ((methodName: string) => boolean);
-      CancelInvoke: (() => void) | ((methodName: string) => void);
-      Invoke: ((methodName: string, time: number) => void);
-      InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
-      StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
-      CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      GetInstanceID: (() => number);
-      GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
-      GetType: (() => any);
-    }
-    export interface PhysicsRaycaster {
+    export declare class Physics2DRaycaster {
       eventCamera: UnityEngine.Camera;
       depth: number;
       finalEventMask: number;
@@ -10252,7 +10582,66 @@ export namespace UnityEngine {
       Equals: ((other: any) => boolean);
       GetType: (() => any);
     }
-    export interface UIBehaviour {
+    export declare class PhysicsRaycaster {
+      eventCamera: UnityEngine.Camera;
+      depth: number;
+      finalEventMask: number;
+      eventMask: UnityEngine.LayerMask;
+      maxRayIntersections: number;
+      priority: number;
+      sortOrderPriority: number;
+      renderOrderPriority: number;
+      rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      Raycast: ((eventData: UnityEngine.EventSystems.PointerEventData, resultAppendList: any) => void);
+      ToString: (() => string);
+      IsActive: (() => boolean);
+      IsDestroyed: (() => boolean);
+      IsInvoking: (() => boolean) | ((methodName: string) => boolean);
+      CancelInvoke: (() => void) | ((methodName: string) => void);
+      Invoke: ((methodName: string, time: number) => void);
+      InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StopAllCoroutines: (() => void);
+      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: any) => UnityEngine.Component);
+      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      CompareTag: ((tag: string) => boolean);
+      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      GetType: (() => any);
+    }
+    export declare class UIBehaviour {
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -10312,7 +10701,8 @@ export namespace UnityEngine {
       PressedAndReleased = 2,
       NotChanged = 3,
     }
-    export interface EventTrigger_TriggerEvent {
+    export declare class EventTrigger_TriggerEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: UnityEngine.EventSystems.BaseEventData) => void);
@@ -10326,7 +10716,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface EventTrigger_Entry {
+    export declare class EventTrigger_Entry {
+      constructor();
       eventID: UnityEngine.EventSystems.EventTriggerType;
       callback: UnityEngine.EventSystems.EventTrigger_TriggerEvent;
       Equals: ((obj: any) => boolean);
@@ -10334,7 +10725,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerInputModule_MouseButtonEventData {
+    export declare class PointerInputModule_MouseButtonEventData {
+      constructor();
       buttonState: UnityEngine.EventSystems.PointerEventData_FramePressState;
       buttonData: UnityEngine.EventSystems.PointerEventData;
       PressedThisFrame: (() => boolean);
@@ -10355,7 +10747,7 @@ export namespace UnityEngine {
         DefaultValues = 0,
         PreviousInputs = 1,
       }
-      export interface AnimationPlayableOutputExtensions {
+      export declare class AnimationPlayableOutputExtensions {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -10363,7 +10755,7 @@ export namespace UnityEngine {
       }
     }
     export namespace Audio {
-      export interface AudioSampleProvider {
+      export declare class AudioSampleProvider {
         id: any; // System.UInt32
         trackIndex: any; // System.UInt16
         owner: UnityEngine.Object;
@@ -10387,7 +10779,8 @@ export namespace UnityEngine {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface AudioSampleProvider_ConsumeSampleFramesNativeFunction {
+      export declare class AudioSampleProvider_ConsumeSampleFramesNativeFunction {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((providerId: any, interleavedSampleFrames: any, sampleFrameCount: any) => any);
@@ -10396,13 +10789,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface AudioSampleProvider_SampleFramesHandler {
+      export declare class AudioSampleProvider_SampleFramesHandler {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((provider: UnityEngine.Experimental.Audio.AudioSampleProvider, sampleFrameCount: any) => void);
@@ -10411,13 +10805,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface AudioSampleProvider_SampleFramesEventNativeFunction {
+      export declare class AudioSampleProvider_SampleFramesEventNativeFunction {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((userData: any, providerId: any, sampleFrameCount: any) => void);
@@ -10426,8 +10821,8 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -10460,7 +10855,7 @@ export namespace UnityEngine {
         LUT = 0,
         AnalyticAndInnerAngle = 1,
       }
-      export interface LinearColor {
+      export declare class LinearColor {
         red: number;
         green: number;
         blue: number;
@@ -10470,7 +10865,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface DirectionalLight {
+      export declare class DirectionalLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -10485,7 +10880,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface PointLight {
+      export declare class PointLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -10500,7 +10895,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface SpotLight {
+      export declare class SpotLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -10519,7 +10914,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface RectangleLight {
+      export declare class RectangleLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -10536,7 +10931,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface DiscLight {
+      export declare class DiscLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -10552,7 +10947,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface SpotLightBoxShape {
+      export declare class SpotLightBoxShape {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -10568,7 +10963,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface SpotLightPyramidShape {
+      export declare class SpotLightPyramidShape {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -10585,7 +10980,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface Cookie {
+      export declare class Cookie {
         instanceID: number;
         scale: number;
         sizes: UnityEngine.Vector2;
@@ -10594,7 +10989,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface LightDataGI {
+      export declare class LightDataGI {
         instanceID: number;
         cookieID: number;
         cookieScale: number;
@@ -10617,19 +11012,20 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface LightmapperUtils {
+      export declare class LightmapperUtils {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface Lightmapping {
+      export declare class Lightmapping {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface Lightmapping_RequestLightsDelegate {
+      export declare class Lightmapping_RequestLightsDelegate {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((requests: UnityEngine.Light[], lightsOutput: any) => void);
@@ -10638,13 +11034,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface RenderSettings {
+      export declare class RenderSettings {
+        constructor();
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -10652,7 +11049,7 @@ export namespace UnityEngine {
       }
     }
     export namespace Playables {
-      export interface CameraPlayable {
+      export declare class CameraPlayable {
         GetHandle: (() => UnityEngine.Playables.PlayableHandle);
         Equals: ((other: UnityEngine.Experimental.Playables.CameraPlayable) => boolean) | ((obj: any) => boolean);
         GetCamera: (() => UnityEngine.Camera);
@@ -10661,7 +11058,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface MaterialEffectPlayable {
+      export declare class MaterialEffectPlayable {
         GetHandle: (() => UnityEngine.Playables.PlayableHandle);
         Equals: ((other: UnityEngine.Experimental.Playables.MaterialEffectPlayable) => boolean) | ((obj: any) => boolean);
         GetMaterial: (() => UnityEngine.Material);
@@ -10672,20 +11069,20 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface TextureMixerPlayable {
+      export declare class TextureMixerPlayable {
         GetHandle: (() => UnityEngine.Playables.PlayableHandle);
         Equals: ((other: UnityEngine.Experimental.Playables.TextureMixerPlayable) => boolean) | ((obj: any) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface TexturePlayableBinding {
+      export declare class TexturePlayableBinding {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface TexturePlayableOutput {
+      export declare class TexturePlayableOutput {
         GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
         GetTarget: (() => UnityEngine.RenderTexture);
         SetTarget: ((value: UnityEngine.RenderTexture) => void);
@@ -10696,23 +11093,23 @@ export namespace UnityEngine {
       }
     }
     export namespace Rendering {
-      export interface IScriptableRuntimeReflectionSystem {
+      export declare class IScriptableRuntimeReflectionSystem {
         TickRealtimeProbes: (() => boolean);
       }
-      export interface ScriptableRuntimeReflectionSystem {
+      export declare class ScriptableRuntimeReflectionSystem {
         TickRealtimeProbes: (() => boolean);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface ScriptableRuntimeReflectionSystemSettings {
+      export declare class ScriptableRuntimeReflectionSystemSettings {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface ExternalGPUProfiler {
+      export declare class ExternalGPUProfiler {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -10728,7 +11125,7 @@ export namespace UnityEngine {
         AfterScriptLateUpdate = 2,
         WaitForPresent = 3,
       }
-      export interface GraphicsDeviceSettings {
+      export declare class GraphicsDeviceSettings {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -10904,18 +11301,21 @@ export namespace UnityEngine {
         DynamicTransform = 2,
         DynamicGeometry = 3,
       }
-      export interface GraphicsFormatUtility {
+      export declare class GraphicsFormatUtility {
+        constructor();
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface RayTracingAccelerationStructure {
+      export declare class RayTracingAccelerationStructure {
+        constructor(settings: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_RASSettings);
+        constructor();
         Dispose: (() => void);
         Release: (() => void);
         Build: (() => void) | ((relativeOrigin: UnityEngine.Vector3) => void);
         Update: (() => void) | ((relativeOrigin: UnityEngine.Vector3) => void);
-        AddInstance: ((targetRenderer: UnityEngine.Renderer, subMeshMask?: any, subMeshTransparencyFlags?: any, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any) => void) | ((aabbBuffer: UnityEngine.GraphicsBuffer, numElements: any, material: UnityEngine.Material, isCutOff: boolean, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any, reuseBounds?: boolean) => void) | ((aabbBuffer: UnityEngine.GraphicsBuffer, numElements: any, material: UnityEngine.Material, instanceTransform: UnityEngine.Matrix4x4, isCutOff: boolean, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any, reuseBounds?: boolean) => void);
+        AddInstance: ((targetRenderer: UnityEngine.Renderer, subMeshMask?: boolean[], subMeshTransparencyFlags?: boolean[], enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any) => void) | ((aabbBuffer: UnityEngine.GraphicsBuffer, numElements: any, material: UnityEngine.Material, isCutOff: boolean, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any, reuseBounds?: boolean) => void) | ((aabbBuffer: UnityEngine.GraphicsBuffer, numElements: any, material: UnityEngine.Material, instanceTransform: UnityEngine.Matrix4x4, isCutOff: boolean, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: any, reuseBounds?: boolean) => void);
         UpdateInstanceTransform: ((renderer: UnityEngine.Renderer) => void);
         GetSize: (() => any);
         Equals: ((obj: any) => boolean);
@@ -10934,7 +11334,8 @@ export namespace UnityEngine {
         Manual = 0,
         Automatic = 1,
       }
-      export interface RayTracingAccelerationStructure_RASSettings {
+      export declare class RayTracingAccelerationStructure_RASSettings {
+        constructor(sceneManagementMode: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_ManagementMode, rayTracingModeMask: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_RayTracingModeMask, layerMask: number);
         managementMode: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_ManagementMode;
         rayTracingModeMask: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_RayTracingModeMask;
         layerMask: number;
@@ -10943,20 +11344,20 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface ShaderWarmupSetup {
+      export declare class ShaderWarmupSetup {
         vdecl: UnityEngine.Rendering.VertexAttributeDescriptor[];
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface ShaderWarmup {
+      export declare class ShaderWarmup {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface RayTracingShader {
+      export declare class RayTracingShader {
         maxRecursionDepth: number;
         name: string;
         hideFlags: UnityEngine.HideFlags;
@@ -10972,8 +11373,8 @@ export namespace UnityEngine {
         SetShaderPass: ((passName: string) => void);
         SetTextureFromGlobal: ((nameID: number, globalTextureNameID: number) => void) | ((name: string, globalTextureName: string) => void);
         Dispatch: ((rayGenFunctionName: string, width: number, height: number, depth: number, camera?: UnityEngine.Camera) => void);
-        SetFloats: ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
-        SetInts: ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
+        SetFloats: ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
+        SetInts: ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
         SetBool: ((name: string, val: boolean) => void) | ((nameID: number, val: boolean) => void);
         SetConstantBuffer: ((nameID: number, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((name: string, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((nameID: number, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((name: string, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
         GetInstanceID: (() => number);
@@ -10984,7 +11385,7 @@ export namespace UnityEngine {
       }
     }
     export namespace Video {
-      export interface VideoClipPlayable {
+      export declare class VideoClipPlayable {
         GetHandle: (() => UnityEngine.Playables.PlayableHandle);
         Equals: ((other: UnityEngine.Experimental.Video.VideoClipPlayable) => boolean) | ((obj: any) => boolean);
         GetClip: (() => UnityEngine.Video.VideoClip);
@@ -10999,7 +11400,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface VideoPlayerExtensions {
+      export declare class VideoPlayerExtensions {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -11008,7 +11409,8 @@ export namespace UnityEngine {
     }
   }
   export namespace iOS {
-    export interface ADBannerView {
+    export declare class ADBannerView {
+      constructor(type: UnityEngine.iOS.ADBannerView_Type, layout: UnityEngine.iOS.ADBannerView_Layout);
       loaded: boolean;
       visible: boolean;
       layout: UnityEngine.iOS.ADBannerView_Layout;
@@ -11037,7 +11439,8 @@ export namespace UnityEngine {
       Banner = 0,
       MediumRect = 1,
     }
-    export interface ADBannerView_BannerWasClickedDelegate {
+    export declare class ADBannerView_BannerWasClickedDelegate {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: (() => void);
@@ -11046,13 +11449,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ADBannerView_BannerWasLoadedDelegate {
+    export declare class ADBannerView_BannerWasLoadedDelegate {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: (() => void);
@@ -11061,13 +11465,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ADBannerView_BannerFailedToLoadDelegate {
+    export declare class ADBannerView_BannerFailedToLoadDelegate {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: (() => void);
@@ -11076,13 +11481,15 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ADInterstitialAd {
+    export declare class ADInterstitialAd {
+      constructor(autoReload: boolean);
+      constructor();
       loaded: boolean;
       Show: (() => void);
       ReloadAd: (() => void);
@@ -11091,7 +11498,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ADInterstitialAd_InterstitialWasLoadedDelegate {
+    export declare class ADInterstitialAd_InterstitialWasLoadedDelegate {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: (() => void);
@@ -11100,13 +11508,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ADInterstitialAd_InterstitialWasViewedDelegate {
+    export declare class ADInterstitialAd_InterstitialWasViewedDelegate {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: (() => void);
@@ -11115,8 +11524,8 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -11188,7 +11597,8 @@ export namespace UnityEngine {
       White = 1,
       Gray = 2,
     }
-    export interface Device {
+    export declare class Device {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11226,7 +11636,8 @@ export namespace UnityEngine {
       Sound = 2,
       Alert = 4,
     }
-    export interface LocalNotification {
+    export declare class LocalNotification {
+      constructor();
       timeZone: string;
       repeatCalendar: UnityEngine.iOS.CalendarIdentifier;
       repeatInterval: UnityEngine.iOS.CalendarUnit;
@@ -11244,7 +11655,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface RemoteNotification {
+    export declare class RemoteNotification {
       alertBody: string;
       alertTitle: string;
       soundName: string;
@@ -11256,7 +11667,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface NotificationServices {
+    export declare class NotificationServices {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11270,7 +11682,7 @@ export namespace UnityEngine {
       RightEdge = 8,
       All = 15,
     }
-    export interface OnDemandResourcesRequest {
+    export declare class OnDemandResourcesRequest {
       error: string;
       loadingPriority: number;
       isDone: boolean;
@@ -11284,7 +11696,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface OnDemandResources {
+    export declare class OnDemandResources {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11292,16 +11704,16 @@ export namespace UnityEngine {
     }
   }
   export namespace Jobs {
-    export interface IJobParallelForTransform {
+    export declare class IJobParallelForTransform {
       Execute: ((index: number, transform: UnityEngine.Jobs.TransformAccess) => void);
     }
-    export interface IJobParallelForTransformExtensions {
+    export declare class IJobParallelForTransformExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TransformAccess {
+    export declare class TransformAccess {
       position: UnityEngine.Vector3;
       rotation: UnityEngine.Quaternion;
       localPosition: UnityEngine.Vector3;
@@ -11315,7 +11727,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface TransformAccessArray {
+    export declare class TransformAccessArray {
+      constructor(transforms: UnityEngine.Transform[], desiredJobCount?: number);
+      constructor(capacity: number, desiredJobCount?: number);
       isCreated: boolean;
       capacity: number;
       length: number;
@@ -11330,7 +11744,7 @@ export namespace UnityEngine {
     }
   }
   export namespace LowLevel {
-    export interface PlayerLoopSystem {
+    export declare class PlayerLoopSystem {
       type: any; // System.Type
       subSystemList: UnityEngine.LowLevel.PlayerLoopSystem[];
       updateDelegate: UnityEngine.LowLevel.PlayerLoopSystem_UpdateFunction;
@@ -11341,7 +11755,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface PlayerLoopSystem_UpdateFunction {
+    export declare class PlayerLoopSystem_UpdateFunction {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: (() => void);
@@ -11350,13 +11765,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PlayerLoop {
+    export declare class PlayerLoop {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11370,19 +11786,20 @@ export namespace UnityEngine {
         Player = 1,
         Editor = 2,
       }
-      export interface IConnectionState {
+      export declare class IConnectionState {
         connectedToTarget: UnityEngine.Networking.PlayerConnection.ConnectionTarget;
         connectionName: string;
       }
-      export interface MessageEventArgs {
+      export declare class MessageEventArgs {
+        constructor();
         playerId: number;
-        data: any; // System.Byte[]
+        data: any[];
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface IEditorPlayerConnection {
+      export declare class IEditorPlayerConnection {
         Register: ((messageId: any, callback: any) => void);
         Unregister: ((messageId: any, callback: any) => void);
         DisconnectAll: (() => void);
@@ -11390,10 +11807,11 @@ export namespace UnityEngine {
         RegisterDisconnection: ((callback: any) => void);
         UnregisterConnection: ((callback: any) => void);
         UnregisterDisconnection: ((callback: any) => void);
-        Send: ((messageId: any, data: any) => void);
-        TrySend: ((messageId: any, data: any) => boolean);
+        Send: ((messageId: any, data: any[]) => void);
+        TrySend: ((messageId: any, data: any[]) => boolean);
       }
-      export interface PlayerConnection {
+      export declare class PlayerConnection {
+        constructor();
         isConnected: boolean;
         name: string;
         hideFlags: UnityEngine.HideFlags;
@@ -11404,8 +11822,8 @@ export namespace UnityEngine {
         RegisterDisconnection: ((callback: any) => void);
         UnregisterConnection: ((callback: any) => void);
         UnregisterDisconnection: ((callback: any) => void);
-        Send: ((messageId: any, data: any) => void);
-        TrySend: ((messageId: any, data: any) => boolean);
+        Send: ((messageId: any, data: any[]) => void);
+        TrySend: ((messageId: any, data: any[]) => boolean);
         BlockUntilRecvMsg: ((messageId: any, timeout: number) => boolean);
         DisconnectAll: (() => void);
         SetDirty: (() => void);
@@ -11418,7 +11836,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Playables {
-    export interface FrameData {
+    export declare class FrameData {
       frameId: any; // System.UInt64
       deltaTime: number;
       weight: number;
@@ -11441,16 +11859,16 @@ export namespace UnityEngine {
       Evaluate = 0,
       Playback = 1,
     }
-    export interface INotification {
+    export declare class INotification {
       id: UnityEngine.PropertyName;
     }
-    export interface INotificationReceiver {
+    export declare class INotificationReceiver {
       OnNotify: ((origin: UnityEngine.Playables.Playable, notification: UnityEngine.Playables.INotification, context: any) => void);
     }
-    export interface IPlayable {
+    export declare class IPlayable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
     }
-    export interface IPlayableBehaviour {
+    export declare class IPlayableBehaviour {
       OnGraphStart: ((playable: UnityEngine.Playables.Playable) => void);
       OnGraphStop: ((playable: UnityEngine.Playables.Playable) => void);
       OnPlayableCreate: ((playable: UnityEngine.Playables.Playable) => void);
@@ -11460,10 +11878,11 @@ export namespace UnityEngine {
       PrepareFrame: ((playable: UnityEngine.Playables.Playable, info: UnityEngine.Playables.FrameData) => void);
       ProcessFrame: ((playable: UnityEngine.Playables.Playable, info: UnityEngine.Playables.FrameData, playerData: any) => void);
     }
-    export interface IPlayableOutput {
+    export declare class IPlayableOutput {
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
     }
-    export interface Notification {
+    export declare class Notification {
+      constructor(name: string);
       id: UnityEngine.PropertyName;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -11475,7 +11894,7 @@ export namespace UnityEngine {
       Loop = 1,
       None = 2,
     }
-    export interface Playable {
+    export declare class Playable {
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       GetPlayableType: (() => any);
       Equals: ((other: UnityEngine.Playables.Playable) => boolean) | ((obj: any) => boolean);
@@ -11483,12 +11902,12 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface IPlayableAsset {
+    export declare class IPlayableAsset {
       duration: number;
       outputs: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.Playables.PlayableBinding]
       CreatePlayable: ((graph: UnityEngine.Playables.PlayableGraph, owner: UnityEngine.GameObject) => UnityEngine.Playables.Playable);
     }
-    export interface PlayableAsset {
+    export declare class PlayableAsset {
       duration: number;
       outputs: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.Playables.PlayableBinding]
       name: string;
@@ -11501,7 +11920,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PlayableBehaviour {
+    export declare class PlayableBehaviour {
+      constructor();
       OnGraphStart: ((playable: UnityEngine.Playables.Playable) => void);
       OnGraphStop: ((playable: UnityEngine.Playables.Playable) => void);
       OnPlayableCreate: ((playable: UnityEngine.Playables.Playable) => void);
@@ -11524,7 +11944,7 @@ export namespace UnityEngine {
       Texture = 2,
       None = 3,
     }
-    export interface PlayableBinding {
+    export declare class PlayableBinding {
       streamName: string;
       sourceObject: UnityEngine.Object;
       outputTargetType: any; // System.Type
@@ -11539,7 +11959,7 @@ export namespace UnityEngine {
       Mix = 0,
       Passthrough = 1,
     }
-    export interface PlayableExtensions {
+    export declare class PlayableExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11551,7 +11971,7 @@ export namespace UnityEngine {
       UnscaledGameTime = 2,
       Manual = 3,
     }
-    export interface PlayableGraph {
+    export declare class PlayableGraph {
       GetRootPlayable: ((index: number) => UnityEngine.Playables.Playable);
       GetOutput: ((index: number) => UnityEngine.Playables.PlayableOutput);
       Evaluate: (() => void) | ((deltaTime: number) => void);
@@ -11579,13 +11999,13 @@ export namespace UnityEngine {
       Playing = 1,
       Delayed = 2,
     }
-    export interface PlayableHandle {
+    export declare class PlayableHandle {
       Equals: ((p: any) => boolean) | ((other: UnityEngine.Playables.PlayableHandle) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PlayableOutput {
+    export declare class PlayableOutput {
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
       GetPlayableOutputType: (() => any);
       Equals: ((other: UnityEngine.Playables.PlayableOutput) => boolean) | ((obj: any) => boolean);
@@ -11593,32 +12013,32 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PlayableOutputExtensions {
+    export declare class PlayableOutputExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PlayableOutputHandle {
+    export declare class PlayableOutputHandle {
       GetHashCode: (() => number);
       Equals: ((p: any) => boolean) | ((other: UnityEngine.Playables.PlayableOutputHandle) => boolean);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ScriptPlayableBinding {
+    export declare class ScriptPlayableBinding {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ScriptPlayableOutput {
+    export declare class ScriptPlayableOutput {
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AnimationPlayableUtilities {
+    export declare class AnimationPlayableUtilities {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11626,775 +12046,775 @@ export namespace UnityEngine {
     }
   }
   export namespace PlayerLoop {
-    export interface TimeUpdate {
+    export declare class TimeUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface TimeUpdate_WaitForLastPresentationAndUpdateTime {
+    export declare class TimeUpdate_WaitForLastPresentationAndUpdateTime {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Initialization {
+    export declare class Initialization {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Initialization_PlayerUpdateTime {
+    export declare class Initialization_PlayerUpdateTime {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Initialization_UpdateCameraMotionVectors {
+    export declare class Initialization_UpdateCameraMotionVectors {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Initialization_DirectorSampleTime {
+    export declare class Initialization_DirectorSampleTime {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Initialization_AsyncUploadTimeSlicedUpdate {
+    export declare class Initialization_AsyncUploadTimeSlicedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Initialization_SynchronizeState {
+    export declare class Initialization_SynchronizeState {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Initialization_SynchronizeInputs {
+    export declare class Initialization_SynchronizeInputs {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Initialization_XREarlyUpdate {
+    export declare class Initialization_XREarlyUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate {
+    export declare class EarlyUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_PollPlayerConnection {
+    export declare class EarlyUpdate_PollPlayerConnection {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ProfilerStartFrame {
+    export declare class EarlyUpdate_ProfilerStartFrame {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_PollHtcsPlayerConnection {
+    export declare class EarlyUpdate_PollHtcsPlayerConnection {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_GpuTimestamp {
+    export declare class EarlyUpdate_GpuTimestamp {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_AnalyticsCoreStatsUpdate {
+    export declare class EarlyUpdate_AnalyticsCoreStatsUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UnityWebRequestUpdate {
+    export declare class EarlyUpdate_UnityWebRequestUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UpdateStreamingManager {
+    export declare class EarlyUpdate_UpdateStreamingManager {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ExecuteMainThreadJobs {
+    export declare class EarlyUpdate_ExecuteMainThreadJobs {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ProcessMouseInWindow {
+    export declare class EarlyUpdate_ProcessMouseInWindow {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ClearIntermediateRenderers {
+    export declare class EarlyUpdate_ClearIntermediateRenderers {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ClearLines {
+    export declare class EarlyUpdate_ClearLines {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_PresentBeforeUpdate {
+    export declare class EarlyUpdate_PresentBeforeUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ResetFrameStatsAfterPresent {
+    export declare class EarlyUpdate_ResetFrameStatsAfterPresent {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UpdateAsyncReadbackManager {
+    export declare class EarlyUpdate_UpdateAsyncReadbackManager {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UpdateTextureStreamingManager {
+    export declare class EarlyUpdate_UpdateTextureStreamingManager {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UpdatePreloading {
+    export declare class EarlyUpdate_UpdatePreloading {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_RendererNotifyInvisible {
+    export declare class EarlyUpdate_RendererNotifyInvisible {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_PlayerCleanupCachedData {
+    export declare class EarlyUpdate_PlayerCleanupCachedData {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UpdateMainGameViewRect {
+    export declare class EarlyUpdate_UpdateMainGameViewRect {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UpdateCanvasRectTransform {
+    export declare class EarlyUpdate_UpdateCanvasRectTransform {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UpdateInputManager {
+    export declare class EarlyUpdate_UpdateInputManager {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ProcessRemoteInput {
+    export declare class EarlyUpdate_ProcessRemoteInput {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_XRUpdate {
+    export declare class EarlyUpdate_XRUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ScriptRunDelayedStartupFrame {
+    export declare class EarlyUpdate_ScriptRunDelayedStartupFrame {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_UpdateKinect {
+    export declare class EarlyUpdate_UpdateKinect {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_DeliverIosPlatformEvents {
+    export declare class EarlyUpdate_DeliverIosPlatformEvents {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_DispatchEventQueueEvents {
+    export declare class EarlyUpdate_DispatchEventQueueEvents {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_PhysicsResetInterpolatedTransformPosition {
+    export declare class EarlyUpdate_PhysicsResetInterpolatedTransformPosition {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_SpriteAtlasManagerUpdate {
+    export declare class EarlyUpdate_SpriteAtlasManagerUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_TangoUpdate {
+    export declare class EarlyUpdate_TangoUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_ARCoreUpdate {
+    export declare class EarlyUpdate_ARCoreUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EarlyUpdate_PerformanceAnalyticsUpdate {
+    export declare class EarlyUpdate_PerformanceAnalyticsUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate {
+    export declare class FixedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_ClearLines {
+    export declare class FixedUpdate_ClearLines {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_DirectorFixedSampleTime {
+    export declare class FixedUpdate_DirectorFixedSampleTime {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_AudioFixedUpdate {
+    export declare class FixedUpdate_AudioFixedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_ScriptRunBehaviourFixedUpdate {
+    export declare class FixedUpdate_ScriptRunBehaviourFixedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_DirectorFixedUpdate {
+    export declare class FixedUpdate_DirectorFixedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_LegacyFixedAnimationUpdate {
+    export declare class FixedUpdate_LegacyFixedAnimationUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_XRFixedUpdate {
+    export declare class FixedUpdate_XRFixedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_PhysicsFixedUpdate {
+    export declare class FixedUpdate_PhysicsFixedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_Physics2DFixedUpdate {
+    export declare class FixedUpdate_Physics2DFixedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_DirectorFixedUpdatePostPhysics {
+    export declare class FixedUpdate_DirectorFixedUpdatePostPhysics {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_ScriptRunDelayedFixedFrameRate {
+    export declare class FixedUpdate_ScriptRunDelayedFixedFrameRate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FixedUpdate_NewInputFixedUpdate {
+    export declare class FixedUpdate_NewInputFixedUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate {
+    export declare class PreUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_PhysicsUpdate {
+    export declare class PreUpdate_PhysicsUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_Physics2DUpdate {
+    export declare class PreUpdate_Physics2DUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_CheckTexFieldInput {
+    export declare class PreUpdate_CheckTexFieldInput {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_IMGUISendQueuedEvents {
+    export declare class PreUpdate_IMGUISendQueuedEvents {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_SendMouseEvents {
+    export declare class PreUpdate_SendMouseEvents {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_AIUpdate {
+    export declare class PreUpdate_AIUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_WindUpdate {
+    export declare class PreUpdate_WindUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_UpdateVideo {
+    export declare class PreUpdate_UpdateVideo {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreUpdate_NewInputUpdate {
+    export declare class PreUpdate_NewInputUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Update {
+    export declare class Update {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Update_ScriptRunBehaviourUpdate {
+    export declare class Update_ScriptRunBehaviourUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Update_DirectorUpdate {
+    export declare class Update_DirectorUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Update_ScriptRunDelayedDynamicFrameRate {
+    export declare class Update_ScriptRunDelayedDynamicFrameRate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Update_ScriptRunDelayedTasks {
+    export declare class Update_ScriptRunDelayedTasks {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate {
+    export declare class PreLateUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_AIUpdatePostScript {
+    export declare class PreLateUpdate_AIUpdatePostScript {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_DirectorUpdateAnimationBegin {
+    export declare class PreLateUpdate_DirectorUpdateAnimationBegin {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_LegacyAnimationUpdate {
+    export declare class PreLateUpdate_LegacyAnimationUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_DirectorUpdateAnimationEnd {
+    export declare class PreLateUpdate_DirectorUpdateAnimationEnd {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_DirectorDeferredEvaluate {
+    export declare class PreLateUpdate_DirectorDeferredEvaluate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_UIElementsUpdatePanels {
+    export declare class PreLateUpdate_UIElementsUpdatePanels {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_UpdateNetworkManager {
+    export declare class PreLateUpdate_UpdateNetworkManager {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_UpdateMasterServerInterface {
+    export declare class PreLateUpdate_UpdateMasterServerInterface {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_UNetUpdate {
+    export declare class PreLateUpdate_UNetUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_EndGraphicsJobsAfterScriptUpdate {
+    export declare class PreLateUpdate_EndGraphicsJobsAfterScriptUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_ParticleSystemBeginUpdateAll {
+    export declare class PreLateUpdate_ParticleSystemBeginUpdateAll {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_ScriptRunBehaviourLateUpdate {
+    export declare class PreLateUpdate_ScriptRunBehaviourLateUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PreLateUpdate_ConstraintManagerUpdate {
+    export declare class PreLateUpdate_ConstraintManagerUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate {
+    export declare class PostLateUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_PlayerSendFrameStarted {
+    export declare class PostLateUpdate_PlayerSendFrameStarted {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateRectTransform {
+    export declare class PostLateUpdate_UpdateRectTransform {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateCanvasRectTransform {
+    export declare class PostLateUpdate_UpdateCanvasRectTransform {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_PlayerUpdateCanvases {
+    export declare class PostLateUpdate_PlayerUpdateCanvases {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateAudio {
+    export declare class PostLateUpdate_UpdateAudio {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateVideo {
+    export declare class PostLateUpdate_UpdateVideo {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_DirectorLateUpdate {
+    export declare class PostLateUpdate_DirectorLateUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ScriptRunDelayedDynamicFrameRate {
+    export declare class PostLateUpdate_ScriptRunDelayedDynamicFrameRate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_VFXUpdate {
+    export declare class PostLateUpdate_VFXUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ParticleSystemEndUpdateAll {
+    export declare class PostLateUpdate_ParticleSystemEndUpdateAll {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_EndGraphicsJobsAfterScriptLateUpdate {
+    export declare class PostLateUpdate_EndGraphicsJobsAfterScriptLateUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateSubstance {
+    export declare class PostLateUpdate_UpdateSubstance {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateCustomRenderTextures {
+    export declare class PostLateUpdate_UpdateCustomRenderTextures {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateAllRenderers {
+    export declare class PostLateUpdate_UpdateAllRenderers {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateLightProbeProxyVolumes {
+    export declare class PostLateUpdate_UpdateLightProbeProxyVolumes {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_EnlightenRuntimeUpdate {
+    export declare class PostLateUpdate_EnlightenRuntimeUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateAllSkinnedMeshes {
+    export declare class PostLateUpdate_UpdateAllSkinnedMeshes {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ProcessWebSendMessages {
+    export declare class PostLateUpdate_ProcessWebSendMessages {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_SortingGroupsUpdate {
+    export declare class PostLateUpdate_SortingGroupsUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateVideoTextures {
+    export declare class PostLateUpdate_UpdateVideoTextures {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_DirectorRenderImage {
+    export declare class PostLateUpdate_DirectorRenderImage {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_PlayerEmitCanvasGeometry {
+    export declare class PostLateUpdate_PlayerEmitCanvasGeometry {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_FinishFrameRendering {
+    export declare class PostLateUpdate_FinishFrameRendering {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_BatchModeUpdate {
+    export declare class PostLateUpdate_BatchModeUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_PlayerSendFrameComplete {
+    export declare class PostLateUpdate_PlayerSendFrameComplete {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateCaptureScreenshot {
+    export declare class PostLateUpdate_UpdateCaptureScreenshot {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_PresentAfterDraw {
+    export declare class PostLateUpdate_PresentAfterDraw {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ClearImmediateRenderers {
+    export declare class PostLateUpdate_ClearImmediateRenderers {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_XRPostPresent {
+    export declare class PostLateUpdate_XRPostPresent {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_UpdateResolution {
+    export declare class PostLateUpdate_UpdateResolution {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_InputEndFrame {
+    export declare class PostLateUpdate_InputEndFrame {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_GUIClearEvents {
+    export declare class PostLateUpdate_GUIClearEvents {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ShaderHandleErrors {
+    export declare class PostLateUpdate_ShaderHandleErrors {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ResetInputAxis {
+    export declare class PostLateUpdate_ResetInputAxis {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ThreadedLoadingDebug {
+    export declare class PostLateUpdate_ThreadedLoadingDebug {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ProfilerSynchronizeStats {
+    export declare class PostLateUpdate_ProfilerSynchronizeStats {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_MemoryFrameMaintenance {
+    export declare class PostLateUpdate_MemoryFrameMaintenance {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ExecuteGameCenterCallbacks {
+    export declare class PostLateUpdate_ExecuteGameCenterCallbacks {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_ProfilerEndFrame {
+    export declare class PostLateUpdate_ProfilerEndFrame {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_PlayerSendFramePostPresent {
+    export declare class PostLateUpdate_PlayerSendFramePostPresent {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_PhysicsSkinnedClothBeginUpdate {
+    export declare class PostLateUpdate_PhysicsSkinnedClothBeginUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_PhysicsSkinnedClothFinishUpdate {
+    export declare class PostLateUpdate_PhysicsSkinnedClothFinishUpdate {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PostLateUpdate_TriggerEndOfFrameCallbacks {
+    export declare class PostLateUpdate_TriggerEndOfFrameCallbacks {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -12418,13 +12838,13 @@ export namespace UnityEngine {
       GlobalIllumination = 12,
       VirtualTexturing = 13,
     }
-    export interface Profiler {
+    export declare class Profiler {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Recorder {
+    export declare class Recorder {
       isValid: boolean;
       enabled: boolean;
       elapsedNanoseconds: any; // System.Int64
@@ -12438,7 +12858,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Sampler {
+    export declare class Sampler {
       isValid: boolean;
       name: string;
       GetRecorder: (() => UnityEngine.Profiling.Recorder);
@@ -12447,7 +12867,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface CustomSampler {
+    export declare class CustomSampler {
       isValid: boolean;
       name: string;
       Begin: (() => void) | ((targetObject: UnityEngine.Object) => void);
@@ -12459,7 +12879,7 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export namespace Experimental {
-      export interface DebugScreenCapture {
+      export declare class DebugScreenCapture {
         rawImageDataReference: any; // Unity.Collections.NativeArray`1[System.Byte]
         imageFormat: UnityEngine.TextureFormat;
         width: number;
@@ -12479,7 +12899,8 @@ export namespace UnityEngine {
           NativeAllocationSites = 8,
           NativeStackTraces = 16,
         }
-        export interface MetaData {
+        export declare class MetaData {
+          constructor();
           content: string;
           platform: string;
           Equals: ((obj: any) => boolean);
@@ -12487,7 +12908,8 @@ export namespace UnityEngine {
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface MemoryProfiler {
+        export declare class MemoryProfiler {
+          constructor();
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -12497,7 +12919,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Rendering {
-    export interface AsyncGPUReadbackRequest {
+    export declare class AsyncGPUReadbackRequest {
       done: boolean;
       hasError: boolean;
       layerCount: number;
@@ -12512,7 +12934,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AsyncGPUReadback {
+    export declare class AsyncGPUReadback {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -12522,14 +12944,15 @@ export namespace UnityEngine {
       VertexProcessing = 0,
       PixelProcessing = 1,
     }
-    export interface GPUFence {
+    export declare class GPUFence {
       passed: boolean;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PIX {
+    export declare class PIX {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -12840,7 +13263,8 @@ export namespace UnityEngine {
       Tier2 = 1,
       Tier3 = 2,
     }
-    export interface SubMeshDescriptor {
+    export declare class SubMeshDescriptor {
+      constructor(indexStart: number, indexCount: number, topology?: UnityEngine.MeshTopology);
       bounds: UnityEngine.Bounds;
       topology: UnityEngine.MeshTopology;
       indexStart: number;
@@ -12853,7 +13277,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface VertexAttributeDescriptor {
+    export declare class VertexAttributeDescriptor {
+      constructor(attribute?: UnityEngine.Rendering.VertexAttribute, format?: UnityEngine.Rendering.VertexAttributeFormat, dimension?: number, stream?: number);
       attribute: UnityEngine.Rendering.VertexAttribute;
       format: UnityEngine.Rendering.VertexAttributeFormat;
       dimension: number;
@@ -12871,7 +13296,17 @@ export namespace UnityEngine {
       FormatSwizzle0 = 4,
       FormatSwizzle1 = 5,
     }
-    export interface RenderTargetIdentifier {
+    export declare class RenderTargetIdentifier {
+      constructor(type: UnityEngine.Rendering.BuiltinRenderTextureType);
+      constructor(type: UnityEngine.Rendering.BuiltinRenderTextureType, mipLevel?: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
+      constructor(name: string);
+      constructor(name: string, mipLevel?: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
+      constructor(nameID: number);
+      constructor(nameID: number, mipLevel?: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
+      constructor(renderTargetIdentifier: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
+      constructor(tex: UnityEngine.Texture);
+      constructor(tex: UnityEngine.Texture, mipLevel?: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
+      constructor(buf: UnityEngine.RenderBuffer, mipLevel?: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
       ToString: (() => string);
       GetHashCode: (() => number);
       Equals: ((rhs: UnityEngine.Rendering.RenderTargetIdentifier) => boolean) | ((obj: any) => boolean);
@@ -12883,7 +13318,10 @@ export namespace UnityEngine {
       ReadOnlyStencil = 2,
       ReadOnlyDepthStencil = 3,
     }
-    export interface RenderTargetBinding {
+    export declare class RenderTargetBinding {
+      constructor(colorRenderTargets: UnityEngine.Rendering.RenderTargetIdentifier[], colorLoadActions: UnityEngine.Rendering.RenderBufferLoadAction[], colorStoreActions: UnityEngine.Rendering.RenderBufferStoreAction[], depthRenderTarget: UnityEngine.Rendering.RenderTargetIdentifier, depthLoadAction: UnityEngine.Rendering.RenderBufferLoadAction, depthStoreAction: UnityEngine.Rendering.RenderBufferStoreAction);
+      constructor(colorRenderTarget: UnityEngine.Rendering.RenderTargetIdentifier, colorLoadAction: UnityEngine.Rendering.RenderBufferLoadAction, colorStoreAction: UnityEngine.Rendering.RenderBufferStoreAction, depthRenderTarget: UnityEngine.Rendering.RenderTargetIdentifier, depthLoadAction: UnityEngine.Rendering.RenderBufferLoadAction, depthStoreAction: UnityEngine.Rendering.RenderBufferStoreAction);
+      constructor(setup: UnityEngine.RenderTargetSetup);
       colorRenderTargets: UnityEngine.Rendering.RenderTargetIdentifier[];
       depthRenderTarget: UnityEngine.Rendering.RenderTargetIdentifier;
       colorLoadActions: UnityEngine.Rendering.RenderBufferLoadAction[];
@@ -12915,7 +13353,7 @@ export namespace UnityEngine {
       Realtime = 1,
       Custom = 2,
     }
-    export interface ReflectionProbeBlendInfo {
+    export declare class ReflectionProbeBlendInfo {
       probe: UnityEngine.ReflectionProbe;
       weight: number;
       Equals: ((obj: any) => boolean);
@@ -13074,14 +13512,14 @@ export namespace UnityEngine {
       AsyncQueueSynchronisation = 0,
       CPUSynchronisation = 1,
     }
-    export interface GraphicsFence {
+    export declare class GraphicsFence {
       passed: boolean;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface GraphicsSettings {
+    export declare class GraphicsSettings {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       GetInstanceID: (() => number);
@@ -13090,13 +13528,15 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface OnDemandRendering {
+    export declare class OnDemandRendering {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface CommandBuffer {
+    export declare class CommandBuffer {
+      constructor();
       name: string;
       sizeInBytes: number;
       ConvertTexture: ((src: UnityEngine.Rendering.RenderTargetIdentifier, dst: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((src: UnityEngine.Rendering.RenderTargetIdentifier, srcElement: number, dst: UnityEngine.Rendering.RenderTargetIdentifier, dstElement: number) => void);
@@ -13131,7 +13571,7 @@ export namespace UnityEngine {
       SetViewProjectionMatrices: ((view: UnityEngine.Matrix4x4, proj: UnityEngine.Matrix4x4) => void);
       SetGlobalDepthBias: ((bias: number, slopeBias: number) => void);
       SetExecutionFlags: ((flags: UnityEngine.Rendering.CommandBufferExecutionFlags) => void);
-      SetGlobalFloatArray: ((nameID: number, values: any) => void) | ((propertyName: string, values: any) => void) | ((nameID: number, values: any) => void) | ((propertyName: string, values: any) => void);
+      SetGlobalFloatArray: ((nameID: number, values: number[]) => void) | ((propertyName: string, values: any) => void) | ((nameID: number, values: any) => void) | ((propertyName: string, values: number[]) => void);
       SetGlobalVectorArray: ((nameID: number, values: UnityEngine.Vector4[]) => void) | ((propertyName: string, values: any) => void) | ((nameID: number, values: any) => void) | ((propertyName: string, values: UnityEngine.Vector4[]) => void);
       SetGlobalMatrixArray: ((nameID: number, values: UnityEngine.Matrix4x4[]) => void) | ((propertyName: string, values: any) => void) | ((nameID: number, values: any) => void) | ((propertyName: string, values: UnityEngine.Matrix4x4[]) => void);
       BeginSample: ((name: string) => void) | ((sampler: UnityEngine.Profiling.CustomSampler) => void);
@@ -13146,8 +13586,8 @@ export namespace UnityEngine {
       CreateAsyncGraphicsFence: (() => UnityEngine.Rendering.GraphicsFence) | ((stage: UnityEngine.Rendering.SynchronisationStage) => UnityEngine.Rendering.GraphicsFence);
       CreateGraphicsFence: ((fenceType: UnityEngine.Rendering.GraphicsFenceType, stage: UnityEngine.Rendering.SynchronisationStageFlags) => UnityEngine.Rendering.GraphicsFence);
       WaitOnAsyncGraphicsFence: ((fence: UnityEngine.Rendering.GraphicsFence) => void) | ((fence: UnityEngine.Rendering.GraphicsFence, stage: UnityEngine.Rendering.SynchronisationStage) => void) | ((fence: UnityEngine.Rendering.GraphicsFence, stage: UnityEngine.Rendering.SynchronisationStageFlags) => void);
-      SetComputeFloatParams: ((computeShader: UnityEngine.ComputeShader, name: string, values: any) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, values: any) => void);
-      SetComputeIntParams: ((computeShader: UnityEngine.ComputeShader, name: string, values: any) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, values: any) => void);
+      SetComputeFloatParams: ((computeShader: UnityEngine.ComputeShader, name: string, values: number[]) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, values: number[]) => void);
+      SetComputeIntParams: ((computeShader: UnityEngine.ComputeShader, name: string, values: number[]) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, values: number[]) => void);
       SetComputeTextureParam: ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, rt: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, rt: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, rt: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number, element: UnityEngine.Rendering.RenderTextureSubElement) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, rt: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number, element: UnityEngine.Rendering.RenderTextureSubElement) => void);
       SetComputeBufferParam: ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, buffer: UnityEngine.ComputeBuffer) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, buffer: UnityEngine.ComputeBuffer) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, buffer: UnityEngine.GraphicsBuffer) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, buffer: UnityEngine.GraphicsBuffer) => void);
       SetComputeConstantBufferParam: ((computeShader: UnityEngine.ComputeShader, nameID: number, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((computeShader: UnityEngine.ComputeShader, name: string, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((computeShader: UnityEngine.ComputeShader, name: string, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
@@ -13158,9 +13598,9 @@ export namespace UnityEngine {
       SetRayTracingConstantBufferParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
       SetRayTracingTextureParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void);
       SetRayTracingFloatParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: number) => void);
-      SetRayTracingFloatParams: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: any) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: any) => void);
+      SetRayTracingFloatParams: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: number[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: number[]) => void);
       SetRayTracingIntParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: number) => void);
-      SetRayTracingIntParams: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: any) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: any) => void);
+      SetRayTracingIntParams: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: number[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: number[]) => void);
       SetRayTracingVectorParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: UnityEngine.Vector4) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: UnityEngine.Vector4) => void);
       SetRayTracingVectorArrayParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: UnityEngine.Vector4[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: UnityEngine.Vector4[]) => void);
       SetRayTracingMatrixParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: UnityEngine.Matrix4x4) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: UnityEngine.Matrix4x4) => void);
@@ -13199,13 +13639,14 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface CommandBufferExtensions {
+    export declare class CommandBufferExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface SplashScreen {
+    export declare class SplashScreen {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13215,7 +13656,7 @@ export namespace UnityEngine {
       StopImmediate = 0,
       FadeOut = 1,
     }
-    export interface SphericalHarmonicsL2 {
+    export declare class SphericalHarmonicsL2 {
       Clear: (() => void);
       AddAmbientLight: ((color: UnityEngine.Color) => void);
       AddDirectionalLight: ((direction: UnityEngine.Vector3, color: UnityEngine.Color, intensity: number) => void);
@@ -13225,7 +13666,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface BatchVisibility {
+    export declare class BatchVisibility {
       offset: number;
       instancesCount: number;
       visibleCount: number;
@@ -13234,7 +13675,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface BatchCullingContext {
+    export declare class BatchCullingContext {
+      constructor(inCullingPlanes: any, inOutBatchVisibility: any, outVisibleIndices: any, inLodParameters: UnityEngine.Rendering.LODParameters);
+      constructor(inCullingPlanes: any, inOutBatchVisibility: any, outVisibleIndices: any, inLodParameters: UnityEngine.Rendering.LODParameters, inCullingMatrix: UnityEngine.Matrix4x4, inNearPlane: number);
       cullingPlanes: any; // Unity.Collections.NativeArray`1[UnityEngine.Plane]
       batchVisibility: any; // Unity.Collections.NativeArray`1[UnityEngine.Rendering.BatchVisibility]
       visibleIndices: any; // Unity.Collections.NativeArray`1[System.Int32]
@@ -13247,7 +13690,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface BatchRendererGroup {
+    export declare class BatchRendererGroup {
+      constructor(cullingCallback: UnityEngine.Rendering.BatchRendererGroup_OnPerformCulling);
       Dispose: (() => void);
       AddBatch: ((mesh: UnityEngine.Mesh, subMeshIndex: number, material: UnityEngine.Material, layer: number, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, invertCulling: boolean, bounds: UnityEngine.Bounds, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock, associatedSceneObject: UnityEngine.GameObject) => number) | ((mesh: UnityEngine.Mesh, subMeshIndex: number, material: UnityEngine.Material, layer: number, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, invertCulling: boolean, bounds: UnityEngine.Bounds, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock, associatedSceneObject: UnityEngine.GameObject, sceneCullingMask: any) => number) | ((mesh: UnityEngine.Mesh, subMeshIndex: number, material: UnityEngine.Material, layer: number, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, invertCulling: boolean, bounds: UnityEngine.Bounds, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock, associatedSceneObject: UnityEngine.GameObject, sceneCullingMask: any, renderingLayerMask: any) => number);
       SetBatchFlags: ((batchIndex: number, flags: any) => void);
@@ -13268,7 +13712,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface BatchRendererGroup_OnPerformCulling {
+    export declare class BatchRendererGroup_OnPerformCulling {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: ((rendererGroup: UnityEngine.Rendering.BatchRendererGroup, cullingContext: UnityEngine.Rendering.BatchCullingContext) => Unity.Jobs.JobHandle);
@@ -13277,13 +13722,16 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface AttachmentDescriptor {
+    export declare class AttachmentDescriptor {
+      constructor(format: UnityEngine.Experimental.Rendering.GraphicsFormat);
+      constructor(format: UnityEngine.RenderTextureFormat);
+      constructor(format: UnityEngine.RenderTextureFormat, target: UnityEngine.Rendering.RenderTargetIdentifier, loadExistingContents?: boolean, storeResults?: boolean, resolve?: boolean);
       loadAction: UnityEngine.Rendering.RenderBufferLoadAction;
       storeAction: UnityEngine.Rendering.RenderBufferStoreAction;
       graphicsFormat: UnityEngine.Experimental.Rendering.GraphicsFormat;
@@ -13301,7 +13749,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface BlendState {
+    export declare class BlendState {
+      constructor(separateMRTBlend?: boolean, alphaToMask?: boolean);
       separateMRTBlendStates: boolean;
       alphaToMask: boolean;
       blendState0: UnityEngine.Rendering.RenderTargetBlendState;
@@ -13317,7 +13766,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface CameraProperties {
+    export declare class CameraProperties {
       GetShadowCullingPlane: ((index: number) => UnityEngine.Plane);
       SetShadowCullingPlane: ((index: number, plane: UnityEngine.Plane) => void);
       GetCameraCullingPlane: ((index: number) => UnityEngine.Plane);
@@ -13337,7 +13786,7 @@ export namespace UnityEngine {
       DisablePerObjectCulling = 32,
       ShadowCasters = 64,
     }
-    export interface ScriptableCullingParameters {
+    export declare class ScriptableCullingParameters {
       maximumVisibleLights: number;
       cullingPlaneCount: number;
       isOrthographic: boolean;
@@ -13363,7 +13812,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface CullingResults {
+    export declare class CullingResults {
       visibleLights: any; // Unity.Collections.NativeArray`1[UnityEngine.Rendering.VisibleLight]
       visibleOffscreenVertexLights: any; // Unity.Collections.NativeArray`1[UnityEngine.Rendering.VisibleLight]
       visibleReflectionProbes: any; // Unity.Collections.NativeArray`1[UnityEngine.Rendering.VisibleReflectionProbe]
@@ -13380,7 +13829,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface DepthState {
+    export declare class DepthState {
+      constructor(writeEnabled?: boolean, compareFunction?: UnityEngine.Rendering.CompareFunction);
       writeEnabled: boolean;
       compareFunction: UnityEngine.Rendering.CompareFunction;
       Equals: ((other: UnityEngine.Rendering.DepthState) => boolean) | ((obj: any) => boolean);
@@ -13388,7 +13838,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface DrawingSettings {
+    export declare class DrawingSettings {
+      constructor(shaderPassName: UnityEngine.Rendering.ShaderTagId, sortingSettings: UnityEngine.Rendering.SortingSettings);
       sortingSettings: UnityEngine.Rendering.SortingSettings;
       perObjectData: UnityEngine.Rendering.PerObjectData;
       enableDynamicBatching: boolean;
@@ -13403,7 +13854,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FilteringSettings {
+    export declare class FilteringSettings {
+      constructor(renderQueueRange?: any, layerMask?: number, renderingLayerMask?: any, excludeMotionVectorObjects?: number);
       renderQueueRange: UnityEngine.Rendering.RenderQueueRange;
       layerMask: number;
       renderingLayerMask: any; // System.UInt32
@@ -13418,7 +13870,7 @@ export namespace UnityEngine {
       PreImageEffects = 0,
       PostImageEffects = 1,
     }
-    export interface LODParameters {
+    export declare class LODParameters {
       isOrthographic: boolean;
       cameraPosition: UnityEngine.Vector3;
       fieldOfView: number;
@@ -13443,7 +13895,8 @@ export namespace UnityEngine {
       OcclusionProbeProxyVolume = 512,
       ShadowMask = 1024,
     }
-    export interface RasterState {
+    export declare class RasterState {
+      constructor(cullingMode?: UnityEngine.Rendering.CullMode, offsetUnits?: number, offsetFactor?: number, depthClip?: boolean);
       cullingMode: UnityEngine.Rendering.CullMode;
       depthClip: boolean;
       conservative: boolean;
@@ -13460,16 +13913,16 @@ export namespace UnityEngine {
       Size = 2,
       ImportanceThenSize = 3,
     }
-    export interface RenderPipeline {
+    export declare class RenderPipeline {
       disposed: boolean;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface RenderPipelineAsset {
+    export declare class RenderPipelineAsset {
       terrainBrushPassIndex: number;
-      renderingLayerMaskNames: any; // System.String[]
+      renderingLayerMaskNames: string[];
       defaultMaterial: UnityEngine.Material;
       autodeskInteractiveShader: UnityEngine.Shader;
       autodeskInteractiveTransparentShader: UnityEngine.Shader;
@@ -13496,13 +13949,14 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface RenderPipelineManager {
+    export declare class RenderPipelineManager {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface RenderQueueRange {
+    export declare class RenderQueueRange {
+      constructor(lowerBound: number, upperBound: number);
       lowerBound: number;
       upperBound: number;
       Equals: ((other: UnityEngine.Rendering.RenderQueueRange) => boolean) | ((obj: any) => boolean);
@@ -13510,7 +13964,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface RenderStateBlock {
+    export declare class RenderStateBlock {
+      constructor(mask: UnityEngine.Rendering.RenderStateMask);
       blendState: UnityEngine.Rendering.BlendState;
       rasterState: UnityEngine.Rendering.RasterState;
       depthState: UnityEngine.Rendering.DepthState;
@@ -13530,7 +13985,8 @@ export namespace UnityEngine {
       Stencil = 8,
       Everything = 15,
     }
-    export interface RenderTargetBlendState {
+    export declare class RenderTargetBlendState {
+      constructor(writeMask?: UnityEngine.Rendering.ColorWriteMask, sourceColorBlendMode?: UnityEngine.Rendering.BlendMode, destinationColorBlendMode?: UnityEngine.Rendering.BlendMode, sourceAlphaBlendMode?: UnityEngine.Rendering.BlendMode, destinationAlphaBlendMode?: UnityEngine.Rendering.BlendMode, colorBlendOperation?: UnityEngine.Rendering.BlendOp, alphaBlendOperation?: UnityEngine.Rendering.BlendOp);
       writeMask: UnityEngine.Rendering.ColorWriteMask;
       sourceColorBlendMode: UnityEngine.Rendering.BlendMode;
       destinationColorBlendMode: UnityEngine.Rendering.BlendMode;
@@ -13543,21 +13999,21 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ScopedRenderPass {
+    export declare class ScopedRenderPass {
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ScopedSubPass {
+    export declare class ScopedSubPass {
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ScriptableRenderContext {
+    export declare class ScriptableRenderContext {
       BeginRenderPass: ((width: number, height: number, samples: number, attachments: any, depthAttachmentIndex?: number) => void);
       BeginScopedRenderPass: ((width: number, height: number, samples: number, attachments: any, depthAttachmentIndex?: number) => UnityEngine.Rendering.ScopedRenderPass);
       BeginSubPass: ((colors: any, inputs: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => void) | ((colors: any, inputs: any, isDepthStencilReadOnly?: boolean) => void) | ((colors: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => void) | ((colors: any, isDepthStencilReadOnly?: boolean) => void);
@@ -13581,14 +14037,16 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ShaderTagId {
+    export declare class ShaderTagId {
+      constructor(name: string);
       name: string;
       Equals: ((obj: any) => boolean) | ((other: UnityEngine.Rendering.ShaderTagId) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ShadowDrawingSettings {
+    export declare class ShadowDrawingSettings {
+      constructor(cullingResults: UnityEngine.Rendering.CullingResults, lightIndex: number);
       cullingResults: UnityEngine.Rendering.CullingResults;
       lightIndex: number;
       useRenderingLayerMaskTest: boolean;
@@ -13598,7 +14056,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ShadowSplitData {
+    export declare class ShadowSplitData {
       cullingPlaneCount: number;
       cullingSphere: UnityEngine.Vector4;
       shadowCascadeBlendCullingFactor: number;
@@ -13621,7 +14079,8 @@ export namespace UnityEngine {
       CommonOpaque = 59,
       CommonTransparent = 23,
     }
-    export interface SortingLayerRange {
+    export declare class SortingLayerRange {
+      constructor(lowerBound: any, upperBound: any);
       lowerBound: any; // System.Int16
       upperBound: any; // System.Int16
       Equals: ((other: UnityEngine.Rendering.SortingLayerRange) => boolean) | ((obj: any) => boolean);
@@ -13634,7 +14093,8 @@ export namespace UnityEngine {
       Orthographic = 1,
       CustomAxis = 2,
     }
-    export interface SortingSettings {
+    export declare class SortingSettings {
+      constructor(camera: UnityEngine.Camera);
       worldToCameraMatrix: UnityEngine.Matrix4x4;
       cameraPosition: UnityEngine.Vector3;
       customAxis: UnityEngine.Vector3;
@@ -13645,7 +14105,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StencilState {
+    export declare class StencilState {
+      constructor(enabled?: boolean, readMask?: any, writeMask?: any, compareFunction?: UnityEngine.Rendering.CompareFunction, passOperation?: UnityEngine.Rendering.StencilOp, failOperation?: UnityEngine.Rendering.StencilOp, zFailOperation?: UnityEngine.Rendering.StencilOp);
+      constructor(enabled: boolean, readMask: any, writeMask: any, compareFunctionFront: UnityEngine.Rendering.CompareFunction, passOperationFront: UnityEngine.Rendering.StencilOp, failOperationFront: UnityEngine.Rendering.StencilOp, zFailOperationFront: UnityEngine.Rendering.StencilOp, compareFunctionBack: UnityEngine.Rendering.CompareFunction, passOperationBack: UnityEngine.Rendering.StencilOp, failOperationBack: UnityEngine.Rendering.StencilOp, zFailOperationBack: UnityEngine.Rendering.StencilOp);
       enabled: boolean;
       readMask: any; // System.Byte
       writeMask: any; // System.Byte
@@ -13666,7 +14128,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface SupportedRenderingFeatures {
+    export declare class SupportedRenderingFeatures {
+      constructor();
       reflectionProbeModes: UnityEngine.Rendering.SupportedRenderingFeatures_ReflectionProbeModes;
       defaultMixedLightingModes: UnityEngine.Rendering.SupportedRenderingFeatures_LightmapMixedBakeModes;
       mixedLightingModes: UnityEngine.Rendering.SupportedRenderingFeatures_LightmapMixedBakeModes;
@@ -13707,7 +14170,7 @@ export namespace UnityEngine {
       Subtractive = 2,
       Shadowmask = 4,
     }
-    export interface VisibleLight {
+    export declare class VisibleLight {
       light: UnityEngine.Light;
       lightType: UnityEngine.LightType;
       finalColor: UnityEngine.Color;
@@ -13722,7 +14185,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface VisibleReflectionProbe {
+    export declare class VisibleReflectionProbe {
       texture: UnityEngine.Texture;
       reflectionProbe: UnityEngine.ReflectionProbe;
       bounds: UnityEngine.Bounds;
@@ -13737,7 +14200,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PlatformKeywordSet {
+    export declare class PlatformKeywordSet {
       IsEnabled: ((define: UnityEngine.Rendering.BuiltinShaderDefine) => boolean);
       Enable: ((define: UnityEngine.Rendering.BuiltinShaderDefine) => void);
       Disable: ((define: UnityEngine.Rendering.BuiltinShaderDefine) => void);
@@ -13753,7 +14216,10 @@ export namespace UnityEngine {
       BuiltinAutoStripped = 10,
       UserDefined = 16,
     }
-    export interface ShaderKeyword {
+    export declare class ShaderKeyword {
+      constructor(keywordName: string);
+      constructor(shader: UnityEngine.Shader, keywordName: string);
+      constructor(shader: UnityEngine.ComputeShader, keywordName: string);
       index: number;
       IsValid: (() => boolean);
       GetKeywordType: (() => UnityEngine.Rendering.ShaderKeywordType);
@@ -13764,7 +14230,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ShaderKeywordSet {
+    export declare class ShaderKeywordSet {
       IsEnabled: ((keyword: UnityEngine.Rendering.ShaderKeyword) => boolean);
       Enable: ((keyword: UnityEngine.Rendering.ShaderKeyword) => void);
       Disable: ((keyword: UnityEngine.Rendering.ShaderKeyword) => void);
@@ -13793,7 +14259,8 @@ export namespace UnityEngine {
       MainTexture = 128,
       MainColor = 256,
     }
-    export interface SortingGroup {
+    export declare class SortingGroup {
+      constructor();
       sortingLayerName: string;
       sortingLayerID: number;
       sortingOrder: number;
@@ -13835,7 +14302,7 @@ export namespace UnityEngine {
     }
   }
   export namespace SceneManagement {
-    export interface Scene {
+    export declare class Scene {
       handle: number;
       path: string;
       name: string;
@@ -13851,13 +14318,14 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface SceneManagerAPI {
+    export declare class SceneManagerAPI {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface SceneManager {
+    export declare class SceneManager {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13872,7 +14340,9 @@ export namespace UnityEngine {
       Physics2D = 1,
       Physics3D = 2,
     }
-    export interface LoadSceneParameters {
+    export declare class LoadSceneParameters {
+      constructor(mode: UnityEngine.SceneManagement.LoadSceneMode);
+      constructor(mode: UnityEngine.SceneManagement.LoadSceneMode, physicsMode: UnityEngine.SceneManagement.LocalPhysicsMode);
       loadSceneMode: UnityEngine.SceneManagement.LoadSceneMode;
       localPhysicsMode: UnityEngine.SceneManagement.LocalPhysicsMode;
       Equals: ((obj: any) => boolean);
@@ -13880,7 +14350,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface CreateSceneParameters {
+    export declare class CreateSceneParameters {
+      constructor(physicsMode: UnityEngine.SceneManagement.LocalPhysicsMode);
       localPhysicsMode: UnityEngine.SceneManagement.LocalPhysicsMode;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -13891,7 +14362,7 @@ export namespace UnityEngine {
       None = 0,
       UnloadAllEmbeddedSceneObjects = 1,
     }
-    export interface SceneUtility {
+    export declare class SceneUtility {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13899,7 +14370,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Scripting {
-    export interface GarbageCollector {
+    export declare class GarbageCollector {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13912,7 +14383,8 @@ export namespace UnityEngine {
     }
   }
   export namespace Serialization {
-    export interface UnitySurrogateSelector {
+    export declare class UnitySurrogateSelector {
+      constructor();
       ChainSelector: ((selector: any) => void);
       GetNextSelector: (() => any);
       Equals: ((obj: any) => boolean);
@@ -13922,7 +14394,8 @@ export namespace UnityEngine {
     }
   }
   export namespace Sprites {
-    export interface DataUtility {
+    export declare class DataUtility {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13930,7 +14403,7 @@ export namespace UnityEngine {
     }
   }
   export namespace TestTools {
-    export interface CoveredSequencePoint {
+    export declare class CoveredSequencePoint {
       method: any; // System.Reflection.MethodBase
       ilOffset: any; // System.UInt32
       hitCount: any; // System.UInt32
@@ -13942,7 +14415,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface CoveredMethodStats {
+    export declare class CoveredMethodStats {
       method: any; // System.Reflection.MethodBase
       totalSequencePoints: number;
       uncoveredSequencePoints: number;
@@ -13951,7 +14424,7 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Coverage {
+    export declare class Coverage {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13959,7 +14432,8 @@ export namespace UnityEngine {
     }
   }
   export namespace tvOS {
-    export interface Remote {
+    export declare class Remote {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13970,7 +14444,8 @@ export namespace UnityEngine {
       AppleTV1Gen = 1001,
       AppleTV2Gen = 1002,
     }
-    export interface Device {
+    export declare class Device {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13978,13 +14453,13 @@ export namespace UnityEngine {
     }
   }
   export namespace U2D {
-    export interface PixelPerfectRendering {
+    export declare class PixelPerfectRendering {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface SpriteBone {
+    export declare class SpriteBone {
       name: string;
       position: UnityEngine.Vector3;
       rotation: UnityEngine.Quaternion;
@@ -13995,25 +14470,27 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface SpriteDataAccessExtensions {
+    export declare class SpriteDataAccessExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface SpriteRendererDataAccessExtensions {
+    export declare class SpriteRendererDataAccessExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface SpriteAtlasManager {
+    export declare class SpriteAtlasManager {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface SpriteAtlas {
+    export declare class SpriteAtlas {
+      constructor();
       isVariant: boolean;
       tag: string;
       spriteCount: number;
@@ -14030,7 +14507,8 @@ export namespace UnityEngine {
     }
   }
   export namespace UI {
-    export interface AnimationTriggers {
+    export declare class AnimationTriggers {
+      constructor();
       normalTrigger: string;
       highlightedTrigger: string;
       pressedTrigger: string;
@@ -14041,7 +14519,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Button {
+    export declare class Button {
       onClick: UnityEngine.UI.Button_ButtonClickedEvent;
       navigation: UnityEngine.UI.Navigation;
       transition: UnityEngine.UI.Selectable_Transition;
@@ -14124,20 +14602,20 @@ export namespace UnityEngine {
       LatePreRender = 4,
       MaxUpdateValue = 5,
     }
-    export interface ICanvasElement {
+    export declare class ICanvasElement {
       transform: UnityEngine.Transform;
       Rebuild: ((executing: UnityEngine.UI.CanvasUpdate) => void);
       LayoutComplete: (() => void);
       GraphicUpdateComplete: (() => void);
       IsDestroyed: (() => boolean);
     }
-    export interface CanvasUpdateRegistry {
+    export declare class CanvasUpdateRegistry {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ColorBlock {
+    export declare class ColorBlock {
       normalColor: UnityEngine.Color;
       highlightedColor: UnityEngine.Color;
       pressedColor: UnityEngine.Color;
@@ -14150,23 +14628,23 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ClipperRegistry {
+    export declare class ClipperRegistry {
       Cull: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Clipping {
+    export declare class Clipping {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IClipper {
+    export declare class IClipper {
       PerformClipping: (() => void);
     }
-    export interface IClippable {
+    export declare class IClippable {
       gameObject: UnityEngine.GameObject;
       rectTransform: UnityEngine.RectTransform;
       RecalculateClipping: (() => void);
@@ -14174,13 +14652,13 @@ export namespace UnityEngine {
       SetClipRect: ((value: UnityEngine.Rect, validRect: boolean) => void);
       SetClipSoftness: ((clipSoftness: UnityEngine.Vector2) => void);
     }
-    export interface DefaultControls {
+    export declare class DefaultControls {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Dropdown {
+    export declare class Dropdown {
       template: UnityEngine.RectTransform;
       captionText: UnityEngine.UI.Text;
       captionImage: UnityEngine.UI.Image;
@@ -14270,7 +14748,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FontData {
+    export declare class FontData {
+      constructor();
       font: UnityEngine.Font;
       fontSize: number;
       fontStyle: UnityEngine.FontStyle;
@@ -14288,13 +14767,13 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface FontUpdateTracker {
+    export declare class FontUpdateTracker {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Graphic {
+    export declare class Graphic {
       color: UnityEngine.Color;
       raycastTarget: boolean;
       raycastPadding: UnityEngine.Vector4;
@@ -14375,7 +14854,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface GraphicRaycaster {
+    export declare class GraphicRaycaster {
       sortOrderPriority: number;
       renderOrderPriority: number;
       ignoreReversedGraphics: boolean;
@@ -14433,26 +14912,26 @@ export namespace UnityEngine {
       Equals: ((other: any) => boolean);
       GetType: (() => any);
     }
-    export interface GraphicRebuildTracker {
+    export declare class GraphicRebuildTracker {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface GraphicRegistry {
+    export declare class GraphicRegistry {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IMask {
+    export declare class IMask {
       rectTransform: UnityEngine.RectTransform;
       Enabled: (() => boolean);
     }
-    export interface IMaskable {
+    export declare class IMaskable {
       RecalculateMasking: (() => void);
     }
-    export interface Image {
+    export declare class Image {
       sprite: UnityEngine.Sprite;
       overrideSprite: UnityEngine.Sprite;
       type: UnityEngine.UI.Image_Type;
@@ -14571,7 +15050,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface InputField {
+    export declare class InputField {
       shouldHideMobileInput: boolean;
       text: string;
       isFocused: boolean;
@@ -14698,7 +15177,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface AspectRatioFitter {
+    export declare class AspectRatioFitter {
       aspectMode: UnityEngine.UI.AspectRatioFitter_AspectMode;
       aspectRatio: number;
       useGUILayout: boolean;
@@ -14753,7 +15232,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface CanvasScaler {
+    export declare class CanvasScaler {
       uiScaleMode: UnityEngine.UI.CanvasScaler_ScaleMode;
       referencePixelsPerUnit: number;
       scaleFactor: number;
@@ -14812,7 +15291,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ContentSizeFitter {
+    export declare class ContentSizeFitter {
       horizontalFit: UnityEngine.UI.ContentSizeFitter_FitMode;
       verticalFit: UnityEngine.UI.ContentSizeFitter_FitMode;
       useGUILayout: boolean;
@@ -14865,7 +15344,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface GridLayoutGroup {
+    export declare class GridLayoutGroup {
       startCorner: UnityEngine.UI.GridLayoutGroup_Corner;
       startAxis: UnityEngine.UI.GridLayoutGroup_Axis;
       cellSize: UnityEngine.Vector2;
@@ -14933,7 +15412,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface HorizontalLayoutGroup {
+    export declare class HorizontalLayoutGroup {
       spacing: number;
       childForceExpandWidth: boolean;
       childForceExpandHeight: boolean;
@@ -15003,7 +15482,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface HorizontalOrVerticalLayoutGroup {
+    export declare class HorizontalOrVerticalLayoutGroup {
       spacing: number;
       childForceExpandWidth: boolean;
       childForceExpandHeight: boolean;
@@ -15073,7 +15552,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ILayoutElement {
+    export declare class ILayoutElement {
       minWidth: number;
       preferredWidth: number;
       flexibleWidth: number;
@@ -15084,18 +15563,18 @@ export namespace UnityEngine {
       CalculateLayoutInputHorizontal: (() => void);
       CalculateLayoutInputVertical: (() => void);
     }
-    export interface ILayoutController {
+    export declare class ILayoutController {
       SetLayoutHorizontal: (() => void);
       SetLayoutVertical: (() => void);
     }
-    export interface ILayoutGroup {
+    export declare class ILayoutGroup {
     }
-    export interface ILayoutSelfController {
+    export declare class ILayoutSelfController {
     }
-    export interface ILayoutIgnorer {
+    export declare class ILayoutIgnorer {
       ignoreLayout: boolean;
     }
-    export interface LayoutElement {
+    export declare class LayoutElement {
       ignoreLayout: boolean;
       minWidth: number;
       minHeight: number;
@@ -15154,7 +15633,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface LayoutGroup {
+    export declare class LayoutGroup {
       padding: UnityEngine.RectOffset;
       childAlignment: UnityEngine.TextAnchor;
       minWidth: number;
@@ -15216,7 +15695,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface LayoutRebuilder {
+    export declare class LayoutRebuilder {
+      constructor();
       transform: UnityEngine.Transform;
       IsDestroyed: (() => boolean);
       Rebuild: ((executing: UnityEngine.UI.CanvasUpdate) => void);
@@ -15227,13 +15707,13 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface LayoutUtility {
+    export declare class LayoutUtility {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VerticalLayoutGroup {
+    export declare class VerticalLayoutGroup {
       spacing: number;
       childForceExpandWidth: boolean;
       childForceExpandHeight: boolean;
@@ -15303,7 +15783,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Mask {
+    export declare class Mask {
       rectTransform: UnityEngine.RectTransform;
       showMaskGraphic: boolean;
       graphic: UnityEngine.UI.Graphic;
@@ -15359,13 +15839,14 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface MaskUtilities {
+    export declare class MaskUtilities {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MaskableGraphic {
+    export declare class MaskableGraphic {
       onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
       maskable: boolean;
       isMaskingGraphic: boolean;
@@ -15456,10 +15937,10 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface IMaterialModifier {
+    export declare class IMaterialModifier {
       GetModifiedMaterial: ((baseMaterial: UnityEngine.Material) => UnityEngine.Material);
     }
-    export interface Navigation {
+    export declare class Navigation {
       mode: UnityEngine.UI.Navigation_Mode;
       wrapAround: boolean;
       selectOnUp: UnityEngine.UI.Selectable;
@@ -15471,7 +15952,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface RawImage {
+    export declare class RawImage {
       mainTexture: UnityEngine.Texture;
       texture: UnityEngine.Texture;
       uvRect: UnityEngine.Rect;
@@ -15564,7 +16045,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface RectMask2D {
+    export declare class RectMask2D {
       padding: UnityEngine.Vector4;
       softness: UnityEngine.Vector2Int;
       canvasRect: UnityEngine.Rect;
@@ -15622,7 +16103,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ScrollRect {
+    export declare class ScrollRect {
       content: UnityEngine.RectTransform;
       horizontal: boolean;
       vertical: boolean;
@@ -15711,7 +16192,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Scrollbar {
+    export declare class Scrollbar {
       handleRect: UnityEngine.RectTransform;
       direction: UnityEngine.UI.Scrollbar_Direction;
       value: number;
@@ -15797,7 +16278,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Selectable {
+    export declare class Selectable {
       navigation: UnityEngine.UI.Navigation;
       transition: UnityEngine.UI.Selectable_Transition;
       colors: UnityEngine.UI.ColorBlock;
@@ -15869,7 +16350,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Slider {
+    export declare class Slider {
       fillRect: UnityEngine.RectTransform;
       handleRect: UnityEngine.RectTransform;
       direction: UnityEngine.UI.Slider_Direction;
@@ -15957,7 +16438,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface SpriteState {
+    export declare class SpriteState {
       highlightedSprite: UnityEngine.Sprite;
       pressedSprite: UnityEngine.Sprite;
       selectedSprite: UnityEngine.Sprite;
@@ -15967,13 +16448,13 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StencilMaterial {
+    export declare class StencilMaterial {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Text {
+    export declare class Text {
       cachedTextGenerator: UnityEngine.TextGenerator;
       cachedTextGeneratorForLayout: UnityEngine.TextGenerator;
       mainTexture: UnityEngine.Texture;
@@ -16091,7 +16572,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Toggle {
+    export declare class Toggle {
       group: UnityEngine.UI.ToggleGroup;
       isOn: boolean;
       navigation: UnityEngine.UI.Navigation;
@@ -16174,7 +16655,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ToggleGroup {
+    export declare class ToggleGroup {
       allowSwitchOff: boolean;
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -16232,7 +16713,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface VertexHelper {
+    export declare class VertexHelper {
+      constructor();
+      constructor(m: UnityEngine.Mesh);
       currentVertCount: number;
       currentIndexCount: number;
       Dispose: (() => void);
@@ -16250,14 +16733,14 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface BaseVertexEffect {
+    export declare class BaseVertexEffect {
       ModifyVertices: ((vertices: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface BaseMeshEffect {
+    export declare class BaseMeshEffect {
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -16307,13 +16790,13 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface IVertexModifier {
+    export declare class IVertexModifier {
       ModifyVertices: ((verts: any) => void);
     }
-    export interface IMeshModifier {
+    export declare class IMeshModifier {
       ModifyMesh: ((mesh: UnityEngine.Mesh) => void) | ((verts: UnityEngine.UI.VertexHelper) => void);
     }
-    export interface Outline {
+    export declare class Outline {
       effectColor: UnityEngine.Color;
       effectDistance: UnityEngine.Vector2;
       useGraphicAlpha: boolean;
@@ -16366,7 +16849,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PositionAsUV1 {
+    export declare class PositionAsUV1 {
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -16416,7 +16899,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Shadow {
+    export declare class Shadow {
       effectColor: UnityEngine.Color;
       effectDistance: UnityEngine.Vector2;
       useGraphicAlpha: boolean;
@@ -16469,7 +16952,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Button_ButtonClickedEvent {
+    export declare class Button_ButtonClickedEvent {
+      constructor();
       AddListener: ((call: UnityEngine.Events.UnityAction) => void);
       RemoveListener: ((call: UnityEngine.Events.UnityAction) => void);
       Invoke: (() => void);
@@ -16483,10 +16967,10 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface DefaultControls_IFactoryControls {
-      CreateGameObject: ((name: string, components: any) => UnityEngine.GameObject);
+    export declare class DefaultControls_IFactoryControls {
+      CreateGameObject: ((name: string, components: any[]) => UnityEngine.GameObject);
     }
-    export interface DefaultControls_Resources {
+    export declare class DefaultControls_Resources {
       standard: UnityEngine.Sprite;
       background: UnityEngine.Sprite;
       inputField: UnityEngine.Sprite;
@@ -16499,7 +16983,11 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Dropdown_OptionData {
+    export declare class Dropdown_OptionData {
+      constructor();
+      constructor(text: string);
+      constructor(image: UnityEngine.Sprite);
+      constructor(text: string, image: UnityEngine.Sprite);
       text: string;
       image: UnityEngine.Sprite;
       Equals: ((obj: any) => boolean);
@@ -16507,14 +16995,16 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Dropdown_OptionDataList {
+    export declare class Dropdown_OptionDataList {
+      constructor();
       options: any; // System.Collections.Generic.List`1[UnityEngine.UI.Dropdown+OptionData]
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Dropdown_DropdownEvent {
+    export declare class Dropdown_DropdownEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: number) => void);
@@ -16603,7 +17093,8 @@ export namespace UnityEngine {
       MultiLineSubmit = 1,
       MultiLineNewline = 2,
     }
-    export interface InputField_OnValidateInput {
+    export declare class InputField_OnValidateInput {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: ((text: string, charIndex: number, addedChar: any) => any);
@@ -16612,13 +17103,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface InputField_SubmitEvent {
+    export declare class InputField_SubmitEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: string) => void);
@@ -16632,7 +17124,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface InputField_OnChangeEvent {
+    export declare class InputField_OnChangeEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: string) => void);
@@ -16690,7 +17183,8 @@ export namespace UnityEngine {
       FixedColumnCount = 1,
       FixedRowCount = 2,
     }
-    export interface MaskableGraphic_CullStateChangedEvent {
+    export declare class MaskableGraphic_CullStateChangedEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: boolean) => void);
@@ -16721,7 +17215,8 @@ export namespace UnityEngine {
       AutoHide = 1,
       AutoHideAndExpandViewport = 2,
     }
-    export interface ScrollRect_ScrollRectEvent {
+    export declare class ScrollRect_ScrollRectEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: UnityEngine.Vector2) => void);
@@ -16741,7 +17236,8 @@ export namespace UnityEngine {
       BottomToTop = 2,
       TopToBottom = 3,
     }
-    export interface Scrollbar_ScrollEvent {
+    export declare class Scrollbar_ScrollEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: number) => void);
@@ -16767,7 +17263,8 @@ export namespace UnityEngine {
       BottomToTop = 2,
       TopToBottom = 3,
     }
-    export interface Slider_SliderEvent {
+    export declare class Slider_SliderEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: number) => void);
@@ -16785,7 +17282,8 @@ export namespace UnityEngine {
       None = 0,
       Fade = 1,
     }
-    export interface Toggle_ToggleEvent {
+    export declare class Toggle_ToggleEvent {
+      constructor();
       AddListener: ((call: any) => void);
       RemoveListener: ((call: any) => void);
       Invoke: ((arg0: boolean) => void);
@@ -16801,7 +17299,8 @@ export namespace UnityEngine {
     }
   }
   export namespace UIElements {
-    export interface BindableElement {
+    export declare class BindableElement {
+      constructor();
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -16876,7 +17375,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface BindableElement_UxmlFactory {
+    export declare class BindableElement_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -16893,7 +17393,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface BindableElement_UxmlTraits {
+    export declare class BindableElement_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -16903,7 +17404,10 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Clickable {
+    export declare class Clickable {
+      constructor(handler: any, delay: any, interval: any);
+      constructor(handler: any);
+      constructor(handler: any);
       lastMousePosition: UnityEngine.Vector2;
       activators: any; // System.Collections.Generic.List`1[UnityEngine.UIElements.ManipulatorActivationFilter]
       target: UnityEngine.UIElements.VisualElement;
@@ -16912,7 +17416,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ContextualMenuManager {
+    export declare class ContextualMenuManager {
       DisplayMenuIfEventMatches: ((evt: UnityEngine.UIElements.EventBase, eventHandler: UnityEngine.UIElements.IEventHandler) => void);
       DisplayMenu: ((triggerEvent: UnityEngine.UIElements.EventBase, target: UnityEngine.UIElements.IEventHandler) => void);
       Equals: ((obj: any) => boolean);
@@ -16920,7 +17424,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ContextualMenuManipulator {
+    export declare class ContextualMenuManipulator {
+      constructor(menuBuilder: any);
       activators: any; // System.Collections.Generic.List`1[UnityEngine.UIElements.ManipulatorActivationFilter]
       target: UnityEngine.UIElements.VisualElement;
       Equals: ((obj: any) => boolean);
@@ -16928,7 +17433,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Cursor {
+    export declare class Cursor {
       texture: UnityEngine.Texture2D;
       hotspot: UnityEngine.Vector2;
       Equals: ((obj: any) => boolean) | ((other: UnityEngine.UIElements.Cursor) => boolean);
@@ -16936,7 +17441,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface DropdownMenuEventInfo {
+    export declare class DropdownMenuEventInfo {
+      constructor(e: UnityEngine.UIElements.EventBase);
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -16945,20 +17451,22 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DropdownMenuItem {
+    export declare class DropdownMenuItem {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DropdownMenuSeparator {
+    export declare class DropdownMenuSeparator {
+      constructor(subMenuPath: string);
       subMenuPath: string;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DropdownMenuAction {
+    export declare class DropdownMenuAction {
+      constructor(actionName: string, actionCallback: any, actionStatusCallback: any, userData?: any);
       name: string;
       status: UnityEngine.UIElements.DropdownMenuAction_Status;
       eventInfo: UnityEngine.UIElements.DropdownMenuEventInfo;
@@ -16977,7 +17485,8 @@ export namespace UnityEngine {
       Checked = 4,
       Hidden = 8,
     }
-    export interface DropdownMenu {
+    export declare class DropdownMenu {
+      constructor();
       MenuItems: (() => any);
       AppendAction: ((actionName: string, action: any, actionStatusCallback: any, userData?: any) => void) | ((actionName: string, action: any, status?: UnityEngine.UIElements.DropdownMenuAction_Status) => void);
       InsertAction: ((atIndex: number, actionName: string, action: any, actionStatusCallback: any, userData?: any) => void) | ((atIndex: number, actionName: string, action: any, status?: UnityEngine.UIElements.DropdownMenuAction_Status) => void);
@@ -16990,20 +17499,21 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface EventDispatcherGate {
+    export declare class EventDispatcherGate {
+      constructor(d: UnityEngine.UIElements.EventDispatcher);
       Dispose: (() => void);
       Equals: ((other: UnityEngine.UIElements.EventDispatcherGate) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EventDispatcher {
+    export declare class EventDispatcher {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Focusable {
+    export declare class Focusable {
       focusController: UnityEngine.UIElements.FocusController;
       focusable: boolean;
       tabIndex: number;
@@ -17020,24 +17530,27 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface FocusChangeDirection {
+    export declare class FocusChangeDirection {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IFocusRing {
+    export declare class IFocusRing {
       GetFocusChangeDirection: ((currentFocusable: UnityEngine.UIElements.Focusable, e: UnityEngine.UIElements.EventBase) => UnityEngine.UIElements.FocusChangeDirection);
       GetNextFocusable: ((currentFocusable: UnityEngine.UIElements.Focusable, direction: UnityEngine.UIElements.FocusChangeDirection) => UnityEngine.UIElements.Focusable);
     }
-    export interface FocusController {
+    export declare class FocusController {
+      constructor(focusRing: UnityEngine.UIElements.IFocusRing);
       focusedElement: UnityEngine.UIElements.Focusable;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IMGUIContainer {
+    export declare class IMGUIContainer {
+      constructor();
+      constructor(onGUIHandler: any);
       onGUIHandler: any; // System.Action
       cullingEnabled: boolean;
       contextType: UnityEngine.UIElements.ContextType;
@@ -17115,7 +17628,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface IMGUIContainer_UxmlFactory {
+    export declare class IMGUIContainer_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -17132,7 +17646,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IMGUIContainer_UxmlTraits {
+    export declare class IMGUIContainer_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -17142,7 +17657,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ImmediateModeElement {
+    export declare class ImmediateModeElement {
+      constructor();
       cullingEnabled: boolean;
       viewDataKey: string;
       userData: any; // System.Object
@@ -17221,13 +17737,13 @@ export namespace UnityEngine {
       Single = 1,
       Multiple = 2,
     }
-    export interface ITransform {
+    export declare class ITransform {
       position: UnityEngine.Vector3;
       rotation: UnityEngine.Quaternion;
       scale: UnityEngine.Vector3;
       matrix: UnityEngine.Matrix4x4;
     }
-    export interface ManipulatorActivationFilter {
+    export declare class ManipulatorActivationFilter {
       button: UnityEngine.UIElements.MouseButton;
       modifiers: UnityEngine.EventModifiers;
       clickCount: number;
@@ -17237,10 +17753,10 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface IManipulator {
+    export declare class IManipulator {
       target: UnityEngine.UIElements.VisualElement;
     }
-    export interface Manipulator {
+    export declare class Manipulator {
       target: UnityEngine.UIElements.VisualElement;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -17252,13 +17768,13 @@ export namespace UnityEngine {
       RightMouse = 1,
       MiddleMouse = 2,
     }
-    export interface MouseCaptureController {
+    export declare class MouseCaptureController {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseManipulator {
+    export declare class MouseManipulator {
       activators: any; // System.Collections.Generic.List`1[UnityEngine.UIElements.ManipulatorActivationFilter]
       target: UnityEngine.UIElements.VisualElement;
       Equals: ((obj: any) => boolean);
@@ -17275,7 +17791,7 @@ export namespace UnityEngine {
       DynamicTransform = 1,
       GroupTransform = 2,
     }
-    export interface IPanel {
+    export declare class IPanel {
       visualTree: UnityEngine.UIElements.VisualElement;
       dispatcher: UnityEngine.UIElements.EventDispatcher;
       contextType: UnityEngine.UIElements.ContextType;
@@ -17284,13 +17800,13 @@ export namespace UnityEngine {
       Pick: ((point: UnityEngine.Vector2) => UnityEngine.UIElements.VisualElement);
       PickAll: ((point: UnityEngine.Vector2, picked: any) => UnityEngine.UIElements.VisualElement);
     }
-    export interface PointerCaptureHelper {
+    export declare class PointerCaptureHelper {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerManipulator {
+    export declare class PointerManipulator {
       activators: any; // System.Collections.Generic.List`1[UnityEngine.UIElements.ManipulatorActivationFilter]
       target: UnityEngine.UIElements.VisualElement;
       Equals: ((obj: any) => boolean);
@@ -17298,7 +17814,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TimerState {
+    export declare class TimerState {
       start: any; // System.Int64
       now: any; // System.Int64
       deltaTime: any; // System.Int64
@@ -17365,7 +17881,9 @@ export namespace UnityEngine {
       Flex = 0,
       None = 1,
     }
-    export interface TemplateContainer {
+    export declare class TemplateContainer {
+      constructor();
+      constructor(templateId: string);
       templateId: string;
       contentContainer: UnityEngine.UIElements.VisualElement;
       binding: UnityEngine.UIElements.IBinding;
@@ -17441,7 +17959,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface TemplateContainer_UxmlFactory {
+    export declare class TemplateContainer_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
       uxmlNamespace: string;
@@ -17458,7 +17977,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TemplateContainer_UxmlTraits {
+    export declare class TemplateContainer_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -17468,7 +17988,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TextElement {
+    export declare class TextElement {
+      constructor();
       text: string;
       displayTooltipWhenElided: boolean;
       isElided: boolean;
@@ -17547,7 +18068,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface TextElement_UxmlFactory {
+    export declare class TextElement_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -17564,7 +18086,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TextElement_UxmlTraits {
+    export declare class TextElement_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -17574,13 +18097,13 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UQuery {
+    export declare class UQuery {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UQueryExtensions {
+    export declare class UQueryExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -17590,7 +18113,8 @@ export namespace UnityEngine {
       Position = 0,
       Ignore = 1,
     }
-    export interface VisualElement {
+    export declare class VisualElement {
+      constructor();
       viewDataKey: string;
       userData: any; // System.Object
       canGrabFocus: boolean;
@@ -17663,7 +18187,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface VisualElement_UxmlFactory {
+    export declare class VisualElement_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -17680,7 +18205,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VisualElement_UxmlTraits {
+    export declare class VisualElement_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -17695,7 +18221,7 @@ export namespace UnityEngine {
       Exactly = 1,
       AtMost = 2,
     }
-    export interface VisualElement_Hierarchy {
+    export declare class VisualElement_Hierarchy {
       parent: UnityEngine.UIElements.VisualElement;
       childCount: number;
       Add: ((child: UnityEngine.UIElements.VisualElement) => void);
@@ -17712,22 +18238,23 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface VisualElementExtensions {
+    export declare class VisualElementExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IExperimentalFeatures {
+    export declare class IExperimentalFeatures {
       animation: UnityEngine.UIElements.Experimental.ITransitionAnimations;
     }
-    export interface VisualElementFocusChangeDirection {
+    export declare class VisualElementFocusChangeDirection {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VisualElementFocusRing {
+    export declare class VisualElementFocusRing {
+      constructor(root: UnityEngine.UIElements.VisualElement, dfo?: UnityEngine.UIElements.VisualElementFocusRing_DefaultFocusOrder);
       defaultFocusOrder: UnityEngine.UIElements.VisualElementFocusRing_DefaultFocusOrder;
       GetFocusChangeDirection: ((currentFocusable: UnityEngine.UIElements.Focusable, e: UnityEngine.UIElements.EventBase) => UnityEngine.UIElements.FocusChangeDirection);
       GetNextFocusable: ((currentFocusable: UnityEngine.UIElements.Focusable, direction: UnityEngine.UIElements.FocusChangeDirection) => UnityEngine.UIElements.Focusable);
@@ -17741,7 +18268,7 @@ export namespace UnityEngine {
       PositionXY = 1,
       PositionYX = 2,
     }
-    export interface IVisualElementScheduledItem {
+    export declare class IVisualElementScheduledItem {
       element: UnityEngine.UIElements.VisualElement;
       isActive: boolean;
       Resume: (() => void);
@@ -17752,10 +18279,10 @@ export namespace UnityEngine {
       Until: ((stopCondition: any) => UnityEngine.UIElements.IVisualElementScheduledItem);
       ForDuration: ((durationMs: any) => UnityEngine.UIElements.IVisualElementScheduledItem);
     }
-    export interface IVisualElementScheduler {
+    export declare class IVisualElementScheduler {
       Execute: ((timerUpdateEvent: any) => UnityEngine.UIElements.IVisualElementScheduledItem) | ((updateEvent: any) => UnityEngine.UIElements.IVisualElementScheduledItem);
     }
-    export interface VisualElementStyleSheetSet {
+    export declare class VisualElementStyleSheetSet {
       count: number;
       Add: ((styleSheet: UnityEngine.UIElements.StyleSheet) => void);
       Clear: (() => void);
@@ -17770,22 +18297,23 @@ export namespace UnityEngine {
       Horizontal = 0,
       Vertical = 1,
     }
-    export interface IBindable {
+    export declare class IBindable {
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
     }
-    export interface IBinding {
+    export declare class IBinding {
       PreUpdate: (() => void);
       Update: (() => void);
       Release: (() => void);
     }
-    export interface IBindingExtensions {
+    export declare class IBindingExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Box {
+    export declare class Box {
+      constructor();
       viewDataKey: string;
       userData: any; // System.Object
       canGrabFocus: boolean;
@@ -17858,7 +18386,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Box_UxmlFactory {
+    export declare class Box_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -17875,7 +18404,9 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Button {
+    export declare class Button {
+      constructor();
+      constructor(clickEvent: any);
       clickable: UnityEngine.UIElements.Clickable;
       text: string;
       displayTooltipWhenElided: boolean;
@@ -17955,7 +18486,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Button_UxmlFactory {
+    export declare class Button_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -17972,7 +18504,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Button_UxmlTraits {
+    export declare class Button_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -17982,7 +18515,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Foldout {
+    export declare class Foldout {
+      constructor();
       contentContainer: UnityEngine.UIElements.VisualElement;
       text: string;
       value: boolean;
@@ -18060,7 +18594,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Foldout_UxmlFactory {
+    export declare class Foldout_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18077,7 +18612,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Foldout_UxmlTraits {
+    export declare class Foldout_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18093,7 +18629,9 @@ export namespace UnityEngine {
       Warning = 2,
       Error = 3,
     }
-    export interface HelpBox {
+    export declare class HelpBox {
+      constructor();
+      constructor(text: string, messageType: UnityEngine.UIElements.HelpBoxMessageType);
       text: string;
       messageType: UnityEngine.UIElements.HelpBoxMessageType;
       viewDataKey: string;
@@ -18168,7 +18706,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface HelpBox_UxmlFactory {
+    export declare class HelpBox_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18185,7 +18724,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface HelpBox_UxmlTraits {
+    export declare class HelpBox_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18195,7 +18735,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Image {
+    export declare class Image {
+      constructor();
       image: UnityEngine.Texture;
       vectorImage: UnityEngine.UIElements.VectorImage;
       sourceRect: UnityEngine.Rect;
@@ -18274,7 +18815,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Image_UxmlFactory {
+    export declare class Image_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18291,7 +18833,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Image_UxmlTraits {
+    export declare class Image_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18301,13 +18844,15 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface INotifyValueChangedExtensions {
+    export declare class INotifyValueChangedExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Label {
+    export declare class Label {
+      constructor();
+      constructor(text: string);
       text: string;
       displayTooltipWhenElided: boolean;
       isElided: boolean;
@@ -18386,7 +18931,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Label_UxmlFactory {
+    export declare class Label_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18403,7 +18949,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Label_UxmlTraits {
+    export declare class Label_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18418,7 +18965,9 @@ export namespace UnityEngine {
       ContentOnly = 1,
       All = 2,
     }
-    export interface ListView {
+    export declare class ListView {
+      constructor();
+      constructor(itemsSource: any, itemHeight: number, makeItem: any, bindItem: any);
       itemsSource: any; // System.Collections.IList
       makeItem: any; // System.Func`1[UnityEngine.UIElements.VisualElement]
       unbindItem: any; // System.Action`2[UnityEngine.UIElements.VisualElement,System.Int32]
@@ -18518,7 +19067,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface ListView_UxmlFactory {
+    export declare class ListView_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18535,7 +19085,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ListView_UxmlTraits {
+    export declare class ListView_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18545,7 +19096,10 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MinMaxSlider {
+    export declare class MinMaxSlider {
+      constructor();
+      constructor(minValue: number, maxValue: number, minLimit: number, maxLimit: number);
+      constructor(label: string, minValue?: number, maxValue?: number, minLimit?: number, maxLimit?: number);
       minValue: number;
       maxValue: number;
       value: UnityEngine.Vector2;
@@ -18629,7 +19183,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface MinMaxSlider_UxmlFactory {
+    export declare class MinMaxSlider_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18646,7 +19201,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MinMaxSlider_UxmlTraits {
+    export declare class MinMaxSlider_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18656,7 +19212,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PopupWindow {
+    export declare class PopupWindow {
+      constructor();
       contentContainer: UnityEngine.UIElements.VisualElement;
       text: string;
       displayTooltipWhenElided: boolean;
@@ -18735,7 +19292,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface PopupWindow_UxmlFactory {
+    export declare class PopupWindow_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18752,7 +19310,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PopupWindow_UxmlTraits {
+    export declare class PopupWindow_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18762,7 +19321,9 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface RepeatButton {
+    export declare class RepeatButton {
+      constructor();
+      constructor(clickEvent: any, delay: any, interval: any);
       text: string;
       displayTooltipWhenElided: boolean;
       isElided: boolean;
@@ -18842,7 +19403,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface RepeatButton_UxmlFactory {
+    export declare class RepeatButton_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18859,7 +19421,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface RepeatButton_UxmlTraits {
+    export declare class RepeatButton_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18869,7 +19432,9 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Scroller {
+    export declare class Scroller {
+      constructor();
+      constructor(lowValue: number, highValue: number, valueChanged: any, direction?: UnityEngine.UIElements.SliderDirection);
       slider: UnityEngine.UIElements.Slider;
       lowButton: UnityEngine.UIElements.RepeatButton;
       highButton: UnityEngine.UIElements.RepeatButton;
@@ -18952,7 +19517,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Scroller_UxmlFactory {
+    export declare class Scroller_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -18969,7 +19535,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Scroller_UxmlTraits {
+    export declare class Scroller_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -18984,7 +19551,9 @@ export namespace UnityEngine {
       Horizontal = 1,
       VerticalAndHorizontal = 2,
     }
-    export interface ScrollView {
+    export declare class ScrollView {
+      constructor();
+      constructor(scrollViewMode: UnityEngine.UIElements.ScrollViewMode);
       showHorizontal: boolean;
       showVertical: boolean;
       scrollOffset: UnityEngine.Vector2;
@@ -19069,7 +19638,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface ScrollView_UxmlFactory {
+    export declare class ScrollView_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -19086,7 +19656,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ScrollView_UxmlTraits {
+    export declare class ScrollView_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -19101,7 +19672,10 @@ export namespace UnityEngine {
       Elastic = 1,
       Clamped = 2,
     }
-    export interface Slider {
+    export declare class Slider {
+      constructor();
+      constructor(start: number, end: number, direction?: UnityEngine.UIElements.SliderDirection, pageSize?: number);
+      constructor(label: string, start?: number, end?: number, direction?: UnityEngine.UIElements.SliderDirection, pageSize?: number);
       lowValue: number;
       highValue: number;
       range: number;
@@ -19187,7 +19761,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Slider_UxmlFactory {
+    export declare class Slider_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -19204,7 +19779,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Slider_UxmlTraits {
+    export declare class Slider_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -19214,7 +19790,10 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface SliderInt {
+    export declare class SliderInt {
+      constructor();
+      constructor(start: number, end: number, direction?: UnityEngine.UIElements.SliderDirection, pageSize?: number);
+      constructor(label: string, start?: number, end?: number, direction?: UnityEngine.UIElements.SliderDirection, pageSize?: number);
       pageSize: number;
       lowValue: number;
       highValue: number;
@@ -19300,7 +19879,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface SliderInt_UxmlFactory {
+    export declare class SliderInt_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -19317,7 +19897,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface SliderInt_UxmlTraits {
+    export declare class SliderInt_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -19327,7 +19908,11 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TextField {
+    export declare class TextField {
+      constructor();
+      constructor(maxLength: number, multiline: boolean, isPasswordField: boolean, maskChar: any);
+      constructor(label: string);
+      constructor(label: string, maxLength: number, multiline: boolean, isPasswordField: boolean, maskChar: any);
       multiline: boolean;
       value: string;
       text: string;
@@ -19421,7 +20006,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface TextField_UxmlFactory {
+    export declare class TextField_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -19438,7 +20024,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TextField_UxmlTraits {
+    export declare class TextField_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -19448,7 +20035,9 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Toggle {
+    export declare class Toggle {
+      constructor();
+      constructor(label: string);
       text: string;
       value: boolean;
       labelElement: UnityEngine.UIElements.Label;
@@ -19528,7 +20117,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface Toggle_UxmlFactory {
+    export declare class Toggle_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -19545,7 +20135,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Toggle_UxmlTraits {
+    export declare class Toggle_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -19555,7 +20146,9 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TwoPaneSplitView {
+    export declare class TwoPaneSplitView {
+      constructor();
+      constructor(fixedPaneIndex: number, fixedPaneStartDimension: number, orientation: UnityEngine.UIElements.TwoPaneSplitViewOrientation);
       fixedPane: UnityEngine.UIElements.VisualElement;
       flexedPane: UnityEngine.UIElements.VisualElement;
       fixedPaneIndex: number;
@@ -19635,7 +20228,8 @@ export namespace UnityEngine {
       GetHashCode: (() => number);
       GetType: (() => any);
     }
-    export interface TwoPaneSplitView_UxmlFactory {
+    export declare class TwoPaneSplitView_UxmlFactory {
+      constructor();
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -19652,7 +20246,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TwoPaneSplitView_UxmlTraits {
+    export declare class TwoPaneSplitView_UxmlTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -19666,9 +20261,10 @@ export namespace UnityEngine {
       Horizontal = 0,
       Vertical = 1,
     }
-    export interface IPointerCaptureEvent {
+    export declare class IPointerCaptureEvent {
     }
-    export interface PointerCaptureOutEvent {
+    export declare class PointerCaptureOutEvent {
+      constructor();
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
       eventTypeId: any; // System.Int64
@@ -19693,7 +20289,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerCaptureEvent {
+    export declare class PointerCaptureEvent {
+      constructor();
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
       eventTypeId: any; // System.Int64
@@ -19718,9 +20315,10 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IMouseCaptureEvent {
+    export declare class IMouseCaptureEvent {
     }
-    export interface MouseCaptureOutEvent {
+    export declare class MouseCaptureOutEvent {
+      constructor();
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
       eventTypeId: any; // System.Int64
@@ -19745,7 +20343,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseCaptureEvent {
+    export declare class MouseCaptureEvent {
+      constructor();
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
       eventTypeId: any; // System.Int64
@@ -19770,36 +20369,13 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IChangeEvent {
+    export declare class IChangeEvent {
     }
-    export interface ICommandEvent {
+    export declare class ICommandEvent {
       commandName: string;
     }
-    export interface ValidateCommandEvent {
-      commandName: string;
-      eventTypeId: any; // System.Int64
-      timestamp: any; // System.Int64
-      bubbles: boolean;
-      tricklesDown: boolean;
-      target: UnityEngine.UIElements.IEventHandler;
-      isPropagationStopped: boolean;
-      isImmediatePropagationStopped: boolean;
-      isDefaultPrevented: boolean;
-      propagationPhase: UnityEngine.UIElements.PropagationPhase;
-      currentTarget: UnityEngine.UIElements.IEventHandler;
-      dispatch: boolean;
-      imguiEvent: UnityEngine.Event;
-      originalMousePosition: UnityEngine.Vector2;
-      Dispose: (() => void);
-      StopPropagation: (() => void);
-      StopImmediatePropagation: (() => void);
-      PreventDefault: (() => void);
-      Equals: ((obj: any) => boolean);
-      GetHashCode: (() => number);
-      GetType: (() => any);
-      ToString: (() => string);
-    }
-    export interface ExecuteCommandEvent {
+    export declare class ValidateCommandEvent {
+      constructor();
       commandName: string;
       eventTypeId: any; // System.Int64
       timestamp: any; // System.Int64
@@ -19823,9 +20399,35 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IDragAndDropEvent {
+    export declare class ExecuteCommandEvent {
+      constructor();
+      commandName: string;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
     }
-    export interface DragExitedEvent {
+    export declare class IDragAndDropEvent {
+    }
+    export declare class DragExitedEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -19860,7 +20462,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DragEnterEvent {
+    export declare class DragEnterEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -19895,7 +20498,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DragLeaveEvent {
+    export declare class DragLeaveEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -19930,7 +20534,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DragUpdatedEvent {
+    export declare class DragUpdatedEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -19965,7 +20570,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DragPerformEvent {
+    export declare class DragPerformEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20000,7 +20606,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface EventBase {
+    export declare class EventBase {
       eventTypeId: any; // System.Int64
       timestamp: any; // System.Int64
       bubbles: boolean;
@@ -20027,13 +20633,13 @@ export namespace UnityEngine {
       NoTrickleDown = 0,
       TrickleDown = 1,
     }
-    export interface IEventHandler {
+    export declare class IEventHandler {
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
       HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
       HasTrickleDownHandlers: (() => boolean);
       HasBubbleUpHandlers: (() => boolean);
     }
-    export interface CallbackEventHandler {
+    export declare class CallbackEventHandler {
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
       HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
       HasTrickleDownHandlers: (() => boolean);
@@ -20043,36 +20649,12 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IFocusEvent {
+    export declare class IFocusEvent {
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
     }
-    export interface FocusOutEvent {
-      relatedTarget: UnityEngine.UIElements.Focusable;
-      direction: UnityEngine.UIElements.FocusChangeDirection;
-      eventTypeId: any; // System.Int64
-      timestamp: any; // System.Int64
-      bubbles: boolean;
-      tricklesDown: boolean;
-      target: UnityEngine.UIElements.IEventHandler;
-      isPropagationStopped: boolean;
-      isImmediatePropagationStopped: boolean;
-      isDefaultPrevented: boolean;
-      propagationPhase: UnityEngine.UIElements.PropagationPhase;
-      currentTarget: UnityEngine.UIElements.IEventHandler;
-      dispatch: boolean;
-      imguiEvent: UnityEngine.Event;
-      originalMousePosition: UnityEngine.Vector2;
-      Dispose: (() => void);
-      StopPropagation: (() => void);
-      StopImmediatePropagation: (() => void);
-      PreventDefault: (() => void);
-      Equals: ((obj: any) => boolean);
-      GetHashCode: (() => number);
-      GetType: (() => any);
-      ToString: (() => string);
-    }
-    export interface BlurEvent {
+    export declare class FocusOutEvent {
+      constructor();
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
       eventTypeId: any; // System.Int64
@@ -20097,7 +20679,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface FocusInEvent {
+    export declare class BlurEvent {
+      constructor();
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
       eventTypeId: any; // System.Int64
@@ -20122,7 +20705,34 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface FocusEvent {
+    export declare class FocusInEvent {
+      constructor();
+      relatedTarget: UnityEngine.UIElements.Focusable;
+      direction: UnityEngine.UIElements.FocusChangeDirection;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class FocusEvent {
+      constructor();
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
       eventTypeId: any; // System.Int64
@@ -20155,7 +20765,8 @@ export namespace UnityEngine {
       BubbleUp = 3,
       DefaultAction = 4,
     }
-    export interface InputEvent {
+    export declare class InputEvent {
+      constructor();
       previousData: string;
       newData: string;
       eventTypeId: any; // System.Int64
@@ -20180,7 +20791,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IKeyboardEvent {
+    export declare class IKeyboardEvent {
       modifiers: UnityEngine.EventModifiers;
       character: any; // System.Char
       keyCode: UnityEngine.KeyCode;
@@ -20190,38 +20801,8 @@ export namespace UnityEngine {
       altKey: boolean;
       actionKey: boolean;
     }
-    export interface KeyDownEvent {
-      modifiers: UnityEngine.EventModifiers;
-      character: any; // System.Char
-      keyCode: UnityEngine.KeyCode;
-      shiftKey: boolean;
-      ctrlKey: boolean;
-      commandKey: boolean;
-      altKey: boolean;
-      actionKey: boolean;
-      eventTypeId: any; // System.Int64
-      timestamp: any; // System.Int64
-      bubbles: boolean;
-      tricklesDown: boolean;
-      target: UnityEngine.UIElements.IEventHandler;
-      isPropagationStopped: boolean;
-      isImmediatePropagationStopped: boolean;
-      isDefaultPrevented: boolean;
-      propagationPhase: UnityEngine.UIElements.PropagationPhase;
-      currentTarget: UnityEngine.UIElements.IEventHandler;
-      dispatch: boolean;
-      imguiEvent: UnityEngine.Event;
-      originalMousePosition: UnityEngine.Vector2;
-      Dispose: (() => void);
-      StopPropagation: (() => void);
-      StopImmediatePropagation: (() => void);
-      PreventDefault: (() => void);
-      Equals: ((obj: any) => boolean);
-      GetHashCode: (() => number);
-      GetType: (() => any);
-      ToString: (() => string);
-    }
-    export interface KeyUpEvent {
+    export declare class KeyDownEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       character: any; // System.Char
       keyCode: UnityEngine.KeyCode;
@@ -20252,7 +20833,40 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface GeometryChangedEvent {
+    export declare class KeyUpEvent {
+      constructor();
+      modifiers: UnityEngine.EventModifiers;
+      character: any; // System.Char
+      keyCode: UnityEngine.KeyCode;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class GeometryChangedEvent {
+      constructor();
       oldRect: UnityEngine.Rect;
       newRect: UnityEngine.Rect;
       eventTypeId: any; // System.Int64
@@ -20277,7 +20891,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IMouseEvent {
+    export declare class IMouseEvent {
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20291,42 +20905,8 @@ export namespace UnityEngine {
       altKey: boolean;
       actionKey: boolean;
     }
-    export interface MouseDownEvent {
-      modifiers: UnityEngine.EventModifiers;
-      mousePosition: UnityEngine.Vector2;
-      localMousePosition: UnityEngine.Vector2;
-      mouseDelta: UnityEngine.Vector2;
-      clickCount: number;
-      button: number;
-      pressedButtons: number;
-      shiftKey: boolean;
-      ctrlKey: boolean;
-      commandKey: boolean;
-      altKey: boolean;
-      actionKey: boolean;
-      currentTarget: UnityEngine.UIElements.IEventHandler;
-      eventTypeId: any; // System.Int64
-      timestamp: any; // System.Int64
-      bubbles: boolean;
-      tricklesDown: boolean;
-      target: UnityEngine.UIElements.IEventHandler;
-      isPropagationStopped: boolean;
-      isImmediatePropagationStopped: boolean;
-      isDefaultPrevented: boolean;
-      propagationPhase: UnityEngine.UIElements.PropagationPhase;
-      dispatch: boolean;
-      imguiEvent: UnityEngine.Event;
-      originalMousePosition: UnityEngine.Vector2;
-      Dispose: (() => void);
-      StopPropagation: (() => void);
-      StopImmediatePropagation: (() => void);
-      PreventDefault: (() => void);
-      Equals: ((obj: any) => boolean);
-      GetHashCode: (() => number);
-      GetType: (() => any);
-      ToString: (() => string);
-    }
-    export interface MouseUpEvent {
+    export declare class MouseDownEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20361,7 +20941,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseMoveEvent {
+    export declare class MouseUpEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20396,7 +20977,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ContextClickEvent {
+    export declare class MouseMoveEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20431,7 +21013,44 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface WheelEvent {
+    export declare class ContextClickEvent {
+      constructor();
+      modifiers: UnityEngine.EventModifiers;
+      mousePosition: UnityEngine.Vector2;
+      localMousePosition: UnityEngine.Vector2;
+      mouseDelta: UnityEngine.Vector2;
+      clickCount: number;
+      button: number;
+      pressedButtons: number;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class WheelEvent {
+      constructor();
       delta: UnityEngine.Vector3;
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -20467,7 +21086,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseEnterEvent {
+    export declare class MouseEnterEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20502,7 +21122,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseLeaveEvent {
+    export declare class MouseLeaveEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20537,7 +21158,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseEnterWindowEvent {
+    export declare class MouseEnterWindowEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20572,7 +21194,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseLeaveWindowEvent {
+    export declare class MouseLeaveWindowEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20607,7 +21230,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseOverEvent {
+    export declare class MouseOverEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20642,7 +21266,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MouseOutEvent {
+    export declare class MouseOutEvent {
+      constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -20677,7 +21302,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ContextualMenuPopulateEvent {
+    export declare class ContextualMenuPopulateEvent {
+      constructor();
       menu: UnityEngine.UIElements.DropdownMenu;
       triggerEvent: UnityEngine.UIElements.EventBase;
       modifiers: UnityEngine.EventModifiers;
@@ -20714,9 +21340,10 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IPanelChangedEvent {
+    export declare class IPanelChangedEvent {
     }
-    export interface AttachToPanelEvent {
+    export declare class AttachToPanelEvent {
+      constructor();
       originPanel: UnityEngine.UIElements.IPanel;
       destinationPanel: UnityEngine.UIElements.IPanel;
       eventTypeId: any; // System.Int64
@@ -20741,7 +21368,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DetachFromPanelEvent {
+    export declare class DetachFromPanelEvent {
+      constructor();
       originPanel: UnityEngine.UIElements.IPanel;
       destinationPanel: UnityEngine.UIElements.IPanel;
       eventTypeId: any; // System.Int64
@@ -20766,19 +21394,19 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerType {
+    export declare class PointerType {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerId {
+    export declare class PointerId {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IPointerEvent {
+    export declare class IPointerEvent {
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -20803,53 +21431,8 @@ export namespace UnityEngine {
       altKey: boolean;
       actionKey: boolean;
     }
-    export interface PointerDownEvent {
-      pointerId: number;
-      pointerType: string;
-      isPrimary: boolean;
-      button: number;
-      pressedButtons: number;
-      position: UnityEngine.Vector3;
-      localPosition: UnityEngine.Vector3;
-      deltaPosition: UnityEngine.Vector3;
-      deltaTime: number;
-      clickCount: number;
-      pressure: number;
-      tangentialPressure: number;
-      altitudeAngle: number;
-      azimuthAngle: number;
-      twist: number;
-      radius: UnityEngine.Vector2;
-      radiusVariance: UnityEngine.Vector2;
-      modifiers: UnityEngine.EventModifiers;
-      shiftKey: boolean;
-      ctrlKey: boolean;
-      commandKey: boolean;
-      altKey: boolean;
-      actionKey: boolean;
-      currentTarget: UnityEngine.UIElements.IEventHandler;
-      eventTypeId: any; // System.Int64
-      timestamp: any; // System.Int64
-      bubbles: boolean;
-      tricklesDown: boolean;
-      target: UnityEngine.UIElements.IEventHandler;
-      isPropagationStopped: boolean;
-      isImmediatePropagationStopped: boolean;
-      isDefaultPrevented: boolean;
-      propagationPhase: UnityEngine.UIElements.PropagationPhase;
-      dispatch: boolean;
-      imguiEvent: UnityEngine.Event;
-      originalMousePosition: UnityEngine.Vector2;
-      Dispose: (() => void);
-      StopPropagation: (() => void);
-      StopImmediatePropagation: (() => void);
-      PreventDefault: (() => void);
-      Equals: ((obj: any) => boolean);
-      GetHashCode: (() => number);
-      GetType: (() => any);
-      ToString: (() => string);
-    }
-    export interface PointerMoveEvent {
+    export declare class PointerDownEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -20895,7 +21478,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerStationaryEvent {
+    export declare class PointerMoveEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -20941,7 +21525,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerUpEvent {
+    export declare class PointerStationaryEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -20987,7 +21572,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerCancelEvent {
+    export declare class PointerUpEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -21033,7 +21619,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ClickEvent {
+    export declare class PointerCancelEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -21079,7 +21666,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerEnterEvent {
+    export declare class ClickEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -21125,7 +21713,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerLeaveEvent {
+    export declare class PointerEnterEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -21171,7 +21760,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerOverEvent {
+    export declare class PointerLeaveEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -21217,7 +21807,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface PointerOutEvent {
+    export declare class PointerOverEvent {
+      constructor();
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -21263,7 +21854,55 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface CustomStyleResolvedEvent {
+    export declare class PointerOutEvent {
+      constructor();
+      pointerId: number;
+      pointerType: string;
+      isPrimary: boolean;
+      button: number;
+      pressedButtons: number;
+      position: UnityEngine.Vector3;
+      localPosition: UnityEngine.Vector3;
+      deltaPosition: UnityEngine.Vector3;
+      deltaTime: number;
+      clickCount: number;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
+      modifiers: UnityEngine.EventModifiers;
+      shiftKey: boolean;
+      ctrlKey: boolean;
+      commandKey: boolean;
+      altKey: boolean;
+      actionKey: boolean;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      eventTypeId: any; // System.Int64
+      timestamp: any; // System.Int64
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose: (() => void);
+      StopPropagation: (() => void);
+      StopImmediatePropagation: (() => void);
+      PreventDefault: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class CustomStyleResolvedEvent {
+      constructor();
       customStyle: UnityEngine.UIElements.ICustomStyle;
       eventTypeId: any; // System.Int64
       timestamp: any; // System.Int64
@@ -21287,7 +21926,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TooltipEvent {
+    export declare class TooltipEvent {
+      constructor();
       tooltip: string;
       rect: UnityEngine.Rect;
       eventTypeId: any; // System.Int64
@@ -21312,7 +21952,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IMGUIEvent {
+    export declare class IMGUIEvent {
+      constructor();
       eventTypeId: any; // System.Int64
       timestamp: any; // System.Int64
       bubbles: boolean;
@@ -21335,7 +21976,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Vertex {
+    export declare class Vertex {
       position: UnityEngine.Vector3;
       tint: UnityEngine.Color32;
       uv: UnityEngine.Vector2;
@@ -21344,20 +21985,20 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface MeshWriteData {
+    export declare class MeshWriteData {
       vertexCount: number;
       indexCount: number;
       uvRegion: UnityEngine.Rect;
       SetNextVertex: ((vertex: UnityEngine.UIElements.Vertex) => void);
       SetNextIndex: ((index: any) => void);
       SetAllVertices: ((vertices: UnityEngine.UIElements.Vertex[]) => void) | ((vertices: any) => void);
-      SetAllIndices: ((indices: any) => void) | ((indices: any) => void);
+      SetAllIndices: ((indices: any[]) => void) | ((indices: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MeshGenerationContext {
+    export declare class MeshGenerationContext {
       visualElement: UnityEngine.UIElements.VisualElement;
       Allocate: ((vertexCount: number, indexCount: number, texture?: UnityEngine.Texture) => UnityEngine.UIElements.MeshWriteData);
       Equals: ((obj: any) => boolean);
@@ -21365,7 +22006,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Background {
+    export declare class Background {
+      constructor(t: UnityEngine.Texture2D);
       texture: UnityEngine.Texture2D;
       vectorImage: UnityEngine.UIElements.VectorImage;
       Equals: ((other: UnityEngine.UIElements.Background) => boolean) | ((obj: any) => boolean);
@@ -21373,13 +22015,15 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ICustomStyle {
+    export declare class ICustomStyle {
     }
     export enum LengthUnit {
       Pixel = 0,
       Percent = 1,
     }
-    export interface Length {
+    export declare class Length {
+      constructor(value: number);
+      constructor(value: number, unit: UnityEngine.UIElements.LengthUnit);
       value: number;
       unit: UnityEngine.UIElements.LengthUnit;
       Equals: ((other: UnityEngine.UIElements.Length) => boolean) | ((obj: any) => boolean);
@@ -21387,7 +22031,11 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StyleBackground {
+    export declare class StyleBackground {
+      constructor(v: UnityEngine.UIElements.Background);
+      constructor(v: UnityEngine.Texture2D);
+      constructor(v: UnityEngine.UIElements.VectorImage);
+      constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.UIElements.Background;
       keyword: UnityEngine.UIElements.StyleKeyword;
       Equals: ((other: UnityEngine.UIElements.StyleBackground) => boolean) | ((obj: any) => boolean);
@@ -21395,7 +22043,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StyleColor {
+    export declare class StyleColor {
+      constructor(v: UnityEngine.Color);
+      constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.Color;
       keyword: UnityEngine.UIElements.StyleKeyword;
       Equals: ((other: UnityEngine.UIElements.StyleColor) => boolean) | ((obj: any) => boolean);
@@ -21403,7 +22053,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StyleCursor {
+    export declare class StyleCursor {
+      constructor(v: UnityEngine.UIElements.Cursor);
+      constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.UIElements.Cursor;
       keyword: UnityEngine.UIElements.StyleKeyword;
       Equals: ((other: UnityEngine.UIElements.StyleCursor) => boolean) | ((obj: any) => boolean);
@@ -21411,7 +22063,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StyleFloat {
+    export declare class StyleFloat {
+      constructor(v: number);
+      constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: number;
       keyword: UnityEngine.UIElements.StyleKeyword;
       Equals: ((other: UnityEngine.UIElements.StyleFloat) => boolean) | ((obj: any) => boolean);
@@ -21419,7 +22073,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StyleFont {
+    export declare class StyleFont {
+      constructor(v: UnityEngine.Font);
+      constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.Font;
       keyword: UnityEngine.UIElements.StyleKeyword;
       Equals: ((other: UnityEngine.UIElements.StyleFont) => boolean) | ((obj: any) => boolean);
@@ -21427,7 +22083,9 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StyleInt {
+    export declare class StyleInt {
+      constructor(v: number);
+      constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: number;
       keyword: UnityEngine.UIElements.StyleKeyword;
       Equals: ((other: UnityEngine.UIElements.StyleInt) => boolean) | ((obj: any) => boolean);
@@ -21435,7 +22093,10 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface StyleLength {
+    export declare class StyleLength {
+      constructor(v: number);
+      constructor(v: UnityEngine.UIElements.Length);
+      constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.UIElements.Length;
       keyword: UnityEngine.UIElements.StyleKeyword;
       Equals: ((other: UnityEngine.UIElements.StyleLength) => boolean) | ((obj: any) => boolean);
@@ -21450,7 +22111,7 @@ export namespace UnityEngine {
       None = 3,
       Initial = 4,
     }
-    export interface IResolvedStyle {
+    export declare class IResolvedStyle {
       alignContent: UnityEngine.UIElements.Align;
       alignItems: UnityEngine.UIElements.Align;
       alignSelf: UnityEngine.UIElements.Align;
@@ -21511,7 +22172,7 @@ export namespace UnityEngine {
       whiteSpace: UnityEngine.UIElements.WhiteSpace;
       width: number;
     }
-    export interface IStyle {
+    export declare class IStyle {
       alignContent: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Align]
       alignItems: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Align]
       alignSelf: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.Align]
@@ -21575,7 +22236,8 @@ export namespace UnityEngine {
       whiteSpace: any; // UnityEngine.UIElements.StyleEnum`1[UnityEngine.UIElements.WhiteSpace]
       width: UnityEngine.UIElements.StyleLength;
     }
-    export interface StyleSheet {
+    export declare class StyleSheet {
+      constructor();
       contentHash: number;
       name: string;
       hideFlags: UnityEngine.HideFlags;
@@ -21586,7 +22248,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ThemeStyleSheet {
+    export declare class ThemeStyleSheet {
+      constructor();
       contentHash: number;
       name: string;
       hideFlags: UnityEngine.HideFlags;
@@ -21597,9 +22260,10 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface IUxmlAttributes {
+    export declare class IUxmlAttributes {
     }
-    export interface UxmlRootElementFactory {
+    export declare class UxmlRootElementFactory {
+      constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
       substituteForTypeName: string;
@@ -21616,7 +22280,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlRootElementTraits {
+    export declare class UxmlRootElementTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -21626,7 +22291,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlStyleFactory {
+    export declare class UxmlStyleFactory {
+      constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
       substituteForTypeName: string;
@@ -21643,7 +22309,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlStyleTraits {
+    export declare class UxmlStyleTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -21653,7 +22320,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlTemplateFactory {
+    export declare class UxmlTemplateFactory {
+      constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
       substituteForTypeName: string;
@@ -21670,7 +22338,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlTemplateTraits {
+    export declare class UxmlTemplateTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -21680,7 +22349,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlAttributeOverridesFactory {
+    export declare class UxmlAttributeOverridesFactory {
+      constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
       substituteForTypeName: string;
@@ -21697,7 +22367,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlAttributeOverridesTraits {
+    export declare class UxmlAttributeOverridesTraits {
+      constructor();
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
@@ -21707,7 +22378,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlAttributeDescription {
+    export declare class UxmlAttributeDescription {
       name: string;
       obsoleteNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
       type: string;
@@ -21726,7 +22397,8 @@ export namespace UnityEngine {
       Prohibited = 2,
       Required = 3,
     }
-    export interface UxmlStringAttributeDescription {
+    export declare class UxmlStringAttributeDescription {
+      constructor();
       defaultValueAsString: string;
       defaultValue: string;
       name: string;
@@ -21741,7 +22413,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlFloatAttributeDescription {
+    export declare class UxmlFloatAttributeDescription {
+      constructor();
       defaultValueAsString: string;
       defaultValue: number;
       name: string;
@@ -21756,7 +22429,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlDoubleAttributeDescription {
+    export declare class UxmlDoubleAttributeDescription {
+      constructor();
       defaultValueAsString: string;
       defaultValue: number;
       name: string;
@@ -21771,7 +22445,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlIntAttributeDescription {
+    export declare class UxmlIntAttributeDescription {
+      constructor();
       defaultValueAsString: string;
       defaultValue: number;
       name: string;
@@ -21786,7 +22461,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlLongAttributeDescription {
+    export declare class UxmlLongAttributeDescription {
+      constructor();
       defaultValueAsString: string;
       defaultValue: any; // System.Int64
       name: string;
@@ -21801,7 +22477,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlBoolAttributeDescription {
+    export declare class UxmlBoolAttributeDescription {
+      constructor();
       defaultValueAsString: string;
       defaultValue: boolean;
       name: string;
@@ -21816,7 +22493,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlColorAttributeDescription {
+    export declare class UxmlColorAttributeDescription {
+      constructor();
       defaultValueAsString: string;
       defaultValue: UnityEngine.Color;
       name: string;
@@ -21831,7 +22509,8 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlChildElementDescription {
+    export declare class UxmlChildElementDescription {
+      constructor(t: any);
       elementName: string;
       elementNamespace: string;
       Equals: ((obj: any) => boolean);
@@ -21839,7 +22518,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlTraits {
+    export declare class UxmlTraits {
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlAttributeDescription]
       uxmlChildElementsDescription: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.UxmlChildElementDescription]
@@ -21849,7 +22528,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IUxmlFactory {
+    export declare class IUxmlFactory {
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -21862,20 +22541,22 @@ export namespace UnityEngine {
       AcceptsAttributeBag: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => boolean);
       Create: ((bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext) => UnityEngine.UIElements.VisualElement);
     }
-    export interface UxmlTypeRestriction {
+    export declare class UxmlTypeRestriction {
       Equals: ((other: UnityEngine.UIElements.UxmlTypeRestriction) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlValueMatches {
+    export declare class UxmlValueMatches {
+      constructor();
       regex: string;
       Equals: ((other: UnityEngine.UIElements.UxmlTypeRestriction) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlValueBounds {
+    export declare class UxmlValueBounds {
+      constructor();
       min: string;
       max: string;
       excludeMin: boolean;
@@ -21885,14 +22566,16 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UxmlEnumeration {
+    export declare class UxmlEnumeration {
+      constructor();
       values: any; // System.Collections.Generic.IEnumerable`1[System.String]
       Equals: ((other: UnityEngine.UIElements.UxmlTypeRestriction) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VectorImage {
+    export declare class VectorImage {
+      constructor();
       name: string;
       hideFlags: UnityEngine.HideFlags;
       SetDirty: (() => void);
@@ -21902,7 +22585,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface VisualTreeAsset {
+    export declare class VisualTreeAsset {
+      constructor();
       templateDependencies: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.VisualTreeAsset]
       stylesheets: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.UIElements.StyleSheet]
       contentHash: number;
@@ -21917,7 +22601,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface CreationContext {
+    export declare class CreationContext {
       target: UnityEngine.UIElements.VisualElement;
       visualTreeAsset: UnityEngine.UIElements.VisualTreeAsset;
       slotInsertionPoints: any; // System.Collections.Generic.Dictionary`2[System.String,UnityEngine.UIElements.VisualElement]
@@ -21927,13 +22611,13 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export namespace Experimental {
-      export interface Easing {
+      export declare class Easing {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface StyleValues {
+      export declare class StyleValues {
         top: number;
         left: number;
         width: number;
@@ -21968,7 +22652,7 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface ITransitionAnimations {
+      export declare class ITransitionAnimations {
         Start: ((from: number, to: number, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Rect, to: UnityEngine.Rect, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Color, to: UnityEngine.Color, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Vector3, to: UnityEngine.Vector3, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Vector2, to: UnityEngine.Vector2, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, durationMs: number, onValueChanged: any) => any) | ((from: UnityEngine.UIElements.Experimental.StyleValues, to: UnityEngine.UIElements.Experimental.StyleValues, durationMs: number) => any) | ((to: UnityEngine.UIElements.Experimental.StyleValues, durationMs: number) => any) | ((fromValueGetter: any, to: number, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Rect, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Color, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Vector3, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Vector2, durationMs: number, onValueChanged: any) => any) | ((fromValueGetter: any, to: UnityEngine.Quaternion, durationMs: number, onValueChanged: any) => any);
         Layout: ((to: UnityEngine.Rect, durationMs: number) => any);
         TopLeft: ((to: UnityEngine.Vector2, durationMs: number) => any);
@@ -21977,7 +22661,7 @@ export namespace UnityEngine {
         Position: ((to: UnityEngine.Vector3, duration: number) => any);
         Rotation: ((to: UnityEngine.Quaternion, duration: number) => any);
       }
-      export interface IValueAnimation {
+      export declare class IValueAnimation {
         isRunning: boolean;
         durationMs: number;
         Start: (() => void);
@@ -21987,7 +22671,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Video {
-    export interface VideoClip {
+    export declare class VideoClip {
       originalPath: string;
       frameCount: any; // System.UInt64
       frameRate: number;
@@ -22048,7 +22732,8 @@ export namespace UnityEngine {
       Direct = 2,
       APIOnly = 3,
     }
-    export interface VideoPlayer {
+    export declare class VideoPlayer {
+      constructor();
       source: UnityEngine.Video.VideoSource;
       url: string;
       clip: UnityEngine.Video.VideoClip;
@@ -22144,7 +22829,8 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface VideoPlayer_EventHandler {
+    export declare class VideoPlayer_EventHandler {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: ((source: UnityEngine.Video.VideoPlayer) => void);
@@ -22153,13 +22839,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VideoPlayer_ErrorEventHandler {
+    export declare class VideoPlayer_ErrorEventHandler {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: ((source: UnityEngine.Video.VideoPlayer, message: string) => void);
@@ -22168,13 +22855,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VideoPlayer_FrameReadyEventHandler {
+    export declare class VideoPlayer_FrameReadyEventHandler {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: ((source: UnityEngine.Video.VideoPlayer, frameIdx: any) => void);
@@ -22183,13 +22871,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VideoPlayer_TimeEventHandler {
+    export declare class VideoPlayer_TimeEventHandler {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: ((source: UnityEngine.Video.VideoPlayer, seconds: number) => void);
@@ -22198,52 +22887,53 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
   }
   export namespace Windows {
-    export interface LicenseInformation {
+    export declare class LicenseInformation {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface CrashReporting {
+    export declare class CrashReporting {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Crypto {
+    export declare class Crypto {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Directory {
+    export declare class Directory {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface File {
+    export declare class File {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export namespace Speech {
-      export interface PhraseRecognitionSystem {
+      export declare class PhraseRecognitionSystem {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhraseRecognitionSystem_ErrorDelegate {
+      export declare class PhraseRecognitionSystem_ErrorDelegate {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((errorCode: UnityEngine.Windows.Speech.SpeechError) => void);
@@ -22252,13 +22942,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhraseRecognitionSystem_StatusDelegate {
+      export declare class PhraseRecognitionSystem_StatusDelegate {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((status: UnityEngine.Windows.Speech.SpeechSystemStatus) => void);
@@ -22267,13 +22958,13 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhraseRecognizer {
+      export declare class PhraseRecognizer {
         IsRunning: boolean;
         Start: (() => void);
         Stop: (() => void);
@@ -22283,7 +22974,8 @@ export namespace UnityEngine {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhraseRecognizer_PhraseRecognizedDelegate {
+      export declare class PhraseRecognizer_PhraseRecognizedDelegate {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((args: UnityEngine.Windows.Speech.PhraseRecognizedEventArgs) => void);
@@ -22292,13 +22984,17 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface DictationRecognizer {
+      export declare class DictationRecognizer {
+        constructor();
+        constructor(confidenceLevel: UnityEngine.Windows.Speech.ConfidenceLevel);
+        constructor(topic: UnityEngine.Windows.Speech.DictationTopicConstraint);
+        constructor(minimumConfidence: UnityEngine.Windows.Speech.ConfidenceLevel, topic: UnityEngine.Windows.Speech.DictationTopicConstraint);
         Status: UnityEngine.Windows.Speech.SpeechSystemStatus;
         AutoSilenceTimeoutSeconds: number;
         InitialSilenceTimeoutSeconds: number;
@@ -22310,7 +23006,8 @@ export namespace UnityEngine {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface DictationRecognizer_DictationHypothesisDelegate {
+      export declare class DictationRecognizer_DictationHypothesisDelegate {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((text: string) => void);
@@ -22319,13 +23016,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface DictationRecognizer_DictationResultDelegate {
+      export declare class DictationRecognizer_DictationResultDelegate {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((text: string, confidence: UnityEngine.Windows.Speech.ConfidenceLevel) => void);
@@ -22334,13 +23032,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface DictationRecognizer_DictationCompletedDelegate {
+      export declare class DictationRecognizer_DictationCompletedDelegate {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((cause: UnityEngine.Windows.Speech.DictationCompletionCause) => void);
@@ -22349,13 +23048,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface DictationRecognizer_DictationErrorHandler {
+      export declare class DictationRecognizer_DictationErrorHandler {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((error: string, hresult: number) => void);
@@ -22364,8 +23064,8 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -22408,15 +23108,15 @@ export namespace UnityEngine {
         MicrophoneUnavailable = 6,
         UnknownError = 7,
       }
-      export interface SemanticMeaning {
+      export declare class SemanticMeaning {
         key: string;
-        values: any; // System.String[]
+        values: string[];
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface PhraseRecognizedEventArgs {
+      export declare class PhraseRecognizedEventArgs {
         confidence: UnityEngine.Windows.Speech.ConfidenceLevel;
         semanticMeanings: UnityEngine.Windows.Speech.SemanticMeaning[];
         text: string;
@@ -22427,7 +23127,9 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface KeywordRecognizer {
+      export declare class KeywordRecognizer {
+        constructor(keywords: string[]);
+        constructor(keywords: string[], minimumConfidence: UnityEngine.Windows.Speech.ConfidenceLevel);
         Keywords: any; // System.Collections.Generic.IEnumerable`1[System.String]
         IsRunning: boolean;
         Start: (() => void);
@@ -22438,7 +23140,9 @@ export namespace UnityEngine {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface GrammarRecognizer {
+      export declare class GrammarRecognizer {
+        constructor(grammarFilePath: string);
+        constructor(grammarFilePath: string, minimumConfidence: UnityEngine.Windows.Speech.ConfidenceLevel);
         GrammarFilePath: string;
         IsRunning: boolean;
         Start: (() => void);
@@ -22455,7 +23159,7 @@ export namespace UnityEngine {
         PNG = 0,
         JPG = 1,
       }
-      export interface PhotoCapture {
+      export declare class PhotoCapture {
         StartPhotoModeAsync: ((setupParams: UnityEngine.Windows.WebCam.CameraParameters, onPhotoModeStartedCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnPhotoModeStartedCallback) => void);
         StopPhotoModeAsync: ((onPhotoModeStoppedCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnPhotoModeStoppedCallback) => void);
         TakePhotoAsync: ((filename: string, fileOutputFormat: UnityEngine.Windows.WebCam.PhotoCaptureFileOutputFormat, onCapturedPhotoToDiskCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnCapturedToDiskCallback) => void) | ((onCapturedPhotoToMemoryCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnCapturedToMemoryCallback) => void);
@@ -22470,7 +23174,7 @@ export namespace UnityEngine {
         Success = 0,
         UnknownError = 1,
       }
-      export interface PhotoCapture_PhotoCaptureResult {
+      export declare class PhotoCapture_PhotoCaptureResult {
         success: boolean;
         resultType: UnityEngine.Windows.WebCam.PhotoCapture_CaptureResultType;
         hResult: any; // System.Int64
@@ -22479,7 +23183,8 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface PhotoCapture_OnCaptureResourceCreatedCallback {
+      export declare class PhotoCapture_OnCaptureResourceCreatedCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((captureObject: UnityEngine.Windows.WebCam.PhotoCapture) => void);
@@ -22488,13 +23193,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhotoCapture_OnPhotoModeStartedCallback {
+      export declare class PhotoCapture_OnPhotoModeStartedCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((result: UnityEngine.Windows.WebCam.PhotoCapture_PhotoCaptureResult) => void);
@@ -22503,13 +23209,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhotoCapture_OnPhotoModeStoppedCallback {
+      export declare class PhotoCapture_OnPhotoModeStoppedCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((result: UnityEngine.Windows.WebCam.PhotoCapture_PhotoCaptureResult) => void);
@@ -22518,13 +23225,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhotoCapture_OnCapturedToDiskCallback {
+      export declare class PhotoCapture_OnCapturedToDiskCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((result: UnityEngine.Windows.WebCam.PhotoCapture_PhotoCaptureResult) => void);
@@ -22533,13 +23241,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhotoCapture_OnCapturedToMemoryCallback {
+      export declare class PhotoCapture_OnCapturedToMemoryCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((result: UnityEngine.Windows.WebCam.PhotoCapture_PhotoCaptureResult, photoCaptureFrame: UnityEngine.Windows.WebCam.PhotoCaptureFrame) => void);
@@ -22548,13 +23257,13 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface PhotoCaptureFrame {
+      export declare class PhotoCaptureFrame {
         dataLength: number;
         hasLocationData: boolean;
         pixelFormat: UnityEngine.Windows.WebCam.CapturePixelFormat;
@@ -22567,7 +23276,7 @@ export namespace UnityEngine {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface VideoCapture {
+      export declare class VideoCapture {
         IsRecording: boolean;
         StartVideoModeAsync: ((setupParams: UnityEngine.Windows.WebCam.CameraParameters, audioState: UnityEngine.Windows.WebCam.VideoCapture_AudioState, onVideoModeStartedCallback: UnityEngine.Windows.WebCam.VideoCapture_OnVideoModeStartedCallback) => void);
         StopVideoModeAsync: ((onVideoModeStoppedCallback: UnityEngine.Windows.WebCam.VideoCapture_OnVideoModeStoppedCallback) => void);
@@ -22590,7 +23299,7 @@ export namespace UnityEngine {
         ApplicationAndMicAudio = 2,
         None = 3,
       }
-      export interface VideoCapture_VideoCaptureResult {
+      export declare class VideoCapture_VideoCaptureResult {
         success: boolean;
         resultType: UnityEngine.Windows.WebCam.VideoCapture_CaptureResultType;
         hResult: any; // System.Int64
@@ -22599,7 +23308,8 @@ export namespace UnityEngine {
         ToString: (() => string);
         GetType: (() => any);
       }
-      export interface VideoCapture_OnVideoCaptureResourceCreatedCallback {
+      export declare class VideoCapture_OnVideoCaptureResourceCreatedCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((captureObject: UnityEngine.Windows.WebCam.VideoCapture) => void);
@@ -22608,13 +23318,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface VideoCapture_OnVideoModeStartedCallback {
+      export declare class VideoCapture_OnVideoModeStartedCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((result: UnityEngine.Windows.WebCam.VideoCapture_VideoCaptureResult) => void);
@@ -22623,13 +23334,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface VideoCapture_OnVideoModeStoppedCallback {
+      export declare class VideoCapture_OnVideoModeStoppedCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((result: UnityEngine.Windows.WebCam.VideoCapture_VideoCaptureResult) => void);
@@ -22638,13 +23350,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface VideoCapture_OnStartedRecordingVideoCallback {
+      export declare class VideoCapture_OnStartedRecordingVideoCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((result: UnityEngine.Windows.WebCam.VideoCapture_VideoCaptureResult) => void);
@@ -22653,13 +23366,14 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface VideoCapture_OnStoppedRecordingVideoCallback {
+      export declare class VideoCapture_OnStoppedRecordingVideoCallback {
+        constructor(object: any, method: any);
         Method: any; // System.Reflection.MethodInfo
         Target: any; // System.Object
         Invoke: ((result: UnityEngine.Windows.WebCam.VideoCapture_VideoCaptureResult) => void);
@@ -22668,8 +23382,8 @@ export namespace UnityEngine {
         GetObjectData: ((info: any, context: any) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any);
-        DynamicInvoke: ((args: any) => any);
+        GetInvocationList: (() => any[]);
+        DynamicInvoke: ((args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -22685,13 +23399,15 @@ export namespace UnityEngine {
         PhotoMode = 1,
         VideoMode = 2,
       }
-      export interface WebCam {
+      export declare class WebCam {
+        constructor();
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface CameraParameters {
+      export declare class CameraParameters {
+        constructor(webCamMode: UnityEngine.Windows.WebCam.WebCamMode);
         hologramOpacity: number;
         frameRate: number;
         cameraResolutionWidth: number;
@@ -22705,7 +23421,8 @@ export namespace UnityEngine {
     }
   }
   export namespace WSA {
-    export interface AppCallbackItem {
+    export declare class AppCallbackItem {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: (() => void);
@@ -22714,13 +23431,14 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface WindowSizeChanged {
+    export declare class WindowSizeChanged {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: ((width: number, height: number) => void);
@@ -22729,8 +23447,8 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -22740,7 +23458,8 @@ export namespace UnityEngine {
       Deactivated = 1,
       PointerActivated = 2,
     }
-    export interface WindowActivated {
+    export declare class WindowActivated {
+      constructor(object: any, method: any);
       Method: any; // System.Reflection.MethodInfo
       Target: any; // System.Object
       Invoke: ((state: UnityEngine.WSA.WindowActivationState) => void);
@@ -22749,19 +23468,20 @@ export namespace UnityEngine {
       GetObjectData: ((info: any, context: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any);
-      DynamicInvoke: ((args: any) => any);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Application {
+    export declare class Application {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Cursor {
+    export declare class Cursor {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -22783,7 +23503,8 @@ export namespace UnityEngine {
       SavedPictures = 12,
       VideosLibrary = 13,
     }
-    export interface Launcher {
+    export declare class Launcher {
+      constructor();
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -22889,7 +23610,8 @@ export namespace UnityEngine {
       Dark = 0,
       Light = 1,
     }
-    export interface SecondaryTileData {
+    export declare class SecondaryTileData {
+      constructor(id: string, displayName: string);
       backgroundColor: UnityEngine.Color32;
       arguments: string;
       backgroundColorSet: boolean;
@@ -22913,7 +23635,7 @@ export namespace UnityEngine {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface Tile {
+    export declare class Tile {
       id: string;
       hasUserConsent: boolean;
       exists: boolean;
@@ -22931,7 +23653,7 @@ export namespace UnityEngine {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Toast {
+    export declare class Toast {
       arguments: string;
       activated: boolean;
       dismissed: boolean;

@@ -1,11 +1,11 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 20.02.2021 21:21:34
+// Generated 7.03.2021 17:05:32
 //
 import { UnityEngine } from './unity';
 
 export namespace ReactUnity {
-  export interface IReactComponent {
+  export declare class IReactComponent {
     Parent: ReactUnity.IContainerComponent;
     IsPseudoElement: boolean;
     Layout: any; // Facebook.Yoga.YogaNode
@@ -28,7 +28,7 @@ export namespace ReactUnity {
     GetComponent: ((type: any) => any);
     AddComponent: ((type: any) => any);
   }
-  export interface IContainerComponent {
+  export declare class IContainerComponent {
     Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
     BeforePseudo: ReactUnity.IReactComponent;
     AfterPseudo: ReactUnity.IReactComponent;
@@ -36,13 +36,14 @@ export namespace ReactUnity {
     AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
     RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
   }
-  export interface ITextComponent {
+  export declare class ITextComponent {
     SetText: ((text: string) => void);
   }
-  export interface IHostComponent {
+  export declare class IHostComponent {
     Context: ReactUnity.ReactContext;
   }
-  export interface ReactContext {
+  export declare class ReactContext {
+    constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: any, mergeLayouts?: boolean);
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
     IsDevServer: boolean;
@@ -51,6 +52,7 @@ export namespace ReactUnity {
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: any; // System.Action
+    Disposables: any; // System.Collections.Generic.List`1[System.IDisposable]
     FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
     scheduleLayout: ((callback?: any) => void);
     InsertStyle: ((style: string, importanceOffset?: number) => void);
@@ -59,12 +61,14 @@ export namespace ReactUnity {
     CreateStaticScript: ((path: string) => ReactUnity.ReactScript);
     CreateText: ((text: string) => ReactUnity.ITextComponent);
     CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
+    Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ReactScript {
+  export declare class ReactScript {
+    constructor();
     DevServerFile: string;
     SourceLocation: string;
     ScriptSource: ReactUnity.ScriptSource;
@@ -88,13 +92,8 @@ export namespace ReactUnity {
     Resource = 3,
     Text = 4,
   }
-  export interface DetectChanges {
-    Equals: ((obj: any) => boolean);
-    GetHashCode: (() => number);
-    GetType: (() => any);
-    ToString: (() => string);
-  }
-  export interface ReactUnity {
+  export declare class ReactUnity {
+    constructor();
     Root: UnityEngine.RectTransform;
     useGUILayout: boolean;
     runInEditMode: boolean;
@@ -148,7 +147,8 @@ export namespace ReactUnity {
     ToString: (() => string);
     GetType: (() => any);
   }
-  export interface ReactUnityAPI {
+  export declare class ReactUnityAPI {
+    constructor(engine: any);
     createText: ((text: string, host: ReactUnity.IHostComponent) => ReactUnity.IReactComponent);
     createElement: ((tag: string, text: string, host: ReactUnity.IHostComponent) => ReactUnity.IReactComponent);
     appendChild: ((parent: any, child: any) => void);
@@ -164,7 +164,8 @@ export namespace ReactUnity {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface ReactUnityRunner {
+  export declare class ReactUnityRunner {
+    constructor();
     RunScript: ((script: string, ctx: ReactUnity.ReactContext, preload?: any, callback?: any) => void);
     ExecuteScript: ((script: string) => void);
     Equals: ((obj: any) => boolean);
@@ -172,7 +173,8 @@ export namespace ReactUnity {
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface UGUIContext {
+  export declare class UGUIContext {
+    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: any);
     RootLayoutNode: any; // Facebook.Yoga.YogaNode
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
@@ -182,6 +184,7 @@ export namespace ReactUnity {
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: any; // System.Action
+    Disposables: any; // System.Collections.Generic.List`1[System.IDisposable]
     FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
     CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
     CreateText: ((text: string) => ReactUnity.ITextComponent);
@@ -190,12 +193,14 @@ export namespace ReactUnity {
     RemoveStyle: ((style: string) => void);
     ResolvePath: ((path: string) => string);
     CreateStaticScript: ((path: string) => ReactUnity.ReactScript);
+    Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
-  export interface CalculateSizeFromContents {
+  export declare class CalculateSizeFromContents {
+    constructor();
     Layout: any; // Facebook.Yoga.YogaNode
     useGUILayout: boolean;
     runInEditMode: boolean;
@@ -244,7 +249,8 @@ export namespace ReactUnity {
     GetType: (() => any);
   }
   export namespace Components {
-    export interface AnchorComponent {
+    export declare class AnchorComponent {
+      constructor(context: ReactUnity.UGUIContext);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Container: UnityEngine.RectTransform;
       Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
@@ -302,7 +308,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ButtonComponent {
+    export declare class ButtonComponent {
+      constructor(context: ReactUnity.UGUIContext);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Button: UnityEngine.UI.Button;
@@ -359,7 +366,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ContainerComponent {
+    export declare class ContainerComponent {
+      constructor(context: ReactUnity.UGUIContext, tag: string);
       Container: UnityEngine.RectTransform;
       Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
       BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
@@ -415,7 +423,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface HostComponent {
+    export declare class HostComponent {
+      constructor(host: UnityEngine.RectTransform, context: ReactUnity.UGUIContext);
       Width: number;
       Height: number;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
@@ -473,7 +482,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ImageComponent {
+    export declare class ImageComponent {
+      constructor(context: ReactUnity.UGUIContext, tag?: string);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Measurer: ReactUnity.Layout.ImageMeasurer;
@@ -533,7 +543,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface InputComponent {
+    export declare class InputComponent {
+      constructor(text: string, context: ReactUnity.UGUIContext);
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Value: string;
@@ -592,7 +603,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface RawImageComponent {
+    export declare class RawImageComponent {
+      constructor(context: ReactUnity.UGUIContext, tag?: string);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Measurer: ReactUnity.Layout.ImageMeasurer;
@@ -652,7 +664,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ReactComponent {
+    export declare class ReactComponent {
+      constructor(context: ReactUnity.UGUIContext, tag: string);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Context: ReactUnity.UGUIContext;
@@ -697,7 +710,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface RenderTextureComponent {
+    export declare class RenderTextureComponent {
+      constructor(context: ReactUnity.UGUIContext, tag?: string);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Measurer: ReactUnity.Layout.ImageMeasurer;
@@ -758,7 +772,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ScrollComponent {
+    export declare class ScrollComponent {
+      constructor(Context: ReactUnity.UGUIContext);
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       ScrollRect: UnityEngine.UI.ScrollRect;
       Container: UnityEngine.RectTransform;
@@ -815,7 +830,9 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TextComponent {
+    export declare class TextComponent {
+      constructor(text: string, context: ReactUnity.UGUIContext, tag: string);
+      constructor(linkedTo: ReactUnity.Components.TextComponent);
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Text: any; // TMPro.TextMeshProUGUI
       Width: number;
@@ -866,7 +883,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ToggleComponent {
+    export declare class ToggleComponent {
+      constructor(context: ReactUnity.UGUIContext);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Value: boolean;
@@ -926,7 +944,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VideoComponent {
+    export declare class VideoComponent {
+      constructor(context: ReactUnity.UGUIContext);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Measurer: ReactUnity.Layout.ImageMeasurer;
@@ -988,7 +1007,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VideoComponentSource {
+    export declare class VideoComponentSource {
+      constructor();
       Url: string;
       Clip: UnityEngine.Video.VideoClip;
       Type: UnityEngine.Video.VideoSource;
@@ -999,13 +1019,14 @@ export namespace ReactUnity {
     }
   }
   export namespace DomProxies {
-    export interface ConsoleProxy {
-      log: ((msg: any) => void) | ((msg: any, subs: any) => void);
-      info: ((msg: any) => void) | ((msg: any, subs: any) => void);
-      debug: ((msg: any) => void) | ((msg: any, subs: any) => void);
-      warn: ((msg: any) => void) | ((msg: any, subs: any) => void);
-      error: ((msg: any) => void) | ((msg: any, subs: any) => void);
-      dir: ((msg: any) => void) | ((msg: any, subs: any) => void);
+    export declare class ConsoleProxy {
+      constructor(engine: any);
+      log: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
+      info: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
+      debug: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
+      warn: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
+      error: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
+      dir: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
       clear: (() => void);
       assert: ((val: boolean) => void);
       Equals: ((obj: any) => boolean);
@@ -1013,7 +1034,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface DocumentProxy {
+    export declare class DocumentProxy {
+      constructor(context: ReactUnity.ReactContext, execute: any, origin: string);
       head: ReactUnity.DomProxies.HeadProxy;
       origin: string;
       execute: any; // System.Action`1[System.String]
@@ -1028,7 +1050,7 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IDomElementProxy {
+    export declare class IDomElementProxy {
       OnAppend: (() => void);
       OnRemove: (() => void);
       setAttribute: ((key: any, value: any) => void);
@@ -1036,7 +1058,7 @@ export namespace ReactUnity {
       appendChild: ((text: string) => void);
       removeChild: ((text: string) => void);
     }
-    export interface DomElementProxyBase {
+    export declare class DomElementProxyBase {
       setAttribute: ((key: any, value: any) => void);
       removeAttribute: ((key: any) => void);
       Equals: ((obj: any) => boolean);
@@ -1044,7 +1066,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface HeadProxy {
+    export declare class HeadProxy {
+      constructor();
       appendChild: ((child: ReactUnity.DomProxies.IDomElementProxy) => void);
       removeChild: ((child: ReactUnity.DomProxies.IDomElementProxy) => void);
       setAttribute: ((key: any, value: any) => void);
@@ -1054,7 +1077,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface ScriptProxy {
+    export declare class ScriptProxy {
+      constructor(document: ReactUnity.DomProxies.DocumentProxy);
       src: string;
       charset: string;
       crossOrigin: string;
@@ -1074,7 +1098,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface StyleProxy {
+    export declare class StyleProxy {
+      constructor(document: ReactUnity.DomProxies.DocumentProxy);
       firstChild: string;
       childNodes: any; // System.Collections.Generic.List`1[System.String]
       enabled: boolean;
@@ -1091,7 +1116,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface LocalStorage {
+    export declare class LocalStorage {
+      constructor();
       setItem: ((x: string, value: string) => void);
       getItem: ((x: string) => string);
       removeItem: ((x: string) => void);
@@ -1100,7 +1126,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface Location {
+    export declare class Location {
+      constructor(sourceLocation: string, restart: any);
       href: string;
       protocol: string;
       hostname: string;
@@ -1115,7 +1142,9 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface WebSocketProxy {
+    export declare class WebSocketProxy {
+      constructor(context: ReactUnity.ReactContext, url: string);
+      constructor(context: ReactUnity.ReactContext, url: string, protocols: string[]);
       Onmessage: any; // Jint.Native.JsValue
       onmessage: any; // System.Object
       Onclose: any; // Jint.Native.JsValue
@@ -1148,8 +1177,8 @@ export namespace ReactUnity {
       Connect: (() => void);
       ConnectAsync: (() => void);
       Ping: (() => boolean) | ((message: string) => boolean);
-      Send: ((data: any) => void) | ((file: any) => void) | ((data: string) => void);
-      SendAsync: ((data: any, completed: any) => void) | ((file: any, completed: any) => void) | ((data: string, completed: any) => void) | ((stream: any, length: number, completed: any) => void);
+      Send: ((data: any[]) => void) | ((file: any) => void) | ((data: string) => void);
+      SendAsync: ((data: any[], completed: any) => void) | ((file: any, completed: any) => void) | ((data: string, completed: any) => void) | ((stream: any, length: number, completed: any) => void);
       SetCookie: ((cookie: any) => void);
       SetCredentials: ((username: string, password: string, preAuth: boolean) => void);
       SetProxy: ((url: string, username: string, password: string) => void);
@@ -1158,7 +1187,9 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface XMLHttpRequest {
+    export declare class XMLHttpRequest {
+      constructor();
+      constructor(origin: string);
       origin: string;
       Onload: any; // Jint.Native.JsValue
       Onreadystatechange: any; // Jint.Native.JsValue
@@ -1188,7 +1219,8 @@ export namespace ReactUnity {
     }
   }
   export namespace Editor {
-    export interface ReactElementDrawer {
+    export declare class ReactElementDrawer {
+      constructor();
       target: UnityEngine.Object;
       targets: UnityEngine.Object[];
       serializedObject: any; // UnityEditor.SerializedObject
@@ -1220,7 +1252,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ReactScriptDrawer {
+    export declare class ReactScriptDrawer {
+      constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: any; // System.Reflection.FieldInfo
       OnGUI: ((position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent) => void);
@@ -1232,7 +1265,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface StringObjectPairDrawer {
+    export declare class StringObjectPairDrawer {
+      constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: any; // System.Reflection.FieldInfo
       OnGUI: ((position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent) => void);
@@ -1244,7 +1278,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface EditStyleWindow {
+    export declare class EditStyleWindow {
+      constructor();
       PreviousComponent: ReactUnity.Layout.ReactElement;
       CurrentStyle: ReactUnity.Styling.NodeStyle;
       CurrentLayout: any; // Facebook.Yoga.YogaNode
@@ -1295,7 +1330,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface QuickStartWindow {
+    export declare class QuickStartWindow {
+      constructor();
       rootVisualElement: UnityEngine.UIElements.VisualElement;
       wantsMouseMove: boolean;
       wantsMouseEnterLeaveWindow: boolean;
@@ -1340,7 +1376,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EmscriptenBuildFlags {
+    export declare class EmscriptenBuildFlags {
+      constructor();
       callbackOrder: number;
       OnPreprocessBuild: ((report: any) => void);
       Equals: ((obj: any) => boolean);
@@ -1349,7 +1386,7 @@ export namespace ReactUnity {
       ToString: (() => string);
     }
     export namespace Developer {
-      export interface TypescriptModelsGenerator {
+      export declare class TypescriptModelsGenerator {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -1357,7 +1394,8 @@ export namespace ReactUnity {
       }
     }
     export namespace Renderer {
-      export interface EditorContext {
+      export declare class EditorContext {
+        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: any);
         Host: ReactUnity.IHostComponent;
         Globals: ReactUnity.Types.StringObjectDictionary;
         IsDevServer: boolean;
@@ -1366,6 +1404,7 @@ export namespace ReactUnity {
         Parser: any; // ExCSS.StylesheetParser
         StyleTree: ReactUnity.StyleEngine.StyleTree;
         OnRestart: any; // System.Action
+        Disposables: any; // System.Collections.Generic.List`1[System.IDisposable]
         FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
         CreateText: ((text: string) => ReactUnity.ITextComponent);
         CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
@@ -1374,27 +1413,14 @@ export namespace ReactUnity {
         RemoveStyle: ((style: string) => void);
         ResolvePath: ((path: string) => string);
         CreateStaticScript: ((path: string) => ReactUnity.ReactScript);
+        Dispose: (() => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface EditorScheduler {
-        setTimeout: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
-        setInterval: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
-        clearTimeout: ((handle: number) => void);
-        clearInterval: ((handle: number) => void);
-        setImmediate: ((callback: ReactUnity.Interop.Callback) => number);
-        requestAnimationFrame: ((callback: ReactUnity.Interop.Callback) => number);
-        cancelAnimationFrame: ((handle: number) => void);
-        clearImmediate: ((handle: number) => void);
-        clearAllTimeouts: (() => void);
-        Equals: ((obj: any) => boolean);
-        GetHashCode: (() => number);
-        GetType: (() => any);
-        ToString: (() => string);
-      }
-      export interface ReactEditorTester {
+      export declare class ReactEditorTester {
+        constructor();
         rootVisualElement: UnityEngine.UIElements.VisualElement;
         wantsMouseMove: boolean;
         wantsMouseEnterLeaveWindow: boolean;
@@ -1414,8 +1440,8 @@ export namespace ReactUnity {
         position: UnityEngine.Rect;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        Restart: (() => void);
         OnEnable: (() => void);
+        Restart: (() => void);
         BeginWindows: (() => void);
         EndWindows: (() => void);
         ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
@@ -1442,11 +1468,56 @@ export namespace ReactUnity {
         GetType: (() => any);
       }
       export namespace Components {
-        export interface EditorReactComponent {
+        export declare class EditorButtonComponent {
+          constructor(context: ReactUnity.Editor.Renderer.EditorContext);
+          Context: ReactUnity.Editor.Renderer.EditorContext;
+          Parent: ReactUnity.IContainerComponent;
+          Element: UnityEngine.UIElements.Button;
+          Layout: any; // Facebook.Yoga.YogaNode
+          LayoutValues: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
+          Style: ReactUnity.Styling.NodeStyle;
+          Inline: any; // System.Dynamic.ExpandoObject
+          IsPseudoElement: boolean;
+          Name: string;
+          Tag: string;
+          ClassName: string;
+          ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+          StateStyles: ReactUnity.Styling.StateStyles;
+          Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+          Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+          BeforePseudo: ReactUnity.IReactComponent;
+          AfterPseudo: ReactUnity.IReactComponent;
+          BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
+          Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+          ApplyLayoutStyles: (() => void);
+          ApplyStyles: (() => void);
+          Destroy: (() => void);
+          ResolveStyle: ((recursive?: boolean) => void);
+          ScheduleLayout: ((callback?: any) => void);
+          SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+          SetData: ((property: string, value: any) => void);
+          SetProperty: ((property: string, value: any) => void);
+          GetComponent: ((type: any) => any);
+          AddComponent: ((type: any) => any);
+          RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          CaptureMouse: (() => void);
+          ReleaseMouse: (() => void);
+          HasMouseCapture: (() => boolean);
+          StartDrag: (() => void);
+          Equals: ((obj: any) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => any);
+          ToString: (() => string);
+        }
+        export declare class EditorHostComponent {
+          constructor(element: UnityEngine.UIElements.VisualElement, ctx: ReactUnity.Editor.Renderer.EditorContext);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.VisualElement;
           Layout: any; // Facebook.Yoga.YogaNode
+          LayoutValues: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
           Style: ReactUnity.Styling.NodeStyle;
           Inline: any; // System.Dynamic.ExpandoObject
           IsPseudoElement: boolean;
@@ -1469,21 +1540,74 @@ export namespace ReactUnity {
           ScheduleLayout: ((callback?: any) => void);
           SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
           SetData: ((property: string, value: any) => void);
-          SetEventListener: ((eventType: string, callback: ReactUnity.Interop.Callback) => void);
+          SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
           SetProperty: ((property: string, value: any) => void);
           GetComponent: ((type: any) => any);
           AddComponent: ((type: any) => any);
           RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          CaptureMouse: (() => void);
+          ReleaseMouse: (() => void);
+          HasMouseCapture: (() => boolean);
+          StartDrag: (() => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
           ToString: (() => string);
         }
-        export interface EditorTextComponent {
+        export declare class IEditorReactComponent<T = any> {
+          Element: T;
+        }
+        export declare class EditorReactComponent<T = any> {
+          constructor(element: T, context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
+          constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
-          Element: UnityEngine.UIElements.VisualElement;
+          Element: T;
           Layout: any; // Facebook.Yoga.YogaNode
+          LayoutValues: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
+          Style: ReactUnity.Styling.NodeStyle;
+          Inline: any; // System.Dynamic.ExpandoObject
+          IsPseudoElement: boolean;
+          Name: string;
+          Tag: string;
+          ClassName: string;
+          ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+          StateStyles: ReactUnity.Styling.StateStyles;
+          Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+          Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+          BeforePseudo: ReactUnity.IReactComponent;
+          AfterPseudo: ReactUnity.IReactComponent;
+          BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+          ApplyLayoutStyles: (() => void);
+          ApplyStyles: (() => void);
+          Destroy: (() => void);
+          ResolveStyle: ((recursive?: boolean) => void);
+          ScheduleLayout: ((callback?: any) => void);
+          SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+          SetData: ((property: string, value: any) => void);
+          SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
+          SetProperty: ((property: string, value: any) => void);
+          GetComponent: ((type: any) => any);
+          AddComponent: ((type: any) => any);
+          RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          CaptureMouse: (() => void);
+          ReleaseMouse: (() => void);
+          HasMouseCapture: (() => boolean);
+          StartDrag: (() => void);
+          Equals: ((obj: any) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => any);
+          ToString: (() => string);
+        }
+        export declare class EditorTextComponent {
+          constructor(text: string, context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
+          Context: ReactUnity.Editor.Renderer.EditorContext;
+          Parent: ReactUnity.IContainerComponent;
+          Element: UnityEngine.UIElements.Label;
+          Layout: any; // Facebook.Yoga.YogaNode
+          LayoutValues: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
           Style: ReactUnity.Styling.NodeStyle;
           Inline: any; // System.Dynamic.ExpandoObject
           IsPseudoElement: boolean;
@@ -1507,11 +1631,31 @@ export namespace ReactUnity {
           ScheduleLayout: ((callback?: any) => void);
           SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
           SetData: ((property: string, value: any) => void);
-          SetEventListener: ((eventType: string, callback: ReactUnity.Interop.Callback) => void);
+          SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
           SetProperty: ((property: string, value: any) => void);
           GetComponent: ((type: any) => any);
           AddComponent: ((type: any) => any);
           RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          CaptureMouse: (() => void);
+          ReleaseMouse: (() => void);
+          HasMouseCapture: (() => boolean);
+          StartDrag: (() => void);
+          Equals: ((obj: any) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => any);
+          ToString: (() => string);
+        }
+      }
+      export namespace Events {
+        export declare class EditorEventHandlerMap {
+          Equals: ((obj: any) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => any);
+          ToString: (() => string);
+        }
+      }
+      export namespace Styling {
+        export declare class StylingHelpers {
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -1521,7 +1665,8 @@ export namespace ReactUnity {
     }
   }
   export namespace EventHandlers {
-    export interface AnchorClickHandler {
+    export declare class AnchorClickHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1570,7 +1715,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface BeginDragHandler {
+    export declare class BeginDragHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1619,7 +1765,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface CancelHandler {
+    export declare class CancelHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1668,7 +1815,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface DeselectHandler {
+    export declare class DeselectHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1717,7 +1865,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface DragHandler {
+    export declare class DragHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1766,7 +1915,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface DropHandler {
+    export declare class DropHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1815,7 +1965,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EndDragHandler {
+    export declare class EndDragHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1864,16 +2015,17 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EventHandlerMap {
+    export declare class EventHandlerMap {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IEventHandler {
+    export declare class IEventHandler {
       ClearListeners: (() => void);
     }
-    export interface KeyDownHandler {
+    export declare class KeyDownHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1923,7 +2075,9 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface KeyEventData {
+    export declare class KeyEventData {
+      constructor(eventSystem: UnityEngine.EventSystems.EventSystem, ctx: any);
+      constructor(eventSystem: UnityEngine.EventSystems.EventSystem, inputSystem?: boolean);
       currentInputModule: UnityEngine.EventSystems.BaseInputModule;
       selectedObject: UnityEngine.GameObject;
       used: boolean;
@@ -1938,7 +2092,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MoveHandler {
+    export declare class MoveHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -1987,7 +2142,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PointerClickHandler {
+    export declare class PointerClickHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2036,7 +2192,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PointerDownHandler {
+    export declare class PointerDownHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2085,7 +2242,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PointerEnterHandler {
+    export declare class PointerEnterHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2134,7 +2292,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PointerExitHandler {
+    export declare class PointerExitHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2183,7 +2342,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PointerUpHandler {
+    export declare class PointerUpHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2232,7 +2392,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface PotentialDragHandler {
+    export declare class PotentialDragHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2281,7 +2442,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ScrollHandler {
+    export declare class ScrollHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2330,7 +2492,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface SelectHandler {
+    export declare class SelectHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2379,7 +2542,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface SubmitHandler {
+    export declare class SubmitHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2428,7 +2592,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface UpdateSelectedHandler {
+    export declare class UpdateSelectedHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2479,13 +2644,13 @@ export namespace ReactUnity {
     }
   }
   export namespace Helpers {
-    export interface CursorAPI {
+    export declare class CursorAPI {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface EventTypes {
+    export declare class EventTypes {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -2493,21 +2658,72 @@ export namespace ReactUnity {
     }
   }
   export namespace Interop {
-    export interface Callback {
+    export declare class AdaptiveDispatcher {
+      constructor();
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      IsInvoking: (() => boolean) | ((methodName: string) => boolean);
+      CancelInvoke: (() => void) | ((methodName: string) => void);
+      Invoke: ((methodName: string, time: number) => void);
+      InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StopAllCoroutines: (() => void);
+      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: any) => UnityEngine.Component);
+      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      CompareTag: ((tag: string) => boolean);
+      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class Callback {
+      constructor(callback: any);
+      constructor(callback: any);
       callback: any; // System.Object
-      Call: (() => any) | ((args: any) => any);
+      Call: (() => any) | ((args: any[]) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface EditorDispatcher {
+    export declare class EditorDispatcher {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MainThreadDispatcher {
+    export declare class MainThreadDispatcher {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2555,7 +2771,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface EditorDispatcher_CoroutineHandle {
+    export declare class AdaptiveDispatcher_CoroutineHandle {
+      constructor(handle: number);
       Handle: number;
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
@@ -2563,7 +2780,17 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface MainThreadDispatcher_CoroutineHandle {
+    export declare class EditorDispatcher_CoroutineHandle {
+      constructor(handle: number);
+      Handle: number;
+      Dispose: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class MainThreadDispatcher_CoroutineHandle {
+      constructor(handle: number);
       Handle: number;
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
@@ -2573,7 +2800,8 @@ export namespace ReactUnity {
     }
   }
   export namespace Layout {
-    export interface ImageMeasurer {
+    export declare class ImageMeasurer {
+      constructor();
       FitMode: ReactUnity.Types.ImageFitMode;
       Sprite: UnityEngine.Sprite;
       Texture: UnityEngine.Texture;
@@ -2627,7 +2855,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ReactElement {
+    export declare class ReactElement {
+      constructor();
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       Component: ReactUnity.Components.ReactComponent;
@@ -2653,6 +2882,7 @@ export namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      LateUpdate: (() => void);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
@@ -2677,7 +2907,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ResponsiveElement {
+    export declare class ResponsiveElement {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2726,7 +2957,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface TextMeasurer {
+    export declare class TextMeasurer {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2778,7 +3010,23 @@ export namespace ReactUnity {
     }
   }
   export namespace Schedulers {
-    export interface IUnityScheduler {
+    export declare class EditorScheduler {
+      constructor();
+      setTimeout: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
+      setInterval: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
+      clearTimeout: ((handle: number) => void);
+      clearInterval: ((handle: number) => void);
+      setImmediate: ((callback: ReactUnity.Interop.Callback) => number);
+      requestAnimationFrame: ((callback: ReactUnity.Interop.Callback) => number);
+      cancelAnimationFrame: ((handle: number) => void);
+      clearImmediate: ((handle: number) => void);
+      clearAllTimeouts: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class IUnityScheduler {
       setImmediate: ((callback: ReactUnity.Interop.Callback) => number);
       setTimeout: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
       setInterval: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
@@ -2789,7 +3037,8 @@ export namespace ReactUnity {
       cancelAnimationFrame: ((handle: number) => void);
       clearAllTimeouts: (() => void);
     }
-    export interface NoScheduler {
+    export declare class NoScheduler {
+      constructor();
       setTimeout: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
       setInterval: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
       setImmediate: ((callback: ReactUnity.Interop.Callback) => number);
@@ -2804,7 +3053,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface UnityScheduler {
+    export declare class UnityScheduler {
+      constructor();
       setTimeout: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
       setInterval: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
       clearTimeout: ((handle: number) => void);
@@ -2821,7 +3071,8 @@ export namespace ReactUnity {
     }
   }
   export namespace StateHandlers {
-    export interface ActiveStateHandler {
+    export declare class ActiveStateHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2871,7 +3122,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface CursorHandler {
+    export declare class CursorHandler {
+      constructor();
       Cursor: string;
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2921,7 +3173,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FocusStateHandler {
+    export declare class FocusStateHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -2971,7 +3224,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FocusVisibleStateHandler {
+    export declare class FocusVisibleStateHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -3021,7 +3275,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface FocusWithinStateHandler {
+    export declare class FocusWithinStateHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -3069,7 +3324,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface HoverStateHandler {
+    export declare class HoverStateHandler {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -3119,18 +3375,19 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface IStateHandler {
+    export declare class IStateHandler {
       ClearListeners: (() => void);
     }
   }
   export namespace StyleEngine {
-    export interface RuleHelpers {
+    export declare class RuleHelpers {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface StyleData {
+    export declare class StyleData {
+      constructor();
       Rules: any; // System.Collections.Generic.List`1[System.Collections.Generic.Dictionary`2[System.String,System.Object]]
       Layouts: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
       Equals: ((obj: any) => boolean);
@@ -3138,7 +3395,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface StyleTree {
+    export declare class StyleTree {
+      constructor(parser: any);
       Parser: any; // ExCSS.StylesheetParser
       Specifity: number;
       LeafNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
@@ -3151,13 +3409,59 @@ export namespace ReactUnity {
       Children: any; // System.Collections.Generic.LinkedList`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: ReactUnity.StyleEngine.StyleData;
-      AddStyle: ((rule: any, importanceOffset?: number) => any);
+      AddStyle: ((rule: any, importanceOffset?: number, mergeLayouts?: boolean) => any);
       GetMatchingRules: ((component: ReactUnity.IReactComponent) => any);
       GetMatchingBefore: ((component: ReactUnity.IReactComponent) => any);
       GetMatchingAfter: ((component: ReactUnity.IReactComponent) => any);
       GetMatchingChild: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => ReactUnity.IReactComponent);
       GetMatchingChildren: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => any);
       AddSelector: ((selectorText: string, importanceOffset?: number) => any);
+      AddChildCascading: ((selector: string) => any);
+      Matches: ((component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent) => boolean);
+      CompareTo: ((other: any) => number);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class RuleTree<T = any> {
+      constructor(parser: any);
+      Parser: any; // ExCSS.StylesheetParser
+      Specifity: number;
+      LeafNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
+      BeforeNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
+      AfterNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
+      Tree: any; // ReactUnity.StyleEngine.RuleTree`1[T]
+      Parent: any; // ReactUnity.StyleEngine.RuleTreeNode`1[T]
+      Selector: string;
+      ParsedSelector: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleSelectorPart]
+      Children: any; // System.Collections.Generic.LinkedList`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
+      RelationType: ReactUnity.StyleEngine.RuleRelationType;
+      Data: T;
+      GetMatchingRules: ((component: ReactUnity.IReactComponent) => any);
+      GetMatchingBefore: ((component: ReactUnity.IReactComponent) => any);
+      GetMatchingAfter: ((component: ReactUnity.IReactComponent) => any);
+      GetMatchingChild: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => ReactUnity.IReactComponent);
+      GetMatchingChildren: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => any);
+      AddSelector: ((selectorText: string, importanceOffset?: number) => any);
+      AddChildCascading: ((selector: string) => any);
+      Matches: ((component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent) => boolean);
+      CompareTo: ((other: any) => number);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class RuleTreeNode<T = any> {
+      constructor();
+      Specifity: number;
+      Tree: any; // ReactUnity.StyleEngine.RuleTree`1[T]
+      Parent: any; // ReactUnity.StyleEngine.RuleTreeNode`1[T]
+      Selector: string;
+      ParsedSelector: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleSelectorPart]
+      Children: any; // System.Collections.Generic.LinkedList`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
+      RelationType: ReactUnity.StyleEngine.RuleRelationType;
+      Data: T;
       AddChildCascading: ((selector: string) => any);
       Matches: ((component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent) => boolean);
       CompareTo: ((other: any) => number);
@@ -3204,7 +3508,8 @@ export namespace ReactUnity {
       Special = 1001,
       State = 2000,
     }
-    export interface RuleSelectorPart {
+    export declare class RuleSelectorPart {
+      constructor();
       Negated: boolean;
       Type: ReactUnity.StyleEngine.RuleSelectorPartType;
       Name: string;
@@ -3216,7 +3521,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface NthChildParameter {
+    export declare class NthChildParameter {
+      constructor(value: string);
       A: number;
       B: number;
       Matches: ((index: number) => boolean);
@@ -3225,7 +3531,7 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface IListInsertIntoSortedListExtensions {
+    export declare class IListInsertIntoSortedListExtensions {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -3233,7 +3539,8 @@ export namespace ReactUnity {
     }
   }
   export namespace Styling {
-    export interface BorderAndBackground {
+    export declare class BorderAndBackground {
+      constructor(parent: UnityEngine.RectTransform);
       Root: UnityEngine.RectTransform;
       Border: UnityEngine.RectTransform;
       Background: UnityEngine.RectTransform;
@@ -3249,13 +3556,14 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface BorderGraphic {
+    export declare class BorderGraphic {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IgnoreMaskImage {
+    export declare class IgnoreMaskImage {
+      constructor();
       materialForRendering: UnityEngine.Material;
       sprite: UnityEngine.Sprite;
       overrideSprite: UnityEngine.Sprite;
@@ -3374,7 +3682,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface InvertedMaskImage {
+    export declare class InvertedMaskImage {
+      constructor();
       materialForRendering: UnityEngine.Material;
       sprite: UnityEngine.Sprite;
       overrideSprite: UnityEngine.Sprite;
@@ -3493,14 +3802,16 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface ILayoutProperty {
+    export declare class ILayoutProperty {
       Set: ((node: any, value: any, defaultNode: any) => void);
       SetDefault: ((node: any) => void) | ((node: any, defaultNode: any) => void);
       Get: ((node: any) => any);
-      Parse: ((value: any) => any);
       Serialize: ((value: any) => string);
     }
-    export interface LayoutValue {
+    export declare class LayoutValue {
+      constructor(prop: ReactUnity.Styling.ILayoutProperty, value: any);
+      prop: ReactUnity.Styling.ILayoutProperty;
+      value: any; // System.Object
       Get: ((node: any) => any);
       Set: ((node: any, defaultNode: any) => void);
       SetDefault: ((node: any) => void) | ((node: any, defaultNode: any) => void);
@@ -3509,13 +3820,36 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface LayoutProperties {
+    export declare class LayoutProperty<T = any> {
+      constructor(name: string, transitionable?: boolean, defaultValue?: T);
+      name: string;
+      type: any; // System.Type
+      defaultValue: any; // System.Object
+      transitionable: boolean;
+      inherited: boolean;
+      proxy: boolean;
+      propInfo: any; // System.Reflection.PropertyInfo
+      setter: any; // System.Action`2[Facebook.Yoga.YogaNode,T]
+      getter: any; // System.Func`2[Facebook.Yoga.YogaNode,T]
+      converter: ReactUnity.Styling.Parsers.IStyleConverter;
+      Set: ((node: any, value: any, defaultNode: any) => void);
+      SetDefault: ((node: any) => void) | ((node: any, defaultNode: any) => void);
+      Get: ((node: any) => any);
+      Serialize: ((value: any) => string);
+      Convert: ((value: any) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface LinkedTextWatcher {
+    export declare class LayoutProperties {
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class LinkedTextWatcher {
+      constructor();
       WatchedText: ReactUnity.Components.TextComponent;
       LinkedText: ReactUnity.Components.TextComponent;
       useGUILayout: boolean;
@@ -3564,7 +3898,8 @@ export namespace ReactUnity {
       ToString: (() => string);
       GetType: (() => any);
     }
-    export interface MaskAndImage {
+    export declare class MaskAndImage {
+      constructor(parent: UnityEngine.RectTransform);
       Mask: UnityEngine.UI.Mask;
       Image: UnityEngine.UI.Image;
       Equals: ((obj: any) => boolean);
@@ -3572,7 +3907,10 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface NodeStyle {
+    export declare class NodeStyle {
+      constructor();
+      constructor(stateStyles: ReactUnity.Styling.StateStyles);
+      constructor(defaultStyle: ReactUnity.Styling.NodeStyle, stateStyles: ReactUnity.Styling.StateStyles);
       HasInheritedChanges: boolean;
       opacity: number;
       zIndex: number;
@@ -3582,7 +3920,15 @@ export namespace ReactUnity {
       backgroundColor: UnityEngine.Color;
       backgroundImage: ReactUnity.Types.ImageReference;
       borderRadius: number;
+      borderTopLeftRadius: number;
+      borderTopRightRadius: number;
+      borderBottomLeftRadius: number;
+      borderBottomRightRadius: number;
       borderColor: UnityEngine.Color;
+      borderLeftColor: UnityEngine.Color;
+      borderRightColor: UnityEngine.Color;
+      borderTopColor: UnityEngine.Color;
+      borderBottomColor: UnityEngine.Color;
       boxShadow: ReactUnity.Styling.Types.ShadowDefinition;
       translate: ReactUnity.Types.YogaValue2;
       scale: UnityEngine.Vector2;
@@ -3608,13 +3954,14 @@ export namespace ReactUnity {
       GetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean) => any);
       SetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, value: any) => void);
       MarkChangesSeen: (() => void);
-      HasValue: ((name: string) => boolean);
+      HasValue: ((prop: ReactUnity.Styling.IStyleProperty) => boolean) | ((name: string) => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface StateStyles {
+    export declare class StateStyles {
+      constructor(cmp: ReactUnity.IReactComponent);
       Dic: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.NodeStyle]
       Component: ReactUnity.IReactComponent;
       States: any; // System.Collections.Generic.HashSet`1[System.String]
@@ -3629,7 +3976,7 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface IStyleProperty {
+    export declare class IStyleProperty {
       name: string;
       type: any; // System.Type
       defaultValue: any; // System.Object
@@ -3638,14 +3985,30 @@ export namespace ReactUnity {
       proxy: boolean;
       Convert: ((value: any) => any);
     }
-    export interface StyleProperties {
+    export declare class StyleProperty<T = any> {
+      constructor(name: string, defaultValue?: any, transitionable?: boolean, inherited?: boolean, proxy?: boolean, converter?: ReactUnity.Styling.Parsers.IStyleConverter);
+      name: string;
+      type: any; // System.Type
+      defaultValue: any; // System.Object
+      transitionable: boolean;
+      inherited: boolean;
+      proxy: boolean;
+      converter: ReactUnity.Styling.Parsers.IStyleConverter;
+      Convert: ((value: any) => any);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class StyleProperties {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export namespace Parsers {
-      export interface BoolConverter {
+      export declare class BoolConverter {
+        constructor(truthyValues: string[], falsyValues: string[]);
         Convert: ((value: any) => any);
         FromString: ((value: string) => any);
         Equals: ((obj: any) => boolean);
@@ -3653,7 +4016,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface ColorConverter {
+      export declare class ColorConverter {
+        constructor();
         FromString: ((value: string) => any);
         Convert: ((value: any) => any);
         Equals: ((obj: any) => boolean);
@@ -3661,15 +4025,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface FloatConverter {
-        FromString: ((value: string) => any);
-        Convert: ((value: any) => any);
-        Equals: ((obj: any) => boolean);
-        GetHashCode: (() => number);
-        GetType: (() => any);
-        ToString: (() => string);
-      }
-      export interface FontReferenceConverter {
+      export declare class EnumConverter<T = any> {
+        constructor();
         Convert: ((value: any) => any);
         FromString: ((value: string) => any);
         Equals: ((obj: any) => boolean);
@@ -3677,7 +4034,17 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface GeneralConverter {
+      export declare class FloatConverter {
+        constructor();
+        FromString: ((value: string) => any);
+        Convert: ((value: any) => any);
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => any);
+        ToString: (() => string);
+      }
+      export declare class FontReferenceConverter {
+        constructor();
         Convert: ((value: any) => any);
         FromString: ((value: string) => any);
         Equals: ((obj: any) => boolean);
@@ -3685,13 +4052,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface IStyleParser {
-        FromString: ((value: string) => any);
-      }
-      export interface IStyleConverter {
-        Convert: ((value: any) => any);
-      }
-      export interface ImageReferenceConverter {
+      export declare class GeneralConverter {
+        constructor(baseConverter?: ReactUnity.Styling.Parsers.IStyleConverter);
         Convert: ((value: any) => any);
         FromString: ((value: string) => any);
         Equals: ((obj: any) => boolean);
@@ -3699,7 +4061,23 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface IntConverter {
+      export declare class IStyleParser {
+        FromString: ((value: string) => any);
+      }
+      export declare class IStyleConverter {
+        Convert: ((value: any) => any);
+      }
+      export declare class ImageReferenceConverter {
+        constructor();
+        Convert: ((value: any) => any);
+        FromString: ((value: string) => any);
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => any);
+        ToString: (() => string);
+      }
+      export declare class IntConverter {
+        constructor();
         FloatParser: ReactUnity.Styling.Parsers.FloatConverter;
         FromString: ((value: string) => any);
         Convert: ((value: any) => any);
@@ -3708,7 +4086,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface ShadowDefinitionConverter {
+      export declare class ShadowDefinitionConverter {
+        constructor();
         ColorParser: ReactUnity.Styling.Parsers.ColorConverter;
         FloatParser: ReactUnity.Styling.Parsers.FloatConverter;
         Convert: ((value: any) => any);
@@ -3718,7 +4097,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface StringConverter {
+      export declare class StringConverter {
+        constructor();
         Convert: ((value: any) => any);
         FromString: ((value: string) => any);
         Equals: ((obj: any) => boolean);
@@ -3726,7 +4106,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface UrlConverter {
+      export declare class UrlConverter {
+        constructor();
         Convert: ((value: any) => any);
         FromString: ((value: string) => any);
         Equals: ((obj: any) => boolean);
@@ -3734,7 +4115,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface Vector2Converter {
+      export declare class Vector2Converter {
+        constructor();
         FromString: ((value: string) => any);
         Convert: ((value: any) => any);
         Equals: ((obj: any) => boolean);
@@ -3742,7 +4124,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface VideoReferenceConverter {
+      export declare class VideoReferenceConverter {
+        constructor();
         Convert: ((value: any) => any);
         FromString: ((value: string) => any);
         Equals: ((obj: any) => boolean);
@@ -3750,7 +4133,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface YogaValue2Converter {
+      export declare class YogaValue2Converter {
+        constructor();
         FromString: ((value: string) => any);
         Convert: ((value: any) => any);
         Equals: ((obj: any) => boolean);
@@ -3758,7 +4142,8 @@ export namespace ReactUnity {
         GetType: (() => any);
         ToString: (() => string);
       }
-      export interface YogaValueConverter {
+      export declare class YogaValueConverter {
+        constructor();
         FromString: ((value: string) => any);
         Convert: ((value: any) => any);
         Equals: ((obj: any) => boolean);
@@ -3780,7 +4165,9 @@ export namespace ReactUnity {
         All = 1,
         None = 2,
       }
-      export interface ShadowDefinition {
+      export declare class ShadowDefinition {
+        constructor();
+        constructor(offset: UnityEngine.Vector2, spread: UnityEngine.Vector2, color: UnityEngine.Color, blur: number, inset?: boolean);
         offset: UnityEngine.Vector2;
         spread: UnityEngine.Vector2;
         color: UnityEngine.Color;
@@ -3815,10 +4202,22 @@ export namespace ReactUnity {
       Procedural = 7,
       Data = 8,
     }
-    export interface FontReference {
+    export declare class AssetReference<AssetType = any> {
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
-      Get: ((context: ReactUnity.UGUIContext, callback: any) => void);
+      Get: ((context: ReactUnity.ReactContext, callback: any) => void);
+      Dispose: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class FontReference {
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
+      type: ReactUnity.Types.AssetReferenceType;
+      value: any; // System.Object
+      Get: ((context: ReactUnity.ReactContext, callback: any) => void);
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -3834,17 +4233,19 @@ export namespace ReactUnity {
       FitEnd = 5,
       Fill = 6,
     }
-    export interface ImageReference {
+    export declare class ImageReference {
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
       Dispose: (() => void);
-      Get: ((context: ReactUnity.UGUIContext, callback: any) => void);
+      Get: ((context: ReactUnity.ReactContext, callback: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface StringObjectPair {
+    export declare class StringObjectPair {
+      constructor();
       Key: string;
       Value: UnityEngine.Object;
       Equals: ((obj: any) => boolean);
@@ -3852,7 +4253,8 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface StringObjectDictionary {
+    export declare class StringObjectDictionary {
+      constructor();
       Comparer: any; // System.Collections.Generic.IEqualityComparer`1[System.String]
       Count: number;
       Keys: any; // System.Collections.Generic.Dictionary`2+KeyCollection[System.String,UnityEngine.Object]
@@ -3874,17 +4276,19 @@ export namespace ReactUnity {
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface VideoReference {
+    export declare class VideoReference {
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
-      Get: ((context: ReactUnity.UGUIContext, callback: any) => void);
+      Get: ((context: ReactUnity.ReactContext, callback: any) => void);
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface YogaValue2 {
+    export declare class YogaValue2 {
+      constructor(x: any, y: any);
       X: any; // Facebook.Yoga.YogaValue
       Y: any; // Facebook.Yoga.YogaValue
       Equals: ((obj: any) => boolean);
@@ -3894,14 +4298,15 @@ export namespace ReactUnity {
     }
   }
   export namespace Visitors {
-    export interface ReactComponentVisitor {
+    export declare class ReactComponentVisitor {
       Visit: ((component: ReactUnity.IReactComponent) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
-    export interface TextContentVisitor {
+    export declare class TextContentVisitor {
+      constructor();
       Visit: ((component: ReactUnity.IReactComponent) => void);
       Get: ((component: ReactUnity.IReactComponent) => string);
       Equals: ((obj: any) => boolean);
@@ -3911,7 +4316,8 @@ export namespace ReactUnity {
     }
   }
   export namespace WebSupport {
-    export interface WebGLInput {
+    export declare class WebGLInput {
+      constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -3979,7 +4385,7 @@ export namespace ReactUnity {
       MultiLineSubmit = 1,
       MultiLineNewline = 2,
     }
-    export interface IInputField {
+    export declare class IInputField {
       contentType: ReactUnity.WebSupport.ContentType;
       lineType: ReactUnity.WebSupport.LineType;
       fontSize: number;
@@ -3998,7 +4404,7 @@ export namespace ReactUnity {
       DeactivateInputField: (() => void);
       Rebuild: (() => void);
     }
-    export interface WebGLWindow {
+    export declare class WebGLWindow {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
