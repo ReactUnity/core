@@ -12,7 +12,7 @@
   "typesVersions": {
     "*": {
       "editor": [
-        "./dist/editor.js"
+        "./dist/editor.d.ts"
       ]
     }
   },
