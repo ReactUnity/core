@@ -1,13 +1,76 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 871:
+/***/ 310:
 /***/ ((module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
 
+;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+
+
+
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
 // EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(377);
+var react_reconciler = __webpack_require__(84);
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
 var deepDiffProps = {
   style: 1,
@@ -86,7 +149,7 @@ function applyDiffedUpdate(writeTo, updatePayload, depth) {
     return updatePayload.length > 0;
   } else {
     for (var attr in updatePayload) {
-      if (Object.prototype.hasOwnProperty.call(updatePayload, attr)) {
+      if (updatePayload.hasOwnProperty(attr)) {
         var value = updatePayload[attr];
         writeTo[attr] = value;
       }
@@ -96,13 +159,21 @@ function applyDiffedUpdate(writeTo, updatePayload, depth) {
   }
 }
 
-function applyUpdate(instance, updatePayload, isAfterMount) {
+function applyUpdate(instance, updatePayload, isAfterMount, type) {
   var updateAfterMount = false;
 
   for (var index = 0; index < updatePayload.length; index += 2) {
     var attr = updatePayload[index];
     var value = updatePayload[index + 1];
-    if (attr === 'children') continue;
+
+    if (attr === 'children') {
+      if (type === 'text') {
+        Unity.setText(instance, value ? value.join('') : '');
+      }
+
+      continue;
+    }
+
     if (attr === 'key') continue;
     if (attr === 'ref') continue;
     if (attr === 'tag') continue;
@@ -210,7 +281,7 @@ var hostConfig = {
     return diffProperties(oldProps, newProps);
   },
   commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    applyUpdate(instance, updatePayload, true);
+    applyUpdate(instance, updatePayload, true, type);
   },
   resetTextContent: function resetTextContent(instance) {
     console.log('resetTextContent');
@@ -261,7 +332,7 @@ var hostConfig = {
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);
 var hostRoot;
-var renderer_Renderer = {
+var Renderer = {
   render: function render(element, hostContainer, callback) {
     if (!hostContainer) hostContainer = RootContainer;
 
@@ -328,153 +399,7 @@ var easing = {
     return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
   }
 };
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(461);
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(201);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/dropdown-item.js
-var __extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-
-
-var dropdown_item_DropdownItem =
-/** @class */
-function (_super) {
-  __extends(DropdownItem, _super);
-
-  function DropdownItem(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.state = {};
-    return _this;
-  }
-
-  DropdownItem.prototype.render = function () {
-    return this.props.children;
-  };
-
-  return DropdownItem;
-}(react.Component);
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/components/components.js
-var ImageFitMode;
-
-(function (ImageFitMode) {
-  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
-  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
-  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
-  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
-  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
-  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
-  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
-})(ImageFitMode || (ImageFitMode = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/components/events.js
-var InputButton;
-
-(function (InputButton) {
-  InputButton[InputButton["Left"] = 0] = "Left";
-  InputButton[InputButton["Right"] = 1] = "Right";
-  InputButton[InputButton["Middle"] = 2] = "Middle";
-})(InputButton || (InputButton = {}));
-
-var FramePressState;
-
-(function (FramePressState) {
-  FramePressState[FramePressState["Pressed"] = 0] = "Pressed";
-  FramePressState[FramePressState["Released"] = 1] = "Released";
-  FramePressState[FramePressState["PressedAndReleased"] = 2] = "PressedAndReleased";
-  FramePressState[FramePressState["NotChanged"] = 3] = "NotChanged";
-})(FramePressState || (FramePressState = {}));
-
-var MoveDirection;
-
-(function (MoveDirection) {
-  MoveDirection[MoveDirection["Left"] = 0] = "Left";
-  MoveDirection[MoveDirection["Up"] = 1] = "Up";
-  MoveDirection[MoveDirection["Right"] = 2] = "Right";
-  MoveDirection[MoveDirection["Down"] = 3] = "Down";
-  MoveDirection[MoveDirection["None"] = 4] = "None";
-})(MoveDirection || (MoveDirection = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/components/input.js
-var TouchScreenKeyboardType;
-
-(function (TouchScreenKeyboardType) {
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Default"] = 0] = "Default";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["ASCIICapable"] = 1] = "ASCIICapable";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NumbersAndPunctuation"] = 2] = "NumbersAndPunctuation";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["URL"] = 3] = "URL";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NumberPad"] = 4] = "NumberPad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["PhonePad"] = 5] = "PhonePad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NamePhonePad"] = 6] = "NamePhonePad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["EmailAddress"] = 7] = "EmailAddress";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NintendoNetworkAccount"] = 8] = "NintendoNetworkAccount";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Social"] = 9] = "Social";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Search"] = 10] = "Search";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["DecimalPad"] = 11] = "DecimalPad";
-})(TouchScreenKeyboardType || (TouchScreenKeyboardType = {}));
-
-var ContentType;
-
-(function (ContentType) {
-  ContentType[ContentType["Standard"] = 0] = "Standard";
-  ContentType[ContentType["Autocorrected"] = 1] = "Autocorrected";
-  ContentType[ContentType["IntegerNumber"] = 2] = "IntegerNumber";
-  ContentType[ContentType["DecimalNumber"] = 3] = "DecimalNumber";
-  ContentType[ContentType["Alphanumeric"] = 4] = "Alphanumeric";
-  ContentType[ContentType["Name"] = 5] = "Name";
-  ContentType[ContentType["EmailAddress"] = 6] = "EmailAddress";
-  ContentType[ContentType["Password"] = 7] = "Password";
-  ContentType[ContentType["Pin"] = 8] = "Pin";
-  ContentType[ContentType["Custom"] = 9] = "Custom";
-})(ContentType || (ContentType = {}));
-
-var CharacterValidation;
-
-(function (CharacterValidation) {
-  CharacterValidation[CharacterValidation["None"] = 0] = "None";
-  CharacterValidation[CharacterValidation["Digit"] = 1] = "Digit";
-  CharacterValidation[CharacterValidation["Integer"] = 2] = "Integer";
-  CharacterValidation[CharacterValidation["Decimal"] = 3] = "Decimal";
-  CharacterValidation[CharacterValidation["Alphanumeric"] = 4] = "Alphanumeric";
-  CharacterValidation[CharacterValidation["Name"] = 5] = "Name";
-  CharacterValidation[CharacterValidation["Regex"] = 6] = "Regex";
-  CharacterValidation[CharacterValidation["EmailAddress"] = 7] = "EmailAddress";
-  CharacterValidation[CharacterValidation["CustomValidator"] = 8] = "CustomValidator";
-})(CharacterValidation || (CharacterValidation = {}));
-
-var LineType;
-
-(function (LineType) {
-  LineType[LineType["SingleLine"] = 0] = "SingleLine";
-  LineType[LineType["MultiLineSubmit"] = 1] = "MultiLineSubmit";
-  LineType[LineType["MultiLineNewline"] = 2] = "MultiLineNewline";
-})(LineType || (LineType = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/components/styles-enums.js
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/styles-enums.js
 var FontWeight;
 
 (function (FontWeight) {
@@ -599,7 +524,7 @@ var CursorType;
   CursorType["Grab"] = "grab";
   CursorType["Grabbing"] = "grabbing";
 })(CursorType || (CursorType = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/components/yoga-enums.js
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/yoga-enums.js
 var FlexDirection;
 
 (function (FlexDirection) {
@@ -669,675 +594,13 @@ var Direction;
   Direction["LTR"] = "ltr";
   Direction["RTL"] = "rtl";
 })(Direction || (Direction = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/components/index.js
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/index.js
 
 
 
 
 
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/common-layouts.js
-
-var transparentColor = 'clear';
-var common_layouts_fullScreen = {
-  position: Position.Absolute,
-  top: -5000,
-  right: -5000,
-  bottom: -5000,
-  left: -5000
-};
-var fullCover = {
-  position: Position.Absolute,
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0
-};
-var common_layouts_dropdownBottom = {
-  position: Position.Absolute,
-  top: '100%',
-  left: 0,
-  minWidth: '100%'
-};
-var dropdownTop = {
-  position: Position.Absolute,
-  bottom: '100%',
-  left: 0,
-  minWidth: '100%'
-};
-var common_layouts_bottomEdge = {
-  position: Position.Absolute,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  height: 0
-};
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/dropdown.js
-var __assign = undefined && undefined.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
-var __rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-
-
-var dropdownMenuStyle = {
-  boxShadow: '0 3 7 6 black 5'
-};
-var dropdownButtonStyle = {
-  backgroundColor: 'white',
-  borderRadius: 0
-};
-var dropdownBackdropStyle = {
-  backgroundColor: transparentColor,
-  cursor: CursorType.Default
-};
-function Dropdown(_a) {
-  var _b;
-
-  var _c = _a.autoClose,
-      autoClose = _c === void 0 ? true : _c,
-      onChange = _a.onChange,
-      name = _a.name,
-      style = _a.style,
-      children = _a.children,
-      otherProps = __rest(_a, ["autoClose", "onChange", "name", "style", "children"]);
-
-  var childrenArray = React.Children.toArray(children);
-  var nonItems = childrenArray.filter(function (x) {
-    return (x === null || x === void 0 ? void 0 : x.type) !== DropdownItem;
-  });
-  var items = childrenArray.filter(function (x) {
-    return (x === null || x === void 0 ? void 0 : x.type) === DropdownItem;
-  });
-
-  var _d = React.useState(false),
-      opened = _d[0],
-      setOpened = _d[1];
-
-  var _e = React.useState(-1),
-      selectedIndex = _e[0],
-      setSelectedIndex = _e[1];
-
-  var selectedItem = items[selectedIndex];
-
-  var toggle = function toggle() {
-    return setOpened(function (st) {
-      return !st;
-    });
-  };
-
-  var close = function close() {
-    return setOpened(false);
-  };
-
-  var handleChildClick = function handleChildClick(ind, value) {
-    onChange === null || onChange === void 0 ? void 0 : onChange(value, ind);
-    if (autoClose) close();
-    setSelectedIndex(ind);
-  };
-
-  return _jsx("view", __assign({
-    name: name || '<Dropdown>'
-  }, {
-    children: _jsxs("button", __assign({
-      name: "<Dropdown Trigger>",
-      onClick: toggle,
-      style: __assign({
-        flexDirection: 'Column',
-        alignItems: 'Stretch'
-      }, style)
-    }, otherProps, {
-      children: [selectedIndex < 0 ? nonItems : ((_b = selectedItem.props) === null || _b === void 0 ? void 0 : _b.triggerTemplate) || selectedItem, opened && _jsxs("view", __assign({
-        style: __assign({
-          zIndex: 1000
-        }, bottomEdge)
-      }, {
-        children: [_jsx("button", {
-          name: "<Dropdown Backdrop>",
-          onClick: close,
-          style: __assign(__assign({}, dropdownBackdropStyle), fullScreen)
-        }, void 0), _jsx("view", __assign({
-          name: "<Dropdown Menu>",
-          style: __assign(__assign({}, dropdownMenuStyle), dropdownBottom)
-        }, {
-          children: items.map(function (x, i) {
-            return _jsx("button", __assign({
-              style: dropdownButtonStyle,
-              onClick: function onClick() {
-                return handleChildClick(i, x.props.value);
-              }
-            }, {
-              children: x
-            }), i);
-          })
-        }), void 0)]
-      }), void 0)]
-    }), void 0)
-  }), void 0);
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/index.js
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/slider/index.js
-var slider_assign = undefined && undefined.__assign || function () {
-  slider_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return slider_assign.apply(this, arguments);
-};
-
-var slider_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-function Slider(_a) {
-  var _b;
-
-  var _c;
-
-  var onChange = _a.onChange,
-      name = _a.name,
-      children = _a.children,
-      initialValue = _a.initialValue,
-      value = _a.value,
-      _d = _a.direction,
-      direction = _d === void 0 ? 'horizontal' : _d,
-      _e = _a.mode,
-      mode = _e === void 0 ? 'normal' : _e,
-      _f = _a.min,
-      min = _f === void 0 ? 0 : _f,
-      _g = _a.max,
-      max = _g === void 0 ? 1 : _g,
-      _h = _a.step,
-      step = _h === void 0 ? 0 : _h,
-      _j = _a.keyStep,
-      keyStep = _j === void 0 ? null : _j,
-      otherProps = slider_rest(_a, ["onChange", "name", "children", "initialValue", "value", "direction", "mode", "min", "max", "step", "keyStep"]);
-
-  var _k = useState((_c = initialValue !== null && initialValue !== void 0 ? initialValue : value) !== null && _c !== void 0 ? _c : min),
-      curValue = _k[0],
-      setCurValue = _k[1];
-
-  var _l = useState(curValue),
-      innerValue = _l[0],
-      setInnerValue = _l[1];
-
-  var orientation = direction === 'vertical' || direction === 'vertical-reverse' ? 'vertical' : 'horizontal';
-  var isReverse = direction === 'vertical-reverse' || direction === 'horizontal-reverse';
-  var sizeProp = orientation === 'horizontal' ? 'width' : 'height';
-  var coordProp = orientation === 'horizontal' ? 'x' : 'y';
-  var crossCoordProp = orientation === 'horizontal' ? 'y' : 'x';
-  var range = max - min;
-  var ref = useRef();
-  var moveStep = keyStep || step || range / 10;
-  var setValWithStep = useCallback(function (val) {
-    val = Math.max(min, Math.min(max, val));
-    setInnerValue(val);
-    if (step > 0) val = Math.round(val / step) * step;
-    setCurValue(val);
-  }, [min, max, step, setCurValue, setInnerValue]);
-  var dragCallback = useCallback(function (ev) {
-    var mul = isReverse ? -1 : 1;
-    var val = innerValue;
-
-    if (mode === 'diff' || mode === 'falloff') {
-      var diff = ev.delta[coordProp] / 200 * range;
-
-      if (mode === 'falloff') {
-        var yDiff = Math.max(Math.abs(ev.pressPosition[crossCoordProp] - ev.position[crossCoordProp]) / 100, 1);
-        val += mul * diff / (yDiff * yDiff);
-      } else val += mul * diff;
-    } else {
-      var relPos = ref.current.GetRelativePosition(ev.position.x, ev.position.y);
-      var relRatio = relPos[coordProp] / ref.current.GameObject.transform.rect[sizeProp];
-      if (isReverse) relRatio = -relRatio;
-      val = (relRatio + 0.5) * range + min;
-    }
-
-    setValWithStep(val);
-  }, [innerValue, setValWithStep, mode, coordProp, crossCoordProp, sizeProp, isReverse, range, min]);
-  var moveCallback = useCallback(function (ev) {
-    var diff = ev.moveVector[coordProp] * moveStep;
-    if (isReverse) diff = -diff;
-    setValWithStep(curValue + diff);
-  }, [coordProp, moveStep, isReverse, curValue, setValWithStep]);
-  useEffect(function () {
-    if (typeof value == 'number') setCurValue(value);
-  }, [setCurValue, value]);
-  useEffect(function () {
-    if (onChange) onChange(curValue);
-  }, [onChange, curValue]);
-  var ratio = (curValue - min) / range;
-  return _jsx("view", slider_assign({
-    tag: "slider",
-    name: name || '<Slider>'
-  }, otherProps, {
-    ref: ref,
-    "data-direction": direction,
-    "data-orientation": orientation,
-    onDrag: dragCallback,
-    onPointerClick: dragCallback,
-    onPotentialDrag: dragCallback,
-    onMove: moveCallback
-  }, {
-    children: _jsx("view", slider_assign({
-      name: "_track"
-    }, {
-      children: _jsx("view", slider_assign({
-        name: "_fill",
-        style: (_b = {}, _b[sizeProp] = ratio * 100 + '%', _b)
-      }, {
-        children: _jsx("view", slider_assign({
-          name: "_thumbContainer"
-        }, {
-          children: _jsx("view", slider_assign({
-            name: "_thumb"
-          }, {
-            children: typeof children === 'function' ? children(curValue) : children
-          }), void 0)
-        }), void 0)
-      }), void 0)
-    }), void 0)
-  }), void 0);
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/radio/radio.js
-var radio_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var radio_assign = undefined && undefined.__assign || function () {
-  radio_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return radio_assign.apply(this, arguments);
-};
-
-var radio_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-var Radio =
-/** @class */
-function (_super) {
-  radio_extends(Radio, _super);
-
-  function Radio() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  } // static contextType: React.ContextType<RadioContext>;
-
-
-  Radio.prototype.render = function () {
-    var _this = this;
-
-    var _a = this.context.radioGroup,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange;
-    var optional = {};
-
-    if (selectedValue !== undefined) {
-      optional.checked = this.props.value === selectedValue;
-    }
-
-    if (typeof onChange === 'function') {
-      optional.onChange = onChange.bind(null, this.props.value);
-    }
-
-    return (0,jsx_runtime.jsx)("button", {
-      name: "[Radio]",
-      onClick: function onClick() {
-        return optional.onChange(_this.props.value);
-      }
-    }, void 0);
-  };
-
-  return Radio;
-}(react.Component);
-
-
-
-var RadioGroup =
-/** @class */
-function (_super) {
-  radio_extends(RadioGroup, _super);
-
-  function RadioGroup() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  RadioGroup.prototype.getChildContext = function () {
-    var _a = this.props,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange;
-    return {
-      radioGroup: {
-        selectedValue: selectedValue,
-        onChange: onChange
-      }
-    };
-  };
-
-  RadioGroup.prototype.render = function () {
-    var _a = this.props,
-        name = _a.name,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange,
-        children = _a.children,
-        rest = radio_rest(_a, ["name", "selectedValue", "onChange", "children"]);
-
-    return (0,jsx_runtime.jsx)("view", radio_assign({
-      name: name || '<RadioGroup>'
-    }, rest, {
-      children: children
-    }), void 0);
-  };
-
-  return RadioGroup;
-}(react.Component);
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/tooltip/tooltip.js
-var tooltip_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var tooltip_assign = undefined && undefined.__assign || function () {
-  tooltip_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return tooltip_assign.apply(this, arguments);
-};
-
-var tooltip_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-
-var Tooltip =
-/** @class */
-function (_super) {
-  tooltip_extends(Tooltip, _super);
-
-  function Tooltip(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.toggle = function () {
-      return _this.setState(function (st) {
-        return {
-          opened: !st.opened
-        };
-      });
-    };
-
-    _this.open = function () {
-      return _this.setState({
-        opened: true
-      });
-    };
-
-    _this.close = function () {
-      return _this.setState({
-        opened: false
-      });
-    };
-
-    _this.state = {
-      opened: false
-    };
-    return _this;
-  }
-
-  Tooltip.prototype.render = function () {
-    var _a, _b;
-
-    var _c = this.props,
-        tooltipContent = _c.tooltipContent,
-        position = _c.position,
-        offset = _c.offset,
-        otherProps = tooltip_rest(_c, ["tooltipContent", "position", "offset"]);
-
-    var containerProp = Tooltip.containerPositionProp[position];
-    var childProp = Tooltip.childPositionProp[position];
-    return (0,jsx_runtime.jsxs)("view", tooltip_assign({}, otherProps, {
-      onPointerEnter: this.open,
-      onPointerExit: this.close
-    }, {
-      children: [this.props.children, this.state.opened && tooltipContent && (0,jsx_runtime.jsx)("view", tooltip_assign({
-        style: (_a = {
-          position: Position.Absolute
-        }, _a[containerProp] = Tooltip.yogaZeroPercent, _a)
-      }, {
-        children: (0,jsx_runtime.jsx)("view", tooltip_assign({
-          name: "<Tooltip>",
-          style: (_b = {
-            position: Position.Absolute,
-            zIndex: 1003
-          }, _b[childProp] = offset, _b)
-        }, {
-          children: tooltipContent
-        }), void 0)
-      }), void 0)]
-    }), void 0);
-  };
-
-  Tooltip.defaultProps = {
-    position: 'bottom',
-    offset: 10
-  };
-  Tooltip.containerPositionProp = {
-    top: 'top',
-    bottom: 'bottom',
-    left: 'left',
-    right: 'right'
-  };
-  Tooltip.childPositionProp = {
-    top: 'bottom',
-    bottom: 'top',
-    left: 'right',
-    right: 'left'
-  };
-  Tooltip.yogaZeroPercent = 0;
-  return Tooltip;
-}(react.Component);
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/tester/test-view.js
-var test_view_assign = undefined && undefined.__assign || function () {
-  test_view_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return test_view_assign.apply(this, arguments);
-};
-
-
-
-var test_view_TestView = react.forwardRef(function (props, ref) {
-  return (0,jsx_runtime.jsx)("view", test_view_assign({
-    ref: ref
-  }, {
-    children: props.children
-  }), void 0);
-});
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/tester/tester.js
-var tester_assign = undefined && undefined.__assign || function () {
-  tester_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return tester_assign.apply(this, arguments);
-};
-
-
-
-
-
-function testRender(element) {
-  return new Promise(function (resolve) {
-    var ref = React.createRef();
-    Renderer.render(_jsx(TestView, tester_assign({
-      ref: ref
-    }, {
-      children: element
-    }), void 0), null, function () {
-      resolve(ref.current);
-    });
-  });
-}
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/generated/unity.js
-//
-// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule
-// Generated 7.02.2021 17:05:39
-//
 var unity_Unity;
 
 (function (Unity) {
@@ -1565,6 +828,10 @@ var unity_Unity;
         ProfilerMarkerDataType[ProfilerMarkerDataType["String16"] = 9] = "String16";
         ProfilerMarkerDataType[ProfilerMarkerDataType["Blob8"] = 11] = "Blob8";
       })(ProfilerMarkerDataType = LowLevel.ProfilerMarkerDataType || (LowLevel.ProfilerMarkerDataType = {}));
+
+      var Unsafe;
+
+      (function (Unsafe) {})(Unsafe = LowLevel.Unsafe || (LowLevel.Unsafe = {}));
     })(LowLevel = Profiling.LowLevel || (Profiling.LowLevel = {}));
   })(Profiling = Unity.Profiling || (Unity.Profiling = {}));
 
@@ -1590,7 +857,7 @@ var unity_Unity;
   })(Rendering = Unity.Rendering || (Unity.Rendering = {}));
 })(unity_Unity || (unity_Unity = {}));
 
-var UnityEngine;
+var unity_UnityEngine;
 
 (function (UnityEngine) {
   var SendMessageOptions;
@@ -4020,6 +3287,166 @@ var UnityEngine;
     TextEditor_DblClickSnapping[TextEditor_DblClickSnapping["PARAGRAPHS"] = 1] = "PARAGRAPHS";
   })(TextEditor_DblClickSnapping = UnityEngine.TextEditor_DblClickSnapping || (UnityEngine.TextEditor_DblClickSnapping = {}));
 
+  var AssetBundleLoadResult;
+
+  (function (AssetBundleLoadResult) {
+    AssetBundleLoadResult[AssetBundleLoadResult["Success"] = 0] = "Success";
+    AssetBundleLoadResult[AssetBundleLoadResult["Cancelled"] = 1] = "Cancelled";
+    AssetBundleLoadResult[AssetBundleLoadResult["NotMatchingCrc"] = 2] = "NotMatchingCrc";
+    AssetBundleLoadResult[AssetBundleLoadResult["FailedCache"] = 3] = "FailedCache";
+    AssetBundleLoadResult[AssetBundleLoadResult["NotValidAssetBundle"] = 4] = "NotValidAssetBundle";
+    AssetBundleLoadResult[AssetBundleLoadResult["NoSerializedData"] = 5] = "NoSerializedData";
+    AssetBundleLoadResult[AssetBundleLoadResult["NotCompatible"] = 6] = "NotCompatible";
+    AssetBundleLoadResult[AssetBundleLoadResult["AlreadyLoaded"] = 7] = "AlreadyLoaded";
+    AssetBundleLoadResult[AssetBundleLoadResult["FailedRead"] = 8] = "FailedRead";
+    AssetBundleLoadResult[AssetBundleLoadResult["FailedDecompression"] = 9] = "FailedDecompression";
+    AssetBundleLoadResult[AssetBundleLoadResult["FailedWrite"] = 10] = "FailedWrite";
+    AssetBundleLoadResult[AssetBundleLoadResult["FailedDeleteRecompressionTarget"] = 11] = "FailedDeleteRecompressionTarget";
+    AssetBundleLoadResult[AssetBundleLoadResult["RecompressionTargetIsLoaded"] = 12] = "RecompressionTargetIsLoaded";
+    AssetBundleLoadResult[AssetBundleLoadResult["RecompressionTargetExistsButNotArchive"] = 13] = "RecompressionTargetExistsButNotArchive";
+  })(AssetBundleLoadResult = UnityEngine.AssetBundleLoadResult || (UnityEngine.AssetBundleLoadResult = {}));
+
+  var CompressionType;
+
+  (function (CompressionType) {
+    CompressionType[CompressionType["None"] = 0] = "None";
+    CompressionType[CompressionType["Lzma"] = 1] = "Lzma";
+    CompressionType[CompressionType["Lz4"] = 2] = "Lz4";
+    CompressionType[CompressionType["Lz4HC"] = 3] = "Lz4HC";
+  })(CompressionType = UnityEngine.CompressionType || (UnityEngine.CompressionType = {}));
+
+  var CompressionLevel;
+
+  (function (CompressionLevel) {
+    CompressionLevel[CompressionLevel["None"] = 0] = "None";
+    CompressionLevel[CompressionLevel["Fastest"] = 1] = "Fastest";
+    CompressionLevel[CompressionLevel["Fast"] = 2] = "Fast";
+    CompressionLevel[CompressionLevel["Normal"] = 3] = "Normal";
+    CompressionLevel[CompressionLevel["High"] = 4] = "High";
+    CompressionLevel[CompressionLevel["Maximum"] = 5] = "Maximum";
+  })(CompressionLevel = UnityEngine.CompressionLevel || (UnityEngine.CompressionLevel = {}));
+
+  var AI;
+
+  (function (AI) {
+    var NavMeshPathStatus;
+
+    (function (NavMeshPathStatus) {
+      NavMeshPathStatus[NavMeshPathStatus["PathComplete"] = 0] = "PathComplete";
+      NavMeshPathStatus[NavMeshPathStatus["PathPartial"] = 1] = "PathPartial";
+      NavMeshPathStatus[NavMeshPathStatus["PathInvalid"] = 2] = "PathInvalid";
+    })(NavMeshPathStatus = AI.NavMeshPathStatus || (AI.NavMeshPathStatus = {}));
+
+    var ObstacleAvoidanceType;
+
+    (function (ObstacleAvoidanceType) {
+      ObstacleAvoidanceType[ObstacleAvoidanceType["NoObstacleAvoidance"] = 0] = "NoObstacleAvoidance";
+      ObstacleAvoidanceType[ObstacleAvoidanceType["LowQualityObstacleAvoidance"] = 1] = "LowQualityObstacleAvoidance";
+      ObstacleAvoidanceType[ObstacleAvoidanceType["MedQualityObstacleAvoidance"] = 2] = "MedQualityObstacleAvoidance";
+      ObstacleAvoidanceType[ObstacleAvoidanceType["GoodQualityObstacleAvoidance"] = 3] = "GoodQualityObstacleAvoidance";
+      ObstacleAvoidanceType[ObstacleAvoidanceType["HighQualityObstacleAvoidance"] = 4] = "HighQualityObstacleAvoidance";
+    })(ObstacleAvoidanceType = AI.ObstacleAvoidanceType || (AI.ObstacleAvoidanceType = {}));
+
+    var NavMeshObstacleShape;
+
+    (function (NavMeshObstacleShape) {
+      NavMeshObstacleShape[NavMeshObstacleShape["Capsule"] = 0] = "Capsule";
+      NavMeshObstacleShape[NavMeshObstacleShape["Box"] = 1] = "Box";
+    })(NavMeshObstacleShape = AI.NavMeshObstacleShape || (AI.NavMeshObstacleShape = {}));
+
+    var OffMeshLinkType;
+
+    (function (OffMeshLinkType) {
+      OffMeshLinkType[OffMeshLinkType["LinkTypeManual"] = 0] = "LinkTypeManual";
+      OffMeshLinkType[OffMeshLinkType["LinkTypeDropDown"] = 1] = "LinkTypeDropDown";
+      OffMeshLinkType[OffMeshLinkType["LinkTypeJumpAcross"] = 2] = "LinkTypeJumpAcross";
+    })(OffMeshLinkType = AI.OffMeshLinkType || (AI.OffMeshLinkType = {}));
+
+    var NavMeshBuildDebugFlags;
+
+    (function (NavMeshBuildDebugFlags) {
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["None"] = 0] = "None";
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["InputGeometry"] = 1] = "InputGeometry";
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["Voxels"] = 2] = "Voxels";
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["Regions"] = 4] = "Regions";
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["RawContours"] = 8] = "RawContours";
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["SimplifiedContours"] = 16] = "SimplifiedContours";
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["PolygonMeshes"] = 32] = "PolygonMeshes";
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["PolygonMeshesDetail"] = 64] = "PolygonMeshesDetail";
+      NavMeshBuildDebugFlags[NavMeshBuildDebugFlags["All"] = 127] = "All";
+    })(NavMeshBuildDebugFlags = AI.NavMeshBuildDebugFlags || (AI.NavMeshBuildDebugFlags = {}));
+
+    var NavMeshBuildSourceShape;
+
+    (function (NavMeshBuildSourceShape) {
+      NavMeshBuildSourceShape[NavMeshBuildSourceShape["Mesh"] = 0] = "Mesh";
+      NavMeshBuildSourceShape[NavMeshBuildSourceShape["Terrain"] = 1] = "Terrain";
+      NavMeshBuildSourceShape[NavMeshBuildSourceShape["Box"] = 2] = "Box";
+      NavMeshBuildSourceShape[NavMeshBuildSourceShape["Sphere"] = 3] = "Sphere";
+      NavMeshBuildSourceShape[NavMeshBuildSourceShape["Capsule"] = 4] = "Capsule";
+      NavMeshBuildSourceShape[NavMeshBuildSourceShape["ModifierBox"] = 5] = "ModifierBox";
+    })(NavMeshBuildSourceShape = AI.NavMeshBuildSourceShape || (AI.NavMeshBuildSourceShape = {}));
+
+    var NavMeshCollectGeometry;
+
+    (function (NavMeshCollectGeometry) {
+      NavMeshCollectGeometry[NavMeshCollectGeometry["RenderMeshes"] = 0] = "RenderMeshes";
+      NavMeshCollectGeometry[NavMeshCollectGeometry["PhysicsColliders"] = 1] = "PhysicsColliders";
+    })(NavMeshCollectGeometry = AI.NavMeshCollectGeometry || (AI.NavMeshCollectGeometry = {}));
+  })(AI = UnityEngine.AI || (UnityEngine.AI = {}));
+
+  var Analytics;
+
+  (function (Analytics_1) {
+    var AnalyticsSessionState;
+
+    (function (AnalyticsSessionState) {
+      AnalyticsSessionState[AnalyticsSessionState["kSessionStopped"] = 0] = "kSessionStopped";
+      AnalyticsSessionState[AnalyticsSessionState["kSessionStarted"] = 1] = "kSessionStarted";
+      AnalyticsSessionState[AnalyticsSessionState["kSessionPaused"] = 2] = "kSessionPaused";
+      AnalyticsSessionState[AnalyticsSessionState["kSessionResumed"] = 3] = "kSessionResumed";
+    })(AnalyticsSessionState = Analytics_1.AnalyticsSessionState || (Analytics_1.AnalyticsSessionState = {}));
+
+    var Gender;
+
+    (function (Gender) {
+      Gender[Gender["Male"] = 0] = "Male";
+      Gender[Gender["Female"] = 1] = "Female";
+      Gender[Gender["Unknown"] = 2] = "Unknown";
+    })(Gender = Analytics_1.Gender || (Analytics_1.Gender = {}));
+
+    var AnalyticsResult;
+
+    (function (AnalyticsResult) {
+      AnalyticsResult[AnalyticsResult["Ok"] = 0] = "Ok";
+      AnalyticsResult[AnalyticsResult["NotInitialized"] = 1] = "NotInitialized";
+      AnalyticsResult[AnalyticsResult["AnalyticsDisabled"] = 2] = "AnalyticsDisabled";
+      AnalyticsResult[AnalyticsResult["TooManyItems"] = 3] = "TooManyItems";
+      AnalyticsResult[AnalyticsResult["SizeLimitReached"] = 4] = "SizeLimitReached";
+      AnalyticsResult[AnalyticsResult["TooManyRequests"] = 5] = "TooManyRequests";
+      AnalyticsResult[AnalyticsResult["InvalidData"] = 6] = "InvalidData";
+      AnalyticsResult[AnalyticsResult["UnsupportedPlatform"] = 7] = "UnsupportedPlatform";
+    })(AnalyticsResult = Analytics_1.AnalyticsResult || (Analytics_1.AnalyticsResult = {}));
+
+    var AnalyticsEventPriority;
+
+    (function (AnalyticsEventPriority) {
+      AnalyticsEventPriority[AnalyticsEventPriority["FlushQueueFlag"] = 1] = "FlushQueueFlag";
+      AnalyticsEventPriority[AnalyticsEventPriority["CacheImmediatelyFlag"] = 2] = "CacheImmediatelyFlag";
+      AnalyticsEventPriority[AnalyticsEventPriority["AllowInStopModeFlag"] = 4] = "AllowInStopModeFlag";
+      AnalyticsEventPriority[AnalyticsEventPriority["SendImmediateFlag"] = 8] = "SendImmediateFlag";
+      AnalyticsEventPriority[AnalyticsEventPriority["NoCachingFlag"] = 16] = "NoCachingFlag";
+      AnalyticsEventPriority[AnalyticsEventPriority["NoRetryFlag"] = 32] = "NoRetryFlag";
+      AnalyticsEventPriority[AnalyticsEventPriority["NormalPriorityEvent"] = 0] = "NormalPriorityEvent";
+      AnalyticsEventPriority[AnalyticsEventPriority["NormalPriorityEvent_WithCaching"] = 2] = "NormalPriorityEvent_WithCaching";
+      AnalyticsEventPriority[AnalyticsEventPriority["NormalPriorityEvent_NoRetryNoCaching"] = 48] = "NormalPriorityEvent_NoRetryNoCaching";
+      AnalyticsEventPriority[AnalyticsEventPriority["HighPriorityEvent"] = 1] = "HighPriorityEvent";
+      AnalyticsEventPriority[AnalyticsEventPriority["HighPriorityEvent_InStopMode"] = 5] = "HighPriorityEvent_InStopMode";
+      AnalyticsEventPriority[AnalyticsEventPriority["HighestPriorityEvent"] = 9] = "HighestPriorityEvent";
+      AnalyticsEventPriority[AnalyticsEventPriority["HighestPriorityEvent_NoRetryNoCaching"] = 49] = "HighestPriorityEvent_NoRetryNoCaching";
+    })(AnalyticsEventPriority = Analytics_1.AnalyticsEventPriority || (Analytics_1.AnalyticsEventPriority = {}));
+  })(Analytics = UnityEngine.Analytics || (UnityEngine.Analytics = {}));
+
   var Animations;
 
   (function (Animations) {
@@ -4060,7 +3487,27 @@ var UnityEngine;
       FrameCaptureDestination[FrameCaptureDestination["DevTools"] = 1] = "DevTools";
       FrameCaptureDestination[FrameCaptureDestination["GPUTraceDocument"] = 2] = "GPUTraceDocument";
     })(FrameCaptureDestination = Apple.FrameCaptureDestination || (Apple.FrameCaptureDestination = {}));
+
+    var ReplayKit;
+
+    (function (ReplayKit_1) {})(ReplayKit = Apple.ReplayKit || (Apple.ReplayKit = {}));
+
+    var TV;
+
+    (function (TV) {})(TV = Apple.TV || (Apple.TV = {}));
   })(Apple = UnityEngine.Apple || (UnityEngine.Apple = {}));
+
+  var Assertions;
+
+  (function (Assertions) {
+    var Comparers;
+
+    (function (Comparers) {})(Comparers = Assertions.Comparers || (Assertions.Comparers = {}));
+
+    var Must;
+
+    (function (Must) {})(Must = Assertions.Must || (Assertions.Must = {}));
+  })(Assertions = UnityEngine.Assertions || (UnityEngine.Assertions = {}));
 
   var Audio;
 
@@ -4181,6 +3628,33 @@ var UnityEngine;
   var Experimental;
 
   (function (Experimental) {
+    var AI;
+
+    (function (AI) {
+      var PathQueryStatus;
+
+      (function (PathQueryStatus) {
+        PathQueryStatus[PathQueryStatus["Failure"] = -2147483648] = "Failure";
+        PathQueryStatus[PathQueryStatus["Success"] = 1073741824] = "Success";
+        PathQueryStatus[PathQueryStatus["InProgress"] = 536870912] = "InProgress";
+        PathQueryStatus[PathQueryStatus["StatusDetailMask"] = 16777215] = "StatusDetailMask";
+        PathQueryStatus[PathQueryStatus["WrongMagic"] = 1] = "WrongMagic";
+        PathQueryStatus[PathQueryStatus["WrongVersion"] = 2] = "WrongVersion";
+        PathQueryStatus[PathQueryStatus["OutOfMemory"] = 4] = "OutOfMemory";
+        PathQueryStatus[PathQueryStatus["InvalidParam"] = 8] = "InvalidParam";
+        PathQueryStatus[PathQueryStatus["BufferTooSmall"] = 16] = "BufferTooSmall";
+        PathQueryStatus[PathQueryStatus["OutOfNodes"] = 32] = "OutOfNodes";
+        PathQueryStatus[PathQueryStatus["PartialResult"] = 64] = "PartialResult";
+      })(PathQueryStatus = AI.PathQueryStatus || (AI.PathQueryStatus = {}));
+
+      var NavMeshPolyTypes;
+
+      (function (NavMeshPolyTypes) {
+        NavMeshPolyTypes[NavMeshPolyTypes["Ground"] = 0] = "Ground";
+        NavMeshPolyTypes[NavMeshPolyTypes["OffMeshConnection"] = 1] = "OffMeshConnection";
+      })(NavMeshPolyTypes = AI.NavMeshPolyTypes || (AI.NavMeshPolyTypes = {}));
+    })(AI = Experimental.AI || (Experimental.AI = {}));
+
     var Animations;
 
     (function (Animations) {
@@ -4191,6 +3665,14 @@ var UnityEngine;
         AnimationStreamSource[AnimationStreamSource["PreviousInputs"] = 1] = "PreviousInputs";
       })(AnimationStreamSource = Animations.AnimationStreamSource || (Animations.AnimationStreamSource = {}));
     })(Animations = Experimental.Animations || (Experimental.Animations = {}));
+
+    var AssetBundlePatching;
+
+    (function (AssetBundlePatching) {})(AssetBundlePatching = Experimental.AssetBundlePatching || (Experimental.AssetBundlePatching = {}));
+
+    var Audio;
+
+    (function (Audio) {})(Audio = Experimental.Audio || (Experimental.Audio = {}));
 
     var GlobalIllumination;
 
@@ -4233,6 +3715,10 @@ var UnityEngine;
         AngularFalloffType[AngularFalloffType["AnalyticAndInnerAngle"] = 1] = "AnalyticAndInnerAngle";
       })(AngularFalloffType = GlobalIllumination.AngularFalloffType || (GlobalIllumination.AngularFalloffType = {}));
     })(GlobalIllumination = Experimental.GlobalIllumination || (Experimental.GlobalIllumination = {}));
+
+    var Playables;
+
+    (function (Playables) {})(Playables = Experimental.Playables || (Experimental.Playables = {}));
 
     var Rendering;
 
@@ -4455,6 +3941,10 @@ var UnityEngine;
         RayTracingAccelerationStructure_ManagementMode[RayTracingAccelerationStructure_ManagementMode["Automatic"] = 1] = "Automatic";
       })(RayTracingAccelerationStructure_ManagementMode = Rendering.RayTracingAccelerationStructure_ManagementMode || (Rendering.RayTracingAccelerationStructure_ManagementMode = {}));
     })(Rendering = Experimental.Rendering || (Experimental.Rendering = {}));
+
+    var Video;
+
+    (function (Video) {})(Video = Experimental.Video || (Experimental.Video = {}));
   })(Experimental = UnityEngine.Experimental || (UnityEngine.Experimental = {}));
 
   var iOS;
@@ -4610,19 +4100,27 @@ var UnityEngine;
     })(SystemGestureDeferMode = iOS.SystemGestureDeferMode || (iOS.SystemGestureDeferMode = {}));
   })(iOS = UnityEngine.iOS || (UnityEngine.iOS = {}));
 
+  var Jobs;
+
+  (function (Jobs) {})(Jobs = UnityEngine.Jobs || (UnityEngine.Jobs = {}));
+
+  var LowLevel;
+
+  (function (LowLevel) {})(LowLevel = UnityEngine.LowLevel || (UnityEngine.LowLevel = {}));
+
   var Networking;
 
   (function (Networking) {
     var PlayerConnection;
 
-    (function (PlayerConnection) {
+    (function (PlayerConnection_1) {
       var ConnectionTarget;
 
       (function (ConnectionTarget) {
         ConnectionTarget[ConnectionTarget["None"] = 0] = "None";
         ConnectionTarget[ConnectionTarget["Player"] = 1] = "Player";
         ConnectionTarget[ConnectionTarget["Editor"] = 2] = "Editor";
-      })(ConnectionTarget = PlayerConnection.ConnectionTarget || (PlayerConnection.ConnectionTarget = {}));
+      })(ConnectionTarget = PlayerConnection_1.ConnectionTarget || (PlayerConnection_1.ConnectionTarget = {}));
     })(PlayerConnection = Networking.PlayerConnection || (Networking.PlayerConnection = {}));
   })(Networking = UnityEngine.Networking || (UnityEngine.Networking = {}));
 
@@ -4678,6 +4176,10 @@ var UnityEngine;
     })(PlayState = Playables.PlayState || (Playables.PlayState = {}));
   })(Playables = UnityEngine.Playables || (UnityEngine.Playables = {}));
 
+  var PlayerLoop;
+
+  (function (PlayerLoop) {})(PlayerLoop = UnityEngine.PlayerLoop || (UnityEngine.PlayerLoop = {}));
+
   var Profiling;
 
   (function (Profiling) {
@@ -4699,6 +4201,10 @@ var UnityEngine;
       ProfilerArea[ProfilerArea["GlobalIllumination"] = 12] = "GlobalIllumination";
       ProfilerArea[ProfilerArea["VirtualTexturing"] = 13] = "VirtualTexturing";
     })(ProfilerArea = Profiling.ProfilerArea || (Profiling.ProfilerArea = {}));
+
+    var Experimental;
+
+    (function (Experimental) {})(Experimental = Profiling.Experimental || (Profiling.Experimental = {}));
 
     var Memory;
 
@@ -5557,6 +5063,18 @@ var UnityEngine;
     })(GarbageCollector_Mode = Scripting.GarbageCollector_Mode || (Scripting.GarbageCollector_Mode = {}));
   })(Scripting = UnityEngine.Scripting || (UnityEngine.Scripting = {}));
 
+  var Serialization;
+
+  (function (Serialization) {})(Serialization = UnityEngine.Serialization || (UnityEngine.Serialization = {}));
+
+  var Sprites;
+
+  (function (Sprites) {})(Sprites = UnityEngine.Sprites || (UnityEngine.Sprites = {}));
+
+  var TestTools;
+
+  (function (TestTools) {})(TestTools = UnityEngine.TestTools || (UnityEngine.TestTools = {}));
+
   var tvOS;
 
   (function (tvOS) {
@@ -5568,6 +5086,10 @@ var UnityEngine;
       DeviceGeneration[DeviceGeneration["AppleTV2Gen"] = 1002] = "AppleTV2Gen";
     })(DeviceGeneration = tvOS.DeviceGeneration || (tvOS.DeviceGeneration = {}));
   })(tvOS = UnityEngine.tvOS || (UnityEngine.tvOS = {}));
+
+  var U2D;
+
+  (function (U2D) {})(U2D = UnityEngine.U2D || (UnityEngine.U2D = {}));
 
   var UI;
 
@@ -5823,6 +5345,263 @@ var UnityEngine;
     })(Toggle_ToggleTransition = UI.Toggle_ToggleTransition || (UI.Toggle_ToggleTransition = {}));
   })(UI = UnityEngine.UI || (UnityEngine.UI = {}));
 
+  var UIElements;
+
+  (function (UIElements) {
+    var DropdownMenuAction_Status;
+
+    (function (DropdownMenuAction_Status) {
+      DropdownMenuAction_Status[DropdownMenuAction_Status["None"] = 0] = "None";
+      DropdownMenuAction_Status[DropdownMenuAction_Status["Normal"] = 1] = "Normal";
+      DropdownMenuAction_Status[DropdownMenuAction_Status["Disabled"] = 2] = "Disabled";
+      DropdownMenuAction_Status[DropdownMenuAction_Status["Checked"] = 4] = "Checked";
+      DropdownMenuAction_Status[DropdownMenuAction_Status["Hidden"] = 8] = "Hidden";
+    })(DropdownMenuAction_Status = UIElements.DropdownMenuAction_Status || (UIElements.DropdownMenuAction_Status = {}));
+
+    var SelectionType;
+
+    (function (SelectionType) {
+      SelectionType[SelectionType["None"] = 0] = "None";
+      SelectionType[SelectionType["Single"] = 1] = "Single";
+      SelectionType[SelectionType["Multiple"] = 2] = "Multiple";
+    })(SelectionType = UIElements.SelectionType || (UIElements.SelectionType = {}));
+
+    var MouseButton;
+
+    (function (MouseButton) {
+      MouseButton[MouseButton["LeftMouse"] = 0] = "LeftMouse";
+      MouseButton[MouseButton["RightMouse"] = 1] = "RightMouse";
+      MouseButton[MouseButton["MiddleMouse"] = 2] = "MiddleMouse";
+    })(MouseButton = UIElements.MouseButton || (UIElements.MouseButton = {}));
+
+    var ContextType;
+
+    (function (ContextType) {
+      ContextType[ContextType["Player"] = 0] = "Player";
+      ContextType[ContextType["Editor"] = 1] = "Editor";
+    })(ContextType = UIElements.ContextType || (UIElements.ContextType = {}));
+
+    var UsageHints;
+
+    (function (UsageHints) {
+      UsageHints[UsageHints["None"] = 0] = "None";
+      UsageHints[UsageHints["DynamicTransform"] = 1] = "DynamicTransform";
+      UsageHints[UsageHints["GroupTransform"] = 2] = "GroupTransform";
+    })(UsageHints = UIElements.UsageHints || (UIElements.UsageHints = {}));
+
+    var Position;
+
+    (function (Position) {
+      Position[Position["Relative"] = 0] = "Relative";
+      Position[Position["Absolute"] = 1] = "Absolute";
+    })(Position = UIElements.Position || (UIElements.Position = {}));
+
+    var Overflow;
+
+    (function (Overflow) {
+      Overflow[Overflow["Visible"] = 0] = "Visible";
+      Overflow[Overflow["Hidden"] = 1] = "Hidden";
+    })(Overflow = UIElements.Overflow || (UIElements.Overflow = {}));
+
+    var OverflowClipBox;
+
+    (function (OverflowClipBox) {
+      OverflowClipBox[OverflowClipBox["PaddingBox"] = 0] = "PaddingBox";
+      OverflowClipBox[OverflowClipBox["ContentBox"] = 1] = "ContentBox";
+    })(OverflowClipBox = UIElements.OverflowClipBox || (UIElements.OverflowClipBox = {}));
+
+    var FlexDirection;
+
+    (function (FlexDirection) {
+      FlexDirection[FlexDirection["Column"] = 0] = "Column";
+      FlexDirection[FlexDirection["ColumnReverse"] = 1] = "ColumnReverse";
+      FlexDirection[FlexDirection["Row"] = 2] = "Row";
+      FlexDirection[FlexDirection["RowReverse"] = 3] = "RowReverse";
+    })(FlexDirection = UIElements.FlexDirection || (UIElements.FlexDirection = {}));
+
+    var Wrap;
+
+    (function (Wrap) {
+      Wrap[Wrap["NoWrap"] = 0] = "NoWrap";
+      Wrap[Wrap["Wrap"] = 1] = "Wrap";
+      Wrap[Wrap["WrapReverse"] = 2] = "WrapReverse";
+    })(Wrap = UIElements.Wrap || (UIElements.Wrap = {}));
+
+    var Align;
+
+    (function (Align) {
+      Align[Align["Auto"] = 0] = "Auto";
+      Align[Align["FlexStart"] = 1] = "FlexStart";
+      Align[Align["Center"] = 2] = "Center";
+      Align[Align["FlexEnd"] = 3] = "FlexEnd";
+      Align[Align["Stretch"] = 4] = "Stretch";
+    })(Align = UIElements.Align || (UIElements.Align = {}));
+
+    var Justify;
+
+    (function (Justify) {
+      Justify[Justify["FlexStart"] = 0] = "FlexStart";
+      Justify[Justify["Center"] = 1] = "Center";
+      Justify[Justify["FlexEnd"] = 2] = "FlexEnd";
+      Justify[Justify["SpaceBetween"] = 3] = "SpaceBetween";
+      Justify[Justify["SpaceAround"] = 4] = "SpaceAround";
+    })(Justify = UIElements.Justify || (UIElements.Justify = {}));
+
+    var TextOverflowPosition;
+
+    (function (TextOverflowPosition) {
+      TextOverflowPosition[TextOverflowPosition["End"] = 0] = "End";
+      TextOverflowPosition[TextOverflowPosition["Start"] = 1] = "Start";
+      TextOverflowPosition[TextOverflowPosition["Middle"] = 2] = "Middle";
+    })(TextOverflowPosition = UIElements.TextOverflowPosition || (UIElements.TextOverflowPosition = {}));
+
+    var TextOverflow;
+
+    (function (TextOverflow) {
+      TextOverflow[TextOverflow["Clip"] = 0] = "Clip";
+      TextOverflow[TextOverflow["Ellipsis"] = 1] = "Ellipsis";
+    })(TextOverflow = UIElements.TextOverflow || (UIElements.TextOverflow = {}));
+
+    var Visibility;
+
+    (function (Visibility) {
+      Visibility[Visibility["Visible"] = 0] = "Visible";
+      Visibility[Visibility["Hidden"] = 1] = "Hidden";
+    })(Visibility = UIElements.Visibility || (UIElements.Visibility = {}));
+
+    var WhiteSpace;
+
+    (function (WhiteSpace) {
+      WhiteSpace[WhiteSpace["Normal"] = 0] = "Normal";
+      WhiteSpace[WhiteSpace["NoWrap"] = 1] = "NoWrap";
+    })(WhiteSpace = UIElements.WhiteSpace || (UIElements.WhiteSpace = {}));
+
+    var DisplayStyle;
+
+    (function (DisplayStyle) {
+      DisplayStyle[DisplayStyle["Flex"] = 0] = "Flex";
+      DisplayStyle[DisplayStyle["None"] = 1] = "None";
+    })(DisplayStyle = UIElements.DisplayStyle || (UIElements.DisplayStyle = {}));
+
+    var PickingMode;
+
+    (function (PickingMode) {
+      PickingMode[PickingMode["Position"] = 0] = "Position";
+      PickingMode[PickingMode["Ignore"] = 1] = "Ignore";
+    })(PickingMode = UIElements.PickingMode || (UIElements.PickingMode = {}));
+
+    var VisualElement_MeasureMode;
+
+    (function (VisualElement_MeasureMode) {
+      VisualElement_MeasureMode[VisualElement_MeasureMode["Undefined"] = 0] = "Undefined";
+      VisualElement_MeasureMode[VisualElement_MeasureMode["Exactly"] = 1] = "Exactly";
+      VisualElement_MeasureMode[VisualElement_MeasureMode["AtMost"] = 2] = "AtMost";
+    })(VisualElement_MeasureMode = UIElements.VisualElement_MeasureMode || (UIElements.VisualElement_MeasureMode = {}));
+
+    var VisualElementFocusRing_DefaultFocusOrder;
+
+    (function (VisualElementFocusRing_DefaultFocusOrder) {
+      VisualElementFocusRing_DefaultFocusOrder[VisualElementFocusRing_DefaultFocusOrder["ChildOrder"] = 0] = "ChildOrder";
+      VisualElementFocusRing_DefaultFocusOrder[VisualElementFocusRing_DefaultFocusOrder["PositionXY"] = 1] = "PositionXY";
+      VisualElementFocusRing_DefaultFocusOrder[VisualElementFocusRing_DefaultFocusOrder["PositionYX"] = 2] = "PositionYX";
+    })(VisualElementFocusRing_DefaultFocusOrder = UIElements.VisualElementFocusRing_DefaultFocusOrder || (UIElements.VisualElementFocusRing_DefaultFocusOrder = {}));
+
+    var SliderDirection;
+
+    (function (SliderDirection) {
+      SliderDirection[SliderDirection["Horizontal"] = 0] = "Horizontal";
+      SliderDirection[SliderDirection["Vertical"] = 1] = "Vertical";
+    })(SliderDirection = UIElements.SliderDirection || (UIElements.SliderDirection = {}));
+
+    var HelpBoxMessageType;
+
+    (function (HelpBoxMessageType) {
+      HelpBoxMessageType[HelpBoxMessageType["None"] = 0] = "None";
+      HelpBoxMessageType[HelpBoxMessageType["Info"] = 1] = "Info";
+      HelpBoxMessageType[HelpBoxMessageType["Warning"] = 2] = "Warning";
+      HelpBoxMessageType[HelpBoxMessageType["Error"] = 3] = "Error";
+    })(HelpBoxMessageType = UIElements.HelpBoxMessageType || (UIElements.HelpBoxMessageType = {}));
+
+    var AlternatingRowBackground;
+
+    (function (AlternatingRowBackground) {
+      AlternatingRowBackground[AlternatingRowBackground["None"] = 0] = "None";
+      AlternatingRowBackground[AlternatingRowBackground["ContentOnly"] = 1] = "ContentOnly";
+      AlternatingRowBackground[AlternatingRowBackground["All"] = 2] = "All";
+    })(AlternatingRowBackground = UIElements.AlternatingRowBackground || (UIElements.AlternatingRowBackground = {}));
+
+    var ScrollViewMode;
+
+    (function (ScrollViewMode) {
+      ScrollViewMode[ScrollViewMode["Vertical"] = 0] = "Vertical";
+      ScrollViewMode[ScrollViewMode["Horizontal"] = 1] = "Horizontal";
+      ScrollViewMode[ScrollViewMode["VerticalAndHorizontal"] = 2] = "VerticalAndHorizontal";
+    })(ScrollViewMode = UIElements.ScrollViewMode || (UIElements.ScrollViewMode = {}));
+
+    var ScrollView_TouchScrollBehavior;
+
+    (function (ScrollView_TouchScrollBehavior) {
+      ScrollView_TouchScrollBehavior[ScrollView_TouchScrollBehavior["Unrestricted"] = 0] = "Unrestricted";
+      ScrollView_TouchScrollBehavior[ScrollView_TouchScrollBehavior["Elastic"] = 1] = "Elastic";
+      ScrollView_TouchScrollBehavior[ScrollView_TouchScrollBehavior["Clamped"] = 2] = "Clamped";
+    })(ScrollView_TouchScrollBehavior = UIElements.ScrollView_TouchScrollBehavior || (UIElements.ScrollView_TouchScrollBehavior = {}));
+
+    var TwoPaneSplitViewOrientation;
+
+    (function (TwoPaneSplitViewOrientation) {
+      TwoPaneSplitViewOrientation[TwoPaneSplitViewOrientation["Horizontal"] = 0] = "Horizontal";
+      TwoPaneSplitViewOrientation[TwoPaneSplitViewOrientation["Vertical"] = 1] = "Vertical";
+    })(TwoPaneSplitViewOrientation = UIElements.TwoPaneSplitViewOrientation || (UIElements.TwoPaneSplitViewOrientation = {}));
+
+    var TrickleDown;
+
+    (function (TrickleDown) {
+      TrickleDown[TrickleDown["NoTrickleDown"] = 0] = "NoTrickleDown";
+      TrickleDown[TrickleDown["TrickleDown"] = 1] = "TrickleDown";
+    })(TrickleDown = UIElements.TrickleDown || (UIElements.TrickleDown = {}));
+
+    var PropagationPhase;
+
+    (function (PropagationPhase) {
+      PropagationPhase[PropagationPhase["None"] = 0] = "None";
+      PropagationPhase[PropagationPhase["TrickleDown"] = 1] = "TrickleDown";
+      PropagationPhase[PropagationPhase["AtTarget"] = 2] = "AtTarget";
+      PropagationPhase[PropagationPhase["DefaultActionAtTarget"] = 5] = "DefaultActionAtTarget";
+      PropagationPhase[PropagationPhase["BubbleUp"] = 3] = "BubbleUp";
+      PropagationPhase[PropagationPhase["DefaultAction"] = 4] = "DefaultAction";
+    })(PropagationPhase = UIElements.PropagationPhase || (UIElements.PropagationPhase = {}));
+
+    var LengthUnit;
+
+    (function (LengthUnit) {
+      LengthUnit[LengthUnit["Pixel"] = 0] = "Pixel";
+      LengthUnit[LengthUnit["Percent"] = 1] = "Percent";
+    })(LengthUnit = UIElements.LengthUnit || (UIElements.LengthUnit = {}));
+
+    var StyleKeyword;
+
+    (function (StyleKeyword) {
+      StyleKeyword[StyleKeyword["Undefined"] = 0] = "Undefined";
+      StyleKeyword[StyleKeyword["Null"] = 1] = "Null";
+      StyleKeyword[StyleKeyword["Auto"] = 2] = "Auto";
+      StyleKeyword[StyleKeyword["None"] = 3] = "None";
+      StyleKeyword[StyleKeyword["Initial"] = 4] = "Initial";
+    })(StyleKeyword = UIElements.StyleKeyword || (UIElements.StyleKeyword = {}));
+
+    var UxmlAttributeDescription_Use;
+
+    (function (UxmlAttributeDescription_Use) {
+      UxmlAttributeDescription_Use[UxmlAttributeDescription_Use["None"] = 0] = "None";
+      UxmlAttributeDescription_Use[UxmlAttributeDescription_Use["Optional"] = 1] = "Optional";
+      UxmlAttributeDescription_Use[UxmlAttributeDescription_Use["Prohibited"] = 2] = "Prohibited";
+      UxmlAttributeDescription_Use[UxmlAttributeDescription_Use["Required"] = 3] = "Required";
+    })(UxmlAttributeDescription_Use = UIElements.UxmlAttributeDescription_Use || (UIElements.UxmlAttributeDescription_Use = {}));
+
+    var Experimental;
+
+    (function (Experimental) {})(Experimental = UIElements.Experimental || (UIElements.Experimental = {}));
+  })(UIElements = UnityEngine.UIElements || (UnityEngine.UIElements = {}));
+
   var Video;
 
   (function (Video) {
@@ -5949,27 +5728,27 @@ var UnityEngine;
 
     var WebCam;
 
-    (function (WebCam) {
+    (function (WebCam_1) {
       var PhotoCaptureFileOutputFormat;
 
       (function (PhotoCaptureFileOutputFormat) {
         PhotoCaptureFileOutputFormat[PhotoCaptureFileOutputFormat["PNG"] = 0] = "PNG";
         PhotoCaptureFileOutputFormat[PhotoCaptureFileOutputFormat["JPG"] = 1] = "JPG";
-      })(PhotoCaptureFileOutputFormat = WebCam.PhotoCaptureFileOutputFormat || (WebCam.PhotoCaptureFileOutputFormat = {}));
+      })(PhotoCaptureFileOutputFormat = WebCam_1.PhotoCaptureFileOutputFormat || (WebCam_1.PhotoCaptureFileOutputFormat = {}));
 
       var PhotoCapture_CaptureResultType;
 
       (function (PhotoCapture_CaptureResultType) {
         PhotoCapture_CaptureResultType[PhotoCapture_CaptureResultType["Success"] = 0] = "Success";
         PhotoCapture_CaptureResultType[PhotoCapture_CaptureResultType["UnknownError"] = 1] = "UnknownError";
-      })(PhotoCapture_CaptureResultType = WebCam.PhotoCapture_CaptureResultType || (WebCam.PhotoCapture_CaptureResultType = {}));
+      })(PhotoCapture_CaptureResultType = WebCam_1.PhotoCapture_CaptureResultType || (WebCam_1.PhotoCapture_CaptureResultType = {}));
 
       var VideoCapture_CaptureResultType;
 
       (function (VideoCapture_CaptureResultType) {
         VideoCapture_CaptureResultType[VideoCapture_CaptureResultType["Success"] = 0] = "Success";
         VideoCapture_CaptureResultType[VideoCapture_CaptureResultType["UnknownError"] = 1] = "UnknownError";
-      })(VideoCapture_CaptureResultType = WebCam.VideoCapture_CaptureResultType || (WebCam.VideoCapture_CaptureResultType = {}));
+      })(VideoCapture_CaptureResultType = WebCam_1.VideoCapture_CaptureResultType || (WebCam_1.VideoCapture_CaptureResultType = {}));
 
       var VideoCapture_AudioState;
 
@@ -5978,7 +5757,7 @@ var UnityEngine;
         VideoCapture_AudioState[VideoCapture_AudioState["ApplicationAudio"] = 1] = "ApplicationAudio";
         VideoCapture_AudioState[VideoCapture_AudioState["ApplicationAndMicAudio"] = 2] = "ApplicationAndMicAudio";
         VideoCapture_AudioState[VideoCapture_AudioState["None"] = 3] = "None";
-      })(VideoCapture_AudioState = WebCam.VideoCapture_AudioState || (WebCam.VideoCapture_AudioState = {}));
+      })(VideoCapture_AudioState = WebCam_1.VideoCapture_AudioState || (WebCam_1.VideoCapture_AudioState = {}));
 
       var CapturePixelFormat;
 
@@ -5987,7 +5766,7 @@ var UnityEngine;
         CapturePixelFormat[CapturePixelFormat["NV12"] = 1] = "NV12";
         CapturePixelFormat[CapturePixelFormat["JPEG"] = 2] = "JPEG";
         CapturePixelFormat[CapturePixelFormat["PNG"] = 3] = "PNG";
-      })(CapturePixelFormat = WebCam.CapturePixelFormat || (WebCam.CapturePixelFormat = {}));
+      })(CapturePixelFormat = WebCam_1.CapturePixelFormat || (WebCam_1.CapturePixelFormat = {}));
 
       var WebCamMode;
 
@@ -5995,7 +5774,7 @@ var UnityEngine;
         WebCamMode[WebCamMode["None"] = 0] = "None";
         WebCamMode[WebCamMode["PhotoMode"] = 1] = "PhotoMode";
         WebCamMode[WebCamMode["VideoMode"] = 2] = "VideoMode";
-      })(WebCamMode = WebCam.WebCamMode || (WebCam.WebCamMode = {}));
+      })(WebCamMode = WebCam_1.WebCamMode || (WebCam_1.WebCamMode = {}));
     })(WebCam = Windows.WebCam || (Windows.WebCam = {}));
   })(Windows = UnityEngine.Windows || (UnityEngine.Windows = {}));
 
@@ -6138,11 +5917,3329 @@ var UnityEngine;
       TileForegroundText[TileForegroundText["Light"] = 1] = "Light";
     })(TileForegroundText = WSA.TileForegroundText || (WSA.TileForegroundText = {}));
   })(WSA = UnityEngine.WSA || (UnityEngine.WSA = {}));
-})(UnityEngine || (UnityEngine = {}));
+})(unity_UnityEngine || (unity_UnityEngine = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/generated/editor.js
+var editor_UnityEditor;
+
+(function (UnityEditor) {
+  var AssetDeleteResult;
+
+  (function (AssetDeleteResult) {
+    AssetDeleteResult[AssetDeleteResult["DidNotDelete"] = 0] = "DidNotDelete";
+    AssetDeleteResult[AssetDeleteResult["FailedDelete"] = 1] = "FailedDelete";
+    AssetDeleteResult[AssetDeleteResult["DidDelete"] = 2] = "DidDelete";
+  })(AssetDeleteResult = UnityEditor.AssetDeleteResult || (UnityEditor.AssetDeleteResult = {}));
+
+  var AssetMoveResult;
+
+  (function (AssetMoveResult) {
+    AssetMoveResult[AssetMoveResult["DidNotMove"] = 0] = "DidNotMove";
+    AssetMoveResult[AssetMoveResult["FailedMove"] = 1] = "FailedMove";
+    AssetMoveResult[AssetMoveResult["DidMove"] = 2] = "DidMove";
+  })(AssetMoveResult = UnityEditor.AssetMoveResult || (UnityEditor.AssetMoveResult = {}));
+
+  var BuildOptions;
+
+  (function (BuildOptions) {
+    BuildOptions[BuildOptions["None"] = 0] = "None";
+    BuildOptions[BuildOptions["Development"] = 1] = "Development";
+    BuildOptions[BuildOptions["AutoRunPlayer"] = 4] = "AutoRunPlayer";
+    BuildOptions[BuildOptions["ShowBuiltPlayer"] = 8] = "ShowBuiltPlayer";
+    BuildOptions[BuildOptions["BuildAdditionalStreamedScenes"] = 16] = "BuildAdditionalStreamedScenes";
+    BuildOptions[BuildOptions["AcceptExternalModificationsToPlayer"] = 32] = "AcceptExternalModificationsToPlayer";
+    BuildOptions[BuildOptions["InstallInBuildFolder"] = 64] = "InstallInBuildFolder";
+    BuildOptions[BuildOptions["WebPlayerOfflineDeployment"] = 128] = "WebPlayerOfflineDeployment";
+    BuildOptions[BuildOptions["ConnectWithProfiler"] = 256] = "ConnectWithProfiler";
+    BuildOptions[BuildOptions["AllowDebugging"] = 512] = "AllowDebugging";
+    BuildOptions[BuildOptions["SymlinkLibraries"] = 1024] = "SymlinkLibraries";
+    BuildOptions[BuildOptions["UncompressedAssetBundle"] = 2048] = "UncompressedAssetBundle";
+    BuildOptions[BuildOptions["StripDebugSymbols"] = 0] = "StripDebugSymbols";
+    BuildOptions[BuildOptions["CompressTextures"] = 0] = "CompressTextures";
+    BuildOptions[BuildOptions["ConnectToHost"] = 4096] = "ConnectToHost";
+    BuildOptions[BuildOptions["EnableHeadlessMode"] = 16384] = "EnableHeadlessMode";
+    BuildOptions[BuildOptions["BuildScriptsOnly"] = 32768] = "BuildScriptsOnly";
+    BuildOptions[BuildOptions["PatchPackage"] = 65536] = "PatchPackage";
+    BuildOptions[BuildOptions["Il2CPP"] = 0] = "Il2CPP";
+    BuildOptions[BuildOptions["ForceEnableAssertions"] = 131072] = "ForceEnableAssertions";
+    BuildOptions[BuildOptions["CompressWithLz4"] = 262144] = "CompressWithLz4";
+    BuildOptions[BuildOptions["CompressWithLz4HC"] = 524288] = "CompressWithLz4HC";
+    BuildOptions[BuildOptions["ForceOptimizeScriptCompilation"] = 0] = "ForceOptimizeScriptCompilation";
+    BuildOptions[BuildOptions["ComputeCRC"] = 1048576] = "ComputeCRC";
+    BuildOptions[BuildOptions["StrictMode"] = 2097152] = "StrictMode";
+    BuildOptions[BuildOptions["IncludeTestAssemblies"] = 4194304] = "IncludeTestAssemblies";
+    BuildOptions[BuildOptions["NoUniqueIdentifier"] = 8388608] = "NoUniqueIdentifier";
+    BuildOptions[BuildOptions["WaitForPlayerConnection"] = 33554432] = "WaitForPlayerConnection";
+    BuildOptions[BuildOptions["EnableCodeCoverage"] = 67108864] = "EnableCodeCoverage";
+    BuildOptions[BuildOptions["EnableDeepProfilingSupport"] = 268435456] = "EnableDeepProfilingSupport";
+    BuildOptions[BuildOptions["DetailedBuildReport"] = 536870912] = "DetailedBuildReport";
+    BuildOptions[BuildOptions["ShaderLivelinkSupport"] = 1073741824] = "ShaderLivelinkSupport";
+  })(BuildOptions = UnityEditor.BuildOptions || (UnityEditor.BuildOptions = {}));
+
+  var BuildAssetBundleOptions;
+
+  (function (BuildAssetBundleOptions) {
+    BuildAssetBundleOptions[BuildAssetBundleOptions["None"] = 0] = "None";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["UncompressedAssetBundle"] = 1] = "UncompressedAssetBundle";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["CollectDependencies"] = 2] = "CollectDependencies";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["CompleteAssets"] = 4] = "CompleteAssets";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["DisableWriteTypeTree"] = 8] = "DisableWriteTypeTree";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["DeterministicAssetBundle"] = 16] = "DeterministicAssetBundle";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["ForceRebuildAssetBundle"] = 32] = "ForceRebuildAssetBundle";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["IgnoreTypeTreeChanges"] = 64] = "IgnoreTypeTreeChanges";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["AppendHashToAssetBundleName"] = 128] = "AppendHashToAssetBundleName";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["ChunkBasedCompression"] = 256] = "ChunkBasedCompression";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["StrictMode"] = 512] = "StrictMode";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["DryRunBuild"] = 1024] = "DryRunBuild";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["DisableLoadAssetByFileName"] = 4096] = "DisableLoadAssetByFileName";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["DisableLoadAssetByFileNameWithExtension"] = 8192] = "DisableLoadAssetByFileNameWithExtension";
+    BuildAssetBundleOptions[BuildAssetBundleOptions["AssetBundleStripUnityVersion"] = 32768] = "AssetBundleStripUnityVersion";
+  })(BuildAssetBundleOptions = UnityEditor.BuildAssetBundleOptions || (UnityEditor.BuildAssetBundleOptions = {}));
+
+  var PlayerConnectionInitiateMode;
+
+  (function (PlayerConnectionInitiateMode) {
+    PlayerConnectionInitiateMode[PlayerConnectionInitiateMode["None"] = 0] = "None";
+    PlayerConnectionInitiateMode[PlayerConnectionInitiateMode["PlayerConnectsToHost"] = 1] = "PlayerConnectsToHost";
+    PlayerConnectionInitiateMode[PlayerConnectionInitiateMode["PlayerListens"] = 2] = "PlayerListens";
+  })(PlayerConnectionInitiateMode = UnityEditor.PlayerConnectionInitiateMode || (UnityEditor.PlayerConnectionInitiateMode = {}));
+
+  var BuildTarget;
+
+  (function (BuildTarget) {
+    BuildTarget[BuildTarget["StandaloneOSX"] = 2] = "StandaloneOSX";
+    BuildTarget[BuildTarget["StandaloneOSXUniversal"] = 3] = "StandaloneOSXUniversal";
+    BuildTarget[BuildTarget["StandaloneOSXIntel"] = 4] = "StandaloneOSXIntel";
+    BuildTarget[BuildTarget["StandaloneWindows"] = 5] = "StandaloneWindows";
+    BuildTarget[BuildTarget["WebPlayer"] = 6] = "WebPlayer";
+    BuildTarget[BuildTarget["WebPlayerStreamed"] = 7] = "WebPlayerStreamed";
+    BuildTarget[BuildTarget["iOS"] = 9] = "iOS";
+    BuildTarget[BuildTarget["PS3"] = 10] = "PS3";
+    BuildTarget[BuildTarget["XBOX360"] = 11] = "XBOX360";
+    BuildTarget[BuildTarget["Android"] = 13] = "Android";
+    BuildTarget[BuildTarget["StandaloneLinux"] = 17] = "StandaloneLinux";
+    BuildTarget[BuildTarget["StandaloneWindows64"] = 19] = "StandaloneWindows64";
+    BuildTarget[BuildTarget["WebGL"] = 20] = "WebGL";
+    BuildTarget[BuildTarget["WSAPlayer"] = 21] = "WSAPlayer";
+    BuildTarget[BuildTarget["StandaloneLinux64"] = 24] = "StandaloneLinux64";
+    BuildTarget[BuildTarget["StandaloneLinuxUniversal"] = 25] = "StandaloneLinuxUniversal";
+    BuildTarget[BuildTarget["WP8Player"] = 26] = "WP8Player";
+    BuildTarget[BuildTarget["StandaloneOSXIntel64"] = 27] = "StandaloneOSXIntel64";
+    BuildTarget[BuildTarget["BlackBerry"] = 28] = "BlackBerry";
+    BuildTarget[BuildTarget["Tizen"] = 29] = "Tizen";
+    BuildTarget[BuildTarget["PSP2"] = 30] = "PSP2";
+    BuildTarget[BuildTarget["PS4"] = 31] = "PS4";
+    BuildTarget[BuildTarget["PSM"] = 32] = "PSM";
+    BuildTarget[BuildTarget["XboxOne"] = 33] = "XboxOne";
+    BuildTarget[BuildTarget["SamsungTV"] = 34] = "SamsungTV";
+    BuildTarget[BuildTarget["N3DS"] = 35] = "N3DS";
+    BuildTarget[BuildTarget["WiiU"] = 36] = "WiiU";
+    BuildTarget[BuildTarget["tvOS"] = 37] = "tvOS";
+    BuildTarget[BuildTarget["Switch"] = 38] = "Switch";
+    BuildTarget[BuildTarget["Lumin"] = 39] = "Lumin";
+    BuildTarget[BuildTarget["Stadia"] = 40] = "Stadia";
+    BuildTarget[BuildTarget["CloudRendering"] = 41] = "CloudRendering";
+    BuildTarget[BuildTarget["iPhone"] = -1] = "iPhone";
+    BuildTarget[BuildTarget["BB10"] = -1] = "BB10";
+    BuildTarget[BuildTarget["MetroPlayer"] = -1] = "MetroPlayer";
+    BuildTarget[BuildTarget["NoTarget"] = -2] = "NoTarget";
+  })(BuildTarget = UnityEditor.BuildTarget || (UnityEditor.BuildTarget = {}));
+
+  var BuildTargetGroup;
+
+  (function (BuildTargetGroup) {
+    BuildTargetGroup[BuildTargetGroup["Unknown"] = 0] = "Unknown";
+    BuildTargetGroup[BuildTargetGroup["Standalone"] = 1] = "Standalone";
+    BuildTargetGroup[BuildTargetGroup["WebPlayer"] = 2] = "WebPlayer";
+    BuildTargetGroup[BuildTargetGroup["iPhone"] = 4] = "iPhone";
+    BuildTargetGroup[BuildTargetGroup["iOS"] = 4] = "iOS";
+    BuildTargetGroup[BuildTargetGroup["PS3"] = 5] = "PS3";
+    BuildTargetGroup[BuildTargetGroup["XBOX360"] = 6] = "XBOX360";
+    BuildTargetGroup[BuildTargetGroup["Android"] = 7] = "Android";
+    BuildTargetGroup[BuildTargetGroup["WebGL"] = 13] = "WebGL";
+    BuildTargetGroup[BuildTargetGroup["WSA"] = 14] = "WSA";
+    BuildTargetGroup[BuildTargetGroup["Metro"] = 14] = "Metro";
+    BuildTargetGroup[BuildTargetGroup["WP8"] = 15] = "WP8";
+    BuildTargetGroup[BuildTargetGroup["BlackBerry"] = 16] = "BlackBerry";
+    BuildTargetGroup[BuildTargetGroup["Tizen"] = 17] = "Tizen";
+    BuildTargetGroup[BuildTargetGroup["PSP2"] = 18] = "PSP2";
+    BuildTargetGroup[BuildTargetGroup["PS4"] = 19] = "PS4";
+    BuildTargetGroup[BuildTargetGroup["PSM"] = 20] = "PSM";
+    BuildTargetGroup[BuildTargetGroup["XboxOne"] = 21] = "XboxOne";
+    BuildTargetGroup[BuildTargetGroup["SamsungTV"] = 22] = "SamsungTV";
+    BuildTargetGroup[BuildTargetGroup["N3DS"] = 23] = "N3DS";
+    BuildTargetGroup[BuildTargetGroup["WiiU"] = 24] = "WiiU";
+    BuildTargetGroup[BuildTargetGroup["tvOS"] = 25] = "tvOS";
+    BuildTargetGroup[BuildTargetGroup["Facebook"] = 26] = "Facebook";
+    BuildTargetGroup[BuildTargetGroup["Switch"] = 27] = "Switch";
+    BuildTargetGroup[BuildTargetGroup["Lumin"] = 28] = "Lumin";
+    BuildTargetGroup[BuildTargetGroup["Stadia"] = 29] = "Stadia";
+    BuildTargetGroup[BuildTargetGroup["CloudRendering"] = 30] = "CloudRendering";
+  })(BuildTargetGroup = UnityEditor.BuildTargetGroup || (UnityEditor.BuildTargetGroup = {}));
+
+  var DragAndDropVisualMode;
+
+  (function (DragAndDropVisualMode) {
+    DragAndDropVisualMode[DragAndDropVisualMode["None"] = 0] = "None";
+    DragAndDropVisualMode[DragAndDropVisualMode["Copy"] = 1] = "Copy";
+    DragAndDropVisualMode[DragAndDropVisualMode["Link"] = 2] = "Link";
+    DragAndDropVisualMode[DragAndDropVisualMode["Move"] = 16] = "Move";
+    DragAndDropVisualMode[DragAndDropVisualMode["Generic"] = 4] = "Generic";
+    DragAndDropVisualMode[DragAndDropVisualMode["Rejected"] = 32] = "Rejected";
+  })(DragAndDropVisualMode = UnityEditor.DragAndDropVisualMode || (UnityEditor.DragAndDropVisualMode = {}));
+
+  var GizmoType;
+
+  (function (GizmoType) {
+    GizmoType[GizmoType["Pickable"] = 1] = "Pickable";
+    GizmoType[GizmoType["NotInSelectionHierarchy"] = 2] = "NotInSelectionHierarchy";
+    GizmoType[GizmoType["NonSelected"] = 32] = "NonSelected";
+    GizmoType[GizmoType["Selected"] = 4] = "Selected";
+    GizmoType[GizmoType["Active"] = 8] = "Active";
+    GizmoType[GizmoType["InSelectionHierarchy"] = 16] = "InSelectionHierarchy";
+    GizmoType[GizmoType["NotSelected"] = -127] = "NotSelected";
+    GizmoType[GizmoType["SelectedOrChild"] = -127] = "SelectedOrChild";
+  })(GizmoType = UnityEditor.GizmoType || (UnityEditor.GizmoType = {}));
+
+  var PlayModeStateChange;
+
+  (function (PlayModeStateChange) {
+    PlayModeStateChange[PlayModeStateChange["EnteredEditMode"] = 0] = "EnteredEditMode";
+    PlayModeStateChange[PlayModeStateChange["ExitingEditMode"] = 1] = "ExitingEditMode";
+    PlayModeStateChange[PlayModeStateChange["EnteredPlayMode"] = 2] = "EnteredPlayMode";
+    PlayModeStateChange[PlayModeStateChange["ExitingPlayMode"] = 3] = "ExitingPlayMode";
+  })(PlayModeStateChange = UnityEditor.PlayModeStateChange || (UnityEditor.PlayModeStateChange = {}));
+
+  var PauseState;
+
+  (function (PauseState) {
+    PauseState[PauseState["Paused"] = 0] = "Paused";
+    PauseState[PauseState["Unpaused"] = 1] = "Unpaused";
+  })(PauseState = UnityEditor.PauseState || (UnityEditor.PauseState = {}));
+
+  var MouseCursor;
+
+  (function (MouseCursor) {
+    MouseCursor[MouseCursor["Arrow"] = 0] = "Arrow";
+    MouseCursor[MouseCursor["Text"] = 1] = "Text";
+    MouseCursor[MouseCursor["ResizeVertical"] = 2] = "ResizeVertical";
+    MouseCursor[MouseCursor["ResizeHorizontal"] = 3] = "ResizeHorizontal";
+    MouseCursor[MouseCursor["Link"] = 4] = "Link";
+    MouseCursor[MouseCursor["SlideArrow"] = 5] = "SlideArrow";
+    MouseCursor[MouseCursor["ResizeUpRight"] = 6] = "ResizeUpRight";
+    MouseCursor[MouseCursor["ResizeUpLeft"] = 7] = "ResizeUpLeft";
+    MouseCursor[MouseCursor["MoveArrow"] = 8] = "MoveArrow";
+    MouseCursor[MouseCursor["RotateArrow"] = 9] = "RotateArrow";
+    MouseCursor[MouseCursor["ScaleArrow"] = 10] = "ScaleArrow";
+    MouseCursor[MouseCursor["ArrowPlus"] = 11] = "ArrowPlus";
+    MouseCursor[MouseCursor["ArrowMinus"] = 12] = "ArrowMinus";
+    MouseCursor[MouseCursor["Pan"] = 13] = "Pan";
+    MouseCursor[MouseCursor["Orbit"] = 14] = "Orbit";
+    MouseCursor[MouseCursor["Zoom"] = 15] = "Zoom";
+    MouseCursor[MouseCursor["FPS"] = 16] = "FPS";
+    MouseCursor[MouseCursor["CustomCursor"] = 17] = "CustomCursor";
+    MouseCursor[MouseCursor["SplitResizeUpDown"] = 18] = "SplitResizeUpDown";
+    MouseCursor[MouseCursor["SplitResizeLeftRight"] = 19] = "SplitResizeLeftRight";
+  })(MouseCursor = UnityEditor.MouseCursor || (UnityEditor.MouseCursor = {}));
+
+  var MessageType;
+
+  (function (MessageType) {
+    MessageType[MessageType["None"] = 0] = "None";
+    MessageType[MessageType["Info"] = 1] = "Info";
+    MessageType[MessageType["Warning"] = 2] = "Warning";
+    MessageType[MessageType["Error"] = 3] = "Error";
+  })(MessageType = UnityEditor.MessageType || (UnityEditor.MessageType = {}));
+
+  var EditorSkin;
+
+  (function (EditorSkin) {
+    EditorSkin[EditorSkin["Game"] = 0] = "Game";
+    EditorSkin[EditorSkin["Inspector"] = 1] = "Inspector";
+    EditorSkin[EditorSkin["Scene"] = 2] = "Scene";
+  })(EditorSkin = UnityEditor.EditorSkin || (UnityEditor.EditorSkin = {}));
+
+  var SerializationMode;
+
+  (function (SerializationMode) {
+    SerializationMode[SerializationMode["Mixed"] = 0] = "Mixed";
+    SerializationMode[SerializationMode["ForceBinary"] = 1] = "ForceBinary";
+    SerializationMode[SerializationMode["ForceText"] = 2] = "ForceText";
+  })(SerializationMode = UnityEditor.SerializationMode || (UnityEditor.SerializationMode = {}));
+
+  var EditorBehaviorMode;
+
+  (function (EditorBehaviorMode) {
+    EditorBehaviorMode[EditorBehaviorMode["Mode3D"] = 0] = "Mode3D";
+    EditorBehaviorMode[EditorBehaviorMode["Mode2D"] = 1] = "Mode2D";
+  })(EditorBehaviorMode = UnityEditor.EditorBehaviorMode || (UnityEditor.EditorBehaviorMode = {}));
+
+  var SpritePackerMode;
+
+  (function (SpritePackerMode) {
+    SpritePackerMode[SpritePackerMode["Disabled"] = 0] = "Disabled";
+    SpritePackerMode[SpritePackerMode["BuildTimeOnly"] = 1] = "BuildTimeOnly";
+    SpritePackerMode[SpritePackerMode["AlwaysOn"] = 2] = "AlwaysOn";
+    SpritePackerMode[SpritePackerMode["BuildTimeOnlyAtlas"] = 3] = "BuildTimeOnlyAtlas";
+    SpritePackerMode[SpritePackerMode["AlwaysOnAtlas"] = 4] = "AlwaysOnAtlas";
+    SpritePackerMode[SpritePackerMode["SpriteAtlasV2"] = 5] = "SpriteAtlasV2";
+  })(SpritePackerMode = UnityEditor.SpritePackerMode || (UnityEditor.SpritePackerMode = {}));
+
+  var LineEndingsMode;
+
+  (function (LineEndingsMode) {
+    LineEndingsMode[LineEndingsMode["OSNative"] = 0] = "OSNative";
+    LineEndingsMode[LineEndingsMode["Unix"] = 1] = "Unix";
+    LineEndingsMode[LineEndingsMode["Windows"] = 2] = "Windows";
+  })(LineEndingsMode = UnityEditor.LineEndingsMode || (UnityEditor.LineEndingsMode = {}));
+
+  var AssetPipelineMode;
+
+  (function (AssetPipelineMode) {
+    AssetPipelineMode[AssetPipelineMode["Version1"] = 0] = "Version1";
+    AssetPipelineMode[AssetPipelineMode["Version2"] = 1] = "Version2";
+  })(AssetPipelineMode = UnityEditor.AssetPipelineMode || (UnityEditor.AssetPipelineMode = {}));
+
+  var CacheServerMode;
+
+  (function (CacheServerMode) {
+    CacheServerMode[CacheServerMode["AsPreferences"] = 0] = "AsPreferences";
+    CacheServerMode[CacheServerMode["Enabled"] = 1] = "Enabled";
+    CacheServerMode[CacheServerMode["Disabled"] = 2] = "Disabled";
+  })(CacheServerMode = UnityEditor.CacheServerMode || (UnityEditor.CacheServerMode = {}));
+
+  var EnterPlayModeOptions;
+
+  (function (EnterPlayModeOptions) {
+    EnterPlayModeOptions[EnterPlayModeOptions["None"] = 0] = "None";
+    EnterPlayModeOptions[EnterPlayModeOptions["DisableDomainReload"] = 1] = "DisableDomainReload";
+    EnterPlayModeOptions[EnterPlayModeOptions["DisableSceneReload"] = 2] = "DisableSceneReload";
+  })(EnterPlayModeOptions = UnityEditor.EnterPlayModeOptions || (UnityEditor.EnterPlayModeOptions = {}));
+
+  var EditorSettings_NamingScheme;
+
+  (function (EditorSettings_NamingScheme) {
+    EditorSettings_NamingScheme[EditorSettings_NamingScheme["SpaceParenthesis"] = 0] = "SpaceParenthesis";
+    EditorSettings_NamingScheme[EditorSettings_NamingScheme["Dot"] = 1] = "Dot";
+    EditorSettings_NamingScheme[EditorSettings_NamingScheme["Underscore"] = 2] = "Underscore";
+  })(EditorSettings_NamingScheme = UnityEditor.EditorSettings_NamingScheme || (UnityEditor.EditorSettings_NamingScheme = {}));
+
+  var PS4BuildSubtarget;
+
+  (function (PS4BuildSubtarget) {
+    PS4BuildSubtarget[PS4BuildSubtarget["PCHosted"] = 0] = "PCHosted";
+    PS4BuildSubtarget[PS4BuildSubtarget["Package"] = 1] = "Package";
+    PS4BuildSubtarget[PS4BuildSubtarget["Iso"] = 2] = "Iso";
+  })(PS4BuildSubtarget = UnityEditor.PS4BuildSubtarget || (UnityEditor.PS4BuildSubtarget = {}));
+
+  var PS4HardwareTarget;
+
+  (function (PS4HardwareTarget) {
+    PS4HardwareTarget[PS4HardwareTarget["BaseOnly"] = 0] = "BaseOnly";
+    PS4HardwareTarget[PS4HardwareTarget["NeoAndBase"] = 1] = "NeoAndBase";
+    PS4HardwareTarget[PS4HardwareTarget["ProAndBase"] = 1] = "ProAndBase";
+  })(PS4HardwareTarget = UnityEditor.PS4HardwareTarget || (UnityEditor.PS4HardwareTarget = {}));
+
+  var XboxBuildSubtarget;
+
+  (function (XboxBuildSubtarget) {
+    XboxBuildSubtarget[XboxBuildSubtarget["Development"] = 0] = "Development";
+    XboxBuildSubtarget[XboxBuildSubtarget["Master"] = 1] = "Master";
+    XboxBuildSubtarget[XboxBuildSubtarget["Debug"] = 2] = "Debug";
+  })(XboxBuildSubtarget = UnityEditor.XboxBuildSubtarget || (UnityEditor.XboxBuildSubtarget = {}));
+
+  var XboxOneDeployMethod;
+
+  (function (XboxOneDeployMethod) {
+    XboxOneDeployMethod[XboxOneDeployMethod["Push"] = 0] = "Push";
+    XboxOneDeployMethod[XboxOneDeployMethod["RunFromPC"] = 2] = "RunFromPC";
+    XboxOneDeployMethod[XboxOneDeployMethod["Package"] = 3] = "Package";
+    XboxOneDeployMethod[XboxOneDeployMethod["PackageStreaming"] = 4] = "PackageStreaming";
+  })(XboxOneDeployMethod = UnityEditor.XboxOneDeployMethod || (UnityEditor.XboxOneDeployMethod = {}));
+
+  var XboxOneDeployDrive;
+
+  (function (XboxOneDeployDrive) {
+    XboxOneDeployDrive[XboxOneDeployDrive["Default"] = 0] = "Default";
+    XboxOneDeployDrive[XboxOneDeployDrive["Retail"] = 1] = "Retail";
+    XboxOneDeployDrive[XboxOneDeployDrive["Development"] = 2] = "Development";
+    XboxOneDeployDrive[XboxOneDeployDrive["Ext1"] = 3] = "Ext1";
+    XboxOneDeployDrive[XboxOneDeployDrive["Ext2"] = 4] = "Ext2";
+    XboxOneDeployDrive[XboxOneDeployDrive["Ext3"] = 5] = "Ext3";
+    XboxOneDeployDrive[XboxOneDeployDrive["Ext4"] = 6] = "Ext4";
+    XboxOneDeployDrive[XboxOneDeployDrive["Ext5"] = 7] = "Ext5";
+    XboxOneDeployDrive[XboxOneDeployDrive["Ext6"] = 8] = "Ext6";
+    XboxOneDeployDrive[XboxOneDeployDrive["Ext7"] = 9] = "Ext7";
+  })(XboxOneDeployDrive = UnityEditor.XboxOneDeployDrive || (UnityEditor.XboxOneDeployDrive = {}));
+
+  var AndroidBuildSubtarget;
+
+  (function (AndroidBuildSubtarget) {
+    AndroidBuildSubtarget[AndroidBuildSubtarget["Generic"] = -1] = "Generic";
+    AndroidBuildSubtarget[AndroidBuildSubtarget["DXT"] = -1] = "DXT";
+    AndroidBuildSubtarget[AndroidBuildSubtarget["PVRTC"] = -1] = "PVRTC";
+    AndroidBuildSubtarget[AndroidBuildSubtarget["ATC"] = -1] = "ATC";
+    AndroidBuildSubtarget[AndroidBuildSubtarget["ETC"] = -1] = "ETC";
+    AndroidBuildSubtarget[AndroidBuildSubtarget["ETC2"] = -1] = "ETC2";
+    AndroidBuildSubtarget[AndroidBuildSubtarget["ASTC"] = -1] = "ASTC";
+  })(AndroidBuildSubtarget = UnityEditor.AndroidBuildSubtarget || (UnityEditor.AndroidBuildSubtarget = {}));
+
+  var MobileTextureSubtarget;
+
+  (function (MobileTextureSubtarget) {
+    MobileTextureSubtarget[MobileTextureSubtarget["Generic"] = 0] = "Generic";
+    MobileTextureSubtarget[MobileTextureSubtarget["DXT"] = 1] = "DXT";
+    MobileTextureSubtarget[MobileTextureSubtarget["PVRTC"] = 2] = "PVRTC";
+    MobileTextureSubtarget[MobileTextureSubtarget["ATC"] = 3] = "ATC";
+    MobileTextureSubtarget[MobileTextureSubtarget["ETC"] = 4] = "ETC";
+    MobileTextureSubtarget[MobileTextureSubtarget["ETC2"] = 5] = "ETC2";
+    MobileTextureSubtarget[MobileTextureSubtarget["ASTC"] = 6] = "ASTC";
+  })(MobileTextureSubtarget = UnityEditor.MobileTextureSubtarget || (UnityEditor.MobileTextureSubtarget = {}));
+
+  var AndroidETC2Fallback;
+
+  (function (AndroidETC2Fallback) {
+    AndroidETC2Fallback[AndroidETC2Fallback["Quality32Bit"] = 0] = "Quality32Bit";
+    AndroidETC2Fallback[AndroidETC2Fallback["Quality16Bit"] = 1] = "Quality16Bit";
+    AndroidETC2Fallback[AndroidETC2Fallback["Quality32BitDownscaled"] = 2] = "Quality32BitDownscaled";
+  })(AndroidETC2Fallback = UnityEditor.AndroidETC2Fallback || (UnityEditor.AndroidETC2Fallback = {}));
+
+  var WSASubtarget;
+
+  (function (WSASubtarget) {
+    WSASubtarget[WSASubtarget["AnyDevice"] = 0] = "AnyDevice";
+    WSASubtarget[WSASubtarget["PC"] = 1] = "PC";
+    WSASubtarget[WSASubtarget["Mobile"] = 2] = "Mobile";
+    WSASubtarget[WSASubtarget["HoloLens"] = 3] = "HoloLens";
+  })(WSASubtarget = UnityEditor.WSASubtarget || (UnityEditor.WSASubtarget = {}));
+
+  var WSASDK;
+
+  (function (WSASDK) {
+    WSASDK[WSASDK["SDK80"] = 0] = "SDK80";
+    WSASDK[WSASDK["SDK81"] = 1] = "SDK81";
+    WSASDK[WSASDK["PhoneSDK81"] = 2] = "PhoneSDK81";
+    WSASDK[WSASDK["UniversalSDK81"] = 3] = "UniversalSDK81";
+    WSASDK[WSASDK["UWP"] = 4] = "UWP";
+  })(WSASDK = UnityEditor.WSASDK || (UnityEditor.WSASDK = {}));
+
+  var WSAUWPBuildType;
+
+  (function (WSAUWPBuildType) {
+    WSAUWPBuildType[WSAUWPBuildType["XAML"] = 0] = "XAML";
+    WSAUWPBuildType[WSAUWPBuildType["D3D"] = 1] = "D3D";
+    WSAUWPBuildType[WSAUWPBuildType["ExecutableOnly"] = 2] = "ExecutableOnly";
+  })(WSAUWPBuildType = UnityEditor.WSAUWPBuildType || (UnityEditor.WSAUWPBuildType = {}));
+
+  var WSABuildAndRunDeployTarget;
+
+  (function (WSABuildAndRunDeployTarget) {
+    WSABuildAndRunDeployTarget[WSABuildAndRunDeployTarget["LocalMachine"] = 0] = "LocalMachine";
+    WSABuildAndRunDeployTarget[WSABuildAndRunDeployTarget["WindowsPhone"] = 1] = "WindowsPhone";
+    WSABuildAndRunDeployTarget[WSABuildAndRunDeployTarget["DevicePortal"] = 2] = "DevicePortal";
+  })(WSABuildAndRunDeployTarget = UnityEditor.WSABuildAndRunDeployTarget || (UnityEditor.WSABuildAndRunDeployTarget = {}));
+
+  var WSABuildType;
+
+  (function (WSABuildType) {
+    WSABuildType[WSABuildType["Debug"] = 0] = "Debug";
+    WSABuildType[WSABuildType["Release"] = 1] = "Release";
+    WSABuildType[WSABuildType["Master"] = 2] = "Master";
+  })(WSABuildType = UnityEditor.WSABuildType || (UnityEditor.WSABuildType = {}));
+
+  var iOSBuildType;
+
+  (function (iOSBuildType) {
+    iOSBuildType[iOSBuildType["Debug"] = 0] = "Debug";
+    iOSBuildType[iOSBuildType["Release"] = 1] = "Release";
+  })(iOSBuildType = UnityEditor.iOSBuildType || (UnityEditor.iOSBuildType = {}));
+
+  var AndroidBuildSystem;
+
+  (function (AndroidBuildSystem) {
+    AndroidBuildSystem[AndroidBuildSystem["Internal"] = 0] = "Internal";
+    AndroidBuildSystem[AndroidBuildSystem["Gradle"] = 1] = "Gradle";
+    AndroidBuildSystem[AndroidBuildSystem["ADT"] = 2] = "ADT";
+    AndroidBuildSystem[AndroidBuildSystem["VisualStudio"] = 3] = "VisualStudio";
+  })(AndroidBuildSystem = UnityEditor.AndroidBuildSystem || (UnityEditor.AndroidBuildSystem = {}));
+
+  var AndroidBuildType;
+
+  (function (AndroidBuildType) {
+    AndroidBuildType[AndroidBuildType["Debug"] = 0] = "Debug";
+    AndroidBuildType[AndroidBuildType["Development"] = 1] = "Development";
+    AndroidBuildType[AndroidBuildType["Release"] = 2] = "Release";
+  })(AndroidBuildType = UnityEditor.AndroidBuildType || (UnityEditor.AndroidBuildType = {}));
+
+  var AndroidMinification;
+
+  (function (AndroidMinification) {
+    AndroidMinification[AndroidMinification["None"] = 0] = "None";
+    AndroidMinification[AndroidMinification["Proguard"] = 1] = "Proguard";
+    AndroidMinification[AndroidMinification["Gradle"] = 2] = "Gradle";
+  })(AndroidMinification = UnityEditor.AndroidMinification || (UnityEditor.AndroidMinification = {}));
+
+  var SemanticMergeMode;
+
+  (function (SemanticMergeMode) {
+    SemanticMergeMode[SemanticMergeMode["Off"] = 0] = "Off";
+    SemanticMergeMode[SemanticMergeMode["Premerge"] = 1] = "Premerge";
+    SemanticMergeMode[SemanticMergeMode["Ask"] = 2] = "Ask";
+  })(SemanticMergeMode = UnityEditor.SemanticMergeMode || (UnityEditor.SemanticMergeMode = {}));
+
+  var EditorSelectedRenderState;
+
+  (function (EditorSelectedRenderState) {
+    EditorSelectedRenderState[EditorSelectedRenderState["Hidden"] = 0] = "Hidden";
+    EditorSelectedRenderState[EditorSelectedRenderState["Wireframe"] = 1] = "Wireframe";
+    EditorSelectedRenderState[EditorSelectedRenderState["Highlight"] = 2] = "Highlight";
+  })(EditorSelectedRenderState = UnityEditor.EditorSelectedRenderState || (UnityEditor.EditorSelectedRenderState = {}));
+
+  var InteractionMode;
+
+  (function (InteractionMode) {
+    InteractionMode[InteractionMode["AutomatedAction"] = 0] = "AutomatedAction";
+    InteractionMode[InteractionMode["UserAction"] = 1] = "UserAction";
+  })(InteractionMode = UnityEditor.InteractionMode || (UnityEditor.InteractionMode = {}));
+
+  var TextureCompressionQuality;
+
+  (function (TextureCompressionQuality) {
+    TextureCompressionQuality[TextureCompressionQuality["Fast"] = 0] = "Fast";
+    TextureCompressionQuality[TextureCompressionQuality["Normal"] = 50] = "Normal";
+    TextureCompressionQuality[TextureCompressionQuality["Best"] = 100] = "Best";
+  })(TextureCompressionQuality = UnityEditor.TextureCompressionQuality || (UnityEditor.TextureCompressionQuality = {}));
+
+  var DialogOptOutDecisionType;
+
+  (function (DialogOptOutDecisionType) {
+    DialogOptOutDecisionType[DialogOptOutDecisionType["ForThisMachine"] = 0] = "ForThisMachine";
+    DialogOptOutDecisionType[DialogOptOutDecisionType["ForThisSession"] = 1] = "ForThisSession";
+  })(DialogOptOutDecisionType = UnityEditor.DialogOptOutDecisionType || (UnityEditor.DialogOptOutDecisionType = {}));
+
+  var ExportPackageOptions;
+
+  (function (ExportPackageOptions) {
+    ExportPackageOptions[ExportPackageOptions["Default"] = 0] = "Default";
+    ExportPackageOptions[ExportPackageOptions["Interactive"] = 1] = "Interactive";
+    ExportPackageOptions[ExportPackageOptions["Recurse"] = 2] = "Recurse";
+    ExportPackageOptions[ExportPackageOptions["IncludeDependencies"] = 4] = "IncludeDependencies";
+    ExportPackageOptions[ExportPackageOptions["IncludeLibraryAssets"] = 8] = "IncludeLibraryAssets";
+  })(ExportPackageOptions = UnityEditor.ExportPackageOptions || (UnityEditor.ExportPackageOptions = {}));
+
+  var InspectorMode;
+
+  (function (InspectorMode) {
+    InspectorMode[InspectorMode["Normal"] = 0] = "Normal";
+    InspectorMode[InspectorMode["Debug"] = 1] = "Debug";
+    InspectorMode[InspectorMode["DebugInternal"] = 2] = "DebugInternal";
+  })(InspectorMode = UnityEditor.InspectorMode || (UnityEditor.InspectorMode = {}));
+
+  var HierarchyType;
+
+  (function (HierarchyType) {
+    HierarchyType[HierarchyType["Assets"] = 1] = "Assets";
+    HierarchyType[HierarchyType["GameObjects"] = 2] = "GameObjects";
+  })(HierarchyType = UnityEditor.HierarchyType || (UnityEditor.HierarchyType = {}));
+
+  var IconDrawStyle;
+
+  (function (IconDrawStyle) {
+    IconDrawStyle[IconDrawStyle["NonTexture"] = 0] = "NonTexture";
+    IconDrawStyle[IconDrawStyle["Texture"] = 1] = "Texture";
+  })(IconDrawStyle = UnityEditor.IconDrawStyle || (UnityEditor.IconDrawStyle = {}));
+
+  var MaterialProperty_PropType;
+
+  (function (MaterialProperty_PropType) {
+    MaterialProperty_PropType[MaterialProperty_PropType["Color"] = 0] = "Color";
+    MaterialProperty_PropType[MaterialProperty_PropType["Vector"] = 1] = "Vector";
+    MaterialProperty_PropType[MaterialProperty_PropType["Float"] = 2] = "Float";
+    MaterialProperty_PropType[MaterialProperty_PropType["Range"] = 3] = "Range";
+    MaterialProperty_PropType[MaterialProperty_PropType["Texture"] = 4] = "Texture";
+  })(MaterialProperty_PropType = UnityEditor.MaterialProperty_PropType || (UnityEditor.MaterialProperty_PropType = {}));
+
+  var MaterialProperty_PropFlags;
+
+  (function (MaterialProperty_PropFlags) {
+    MaterialProperty_PropFlags[MaterialProperty_PropFlags["None"] = 0] = "None";
+    MaterialProperty_PropFlags[MaterialProperty_PropFlags["HideInInspector"] = 1] = "HideInInspector";
+    MaterialProperty_PropFlags[MaterialProperty_PropFlags["PerRendererData"] = 2] = "PerRendererData";
+    MaterialProperty_PropFlags[MaterialProperty_PropFlags["NoScaleOffset"] = 4] = "NoScaleOffset";
+    MaterialProperty_PropFlags[MaterialProperty_PropFlags["Normal"] = 8] = "Normal";
+    MaterialProperty_PropFlags[MaterialProperty_PropFlags["HDR"] = 16] = "HDR";
+    MaterialProperty_PropFlags[MaterialProperty_PropFlags["Gamma"] = 32] = "Gamma";
+    MaterialProperty_PropFlags[MaterialProperty_PropFlags["NonModifiableTextureData"] = 64] = "NonModifiableTextureData";
+  })(MaterialProperty_PropFlags = UnityEditor.MaterialProperty_PropFlags || (UnityEditor.MaterialProperty_PropFlags = {}));
+
+  var MaterialProperty_TexDim;
+
+  (function (MaterialProperty_TexDim) {
+    MaterialProperty_TexDim[MaterialProperty_TexDim["Unknown"] = -1] = "Unknown";
+    MaterialProperty_TexDim[MaterialProperty_TexDim["None"] = 0] = "None";
+    MaterialProperty_TexDim[MaterialProperty_TexDim["Tex2D"] = 2] = "Tex2D";
+    MaterialProperty_TexDim[MaterialProperty_TexDim["Tex3D"] = 3] = "Tex3D";
+    MaterialProperty_TexDim[MaterialProperty_TexDim["Cube"] = 4] = "Cube";
+    MaterialProperty_TexDim[MaterialProperty_TexDim["Any"] = 6] = "Any";
+  })(MaterialProperty_TexDim = UnityEditor.MaterialProperty_TexDim || (UnityEditor.MaterialProperty_TexDim = {}));
+
+  var ResolutionDialogSetting;
+
+  (function (ResolutionDialogSetting) {
+    ResolutionDialogSetting[ResolutionDialogSetting["Disabled"] = 0] = "Disabled";
+    ResolutionDialogSetting[ResolutionDialogSetting["Enabled"] = 1] = "Enabled";
+    ResolutionDialogSetting[ResolutionDialogSetting["HiddenByDefault"] = 2] = "HiddenByDefault";
+  })(ResolutionDialogSetting = UnityEditor.ResolutionDialogSetting || (UnityEditor.ResolutionDialogSetting = {}));
+
+  var ScriptingImplementation;
+
+  (function (ScriptingImplementation) {
+    ScriptingImplementation[ScriptingImplementation["Mono2x"] = 0] = "Mono2x";
+    ScriptingImplementation[ScriptingImplementation["IL2CPP"] = 1] = "IL2CPP";
+    ScriptingImplementation[ScriptingImplementation["WinRTDotNET"] = 2] = "WinRTDotNET";
+  })(ScriptingImplementation = UnityEditor.ScriptingImplementation || (UnityEditor.ScriptingImplementation = {}));
+
+  var Il2CppCompilerConfiguration;
+
+  (function (Il2CppCompilerConfiguration) {
+    Il2CppCompilerConfiguration[Il2CppCompilerConfiguration["Debug"] = 0] = "Debug";
+    Il2CppCompilerConfiguration[Il2CppCompilerConfiguration["Release"] = 1] = "Release";
+    Il2CppCompilerConfiguration[Il2CppCompilerConfiguration["Master"] = 2] = "Master";
+  })(Il2CppCompilerConfiguration = UnityEditor.Il2CppCompilerConfiguration || (UnityEditor.Il2CppCompilerConfiguration = {}));
+
+  var AspectRatio;
+
+  (function (AspectRatio) {
+    AspectRatio[AspectRatio["AspectOthers"] = 0] = "AspectOthers";
+    AspectRatio[AspectRatio["Aspect4by3"] = 1] = "Aspect4by3";
+    AspectRatio[AspectRatio["Aspect5by4"] = 2] = "Aspect5by4";
+    AspectRatio[AspectRatio["Aspect16by10"] = 3] = "Aspect16by10";
+    AspectRatio[AspectRatio["Aspect16by9"] = 4] = "Aspect16by9";
+  })(AspectRatio = UnityEditor.AspectRatio || (UnityEditor.AspectRatio = {}));
+
+  var MacFullscreenMode;
+
+  (function (MacFullscreenMode) {
+    MacFullscreenMode[MacFullscreenMode["CaptureDisplay"] = 0] = "CaptureDisplay";
+    MacFullscreenMode[MacFullscreenMode["FullscreenWindow"] = 1] = "FullscreenWindow";
+    MacFullscreenMode[MacFullscreenMode["FullscreenWindowWithDockAndMenuBar"] = 2] = "FullscreenWindowWithDockAndMenuBar";
+  })(MacFullscreenMode = UnityEditor.MacFullscreenMode || (UnityEditor.MacFullscreenMode = {}));
+
+  var D3D9FullscreenMode;
+
+  (function (D3D9FullscreenMode) {
+    D3D9FullscreenMode[D3D9FullscreenMode["ExclusiveMode"] = 0] = "ExclusiveMode";
+    D3D9FullscreenMode[D3D9FullscreenMode["FullscreenWindow"] = 1] = "FullscreenWindow";
+  })(D3D9FullscreenMode = UnityEditor.D3D9FullscreenMode || (UnityEditor.D3D9FullscreenMode = {}));
+
+  var D3D11FullscreenMode;
+
+  (function (D3D11FullscreenMode) {
+    D3D11FullscreenMode[D3D11FullscreenMode["ExclusiveMode"] = 0] = "ExclusiveMode";
+    D3D11FullscreenMode[D3D11FullscreenMode["FullscreenWindow"] = 1] = "FullscreenWindow";
+  })(D3D11FullscreenMode = UnityEditor.D3D11FullscreenMode || (UnityEditor.D3D11FullscreenMode = {}));
+
+  var StereoRenderingPath;
+
+  (function (StereoRenderingPath) {
+    StereoRenderingPath[StereoRenderingPath["MultiPass"] = 0] = "MultiPass";
+    StereoRenderingPath[StereoRenderingPath["SinglePass"] = 1] = "SinglePass";
+    StereoRenderingPath[StereoRenderingPath["Instancing"] = 2] = "Instancing";
+  })(StereoRenderingPath = UnityEditor.StereoRenderingPath || (UnityEditor.StereoRenderingPath = {}));
+
+  var StrippingLevel;
+
+  (function (StrippingLevel) {
+    StrippingLevel[StrippingLevel["Disabled"] = 0] = "Disabled";
+    StrippingLevel[StrippingLevel["StripAssemblies"] = 1] = "StripAssemblies";
+    StrippingLevel[StrippingLevel["StripByteCode"] = 2] = "StripByteCode";
+    StrippingLevel[StrippingLevel["UseMicroMSCorlib"] = 3] = "UseMicroMSCorlib";
+  })(StrippingLevel = UnityEditor.StrippingLevel || (UnityEditor.StrippingLevel = {}));
+
+  var ScriptCallOptimizationLevel;
+
+  (function (ScriptCallOptimizationLevel) {
+    ScriptCallOptimizationLevel[ScriptCallOptimizationLevel["SlowAndSafe"] = 0] = "SlowAndSafe";
+    ScriptCallOptimizationLevel[ScriptCallOptimizationLevel["FastButNoExceptions"] = 1] = "FastButNoExceptions";
+  })(ScriptCallOptimizationLevel = UnityEditor.ScriptCallOptimizationLevel || (UnityEditor.ScriptCallOptimizationLevel = {}));
+
+  var UIOrientation;
+
+  (function (UIOrientation) {
+    UIOrientation[UIOrientation["Portrait"] = 0] = "Portrait";
+    UIOrientation[UIOrientation["PortraitUpsideDown"] = 1] = "PortraitUpsideDown";
+    UIOrientation[UIOrientation["LandscapeRight"] = 2] = "LandscapeRight";
+    UIOrientation[UIOrientation["LandscapeLeft"] = 3] = "LandscapeLeft";
+    UIOrientation[UIOrientation["AutoRotation"] = 4] = "AutoRotation";
+  })(UIOrientation = UnityEditor.UIOrientation || (UnityEditor.UIOrientation = {}));
+
+  var ScriptingRuntimeVersion;
+
+  (function (ScriptingRuntimeVersion) {
+    ScriptingRuntimeVersion[ScriptingRuntimeVersion["Legacy"] = 0] = "Legacy";
+    ScriptingRuntimeVersion[ScriptingRuntimeVersion["Latest"] = 1] = "Latest";
+  })(ScriptingRuntimeVersion = UnityEditor.ScriptingRuntimeVersion || (UnityEditor.ScriptingRuntimeVersion = {}));
+
+  var ApiCompatibilityLevel;
+
+  (function (ApiCompatibilityLevel) {
+    ApiCompatibilityLevel[ApiCompatibilityLevel["NET_2_0"] = 1] = "NET_2_0";
+    ApiCompatibilityLevel[ApiCompatibilityLevel["NET_2_0_Subset"] = 2] = "NET_2_0_Subset";
+    ApiCompatibilityLevel[ApiCompatibilityLevel["NET_4_6"] = 3] = "NET_4_6";
+    ApiCompatibilityLevel[ApiCompatibilityLevel["NET_Web"] = 4] = "NET_Web";
+    ApiCompatibilityLevel[ApiCompatibilityLevel["NET_Micro"] = 5] = "NET_Micro";
+    ApiCompatibilityLevel[ApiCompatibilityLevel["NET_Standard_2_0"] = 6] = "NET_Standard_2_0";
+  })(ApiCompatibilityLevel = UnityEditor.ApiCompatibilityLevel || (UnityEditor.ApiCompatibilityLevel = {}));
+
+  var ManagedStrippingLevel;
+
+  (function (ManagedStrippingLevel) {
+    ManagedStrippingLevel[ManagedStrippingLevel["Disabled"] = 0] = "Disabled";
+    ManagedStrippingLevel[ManagedStrippingLevel["Low"] = 1] = "Low";
+    ManagedStrippingLevel[ManagedStrippingLevel["Medium"] = 2] = "Medium";
+    ManagedStrippingLevel[ManagedStrippingLevel["High"] = 3] = "High";
+  })(ManagedStrippingLevel = UnityEditor.ManagedStrippingLevel || (UnityEditor.ManagedStrippingLevel = {}));
+
+  var ActionOnDotNetUnhandledException;
+
+  (function (ActionOnDotNetUnhandledException) {
+    ActionOnDotNetUnhandledException[ActionOnDotNetUnhandledException["SilentExit"] = 0] = "SilentExit";
+    ActionOnDotNetUnhandledException[ActionOnDotNetUnhandledException["Crash"] = 1] = "Crash";
+  })(ActionOnDotNetUnhandledException = UnityEditor.ActionOnDotNetUnhandledException || (UnityEditor.ActionOnDotNetUnhandledException = {}));
+
+  var SplashScreenStyle;
+
+  (function (SplashScreenStyle) {
+    SplashScreenStyle[SplashScreenStyle["Light"] = 0] = "Light";
+    SplashScreenStyle[SplashScreenStyle["Dark"] = 1] = "Dark";
+  })(SplashScreenStyle = UnityEditor.SplashScreenStyle || (UnityEditor.SplashScreenStyle = {}));
+
+  var GraphicsJobMode;
+
+  (function (GraphicsJobMode) {
+    GraphicsJobMode[GraphicsJobMode["Native"] = 0] = "Native";
+    GraphicsJobMode[GraphicsJobMode["Legacy"] = 1] = "Legacy";
+  })(GraphicsJobMode = UnityEditor.GraphicsJobMode || (UnityEditor.GraphicsJobMode = {}));
+
+  var IconKind;
+
+  (function (IconKind) {
+    IconKind[IconKind["Any"] = -1] = "Any";
+    IconKind[IconKind["Application"] = 0] = "Application";
+    IconKind[IconKind["Settings"] = 1] = "Settings";
+    IconKind[IconKind["Notification"] = 2] = "Notification";
+    IconKind[IconKind["Spotlight"] = 3] = "Spotlight";
+    IconKind[IconKind["Store"] = 4] = "Store";
+  })(IconKind = UnityEditor.IconKind || (UnityEditor.IconKind = {}));
+
+  var ShaderPrecisionModel;
+
+  (function (ShaderPrecisionModel) {
+    ShaderPrecisionModel[ShaderPrecisionModel["PlatformDefault"] = 0] = "PlatformDefault";
+    ShaderPrecisionModel[ShaderPrecisionModel["Unified"] = 1] = "Unified";
+  })(ShaderPrecisionModel = UnityEditor.ShaderPrecisionModel || (UnityEditor.ShaderPrecisionModel = {}));
+
+  var NormalMapEncoding;
+
+  (function (NormalMapEncoding) {
+    NormalMapEncoding[NormalMapEncoding["XYZ"] = 0] = "XYZ";
+    NormalMapEncoding[NormalMapEncoding["DXT5nm"] = 1] = "DXT5nm";
+  })(NormalMapEncoding = UnityEditor.NormalMapEncoding || (UnityEditor.NormalMapEncoding = {}));
+
+  var PlayerSettings_PS4_PS4AppCategory;
+
+  (function (PlayerSettings_PS4_PS4AppCategory) {
+    PlayerSettings_PS4_PS4AppCategory[PlayerSettings_PS4_PS4AppCategory["Application"] = 0] = "Application";
+    PlayerSettings_PS4_PS4AppCategory[PlayerSettings_PS4_PS4AppCategory["Patch"] = 1] = "Patch";
+    PlayerSettings_PS4_PS4AppCategory[PlayerSettings_PS4_PS4AppCategory["Remaster"] = 2] = "Remaster";
+  })(PlayerSettings_PS4_PS4AppCategory = UnityEditor.PlayerSettings_PS4_PS4AppCategory || (UnityEditor.PlayerSettings_PS4_PS4AppCategory = {}));
+
+  var PlayerSettings_PS4_PS4RemotePlayKeyAssignment;
+
+  (function (PlayerSettings_PS4_PS4RemotePlayKeyAssignment) {
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["None"] = -1] = "None";
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["PatternA"] = 0] = "PatternA";
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["PatternB"] = 1] = "PatternB";
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["PatternC"] = 2] = "PatternC";
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["PatternD"] = 3] = "PatternD";
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["PatternE"] = 4] = "PatternE";
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["PatternF"] = 5] = "PatternF";
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["PatternG"] = 6] = "PatternG";
+    PlayerSettings_PS4_PS4RemotePlayKeyAssignment[PlayerSettings_PS4_PS4RemotePlayKeyAssignment["PatternH"] = 7] = "PatternH";
+  })(PlayerSettings_PS4_PS4RemotePlayKeyAssignment = UnityEditor.PlayerSettings_PS4_PS4RemotePlayKeyAssignment || (UnityEditor.PlayerSettings_PS4_PS4RemotePlayKeyAssignment = {}));
+
+  var PlayerSettings_PS4_PS4EnterButtonAssignment;
+
+  (function (PlayerSettings_PS4_PS4EnterButtonAssignment) {
+    PlayerSettings_PS4_PS4EnterButtonAssignment[PlayerSettings_PS4_PS4EnterButtonAssignment["CircleButton"] = 0] = "CircleButton";
+    PlayerSettings_PS4_PS4EnterButtonAssignment[PlayerSettings_PS4_PS4EnterButtonAssignment["CrossButton"] = 1] = "CrossButton";
+    PlayerSettings_PS4_PS4EnterButtonAssignment[PlayerSettings_PS4_PS4EnterButtonAssignment["SystemDefined"] = 2] = "SystemDefined";
+  })(PlayerSettings_PS4_PS4EnterButtonAssignment = UnityEditor.PlayerSettings_PS4_PS4EnterButtonAssignment || (UnityEditor.PlayerSettings_PS4_PS4EnterButtonAssignment = {}));
+
+  var PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings;
+
+  (function (PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings) {
+    PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings[PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings["PerUser"] = 0] = "PerUser";
+    PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings[PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings["ForceDefault"] = 1] = "ForceDefault";
+    PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings[PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings["DynamicModeAtRuntime"] = 2] = "DynamicModeAtRuntime";
+  })(PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings = UnityEditor.PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings || (UnityEditor.PlayerSettings_PS4_PlayStationVREyeToEyeDistanceSettings = {}));
+
+  var PlayerSettings_SplashScreen_AnimationMode;
+
+  (function (PlayerSettings_SplashScreen_AnimationMode) {
+    PlayerSettings_SplashScreen_AnimationMode[PlayerSettings_SplashScreen_AnimationMode["Static"] = 0] = "Static";
+    PlayerSettings_SplashScreen_AnimationMode[PlayerSettings_SplashScreen_AnimationMode["Dolly"] = 1] = "Dolly";
+    PlayerSettings_SplashScreen_AnimationMode[PlayerSettings_SplashScreen_AnimationMode["Custom"] = 2] = "Custom";
+  })(PlayerSettings_SplashScreen_AnimationMode = UnityEditor.PlayerSettings_SplashScreen_AnimationMode || (UnityEditor.PlayerSettings_SplashScreen_AnimationMode = {}));
+
+  var PlayerSettings_SplashScreen_DrawMode;
+
+  (function (PlayerSettings_SplashScreen_DrawMode) {
+    PlayerSettings_SplashScreen_DrawMode[PlayerSettings_SplashScreen_DrawMode["UnityLogoBelow"] = 0] = "UnityLogoBelow";
+    PlayerSettings_SplashScreen_DrawMode[PlayerSettings_SplashScreen_DrawMode["AllSequential"] = 1] = "AllSequential";
+  })(PlayerSettings_SplashScreen_DrawMode = UnityEditor.PlayerSettings_SplashScreen_DrawMode || (UnityEditor.PlayerSettings_SplashScreen_DrawMode = {}));
+
+  var PlayerSettings_SplashScreen_UnityLogoStyle;
+
+  (function (PlayerSettings_SplashScreen_UnityLogoStyle) {
+    PlayerSettings_SplashScreen_UnityLogoStyle[PlayerSettings_SplashScreen_UnityLogoStyle["DarkOnLight"] = 0] = "DarkOnLight";
+    PlayerSettings_SplashScreen_UnityLogoStyle[PlayerSettings_SplashScreen_UnityLogoStyle["LightOnDark"] = 1] = "LightOnDark";
+  })(PlayerSettings_SplashScreen_UnityLogoStyle = UnityEditor.PlayerSettings_SplashScreen_UnityLogoStyle || (UnityEditor.PlayerSettings_SplashScreen_UnityLogoStyle = {}));
+
+  var PlayerSettings_Switch_ScreenResolutionBehavior;
+
+  (function (PlayerSettings_Switch_ScreenResolutionBehavior) {
+    PlayerSettings_Switch_ScreenResolutionBehavior[PlayerSettings_Switch_ScreenResolutionBehavior["Manual"] = 0] = "Manual";
+    PlayerSettings_Switch_ScreenResolutionBehavior[PlayerSettings_Switch_ScreenResolutionBehavior["OperationMode"] = 1] = "OperationMode";
+    PlayerSettings_Switch_ScreenResolutionBehavior[PlayerSettings_Switch_ScreenResolutionBehavior["PerformanceMode"] = 2] = "PerformanceMode";
+    PlayerSettings_Switch_ScreenResolutionBehavior[PlayerSettings_Switch_ScreenResolutionBehavior["Both"] = 3] = "Both";
+  })(PlayerSettings_Switch_ScreenResolutionBehavior = UnityEditor.PlayerSettings_Switch_ScreenResolutionBehavior || (UnityEditor.PlayerSettings_Switch_ScreenResolutionBehavior = {}));
+
+  var PlayerSettings_Switch_Languages;
+
+  (function (PlayerSettings_Switch_Languages) {
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["AmericanEnglish"] = 0] = "AmericanEnglish";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["BritishEnglish"] = 1] = "BritishEnglish";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["Japanese"] = 2] = "Japanese";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["French"] = 3] = "French";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["German"] = 4] = "German";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["LatinAmericanSpanish"] = 5] = "LatinAmericanSpanish";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["Spanish"] = 6] = "Spanish";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["Italian"] = 7] = "Italian";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["Dutch"] = 8] = "Dutch";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["CanadianFrench"] = 9] = "CanadianFrench";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["Portuguese"] = 10] = "Portuguese";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["Russian"] = 11] = "Russian";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["SimplifiedChinese"] = 12] = "SimplifiedChinese";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["TraditionalChinese"] = 13] = "TraditionalChinese";
+    PlayerSettings_Switch_Languages[PlayerSettings_Switch_Languages["Korean"] = 14] = "Korean";
+  })(PlayerSettings_Switch_Languages = UnityEditor.PlayerSettings_Switch_Languages || (UnityEditor.PlayerSettings_Switch_Languages = {}));
+
+  var PlayerSettings_Switch_StartupUserAccount;
+
+  (function (PlayerSettings_Switch_StartupUserAccount) {
+    PlayerSettings_Switch_StartupUserAccount[PlayerSettings_Switch_StartupUserAccount["None"] = 0] = "None";
+    PlayerSettings_Switch_StartupUserAccount[PlayerSettings_Switch_StartupUserAccount["Required"] = 1] = "Required";
+    PlayerSettings_Switch_StartupUserAccount[PlayerSettings_Switch_StartupUserAccount["RequiredWithNetworkServiceAccountAvailable"] = 2] = "RequiredWithNetworkServiceAccountAvailable";
+  })(PlayerSettings_Switch_StartupUserAccount = UnityEditor.PlayerSettings_Switch_StartupUserAccount || (UnityEditor.PlayerSettings_Switch_StartupUserAccount = {}));
+
+  var PlayerSettings_Switch_TouchScreenUsage;
+
+  (function (PlayerSettings_Switch_TouchScreenUsage) {
+    PlayerSettings_Switch_TouchScreenUsage[PlayerSettings_Switch_TouchScreenUsage["Supported"] = 0] = "Supported";
+    PlayerSettings_Switch_TouchScreenUsage[PlayerSettings_Switch_TouchScreenUsage["Required"] = 1] = "Required";
+    PlayerSettings_Switch_TouchScreenUsage[PlayerSettings_Switch_TouchScreenUsage["None"] = 2] = "None";
+  })(PlayerSettings_Switch_TouchScreenUsage = UnityEditor.PlayerSettings_Switch_TouchScreenUsage || (UnityEditor.PlayerSettings_Switch_TouchScreenUsage = {}));
+
+  var PlayerSettings_Switch_LogoHandling;
+
+  (function (PlayerSettings_Switch_LogoHandling) {
+    PlayerSettings_Switch_LogoHandling[PlayerSettings_Switch_LogoHandling["Auto"] = 0] = "Auto";
+    PlayerSettings_Switch_LogoHandling[PlayerSettings_Switch_LogoHandling["Manual"] = 1] = "Manual";
+  })(PlayerSettings_Switch_LogoHandling = UnityEditor.PlayerSettings_Switch_LogoHandling || (UnityEditor.PlayerSettings_Switch_LogoHandling = {}));
+
+  var PlayerSettings_Switch_LogoType;
+
+  (function (PlayerSettings_Switch_LogoType) {
+    PlayerSettings_Switch_LogoType[PlayerSettings_Switch_LogoType["LicensedByNintendo"] = 0] = "LicensedByNintendo";
+    PlayerSettings_Switch_LogoType[PlayerSettings_Switch_LogoType["DistributedByNintendo"] = 1] = "DistributedByNintendo";
+    PlayerSettings_Switch_LogoType[PlayerSettings_Switch_LogoType["Nintendo"] = 2] = "Nintendo";
+  })(PlayerSettings_Switch_LogoType = UnityEditor.PlayerSettings_Switch_LogoType || (UnityEditor.PlayerSettings_Switch_LogoType = {}));
+
+  var PlayerSettings_Switch_ApplicationAttribute;
+
+  (function (PlayerSettings_Switch_ApplicationAttribute) {
+    PlayerSettings_Switch_ApplicationAttribute[PlayerSettings_Switch_ApplicationAttribute["None"] = 0] = "None";
+    PlayerSettings_Switch_ApplicationAttribute[PlayerSettings_Switch_ApplicationAttribute["Demo"] = 1] = "Demo";
+  })(PlayerSettings_Switch_ApplicationAttribute = UnityEditor.PlayerSettings_Switch_ApplicationAttribute || (UnityEditor.PlayerSettings_Switch_ApplicationAttribute = {}));
+
+  var PlayerSettings_Switch_RatingCategories;
+
+  (function (PlayerSettings_Switch_RatingCategories) {
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["CERO"] = 0] = "CERO";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["GRACGCRB"] = 1] = "GRACGCRB";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["GSRMR"] = 2] = "GSRMR";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["ESRB"] = 3] = "ESRB";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["ClassInd"] = 4] = "ClassInd";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["USK"] = 5] = "USK";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["PEGI"] = 6] = "PEGI";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["PEGIPortugal"] = 7] = "PEGIPortugal";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["PEGIBBFC"] = 8] = "PEGIBBFC";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["Russian"] = 9] = "Russian";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["ACB"] = 10] = "ACB";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["OFLC"] = 11] = "OFLC";
+    PlayerSettings_Switch_RatingCategories[PlayerSettings_Switch_RatingCategories["IARCGeneric"] = 12] = "IARCGeneric";
+  })(PlayerSettings_Switch_RatingCategories = UnityEditor.PlayerSettings_Switch_RatingCategories || (UnityEditor.PlayerSettings_Switch_RatingCategories = {}));
+
+  var PlayerSettings_Switch_SupportedNpadStyle;
+
+  (function (PlayerSettings_Switch_SupportedNpadStyle) {
+    PlayerSettings_Switch_SupportedNpadStyle[PlayerSettings_Switch_SupportedNpadStyle["FullKey"] = 2] = "FullKey";
+    PlayerSettings_Switch_SupportedNpadStyle[PlayerSettings_Switch_SupportedNpadStyle["Handheld"] = 4] = "Handheld";
+    PlayerSettings_Switch_SupportedNpadStyle[PlayerSettings_Switch_SupportedNpadStyle["JoyDual"] = 16] = "JoyDual";
+    PlayerSettings_Switch_SupportedNpadStyle[PlayerSettings_Switch_SupportedNpadStyle["JoyLeft"] = 256] = "JoyLeft";
+    PlayerSettings_Switch_SupportedNpadStyle[PlayerSettings_Switch_SupportedNpadStyle["JoyRight"] = 65536] = "JoyRight";
+  })(PlayerSettings_Switch_SupportedNpadStyle = UnityEditor.PlayerSettings_Switch_SupportedNpadStyle || (UnityEditor.PlayerSettings_Switch_SupportedNpadStyle = {}));
+
+  var PlayerSettings_WSAApplicationShowName;
+
+  (function (PlayerSettings_WSAApplicationShowName) {
+    PlayerSettings_WSAApplicationShowName[PlayerSettings_WSAApplicationShowName["NotSet"] = 0] = "NotSet";
+    PlayerSettings_WSAApplicationShowName[PlayerSettings_WSAApplicationShowName["AllLogos"] = 1] = "AllLogos";
+    PlayerSettings_WSAApplicationShowName[PlayerSettings_WSAApplicationShowName["NoLogos"] = 2] = "NoLogos";
+    PlayerSettings_WSAApplicationShowName[PlayerSettings_WSAApplicationShowName["StandardLogoOnly"] = 3] = "StandardLogoOnly";
+    PlayerSettings_WSAApplicationShowName[PlayerSettings_WSAApplicationShowName["WideLogoOnly"] = 4] = "WideLogoOnly";
+  })(PlayerSettings_WSAApplicationShowName = UnityEditor.PlayerSettings_WSAApplicationShowName || (UnityEditor.PlayerSettings_WSAApplicationShowName = {}));
+
+  var PlayerSettings_WSADefaultTileSize;
+
+  (function (PlayerSettings_WSADefaultTileSize) {
+    PlayerSettings_WSADefaultTileSize[PlayerSettings_WSADefaultTileSize["NotSet"] = 0] = "NotSet";
+    PlayerSettings_WSADefaultTileSize[PlayerSettings_WSADefaultTileSize["Medium"] = 1] = "Medium";
+    PlayerSettings_WSADefaultTileSize[PlayerSettings_WSADefaultTileSize["Wide"] = 2] = "Wide";
+  })(PlayerSettings_WSADefaultTileSize = UnityEditor.PlayerSettings_WSADefaultTileSize || (UnityEditor.PlayerSettings_WSADefaultTileSize = {}));
+
+  var PlayerSettings_WSAApplicationForegroundText;
+
+  (function (PlayerSettings_WSAApplicationForegroundText) {
+    PlayerSettings_WSAApplicationForegroundText[PlayerSettings_WSAApplicationForegroundText["Light"] = 1] = "Light";
+    PlayerSettings_WSAApplicationForegroundText[PlayerSettings_WSAApplicationForegroundText["Dark"] = 2] = "Dark";
+  })(PlayerSettings_WSAApplicationForegroundText = UnityEditor.PlayerSettings_WSAApplicationForegroundText || (UnityEditor.PlayerSettings_WSAApplicationForegroundText = {}));
+
+  var PlayerSettings_WSACapability;
+
+  (function (PlayerSettings_WSACapability) {
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["EnterpriseAuthentication"] = 0] = "EnterpriseAuthentication";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["InternetClient"] = 1] = "InternetClient";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["InternetClientServer"] = 2] = "InternetClientServer";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["MusicLibrary"] = 3] = "MusicLibrary";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["PicturesLibrary"] = 4] = "PicturesLibrary";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["PrivateNetworkClientServer"] = 5] = "PrivateNetworkClientServer";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["RemovableStorage"] = 6] = "RemovableStorage";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["SharedUserCertificates"] = 7] = "SharedUserCertificates";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["VideosLibrary"] = 8] = "VideosLibrary";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["WebCam"] = 9] = "WebCam";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["Proximity"] = 10] = "Proximity";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["Microphone"] = 11] = "Microphone";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["Location"] = 12] = "Location";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["HumanInterfaceDevice"] = 13] = "HumanInterfaceDevice";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["AllJoyn"] = 14] = "AllJoyn";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["BlockedChatMessages"] = 15] = "BlockedChatMessages";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["Chat"] = 16] = "Chat";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["CodeGeneration"] = 17] = "CodeGeneration";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["Objects3D"] = 18] = "Objects3D";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["PhoneCall"] = 19] = "PhoneCall";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["UserAccountInformation"] = 20] = "UserAccountInformation";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["VoipCall"] = 21] = "VoipCall";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["Bluetooth"] = 22] = "Bluetooth";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["SpatialPerception"] = 23] = "SpatialPerception";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["InputInjectionBrokered"] = 24] = "InputInjectionBrokered";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["Appointments"] = 25] = "Appointments";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["BackgroundMediaPlayback"] = 26] = "BackgroundMediaPlayback";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["Contacts"] = 27] = "Contacts";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["LowLevelDevices"] = 28] = "LowLevelDevices";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["OfflineMapsManagement"] = 29] = "OfflineMapsManagement";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["PhoneCallHistoryPublic"] = 30] = "PhoneCallHistoryPublic";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["PointOfService"] = 31] = "PointOfService";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["RecordedCallsFolder"] = 32] = "RecordedCallsFolder";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["RemoteSystem"] = 33] = "RemoteSystem";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["SystemManagement"] = 34] = "SystemManagement";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["UserDataTasks"] = 35] = "UserDataTasks";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["UserNotificationListener"] = 36] = "UserNotificationListener";
+    PlayerSettings_WSACapability[PlayerSettings_WSACapability["GazeInput"] = 37] = "GazeInput";
+  })(PlayerSettings_WSACapability = UnityEditor.PlayerSettings_WSACapability || (UnityEditor.PlayerSettings_WSACapability = {}));
+
+  var PlayerSettings_WSATargetFamily;
+
+  (function (PlayerSettings_WSATargetFamily) {
+    PlayerSettings_WSATargetFamily[PlayerSettings_WSATargetFamily["Desktop"] = 0] = "Desktop";
+    PlayerSettings_WSATargetFamily[PlayerSettings_WSATargetFamily["Mobile"] = 1] = "Mobile";
+    PlayerSettings_WSATargetFamily[PlayerSettings_WSATargetFamily["Xbox"] = 2] = "Xbox";
+    PlayerSettings_WSATargetFamily[PlayerSettings_WSATargetFamily["Holographic"] = 3] = "Holographic";
+    PlayerSettings_WSATargetFamily[PlayerSettings_WSATargetFamily["Team"] = 4] = "Team";
+    PlayerSettings_WSATargetFamily[PlayerSettings_WSATargetFamily["IoT"] = 5] = "IoT";
+    PlayerSettings_WSATargetFamily[PlayerSettings_WSATargetFamily["IoTHeadless"] = 6] = "IoTHeadless";
+  })(PlayerSettings_WSATargetFamily = UnityEditor.PlayerSettings_WSATargetFamily || (UnityEditor.PlayerSettings_WSATargetFamily = {}));
+
+  var PlayerSettings_WSAImageScale;
+
+  (function (PlayerSettings_WSAImageScale) {
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_100"] = 100] = "_100";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_125"] = 125] = "_125";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_150"] = 150] = "_150";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_200"] = 200] = "_200";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_400"] = 400] = "_400";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["Target16"] = 16] = "Target16";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["Target24"] = 24] = "Target24";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["Target32"] = 32] = "Target32";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["Target48"] = 48] = "Target48";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["Target256"] = 256] = "Target256";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_80"] = 80] = "_80";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_140"] = 140] = "_140";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_180"] = 180] = "_180";
+    PlayerSettings_WSAImageScale[PlayerSettings_WSAImageScale["_240"] = 240] = "_240";
+  })(PlayerSettings_WSAImageScale = UnityEditor.PlayerSettings_WSAImageScale || (UnityEditor.PlayerSettings_WSAImageScale = {}));
+
+  var PlayerSettings_WSAImageType;
+
+  (function (PlayerSettings_WSAImageType) {
+    PlayerSettings_WSAImageType[PlayerSettings_WSAImageType["PackageLogo"] = 1] = "PackageLogo";
+    PlayerSettings_WSAImageType[PlayerSettings_WSAImageType["SplashScreenImage"] = 2] = "SplashScreenImage";
+    PlayerSettings_WSAImageType[PlayerSettings_WSAImageType["UWPSquare44x44Logo"] = 31] = "UWPSquare44x44Logo";
+    PlayerSettings_WSAImageType[PlayerSettings_WSAImageType["UWPSquare71x71Logo"] = 32] = "UWPSquare71x71Logo";
+    PlayerSettings_WSAImageType[PlayerSettings_WSAImageType["UWPSquare150x150Logo"] = 33] = "UWPSquare150x150Logo";
+    PlayerSettings_WSAImageType[PlayerSettings_WSAImageType["UWPSquare310x310Logo"] = 34] = "UWPSquare310x310Logo";
+    PlayerSettings_WSAImageType[PlayerSettings_WSAImageType["UWPWide310x150Logo"] = 35] = "UWPWide310x150Logo";
+  })(PlayerSettings_WSAImageType = UnityEditor.PlayerSettings_WSAImageType || (UnityEditor.PlayerSettings_WSAImageType = {}));
+
+  var PlayerSettings_WSAInputSource;
+
+  (function (PlayerSettings_WSAInputSource) {
+    PlayerSettings_WSAInputSource[PlayerSettings_WSAInputSource["CoreWindow"] = 0] = "CoreWindow";
+    PlayerSettings_WSAInputSource[PlayerSettings_WSAInputSource["IndependentInputSource"] = 1] = "IndependentInputSource";
+    PlayerSettings_WSAInputSource[PlayerSettings_WSAInputSource["SwapChainPanel"] = 2] = "SwapChainPanel";
+  })(PlayerSettings_WSAInputSource = UnityEditor.PlayerSettings_WSAInputSource || (UnityEditor.PlayerSettings_WSAInputSource = {}));
+
+  var PlayerSettings_VRWindowsMixedReality_DepthBufferFormat;
+
+  (function (PlayerSettings_VRWindowsMixedReality_DepthBufferFormat) {
+    PlayerSettings_VRWindowsMixedReality_DepthBufferFormat[PlayerSettings_VRWindowsMixedReality_DepthBufferFormat["DepthBufferFormat16Bit"] = 0] = "DepthBufferFormat16Bit";
+    PlayerSettings_VRWindowsMixedReality_DepthBufferFormat[PlayerSettings_VRWindowsMixedReality_DepthBufferFormat["DepthBufferFormat24Bit"] = 1] = "DepthBufferFormat24Bit";
+  })(PlayerSettings_VRWindowsMixedReality_DepthBufferFormat = UnityEditor.PlayerSettings_VRWindowsMixedReality_DepthBufferFormat || (UnityEditor.PlayerSettings_VRWindowsMixedReality_DepthBufferFormat = {}));
+
+  var AndroidTargetDevice;
+
+  (function (AndroidTargetDevice) {
+    AndroidTargetDevice[AndroidTargetDevice["FAT"] = 0] = "FAT";
+    AndroidTargetDevice[AndroidTargetDevice["ARMv7"] = 3] = "ARMv7";
+  })(AndroidTargetDevice = UnityEditor.AndroidTargetDevice || (UnityEditor.AndroidTargetDevice = {}));
+
+  var TargetGlesGraphics;
+
+  (function (TargetGlesGraphics) {
+    TargetGlesGraphics[TargetGlesGraphics["OpenGLES_1_x"] = 0] = "OpenGLES_1_x";
+    TargetGlesGraphics[TargetGlesGraphics["OpenGLES_2_0"] = 1] = "OpenGLES_2_0";
+    TargetGlesGraphics[TargetGlesGraphics["OpenGLES_3_0"] = 2] = "OpenGLES_3_0";
+    TargetGlesGraphics[TargetGlesGraphics["Automatic"] = -1] = "Automatic";
+  })(TargetGlesGraphics = UnityEditor.TargetGlesGraphics || (UnityEditor.TargetGlesGraphics = {}));
+
+  var TargetIOSGraphics;
+
+  (function (TargetIOSGraphics) {
+    TargetIOSGraphics[TargetIOSGraphics["OpenGLES_2_0"] = 2] = "OpenGLES_2_0";
+    TargetIOSGraphics[TargetIOSGraphics["OpenGLES_3_0"] = 3] = "OpenGLES_3_0";
+    TargetIOSGraphics[TargetIOSGraphics["Metal"] = 4] = "Metal";
+    TargetIOSGraphics[TargetIOSGraphics["Automatic"] = -1] = "Automatic";
+  })(TargetIOSGraphics = UnityEditor.TargetIOSGraphics || (UnityEditor.TargetIOSGraphics = {}));
+
+  var iOSTargetResolution;
+
+  (function (iOSTargetResolution) {
+    iOSTargetResolution[iOSTargetResolution["Native"] = 0] = "Native";
+    iOSTargetResolution[iOSTargetResolution["ResolutionAutoPerformance"] = 3] = "ResolutionAutoPerformance";
+    iOSTargetResolution[iOSTargetResolution["ResolutionAutoQuality"] = 4] = "ResolutionAutoQuality";
+    iOSTargetResolution[iOSTargetResolution["Resolution320p"] = 5] = "Resolution320p";
+    iOSTargetResolution[iOSTargetResolution["Resolution640p"] = 6] = "Resolution640p";
+    iOSTargetResolution[iOSTargetResolution["Resolution768p"] = 7] = "Resolution768p";
+  })(iOSTargetResolution = UnityEditor.iOSTargetResolution || (UnityEditor.iOSTargetResolution = {}));
+
+  var iOSTargetOSVersion;
+
+  (function (iOSTargetOSVersion) {
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_4_0"] = 10] = "iOS_4_0";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_4_1"] = 12] = "iOS_4_1";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_4_2"] = 14] = "iOS_4_2";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_4_3"] = 16] = "iOS_4_3";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_5_0"] = 18] = "iOS_5_0";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_5_1"] = 20] = "iOS_5_1";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_6_0"] = 22] = "iOS_6_0";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_7_0"] = 24] = "iOS_7_0";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_7_1"] = 26] = "iOS_7_1";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_8_0"] = 28] = "iOS_8_0";
+    iOSTargetOSVersion[iOSTargetOSVersion["iOS_8_1"] = 30] = "iOS_8_1";
+    iOSTargetOSVersion[iOSTargetOSVersion["Unknown"] = 999] = "Unknown";
+  })(iOSTargetOSVersion = UnityEditor.iOSTargetOSVersion || (UnityEditor.iOSTargetOSVersion = {}));
+
+  var iOSSystemGestureDeferMode;
+
+  (function (iOSSystemGestureDeferMode) {
+    iOSSystemGestureDeferMode[iOSSystemGestureDeferMode["None"] = 0] = "None";
+    iOSSystemGestureDeferMode[iOSSystemGestureDeferMode["TopEdge"] = 1] = "TopEdge";
+    iOSSystemGestureDeferMode[iOSSystemGestureDeferMode["LeftEdge"] = 2] = "LeftEdge";
+    iOSSystemGestureDeferMode[iOSSystemGestureDeferMode["BottomEdge"] = 4] = "BottomEdge";
+    iOSSystemGestureDeferMode[iOSSystemGestureDeferMode["RightEdge"] = 8] = "RightEdge";
+    iOSSystemGestureDeferMode[iOSSystemGestureDeferMode["All"] = 15] = "All";
+  })(iOSSystemGestureDeferMode = UnityEditor.iOSSystemGestureDeferMode || (UnityEditor.iOSSystemGestureDeferMode = {}));
+
+  var AndroidArchitecture;
+
+  (function (AndroidArchitecture) {
+    AndroidArchitecture[AndroidArchitecture["None"] = 0] = "None";
+    AndroidArchitecture[AndroidArchitecture["ARMv7"] = 1] = "ARMv7";
+    AndroidArchitecture[AndroidArchitecture["ARM64"] = 2] = "ARM64";
+    AndroidArchitecture[AndroidArchitecture["All"] = 4294967295] = "All";
+  })(AndroidArchitecture = UnityEditor.AndroidArchitecture || (UnityEditor.AndroidArchitecture = {}));
+
+  var AndroidSdkVersions;
+
+  (function (AndroidSdkVersions) {
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevelAuto"] = 0] = "AndroidApiLevelAuto";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel16"] = 16] = "AndroidApiLevel16";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel17"] = 17] = "AndroidApiLevel17";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel18"] = 18] = "AndroidApiLevel18";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel19"] = 19] = "AndroidApiLevel19";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel21"] = 21] = "AndroidApiLevel21";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel22"] = 22] = "AndroidApiLevel22";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel23"] = 23] = "AndroidApiLevel23";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel24"] = 24] = "AndroidApiLevel24";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel25"] = 25] = "AndroidApiLevel25";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel26"] = 26] = "AndroidApiLevel26";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel27"] = 27] = "AndroidApiLevel27";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel28"] = 28] = "AndroidApiLevel28";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel29"] = 29] = "AndroidApiLevel29";
+    AndroidSdkVersions[AndroidSdkVersions["AndroidApiLevel30"] = 30] = "AndroidApiLevel30";
+  })(AndroidSdkVersions = UnityEditor.AndroidSdkVersions || (UnityEditor.AndroidSdkVersions = {}));
+
+  var AndroidPreferredInstallLocation;
+
+  (function (AndroidPreferredInstallLocation) {
+    AndroidPreferredInstallLocation[AndroidPreferredInstallLocation["Auto"] = 0] = "Auto";
+    AndroidPreferredInstallLocation[AndroidPreferredInstallLocation["PreferExternal"] = 1] = "PreferExternal";
+    AndroidPreferredInstallLocation[AndroidPreferredInstallLocation["ForceInternal"] = 2] = "ForceInternal";
+  })(AndroidPreferredInstallLocation = UnityEditor.AndroidPreferredInstallLocation || (UnityEditor.AndroidPreferredInstallLocation = {}));
+
+  var AndroidShowActivityIndicatorOnLoading;
+
+  (function (AndroidShowActivityIndicatorOnLoading) {
+    AndroidShowActivityIndicatorOnLoading[AndroidShowActivityIndicatorOnLoading["Large"] = 0] = "Large";
+    AndroidShowActivityIndicatorOnLoading[AndroidShowActivityIndicatorOnLoading["InversedLarge"] = 1] = "InversedLarge";
+    AndroidShowActivityIndicatorOnLoading[AndroidShowActivityIndicatorOnLoading["Small"] = 2] = "Small";
+    AndroidShowActivityIndicatorOnLoading[AndroidShowActivityIndicatorOnLoading["InversedSmall"] = 3] = "InversedSmall";
+    AndroidShowActivityIndicatorOnLoading[AndroidShowActivityIndicatorOnLoading["DontShow"] = -1] = "DontShow";
+  })(AndroidShowActivityIndicatorOnLoading = UnityEditor.AndroidShowActivityIndicatorOnLoading || (UnityEditor.AndroidShowActivityIndicatorOnLoading = {}));
+
+  var AndroidGamepadSupportLevel;
+
+  (function (AndroidGamepadSupportLevel) {
+    AndroidGamepadSupportLevel[AndroidGamepadSupportLevel["SupportsDPad"] = 0] = "SupportsDPad";
+    AndroidGamepadSupportLevel[AndroidGamepadSupportLevel["SupportsGamepad"] = 1] = "SupportsGamepad";
+    AndroidGamepadSupportLevel[AndroidGamepadSupportLevel["RequiresGamepad"] = 2] = "RequiresGamepad";
+  })(AndroidGamepadSupportLevel = UnityEditor.AndroidGamepadSupportLevel || (UnityEditor.AndroidGamepadSupportLevel = {}));
+
+  var AndroidSplashScreenScale;
+
+  (function (AndroidSplashScreenScale) {
+    AndroidSplashScreenScale[AndroidSplashScreenScale["Center"] = 0] = "Center";
+    AndroidSplashScreenScale[AndroidSplashScreenScale["ScaleToFit"] = 1] = "ScaleToFit";
+    AndroidSplashScreenScale[AndroidSplashScreenScale["ScaleToFill"] = 2] = "ScaleToFill";
+  })(AndroidSplashScreenScale = UnityEditor.AndroidSplashScreenScale || (UnityEditor.AndroidSplashScreenScale = {}));
+
+  var AndroidBlitType;
+
+  (function (AndroidBlitType) {
+    AndroidBlitType[AndroidBlitType["Always"] = 0] = "Always";
+    AndroidBlitType[AndroidBlitType["Never"] = 1] = "Never";
+    AndroidBlitType[AndroidBlitType["Auto"] = 2] = "Auto";
+  })(AndroidBlitType = UnityEditor.AndroidBlitType || (UnityEditor.AndroidBlitType = {}));
+
+  var AppleMobileArchitecture;
+
+  (function (AppleMobileArchitecture) {
+    AppleMobileArchitecture[AppleMobileArchitecture["ARMv7"] = 0] = "ARMv7";
+    AppleMobileArchitecture[AppleMobileArchitecture["ARM64"] = 1] = "ARM64";
+    AppleMobileArchitecture[AppleMobileArchitecture["Universal"] = 2] = "Universal";
+  })(AppleMobileArchitecture = UnityEditor.AppleMobileArchitecture || (UnityEditor.AppleMobileArchitecture = {}));
+
+  var iOSSdkVersion;
+
+  (function (iOSSdkVersion) {
+    iOSSdkVersion[iOSSdkVersion["DeviceSDK"] = 988] = "DeviceSDK";
+    iOSSdkVersion[iOSSdkVersion["SimulatorSDK"] = 989] = "SimulatorSDK";
+  })(iOSSdkVersion = UnityEditor.iOSSdkVersion || (UnityEditor.iOSSdkVersion = {}));
+
+  var iOSTargetDevice;
+
+  (function (iOSTargetDevice) {
+    iOSTargetDevice[iOSTargetDevice["iPhoneOnly"] = 0] = "iPhoneOnly";
+    iOSTargetDevice[iOSTargetDevice["iPadOnly"] = 1] = "iPadOnly";
+    iOSTargetDevice[iOSTargetDevice["iPhoneAndiPad"] = 2] = "iPhoneAndiPad";
+  })(iOSTargetDevice = UnityEditor.iOSTargetDevice || (UnityEditor.iOSTargetDevice = {}));
+
+  var iOSShowActivityIndicatorOnLoading;
+
+  (function (iOSShowActivityIndicatorOnLoading) {
+    iOSShowActivityIndicatorOnLoading[iOSShowActivityIndicatorOnLoading["WhiteLarge"] = 0] = "WhiteLarge";
+    iOSShowActivityIndicatorOnLoading[iOSShowActivityIndicatorOnLoading["White"] = 1] = "White";
+    iOSShowActivityIndicatorOnLoading[iOSShowActivityIndicatorOnLoading["Gray"] = 2] = "Gray";
+    iOSShowActivityIndicatorOnLoading[iOSShowActivityIndicatorOnLoading["DontShow"] = -1] = "DontShow";
+  })(iOSShowActivityIndicatorOnLoading = UnityEditor.iOSShowActivityIndicatorOnLoading || (UnityEditor.iOSShowActivityIndicatorOnLoading = {}));
+
+  var iOSStatusBarStyle;
+
+  (function (iOSStatusBarStyle) {
+    iOSStatusBarStyle[iOSStatusBarStyle["Default"] = 0] = "Default";
+    iOSStatusBarStyle[iOSStatusBarStyle["LightContent"] = 1] = "LightContent";
+    iOSStatusBarStyle[iOSStatusBarStyle["BlackTranslucent"] = -1] = "BlackTranslucent";
+    iOSStatusBarStyle[iOSStatusBarStyle["BlackOpaque"] = -1] = "BlackOpaque";
+  })(iOSStatusBarStyle = UnityEditor.iOSStatusBarStyle || (UnityEditor.iOSStatusBarStyle = {}));
+
+  var iOSAppInBackgroundBehavior;
+
+  (function (iOSAppInBackgroundBehavior) {
+    iOSAppInBackgroundBehavior[iOSAppInBackgroundBehavior["Custom"] = -1] = "Custom";
+    iOSAppInBackgroundBehavior[iOSAppInBackgroundBehavior["Suspend"] = 0] = "Suspend";
+    iOSAppInBackgroundBehavior[iOSAppInBackgroundBehavior["Exit"] = 1] = "Exit";
+  })(iOSAppInBackgroundBehavior = UnityEditor.iOSAppInBackgroundBehavior || (UnityEditor.iOSAppInBackgroundBehavior = {}));
+
+  var iOSBackgroundMode;
+
+  (function (iOSBackgroundMode) {
+    iOSBackgroundMode[iOSBackgroundMode["None"] = 0] = "None";
+    iOSBackgroundMode[iOSBackgroundMode["Audio"] = 1] = "Audio";
+    iOSBackgroundMode[iOSBackgroundMode["Location"] = 2] = "Location";
+    iOSBackgroundMode[iOSBackgroundMode["VOIP"] = 4] = "VOIP";
+    iOSBackgroundMode[iOSBackgroundMode["NewsstandContent"] = 8] = "NewsstandContent";
+    iOSBackgroundMode[iOSBackgroundMode["ExternalAccessory"] = 16] = "ExternalAccessory";
+    iOSBackgroundMode[iOSBackgroundMode["BluetoothCentral"] = 32] = "BluetoothCentral";
+    iOSBackgroundMode[iOSBackgroundMode["BluetoothPeripheral"] = 64] = "BluetoothPeripheral";
+    iOSBackgroundMode[iOSBackgroundMode["Fetch"] = 128] = "Fetch";
+    iOSBackgroundMode[iOSBackgroundMode["RemoteNotification"] = 256] = "RemoteNotification";
+  })(iOSBackgroundMode = UnityEditor.iOSBackgroundMode || (UnityEditor.iOSBackgroundMode = {}));
+
+  var iOSLaunchScreenImageType;
+
+  (function (iOSLaunchScreenImageType) {
+    iOSLaunchScreenImageType[iOSLaunchScreenImageType["iPhonePortraitImage"] = 0] = "iPhonePortraitImage";
+    iOSLaunchScreenImageType[iOSLaunchScreenImageType["iPhoneLandscapeImage"] = 1] = "iPhoneLandscapeImage";
+    iOSLaunchScreenImageType[iOSLaunchScreenImageType["iPadImage"] = 2] = "iPadImage";
+  })(iOSLaunchScreenImageType = UnityEditor.iOSLaunchScreenImageType || (UnityEditor.iOSLaunchScreenImageType = {}));
+
+  var iOSLaunchScreenType;
+
+  (function (iOSLaunchScreenType) {
+    iOSLaunchScreenType[iOSLaunchScreenType["Default"] = 0] = "Default";
+    iOSLaunchScreenType[iOSLaunchScreenType["ImageAndBackgroundRelative"] = 1] = "ImageAndBackgroundRelative";
+    iOSLaunchScreenType[iOSLaunchScreenType["ImageAndBackgroundConstant"] = 4] = "ImageAndBackgroundConstant";
+    iOSLaunchScreenType[iOSLaunchScreenType["CustomXib"] = 2] = "CustomXib";
+    iOSLaunchScreenType[iOSLaunchScreenType["CustomStoryboard"] = 5] = "CustomStoryboard";
+    iOSLaunchScreenType[iOSLaunchScreenType["None"] = 3] = "None";
+  })(iOSLaunchScreenType = UnityEditor.iOSLaunchScreenType || (UnityEditor.iOSLaunchScreenType = {}));
+
+  var ProvisioningProfileType;
+
+  (function (ProvisioningProfileType) {
+    ProvisioningProfileType[ProvisioningProfileType["Automatic"] = 0] = "Automatic";
+    ProvisioningProfileType[ProvisioningProfileType["Development"] = 1] = "Development";
+    ProvisioningProfileType[ProvisioningProfileType["Distribution"] = 2] = "Distribution";
+  })(ProvisioningProfileType = UnityEditor.ProvisioningProfileType || (UnityEditor.ProvisioningProfileType = {}));
+
+  var tvOSSdkVersion;
+
+  (function (tvOSSdkVersion) {
+    tvOSSdkVersion[tvOSSdkVersion["Device"] = 0] = "Device";
+    tvOSSdkVersion[tvOSSdkVersion["Simulator"] = 1] = "Simulator";
+  })(tvOSSdkVersion = UnityEditor.tvOSSdkVersion || (UnityEditor.tvOSSdkVersion = {}));
+
+  var tvOSTargetOSVersion;
+
+  (function (tvOSTargetOSVersion) {
+    tvOSTargetOSVersion[tvOSTargetOSVersion["Unknown"] = 0] = "Unknown";
+    tvOSTargetOSVersion[tvOSTargetOSVersion["tvOS_9_0"] = 900] = "tvOS_9_0";
+    tvOSTargetOSVersion[tvOSTargetOSVersion["tvOS_9_1"] = 901] = "tvOS_9_1";
+  })(tvOSTargetOSVersion = UnityEditor.tvOSTargetOSVersion || (UnityEditor.tvOSTargetOSVersion = {}));
+
+  var WebGLExceptionSupport;
+
+  (function (WebGLExceptionSupport) {
+    WebGLExceptionSupport[WebGLExceptionSupport["None"] = 0] = "None";
+    WebGLExceptionSupport[WebGLExceptionSupport["ExplicitlyThrownExceptionsOnly"] = 1] = "ExplicitlyThrownExceptionsOnly";
+    WebGLExceptionSupport[WebGLExceptionSupport["FullWithoutStacktrace"] = 2] = "FullWithoutStacktrace";
+    WebGLExceptionSupport[WebGLExceptionSupport["FullWithStacktrace"] = 3] = "FullWithStacktrace";
+  })(WebGLExceptionSupport = UnityEditor.WebGLExceptionSupport || (UnityEditor.WebGLExceptionSupport = {}));
+
+  var WebGLCompressionFormat;
+
+  (function (WebGLCompressionFormat) {
+    WebGLCompressionFormat[WebGLCompressionFormat["Brotli"] = 0] = "Brotli";
+    WebGLCompressionFormat[WebGLCompressionFormat["Gzip"] = 1] = "Gzip";
+    WebGLCompressionFormat[WebGLCompressionFormat["Disabled"] = 2] = "Disabled";
+  })(WebGLCompressionFormat = UnityEditor.WebGLCompressionFormat || (UnityEditor.WebGLCompressionFormat = {}));
+
+  var WebGLLinkerTarget;
+
+  (function (WebGLLinkerTarget) {
+    WebGLLinkerTarget[WebGLLinkerTarget["Asm"] = 0] = "Asm";
+    WebGLLinkerTarget[WebGLLinkerTarget["Wasm"] = 1] = "Wasm";
+    WebGLLinkerTarget[WebGLLinkerTarget["Both"] = 2] = "Both";
+  })(WebGLLinkerTarget = UnityEditor.WebGLLinkerTarget || (UnityEditor.WebGLLinkerTarget = {}));
+
+  var WebGLWasmArithmeticExceptions;
+
+  (function (WebGLWasmArithmeticExceptions) {
+    WebGLWasmArithmeticExceptions[WebGLWasmArithmeticExceptions["Throw"] = 0] = "Throw";
+    WebGLWasmArithmeticExceptions[WebGLWasmArithmeticExceptions["Ignore"] = 1] = "Ignore";
+  })(WebGLWasmArithmeticExceptions = UnityEditor.WebGLWasmArithmeticExceptions || (UnityEditor.WebGLWasmArithmeticExceptions = {}));
+
+  var XboxOneEncryptionLevel;
+
+  (function (XboxOneEncryptionLevel) {
+    XboxOneEncryptionLevel[XboxOneEncryptionLevel["None"] = 0] = "None";
+    XboxOneEncryptionLevel[XboxOneEncryptionLevel["DevkitCompatible"] = 1] = "DevkitCompatible";
+    XboxOneEncryptionLevel[XboxOneEncryptionLevel["FullEncryption"] = 2] = "FullEncryption";
+  })(XboxOneEncryptionLevel = UnityEditor.XboxOneEncryptionLevel || (UnityEditor.XboxOneEncryptionLevel = {}));
+
+  var XboxOnePackageUpdateGranularity;
+
+  (function (XboxOnePackageUpdateGranularity) {
+    XboxOnePackageUpdateGranularity[XboxOnePackageUpdateGranularity["Chunk"] = 1] = "Chunk";
+    XboxOnePackageUpdateGranularity[XboxOnePackageUpdateGranularity["File"] = 2] = "File";
+  })(XboxOnePackageUpdateGranularity = UnityEditor.XboxOnePackageUpdateGranularity || (UnityEditor.XboxOnePackageUpdateGranularity = {}));
+
+  var XboxOneLoggingLevel;
+
+  (function (XboxOneLoggingLevel) {
+    XboxOneLoggingLevel[XboxOneLoggingLevel["AllLogging"] = 4] = "AllLogging";
+    XboxOneLoggingLevel[XboxOneLoggingLevel["WarningsAndErrors"] = 2] = "WarningsAndErrors";
+    XboxOneLoggingLevel[XboxOneLoggingLevel["ErrorsOnly"] = 1] = "ErrorsOnly";
+  })(XboxOneLoggingLevel = UnityEditor.XboxOneLoggingLevel || (UnityEditor.XboxOneLoggingLevel = {}));
+
+  var ScriptCompiler;
+
+  (function (ScriptCompiler) {
+    ScriptCompiler[ScriptCompiler["Mono"] = 0] = "Mono";
+    ScriptCompiler[ScriptCompiler["Roslyn"] = 1] = "Roslyn";
+  })(ScriptCompiler = UnityEditor.ScriptCompiler || (UnityEditor.ScriptCompiler = {}));
+
+  var SelectionMode;
+
+  (function (SelectionMode) {
+    SelectionMode[SelectionMode["Unfiltered"] = 0] = "Unfiltered";
+    SelectionMode[SelectionMode["TopLevel"] = 1] = "TopLevel";
+    SelectionMode[SelectionMode["Deep"] = 2] = "Deep";
+    SelectionMode[SelectionMode["ExcludePrefab"] = 4] = "ExcludePrefab";
+    SelectionMode[SelectionMode["Editable"] = 8] = "Editable";
+    SelectionMode[SelectionMode["Assets"] = 16] = "Assets";
+    SelectionMode[SelectionMode["DeepAssets"] = 32] = "DeepAssets";
+    SelectionMode[SelectionMode["OnlyUserModifiable"] = 8] = "OnlyUserModifiable";
+  })(SelectionMode = UnityEditor.SelectionMode || (UnityEditor.SelectionMode = {}));
+
+  var SerializedPropertyType;
+
+  (function (SerializedPropertyType) {
+    SerializedPropertyType[SerializedPropertyType["Generic"] = -1] = "Generic";
+    SerializedPropertyType[SerializedPropertyType["Integer"] = 0] = "Integer";
+    SerializedPropertyType[SerializedPropertyType["Boolean"] = 1] = "Boolean";
+    SerializedPropertyType[SerializedPropertyType["Float"] = 2] = "Float";
+    SerializedPropertyType[SerializedPropertyType["String"] = 3] = "String";
+    SerializedPropertyType[SerializedPropertyType["Color"] = 4] = "Color";
+    SerializedPropertyType[SerializedPropertyType["ObjectReference"] = 5] = "ObjectReference";
+    SerializedPropertyType[SerializedPropertyType["LayerMask"] = 6] = "LayerMask";
+    SerializedPropertyType[SerializedPropertyType["Enum"] = 7] = "Enum";
+    SerializedPropertyType[SerializedPropertyType["Vector2"] = 8] = "Vector2";
+    SerializedPropertyType[SerializedPropertyType["Vector3"] = 9] = "Vector3";
+    SerializedPropertyType[SerializedPropertyType["Vector4"] = 10] = "Vector4";
+    SerializedPropertyType[SerializedPropertyType["Rect"] = 11] = "Rect";
+    SerializedPropertyType[SerializedPropertyType["ArraySize"] = 12] = "ArraySize";
+    SerializedPropertyType[SerializedPropertyType["Character"] = 13] = "Character";
+    SerializedPropertyType[SerializedPropertyType["AnimationCurve"] = 14] = "AnimationCurve";
+    SerializedPropertyType[SerializedPropertyType["Bounds"] = 15] = "Bounds";
+    SerializedPropertyType[SerializedPropertyType["Gradient"] = 16] = "Gradient";
+    SerializedPropertyType[SerializedPropertyType["Quaternion"] = 17] = "Quaternion";
+    SerializedPropertyType[SerializedPropertyType["ExposedReference"] = 18] = "ExposedReference";
+    SerializedPropertyType[SerializedPropertyType["FixedBufferSize"] = 19] = "FixedBufferSize";
+    SerializedPropertyType[SerializedPropertyType["Vector2Int"] = 20] = "Vector2Int";
+    SerializedPropertyType[SerializedPropertyType["Vector3Int"] = 21] = "Vector3Int";
+    SerializedPropertyType[SerializedPropertyType["RectInt"] = 22] = "RectInt";
+    SerializedPropertyType[SerializedPropertyType["BoundsInt"] = 23] = "BoundsInt";
+    SerializedPropertyType[SerializedPropertyType["ManagedReference"] = 24] = "ManagedReference";
+  })(SerializedPropertyType = UnityEditor.SerializedPropertyType || (UnityEditor.SerializedPropertyType = {}));
+
+  var PreprocessorOverride;
+
+  (function (PreprocessorOverride) {
+    PreprocessorOverride[PreprocessorOverride["UseProjectSettings"] = 0] = "UseProjectSettings";
+    PreprocessorOverride[PreprocessorOverride["ForcePlatformPreprocessor"] = 1] = "ForcePlatformPreprocessor";
+    PreprocessorOverride[PreprocessorOverride["ForceCachingPreprocessor"] = 2] = "ForceCachingPreprocessor";
+  })(PreprocessorOverride = UnityEditor.PreprocessorOverride || (UnityEditor.PreprocessorOverride = {}));
+
+  var ShaderUtil_ShaderPropertyTexDim;
+
+  (function (ShaderUtil_ShaderPropertyTexDim) {
+    ShaderUtil_ShaderPropertyTexDim[ShaderUtil_ShaderPropertyTexDim["TexDimNone"] = 0] = "TexDimNone";
+    ShaderUtil_ShaderPropertyTexDim[ShaderUtil_ShaderPropertyTexDim["TexDim2D"] = 2] = "TexDim2D";
+    ShaderUtil_ShaderPropertyTexDim[ShaderUtil_ShaderPropertyTexDim["TexDim3D"] = 3] = "TexDim3D";
+    ShaderUtil_ShaderPropertyTexDim[ShaderUtil_ShaderPropertyTexDim["TexDimCUBE"] = 4] = "TexDimCUBE";
+    ShaderUtil_ShaderPropertyTexDim[ShaderUtil_ShaderPropertyTexDim["TexDimAny"] = 6] = "TexDimAny";
+  })(ShaderUtil_ShaderPropertyTexDim = UnityEditor.ShaderUtil_ShaderPropertyTexDim || (UnityEditor.ShaderUtil_ShaderPropertyTexDim = {}));
+
+  var ShaderUtil_ShaderPropertyType;
+
+  (function (ShaderUtil_ShaderPropertyType) {
+    ShaderUtil_ShaderPropertyType[ShaderUtil_ShaderPropertyType["Color"] = 0] = "Color";
+    ShaderUtil_ShaderPropertyType[ShaderUtil_ShaderPropertyType["Vector"] = 1] = "Vector";
+    ShaderUtil_ShaderPropertyType[ShaderUtil_ShaderPropertyType["Float"] = 2] = "Float";
+    ShaderUtil_ShaderPropertyType[ShaderUtil_ShaderPropertyType["Range"] = 3] = "Range";
+    ShaderUtil_ShaderPropertyType[ShaderUtil_ShaderPropertyType["TexEnv"] = 4] = "TexEnv";
+  })(ShaderUtil_ShaderPropertyType = UnityEditor.ShaderUtil_ShaderPropertyType || (UnityEditor.ShaderUtil_ShaderPropertyType = {}));
+
+  var StaticEditorFlags;
+
+  (function (StaticEditorFlags) {
+    StaticEditorFlags[StaticEditorFlags["ContributeGI"] = 1] = "ContributeGI";
+    StaticEditorFlags[StaticEditorFlags["OccluderStatic"] = 2] = "OccluderStatic";
+    StaticEditorFlags[StaticEditorFlags["OccludeeStatic"] = 16] = "OccludeeStatic";
+    StaticEditorFlags[StaticEditorFlags["BatchingStatic"] = 4] = "BatchingStatic";
+    StaticEditorFlags[StaticEditorFlags["NavigationStatic"] = 8] = "NavigationStatic";
+    StaticEditorFlags[StaticEditorFlags["OffMeshLinkGeneration"] = 32] = "OffMeshLinkGeneration";
+    StaticEditorFlags[StaticEditorFlags["ReflectionProbeStatic"] = 64] = "ReflectionProbeStatic";
+    StaticEditorFlags[StaticEditorFlags["LightmapStatic"] = 1] = "LightmapStatic";
+  })(StaticEditorFlags = UnityEditor.StaticEditorFlags || (UnityEditor.StaticEditorFlags = {}));
+
+  var VertexChannelCompressionFlags;
+
+  (function (VertexChannelCompressionFlags) {
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["None"] = 0] = "None";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["Position"] = 1] = "Position";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["Normal"] = 2] = "Normal";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["Tangent"] = 4] = "Tangent";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["Color"] = 8] = "Color";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["TexCoord0"] = 16] = "TexCoord0";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["TexCoord1"] = 32] = "TexCoord1";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["TexCoord2"] = 64] = "TexCoord2";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["TexCoord3"] = 128] = "TexCoord3";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["kPosition"] = 1] = "kPosition";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["kNormal"] = 2] = "kNormal";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["kColor"] = 4] = "kColor";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["kUV0"] = 8] = "kUV0";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["kUV1"] = 16] = "kUV1";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["kUV2"] = 32] = "kUV2";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["kUV3"] = 64] = "kUV3";
+    VertexChannelCompressionFlags[VertexChannelCompressionFlags["kTangent"] = 128] = "kTangent";
+  })(VertexChannelCompressionFlags = UnityEditor.VertexChannelCompressionFlags || (UnityEditor.VertexChannelCompressionFlags = {}));
+
+  var AnimationUtility_CurveModifiedType;
+
+  (function (AnimationUtility_CurveModifiedType) {
+    AnimationUtility_CurveModifiedType[AnimationUtility_CurveModifiedType["CurveDeleted"] = 0] = "CurveDeleted";
+    AnimationUtility_CurveModifiedType[AnimationUtility_CurveModifiedType["CurveModified"] = 1] = "CurveModified";
+    AnimationUtility_CurveModifiedType[AnimationUtility_CurveModifiedType["ClipModified"] = 2] = "ClipModified";
+  })(AnimationUtility_CurveModifiedType = UnityEditor.AnimationUtility_CurveModifiedType || (UnityEditor.AnimationUtility_CurveModifiedType = {}));
+
+  var AnimationUtility_TangentMode;
+
+  (function (AnimationUtility_TangentMode) {
+    AnimationUtility_TangentMode[AnimationUtility_TangentMode["Free"] = 0] = "Free";
+    AnimationUtility_TangentMode[AnimationUtility_TangentMode["Auto"] = 1] = "Auto";
+    AnimationUtility_TangentMode[AnimationUtility_TangentMode["Linear"] = 2] = "Linear";
+    AnimationUtility_TangentMode[AnimationUtility_TangentMode["Constant"] = 3] = "Constant";
+    AnimationUtility_TangentMode[AnimationUtility_TangentMode["ClampedAuto"] = 4] = "ClampedAuto";
+  })(AnimationUtility_TangentMode = UnityEditor.AnimationUtility_TangentMode || (UnityEditor.AnimationUtility_TangentMode = {}));
+
+  var DrawCameraMode;
+
+  (function (DrawCameraMode) {
+    DrawCameraMode[DrawCameraMode["UserDefined"] = -2147483648] = "UserDefined";
+    DrawCameraMode[DrawCameraMode["Normal"] = -1] = "Normal";
+    DrawCameraMode[DrawCameraMode["Textured"] = 0] = "Textured";
+    DrawCameraMode[DrawCameraMode["Wireframe"] = 1] = "Wireframe";
+    DrawCameraMode[DrawCameraMode["TexturedWire"] = 2] = "TexturedWire";
+    DrawCameraMode[DrawCameraMode["ShadowCascades"] = 3] = "ShadowCascades";
+    DrawCameraMode[DrawCameraMode["RenderPaths"] = 4] = "RenderPaths";
+    DrawCameraMode[DrawCameraMode["AlphaChannel"] = 5] = "AlphaChannel";
+    DrawCameraMode[DrawCameraMode["Overdraw"] = 6] = "Overdraw";
+    DrawCameraMode[DrawCameraMode["Mipmaps"] = 7] = "Mipmaps";
+    DrawCameraMode[DrawCameraMode["DeferredDiffuse"] = 8] = "DeferredDiffuse";
+    DrawCameraMode[DrawCameraMode["DeferredSpecular"] = 9] = "DeferredSpecular";
+    DrawCameraMode[DrawCameraMode["DeferredSmoothness"] = 10] = "DeferredSmoothness";
+    DrawCameraMode[DrawCameraMode["DeferredNormal"] = 11] = "DeferredNormal";
+    DrawCameraMode[DrawCameraMode["Charting"] = -12] = "Charting";
+    DrawCameraMode[DrawCameraMode["RealtimeCharting"] = 12] = "RealtimeCharting";
+    DrawCameraMode[DrawCameraMode["Systems"] = 13] = "Systems";
+    DrawCameraMode[DrawCameraMode["Albedo"] = -14] = "Albedo";
+    DrawCameraMode[DrawCameraMode["RealtimeAlbedo"] = 14] = "RealtimeAlbedo";
+    DrawCameraMode[DrawCameraMode["Emissive"] = -15] = "Emissive";
+    DrawCameraMode[DrawCameraMode["RealtimeEmissive"] = 15] = "RealtimeEmissive";
+    DrawCameraMode[DrawCameraMode["Irradiance"] = -16] = "Irradiance";
+    DrawCameraMode[DrawCameraMode["RealtimeIndirect"] = 16] = "RealtimeIndirect";
+    DrawCameraMode[DrawCameraMode["Directionality"] = -17] = "Directionality";
+    DrawCameraMode[DrawCameraMode["RealtimeDirectionality"] = 17] = "RealtimeDirectionality";
+    DrawCameraMode[DrawCameraMode["Baked"] = -18] = "Baked";
+    DrawCameraMode[DrawCameraMode["BakedLightmap"] = 18] = "BakedLightmap";
+    DrawCameraMode[DrawCameraMode["Clustering"] = 19] = "Clustering";
+    DrawCameraMode[DrawCameraMode["LitClustering"] = 20] = "LitClustering";
+    DrawCameraMode[DrawCameraMode["ValidateAlbedo"] = 21] = "ValidateAlbedo";
+    DrawCameraMode[DrawCameraMode["ValidateMetalSpecular"] = 22] = "ValidateMetalSpecular";
+    DrawCameraMode[DrawCameraMode["ShadowMasks"] = 23] = "ShadowMasks";
+    DrawCameraMode[DrawCameraMode["LightOverlap"] = 24] = "LightOverlap";
+    DrawCameraMode[DrawCameraMode["BakedAlbedo"] = 25] = "BakedAlbedo";
+    DrawCameraMode[DrawCameraMode["BakedEmissive"] = 26] = "BakedEmissive";
+    DrawCameraMode[DrawCameraMode["BakedDirectionality"] = 27] = "BakedDirectionality";
+    DrawCameraMode[DrawCameraMode["BakedTexelValidity"] = 28] = "BakedTexelValidity";
+    DrawCameraMode[DrawCameraMode["BakedIndices"] = 29] = "BakedIndices";
+    DrawCameraMode[DrawCameraMode["BakedCharting"] = 30] = "BakedCharting";
+    DrawCameraMode[DrawCameraMode["SpriteMask"] = 31] = "SpriteMask";
+    DrawCameraMode[DrawCameraMode["BakedUVOverlap"] = 32] = "BakedUVOverlap";
+    DrawCameraMode[DrawCameraMode["TextureStreaming"] = 33] = "TextureStreaming";
+    DrawCameraMode[DrawCameraMode["BakedLightmapCulling"] = 34] = "BakedLightmapCulling";
+    DrawCameraMode[DrawCameraMode["GIContributorsReceivers"] = 35] = "GIContributorsReceivers";
+  })(DrawCameraMode = UnityEditor.DrawCameraMode || (UnityEditor.DrawCameraMode = {}));
+
+  var AssetStatus;
+
+  (function (AssetStatus) {
+    AssetStatus[AssetStatus["Calculating"] = -1] = "Calculating";
+    AssetStatus[AssetStatus["ClientOnly"] = 0] = "ClientOnly";
+    AssetStatus[AssetStatus["ServerOnly"] = 1] = "ServerOnly";
+    AssetStatus[AssetStatus["Unchanged"] = 2] = "Unchanged";
+    AssetStatus[AssetStatus["Conflict"] = 3] = "Conflict";
+    AssetStatus[AssetStatus["Same"] = 4] = "Same";
+    AssetStatus[AssetStatus["NewVersionAvailable"] = 5] = "NewVersionAvailable";
+    AssetStatus[AssetStatus["NewLocalVersion"] = 6] = "NewLocalVersion";
+    AssetStatus[AssetStatus["RestoredFromTrash"] = 7] = "RestoredFromTrash";
+    AssetStatus[AssetStatus["Ignored"] = 8] = "Ignored";
+    AssetStatus[AssetStatus["BadState"] = 9] = "BadState";
+  })(AssetStatus = UnityEditor.AssetStatus || (UnityEditor.AssetStatus = {}));
+
+  var SpeedTreeImporter_MaterialLocation;
+
+  (function (SpeedTreeImporter_MaterialLocation) {
+    SpeedTreeImporter_MaterialLocation[SpeedTreeImporter_MaterialLocation["External"] = 0] = "External";
+    SpeedTreeImporter_MaterialLocation[SpeedTreeImporter_MaterialLocation["InPrefab"] = 1] = "InPrefab";
+  })(SpeedTreeImporter_MaterialLocation = UnityEditor.SpeedTreeImporter_MaterialLocation || (UnityEditor.SpeedTreeImporter_MaterialLocation = {}));
+
+  var TextureImporterFormat;
+
+  (function (TextureImporterFormat) {
+    TextureImporterFormat[TextureImporterFormat["Automatic"] = -1] = "Automatic";
+    TextureImporterFormat[TextureImporterFormat["AutomaticCompressed"] = -1] = "AutomaticCompressed";
+    TextureImporterFormat[TextureImporterFormat["Automatic16bit"] = -2] = "Automatic16bit";
+    TextureImporterFormat[TextureImporterFormat["AutomaticTruecolor"] = -3] = "AutomaticTruecolor";
+    TextureImporterFormat[TextureImporterFormat["AutomaticCrunched"] = -5] = "AutomaticCrunched";
+    TextureImporterFormat[TextureImporterFormat["AutomaticHDR"] = -6] = "AutomaticHDR";
+    TextureImporterFormat[TextureImporterFormat["AutomaticCompressedHDR"] = -7] = "AutomaticCompressedHDR";
+    TextureImporterFormat[TextureImporterFormat["DXT1"] = 10] = "DXT1";
+    TextureImporterFormat[TextureImporterFormat["DXT5"] = 12] = "DXT5";
+    TextureImporterFormat[TextureImporterFormat["RGB16"] = 7] = "RGB16";
+    TextureImporterFormat[TextureImporterFormat["RGB24"] = 3] = "RGB24";
+    TextureImporterFormat[TextureImporterFormat["Alpha8"] = 1] = "Alpha8";
+    TextureImporterFormat[TextureImporterFormat["R16"] = 9] = "R16";
+    TextureImporterFormat[TextureImporterFormat["R8"] = 63] = "R8";
+    TextureImporterFormat[TextureImporterFormat["RG16"] = 62] = "RG16";
+    TextureImporterFormat[TextureImporterFormat["ARGB16"] = 2] = "ARGB16";
+    TextureImporterFormat[TextureImporterFormat["RGBA32"] = 4] = "RGBA32";
+    TextureImporterFormat[TextureImporterFormat["ARGB32"] = 5] = "ARGB32";
+    TextureImporterFormat[TextureImporterFormat["RGBA16"] = 13] = "RGBA16";
+    TextureImporterFormat[TextureImporterFormat["RHalf"] = 15] = "RHalf";
+    TextureImporterFormat[TextureImporterFormat["RGHalf"] = 16] = "RGHalf";
+    TextureImporterFormat[TextureImporterFormat["RGBAHalf"] = 17] = "RGBAHalf";
+    TextureImporterFormat[TextureImporterFormat["RFloat"] = 18] = "RFloat";
+    TextureImporterFormat[TextureImporterFormat["RGFloat"] = 19] = "RGFloat";
+    TextureImporterFormat[TextureImporterFormat["RGBAFloat"] = 20] = "RGBAFloat";
+    TextureImporterFormat[TextureImporterFormat["RGB9E5"] = 22] = "RGB9E5";
+    TextureImporterFormat[TextureImporterFormat["BC4"] = 26] = "BC4";
+    TextureImporterFormat[TextureImporterFormat["BC5"] = 27] = "BC5";
+    TextureImporterFormat[TextureImporterFormat["BC6H"] = 24] = "BC6H";
+    TextureImporterFormat[TextureImporterFormat["BC7"] = 25] = "BC7";
+    TextureImporterFormat[TextureImporterFormat["DXT1Crunched"] = 28] = "DXT1Crunched";
+    TextureImporterFormat[TextureImporterFormat["DXT5Crunched"] = 29] = "DXT5Crunched";
+    TextureImporterFormat[TextureImporterFormat["PVRTC_RGB2"] = 30] = "PVRTC_RGB2";
+    TextureImporterFormat[TextureImporterFormat["PVRTC_RGBA2"] = 31] = "PVRTC_RGBA2";
+    TextureImporterFormat[TextureImporterFormat["PVRTC_RGB4"] = 32] = "PVRTC_RGB4";
+    TextureImporterFormat[TextureImporterFormat["PVRTC_RGBA4"] = 33] = "PVRTC_RGBA4";
+    TextureImporterFormat[TextureImporterFormat["ETC_RGB4"] = 34] = "ETC_RGB4";
+    TextureImporterFormat[TextureImporterFormat["ATC_RGB4"] = 35] = "ATC_RGB4";
+    TextureImporterFormat[TextureImporterFormat["ATC_RGBA8"] = 36] = "ATC_RGBA8";
+    TextureImporterFormat[TextureImporterFormat["EAC_R"] = 41] = "EAC_R";
+    TextureImporterFormat[TextureImporterFormat["EAC_R_SIGNED"] = 42] = "EAC_R_SIGNED";
+    TextureImporterFormat[TextureImporterFormat["EAC_RG"] = 43] = "EAC_RG";
+    TextureImporterFormat[TextureImporterFormat["EAC_RG_SIGNED"] = 44] = "EAC_RG_SIGNED";
+    TextureImporterFormat[TextureImporterFormat["ETC2_RGB4"] = 45] = "ETC2_RGB4";
+    TextureImporterFormat[TextureImporterFormat["ETC2_RGB4_PUNCHTHROUGH_ALPHA"] = 46] = "ETC2_RGB4_PUNCHTHROUGH_ALPHA";
+    TextureImporterFormat[TextureImporterFormat["ETC2_RGBA8"] = 47] = "ETC2_RGBA8";
+    TextureImporterFormat[TextureImporterFormat["ASTC_4x4"] = 48] = "ASTC_4x4";
+    TextureImporterFormat[TextureImporterFormat["ASTC_5x5"] = 49] = "ASTC_5x5";
+    TextureImporterFormat[TextureImporterFormat["ASTC_6x6"] = 50] = "ASTC_6x6";
+    TextureImporterFormat[TextureImporterFormat["ASTC_8x8"] = 51] = "ASTC_8x8";
+    TextureImporterFormat[TextureImporterFormat["ASTC_10x10"] = 52] = "ASTC_10x10";
+    TextureImporterFormat[TextureImporterFormat["ASTC_12x12"] = 53] = "ASTC_12x12";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGB_4x4"] = 48] = "ASTC_RGB_4x4";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGB_5x5"] = 49] = "ASTC_RGB_5x5";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGB_6x6"] = 50] = "ASTC_RGB_6x6";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGB_8x8"] = 51] = "ASTC_RGB_8x8";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGB_10x10"] = 52] = "ASTC_RGB_10x10";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGB_12x12"] = 53] = "ASTC_RGB_12x12";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGBA_4x4"] = 54] = "ASTC_RGBA_4x4";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGBA_5x5"] = 55] = "ASTC_RGBA_5x5";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGBA_6x6"] = 56] = "ASTC_RGBA_6x6";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGBA_8x8"] = 57] = "ASTC_RGBA_8x8";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGBA_10x10"] = 58] = "ASTC_RGBA_10x10";
+    TextureImporterFormat[TextureImporterFormat["ASTC_RGBA_12x12"] = 59] = "ASTC_RGBA_12x12";
+    TextureImporterFormat[TextureImporterFormat["ETC_RGB4_3DS"] = 60] = "ETC_RGB4_3DS";
+    TextureImporterFormat[TextureImporterFormat["ETC_RGBA8_3DS"] = 61] = "ETC_RGBA8_3DS";
+    TextureImporterFormat[TextureImporterFormat["ETC_RGB4Crunched"] = 64] = "ETC_RGB4Crunched";
+    TextureImporterFormat[TextureImporterFormat["ETC2_RGBA8Crunched"] = 65] = "ETC2_RGBA8Crunched";
+    TextureImporterFormat[TextureImporterFormat["ASTC_HDR_4x4"] = 66] = "ASTC_HDR_4x4";
+    TextureImporterFormat[TextureImporterFormat["ASTC_HDR_5x5"] = 67] = "ASTC_HDR_5x5";
+    TextureImporterFormat[TextureImporterFormat["ASTC_HDR_6x6"] = 68] = "ASTC_HDR_6x6";
+    TextureImporterFormat[TextureImporterFormat["ASTC_HDR_8x8"] = 69] = "ASTC_HDR_8x8";
+    TextureImporterFormat[TextureImporterFormat["ASTC_HDR_10x10"] = 70] = "ASTC_HDR_10x10";
+    TextureImporterFormat[TextureImporterFormat["ASTC_HDR_12x12"] = 71] = "ASTC_HDR_12x12";
+    TextureImporterFormat[TextureImporterFormat["RG32"] = 72] = "RG32";
+    TextureImporterFormat[TextureImporterFormat["RGB48"] = 73] = "RGB48";
+    TextureImporterFormat[TextureImporterFormat["RGBA64"] = 74] = "RGBA64";
+  })(TextureImporterFormat = UnityEditor.TextureImporterFormat || (UnityEditor.TextureImporterFormat = {}));
+
+  var TextureImporterMipFilter;
+
+  (function (TextureImporterMipFilter) {
+    TextureImporterMipFilter[TextureImporterMipFilter["BoxFilter"] = 0] = "BoxFilter";
+    TextureImporterMipFilter[TextureImporterMipFilter["KaiserFilter"] = 1] = "KaiserFilter";
+  })(TextureImporterMipFilter = UnityEditor.TextureImporterMipFilter || (UnityEditor.TextureImporterMipFilter = {}));
+
+  var TextureImporterGenerateCubemap;
+
+  (function (TextureImporterGenerateCubemap) {
+    TextureImporterGenerateCubemap[TextureImporterGenerateCubemap["None"] = 0] = "None";
+    TextureImporterGenerateCubemap[TextureImporterGenerateCubemap["Spheremap"] = 1] = "Spheremap";
+    TextureImporterGenerateCubemap[TextureImporterGenerateCubemap["Cylindrical"] = 2] = "Cylindrical";
+    TextureImporterGenerateCubemap[TextureImporterGenerateCubemap["SimpleSpheremap"] = 3] = "SimpleSpheremap";
+    TextureImporterGenerateCubemap[TextureImporterGenerateCubemap["NiceSpheremap"] = 4] = "NiceSpheremap";
+    TextureImporterGenerateCubemap[TextureImporterGenerateCubemap["FullCubemap"] = 5] = "FullCubemap";
+    TextureImporterGenerateCubemap[TextureImporterGenerateCubemap["AutoCubemap"] = 6] = "AutoCubemap";
+  })(TextureImporterGenerateCubemap = UnityEditor.TextureImporterGenerateCubemap || (UnityEditor.TextureImporterGenerateCubemap = {}));
+
+  var TextureImporterNPOTScale;
+
+  (function (TextureImporterNPOTScale) {
+    TextureImporterNPOTScale[TextureImporterNPOTScale["None"] = 0] = "None";
+    TextureImporterNPOTScale[TextureImporterNPOTScale["ToNearest"] = 1] = "ToNearest";
+    TextureImporterNPOTScale[TextureImporterNPOTScale["ToLarger"] = 2] = "ToLarger";
+    TextureImporterNPOTScale[TextureImporterNPOTScale["ToSmaller"] = 3] = "ToSmaller";
+  })(TextureImporterNPOTScale = UnityEditor.TextureImporterNPOTScale || (UnityEditor.TextureImporterNPOTScale = {}));
+
+  var TextureImporterNormalFilter;
+
+  (function (TextureImporterNormalFilter) {
+    TextureImporterNormalFilter[TextureImporterNormalFilter["Standard"] = 0] = "Standard";
+    TextureImporterNormalFilter[TextureImporterNormalFilter["Sobel"] = 1] = "Sobel";
+  })(TextureImporterNormalFilter = UnityEditor.TextureImporterNormalFilter || (UnityEditor.TextureImporterNormalFilter = {}));
+
+  var TextureImporterAlphaSource;
+
+  (function (TextureImporterAlphaSource) {
+    TextureImporterAlphaSource[TextureImporterAlphaSource["None"] = 0] = "None";
+    TextureImporterAlphaSource[TextureImporterAlphaSource["FromInput"] = 1] = "FromInput";
+    TextureImporterAlphaSource[TextureImporterAlphaSource["FromGrayScale"] = 2] = "FromGrayScale";
+  })(TextureImporterAlphaSource = UnityEditor.TextureImporterAlphaSource || (UnityEditor.TextureImporterAlphaSource = {}));
+
+  var TextureImporterSingleChannelComponent;
+
+  (function (TextureImporterSingleChannelComponent) {
+    TextureImporterSingleChannelComponent[TextureImporterSingleChannelComponent["Alpha"] = 0] = "Alpha";
+    TextureImporterSingleChannelComponent[TextureImporterSingleChannelComponent["Red"] = 1] = "Red";
+  })(TextureImporterSingleChannelComponent = UnityEditor.TextureImporterSingleChannelComponent || (UnityEditor.TextureImporterSingleChannelComponent = {}));
+
+  var TextureImporterType;
+
+  (function (TextureImporterType) {
+    TextureImporterType[TextureImporterType["Default"] = 0] = "Default";
+    TextureImporterType[TextureImporterType["Image"] = 0] = "Image";
+    TextureImporterType[TextureImporterType["Bump"] = 1] = "Bump";
+    TextureImporterType[TextureImporterType["NormalMap"] = 1] = "NormalMap";
+    TextureImporterType[TextureImporterType["GUI"] = 2] = "GUI";
+    TextureImporterType[TextureImporterType["Sprite"] = 8] = "Sprite";
+    TextureImporterType[TextureImporterType["Cursor"] = 7] = "Cursor";
+    TextureImporterType[TextureImporterType["Cubemap"] = 3] = "Cubemap";
+    TextureImporterType[TextureImporterType["Reflection"] = 3] = "Reflection";
+    TextureImporterType[TextureImporterType["Cookie"] = 4] = "Cookie";
+    TextureImporterType[TextureImporterType["Lightmap"] = 6] = "Lightmap";
+    TextureImporterType[TextureImporterType["HDRI"] = 9] = "HDRI";
+    TextureImporterType[TextureImporterType["Advanced"] = 5] = "Advanced";
+    TextureImporterType[TextureImporterType["SingleChannel"] = 10] = "SingleChannel";
+    TextureImporterType[TextureImporterType["Shadowmask"] = 11] = "Shadowmask";
+    TextureImporterType[TextureImporterType["DirectionalLightmap"] = 12] = "DirectionalLightmap";
+  })(TextureImporterType = UnityEditor.TextureImporterType || (UnityEditor.TextureImporterType = {}));
+
+  var TextureImporterCompression;
+
+  (function (TextureImporterCompression) {
+    TextureImporterCompression[TextureImporterCompression["Uncompressed"] = 0] = "Uncompressed";
+    TextureImporterCompression[TextureImporterCompression["Compressed"] = 1] = "Compressed";
+    TextureImporterCompression[TextureImporterCompression["CompressedHQ"] = 2] = "CompressedHQ";
+    TextureImporterCompression[TextureImporterCompression["CompressedLQ"] = 3] = "CompressedLQ";
+  })(TextureImporterCompression = UnityEditor.TextureImporterCompression || (UnityEditor.TextureImporterCompression = {}));
+
+  var TextureResizeAlgorithm;
+
+  (function (TextureResizeAlgorithm) {
+    TextureResizeAlgorithm[TextureResizeAlgorithm["Mitchell"] = 0] = "Mitchell";
+    TextureResizeAlgorithm[TextureResizeAlgorithm["Bilinear"] = 1] = "Bilinear";
+  })(TextureResizeAlgorithm = UnityEditor.TextureResizeAlgorithm || (UnityEditor.TextureResizeAlgorithm = {}));
+
+  var TextureImporterShape;
+
+  (function (TextureImporterShape) {
+    TextureImporterShape[TextureImporterShape["Texture2D"] = 1] = "Texture2D";
+    TextureImporterShape[TextureImporterShape["TextureCube"] = 2] = "TextureCube";
+    TextureImporterShape[TextureImporterShape["Texture2DArray"] = 4] = "Texture2DArray";
+    TextureImporterShape[TextureImporterShape["Texture3D"] = 8] = "Texture3D";
+  })(TextureImporterShape = UnityEditor.TextureImporterShape || (UnityEditor.TextureImporterShape = {}));
+
+  var SpriteImportMode;
+
+  (function (SpriteImportMode) {
+    SpriteImportMode[SpriteImportMode["None"] = 0] = "None";
+    SpriteImportMode[SpriteImportMode["Single"] = 1] = "Single";
+    SpriteImportMode[SpriteImportMode["Multiple"] = 2] = "Multiple";
+    SpriteImportMode[SpriteImportMode["Polygon"] = 3] = "Polygon";
+  })(SpriteImportMode = UnityEditor.SpriteImportMode || (UnityEditor.SpriteImportMode = {}));
+
+  var AndroidETC2FallbackOverride;
+
+  (function (AndroidETC2FallbackOverride) {
+    AndroidETC2FallbackOverride[AndroidETC2FallbackOverride["UseBuildSettings"] = 0] = "UseBuildSettings";
+    AndroidETC2FallbackOverride[AndroidETC2FallbackOverride["Quality32Bit"] = 1] = "Quality32Bit";
+    AndroidETC2FallbackOverride[AndroidETC2FallbackOverride["Quality16Bit"] = 2] = "Quality16Bit";
+    AndroidETC2FallbackOverride[AndroidETC2FallbackOverride["Quality32BitDownscaled"] = 3] = "Quality32BitDownscaled";
+  })(AndroidETC2FallbackOverride = UnityEditor.AndroidETC2FallbackOverride || (UnityEditor.AndroidETC2FallbackOverride = {}));
+
+  var CommandHint;
+
+  (function (CommandHint) {
+    CommandHint[CommandHint["Undefined"] = -1] = "Undefined";
+    CommandHint[CommandHint["None"] = 0] = "None";
+    CommandHint[CommandHint["Event"] = 1] = "Event";
+    CommandHint[CommandHint["Menu"] = 2] = "Menu";
+    CommandHint[CommandHint["Shortcut"] = 4] = "Shortcut";
+    CommandHint[CommandHint["Shelf"] = 8] = "Shelf";
+    CommandHint[CommandHint["UI"] = 1048576] = "UI";
+    CommandHint[CommandHint["OnGUI"] = 3145728] = "OnGUI";
+    CommandHint[CommandHint["UIElements"] = 5242880] = "UIElements";
+    CommandHint[CommandHint["Validate"] = 1073741824] = "Validate";
+    CommandHint[CommandHint["UserDefined"] = -2147483648] = "UserDefined";
+    CommandHint[CommandHint["Any"] = -1] = "Any";
+  })(CommandHint = UnityEditor.CommandHint || (UnityEditor.CommandHint = {}));
+
+  var GameViewSizeGroupType;
+
+  (function (GameViewSizeGroupType) {
+    GameViewSizeGroupType[GameViewSizeGroupType["Standalone"] = 0] = "Standalone";
+    GameViewSizeGroupType[GameViewSizeGroupType["WebPlayer"] = 1] = "WebPlayer";
+    GameViewSizeGroupType[GameViewSizeGroupType["iOS"] = 2] = "iOS";
+    GameViewSizeGroupType[GameViewSizeGroupType["Android"] = 3] = "Android";
+    GameViewSizeGroupType[GameViewSizeGroupType["PS3"] = 4] = "PS3";
+    GameViewSizeGroupType[GameViewSizeGroupType["WiiU"] = 5] = "WiiU";
+    GameViewSizeGroupType[GameViewSizeGroupType["Tizen"] = 6] = "Tizen";
+    GameViewSizeGroupType[GameViewSizeGroupType["WP8"] = 7] = "WP8";
+    GameViewSizeGroupType[GameViewSizeGroupType["N3DS"] = 8] = "N3DS";
+    GameViewSizeGroupType[GameViewSizeGroupType["HMD"] = 9] = "HMD";
+  })(GameViewSizeGroupType = UnityEditor.GameViewSizeGroupType || (UnityEditor.GameViewSizeGroupType = {}));
+
+  var LightmapEditorSettings_Lightmapper;
+
+  (function (LightmapEditorSettings_Lightmapper) {
+    LightmapEditorSettings_Lightmapper[LightmapEditorSettings_Lightmapper["Radiosity"] = 0] = "Radiosity";
+    LightmapEditorSettings_Lightmapper[LightmapEditorSettings_Lightmapper["Enlighten"] = 0] = "Enlighten";
+    LightmapEditorSettings_Lightmapper[LightmapEditorSettings_Lightmapper["PathTracer"] = 1] = "PathTracer";
+    LightmapEditorSettings_Lightmapper[LightmapEditorSettings_Lightmapper["ProgressiveCPU"] = 1] = "ProgressiveCPU";
+    LightmapEditorSettings_Lightmapper[LightmapEditorSettings_Lightmapper["ProgressiveGPU"] = 2] = "ProgressiveGPU";
+  })(LightmapEditorSettings_Lightmapper = UnityEditor.LightmapEditorSettings_Lightmapper || (UnityEditor.LightmapEditorSettings_Lightmapper = {}));
+
+  var LightmapEditorSettings_Sampling;
+
+  (function (LightmapEditorSettings_Sampling) {
+    LightmapEditorSettings_Sampling[LightmapEditorSettings_Sampling["Auto"] = 0] = "Auto";
+    LightmapEditorSettings_Sampling[LightmapEditorSettings_Sampling["Fixed"] = 1] = "Fixed";
+  })(LightmapEditorSettings_Sampling = UnityEditor.LightmapEditorSettings_Sampling || (UnityEditor.LightmapEditorSettings_Sampling = {}));
+
+  var LightmapEditorSettings_FilterMode;
+
+  (function (LightmapEditorSettings_FilterMode) {
+    LightmapEditorSettings_FilterMode[LightmapEditorSettings_FilterMode["None"] = 0] = "None";
+    LightmapEditorSettings_FilterMode[LightmapEditorSettings_FilterMode["Auto"] = 1] = "Auto";
+    LightmapEditorSettings_FilterMode[LightmapEditorSettings_FilterMode["Advanced"] = 2] = "Advanced";
+  })(LightmapEditorSettings_FilterMode = UnityEditor.LightmapEditorSettings_FilterMode || (UnityEditor.LightmapEditorSettings_FilterMode = {}));
+
+  var LightmapEditorSettings_DenoiserType;
+
+  (function (LightmapEditorSettings_DenoiserType) {
+    LightmapEditorSettings_DenoiserType[LightmapEditorSettings_DenoiserType["None"] = 0] = "None";
+    LightmapEditorSettings_DenoiserType[LightmapEditorSettings_DenoiserType["Optix"] = 1] = "Optix";
+    LightmapEditorSettings_DenoiserType[LightmapEditorSettings_DenoiserType["OpenImage"] = 2] = "OpenImage";
+    LightmapEditorSettings_DenoiserType[LightmapEditorSettings_DenoiserType["RadeonPro"] = 3] = "RadeonPro";
+  })(LightmapEditorSettings_DenoiserType = UnityEditor.LightmapEditorSettings_DenoiserType || (UnityEditor.LightmapEditorSettings_DenoiserType = {}));
+
+  var LightmapEditorSettings_FilterType;
+
+  (function (LightmapEditorSettings_FilterType) {
+    LightmapEditorSettings_FilterType[LightmapEditorSettings_FilterType["Gaussian"] = 0] = "Gaussian";
+    LightmapEditorSettings_FilterType[LightmapEditorSettings_FilterType["ATrous"] = 1] = "ATrous";
+    LightmapEditorSettings_FilterType[LightmapEditorSettings_FilterType["None"] = 2] = "None";
+  })(LightmapEditorSettings_FilterType = UnityEditor.LightmapEditorSettings_FilterType || (UnityEditor.LightmapEditorSettings_FilterType = {}));
+
+  var LightmapEditorSettings_GIBakeBackend;
+
+  (function (LightmapEditorSettings_GIBakeBackend) {
+    LightmapEditorSettings_GIBakeBackend[LightmapEditorSettings_GIBakeBackend["Radiosity"] = 0] = "Radiosity";
+    LightmapEditorSettings_GIBakeBackend[LightmapEditorSettings_GIBakeBackend["PathTracer"] = 1] = "PathTracer";
+  })(LightmapEditorSettings_GIBakeBackend = UnityEditor.LightmapEditorSettings_GIBakeBackend || (UnityEditor.LightmapEditorSettings_GIBakeBackend = {}));
+
+  var LightmapEditorSettings_PathTracerSampling;
+
+  (function (LightmapEditorSettings_PathTracerSampling) {
+    LightmapEditorSettings_PathTracerSampling[LightmapEditorSettings_PathTracerSampling["Auto"] = 0] = "Auto";
+    LightmapEditorSettings_PathTracerSampling[LightmapEditorSettings_PathTracerSampling["Fixed"] = 1] = "Fixed";
+  })(LightmapEditorSettings_PathTracerSampling = UnityEditor.LightmapEditorSettings_PathTracerSampling || (UnityEditor.LightmapEditorSettings_PathTracerSampling = {}));
+
+  var LightmapEditorSettings_PathTracerFilter;
+
+  (function (LightmapEditorSettings_PathTracerFilter) {
+    LightmapEditorSettings_PathTracerFilter[LightmapEditorSettings_PathTracerFilter["Gaussian"] = 0] = "Gaussian";
+    LightmapEditorSettings_PathTracerFilter[LightmapEditorSettings_PathTracerFilter["ATrous"] = 1] = "ATrous";
+  })(LightmapEditorSettings_PathTracerFilter = UnityEditor.LightmapEditorSettings_PathTracerFilter || (UnityEditor.LightmapEditorSettings_PathTracerFilter = {}));
+
+  var LightmapBakeQuality;
+
+  (function (LightmapBakeQuality) {
+    LightmapBakeQuality[LightmapBakeQuality["High"] = 0] = "High";
+    LightmapBakeQuality[LightmapBakeQuality["Low"] = 1] = "Low";
+  })(LightmapBakeQuality = UnityEditor.LightmapBakeQuality || (UnityEditor.LightmapBakeQuality = {}));
+
+  var Lightmapping_GIWorkflowMode;
+
+  (function (Lightmapping_GIWorkflowMode) {
+    Lightmapping_GIWorkflowMode[Lightmapping_GIWorkflowMode["Iterative"] = 0] = "Iterative";
+    Lightmapping_GIWorkflowMode[Lightmapping_GIWorkflowMode["OnDemand"] = 1] = "OnDemand";
+    Lightmapping_GIWorkflowMode[Lightmapping_GIWorkflowMode["Legacy"] = 2] = "Legacy";
+  })(Lightmapping_GIWorkflowMode = UnityEditor.Lightmapping_GIWorkflowMode || (UnityEditor.Lightmapping_GIWorkflowMode = {}));
+
+  var ViewTool;
+
+  (function (ViewTool) {
+    ViewTool[ViewTool["None"] = -1] = "None";
+    ViewTool[ViewTool["Orbit"] = 0] = "Orbit";
+    ViewTool[ViewTool["Pan"] = 1] = "Pan";
+    ViewTool[ViewTool["Zoom"] = 2] = "Zoom";
+    ViewTool[ViewTool["FPS"] = 3] = "FPS";
+  })(ViewTool = UnityEditor.ViewTool || (UnityEditor.ViewTool = {}));
+
+  var PivotMode;
+
+  (function (PivotMode) {
+    PivotMode[PivotMode["Center"] = 0] = "Center";
+    PivotMode[PivotMode["Pivot"] = 1] = "Pivot";
+  })(PivotMode = UnityEditor.PivotMode || (UnityEditor.PivotMode = {}));
+
+  var PivotRotation;
+
+  (function (PivotRotation) {
+    PivotRotation[PivotRotation["Local"] = 0] = "Local";
+    PivotRotation[PivotRotation["Global"] = 1] = "Global";
+  })(PivotRotation = UnityEditor.PivotRotation || (UnityEditor.PivotRotation = {}));
+
+  var Tool;
+
+  (function (Tool) {
+    Tool[Tool["View"] = 0] = "View";
+    Tool[Tool["Move"] = 1] = "Move";
+    Tool[Tool["Rotate"] = 2] = "Rotate";
+    Tool[Tool["Scale"] = 3] = "Scale";
+    Tool[Tool["Rect"] = 4] = "Rect";
+    Tool[Tool["Transform"] = 5] = "Transform";
+    Tool[Tool["Custom"] = 6] = "Custom";
+    Tool[Tool["None"] = -1] = "None";
+  })(Tool = UnityEditor.Tool || (UnityEditor.Tool = {}));
+
+  var TextureImporterCubemapConvolution;
+
+  (function (TextureImporterCubemapConvolution) {
+    TextureImporterCubemapConvolution[TextureImporterCubemapConvolution["None"] = 0] = "None";
+    TextureImporterCubemapConvolution[TextureImporterCubemapConvolution["Specular"] = 1] = "Specular";
+    TextureImporterCubemapConvolution[TextureImporterCubemapConvolution["Diffuse"] = 2] = "Diffuse";
+  })(TextureImporterCubemapConvolution = UnityEditor.TextureImporterCubemapConvolution || (UnityEditor.TextureImporterCubemapConvolution = {}));
+
+  var TextureImporterRGBMMode;
+
+  (function (TextureImporterRGBMMode) {
+    TextureImporterRGBMMode[TextureImporterRGBMMode["Auto"] = 0] = "Auto";
+    TextureImporterRGBMMode[TextureImporterRGBMMode["On"] = 1] = "On";
+    TextureImporterRGBMMode[TextureImporterRGBMMode["Off"] = 2] = "Off";
+    TextureImporterRGBMMode[TextureImporterRGBMMode["Encoded"] = 3] = "Encoded";
+  })(TextureImporterRGBMMode = UnityEditor.TextureImporterRGBMMode || (UnityEditor.TextureImporterRGBMMode = {}));
+
+  var BodyPart;
+
+  (function (BodyPart) {
+    BodyPart[BodyPart["None"] = -1] = "None";
+    BodyPart[BodyPart["Avatar"] = 0] = "Avatar";
+    BodyPart[BodyPart["Body"] = 1] = "Body";
+    BodyPart[BodyPart["Head"] = 2] = "Head";
+    BodyPart[BodyPart["LeftArm"] = 3] = "LeftArm";
+    BodyPart[BodyPart["LeftFingers"] = 4] = "LeftFingers";
+    BodyPart[BodyPart["RightArm"] = 5] = "RightArm";
+    BodyPart[BodyPart["RightFingers"] = 6] = "RightFingers";
+    BodyPart[BodyPart["LeftLeg"] = 7] = "LeftLeg";
+    BodyPart[BodyPart["RightLeg"] = 8] = "RightLeg";
+    BodyPart[BodyPart["Last"] = 9] = "Last";
+  })(BodyPart = UnityEditor.BodyPart || (UnityEditor.BodyPart = {}));
+
+  var BoneState;
+
+  (function (BoneState) {
+    BoneState[BoneState["None"] = 0] = "None";
+    BoneState[BoneState["NotFound"] = 1] = "NotFound";
+    BoneState[BoneState["Duplicate"] = 2] = "Duplicate";
+    BoneState[BoneState["InvalidHierarchy"] = 3] = "InvalidHierarchy";
+    BoneState[BoneState["BoneLenghtIsZero"] = 4] = "BoneLenghtIsZero";
+    BoneState[BoneState["Valid"] = 5] = "Valid";
+  })(BoneState = UnityEditor.BoneState || (UnityEditor.BoneState = {}));
+
+  var PrefabAssetType;
+
+  (function (PrefabAssetType) {
+    PrefabAssetType[PrefabAssetType["NotAPrefab"] = 0] = "NotAPrefab";
+    PrefabAssetType[PrefabAssetType["Regular"] = 1] = "Regular";
+    PrefabAssetType[PrefabAssetType["Model"] = 2] = "Model";
+    PrefabAssetType[PrefabAssetType["Variant"] = 3] = "Variant";
+    PrefabAssetType[PrefabAssetType["MissingAsset"] = 4] = "MissingAsset";
+  })(PrefabAssetType = UnityEditor.PrefabAssetType || (UnityEditor.PrefabAssetType = {}));
+
+  var PrefabInstanceStatus;
+
+  (function (PrefabInstanceStatus) {
+    PrefabInstanceStatus[PrefabInstanceStatus["NotAPrefab"] = 0] = "NotAPrefab";
+    PrefabInstanceStatus[PrefabInstanceStatus["Connected"] = 1] = "Connected";
+    PrefabInstanceStatus[PrefabInstanceStatus["Disconnected"] = 2] = "Disconnected";
+    PrefabInstanceStatus[PrefabInstanceStatus["MissingAsset"] = 3] = "MissingAsset";
+  })(PrefabInstanceStatus = UnityEditor.PrefabInstanceStatus || (UnityEditor.PrefabInstanceStatus = {}));
+
+  var PrefabUnpackMode;
+
+  (function (PrefabUnpackMode) {
+    PrefabUnpackMode[PrefabUnpackMode["OutermostRoot"] = 0] = "OutermostRoot";
+    PrefabUnpackMode[PrefabUnpackMode["Completely"] = 1] = "Completely";
+  })(PrefabUnpackMode = UnityEditor.PrefabUnpackMode || (UnityEditor.PrefabUnpackMode = {}));
+
+  var PrefabType;
+
+  (function (PrefabType) {
+    PrefabType[PrefabType["None"] = 0] = "None";
+    PrefabType[PrefabType["Prefab"] = 1] = "Prefab";
+    PrefabType[PrefabType["ModelPrefab"] = 2] = "ModelPrefab";
+    PrefabType[PrefabType["PrefabInstance"] = 3] = "PrefabInstance";
+    PrefabType[PrefabType["ModelPrefabInstance"] = 4] = "ModelPrefabInstance";
+    PrefabType[PrefabType["MissingPrefabInstance"] = 5] = "MissingPrefabInstance";
+    PrefabType[PrefabType["DisconnectedPrefabInstance"] = 6] = "DisconnectedPrefabInstance";
+    PrefabType[PrefabType["DisconnectedModelPrefabInstance"] = 7] = "DisconnectedModelPrefabInstance";
+  })(PrefabType = UnityEditor.PrefabType || (UnityEditor.PrefabType = {}));
+
+  var ReplacePrefabOptions;
+
+  (function (ReplacePrefabOptions) {
+    ReplacePrefabOptions[ReplacePrefabOptions["Default"] = 0] = "Default";
+    ReplacePrefabOptions[ReplacePrefabOptions["ConnectToPrefab"] = 1] = "ConnectToPrefab";
+    ReplacePrefabOptions[ReplacePrefabOptions["ReplaceNameBased"] = 2] = "ReplaceNameBased";
+  })(ReplacePrefabOptions = UnityEditor.ReplacePrefabOptions || (UnityEditor.ReplacePrefabOptions = {}));
+
+  var SaveType;
+
+  (function (SaveType) {
+    SaveType[SaveType["Binary"] = 0] = "Binary";
+    SaveType[SaveType["Text"] = 1] = "Text";
+  })(SaveType = UnityEditor.SaveType || (UnityEditor.SaveType = {}));
+
+  var Progress_Status;
+
+  (function (Progress_Status) {
+    Progress_Status[Progress_Status["Running"] = 0] = "Running";
+    Progress_Status[Progress_Status["Succeeded"] = 1] = "Succeeded";
+    Progress_Status[Progress_Status["Failed"] = 2] = "Failed";
+    Progress_Status[Progress_Status["Canceled"] = 3] = "Canceled";
+    Progress_Status[Progress_Status["Paused"] = 4] = "Paused";
+  })(Progress_Status = UnityEditor.Progress_Status || (UnityEditor.Progress_Status = {}));
+
+  var Progress_Options;
+
+  (function (Progress_Options) {
+    Progress_Options[Progress_Options["None"] = 0] = "None";
+    Progress_Options[Progress_Options["Sticky"] = 1] = "Sticky";
+    Progress_Options[Progress_Options["Indefinite"] = 2] = "Indefinite";
+    Progress_Options[Progress_Options["Synchronous"] = 4] = "Synchronous";
+    Progress_Options[Progress_Options["Managed"] = 8] = "Managed";
+    Progress_Options[Progress_Options["Unmanaged"] = 16] = "Unmanaged";
+  })(Progress_Options = UnityEditor.Progress_Options || (UnityEditor.Progress_Options = {}));
+
+  var Progress_TimeDisplayMode;
+
+  (function (Progress_TimeDisplayMode) {
+    Progress_TimeDisplayMode[Progress_TimeDisplayMode["NoTimeShown"] = 0] = "NoTimeShown";
+    Progress_TimeDisplayMode[Progress_TimeDisplayMode["ShowRunningTime"] = 1] = "ShowRunningTime";
+    Progress_TimeDisplayMode[Progress_TimeDisplayMode["ShowRemainingTime"] = 2] = "ShowRemainingTime";
+  })(Progress_TimeDisplayMode = UnityEditor.Progress_TimeDisplayMode || (UnityEditor.Progress_TimeDisplayMode = {}));
+
+  var Progress_Priority;
+
+  (function (Progress_Priority) {
+    Progress_Priority[Progress_Priority["Unresponsive"] = 0] = "Unresponsive";
+    Progress_Priority[Progress_Priority["Idle"] = 1] = "Idle";
+    Progress_Priority[Progress_Priority["Low"] = 2] = "Low";
+    Progress_Priority[Progress_Priority["Normal"] = 6] = "Normal";
+    Progress_Priority[Progress_Priority["High"] = 10] = "High";
+  })(Progress_Priority = UnityEditor.Progress_Priority || (UnityEditor.Progress_Priority = {}));
+
+  var SearchableEditorWindow_SearchMode;
+
+  (function (SearchableEditorWindow_SearchMode) {
+    SearchableEditorWindow_SearchMode[SearchableEditorWindow_SearchMode["All"] = 0] = "All";
+    SearchableEditorWindow_SearchMode[SearchableEditorWindow_SearchMode["Name"] = 1] = "Name";
+    SearchableEditorWindow_SearchMode[SearchableEditorWindow_SearchMode["Type"] = 2] = "Type";
+    SearchableEditorWindow_SearchMode[SearchableEditorWindow_SearchMode["Label"] = 3] = "Label";
+    SearchableEditorWindow_SearchMode[SearchableEditorWindow_SearchMode["AssetBundleName"] = 4] = "AssetBundleName";
+  })(SearchableEditorWindow_SearchMode = UnityEditor.SearchableEditorWindow_SearchMode || (UnityEditor.SearchableEditorWindow_SearchMode = {}));
+
+  var SearchableEditorWindow_SearchModeHierarchyWindow;
+
+  (function (SearchableEditorWindow_SearchModeHierarchyWindow) {
+    SearchableEditorWindow_SearchModeHierarchyWindow[SearchableEditorWindow_SearchModeHierarchyWindow["All"] = 0] = "All";
+    SearchableEditorWindow_SearchModeHierarchyWindow[SearchableEditorWindow_SearchModeHierarchyWindow["Name"] = 1] = "Name";
+    SearchableEditorWindow_SearchModeHierarchyWindow[SearchableEditorWindow_SearchModeHierarchyWindow["Type"] = 2] = "Type";
+  })(SearchableEditorWindow_SearchModeHierarchyWindow = UnityEditor.SearchableEditorWindow_SearchModeHierarchyWindow || (UnityEditor.SearchableEditorWindow_SearchModeHierarchyWindow = {}));
+
+  var LightingExplorerTableColumn_DataType;
+
+  (function (LightingExplorerTableColumn_DataType) {
+    LightingExplorerTableColumn_DataType[LightingExplorerTableColumn_DataType["Name"] = 0] = "Name";
+    LightingExplorerTableColumn_DataType[LightingExplorerTableColumn_DataType["Checkbox"] = 1] = "Checkbox";
+    LightingExplorerTableColumn_DataType[LightingExplorerTableColumn_DataType["Enum"] = 2] = "Enum";
+    LightingExplorerTableColumn_DataType[LightingExplorerTableColumn_DataType["Int"] = 3] = "Int";
+    LightingExplorerTableColumn_DataType[LightingExplorerTableColumn_DataType["Float"] = 4] = "Float";
+    LightingExplorerTableColumn_DataType[LightingExplorerTableColumn_DataType["Color"] = 5] = "Color";
+    LightingExplorerTableColumn_DataType[LightingExplorerTableColumn_DataType["Custom"] = 20] = "Custom";
+  })(LightingExplorerTableColumn_DataType = UnityEditor.LightingExplorerTableColumn_DataType || (UnityEditor.LightingExplorerTableColumn_DataType = {}));
+
+  var SettingsScope;
+
+  (function (SettingsScope) {
+    SettingsScope[SettingsScope["User"] = 0] = "User";
+    SettingsScope[SettingsScope["Project"] = 1] = "Project";
+  })(SettingsScope = UnityEditor.SettingsScope || (UnityEditor.SettingsScope = {}));
+
+  var HighlightSearchMode;
+
+  (function (HighlightSearchMode) {
+    HighlightSearchMode[HighlightSearchMode["None"] = 0] = "None";
+    HighlightSearchMode[HighlightSearchMode["Auto"] = 1] = "Auto";
+    HighlightSearchMode[HighlightSearchMode["Identifier"] = 2] = "Identifier";
+    HighlightSearchMode[HighlightSearchMode["PrefixLabel"] = 3] = "PrefixLabel";
+    HighlightSearchMode[HighlightSearchMode["Content"] = 4] = "Content";
+  })(HighlightSearchMode = UnityEditor.HighlightSearchMode || (UnityEditor.HighlightSearchMode = {}));
+
+  var ObjectChangeKind;
+
+  (function (ObjectChangeKind) {
+    ObjectChangeKind[ObjectChangeKind["None"] = 0] = "None";
+    ObjectChangeKind[ObjectChangeKind["ChangeScene"] = 1] = "ChangeScene";
+    ObjectChangeKind[ObjectChangeKind["CreateGameObjectHierarchy"] = 2] = "CreateGameObjectHierarchy";
+    ObjectChangeKind[ObjectChangeKind["ChangeGameObjectStructureHierarchy"] = 3] = "ChangeGameObjectStructureHierarchy";
+    ObjectChangeKind[ObjectChangeKind["ChangeGameObjectStructure"] = 4] = "ChangeGameObjectStructure";
+    ObjectChangeKind[ObjectChangeKind["ChangeGameObjectParent"] = 5] = "ChangeGameObjectParent";
+    ObjectChangeKind[ObjectChangeKind["ChangeGameObjectOrComponentProperties"] = 6] = "ChangeGameObjectOrComponentProperties";
+    ObjectChangeKind[ObjectChangeKind["DestroyGameObjectHierarchy"] = 7] = "DestroyGameObjectHierarchy";
+    ObjectChangeKind[ObjectChangeKind["CreateAssetObject"] = 8] = "CreateAssetObject";
+    ObjectChangeKind[ObjectChangeKind["DestroyAssetObject"] = 9] = "DestroyAssetObject";
+    ObjectChangeKind[ObjectChangeKind["ChangeAssetObjectProperties"] = 10] = "ChangeAssetObjectProperties";
+    ObjectChangeKind[ObjectChangeKind["UpdatePrefabInstances"] = 11] = "UpdatePrefabInstances";
+  })(ObjectChangeKind = UnityEditor.ObjectChangeKind || (UnityEditor.ObjectChangeKind = {}));
+
+  var RemoveAssetOptions;
+
+  (function (RemoveAssetOptions) {
+    RemoveAssetOptions[RemoveAssetOptions["MoveAssetToTrash"] = 0] = "MoveAssetToTrash";
+    RemoveAssetOptions[RemoveAssetOptions["DeleteAssets"] = 2] = "DeleteAssets";
+  })(RemoveAssetOptions = UnityEditor.RemoveAssetOptions || (UnityEditor.RemoveAssetOptions = {}));
+
+  var ImportAssetOptions;
+
+  (function (ImportAssetOptions) {
+    ImportAssetOptions[ImportAssetOptions["Default"] = 0] = "Default";
+    ImportAssetOptions[ImportAssetOptions["ForceUpdate"] = 1] = "ForceUpdate";
+    ImportAssetOptions[ImportAssetOptions["ForceSynchronousImport"] = 8] = "ForceSynchronousImport";
+    ImportAssetOptions[ImportAssetOptions["ImportRecursive"] = 256] = "ImportRecursive";
+    ImportAssetOptions[ImportAssetOptions["DontDownloadFromCacheServer"] = 8192] = "DontDownloadFromCacheServer";
+    ImportAssetOptions[ImportAssetOptions["ForceUncompressedImport"] = 16384] = "ForceUncompressedImport";
+  })(ImportAssetOptions = UnityEditor.ImportAssetOptions || (UnityEditor.ImportAssetOptions = {}));
+
+  var StatusQueryOptions;
+
+  (function (StatusQueryOptions) {
+    StatusQueryOptions[StatusQueryOptions["ForceUpdate"] = 0] = "ForceUpdate";
+    StatusQueryOptions[StatusQueryOptions["UseCachedIfPossible"] = 1] = "UseCachedIfPossible";
+    StatusQueryOptions[StatusQueryOptions["UseCachedAsync"] = 2] = "UseCachedAsync";
+  })(StatusQueryOptions = UnityEditor.StatusQueryOptions || (UnityEditor.StatusQueryOptions = {}));
+
+  var ForceReserializeAssetsOptions;
+
+  (function (ForceReserializeAssetsOptions) {
+    ForceReserializeAssetsOptions[ForceReserializeAssetsOptions["ReserializeAssets"] = 1] = "ReserializeAssets";
+    ForceReserializeAssetsOptions[ForceReserializeAssetsOptions["ReserializeMetadata"] = 2] = "ReserializeMetadata";
+    ForceReserializeAssetsOptions[ForceReserializeAssetsOptions["ReserializeAssetsAndMetadata"] = 3] = "ReserializeAssetsAndMetadata";
+  })(ForceReserializeAssetsOptions = UnityEditor.ForceReserializeAssetsOptions || (UnityEditor.ForceReserializeAssetsOptions = {}));
+
+  var AudioImporterFormat;
+
+  (function (AudioImporterFormat) {
+    AudioImporterFormat[AudioImporterFormat["Native"] = -1] = "Native";
+    AudioImporterFormat[AudioImporterFormat["Compressed"] = 0] = "Compressed";
+  })(AudioImporterFormat = UnityEditor.AudioImporterFormat || (UnityEditor.AudioImporterFormat = {}));
+
+  var AudioImporterLoadType;
+
+  (function (AudioImporterLoadType) {
+    AudioImporterLoadType[AudioImporterLoadType["DecompressOnLoad"] = -1] = "DecompressOnLoad";
+    AudioImporterLoadType[AudioImporterLoadType["CompressedInMemory"] = -1] = "CompressedInMemory";
+    AudioImporterLoadType[AudioImporterLoadType["StreamFromDisc"] = -1] = "StreamFromDisc";
+  })(AudioImporterLoadType = UnityEditor.AudioImporterLoadType || (UnityEditor.AudioImporterLoadType = {}));
+
+  var AudioImporterChannels;
+
+  (function (AudioImporterChannels) {
+    AudioImporterChannels[AudioImporterChannels["Automatic"] = 0] = "Automatic";
+    AudioImporterChannels[AudioImporterChannels["Mono"] = 1] = "Mono";
+    AudioImporterChannels[AudioImporterChannels["Stereo"] = 2] = "Stereo";
+  })(AudioImporterChannels = UnityEditor.AudioImporterChannels || (UnityEditor.AudioImporterChannels = {}));
+
+  var AudioSampleRateSetting;
+
+  (function (AudioSampleRateSetting) {
+    AudioSampleRateSetting[AudioSampleRateSetting["PreserveSampleRate"] = 0] = "PreserveSampleRate";
+    AudioSampleRateSetting[AudioSampleRateSetting["OptimizeSampleRate"] = 1] = "OptimizeSampleRate";
+    AudioSampleRateSetting[AudioSampleRateSetting["OverrideSampleRate"] = 2] = "OverrideSampleRate";
+  })(AudioSampleRateSetting = UnityEditor.AudioSampleRateSetting || (UnityEditor.AudioSampleRateSetting = {}));
+
+  var VideoCodec;
+
+  (function (VideoCodec) {
+    VideoCodec[VideoCodec["Auto"] = 0] = "Auto";
+    VideoCodec[VideoCodec["H264"] = 1] = "H264";
+    VideoCodec[VideoCodec["H265"] = 3] = "H265";
+    VideoCodec[VideoCodec["VP8"] = 2] = "VP8";
+  })(VideoCodec = UnityEditor.VideoCodec || (UnityEditor.VideoCodec = {}));
+
+  var VideoBitrateMode;
+
+  (function (VideoBitrateMode) {
+    VideoBitrateMode[VideoBitrateMode["Low"] = 0] = "Low";
+    VideoBitrateMode[VideoBitrateMode["Medium"] = 1] = "Medium";
+    VideoBitrateMode[VideoBitrateMode["High"] = 2] = "High";
+  })(VideoBitrateMode = UnityEditor.VideoBitrateMode || (UnityEditor.VideoBitrateMode = {}));
+
+  var VideoDeinterlaceMode;
+
+  (function (VideoDeinterlaceMode) {
+    VideoDeinterlaceMode[VideoDeinterlaceMode["Off"] = 0] = "Off";
+    VideoDeinterlaceMode[VideoDeinterlaceMode["Even"] = 1] = "Even";
+    VideoDeinterlaceMode[VideoDeinterlaceMode["Odd"] = 2] = "Odd";
+  })(VideoDeinterlaceMode = UnityEditor.VideoDeinterlaceMode || (UnityEditor.VideoDeinterlaceMode = {}));
+
+  var VideoResizeMode;
+
+  (function (VideoResizeMode) {
+    VideoResizeMode[VideoResizeMode["OriginalSize"] = 0] = "OriginalSize";
+    VideoResizeMode[VideoResizeMode["ThreeQuarterRes"] = 1] = "ThreeQuarterRes";
+    VideoResizeMode[VideoResizeMode["HalfRes"] = 2] = "HalfRes";
+    VideoResizeMode[VideoResizeMode["QuarterRes"] = 3] = "QuarterRes";
+    VideoResizeMode[VideoResizeMode["Square1024"] = 4] = "Square1024";
+    VideoResizeMode[VideoResizeMode["Square512"] = 5] = "Square512";
+    VideoResizeMode[VideoResizeMode["Square256"] = 6] = "Square256";
+    VideoResizeMode[VideoResizeMode["CustomSize"] = 7] = "CustomSize";
+  })(VideoResizeMode = UnityEditor.VideoResizeMode || (UnityEditor.VideoResizeMode = {}));
+
+  var VideoSpatialQuality;
+
+  (function (VideoSpatialQuality) {
+    VideoSpatialQuality[VideoSpatialQuality["LowSpatialQuality"] = 0] = "LowSpatialQuality";
+    VideoSpatialQuality[VideoSpatialQuality["MediumSpatialQuality"] = 1] = "MediumSpatialQuality";
+    VideoSpatialQuality[VideoSpatialQuality["HighSpatialQuality"] = 2] = "HighSpatialQuality";
+  })(VideoSpatialQuality = UnityEditor.VideoSpatialQuality || (UnityEditor.VideoSpatialQuality = {}));
+
+  var VideoEncodeAspectRatio;
+
+  (function (VideoEncodeAspectRatio) {
+    VideoEncodeAspectRatio[VideoEncodeAspectRatio["NoScaling"] = 0] = "NoScaling";
+    VideoEncodeAspectRatio[VideoEncodeAspectRatio["Stretch"] = 5] = "Stretch";
+  })(VideoEncodeAspectRatio = UnityEditor.VideoEncodeAspectRatio || (UnityEditor.VideoEncodeAspectRatio = {}));
+
+  var MeshOptimizationFlags;
+
+  (function (MeshOptimizationFlags) {
+    MeshOptimizationFlags[MeshOptimizationFlags["PolygonOrder"] = 1] = "PolygonOrder";
+    MeshOptimizationFlags[MeshOptimizationFlags["VertexOrder"] = 2] = "VertexOrder";
+    MeshOptimizationFlags[MeshOptimizationFlags["Everything"] = -1] = "Everything";
+  })(MeshOptimizationFlags = UnityEditor.MeshOptimizationFlags || (UnityEditor.MeshOptimizationFlags = {}));
+
+  var ClipAnimationMaskType;
+
+  (function (ClipAnimationMaskType) {
+    ClipAnimationMaskType[ClipAnimationMaskType["CreateFromThisModel"] = 0] = "CreateFromThisModel";
+    ClipAnimationMaskType[ClipAnimationMaskType["CopyFromOther"] = 1] = "CopyFromOther";
+    ClipAnimationMaskType[ClipAnimationMaskType["None"] = 3] = "None";
+  })(ClipAnimationMaskType = UnityEditor.ClipAnimationMaskType || (UnityEditor.ClipAnimationMaskType = {}));
+
+  var ModelImporterGenerateMaterials;
+
+  (function (ModelImporterGenerateMaterials) {
+    ModelImporterGenerateMaterials[ModelImporterGenerateMaterials["None"] = 0] = "None";
+    ModelImporterGenerateMaterials[ModelImporterGenerateMaterials["PerTexture"] = 1] = "PerTexture";
+    ModelImporterGenerateMaterials[ModelImporterGenerateMaterials["PerSourceMaterial"] = 2] = "PerSourceMaterial";
+  })(ModelImporterGenerateMaterials = UnityEditor.ModelImporterGenerateMaterials || (UnityEditor.ModelImporterGenerateMaterials = {}));
+
+  var ModelImporterMaterialName;
+
+  (function (ModelImporterMaterialName) {
+    ModelImporterMaterialName[ModelImporterMaterialName["BasedOnTextureName"] = 0] = "BasedOnTextureName";
+    ModelImporterMaterialName[ModelImporterMaterialName["BasedOnMaterialName"] = 1] = "BasedOnMaterialName";
+    ModelImporterMaterialName[ModelImporterMaterialName["BasedOnModelNameAndMaterialName"] = 2] = "BasedOnModelNameAndMaterialName";
+    ModelImporterMaterialName[ModelImporterMaterialName["BasedOnTextureName_Or_ModelNameAndMaterialName"] = 3] = "BasedOnTextureName_Or_ModelNameAndMaterialName";
+  })(ModelImporterMaterialName = UnityEditor.ModelImporterMaterialName || (UnityEditor.ModelImporterMaterialName = {}));
+
+  var ModelImporterMaterialSearch;
+
+  (function (ModelImporterMaterialSearch) {
+    ModelImporterMaterialSearch[ModelImporterMaterialSearch["Local"] = 0] = "Local";
+    ModelImporterMaterialSearch[ModelImporterMaterialSearch["RecursiveUp"] = 1] = "RecursiveUp";
+    ModelImporterMaterialSearch[ModelImporterMaterialSearch["Everywhere"] = 2] = "Everywhere";
+  })(ModelImporterMaterialSearch = UnityEditor.ModelImporterMaterialSearch || (UnityEditor.ModelImporterMaterialSearch = {}));
+
+  var ModelImporterMaterialLocation;
+
+  (function (ModelImporterMaterialLocation) {
+    ModelImporterMaterialLocation[ModelImporterMaterialLocation["External"] = 0] = "External";
+    ModelImporterMaterialLocation[ModelImporterMaterialLocation["InPrefab"] = 1] = "InPrefab";
+  })(ModelImporterMaterialLocation = UnityEditor.ModelImporterMaterialLocation || (UnityEditor.ModelImporterMaterialLocation = {}));
+
+  var ModelImporterMaterialImportMode;
+
+  (function (ModelImporterMaterialImportMode) {
+    ModelImporterMaterialImportMode[ModelImporterMaterialImportMode["None"] = 0] = "None";
+    ModelImporterMaterialImportMode[ModelImporterMaterialImportMode["ImportStandard"] = 1] = "ImportStandard";
+    ModelImporterMaterialImportMode[ModelImporterMaterialImportMode["ImportViaMaterialDescription"] = 2] = "ImportViaMaterialDescription";
+    ModelImporterMaterialImportMode[ModelImporterMaterialImportMode["LegacyImport"] = 1] = "LegacyImport";
+    ModelImporterMaterialImportMode[ModelImporterMaterialImportMode["Import"] = 2] = "Import";
+  })(ModelImporterMaterialImportMode = UnityEditor.ModelImporterMaterialImportMode || (UnityEditor.ModelImporterMaterialImportMode = {}));
+
+  var ModelImporterTangentSpaceMode;
+
+  (function (ModelImporterTangentSpaceMode) {
+    ModelImporterTangentSpaceMode[ModelImporterTangentSpaceMode["Import"] = 0] = "Import";
+    ModelImporterTangentSpaceMode[ModelImporterTangentSpaceMode["Calculate"] = 1] = "Calculate";
+    ModelImporterTangentSpaceMode[ModelImporterTangentSpaceMode["None"] = 2] = "None";
+  })(ModelImporterTangentSpaceMode = UnityEditor.ModelImporterTangentSpaceMode || (UnityEditor.ModelImporterTangentSpaceMode = {}));
+
+  var ModelImporterNormals;
+
+  (function (ModelImporterNormals) {
+    ModelImporterNormals[ModelImporterNormals["Import"] = 0] = "Import";
+    ModelImporterNormals[ModelImporterNormals["Calculate"] = 1] = "Calculate";
+    ModelImporterNormals[ModelImporterNormals["None"] = 2] = "None";
+  })(ModelImporterNormals = UnityEditor.ModelImporterNormals || (UnityEditor.ModelImporterNormals = {}));
+
+  var ModelImporterNormalCalculationMode;
+
+  (function (ModelImporterNormalCalculationMode) {
+    ModelImporterNormalCalculationMode[ModelImporterNormalCalculationMode["Unweighted_Legacy"] = 0] = "Unweighted_Legacy";
+    ModelImporterNormalCalculationMode[ModelImporterNormalCalculationMode["Unweighted"] = 1] = "Unweighted";
+    ModelImporterNormalCalculationMode[ModelImporterNormalCalculationMode["AreaWeighted"] = 2] = "AreaWeighted";
+    ModelImporterNormalCalculationMode[ModelImporterNormalCalculationMode["AngleWeighted"] = 3] = "AngleWeighted";
+    ModelImporterNormalCalculationMode[ModelImporterNormalCalculationMode["AreaAndAngleWeighted"] = 4] = "AreaAndAngleWeighted";
+  })(ModelImporterNormalCalculationMode = UnityEditor.ModelImporterNormalCalculationMode || (UnityEditor.ModelImporterNormalCalculationMode = {}));
+
+  var ModelImporterNormalSmoothingSource;
+
+  (function (ModelImporterNormalSmoothingSource) {
+    ModelImporterNormalSmoothingSource[ModelImporterNormalSmoothingSource["PreferSmoothingGroups"] = 0] = "PreferSmoothingGroups";
+    ModelImporterNormalSmoothingSource[ModelImporterNormalSmoothingSource["FromSmoothingGroups"] = 1] = "FromSmoothingGroups";
+    ModelImporterNormalSmoothingSource[ModelImporterNormalSmoothingSource["FromAngle"] = 2] = "FromAngle";
+    ModelImporterNormalSmoothingSource[ModelImporterNormalSmoothingSource["None"] = 3] = "None";
+  })(ModelImporterNormalSmoothingSource = UnityEditor.ModelImporterNormalSmoothingSource || (UnityEditor.ModelImporterNormalSmoothingSource = {}));
+
+  var ModelImporterTangents;
+
+  (function (ModelImporterTangents) {
+    ModelImporterTangents[ModelImporterTangents["Import"] = 0] = "Import";
+    ModelImporterTangents[ModelImporterTangents["CalculateLegacy"] = 1] = "CalculateLegacy";
+    ModelImporterTangents[ModelImporterTangents["CalculateLegacyWithSplitTangents"] = 4] = "CalculateLegacyWithSplitTangents";
+    ModelImporterTangents[ModelImporterTangents["CalculateMikk"] = 3] = "CalculateMikk";
+    ModelImporterTangents[ModelImporterTangents["None"] = 2] = "None";
+  })(ModelImporterTangents = UnityEditor.ModelImporterTangents || (UnityEditor.ModelImporterTangents = {}));
+
+  var ModelImporterMeshCompression;
+
+  (function (ModelImporterMeshCompression) {
+    ModelImporterMeshCompression[ModelImporterMeshCompression["Off"] = 0] = "Off";
+    ModelImporterMeshCompression[ModelImporterMeshCompression["Low"] = 1] = "Low";
+    ModelImporterMeshCompression[ModelImporterMeshCompression["Medium"] = 2] = "Medium";
+    ModelImporterMeshCompression[ModelImporterMeshCompression["High"] = 3] = "High";
+  })(ModelImporterMeshCompression = UnityEditor.ModelImporterMeshCompression || (UnityEditor.ModelImporterMeshCompression = {}));
+
+  var ModelImporterIndexFormat;
+
+  (function (ModelImporterIndexFormat) {
+    ModelImporterIndexFormat[ModelImporterIndexFormat["Auto"] = 0] = "Auto";
+    ModelImporterIndexFormat[ModelImporterIndexFormat["UInt16"] = 1] = "UInt16";
+    ModelImporterIndexFormat[ModelImporterIndexFormat["UInt32"] = 2] = "UInt32";
+  })(ModelImporterIndexFormat = UnityEditor.ModelImporterIndexFormat || (UnityEditor.ModelImporterIndexFormat = {}));
+
+  var ModelImporterAnimationCompression;
+
+  (function (ModelImporterAnimationCompression) {
+    ModelImporterAnimationCompression[ModelImporterAnimationCompression["Off"] = 0] = "Off";
+    ModelImporterAnimationCompression[ModelImporterAnimationCompression["KeyframeReduction"] = 1] = "KeyframeReduction";
+    ModelImporterAnimationCompression[ModelImporterAnimationCompression["KeyframeReductionAndCompression"] = 2] = "KeyframeReductionAndCompression";
+    ModelImporterAnimationCompression[ModelImporterAnimationCompression["Optimal"] = 3] = "Optimal";
+  })(ModelImporterAnimationCompression = UnityEditor.ModelImporterAnimationCompression || (UnityEditor.ModelImporterAnimationCompression = {}));
+
+  var ModelImporterGenerateAnimations;
+
+  (function (ModelImporterGenerateAnimations) {
+    ModelImporterGenerateAnimations[ModelImporterGenerateAnimations["None"] = 0] = "None";
+    ModelImporterGenerateAnimations[ModelImporterGenerateAnimations["GenerateAnimations"] = 4] = "GenerateAnimations";
+    ModelImporterGenerateAnimations[ModelImporterGenerateAnimations["InRoot"] = 3] = "InRoot";
+    ModelImporterGenerateAnimations[ModelImporterGenerateAnimations["InOriginalRoots"] = 1] = "InOriginalRoots";
+    ModelImporterGenerateAnimations[ModelImporterGenerateAnimations["InNodes"] = 2] = "InNodes";
+  })(ModelImporterGenerateAnimations = UnityEditor.ModelImporterGenerateAnimations || (UnityEditor.ModelImporterGenerateAnimations = {}));
+
+  var ModelImporterAnimationType;
+
+  (function (ModelImporterAnimationType) {
+    ModelImporterAnimationType[ModelImporterAnimationType["None"] = 0] = "None";
+    ModelImporterAnimationType[ModelImporterAnimationType["Legacy"] = 1] = "Legacy";
+    ModelImporterAnimationType[ModelImporterAnimationType["Generic"] = 2] = "Generic";
+    ModelImporterAnimationType[ModelImporterAnimationType["Human"] = 3] = "Human";
+  })(ModelImporterAnimationType = UnityEditor.ModelImporterAnimationType || (UnityEditor.ModelImporterAnimationType = {}));
+
+  var ModelImporterHumanoidOversampling;
+
+  (function (ModelImporterHumanoidOversampling) {
+    ModelImporterHumanoidOversampling[ModelImporterHumanoidOversampling["X1"] = 1] = "X1";
+    ModelImporterHumanoidOversampling[ModelImporterHumanoidOversampling["X2"] = 2] = "X2";
+    ModelImporterHumanoidOversampling[ModelImporterHumanoidOversampling["X4"] = 4] = "X4";
+    ModelImporterHumanoidOversampling[ModelImporterHumanoidOversampling["X8"] = 8] = "X8";
+  })(ModelImporterHumanoidOversampling = UnityEditor.ModelImporterHumanoidOversampling || (UnityEditor.ModelImporterHumanoidOversampling = {}));
+
+  var ModelImporterSecondaryUVMarginMethod;
+
+  (function (ModelImporterSecondaryUVMarginMethod) {
+    ModelImporterSecondaryUVMarginMethod[ModelImporterSecondaryUVMarginMethod["Manual"] = 0] = "Manual";
+    ModelImporterSecondaryUVMarginMethod[ModelImporterSecondaryUVMarginMethod["Calculate"] = 1] = "Calculate";
+  })(ModelImporterSecondaryUVMarginMethod = UnityEditor.ModelImporterSecondaryUVMarginMethod || (UnityEditor.ModelImporterSecondaryUVMarginMethod = {}));
+
+  var ModelImporterAvatarSetup;
+
+  (function (ModelImporterAvatarSetup) {
+    ModelImporterAvatarSetup[ModelImporterAvatarSetup["NoAvatar"] = 0] = "NoAvatar";
+    ModelImporterAvatarSetup[ModelImporterAvatarSetup["CreateFromThisModel"] = 1] = "CreateFromThisModel";
+    ModelImporterAvatarSetup[ModelImporterAvatarSetup["CopyFromOther"] = 2] = "CopyFromOther";
+  })(ModelImporterAvatarSetup = UnityEditor.ModelImporterAvatarSetup || (UnityEditor.ModelImporterAvatarSetup = {}));
+
+  var ModelImporterSkinWeights;
+
+  (function (ModelImporterSkinWeights) {
+    ModelImporterSkinWeights[ModelImporterSkinWeights["Standard"] = 0] = "Standard";
+    ModelImporterSkinWeights[ModelImporterSkinWeights["Custom"] = 1] = "Custom";
+  })(ModelImporterSkinWeights = UnityEditor.ModelImporterSkinWeights || (UnityEditor.ModelImporterSkinWeights = {}));
+
+  var PhysicsVisualizationSettings_FilterWorkflow;
+
+  (function (PhysicsVisualizationSettings_FilterWorkflow) {
+    PhysicsVisualizationSettings_FilterWorkflow[PhysicsVisualizationSettings_FilterWorkflow["HideSelectedItems"] = 0] = "HideSelectedItems";
+    PhysicsVisualizationSettings_FilterWorkflow[PhysicsVisualizationSettings_FilterWorkflow["ShowSelectedItems"] = 1] = "ShowSelectedItems";
+  })(PhysicsVisualizationSettings_FilterWorkflow = UnityEditor.PhysicsVisualizationSettings_FilterWorkflow || (UnityEditor.PhysicsVisualizationSettings_FilterWorkflow = {}));
+
+  var PhysicsVisualizationSettings_MeshColliderType;
+
+  (function (PhysicsVisualizationSettings_MeshColliderType) {
+    PhysicsVisualizationSettings_MeshColliderType[PhysicsVisualizationSettings_MeshColliderType["Convex"] = 0] = "Convex";
+    PhysicsVisualizationSettings_MeshColliderType[PhysicsVisualizationSettings_MeshColliderType["NonConvex"] = 1] = "NonConvex";
+  })(PhysicsVisualizationSettings_MeshColliderType = UnityEditor.PhysicsVisualizationSettings_MeshColliderType || (UnityEditor.PhysicsVisualizationSettings_MeshColliderType = {}));
+
+  var NetworkDetailStats_NetworkDirection;
+
+  (function (NetworkDetailStats_NetworkDirection) {
+    NetworkDetailStats_NetworkDirection[NetworkDetailStats_NetworkDirection["Incoming"] = 0] = "Incoming";
+    NetworkDetailStats_NetworkDirection[NetworkDetailStats_NetworkDirection["Outgoing"] = 1] = "Outgoing";
+  })(NetworkDetailStats_NetworkDirection = UnityEditor.NetworkDetailStats_NetworkDirection || (UnityEditor.NetworkDetailStats_NetworkDirection = {}));
+
+  var FontTextureCase;
+
+  (function (FontTextureCase) {
+    FontTextureCase[FontTextureCase["Dynamic"] = -2] = "Dynamic";
+    FontTextureCase[FontTextureCase["Unicode"] = -1] = "Unicode";
+    FontTextureCase[FontTextureCase["ASCII"] = 0] = "ASCII";
+    FontTextureCase[FontTextureCase["ASCIIUpperCase"] = 1] = "ASCIIUpperCase";
+    FontTextureCase[FontTextureCase["ASCIILowerCase"] = 2] = "ASCIILowerCase";
+    FontTextureCase[FontTextureCase["CustomSet"] = 3] = "CustomSet";
+  })(FontTextureCase = UnityEditor.FontTextureCase || (UnityEditor.FontTextureCase = {}));
+
+  var FontRenderingMode;
+
+  (function (FontRenderingMode) {
+    FontRenderingMode[FontRenderingMode["Smooth"] = 0] = "Smooth";
+    FontRenderingMode[FontRenderingMode["HintedSmooth"] = 1] = "HintedSmooth";
+    FontRenderingMode[FontRenderingMode["HintedRaster"] = 2] = "HintedRaster";
+    FontRenderingMode[FontRenderingMode["OSDefault"] = 3] = "OSDefault";
+  })(FontRenderingMode = UnityEditor.FontRenderingMode || (UnityEditor.FontRenderingMode = {}));
+
+  var AscentCalculationMode;
+
+  (function (AscentCalculationMode) {
+    AscentCalculationMode[AscentCalculationMode["Legacy2x"] = 0] = "Legacy2x";
+    AscentCalculationMode[AscentCalculationMode["FaceAscender"] = 1] = "FaceAscender";
+    AscentCalculationMode[AscentCalculationMode["FaceBoundingBox"] = 2] = "FaceBoundingBox";
+  })(AscentCalculationMode = UnityEditor.AscentCalculationMode || (UnityEditor.AscentCalculationMode = {}));
+
+  var GridPalette_CellSizing;
+
+  (function (GridPalette_CellSizing) {
+    GridPalette_CellSizing[GridPalette_CellSizing["Automatic"] = 0] = "Automatic";
+    GridPalette_CellSizing[GridPalette_CellSizing["Manual"] = 100] = "Manual";
+  })(GridPalette_CellSizing = UnityEditor.GridPalette_CellSizing || (UnityEditor.GridPalette_CellSizing = {}));
+
+  var Advertisements;
+
+  (function (Advertisements) {})(Advertisements = UnityEditor.Advertisements || (UnityEditor.Advertisements = {}));
+
+  var AI;
+
+  (function (AI) {})(AI = UnityEditor.AI || (UnityEditor.AI = {}));
+
+  var Analytics;
+
+  (function (Analytics) {})(Analytics = UnityEditor.Analytics || (UnityEditor.Analytics = {}));
+
+  var AnimatedValues;
+
+  (function (AnimatedValues) {})(AnimatedValues = UnityEditor.AnimatedValues || (UnityEditor.AnimatedValues = {}));
+
+  var Animations;
+
+  (function (Animations) {
+    var AnimatorLayerBlendingMode;
+
+    (function (AnimatorLayerBlendingMode) {
+      AnimatorLayerBlendingMode[AnimatorLayerBlendingMode["Override"] = 0] = "Override";
+      AnimatorLayerBlendingMode[AnimatorLayerBlendingMode["Additive"] = 1] = "Additive";
+    })(AnimatorLayerBlendingMode = Animations.AnimatorLayerBlendingMode || (Animations.AnimatorLayerBlendingMode = {}));
+
+    var BlendTreeType;
+
+    (function (BlendTreeType) {
+      BlendTreeType[BlendTreeType["Simple1D"] = 0] = "Simple1D";
+      BlendTreeType[BlendTreeType["SimpleDirectional2D"] = 1] = "SimpleDirectional2D";
+      BlendTreeType[BlendTreeType["FreeformDirectional2D"] = 2] = "FreeformDirectional2D";
+      BlendTreeType[BlendTreeType["FreeformCartesian2D"] = 3] = "FreeformCartesian2D";
+      BlendTreeType[BlendTreeType["Direct"] = 4] = "Direct";
+    })(BlendTreeType = Animations.BlendTreeType || (Animations.BlendTreeType = {}));
+
+    var AnimatorConditionMode;
+
+    (function (AnimatorConditionMode) {
+      AnimatorConditionMode[AnimatorConditionMode["If"] = 1] = "If";
+      AnimatorConditionMode[AnimatorConditionMode["IfNot"] = 2] = "IfNot";
+      AnimatorConditionMode[AnimatorConditionMode["Greater"] = 3] = "Greater";
+      AnimatorConditionMode[AnimatorConditionMode["Less"] = 4] = "Less";
+      AnimatorConditionMode[AnimatorConditionMode["Equals"] = 6] = "Equals";
+      AnimatorConditionMode[AnimatorConditionMode["NotEqual"] = 7] = "NotEqual";
+    })(AnimatorConditionMode = Animations.AnimatorConditionMode || (Animations.AnimatorConditionMode = {}));
+
+    var TransitionInterruptionSource;
+
+    (function (TransitionInterruptionSource) {
+      TransitionInterruptionSource[TransitionInterruptionSource["None"] = 0] = "None";
+      TransitionInterruptionSource[TransitionInterruptionSource["Source"] = 1] = "Source";
+      TransitionInterruptionSource[TransitionInterruptionSource["Destination"] = 2] = "Destination";
+      TransitionInterruptionSource[TransitionInterruptionSource["SourceThenDestination"] = 3] = "SourceThenDestination";
+      TransitionInterruptionSource[TransitionInterruptionSource["DestinationThenSource"] = 4] = "DestinationThenSource";
+    })(TransitionInterruptionSource = Animations.TransitionInterruptionSource || (Animations.TransitionInterruptionSource = {}));
+  })(Animations = UnityEditor.Animations || (UnityEditor.Animations = {}));
+
+  var AssetImporters;
+
+  (function (AssetImporters) {})(AssetImporters = UnityEditor.AssetImporters || (UnityEditor.AssetImporters = {}));
+
+  var Audio;
+
+  (function (Audio) {})(Audio = UnityEditor.Audio || (UnityEditor.Audio = {}));
+
+  var Build;
+
+  (function (Build) {
+    var Content;
+
+    (function (Content) {
+      var ContentBuildFlags;
+
+      (function (ContentBuildFlags) {
+        ContentBuildFlags[ContentBuildFlags["None"] = 0] = "None";
+        ContentBuildFlags[ContentBuildFlags["DisableWriteTypeTree"] = 1] = "DisableWriteTypeTree";
+        ContentBuildFlags[ContentBuildFlags["StripUnityVersion"] = 2] = "StripUnityVersion";
+        ContentBuildFlags[ContentBuildFlags["DevelopmentBuild"] = 4] = "DevelopmentBuild";
+      })(ContentBuildFlags = Content.ContentBuildFlags || (Content.ContentBuildFlags = {}));
+
+      var DependencyType;
+
+      (function (DependencyType) {
+        DependencyType[DependencyType["RecursiveOperation"] = 1] = "RecursiveOperation";
+        DependencyType[DependencyType["MissingReferences"] = 2] = "MissingReferences";
+        DependencyType[DependencyType["ValidReferences"] = 4] = "ValidReferences";
+        DependencyType[DependencyType["DefaultDependencies"] = 5] = "DefaultDependencies";
+      })(DependencyType = Content.DependencyType || (Content.DependencyType = {}));
+
+      var CompressionType;
+
+      (function (CompressionType) {
+        CompressionType[CompressionType["None"] = 0] = "None";
+        CompressionType[CompressionType["Lzma"] = 1] = "Lzma";
+        CompressionType[CompressionType["Lz4"] = 2] = "Lz4";
+        CompressionType[CompressionType["Lz4HC"] = 3] = "Lz4HC";
+      })(CompressionType = Content.CompressionType || (Content.CompressionType = {}));
+
+      var CompressionLevel;
+
+      (function (CompressionLevel) {
+        CompressionLevel[CompressionLevel["None"] = 0] = "None";
+        CompressionLevel[CompressionLevel["Fastest"] = 1] = "Fastest";
+        CompressionLevel[CompressionLevel["Fast"] = 2] = "Fast";
+        CompressionLevel[CompressionLevel["Normal"] = 3] = "Normal";
+        CompressionLevel[CompressionLevel["High"] = 4] = "High";
+        CompressionLevel[CompressionLevel["Maximum"] = 5] = "Maximum";
+      })(CompressionLevel = Content.CompressionLevel || (Content.CompressionLevel = {}));
+
+      var ProfileEventType;
+
+      (function (ProfileEventType) {
+        ProfileEventType[ProfileEventType["Begin"] = 0] = "Begin";
+        ProfileEventType[ProfileEventType["End"] = 1] = "End";
+        ProfileEventType[ProfileEventType["Info"] = 2] = "Info";
+      })(ProfileEventType = Content.ProfileEventType || (Content.ProfileEventType = {}));
+
+      var ProfileCaptureOptions;
+
+      (function (ProfileCaptureOptions) {
+        ProfileCaptureOptions[ProfileCaptureOptions["None"] = 0] = "None";
+        ProfileCaptureOptions[ProfileCaptureOptions["IgnoreShortEvents"] = 1] = "IgnoreShortEvents";
+      })(ProfileCaptureOptions = Content.ProfileCaptureOptions || (Content.ProfileCaptureOptions = {}));
+
+      var FileType;
+
+      (function (FileType) {
+        FileType[FileType["NonAssetType"] = 0] = "NonAssetType";
+        FileType[FileType["DeprecatedCachedAssetType"] = 1] = "DeprecatedCachedAssetType";
+        FileType[FileType["SerializedAssetType"] = 2] = "SerializedAssetType";
+        FileType[FileType["MetaAssetType"] = 3] = "MetaAssetType";
+      })(FileType = Content.FileType || (Content.FileType = {}));
+    })(Content = Build.Content || (Build.Content = {}));
+
+    var Player;
+
+    (function (Player) {
+      var ScriptCompilationOptions;
+
+      (function (ScriptCompilationOptions) {
+        ScriptCompilationOptions[ScriptCompilationOptions["None"] = 0] = "None";
+        ScriptCompilationOptions[ScriptCompilationOptions["DevelopmentBuild"] = 1] = "DevelopmentBuild";
+        ScriptCompilationOptions[ScriptCompilationOptions["Assertions"] = 2] = "Assertions";
+      })(ScriptCompilationOptions = Player.ScriptCompilationOptions || (Player.ScriptCompilationOptions = {}));
+    })(Player = Build.Player || (Build.Player = {}));
+
+    var Reporting;
+
+    (function (Reporting) {
+      var BuildResult;
+
+      (function (BuildResult) {
+        BuildResult[BuildResult["Unknown"] = 0] = "Unknown";
+        BuildResult[BuildResult["Succeeded"] = 1] = "Succeeded";
+        BuildResult[BuildResult["Failed"] = 2] = "Failed";
+        BuildResult[BuildResult["Cancelled"] = 3] = "Cancelled";
+      })(BuildResult = Reporting.BuildResult || (Reporting.BuildResult = {}));
+    })(Reporting = Build.Reporting || (Build.Reporting = {}));
+  })(Build = UnityEditor.Build || (UnityEditor.Build = {}));
+
+  var Compilation;
+
+  (function (Compilation) {
+    var CompilationPipeline_PrecompiledAssemblySources;
+
+    (function (CompilationPipeline_PrecompiledAssemblySources) {
+      CompilationPipeline_PrecompiledAssemblySources[CompilationPipeline_PrecompiledAssemblySources["UserAssembly"] = 1] = "UserAssembly";
+      CompilationPipeline_PrecompiledAssemblySources[CompilationPipeline_PrecompiledAssemblySources["UnityEngine"] = 2] = "UnityEngine";
+      CompilationPipeline_PrecompiledAssemblySources[CompilationPipeline_PrecompiledAssemblySources["UnityEditor"] = 4] = "UnityEditor";
+      CompilationPipeline_PrecompiledAssemblySources[CompilationPipeline_PrecompiledAssemblySources["SystemAssembly"] = 8] = "SystemAssembly";
+      CompilationPipeline_PrecompiledAssemblySources[CompilationPipeline_PrecompiledAssemblySources["UnityAssembly"] = 16] = "UnityAssembly";
+      CompilationPipeline_PrecompiledAssemblySources[CompilationPipeline_PrecompiledAssemblySources["All"] = -1] = "All";
+    })(CompilationPipeline_PrecompiledAssemblySources = Compilation.CompilationPipeline_PrecompiledAssemblySources || (Compilation.CompilationPipeline_PrecompiledAssemblySources = {}));
+
+    var AssemblyBuilderStatus;
+
+    (function (AssemblyBuilderStatus) {
+      AssemblyBuilderStatus[AssemblyBuilderStatus["NotStarted"] = 0] = "NotStarted";
+      AssemblyBuilderStatus[AssemblyBuilderStatus["IsCompiling"] = 1] = "IsCompiling";
+      AssemblyBuilderStatus[AssemblyBuilderStatus["Finished"] = 2] = "Finished";
+    })(AssemblyBuilderStatus = Compilation.AssemblyBuilderStatus || (Compilation.AssemblyBuilderStatus = {}));
+
+    var AssemblyBuilderFlags;
+
+    (function (AssemblyBuilderFlags) {
+      AssemblyBuilderFlags[AssemblyBuilderFlags["None"] = 0] = "None";
+      AssemblyBuilderFlags[AssemblyBuilderFlags["EditorAssembly"] = 1] = "EditorAssembly";
+      AssemblyBuilderFlags[AssemblyBuilderFlags["DevelopmentBuild"] = 2] = "DevelopmentBuild";
+    })(AssemblyBuilderFlags = Compilation.AssemblyBuilderFlags || (Compilation.AssemblyBuilderFlags = {}));
+
+    var ReferencesOptions;
+
+    (function (ReferencesOptions) {
+      ReferencesOptions[ReferencesOptions["None"] = 0] = "None";
+      ReferencesOptions[ReferencesOptions["UseEngineModules"] = 1] = "UseEngineModules";
+    })(ReferencesOptions = Compilation.ReferencesOptions || (Compilation.ReferencesOptions = {}));
+
+    var AssemblyFlags;
+
+    (function (AssemblyFlags) {
+      AssemblyFlags[AssemblyFlags["None"] = 0] = "None";
+      AssemblyFlags[AssemblyFlags["EditorAssembly"] = 1] = "EditorAssembly";
+    })(AssemblyFlags = Compilation.AssemblyFlags || (Compilation.AssemblyFlags = {}));
+
+    var AssembliesType;
+
+    (function (AssembliesType) {
+      AssembliesType[AssembliesType["Editor"] = 0] = "Editor";
+      AssembliesType[AssembliesType["Player"] = 1] = "Player";
+      AssembliesType[AssembliesType["PlayerWithoutTestAssemblies"] = 2] = "PlayerWithoutTestAssemblies";
+    })(AssembliesType = Compilation.AssembliesType || (Compilation.AssembliesType = {}));
+
+    var AssemblyDefinitionReferenceType;
+
+    (function (AssemblyDefinitionReferenceType) {
+      AssemblyDefinitionReferenceType[AssemblyDefinitionReferenceType["Name"] = 0] = "Name";
+      AssemblyDefinitionReferenceType[AssemblyDefinitionReferenceType["Guid"] = 1] = "Guid";
+    })(AssemblyDefinitionReferenceType = Compilation.AssemblyDefinitionReferenceType || (Compilation.AssemblyDefinitionReferenceType = {}));
+
+    var CodeOptimization;
+
+    (function (CodeOptimization) {
+      CodeOptimization[CodeOptimization["None"] = 0] = "None";
+      CodeOptimization[CodeOptimization["Debug"] = 1] = "Debug";
+      CodeOptimization[CodeOptimization["Release"] = 2] = "Release";
+    })(CodeOptimization = Compilation.CodeOptimization || (Compilation.CodeOptimization = {}));
+
+    var CompilerMessageType;
+
+    (function (CompilerMessageType) {
+      CompilerMessageType[CompilerMessageType["Error"] = 0] = "Error";
+      CompilerMessageType[CompilerMessageType["Warning"] = 1] = "Warning";
+    })(CompilerMessageType = Compilation.CompilerMessageType || (Compilation.CompilerMessageType = {}));
+  })(Compilation = UnityEditor.Compilation || (UnityEditor.Compilation = {}));
+
+  var Connect;
+
+  (function (Connect) {})(Connect = UnityEditor.Connect || (UnityEditor.Connect = {}));
+
+  var CrashReporting;
+
+  (function (CrashReporting) {})(CrashReporting = UnityEditor.CrashReporting || (UnityEditor.CrashReporting = {}));
+
+  var EditorTools;
+
+  (function (EditorTools_1) {})(EditorTools = UnityEditor.EditorTools || (UnityEditor.EditorTools = {}));
+
+  var Events;
+
+  (function (Events) {})(Events = UnityEditor.Events || (UnityEditor.Events = {}));
+
+  var Experimental;
+
+  (function (Experimental) {
+    var AssetDatabaseExperimental_OnDemandMode;
+
+    (function (AssetDatabaseExperimental_OnDemandMode) {
+      AssetDatabaseExperimental_OnDemandMode[AssetDatabaseExperimental_OnDemandMode["Off"] = 0] = "Off";
+      AssetDatabaseExperimental_OnDemandMode[AssetDatabaseExperimental_OnDemandMode["Lazy"] = 1] = "Lazy";
+      AssetDatabaseExperimental_OnDemandMode[AssetDatabaseExperimental_OnDemandMode["Background"] = 2] = "Background";
+    })(AssetDatabaseExperimental_OnDemandMode = Experimental.AssetDatabaseExperimental_OnDemandMode || (Experimental.AssetDatabaseExperimental_OnDemandMode = {}));
+
+    var AssetDatabaseExperimental_ImportSyncMode;
+
+    (function (AssetDatabaseExperimental_ImportSyncMode) {
+      AssetDatabaseExperimental_ImportSyncMode[AssetDatabaseExperimental_ImportSyncMode["Block"] = 0] = "Block";
+      AssetDatabaseExperimental_ImportSyncMode[AssetDatabaseExperimental_ImportSyncMode["Queue"] = 1] = "Queue";
+      AssetDatabaseExperimental_ImportSyncMode[AssetDatabaseExperimental_ImportSyncMode["Poll"] = 2] = "Poll";
+    })(AssetDatabaseExperimental_ImportSyncMode = Experimental.AssetDatabaseExperimental_ImportSyncMode || (Experimental.AssetDatabaseExperimental_ImportSyncMode = {}));
+
+    var OnDemandState;
+
+    (function (OnDemandState) {
+      OnDemandState[OnDemandState["Unavailable"] = 0] = "Unavailable";
+      OnDemandState[OnDemandState["Processing"] = 1] = "Processing";
+      OnDemandState[OnDemandState["Downloading"] = 2] = "Downloading";
+      OnDemandState[OnDemandState["Available"] = 3] = "Available";
+      OnDemandState[OnDemandState["Failed"] = 4] = "Failed";
+    })(OnDemandState = Experimental.OnDemandState || (Experimental.OnDemandState = {}));
+
+    var Build;
+
+    (function (Build) {
+      var AssetBundle;
+
+      (function (AssetBundle) {
+        var CompressionType;
+
+        (function (CompressionType) {
+          CompressionType[CompressionType["None"] = 0] = "None";
+          CompressionType[CompressionType["Lzma"] = 1] = "Lzma";
+          CompressionType[CompressionType["Lz4"] = 2] = "Lz4";
+          CompressionType[CompressionType["Lz4HC"] = 3] = "Lz4HC";
+        })(CompressionType = AssetBundle.CompressionType || (AssetBundle.CompressionType = {}));
+
+        var CompressionLevel;
+
+        (function (CompressionLevel) {
+          CompressionLevel[CompressionLevel["None"] = 0] = "None";
+          CompressionLevel[CompressionLevel["Fastest"] = 1] = "Fastest";
+          CompressionLevel[CompressionLevel["Fast"] = 2] = "Fast";
+          CompressionLevel[CompressionLevel["Normal"] = 3] = "Normal";
+          CompressionLevel[CompressionLevel["High"] = 4] = "High";
+          CompressionLevel[CompressionLevel["Maximum"] = 5] = "Maximum";
+        })(CompressionLevel = AssetBundle.CompressionLevel || (AssetBundle.CompressionLevel = {}));
+      })(AssetBundle = Build.AssetBundle || (Build.AssetBundle = {}));
+    })(Build = Experimental.Build || (Experimental.Build = {}));
+
+    var Licensing;
+
+    (function (Licensing) {})(Licensing = Experimental.Licensing || (Experimental.Licensing = {}));
+
+    var Rendering;
+
+    (function (Rendering) {})(Rendering = Experimental.Rendering || (Experimental.Rendering = {}));
+
+    var RestService;
+
+    (function (RestService) {})(RestService = Experimental.RestService || (Experimental.RestService = {}));
+
+    var SceneManagement;
+
+    (function (SceneManagement) {
+      var PrefabStage_Mode;
+
+      (function (PrefabStage_Mode) {
+        PrefabStage_Mode[PrefabStage_Mode["InIsolation"] = 0] = "InIsolation";
+        PrefabStage_Mode[PrefabStage_Mode["InContext"] = 1] = "InContext";
+      })(PrefabStage_Mode = SceneManagement.PrefabStage_Mode || (SceneManagement.PrefabStage_Mode = {}));
+    })(SceneManagement = Experimental.SceneManagement || (Experimental.SceneManagement = {}));
+
+    var TerrainAPI;
+
+    (function (TerrainAPI) {
+      var BrushGUIEditFlags;
+
+      (function (BrushGUIEditFlags) {
+        BrushGUIEditFlags[BrushGUIEditFlags["Select"] = 1] = "Select";
+        BrushGUIEditFlags[BrushGUIEditFlags["Inspect"] = 2] = "Inspect";
+        BrushGUIEditFlags[BrushGUIEditFlags["Size"] = 4] = "Size";
+        BrushGUIEditFlags[BrushGUIEditFlags["Opacity"] = 8] = "Opacity";
+        BrushGUIEditFlags[BrushGUIEditFlags["SelectAndInspect"] = 3] = "SelectAndInspect";
+        BrushGUIEditFlags[BrushGUIEditFlags["All"] = 15] = "All";
+      })(BrushGUIEditFlags = TerrainAPI.BrushGUIEditFlags || (TerrainAPI.BrushGUIEditFlags = {}));
+
+      var RepaintFlags;
+
+      (function (RepaintFlags) {
+        RepaintFlags[RepaintFlags["UI"] = 1] = "UI";
+        RepaintFlags[RepaintFlags["Scene"] = 2] = "Scene";
+      })(RepaintFlags = TerrainAPI.RepaintFlags || (TerrainAPI.RepaintFlags = {}));
+
+      var TerrainPaintUtilityEditor_BrushPreview;
+
+      (function (TerrainPaintUtilityEditor_BrushPreview) {
+        TerrainPaintUtilityEditor_BrushPreview[TerrainPaintUtilityEditor_BrushPreview["SourceRenderTexture"] = 0] = "SourceRenderTexture";
+        TerrainPaintUtilityEditor_BrushPreview[TerrainPaintUtilityEditor_BrushPreview["DestinationRenderTexture"] = 1] = "DestinationRenderTexture";
+      })(TerrainPaintUtilityEditor_BrushPreview = TerrainAPI.TerrainPaintUtilityEditor_BrushPreview || (TerrainAPI.TerrainPaintUtilityEditor_BrushPreview = {}));
+    })(TerrainAPI = Experimental.TerrainAPI || (Experimental.TerrainAPI = {}));
+  })(Experimental = UnityEditor.Experimental || (UnityEditor.Experimental = {}));
+
+  var Hardware;
+
+  (function (Hardware) {
+    var DevDeviceState;
+
+    (function (DevDeviceState) {
+      DevDeviceState[DevDeviceState["Disconnected"] = 0] = "Disconnected";
+      DevDeviceState[DevDeviceState["Connected"] = 1] = "Connected";
+    })(DevDeviceState = Hardware.DevDeviceState || (Hardware.DevDeviceState = {}));
+
+    var DevDeviceFeatures;
+
+    (function (DevDeviceFeatures) {
+      DevDeviceFeatures[DevDeviceFeatures["None"] = 0] = "None";
+      DevDeviceFeatures[DevDeviceFeatures["PlayerConnection"] = 1] = "PlayerConnection";
+      DevDeviceFeatures[DevDeviceFeatures["RemoteConnection"] = 2] = "RemoteConnection";
+    })(DevDeviceFeatures = Hardware.DevDeviceFeatures || (Hardware.DevDeviceFeatures = {}));
+  })(Hardware = UnityEditor.Hardware || (UnityEditor.Hardware = {}));
+
+  var Il2Cpp;
+
+  (function (Il2Cpp) {})(Il2Cpp = UnityEditor.Il2Cpp || (UnityEditor.Il2Cpp = {}));
+
+  var IMGUI;
+
+  (function (IMGUI) {
+    var Controls;
+
+    (function (Controls) {
+      var CapsuleBoundsHandle_HeightAxis;
+
+      (function (CapsuleBoundsHandle_HeightAxis) {
+        CapsuleBoundsHandle_HeightAxis[CapsuleBoundsHandle_HeightAxis["X"] = 0] = "X";
+        CapsuleBoundsHandle_HeightAxis[CapsuleBoundsHandle_HeightAxis["Y"] = 1] = "Y";
+        CapsuleBoundsHandle_HeightAxis[CapsuleBoundsHandle_HeightAxis["Z"] = 2] = "Z";
+      })(CapsuleBoundsHandle_HeightAxis = Controls.CapsuleBoundsHandle_HeightAxis || (Controls.CapsuleBoundsHandle_HeightAxis = {}));
+
+      var PrimitiveBoundsHandle_Axes;
+
+      (function (PrimitiveBoundsHandle_Axes) {
+        PrimitiveBoundsHandle_Axes[PrimitiveBoundsHandle_Axes["None"] = 0] = "None";
+        PrimitiveBoundsHandle_Axes[PrimitiveBoundsHandle_Axes["X"] = 1] = "X";
+        PrimitiveBoundsHandle_Axes[PrimitiveBoundsHandle_Axes["Y"] = 2] = "Y";
+        PrimitiveBoundsHandle_Axes[PrimitiveBoundsHandle_Axes["Z"] = 4] = "Z";
+        PrimitiveBoundsHandle_Axes[PrimitiveBoundsHandle_Axes["All"] = 7] = "All";
+      })(PrimitiveBoundsHandle_Axes = Controls.PrimitiveBoundsHandle_Axes || (Controls.PrimitiveBoundsHandle_Axes = {}));
+
+      var TreeViewSelectionOptions;
+
+      (function (TreeViewSelectionOptions) {
+        TreeViewSelectionOptions[TreeViewSelectionOptions["None"] = 0] = "None";
+        TreeViewSelectionOptions[TreeViewSelectionOptions["FireSelectionChanged"] = 1] = "FireSelectionChanged";
+        TreeViewSelectionOptions[TreeViewSelectionOptions["RevealAndFrame"] = 2] = "RevealAndFrame";
+      })(TreeViewSelectionOptions = Controls.TreeViewSelectionOptions || (Controls.TreeViewSelectionOptions = {}));
+    })(Controls = IMGUI.Controls || (IMGUI.Controls = {}));
+  })(IMGUI = UnityEditor.IMGUI || (UnityEditor.IMGUI = {}));
+
+  var Localization;
+
+  (function (Localization_1) {
+    var Editor;
+
+    (function (Editor) {})(Editor = Localization_1.Editor || (Localization_1.Editor = {}));
+  })(Localization = UnityEditor.Localization || (UnityEditor.Localization = {}));
+
+  var Macros;
+
+  (function (Macros) {})(Macros = UnityEditor.Macros || (UnityEditor.Macros = {}));
+
+  var Media;
+
+  (function (Media) {})(Media = UnityEditor.Media || (UnityEditor.Media = {}));
+
+  var MemoryProfiler;
+
+  (function (MemoryProfiler) {
+    var PackedNativeUnityEngineObject_ObjectFlags;
+
+    (function (PackedNativeUnityEngineObject_ObjectFlags) {
+      PackedNativeUnityEngineObject_ObjectFlags[PackedNativeUnityEngineObject_ObjectFlags["IsDontDestroyOnLoad"] = 1] = "IsDontDestroyOnLoad";
+      PackedNativeUnityEngineObject_ObjectFlags[PackedNativeUnityEngineObject_ObjectFlags["IsPersistent"] = 2] = "IsPersistent";
+      PackedNativeUnityEngineObject_ObjectFlags[PackedNativeUnityEngineObject_ObjectFlags["IsManager"] = 4] = "IsManager";
+    })(PackedNativeUnityEngineObject_ObjectFlags = MemoryProfiler.PackedNativeUnityEngineObject_ObjectFlags || (MemoryProfiler.PackedNativeUnityEngineObject_ObjectFlags = {}));
+
+    var TypeDescription_TypeFlags;
+
+    (function (TypeDescription_TypeFlags) {
+      TypeDescription_TypeFlags[TypeDescription_TypeFlags["kNone"] = 0] = "kNone";
+      TypeDescription_TypeFlags[TypeDescription_TypeFlags["kValueType"] = 1] = "kValueType";
+      TypeDescription_TypeFlags[TypeDescription_TypeFlags["kArray"] = 2] = "kArray";
+      TypeDescription_TypeFlags[TypeDescription_TypeFlags["kArrayRankMask"] = -65536] = "kArrayRankMask";
+    })(TypeDescription_TypeFlags = MemoryProfiler.TypeDescription_TypeFlags || (MemoryProfiler.TypeDescription_TypeFlags = {}));
+  })(MemoryProfiler = UnityEditor.MemoryProfiler || (UnityEditor.MemoryProfiler = {}));
+
+  var MPE;
+
+  (function (MPE) {
+    var EventDataSerialization;
+
+    (function (EventDataSerialization) {
+      EventDataSerialization[EventDataSerialization["StandardJson"] = 0] = "StandardJson";
+      EventDataSerialization[EventDataSerialization["JsonUtility"] = 1] = "JsonUtility";
+    })(EventDataSerialization = MPE.EventDataSerialization || (MPE.EventDataSerialization = {}));
+
+    var ProcessEvent;
+
+    (function (ProcessEvent) {
+      ProcessEvent[ProcessEvent["UMP_EVENT_UNDEFINED"] = 0] = "UMP_EVENT_UNDEFINED";
+      ProcessEvent[ProcessEvent["Undefined"] = 0] = "Undefined";
+      ProcessEvent[ProcessEvent["UMP_EVENT_CREATE"] = 1] = "UMP_EVENT_CREATE";
+      ProcessEvent[ProcessEvent["Create"] = 1] = "Create";
+      ProcessEvent[ProcessEvent["UMP_EVENT_INITIALIZE"] = 2] = "UMP_EVENT_INITIALIZE";
+      ProcessEvent[ProcessEvent["Initialize"] = 2] = "Initialize";
+      ProcessEvent[ProcessEvent["UMP_EVENT_AFTER_DOMAIN_RELOAD"] = 3] = "UMP_EVENT_AFTER_DOMAIN_RELOAD";
+      ProcessEvent[ProcessEvent["AfterDomainReload"] = 3] = "AfterDomainReload";
+      ProcessEvent[ProcessEvent["UMP_EVENT_SHUTDOWN"] = 4] = "UMP_EVENT_SHUTDOWN";
+      ProcessEvent[ProcessEvent["Shutdown"] = 4] = "Shutdown";
+    })(ProcessEvent = MPE.ProcessEvent || (MPE.ProcessEvent = {}));
+
+    var ProcessLevel;
+
+    (function (ProcessLevel) {
+      ProcessLevel[ProcessLevel["UMP_UNDEFINED"] = 0] = "UMP_UNDEFINED";
+      ProcessLevel[ProcessLevel["Undefined"] = 0] = "Undefined";
+      ProcessLevel[ProcessLevel["UMP_MASTER"] = 1] = "UMP_MASTER";
+      ProcessLevel[ProcessLevel["Master"] = 1] = "Master";
+      ProcessLevel[ProcessLevel["UMP_SLAVE"] = 2] = "UMP_SLAVE";
+      ProcessLevel[ProcessLevel["Slave"] = 2] = "Slave";
+    })(ProcessLevel = MPE.ProcessLevel || (MPE.ProcessLevel = {}));
+
+    var ProcessState;
+
+    (function (ProcessState) {
+      ProcessState[ProcessState["UMP_UNKNOWN_PROCESS"] = 0] = "UMP_UNKNOWN_PROCESS";
+      ProcessState[ProcessState["UnknownProcess"] = 0] = "UnknownProcess";
+      ProcessState[ProcessState["UMP_FINISHED_SUCCESSFULLY"] = 1] = "UMP_FINISHED_SUCCESSFULLY";
+      ProcessState[ProcessState["FinishedSuccessfully"] = 1] = "FinishedSuccessfully";
+      ProcessState[ProcessState["UMP_FINISHED_WITH_ERROR"] = 2] = "UMP_FINISHED_WITH_ERROR";
+      ProcessState[ProcessState["FinishedWithError"] = 2] = "FinishedWithError";
+      ProcessState[ProcessState["UMP_RUNNING"] = 3] = "UMP_RUNNING";
+      ProcessState[ProcessState["Running"] = 3] = "Running";
+    })(ProcessState = MPE.ProcessState || (MPE.ProcessState = {}));
+  })(MPE = UnityEditor.MPE || (UnityEditor.MPE = {}));
+
+  var Networking;
+
+  (function (Networking) {
+    var PlayerConnection;
+
+    (function (PlayerConnection) {})(PlayerConnection = Networking.PlayerConnection || (Networking.PlayerConnection = {}));
+  })(Networking = UnityEditor.Networking || (UnityEditor.Networking = {}));
+
+  var PackageManager;
+
+  (function (PackageManager) {
+    var ErrorCode;
+
+    (function (ErrorCode) {
+      ErrorCode[ErrorCode["Unknown"] = 0] = "Unknown";
+      ErrorCode[ErrorCode["NotFound"] = 1] = "NotFound";
+      ErrorCode[ErrorCode["Forbidden"] = 2] = "Forbidden";
+      ErrorCode[ErrorCode["InvalidParameter"] = 3] = "InvalidParameter";
+      ErrorCode[ErrorCode["Conflict"] = 4] = "Conflict";
+    })(ErrorCode = PackageManager.ErrorCode || (PackageManager.ErrorCode = {}));
+
+    var LogLevel;
+
+    (function (LogLevel) {
+      LogLevel[LogLevel["Error"] = 0] = "Error";
+      LogLevel[LogLevel["Warn"] = 1] = "Warn";
+      LogLevel[LogLevel["Info"] = 2] = "Info";
+      LogLevel[LogLevel["Verbose"] = 3] = "Verbose";
+      LogLevel[LogLevel["Debug"] = 4] = "Debug";
+      LogLevel[LogLevel["Silly"] = 5] = "Silly";
+    })(LogLevel = PackageManager.LogLevel || (PackageManager.LogLevel = {}));
+
+    var PackageSource;
+
+    (function (PackageSource) {
+      PackageSource[PackageSource["Unknown"] = 0] = "Unknown";
+      PackageSource[PackageSource["Registry"] = 1] = "Registry";
+      PackageSource[PackageSource["BuiltIn"] = 2] = "BuiltIn";
+      PackageSource[PackageSource["Embedded"] = 3] = "Embedded";
+      PackageSource[PackageSource["Local"] = 4] = "Local";
+      PackageSource[PackageSource["Git"] = 5] = "Git";
+      PackageSource[PackageSource["LocalTarball"] = 6] = "LocalTarball";
+    })(PackageSource = PackageManager.PackageSource || (PackageManager.PackageSource = {}));
+
+    var PackageStatus;
+
+    (function (PackageStatus) {
+      PackageStatus[PackageStatus["Unknown"] = 0] = "Unknown";
+      PackageStatus[PackageStatus["Unavailable"] = 1] = "Unavailable";
+      PackageStatus[PackageStatus["InProgress"] = 2] = "InProgress";
+      PackageStatus[PackageStatus["Error"] = 3] = "Error";
+      PackageStatus[PackageStatus["Available"] = 4] = "Available";
+    })(PackageStatus = PackageManager.PackageStatus || (PackageManager.PackageStatus = {}));
+
+    var StatusCode;
+
+    (function (StatusCode) {
+      StatusCode[StatusCode["InProgress"] = 0] = "InProgress";
+      StatusCode[StatusCode["Success"] = 1] = "Success";
+      StatusCode[StatusCode["Failure"] = 2] = "Failure";
+    })(StatusCode = PackageManager.StatusCode || (PackageManager.StatusCode = {}));
+
+    var Requests;
+
+    (function (Requests) {})(Requests = PackageManager.Requests || (PackageManager.Requests = {}));
+  })(PackageManager = UnityEditor.PackageManager || (UnityEditor.PackageManager = {}));
+
+  var Playables;
+
+  (function (Playables) {})(Playables = UnityEditor.Playables || (UnityEditor.Playables = {}));
+
+  var Presets;
+
+  (function (Presets) {})(Presets = UnityEditor.Presets || (UnityEditor.Presets = {}));
+
+  var Profiling;
+
+  (function (Profiling) {
+    var HierarchyFrameDataView_ViewModes;
+
+    (function (HierarchyFrameDataView_ViewModes) {
+      HierarchyFrameDataView_ViewModes[HierarchyFrameDataView_ViewModes["Default"] = 0] = "Default";
+      HierarchyFrameDataView_ViewModes[HierarchyFrameDataView_ViewModes["MergeSamplesWithTheSameName"] = 1] = "MergeSamplesWithTheSameName";
+      HierarchyFrameDataView_ViewModes[HierarchyFrameDataView_ViewModes["HideEditorOnlySamples"] = 2] = "HideEditorOnlySamples";
+    })(HierarchyFrameDataView_ViewModes = Profiling.HierarchyFrameDataView_ViewModes || (Profiling.HierarchyFrameDataView_ViewModes = {}));
+
+    var Memory;
+
+    (function (Memory) {
+      var Experimental;
+
+      (function (Experimental) {
+        var ObjectFlags;
+
+        (function (ObjectFlags) {
+          ObjectFlags[ObjectFlags["IsDontDestroyOnLoad"] = 1] = "IsDontDestroyOnLoad";
+          ObjectFlags[ObjectFlags["IsPersistent"] = 2] = "IsPersistent";
+          ObjectFlags[ObjectFlags["IsManager"] = 4] = "IsManager";
+        })(ObjectFlags = Experimental.ObjectFlags || (Experimental.ObjectFlags = {}));
+
+        var TypeFlags;
+
+        (function (TypeFlags) {
+          TypeFlags[TypeFlags["kNone"] = 0] = "kNone";
+          TypeFlags[TypeFlags["kValueType"] = 1] = "kValueType";
+          TypeFlags[TypeFlags["kArray"] = 2] = "kArray";
+          TypeFlags[TypeFlags["kArrayRankMask"] = -65536] = "kArrayRankMask";
+        })(TypeFlags = Experimental.TypeFlags || (Experimental.TypeFlags = {}));
+      })(Experimental = Memory.Experimental || (Memory.Experimental = {}));
+    })(Memory = Profiling.Memory || (Profiling.Memory = {}));
+  })(Profiling = UnityEditor.Profiling || (UnityEditor.Profiling = {}));
+
+  var ProjectWindowCallback;
+
+  (function (ProjectWindowCallback) {})(ProjectWindowCallback = UnityEditor.ProjectWindowCallback || (UnityEditor.ProjectWindowCallback = {}));
+
+  var Purchasing;
+
+  (function (Purchasing) {})(Purchasing = UnityEditor.Purchasing || (UnityEditor.Purchasing = {}));
+
+  var Rendering;
+
+  (function (Rendering) {
+    var ShaderQuality;
+
+    (function (ShaderQuality) {
+      ShaderQuality[ShaderQuality["Low"] = 0] = "Low";
+      ShaderQuality[ShaderQuality["Medium"] = 1] = "Medium";
+      ShaderQuality[ShaderQuality["High"] = 2] = "High";
+    })(ShaderQuality = Rendering.ShaderQuality || (Rendering.ShaderQuality = {}));
+
+    var ShaderCompilerPlatform;
+
+    (function (ShaderCompilerPlatform) {
+      ShaderCompilerPlatform[ShaderCompilerPlatform["None"] = 0] = "None";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["D3D"] = 4] = "D3D";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["GLES20"] = 5] = "GLES20";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["GLES3x"] = 9] = "GLES3x";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["PS4"] = 11] = "PS4";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["XboxOneD3D11"] = 12] = "XboxOneD3D11";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["Metal"] = 14] = "Metal";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["OpenGLCore"] = 15] = "OpenGLCore";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["Vulkan"] = 18] = "Vulkan";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["Switch"] = 19] = "Switch";
+      ShaderCompilerPlatform[ShaderCompilerPlatform["XboxOneD3D12"] = 20] = "XboxOneD3D12";
+    })(ShaderCompilerPlatform = Rendering.ShaderCompilerPlatform || (Rendering.ShaderCompilerPlatform = {}));
+
+    var ShaderCompilerMessageSeverity;
+
+    (function (ShaderCompilerMessageSeverity) {
+      ShaderCompilerMessageSeverity[ShaderCompilerMessageSeverity["Error"] = 0] = "Error";
+      ShaderCompilerMessageSeverity[ShaderCompilerMessageSeverity["Warning"] = 1] = "Warning";
+    })(ShaderCompilerMessageSeverity = Rendering.ShaderCompilerMessageSeverity || (Rendering.ShaderCompilerMessageSeverity = {}));
+
+    var ShaderRequirements;
+
+    (function (ShaderRequirements) {
+      ShaderRequirements[ShaderRequirements["None"] = 0] = "None";
+      ShaderRequirements[ShaderRequirements["BaseShaders"] = 1] = "BaseShaders";
+      ShaderRequirements[ShaderRequirements["Interpolators10"] = 2] = "Interpolators10";
+      ShaderRequirements[ShaderRequirements["Interpolators32"] = 4] = "Interpolators32";
+      ShaderRequirements[ShaderRequirements["MRT4"] = 8] = "MRT4";
+      ShaderRequirements[ShaderRequirements["MRT8"] = 16] = "MRT8";
+      ShaderRequirements[ShaderRequirements["Derivatives"] = 32] = "Derivatives";
+      ShaderRequirements[ShaderRequirements["SampleLOD"] = 64] = "SampleLOD";
+      ShaderRequirements[ShaderRequirements["FragCoord"] = 128] = "FragCoord";
+      ShaderRequirements[ShaderRequirements["Interpolators15Integers"] = 512] = "Interpolators15Integers";
+      ShaderRequirements[ShaderRequirements["Texture2DArray"] = 1024] = "Texture2DArray";
+      ShaderRequirements[ShaderRequirements["Instancing"] = 2048] = "Instancing";
+      ShaderRequirements[ShaderRequirements["Geometry"] = 4096] = "Geometry";
+      ShaderRequirements[ShaderRequirements["CubeArray"] = 8192] = "CubeArray";
+      ShaderRequirements[ShaderRequirements["Compute"] = 16384] = "Compute";
+      ShaderRequirements[ShaderRequirements["RandomWrite"] = 32768] = "RandomWrite";
+      ShaderRequirements[ShaderRequirements["TessellationCompute"] = 65536] = "TessellationCompute";
+      ShaderRequirements[ShaderRequirements["TessellationShaders"] = 131072] = "TessellationShaders";
+      ShaderRequirements[ShaderRequirements["SparseTexelResident"] = 262144] = "SparseTexelResident";
+      ShaderRequirements[ShaderRequirements["FramebufferFetch"] = 524288] = "FramebufferFetch";
+      ShaderRequirements[ShaderRequirements["MSAATextureSamples"] = 1048576] = "MSAATextureSamples";
+    })(ShaderRequirements = Rendering.ShaderRequirements || (Rendering.ShaderRequirements = {}));
+
+    var ShaderType;
+
+    (function (ShaderType) {
+      ShaderType[ShaderType["Vertex"] = 1] = "Vertex";
+      ShaderType[ShaderType["Fragment"] = 2] = "Fragment";
+      ShaderType[ShaderType["Geometry"] = 3] = "Geometry";
+      ShaderType[ShaderType["Hull"] = 4] = "Hull";
+      ShaderType[ShaderType["Domain"] = 5] = "Domain";
+      ShaderType[ShaderType["Surface"] = 6] = "Surface";
+      ShaderType[ShaderType["RayTracing"] = 7] = "RayTracing";
+      ShaderType[ShaderType["Count"] = 7] = "Count";
+    })(ShaderType = Rendering.ShaderType || (Rendering.ShaderType = {}));
+  })(Rendering = UnityEditor.Rendering || (UnityEditor.Rendering = {}));
+
+  var SceneManagement;
+
+  (function (SceneManagement) {
+    var OpenSceneMode;
+
+    (function (OpenSceneMode) {
+      OpenSceneMode[OpenSceneMode["Single"] = 0] = "Single";
+      OpenSceneMode[OpenSceneMode["Additive"] = 1] = "Additive";
+      OpenSceneMode[OpenSceneMode["AdditiveWithoutLoading"] = 2] = "AdditiveWithoutLoading";
+    })(OpenSceneMode = SceneManagement.OpenSceneMode || (SceneManagement.OpenSceneMode = {}));
+
+    var NewSceneMode;
+
+    (function (NewSceneMode) {
+      NewSceneMode[NewSceneMode["Single"] = 0] = "Single";
+      NewSceneMode[NewSceneMode["Additive"] = 1] = "Additive";
+    })(NewSceneMode = SceneManagement.NewSceneMode || (SceneManagement.NewSceneMode = {}));
+
+    var NewSceneSetup;
+
+    (function (NewSceneSetup) {
+      NewSceneSetup[NewSceneSetup["EmptyScene"] = 0] = "EmptyScene";
+      NewSceneSetup[NewSceneSetup["DefaultGameObjects"] = 1] = "DefaultGameObjects";
+    })(NewSceneSetup = SceneManagement.NewSceneSetup || (SceneManagement.NewSceneSetup = {}));
+  })(SceneManagement = UnityEditor.SceneManagement || (UnityEditor.SceneManagement = {}));
+
+  var Scripting;
+
+  (function (Scripting) {})(Scripting = UnityEditor.Scripting || (UnityEditor.Scripting = {}));
+
+  var SearchService;
+
+  (function (SearchService) {
+    var VisibleObjects;
+
+    (function (VisibleObjects) {
+      VisibleObjects[VisibleObjects["None"] = 0] = "None";
+      VisibleObjects[VisibleObjects["Assets"] = 1] = "Assets";
+      VisibleObjects[VisibleObjects["Scene"] = 2] = "Scene";
+      VisibleObjects[VisibleObjects["All"] = 3] = "All";
+    })(VisibleObjects = SearchService.VisibleObjects || (SearchService.VisibleObjects = {}));
+
+    var SearchEngineScope;
+
+    (function (SearchEngineScope) {
+      SearchEngineScope[SearchEngineScope["Scene"] = 0] = "Scene";
+      SearchEngineScope[SearchEngineScope["Project"] = 1] = "Project";
+      SearchEngineScope[SearchEngineScope["ObjectSelector"] = 2] = "ObjectSelector";
+    })(SearchEngineScope = SearchService.SearchEngineScope || (SearchService.SearchEngineScope = {}));
+  })(SearchService = UnityEditor.SearchService || (UnityEditor.SearchService = {}));
+
+  var ShortcutManagement;
+
+  (function (ShortcutManagement) {
+    var ShortcutStage;
+
+    (function (ShortcutStage) {
+      ShortcutStage[ShortcutStage["Begin"] = 0] = "Begin";
+      ShortcutStage[ShortcutStage["End"] = 1] = "End";
+    })(ShortcutStage = ShortcutManagement.ShortcutStage || (ShortcutManagement.ShortcutStage = {}));
+
+    var ShortcutModifiers;
+
+    (function (ShortcutModifiers) {
+      ShortcutModifiers[ShortcutModifiers["None"] = 0] = "None";
+      ShortcutModifiers[ShortcutModifiers["Alt"] = 1] = "Alt";
+      ShortcutModifiers[ShortcutModifiers["Action"] = 2] = "Action";
+      ShortcutModifiers[ShortcutModifiers["Shift"] = 4] = "Shift";
+    })(ShortcutModifiers = ShortcutManagement.ShortcutModifiers || (ShortcutManagement.ShortcutModifiers = {}));
+  })(ShortcutManagement = UnityEditor.ShortcutManagement || (UnityEditor.ShortcutManagement = {}));
+
+  var Sprites;
+
+  (function (Sprites) {
+    var Packer_Execution;
+
+    (function (Packer_Execution) {
+      Packer_Execution[Packer_Execution["Normal"] = 0] = "Normal";
+      Packer_Execution[Packer_Execution["ForceRegroup"] = 1] = "ForceRegroup";
+    })(Packer_Execution = Sprites.Packer_Execution || (Sprites.Packer_Execution = {}));
+  })(Sprites = UnityEditor.Sprites || (UnityEditor.Sprites = {}));
+
+  var U2D;
+
+  (function (U2D) {})(U2D = UnityEditor.U2D || (UnityEditor.U2D = {}));
+
+  var UIElements;
+
+  (function (UIElements) {})(UIElements = UnityEditor.UIElements || (UnityEditor.UIElements = {}));
+
+  var UnityLinker;
+
+  (function (UnityLinker) {})(UnityLinker = UnityEditor.UnityLinker || (UnityEditor.UnityLinker = {}));
+
+  var VersionControl;
+
+  (function (VersionControl) {
+    var Asset_States;
+
+    (function (Asset_States) {
+      Asset_States[Asset_States["None"] = 0] = "None";
+      Asset_States[Asset_States["Local"] = 1] = "Local";
+      Asset_States[Asset_States["Synced"] = 2] = "Synced";
+      Asset_States[Asset_States["OutOfSync"] = 4] = "OutOfSync";
+      Asset_States[Asset_States["Missing"] = 8] = "Missing";
+      Asset_States[Asset_States["CheckedOutLocal"] = 16] = "CheckedOutLocal";
+      Asset_States[Asset_States["CheckedOutRemote"] = 32] = "CheckedOutRemote";
+      Asset_States[Asset_States["DeletedLocal"] = 64] = "DeletedLocal";
+      Asset_States[Asset_States["DeletedRemote"] = 128] = "DeletedRemote";
+      Asset_States[Asset_States["AddedLocal"] = 256] = "AddedLocal";
+      Asset_States[Asset_States["AddedRemote"] = 512] = "AddedRemote";
+      Asset_States[Asset_States["Conflicted"] = 1024] = "Conflicted";
+      Asset_States[Asset_States["LockedLocal"] = 2048] = "LockedLocal";
+      Asset_States[Asset_States["LockedRemote"] = 4096] = "LockedRemote";
+      Asset_States[Asset_States["Updating"] = 8192] = "Updating";
+      Asset_States[Asset_States["ReadOnly"] = 16384] = "ReadOnly";
+      Asset_States[Asset_States["MetaFile"] = 32768] = "MetaFile";
+      Asset_States[Asset_States["MovedLocal"] = 65536] = "MovedLocal";
+      Asset_States[Asset_States["MovedRemote"] = 131072] = "MovedRemote";
+      Asset_States[Asset_States["Unversioned"] = 262144] = "Unversioned";
+      Asset_States[Asset_States["Exclusive"] = 524288] = "Exclusive";
+    })(Asset_States = VersionControl.Asset_States || (VersionControl.Asset_States = {}));
+
+    var Message_Severity;
+
+    (function (Message_Severity) {
+      Message_Severity[Message_Severity["Data"] = 0] = "Data";
+      Message_Severity[Message_Severity["Verbose"] = 1] = "Verbose";
+      Message_Severity[Message_Severity["Info"] = 2] = "Info";
+      Message_Severity[Message_Severity["Warning"] = 3] = "Warning";
+      Message_Severity[Message_Severity["Error"] = 4] = "Error";
+    })(Message_Severity = VersionControl.Message_Severity || (VersionControl.Message_Severity = {}));
+
+    var CompletionAction;
+
+    (function (CompletionAction) {
+      CompletionAction[CompletionAction["UpdatePendingWindow"] = 1] = "UpdatePendingWindow";
+      CompletionAction[CompletionAction["OnChangeContentsPendingWindow"] = 2] = "OnChangeContentsPendingWindow";
+      CompletionAction[CompletionAction["OnIncomingPendingWindow"] = 3] = "OnIncomingPendingWindow";
+      CompletionAction[CompletionAction["OnChangeSetsPendingWindow"] = 4] = "OnChangeSetsPendingWindow";
+      CompletionAction[CompletionAction["OnGotLatestPendingWindow"] = 5] = "OnGotLatestPendingWindow";
+      CompletionAction[CompletionAction["OnSubmittedChangeWindow"] = 6] = "OnSubmittedChangeWindow";
+      CompletionAction[CompletionAction["OnAddedChangeWindow"] = 7] = "OnAddedChangeWindow";
+      CompletionAction[CompletionAction["OnCheckoutCompleted"] = 8] = "OnCheckoutCompleted";
+    })(CompletionAction = VersionControl.CompletionAction || (VersionControl.CompletionAction = {}));
+
+    var SubmitResult;
+
+    (function (SubmitResult) {
+      SubmitResult[SubmitResult["OK"] = 1] = "OK";
+      SubmitResult[SubmitResult["Error"] = 2] = "Error";
+      SubmitResult[SubmitResult["ConflictingFiles"] = 4] = "ConflictingFiles";
+      SubmitResult[SubmitResult["UnaddedFiles"] = 8] = "UnaddedFiles";
+    })(SubmitResult = VersionControl.SubmitResult || (VersionControl.SubmitResult = {}));
+
+    var CheckoutMode;
+
+    (function (CheckoutMode) {
+      CheckoutMode[CheckoutMode["Asset"] = 1] = "Asset";
+      CheckoutMode[CheckoutMode["Meta"] = 2] = "Meta";
+      CheckoutMode[CheckoutMode["Both"] = 3] = "Both";
+      CheckoutMode[CheckoutMode["Exact"] = 4] = "Exact";
+    })(CheckoutMode = VersionControl.CheckoutMode || (VersionControl.CheckoutMode = {}));
+
+    var ResolveMethod;
+
+    (function (ResolveMethod) {
+      ResolveMethod[ResolveMethod["UseMine"] = 1] = "UseMine";
+      ResolveMethod[ResolveMethod["UseTheirs"] = 2] = "UseTheirs";
+      ResolveMethod[ResolveMethod["UseMerged"] = 3] = "UseMerged";
+    })(ResolveMethod = VersionControl.ResolveMethod || (VersionControl.ResolveMethod = {}));
+
+    var MergeMethod;
+
+    (function (MergeMethod) {
+      MergeMethod[MergeMethod["MergeNone"] = 0] = "MergeNone";
+      MergeMethod[MergeMethod["MergeAll"] = 1] = "MergeAll";
+      MergeMethod[MergeMethod["MergeNonConflicting"] = 2] = "MergeNonConflicting";
+    })(MergeMethod = VersionControl.MergeMethod || (VersionControl.MergeMethod = {}));
+
+    var OnlineState;
+
+    (function (OnlineState) {
+      OnlineState[OnlineState["Updating"] = 0] = "Updating";
+      OnlineState[OnlineState["Online"] = 1] = "Online";
+      OnlineState[OnlineState["Offline"] = 2] = "Offline";
+    })(OnlineState = VersionControl.OnlineState || (VersionControl.OnlineState = {}));
+
+    var RevertMode;
+
+    (function (RevertMode) {
+      RevertMode[RevertMode["Normal"] = 0] = "Normal";
+      RevertMode[RevertMode["Unchanged"] = 1] = "Unchanged";
+      RevertMode[RevertMode["KeepModifications"] = 2] = "KeepModifications";
+    })(RevertMode = VersionControl.RevertMode || (VersionControl.RevertMode = {}));
+
+    var FileMode;
+
+    (function (FileMode) {
+      FileMode[FileMode["None"] = 0] = "None";
+      FileMode[FileMode["Binary"] = 1] = "Binary";
+      FileMode[FileMode["Text"] = 2] = "Text";
+    })(FileMode = VersionControl.FileMode || (VersionControl.FileMode = {}));
+  })(VersionControl = UnityEditor.VersionControl || (UnityEditor.VersionControl = {}));
+
+  var VisualStudioIntegration;
+
+  (function (VisualStudioIntegration) {})(VisualStudioIntegration = UnityEditor.VisualStudioIntegration || (UnityEditor.VisualStudioIntegration = {}));
+
+  var XR;
+
+  (function (XR) {})(XR = UnityEditor.XR || (UnityEditor.XR = {}));
+})(editor_UnityEditor || (editor_UnityEditor = {}));
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/generated/react.js
 var ReactUnity;
 
-(function (ReactUnity) {
+(function (ReactUnity_1) {
   var ScriptSource;
 
   (function (ScriptSource) {
@@ -6151,7 +9248,63 @@ var ReactUnity;
     ScriptSource[ScriptSource["Url"] = 2] = "Url";
     ScriptSource[ScriptSource["Resource"] = 3] = "Resource";
     ScriptSource[ScriptSource["Text"] = 4] = "Text";
-  })(ScriptSource = ReactUnity.ScriptSource || (ReactUnity.ScriptSource = {}));
+  })(ScriptSource = ReactUnity_1.ScriptSource || (ReactUnity_1.ScriptSource = {}));
+
+  var Components;
+
+  (function (Components) {})(Components = ReactUnity_1.Components || (ReactUnity_1.Components = {}));
+
+  var DomProxies;
+
+  (function (DomProxies) {})(DomProxies = ReactUnity_1.DomProxies || (ReactUnity_1.DomProxies = {}));
+
+  var Editor;
+
+  (function (Editor) {
+    var Developer;
+
+    (function (Developer) {})(Developer = Editor.Developer || (Editor.Developer = {}));
+
+    var Renderer;
+
+    (function (Renderer) {
+      var Components;
+
+      (function (Components) {})(Components = Renderer.Components || (Renderer.Components = {}));
+
+      var Events;
+
+      (function (Events) {})(Events = Renderer.Events || (Renderer.Events = {}));
+
+      var Styling;
+
+      (function (Styling) {})(Styling = Renderer.Styling || (Renderer.Styling = {}));
+    })(Renderer = Editor.Renderer || (Editor.Renderer = {}));
+  })(Editor = ReactUnity_1.Editor || (ReactUnity_1.Editor = {}));
+
+  var EventHandlers;
+
+  (function (EventHandlers) {})(EventHandlers = ReactUnity_1.EventHandlers || (ReactUnity_1.EventHandlers = {}));
+
+  var Helpers;
+
+  (function (Helpers) {})(Helpers = ReactUnity_1.Helpers || (ReactUnity_1.Helpers = {}));
+
+  var Interop;
+
+  (function (Interop) {})(Interop = ReactUnity_1.Interop || (ReactUnity_1.Interop = {}));
+
+  var Layout;
+
+  (function (Layout) {})(Layout = ReactUnity_1.Layout || (ReactUnity_1.Layout = {}));
+
+  var Schedulers;
+
+  (function (Schedulers) {})(Schedulers = ReactUnity_1.Schedulers || (ReactUnity_1.Schedulers = {}));
+
+  var StateHandlers;
+
+  (function (StateHandlers) {})(StateHandlers = ReactUnity_1.StateHandlers || (ReactUnity_1.StateHandlers = {}));
 
   var StyleEngine;
 
@@ -6199,11 +9352,15 @@ var ReactUnity;
       RuleSelectorPartType[RuleSelectorPartType["Special"] = 1001] = "Special";
       RuleSelectorPartType[RuleSelectorPartType["State"] = 2000] = "State";
     })(RuleSelectorPartType = StyleEngine.RuleSelectorPartType || (StyleEngine.RuleSelectorPartType = {}));
-  })(StyleEngine = ReactUnity.StyleEngine || (ReactUnity.StyleEngine = {}));
+  })(StyleEngine = ReactUnity_1.StyleEngine || (ReactUnity_1.StyleEngine = {}));
 
   var Styling;
 
   (function (Styling) {
+    var Parsers;
+
+    (function (Parsers) {})(Parsers = Styling.Parsers || (Styling.Parsers = {}));
+
     var Types;
 
     (function (Types) {
@@ -6238,7 +9395,7 @@ var ReactUnity;
         SpecialNames[SpecialNames["Unset"] = 6] = "Unset";
       })(SpecialNames = Types.SpecialNames || (Types.SpecialNames = {}));
     })(Types = Styling.Types || (Styling.Types = {}));
-  })(Styling = ReactUnity.Styling || (ReactUnity.Styling = {}));
+  })(Styling = ReactUnity_1.Styling || (ReactUnity_1.Styling = {}));
 
   var Types;
 
@@ -6268,7 +9425,11 @@ var ReactUnity;
       ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
       ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
     })(ImageFitMode = Types.ImageFitMode || (Types.ImageFitMode = {}));
-  })(Types = ReactUnity.Types || (ReactUnity.Types = {}));
+  })(Types = ReactUnity_1.Types || (ReactUnity_1.Types = {}));
+
+  var Visitors;
+
+  (function (Visitors) {})(Visitors = ReactUnity_1.Visitors || (ReactUnity_1.Visitors = {}));
 
   var WebSupport;
 
@@ -6295,12 +9456,4865 @@ var ReactUnity;
       LineType[LineType["MultiLineSubmit"] = 1] = "MultiLineSubmit";
       LineType[LineType["MultiLineNewline"] = 2] = "MultiLineNewline";
     })(LineType = WebSupport.LineType || (WebSupport.LineType = {}));
-  })(WebSupport = ReactUnity.WebSupport || (ReactUnity.WebSupport = {}));
+  })(WebSupport = ReactUnity_1.WebSupport || (ReactUnity_1.WebSupport = {}));
 })(ReactUnity || (ReactUnity = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/generated/system.js
+//
+// Types in assemblies: mscorlib, mscorlib, System.Core, System, mscorlib, System, mscorlib
+// Generated 7.03.2021 23:19:28
+//
+var System;
+
+(function (System) {
+  var LoaderOptimization;
+
+  (function (LoaderOptimization) {
+    LoaderOptimization[LoaderOptimization["NotSpecified"] = 0] = "NotSpecified";
+    LoaderOptimization[LoaderOptimization["SingleDomain"] = 1] = "SingleDomain";
+    LoaderOptimization[LoaderOptimization["MultiDomain"] = 2] = "MultiDomain";
+    LoaderOptimization[LoaderOptimization["MultiDomainHost"] = 3] = "MultiDomainHost";
+    LoaderOptimization[LoaderOptimization["DomainMask"] = 3] = "DomainMask";
+    LoaderOptimization[LoaderOptimization["DisallowBindings"] = 4] = "DisallowBindings";
+  })(LoaderOptimization = System.LoaderOptimization || (System.LoaderOptimization = {}));
+
+  var AttributeTargets;
+
+  (function (AttributeTargets) {
+    AttributeTargets[AttributeTargets["Assembly"] = 1] = "Assembly";
+    AttributeTargets[AttributeTargets["Module"] = 2] = "Module";
+    AttributeTargets[AttributeTargets["Class"] = 4] = "Class";
+    AttributeTargets[AttributeTargets["Struct"] = 8] = "Struct";
+    AttributeTargets[AttributeTargets["Enum"] = 16] = "Enum";
+    AttributeTargets[AttributeTargets["Constructor"] = 32] = "Constructor";
+    AttributeTargets[AttributeTargets["Method"] = 64] = "Method";
+    AttributeTargets[AttributeTargets["Property"] = 128] = "Property";
+    AttributeTargets[AttributeTargets["Field"] = 256] = "Field";
+    AttributeTargets[AttributeTargets["Event"] = 512] = "Event";
+    AttributeTargets[AttributeTargets["Interface"] = 1024] = "Interface";
+    AttributeTargets[AttributeTargets["Parameter"] = 2048] = "Parameter";
+    AttributeTargets[AttributeTargets["Delegate"] = 4096] = "Delegate";
+    AttributeTargets[AttributeTargets["ReturnValue"] = 8192] = "ReturnValue";
+    AttributeTargets[AttributeTargets["GenericParameter"] = 16384] = "GenericParameter";
+    AttributeTargets[AttributeTargets["All"] = 32767] = "All";
+  })(AttributeTargets = System.AttributeTargets || (System.AttributeTargets = {}));
+
+  var ConsoleColor;
+
+  (function (ConsoleColor) {
+    ConsoleColor[ConsoleColor["Black"] = 0] = "Black";
+    ConsoleColor[ConsoleColor["DarkBlue"] = 1] = "DarkBlue";
+    ConsoleColor[ConsoleColor["DarkGreen"] = 2] = "DarkGreen";
+    ConsoleColor[ConsoleColor["DarkCyan"] = 3] = "DarkCyan";
+    ConsoleColor[ConsoleColor["DarkRed"] = 4] = "DarkRed";
+    ConsoleColor[ConsoleColor["DarkMagenta"] = 5] = "DarkMagenta";
+    ConsoleColor[ConsoleColor["DarkYellow"] = 6] = "DarkYellow";
+    ConsoleColor[ConsoleColor["Gray"] = 7] = "Gray";
+    ConsoleColor[ConsoleColor["DarkGray"] = 8] = "DarkGray";
+    ConsoleColor[ConsoleColor["Blue"] = 9] = "Blue";
+    ConsoleColor[ConsoleColor["Green"] = 10] = "Green";
+    ConsoleColor[ConsoleColor["Cyan"] = 11] = "Cyan";
+    ConsoleColor[ConsoleColor["Red"] = 12] = "Red";
+    ConsoleColor[ConsoleColor["Magenta"] = 13] = "Magenta";
+    ConsoleColor[ConsoleColor["Yellow"] = 14] = "Yellow";
+    ConsoleColor[ConsoleColor["White"] = 15] = "White";
+  })(ConsoleColor = System.ConsoleColor || (System.ConsoleColor = {}));
+
+  var ConsoleKey;
+
+  (function (ConsoleKey) {
+    ConsoleKey[ConsoleKey["Backspace"] = 8] = "Backspace";
+    ConsoleKey[ConsoleKey["Tab"] = 9] = "Tab";
+    ConsoleKey[ConsoleKey["Clear"] = 12] = "Clear";
+    ConsoleKey[ConsoleKey["Enter"] = 13] = "Enter";
+    ConsoleKey[ConsoleKey["Pause"] = 19] = "Pause";
+    ConsoleKey[ConsoleKey["Escape"] = 27] = "Escape";
+    ConsoleKey[ConsoleKey["Spacebar"] = 32] = "Spacebar";
+    ConsoleKey[ConsoleKey["PageUp"] = 33] = "PageUp";
+    ConsoleKey[ConsoleKey["PageDown"] = 34] = "PageDown";
+    ConsoleKey[ConsoleKey["End"] = 35] = "End";
+    ConsoleKey[ConsoleKey["Home"] = 36] = "Home";
+    ConsoleKey[ConsoleKey["LeftArrow"] = 37] = "LeftArrow";
+    ConsoleKey[ConsoleKey["UpArrow"] = 38] = "UpArrow";
+    ConsoleKey[ConsoleKey["RightArrow"] = 39] = "RightArrow";
+    ConsoleKey[ConsoleKey["DownArrow"] = 40] = "DownArrow";
+    ConsoleKey[ConsoleKey["Select"] = 41] = "Select";
+    ConsoleKey[ConsoleKey["Print"] = 42] = "Print";
+    ConsoleKey[ConsoleKey["Execute"] = 43] = "Execute";
+    ConsoleKey[ConsoleKey["PrintScreen"] = 44] = "PrintScreen";
+    ConsoleKey[ConsoleKey["Insert"] = 45] = "Insert";
+    ConsoleKey[ConsoleKey["Delete"] = 46] = "Delete";
+    ConsoleKey[ConsoleKey["Help"] = 47] = "Help";
+    ConsoleKey[ConsoleKey["D0"] = 48] = "D0";
+    ConsoleKey[ConsoleKey["D1"] = 49] = "D1";
+    ConsoleKey[ConsoleKey["D2"] = 50] = "D2";
+    ConsoleKey[ConsoleKey["D3"] = 51] = "D3";
+    ConsoleKey[ConsoleKey["D4"] = 52] = "D4";
+    ConsoleKey[ConsoleKey["D5"] = 53] = "D5";
+    ConsoleKey[ConsoleKey["D6"] = 54] = "D6";
+    ConsoleKey[ConsoleKey["D7"] = 55] = "D7";
+    ConsoleKey[ConsoleKey["D8"] = 56] = "D8";
+    ConsoleKey[ConsoleKey["D9"] = 57] = "D9";
+    ConsoleKey[ConsoleKey["A"] = 65] = "A";
+    ConsoleKey[ConsoleKey["B"] = 66] = "B";
+    ConsoleKey[ConsoleKey["C"] = 67] = "C";
+    ConsoleKey[ConsoleKey["D"] = 68] = "D";
+    ConsoleKey[ConsoleKey["E"] = 69] = "E";
+    ConsoleKey[ConsoleKey["F"] = 70] = "F";
+    ConsoleKey[ConsoleKey["G"] = 71] = "G";
+    ConsoleKey[ConsoleKey["H"] = 72] = "H";
+    ConsoleKey[ConsoleKey["I"] = 73] = "I";
+    ConsoleKey[ConsoleKey["J"] = 74] = "J";
+    ConsoleKey[ConsoleKey["K"] = 75] = "K";
+    ConsoleKey[ConsoleKey["L"] = 76] = "L";
+    ConsoleKey[ConsoleKey["M"] = 77] = "M";
+    ConsoleKey[ConsoleKey["N"] = 78] = "N";
+    ConsoleKey[ConsoleKey["O"] = 79] = "O";
+    ConsoleKey[ConsoleKey["P"] = 80] = "P";
+    ConsoleKey[ConsoleKey["Q"] = 81] = "Q";
+    ConsoleKey[ConsoleKey["R"] = 82] = "R";
+    ConsoleKey[ConsoleKey["S"] = 83] = "S";
+    ConsoleKey[ConsoleKey["T"] = 84] = "T";
+    ConsoleKey[ConsoleKey["U"] = 85] = "U";
+    ConsoleKey[ConsoleKey["V"] = 86] = "V";
+    ConsoleKey[ConsoleKey["W"] = 87] = "W";
+    ConsoleKey[ConsoleKey["X"] = 88] = "X";
+    ConsoleKey[ConsoleKey["Y"] = 89] = "Y";
+    ConsoleKey[ConsoleKey["Z"] = 90] = "Z";
+    ConsoleKey[ConsoleKey["LeftWindows"] = 91] = "LeftWindows";
+    ConsoleKey[ConsoleKey["RightWindows"] = 92] = "RightWindows";
+    ConsoleKey[ConsoleKey["Applications"] = 93] = "Applications";
+    ConsoleKey[ConsoleKey["Sleep"] = 95] = "Sleep";
+    ConsoleKey[ConsoleKey["NumPad0"] = 96] = "NumPad0";
+    ConsoleKey[ConsoleKey["NumPad1"] = 97] = "NumPad1";
+    ConsoleKey[ConsoleKey["NumPad2"] = 98] = "NumPad2";
+    ConsoleKey[ConsoleKey["NumPad3"] = 99] = "NumPad3";
+    ConsoleKey[ConsoleKey["NumPad4"] = 100] = "NumPad4";
+    ConsoleKey[ConsoleKey["NumPad5"] = 101] = "NumPad5";
+    ConsoleKey[ConsoleKey["NumPad6"] = 102] = "NumPad6";
+    ConsoleKey[ConsoleKey["NumPad7"] = 103] = "NumPad7";
+    ConsoleKey[ConsoleKey["NumPad8"] = 104] = "NumPad8";
+    ConsoleKey[ConsoleKey["NumPad9"] = 105] = "NumPad9";
+    ConsoleKey[ConsoleKey["Multiply"] = 106] = "Multiply";
+    ConsoleKey[ConsoleKey["Add"] = 107] = "Add";
+    ConsoleKey[ConsoleKey["Separator"] = 108] = "Separator";
+    ConsoleKey[ConsoleKey["Subtract"] = 109] = "Subtract";
+    ConsoleKey[ConsoleKey["Decimal"] = 110] = "Decimal";
+    ConsoleKey[ConsoleKey["Divide"] = 111] = "Divide";
+    ConsoleKey[ConsoleKey["F1"] = 112] = "F1";
+    ConsoleKey[ConsoleKey["F2"] = 113] = "F2";
+    ConsoleKey[ConsoleKey["F3"] = 114] = "F3";
+    ConsoleKey[ConsoleKey["F4"] = 115] = "F4";
+    ConsoleKey[ConsoleKey["F5"] = 116] = "F5";
+    ConsoleKey[ConsoleKey["F6"] = 117] = "F6";
+    ConsoleKey[ConsoleKey["F7"] = 118] = "F7";
+    ConsoleKey[ConsoleKey["F8"] = 119] = "F8";
+    ConsoleKey[ConsoleKey["F9"] = 120] = "F9";
+    ConsoleKey[ConsoleKey["F10"] = 121] = "F10";
+    ConsoleKey[ConsoleKey["F11"] = 122] = "F11";
+    ConsoleKey[ConsoleKey["F12"] = 123] = "F12";
+    ConsoleKey[ConsoleKey["F13"] = 124] = "F13";
+    ConsoleKey[ConsoleKey["F14"] = 125] = "F14";
+    ConsoleKey[ConsoleKey["F15"] = 126] = "F15";
+    ConsoleKey[ConsoleKey["F16"] = 127] = "F16";
+    ConsoleKey[ConsoleKey["F17"] = 128] = "F17";
+    ConsoleKey[ConsoleKey["F18"] = 129] = "F18";
+    ConsoleKey[ConsoleKey["F19"] = 130] = "F19";
+    ConsoleKey[ConsoleKey["F20"] = 131] = "F20";
+    ConsoleKey[ConsoleKey["F21"] = 132] = "F21";
+    ConsoleKey[ConsoleKey["F22"] = 133] = "F22";
+    ConsoleKey[ConsoleKey["F23"] = 134] = "F23";
+    ConsoleKey[ConsoleKey["F24"] = 135] = "F24";
+    ConsoleKey[ConsoleKey["BrowserBack"] = 166] = "BrowserBack";
+    ConsoleKey[ConsoleKey["BrowserForward"] = 167] = "BrowserForward";
+    ConsoleKey[ConsoleKey["BrowserRefresh"] = 168] = "BrowserRefresh";
+    ConsoleKey[ConsoleKey["BrowserStop"] = 169] = "BrowserStop";
+    ConsoleKey[ConsoleKey["BrowserSearch"] = 170] = "BrowserSearch";
+    ConsoleKey[ConsoleKey["BrowserFavorites"] = 171] = "BrowserFavorites";
+    ConsoleKey[ConsoleKey["BrowserHome"] = 172] = "BrowserHome";
+    ConsoleKey[ConsoleKey["VolumeMute"] = 173] = "VolumeMute";
+    ConsoleKey[ConsoleKey["VolumeDown"] = 174] = "VolumeDown";
+    ConsoleKey[ConsoleKey["VolumeUp"] = 175] = "VolumeUp";
+    ConsoleKey[ConsoleKey["MediaNext"] = 176] = "MediaNext";
+    ConsoleKey[ConsoleKey["MediaPrevious"] = 177] = "MediaPrevious";
+    ConsoleKey[ConsoleKey["MediaStop"] = 178] = "MediaStop";
+    ConsoleKey[ConsoleKey["MediaPlay"] = 179] = "MediaPlay";
+    ConsoleKey[ConsoleKey["LaunchMail"] = 180] = "LaunchMail";
+    ConsoleKey[ConsoleKey["LaunchMediaSelect"] = 181] = "LaunchMediaSelect";
+    ConsoleKey[ConsoleKey["LaunchApp1"] = 182] = "LaunchApp1";
+    ConsoleKey[ConsoleKey["LaunchApp2"] = 183] = "LaunchApp2";
+    ConsoleKey[ConsoleKey["Oem1"] = 186] = "Oem1";
+    ConsoleKey[ConsoleKey["OemPlus"] = 187] = "OemPlus";
+    ConsoleKey[ConsoleKey["OemComma"] = 188] = "OemComma";
+    ConsoleKey[ConsoleKey["OemMinus"] = 189] = "OemMinus";
+    ConsoleKey[ConsoleKey["OemPeriod"] = 190] = "OemPeriod";
+    ConsoleKey[ConsoleKey["Oem2"] = 191] = "Oem2";
+    ConsoleKey[ConsoleKey["Oem3"] = 192] = "Oem3";
+    ConsoleKey[ConsoleKey["Oem4"] = 219] = "Oem4";
+    ConsoleKey[ConsoleKey["Oem5"] = 220] = "Oem5";
+    ConsoleKey[ConsoleKey["Oem6"] = 221] = "Oem6";
+    ConsoleKey[ConsoleKey["Oem7"] = 222] = "Oem7";
+    ConsoleKey[ConsoleKey["Oem8"] = 223] = "Oem8";
+    ConsoleKey[ConsoleKey["Oem102"] = 226] = "Oem102";
+    ConsoleKey[ConsoleKey["Process"] = 229] = "Process";
+    ConsoleKey[ConsoleKey["Packet"] = 231] = "Packet";
+    ConsoleKey[ConsoleKey["Attention"] = 246] = "Attention";
+    ConsoleKey[ConsoleKey["CrSel"] = 247] = "CrSel";
+    ConsoleKey[ConsoleKey["ExSel"] = 248] = "ExSel";
+    ConsoleKey[ConsoleKey["EraseEndOfFile"] = 249] = "EraseEndOfFile";
+    ConsoleKey[ConsoleKey["Play"] = 250] = "Play";
+    ConsoleKey[ConsoleKey["Zoom"] = 251] = "Zoom";
+    ConsoleKey[ConsoleKey["NoName"] = 252] = "NoName";
+    ConsoleKey[ConsoleKey["Pa1"] = 253] = "Pa1";
+    ConsoleKey[ConsoleKey["OemClear"] = 254] = "OemClear";
+  })(ConsoleKey = System.ConsoleKey || (System.ConsoleKey = {}));
+
+  var ConsoleModifiers;
+
+  (function (ConsoleModifiers) {
+    ConsoleModifiers[ConsoleModifiers["Alt"] = 1] = "Alt";
+    ConsoleModifiers[ConsoleModifiers["Shift"] = 2] = "Shift";
+    ConsoleModifiers[ConsoleModifiers["Control"] = 4] = "Control";
+  })(ConsoleModifiers = System.ConsoleModifiers || (System.ConsoleModifiers = {}));
+
+  var ConsoleSpecialKey;
+
+  (function (ConsoleSpecialKey) {
+    ConsoleSpecialKey[ConsoleSpecialKey["ControlC"] = 0] = "ControlC";
+    ConsoleSpecialKey[ConsoleSpecialKey["ControlBreak"] = 1] = "ControlBreak";
+  })(ConsoleSpecialKey = System.ConsoleSpecialKey || (System.ConsoleSpecialKey = {}));
+
+  var Base64FormattingOptions;
+
+  (function (Base64FormattingOptions) {
+    Base64FormattingOptions[Base64FormattingOptions["None"] = 0] = "None";
+    Base64FormattingOptions[Base64FormattingOptions["InsertLineBreaks"] = 1] = "InsertLineBreaks";
+  })(Base64FormattingOptions = System.Base64FormattingOptions || (System.Base64FormattingOptions = {}));
+
+  var DateTimeKind;
+
+  (function (DateTimeKind) {
+    DateTimeKind[DateTimeKind["Unspecified"] = 0] = "Unspecified";
+    DateTimeKind[DateTimeKind["Utc"] = 1] = "Utc";
+    DateTimeKind[DateTimeKind["Local"] = 2] = "Local";
+  })(DateTimeKind = System.DateTimeKind || (System.DateTimeKind = {}));
+
+  var DayOfWeek;
+
+  (function (DayOfWeek) {
+    DayOfWeek[DayOfWeek["Sunday"] = 0] = "Sunday";
+    DayOfWeek[DayOfWeek["Monday"] = 1] = "Monday";
+    DayOfWeek[DayOfWeek["Tuesday"] = 2] = "Tuesday";
+    DayOfWeek[DayOfWeek["Wednesday"] = 3] = "Wednesday";
+    DayOfWeek[DayOfWeek["Thursday"] = 4] = "Thursday";
+    DayOfWeek[DayOfWeek["Friday"] = 5] = "Friday";
+    DayOfWeek[DayOfWeek["Saturday"] = 6] = "Saturday";
+  })(DayOfWeek = System.DayOfWeek || (System.DayOfWeek = {}));
+
+  var GCCollectionMode;
+
+  (function (GCCollectionMode) {
+    GCCollectionMode[GCCollectionMode["Default"] = 0] = "Default";
+    GCCollectionMode[GCCollectionMode["Forced"] = 1] = "Forced";
+    GCCollectionMode[GCCollectionMode["Optimized"] = 2] = "Optimized";
+  })(GCCollectionMode = System.GCCollectionMode || (System.GCCollectionMode = {}));
+
+  var GCNotificationStatus;
+
+  (function (GCNotificationStatus) {
+    GCNotificationStatus[GCNotificationStatus["Succeeded"] = 0] = "Succeeded";
+    GCNotificationStatus[GCNotificationStatus["Failed"] = 1] = "Failed";
+    GCNotificationStatus[GCNotificationStatus["Canceled"] = 2] = "Canceled";
+    GCNotificationStatus[GCNotificationStatus["Timeout"] = 3] = "Timeout";
+    GCNotificationStatus[GCNotificationStatus["NotApplicable"] = 4] = "NotApplicable";
+  })(GCNotificationStatus = System.GCNotificationStatus || (System.GCNotificationStatus = {}));
+
+  var MidpointRounding;
+
+  (function (MidpointRounding) {
+    MidpointRounding[MidpointRounding["ToEven"] = 0] = "ToEven";
+    MidpointRounding[MidpointRounding["AwayFromZero"] = 1] = "AwayFromZero";
+  })(MidpointRounding = System.MidpointRounding || (System.MidpointRounding = {}));
+
+  var StringSplitOptions;
+
+  (function (StringSplitOptions) {
+    StringSplitOptions[StringSplitOptions["None"] = 0] = "None";
+    StringSplitOptions[StringSplitOptions["RemoveEmptyEntries"] = 1] = "RemoveEmptyEntries";
+  })(StringSplitOptions = System.StringSplitOptions || (System.StringSplitOptions = {}));
+
+  var Environment_SpecialFolder;
+
+  (function (Environment_SpecialFolder) {
+    Environment_SpecialFolder[Environment_SpecialFolder["MyDocuments"] = 5] = "MyDocuments";
+    Environment_SpecialFolder[Environment_SpecialFolder["Desktop"] = 0] = "Desktop";
+    Environment_SpecialFolder[Environment_SpecialFolder["MyComputer"] = 17] = "MyComputer";
+    Environment_SpecialFolder[Environment_SpecialFolder["Programs"] = 2] = "Programs";
+    Environment_SpecialFolder[Environment_SpecialFolder["Personal"] = 5] = "Personal";
+    Environment_SpecialFolder[Environment_SpecialFolder["Favorites"] = 6] = "Favorites";
+    Environment_SpecialFolder[Environment_SpecialFolder["Startup"] = 7] = "Startup";
+    Environment_SpecialFolder[Environment_SpecialFolder["Recent"] = 8] = "Recent";
+    Environment_SpecialFolder[Environment_SpecialFolder["SendTo"] = 9] = "SendTo";
+    Environment_SpecialFolder[Environment_SpecialFolder["StartMenu"] = 11] = "StartMenu";
+    Environment_SpecialFolder[Environment_SpecialFolder["MyMusic"] = 13] = "MyMusic";
+    Environment_SpecialFolder[Environment_SpecialFolder["DesktopDirectory"] = 16] = "DesktopDirectory";
+    Environment_SpecialFolder[Environment_SpecialFolder["Templates"] = 21] = "Templates";
+    Environment_SpecialFolder[Environment_SpecialFolder["ApplicationData"] = 26] = "ApplicationData";
+    Environment_SpecialFolder[Environment_SpecialFolder["LocalApplicationData"] = 28] = "LocalApplicationData";
+    Environment_SpecialFolder[Environment_SpecialFolder["InternetCache"] = 32] = "InternetCache";
+    Environment_SpecialFolder[Environment_SpecialFolder["Cookies"] = 33] = "Cookies";
+    Environment_SpecialFolder[Environment_SpecialFolder["History"] = 34] = "History";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonApplicationData"] = 35] = "CommonApplicationData";
+    Environment_SpecialFolder[Environment_SpecialFolder["System"] = 37] = "System";
+    Environment_SpecialFolder[Environment_SpecialFolder["ProgramFiles"] = 38] = "ProgramFiles";
+    Environment_SpecialFolder[Environment_SpecialFolder["MyPictures"] = 39] = "MyPictures";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonProgramFiles"] = 43] = "CommonProgramFiles";
+    Environment_SpecialFolder[Environment_SpecialFolder["MyVideos"] = 14] = "MyVideos";
+    Environment_SpecialFolder[Environment_SpecialFolder["NetworkShortcuts"] = 19] = "NetworkShortcuts";
+    Environment_SpecialFolder[Environment_SpecialFolder["Fonts"] = 20] = "Fonts";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonStartMenu"] = 22] = "CommonStartMenu";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonPrograms"] = 23] = "CommonPrograms";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonStartup"] = 24] = "CommonStartup";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonDesktopDirectory"] = 25] = "CommonDesktopDirectory";
+    Environment_SpecialFolder[Environment_SpecialFolder["PrinterShortcuts"] = 27] = "PrinterShortcuts";
+    Environment_SpecialFolder[Environment_SpecialFolder["Windows"] = 36] = "Windows";
+    Environment_SpecialFolder[Environment_SpecialFolder["UserProfile"] = 40] = "UserProfile";
+    Environment_SpecialFolder[Environment_SpecialFolder["SystemX86"] = 41] = "SystemX86";
+    Environment_SpecialFolder[Environment_SpecialFolder["ProgramFilesX86"] = 42] = "ProgramFilesX86";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonProgramFilesX86"] = 44] = "CommonProgramFilesX86";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonTemplates"] = 45] = "CommonTemplates";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonDocuments"] = 46] = "CommonDocuments";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonAdminTools"] = 47] = "CommonAdminTools";
+    Environment_SpecialFolder[Environment_SpecialFolder["AdminTools"] = 48] = "AdminTools";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonMusic"] = 53] = "CommonMusic";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonPictures"] = 54] = "CommonPictures";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonVideos"] = 55] = "CommonVideos";
+    Environment_SpecialFolder[Environment_SpecialFolder["Resources"] = 56] = "Resources";
+    Environment_SpecialFolder[Environment_SpecialFolder["LocalizedResources"] = 57] = "LocalizedResources";
+    Environment_SpecialFolder[Environment_SpecialFolder["CommonOemLinks"] = 58] = "CommonOemLinks";
+    Environment_SpecialFolder[Environment_SpecialFolder["CDBurning"] = 59] = "CDBurning";
+  })(Environment_SpecialFolder = System.Environment_SpecialFolder || (System.Environment_SpecialFolder = {}));
+
+  var Environment_SpecialFolderOption;
+
+  (function (Environment_SpecialFolderOption) {
+    Environment_SpecialFolderOption[Environment_SpecialFolderOption["None"] = 0] = "None";
+    Environment_SpecialFolderOption[Environment_SpecialFolderOption["DoNotVerify"] = 16384] = "DoNotVerify";
+    Environment_SpecialFolderOption[Environment_SpecialFolderOption["Create"] = 32768] = "Create";
+  })(Environment_SpecialFolderOption = System.Environment_SpecialFolderOption || (System.Environment_SpecialFolderOption = {}));
+
+  var ActivationContext_ContextForm;
+
+  (function (ActivationContext_ContextForm) {
+    ActivationContext_ContextForm[ActivationContext_ContextForm["Loose"] = 0] = "Loose";
+    ActivationContext_ContextForm[ActivationContext_ContextForm["StoreBounded"] = 1] = "StoreBounded";
+  })(ActivationContext_ContextForm = System.ActivationContext_ContextForm || (System.ActivationContext_ContextForm = {}));
+
+  var AppDomainManagerInitializationOptions;
+
+  (function (AppDomainManagerInitializationOptions) {
+    AppDomainManagerInitializationOptions[AppDomainManagerInitializationOptions["None"] = 0] = "None";
+    AppDomainManagerInitializationOptions[AppDomainManagerInitializationOptions["RegisterWithHost"] = 1] = "RegisterWithHost";
+  })(AppDomainManagerInitializationOptions = System.AppDomainManagerInitializationOptions || (System.AppDomainManagerInitializationOptions = {}));
+
+  var EnvironmentVariableTarget;
+
+  (function (EnvironmentVariableTarget) {
+    EnvironmentVariableTarget[EnvironmentVariableTarget["Process"] = 0] = "Process";
+    EnvironmentVariableTarget[EnvironmentVariableTarget["User"] = 1] = "User";
+    EnvironmentVariableTarget[EnvironmentVariableTarget["Machine"] = 2] = "Machine";
+  })(EnvironmentVariableTarget = System.EnvironmentVariableTarget || (System.EnvironmentVariableTarget = {}));
+
+  var PlatformID;
+
+  (function (PlatformID) {
+    PlatformID[PlatformID["Win32S"] = 0] = "Win32S";
+    PlatformID[PlatformID["Win32Windows"] = 1] = "Win32Windows";
+    PlatformID[PlatformID["Win32NT"] = 2] = "Win32NT";
+    PlatformID[PlatformID["WinCE"] = 3] = "WinCE";
+    PlatformID[PlatformID["Unix"] = 4] = "Unix";
+    PlatformID[PlatformID["Xbox"] = 5] = "Xbox";
+    PlatformID[PlatformID["MacOSX"] = 6] = "MacOSX";
+  })(PlatformID = System.PlatformID || (System.PlatformID = {}));
+
+  var StringComparison;
+
+  (function (StringComparison) {
+    StringComparison[StringComparison["CurrentCulture"] = 0] = "CurrentCulture";
+    StringComparison[StringComparison["CurrentCultureIgnoreCase"] = 1] = "CurrentCultureIgnoreCase";
+    StringComparison[StringComparison["InvariantCulture"] = 2] = "InvariantCulture";
+    StringComparison[StringComparison["InvariantCultureIgnoreCase"] = 3] = "InvariantCultureIgnoreCase";
+    StringComparison[StringComparison["Ordinal"] = 4] = "Ordinal";
+    StringComparison[StringComparison["OrdinalIgnoreCase"] = 5] = "OrdinalIgnoreCase";
+  })(StringComparison = System.StringComparison || (System.StringComparison = {}));
+
+  var TypeCode;
+
+  (function (TypeCode) {
+    TypeCode[TypeCode["Empty"] = 0] = "Empty";
+    TypeCode[TypeCode["Object"] = 1] = "Object";
+    TypeCode[TypeCode["DBNull"] = 2] = "DBNull";
+    TypeCode[TypeCode["Boolean"] = 3] = "Boolean";
+    TypeCode[TypeCode["Char"] = 4] = "Char";
+    TypeCode[TypeCode["SByte"] = 5] = "SByte";
+    TypeCode[TypeCode["Byte"] = 6] = "Byte";
+    TypeCode[TypeCode["Int16"] = 7] = "Int16";
+    TypeCode[TypeCode["UInt16"] = 8] = "UInt16";
+    TypeCode[TypeCode["Int32"] = 9] = "Int32";
+    TypeCode[TypeCode["UInt32"] = 10] = "UInt32";
+    TypeCode[TypeCode["Int64"] = 11] = "Int64";
+    TypeCode[TypeCode["UInt64"] = 12] = "UInt64";
+    TypeCode[TypeCode["Single"] = 13] = "Single";
+    TypeCode[TypeCode["Double"] = 14] = "Double";
+    TypeCode[TypeCode["Decimal"] = 15] = "Decimal";
+    TypeCode[TypeCode["DateTime"] = 16] = "DateTime";
+    TypeCode[TypeCode["String"] = 18] = "String";
+  })(TypeCode = System.TypeCode || (System.TypeCode = {}));
+
+  var GenericUriParserOptions;
+
+  (function (GenericUriParserOptions) {
+    GenericUriParserOptions[GenericUriParserOptions["Default"] = 0] = "Default";
+    GenericUriParserOptions[GenericUriParserOptions["GenericAuthority"] = 1] = "GenericAuthority";
+    GenericUriParserOptions[GenericUriParserOptions["AllowEmptyAuthority"] = 2] = "AllowEmptyAuthority";
+    GenericUriParserOptions[GenericUriParserOptions["NoUserInfo"] = 4] = "NoUserInfo";
+    GenericUriParserOptions[GenericUriParserOptions["NoPort"] = 8] = "NoPort";
+    GenericUriParserOptions[GenericUriParserOptions["NoQuery"] = 16] = "NoQuery";
+    GenericUriParserOptions[GenericUriParserOptions["NoFragment"] = 32] = "NoFragment";
+    GenericUriParserOptions[GenericUriParserOptions["DontConvertPathBackslashes"] = 64] = "DontConvertPathBackslashes";
+    GenericUriParserOptions[GenericUriParserOptions["DontCompressPath"] = 128] = "DontCompressPath";
+    GenericUriParserOptions[GenericUriParserOptions["DontUnescapePathDotsAndSlashes"] = 256] = "DontUnescapePathDotsAndSlashes";
+    GenericUriParserOptions[GenericUriParserOptions["Idn"] = 512] = "Idn";
+    GenericUriParserOptions[GenericUriParserOptions["IriParsing"] = 1024] = "IriParsing";
+  })(GenericUriParserOptions = System.GenericUriParserOptions || (System.GenericUriParserOptions = {}));
+
+  var UriPartial;
+
+  (function (UriPartial) {
+    UriPartial[UriPartial["Scheme"] = 0] = "Scheme";
+    UriPartial[UriPartial["Authority"] = 1] = "Authority";
+    UriPartial[UriPartial["Path"] = 2] = "Path";
+    UriPartial[UriPartial["Query"] = 3] = "Query";
+  })(UriPartial = System.UriPartial || (System.UriPartial = {}));
+
+  var UriKind;
+
+  (function (UriKind) {
+    UriKind[UriKind["RelativeOrAbsolute"] = 0] = "RelativeOrAbsolute";
+    UriKind[UriKind["Absolute"] = 1] = "Absolute";
+    UriKind[UriKind["Relative"] = 2] = "Relative";
+  })(UriKind = System.UriKind || (System.UriKind = {}));
+
+  var UriComponents;
+
+  (function (UriComponents) {
+    UriComponents[UriComponents["Scheme"] = 1] = "Scheme";
+    UriComponents[UriComponents["UserInfo"] = 2] = "UserInfo";
+    UriComponents[UriComponents["Host"] = 4] = "Host";
+    UriComponents[UriComponents["Port"] = 8] = "Port";
+    UriComponents[UriComponents["Path"] = 16] = "Path";
+    UriComponents[UriComponents["Query"] = 32] = "Query";
+    UriComponents[UriComponents["Fragment"] = 64] = "Fragment";
+    UriComponents[UriComponents["StrongPort"] = 128] = "StrongPort";
+    UriComponents[UriComponents["NormalizedHost"] = 256] = "NormalizedHost";
+    UriComponents[UriComponents["KeepDelimiter"] = 1073741824] = "KeepDelimiter";
+    UriComponents[UriComponents["SerializationInfoString"] = -2147483648] = "SerializationInfoString";
+    UriComponents[UriComponents["AbsoluteUri"] = 127] = "AbsoluteUri";
+    UriComponents[UriComponents["HostAndPort"] = 132] = "HostAndPort";
+    UriComponents[UriComponents["StrongAuthority"] = 134] = "StrongAuthority";
+    UriComponents[UriComponents["SchemeAndServer"] = 13] = "SchemeAndServer";
+    UriComponents[UriComponents["HttpRequestUrl"] = 61] = "HttpRequestUrl";
+    UriComponents[UriComponents["PathAndQuery"] = 48] = "PathAndQuery";
+  })(UriComponents = System.UriComponents || (System.UriComponents = {}));
+
+  var UriFormat;
+
+  (function (UriFormat) {
+    UriFormat[UriFormat["UriEscaped"] = 1] = "UriEscaped";
+    UriFormat[UriFormat["Unescaped"] = 2] = "Unescaped";
+    UriFormat[UriFormat["SafeUnescaped"] = 3] = "SafeUnescaped";
+  })(UriFormat = System.UriFormat || (System.UriFormat = {}));
+
+  var UriIdnScope;
+
+  (function (UriIdnScope) {
+    UriIdnScope[UriIdnScope["None"] = 0] = "None";
+    UriIdnScope[UriIdnScope["AllExceptIntranet"] = 1] = "AllExceptIntranet";
+    UriIdnScope[UriIdnScope["All"] = 2] = "All";
+  })(UriIdnScope = System.UriIdnScope || (System.UriIdnScope = {}));
+
+  var UriHostNameType;
+
+  (function (UriHostNameType) {
+    UriHostNameType[UriHostNameType["Unknown"] = 0] = "Unknown";
+    UriHostNameType[UriHostNameType["Basic"] = 1] = "Basic";
+    UriHostNameType[UriHostNameType["Dns"] = 2] = "Dns";
+    UriHostNameType[UriHostNameType["IPv4"] = 3] = "IPv4";
+    UriHostNameType[UriHostNameType["IPv6"] = 4] = "IPv6";
+  })(UriHostNameType = System.UriHostNameType || (System.UriHostNameType = {}));
+
+  var Buffers;
+
+  (function (Buffers) {
+    var Binary;
+
+    (function (Binary) {})(Binary = Buffers.Binary || (Buffers.Binary = {}));
+  })(Buffers = System.Buffers || (System.Buffers = {}));
+
+  var CodeDom;
+
+  (function (CodeDom) {
+    var CodeTypeReferenceOptions;
+
+    (function (CodeTypeReferenceOptions) {
+      CodeTypeReferenceOptions[CodeTypeReferenceOptions["GlobalReference"] = 1] = "GlobalReference";
+      CodeTypeReferenceOptions[CodeTypeReferenceOptions["GenericTypeParameter"] = 2] = "GenericTypeParameter";
+    })(CodeTypeReferenceOptions = CodeDom.CodeTypeReferenceOptions || (CodeDom.CodeTypeReferenceOptions = {}));
+
+    var CodeBinaryOperatorType;
+
+    (function (CodeBinaryOperatorType) {
+      CodeBinaryOperatorType[CodeBinaryOperatorType["Add"] = 0] = "Add";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["Subtract"] = 1] = "Subtract";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["Multiply"] = 2] = "Multiply";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["Divide"] = 3] = "Divide";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["Modulus"] = 4] = "Modulus";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["Assign"] = 5] = "Assign";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["IdentityInequality"] = 6] = "IdentityInequality";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["IdentityEquality"] = 7] = "IdentityEquality";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["ValueEquality"] = 8] = "ValueEquality";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["BitwiseOr"] = 9] = "BitwiseOr";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["BitwiseAnd"] = 10] = "BitwiseAnd";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["BooleanOr"] = 11] = "BooleanOr";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["BooleanAnd"] = 12] = "BooleanAnd";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["LessThan"] = 13] = "LessThan";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["LessThanOrEqual"] = 14] = "LessThanOrEqual";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["GreaterThan"] = 15] = "GreaterThan";
+      CodeBinaryOperatorType[CodeBinaryOperatorType["GreaterThanOrEqual"] = 16] = "GreaterThanOrEqual";
+    })(CodeBinaryOperatorType = CodeDom.CodeBinaryOperatorType || (CodeDom.CodeBinaryOperatorType = {}));
+
+    var CodeRegionMode;
+
+    (function (CodeRegionMode) {
+      CodeRegionMode[CodeRegionMode["None"] = 0] = "None";
+      CodeRegionMode[CodeRegionMode["Start"] = 1] = "Start";
+      CodeRegionMode[CodeRegionMode["End"] = 2] = "End";
+    })(CodeRegionMode = CodeDom.CodeRegionMode || (CodeDom.CodeRegionMode = {}));
+
+    var FieldDirection;
+
+    (function (FieldDirection) {
+      FieldDirection[FieldDirection["In"] = 0] = "In";
+      FieldDirection[FieldDirection["Out"] = 1] = "Out";
+      FieldDirection[FieldDirection["Ref"] = 2] = "Ref";
+    })(FieldDirection = CodeDom.FieldDirection || (CodeDom.FieldDirection = {}));
+
+    var MemberAttributes;
+
+    (function (MemberAttributes) {
+      MemberAttributes[MemberAttributes["Abstract"] = 1] = "Abstract";
+      MemberAttributes[MemberAttributes["Final"] = 2] = "Final";
+      MemberAttributes[MemberAttributes["Static"] = 3] = "Static";
+      MemberAttributes[MemberAttributes["Override"] = 4] = "Override";
+      MemberAttributes[MemberAttributes["Const"] = 5] = "Const";
+      MemberAttributes[MemberAttributes["New"] = 16] = "New";
+      MemberAttributes[MemberAttributes["Overloaded"] = 256] = "Overloaded";
+      MemberAttributes[MemberAttributes["Assembly"] = 4096] = "Assembly";
+      MemberAttributes[MemberAttributes["FamilyAndAssembly"] = 8192] = "FamilyAndAssembly";
+      MemberAttributes[MemberAttributes["Family"] = 12288] = "Family";
+      MemberAttributes[MemberAttributes["FamilyOrAssembly"] = 16384] = "FamilyOrAssembly";
+      MemberAttributes[MemberAttributes["Private"] = 20480] = "Private";
+      MemberAttributes[MemberAttributes["Public"] = 24576] = "Public";
+      MemberAttributes[MemberAttributes["AccessMask"] = 61440] = "AccessMask";
+      MemberAttributes[MemberAttributes["ScopeMask"] = 15] = "ScopeMask";
+      MemberAttributes[MemberAttributes["VTableMask"] = 240] = "VTableMask";
+    })(MemberAttributes = CodeDom.MemberAttributes || (CodeDom.MemberAttributes = {}));
+
+    var Compiler;
+
+    (function (Compiler) {
+      var GeneratorSupport;
+
+      (function (GeneratorSupport) {
+        GeneratorSupport[GeneratorSupport["ArraysOfArrays"] = 1] = "ArraysOfArrays";
+        GeneratorSupport[GeneratorSupport["EntryPointMethod"] = 2] = "EntryPointMethod";
+        GeneratorSupport[GeneratorSupport["GotoStatements"] = 4] = "GotoStatements";
+        GeneratorSupport[GeneratorSupport["MultidimensionalArrays"] = 8] = "MultidimensionalArrays";
+        GeneratorSupport[GeneratorSupport["StaticConstructors"] = 16] = "StaticConstructors";
+        GeneratorSupport[GeneratorSupport["TryCatchStatements"] = 32] = "TryCatchStatements";
+        GeneratorSupport[GeneratorSupport["ReturnTypeAttributes"] = 64] = "ReturnTypeAttributes";
+        GeneratorSupport[GeneratorSupport["DeclareValueTypes"] = 128] = "DeclareValueTypes";
+        GeneratorSupport[GeneratorSupport["DeclareEnums"] = 256] = "DeclareEnums";
+        GeneratorSupport[GeneratorSupport["DeclareDelegates"] = 512] = "DeclareDelegates";
+        GeneratorSupport[GeneratorSupport["DeclareInterfaces"] = 1024] = "DeclareInterfaces";
+        GeneratorSupport[GeneratorSupport["DeclareEvents"] = 2048] = "DeclareEvents";
+        GeneratorSupport[GeneratorSupport["AssemblyAttributes"] = 4096] = "AssemblyAttributes";
+        GeneratorSupport[GeneratorSupport["ParameterAttributes"] = 8192] = "ParameterAttributes";
+        GeneratorSupport[GeneratorSupport["ReferenceParameters"] = 16384] = "ReferenceParameters";
+        GeneratorSupport[GeneratorSupport["ChainedConstructorArguments"] = 32768] = "ChainedConstructorArguments";
+        GeneratorSupport[GeneratorSupport["NestedTypes"] = 65536] = "NestedTypes";
+        GeneratorSupport[GeneratorSupport["MultipleInterfaceMembers"] = 131072] = "MultipleInterfaceMembers";
+        GeneratorSupport[GeneratorSupport["PublicStaticMembers"] = 262144] = "PublicStaticMembers";
+        GeneratorSupport[GeneratorSupport["ComplexExpressions"] = 524288] = "ComplexExpressions";
+        GeneratorSupport[GeneratorSupport["Win32Resources"] = 1048576] = "Win32Resources";
+        GeneratorSupport[GeneratorSupport["Resources"] = 2097152] = "Resources";
+        GeneratorSupport[GeneratorSupport["PartialTypes"] = 4194304] = "PartialTypes";
+        GeneratorSupport[GeneratorSupport["GenericTypeReference"] = 8388608] = "GenericTypeReference";
+        GeneratorSupport[GeneratorSupport["GenericTypeDeclaration"] = 16777216] = "GenericTypeDeclaration";
+        GeneratorSupport[GeneratorSupport["DeclareIndexerProperties"] = 33554432] = "DeclareIndexerProperties";
+      })(GeneratorSupport = Compiler.GeneratorSupport || (Compiler.GeneratorSupport = {}));
+
+      var LanguageOptions;
+
+      (function (LanguageOptions) {
+        LanguageOptions[LanguageOptions["None"] = 0] = "None";
+        LanguageOptions[LanguageOptions["CaseInsensitive"] = 1] = "CaseInsensitive";
+      })(LanguageOptions = Compiler.LanguageOptions || (Compiler.LanguageOptions = {}));
+    })(Compiler = CodeDom.Compiler || (CodeDom.Compiler = {}));
+  })(CodeDom = System.CodeDom || (System.CodeDom = {}));
+
+  var Collections;
+
+  (function (Collections) {
+    var Concurrent;
+
+    (function (Concurrent) {
+      var EnumerablePartitionerOptions;
+
+      (function (EnumerablePartitionerOptions) {
+        EnumerablePartitionerOptions[EnumerablePartitionerOptions["None"] = 0] = "None";
+        EnumerablePartitionerOptions[EnumerablePartitionerOptions["NoBuffering"] = 1] = "NoBuffering";
+      })(EnumerablePartitionerOptions = Concurrent.EnumerablePartitionerOptions || (Concurrent.EnumerablePartitionerOptions = {}));
+    })(Concurrent = Collections.Concurrent || (Collections.Concurrent = {}));
+
+    var Generic;
+
+    (function (Generic) {})(Generic = Collections.Generic || (Collections.Generic = {}));
+
+    var ObjectModel;
+
+    (function (ObjectModel) {})(ObjectModel = Collections.ObjectModel || (Collections.ObjectModel = {}));
+
+    var Specialized;
+
+    (function (Specialized) {
+      var NotifyCollectionChangedAction;
+
+      (function (NotifyCollectionChangedAction) {
+        NotifyCollectionChangedAction[NotifyCollectionChangedAction["Add"] = 0] = "Add";
+        NotifyCollectionChangedAction[NotifyCollectionChangedAction["Remove"] = 1] = "Remove";
+        NotifyCollectionChangedAction[NotifyCollectionChangedAction["Replace"] = 2] = "Replace";
+        NotifyCollectionChangedAction[NotifyCollectionChangedAction["Move"] = 3] = "Move";
+        NotifyCollectionChangedAction[NotifyCollectionChangedAction["Reset"] = 4] = "Reset";
+      })(NotifyCollectionChangedAction = Specialized.NotifyCollectionChangedAction || (Specialized.NotifyCollectionChangedAction = {}));
+    })(Specialized = Collections.Specialized || (Collections.Specialized = {}));
+  })(Collections = System.Collections || (System.Collections = {}));
+
+  var ComponentModel;
+
+  (function (ComponentModel) {
+    var BindableSupport;
+
+    (function (BindableSupport) {
+      BindableSupport[BindableSupport["No"] = 0] = "No";
+      BindableSupport[BindableSupport["Yes"] = 1] = "Yes";
+      BindableSupport[BindableSupport["Default"] = 2] = "Default";
+    })(BindableSupport = ComponentModel.BindableSupport || (ComponentModel.BindableSupport = {}));
+
+    var BindingDirection;
+
+    (function (BindingDirection) {
+      BindingDirection[BindingDirection["OneWay"] = 0] = "OneWay";
+      BindingDirection[BindingDirection["TwoWay"] = 1] = "TwoWay";
+    })(BindingDirection = ComponentModel.BindingDirection || (ComponentModel.BindingDirection = {}));
+
+    var CollectionChangeAction;
+
+    (function (CollectionChangeAction) {
+      CollectionChangeAction[CollectionChangeAction["Add"] = 1] = "Add";
+      CollectionChangeAction[CollectionChangeAction["Remove"] = 2] = "Remove";
+      CollectionChangeAction[CollectionChangeAction["Refresh"] = 3] = "Refresh";
+    })(CollectionChangeAction = ComponentModel.CollectionChangeAction || (ComponentModel.CollectionChangeAction = {}));
+
+    var DataObjectMethodType;
+
+    (function (DataObjectMethodType) {
+      DataObjectMethodType[DataObjectMethodType["Fill"] = 0] = "Fill";
+      DataObjectMethodType[DataObjectMethodType["Select"] = 1] = "Select";
+      DataObjectMethodType[DataObjectMethodType["Update"] = 2] = "Update";
+      DataObjectMethodType[DataObjectMethodType["Insert"] = 3] = "Insert";
+      DataObjectMethodType[DataObjectMethodType["Delete"] = 4] = "Delete";
+    })(DataObjectMethodType = ComponentModel.DataObjectMethodType || (ComponentModel.DataObjectMethodType = {}));
+
+    var DesignerSerializationVisibility;
+
+    (function (DesignerSerializationVisibility) {
+      DesignerSerializationVisibility[DesignerSerializationVisibility["Hidden"] = 0] = "Hidden";
+      DesignerSerializationVisibility[DesignerSerializationVisibility["Visible"] = 1] = "Visible";
+      DesignerSerializationVisibility[DesignerSerializationVisibility["Content"] = 2] = "Content";
+    })(DesignerSerializationVisibility = ComponentModel.DesignerSerializationVisibility || (ComponentModel.DesignerSerializationVisibility = {}));
+
+    var EditorBrowsableState;
+
+    (function (EditorBrowsableState) {
+      EditorBrowsableState[EditorBrowsableState["Always"] = 0] = "Always";
+      EditorBrowsableState[EditorBrowsableState["Never"] = 1] = "Never";
+      EditorBrowsableState[EditorBrowsableState["Advanced"] = 2] = "Advanced";
+    })(EditorBrowsableState = ComponentModel.EditorBrowsableState || (ComponentModel.EditorBrowsableState = {}));
+
+    var LicenseUsageMode;
+
+    (function (LicenseUsageMode) {
+      LicenseUsageMode[LicenseUsageMode["Runtime"] = 0] = "Runtime";
+      LicenseUsageMode[LicenseUsageMode["Designtime"] = 1] = "Designtime";
+    })(LicenseUsageMode = ComponentModel.LicenseUsageMode || (ComponentModel.LicenseUsageMode = {}));
+
+    var ListChangedType;
+
+    (function (ListChangedType) {
+      ListChangedType[ListChangedType["Reset"] = 0] = "Reset";
+      ListChangedType[ListChangedType["ItemAdded"] = 1] = "ItemAdded";
+      ListChangedType[ListChangedType["ItemDeleted"] = 2] = "ItemDeleted";
+      ListChangedType[ListChangedType["ItemMoved"] = 3] = "ItemMoved";
+      ListChangedType[ListChangedType["ItemChanged"] = 4] = "ItemChanged";
+      ListChangedType[ListChangedType["PropertyDescriptorAdded"] = 5] = "PropertyDescriptorAdded";
+      ListChangedType[ListChangedType["PropertyDescriptorDeleted"] = 6] = "PropertyDescriptorDeleted";
+      ListChangedType[ListChangedType["PropertyDescriptorChanged"] = 7] = "PropertyDescriptorChanged";
+    })(ListChangedType = ComponentModel.ListChangedType || (ComponentModel.ListChangedType = {}));
+
+    var ListSortDirection;
+
+    (function (ListSortDirection) {
+      ListSortDirection[ListSortDirection["Ascending"] = 0] = "Ascending";
+      ListSortDirection[ListSortDirection["Descending"] = 1] = "Descending";
+    })(ListSortDirection = ComponentModel.ListSortDirection || (ComponentModel.ListSortDirection = {}));
+
+    var MaskedTextResultHint;
+
+    (function (MaskedTextResultHint) {
+      MaskedTextResultHint[MaskedTextResultHint["Unknown"] = 0] = "Unknown";
+      MaskedTextResultHint[MaskedTextResultHint["CharacterEscaped"] = 1] = "CharacterEscaped";
+      MaskedTextResultHint[MaskedTextResultHint["NoEffect"] = 2] = "NoEffect";
+      MaskedTextResultHint[MaskedTextResultHint["SideEffect"] = 3] = "SideEffect";
+      MaskedTextResultHint[MaskedTextResultHint["Success"] = 4] = "Success";
+      MaskedTextResultHint[MaskedTextResultHint["AsciiCharacterExpected"] = -1] = "AsciiCharacterExpected";
+      MaskedTextResultHint[MaskedTextResultHint["AlphanumericCharacterExpected"] = -2] = "AlphanumericCharacterExpected";
+      MaskedTextResultHint[MaskedTextResultHint["DigitExpected"] = -3] = "DigitExpected";
+      MaskedTextResultHint[MaskedTextResultHint["LetterExpected"] = -4] = "LetterExpected";
+      MaskedTextResultHint[MaskedTextResultHint["SignedDigitExpected"] = -5] = "SignedDigitExpected";
+      MaskedTextResultHint[MaskedTextResultHint["InvalidInput"] = -51] = "InvalidInput";
+      MaskedTextResultHint[MaskedTextResultHint["PromptCharNotAllowed"] = -52] = "PromptCharNotAllowed";
+      MaskedTextResultHint[MaskedTextResultHint["UnavailableEditPosition"] = -53] = "UnavailableEditPosition";
+      MaskedTextResultHint[MaskedTextResultHint["NonEditPosition"] = -54] = "NonEditPosition";
+      MaskedTextResultHint[MaskedTextResultHint["PositionOutOfRange"] = -55] = "PositionOutOfRange";
+    })(MaskedTextResultHint = ComponentModel.MaskedTextResultHint || (ComponentModel.MaskedTextResultHint = {}));
+
+    var ToolboxItemFilterType;
+
+    (function (ToolboxItemFilterType) {
+      ToolboxItemFilterType[ToolboxItemFilterType["Allow"] = 0] = "Allow";
+      ToolboxItemFilterType[ToolboxItemFilterType["Custom"] = 1] = "Custom";
+      ToolboxItemFilterType[ToolboxItemFilterType["Prevent"] = 2] = "Prevent";
+      ToolboxItemFilterType[ToolboxItemFilterType["Require"] = 3] = "Require";
+    })(ToolboxItemFilterType = ComponentModel.ToolboxItemFilterType || (ComponentModel.ToolboxItemFilterType = {}));
+
+    var InheritanceLevel;
+
+    (function (InheritanceLevel) {
+      InheritanceLevel[InheritanceLevel["Inherited"] = 1] = "Inherited";
+      InheritanceLevel[InheritanceLevel["InheritedReadOnly"] = 2] = "InheritedReadOnly";
+      InheritanceLevel[InheritanceLevel["NotInherited"] = 3] = "NotInherited";
+    })(InheritanceLevel = ComponentModel.InheritanceLevel || (ComponentModel.InheritanceLevel = {}));
+
+    var PropertyTabScope;
+
+    (function (PropertyTabScope) {
+      PropertyTabScope[PropertyTabScope["Static"] = 0] = "Static";
+      PropertyTabScope[PropertyTabScope["Global"] = 1] = "Global";
+      PropertyTabScope[PropertyTabScope["Document"] = 2] = "Document";
+      PropertyTabScope[PropertyTabScope["Component"] = 3] = "Component";
+    })(PropertyTabScope = ComponentModel.PropertyTabScope || (ComponentModel.PropertyTabScope = {}));
+
+    var RefreshProperties;
+
+    (function (RefreshProperties) {
+      RefreshProperties[RefreshProperties["None"] = 0] = "None";
+      RefreshProperties[RefreshProperties["All"] = 1] = "All";
+      RefreshProperties[RefreshProperties["Repaint"] = 2] = "Repaint";
+    })(RefreshProperties = ComponentModel.RefreshProperties || (ComponentModel.RefreshProperties = {}));
+
+    var Design;
+
+    (function (Design) {
+      var HelpContextType;
+
+      (function (HelpContextType) {
+        HelpContextType[HelpContextType["Ambient"] = 0] = "Ambient";
+        HelpContextType[HelpContextType["Window"] = 1] = "Window";
+        HelpContextType[HelpContextType["Selection"] = 2] = "Selection";
+        HelpContextType[HelpContextType["ToolWindowSelection"] = 3] = "ToolWindowSelection";
+      })(HelpContextType = Design.HelpContextType || (Design.HelpContextType = {}));
+
+      var HelpKeywordType;
+
+      (function (HelpKeywordType) {
+        HelpKeywordType[HelpKeywordType["F1Keyword"] = 0] = "F1Keyword";
+        HelpKeywordType[HelpKeywordType["GeneralKeyword"] = 1] = "GeneralKeyword";
+        HelpKeywordType[HelpKeywordType["FilterKeyword"] = 2] = "FilterKeyword";
+      })(HelpKeywordType = Design.HelpKeywordType || (Design.HelpKeywordType = {}));
+
+      var SelectionTypes;
+
+      (function (SelectionTypes) {
+        SelectionTypes[SelectionTypes["Auto"] = 1] = "Auto";
+        SelectionTypes[SelectionTypes["Normal"] = 1] = "Normal";
+        SelectionTypes[SelectionTypes["Replace"] = 2] = "Replace";
+        SelectionTypes[SelectionTypes["MouseDown"] = 4] = "MouseDown";
+        SelectionTypes[SelectionTypes["MouseUp"] = 8] = "MouseUp";
+        SelectionTypes[SelectionTypes["Click"] = 16] = "Click";
+        SelectionTypes[SelectionTypes["Primary"] = 16] = "Primary";
+        SelectionTypes[SelectionTypes["Toggle"] = 32] = "Toggle";
+        SelectionTypes[SelectionTypes["Add"] = 64] = "Add";
+        SelectionTypes[SelectionTypes["Remove"] = 128] = "Remove";
+        SelectionTypes[SelectionTypes["Valid"] = 31] = "Valid";
+      })(SelectionTypes = Design.SelectionTypes || (Design.SelectionTypes = {}));
+
+      var ViewTechnology;
+
+      (function (ViewTechnology) {
+        ViewTechnology[ViewTechnology["Passthrough"] = 0] = "Passthrough";
+        ViewTechnology[ViewTechnology["WindowsForms"] = 1] = "WindowsForms";
+        ViewTechnology[ViewTechnology["Default"] = 2] = "Default";
+      })(ViewTechnology = Design.ViewTechnology || (Design.ViewTechnology = {}));
+
+      var Serialization;
+
+      (function (Serialization) {})(Serialization = Design.Serialization || (Design.Serialization = {}));
+    })(Design = ComponentModel.Design || (ComponentModel.Design = {}));
+  })(ComponentModel = System.ComponentModel || (System.ComponentModel = {}));
+
+  var Deployment;
+
+  (function (Deployment) {
+    var Internal;
+
+    (function (Internal) {})(Internal = Deployment.Internal || (Deployment.Internal = {}));
+  })(Deployment = System.Deployment || (System.Deployment = {}));
+
+  var Diagnostics;
+
+  (function (Diagnostics) {
+    var DebuggerBrowsableState;
+
+    (function (DebuggerBrowsableState) {
+      DebuggerBrowsableState[DebuggerBrowsableState["Never"] = 0] = "Never";
+      DebuggerBrowsableState[DebuggerBrowsableState["Collapsed"] = 2] = "Collapsed";
+      DebuggerBrowsableState[DebuggerBrowsableState["RootHidden"] = 3] = "RootHidden";
+    })(DebuggerBrowsableState = Diagnostics.DebuggerBrowsableState || (Diagnostics.DebuggerBrowsableState = {}));
+
+    var TraceLogRetentionOption;
+
+    (function (TraceLogRetentionOption) {
+      TraceLogRetentionOption[TraceLogRetentionOption["LimitedCircularFiles"] = 1] = "LimitedCircularFiles";
+      TraceLogRetentionOption[TraceLogRetentionOption["LimitedSequentialFiles"] = 3] = "LimitedSequentialFiles";
+      TraceLogRetentionOption[TraceLogRetentionOption["SingleFileBoundedSize"] = 4] = "SingleFileBoundedSize";
+      TraceLogRetentionOption[TraceLogRetentionOption["SingleFileUnboundedSize"] = 2] = "SingleFileUnboundedSize";
+      TraceLogRetentionOption[TraceLogRetentionOption["UnlimitedSequentialFiles"] = 0] = "UnlimitedSequentialFiles";
+    })(TraceLogRetentionOption = Diagnostics.TraceLogRetentionOption || (Diagnostics.TraceLogRetentionOption = {}));
+
+    var SourceLevels;
+
+    (function (SourceLevels) {
+      SourceLevels[SourceLevels["Off"] = 0] = "Off";
+      SourceLevels[SourceLevels["Critical"] = 1] = "Critical";
+      SourceLevels[SourceLevels["Error"] = 3] = "Error";
+      SourceLevels[SourceLevels["Warning"] = 7] = "Warning";
+      SourceLevels[SourceLevels["Information"] = 15] = "Information";
+      SourceLevels[SourceLevels["Verbose"] = 31] = "Verbose";
+      SourceLevels[SourceLevels["ActivityTracing"] = 65280] = "ActivityTracing";
+      SourceLevels[SourceLevels["All"] = -1] = "All";
+    })(SourceLevels = Diagnostics.SourceLevels || (Diagnostics.SourceLevels = {}));
+
+    var TraceEventType;
+
+    (function (TraceEventType) {
+      TraceEventType[TraceEventType["Critical"] = 1] = "Critical";
+      TraceEventType[TraceEventType["Error"] = 2] = "Error";
+      TraceEventType[TraceEventType["Warning"] = 4] = "Warning";
+      TraceEventType[TraceEventType["Information"] = 8] = "Information";
+      TraceEventType[TraceEventType["Verbose"] = 16] = "Verbose";
+      TraceEventType[TraceEventType["Start"] = 256] = "Start";
+      TraceEventType[TraceEventType["Stop"] = 512] = "Stop";
+      TraceEventType[TraceEventType["Suspend"] = 1024] = "Suspend";
+      TraceEventType[TraceEventType["Resume"] = 2048] = "Resume";
+      TraceEventType[TraceEventType["Transfer"] = 4096] = "Transfer";
+    })(TraceEventType = Diagnostics.TraceEventType || (Diagnostics.TraceEventType = {}));
+
+    var TraceLevel;
+
+    (function (TraceLevel) {
+      TraceLevel[TraceLevel["Off"] = 0] = "Off";
+      TraceLevel[TraceLevel["Error"] = 1] = "Error";
+      TraceLevel[TraceLevel["Warning"] = 2] = "Warning";
+      TraceLevel[TraceLevel["Info"] = 3] = "Info";
+      TraceLevel[TraceLevel["Verbose"] = 4] = "Verbose";
+    })(TraceLevel = Diagnostics.TraceLevel || (Diagnostics.TraceLevel = {}));
+
+    var TraceOptions;
+
+    (function (TraceOptions) {
+      TraceOptions[TraceOptions["None"] = 0] = "None";
+      TraceOptions[TraceOptions["LogicalOperationStack"] = 1] = "LogicalOperationStack";
+      TraceOptions[TraceOptions["DateTime"] = 2] = "DateTime";
+      TraceOptions[TraceOptions["Timestamp"] = 4] = "Timestamp";
+      TraceOptions[TraceOptions["ProcessId"] = 8] = "ProcessId";
+      TraceOptions[TraceOptions["ThreadId"] = 16] = "ThreadId";
+      TraceOptions[TraceOptions["Callstack"] = 32] = "Callstack";
+    })(TraceOptions = Diagnostics.TraceOptions || (Diagnostics.TraceOptions = {}));
+
+    var EventLogEntryType;
+
+    (function (EventLogEntryType) {
+      EventLogEntryType[EventLogEntryType["Error"] = 1] = "Error";
+      EventLogEntryType[EventLogEntryType["Warning"] = 2] = "Warning";
+      EventLogEntryType[EventLogEntryType["Information"] = 4] = "Information";
+      EventLogEntryType[EventLogEntryType["SuccessAudit"] = 8] = "SuccessAudit";
+      EventLogEntryType[EventLogEntryType["FailureAudit"] = 16] = "FailureAudit";
+    })(EventLogEntryType = Diagnostics.EventLogEntryType || (Diagnostics.EventLogEntryType = {}));
+
+    var EventLogPermissionAccess;
+
+    (function (EventLogPermissionAccess) {
+      EventLogPermissionAccess[EventLogPermissionAccess["None"] = 0] = "None";
+      EventLogPermissionAccess[EventLogPermissionAccess["Browse"] = 2] = "Browse";
+      EventLogPermissionAccess[EventLogPermissionAccess["Instrument"] = 6] = "Instrument";
+      EventLogPermissionAccess[EventLogPermissionAccess["Audit"] = 10] = "Audit";
+      EventLogPermissionAccess[EventLogPermissionAccess["Write"] = 16] = "Write";
+      EventLogPermissionAccess[EventLogPermissionAccess["Administer"] = 48] = "Administer";
+    })(EventLogPermissionAccess = Diagnostics.EventLogPermissionAccess || (Diagnostics.EventLogPermissionAccess = {}));
+
+    var OverflowAction;
+
+    (function (OverflowAction) {
+      OverflowAction[OverflowAction["DoNotOverwrite"] = -1] = "DoNotOverwrite";
+      OverflowAction[OverflowAction["OverwriteAsNeeded"] = 0] = "OverwriteAsNeeded";
+      OverflowAction[OverflowAction["OverwriteOlder"] = 1] = "OverwriteOlder";
+    })(OverflowAction = Diagnostics.OverflowAction || (Diagnostics.OverflowAction = {}));
+
+    var PerformanceCounterCategoryType;
+
+    (function (PerformanceCounterCategoryType) {
+      PerformanceCounterCategoryType[PerformanceCounterCategoryType["SingleInstance"] = 0] = "SingleInstance";
+      PerformanceCounterCategoryType[PerformanceCounterCategoryType["MultiInstance"] = 1] = "MultiInstance";
+      PerformanceCounterCategoryType[PerformanceCounterCategoryType["Unknown"] = -1] = "Unknown";
+    })(PerformanceCounterCategoryType = Diagnostics.PerformanceCounterCategoryType || (Diagnostics.PerformanceCounterCategoryType = {}));
+
+    var PerformanceCounterInstanceLifetime;
+
+    (function (PerformanceCounterInstanceLifetime) {
+      PerformanceCounterInstanceLifetime[PerformanceCounterInstanceLifetime["Global"] = 0] = "Global";
+      PerformanceCounterInstanceLifetime[PerformanceCounterInstanceLifetime["Process"] = 1] = "Process";
+    })(PerformanceCounterInstanceLifetime = Diagnostics.PerformanceCounterInstanceLifetime || (Diagnostics.PerformanceCounterInstanceLifetime = {}));
+
+    var PerformanceCounterPermissionAccess;
+
+    (function (PerformanceCounterPermissionAccess) {
+      PerformanceCounterPermissionAccess[PerformanceCounterPermissionAccess["None"] = 0] = "None";
+      PerformanceCounterPermissionAccess[PerformanceCounterPermissionAccess["Browse"] = 1] = "Browse";
+      PerformanceCounterPermissionAccess[PerformanceCounterPermissionAccess["Read"] = 1] = "Read";
+      PerformanceCounterPermissionAccess[PerformanceCounterPermissionAccess["Write"] = 2] = "Write";
+      PerformanceCounterPermissionAccess[PerformanceCounterPermissionAccess["Instrument"] = 3] = "Instrument";
+      PerformanceCounterPermissionAccess[PerformanceCounterPermissionAccess["Administer"] = 7] = "Administer";
+    })(PerformanceCounterPermissionAccess = Diagnostics.PerformanceCounterPermissionAccess || (Diagnostics.PerformanceCounterPermissionAccess = {}));
+
+    var PerformanceCounterType;
+
+    (function (PerformanceCounterType) {
+      PerformanceCounterType[PerformanceCounterType["NumberOfItemsHEX32"] = 0] = "NumberOfItemsHEX32";
+      PerformanceCounterType[PerformanceCounterType["NumberOfItemsHEX64"] = 256] = "NumberOfItemsHEX64";
+      PerformanceCounterType[PerformanceCounterType["NumberOfItems32"] = 65536] = "NumberOfItems32";
+      PerformanceCounterType[PerformanceCounterType["NumberOfItems64"] = 65792] = "NumberOfItems64";
+      PerformanceCounterType[PerformanceCounterType["CounterDelta32"] = 4195328] = "CounterDelta32";
+      PerformanceCounterType[PerformanceCounterType["CounterDelta64"] = 4195584] = "CounterDelta64";
+      PerformanceCounterType[PerformanceCounterType["SampleCounter"] = 4260864] = "SampleCounter";
+      PerformanceCounterType[PerformanceCounterType["CountPerTimeInterval32"] = 4523008] = "CountPerTimeInterval32";
+      PerformanceCounterType[PerformanceCounterType["CountPerTimeInterval64"] = 4523264] = "CountPerTimeInterval64";
+      PerformanceCounterType[PerformanceCounterType["RateOfCountsPerSecond32"] = 272696320] = "RateOfCountsPerSecond32";
+      PerformanceCounterType[PerformanceCounterType["RateOfCountsPerSecond64"] = 272696576] = "RateOfCountsPerSecond64";
+      PerformanceCounterType[PerformanceCounterType["RawFraction"] = 537003008] = "RawFraction";
+      PerformanceCounterType[PerformanceCounterType["CounterTimer"] = 541132032] = "CounterTimer";
+      PerformanceCounterType[PerformanceCounterType["Timer100Ns"] = 542180608] = "Timer100Ns";
+      PerformanceCounterType[PerformanceCounterType["SampleFraction"] = 549585920] = "SampleFraction";
+      PerformanceCounterType[PerformanceCounterType["CounterTimerInverse"] = 557909248] = "CounterTimerInverse";
+      PerformanceCounterType[PerformanceCounterType["Timer100NsInverse"] = 558957824] = "Timer100NsInverse";
+      PerformanceCounterType[PerformanceCounterType["CounterMultiTimer"] = 574686464] = "CounterMultiTimer";
+      PerformanceCounterType[PerformanceCounterType["CounterMultiTimer100Ns"] = 575735040] = "CounterMultiTimer100Ns";
+      PerformanceCounterType[PerformanceCounterType["CounterMultiTimerInverse"] = 591463680] = "CounterMultiTimerInverse";
+      PerformanceCounterType[PerformanceCounterType["CounterMultiTimer100NsInverse"] = 592512256] = "CounterMultiTimer100NsInverse";
+      PerformanceCounterType[PerformanceCounterType["AverageTimer32"] = 805438464] = "AverageTimer32";
+      PerformanceCounterType[PerformanceCounterType["ElapsedTime"] = 807666944] = "ElapsedTime";
+      PerformanceCounterType[PerformanceCounterType["AverageCount64"] = 1073874176] = "AverageCount64";
+      PerformanceCounterType[PerformanceCounterType["SampleBase"] = 1073939457] = "SampleBase";
+      PerformanceCounterType[PerformanceCounterType["AverageBase"] = 1073939458] = "AverageBase";
+      PerformanceCounterType[PerformanceCounterType["RawBase"] = 1073939459] = "RawBase";
+      PerformanceCounterType[PerformanceCounterType["CounterMultiBase"] = 1107494144] = "CounterMultiBase";
+    })(PerformanceCounterType = Diagnostics.PerformanceCounterType || (Diagnostics.PerformanceCounterType = {}));
+
+    var ProcessPriorityClass;
+
+    (function (ProcessPriorityClass) {
+      ProcessPriorityClass[ProcessPriorityClass["AboveNormal"] = 32768] = "AboveNormal";
+      ProcessPriorityClass[ProcessPriorityClass["BelowNormal"] = 16384] = "BelowNormal";
+      ProcessPriorityClass[ProcessPriorityClass["High"] = 128] = "High";
+      ProcessPriorityClass[ProcessPriorityClass["Idle"] = 64] = "Idle";
+      ProcessPriorityClass[ProcessPriorityClass["Normal"] = 32] = "Normal";
+      ProcessPriorityClass[ProcessPriorityClass["RealTime"] = 256] = "RealTime";
+    })(ProcessPriorityClass = Diagnostics.ProcessPriorityClass || (Diagnostics.ProcessPriorityClass = {}));
+
+    var ProcessWindowStyle;
+
+    (function (ProcessWindowStyle) {
+      ProcessWindowStyle[ProcessWindowStyle["Hidden"] = 1] = "Hidden";
+      ProcessWindowStyle[ProcessWindowStyle["Maximized"] = 3] = "Maximized";
+      ProcessWindowStyle[ProcessWindowStyle["Minimized"] = 2] = "Minimized";
+      ProcessWindowStyle[ProcessWindowStyle["Normal"] = 0] = "Normal";
+    })(ProcessWindowStyle = Diagnostics.ProcessWindowStyle || (Diagnostics.ProcessWindowStyle = {}));
+
+    var ThreadPriorityLevel;
+
+    (function (ThreadPriorityLevel) {
+      ThreadPriorityLevel[ThreadPriorityLevel["AboveNormal"] = 1] = "AboveNormal";
+      ThreadPriorityLevel[ThreadPriorityLevel["BelowNormal"] = -1] = "BelowNormal";
+      ThreadPriorityLevel[ThreadPriorityLevel["Highest"] = 2] = "Highest";
+      ThreadPriorityLevel[ThreadPriorityLevel["Idle"] = -15] = "Idle";
+      ThreadPriorityLevel[ThreadPriorityLevel["Lowest"] = -2] = "Lowest";
+      ThreadPriorityLevel[ThreadPriorityLevel["Normal"] = 0] = "Normal";
+      ThreadPriorityLevel[ThreadPriorityLevel["TimeCritical"] = 15] = "TimeCritical";
+    })(ThreadPriorityLevel = Diagnostics.ThreadPriorityLevel || (Diagnostics.ThreadPriorityLevel = {}));
+
+    var ThreadState;
+
+    (function (ThreadState) {
+      ThreadState[ThreadState["Initialized"] = 0] = "Initialized";
+      ThreadState[ThreadState["Ready"] = 1] = "Ready";
+      ThreadState[ThreadState["Running"] = 2] = "Running";
+      ThreadState[ThreadState["Standby"] = 3] = "Standby";
+      ThreadState[ThreadState["Terminated"] = 4] = "Terminated";
+      ThreadState[ThreadState["Transition"] = 6] = "Transition";
+      ThreadState[ThreadState["Unknown"] = 7] = "Unknown";
+      ThreadState[ThreadState["Wait"] = 5] = "Wait";
+    })(ThreadState = Diagnostics.ThreadState || (Diagnostics.ThreadState = {}));
+
+    var ThreadWaitReason;
+
+    (function (ThreadWaitReason) {
+      ThreadWaitReason[ThreadWaitReason["EventPairHigh"] = 7] = "EventPairHigh";
+      ThreadWaitReason[ThreadWaitReason["EventPairLow"] = 8] = "EventPairLow";
+      ThreadWaitReason[ThreadWaitReason["ExecutionDelay"] = 4] = "ExecutionDelay";
+      ThreadWaitReason[ThreadWaitReason["Executive"] = 0] = "Executive";
+      ThreadWaitReason[ThreadWaitReason["FreePage"] = 1] = "FreePage";
+      ThreadWaitReason[ThreadWaitReason["LpcReceive"] = 9] = "LpcReceive";
+      ThreadWaitReason[ThreadWaitReason["LpcReply"] = 10] = "LpcReply";
+      ThreadWaitReason[ThreadWaitReason["PageIn"] = 2] = "PageIn";
+      ThreadWaitReason[ThreadWaitReason["PageOut"] = 12] = "PageOut";
+      ThreadWaitReason[ThreadWaitReason["Suspended"] = 5] = "Suspended";
+      ThreadWaitReason[ThreadWaitReason["SystemAllocation"] = 3] = "SystemAllocation";
+      ThreadWaitReason[ThreadWaitReason["Unknown"] = 13] = "Unknown";
+      ThreadWaitReason[ThreadWaitReason["UserRequest"] = 6] = "UserRequest";
+      ThreadWaitReason[ThreadWaitReason["VirtualMemory"] = 11] = "VirtualMemory";
+    })(ThreadWaitReason = Diagnostics.ThreadWaitReason || (Diagnostics.ThreadWaitReason = {}));
+
+    var Contracts;
+
+    (function (Contracts) {
+      var ContractFailureKind;
+
+      (function (ContractFailureKind) {
+        ContractFailureKind[ContractFailureKind["Precondition"] = 0] = "Precondition";
+        ContractFailureKind[ContractFailureKind["Postcondition"] = 1] = "Postcondition";
+        ContractFailureKind[ContractFailureKind["PostconditionOnException"] = 2] = "PostconditionOnException";
+        ContractFailureKind[ContractFailureKind["Invariant"] = 3] = "Invariant";
+        ContractFailureKind[ContractFailureKind["Assert"] = 4] = "Assert";
+        ContractFailureKind[ContractFailureKind["Assume"] = 5] = "Assume";
+      })(ContractFailureKind = Contracts.ContractFailureKind || (Contracts.ContractFailureKind = {}));
+
+      var Internal;
+
+      (function (Internal) {})(Internal = Contracts.Internal || (Contracts.Internal = {}));
+    })(Contracts = Diagnostics.Contracts || (Diagnostics.Contracts = {}));
+
+    var Eventing;
+
+    (function (Eventing) {
+      var EventProvider_WriteEventErrorCode;
+
+      (function (EventProvider_WriteEventErrorCode) {
+        EventProvider_WriteEventErrorCode[EventProvider_WriteEventErrorCode["EventTooBig"] = 2] = "EventTooBig";
+        EventProvider_WriteEventErrorCode[EventProvider_WriteEventErrorCode["NoError"] = 0] = "NoError";
+        EventProvider_WriteEventErrorCode[EventProvider_WriteEventErrorCode["NoFreeBuffers"] = 1] = "NoFreeBuffers";
+      })(EventProvider_WriteEventErrorCode = Eventing.EventProvider_WriteEventErrorCode || (Eventing.EventProvider_WriteEventErrorCode = {}));
+
+      var Reader;
+
+      (function (Reader) {
+        var SessionAuthentication;
+
+        (function (SessionAuthentication) {
+          SessionAuthentication[SessionAuthentication["Default"] = 0] = "Default";
+          SessionAuthentication[SessionAuthentication["Kerberos"] = 2] = "Kerberos";
+          SessionAuthentication[SessionAuthentication["Negotiate"] = 1] = "Negotiate";
+          SessionAuthentication[SessionAuthentication["Ntlm"] = 3] = "Ntlm";
+        })(SessionAuthentication = Reader.SessionAuthentication || (Reader.SessionAuthentication = {}));
+
+        var PathType;
+
+        (function (PathType) {
+          PathType[PathType["FilePath"] = 2] = "FilePath";
+          PathType[PathType["LogName"] = 1] = "LogName";
+        })(PathType = Reader.PathType || (Reader.PathType = {}));
+
+        var EventLogIsolation;
+
+        (function (EventLogIsolation) {
+          EventLogIsolation[EventLogIsolation["Application"] = 0] = "Application";
+          EventLogIsolation[EventLogIsolation["Custom"] = 2] = "Custom";
+          EventLogIsolation[EventLogIsolation["System"] = 1] = "System";
+        })(EventLogIsolation = Reader.EventLogIsolation || (Reader.EventLogIsolation = {}));
+
+        var EventLogMode;
+
+        (function (EventLogMode) {
+          EventLogMode[EventLogMode["AutoBackup"] = 1] = "AutoBackup";
+          EventLogMode[EventLogMode["Circular"] = 0] = "Circular";
+          EventLogMode[EventLogMode["Retain"] = 2] = "Retain";
+        })(EventLogMode = Reader.EventLogMode || (Reader.EventLogMode = {}));
+
+        var EventLogType;
+
+        (function (EventLogType) {
+          EventLogType[EventLogType["Administrative"] = 0] = "Administrative";
+          EventLogType[EventLogType["Analytical"] = 2] = "Analytical";
+          EventLogType[EventLogType["Debug"] = 3] = "Debug";
+          EventLogType[EventLogType["Operational"] = 1] = "Operational";
+        })(EventLogType = Reader.EventLogType || (Reader.EventLogType = {}));
+
+        var StandardEventKeywords;
+
+        (function (StandardEventKeywords) {
+          StandardEventKeywords[StandardEventKeywords["AuditFailure"] = 4503599627370496] = "AuditFailure";
+          StandardEventKeywords[StandardEventKeywords["AuditSuccess"] = 9007199254740992] = "AuditSuccess";
+          StandardEventKeywords[StandardEventKeywords["CorrelationHint"] = 4503599627370496] = "CorrelationHint";
+          StandardEventKeywords[StandardEventKeywords["CorrelationHint2"] = 18014398509481984] = "CorrelationHint2";
+          StandardEventKeywords[StandardEventKeywords["EventLogClassic"] = 36028797018963970] = "EventLogClassic";
+          StandardEventKeywords[StandardEventKeywords["None"] = 0] = "None";
+          StandardEventKeywords[StandardEventKeywords["ResponseTime"] = 281474976710656] = "ResponseTime";
+          StandardEventKeywords[StandardEventKeywords["Sqm"] = 2251799813685248] = "Sqm";
+          StandardEventKeywords[StandardEventKeywords["WdiContext"] = 562949953421312] = "WdiContext";
+          StandardEventKeywords[StandardEventKeywords["WdiDiagnostic"] = 1125899906842624] = "WdiDiagnostic";
+        })(StandardEventKeywords = Reader.StandardEventKeywords || (Reader.StandardEventKeywords = {}));
+
+        var StandardEventLevel;
+
+        (function (StandardEventLevel) {
+          StandardEventLevel[StandardEventLevel["Critical"] = 1] = "Critical";
+          StandardEventLevel[StandardEventLevel["Error"] = 2] = "Error";
+          StandardEventLevel[StandardEventLevel["Informational"] = 4] = "Informational";
+          StandardEventLevel[StandardEventLevel["LogAlways"] = 0] = "LogAlways";
+          StandardEventLevel[StandardEventLevel["Verbose"] = 5] = "Verbose";
+          StandardEventLevel[StandardEventLevel["Warning"] = 3] = "Warning";
+        })(StandardEventLevel = Reader.StandardEventLevel || (Reader.StandardEventLevel = {}));
+
+        var StandardEventOpcode;
+
+        (function (StandardEventOpcode) {
+          StandardEventOpcode[StandardEventOpcode["DataCollectionStart"] = 3] = "DataCollectionStart";
+          StandardEventOpcode[StandardEventOpcode["DataCollectionStop"] = 4] = "DataCollectionStop";
+          StandardEventOpcode[StandardEventOpcode["Extension"] = 5] = "Extension";
+          StandardEventOpcode[StandardEventOpcode["Info"] = 0] = "Info";
+          StandardEventOpcode[StandardEventOpcode["Receive"] = 240] = "Receive";
+          StandardEventOpcode[StandardEventOpcode["Reply"] = 6] = "Reply";
+          StandardEventOpcode[StandardEventOpcode["Resume"] = 7] = "Resume";
+          StandardEventOpcode[StandardEventOpcode["Send"] = 9] = "Send";
+          StandardEventOpcode[StandardEventOpcode["Start"] = 1] = "Start";
+          StandardEventOpcode[StandardEventOpcode["Stop"] = 2] = "Stop";
+          StandardEventOpcode[StandardEventOpcode["Suspend"] = 8] = "Suspend";
+        })(StandardEventOpcode = Reader.StandardEventOpcode || (Reader.StandardEventOpcode = {}));
+
+        var StandardEventTask;
+
+        (function (StandardEventTask) {
+          StandardEventTask[StandardEventTask["None"] = 0] = "None";
+        })(StandardEventTask = Reader.StandardEventTask || (Reader.StandardEventTask = {}));
+      })(Reader = Eventing.Reader || (Eventing.Reader = {}));
+    })(Eventing = Diagnostics.Eventing || (Diagnostics.Eventing = {}));
+
+    var PerformanceData;
+
+    (function (PerformanceData) {
+      var CounterSetInstanceType;
+
+      (function (CounterSetInstanceType) {
+        CounterSetInstanceType[CounterSetInstanceType["GlobalAggregate"] = 4] = "GlobalAggregate";
+        CounterSetInstanceType[CounterSetInstanceType["GlobalAggregateWithHistory"] = 11] = "GlobalAggregateWithHistory";
+        CounterSetInstanceType[CounterSetInstanceType["InstanceAggregate"] = 22] = "InstanceAggregate";
+        CounterSetInstanceType[CounterSetInstanceType["Multiple"] = 2] = "Multiple";
+        CounterSetInstanceType[CounterSetInstanceType["MultipleAggregate"] = 6] = "MultipleAggregate";
+        CounterSetInstanceType[CounterSetInstanceType["Single"] = 0] = "Single";
+      })(CounterSetInstanceType = PerformanceData.CounterSetInstanceType || (PerformanceData.CounterSetInstanceType = {}));
+
+      var CounterType;
+
+      (function (CounterType) {
+        CounterType[CounterType["AverageBase"] = 1073939458] = "AverageBase";
+        CounterType[CounterType["AverageCount64"] = 1073874176] = "AverageCount64";
+        CounterType[CounterType["AverageTimer32"] = 805438464] = "AverageTimer32";
+        CounterType[CounterType["Delta32"] = 4195328] = "Delta32";
+        CounterType[CounterType["Delta64"] = 4195584] = "Delta64";
+        CounterType[CounterType["ElapsedTime"] = 807666944] = "ElapsedTime";
+        CounterType[CounterType["LargeQueueLength"] = 4523264] = "LargeQueueLength";
+        CounterType[CounterType["MultiTimerBase"] = 1107494144] = "MultiTimerBase";
+        CounterType[CounterType["MultiTimerPercentageActive"] = 574686464] = "MultiTimerPercentageActive";
+        CounterType[CounterType["MultiTimerPercentageActive100Ns"] = 575735040] = "MultiTimerPercentageActive100Ns";
+        CounterType[CounterType["MultiTimerPercentageNotActive"] = 591463680] = "MultiTimerPercentageNotActive";
+        CounterType[CounterType["MultiTimerPercentageNotActive100Ns"] = 592512256] = "MultiTimerPercentageNotActive100Ns";
+        CounterType[CounterType["ObjectSpecificTimer"] = 543229184] = "ObjectSpecificTimer";
+        CounterType[CounterType["PercentageActive"] = 541132032] = "PercentageActive";
+        CounterType[CounterType["PercentageActive100Ns"] = 542180608] = "PercentageActive100Ns";
+        CounterType[CounterType["PercentageNotActive"] = 557909248] = "PercentageNotActive";
+        CounterType[CounterType["PercentageNotActive100Ns"] = 558957824] = "PercentageNotActive100Ns";
+        CounterType[CounterType["PrecisionObjectSpecificTimer"] = 543622400] = "PrecisionObjectSpecificTimer";
+        CounterType[CounterType["PrecisionSystemTimer"] = 541525248] = "PrecisionSystemTimer";
+        CounterType[CounterType["PrecisionTimer100Ns"] = 542573824] = "PrecisionTimer100Ns";
+        CounterType[CounterType["QueueLength"] = 4523008] = "QueueLength";
+        CounterType[CounterType["QueueLength100Ns"] = 5571840] = "QueueLength100Ns";
+        CounterType[CounterType["QueueLengthObjectTime"] = 6620416] = "QueueLengthObjectTime";
+        CounterType[CounterType["RateOfCountPerSecond32"] = 272696320] = "RateOfCountPerSecond32";
+        CounterType[CounterType["RateOfCountPerSecond64"] = 272696576] = "RateOfCountPerSecond64";
+        CounterType[CounterType["RawBase32"] = 1073939459] = "RawBase32";
+        CounterType[CounterType["RawBase64"] = 1073939712] = "RawBase64";
+        CounterType[CounterType["RawData32"] = 65536] = "RawData32";
+        CounterType[CounterType["RawData64"] = 65792] = "RawData64";
+        CounterType[CounterType["RawDataHex32"] = 0] = "RawDataHex32";
+        CounterType[CounterType["RawDataHex64"] = 256] = "RawDataHex64";
+        CounterType[CounterType["RawFraction32"] = 537003008] = "RawFraction32";
+        CounterType[CounterType["RawFraction64"] = 537003264] = "RawFraction64";
+        CounterType[CounterType["SampleBase"] = 1073939457] = "SampleBase";
+        CounterType[CounterType["SampleCounter"] = 4260864] = "SampleCounter";
+        CounterType[CounterType["SampleFraction"] = 549585920] = "SampleFraction";
+      })(CounterType = PerformanceData.CounterType || (PerformanceData.CounterType = {}));
+    })(PerformanceData = Diagnostics.PerformanceData || (Diagnostics.PerformanceData = {}));
+
+    var SymbolStore;
+
+    (function (SymbolStore) {
+      var SymAddressKind;
+
+      (function (SymAddressKind) {
+        SymAddressKind[SymAddressKind["ILOffset"] = 1] = "ILOffset";
+        SymAddressKind[SymAddressKind["NativeRVA"] = 2] = "NativeRVA";
+        SymAddressKind[SymAddressKind["NativeRegister"] = 3] = "NativeRegister";
+        SymAddressKind[SymAddressKind["NativeRegisterRelative"] = 4] = "NativeRegisterRelative";
+        SymAddressKind[SymAddressKind["NativeOffset"] = 5] = "NativeOffset";
+        SymAddressKind[SymAddressKind["NativeRegisterRegister"] = 6] = "NativeRegisterRegister";
+        SymAddressKind[SymAddressKind["NativeRegisterStack"] = 7] = "NativeRegisterStack";
+        SymAddressKind[SymAddressKind["NativeStackRegister"] = 8] = "NativeStackRegister";
+        SymAddressKind[SymAddressKind["BitField"] = 9] = "BitField";
+        SymAddressKind[SymAddressKind["NativeSectionOffset"] = 10] = "NativeSectionOffset";
+      })(SymAddressKind = SymbolStore.SymAddressKind || (SymbolStore.SymAddressKind = {}));
+    })(SymbolStore = Diagnostics.SymbolStore || (Diagnostics.SymbolStore = {}));
+
+    var Tracing;
+
+    (function (Tracing) {
+      var EventFieldTags;
+
+      (function (EventFieldTags) {
+        EventFieldTags[EventFieldTags["None"] = 0] = "None";
+      })(EventFieldTags = Tracing.EventFieldTags || (Tracing.EventFieldTags = {}));
+
+      var EventFieldFormat;
+
+      (function (EventFieldFormat) {
+        EventFieldFormat[EventFieldFormat["Default"] = 0] = "Default";
+        EventFieldFormat[EventFieldFormat["String"] = 2] = "String";
+        EventFieldFormat[EventFieldFormat["Boolean"] = 3] = "Boolean";
+        EventFieldFormat[EventFieldFormat["Hexadecimal"] = 4] = "Hexadecimal";
+        EventFieldFormat[EventFieldFormat["Xml"] = 11] = "Xml";
+        EventFieldFormat[EventFieldFormat["Json"] = 12] = "Json";
+        EventFieldFormat[EventFieldFormat["HResult"] = 15] = "HResult";
+      })(EventFieldFormat = Tracing.EventFieldFormat || (Tracing.EventFieldFormat = {}));
+
+      var EventTags;
+
+      (function (EventTags) {
+        EventTags[EventTags["None"] = 0] = "None";
+      })(EventTags = Tracing.EventTags || (Tracing.EventTags = {}));
+
+      var EventActivityOptions;
+
+      (function (EventActivityOptions) {
+        EventActivityOptions[EventActivityOptions["None"] = 0] = "None";
+        EventActivityOptions[EventActivityOptions["Disable"] = 2] = "Disable";
+        EventActivityOptions[EventActivityOptions["Recursive"] = 4] = "Recursive";
+        EventActivityOptions[EventActivityOptions["Detachable"] = 8] = "Detachable";
+      })(EventActivityOptions = Tracing.EventActivityOptions || (Tracing.EventActivityOptions = {}));
+
+      var EventSourceSettings;
+
+      (function (EventSourceSettings) {
+        EventSourceSettings[EventSourceSettings["Default"] = 0] = "Default";
+        EventSourceSettings[EventSourceSettings["ThrowOnEventWriteErrors"] = 1] = "ThrowOnEventWriteErrors";
+        EventSourceSettings[EventSourceSettings["EtwManifestEventFormat"] = 4] = "EtwManifestEventFormat";
+        EventSourceSettings[EventSourceSettings["EtwSelfDescribingEventFormat"] = 8] = "EtwSelfDescribingEventFormat";
+      })(EventSourceSettings = Tracing.EventSourceSettings || (Tracing.EventSourceSettings = {}));
+
+      var EventCommand;
+
+      (function (EventCommand) {
+        EventCommand[EventCommand["Update"] = 0] = "Update";
+        EventCommand[EventCommand["SendManifest"] = -1] = "SendManifest";
+        EventCommand[EventCommand["Enable"] = -2] = "Enable";
+        EventCommand[EventCommand["Disable"] = -3] = "Disable";
+      })(EventCommand = Tracing.EventCommand || (Tracing.EventCommand = {}));
+
+      var EventManifestOptions;
+
+      (function (EventManifestOptions) {
+        EventManifestOptions[EventManifestOptions["None"] = 0] = "None";
+        EventManifestOptions[EventManifestOptions["Strict"] = 1] = "Strict";
+        EventManifestOptions[EventManifestOptions["AllCultures"] = 2] = "AllCultures";
+        EventManifestOptions[EventManifestOptions["OnlyIfNeededForRegistration"] = 4] = "OnlyIfNeededForRegistration";
+        EventManifestOptions[EventManifestOptions["AllowEventSourceOverride"] = 8] = "AllowEventSourceOverride";
+      })(EventManifestOptions = Tracing.EventManifestOptions || (Tracing.EventManifestOptions = {}));
+
+      var EventLevel;
+
+      (function (EventLevel) {
+        EventLevel[EventLevel["LogAlways"] = 0] = "LogAlways";
+        EventLevel[EventLevel["Critical"] = 1] = "Critical";
+        EventLevel[EventLevel["Error"] = 2] = "Error";
+        EventLevel[EventLevel["Warning"] = 3] = "Warning";
+        EventLevel[EventLevel["Informational"] = 4] = "Informational";
+        EventLevel[EventLevel["Verbose"] = 5] = "Verbose";
+      })(EventLevel = Tracing.EventLevel || (Tracing.EventLevel = {}));
+
+      var EventTask;
+
+      (function (EventTask) {
+        EventTask[EventTask["None"] = 0] = "None";
+      })(EventTask = Tracing.EventTask || (Tracing.EventTask = {}));
+
+      var EventOpcode;
+
+      (function (EventOpcode) {
+        EventOpcode[EventOpcode["Info"] = 0] = "Info";
+        EventOpcode[EventOpcode["Start"] = 1] = "Start";
+        EventOpcode[EventOpcode["Stop"] = 2] = "Stop";
+        EventOpcode[EventOpcode["DataCollectionStart"] = 3] = "DataCollectionStart";
+        EventOpcode[EventOpcode["DataCollectionStop"] = 4] = "DataCollectionStop";
+        EventOpcode[EventOpcode["Extension"] = 5] = "Extension";
+        EventOpcode[EventOpcode["Reply"] = 6] = "Reply";
+        EventOpcode[EventOpcode["Resume"] = 7] = "Resume";
+        EventOpcode[EventOpcode["Suspend"] = 8] = "Suspend";
+        EventOpcode[EventOpcode["Send"] = 9] = "Send";
+        EventOpcode[EventOpcode["Receive"] = 240] = "Receive";
+      })(EventOpcode = Tracing.EventOpcode || (Tracing.EventOpcode = {}));
+
+      var EventChannel;
+
+      (function (EventChannel) {
+        EventChannel[EventChannel["None"] = 0] = "None";
+        EventChannel[EventChannel["Admin"] = 16] = "Admin";
+        EventChannel[EventChannel["Operational"] = 17] = "Operational";
+        EventChannel[EventChannel["Analytic"] = 18] = "Analytic";
+        EventChannel[EventChannel["Debug"] = 19] = "Debug";
+      })(EventChannel = Tracing.EventChannel || (Tracing.EventChannel = {}));
+
+      var EventKeywords;
+
+      (function (EventKeywords) {
+        EventKeywords[EventKeywords["None"] = 0] = "None";
+        EventKeywords[EventKeywords["All"] = -1] = "All";
+        EventKeywords[EventKeywords["MicrosoftTelemetry"] = 562949953421312] = "MicrosoftTelemetry";
+        EventKeywords[EventKeywords["WdiContext"] = 562949953421312] = "WdiContext";
+        EventKeywords[EventKeywords["WdiDiagnostic"] = 1125899906842624] = "WdiDiagnostic";
+        EventKeywords[EventKeywords["Sqm"] = 2251799813685248] = "Sqm";
+        EventKeywords[EventKeywords["AuditFailure"] = 4503599627370496] = "AuditFailure";
+        EventKeywords[EventKeywords["AuditSuccess"] = 9007199254740992] = "AuditSuccess";
+        EventKeywords[EventKeywords["CorrelationHint"] = 4503599627370496] = "CorrelationHint";
+        EventKeywords[EventKeywords["EventLogClassic"] = 36028797018963970] = "EventLogClassic";
+      })(EventKeywords = Tracing.EventKeywords || (Tracing.EventKeywords = {}));
+    })(Tracing = Diagnostics.Tracing || (Diagnostics.Tracing = {}));
+  })(Diagnostics = System.Diagnostics || (System.Diagnostics = {}));
+
+  var Dynamic;
+
+  (function (Dynamic) {})(Dynamic = System.Dynamic || (System.Dynamic = {}));
+
+  var Globalization;
+
+  (function (Globalization) {
+    var CalendarAlgorithmType;
+
+    (function (CalendarAlgorithmType) {
+      CalendarAlgorithmType[CalendarAlgorithmType["Unknown"] = 0] = "Unknown";
+      CalendarAlgorithmType[CalendarAlgorithmType["SolarCalendar"] = 1] = "SolarCalendar";
+      CalendarAlgorithmType[CalendarAlgorithmType["LunarCalendar"] = 2] = "LunarCalendar";
+      CalendarAlgorithmType[CalendarAlgorithmType["LunisolarCalendar"] = 3] = "LunisolarCalendar";
+    })(CalendarAlgorithmType = Globalization.CalendarAlgorithmType || (Globalization.CalendarAlgorithmType = {}));
+
+    var CalendarWeekRule;
+
+    (function (CalendarWeekRule) {
+      CalendarWeekRule[CalendarWeekRule["FirstDay"] = 0] = "FirstDay";
+      CalendarWeekRule[CalendarWeekRule["FirstFullWeek"] = 1] = "FirstFullWeek";
+      CalendarWeekRule[CalendarWeekRule["FirstFourDayWeek"] = 2] = "FirstFourDayWeek";
+    })(CalendarWeekRule = Globalization.CalendarWeekRule || (Globalization.CalendarWeekRule = {}));
+
+    var CompareOptions;
+
+    (function (CompareOptions) {
+      CompareOptions[CompareOptions["None"] = 0] = "None";
+      CompareOptions[CompareOptions["IgnoreCase"] = 1] = "IgnoreCase";
+      CompareOptions[CompareOptions["IgnoreNonSpace"] = 2] = "IgnoreNonSpace";
+      CompareOptions[CompareOptions["IgnoreSymbols"] = 4] = "IgnoreSymbols";
+      CompareOptions[CompareOptions["IgnoreKanaType"] = 8] = "IgnoreKanaType";
+      CompareOptions[CompareOptions["IgnoreWidth"] = 16] = "IgnoreWidth";
+      CompareOptions[CompareOptions["OrdinalIgnoreCase"] = 268435456] = "OrdinalIgnoreCase";
+      CompareOptions[CompareOptions["StringSort"] = 536870912] = "StringSort";
+      CompareOptions[CompareOptions["Ordinal"] = 1073741824] = "Ordinal";
+    })(CompareOptions = Globalization.CompareOptions || (Globalization.CompareOptions = {}));
+
+    var CultureTypes;
+
+    (function (CultureTypes) {
+      CultureTypes[CultureTypes["NeutralCultures"] = 1] = "NeutralCultures";
+      CultureTypes[CultureTypes["SpecificCultures"] = 2] = "SpecificCultures";
+      CultureTypes[CultureTypes["InstalledWin32Cultures"] = 4] = "InstalledWin32Cultures";
+      CultureTypes[CultureTypes["AllCultures"] = 7] = "AllCultures";
+      CultureTypes[CultureTypes["UserCustomCulture"] = 8] = "UserCustomCulture";
+      CultureTypes[CultureTypes["ReplacementCultures"] = 16] = "ReplacementCultures";
+      CultureTypes[CultureTypes["WindowsOnlyCultures"] = 32] = "WindowsOnlyCultures";
+      CultureTypes[CultureTypes["FrameworkCultures"] = 64] = "FrameworkCultures";
+    })(CultureTypes = Globalization.CultureTypes || (Globalization.CultureTypes = {}));
+
+    var DateTimeStyles;
+
+    (function (DateTimeStyles) {
+      DateTimeStyles[DateTimeStyles["None"] = 0] = "None";
+      DateTimeStyles[DateTimeStyles["AllowLeadingWhite"] = 1] = "AllowLeadingWhite";
+      DateTimeStyles[DateTimeStyles["AllowTrailingWhite"] = 2] = "AllowTrailingWhite";
+      DateTimeStyles[DateTimeStyles["AllowInnerWhite"] = 4] = "AllowInnerWhite";
+      DateTimeStyles[DateTimeStyles["AllowWhiteSpaces"] = 7] = "AllowWhiteSpaces";
+      DateTimeStyles[DateTimeStyles["NoCurrentDateDefault"] = 8] = "NoCurrentDateDefault";
+      DateTimeStyles[DateTimeStyles["AdjustToUniversal"] = 16] = "AdjustToUniversal";
+      DateTimeStyles[DateTimeStyles["AssumeLocal"] = 32] = "AssumeLocal";
+      DateTimeStyles[DateTimeStyles["AssumeUniversal"] = 64] = "AssumeUniversal";
+      DateTimeStyles[DateTimeStyles["RoundtripKind"] = 128] = "RoundtripKind";
+    })(DateTimeStyles = Globalization.DateTimeStyles || (Globalization.DateTimeStyles = {}));
+
+    var DigitShapes;
+
+    (function (DigitShapes) {
+      DigitShapes[DigitShapes["Context"] = 0] = "Context";
+      DigitShapes[DigitShapes["None"] = 1] = "None";
+      DigitShapes[DigitShapes["NativeNational"] = 2] = "NativeNational";
+    })(DigitShapes = Globalization.DigitShapes || (Globalization.DigitShapes = {}));
+
+    var GregorianCalendarTypes;
+
+    (function (GregorianCalendarTypes) {
+      GregorianCalendarTypes[GregorianCalendarTypes["Localized"] = 1] = "Localized";
+      GregorianCalendarTypes[GregorianCalendarTypes["USEnglish"] = 2] = "USEnglish";
+      GregorianCalendarTypes[GregorianCalendarTypes["MiddleEastFrench"] = 9] = "MiddleEastFrench";
+      GregorianCalendarTypes[GregorianCalendarTypes["Arabic"] = 10] = "Arabic";
+      GregorianCalendarTypes[GregorianCalendarTypes["TransliteratedEnglish"] = 11] = "TransliteratedEnglish";
+      GregorianCalendarTypes[GregorianCalendarTypes["TransliteratedFrench"] = 12] = "TransliteratedFrench";
+    })(GregorianCalendarTypes = Globalization.GregorianCalendarTypes || (Globalization.GregorianCalendarTypes = {}));
+
+    var NumberStyles;
+
+    (function (NumberStyles) {
+      NumberStyles[NumberStyles["None"] = 0] = "None";
+      NumberStyles[NumberStyles["AllowLeadingWhite"] = 1] = "AllowLeadingWhite";
+      NumberStyles[NumberStyles["AllowTrailingWhite"] = 2] = "AllowTrailingWhite";
+      NumberStyles[NumberStyles["AllowLeadingSign"] = 4] = "AllowLeadingSign";
+      NumberStyles[NumberStyles["AllowTrailingSign"] = 8] = "AllowTrailingSign";
+      NumberStyles[NumberStyles["AllowParentheses"] = 16] = "AllowParentheses";
+      NumberStyles[NumberStyles["AllowDecimalPoint"] = 32] = "AllowDecimalPoint";
+      NumberStyles[NumberStyles["AllowThousands"] = 64] = "AllowThousands";
+      NumberStyles[NumberStyles["AllowExponent"] = 128] = "AllowExponent";
+      NumberStyles[NumberStyles["AllowCurrencySymbol"] = 256] = "AllowCurrencySymbol";
+      NumberStyles[NumberStyles["AllowHexSpecifier"] = 512] = "AllowHexSpecifier";
+      NumberStyles[NumberStyles["Integer"] = 7] = "Integer";
+      NumberStyles[NumberStyles["HexNumber"] = 515] = "HexNumber";
+      NumberStyles[NumberStyles["Number"] = 111] = "Number";
+      NumberStyles[NumberStyles["Float"] = 167] = "Float";
+      NumberStyles[NumberStyles["Currency"] = 383] = "Currency";
+      NumberStyles[NumberStyles["Any"] = 511] = "Any";
+    })(NumberStyles = Globalization.NumberStyles || (Globalization.NumberStyles = {}));
+
+    var TimeSpanStyles;
+
+    (function (TimeSpanStyles) {
+      TimeSpanStyles[TimeSpanStyles["None"] = 0] = "None";
+      TimeSpanStyles[TimeSpanStyles["AssumeNegative"] = 1] = "AssumeNegative";
+    })(TimeSpanStyles = Globalization.TimeSpanStyles || (Globalization.TimeSpanStyles = {}));
+
+    var UnicodeCategory;
+
+    (function (UnicodeCategory) {
+      UnicodeCategory[UnicodeCategory["UppercaseLetter"] = 0] = "UppercaseLetter";
+      UnicodeCategory[UnicodeCategory["LowercaseLetter"] = 1] = "LowercaseLetter";
+      UnicodeCategory[UnicodeCategory["TitlecaseLetter"] = 2] = "TitlecaseLetter";
+      UnicodeCategory[UnicodeCategory["ModifierLetter"] = 3] = "ModifierLetter";
+      UnicodeCategory[UnicodeCategory["OtherLetter"] = 4] = "OtherLetter";
+      UnicodeCategory[UnicodeCategory["NonSpacingMark"] = 5] = "NonSpacingMark";
+      UnicodeCategory[UnicodeCategory["SpacingCombiningMark"] = 6] = "SpacingCombiningMark";
+      UnicodeCategory[UnicodeCategory["EnclosingMark"] = 7] = "EnclosingMark";
+      UnicodeCategory[UnicodeCategory["DecimalDigitNumber"] = 8] = "DecimalDigitNumber";
+      UnicodeCategory[UnicodeCategory["LetterNumber"] = 9] = "LetterNumber";
+      UnicodeCategory[UnicodeCategory["OtherNumber"] = 10] = "OtherNumber";
+      UnicodeCategory[UnicodeCategory["SpaceSeparator"] = 11] = "SpaceSeparator";
+      UnicodeCategory[UnicodeCategory["LineSeparator"] = 12] = "LineSeparator";
+      UnicodeCategory[UnicodeCategory["ParagraphSeparator"] = 13] = "ParagraphSeparator";
+      UnicodeCategory[UnicodeCategory["Control"] = 14] = "Control";
+      UnicodeCategory[UnicodeCategory["Format"] = 15] = "Format";
+      UnicodeCategory[UnicodeCategory["Surrogate"] = 16] = "Surrogate";
+      UnicodeCategory[UnicodeCategory["PrivateUse"] = 17] = "PrivateUse";
+      UnicodeCategory[UnicodeCategory["ConnectorPunctuation"] = 18] = "ConnectorPunctuation";
+      UnicodeCategory[UnicodeCategory["DashPunctuation"] = 19] = "DashPunctuation";
+      UnicodeCategory[UnicodeCategory["OpenPunctuation"] = 20] = "OpenPunctuation";
+      UnicodeCategory[UnicodeCategory["ClosePunctuation"] = 21] = "ClosePunctuation";
+      UnicodeCategory[UnicodeCategory["InitialQuotePunctuation"] = 22] = "InitialQuotePunctuation";
+      UnicodeCategory[UnicodeCategory["FinalQuotePunctuation"] = 23] = "FinalQuotePunctuation";
+      UnicodeCategory[UnicodeCategory["OtherPunctuation"] = 24] = "OtherPunctuation";
+      UnicodeCategory[UnicodeCategory["MathSymbol"] = 25] = "MathSymbol";
+      UnicodeCategory[UnicodeCategory["CurrencySymbol"] = 26] = "CurrencySymbol";
+      UnicodeCategory[UnicodeCategory["ModifierSymbol"] = 27] = "ModifierSymbol";
+      UnicodeCategory[UnicodeCategory["OtherSymbol"] = 28] = "OtherSymbol";
+      UnicodeCategory[UnicodeCategory["OtherNotAssigned"] = 29] = "OtherNotAssigned";
+    })(UnicodeCategory = Globalization.UnicodeCategory || (Globalization.UnicodeCategory = {}));
+  })(Globalization = System.Globalization || (System.Globalization = {}));
+
+  var IO;
+
+  (function (IO) {
+    var DriveType;
+
+    (function (DriveType) {
+      DriveType[DriveType["CDRom"] = 5] = "CDRom";
+      DriveType[DriveType["Fixed"] = 3] = "Fixed";
+      DriveType[DriveType["Network"] = 4] = "Network";
+      DriveType[DriveType["NoRootDirectory"] = 1] = "NoRootDirectory";
+      DriveType[DriveType["Ram"] = 6] = "Ram";
+      DriveType[DriveType["Removable"] = 2] = "Removable";
+      DriveType[DriveType["Unknown"] = 0] = "Unknown";
+    })(DriveType = IO.DriveType || (IO.DriveType = {}));
+
+    var FileAccess;
+
+    (function (FileAccess) {
+      FileAccess[FileAccess["Read"] = 1] = "Read";
+      FileAccess[FileAccess["Write"] = 2] = "Write";
+      FileAccess[FileAccess["ReadWrite"] = 3] = "ReadWrite";
+    })(FileAccess = IO.FileAccess || (IO.FileAccess = {}));
+
+    var FileAttributes;
+
+    (function (FileAttributes) {
+      FileAttributes[FileAttributes["Archive"] = 32] = "Archive";
+      FileAttributes[FileAttributes["Compressed"] = 2048] = "Compressed";
+      FileAttributes[FileAttributes["Device"] = 64] = "Device";
+      FileAttributes[FileAttributes["Directory"] = 16] = "Directory";
+      FileAttributes[FileAttributes["Encrypted"] = 16384] = "Encrypted";
+      FileAttributes[FileAttributes["Hidden"] = 2] = "Hidden";
+      FileAttributes[FileAttributes["Normal"] = 128] = "Normal";
+      FileAttributes[FileAttributes["NotContentIndexed"] = 8192] = "NotContentIndexed";
+      FileAttributes[FileAttributes["Offline"] = 4096] = "Offline";
+      FileAttributes[FileAttributes["ReadOnly"] = 1] = "ReadOnly";
+      FileAttributes[FileAttributes["ReparsePoint"] = 1024] = "ReparsePoint";
+      FileAttributes[FileAttributes["SparseFile"] = 512] = "SparseFile";
+      FileAttributes[FileAttributes["System"] = 4] = "System";
+      FileAttributes[FileAttributes["Temporary"] = 256] = "Temporary";
+      FileAttributes[FileAttributes["IntegrityStream"] = 32768] = "IntegrityStream";
+      FileAttributes[FileAttributes["NoScrubData"] = 131072] = "NoScrubData";
+    })(FileAttributes = IO.FileAttributes || (IO.FileAttributes = {}));
+
+    var FileMode;
+
+    (function (FileMode) {
+      FileMode[FileMode["CreateNew"] = 1] = "CreateNew";
+      FileMode[FileMode["Create"] = 2] = "Create";
+      FileMode[FileMode["Open"] = 3] = "Open";
+      FileMode[FileMode["OpenOrCreate"] = 4] = "OpenOrCreate";
+      FileMode[FileMode["Truncate"] = 5] = "Truncate";
+      FileMode[FileMode["Append"] = 6] = "Append";
+    })(FileMode = IO.FileMode || (IO.FileMode = {}));
+
+    var FileOptions;
+
+    (function (FileOptions) {
+      FileOptions[FileOptions["None"] = 0] = "None";
+      FileOptions[FileOptions["Encrypted"] = 16384] = "Encrypted";
+      FileOptions[FileOptions["DeleteOnClose"] = 67108864] = "DeleteOnClose";
+      FileOptions[FileOptions["SequentialScan"] = 134217728] = "SequentialScan";
+      FileOptions[FileOptions["RandomAccess"] = 268435456] = "RandomAccess";
+      FileOptions[FileOptions["Asynchronous"] = 1073741824] = "Asynchronous";
+      FileOptions[FileOptions["WriteThrough"] = -2147483648] = "WriteThrough";
+    })(FileOptions = IO.FileOptions || (IO.FileOptions = {}));
+
+    var FileShare;
+
+    (function (FileShare) {
+      FileShare[FileShare["None"] = 0] = "None";
+      FileShare[FileShare["Read"] = 1] = "Read";
+      FileShare[FileShare["Write"] = 2] = "Write";
+      FileShare[FileShare["ReadWrite"] = 3] = "ReadWrite";
+      FileShare[FileShare["Delete"] = 4] = "Delete";
+      FileShare[FileShare["Inheritable"] = 16] = "Inheritable";
+    })(FileShare = IO.FileShare || (IO.FileShare = {}));
+
+    var SearchOption;
+
+    (function (SearchOption) {
+      SearchOption[SearchOption["TopDirectoryOnly"] = 0] = "TopDirectoryOnly";
+      SearchOption[SearchOption["AllDirectories"] = 1] = "AllDirectories";
+    })(SearchOption = IO.SearchOption || (IO.SearchOption = {}));
+
+    var SeekOrigin;
+
+    (function (SeekOrigin) {
+      SeekOrigin[SeekOrigin["Begin"] = 0] = "Begin";
+      SeekOrigin[SeekOrigin["Current"] = 1] = "Current";
+      SeekOrigin[SeekOrigin["End"] = 2] = "End";
+    })(SeekOrigin = IO.SeekOrigin || (IO.SeekOrigin = {}));
+
+    var HandleInheritability;
+
+    (function (HandleInheritability) {
+      HandleInheritability[HandleInheritability["None"] = 0] = "None";
+      HandleInheritability[HandleInheritability["Inheritable"] = 1] = "Inheritable";
+    })(HandleInheritability = IO.HandleInheritability || (IO.HandleInheritability = {}));
+
+    var NotifyFilters;
+
+    (function (NotifyFilters) {
+      NotifyFilters[NotifyFilters["Attributes"] = 4] = "Attributes";
+      NotifyFilters[NotifyFilters["CreationTime"] = 64] = "CreationTime";
+      NotifyFilters[NotifyFilters["DirectoryName"] = 2] = "DirectoryName";
+      NotifyFilters[NotifyFilters["FileName"] = 1] = "FileName";
+      NotifyFilters[NotifyFilters["LastAccess"] = 32] = "LastAccess";
+      NotifyFilters[NotifyFilters["LastWrite"] = 16] = "LastWrite";
+      NotifyFilters[NotifyFilters["Security"] = 256] = "Security";
+      NotifyFilters[NotifyFilters["Size"] = 8] = "Size";
+    })(NotifyFilters = IO.NotifyFilters || (IO.NotifyFilters = {}));
+
+    var WatcherChangeTypes;
+
+    (function (WatcherChangeTypes) {
+      WatcherChangeTypes[WatcherChangeTypes["All"] = 15] = "All";
+      WatcherChangeTypes[WatcherChangeTypes["Changed"] = 4] = "Changed";
+      WatcherChangeTypes[WatcherChangeTypes["Created"] = 1] = "Created";
+      WatcherChangeTypes[WatcherChangeTypes["Deleted"] = 2] = "Deleted";
+      WatcherChangeTypes[WatcherChangeTypes["Renamed"] = 8] = "Renamed";
+    })(WatcherChangeTypes = IO.WatcherChangeTypes || (IO.WatcherChangeTypes = {}));
+
+    var Compression;
+
+    (function (Compression) {
+      var CompressionLevel;
+
+      (function (CompressionLevel) {
+        CompressionLevel[CompressionLevel["Optimal"] = 0] = "Optimal";
+        CompressionLevel[CompressionLevel["Fastest"] = 1] = "Fastest";
+        CompressionLevel[CompressionLevel["NoCompression"] = 2] = "NoCompression";
+      })(CompressionLevel = Compression.CompressionLevel || (Compression.CompressionLevel = {}));
+
+      var CompressionMode;
+
+      (function (CompressionMode) {
+        CompressionMode[CompressionMode["Decompress"] = 0] = "Decompress";
+        CompressionMode[CompressionMode["Compress"] = 1] = "Compress";
+      })(CompressionMode = Compression.CompressionMode || (Compression.CompressionMode = {}));
+    })(Compression = IO.Compression || (IO.Compression = {}));
+
+    var IsolatedStorage;
+
+    (function (IsolatedStorage_1) {
+      var IsolatedStorageScope;
+
+      (function (IsolatedStorageScope) {
+        IsolatedStorageScope[IsolatedStorageScope["None"] = 0] = "None";
+        IsolatedStorageScope[IsolatedStorageScope["User"] = 1] = "User";
+        IsolatedStorageScope[IsolatedStorageScope["Domain"] = 2] = "Domain";
+        IsolatedStorageScope[IsolatedStorageScope["Assembly"] = 4] = "Assembly";
+        IsolatedStorageScope[IsolatedStorageScope["Roaming"] = 8] = "Roaming";
+        IsolatedStorageScope[IsolatedStorageScope["Machine"] = 16] = "Machine";
+        IsolatedStorageScope[IsolatedStorageScope["Application"] = 32] = "Application";
+      })(IsolatedStorageScope = IsolatedStorage_1.IsolatedStorageScope || (IsolatedStorage_1.IsolatedStorageScope = {}));
+
+      var IsolatedStorageSecurityOptions;
+
+      (function (IsolatedStorageSecurityOptions) {
+        IsolatedStorageSecurityOptions[IsolatedStorageSecurityOptions["IncreaseQuotaForApplication"] = 4] = "IncreaseQuotaForApplication";
+      })(IsolatedStorageSecurityOptions = IsolatedStorage_1.IsolatedStorageSecurityOptions || (IsolatedStorage_1.IsolatedStorageSecurityOptions = {}));
+    })(IsolatedStorage = IO.IsolatedStorage || (IO.IsolatedStorage = {}));
+
+    var MemoryMappedFiles;
+
+    (function (MemoryMappedFiles) {
+      var MemoryMappedFileAccess;
+
+      (function (MemoryMappedFileAccess) {
+        MemoryMappedFileAccess[MemoryMappedFileAccess["ReadWrite"] = 0] = "ReadWrite";
+        MemoryMappedFileAccess[MemoryMappedFileAccess["Read"] = 1] = "Read";
+        MemoryMappedFileAccess[MemoryMappedFileAccess["Write"] = 2] = "Write";
+        MemoryMappedFileAccess[MemoryMappedFileAccess["CopyOnWrite"] = 3] = "CopyOnWrite";
+        MemoryMappedFileAccess[MemoryMappedFileAccess["ReadExecute"] = 4] = "ReadExecute";
+        MemoryMappedFileAccess[MemoryMappedFileAccess["ReadWriteExecute"] = 5] = "ReadWriteExecute";
+      })(MemoryMappedFileAccess = MemoryMappedFiles.MemoryMappedFileAccess || (MemoryMappedFiles.MemoryMappedFileAccess = {}));
+
+      var MemoryMappedFileOptions;
+
+      (function (MemoryMappedFileOptions) {
+        MemoryMappedFileOptions[MemoryMappedFileOptions["None"] = 0] = "None";
+        MemoryMappedFileOptions[MemoryMappedFileOptions["DelayAllocatePages"] = 67108864] = "DelayAllocatePages";
+      })(MemoryMappedFileOptions = MemoryMappedFiles.MemoryMappedFileOptions || (MemoryMappedFiles.MemoryMappedFileOptions = {}));
+
+      var MemoryMappedFileRights;
+
+      (function (MemoryMappedFileRights) {
+        MemoryMappedFileRights[MemoryMappedFileRights["CopyOnWrite"] = 1] = "CopyOnWrite";
+        MemoryMappedFileRights[MemoryMappedFileRights["Write"] = 2] = "Write";
+        MemoryMappedFileRights[MemoryMappedFileRights["Read"] = 4] = "Read";
+        MemoryMappedFileRights[MemoryMappedFileRights["Execute"] = 8] = "Execute";
+        MemoryMappedFileRights[MemoryMappedFileRights["Delete"] = 65536] = "Delete";
+        MemoryMappedFileRights[MemoryMappedFileRights["ReadPermissions"] = 131072] = "ReadPermissions";
+        MemoryMappedFileRights[MemoryMappedFileRights["ChangePermissions"] = 262144] = "ChangePermissions";
+        MemoryMappedFileRights[MemoryMappedFileRights["TakeOwnership"] = 524288] = "TakeOwnership";
+        MemoryMappedFileRights[MemoryMappedFileRights["ReadWrite"] = 6] = "ReadWrite";
+        MemoryMappedFileRights[MemoryMappedFileRights["ReadExecute"] = 12] = "ReadExecute";
+        MemoryMappedFileRights[MemoryMappedFileRights["ReadWriteExecute"] = 14] = "ReadWriteExecute";
+        MemoryMappedFileRights[MemoryMappedFileRights["FullControl"] = 983055] = "FullControl";
+        MemoryMappedFileRights[MemoryMappedFileRights["AccessSystemSecurity"] = 16777216] = "AccessSystemSecurity";
+      })(MemoryMappedFileRights = MemoryMappedFiles.MemoryMappedFileRights || (MemoryMappedFiles.MemoryMappedFileRights = {}));
+    })(MemoryMappedFiles = IO.MemoryMappedFiles || (IO.MemoryMappedFiles = {}));
+
+    var Pipes;
+
+    (function (Pipes) {
+      var PipeAccessRights;
+
+      (function (PipeAccessRights) {
+        PipeAccessRights[PipeAccessRights["ReadData"] = 1] = "ReadData";
+        PipeAccessRights[PipeAccessRights["WriteData"] = 2] = "WriteData";
+        PipeAccessRights[PipeAccessRights["CreateNewInstance"] = 4] = "CreateNewInstance";
+        PipeAccessRights[PipeAccessRights["ReadExtendedAttributes"] = 8] = "ReadExtendedAttributes";
+        PipeAccessRights[PipeAccessRights["WriteExtendedAttributes"] = 16] = "WriteExtendedAttributes";
+        PipeAccessRights[PipeAccessRights["ReadAttributes"] = 128] = "ReadAttributes";
+        PipeAccessRights[PipeAccessRights["WriteAttributes"] = 256] = "WriteAttributes";
+        PipeAccessRights[PipeAccessRights["Delete"] = 65536] = "Delete";
+        PipeAccessRights[PipeAccessRights["ReadPermissions"] = 131072] = "ReadPermissions";
+        PipeAccessRights[PipeAccessRights["ChangePermissions"] = 262144] = "ChangePermissions";
+        PipeAccessRights[PipeAccessRights["TakeOwnership"] = 524288] = "TakeOwnership";
+        PipeAccessRights[PipeAccessRights["Synchronize"] = 1048576] = "Synchronize";
+        PipeAccessRights[PipeAccessRights["AccessSystemSecurity"] = 16777216] = "AccessSystemSecurity";
+        PipeAccessRights[PipeAccessRights["Read"] = 131209] = "Read";
+        PipeAccessRights[PipeAccessRights["Write"] = 274] = "Write";
+        PipeAccessRights[PipeAccessRights["ReadWrite"] = 131483] = "ReadWrite";
+        PipeAccessRights[PipeAccessRights["FullControl"] = 2032031] = "FullControl";
+      })(PipeAccessRights = Pipes.PipeAccessRights || (Pipes.PipeAccessRights = {}));
+
+      var PipeDirection;
+
+      (function (PipeDirection) {
+        PipeDirection[PipeDirection["In"] = 1] = "In";
+        PipeDirection[PipeDirection["Out"] = 2] = "Out";
+        PipeDirection[PipeDirection["InOut"] = 3] = "InOut";
+      })(PipeDirection = Pipes.PipeDirection || (Pipes.PipeDirection = {}));
+
+      var PipeOptions;
+
+      (function (PipeOptions) {
+        PipeOptions[PipeOptions["None"] = 0] = "None";
+        PipeOptions[PipeOptions["WriteThrough"] = -2147483648] = "WriteThrough";
+        PipeOptions[PipeOptions["Asynchronous"] = 1073741824] = "Asynchronous";
+      })(PipeOptions = Pipes.PipeOptions || (Pipes.PipeOptions = {}));
+
+      var PipeTransmissionMode;
+
+      (function (PipeTransmissionMode) {
+        PipeTransmissionMode[PipeTransmissionMode["Byte"] = 0] = "Byte";
+        PipeTransmissionMode[PipeTransmissionMode["Message"] = 1] = "Message";
+      })(PipeTransmissionMode = Pipes.PipeTransmissionMode || (Pipes.PipeTransmissionMode = {}));
+    })(Pipes = IO.Pipes || (IO.Pipes = {}));
+
+    var Ports;
+
+    (function (Ports) {
+      var Handshake;
+
+      (function (Handshake) {
+        Handshake[Handshake["None"] = 0] = "None";
+        Handshake[Handshake["XOnXOff"] = 1] = "XOnXOff";
+        Handshake[Handshake["RequestToSend"] = 2] = "RequestToSend";
+        Handshake[Handshake["RequestToSendXOnXOff"] = 3] = "RequestToSendXOnXOff";
+      })(Handshake = Ports.Handshake || (Ports.Handshake = {}));
+
+      var Parity;
+
+      (function (Parity) {
+        Parity[Parity["None"] = 0] = "None";
+        Parity[Parity["Odd"] = 1] = "Odd";
+        Parity[Parity["Even"] = 2] = "Even";
+        Parity[Parity["Mark"] = 3] = "Mark";
+        Parity[Parity["Space"] = 4] = "Space";
+      })(Parity = Ports.Parity || (Ports.Parity = {}));
+
+      var SerialData;
+
+      (function (SerialData) {
+        SerialData[SerialData["Chars"] = 1] = "Chars";
+        SerialData[SerialData["Eof"] = 2] = "Eof";
+      })(SerialData = Ports.SerialData || (Ports.SerialData = {}));
+
+      var SerialError;
+
+      (function (SerialError) {
+        SerialError[SerialError["RXOver"] = 1] = "RXOver";
+        SerialError[SerialError["Overrun"] = 2] = "Overrun";
+        SerialError[SerialError["RXParity"] = 4] = "RXParity";
+        SerialError[SerialError["Frame"] = 8] = "Frame";
+        SerialError[SerialError["TXFull"] = 256] = "TXFull";
+      })(SerialError = Ports.SerialError || (Ports.SerialError = {}));
+
+      var SerialPinChange;
+
+      (function (SerialPinChange) {
+        SerialPinChange[SerialPinChange["CtsChanged"] = 8] = "CtsChanged";
+        SerialPinChange[SerialPinChange["DsrChanged"] = 16] = "DsrChanged";
+        SerialPinChange[SerialPinChange["CDChanged"] = 32] = "CDChanged";
+        SerialPinChange[SerialPinChange["Break"] = 64] = "Break";
+        SerialPinChange[SerialPinChange["Ring"] = 256] = "Ring";
+      })(SerialPinChange = Ports.SerialPinChange || (Ports.SerialPinChange = {}));
+
+      var StopBits;
+
+      (function (StopBits) {
+        StopBits[StopBits["None"] = 0] = "None";
+        StopBits[StopBits["One"] = 1] = "One";
+        StopBits[StopBits["Two"] = 2] = "Two";
+        StopBits[StopBits["OnePointFive"] = 3] = "OnePointFive";
+      })(StopBits = Ports.StopBits || (Ports.StopBits = {}));
+    })(Ports = IO.Ports || (IO.Ports = {}));
+  })(IO = System.IO || (System.IO = {}));
+
+  var Linq;
+
+  (function (Linq) {
+    var ParallelExecutionMode;
+
+    (function (ParallelExecutionMode) {
+      ParallelExecutionMode[ParallelExecutionMode["Default"] = 0] = "Default";
+      ParallelExecutionMode[ParallelExecutionMode["ForceParallelism"] = 1] = "ForceParallelism";
+    })(ParallelExecutionMode = Linq.ParallelExecutionMode || (Linq.ParallelExecutionMode = {}));
+
+    var ParallelMergeOptions;
+
+    (function (ParallelMergeOptions) {
+      ParallelMergeOptions[ParallelMergeOptions["Default"] = 0] = "Default";
+      ParallelMergeOptions[ParallelMergeOptions["NotBuffered"] = 1] = "NotBuffered";
+      ParallelMergeOptions[ParallelMergeOptions["AutoBuffered"] = 2] = "AutoBuffered";
+      ParallelMergeOptions[ParallelMergeOptions["FullyBuffered"] = 3] = "FullyBuffered";
+    })(ParallelMergeOptions = Linq.ParallelMergeOptions || (Linq.ParallelMergeOptions = {}));
+
+    var Expressions;
+
+    (function (Expressions) {
+      var ExpressionType;
+
+      (function (ExpressionType) {
+        ExpressionType[ExpressionType["Add"] = 0] = "Add";
+        ExpressionType[ExpressionType["AddChecked"] = 1] = "AddChecked";
+        ExpressionType[ExpressionType["And"] = 2] = "And";
+        ExpressionType[ExpressionType["AndAlso"] = 3] = "AndAlso";
+        ExpressionType[ExpressionType["ArrayLength"] = 4] = "ArrayLength";
+        ExpressionType[ExpressionType["ArrayIndex"] = 5] = "ArrayIndex";
+        ExpressionType[ExpressionType["Call"] = 6] = "Call";
+        ExpressionType[ExpressionType["Coalesce"] = 7] = "Coalesce";
+        ExpressionType[ExpressionType["Conditional"] = 8] = "Conditional";
+        ExpressionType[ExpressionType["Constant"] = 9] = "Constant";
+        ExpressionType[ExpressionType["Convert"] = 10] = "Convert";
+        ExpressionType[ExpressionType["ConvertChecked"] = 11] = "ConvertChecked";
+        ExpressionType[ExpressionType["Divide"] = 12] = "Divide";
+        ExpressionType[ExpressionType["Equal"] = 13] = "Equal";
+        ExpressionType[ExpressionType["ExclusiveOr"] = 14] = "ExclusiveOr";
+        ExpressionType[ExpressionType["GreaterThan"] = 15] = "GreaterThan";
+        ExpressionType[ExpressionType["GreaterThanOrEqual"] = 16] = "GreaterThanOrEqual";
+        ExpressionType[ExpressionType["Invoke"] = 17] = "Invoke";
+        ExpressionType[ExpressionType["Lambda"] = 18] = "Lambda";
+        ExpressionType[ExpressionType["LeftShift"] = 19] = "LeftShift";
+        ExpressionType[ExpressionType["LessThan"] = 20] = "LessThan";
+        ExpressionType[ExpressionType["LessThanOrEqual"] = 21] = "LessThanOrEqual";
+        ExpressionType[ExpressionType["ListInit"] = 22] = "ListInit";
+        ExpressionType[ExpressionType["MemberAccess"] = 23] = "MemberAccess";
+        ExpressionType[ExpressionType["MemberInit"] = 24] = "MemberInit";
+        ExpressionType[ExpressionType["Modulo"] = 25] = "Modulo";
+        ExpressionType[ExpressionType["Multiply"] = 26] = "Multiply";
+        ExpressionType[ExpressionType["MultiplyChecked"] = 27] = "MultiplyChecked";
+        ExpressionType[ExpressionType["Negate"] = 28] = "Negate";
+        ExpressionType[ExpressionType["UnaryPlus"] = 29] = "UnaryPlus";
+        ExpressionType[ExpressionType["NegateChecked"] = 30] = "NegateChecked";
+        ExpressionType[ExpressionType["New"] = 31] = "New";
+        ExpressionType[ExpressionType["NewArrayInit"] = 32] = "NewArrayInit";
+        ExpressionType[ExpressionType["NewArrayBounds"] = 33] = "NewArrayBounds";
+        ExpressionType[ExpressionType["Not"] = 34] = "Not";
+        ExpressionType[ExpressionType["NotEqual"] = 35] = "NotEqual";
+        ExpressionType[ExpressionType["Or"] = 36] = "Or";
+        ExpressionType[ExpressionType["OrElse"] = 37] = "OrElse";
+        ExpressionType[ExpressionType["Parameter"] = 38] = "Parameter";
+        ExpressionType[ExpressionType["Power"] = 39] = "Power";
+        ExpressionType[ExpressionType["Quote"] = 40] = "Quote";
+        ExpressionType[ExpressionType["RightShift"] = 41] = "RightShift";
+        ExpressionType[ExpressionType["Subtract"] = 42] = "Subtract";
+        ExpressionType[ExpressionType["SubtractChecked"] = 43] = "SubtractChecked";
+        ExpressionType[ExpressionType["TypeAs"] = 44] = "TypeAs";
+        ExpressionType[ExpressionType["TypeIs"] = 45] = "TypeIs";
+        ExpressionType[ExpressionType["Assign"] = 46] = "Assign";
+        ExpressionType[ExpressionType["Block"] = 47] = "Block";
+        ExpressionType[ExpressionType["DebugInfo"] = 48] = "DebugInfo";
+        ExpressionType[ExpressionType["Decrement"] = 49] = "Decrement";
+        ExpressionType[ExpressionType["Dynamic"] = 50] = "Dynamic";
+        ExpressionType[ExpressionType["Default"] = 51] = "Default";
+        ExpressionType[ExpressionType["Extension"] = 52] = "Extension";
+        ExpressionType[ExpressionType["Goto"] = 53] = "Goto";
+        ExpressionType[ExpressionType["Increment"] = 54] = "Increment";
+        ExpressionType[ExpressionType["Index"] = 55] = "Index";
+        ExpressionType[ExpressionType["Label"] = 56] = "Label";
+        ExpressionType[ExpressionType["RuntimeVariables"] = 57] = "RuntimeVariables";
+        ExpressionType[ExpressionType["Loop"] = 58] = "Loop";
+        ExpressionType[ExpressionType["Switch"] = 59] = "Switch";
+        ExpressionType[ExpressionType["Throw"] = 60] = "Throw";
+        ExpressionType[ExpressionType["Try"] = 61] = "Try";
+        ExpressionType[ExpressionType["Unbox"] = 62] = "Unbox";
+        ExpressionType[ExpressionType["AddAssign"] = 63] = "AddAssign";
+        ExpressionType[ExpressionType["AndAssign"] = 64] = "AndAssign";
+        ExpressionType[ExpressionType["DivideAssign"] = 65] = "DivideAssign";
+        ExpressionType[ExpressionType["ExclusiveOrAssign"] = 66] = "ExclusiveOrAssign";
+        ExpressionType[ExpressionType["LeftShiftAssign"] = 67] = "LeftShiftAssign";
+        ExpressionType[ExpressionType["ModuloAssign"] = 68] = "ModuloAssign";
+        ExpressionType[ExpressionType["MultiplyAssign"] = 69] = "MultiplyAssign";
+        ExpressionType[ExpressionType["OrAssign"] = 70] = "OrAssign";
+        ExpressionType[ExpressionType["PowerAssign"] = 71] = "PowerAssign";
+        ExpressionType[ExpressionType["RightShiftAssign"] = 72] = "RightShiftAssign";
+        ExpressionType[ExpressionType["SubtractAssign"] = 73] = "SubtractAssign";
+        ExpressionType[ExpressionType["AddAssignChecked"] = 74] = "AddAssignChecked";
+        ExpressionType[ExpressionType["MultiplyAssignChecked"] = 75] = "MultiplyAssignChecked";
+        ExpressionType[ExpressionType["SubtractAssignChecked"] = 76] = "SubtractAssignChecked";
+        ExpressionType[ExpressionType["PreIncrementAssign"] = 77] = "PreIncrementAssign";
+        ExpressionType[ExpressionType["PreDecrementAssign"] = 78] = "PreDecrementAssign";
+        ExpressionType[ExpressionType["PostIncrementAssign"] = 79] = "PostIncrementAssign";
+        ExpressionType[ExpressionType["PostDecrementAssign"] = 80] = "PostDecrementAssign";
+        ExpressionType[ExpressionType["TypeEqual"] = 81] = "TypeEqual";
+        ExpressionType[ExpressionType["OnesComplement"] = 82] = "OnesComplement";
+        ExpressionType[ExpressionType["IsTrue"] = 83] = "IsTrue";
+        ExpressionType[ExpressionType["IsFalse"] = 84] = "IsFalse";
+      })(ExpressionType = Expressions.ExpressionType || (Expressions.ExpressionType = {}));
+
+      var GotoExpressionKind;
+
+      (function (GotoExpressionKind) {
+        GotoExpressionKind[GotoExpressionKind["Goto"] = 0] = "Goto";
+        GotoExpressionKind[GotoExpressionKind["Return"] = 1] = "Return";
+        GotoExpressionKind[GotoExpressionKind["Break"] = 2] = "Break";
+        GotoExpressionKind[GotoExpressionKind["Continue"] = 3] = "Continue";
+      })(GotoExpressionKind = Expressions.GotoExpressionKind || (Expressions.GotoExpressionKind = {}));
+
+      var MemberBindingType;
+
+      (function (MemberBindingType) {
+        MemberBindingType[MemberBindingType["Assignment"] = 0] = "Assignment";
+        MemberBindingType[MemberBindingType["MemberBinding"] = 1] = "MemberBinding";
+        MemberBindingType[MemberBindingType["ListBinding"] = 2] = "ListBinding";
+      })(MemberBindingType = Expressions.MemberBindingType || (Expressions.MemberBindingType = {}));
+    })(Expressions = Linq.Expressions || (Linq.Expressions = {}));
+  })(Linq = System.Linq || (System.Linq = {}));
+
+  var Management;
+
+  (function (Management) {
+    var Instrumentation;
+
+    (function (Instrumentation) {
+      var ManagementConfigurationType;
+
+      (function (ManagementConfigurationType) {
+        ManagementConfigurationType[ManagementConfigurationType["Apply"] = 0] = "Apply";
+        ManagementConfigurationType[ManagementConfigurationType["OnCommit"] = 1] = "OnCommit";
+      })(ManagementConfigurationType = Instrumentation.ManagementConfigurationType || (Instrumentation.ManagementConfigurationType = {}));
+
+      var ManagementHostingModel;
+
+      (function (ManagementHostingModel) {
+        ManagementHostingModel[ManagementHostingModel["Decoupled"] = 0] = "Decoupled";
+        ManagementHostingModel[ManagementHostingModel["LocalService"] = 2] = "LocalService";
+        ManagementHostingModel[ManagementHostingModel["LocalSystem"] = 3] = "LocalSystem";
+        ManagementHostingModel[ManagementHostingModel["NetworkService"] = 1] = "NetworkService";
+      })(ManagementHostingModel = Instrumentation.ManagementHostingModel || (Instrumentation.ManagementHostingModel = {}));
+    })(Instrumentation = Management.Instrumentation || (Management.Instrumentation = {}));
+  })(Management = System.Management || (System.Management = {}));
+
+  var Media;
+
+  (function (Media) {})(Media = System.Media || (System.Media = {}));
+
+  var Reflection;
+
+  (function (Reflection) {
+    var AssemblyNameFlags;
+
+    (function (AssemblyNameFlags) {
+      AssemblyNameFlags[AssemblyNameFlags["None"] = 0] = "None";
+      AssemblyNameFlags[AssemblyNameFlags["PublicKey"] = 1] = "PublicKey";
+      AssemblyNameFlags[AssemblyNameFlags["EnableJITcompileOptimizer"] = 16384] = "EnableJITcompileOptimizer";
+      AssemblyNameFlags[AssemblyNameFlags["EnableJITcompileTracking"] = 32768] = "EnableJITcompileTracking";
+      AssemblyNameFlags[AssemblyNameFlags["Retargetable"] = 256] = "Retargetable";
+    })(AssemblyNameFlags = Reflection.AssemblyNameFlags || (Reflection.AssemblyNameFlags = {}));
+
+    var AssemblyContentType;
+
+    (function (AssemblyContentType) {
+      AssemblyContentType[AssemblyContentType["Default"] = 0] = "Default";
+      AssemblyContentType[AssemblyContentType["WindowsRuntime"] = 1] = "WindowsRuntime";
+    })(AssemblyContentType = Reflection.AssemblyContentType || (Reflection.AssemblyContentType = {}));
+
+    var ProcessorArchitecture;
+
+    (function (ProcessorArchitecture) {
+      ProcessorArchitecture[ProcessorArchitecture["None"] = 0] = "None";
+      ProcessorArchitecture[ProcessorArchitecture["MSIL"] = 1] = "MSIL";
+      ProcessorArchitecture[ProcessorArchitecture["X86"] = 2] = "X86";
+      ProcessorArchitecture[ProcessorArchitecture["IA64"] = 3] = "IA64";
+      ProcessorArchitecture[ProcessorArchitecture["Amd64"] = 4] = "Amd64";
+      ProcessorArchitecture[ProcessorArchitecture["Arm"] = 5] = "Arm";
+    })(ProcessorArchitecture = Reflection.ProcessorArchitecture || (Reflection.ProcessorArchitecture = {}));
+
+    var BindingFlags;
+
+    (function (BindingFlags) {
+      BindingFlags[BindingFlags["Default"] = 0] = "Default";
+      BindingFlags[BindingFlags["IgnoreCase"] = 1] = "IgnoreCase";
+      BindingFlags[BindingFlags["DeclaredOnly"] = 2] = "DeclaredOnly";
+      BindingFlags[BindingFlags["Instance"] = 4] = "Instance";
+      BindingFlags[BindingFlags["Static"] = 8] = "Static";
+      BindingFlags[BindingFlags["Public"] = 16] = "Public";
+      BindingFlags[BindingFlags["NonPublic"] = 32] = "NonPublic";
+      BindingFlags[BindingFlags["FlattenHierarchy"] = 64] = "FlattenHierarchy";
+      BindingFlags[BindingFlags["InvokeMethod"] = 256] = "InvokeMethod";
+      BindingFlags[BindingFlags["CreateInstance"] = 512] = "CreateInstance";
+      BindingFlags[BindingFlags["GetField"] = 1024] = "GetField";
+      BindingFlags[BindingFlags["SetField"] = 2048] = "SetField";
+      BindingFlags[BindingFlags["GetProperty"] = 4096] = "GetProperty";
+      BindingFlags[BindingFlags["SetProperty"] = 8192] = "SetProperty";
+      BindingFlags[BindingFlags["PutDispProperty"] = 16384] = "PutDispProperty";
+      BindingFlags[BindingFlags["PutRefDispProperty"] = 32768] = "PutRefDispProperty";
+      BindingFlags[BindingFlags["ExactBinding"] = 65536] = "ExactBinding";
+      BindingFlags[BindingFlags["SuppressChangeType"] = 131072] = "SuppressChangeType";
+      BindingFlags[BindingFlags["OptionalParamBinding"] = 262144] = "OptionalParamBinding";
+      BindingFlags[BindingFlags["IgnoreReturn"] = 16777216] = "IgnoreReturn";
+    })(BindingFlags = Reflection.BindingFlags || (Reflection.BindingFlags = {}));
+
+    var CallingConventions;
+
+    (function (CallingConventions) {
+      CallingConventions[CallingConventions["Standard"] = 1] = "Standard";
+      CallingConventions[CallingConventions["VarArgs"] = 2] = "VarArgs";
+      CallingConventions[CallingConventions["Any"] = 3] = "Any";
+      CallingConventions[CallingConventions["HasThis"] = 32] = "HasThis";
+      CallingConventions[CallingConventions["ExplicitThis"] = 64] = "ExplicitThis";
+    })(CallingConventions = Reflection.CallingConventions || (Reflection.CallingConventions = {}));
+
+    var EventAttributes;
+
+    (function (EventAttributes) {
+      EventAttributes[EventAttributes["None"] = 0] = "None";
+      EventAttributes[EventAttributes["SpecialName"] = 512] = "SpecialName";
+      EventAttributes[EventAttributes["ReservedMask"] = 1024] = "ReservedMask";
+      EventAttributes[EventAttributes["RTSpecialName"] = 1024] = "RTSpecialName";
+    })(EventAttributes = Reflection.EventAttributes || (Reflection.EventAttributes = {}));
+
+    var FieldAttributes;
+
+    (function (FieldAttributes) {
+      FieldAttributes[FieldAttributes["FieldAccessMask"] = 7] = "FieldAccessMask";
+      FieldAttributes[FieldAttributes["PrivateScope"] = 0] = "PrivateScope";
+      FieldAttributes[FieldAttributes["Private"] = 1] = "Private";
+      FieldAttributes[FieldAttributes["FamANDAssem"] = 2] = "FamANDAssem";
+      FieldAttributes[FieldAttributes["Assembly"] = 3] = "Assembly";
+      FieldAttributes[FieldAttributes["Family"] = 4] = "Family";
+      FieldAttributes[FieldAttributes["FamORAssem"] = 5] = "FamORAssem";
+      FieldAttributes[FieldAttributes["Public"] = 6] = "Public";
+      FieldAttributes[FieldAttributes["Static"] = 16] = "Static";
+      FieldAttributes[FieldAttributes["InitOnly"] = 32] = "InitOnly";
+      FieldAttributes[FieldAttributes["Literal"] = 64] = "Literal";
+      FieldAttributes[FieldAttributes["NotSerialized"] = 128] = "NotSerialized";
+      FieldAttributes[FieldAttributes["SpecialName"] = 512] = "SpecialName";
+      FieldAttributes[FieldAttributes["PinvokeImpl"] = 8192] = "PinvokeImpl";
+      FieldAttributes[FieldAttributes["ReservedMask"] = 38144] = "ReservedMask";
+      FieldAttributes[FieldAttributes["RTSpecialName"] = 1024] = "RTSpecialName";
+      FieldAttributes[FieldAttributes["HasFieldMarshal"] = 4096] = "HasFieldMarshal";
+      FieldAttributes[FieldAttributes["HasDefault"] = 32768] = "HasDefault";
+      FieldAttributes[FieldAttributes["HasFieldRVA"] = 256] = "HasFieldRVA";
+    })(FieldAttributes = Reflection.FieldAttributes || (Reflection.FieldAttributes = {}));
+
+    var GenericParameterAttributes;
+
+    (function (GenericParameterAttributes) {
+      GenericParameterAttributes[GenericParameterAttributes["None"] = 0] = "None";
+      GenericParameterAttributes[GenericParameterAttributes["VarianceMask"] = 3] = "VarianceMask";
+      GenericParameterAttributes[GenericParameterAttributes["Covariant"] = 1] = "Covariant";
+      GenericParameterAttributes[GenericParameterAttributes["Contravariant"] = 2] = "Contravariant";
+      GenericParameterAttributes[GenericParameterAttributes["SpecialConstraintMask"] = 28] = "SpecialConstraintMask";
+      GenericParameterAttributes[GenericParameterAttributes["ReferenceTypeConstraint"] = 4] = "ReferenceTypeConstraint";
+      GenericParameterAttributes[GenericParameterAttributes["NotNullableValueTypeConstraint"] = 8] = "NotNullableValueTypeConstraint";
+      GenericParameterAttributes[GenericParameterAttributes["DefaultConstructorConstraint"] = 16] = "DefaultConstructorConstraint";
+    })(GenericParameterAttributes = Reflection.GenericParameterAttributes || (Reflection.GenericParameterAttributes = {}));
+
+    var ResourceLocation;
+
+    (function (ResourceLocation) {
+      ResourceLocation[ResourceLocation["Embedded"] = 1] = "Embedded";
+      ResourceLocation[ResourceLocation["ContainedInAnotherAssembly"] = 2] = "ContainedInAnotherAssembly";
+      ResourceLocation[ResourceLocation["ContainedInManifestFile"] = 4] = "ContainedInManifestFile";
+    })(ResourceLocation = Reflection.ResourceLocation || (Reflection.ResourceLocation = {}));
+
+    var MemberTypes;
+
+    (function (MemberTypes) {
+      MemberTypes[MemberTypes["Constructor"] = 1] = "Constructor";
+      MemberTypes[MemberTypes["Event"] = 2] = "Event";
+      MemberTypes[MemberTypes["Field"] = 4] = "Field";
+      MemberTypes[MemberTypes["Method"] = 8] = "Method";
+      MemberTypes[MemberTypes["Property"] = 16] = "Property";
+      MemberTypes[MemberTypes["TypeInfo"] = 32] = "TypeInfo";
+      MemberTypes[MemberTypes["Custom"] = 64] = "Custom";
+      MemberTypes[MemberTypes["NestedType"] = 128] = "NestedType";
+      MemberTypes[MemberTypes["All"] = 191] = "All";
+    })(MemberTypes = Reflection.MemberTypes || (Reflection.MemberTypes = {}));
+
+    var MethodAttributes;
+
+    (function (MethodAttributes) {
+      MethodAttributes[MethodAttributes["MemberAccessMask"] = 7] = "MemberAccessMask";
+      MethodAttributes[MethodAttributes["PrivateScope"] = 0] = "PrivateScope";
+      MethodAttributes[MethodAttributes["Private"] = 1] = "Private";
+      MethodAttributes[MethodAttributes["FamANDAssem"] = 2] = "FamANDAssem";
+      MethodAttributes[MethodAttributes["Assembly"] = 3] = "Assembly";
+      MethodAttributes[MethodAttributes["Family"] = 4] = "Family";
+      MethodAttributes[MethodAttributes["FamORAssem"] = 5] = "FamORAssem";
+      MethodAttributes[MethodAttributes["Public"] = 6] = "Public";
+      MethodAttributes[MethodAttributes["Static"] = 16] = "Static";
+      MethodAttributes[MethodAttributes["Final"] = 32] = "Final";
+      MethodAttributes[MethodAttributes["Virtual"] = 64] = "Virtual";
+      MethodAttributes[MethodAttributes["HideBySig"] = 128] = "HideBySig";
+      MethodAttributes[MethodAttributes["CheckAccessOnOverride"] = 512] = "CheckAccessOnOverride";
+      MethodAttributes[MethodAttributes["VtableLayoutMask"] = 256] = "VtableLayoutMask";
+      MethodAttributes[MethodAttributes["ReuseSlot"] = 0] = "ReuseSlot";
+      MethodAttributes[MethodAttributes["NewSlot"] = 256] = "NewSlot";
+      MethodAttributes[MethodAttributes["Abstract"] = 1024] = "Abstract";
+      MethodAttributes[MethodAttributes["SpecialName"] = 2048] = "SpecialName";
+      MethodAttributes[MethodAttributes["PinvokeImpl"] = 8192] = "PinvokeImpl";
+      MethodAttributes[MethodAttributes["UnmanagedExport"] = 8] = "UnmanagedExport";
+      MethodAttributes[MethodAttributes["RTSpecialName"] = 4096] = "RTSpecialName";
+      MethodAttributes[MethodAttributes["ReservedMask"] = 53248] = "ReservedMask";
+      MethodAttributes[MethodAttributes["HasSecurity"] = 16384] = "HasSecurity";
+      MethodAttributes[MethodAttributes["RequireSecObject"] = 32768] = "RequireSecObject";
+    })(MethodAttributes = Reflection.MethodAttributes || (Reflection.MethodAttributes = {}));
+
+    var ExceptionHandlingClauseOptions;
+
+    (function (ExceptionHandlingClauseOptions) {
+      ExceptionHandlingClauseOptions[ExceptionHandlingClauseOptions["Clause"] = 0] = "Clause";
+      ExceptionHandlingClauseOptions[ExceptionHandlingClauseOptions["Filter"] = 1] = "Filter";
+      ExceptionHandlingClauseOptions[ExceptionHandlingClauseOptions["Finally"] = 2] = "Finally";
+      ExceptionHandlingClauseOptions[ExceptionHandlingClauseOptions["Fault"] = 4] = "Fault";
+    })(ExceptionHandlingClauseOptions = Reflection.ExceptionHandlingClauseOptions || (Reflection.ExceptionHandlingClauseOptions = {}));
+
+    var MethodImplAttributes;
+
+    (function (MethodImplAttributes) {
+      MethodImplAttributes[MethodImplAttributes["CodeTypeMask"] = 3] = "CodeTypeMask";
+      MethodImplAttributes[MethodImplAttributes["IL"] = 0] = "IL";
+      MethodImplAttributes[MethodImplAttributes["Native"] = 1] = "Native";
+      MethodImplAttributes[MethodImplAttributes["OPTIL"] = 2] = "OPTIL";
+      MethodImplAttributes[MethodImplAttributes["Runtime"] = 3] = "Runtime";
+      MethodImplAttributes[MethodImplAttributes["ManagedMask"] = 4] = "ManagedMask";
+      MethodImplAttributes[MethodImplAttributes["Unmanaged"] = 4] = "Unmanaged";
+      MethodImplAttributes[MethodImplAttributes["Managed"] = 0] = "Managed";
+      MethodImplAttributes[MethodImplAttributes["ForwardRef"] = 16] = "ForwardRef";
+      MethodImplAttributes[MethodImplAttributes["PreserveSig"] = 128] = "PreserveSig";
+      MethodImplAttributes[MethodImplAttributes["InternalCall"] = 4096] = "InternalCall";
+      MethodImplAttributes[MethodImplAttributes["Synchronized"] = 32] = "Synchronized";
+      MethodImplAttributes[MethodImplAttributes["NoInlining"] = 8] = "NoInlining";
+      MethodImplAttributes[MethodImplAttributes["AggressiveInlining"] = 256] = "AggressiveInlining";
+      MethodImplAttributes[MethodImplAttributes["NoOptimization"] = 64] = "NoOptimization";
+      MethodImplAttributes[MethodImplAttributes["MaxMethodImplVal"] = 65535] = "MaxMethodImplVal";
+    })(MethodImplAttributes = Reflection.MethodImplAttributes || (Reflection.MethodImplAttributes = {}));
+
+    var ParameterAttributes;
+
+    (function (ParameterAttributes) {
+      ParameterAttributes[ParameterAttributes["None"] = 0] = "None";
+      ParameterAttributes[ParameterAttributes["In"] = 1] = "In";
+      ParameterAttributes[ParameterAttributes["Out"] = 2] = "Out";
+      ParameterAttributes[ParameterAttributes["Lcid"] = 4] = "Lcid";
+      ParameterAttributes[ParameterAttributes["Retval"] = 8] = "Retval";
+      ParameterAttributes[ParameterAttributes["Optional"] = 16] = "Optional";
+      ParameterAttributes[ParameterAttributes["ReservedMask"] = 61440] = "ReservedMask";
+      ParameterAttributes[ParameterAttributes["HasDefault"] = 4096] = "HasDefault";
+      ParameterAttributes[ParameterAttributes["HasFieldMarshal"] = 8192] = "HasFieldMarshal";
+      ParameterAttributes[ParameterAttributes["Reserved3"] = 16384] = "Reserved3";
+      ParameterAttributes[ParameterAttributes["Reserved4"] = 32768] = "Reserved4";
+    })(ParameterAttributes = Reflection.ParameterAttributes || (Reflection.ParameterAttributes = {}));
+
+    var PropertyAttributes;
+
+    (function (PropertyAttributes) {
+      PropertyAttributes[PropertyAttributes["None"] = 0] = "None";
+      PropertyAttributes[PropertyAttributes["SpecialName"] = 512] = "SpecialName";
+      PropertyAttributes[PropertyAttributes["ReservedMask"] = 62464] = "ReservedMask";
+      PropertyAttributes[PropertyAttributes["RTSpecialName"] = 1024] = "RTSpecialName";
+      PropertyAttributes[PropertyAttributes["HasDefault"] = 4096] = "HasDefault";
+      PropertyAttributes[PropertyAttributes["Reserved2"] = 8192] = "Reserved2";
+      PropertyAttributes[PropertyAttributes["Reserved3"] = 16384] = "Reserved3";
+      PropertyAttributes[PropertyAttributes["Reserved4"] = 32768] = "Reserved4";
+    })(PropertyAttributes = Reflection.PropertyAttributes || (Reflection.PropertyAttributes = {}));
+
+    var ResourceAttributes;
+
+    (function (ResourceAttributes) {
+      ResourceAttributes[ResourceAttributes["Public"] = 1] = "Public";
+      ResourceAttributes[ResourceAttributes["Private"] = 2] = "Private";
+    })(ResourceAttributes = Reflection.ResourceAttributes || (Reflection.ResourceAttributes = {}));
+
+    var TypeAttributes;
+
+    (function (TypeAttributes) {
+      TypeAttributes[TypeAttributes["VisibilityMask"] = 7] = "VisibilityMask";
+      TypeAttributes[TypeAttributes["NotPublic"] = 0] = "NotPublic";
+      TypeAttributes[TypeAttributes["Public"] = 1] = "Public";
+      TypeAttributes[TypeAttributes["NestedPublic"] = 2] = "NestedPublic";
+      TypeAttributes[TypeAttributes["NestedPrivate"] = 3] = "NestedPrivate";
+      TypeAttributes[TypeAttributes["NestedFamily"] = 4] = "NestedFamily";
+      TypeAttributes[TypeAttributes["NestedAssembly"] = 5] = "NestedAssembly";
+      TypeAttributes[TypeAttributes["NestedFamANDAssem"] = 6] = "NestedFamANDAssem";
+      TypeAttributes[TypeAttributes["NestedFamORAssem"] = 7] = "NestedFamORAssem";
+      TypeAttributes[TypeAttributes["LayoutMask"] = 24] = "LayoutMask";
+      TypeAttributes[TypeAttributes["AutoLayout"] = 0] = "AutoLayout";
+      TypeAttributes[TypeAttributes["SequentialLayout"] = 8] = "SequentialLayout";
+      TypeAttributes[TypeAttributes["ExplicitLayout"] = 16] = "ExplicitLayout";
+      TypeAttributes[TypeAttributes["ClassSemanticsMask"] = 32] = "ClassSemanticsMask";
+      TypeAttributes[TypeAttributes["Class"] = 0] = "Class";
+      TypeAttributes[TypeAttributes["Interface"] = 32] = "Interface";
+      TypeAttributes[TypeAttributes["Abstract"] = 128] = "Abstract";
+      TypeAttributes[TypeAttributes["Sealed"] = 256] = "Sealed";
+      TypeAttributes[TypeAttributes["SpecialName"] = 1024] = "SpecialName";
+      TypeAttributes[TypeAttributes["Import"] = 4096] = "Import";
+      TypeAttributes[TypeAttributes["Serializable"] = 8192] = "Serializable";
+      TypeAttributes[TypeAttributes["WindowsRuntime"] = 16384] = "WindowsRuntime";
+      TypeAttributes[TypeAttributes["StringFormatMask"] = 196608] = "StringFormatMask";
+      TypeAttributes[TypeAttributes["AnsiClass"] = 0] = "AnsiClass";
+      TypeAttributes[TypeAttributes["UnicodeClass"] = 65536] = "UnicodeClass";
+      TypeAttributes[TypeAttributes["AutoClass"] = 131072] = "AutoClass";
+      TypeAttributes[TypeAttributes["CustomFormatClass"] = 196608] = "CustomFormatClass";
+      TypeAttributes[TypeAttributes["CustomFormatMask"] = 12582912] = "CustomFormatMask";
+      TypeAttributes[TypeAttributes["BeforeFieldInit"] = 1048576] = "BeforeFieldInit";
+      TypeAttributes[TypeAttributes["ReservedMask"] = 264192] = "ReservedMask";
+      TypeAttributes[TypeAttributes["RTSpecialName"] = 2048] = "RTSpecialName";
+      TypeAttributes[TypeAttributes["HasSecurity"] = 262144] = "HasSecurity";
+    })(TypeAttributes = Reflection.TypeAttributes || (Reflection.TypeAttributes = {}));
+
+    var ImageFileMachine;
+
+    (function (ImageFileMachine) {
+      ImageFileMachine[ImageFileMachine["I386"] = 332] = "I386";
+      ImageFileMachine[ImageFileMachine["IA64"] = 512] = "IA64";
+      ImageFileMachine[ImageFileMachine["AMD64"] = 34404] = "AMD64";
+      ImageFileMachine[ImageFileMachine["ARM"] = 452] = "ARM";
+    })(ImageFileMachine = Reflection.ImageFileMachine || (Reflection.ImageFileMachine = {}));
+
+    var PortableExecutableKinds;
+
+    (function (PortableExecutableKinds) {
+      PortableExecutableKinds[PortableExecutableKinds["NotAPortableExecutableImage"] = 0] = "NotAPortableExecutableImage";
+      PortableExecutableKinds[PortableExecutableKinds["ILOnly"] = 1] = "ILOnly";
+      PortableExecutableKinds[PortableExecutableKinds["Required32Bit"] = 2] = "Required32Bit";
+      PortableExecutableKinds[PortableExecutableKinds["PE32Plus"] = 4] = "PE32Plus";
+      PortableExecutableKinds[PortableExecutableKinds["Unmanaged32Bit"] = 8] = "Unmanaged32Bit";
+      PortableExecutableKinds[PortableExecutableKinds["Preferred32Bit"] = 16] = "Preferred32Bit";
+    })(PortableExecutableKinds = Reflection.PortableExecutableKinds || (Reflection.PortableExecutableKinds = {}));
+
+    var Emit;
+
+    (function (Emit) {
+      var AssemblyBuilderAccess;
+
+      (function (AssemblyBuilderAccess) {
+        AssemblyBuilderAccess[AssemblyBuilderAccess["Run"] = 1] = "Run";
+        AssemblyBuilderAccess[AssemblyBuilderAccess["Save"] = 2] = "Save";
+        AssemblyBuilderAccess[AssemblyBuilderAccess["RunAndSave"] = 3] = "RunAndSave";
+        AssemblyBuilderAccess[AssemblyBuilderAccess["ReflectionOnly"] = 6] = "ReflectionOnly";
+        AssemblyBuilderAccess[AssemblyBuilderAccess["RunAndCollect"] = 9] = "RunAndCollect";
+      })(AssemblyBuilderAccess = Emit.AssemblyBuilderAccess || (Emit.AssemblyBuilderAccess = {}));
+
+      var FlowControl;
+
+      (function (FlowControl) {
+        FlowControl[FlowControl["Branch"] = 0] = "Branch";
+        FlowControl[FlowControl["Break"] = 1] = "Break";
+        FlowControl[FlowControl["Call"] = 2] = "Call";
+        FlowControl[FlowControl["Cond_Branch"] = 3] = "Cond_Branch";
+        FlowControl[FlowControl["Meta"] = 4] = "Meta";
+        FlowControl[FlowControl["Next"] = 5] = "Next";
+        FlowControl[FlowControl["Phi"] = 6] = "Phi";
+        FlowControl[FlowControl["Return"] = 7] = "Return";
+        FlowControl[FlowControl["Throw"] = 8] = "Throw";
+      })(FlowControl = Emit.FlowControl || (Emit.FlowControl = {}));
+
+      var OpCodeType;
+
+      (function (OpCodeType) {
+        OpCodeType[OpCodeType["Annotation"] = 0] = "Annotation";
+        OpCodeType[OpCodeType["Macro"] = 1] = "Macro";
+        OpCodeType[OpCodeType["Nternal"] = 2] = "Nternal";
+        OpCodeType[OpCodeType["Objmodel"] = 3] = "Objmodel";
+        OpCodeType[OpCodeType["Prefix"] = 4] = "Prefix";
+        OpCodeType[OpCodeType["Primitive"] = 5] = "Primitive";
+      })(OpCodeType = Emit.OpCodeType || (Emit.OpCodeType = {}));
+
+      var OperandType;
+
+      (function (OperandType) {
+        OperandType[OperandType["InlineBrTarget"] = 0] = "InlineBrTarget";
+        OperandType[OperandType["InlineField"] = 1] = "InlineField";
+        OperandType[OperandType["InlineI"] = 2] = "InlineI";
+        OperandType[OperandType["InlineI8"] = 3] = "InlineI8";
+        OperandType[OperandType["InlineMethod"] = 4] = "InlineMethod";
+        OperandType[OperandType["InlineNone"] = 5] = "InlineNone";
+        OperandType[OperandType["InlinePhi"] = 6] = "InlinePhi";
+        OperandType[OperandType["InlineR"] = 7] = "InlineR";
+        OperandType[OperandType["InlineSig"] = 9] = "InlineSig";
+        OperandType[OperandType["InlineString"] = 10] = "InlineString";
+        OperandType[OperandType["InlineSwitch"] = 11] = "InlineSwitch";
+        OperandType[OperandType["InlineTok"] = 12] = "InlineTok";
+        OperandType[OperandType["InlineType"] = 13] = "InlineType";
+        OperandType[OperandType["InlineVar"] = 14] = "InlineVar";
+        OperandType[OperandType["ShortInlineBrTarget"] = 15] = "ShortInlineBrTarget";
+        OperandType[OperandType["ShortInlineI"] = 16] = "ShortInlineI";
+        OperandType[OperandType["ShortInlineR"] = 17] = "ShortInlineR";
+        OperandType[OperandType["ShortInlineVar"] = 18] = "ShortInlineVar";
+      })(OperandType = Emit.OperandType || (Emit.OperandType = {}));
+
+      var PEFileKinds;
+
+      (function (PEFileKinds) {
+        PEFileKinds[PEFileKinds["Dll"] = 1] = "Dll";
+        PEFileKinds[PEFileKinds["ConsoleApplication"] = 2] = "ConsoleApplication";
+        PEFileKinds[PEFileKinds["WindowApplication"] = 3] = "WindowApplication";
+      })(PEFileKinds = Emit.PEFileKinds || (Emit.PEFileKinds = {}));
+
+      var PackingSize;
+
+      (function (PackingSize) {
+        PackingSize[PackingSize["Unspecified"] = 0] = "Unspecified";
+        PackingSize[PackingSize["Size1"] = 1] = "Size1";
+        PackingSize[PackingSize["Size2"] = 2] = "Size2";
+        PackingSize[PackingSize["Size4"] = 4] = "Size4";
+        PackingSize[PackingSize["Size8"] = 8] = "Size8";
+        PackingSize[PackingSize["Size16"] = 16] = "Size16";
+        PackingSize[PackingSize["Size32"] = 32] = "Size32";
+        PackingSize[PackingSize["Size64"] = 64] = "Size64";
+        PackingSize[PackingSize["Size128"] = 128] = "Size128";
+      })(PackingSize = Emit.PackingSize || (Emit.PackingSize = {}));
+
+      var StackBehaviour;
+
+      (function (StackBehaviour) {
+        StackBehaviour[StackBehaviour["Pop0"] = 0] = "Pop0";
+        StackBehaviour[StackBehaviour["Pop1"] = 1] = "Pop1";
+        StackBehaviour[StackBehaviour["Pop1_pop1"] = 2] = "Pop1_pop1";
+        StackBehaviour[StackBehaviour["Popi"] = 3] = "Popi";
+        StackBehaviour[StackBehaviour["Popi_pop1"] = 4] = "Popi_pop1";
+        StackBehaviour[StackBehaviour["Popi_popi"] = 5] = "Popi_popi";
+        StackBehaviour[StackBehaviour["Popi_popi8"] = 6] = "Popi_popi8";
+        StackBehaviour[StackBehaviour["Popi_popi_popi"] = 7] = "Popi_popi_popi";
+        StackBehaviour[StackBehaviour["Popi_popr4"] = 8] = "Popi_popr4";
+        StackBehaviour[StackBehaviour["Popi_popr8"] = 9] = "Popi_popr8";
+        StackBehaviour[StackBehaviour["Popref"] = 10] = "Popref";
+        StackBehaviour[StackBehaviour["Popref_pop1"] = 11] = "Popref_pop1";
+        StackBehaviour[StackBehaviour["Popref_popi"] = 12] = "Popref_popi";
+        StackBehaviour[StackBehaviour["Popref_popi_popi"] = 13] = "Popref_popi_popi";
+        StackBehaviour[StackBehaviour["Popref_popi_popi8"] = 14] = "Popref_popi_popi8";
+        StackBehaviour[StackBehaviour["Popref_popi_popr4"] = 15] = "Popref_popi_popr4";
+        StackBehaviour[StackBehaviour["Popref_popi_popr8"] = 16] = "Popref_popi_popr8";
+        StackBehaviour[StackBehaviour["Popref_popi_popref"] = 17] = "Popref_popi_popref";
+        StackBehaviour[StackBehaviour["Push0"] = 18] = "Push0";
+        StackBehaviour[StackBehaviour["Push1"] = 19] = "Push1";
+        StackBehaviour[StackBehaviour["Push1_push1"] = 20] = "Push1_push1";
+        StackBehaviour[StackBehaviour["Pushi"] = 21] = "Pushi";
+        StackBehaviour[StackBehaviour["Pushi8"] = 22] = "Pushi8";
+        StackBehaviour[StackBehaviour["Pushr4"] = 23] = "Pushr4";
+        StackBehaviour[StackBehaviour["Pushr8"] = 24] = "Pushr8";
+        StackBehaviour[StackBehaviour["Pushref"] = 25] = "Pushref";
+        StackBehaviour[StackBehaviour["Varpop"] = 26] = "Varpop";
+        StackBehaviour[StackBehaviour["Varpush"] = 27] = "Varpush";
+        StackBehaviour[StackBehaviour["Popref_popi_pop1"] = 28] = "Popref_popi_pop1";
+      })(StackBehaviour = Emit.StackBehaviour || (Emit.StackBehaviour = {}));
+    })(Emit = Reflection.Emit || (Reflection.Emit = {}));
+
+    var Metadata;
+
+    (function (Metadata) {})(Metadata = Reflection.Metadata || (Reflection.Metadata = {}));
+  })(Reflection = System.Reflection || (System.Reflection = {}));
+
+  var Resources;
+
+  (function (Resources) {
+    var UltimateResourceFallbackLocation;
+
+    (function (UltimateResourceFallbackLocation) {
+      UltimateResourceFallbackLocation[UltimateResourceFallbackLocation["MainAssembly"] = 0] = "MainAssembly";
+      UltimateResourceFallbackLocation[UltimateResourceFallbackLocation["Satellite"] = 1] = "Satellite";
+    })(UltimateResourceFallbackLocation = Resources.UltimateResourceFallbackLocation || (Resources.UltimateResourceFallbackLocation = {}));
+  })(Resources = System.Resources || (System.Resources = {}));
+
+  var Runtime;
+
+  (function (Runtime) {
+    var GCLargeObjectHeapCompactionMode;
+
+    (function (GCLargeObjectHeapCompactionMode) {
+      GCLargeObjectHeapCompactionMode[GCLargeObjectHeapCompactionMode["Default"] = 1] = "Default";
+      GCLargeObjectHeapCompactionMode[GCLargeObjectHeapCompactionMode["CompactOnce"] = 2] = "CompactOnce";
+    })(GCLargeObjectHeapCompactionMode = Runtime.GCLargeObjectHeapCompactionMode || (Runtime.GCLargeObjectHeapCompactionMode = {}));
+
+    var GCLatencyMode;
+
+    (function (GCLatencyMode) {
+      GCLatencyMode[GCLatencyMode["Batch"] = 0] = "Batch";
+      GCLatencyMode[GCLatencyMode["Interactive"] = 1] = "Interactive";
+      GCLatencyMode[GCLatencyMode["LowLatency"] = 2] = "LowLatency";
+      GCLatencyMode[GCLatencyMode["SustainedLowLatency"] = 3] = "SustainedLowLatency";
+      GCLatencyMode[GCLatencyMode["NoGCRegion"] = 4] = "NoGCRegion";
+    })(GCLatencyMode = Runtime.GCLatencyMode || (Runtime.GCLatencyMode = {}));
+
+    var CompilerServices;
+
+    (function (CompilerServices) {
+      var LoadHint;
+
+      (function (LoadHint) {
+        LoadHint[LoadHint["Default"] = 0] = "Default";
+        LoadHint[LoadHint["Always"] = 1] = "Always";
+        LoadHint[LoadHint["Sometimes"] = 2] = "Sometimes";
+      })(LoadHint = CompilerServices.LoadHint || (CompilerServices.LoadHint = {}));
+
+      var CompilationRelaxations;
+
+      (function (CompilationRelaxations) {
+        CompilationRelaxations[CompilationRelaxations["NoStringInterning"] = 8] = "NoStringInterning";
+      })(CompilationRelaxations = CompilerServices.CompilationRelaxations || (CompilerServices.CompilationRelaxations = {}));
+
+      var MethodImplOptions;
+
+      (function (MethodImplOptions) {
+        MethodImplOptions[MethodImplOptions["Unmanaged"] = 4] = "Unmanaged";
+        MethodImplOptions[MethodImplOptions["ForwardRef"] = 16] = "ForwardRef";
+        MethodImplOptions[MethodImplOptions["PreserveSig"] = 128] = "PreserveSig";
+        MethodImplOptions[MethodImplOptions["InternalCall"] = 4096] = "InternalCall";
+        MethodImplOptions[MethodImplOptions["Synchronized"] = 32] = "Synchronized";
+        MethodImplOptions[MethodImplOptions["NoInlining"] = 8] = "NoInlining";
+        MethodImplOptions[MethodImplOptions["AggressiveInlining"] = 256] = "AggressiveInlining";
+        MethodImplOptions[MethodImplOptions["NoOptimization"] = 64] = "NoOptimization";
+      })(MethodImplOptions = CompilerServices.MethodImplOptions || (CompilerServices.MethodImplOptions = {}));
+
+      var MethodCodeType;
+
+      (function (MethodCodeType) {
+        MethodCodeType[MethodCodeType["IL"] = 0] = "IL";
+        MethodCodeType[MethodCodeType["Native"] = 1] = "Native";
+        MethodCodeType[MethodCodeType["OPTIL"] = 2] = "OPTIL";
+        MethodCodeType[MethodCodeType["Runtime"] = 3] = "Runtime";
+      })(MethodCodeType = CompilerServices.MethodCodeType || (CompilerServices.MethodCodeType = {}));
+    })(CompilerServices = Runtime.CompilerServices || (Runtime.CompilerServices = {}));
+
+    var ConstrainedExecution;
+
+    (function (ConstrainedExecution) {
+      var Consistency;
+
+      (function (Consistency) {
+        Consistency[Consistency["MayCorruptProcess"] = 0] = "MayCorruptProcess";
+        Consistency[Consistency["MayCorruptAppDomain"] = 1] = "MayCorruptAppDomain";
+        Consistency[Consistency["MayCorruptInstance"] = 2] = "MayCorruptInstance";
+        Consistency[Consistency["WillNotCorruptState"] = 3] = "WillNotCorruptState";
+      })(Consistency = ConstrainedExecution.Consistency || (ConstrainedExecution.Consistency = {}));
+
+      var Cer;
+
+      (function (Cer) {
+        Cer[Cer["None"] = 0] = "None";
+        Cer[Cer["MayFail"] = 1] = "MayFail";
+        Cer[Cer["Success"] = 2] = "Success";
+      })(Cer = ConstrainedExecution.Cer || (ConstrainedExecution.Cer = {}));
+    })(ConstrainedExecution = Runtime.ConstrainedExecution || (Runtime.ConstrainedExecution = {}));
+
+    var DesignerServices;
+
+    (function (DesignerServices) {})(DesignerServices = Runtime.DesignerServices || (Runtime.DesignerServices = {}));
+
+    var ExceptionServices;
+
+    (function (ExceptionServices) {})(ExceptionServices = Runtime.ExceptionServices || (Runtime.ExceptionServices = {}));
+
+    var Hosting;
+
+    (function (Hosting) {})(Hosting = Runtime.Hosting || (Runtime.Hosting = {}));
+
+    var InteropServices;
+
+    (function (InteropServices) {
+      var Architecture;
+
+      (function (Architecture) {
+        Architecture[Architecture["X86"] = 0] = "X86";
+        Architecture[Architecture["X64"] = 1] = "X64";
+        Architecture[Architecture["Arm"] = 2] = "Arm";
+        Architecture[Architecture["Arm64"] = 3] = "Arm64";
+      })(Architecture = InteropServices.Architecture || (InteropServices.Architecture = {}));
+
+      var ComInterfaceType;
+
+      (function (ComInterfaceType) {
+        ComInterfaceType[ComInterfaceType["InterfaceIsDual"] = 0] = "InterfaceIsDual";
+        ComInterfaceType[ComInterfaceType["InterfaceIsIUnknown"] = 1] = "InterfaceIsIUnknown";
+        ComInterfaceType[ComInterfaceType["InterfaceIsIDispatch"] = 2] = "InterfaceIsIDispatch";
+        ComInterfaceType[ComInterfaceType["InterfaceIsIInspectable"] = 3] = "InterfaceIsIInspectable";
+      })(ComInterfaceType = InteropServices.ComInterfaceType || (InteropServices.ComInterfaceType = {}));
+
+      var ClassInterfaceType;
+
+      (function (ClassInterfaceType) {
+        ClassInterfaceType[ClassInterfaceType["None"] = 0] = "None";
+        ClassInterfaceType[ClassInterfaceType["AutoDispatch"] = 1] = "AutoDispatch";
+        ClassInterfaceType[ClassInterfaceType["AutoDual"] = 2] = "AutoDual";
+      })(ClassInterfaceType = InteropServices.ClassInterfaceType || (InteropServices.ClassInterfaceType = {}));
+
+      var IDispatchImplType;
+
+      (function (IDispatchImplType) {
+        IDispatchImplType[IDispatchImplType["SystemDefinedImpl"] = 0] = "SystemDefinedImpl";
+        IDispatchImplType[IDispatchImplType["InternalImpl"] = 1] = "InternalImpl";
+        IDispatchImplType[IDispatchImplType["CompatibleImpl"] = 2] = "CompatibleImpl";
+      })(IDispatchImplType = InteropServices.IDispatchImplType || (InteropServices.IDispatchImplType = {}));
+
+      var TypeLibTypeFlags;
+
+      (function (TypeLibTypeFlags) {
+        TypeLibTypeFlags[TypeLibTypeFlags["FAppObject"] = 1] = "FAppObject";
+        TypeLibTypeFlags[TypeLibTypeFlags["FCanCreate"] = 2] = "FCanCreate";
+        TypeLibTypeFlags[TypeLibTypeFlags["FLicensed"] = 4] = "FLicensed";
+        TypeLibTypeFlags[TypeLibTypeFlags["FPreDeclId"] = 8] = "FPreDeclId";
+        TypeLibTypeFlags[TypeLibTypeFlags["FHidden"] = 16] = "FHidden";
+        TypeLibTypeFlags[TypeLibTypeFlags["FControl"] = 32] = "FControl";
+        TypeLibTypeFlags[TypeLibTypeFlags["FDual"] = 64] = "FDual";
+        TypeLibTypeFlags[TypeLibTypeFlags["FNonExtensible"] = 128] = "FNonExtensible";
+        TypeLibTypeFlags[TypeLibTypeFlags["FOleAutomation"] = 256] = "FOleAutomation";
+        TypeLibTypeFlags[TypeLibTypeFlags["FRestricted"] = 512] = "FRestricted";
+        TypeLibTypeFlags[TypeLibTypeFlags["FAggregatable"] = 1024] = "FAggregatable";
+        TypeLibTypeFlags[TypeLibTypeFlags["FReplaceable"] = 2048] = "FReplaceable";
+        TypeLibTypeFlags[TypeLibTypeFlags["FDispatchable"] = 4096] = "FDispatchable";
+        TypeLibTypeFlags[TypeLibTypeFlags["FReverseBind"] = 8192] = "FReverseBind";
+      })(TypeLibTypeFlags = InteropServices.TypeLibTypeFlags || (InteropServices.TypeLibTypeFlags = {}));
+
+      var TypeLibFuncFlags;
+
+      (function (TypeLibFuncFlags) {
+        TypeLibFuncFlags[TypeLibFuncFlags["FRestricted"] = 1] = "FRestricted";
+        TypeLibFuncFlags[TypeLibFuncFlags["FSource"] = 2] = "FSource";
+        TypeLibFuncFlags[TypeLibFuncFlags["FBindable"] = 4] = "FBindable";
+        TypeLibFuncFlags[TypeLibFuncFlags["FRequestEdit"] = 8] = "FRequestEdit";
+        TypeLibFuncFlags[TypeLibFuncFlags["FDisplayBind"] = 16] = "FDisplayBind";
+        TypeLibFuncFlags[TypeLibFuncFlags["FDefaultBind"] = 32] = "FDefaultBind";
+        TypeLibFuncFlags[TypeLibFuncFlags["FHidden"] = 64] = "FHidden";
+        TypeLibFuncFlags[TypeLibFuncFlags["FUsesGetLastError"] = 128] = "FUsesGetLastError";
+        TypeLibFuncFlags[TypeLibFuncFlags["FDefaultCollelem"] = 256] = "FDefaultCollelem";
+        TypeLibFuncFlags[TypeLibFuncFlags["FUiDefault"] = 512] = "FUiDefault";
+        TypeLibFuncFlags[TypeLibFuncFlags["FNonBrowsable"] = 1024] = "FNonBrowsable";
+        TypeLibFuncFlags[TypeLibFuncFlags["FReplaceable"] = 2048] = "FReplaceable";
+        TypeLibFuncFlags[TypeLibFuncFlags["FImmediateBind"] = 4096] = "FImmediateBind";
+      })(TypeLibFuncFlags = InteropServices.TypeLibFuncFlags || (InteropServices.TypeLibFuncFlags = {}));
+
+      var TypeLibVarFlags;
+
+      (function (TypeLibVarFlags) {
+        TypeLibVarFlags[TypeLibVarFlags["FReadOnly"] = 1] = "FReadOnly";
+        TypeLibVarFlags[TypeLibVarFlags["FSource"] = 2] = "FSource";
+        TypeLibVarFlags[TypeLibVarFlags["FBindable"] = 4] = "FBindable";
+        TypeLibVarFlags[TypeLibVarFlags["FRequestEdit"] = 8] = "FRequestEdit";
+        TypeLibVarFlags[TypeLibVarFlags["FDisplayBind"] = 16] = "FDisplayBind";
+        TypeLibVarFlags[TypeLibVarFlags["FDefaultBind"] = 32] = "FDefaultBind";
+        TypeLibVarFlags[TypeLibVarFlags["FHidden"] = 64] = "FHidden";
+        TypeLibVarFlags[TypeLibVarFlags["FRestricted"] = 128] = "FRestricted";
+        TypeLibVarFlags[TypeLibVarFlags["FDefaultCollelem"] = 256] = "FDefaultCollelem";
+        TypeLibVarFlags[TypeLibVarFlags["FUiDefault"] = 512] = "FUiDefault";
+        TypeLibVarFlags[TypeLibVarFlags["FNonBrowsable"] = 1024] = "FNonBrowsable";
+        TypeLibVarFlags[TypeLibVarFlags["FReplaceable"] = 2048] = "FReplaceable";
+        TypeLibVarFlags[TypeLibVarFlags["FImmediateBind"] = 4096] = "FImmediateBind";
+      })(TypeLibVarFlags = InteropServices.TypeLibVarFlags || (InteropServices.TypeLibVarFlags = {}));
+
+      var VarEnum;
+
+      (function (VarEnum) {
+        VarEnum[VarEnum["VT_EMPTY"] = 0] = "VT_EMPTY";
+        VarEnum[VarEnum["VT_NULL"] = 1] = "VT_NULL";
+        VarEnum[VarEnum["VT_I2"] = 2] = "VT_I2";
+        VarEnum[VarEnum["VT_I4"] = 3] = "VT_I4";
+        VarEnum[VarEnum["VT_R4"] = 4] = "VT_R4";
+        VarEnum[VarEnum["VT_R8"] = 5] = "VT_R8";
+        VarEnum[VarEnum["VT_CY"] = 6] = "VT_CY";
+        VarEnum[VarEnum["VT_DATE"] = 7] = "VT_DATE";
+        VarEnum[VarEnum["VT_BSTR"] = 8] = "VT_BSTR";
+        VarEnum[VarEnum["VT_DISPATCH"] = 9] = "VT_DISPATCH";
+        VarEnum[VarEnum["VT_ERROR"] = 10] = "VT_ERROR";
+        VarEnum[VarEnum["VT_BOOL"] = 11] = "VT_BOOL";
+        VarEnum[VarEnum["VT_VARIANT"] = 12] = "VT_VARIANT";
+        VarEnum[VarEnum["VT_UNKNOWN"] = 13] = "VT_UNKNOWN";
+        VarEnum[VarEnum["VT_DECIMAL"] = 14] = "VT_DECIMAL";
+        VarEnum[VarEnum["VT_I1"] = 16] = "VT_I1";
+        VarEnum[VarEnum["VT_UI1"] = 17] = "VT_UI1";
+        VarEnum[VarEnum["VT_UI2"] = 18] = "VT_UI2";
+        VarEnum[VarEnum["VT_UI4"] = 19] = "VT_UI4";
+        VarEnum[VarEnum["VT_I8"] = 20] = "VT_I8";
+        VarEnum[VarEnum["VT_UI8"] = 21] = "VT_UI8";
+        VarEnum[VarEnum["VT_INT"] = 22] = "VT_INT";
+        VarEnum[VarEnum["VT_UINT"] = 23] = "VT_UINT";
+        VarEnum[VarEnum["VT_VOID"] = 24] = "VT_VOID";
+        VarEnum[VarEnum["VT_HRESULT"] = 25] = "VT_HRESULT";
+        VarEnum[VarEnum["VT_PTR"] = 26] = "VT_PTR";
+        VarEnum[VarEnum["VT_SAFEARRAY"] = 27] = "VT_SAFEARRAY";
+        VarEnum[VarEnum["VT_CARRAY"] = 28] = "VT_CARRAY";
+        VarEnum[VarEnum["VT_USERDEFINED"] = 29] = "VT_USERDEFINED";
+        VarEnum[VarEnum["VT_LPSTR"] = 30] = "VT_LPSTR";
+        VarEnum[VarEnum["VT_LPWSTR"] = 31] = "VT_LPWSTR";
+        VarEnum[VarEnum["VT_RECORD"] = 36] = "VT_RECORD";
+        VarEnum[VarEnum["VT_FILETIME"] = 64] = "VT_FILETIME";
+        VarEnum[VarEnum["VT_BLOB"] = 65] = "VT_BLOB";
+        VarEnum[VarEnum["VT_STREAM"] = 66] = "VT_STREAM";
+        VarEnum[VarEnum["VT_STORAGE"] = 67] = "VT_STORAGE";
+        VarEnum[VarEnum["VT_STREAMED_OBJECT"] = 68] = "VT_STREAMED_OBJECT";
+        VarEnum[VarEnum["VT_STORED_OBJECT"] = 69] = "VT_STORED_OBJECT";
+        VarEnum[VarEnum["VT_BLOB_OBJECT"] = 70] = "VT_BLOB_OBJECT";
+        VarEnum[VarEnum["VT_CF"] = 71] = "VT_CF";
+        VarEnum[VarEnum["VT_CLSID"] = 72] = "VT_CLSID";
+        VarEnum[VarEnum["VT_VECTOR"] = 4096] = "VT_VECTOR";
+        VarEnum[VarEnum["VT_ARRAY"] = 8192] = "VT_ARRAY";
+        VarEnum[VarEnum["VT_BYREF"] = 16384] = "VT_BYREF";
+      })(VarEnum = InteropServices.VarEnum || (InteropServices.VarEnum = {}));
+
+      var UnmanagedType;
+
+      (function (UnmanagedType) {
+        UnmanagedType[UnmanagedType["Bool"] = 2] = "Bool";
+        UnmanagedType[UnmanagedType["I1"] = 3] = "I1";
+        UnmanagedType[UnmanagedType["U1"] = 4] = "U1";
+        UnmanagedType[UnmanagedType["I2"] = 5] = "I2";
+        UnmanagedType[UnmanagedType["U2"] = 6] = "U2";
+        UnmanagedType[UnmanagedType["I4"] = 7] = "I4";
+        UnmanagedType[UnmanagedType["U4"] = 8] = "U4";
+        UnmanagedType[UnmanagedType["I8"] = 9] = "I8";
+        UnmanagedType[UnmanagedType["U8"] = 10] = "U8";
+        UnmanagedType[UnmanagedType["R4"] = 11] = "R4";
+        UnmanagedType[UnmanagedType["R8"] = 12] = "R8";
+        UnmanagedType[UnmanagedType["Currency"] = 15] = "Currency";
+        UnmanagedType[UnmanagedType["BStr"] = 19] = "BStr";
+        UnmanagedType[UnmanagedType["LPStr"] = 20] = "LPStr";
+        UnmanagedType[UnmanagedType["LPWStr"] = 21] = "LPWStr";
+        UnmanagedType[UnmanagedType["LPTStr"] = 22] = "LPTStr";
+        UnmanagedType[UnmanagedType["ByValTStr"] = 23] = "ByValTStr";
+        UnmanagedType[UnmanagedType["IUnknown"] = 25] = "IUnknown";
+        UnmanagedType[UnmanagedType["IDispatch"] = 26] = "IDispatch";
+        UnmanagedType[UnmanagedType["Struct"] = 27] = "Struct";
+        UnmanagedType[UnmanagedType["Interface"] = 28] = "Interface";
+        UnmanagedType[UnmanagedType["SafeArray"] = 29] = "SafeArray";
+        UnmanagedType[UnmanagedType["ByValArray"] = 30] = "ByValArray";
+        UnmanagedType[UnmanagedType["SysInt"] = 31] = "SysInt";
+        UnmanagedType[UnmanagedType["SysUInt"] = 32] = "SysUInt";
+        UnmanagedType[UnmanagedType["VBByRefStr"] = 34] = "VBByRefStr";
+        UnmanagedType[UnmanagedType["AnsiBStr"] = 35] = "AnsiBStr";
+        UnmanagedType[UnmanagedType["TBStr"] = 36] = "TBStr";
+        UnmanagedType[UnmanagedType["VariantBool"] = 37] = "VariantBool";
+        UnmanagedType[UnmanagedType["FunctionPtr"] = 38] = "FunctionPtr";
+        UnmanagedType[UnmanagedType["AsAny"] = 40] = "AsAny";
+        UnmanagedType[UnmanagedType["LPArray"] = 42] = "LPArray";
+        UnmanagedType[UnmanagedType["LPStruct"] = 43] = "LPStruct";
+        UnmanagedType[UnmanagedType["CustomMarshaler"] = 44] = "CustomMarshaler";
+        UnmanagedType[UnmanagedType["Error"] = 45] = "Error";
+        UnmanagedType[UnmanagedType["IInspectable"] = 46] = "IInspectable";
+        UnmanagedType[UnmanagedType["HString"] = 47] = "HString";
+        UnmanagedType[UnmanagedType["LPUTF8Str"] = 48] = "LPUTF8Str";
+      })(UnmanagedType = InteropServices.UnmanagedType || (InteropServices.UnmanagedType = {}));
+
+      var DllImportSearchPath;
+
+      (function (DllImportSearchPath) {
+        DllImportSearchPath[DllImportSearchPath["UseDllDirectoryForDependencies"] = 256] = "UseDllDirectoryForDependencies";
+        DllImportSearchPath[DllImportSearchPath["ApplicationDirectory"] = 512] = "ApplicationDirectory";
+        DllImportSearchPath[DllImportSearchPath["UserDirectories"] = 1024] = "UserDirectories";
+        DllImportSearchPath[DllImportSearchPath["System32"] = 2048] = "System32";
+        DllImportSearchPath[DllImportSearchPath["SafeDirectories"] = 4096] = "SafeDirectories";
+        DllImportSearchPath[DllImportSearchPath["AssemblyDirectory"] = 2] = "AssemblyDirectory";
+        DllImportSearchPath[DllImportSearchPath["LegacyBehavior"] = 0] = "LegacyBehavior";
+      })(DllImportSearchPath = InteropServices.DllImportSearchPath || (InteropServices.DllImportSearchPath = {}));
+
+      var CallingConvention;
+
+      (function (CallingConvention) {
+        CallingConvention[CallingConvention["Winapi"] = 1] = "Winapi";
+        CallingConvention[CallingConvention["Cdecl"] = 2] = "Cdecl";
+        CallingConvention[CallingConvention["StdCall"] = 3] = "StdCall";
+        CallingConvention[CallingConvention["ThisCall"] = 4] = "ThisCall";
+        CallingConvention[CallingConvention["FastCall"] = 5] = "FastCall";
+      })(CallingConvention = InteropServices.CallingConvention || (InteropServices.CallingConvention = {}));
+
+      var CharSet;
+
+      (function (CharSet) {
+        CharSet[CharSet["None"] = 1] = "None";
+        CharSet[CharSet["Ansi"] = 2] = "Ansi";
+        CharSet[CharSet["Unicode"] = 3] = "Unicode";
+        CharSet[CharSet["Auto"] = 4] = "Auto";
+      })(CharSet = InteropServices.CharSet || (InteropServices.CharSet = {}));
+
+      var ComMemberType;
+
+      (function (ComMemberType) {
+        ComMemberType[ComMemberType["Method"] = 0] = "Method";
+        ComMemberType[ComMemberType["PropGet"] = 1] = "PropGet";
+        ComMemberType[ComMemberType["PropSet"] = 2] = "PropSet";
+      })(ComMemberType = InteropServices.ComMemberType || (InteropServices.ComMemberType = {}));
+
+      var CustomQueryInterfaceResult;
+
+      (function (CustomQueryInterfaceResult) {
+        CustomQueryInterfaceResult[CustomQueryInterfaceResult["Handled"] = 0] = "Handled";
+        CustomQueryInterfaceResult[CustomQueryInterfaceResult["NotHandled"] = 1] = "NotHandled";
+        CustomQueryInterfaceResult[CustomQueryInterfaceResult["Failed"] = 2] = "Failed";
+      })(CustomQueryInterfaceResult = InteropServices.CustomQueryInterfaceResult || (InteropServices.CustomQueryInterfaceResult = {}));
+
+      var AssemblyRegistrationFlags;
+
+      (function (AssemblyRegistrationFlags) {
+        AssemblyRegistrationFlags[AssemblyRegistrationFlags["None"] = 0] = "None";
+        AssemblyRegistrationFlags[AssemblyRegistrationFlags["SetCodeBase"] = 1] = "SetCodeBase";
+      })(AssemblyRegistrationFlags = InteropServices.AssemblyRegistrationFlags || (InteropServices.AssemblyRegistrationFlags = {}));
+
+      var LayoutKind;
+
+      (function (LayoutKind) {
+        LayoutKind[LayoutKind["Sequential"] = 0] = "Sequential";
+        LayoutKind[LayoutKind["Explicit"] = 2] = "Explicit";
+        LayoutKind[LayoutKind["Auto"] = 3] = "Auto";
+      })(LayoutKind = InteropServices.LayoutKind || (InteropServices.LayoutKind = {}));
+
+      var TYPEKIND;
+
+      (function (TYPEKIND) {
+        TYPEKIND[TYPEKIND["TKIND_ENUM"] = 0] = "TKIND_ENUM";
+        TYPEKIND[TYPEKIND["TKIND_RECORD"] = 1] = "TKIND_RECORD";
+        TYPEKIND[TYPEKIND["TKIND_MODULE"] = 2] = "TKIND_MODULE";
+        TYPEKIND[TYPEKIND["TKIND_INTERFACE"] = 3] = "TKIND_INTERFACE";
+        TYPEKIND[TYPEKIND["TKIND_DISPATCH"] = 4] = "TKIND_DISPATCH";
+        TYPEKIND[TYPEKIND["TKIND_COCLASS"] = 5] = "TKIND_COCLASS";
+        TYPEKIND[TYPEKIND["TKIND_ALIAS"] = 6] = "TKIND_ALIAS";
+        TYPEKIND[TYPEKIND["TKIND_UNION"] = 7] = "TKIND_UNION";
+        TYPEKIND[TYPEKIND["TKIND_MAX"] = 8] = "TKIND_MAX";
+      })(TYPEKIND = InteropServices.TYPEKIND || (InteropServices.TYPEKIND = {}));
+
+      var TYPEFLAGS;
+
+      (function (TYPEFLAGS) {
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FAPPOBJECT"] = 1] = "TYPEFLAG_FAPPOBJECT";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FCANCREATE"] = 2] = "TYPEFLAG_FCANCREATE";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FLICENSED"] = 4] = "TYPEFLAG_FLICENSED";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FPREDECLID"] = 8] = "TYPEFLAG_FPREDECLID";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FHIDDEN"] = 16] = "TYPEFLAG_FHIDDEN";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FCONTROL"] = 32] = "TYPEFLAG_FCONTROL";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FDUAL"] = 64] = "TYPEFLAG_FDUAL";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FNONEXTENSIBLE"] = 128] = "TYPEFLAG_FNONEXTENSIBLE";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FOLEAUTOMATION"] = 256] = "TYPEFLAG_FOLEAUTOMATION";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FRESTRICTED"] = 512] = "TYPEFLAG_FRESTRICTED";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FAGGREGATABLE"] = 1024] = "TYPEFLAG_FAGGREGATABLE";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FREPLACEABLE"] = 2048] = "TYPEFLAG_FREPLACEABLE";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FDISPATCHABLE"] = 4096] = "TYPEFLAG_FDISPATCHABLE";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FREVERSEBIND"] = 8192] = "TYPEFLAG_FREVERSEBIND";
+        TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FPROXY"] = 16384] = "TYPEFLAG_FPROXY";
+      })(TYPEFLAGS = InteropServices.TYPEFLAGS || (InteropServices.TYPEFLAGS = {}));
+
+      var IMPLTYPEFLAGS;
+
+      (function (IMPLTYPEFLAGS) {
+        IMPLTYPEFLAGS[IMPLTYPEFLAGS["IMPLTYPEFLAG_FDEFAULT"] = 1] = "IMPLTYPEFLAG_FDEFAULT";
+        IMPLTYPEFLAGS[IMPLTYPEFLAGS["IMPLTYPEFLAG_FSOURCE"] = 2] = "IMPLTYPEFLAG_FSOURCE";
+        IMPLTYPEFLAGS[IMPLTYPEFLAGS["IMPLTYPEFLAG_FRESTRICTED"] = 4] = "IMPLTYPEFLAG_FRESTRICTED";
+        IMPLTYPEFLAGS[IMPLTYPEFLAGS["IMPLTYPEFLAG_FDEFAULTVTABLE"] = 8] = "IMPLTYPEFLAG_FDEFAULTVTABLE";
+      })(IMPLTYPEFLAGS = InteropServices.IMPLTYPEFLAGS || (InteropServices.IMPLTYPEFLAGS = {}));
+
+      var IDLFLAG;
+
+      (function (IDLFLAG) {
+        IDLFLAG[IDLFLAG["IDLFLAG_NONE"] = 0] = "IDLFLAG_NONE";
+        IDLFLAG[IDLFLAG["IDLFLAG_FIN"] = 1] = "IDLFLAG_FIN";
+        IDLFLAG[IDLFLAG["IDLFLAG_FOUT"] = 2] = "IDLFLAG_FOUT";
+        IDLFLAG[IDLFLAG["IDLFLAG_FLCID"] = 4] = "IDLFLAG_FLCID";
+        IDLFLAG[IDLFLAG["IDLFLAG_FRETVAL"] = 8] = "IDLFLAG_FRETVAL";
+      })(IDLFLAG = InteropServices.IDLFLAG || (InteropServices.IDLFLAG = {}));
+
+      var PARAMFLAG;
+
+      (function (PARAMFLAG) {
+        PARAMFLAG[PARAMFLAG["PARAMFLAG_NONE"] = 0] = "PARAMFLAG_NONE";
+        PARAMFLAG[PARAMFLAG["PARAMFLAG_FIN"] = 1] = "PARAMFLAG_FIN";
+        PARAMFLAG[PARAMFLAG["PARAMFLAG_FOUT"] = 2] = "PARAMFLAG_FOUT";
+        PARAMFLAG[PARAMFLAG["PARAMFLAG_FLCID"] = 4] = "PARAMFLAG_FLCID";
+        PARAMFLAG[PARAMFLAG["PARAMFLAG_FRETVAL"] = 8] = "PARAMFLAG_FRETVAL";
+        PARAMFLAG[PARAMFLAG["PARAMFLAG_FOPT"] = 16] = "PARAMFLAG_FOPT";
+        PARAMFLAG[PARAMFLAG["PARAMFLAG_FHASDEFAULT"] = 32] = "PARAMFLAG_FHASDEFAULT";
+        PARAMFLAG[PARAMFLAG["PARAMFLAG_FHASCUSTDATA"] = 64] = "PARAMFLAG_FHASCUSTDATA";
+      })(PARAMFLAG = InteropServices.PARAMFLAG || (InteropServices.PARAMFLAG = {}));
+
+      var FUNCKIND;
+
+      (function (FUNCKIND) {
+        FUNCKIND[FUNCKIND["FUNC_VIRTUAL"] = 0] = "FUNC_VIRTUAL";
+        FUNCKIND[FUNCKIND["FUNC_PUREVIRTUAL"] = 1] = "FUNC_PUREVIRTUAL";
+        FUNCKIND[FUNCKIND["FUNC_NONVIRTUAL"] = 2] = "FUNC_NONVIRTUAL";
+        FUNCKIND[FUNCKIND["FUNC_STATIC"] = 3] = "FUNC_STATIC";
+        FUNCKIND[FUNCKIND["FUNC_DISPATCH"] = 4] = "FUNC_DISPATCH";
+      })(FUNCKIND = InteropServices.FUNCKIND || (InteropServices.FUNCKIND = {}));
+
+      var INVOKEKIND;
+
+      (function (INVOKEKIND) {
+        INVOKEKIND[INVOKEKIND["INVOKE_FUNC"] = 1] = "INVOKE_FUNC";
+        INVOKEKIND[INVOKEKIND["INVOKE_PROPERTYGET"] = 2] = "INVOKE_PROPERTYGET";
+        INVOKEKIND[INVOKEKIND["INVOKE_PROPERTYPUT"] = 4] = "INVOKE_PROPERTYPUT";
+        INVOKEKIND[INVOKEKIND["INVOKE_PROPERTYPUTREF"] = 8] = "INVOKE_PROPERTYPUTREF";
+      })(INVOKEKIND = InteropServices.INVOKEKIND || (InteropServices.INVOKEKIND = {}));
+
+      var CALLCONV;
+
+      (function (CALLCONV) {
+        CALLCONV[CALLCONV["CC_CDECL"] = 1] = "CC_CDECL";
+        CALLCONV[CALLCONV["CC_MSCPASCAL"] = 2] = "CC_MSCPASCAL";
+        CALLCONV[CALLCONV["CC_PASCAL"] = 2] = "CC_PASCAL";
+        CALLCONV[CALLCONV["CC_MACPASCAL"] = 3] = "CC_MACPASCAL";
+        CALLCONV[CALLCONV["CC_STDCALL"] = 4] = "CC_STDCALL";
+        CALLCONV[CALLCONV["CC_RESERVED"] = 5] = "CC_RESERVED";
+        CALLCONV[CALLCONV["CC_SYSCALL"] = 6] = "CC_SYSCALL";
+        CALLCONV[CALLCONV["CC_MPWCDECL"] = 7] = "CC_MPWCDECL";
+        CALLCONV[CALLCONV["CC_MPWPASCAL"] = 8] = "CC_MPWPASCAL";
+        CALLCONV[CALLCONV["CC_MAX"] = 9] = "CC_MAX";
+      })(CALLCONV = InteropServices.CALLCONV || (InteropServices.CALLCONV = {}));
+
+      var FUNCFLAGS;
+
+      (function (FUNCFLAGS) {
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FRESTRICTED"] = 1] = "FUNCFLAG_FRESTRICTED";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FSOURCE"] = 2] = "FUNCFLAG_FSOURCE";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FBINDABLE"] = 4] = "FUNCFLAG_FBINDABLE";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FREQUESTEDIT"] = 8] = "FUNCFLAG_FREQUESTEDIT";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FDISPLAYBIND"] = 16] = "FUNCFLAG_FDISPLAYBIND";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FDEFAULTBIND"] = 32] = "FUNCFLAG_FDEFAULTBIND";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FHIDDEN"] = 64] = "FUNCFLAG_FHIDDEN";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FUSESGETLASTERROR"] = 128] = "FUNCFLAG_FUSESGETLASTERROR";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FDEFAULTCOLLELEM"] = 256] = "FUNCFLAG_FDEFAULTCOLLELEM";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FUIDEFAULT"] = 512] = "FUNCFLAG_FUIDEFAULT";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FNONBROWSABLE"] = 1024] = "FUNCFLAG_FNONBROWSABLE";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FREPLACEABLE"] = 2048] = "FUNCFLAG_FREPLACEABLE";
+        FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FIMMEDIATEBIND"] = 4096] = "FUNCFLAG_FIMMEDIATEBIND";
+      })(FUNCFLAGS = InteropServices.FUNCFLAGS || (InteropServices.FUNCFLAGS = {}));
+
+      var VARFLAGS;
+
+      (function (VARFLAGS) {
+        VARFLAGS[VARFLAGS["VARFLAG_FREADONLY"] = 1] = "VARFLAG_FREADONLY";
+        VARFLAGS[VARFLAGS["VARFLAG_FSOURCE"] = 2] = "VARFLAG_FSOURCE";
+        VARFLAGS[VARFLAGS["VARFLAG_FBINDABLE"] = 4] = "VARFLAG_FBINDABLE";
+        VARFLAGS[VARFLAGS["VARFLAG_FREQUESTEDIT"] = 8] = "VARFLAG_FREQUESTEDIT";
+        VARFLAGS[VARFLAGS["VARFLAG_FDISPLAYBIND"] = 16] = "VARFLAG_FDISPLAYBIND";
+        VARFLAGS[VARFLAGS["VARFLAG_FDEFAULTBIND"] = 32] = "VARFLAG_FDEFAULTBIND";
+        VARFLAGS[VARFLAGS["VARFLAG_FHIDDEN"] = 64] = "VARFLAG_FHIDDEN";
+        VARFLAGS[VARFLAGS["VARFLAG_FRESTRICTED"] = 128] = "VARFLAG_FRESTRICTED";
+        VARFLAGS[VARFLAGS["VARFLAG_FDEFAULTCOLLELEM"] = 256] = "VARFLAG_FDEFAULTCOLLELEM";
+        VARFLAGS[VARFLAGS["VARFLAG_FUIDEFAULT"] = 512] = "VARFLAG_FUIDEFAULT";
+        VARFLAGS[VARFLAGS["VARFLAG_FNONBROWSABLE"] = 1024] = "VARFLAG_FNONBROWSABLE";
+        VARFLAGS[VARFLAGS["VARFLAG_FREPLACEABLE"] = 2048] = "VARFLAG_FREPLACEABLE";
+        VARFLAGS[VARFLAGS["VARFLAG_FIMMEDIATEBIND"] = 4096] = "VARFLAG_FIMMEDIATEBIND";
+      })(VARFLAGS = InteropServices.VARFLAGS || (InteropServices.VARFLAGS = {}));
+
+      var CustomQueryInterfaceMode;
+
+      (function (CustomQueryInterfaceMode) {
+        CustomQueryInterfaceMode[CustomQueryInterfaceMode["Allow"] = 1] = "Allow";
+        CustomQueryInterfaceMode[CustomQueryInterfaceMode["Ignore"] = 0] = "Ignore";
+      })(CustomQueryInterfaceMode = InteropServices.CustomQueryInterfaceMode || (InteropServices.CustomQueryInterfaceMode = {}));
+
+      var DESCKIND;
+
+      (function (DESCKIND) {
+        DESCKIND[DESCKIND["DESCKIND_NONE"] = 0] = "DESCKIND_NONE";
+        DESCKIND[DESCKIND["DESCKIND_FUNCDESC"] = 1] = "DESCKIND_FUNCDESC";
+        DESCKIND[DESCKIND["DESCKIND_VARDESC"] = 2] = "DESCKIND_VARDESC";
+        DESCKIND[DESCKIND["DESCKIND_TYPECOMP"] = 3] = "DESCKIND_TYPECOMP";
+        DESCKIND[DESCKIND["DESCKIND_IMPLICITAPPOBJ"] = 4] = "DESCKIND_IMPLICITAPPOBJ";
+        DESCKIND[DESCKIND["DESCKIND_MAX"] = 5] = "DESCKIND_MAX";
+      })(DESCKIND = InteropServices.DESCKIND || (InteropServices.DESCKIND = {}));
+
+      var ExporterEventKind;
+
+      (function (ExporterEventKind) {
+        ExporterEventKind[ExporterEventKind["NOTIF_TYPECONVERTED"] = 0] = "NOTIF_TYPECONVERTED";
+        ExporterEventKind[ExporterEventKind["NOTIF_CONVERTWARNING"] = 1] = "NOTIF_CONVERTWARNING";
+        ExporterEventKind[ExporterEventKind["ERROR_REFTOINVALIDASSEMBLY"] = 2] = "ERROR_REFTOINVALIDASSEMBLY";
+      })(ExporterEventKind = InteropServices.ExporterEventKind || (InteropServices.ExporterEventKind = {}));
+
+      var GCHandleType;
+
+      (function (GCHandleType) {
+        GCHandleType[GCHandleType["Weak"] = 0] = "Weak";
+        GCHandleType[GCHandleType["WeakTrackResurrection"] = 1] = "WeakTrackResurrection";
+        GCHandleType[GCHandleType["Normal"] = 2] = "Normal";
+        GCHandleType[GCHandleType["Pinned"] = 3] = "Pinned";
+      })(GCHandleType = InteropServices.GCHandleType || (InteropServices.GCHandleType = {}));
+
+      var ImporterEventKind;
+
+      (function (ImporterEventKind) {
+        ImporterEventKind[ImporterEventKind["NOTIF_TYPECONVERTED"] = 0] = "NOTIF_TYPECONVERTED";
+        ImporterEventKind[ImporterEventKind["NOTIF_CONVERTWARNING"] = 1] = "NOTIF_CONVERTWARNING";
+        ImporterEventKind[ImporterEventKind["ERROR_REFTOINVALIDTYPELIB"] = 2] = "ERROR_REFTOINVALIDTYPELIB";
+      })(ImporterEventKind = InteropServices.ImporterEventKind || (InteropServices.ImporterEventKind = {}));
+
+      var LIBFLAGS;
+
+      (function (LIBFLAGS) {
+        LIBFLAGS[LIBFLAGS["LIBFLAG_FRESTRICTED"] = 1] = "LIBFLAG_FRESTRICTED";
+        LIBFLAGS[LIBFLAGS["LIBFLAG_FCONTROL"] = 2] = "LIBFLAG_FCONTROL";
+        LIBFLAGS[LIBFLAGS["LIBFLAG_FHIDDEN"] = 4] = "LIBFLAG_FHIDDEN";
+        LIBFLAGS[LIBFLAGS["LIBFLAG_FHASDISKIMAGE"] = 8] = "LIBFLAG_FHASDISKIMAGE";
+      })(LIBFLAGS = InteropServices.LIBFLAGS || (InteropServices.LIBFLAGS = {}));
+
+      var RegistrationClassContext;
+
+      (function (RegistrationClassContext) {
+        RegistrationClassContext[RegistrationClassContext["DisableActivateAsActivator"] = 32768] = "DisableActivateAsActivator";
+        RegistrationClassContext[RegistrationClassContext["EnableActivateAsActivator"] = 65536] = "EnableActivateAsActivator";
+        RegistrationClassContext[RegistrationClassContext["EnableCodeDownload"] = 8192] = "EnableCodeDownload";
+        RegistrationClassContext[RegistrationClassContext["FromDefaultContext"] = 131072] = "FromDefaultContext";
+        RegistrationClassContext[RegistrationClassContext["InProcessHandler"] = 2] = "InProcessHandler";
+        RegistrationClassContext[RegistrationClassContext["InProcessHandler16"] = 32] = "InProcessHandler16";
+        RegistrationClassContext[RegistrationClassContext["InProcessServer"] = 1] = "InProcessServer";
+        RegistrationClassContext[RegistrationClassContext["InProcessServer16"] = 8] = "InProcessServer16";
+        RegistrationClassContext[RegistrationClassContext["LocalServer"] = 4] = "LocalServer";
+        RegistrationClassContext[RegistrationClassContext["NoCodeDownload"] = 1024] = "NoCodeDownload";
+        RegistrationClassContext[RegistrationClassContext["NoCustomMarshal"] = 4096] = "NoCustomMarshal";
+        RegistrationClassContext[RegistrationClassContext["NoFailureLog"] = 16384] = "NoFailureLog";
+        RegistrationClassContext[RegistrationClassContext["RemoteServer"] = 16] = "RemoteServer";
+        RegistrationClassContext[RegistrationClassContext["Reserved1"] = 64] = "Reserved1";
+        RegistrationClassContext[RegistrationClassContext["Reserved2"] = 128] = "Reserved2";
+        RegistrationClassContext[RegistrationClassContext["Reserved3"] = 256] = "Reserved3";
+        RegistrationClassContext[RegistrationClassContext["Reserved4"] = 512] = "Reserved4";
+        RegistrationClassContext[RegistrationClassContext["Reserved5"] = 2048] = "Reserved5";
+      })(RegistrationClassContext = InteropServices.RegistrationClassContext || (InteropServices.RegistrationClassContext = {}));
+
+      var RegistrationConnectionType;
+
+      (function (RegistrationConnectionType) {
+        RegistrationConnectionType[RegistrationConnectionType["MultipleUse"] = 1] = "MultipleUse";
+        RegistrationConnectionType[RegistrationConnectionType["MultiSeparate"] = 2] = "MultiSeparate";
+        RegistrationConnectionType[RegistrationConnectionType["SingleUse"] = 0] = "SingleUse";
+        RegistrationConnectionType[RegistrationConnectionType["Suspended"] = 4] = "Suspended";
+        RegistrationConnectionType[RegistrationConnectionType["Surrogate"] = 8] = "Surrogate";
+      })(RegistrationConnectionType = InteropServices.RegistrationConnectionType || (InteropServices.RegistrationConnectionType = {}));
+
+      var SYSKIND;
+
+      (function (SYSKIND) {
+        SYSKIND[SYSKIND["SYS_WIN16"] = 0] = "SYS_WIN16";
+        SYSKIND[SYSKIND["SYS_WIN32"] = 1] = "SYS_WIN32";
+        SYSKIND[SYSKIND["SYS_MAC"] = 2] = "SYS_MAC";
+      })(SYSKIND = InteropServices.SYSKIND || (InteropServices.SYSKIND = {}));
+
+      var TypeLibExporterFlags;
+
+      (function (TypeLibExporterFlags) {
+        TypeLibExporterFlags[TypeLibExporterFlags["OnlyReferenceRegistered"] = 1] = "OnlyReferenceRegistered";
+        TypeLibExporterFlags[TypeLibExporterFlags["None"] = 0] = "None";
+        TypeLibExporterFlags[TypeLibExporterFlags["CallerResolvedReferences"] = 2] = "CallerResolvedReferences";
+        TypeLibExporterFlags[TypeLibExporterFlags["OldNames"] = 4] = "OldNames";
+        TypeLibExporterFlags[TypeLibExporterFlags["ExportAs32Bit"] = 16] = "ExportAs32Bit";
+        TypeLibExporterFlags[TypeLibExporterFlags["ExportAs64Bit"] = 32] = "ExportAs64Bit";
+      })(TypeLibExporterFlags = InteropServices.TypeLibExporterFlags || (InteropServices.TypeLibExporterFlags = {}));
+
+      var TypeLibImporterFlags;
+
+      (function (TypeLibImporterFlags) {
+        TypeLibImporterFlags[TypeLibImporterFlags["PrimaryInteropAssembly"] = 1] = "PrimaryInteropAssembly";
+        TypeLibImporterFlags[TypeLibImporterFlags["UnsafeInterfaces"] = 2] = "UnsafeInterfaces";
+        TypeLibImporterFlags[TypeLibImporterFlags["SafeArrayAsSystemArray"] = 4] = "SafeArrayAsSystemArray";
+        TypeLibImporterFlags[TypeLibImporterFlags["TransformDispRetVals"] = 8] = "TransformDispRetVals";
+        TypeLibImporterFlags[TypeLibImporterFlags["None"] = 0] = "None";
+        TypeLibImporterFlags[TypeLibImporterFlags["PreventClassMembers"] = 16] = "PreventClassMembers";
+        TypeLibImporterFlags[TypeLibImporterFlags["ImportAsAgnostic"] = 2048] = "ImportAsAgnostic";
+        TypeLibImporterFlags[TypeLibImporterFlags["ImportAsItanium"] = 1024] = "ImportAsItanium";
+        TypeLibImporterFlags[TypeLibImporterFlags["ImportAsX64"] = 512] = "ImportAsX64";
+        TypeLibImporterFlags[TypeLibImporterFlags["ImportAsX86"] = 256] = "ImportAsX86";
+        TypeLibImporterFlags[TypeLibImporterFlags["ReflectionOnlyLoading"] = 4096] = "ReflectionOnlyLoading";
+        TypeLibImporterFlags[TypeLibImporterFlags["SerializableValueClasses"] = 32] = "SerializableValueClasses";
+        TypeLibImporterFlags[TypeLibImporterFlags["NoDefineVersionResource"] = 8192] = "NoDefineVersionResource";
+        TypeLibImporterFlags[TypeLibImporterFlags["ImportAsArm"] = 16384] = "ImportAsArm";
+      })(TypeLibImporterFlags = InteropServices.TypeLibImporterFlags || (InteropServices.TypeLibImporterFlags = {}));
+
+      var ComTypes;
+
+      (function (ComTypes) {
+        var DESCKIND;
+
+        (function (DESCKIND) {
+          DESCKIND[DESCKIND["DESCKIND_NONE"] = 0] = "DESCKIND_NONE";
+          DESCKIND[DESCKIND["DESCKIND_FUNCDESC"] = 1] = "DESCKIND_FUNCDESC";
+          DESCKIND[DESCKIND["DESCKIND_VARDESC"] = 2] = "DESCKIND_VARDESC";
+          DESCKIND[DESCKIND["DESCKIND_TYPECOMP"] = 3] = "DESCKIND_TYPECOMP";
+          DESCKIND[DESCKIND["DESCKIND_IMPLICITAPPOBJ"] = 4] = "DESCKIND_IMPLICITAPPOBJ";
+          DESCKIND[DESCKIND["DESCKIND_MAX"] = 5] = "DESCKIND_MAX";
+        })(DESCKIND = ComTypes.DESCKIND || (ComTypes.DESCKIND = {}));
+
+        var TYPEKIND;
+
+        (function (TYPEKIND) {
+          TYPEKIND[TYPEKIND["TKIND_ENUM"] = 0] = "TKIND_ENUM";
+          TYPEKIND[TYPEKIND["TKIND_RECORD"] = 1] = "TKIND_RECORD";
+          TYPEKIND[TYPEKIND["TKIND_MODULE"] = 2] = "TKIND_MODULE";
+          TYPEKIND[TYPEKIND["TKIND_INTERFACE"] = 3] = "TKIND_INTERFACE";
+          TYPEKIND[TYPEKIND["TKIND_DISPATCH"] = 4] = "TKIND_DISPATCH";
+          TYPEKIND[TYPEKIND["TKIND_COCLASS"] = 5] = "TKIND_COCLASS";
+          TYPEKIND[TYPEKIND["TKIND_ALIAS"] = 6] = "TKIND_ALIAS";
+          TYPEKIND[TYPEKIND["TKIND_UNION"] = 7] = "TKIND_UNION";
+          TYPEKIND[TYPEKIND["TKIND_MAX"] = 8] = "TKIND_MAX";
+        })(TYPEKIND = ComTypes.TYPEKIND || (ComTypes.TYPEKIND = {}));
+
+        var TYPEFLAGS;
+
+        (function (TYPEFLAGS) {
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FAPPOBJECT"] = 1] = "TYPEFLAG_FAPPOBJECT";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FCANCREATE"] = 2] = "TYPEFLAG_FCANCREATE";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FLICENSED"] = 4] = "TYPEFLAG_FLICENSED";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FPREDECLID"] = 8] = "TYPEFLAG_FPREDECLID";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FHIDDEN"] = 16] = "TYPEFLAG_FHIDDEN";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FCONTROL"] = 32] = "TYPEFLAG_FCONTROL";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FDUAL"] = 64] = "TYPEFLAG_FDUAL";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FNONEXTENSIBLE"] = 128] = "TYPEFLAG_FNONEXTENSIBLE";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FOLEAUTOMATION"] = 256] = "TYPEFLAG_FOLEAUTOMATION";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FRESTRICTED"] = 512] = "TYPEFLAG_FRESTRICTED";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FAGGREGATABLE"] = 1024] = "TYPEFLAG_FAGGREGATABLE";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FREPLACEABLE"] = 2048] = "TYPEFLAG_FREPLACEABLE";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FDISPATCHABLE"] = 4096] = "TYPEFLAG_FDISPATCHABLE";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FREVERSEBIND"] = 8192] = "TYPEFLAG_FREVERSEBIND";
+          TYPEFLAGS[TYPEFLAGS["TYPEFLAG_FPROXY"] = 16384] = "TYPEFLAG_FPROXY";
+        })(TYPEFLAGS = ComTypes.TYPEFLAGS || (ComTypes.TYPEFLAGS = {}));
+
+        var IMPLTYPEFLAGS;
+
+        (function (IMPLTYPEFLAGS) {
+          IMPLTYPEFLAGS[IMPLTYPEFLAGS["IMPLTYPEFLAG_FDEFAULT"] = 1] = "IMPLTYPEFLAG_FDEFAULT";
+          IMPLTYPEFLAGS[IMPLTYPEFLAGS["IMPLTYPEFLAG_FSOURCE"] = 2] = "IMPLTYPEFLAG_FSOURCE";
+          IMPLTYPEFLAGS[IMPLTYPEFLAGS["IMPLTYPEFLAG_FRESTRICTED"] = 4] = "IMPLTYPEFLAG_FRESTRICTED";
+          IMPLTYPEFLAGS[IMPLTYPEFLAGS["IMPLTYPEFLAG_FDEFAULTVTABLE"] = 8] = "IMPLTYPEFLAG_FDEFAULTVTABLE";
+        })(IMPLTYPEFLAGS = ComTypes.IMPLTYPEFLAGS || (ComTypes.IMPLTYPEFLAGS = {}));
+
+        var IDLFLAG;
+
+        (function (IDLFLAG) {
+          IDLFLAG[IDLFLAG["IDLFLAG_NONE"] = 0] = "IDLFLAG_NONE";
+          IDLFLAG[IDLFLAG["IDLFLAG_FIN"] = 1] = "IDLFLAG_FIN";
+          IDLFLAG[IDLFLAG["IDLFLAG_FOUT"] = 2] = "IDLFLAG_FOUT";
+          IDLFLAG[IDLFLAG["IDLFLAG_FLCID"] = 4] = "IDLFLAG_FLCID";
+          IDLFLAG[IDLFLAG["IDLFLAG_FRETVAL"] = 8] = "IDLFLAG_FRETVAL";
+        })(IDLFLAG = ComTypes.IDLFLAG || (ComTypes.IDLFLAG = {}));
+
+        var PARAMFLAG;
+
+        (function (PARAMFLAG) {
+          PARAMFLAG[PARAMFLAG["PARAMFLAG_NONE"] = 0] = "PARAMFLAG_NONE";
+          PARAMFLAG[PARAMFLAG["PARAMFLAG_FIN"] = 1] = "PARAMFLAG_FIN";
+          PARAMFLAG[PARAMFLAG["PARAMFLAG_FOUT"] = 2] = "PARAMFLAG_FOUT";
+          PARAMFLAG[PARAMFLAG["PARAMFLAG_FLCID"] = 4] = "PARAMFLAG_FLCID";
+          PARAMFLAG[PARAMFLAG["PARAMFLAG_FRETVAL"] = 8] = "PARAMFLAG_FRETVAL";
+          PARAMFLAG[PARAMFLAG["PARAMFLAG_FOPT"] = 16] = "PARAMFLAG_FOPT";
+          PARAMFLAG[PARAMFLAG["PARAMFLAG_FHASDEFAULT"] = 32] = "PARAMFLAG_FHASDEFAULT";
+          PARAMFLAG[PARAMFLAG["PARAMFLAG_FHASCUSTDATA"] = 64] = "PARAMFLAG_FHASCUSTDATA";
+        })(PARAMFLAG = ComTypes.PARAMFLAG || (ComTypes.PARAMFLAG = {}));
+
+        var VARKIND;
+
+        (function (VARKIND) {
+          VARKIND[VARKIND["VAR_PERINSTANCE"] = 0] = "VAR_PERINSTANCE";
+          VARKIND[VARKIND["VAR_STATIC"] = 1] = "VAR_STATIC";
+          VARKIND[VARKIND["VAR_CONST"] = 2] = "VAR_CONST";
+          VARKIND[VARKIND["VAR_DISPATCH"] = 3] = "VAR_DISPATCH";
+        })(VARKIND = ComTypes.VARKIND || (ComTypes.VARKIND = {}));
+
+        var FUNCKIND;
+
+        (function (FUNCKIND) {
+          FUNCKIND[FUNCKIND["FUNC_VIRTUAL"] = 0] = "FUNC_VIRTUAL";
+          FUNCKIND[FUNCKIND["FUNC_PUREVIRTUAL"] = 1] = "FUNC_PUREVIRTUAL";
+          FUNCKIND[FUNCKIND["FUNC_NONVIRTUAL"] = 2] = "FUNC_NONVIRTUAL";
+          FUNCKIND[FUNCKIND["FUNC_STATIC"] = 3] = "FUNC_STATIC";
+          FUNCKIND[FUNCKIND["FUNC_DISPATCH"] = 4] = "FUNC_DISPATCH";
+        })(FUNCKIND = ComTypes.FUNCKIND || (ComTypes.FUNCKIND = {}));
+
+        var INVOKEKIND;
+
+        (function (INVOKEKIND) {
+          INVOKEKIND[INVOKEKIND["INVOKE_FUNC"] = 1] = "INVOKE_FUNC";
+          INVOKEKIND[INVOKEKIND["INVOKE_PROPERTYGET"] = 2] = "INVOKE_PROPERTYGET";
+          INVOKEKIND[INVOKEKIND["INVOKE_PROPERTYPUT"] = 4] = "INVOKE_PROPERTYPUT";
+          INVOKEKIND[INVOKEKIND["INVOKE_PROPERTYPUTREF"] = 8] = "INVOKE_PROPERTYPUTREF";
+        })(INVOKEKIND = ComTypes.INVOKEKIND || (ComTypes.INVOKEKIND = {}));
+
+        var CALLCONV;
+
+        (function (CALLCONV) {
+          CALLCONV[CALLCONV["CC_CDECL"] = 1] = "CC_CDECL";
+          CALLCONV[CALLCONV["CC_MSCPASCAL"] = 2] = "CC_MSCPASCAL";
+          CALLCONV[CALLCONV["CC_PASCAL"] = 2] = "CC_PASCAL";
+          CALLCONV[CALLCONV["CC_MACPASCAL"] = 3] = "CC_MACPASCAL";
+          CALLCONV[CALLCONV["CC_STDCALL"] = 4] = "CC_STDCALL";
+          CALLCONV[CALLCONV["CC_RESERVED"] = 5] = "CC_RESERVED";
+          CALLCONV[CALLCONV["CC_SYSCALL"] = 6] = "CC_SYSCALL";
+          CALLCONV[CALLCONV["CC_MPWCDECL"] = 7] = "CC_MPWCDECL";
+          CALLCONV[CALLCONV["CC_MPWPASCAL"] = 8] = "CC_MPWPASCAL";
+          CALLCONV[CALLCONV["CC_MAX"] = 9] = "CC_MAX";
+        })(CALLCONV = ComTypes.CALLCONV || (ComTypes.CALLCONV = {}));
+
+        var FUNCFLAGS;
+
+        (function (FUNCFLAGS) {
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FRESTRICTED"] = 1] = "FUNCFLAG_FRESTRICTED";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FSOURCE"] = 2] = "FUNCFLAG_FSOURCE";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FBINDABLE"] = 4] = "FUNCFLAG_FBINDABLE";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FREQUESTEDIT"] = 8] = "FUNCFLAG_FREQUESTEDIT";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FDISPLAYBIND"] = 16] = "FUNCFLAG_FDISPLAYBIND";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FDEFAULTBIND"] = 32] = "FUNCFLAG_FDEFAULTBIND";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FHIDDEN"] = 64] = "FUNCFLAG_FHIDDEN";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FUSESGETLASTERROR"] = 128] = "FUNCFLAG_FUSESGETLASTERROR";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FDEFAULTCOLLELEM"] = 256] = "FUNCFLAG_FDEFAULTCOLLELEM";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FUIDEFAULT"] = 512] = "FUNCFLAG_FUIDEFAULT";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FNONBROWSABLE"] = 1024] = "FUNCFLAG_FNONBROWSABLE";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FREPLACEABLE"] = 2048] = "FUNCFLAG_FREPLACEABLE";
+          FUNCFLAGS[FUNCFLAGS["FUNCFLAG_FIMMEDIATEBIND"] = 4096] = "FUNCFLAG_FIMMEDIATEBIND";
+        })(FUNCFLAGS = ComTypes.FUNCFLAGS || (ComTypes.FUNCFLAGS = {}));
+
+        var VARFLAGS;
+
+        (function (VARFLAGS) {
+          VARFLAGS[VARFLAGS["VARFLAG_FREADONLY"] = 1] = "VARFLAG_FREADONLY";
+          VARFLAGS[VARFLAGS["VARFLAG_FSOURCE"] = 2] = "VARFLAG_FSOURCE";
+          VARFLAGS[VARFLAGS["VARFLAG_FBINDABLE"] = 4] = "VARFLAG_FBINDABLE";
+          VARFLAGS[VARFLAGS["VARFLAG_FREQUESTEDIT"] = 8] = "VARFLAG_FREQUESTEDIT";
+          VARFLAGS[VARFLAGS["VARFLAG_FDISPLAYBIND"] = 16] = "VARFLAG_FDISPLAYBIND";
+          VARFLAGS[VARFLAGS["VARFLAG_FDEFAULTBIND"] = 32] = "VARFLAG_FDEFAULTBIND";
+          VARFLAGS[VARFLAGS["VARFLAG_FHIDDEN"] = 64] = "VARFLAG_FHIDDEN";
+          VARFLAGS[VARFLAGS["VARFLAG_FRESTRICTED"] = 128] = "VARFLAG_FRESTRICTED";
+          VARFLAGS[VARFLAGS["VARFLAG_FDEFAULTCOLLELEM"] = 256] = "VARFLAG_FDEFAULTCOLLELEM";
+          VARFLAGS[VARFLAGS["VARFLAG_FUIDEFAULT"] = 512] = "VARFLAG_FUIDEFAULT";
+          VARFLAGS[VARFLAGS["VARFLAG_FNONBROWSABLE"] = 1024] = "VARFLAG_FNONBROWSABLE";
+          VARFLAGS[VARFLAGS["VARFLAG_FREPLACEABLE"] = 2048] = "VARFLAG_FREPLACEABLE";
+          VARFLAGS[VARFLAGS["VARFLAG_FIMMEDIATEBIND"] = 4096] = "VARFLAG_FIMMEDIATEBIND";
+        })(VARFLAGS = ComTypes.VARFLAGS || (ComTypes.VARFLAGS = {}));
+
+        var SYSKIND;
+
+        (function (SYSKIND) {
+          SYSKIND[SYSKIND["SYS_WIN16"] = 0] = "SYS_WIN16";
+          SYSKIND[SYSKIND["SYS_WIN32"] = 1] = "SYS_WIN32";
+          SYSKIND[SYSKIND["SYS_MAC"] = 2] = "SYS_MAC";
+          SYSKIND[SYSKIND["SYS_WIN64"] = 3] = "SYS_WIN64";
+        })(SYSKIND = ComTypes.SYSKIND || (ComTypes.SYSKIND = {}));
+
+        var LIBFLAGS;
+
+        (function (LIBFLAGS) {
+          LIBFLAGS[LIBFLAGS["LIBFLAG_FRESTRICTED"] = 1] = "LIBFLAG_FRESTRICTED";
+          LIBFLAGS[LIBFLAGS["LIBFLAG_FCONTROL"] = 2] = "LIBFLAG_FCONTROL";
+          LIBFLAGS[LIBFLAGS["LIBFLAG_FHIDDEN"] = 4] = "LIBFLAG_FHIDDEN";
+          LIBFLAGS[LIBFLAGS["LIBFLAG_FHASDISKIMAGE"] = 8] = "LIBFLAG_FHASDISKIMAGE";
+        })(LIBFLAGS = ComTypes.LIBFLAGS || (ComTypes.LIBFLAGS = {}));
+
+        var ADVF;
+
+        (function (ADVF) {
+          ADVF[ADVF["ADVF_NODATA"] = 1] = "ADVF_NODATA";
+          ADVF[ADVF["ADVF_PRIMEFIRST"] = 2] = "ADVF_PRIMEFIRST";
+          ADVF[ADVF["ADVF_ONLYONCE"] = 4] = "ADVF_ONLYONCE";
+          ADVF[ADVF["ADVFCACHE_NOHANDLER"] = 8] = "ADVFCACHE_NOHANDLER";
+          ADVF[ADVF["ADVFCACHE_FORCEBUILTIN"] = 16] = "ADVFCACHE_FORCEBUILTIN";
+          ADVF[ADVF["ADVFCACHE_ONSAVE"] = 32] = "ADVFCACHE_ONSAVE";
+          ADVF[ADVF["ADVF_DATAONSTOP"] = 64] = "ADVF_DATAONSTOP";
+        })(ADVF = ComTypes.ADVF || (ComTypes.ADVF = {}));
+
+        var DATADIR;
+
+        (function (DATADIR) {
+          DATADIR[DATADIR["DATADIR_GET"] = 1] = "DATADIR_GET";
+          DATADIR[DATADIR["DATADIR_SET"] = 2] = "DATADIR_SET";
+        })(DATADIR = ComTypes.DATADIR || (ComTypes.DATADIR = {}));
+
+        var DVASPECT;
+
+        (function (DVASPECT) {
+          DVASPECT[DVASPECT["DVASPECT_CONTENT"] = 1] = "DVASPECT_CONTENT";
+          DVASPECT[DVASPECT["DVASPECT_THUMBNAIL"] = 2] = "DVASPECT_THUMBNAIL";
+          DVASPECT[DVASPECT["DVASPECT_ICON"] = 4] = "DVASPECT_ICON";
+          DVASPECT[DVASPECT["DVASPECT_DOCPRINT"] = 8] = "DVASPECT_DOCPRINT";
+        })(DVASPECT = ComTypes.DVASPECT || (ComTypes.DVASPECT = {}));
+
+        var TYMED;
+
+        (function (TYMED) {
+          TYMED[TYMED["TYMED_HGLOBAL"] = 1] = "TYMED_HGLOBAL";
+          TYMED[TYMED["TYMED_FILE"] = 2] = "TYMED_FILE";
+          TYMED[TYMED["TYMED_ISTREAM"] = 4] = "TYMED_ISTREAM";
+          TYMED[TYMED["TYMED_ISTORAGE"] = 8] = "TYMED_ISTORAGE";
+          TYMED[TYMED["TYMED_GDI"] = 16] = "TYMED_GDI";
+          TYMED[TYMED["TYMED_MFPICT"] = 32] = "TYMED_MFPICT";
+          TYMED[TYMED["TYMED_ENHMF"] = 64] = "TYMED_ENHMF";
+          TYMED[TYMED["TYMED_NULL"] = 0] = "TYMED_NULL";
+        })(TYMED = ComTypes.TYMED || (ComTypes.TYMED = {}));
+      })(ComTypes = InteropServices.ComTypes || (InteropServices.ComTypes = {}));
+
+      var WindowsRuntime;
+
+      (function (WindowsRuntime) {})(WindowsRuntime = InteropServices.WindowsRuntime || (InteropServices.WindowsRuntime = {}));
+    })(InteropServices = Runtime.InteropServices || (Runtime.InteropServices = {}));
+
+    var Remoting;
+
+    (function (Remoting) {
+      var CustomErrorsModes;
+
+      (function (CustomErrorsModes) {
+        CustomErrorsModes[CustomErrorsModes["On"] = 0] = "On";
+        CustomErrorsModes[CustomErrorsModes["Off"] = 1] = "Off";
+        CustomErrorsModes[CustomErrorsModes["RemoteOnly"] = 2] = "RemoteOnly";
+      })(CustomErrorsModes = Remoting.CustomErrorsModes || (Remoting.CustomErrorsModes = {}));
+
+      var WellKnownObjectMode;
+
+      (function (WellKnownObjectMode) {
+        WellKnownObjectMode[WellKnownObjectMode["Singleton"] = 1] = "Singleton";
+        WellKnownObjectMode[WellKnownObjectMode["SingleCall"] = 2] = "SingleCall";
+      })(WellKnownObjectMode = Remoting.WellKnownObjectMode || (Remoting.WellKnownObjectMode = {}));
+
+      var Activation;
+
+      (function (Activation) {
+        var ActivatorLevel;
+
+        (function (ActivatorLevel) {
+          ActivatorLevel[ActivatorLevel["Construction"] = 4] = "Construction";
+          ActivatorLevel[ActivatorLevel["Context"] = 8] = "Context";
+          ActivatorLevel[ActivatorLevel["AppDomain"] = 12] = "AppDomain";
+          ActivatorLevel[ActivatorLevel["Process"] = 16] = "Process";
+          ActivatorLevel[ActivatorLevel["Machine"] = 20] = "Machine";
+        })(ActivatorLevel = Activation.ActivatorLevel || (Activation.ActivatorLevel = {}));
+      })(Activation = Remoting.Activation || (Remoting.Activation = {}));
+
+      var Channels;
+
+      (function (Channels) {
+        var ServerProcessing;
+
+        (function (ServerProcessing) {
+          ServerProcessing[ServerProcessing["Complete"] = 0] = "Complete";
+          ServerProcessing[ServerProcessing["OneWay"] = 1] = "OneWay";
+          ServerProcessing[ServerProcessing["Async"] = 2] = "Async";
+        })(ServerProcessing = Channels.ServerProcessing || (Channels.ServerProcessing = {}));
+      })(Channels = Remoting.Channels || (Remoting.Channels = {}));
+
+      var Contexts;
+
+      (function (Contexts) {})(Contexts = Remoting.Contexts || (Remoting.Contexts = {}));
+
+      var Lifetime;
+
+      (function (Lifetime) {
+        var LeaseState;
+
+        (function (LeaseState) {
+          LeaseState[LeaseState["Null"] = 0] = "Null";
+          LeaseState[LeaseState["Initial"] = 1] = "Initial";
+          LeaseState[LeaseState["Active"] = 2] = "Active";
+          LeaseState[LeaseState["Renewing"] = 3] = "Renewing";
+          LeaseState[LeaseState["Expired"] = 4] = "Expired";
+        })(LeaseState = Lifetime.LeaseState || (Lifetime.LeaseState = {}));
+      })(Lifetime = Remoting.Lifetime || (Remoting.Lifetime = {}));
+
+      var Messaging;
+
+      (function (Messaging) {})(Messaging = Remoting.Messaging || (Remoting.Messaging = {}));
+
+      var Metadata;
+
+      (function (Metadata) {
+        var SoapOption;
+
+        (function (SoapOption) {
+          SoapOption[SoapOption["None"] = 0] = "None";
+          SoapOption[SoapOption["AlwaysIncludeTypes"] = 1] = "AlwaysIncludeTypes";
+          SoapOption[SoapOption["XsdString"] = 2] = "XsdString";
+          SoapOption[SoapOption["EmbedAll"] = 4] = "EmbedAll";
+          SoapOption[SoapOption["Option1"] = 8] = "Option1";
+          SoapOption[SoapOption["Option2"] = 16] = "Option2";
+        })(SoapOption = Metadata.SoapOption || (Metadata.SoapOption = {}));
+
+        var XmlFieldOrderOption;
+
+        (function (XmlFieldOrderOption) {
+          XmlFieldOrderOption[XmlFieldOrderOption["All"] = 0] = "All";
+          XmlFieldOrderOption[XmlFieldOrderOption["Sequence"] = 1] = "Sequence";
+          XmlFieldOrderOption[XmlFieldOrderOption["Choice"] = 2] = "Choice";
+        })(XmlFieldOrderOption = Metadata.XmlFieldOrderOption || (Metadata.XmlFieldOrderOption = {}));
+
+        var W3cXsd2001;
+
+        (function (W3cXsd2001) {})(W3cXsd2001 = Metadata.W3cXsd2001 || (Metadata.W3cXsd2001 = {}));
+      })(Metadata = Remoting.Metadata || (Remoting.Metadata = {}));
+
+      var Proxies;
+
+      (function (Proxies) {})(Proxies = Remoting.Proxies || (Remoting.Proxies = {}));
+
+      var Services;
+
+      (function (Services) {})(Services = Remoting.Services || (Remoting.Services = {}));
+    })(Remoting = Runtime.Remoting || (Runtime.Remoting = {}));
+
+    var Serialization;
+
+    (function (Serialization) {
+      var StreamingContextStates;
+
+      (function (StreamingContextStates) {
+        StreamingContextStates[StreamingContextStates["CrossProcess"] = 1] = "CrossProcess";
+        StreamingContextStates[StreamingContextStates["CrossMachine"] = 2] = "CrossMachine";
+        StreamingContextStates[StreamingContextStates["File"] = 4] = "File";
+        StreamingContextStates[StreamingContextStates["Persistence"] = 8] = "Persistence";
+        StreamingContextStates[StreamingContextStates["Remoting"] = 16] = "Remoting";
+        StreamingContextStates[StreamingContextStates["Other"] = 32] = "Other";
+        StreamingContextStates[StreamingContextStates["Clone"] = 64] = "Clone";
+        StreamingContextStates[StreamingContextStates["CrossAppDomain"] = 128] = "CrossAppDomain";
+        StreamingContextStates[StreamingContextStates["All"] = 255] = "All";
+      })(StreamingContextStates = Serialization.StreamingContextStates || (Serialization.StreamingContextStates = {}));
+
+      var Formatters;
+
+      (function (Formatters) {
+        var FormatterTypeStyle;
+
+        (function (FormatterTypeStyle) {
+          FormatterTypeStyle[FormatterTypeStyle["TypesWhenNeeded"] = 0] = "TypesWhenNeeded";
+          FormatterTypeStyle[FormatterTypeStyle["TypesAlways"] = 1] = "TypesAlways";
+          FormatterTypeStyle[FormatterTypeStyle["XsdString"] = 2] = "XsdString";
+        })(FormatterTypeStyle = Formatters.FormatterTypeStyle || (Formatters.FormatterTypeStyle = {}));
+
+        var FormatterAssemblyStyle;
+
+        (function (FormatterAssemblyStyle) {
+          FormatterAssemblyStyle[FormatterAssemblyStyle["Simple"] = 0] = "Simple";
+          FormatterAssemblyStyle[FormatterAssemblyStyle["Full"] = 1] = "Full";
+        })(FormatterAssemblyStyle = Formatters.FormatterAssemblyStyle || (Formatters.FormatterAssemblyStyle = {}));
+
+        var TypeFilterLevel;
+
+        (function (TypeFilterLevel) {
+          TypeFilterLevel[TypeFilterLevel["Low"] = 2] = "Low";
+          TypeFilterLevel[TypeFilterLevel["Full"] = 3] = "Full";
+        })(TypeFilterLevel = Formatters.TypeFilterLevel || (Formatters.TypeFilterLevel = {}));
+
+        var Binary;
+
+        (function (Binary) {})(Binary = Formatters.Binary || (Formatters.Binary = {}));
+      })(Formatters = Serialization.Formatters || (Serialization.Formatters = {}));
+    })(Serialization = Runtime.Serialization || (Runtime.Serialization = {}));
+
+    var Versioning;
+
+    (function (Versioning) {
+      var ComponentGuaranteesOptions;
+
+      (function (ComponentGuaranteesOptions) {
+        ComponentGuaranteesOptions[ComponentGuaranteesOptions["None"] = 0] = "None";
+        ComponentGuaranteesOptions[ComponentGuaranteesOptions["Exchange"] = 1] = "Exchange";
+        ComponentGuaranteesOptions[ComponentGuaranteesOptions["Stable"] = 2] = "Stable";
+        ComponentGuaranteesOptions[ComponentGuaranteesOptions["SideBySide"] = 4] = "SideBySide";
+      })(ComponentGuaranteesOptions = Versioning.ComponentGuaranteesOptions || (Versioning.ComponentGuaranteesOptions = {}));
+
+      var ResourceScope;
+
+      (function (ResourceScope) {
+        ResourceScope[ResourceScope["None"] = 0] = "None";
+        ResourceScope[ResourceScope["Machine"] = 1] = "Machine";
+        ResourceScope[ResourceScope["Process"] = 2] = "Process";
+        ResourceScope[ResourceScope["AppDomain"] = 4] = "AppDomain";
+        ResourceScope[ResourceScope["Library"] = 8] = "Library";
+        ResourceScope[ResourceScope["Private"] = 16] = "Private";
+        ResourceScope[ResourceScope["Assembly"] = 32] = "Assembly";
+      })(ResourceScope = Versioning.ResourceScope || (Versioning.ResourceScope = {}));
+    })(Versioning = Runtime.Versioning || (Runtime.Versioning = {}));
+  })(Runtime = System.Runtime || (System.Runtime = {}));
+
+  var Security;
+
+  (function (Security) {
+    var PartialTrustVisibilityLevel;
+
+    (function (PartialTrustVisibilityLevel) {
+      PartialTrustVisibilityLevel[PartialTrustVisibilityLevel["VisibleToAllHosts"] = 0] = "VisibleToAllHosts";
+      PartialTrustVisibilityLevel[PartialTrustVisibilityLevel["NotVisibleByDefault"] = 1] = "NotVisibleByDefault";
+    })(PartialTrustVisibilityLevel = Security.PartialTrustVisibilityLevel || (Security.PartialTrustVisibilityLevel = {}));
+
+    var SecurityCriticalScope;
+
+    (function (SecurityCriticalScope) {
+      SecurityCriticalScope[SecurityCriticalScope["Explicit"] = 0] = "Explicit";
+      SecurityCriticalScope[SecurityCriticalScope["Everything"] = 1] = "Everything";
+    })(SecurityCriticalScope = Security.SecurityCriticalScope || (Security.SecurityCriticalScope = {}));
+
+    var SecurityRuleSet;
+
+    (function (SecurityRuleSet) {
+      SecurityRuleSet[SecurityRuleSet["None"] = 0] = "None";
+      SecurityRuleSet[SecurityRuleSet["Level1"] = 1] = "Level1";
+      SecurityRuleSet[SecurityRuleSet["Level2"] = 2] = "Level2";
+    })(SecurityRuleSet = Security.SecurityRuleSet || (Security.SecurityRuleSet = {}));
+
+    var SecurityContextSource;
+
+    (function (SecurityContextSource) {
+      SecurityContextSource[SecurityContextSource["CurrentAppDomain"] = 0] = "CurrentAppDomain";
+      SecurityContextSource[SecurityContextSource["CurrentAssembly"] = 1] = "CurrentAssembly";
+    })(SecurityContextSource = Security.SecurityContextSource || (Security.SecurityContextSource = {}));
+
+    var HostSecurityManagerOptions;
+
+    (function (HostSecurityManagerOptions) {
+      HostSecurityManagerOptions[HostSecurityManagerOptions["None"] = 0] = "None";
+      HostSecurityManagerOptions[HostSecurityManagerOptions["HostAppDomainEvidence"] = 1] = "HostAppDomainEvidence";
+      HostSecurityManagerOptions[HostSecurityManagerOptions["HostPolicyLevel"] = 2] = "HostPolicyLevel";
+      HostSecurityManagerOptions[HostSecurityManagerOptions["HostAssemblyEvidence"] = 4] = "HostAssemblyEvidence";
+      HostSecurityManagerOptions[HostSecurityManagerOptions["HostDetermineApplicationTrust"] = 8] = "HostDetermineApplicationTrust";
+      HostSecurityManagerOptions[HostSecurityManagerOptions["HostResolvePolicy"] = 16] = "HostResolvePolicy";
+      HostSecurityManagerOptions[HostSecurityManagerOptions["AllFlags"] = 31] = "AllFlags";
+    })(HostSecurityManagerOptions = Security.HostSecurityManagerOptions || (Security.HostSecurityManagerOptions = {}));
+
+    var PolicyLevelType;
+
+    (function (PolicyLevelType) {
+      PolicyLevelType[PolicyLevelType["User"] = 0] = "User";
+      PolicyLevelType[PolicyLevelType["Machine"] = 1] = "Machine";
+      PolicyLevelType[PolicyLevelType["Enterprise"] = 2] = "Enterprise";
+      PolicyLevelType[PolicyLevelType["AppDomain"] = 3] = "AppDomain";
+    })(PolicyLevelType = Security.PolicyLevelType || (Security.PolicyLevelType = {}));
+
+    var SecurityZone;
+
+    (function (SecurityZone) {
+      SecurityZone[SecurityZone["MyComputer"] = 0] = "MyComputer";
+      SecurityZone[SecurityZone["Intranet"] = 1] = "Intranet";
+      SecurityZone[SecurityZone["Trusted"] = 2] = "Trusted";
+      SecurityZone[SecurityZone["Internet"] = 3] = "Internet";
+      SecurityZone[SecurityZone["Untrusted"] = 4] = "Untrusted";
+      SecurityZone[SecurityZone["NoZone"] = -1] = "NoZone";
+    })(SecurityZone = Security.SecurityZone || (Security.SecurityZone = {}));
+
+    var ManifestKinds;
+
+    (function (ManifestKinds) {
+      ManifestKinds[ManifestKinds["Application"] = 2] = "Application";
+      ManifestKinds[ManifestKinds["ApplicationAndDeployment"] = 3] = "ApplicationAndDeployment";
+      ManifestKinds[ManifestKinds["Deployment"] = 1] = "Deployment";
+      ManifestKinds[ManifestKinds["None"] = 0] = "None";
+    })(ManifestKinds = Security.ManifestKinds || (Security.ManifestKinds = {}));
+
+    var AccessControl;
+
+    (function (AccessControl) {
+      var AccessControlActions;
+
+      (function (AccessControlActions) {
+        AccessControlActions[AccessControlActions["None"] = 0] = "None";
+        AccessControlActions[AccessControlActions["View"] = 1] = "View";
+        AccessControlActions[AccessControlActions["Change"] = 2] = "Change";
+      })(AccessControlActions = AccessControl.AccessControlActions || (AccessControl.AccessControlActions = {}));
+
+      var AccessControlModification;
+
+      (function (AccessControlModification) {
+        AccessControlModification[AccessControlModification["Add"] = 0] = "Add";
+        AccessControlModification[AccessControlModification["Set"] = 1] = "Set";
+        AccessControlModification[AccessControlModification["Reset"] = 2] = "Reset";
+        AccessControlModification[AccessControlModification["Remove"] = 3] = "Remove";
+        AccessControlModification[AccessControlModification["RemoveAll"] = 4] = "RemoveAll";
+        AccessControlModification[AccessControlModification["RemoveSpecific"] = 5] = "RemoveSpecific";
+      })(AccessControlModification = AccessControl.AccessControlModification || (AccessControl.AccessControlModification = {}));
+
+      var AccessControlSections;
+
+      (function (AccessControlSections) {
+        AccessControlSections[AccessControlSections["None"] = 0] = "None";
+        AccessControlSections[AccessControlSections["Audit"] = 1] = "Audit";
+        AccessControlSections[AccessControlSections["Access"] = 2] = "Access";
+        AccessControlSections[AccessControlSections["Owner"] = 4] = "Owner";
+        AccessControlSections[AccessControlSections["Group"] = 8] = "Group";
+        AccessControlSections[AccessControlSections["All"] = 15] = "All";
+      })(AccessControlSections = AccessControl.AccessControlSections || (AccessControl.AccessControlSections = {}));
+
+      var AccessControlType;
+
+      (function (AccessControlType) {
+        AccessControlType[AccessControlType["Allow"] = 0] = "Allow";
+        AccessControlType[AccessControlType["Deny"] = 1] = "Deny";
+      })(AccessControlType = AccessControl.AccessControlType || (AccessControl.AccessControlType = {}));
+
+      var AceFlags;
+
+      (function (AceFlags) {
+        AceFlags[AceFlags["None"] = 0] = "None";
+        AceFlags[AceFlags["ObjectInherit"] = 1] = "ObjectInherit";
+        AceFlags[AceFlags["ContainerInherit"] = 2] = "ContainerInherit";
+        AceFlags[AceFlags["NoPropagateInherit"] = 4] = "NoPropagateInherit";
+        AceFlags[AceFlags["InheritOnly"] = 8] = "InheritOnly";
+        AceFlags[AceFlags["InheritanceFlags"] = 15] = "InheritanceFlags";
+        AceFlags[AceFlags["Inherited"] = 16] = "Inherited";
+        AceFlags[AceFlags["SuccessfulAccess"] = 64] = "SuccessfulAccess";
+        AceFlags[AceFlags["FailedAccess"] = 128] = "FailedAccess";
+        AceFlags[AceFlags["AuditFlags"] = 192] = "AuditFlags";
+      })(AceFlags = AccessControl.AceFlags || (AccessControl.AceFlags = {}));
+
+      var AceQualifier;
+
+      (function (AceQualifier) {
+        AceQualifier[AceQualifier["AccessAllowed"] = 0] = "AccessAllowed";
+        AceQualifier[AceQualifier["AccessDenied"] = 1] = "AccessDenied";
+        AceQualifier[AceQualifier["SystemAudit"] = 2] = "SystemAudit";
+        AceQualifier[AceQualifier["SystemAlarm"] = 3] = "SystemAlarm";
+      })(AceQualifier = AccessControl.AceQualifier || (AccessControl.AceQualifier = {}));
+
+      var AceType;
+
+      (function (AceType) {
+        AceType[AceType["AccessAllowed"] = 0] = "AccessAllowed";
+        AceType[AceType["AccessDenied"] = 1] = "AccessDenied";
+        AceType[AceType["SystemAudit"] = 2] = "SystemAudit";
+        AceType[AceType["SystemAlarm"] = 3] = "SystemAlarm";
+        AceType[AceType["AccessAllowedCompound"] = 4] = "AccessAllowedCompound";
+        AceType[AceType["AccessAllowedObject"] = 5] = "AccessAllowedObject";
+        AceType[AceType["AccessDeniedObject"] = 6] = "AccessDeniedObject";
+        AceType[AceType["SystemAuditObject"] = 7] = "SystemAuditObject";
+        AceType[AceType["SystemAlarmObject"] = 8] = "SystemAlarmObject";
+        AceType[AceType["AccessAllowedCallback"] = 9] = "AccessAllowedCallback";
+        AceType[AceType["AccessDeniedCallback"] = 10] = "AccessDeniedCallback";
+        AceType[AceType["AccessAllowedCallbackObject"] = 11] = "AccessAllowedCallbackObject";
+        AceType[AceType["AccessDeniedCallbackObject"] = 12] = "AccessDeniedCallbackObject";
+        AceType[AceType["SystemAuditCallback"] = 13] = "SystemAuditCallback";
+        AceType[AceType["SystemAlarmCallback"] = 14] = "SystemAlarmCallback";
+        AceType[AceType["SystemAuditCallbackObject"] = 15] = "SystemAuditCallbackObject";
+        AceType[AceType["SystemAlarmCallbackObject"] = 16] = "SystemAlarmCallbackObject";
+        AceType[AceType["MaxDefinedAceType"] = 16] = "MaxDefinedAceType";
+      })(AceType = AccessControl.AceType || (AccessControl.AceType = {}));
+
+      var AuditFlags;
+
+      (function (AuditFlags) {
+        AuditFlags[AuditFlags["None"] = 0] = "None";
+        AuditFlags[AuditFlags["Success"] = 1] = "Success";
+        AuditFlags[AuditFlags["Failure"] = 2] = "Failure";
+      })(AuditFlags = AccessControl.AuditFlags || (AccessControl.AuditFlags = {}));
+
+      var CompoundAceType;
+
+      (function (CompoundAceType) {
+        CompoundAceType[CompoundAceType["Impersonation"] = 1] = "Impersonation";
+      })(CompoundAceType = AccessControl.CompoundAceType || (AccessControl.CompoundAceType = {}));
+
+      var ControlFlags;
+
+      (function (ControlFlags) {
+        ControlFlags[ControlFlags["None"] = 0] = "None";
+        ControlFlags[ControlFlags["OwnerDefaulted"] = 1] = "OwnerDefaulted";
+        ControlFlags[ControlFlags["GroupDefaulted"] = 2] = "GroupDefaulted";
+        ControlFlags[ControlFlags["DiscretionaryAclPresent"] = 4] = "DiscretionaryAclPresent";
+        ControlFlags[ControlFlags["DiscretionaryAclDefaulted"] = 8] = "DiscretionaryAclDefaulted";
+        ControlFlags[ControlFlags["SystemAclPresent"] = 16] = "SystemAclPresent";
+        ControlFlags[ControlFlags["SystemAclDefaulted"] = 32] = "SystemAclDefaulted";
+        ControlFlags[ControlFlags["DiscretionaryAclUntrusted"] = 64] = "DiscretionaryAclUntrusted";
+        ControlFlags[ControlFlags["ServerSecurity"] = 128] = "ServerSecurity";
+        ControlFlags[ControlFlags["DiscretionaryAclAutoInheritRequired"] = 256] = "DiscretionaryAclAutoInheritRequired";
+        ControlFlags[ControlFlags["SystemAclAutoInheritRequired"] = 512] = "SystemAclAutoInheritRequired";
+        ControlFlags[ControlFlags["DiscretionaryAclAutoInherited"] = 1024] = "DiscretionaryAclAutoInherited";
+        ControlFlags[ControlFlags["SystemAclAutoInherited"] = 2048] = "SystemAclAutoInherited";
+        ControlFlags[ControlFlags["DiscretionaryAclProtected"] = 4096] = "DiscretionaryAclProtected";
+        ControlFlags[ControlFlags["SystemAclProtected"] = 8192] = "SystemAclProtected";
+        ControlFlags[ControlFlags["RMControlValid"] = 16384] = "RMControlValid";
+        ControlFlags[ControlFlags["SelfRelative"] = 32768] = "SelfRelative";
+      })(ControlFlags = AccessControl.ControlFlags || (AccessControl.ControlFlags = {}));
+
+      var CryptoKeyRights;
+
+      (function (CryptoKeyRights) {
+        CryptoKeyRights[CryptoKeyRights["ReadData"] = 1] = "ReadData";
+        CryptoKeyRights[CryptoKeyRights["WriteData"] = 2] = "WriteData";
+        CryptoKeyRights[CryptoKeyRights["ReadExtendedAttributes"] = 8] = "ReadExtendedAttributes";
+        CryptoKeyRights[CryptoKeyRights["WriteExtendedAttributes"] = 16] = "WriteExtendedAttributes";
+        CryptoKeyRights[CryptoKeyRights["ReadAttributes"] = 128] = "ReadAttributes";
+        CryptoKeyRights[CryptoKeyRights["WriteAttributes"] = 256] = "WriteAttributes";
+        CryptoKeyRights[CryptoKeyRights["Delete"] = 65536] = "Delete";
+        CryptoKeyRights[CryptoKeyRights["ReadPermissions"] = 131072] = "ReadPermissions";
+        CryptoKeyRights[CryptoKeyRights["ChangePermissions"] = 262144] = "ChangePermissions";
+        CryptoKeyRights[CryptoKeyRights["TakeOwnership"] = 524288] = "TakeOwnership";
+        CryptoKeyRights[CryptoKeyRights["Synchronize"] = 1048576] = "Synchronize";
+        CryptoKeyRights[CryptoKeyRights["FullControl"] = 2032027] = "FullControl";
+        CryptoKeyRights[CryptoKeyRights["GenericAll"] = 268435456] = "GenericAll";
+        CryptoKeyRights[CryptoKeyRights["GenericExecute"] = 536870912] = "GenericExecute";
+        CryptoKeyRights[CryptoKeyRights["GenericWrite"] = 1073741824] = "GenericWrite";
+        CryptoKeyRights[CryptoKeyRights["GenericRead"] = -2147483648] = "GenericRead";
+      })(CryptoKeyRights = AccessControl.CryptoKeyRights || (AccessControl.CryptoKeyRights = {}));
+
+      var EventWaitHandleRights;
+
+      (function (EventWaitHandleRights) {
+        EventWaitHandleRights[EventWaitHandleRights["Modify"] = 2] = "Modify";
+        EventWaitHandleRights[EventWaitHandleRights["Delete"] = 65536] = "Delete";
+        EventWaitHandleRights[EventWaitHandleRights["ReadPermissions"] = 131072] = "ReadPermissions";
+        EventWaitHandleRights[EventWaitHandleRights["ChangePermissions"] = 262144] = "ChangePermissions";
+        EventWaitHandleRights[EventWaitHandleRights["TakeOwnership"] = 524288] = "TakeOwnership";
+        EventWaitHandleRights[EventWaitHandleRights["Synchronize"] = 1048576] = "Synchronize";
+        EventWaitHandleRights[EventWaitHandleRights["FullControl"] = 2031619] = "FullControl";
+      })(EventWaitHandleRights = AccessControl.EventWaitHandleRights || (AccessControl.EventWaitHandleRights = {}));
+
+      var FileSystemRights;
+
+      (function (FileSystemRights) {
+        FileSystemRights[FileSystemRights["ListDirectory"] = 1] = "ListDirectory";
+        FileSystemRights[FileSystemRights["ReadData"] = 1] = "ReadData";
+        FileSystemRights[FileSystemRights["CreateFiles"] = 2] = "CreateFiles";
+        FileSystemRights[FileSystemRights["WriteData"] = 2] = "WriteData";
+        FileSystemRights[FileSystemRights["AppendData"] = 4] = "AppendData";
+        FileSystemRights[FileSystemRights["CreateDirectories"] = 4] = "CreateDirectories";
+        FileSystemRights[FileSystemRights["ReadExtendedAttributes"] = 8] = "ReadExtendedAttributes";
+        FileSystemRights[FileSystemRights["WriteExtendedAttributes"] = 16] = "WriteExtendedAttributes";
+        FileSystemRights[FileSystemRights["ExecuteFile"] = 32] = "ExecuteFile";
+        FileSystemRights[FileSystemRights["Traverse"] = 32] = "Traverse";
+        FileSystemRights[FileSystemRights["DeleteSubdirectoriesAndFiles"] = 64] = "DeleteSubdirectoriesAndFiles";
+        FileSystemRights[FileSystemRights["ReadAttributes"] = 128] = "ReadAttributes";
+        FileSystemRights[FileSystemRights["WriteAttributes"] = 256] = "WriteAttributes";
+        FileSystemRights[FileSystemRights["Write"] = 278] = "Write";
+        FileSystemRights[FileSystemRights["Delete"] = 65536] = "Delete";
+        FileSystemRights[FileSystemRights["ReadPermissions"] = 131072] = "ReadPermissions";
+        FileSystemRights[FileSystemRights["Read"] = 131209] = "Read";
+        FileSystemRights[FileSystemRights["ReadAndExecute"] = 131241] = "ReadAndExecute";
+        FileSystemRights[FileSystemRights["Modify"] = 197055] = "Modify";
+        FileSystemRights[FileSystemRights["ChangePermissions"] = 262144] = "ChangePermissions";
+        FileSystemRights[FileSystemRights["TakeOwnership"] = 524288] = "TakeOwnership";
+        FileSystemRights[FileSystemRights["Synchronize"] = 1048576] = "Synchronize";
+        FileSystemRights[FileSystemRights["FullControl"] = 2032127] = "FullControl";
+      })(FileSystemRights = AccessControl.FileSystemRights || (AccessControl.FileSystemRights = {}));
+
+      var InheritanceFlags;
+
+      (function (InheritanceFlags) {
+        InheritanceFlags[InheritanceFlags["None"] = 0] = "None";
+        InheritanceFlags[InheritanceFlags["ContainerInherit"] = 1] = "ContainerInherit";
+        InheritanceFlags[InheritanceFlags["ObjectInherit"] = 2] = "ObjectInherit";
+      })(InheritanceFlags = AccessControl.InheritanceFlags || (AccessControl.InheritanceFlags = {}));
+
+      var MutexRights;
+
+      (function (MutexRights) {
+        MutexRights[MutexRights["Modify"] = 1] = "Modify";
+        MutexRights[MutexRights["Delete"] = 65536] = "Delete";
+        MutexRights[MutexRights["ReadPermissions"] = 131072] = "ReadPermissions";
+        MutexRights[MutexRights["ChangePermissions"] = 262144] = "ChangePermissions";
+        MutexRights[MutexRights["TakeOwnership"] = 524288] = "TakeOwnership";
+        MutexRights[MutexRights["Synchronize"] = 1048576] = "Synchronize";
+        MutexRights[MutexRights["FullControl"] = 2031617] = "FullControl";
+      })(MutexRights = AccessControl.MutexRights || (AccessControl.MutexRights = {}));
+
+      var ObjectAceFlags;
+
+      (function (ObjectAceFlags) {
+        ObjectAceFlags[ObjectAceFlags["None"] = 0] = "None";
+        ObjectAceFlags[ObjectAceFlags["ObjectAceTypePresent"] = 1] = "ObjectAceTypePresent";
+        ObjectAceFlags[ObjectAceFlags["InheritedObjectAceTypePresent"] = 2] = "InheritedObjectAceTypePresent";
+      })(ObjectAceFlags = AccessControl.ObjectAceFlags || (AccessControl.ObjectAceFlags = {}));
+
+      var PropagationFlags;
+
+      (function (PropagationFlags) {
+        PropagationFlags[PropagationFlags["None"] = 0] = "None";
+        PropagationFlags[PropagationFlags["NoPropagateInherit"] = 1] = "NoPropagateInherit";
+        PropagationFlags[PropagationFlags["InheritOnly"] = 2] = "InheritOnly";
+      })(PropagationFlags = AccessControl.PropagationFlags || (AccessControl.PropagationFlags = {}));
+
+      var RegistryRights;
+
+      (function (RegistryRights) {
+        RegistryRights[RegistryRights["QueryValues"] = 1] = "QueryValues";
+        RegistryRights[RegistryRights["SetValue"] = 2] = "SetValue";
+        RegistryRights[RegistryRights["CreateSubKey"] = 4] = "CreateSubKey";
+        RegistryRights[RegistryRights["EnumerateSubKeys"] = 8] = "EnumerateSubKeys";
+        RegistryRights[RegistryRights["Notify"] = 16] = "Notify";
+        RegistryRights[RegistryRights["CreateLink"] = 32] = "CreateLink";
+        RegistryRights[RegistryRights["Delete"] = 65536] = "Delete";
+        RegistryRights[RegistryRights["ReadPermissions"] = 131072] = "ReadPermissions";
+        RegistryRights[RegistryRights["WriteKey"] = 131078] = "WriteKey";
+        RegistryRights[RegistryRights["ReadKey"] = 131097] = "ReadKey";
+        RegistryRights[RegistryRights["ExecuteKey"] = 131097] = "ExecuteKey";
+        RegistryRights[RegistryRights["ChangePermissions"] = 262144] = "ChangePermissions";
+        RegistryRights[RegistryRights["TakeOwnership"] = 524288] = "TakeOwnership";
+        RegistryRights[RegistryRights["FullControl"] = 983103] = "FullControl";
+      })(RegistryRights = AccessControl.RegistryRights || (AccessControl.RegistryRights = {}));
+
+      var ResourceType;
+
+      (function (ResourceType) {
+        ResourceType[ResourceType["Unknown"] = 0] = "Unknown";
+        ResourceType[ResourceType["FileObject"] = 1] = "FileObject";
+        ResourceType[ResourceType["Service"] = 2] = "Service";
+        ResourceType[ResourceType["Printer"] = 3] = "Printer";
+        ResourceType[ResourceType["RegistryKey"] = 4] = "RegistryKey";
+        ResourceType[ResourceType["LMShare"] = 5] = "LMShare";
+        ResourceType[ResourceType["KernelObject"] = 6] = "KernelObject";
+        ResourceType[ResourceType["WindowObject"] = 7] = "WindowObject";
+        ResourceType[ResourceType["DSObject"] = 8] = "DSObject";
+        ResourceType[ResourceType["DSObjectAll"] = 9] = "DSObjectAll";
+        ResourceType[ResourceType["ProviderDefined"] = 10] = "ProviderDefined";
+        ResourceType[ResourceType["WmiGuidObject"] = 11] = "WmiGuidObject";
+        ResourceType[ResourceType["RegistryWow6432Key"] = 12] = "RegistryWow6432Key";
+      })(ResourceType = AccessControl.ResourceType || (AccessControl.ResourceType = {}));
+
+      var SecurityInfos;
+
+      (function (SecurityInfos) {
+        SecurityInfos[SecurityInfos["Owner"] = 1] = "Owner";
+        SecurityInfos[SecurityInfos["Group"] = 2] = "Group";
+        SecurityInfos[SecurityInfos["DiscretionaryAcl"] = 4] = "DiscretionaryAcl";
+        SecurityInfos[SecurityInfos["SystemAcl"] = 8] = "SystemAcl";
+      })(SecurityInfos = AccessControl.SecurityInfos || (AccessControl.SecurityInfos = {}));
+
+      var SemaphoreRights;
+
+      (function (SemaphoreRights) {
+        SemaphoreRights[SemaphoreRights["Modify"] = 2] = "Modify";
+        SemaphoreRights[SemaphoreRights["Delete"] = 65536] = "Delete";
+        SemaphoreRights[SemaphoreRights["ReadPermissions"] = 131072] = "ReadPermissions";
+        SemaphoreRights[SemaphoreRights["ChangePermissions"] = 262144] = "ChangePermissions";
+        SemaphoreRights[SemaphoreRights["TakeOwnership"] = 524288] = "TakeOwnership";
+        SemaphoreRights[SemaphoreRights["Synchronize"] = 1048576] = "Synchronize";
+        SemaphoreRights[SemaphoreRights["FullControl"] = 2031619] = "FullControl";
+      })(SemaphoreRights = AccessControl.SemaphoreRights || (AccessControl.SemaphoreRights = {}));
+    })(AccessControl = Security.AccessControl || (Security.AccessControl = {}));
+
+    var Authentication;
+
+    (function (Authentication) {
+      var CipherAlgorithmType;
+
+      (function (CipherAlgorithmType) {
+        CipherAlgorithmType[CipherAlgorithmType["None"] = 0] = "None";
+        CipherAlgorithmType[CipherAlgorithmType["Null"] = 24576] = "Null";
+        CipherAlgorithmType[CipherAlgorithmType["Aes"] = 26129] = "Aes";
+        CipherAlgorithmType[CipherAlgorithmType["Aes128"] = 26126] = "Aes128";
+        CipherAlgorithmType[CipherAlgorithmType["Aes192"] = 26127] = "Aes192";
+        CipherAlgorithmType[CipherAlgorithmType["Aes256"] = 26128] = "Aes256";
+        CipherAlgorithmType[CipherAlgorithmType["Des"] = 26113] = "Des";
+        CipherAlgorithmType[CipherAlgorithmType["Rc2"] = 26114] = "Rc2";
+        CipherAlgorithmType[CipherAlgorithmType["Rc4"] = 26625] = "Rc4";
+        CipherAlgorithmType[CipherAlgorithmType["TripleDes"] = 26115] = "TripleDes";
+      })(CipherAlgorithmType = Authentication.CipherAlgorithmType || (Authentication.CipherAlgorithmType = {}));
+
+      var ExchangeAlgorithmType;
+
+      (function (ExchangeAlgorithmType) {
+        ExchangeAlgorithmType[ExchangeAlgorithmType["None"] = 0] = "None";
+        ExchangeAlgorithmType[ExchangeAlgorithmType["DiffieHellman"] = 43522] = "DiffieHellman";
+        ExchangeAlgorithmType[ExchangeAlgorithmType["RsaKeyX"] = 41984] = "RsaKeyX";
+        ExchangeAlgorithmType[ExchangeAlgorithmType["RsaSign"] = 9216] = "RsaSign";
+      })(ExchangeAlgorithmType = Authentication.ExchangeAlgorithmType || (Authentication.ExchangeAlgorithmType = {}));
+
+      var HashAlgorithmType;
+
+      (function (HashAlgorithmType) {
+        HashAlgorithmType[HashAlgorithmType["None"] = 0] = "None";
+        HashAlgorithmType[HashAlgorithmType["Md5"] = 32771] = "Md5";
+        HashAlgorithmType[HashAlgorithmType["Sha1"] = 32772] = "Sha1";
+        HashAlgorithmType[HashAlgorithmType["Sha256"] = 32780] = "Sha256";
+        HashAlgorithmType[HashAlgorithmType["Sha384"] = 32781] = "Sha384";
+        HashAlgorithmType[HashAlgorithmType["Sha512"] = 32782] = "Sha512";
+      })(HashAlgorithmType = Authentication.HashAlgorithmType || (Authentication.HashAlgorithmType = {}));
+
+      var SslProtocols;
+
+      (function (SslProtocols) {
+        SslProtocols[SslProtocols["None"] = 0] = "None";
+        SslProtocols[SslProtocols["Ssl2"] = 12] = "Ssl2";
+        SslProtocols[SslProtocols["Ssl3"] = 48] = "Ssl3";
+        SslProtocols[SslProtocols["Tls"] = 192] = "Tls";
+        SslProtocols[SslProtocols["Tls11"] = 768] = "Tls11";
+        SslProtocols[SslProtocols["Tls12"] = 3072] = "Tls12";
+        SslProtocols[SslProtocols["Default"] = 240] = "Default";
+      })(SslProtocols = Authentication.SslProtocols || (Authentication.SslProtocols = {}));
+
+      var ExtendedProtection;
+
+      (function (ExtendedProtection) {
+        var TokenBindingType;
+
+        (function (TokenBindingType) {
+          TokenBindingType[TokenBindingType["Provided"] = 0] = "Provided";
+          TokenBindingType[TokenBindingType["Referred"] = 1] = "Referred";
+        })(TokenBindingType = ExtendedProtection.TokenBindingType || (ExtendedProtection.TokenBindingType = {}));
+
+        var ChannelBindingKind;
+
+        (function (ChannelBindingKind) {
+          ChannelBindingKind[ChannelBindingKind["Unknown"] = 0] = "Unknown";
+          ChannelBindingKind[ChannelBindingKind["Unique"] = 25] = "Unique";
+          ChannelBindingKind[ChannelBindingKind["Endpoint"] = 26] = "Endpoint";
+        })(ChannelBindingKind = ExtendedProtection.ChannelBindingKind || (ExtendedProtection.ChannelBindingKind = {}));
+
+        var PolicyEnforcement;
+
+        (function (PolicyEnforcement) {
+          PolicyEnforcement[PolicyEnforcement["Never"] = 0] = "Never";
+          PolicyEnforcement[PolicyEnforcement["WhenSupported"] = 1] = "WhenSupported";
+          PolicyEnforcement[PolicyEnforcement["Always"] = 2] = "Always";
+        })(PolicyEnforcement = ExtendedProtection.PolicyEnforcement || (ExtendedProtection.PolicyEnforcement = {}));
+
+        var ProtectionScenario;
+
+        (function (ProtectionScenario) {
+          ProtectionScenario[ProtectionScenario["TransportSelected"] = 0] = "TransportSelected";
+          ProtectionScenario[ProtectionScenario["TrustedProxy"] = 1] = "TrustedProxy";
+        })(ProtectionScenario = ExtendedProtection.ProtectionScenario || (ExtendedProtection.ProtectionScenario = {}));
+
+        var Configuration;
+
+        (function (Configuration) {})(Configuration = ExtendedProtection.Configuration || (ExtendedProtection.Configuration = {}));
+      })(ExtendedProtection = Authentication.ExtendedProtection || (Authentication.ExtendedProtection = {}));
+    })(Authentication = Security.Authentication || (Security.Authentication = {}));
+
+    var Claims;
+
+    (function (Claims) {})(Claims = Security.Claims || (Security.Claims = {}));
+
+    var Cryptography;
+
+    (function (Cryptography) {
+      var RSAEncryptionPaddingMode;
+
+      (function (RSAEncryptionPaddingMode) {
+        RSAEncryptionPaddingMode[RSAEncryptionPaddingMode["Pkcs1"] = 0] = "Pkcs1";
+        RSAEncryptionPaddingMode[RSAEncryptionPaddingMode["Oaep"] = 1] = "Oaep";
+      })(RSAEncryptionPaddingMode = Cryptography.RSAEncryptionPaddingMode || (Cryptography.RSAEncryptionPaddingMode = {}));
+
+      var RSASignaturePaddingMode;
+
+      (function (RSASignaturePaddingMode) {
+        RSASignaturePaddingMode[RSASignaturePaddingMode["Pkcs1"] = 0] = "Pkcs1";
+        RSASignaturePaddingMode[RSASignaturePaddingMode["Pss"] = 1] = "Pss";
+      })(RSASignaturePaddingMode = Cryptography.RSASignaturePaddingMode || (Cryptography.RSASignaturePaddingMode = {}));
+
+      var FromBase64TransformMode;
+
+      (function (FromBase64TransformMode) {
+        FromBase64TransformMode[FromBase64TransformMode["IgnoreWhiteSpaces"] = 0] = "IgnoreWhiteSpaces";
+        FromBase64TransformMode[FromBase64TransformMode["DoNotIgnoreWhiteSpaces"] = 1] = "DoNotIgnoreWhiteSpaces";
+      })(FromBase64TransformMode = Cryptography.FromBase64TransformMode || (Cryptography.FromBase64TransformMode = {}));
+
+      var CipherMode;
+
+      (function (CipherMode) {
+        CipherMode[CipherMode["CBC"] = 1] = "CBC";
+        CipherMode[CipherMode["ECB"] = 2] = "ECB";
+        CipherMode[CipherMode["OFB"] = 3] = "OFB";
+        CipherMode[CipherMode["CFB"] = 4] = "CFB";
+        CipherMode[CipherMode["CTS"] = 5] = "CTS";
+      })(CipherMode = Cryptography.CipherMode || (Cryptography.CipherMode = {}));
+
+      var PaddingMode;
+
+      (function (PaddingMode) {
+        PaddingMode[PaddingMode["None"] = 1] = "None";
+        PaddingMode[PaddingMode["PKCS7"] = 2] = "PKCS7";
+        PaddingMode[PaddingMode["Zeros"] = 3] = "Zeros";
+        PaddingMode[PaddingMode["ANSIX923"] = 4] = "ANSIX923";
+        PaddingMode[PaddingMode["ISO10126"] = 5] = "ISO10126";
+      })(PaddingMode = Cryptography.PaddingMode || (Cryptography.PaddingMode = {}));
+
+      var CspProviderFlags;
+
+      (function (CspProviderFlags) {
+        CspProviderFlags[CspProviderFlags["NoFlags"] = 0] = "NoFlags";
+        CspProviderFlags[CspProviderFlags["UseMachineKeyStore"] = 1] = "UseMachineKeyStore";
+        CspProviderFlags[CspProviderFlags["UseDefaultKeyContainer"] = 2] = "UseDefaultKeyContainer";
+        CspProviderFlags[CspProviderFlags["UseNonExportableKey"] = 4] = "UseNonExportableKey";
+        CspProviderFlags[CspProviderFlags["UseExistingKey"] = 8] = "UseExistingKey";
+        CspProviderFlags[CspProviderFlags["UseArchivableKey"] = 16] = "UseArchivableKey";
+        CspProviderFlags[CspProviderFlags["UseUserProtectedKey"] = 32] = "UseUserProtectedKey";
+        CspProviderFlags[CspProviderFlags["NoPrompt"] = 64] = "NoPrompt";
+        CspProviderFlags[CspProviderFlags["CreateEphemeralKey"] = 128] = "CreateEphemeralKey";
+      })(CspProviderFlags = Cryptography.CspProviderFlags || (Cryptography.CspProviderFlags = {}));
+
+      var CryptoStreamMode;
+
+      (function (CryptoStreamMode) {
+        CryptoStreamMode[CryptoStreamMode["Read"] = 0] = "Read";
+        CryptoStreamMode[CryptoStreamMode["Write"] = 1] = "Write";
+      })(CryptoStreamMode = Cryptography.CryptoStreamMode || (Cryptography.CryptoStreamMode = {}));
+
+      var KeyNumber;
+
+      (function (KeyNumber) {
+        KeyNumber[KeyNumber["Exchange"] = 1] = "Exchange";
+        KeyNumber[KeyNumber["Signature"] = 2] = "Signature";
+      })(KeyNumber = Cryptography.KeyNumber || (Cryptography.KeyNumber = {}));
+
+      var CngKeyHandleOpenOptions;
+
+      (function (CngKeyHandleOpenOptions) {
+        CngKeyHandleOpenOptions[CngKeyHandleOpenOptions["None"] = 0] = "None";
+        CngKeyHandleOpenOptions[CngKeyHandleOpenOptions["EphemeralKey"] = 1] = "EphemeralKey";
+      })(CngKeyHandleOpenOptions = Cryptography.CngKeyHandleOpenOptions || (Cryptography.CngKeyHandleOpenOptions = {}));
+
+      var ECKeyXmlFormat;
+
+      (function (ECKeyXmlFormat) {
+        ECKeyXmlFormat[ECKeyXmlFormat["Rfc4050"] = 0] = "Rfc4050";
+      })(ECKeyXmlFormat = Cryptography.ECKeyXmlFormat || (Cryptography.ECKeyXmlFormat = {}));
+
+      var CngExportPolicies;
+
+      (function (CngExportPolicies) {
+        CngExportPolicies[CngExportPolicies["None"] = 0] = "None";
+        CngExportPolicies[CngExportPolicies["AllowExport"] = 1] = "AllowExport";
+        CngExportPolicies[CngExportPolicies["AllowPlaintextExport"] = 2] = "AllowPlaintextExport";
+        CngExportPolicies[CngExportPolicies["AllowArchiving"] = 4] = "AllowArchiving";
+        CngExportPolicies[CngExportPolicies["AllowPlaintextArchiving"] = 8] = "AllowPlaintextArchiving";
+      })(CngExportPolicies = Cryptography.CngExportPolicies || (Cryptography.CngExportPolicies = {}));
+
+      var CngKeyCreationOptions;
+
+      (function (CngKeyCreationOptions) {
+        CngKeyCreationOptions[CngKeyCreationOptions["None"] = 0] = "None";
+        CngKeyCreationOptions[CngKeyCreationOptions["MachineKey"] = 32] = "MachineKey";
+        CngKeyCreationOptions[CngKeyCreationOptions["OverwriteExistingKey"] = 128] = "OverwriteExistingKey";
+      })(CngKeyCreationOptions = Cryptography.CngKeyCreationOptions || (Cryptography.CngKeyCreationOptions = {}));
+
+      var CngKeyOpenOptions;
+
+      (function (CngKeyOpenOptions) {
+        CngKeyOpenOptions[CngKeyOpenOptions["None"] = 0] = "None";
+        CngKeyOpenOptions[CngKeyOpenOptions["UserKey"] = 0] = "UserKey";
+        CngKeyOpenOptions[CngKeyOpenOptions["MachineKey"] = 32] = "MachineKey";
+        CngKeyOpenOptions[CngKeyOpenOptions["Silent"] = 64] = "Silent";
+      })(CngKeyOpenOptions = Cryptography.CngKeyOpenOptions || (Cryptography.CngKeyOpenOptions = {}));
+
+      var CngKeyUsages;
+
+      (function (CngKeyUsages) {
+        CngKeyUsages[CngKeyUsages["None"] = 0] = "None";
+        CngKeyUsages[CngKeyUsages["Decryption"] = 1] = "Decryption";
+        CngKeyUsages[CngKeyUsages["Signing"] = 2] = "Signing";
+        CngKeyUsages[CngKeyUsages["KeyAgreement"] = 4] = "KeyAgreement";
+        CngKeyUsages[CngKeyUsages["AllUsages"] = 16777215] = "AllUsages";
+      })(CngKeyUsages = Cryptography.CngKeyUsages || (Cryptography.CngKeyUsages = {}));
+
+      var CngPropertyOptions;
+
+      (function (CngPropertyOptions) {
+        CngPropertyOptions[CngPropertyOptions["None"] = 0] = "None";
+        CngPropertyOptions[CngPropertyOptions["CustomProperty"] = 1073741824] = "CustomProperty";
+        CngPropertyOptions[CngPropertyOptions["Persist"] = -2147483648] = "Persist";
+      })(CngPropertyOptions = Cryptography.CngPropertyOptions || (Cryptography.CngPropertyOptions = {}));
+
+      var CngUIProtectionLevels;
+
+      (function (CngUIProtectionLevels) {
+        CngUIProtectionLevels[CngUIProtectionLevels["None"] = 0] = "None";
+        CngUIProtectionLevels[CngUIProtectionLevels["ProtectKey"] = 1] = "ProtectKey";
+        CngUIProtectionLevels[CngUIProtectionLevels["ForceHighProtection"] = 2] = "ForceHighProtection";
+      })(CngUIProtectionLevels = Cryptography.CngUIProtectionLevels || (Cryptography.CngUIProtectionLevels = {}));
+
+      var ECCurve_ECCurveType;
+
+      (function (ECCurve_ECCurveType) {
+        ECCurve_ECCurveType[ECCurve_ECCurveType["Implicit"] = 0] = "Implicit";
+        ECCurve_ECCurveType[ECCurve_ECCurveType["PrimeShortWeierstrass"] = 1] = "PrimeShortWeierstrass";
+        ECCurve_ECCurveType[ECCurve_ECCurveType["PrimeTwistedEdwards"] = 2] = "PrimeTwistedEdwards";
+        ECCurve_ECCurveType[ECCurve_ECCurveType["PrimeMontgomery"] = 3] = "PrimeMontgomery";
+        ECCurve_ECCurveType[ECCurve_ECCurveType["Characteristic2"] = 4] = "Characteristic2";
+        ECCurve_ECCurveType[ECCurve_ECCurveType["Named"] = 5] = "Named";
+      })(ECCurve_ECCurveType = Cryptography.ECCurve_ECCurveType || (Cryptography.ECCurve_ECCurveType = {}));
+
+      var ECDiffieHellmanKeyDerivationFunction;
+
+      (function (ECDiffieHellmanKeyDerivationFunction) {
+        ECDiffieHellmanKeyDerivationFunction[ECDiffieHellmanKeyDerivationFunction["Hash"] = 0] = "Hash";
+        ECDiffieHellmanKeyDerivationFunction[ECDiffieHellmanKeyDerivationFunction["Hmac"] = 1] = "Hmac";
+        ECDiffieHellmanKeyDerivationFunction[ECDiffieHellmanKeyDerivationFunction["Tls"] = 2] = "Tls";
+      })(ECDiffieHellmanKeyDerivationFunction = Cryptography.ECDiffieHellmanKeyDerivationFunction || (Cryptography.ECDiffieHellmanKeyDerivationFunction = {}));
+
+      var SignatureVerificationResult;
+
+      (function (SignatureVerificationResult) {
+        SignatureVerificationResult[SignatureVerificationResult["AssemblyIdentityMismatch"] = 1] = "AssemblyIdentityMismatch";
+        SignatureVerificationResult[SignatureVerificationResult["BadDigest"] = -2146869232] = "BadDigest";
+        SignatureVerificationResult[SignatureVerificationResult["BadSignatureFormat"] = -2146762749] = "BadSignatureFormat";
+        SignatureVerificationResult[SignatureVerificationResult["BasicConstraintsNotObserved"] = -2146869223] = "BasicConstraintsNotObserved";
+        SignatureVerificationResult[SignatureVerificationResult["CertificateExpired"] = -2146762495] = "CertificateExpired";
+        SignatureVerificationResult[SignatureVerificationResult["CertificateExplicitlyDistrusted"] = -2146762479] = "CertificateExplicitlyDistrusted";
+        SignatureVerificationResult[SignatureVerificationResult["CertificateMalformed"] = -2146762488] = "CertificateMalformed";
+        SignatureVerificationResult[SignatureVerificationResult["CertificateNotExplicitlyTrusted"] = -2146762748] = "CertificateNotExplicitlyTrusted";
+        SignatureVerificationResult[SignatureVerificationResult["CertificateRevoked"] = -2146762484] = "CertificateRevoked";
+        SignatureVerificationResult[SignatureVerificationResult["CertificateUsageNotAllowed"] = -2146762490] = "CertificateUsageNotAllowed";
+        SignatureVerificationResult[SignatureVerificationResult["ContainingSignatureInvalid"] = 2] = "ContainingSignatureInvalid";
+        SignatureVerificationResult[SignatureVerificationResult["CouldNotBuildChain"] = -2146762486] = "CouldNotBuildChain";
+        SignatureVerificationResult[SignatureVerificationResult["GenericTrustFailure"] = -2146762485] = "GenericTrustFailure";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidCertificateName"] = -2146762476] = "InvalidCertificateName";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidCertificatePolicy"] = -2146762477] = "InvalidCertificatePolicy";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidCertificateRole"] = -2146762493] = "InvalidCertificateRole";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidCertificateSignature"] = -2146869244] = "InvalidCertificateSignature";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidCertificateUsage"] = -2146762480] = "InvalidCertificateUsage";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidCountersignature"] = -2146869245] = "InvalidCountersignature";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidSignerCertificate"] = -2146869246] = "InvalidSignerCertificate";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidTimePeriodNesting"] = -2146762494] = "InvalidTimePeriodNesting";
+        SignatureVerificationResult[SignatureVerificationResult["InvalidTimestamp"] = -2146869243] = "InvalidTimestamp";
+        SignatureVerificationResult[SignatureVerificationResult["IssuerChainingError"] = -2146762489] = "IssuerChainingError";
+        SignatureVerificationResult[SignatureVerificationResult["MissingSignature"] = -2146762496] = "MissingSignature";
+        SignatureVerificationResult[SignatureVerificationResult["PathLengthConstraintViolated"] = -2146762492] = "PathLengthConstraintViolated";
+        SignatureVerificationResult[SignatureVerificationResult["PublicKeyTokenMismatch"] = 3] = "PublicKeyTokenMismatch";
+        SignatureVerificationResult[SignatureVerificationResult["PublisherMismatch"] = 4] = "PublisherMismatch";
+        SignatureVerificationResult[SignatureVerificationResult["RevocationCheckFailure"] = -2146762482] = "RevocationCheckFailure";
+        SignatureVerificationResult[SignatureVerificationResult["SystemError"] = -2146869247] = "SystemError";
+        SignatureVerificationResult[SignatureVerificationResult["UnknownCriticalExtension"] = -2146762491] = "UnknownCriticalExtension";
+        SignatureVerificationResult[SignatureVerificationResult["UnknownTrustProvider"] = -2146762751] = "UnknownTrustProvider";
+        SignatureVerificationResult[SignatureVerificationResult["UnknownVerificationAction"] = -2146762750] = "UnknownVerificationAction";
+        SignatureVerificationResult[SignatureVerificationResult["UntrustedCertificationAuthority"] = -2146762478] = "UntrustedCertificationAuthority";
+        SignatureVerificationResult[SignatureVerificationResult["UntrustedRootCertificate"] = -2146762487] = "UntrustedRootCertificate";
+        SignatureVerificationResult[SignatureVerificationResult["UntrustedTestRootCertificate"] = -2146762483] = "UntrustedTestRootCertificate";
+        SignatureVerificationResult[SignatureVerificationResult["Valid"] = 0] = "Valid";
+      })(SignatureVerificationResult = Cryptography.SignatureVerificationResult || (Cryptography.SignatureVerificationResult = {}));
+
+      var OidGroup;
+
+      (function (OidGroup) {
+        OidGroup[OidGroup["All"] = 0] = "All";
+        OidGroup[OidGroup["HashAlgorithm"] = 1] = "HashAlgorithm";
+        OidGroup[OidGroup["EncryptionAlgorithm"] = 2] = "EncryptionAlgorithm";
+        OidGroup[OidGroup["PublicKeyAlgorithm"] = 3] = "PublicKeyAlgorithm";
+        OidGroup[OidGroup["SignatureAlgorithm"] = 4] = "SignatureAlgorithm";
+        OidGroup[OidGroup["Attribute"] = 5] = "Attribute";
+        OidGroup[OidGroup["ExtensionOrAttribute"] = 6] = "ExtensionOrAttribute";
+        OidGroup[OidGroup["EnhancedKeyUsage"] = 7] = "EnhancedKeyUsage";
+        OidGroup[OidGroup["Policy"] = 8] = "Policy";
+        OidGroup[OidGroup["Template"] = 9] = "Template";
+        OidGroup[OidGroup["KeyDerivationFunction"] = 10] = "KeyDerivationFunction";
+      })(OidGroup = Cryptography.OidGroup || (Cryptography.OidGroup = {}));
+
+      var X509Certificates;
+
+      (function (X509Certificates) {
+        var X509ContentType;
+
+        (function (X509ContentType) {
+          X509ContentType[X509ContentType["Unknown"] = 0] = "Unknown";
+          X509ContentType[X509ContentType["Cert"] = 1] = "Cert";
+          X509ContentType[X509ContentType["SerializedCert"] = 2] = "SerializedCert";
+          X509ContentType[X509ContentType["Pfx"] = 3] = "Pfx";
+          X509ContentType[X509ContentType["Pkcs12"] = 3] = "Pkcs12";
+          X509ContentType[X509ContentType["SerializedStore"] = 4] = "SerializedStore";
+          X509ContentType[X509ContentType["Pkcs7"] = 5] = "Pkcs7";
+          X509ContentType[X509ContentType["Authenticode"] = 6] = "Authenticode";
+        })(X509ContentType = X509Certificates.X509ContentType || (X509Certificates.X509ContentType = {}));
+
+        var X509KeyStorageFlags;
+
+        (function (X509KeyStorageFlags) {
+          X509KeyStorageFlags[X509KeyStorageFlags["DefaultKeySet"] = 0] = "DefaultKeySet";
+          X509KeyStorageFlags[X509KeyStorageFlags["UserKeySet"] = 1] = "UserKeySet";
+          X509KeyStorageFlags[X509KeyStorageFlags["MachineKeySet"] = 2] = "MachineKeySet";
+          X509KeyStorageFlags[X509KeyStorageFlags["Exportable"] = 4] = "Exportable";
+          X509KeyStorageFlags[X509KeyStorageFlags["UserProtected"] = 8] = "UserProtected";
+          X509KeyStorageFlags[X509KeyStorageFlags["PersistKeySet"] = 16] = "PersistKeySet";
+          X509KeyStorageFlags[X509KeyStorageFlags["EphemeralKeySet"] = 32] = "EphemeralKeySet";
+        })(X509KeyStorageFlags = X509Certificates.X509KeyStorageFlags || (X509Certificates.X509KeyStorageFlags = {}));
+
+        var TrustStatus;
+
+        (function (TrustStatus) {
+          TrustStatus[TrustStatus["Untrusted"] = 0] = "Untrusted";
+          TrustStatus[TrustStatus["UnknownIdentity"] = 1] = "UnknownIdentity";
+          TrustStatus[TrustStatus["KnownIdentity"] = 2] = "KnownIdentity";
+          TrustStatus[TrustStatus["Trusted"] = 3] = "Trusted";
+        })(TrustStatus = X509Certificates.TrustStatus || (X509Certificates.TrustStatus = {}));
+
+        var OpenFlags;
+
+        (function (OpenFlags) {
+          OpenFlags[OpenFlags["ReadOnly"] = 0] = "ReadOnly";
+          OpenFlags[OpenFlags["ReadWrite"] = 1] = "ReadWrite";
+          OpenFlags[OpenFlags["MaxAllowed"] = 2] = "MaxAllowed";
+          OpenFlags[OpenFlags["OpenExistingOnly"] = 4] = "OpenExistingOnly";
+          OpenFlags[OpenFlags["IncludeArchived"] = 8] = "IncludeArchived";
+        })(OpenFlags = X509Certificates.OpenFlags || (X509Certificates.OpenFlags = {}));
+
+        var StoreLocation;
+
+        (function (StoreLocation) {
+          StoreLocation[StoreLocation["CurrentUser"] = 1] = "CurrentUser";
+          StoreLocation[StoreLocation["LocalMachine"] = 2] = "LocalMachine";
+        })(StoreLocation = X509Certificates.StoreLocation || (X509Certificates.StoreLocation = {}));
+
+        var StoreName;
+
+        (function (StoreName) {
+          StoreName[StoreName["AddressBook"] = 1] = "AddressBook";
+          StoreName[StoreName["AuthRoot"] = 2] = "AuthRoot";
+          StoreName[StoreName["CertificateAuthority"] = 3] = "CertificateAuthority";
+          StoreName[StoreName["Disallowed"] = 4] = "Disallowed";
+          StoreName[StoreName["My"] = 5] = "My";
+          StoreName[StoreName["Root"] = 6] = "Root";
+          StoreName[StoreName["TrustedPeople"] = 7] = "TrustedPeople";
+          StoreName[StoreName["TrustedPublisher"] = 8] = "TrustedPublisher";
+        })(StoreName = X509Certificates.StoreName || (X509Certificates.StoreName = {}));
+
+        var X500DistinguishedNameFlags;
+
+        (function (X500DistinguishedNameFlags) {
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["None"] = 0] = "None";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["Reversed"] = 1] = "Reversed";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["UseSemicolons"] = 16] = "UseSemicolons";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["DoNotUsePlusSign"] = 32] = "DoNotUsePlusSign";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["DoNotUseQuotes"] = 64] = "DoNotUseQuotes";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["UseCommas"] = 128] = "UseCommas";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["UseNewLines"] = 256] = "UseNewLines";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["UseUTF8Encoding"] = 4096] = "UseUTF8Encoding";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["UseT61Encoding"] = 8192] = "UseT61Encoding";
+          X500DistinguishedNameFlags[X500DistinguishedNameFlags["ForceUTF8Encoding"] = 16384] = "ForceUTF8Encoding";
+        })(X500DistinguishedNameFlags = X509Certificates.X500DistinguishedNameFlags || (X509Certificates.X500DistinguishedNameFlags = {}));
+
+        var X509ChainStatusFlags;
+
+        (function (X509ChainStatusFlags) {
+          X509ChainStatusFlags[X509ChainStatusFlags["NoError"] = 0] = "NoError";
+          X509ChainStatusFlags[X509ChainStatusFlags["NotTimeValid"] = 1] = "NotTimeValid";
+          X509ChainStatusFlags[X509ChainStatusFlags["NotTimeNested"] = 2] = "NotTimeNested";
+          X509ChainStatusFlags[X509ChainStatusFlags["Revoked"] = 4] = "Revoked";
+          X509ChainStatusFlags[X509ChainStatusFlags["NotSignatureValid"] = 8] = "NotSignatureValid";
+          X509ChainStatusFlags[X509ChainStatusFlags["NotValidForUsage"] = 16] = "NotValidForUsage";
+          X509ChainStatusFlags[X509ChainStatusFlags["UntrustedRoot"] = 32] = "UntrustedRoot";
+          X509ChainStatusFlags[X509ChainStatusFlags["RevocationStatusUnknown"] = 64] = "RevocationStatusUnknown";
+          X509ChainStatusFlags[X509ChainStatusFlags["Cyclic"] = 128] = "Cyclic";
+          X509ChainStatusFlags[X509ChainStatusFlags["InvalidExtension"] = 256] = "InvalidExtension";
+          X509ChainStatusFlags[X509ChainStatusFlags["InvalidPolicyConstraints"] = 512] = "InvalidPolicyConstraints";
+          X509ChainStatusFlags[X509ChainStatusFlags["InvalidBasicConstraints"] = 1024] = "InvalidBasicConstraints";
+          X509ChainStatusFlags[X509ChainStatusFlags["InvalidNameConstraints"] = 2048] = "InvalidNameConstraints";
+          X509ChainStatusFlags[X509ChainStatusFlags["HasNotSupportedNameConstraint"] = 4096] = "HasNotSupportedNameConstraint";
+          X509ChainStatusFlags[X509ChainStatusFlags["HasNotDefinedNameConstraint"] = 8192] = "HasNotDefinedNameConstraint";
+          X509ChainStatusFlags[X509ChainStatusFlags["HasNotPermittedNameConstraint"] = 16384] = "HasNotPermittedNameConstraint";
+          X509ChainStatusFlags[X509ChainStatusFlags["HasExcludedNameConstraint"] = 32768] = "HasExcludedNameConstraint";
+          X509ChainStatusFlags[X509ChainStatusFlags["PartialChain"] = 65536] = "PartialChain";
+          X509ChainStatusFlags[X509ChainStatusFlags["CtlNotTimeValid"] = 131072] = "CtlNotTimeValid";
+          X509ChainStatusFlags[X509ChainStatusFlags["CtlNotSignatureValid"] = 262144] = "CtlNotSignatureValid";
+          X509ChainStatusFlags[X509ChainStatusFlags["CtlNotValidForUsage"] = 524288] = "CtlNotValidForUsage";
+          X509ChainStatusFlags[X509ChainStatusFlags["OfflineRevocation"] = 16777216] = "OfflineRevocation";
+          X509ChainStatusFlags[X509ChainStatusFlags["NoIssuanceChainPolicy"] = 33554432] = "NoIssuanceChainPolicy";
+          X509ChainStatusFlags[X509ChainStatusFlags["ExplicitDistrust"] = 67108864] = "ExplicitDistrust";
+          X509ChainStatusFlags[X509ChainStatusFlags["HasNotSupportedCriticalExtension"] = 134217728] = "HasNotSupportedCriticalExtension";
+          X509ChainStatusFlags[X509ChainStatusFlags["HasWeakSignature"] = 1048576] = "HasWeakSignature";
+        })(X509ChainStatusFlags = X509Certificates.X509ChainStatusFlags || (X509Certificates.X509ChainStatusFlags = {}));
+
+        var X509FindType;
+
+        (function (X509FindType) {
+          X509FindType[X509FindType["FindByThumbprint"] = 0] = "FindByThumbprint";
+          X509FindType[X509FindType["FindBySubjectName"] = 1] = "FindBySubjectName";
+          X509FindType[X509FindType["FindBySubjectDistinguishedName"] = 2] = "FindBySubjectDistinguishedName";
+          X509FindType[X509FindType["FindByIssuerName"] = 3] = "FindByIssuerName";
+          X509FindType[X509FindType["FindByIssuerDistinguishedName"] = 4] = "FindByIssuerDistinguishedName";
+          X509FindType[X509FindType["FindBySerialNumber"] = 5] = "FindBySerialNumber";
+          X509FindType[X509FindType["FindByTimeValid"] = 6] = "FindByTimeValid";
+          X509FindType[X509FindType["FindByTimeNotYetValid"] = 7] = "FindByTimeNotYetValid";
+          X509FindType[X509FindType["FindByTimeExpired"] = 8] = "FindByTimeExpired";
+          X509FindType[X509FindType["FindByTemplateName"] = 9] = "FindByTemplateName";
+          X509FindType[X509FindType["FindByApplicationPolicy"] = 10] = "FindByApplicationPolicy";
+          X509FindType[X509FindType["FindByCertificatePolicy"] = 11] = "FindByCertificatePolicy";
+          X509FindType[X509FindType["FindByExtension"] = 12] = "FindByExtension";
+          X509FindType[X509FindType["FindByKeyUsage"] = 13] = "FindByKeyUsage";
+          X509FindType[X509FindType["FindBySubjectKeyIdentifier"] = 14] = "FindBySubjectKeyIdentifier";
+        })(X509FindType = X509Certificates.X509FindType || (X509Certificates.X509FindType = {}));
+
+        var X509IncludeOption;
+
+        (function (X509IncludeOption) {
+          X509IncludeOption[X509IncludeOption["None"] = 0] = "None";
+          X509IncludeOption[X509IncludeOption["ExcludeRoot"] = 1] = "ExcludeRoot";
+          X509IncludeOption[X509IncludeOption["EndCertOnly"] = 2] = "EndCertOnly";
+          X509IncludeOption[X509IncludeOption["WholeChain"] = 3] = "WholeChain";
+        })(X509IncludeOption = X509Certificates.X509IncludeOption || (X509Certificates.X509IncludeOption = {}));
+
+        var X509KeyUsageFlags;
+
+        (function (X509KeyUsageFlags) {
+          X509KeyUsageFlags[X509KeyUsageFlags["None"] = 0] = "None";
+          X509KeyUsageFlags[X509KeyUsageFlags["EncipherOnly"] = 1] = "EncipherOnly";
+          X509KeyUsageFlags[X509KeyUsageFlags["CrlSign"] = 2] = "CrlSign";
+          X509KeyUsageFlags[X509KeyUsageFlags["KeyCertSign"] = 4] = "KeyCertSign";
+          X509KeyUsageFlags[X509KeyUsageFlags["KeyAgreement"] = 8] = "KeyAgreement";
+          X509KeyUsageFlags[X509KeyUsageFlags["DataEncipherment"] = 16] = "DataEncipherment";
+          X509KeyUsageFlags[X509KeyUsageFlags["KeyEncipherment"] = 32] = "KeyEncipherment";
+          X509KeyUsageFlags[X509KeyUsageFlags["NonRepudiation"] = 64] = "NonRepudiation";
+          X509KeyUsageFlags[X509KeyUsageFlags["DigitalSignature"] = 128] = "DigitalSignature";
+          X509KeyUsageFlags[X509KeyUsageFlags["DecipherOnly"] = 32768] = "DecipherOnly";
+        })(X509KeyUsageFlags = X509Certificates.X509KeyUsageFlags || (X509Certificates.X509KeyUsageFlags = {}));
+
+        var X509NameType;
+
+        (function (X509NameType) {
+          X509NameType[X509NameType["SimpleName"] = 0] = "SimpleName";
+          X509NameType[X509NameType["EmailName"] = 1] = "EmailName";
+          X509NameType[X509NameType["UpnName"] = 2] = "UpnName";
+          X509NameType[X509NameType["DnsName"] = 3] = "DnsName";
+          X509NameType[X509NameType["DnsFromAlternativeName"] = 4] = "DnsFromAlternativeName";
+          X509NameType[X509NameType["UrlName"] = 5] = "UrlName";
+        })(X509NameType = X509Certificates.X509NameType || (X509Certificates.X509NameType = {}));
+
+        var X509RevocationFlag;
+
+        (function (X509RevocationFlag) {
+          X509RevocationFlag[X509RevocationFlag["EndCertificateOnly"] = 0] = "EndCertificateOnly";
+          X509RevocationFlag[X509RevocationFlag["EntireChain"] = 1] = "EntireChain";
+          X509RevocationFlag[X509RevocationFlag["ExcludeRoot"] = 2] = "ExcludeRoot";
+        })(X509RevocationFlag = X509Certificates.X509RevocationFlag || (X509Certificates.X509RevocationFlag = {}));
+
+        var X509RevocationMode;
+
+        (function (X509RevocationMode) {
+          X509RevocationMode[X509RevocationMode["NoCheck"] = 0] = "NoCheck";
+          X509RevocationMode[X509RevocationMode["Online"] = 1] = "Online";
+          X509RevocationMode[X509RevocationMode["Offline"] = 2] = "Offline";
+        })(X509RevocationMode = X509Certificates.X509RevocationMode || (X509Certificates.X509RevocationMode = {}));
+
+        var X509SubjectKeyIdentifierHashAlgorithm;
+
+        (function (X509SubjectKeyIdentifierHashAlgorithm) {
+          X509SubjectKeyIdentifierHashAlgorithm[X509SubjectKeyIdentifierHashAlgorithm["Sha1"] = 0] = "Sha1";
+          X509SubjectKeyIdentifierHashAlgorithm[X509SubjectKeyIdentifierHashAlgorithm["ShortSha1"] = 1] = "ShortSha1";
+          X509SubjectKeyIdentifierHashAlgorithm[X509SubjectKeyIdentifierHashAlgorithm["CapiSha1"] = 2] = "CapiSha1";
+        })(X509SubjectKeyIdentifierHashAlgorithm = X509Certificates.X509SubjectKeyIdentifierHashAlgorithm || (X509Certificates.X509SubjectKeyIdentifierHashAlgorithm = {}));
+
+        var X509VerificationFlags;
+
+        (function (X509VerificationFlags) {
+          X509VerificationFlags[X509VerificationFlags["NoFlag"] = 0] = "NoFlag";
+          X509VerificationFlags[X509VerificationFlags["IgnoreNotTimeValid"] = 1] = "IgnoreNotTimeValid";
+          X509VerificationFlags[X509VerificationFlags["IgnoreCtlNotTimeValid"] = 2] = "IgnoreCtlNotTimeValid";
+          X509VerificationFlags[X509VerificationFlags["IgnoreNotTimeNested"] = 4] = "IgnoreNotTimeNested";
+          X509VerificationFlags[X509VerificationFlags["IgnoreInvalidBasicConstraints"] = 8] = "IgnoreInvalidBasicConstraints";
+          X509VerificationFlags[X509VerificationFlags["AllowUnknownCertificateAuthority"] = 16] = "AllowUnknownCertificateAuthority";
+          X509VerificationFlags[X509VerificationFlags["IgnoreWrongUsage"] = 32] = "IgnoreWrongUsage";
+          X509VerificationFlags[X509VerificationFlags["IgnoreInvalidName"] = 64] = "IgnoreInvalidName";
+          X509VerificationFlags[X509VerificationFlags["IgnoreInvalidPolicy"] = 128] = "IgnoreInvalidPolicy";
+          X509VerificationFlags[X509VerificationFlags["IgnoreEndRevocationUnknown"] = 256] = "IgnoreEndRevocationUnknown";
+          X509VerificationFlags[X509VerificationFlags["IgnoreCtlSignerRevocationUnknown"] = 512] = "IgnoreCtlSignerRevocationUnknown";
+          X509VerificationFlags[X509VerificationFlags["IgnoreCertificateAuthorityRevocationUnknown"] = 1024] = "IgnoreCertificateAuthorityRevocationUnknown";
+          X509VerificationFlags[X509VerificationFlags["IgnoreRootRevocationUnknown"] = 2048] = "IgnoreRootRevocationUnknown";
+          X509VerificationFlags[X509VerificationFlags["AllFlags"] = 4095] = "AllFlags";
+        })(X509VerificationFlags = X509Certificates.X509VerificationFlags || (X509Certificates.X509VerificationFlags = {}));
+      })(X509Certificates = Cryptography.X509Certificates || (Cryptography.X509Certificates = {}));
+    })(Cryptography = Security.Cryptography || (Security.Cryptography = {}));
+
+    var Permissions;
+
+    (function (Permissions) {
+      var EnvironmentPermissionAccess;
+
+      (function (EnvironmentPermissionAccess) {
+        EnvironmentPermissionAccess[EnvironmentPermissionAccess["NoAccess"] = 0] = "NoAccess";
+        EnvironmentPermissionAccess[EnvironmentPermissionAccess["Read"] = 1] = "Read";
+        EnvironmentPermissionAccess[EnvironmentPermissionAccess["Write"] = 2] = "Write";
+        EnvironmentPermissionAccess[EnvironmentPermissionAccess["AllAccess"] = 3] = "AllAccess";
+      })(EnvironmentPermissionAccess = Permissions.EnvironmentPermissionAccess || (Permissions.EnvironmentPermissionAccess = {}));
+
+      var FileDialogPermissionAccess;
+
+      (function (FileDialogPermissionAccess) {
+        FileDialogPermissionAccess[FileDialogPermissionAccess["None"] = 0] = "None";
+        FileDialogPermissionAccess[FileDialogPermissionAccess["Open"] = 1] = "Open";
+        FileDialogPermissionAccess[FileDialogPermissionAccess["Save"] = 2] = "Save";
+        FileDialogPermissionAccess[FileDialogPermissionAccess["OpenSave"] = 3] = "OpenSave";
+      })(FileDialogPermissionAccess = Permissions.FileDialogPermissionAccess || (Permissions.FileDialogPermissionAccess = {}));
+
+      var FileIOPermissionAccess;
+
+      (function (FileIOPermissionAccess) {
+        FileIOPermissionAccess[FileIOPermissionAccess["NoAccess"] = 0] = "NoAccess";
+        FileIOPermissionAccess[FileIOPermissionAccess["Read"] = 1] = "Read";
+        FileIOPermissionAccess[FileIOPermissionAccess["Write"] = 2] = "Write";
+        FileIOPermissionAccess[FileIOPermissionAccess["Append"] = 4] = "Append";
+        FileIOPermissionAccess[FileIOPermissionAccess["PathDiscovery"] = 8] = "PathDiscovery";
+        FileIOPermissionAccess[FileIOPermissionAccess["AllAccess"] = 15] = "AllAccess";
+      })(FileIOPermissionAccess = Permissions.FileIOPermissionAccess || (Permissions.FileIOPermissionAccess = {}));
+
+      var HostProtectionResource;
+
+      (function (HostProtectionResource) {
+        HostProtectionResource[HostProtectionResource["None"] = 0] = "None";
+        HostProtectionResource[HostProtectionResource["Synchronization"] = 1] = "Synchronization";
+        HostProtectionResource[HostProtectionResource["SharedState"] = 2] = "SharedState";
+        HostProtectionResource[HostProtectionResource["ExternalProcessMgmt"] = 4] = "ExternalProcessMgmt";
+        HostProtectionResource[HostProtectionResource["SelfAffectingProcessMgmt"] = 8] = "SelfAffectingProcessMgmt";
+        HostProtectionResource[HostProtectionResource["ExternalThreading"] = 16] = "ExternalThreading";
+        HostProtectionResource[HostProtectionResource["SelfAffectingThreading"] = 32] = "SelfAffectingThreading";
+        HostProtectionResource[HostProtectionResource["SecurityInfrastructure"] = 64] = "SecurityInfrastructure";
+        HostProtectionResource[HostProtectionResource["UI"] = 128] = "UI";
+        HostProtectionResource[HostProtectionResource["MayLeakOnAbort"] = 256] = "MayLeakOnAbort";
+        HostProtectionResource[HostProtectionResource["All"] = 511] = "All";
+      })(HostProtectionResource = Permissions.HostProtectionResource || (Permissions.HostProtectionResource = {}));
+
+      var IsolatedStorageContainment;
+
+      (function (IsolatedStorageContainment) {
+        IsolatedStorageContainment[IsolatedStorageContainment["None"] = 0] = "None";
+        IsolatedStorageContainment[IsolatedStorageContainment["DomainIsolationByUser"] = 16] = "DomainIsolationByUser";
+        IsolatedStorageContainment[IsolatedStorageContainment["AssemblyIsolationByUser"] = 32] = "AssemblyIsolationByUser";
+        IsolatedStorageContainment[IsolatedStorageContainment["DomainIsolationByRoamingUser"] = 80] = "DomainIsolationByRoamingUser";
+        IsolatedStorageContainment[IsolatedStorageContainment["AssemblyIsolationByRoamingUser"] = 96] = "AssemblyIsolationByRoamingUser";
+        IsolatedStorageContainment[IsolatedStorageContainment["AdministerIsolatedStorageByUser"] = 112] = "AdministerIsolatedStorageByUser";
+        IsolatedStorageContainment[IsolatedStorageContainment["UnrestrictedIsolatedStorage"] = 240] = "UnrestrictedIsolatedStorage";
+        IsolatedStorageContainment[IsolatedStorageContainment["ApplicationIsolationByUser"] = 21] = "ApplicationIsolationByUser";
+        IsolatedStorageContainment[IsolatedStorageContainment["DomainIsolationByMachine"] = 48] = "DomainIsolationByMachine";
+        IsolatedStorageContainment[IsolatedStorageContainment["AssemblyIsolationByMachine"] = 64] = "AssemblyIsolationByMachine";
+        IsolatedStorageContainment[IsolatedStorageContainment["ApplicationIsolationByMachine"] = 69] = "ApplicationIsolationByMachine";
+        IsolatedStorageContainment[IsolatedStorageContainment["ApplicationIsolationByRoamingUser"] = 101] = "ApplicationIsolationByRoamingUser";
+      })(IsolatedStorageContainment = Permissions.IsolatedStorageContainment || (Permissions.IsolatedStorageContainment = {}));
+
+      var KeyContainerPermissionFlags;
+
+      (function (KeyContainerPermissionFlags) {
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["NoFlags"] = 0] = "NoFlags";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["Create"] = 1] = "Create";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["Open"] = 2] = "Open";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["Delete"] = 4] = "Delete";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["Import"] = 16] = "Import";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["Export"] = 32] = "Export";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["Sign"] = 256] = "Sign";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["Decrypt"] = 512] = "Decrypt";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["ViewAcl"] = 4096] = "ViewAcl";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["ChangeAcl"] = 8192] = "ChangeAcl";
+        KeyContainerPermissionFlags[KeyContainerPermissionFlags["AllFlags"] = 13111] = "AllFlags";
+      })(KeyContainerPermissionFlags = Permissions.KeyContainerPermissionFlags || (Permissions.KeyContainerPermissionFlags = {}));
+
+      var PermissionState;
+
+      (function (PermissionState) {
+        PermissionState[PermissionState["Unrestricted"] = 1] = "Unrestricted";
+        PermissionState[PermissionState["None"] = 0] = "None";
+      })(PermissionState = Permissions.PermissionState || (Permissions.PermissionState = {}));
+
+      var ReflectionPermissionFlag;
+
+      (function (ReflectionPermissionFlag) {
+        ReflectionPermissionFlag[ReflectionPermissionFlag["NoFlags"] = 0] = "NoFlags";
+        ReflectionPermissionFlag[ReflectionPermissionFlag["TypeInformation"] = 1] = "TypeInformation";
+        ReflectionPermissionFlag[ReflectionPermissionFlag["MemberAccess"] = 2] = "MemberAccess";
+        ReflectionPermissionFlag[ReflectionPermissionFlag["ReflectionEmit"] = 4] = "ReflectionEmit";
+        ReflectionPermissionFlag[ReflectionPermissionFlag["AllFlags"] = 7] = "AllFlags";
+        ReflectionPermissionFlag[ReflectionPermissionFlag["RestrictedMemberAccess"] = 8] = "RestrictedMemberAccess";
+      })(ReflectionPermissionFlag = Permissions.ReflectionPermissionFlag || (Permissions.ReflectionPermissionFlag = {}));
+
+      var RegistryPermissionAccess;
+
+      (function (RegistryPermissionAccess) {
+        RegistryPermissionAccess[RegistryPermissionAccess["NoAccess"] = 0] = "NoAccess";
+        RegistryPermissionAccess[RegistryPermissionAccess["Read"] = 1] = "Read";
+        RegistryPermissionAccess[RegistryPermissionAccess["Write"] = 2] = "Write";
+        RegistryPermissionAccess[RegistryPermissionAccess["Create"] = 4] = "Create";
+        RegistryPermissionAccess[RegistryPermissionAccess["AllAccess"] = 7] = "AllAccess";
+      })(RegistryPermissionAccess = Permissions.RegistryPermissionAccess || (Permissions.RegistryPermissionAccess = {}));
+
+      var SecurityAction;
+
+      (function (SecurityAction) {
+        SecurityAction[SecurityAction["Demand"] = 2] = "Demand";
+        SecurityAction[SecurityAction["Assert"] = 3] = "Assert";
+        SecurityAction[SecurityAction["Deny"] = 4] = "Deny";
+        SecurityAction[SecurityAction["PermitOnly"] = 5] = "PermitOnly";
+        SecurityAction[SecurityAction["LinkDemand"] = 6] = "LinkDemand";
+        SecurityAction[SecurityAction["InheritanceDemand"] = 7] = "InheritanceDemand";
+        SecurityAction[SecurityAction["RequestMinimum"] = 8] = "RequestMinimum";
+        SecurityAction[SecurityAction["RequestOptional"] = 9] = "RequestOptional";
+        SecurityAction[SecurityAction["RequestRefuse"] = 10] = "RequestRefuse";
+      })(SecurityAction = Permissions.SecurityAction || (Permissions.SecurityAction = {}));
+
+      var SecurityPermissionFlag;
+
+      (function (SecurityPermissionFlag) {
+        SecurityPermissionFlag[SecurityPermissionFlag["NoFlags"] = 0] = "NoFlags";
+        SecurityPermissionFlag[SecurityPermissionFlag["Assertion"] = 1] = "Assertion";
+        SecurityPermissionFlag[SecurityPermissionFlag["UnmanagedCode"] = 2] = "UnmanagedCode";
+        SecurityPermissionFlag[SecurityPermissionFlag["SkipVerification"] = 4] = "SkipVerification";
+        SecurityPermissionFlag[SecurityPermissionFlag["Execution"] = 8] = "Execution";
+        SecurityPermissionFlag[SecurityPermissionFlag["ControlThread"] = 16] = "ControlThread";
+        SecurityPermissionFlag[SecurityPermissionFlag["ControlEvidence"] = 32] = "ControlEvidence";
+        SecurityPermissionFlag[SecurityPermissionFlag["ControlPolicy"] = 64] = "ControlPolicy";
+        SecurityPermissionFlag[SecurityPermissionFlag["SerializationFormatter"] = 128] = "SerializationFormatter";
+        SecurityPermissionFlag[SecurityPermissionFlag["ControlDomainPolicy"] = 256] = "ControlDomainPolicy";
+        SecurityPermissionFlag[SecurityPermissionFlag["ControlPrincipal"] = 512] = "ControlPrincipal";
+        SecurityPermissionFlag[SecurityPermissionFlag["ControlAppDomain"] = 1024] = "ControlAppDomain";
+        SecurityPermissionFlag[SecurityPermissionFlag["RemotingConfiguration"] = 2048] = "RemotingConfiguration";
+        SecurityPermissionFlag[SecurityPermissionFlag["Infrastructure"] = 4096] = "Infrastructure";
+        SecurityPermissionFlag[SecurityPermissionFlag["BindingRedirects"] = 8192] = "BindingRedirects";
+        SecurityPermissionFlag[SecurityPermissionFlag["AllFlags"] = 16383] = "AllFlags";
+      })(SecurityPermissionFlag = Permissions.SecurityPermissionFlag || (Permissions.SecurityPermissionFlag = {}));
+
+      var UIPermissionClipboard;
+
+      (function (UIPermissionClipboard) {
+        UIPermissionClipboard[UIPermissionClipboard["NoClipboard"] = 0] = "NoClipboard";
+        UIPermissionClipboard[UIPermissionClipboard["OwnClipboard"] = 1] = "OwnClipboard";
+        UIPermissionClipboard[UIPermissionClipboard["AllClipboard"] = 2] = "AllClipboard";
+      })(UIPermissionClipboard = Permissions.UIPermissionClipboard || (Permissions.UIPermissionClipboard = {}));
+
+      var UIPermissionWindow;
+
+      (function (UIPermissionWindow) {
+        UIPermissionWindow[UIPermissionWindow["NoWindows"] = 0] = "NoWindows";
+        UIPermissionWindow[UIPermissionWindow["SafeSubWindows"] = 1] = "SafeSubWindows";
+        UIPermissionWindow[UIPermissionWindow["SafeTopLevelWindows"] = 2] = "SafeTopLevelWindows";
+        UIPermissionWindow[UIPermissionWindow["AllWindows"] = 3] = "AllWindows";
+      })(UIPermissionWindow = Permissions.UIPermissionWindow || (Permissions.UIPermissionWindow = {}));
+
+      var TypeDescriptorPermissionFlags;
+
+      (function (TypeDescriptorPermissionFlags) {
+        TypeDescriptorPermissionFlags[TypeDescriptorPermissionFlags["NoFlags"] = 0] = "NoFlags";
+        TypeDescriptorPermissionFlags[TypeDescriptorPermissionFlags["RestrictedRegistrationAccess"] = 1] = "RestrictedRegistrationAccess";
+      })(TypeDescriptorPermissionFlags = Permissions.TypeDescriptorPermissionFlags || (Permissions.TypeDescriptorPermissionFlags = {}));
+
+      var StorePermissionFlags;
+
+      (function (StorePermissionFlags) {
+        StorePermissionFlags[StorePermissionFlags["NoFlags"] = 0] = "NoFlags";
+        StorePermissionFlags[StorePermissionFlags["CreateStore"] = 1] = "CreateStore";
+        StorePermissionFlags[StorePermissionFlags["DeleteStore"] = 2] = "DeleteStore";
+        StorePermissionFlags[StorePermissionFlags["EnumerateStores"] = 4] = "EnumerateStores";
+        StorePermissionFlags[StorePermissionFlags["OpenStore"] = 16] = "OpenStore";
+        StorePermissionFlags[StorePermissionFlags["AddToStore"] = 32] = "AddToStore";
+        StorePermissionFlags[StorePermissionFlags["RemoveFromStore"] = 64] = "RemoveFromStore";
+        StorePermissionFlags[StorePermissionFlags["EnumerateCertificates"] = 128] = "EnumerateCertificates";
+        StorePermissionFlags[StorePermissionFlags["AllFlags"] = 247] = "AllFlags";
+      })(StorePermissionFlags = Permissions.StorePermissionFlags || (Permissions.StorePermissionFlags = {}));
+    })(Permissions = Security.Permissions || (Security.Permissions = {}));
+
+    var Policy;
+
+    (function (Policy) {
+      var ApplicationVersionMatch;
+
+      (function (ApplicationVersionMatch) {
+        ApplicationVersionMatch[ApplicationVersionMatch["MatchExactVersion"] = 0] = "MatchExactVersion";
+        ApplicationVersionMatch[ApplicationVersionMatch["MatchAllVersions"] = 1] = "MatchAllVersions";
+      })(ApplicationVersionMatch = Policy.ApplicationVersionMatch || (Policy.ApplicationVersionMatch = {}));
+
+      var PolicyStatementAttribute;
+
+      (function (PolicyStatementAttribute) {
+        PolicyStatementAttribute[PolicyStatementAttribute["Nothing"] = 0] = "Nothing";
+        PolicyStatementAttribute[PolicyStatementAttribute["Exclusive"] = 1] = "Exclusive";
+        PolicyStatementAttribute[PolicyStatementAttribute["LevelFinal"] = 2] = "LevelFinal";
+        PolicyStatementAttribute[PolicyStatementAttribute["All"] = 3] = "All";
+      })(PolicyStatementAttribute = Policy.PolicyStatementAttribute || (Policy.PolicyStatementAttribute = {}));
+
+      var TrustManagerUIContext;
+
+      (function (TrustManagerUIContext) {
+        TrustManagerUIContext[TrustManagerUIContext["Install"] = 0] = "Install";
+        TrustManagerUIContext[TrustManagerUIContext["Upgrade"] = 1] = "Upgrade";
+        TrustManagerUIContext[TrustManagerUIContext["Run"] = 2] = "Run";
+      })(TrustManagerUIContext = Policy.TrustManagerUIContext || (Policy.TrustManagerUIContext = {}));
+    })(Policy = Security.Policy || (Security.Policy = {}));
+
+    var Principal;
+
+    (function (Principal) {
+      var PrincipalPolicy;
+
+      (function (PrincipalPolicy) {
+        PrincipalPolicy[PrincipalPolicy["UnauthenticatedPrincipal"] = 0] = "UnauthenticatedPrincipal";
+        PrincipalPolicy[PrincipalPolicy["NoPrincipal"] = 1] = "NoPrincipal";
+        PrincipalPolicy[PrincipalPolicy["WindowsPrincipal"] = 2] = "WindowsPrincipal";
+      })(PrincipalPolicy = Principal.PrincipalPolicy || (Principal.PrincipalPolicy = {}));
+
+      var TokenAccessLevels;
+
+      (function (TokenAccessLevels) {
+        TokenAccessLevels[TokenAccessLevels["AssignPrimary"] = 1] = "AssignPrimary";
+        TokenAccessLevels[TokenAccessLevels["Duplicate"] = 2] = "Duplicate";
+        TokenAccessLevels[TokenAccessLevels["Impersonate"] = 4] = "Impersonate";
+        TokenAccessLevels[TokenAccessLevels["Query"] = 8] = "Query";
+        TokenAccessLevels[TokenAccessLevels["QuerySource"] = 16] = "QuerySource";
+        TokenAccessLevels[TokenAccessLevels["AdjustPrivileges"] = 32] = "AdjustPrivileges";
+        TokenAccessLevels[TokenAccessLevels["AdjustGroups"] = 64] = "AdjustGroups";
+        TokenAccessLevels[TokenAccessLevels["AdjustDefault"] = 128] = "AdjustDefault";
+        TokenAccessLevels[TokenAccessLevels["AdjustSessionId"] = 256] = "AdjustSessionId";
+        TokenAccessLevels[TokenAccessLevels["Read"] = 131080] = "Read";
+        TokenAccessLevels[TokenAccessLevels["Write"] = 131296] = "Write";
+        TokenAccessLevels[TokenAccessLevels["AllAccess"] = 983551] = "AllAccess";
+        TokenAccessLevels[TokenAccessLevels["MaximumAllowed"] = 33554432] = "MaximumAllowed";
+      })(TokenAccessLevels = Principal.TokenAccessLevels || (Principal.TokenAccessLevels = {}));
+
+      var TokenImpersonationLevel;
+
+      (function (TokenImpersonationLevel) {
+        TokenImpersonationLevel[TokenImpersonationLevel["Anonymous"] = 1] = "Anonymous";
+        TokenImpersonationLevel[TokenImpersonationLevel["Delegation"] = 4] = "Delegation";
+        TokenImpersonationLevel[TokenImpersonationLevel["Identification"] = 2] = "Identification";
+        TokenImpersonationLevel[TokenImpersonationLevel["Impersonation"] = 3] = "Impersonation";
+        TokenImpersonationLevel[TokenImpersonationLevel["None"] = 0] = "None";
+      })(TokenImpersonationLevel = Principal.TokenImpersonationLevel || (Principal.TokenImpersonationLevel = {}));
+
+      var WellKnownSidType;
+
+      (function (WellKnownSidType) {
+        WellKnownSidType[WellKnownSidType["NullSid"] = 0] = "NullSid";
+        WellKnownSidType[WellKnownSidType["WorldSid"] = 1] = "WorldSid";
+        WellKnownSidType[WellKnownSidType["LocalSid"] = 2] = "LocalSid";
+        WellKnownSidType[WellKnownSidType["CreatorOwnerSid"] = 3] = "CreatorOwnerSid";
+        WellKnownSidType[WellKnownSidType["CreatorGroupSid"] = 4] = "CreatorGroupSid";
+        WellKnownSidType[WellKnownSidType["CreatorOwnerServerSid"] = 5] = "CreatorOwnerServerSid";
+        WellKnownSidType[WellKnownSidType["CreatorGroupServerSid"] = 6] = "CreatorGroupServerSid";
+        WellKnownSidType[WellKnownSidType["NTAuthoritySid"] = 7] = "NTAuthoritySid";
+        WellKnownSidType[WellKnownSidType["DialupSid"] = 8] = "DialupSid";
+        WellKnownSidType[WellKnownSidType["NetworkSid"] = 9] = "NetworkSid";
+        WellKnownSidType[WellKnownSidType["BatchSid"] = 10] = "BatchSid";
+        WellKnownSidType[WellKnownSidType["InteractiveSid"] = 11] = "InteractiveSid";
+        WellKnownSidType[WellKnownSidType["ServiceSid"] = 12] = "ServiceSid";
+        WellKnownSidType[WellKnownSidType["AnonymousSid"] = 13] = "AnonymousSid";
+        WellKnownSidType[WellKnownSidType["ProxySid"] = 14] = "ProxySid";
+        WellKnownSidType[WellKnownSidType["EnterpriseControllersSid"] = 15] = "EnterpriseControllersSid";
+        WellKnownSidType[WellKnownSidType["SelfSid"] = 16] = "SelfSid";
+        WellKnownSidType[WellKnownSidType["AuthenticatedUserSid"] = 17] = "AuthenticatedUserSid";
+        WellKnownSidType[WellKnownSidType["RestrictedCodeSid"] = 18] = "RestrictedCodeSid";
+        WellKnownSidType[WellKnownSidType["TerminalServerSid"] = 19] = "TerminalServerSid";
+        WellKnownSidType[WellKnownSidType["RemoteLogonIdSid"] = 20] = "RemoteLogonIdSid";
+        WellKnownSidType[WellKnownSidType["LogonIdsSid"] = 21] = "LogonIdsSid";
+        WellKnownSidType[WellKnownSidType["LocalSystemSid"] = 22] = "LocalSystemSid";
+        WellKnownSidType[WellKnownSidType["LocalServiceSid"] = 23] = "LocalServiceSid";
+        WellKnownSidType[WellKnownSidType["NetworkServiceSid"] = 24] = "NetworkServiceSid";
+        WellKnownSidType[WellKnownSidType["BuiltinDomainSid"] = 25] = "BuiltinDomainSid";
+        WellKnownSidType[WellKnownSidType["BuiltinAdministratorsSid"] = 26] = "BuiltinAdministratorsSid";
+        WellKnownSidType[WellKnownSidType["BuiltinUsersSid"] = 27] = "BuiltinUsersSid";
+        WellKnownSidType[WellKnownSidType["BuiltinGuestsSid"] = 28] = "BuiltinGuestsSid";
+        WellKnownSidType[WellKnownSidType["BuiltinPowerUsersSid"] = 29] = "BuiltinPowerUsersSid";
+        WellKnownSidType[WellKnownSidType["BuiltinAccountOperatorsSid"] = 30] = "BuiltinAccountOperatorsSid";
+        WellKnownSidType[WellKnownSidType["BuiltinSystemOperatorsSid"] = 31] = "BuiltinSystemOperatorsSid";
+        WellKnownSidType[WellKnownSidType["BuiltinPrintOperatorsSid"] = 32] = "BuiltinPrintOperatorsSid";
+        WellKnownSidType[WellKnownSidType["BuiltinBackupOperatorsSid"] = 33] = "BuiltinBackupOperatorsSid";
+        WellKnownSidType[WellKnownSidType["BuiltinReplicatorSid"] = 34] = "BuiltinReplicatorSid";
+        WellKnownSidType[WellKnownSidType["BuiltinPreWindows2000CompatibleAccessSid"] = 35] = "BuiltinPreWindows2000CompatibleAccessSid";
+        WellKnownSidType[WellKnownSidType["BuiltinRemoteDesktopUsersSid"] = 36] = "BuiltinRemoteDesktopUsersSid";
+        WellKnownSidType[WellKnownSidType["BuiltinNetworkConfigurationOperatorsSid"] = 37] = "BuiltinNetworkConfigurationOperatorsSid";
+        WellKnownSidType[WellKnownSidType["AccountAdministratorSid"] = 38] = "AccountAdministratorSid";
+        WellKnownSidType[WellKnownSidType["AccountGuestSid"] = 39] = "AccountGuestSid";
+        WellKnownSidType[WellKnownSidType["AccountKrbtgtSid"] = 40] = "AccountKrbtgtSid";
+        WellKnownSidType[WellKnownSidType["AccountDomainAdminsSid"] = 41] = "AccountDomainAdminsSid";
+        WellKnownSidType[WellKnownSidType["AccountDomainUsersSid"] = 42] = "AccountDomainUsersSid";
+        WellKnownSidType[WellKnownSidType["AccountDomainGuestsSid"] = 43] = "AccountDomainGuestsSid";
+        WellKnownSidType[WellKnownSidType["AccountComputersSid"] = 44] = "AccountComputersSid";
+        WellKnownSidType[WellKnownSidType["AccountControllersSid"] = 45] = "AccountControllersSid";
+        WellKnownSidType[WellKnownSidType["AccountCertAdminsSid"] = 46] = "AccountCertAdminsSid";
+        WellKnownSidType[WellKnownSidType["AccountSchemaAdminsSid"] = 47] = "AccountSchemaAdminsSid";
+        WellKnownSidType[WellKnownSidType["AccountEnterpriseAdminsSid"] = 48] = "AccountEnterpriseAdminsSid";
+        WellKnownSidType[WellKnownSidType["AccountPolicyAdminsSid"] = 49] = "AccountPolicyAdminsSid";
+        WellKnownSidType[WellKnownSidType["AccountRasAndIasServersSid"] = 50] = "AccountRasAndIasServersSid";
+        WellKnownSidType[WellKnownSidType["NtlmAuthenticationSid"] = 51] = "NtlmAuthenticationSid";
+        WellKnownSidType[WellKnownSidType["DigestAuthenticationSid"] = 52] = "DigestAuthenticationSid";
+        WellKnownSidType[WellKnownSidType["SChannelAuthenticationSid"] = 53] = "SChannelAuthenticationSid";
+        WellKnownSidType[WellKnownSidType["ThisOrganizationSid"] = 54] = "ThisOrganizationSid";
+        WellKnownSidType[WellKnownSidType["OtherOrganizationSid"] = 55] = "OtherOrganizationSid";
+        WellKnownSidType[WellKnownSidType["BuiltinIncomingForestTrustBuildersSid"] = 56] = "BuiltinIncomingForestTrustBuildersSid";
+        WellKnownSidType[WellKnownSidType["BuiltinPerformanceMonitoringUsersSid"] = 57] = "BuiltinPerformanceMonitoringUsersSid";
+        WellKnownSidType[WellKnownSidType["BuiltinPerformanceLoggingUsersSid"] = 58] = "BuiltinPerformanceLoggingUsersSid";
+        WellKnownSidType[WellKnownSidType["BuiltinAuthorizationAccessSid"] = 59] = "BuiltinAuthorizationAccessSid";
+        WellKnownSidType[WellKnownSidType["WinBuiltinTerminalServerLicenseServersSid"] = 60] = "WinBuiltinTerminalServerLicenseServersSid";
+        WellKnownSidType[WellKnownSidType["MaxDefined"] = 60] = "MaxDefined";
+        WellKnownSidType[WellKnownSidType["WinBuiltinDCOMUsersSid"] = 61] = "WinBuiltinDCOMUsersSid";
+        WellKnownSidType[WellKnownSidType["WinBuiltinIUsersSid"] = 62] = "WinBuiltinIUsersSid";
+        WellKnownSidType[WellKnownSidType["WinIUserSid"] = 63] = "WinIUserSid";
+        WellKnownSidType[WellKnownSidType["WinBuiltinCryptoOperatorsSid"] = 64] = "WinBuiltinCryptoOperatorsSid";
+        WellKnownSidType[WellKnownSidType["WinUntrustedLabelSid"] = 65] = "WinUntrustedLabelSid";
+        WellKnownSidType[WellKnownSidType["WinLowLabelSid"] = 66] = "WinLowLabelSid";
+        WellKnownSidType[WellKnownSidType["WinMediumLabelSid"] = 67] = "WinMediumLabelSid";
+        WellKnownSidType[WellKnownSidType["WinHighLabelSid"] = 68] = "WinHighLabelSid";
+        WellKnownSidType[WellKnownSidType["WinSystemLabelSid"] = 69] = "WinSystemLabelSid";
+        WellKnownSidType[WellKnownSidType["WinWriteRestrictedCodeSid"] = 70] = "WinWriteRestrictedCodeSid";
+        WellKnownSidType[WellKnownSidType["WinCreatorOwnerRightsSid"] = 71] = "WinCreatorOwnerRightsSid";
+        WellKnownSidType[WellKnownSidType["WinCacheablePrincipalsGroupSid"] = 72] = "WinCacheablePrincipalsGroupSid";
+        WellKnownSidType[WellKnownSidType["WinNonCacheablePrincipalsGroupSid"] = 73] = "WinNonCacheablePrincipalsGroupSid";
+        WellKnownSidType[WellKnownSidType["WinEnterpriseReadonlyControllersSid"] = 74] = "WinEnterpriseReadonlyControllersSid";
+        WellKnownSidType[WellKnownSidType["WinAccountReadonlyControllersSid"] = 75] = "WinAccountReadonlyControllersSid";
+        WellKnownSidType[WellKnownSidType["WinBuiltinEventLogReadersGroup"] = 76] = "WinBuiltinEventLogReadersGroup";
+        WellKnownSidType[WellKnownSidType["WinNewEnterpriseReadonlyControllersSid"] = 77] = "WinNewEnterpriseReadonlyControllersSid";
+        WellKnownSidType[WellKnownSidType["WinBuiltinCertSvcDComAccessGroup"] = 78] = "WinBuiltinCertSvcDComAccessGroup";
+        WellKnownSidType[WellKnownSidType["WinMediumPlusLabelSid"] = 79] = "WinMediumPlusLabelSid";
+        WellKnownSidType[WellKnownSidType["WinLocalLogonSid"] = 80] = "WinLocalLogonSid";
+        WellKnownSidType[WellKnownSidType["WinConsoleLogonSid"] = 81] = "WinConsoleLogonSid";
+        WellKnownSidType[WellKnownSidType["WinThisOrganizationCertificateSid"] = 82] = "WinThisOrganizationCertificateSid";
+        WellKnownSidType[WellKnownSidType["WinApplicationPackageAuthoritySid"] = 83] = "WinApplicationPackageAuthoritySid";
+        WellKnownSidType[WellKnownSidType["WinBuiltinAnyPackageSid"] = 84] = "WinBuiltinAnyPackageSid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityInternetClientSid"] = 85] = "WinCapabilityInternetClientSid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityInternetClientServerSid"] = 86] = "WinCapabilityInternetClientServerSid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityPrivateNetworkClientServerSid"] = 87] = "WinCapabilityPrivateNetworkClientServerSid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityPicturesLibrarySid"] = 88] = "WinCapabilityPicturesLibrarySid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityVideosLibrarySid"] = 89] = "WinCapabilityVideosLibrarySid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityMusicLibrarySid"] = 90] = "WinCapabilityMusicLibrarySid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityDocumentsLibrarySid"] = 91] = "WinCapabilityDocumentsLibrarySid";
+        WellKnownSidType[WellKnownSidType["WinCapabilitySharedUserCertificatesSid"] = 92] = "WinCapabilitySharedUserCertificatesSid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityEnterpriseAuthenticationSid"] = 93] = "WinCapabilityEnterpriseAuthenticationSid";
+        WellKnownSidType[WellKnownSidType["WinCapabilityRemovableStorageSid"] = 94] = "WinCapabilityRemovableStorageSid";
+      })(WellKnownSidType = Principal.WellKnownSidType || (Principal.WellKnownSidType = {}));
+
+      var WindowsAccountType;
+
+      (function (WindowsAccountType) {
+        WindowsAccountType[WindowsAccountType["Normal"] = 0] = "Normal";
+        WindowsAccountType[WindowsAccountType["Guest"] = 1] = "Guest";
+        WindowsAccountType[WindowsAccountType["System"] = 2] = "System";
+        WindowsAccountType[WindowsAccountType["Anonymous"] = 3] = "Anonymous";
+      })(WindowsAccountType = Principal.WindowsAccountType || (Principal.WindowsAccountType = {}));
+
+      var WindowsBuiltInRole;
+
+      (function (WindowsBuiltInRole) {
+        WindowsBuiltInRole[WindowsBuiltInRole["Administrator"] = 544] = "Administrator";
+        WindowsBuiltInRole[WindowsBuiltInRole["User"] = 545] = "User";
+        WindowsBuiltInRole[WindowsBuiltInRole["Guest"] = 546] = "Guest";
+        WindowsBuiltInRole[WindowsBuiltInRole["PowerUser"] = 547] = "PowerUser";
+        WindowsBuiltInRole[WindowsBuiltInRole["AccountOperator"] = 548] = "AccountOperator";
+        WindowsBuiltInRole[WindowsBuiltInRole["SystemOperator"] = 549] = "SystemOperator";
+        WindowsBuiltInRole[WindowsBuiltInRole["PrintOperator"] = 550] = "PrintOperator";
+        WindowsBuiltInRole[WindowsBuiltInRole["BackupOperator"] = 551] = "BackupOperator";
+        WindowsBuiltInRole[WindowsBuiltInRole["Replicator"] = 552] = "Replicator";
+      })(WindowsBuiltInRole = Principal.WindowsBuiltInRole || (Principal.WindowsBuiltInRole = {}));
+    })(Principal = Security.Principal || (Security.Principal = {}));
+  })(Security = System.Security || (System.Security = {}));
+
+  var Text;
+
+  (function (Text) {
+    var NormalizationForm;
+
+    (function (NormalizationForm) {
+      NormalizationForm[NormalizationForm["FormC"] = 1] = "FormC";
+      NormalizationForm[NormalizationForm["FormD"] = 2] = "FormD";
+      NormalizationForm[NormalizationForm["FormKC"] = 5] = "FormKC";
+      NormalizationForm[NormalizationForm["FormKD"] = 6] = "FormKD";
+    })(NormalizationForm = Text.NormalizationForm || (Text.NormalizationForm = {}));
+
+    var RegularExpressions;
+
+    (function (RegularExpressions) {
+      var RegexOptions;
+
+      (function (RegexOptions) {
+        RegexOptions[RegexOptions["None"] = 0] = "None";
+        RegexOptions[RegexOptions["IgnoreCase"] = 1] = "IgnoreCase";
+        RegexOptions[RegexOptions["Multiline"] = 2] = "Multiline";
+        RegexOptions[RegexOptions["ExplicitCapture"] = 4] = "ExplicitCapture";
+        RegexOptions[RegexOptions["Compiled"] = 8] = "Compiled";
+        RegexOptions[RegexOptions["Singleline"] = 16] = "Singleline";
+        RegexOptions[RegexOptions["IgnorePatternWhitespace"] = 32] = "IgnorePatternWhitespace";
+        RegexOptions[RegexOptions["RightToLeft"] = 64] = "RightToLeft";
+        RegexOptions[RegexOptions["ECMAScript"] = 256] = "ECMAScript";
+        RegexOptions[RegexOptions["CultureInvariant"] = 512] = "CultureInvariant";
+      })(RegexOptions = RegularExpressions.RegexOptions || (RegularExpressions.RegexOptions = {}));
+    })(RegularExpressions = Text.RegularExpressions || (Text.RegularExpressions = {}));
+  })(Text = System.Text || (System.Text = {}));
+
+  var Threading;
+
+  (function (Threading) {
+    var LazyThreadSafetyMode;
+
+    (function (LazyThreadSafetyMode) {
+      LazyThreadSafetyMode[LazyThreadSafetyMode["None"] = 0] = "None";
+      LazyThreadSafetyMode[LazyThreadSafetyMode["PublicationOnly"] = 1] = "PublicationOnly";
+      LazyThreadSafetyMode[LazyThreadSafetyMode["ExecutionAndPublication"] = 2] = "ExecutionAndPublication";
+    })(LazyThreadSafetyMode = Threading.LazyThreadSafetyMode || (Threading.LazyThreadSafetyMode = {}));
+
+    var ApartmentState;
+
+    (function (ApartmentState) {
+      ApartmentState[ApartmentState["STA"] = 0] = "STA";
+      ApartmentState[ApartmentState["MTA"] = 1] = "MTA";
+      ApartmentState[ApartmentState["Unknown"] = 2] = "Unknown";
+    })(ApartmentState = Threading.ApartmentState || (Threading.ApartmentState = {}));
+
+    var EventResetMode;
+
+    (function (EventResetMode) {
+      EventResetMode[EventResetMode["AutoReset"] = 0] = "AutoReset";
+      EventResetMode[EventResetMode["ManualReset"] = 1] = "ManualReset";
+    })(EventResetMode = Threading.EventResetMode || (Threading.EventResetMode = {}));
+
+    var ThreadPriority;
+
+    (function (ThreadPriority) {
+      ThreadPriority[ThreadPriority["Lowest"] = 0] = "Lowest";
+      ThreadPriority[ThreadPriority["BelowNormal"] = 1] = "BelowNormal";
+      ThreadPriority[ThreadPriority["Normal"] = 2] = "Normal";
+      ThreadPriority[ThreadPriority["AboveNormal"] = 3] = "AboveNormal";
+      ThreadPriority[ThreadPriority["Highest"] = 4] = "Highest";
+    })(ThreadPriority = Threading.ThreadPriority || (Threading.ThreadPriority = {}));
+
+    var ThreadState;
+
+    (function (ThreadState) {
+      ThreadState[ThreadState["Running"] = 0] = "Running";
+      ThreadState[ThreadState["StopRequested"] = 1] = "StopRequested";
+      ThreadState[ThreadState["SuspendRequested"] = 2] = "SuspendRequested";
+      ThreadState[ThreadState["Background"] = 4] = "Background";
+      ThreadState[ThreadState["Unstarted"] = 8] = "Unstarted";
+      ThreadState[ThreadState["Stopped"] = 16] = "Stopped";
+      ThreadState[ThreadState["WaitSleepJoin"] = 32] = "WaitSleepJoin";
+      ThreadState[ThreadState["Suspended"] = 64] = "Suspended";
+      ThreadState[ThreadState["AbortRequested"] = 128] = "AbortRequested";
+      ThreadState[ThreadState["Aborted"] = 256] = "Aborted";
+    })(ThreadState = Threading.ThreadState || (Threading.ThreadState = {}));
+
+    var LockRecursionPolicy;
+
+    (function (LockRecursionPolicy) {
+      LockRecursionPolicy[LockRecursionPolicy["NoRecursion"] = 0] = "NoRecursion";
+      LockRecursionPolicy[LockRecursionPolicy["SupportsRecursion"] = 1] = "SupportsRecursion";
+    })(LockRecursionPolicy = Threading.LockRecursionPolicy || (Threading.LockRecursionPolicy = {}));
+
+    var Tasks;
+
+    (function (Tasks) {
+      var TaskStatus;
+
+      (function (TaskStatus) {
+        TaskStatus[TaskStatus["Created"] = 0] = "Created";
+        TaskStatus[TaskStatus["WaitingForActivation"] = 1] = "WaitingForActivation";
+        TaskStatus[TaskStatus["WaitingToRun"] = 2] = "WaitingToRun";
+        TaskStatus[TaskStatus["Running"] = 3] = "Running";
+        TaskStatus[TaskStatus["WaitingForChildrenToComplete"] = 4] = "WaitingForChildrenToComplete";
+        TaskStatus[TaskStatus["RanToCompletion"] = 5] = "RanToCompletion";
+        TaskStatus[TaskStatus["Canceled"] = 6] = "Canceled";
+        TaskStatus[TaskStatus["Faulted"] = 7] = "Faulted";
+      })(TaskStatus = Tasks.TaskStatus || (Tasks.TaskStatus = {}));
+
+      var TaskCreationOptions;
+
+      (function (TaskCreationOptions) {
+        TaskCreationOptions[TaskCreationOptions["None"] = 0] = "None";
+        TaskCreationOptions[TaskCreationOptions["PreferFairness"] = 1] = "PreferFairness";
+        TaskCreationOptions[TaskCreationOptions["LongRunning"] = 2] = "LongRunning";
+        TaskCreationOptions[TaskCreationOptions["AttachedToParent"] = 4] = "AttachedToParent";
+        TaskCreationOptions[TaskCreationOptions["DenyChildAttach"] = 8] = "DenyChildAttach";
+        TaskCreationOptions[TaskCreationOptions["HideScheduler"] = 16] = "HideScheduler";
+        TaskCreationOptions[TaskCreationOptions["RunContinuationsAsynchronously"] = 64] = "RunContinuationsAsynchronously";
+      })(TaskCreationOptions = Tasks.TaskCreationOptions || (Tasks.TaskCreationOptions = {}));
+
+      var TaskContinuationOptions;
+
+      (function (TaskContinuationOptions) {
+        TaskContinuationOptions[TaskContinuationOptions["None"] = 0] = "None";
+        TaskContinuationOptions[TaskContinuationOptions["PreferFairness"] = 1] = "PreferFairness";
+        TaskContinuationOptions[TaskContinuationOptions["LongRunning"] = 2] = "LongRunning";
+        TaskContinuationOptions[TaskContinuationOptions["AttachedToParent"] = 4] = "AttachedToParent";
+        TaskContinuationOptions[TaskContinuationOptions["DenyChildAttach"] = 8] = "DenyChildAttach";
+        TaskContinuationOptions[TaskContinuationOptions["HideScheduler"] = 16] = "HideScheduler";
+        TaskContinuationOptions[TaskContinuationOptions["LazyCancellation"] = 32] = "LazyCancellation";
+        TaskContinuationOptions[TaskContinuationOptions["RunContinuationsAsynchronously"] = 64] = "RunContinuationsAsynchronously";
+        TaskContinuationOptions[TaskContinuationOptions["NotOnRanToCompletion"] = 65536] = "NotOnRanToCompletion";
+        TaskContinuationOptions[TaskContinuationOptions["NotOnFaulted"] = 131072] = "NotOnFaulted";
+        TaskContinuationOptions[TaskContinuationOptions["NotOnCanceled"] = 262144] = "NotOnCanceled";
+        TaskContinuationOptions[TaskContinuationOptions["OnlyOnRanToCompletion"] = 393216] = "OnlyOnRanToCompletion";
+        TaskContinuationOptions[TaskContinuationOptions["OnlyOnFaulted"] = 327680] = "OnlyOnFaulted";
+        TaskContinuationOptions[TaskContinuationOptions["OnlyOnCanceled"] = 196608] = "OnlyOnCanceled";
+        TaskContinuationOptions[TaskContinuationOptions["ExecuteSynchronously"] = 524288] = "ExecuteSynchronously";
+      })(TaskContinuationOptions = Tasks.TaskContinuationOptions || (Tasks.TaskContinuationOptions = {}));
+    })(Tasks = Threading.Tasks || (Threading.Tasks = {}));
+  })(Threading = System.Threading || (System.Threading = {}));
+
+  var Timers;
+
+  (function (Timers) {})(Timers = System.Timers || (System.Timers = {}));
+
+  var Web;
+
+  (function (Web) {
+    var AspNetHostingPermissionLevel;
+
+    (function (AspNetHostingPermissionLevel) {
+      AspNetHostingPermissionLevel[AspNetHostingPermissionLevel["None"] = 100] = "None";
+      AspNetHostingPermissionLevel[AspNetHostingPermissionLevel["Minimal"] = 200] = "Minimal";
+      AspNetHostingPermissionLevel[AspNetHostingPermissionLevel["Low"] = 300] = "Low";
+      AspNetHostingPermissionLevel[AspNetHostingPermissionLevel["Medium"] = 400] = "Medium";
+      AspNetHostingPermissionLevel[AspNetHostingPermissionLevel["High"] = 500] = "High";
+      AspNetHostingPermissionLevel[AspNetHostingPermissionLevel["Unrestricted"] = 600] = "Unrestricted";
+    })(AspNetHostingPermissionLevel = Web.AspNetHostingPermissionLevel || (Web.AspNetHostingPermissionLevel = {}));
+  })(Web = System.Web || (System.Web = {}));
+})(System || (System = {}));
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/generated/index.js
 
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/index.js
+
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/components.js
+var ImageFitMode;
+
+(function (ImageFitMode) {
+  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
+  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
+  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
+  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
+  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
+  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
+  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
+})(ImageFitMode || (ImageFitMode = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/index.js
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/editor.js
 
 
 
@@ -6310,18 +14324,14 @@ var ReactUnity;
 
 
 
-
-
-
-
-
-
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(359);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(379);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./src/editor/index.module.scss
-var index_module = __webpack_require__(771);
-;// CONCATENATED MODULE: ./src/editor/index.module.scss
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[1].oneOf[6].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].oneOf[6].use[3]!./src/index.module.scss
+var index_module = __webpack_require__(637);
+;// CONCATENATED MODULE: ./src/index.module.scss
 
             
 
@@ -6334,17 +14344,18 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
 
 
-/* harmony default export */ const editor_index_module = (index_module/* default.locals */.Z.locals || {});
-;// CONCATENATED MODULE: ./src/editor/index.tsx
-function App(){return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:["Hello world",/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{children:["My name is React",/*#__PURE__*/(0,jsx_runtime.jsx)("view",{children:"A good framework"})]})]});};renderer_Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
-;// CONCATENATED MODULE: ./src/index.tsx
+/* harmony default export */ const src_index_module = (index_module/* default.locals */.Z.locals || {});
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(114);
+;// CONCATENATED MODULE: ./src/app.tsx
+function App(){var _useState=(0,react.useState)(0),_useState2=_slicedToArray(_useState,2),ct=_useState2[0],setCt=_useState2[1];var a=5;(0,react.useEffect)(function(){setInterval(function(){return setCt(function(x){return x+1;});},1000);},[setCt]);var ongui=function ongui(){if(UnityEngine.GUILayout.Button("I am a button",UnityEngine.GUILayout.Width(150))){console.log("You clicked the button!");}var startPoint=new UnityEngine.Vector3(-0.0,0.0,0.0);var endPoint=new UnityEngine.Vector3(50.0,50.0,0.0);UnityEditor.Handles.color=UnityEngine.Color.black;UnityEditor.Handles.DrawLine(startPoint,endPoint,5);};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexGrow:1},children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("toolbar",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("tb-button",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("tb-popupsearch",{}),/*#__PURE__*/(0,jsx_runtime.jsx)("tb-toggle",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsx)("tb-breadcrumbs",{children:"My bread crumbs"})]}),"Hello world",/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{onClick:function onClick(){return console.log('Clickff');},onContextClick:function onContextClick(){return console.log('Context click');},onFocus:function onFocus(){return console.log('Selected');},onBlur:function onBlur(){return console.log('Deselected');},focusable:true,children:["My name is ",ct,"A good framework"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("imgui",{onGUI:ongui})]});};Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+;// CONCATENATED MODULE: ./src/index.ts
 /* module decorator */ module = __webpack_require__.hmd(module);
-var _module,_module$hot;// import './showcase';
-(_module=module)===null||_module===void 0?void 0:(_module$hot=_module.hot)===null||_module$hot===void 0?void 0:_module$hot.accept();
+var _module,_module$hot;(_module=module)===null||_module===void 0?void 0:(_module$hot=_module.hot)===null||_module$hot===void 0?void 0:_module$hot.accept();
 
 /***/ }),
 
-/***/ 667:
+/***/ 489:
 /***/ ((module) => {
 
 "use strict";
@@ -6417,7 +14428,7 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ 916:
+/***/ 625:
 /***/ ((module) => {
 
 "use strict";
@@ -6519,7 +14530,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 422:
+/***/ 314:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
@@ -6535,9 +14546,9 @@ module.exports = function $$$reconciler($$$hostConfig) {
   var exports = {};
   'use strict';
 
-  var aa = __webpack_require__(916),
-      ba = __webpack_require__(201),
-      m = __webpack_require__(735);
+  var aa = __webpack_require__(625),
+      ba = __webpack_require__(359),
+      m = __webpack_require__(22);
 
   function q(a) {
     for (var b = "https://reactjs.org/docs/error-decoder.html?invariant=" + a, c = 1; c < arguments.length; c++) {
@@ -12230,19 +20241,19 @@ module.exports = function $$$reconciler($$$hostConfig) {
 
 /***/ }),
 
-/***/ 377:
+/***/ 84:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(422);
+  module.exports = __webpack_require__(314);
 } else {}
 
 /***/ }),
 
-/***/ 764:
+/***/ 93:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -12257,9 +20268,9 @@ var __webpack_unused_export__;
  */
 
 
-__webpack_require__(916);
+__webpack_require__(625);
 
-var f = __webpack_require__(201),
+var f = __webpack_require__(359),
     g = 60103;
 
 __webpack_unused_export__ = 60107;
@@ -12310,7 +20321,7 @@ exports.jsxs = q;
 
 /***/ }),
 
-/***/ 51:
+/***/ 357:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -12324,7 +20335,7 @@ exports.jsxs = q;
  */
 
 
-var l = __webpack_require__(916),
+var l = __webpack_require__(625),
     n = 60103,
     p = 60106;
 
@@ -12731,31 +20742,31 @@ exports.version = "17.0.1";
 
 /***/ }),
 
-/***/ 201:
+/***/ 359:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(51);
+  module.exports = __webpack_require__(357);
 } else {}
 
 /***/ }),
 
-/***/ 461:
+/***/ 114:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(764);
+  module.exports = __webpack_require__(93);
 } else {}
 
 /***/ }),
 
-/***/ 557:
+/***/ 822:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -13107,32 +21118,32 @@ exports.unstable_wrapCallback = function (a) {
 
 /***/ }),
 
-/***/ 735:
+/***/ 22:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(557);
+  module.exports = __webpack_require__(822);
 } else {}
 
 /***/ }),
 
-/***/ 771:
+/***/ 637:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(667);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(489);
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "view{background-color:0, 0, 0, 0.2;color:white}view view{color:red}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13498,9 +21509,11 @@ module.exports = function (list, options) {
 /******/ 	})();
 /******/ 	
 /************************************************************************/
+/******/ 	
 /******/ 	// startup
-/******/ 	// Load entry module
+/******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	__webpack_require__(871);
+/******/ 	var __webpack_exports__ = __webpack_require__(310);
+/******/ 	
 /******/ })()
 ;

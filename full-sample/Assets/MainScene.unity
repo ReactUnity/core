@@ -164,7 +164,6 @@ MonoBehaviour:
     SourcePath: react/index
     SourceText: 
     ResourcesPath: 
-    Watch: 0
     UseDevServer: 1
     DevServer: http://localhost:3000
   PreloadScripts: []

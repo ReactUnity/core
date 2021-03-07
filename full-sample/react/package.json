@@ -10,10 +10,11 @@
     "start": "react-unity-scripts start",
     "build": "react-unity-scripts build",
     "lint": "eslint --ext js,ts,tsx src",
+    "preinstall": "npx only-allow@1.0.0 yarn",
     "test": "react-unity-scripts start --test"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.0.17",
+    "@reactunity/renderer": "^0.0.18",
     "@reduxjs/toolkit": "^1.5.0",
     "classnames": "^2.2.6",
     "history": "^5.0.0",
@@ -23,7 +24,7 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.1.5",
+    "@reactunity/scripts": "^0.1.7",
     "@types/react-redux": "^7.1.16",
     "node-sass": "^5.0.0",
     "svg-to-png-loader": "^3.0.0",

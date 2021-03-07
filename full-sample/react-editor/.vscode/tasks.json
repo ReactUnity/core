@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Start React",
+      "label": "Start Editor",
       "command": "yarn start",
       "type": "shell",
       "presentation": {
@@ -10,7 +10,7 @@
       }
     },
     {
-      "label": "Build React",
+      "label": "Build Editor",
       "command": "yarn build",
       "type": "shell",
       "presentation": {
