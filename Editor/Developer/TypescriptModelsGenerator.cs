@@ -38,8 +38,10 @@ namespace ReactUnity.Editor.Developer
                 },
                 new List<string> { "Unity", "UnityEngine" },
                 new List<string> { },
-                new Dictionary<string, string>(),
-                new List<string> { }
+                new Dictionary<string, string> { { "System", "system" } },
+                new List<string> { },
+                true,
+                true
             );
         }
 
@@ -52,8 +54,10 @@ namespace ReactUnity.Editor.Developer
                 },
                 new List<string> { "UnityEditor" },
                 new List<string> { "UnityEngine.InputSystem", "UnityEngine.Experimental" },
-                new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" } },
-                new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" }
+                new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" }, { "System", "system" } },
+                new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" },
+                true,
+                true
             );
         }
 
@@ -64,7 +68,7 @@ namespace ReactUnity.Editor.Developer
                 new List<Assembly> { typeof(ReactUnity).Assembly, typeof(TypescriptModelsGenerator).Assembly },
                 new List<string> { "ReactUnity" },
                 new List<string> { "UnityEngine.InputSystem" },
-                new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" } },
+                new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" }, { "System", "system" } },
                 new List<string> { },
                 true,
                 true
@@ -78,14 +82,18 @@ namespace ReactUnity.Editor.Developer
                 new List<Assembly> {
                     typeof(System.Convert).Assembly,
                     typeof(System.Object).Assembly,
+                    typeof(System.Collections.Generic.HashSet<>).Assembly,
+                    typeof(System.Diagnostics.TraceFilter).Assembly,
                     typeof(System.Collections.IEnumerator).Assembly,
-                    typeof(System.Collections.IDictionary).Assembly,
+                    typeof(System.Collections.Specialized.StringDictionary).Assembly,
                     typeof(System.Reflection.Assembly).Assembly,
                 },
                 new List<string> { "System" },
-                new List<string> { },
+                new List<string> { "System.Configuration", "System.Xml", "System.Net" },
                 new Dictionary<string, string> { },
-                new List<string> { }
+                new List<string> { },
+                true,
+                true
             );
         }
 #endif
@@ -96,7 +104,7 @@ namespace ReactUnity.Editor.Developer
         static Dictionary<string, string> ImportNamespaces;
         static HashSet<string> Imports;
         static bool ExportAsClass;
-        static bool GenerateGenericClasses;
+        static bool AllowGeneric;
 
         static void Generate(List<Assembly> assemblies, List<string> include, List<string> exclude, Dictionary<string, string> import, List<string> excludeTypes,
             bool exportAsClass = true, bool generateGenericClasses = false)
@@ -110,7 +118,7 @@ namespace ReactUnity.Editor.Developer
             ExcludedNamespaces = exclude ?? new List<string>();
             Imports = new HashSet<string>();
             ExportAsClass = exportAsClass;
-            GenerateGenericClasses = generateGenericClasses;
+            AllowGeneric = generateGenericClasses;
 
             var res = GetTypescript(assemblies);
             File.WriteAllText(filePath, res);
@@ -120,7 +128,10 @@ namespace ReactUnity.Editor.Developer
 
         static string GetTypescript(List<Assembly> assemblies)
         {
-            var types = assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, GenerateGenericClasses)).OrderBy(x => x.Namespace).Append(null);
+            var types = assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, AllowGeneric)).OrderBy(x => x.Namespace)
+                .GroupBy(x => GetNameWithoutGenericArity(x.ToString()))
+                .Select(x => x.OrderByDescending(x => x.GetGenericArguments().Length).First())
+                .Append(null);
             var sb = new StringBuilder();
 
             var nsStack = new Stack<string>();
@@ -168,7 +179,7 @@ namespace ReactUnity.Editor.Developer
 
                 if (type.IsEnum)
                 {
-                    sb.Append($"{bl}export enum {getTypesScriptType(type, false)} {{{n}");
+                    sb.Append($"{bl}export enum {getTypesScriptType(type, false, true)} {{{n}");
                     var fields = type.GetFields().Where(x => x.Name != "value__");
 
                     foreach (var info in fields)
@@ -176,7 +187,7 @@ namespace ReactUnity.Editor.Developer
                 }
                 else
                 {
-                    sb.Append($"{bl}{(ExportAsClass ? "export declare class" : "export interface")} {getTypesScriptType(type, false, true, GenerateGenericClasses)} {{{n}");
+                    sb.Append($"{bl}{(ExportAsClass && !type.IsInterface ? "export declare class" : "export interface")} {getTypesScriptType(type, false, true, AllowGeneric, " = any")} {{{n}");
 
                     if (ExportAsClass)
                     {
@@ -229,6 +240,7 @@ namespace ReactUnity.Editor.Developer
             return t != null &&
               IncludedNamespaces.Any(x => t.FullName.StartsWith(x + ".")) &&
               (t.DeclaringType == null || filterType(t.DeclaringType, allowGeneric)) &&
+              (!ExcludedNamespaces.Any(x => t.Namespace.StartsWith(x))) &&
               (t.IsPublic || t.IsNestedPublic) &&
               !typeof(Attribute).IsAssignableFrom(t) &&
               !t.FullName.Contains("<") &&
@@ -237,9 +249,9 @@ namespace ReactUnity.Editor.Developer
 
         static string getTypeScriptString(PropertyInfo info)
         {
-            var typeString = getTypesScriptType(info.PropertyType, true);
-            var isNullable = info.PropertyType.ToString().Contains("Nullable");
             var isStatic = info.GetAccessors(true)[0].IsStatic;
+            var typeString = getTypesScriptType(info.PropertyType, true, false, AllowGeneric && !isStatic);
+            var isNullable = info.PropertyType.ToString().Contains("Nullable");
 
             return string.Format("{3}{0}{4}: {1};{2}",
               info.Name,
@@ -252,9 +264,9 @@ namespace ReactUnity.Editor.Developer
 
         static string getTypeScriptString(FieldInfo info)
         {
-            var typeString = getTypesScriptType(info.FieldType, true);
-            var isNullable = info.FieldType.ToString().Contains("Nullable");
             var isStatic = info.IsStatic;
+            var typeString = getTypesScriptType(info.FieldType, true, false, AllowGeneric && !isStatic);
+            var isNullable = info.FieldType.ToString().Contains("Nullable");
 
             return string.Format("{3}{0}{4}: {1};{2}",
               info.Name,
@@ -280,8 +292,8 @@ namespace ReactUnity.Editor.Developer
 
         static string getTypeScriptString(MethodInfo info)
         {
-            var retType = getTypesScriptType(info.ReturnType, true);
-            var args = string.Join(", ", info.GetParameters().Select(getTypeScriptString));
+            var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
+            var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
 
             return string.Format("({0}) => {1}",
               args,
@@ -291,17 +303,17 @@ namespace ReactUnity.Editor.Developer
 
         static string getTypeScriptString(ConstructorInfo info)
         {
-            var args = string.Join(", ", info.GetParameters().Select(getTypeScriptString));
+            var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, true)));
 
             return string.Format("constructor({0});", args);
         }
 
-        static string getTypeScriptString(ParameterInfo info)
+        static string getTypeScriptString(ParameterInfo info, bool allowGeneric)
         {
-            var typeString = getTypesScriptType(info.ParameterType, true);
+            var typeString = getTypesScriptType(info.ParameterType, true, false, allowGeneric);
             var isParams = info.GetCustomAttribute(typeof(ParamArrayAttribute), false) != null;
 
-            var keywords = new HashSet<string> { "arguments", "function" };
+            var keywords = new HashSet<string> { "arguments", "function", "finally" };
 
             return string.Format("{3}{0}{2}: {1}",
                 keywords.Contains(info.Name) ? info.Name + "CS" : info.Name,
@@ -336,9 +348,10 @@ namespace ReactUnity.Editor.Developer
         }
 
 
-        static string getTypesScriptType(Type type, bool withNs, bool skipKnownTypes = false, bool allowGeneric = false)
+        static string getTypesScriptType(Type type, bool withNs, bool skipKnownTypes = false, bool allowGeneric = false, string suffixGeneric = "")
         {
             var propertyType = type.ToString();
+            var genArgs = type.GetGenericArguments();
 
             if (ExcludedTypes.Contains(propertyType)) return "any";
 
@@ -348,6 +361,9 @@ namespace ReactUnity.Editor.Developer
                 {
                     case "System.Void":
                         return "void";
+
+                    case "System.Dynamic.ExpandoObject":
+                        return "Record<string, any>";
 
                     case "System.String":
                         return "string";
@@ -371,28 +387,48 @@ namespace ReactUnity.Editor.Developer
                     default:
                         break;
                 }
+
+                if (type.IsArray) return getTypesScriptType(type.GetElementType(), withNs, skipKnownTypes, allowGeneric) + "[]";
+                var isList = type.GetTypeInfo().ImplementedInterfaces.Any(x => x.GetTypeInfo().IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
+                var hasGenericArguments = genArgs.Any();
+                if (isList && hasGenericArguments) return getTypesScriptType(genArgs[0], withNs, skipKnownTypes, allowGeneric) + "[]";
             }
 
-            if (type.IsArray) return getTypesScriptType(type.GetElementType(), withNs) + "[]";
-
-            if (GenerateGenericClasses && type.IsGenericParameter) return withNs ? propertyType : type.Name;
+            if (allowGeneric && type.IsGenericParameter) return withNs ? propertyType : type.Name;
 
             if (allowGeneric && type.IsGenericType)
             {
+                var gens = genArgs.Select(x => getTypesScriptType(x, withNs, skipKnownTypes, allowGeneric)).ToList();
+
+                if (!skipKnownTypes)
+                {
+                    if (propertyType.StartsWith("System.Action") || propertyType.StartsWith("System.Func"))
+                    {
+                        var retType = propertyType.StartsWith("System.Action") || gens.Count == 0 ? "void" : gens.Last();
+                        if (propertyType.StartsWith("System.Action")) gens = gens.Take(gens.Count - 1).ToList();
+                        var args = string.Join(", ", gens.Select((x, i) => $"arg{i}: {x}"));
+
+                        return string.Format("(({0}) => {1})",
+                          args,
+                          retType
+                        );
+                    }
+                }
+
                 var nameWithoutGeneric = GetNameWithoutGenericArity(withNs ? propertyType : type.Name);
-                var gens = string.Join(", ", type.GetGenericArguments().Select(x => getTypesScriptType(x, withNs, true, allowGeneric) + " = any"));
-                return $"{nameWithoutGeneric}<{gens}>";
+                var gn = string.Join(", ", gens.Select(x => x + suffixGeneric));
+                return $"{nameWithoutGeneric}<{gn}>";
             }
 
             if (typeof(Attribute).IsAssignableFrom(type)) return "any";
             if (!type.IsEnum && propertyType.Contains("`")) return "any";
             if (type.DeclaringType != null)
             {
-                var parent = getTypesScriptType(type.DeclaringType, withNs);
+                var parent = getTypesScriptType(type.DeclaringType, withNs, skipKnownTypes, allowGeneric);
                 if (parent == "any") return "any";
                 return parent + "_" + type.Name;
             }
-            if (ExcludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return "any";
+            if (!skipKnownTypes && ExcludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return "any";
             if (IncludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return (withNs ? (type.Namespace + ".") : "") + type.Name;
 
             var importing = ImportNamespaces.FirstOrDefault(x => propertyType.StartsWith(x.Key + "."));
