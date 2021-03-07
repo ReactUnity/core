@@ -26,6 +26,9 @@ namespace ReactUnity.Interop
 
         public static void Initialize()
         {
+            if (UpdateCR != null) StopCoroutine(UpdateCR);
+            var handle = GetNextHandle();
+            UpdateCR = StartCoroutine(OnEveryUpdateCoroutine(Update, handle));
         }
 
         private static List<IEnumerator> ToStart = new List<IEnumerator>();
@@ -34,15 +37,11 @@ namespace ReactUnity.Interop
 
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
         private static List<EditorCoroutine> Started = new List<EditorCoroutine>();
+        private static EditorCoroutine UpdateCR;
 #else
         private static List<object> Started = new List<object>();
+        private static object UpdateCR;
 #endif
-
-        static EditorDispatcher()
-        {
-            var handle = GetNextHandle();
-            StartCoroutine(OnEveryUpdateCoroutine(Update, handle));
-        }
 
         static public void AddCallOnLateUpdate(Action call)
         {
@@ -188,6 +187,7 @@ namespace ReactUnity.Interop
             {
                 yield return null;
                 if (!ToStop.Contains(handle)) callback();
+                else break;
             }
         }
 
@@ -211,6 +211,7 @@ namespace ReactUnity.Interop
                 yield return null;
 #endif
                 if (!ToStop.Contains(handle)) callback();
+                else break;
             }
         }
 

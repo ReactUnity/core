@@ -208,6 +208,7 @@ namespace ReactUnity.Interop
             {
                 yield return new WaitForSeconds(interval);
                 if (!ToStop.Contains(handle)) callback();
+                else break;
             }
         }
 

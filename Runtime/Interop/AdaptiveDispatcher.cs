@@ -22,13 +22,30 @@ namespace ReactUnity.Interop
             }
         }
 
+        private static bool Initialized;
         private static bool Playing;
 
         public static void Initialize()
         {
+            if (Initialized) return;
+            Initialized = true;
+
             Playing = Application.isPlaying;
+
             if (Playing) MainThreadDispatcher.Initialize();
             else EditorDispatcher.Initialize();
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.playModeStateChanged += (state) =>
+            {
+                if (state == UnityEditor.PlayModeStateChange.EnteredPlayMode) Playing = true;
+                if (state == UnityEditor.PlayModeStateChange.ExitingPlayMode) Playing = false;
+                if (state == UnityEditor.PlayModeStateChange.EnteredEditMode) Playing = false;
+
+                if (Playing) MainThreadDispatcher.Initialize();
+                else EditorDispatcher.Initialize();
+            };
+#endif
         }
 
         static public void AddCallOnLateUpdate(Action call)

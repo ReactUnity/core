@@ -81,6 +81,7 @@ namespace ReactUnity.Editor.Renderer
             host.Clear();
             var src = GetScript();
 
+            AdaptiveDispatcher.Initialize();
             runner = new ReactUnityRunner();
 
             ScriptWatchDisposable = src.GetScript((sc, isDevServer) =>
