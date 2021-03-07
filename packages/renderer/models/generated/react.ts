@@ -1,11 +1,12 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 7.03.2021 18:49:47
+// Generated 7.03.2021 22:05:10
 //
+import { System } from './system';
 import { UnityEngine } from './unity';
 
 export namespace ReactUnity {
-  export declare class IReactComponent {
+  export interface IReactComponent {
     Parent: ReactUnity.IContainerComponent;
     IsPseudoElement: boolean;
     Layout: any; // Facebook.Yoga.YogaNode
@@ -13,37 +14,37 @@ export namespace ReactUnity {
     Name: string;
     Tag: string;
     ClassName: string;
-    ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+    ClassList: System.Collections.Generic.HashSet<string>;
     StateStyles: ReactUnity.Styling.StateStyles;
-    Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+    Data: System.Collections.Generic.Dictionary<string, System.Object>;
     Destroy: (() => void);
     ApplyLayoutStyles: (() => void);
-    ScheduleLayout: ((callback?: any) => void);
+    ScheduleLayout: ((callback?: System.Action) => void);
     ResolveStyle: ((recursive?: boolean) => void);
     Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
     SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
-    SetProperty: ((property: string, value: any) => void);
-    SetData: ((property: string, value: any) => void);
+    SetProperty: ((property: string, value: System.Object) => void);
+    SetData: ((property: string, value: System.Object) => void);
     SetEventListener: ((eventType: string, callback: ReactUnity.Interop.Callback) => void);
-    GetComponent: ((type: any) => any);
-    AddComponent: ((type: any) => any);
+    GetComponent: ((type: System.Type) => System.Object);
+    AddComponent: ((type: System.Type) => System.Object);
   }
-  export declare class IContainerComponent {
-    Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+  export interface IContainerComponent {
+    Children: ReactUnity.IReactComponent[];
     BeforePseudo: ReactUnity.IReactComponent;
     AfterPseudo: ReactUnity.IReactComponent;
-    BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-    AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+    BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+    AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
     RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
   }
-  export declare class ITextComponent {
+  export interface ITextComponent {
     SetText: ((text: string) => void);
   }
-  export declare class IHostComponent {
+  export interface IHostComponent {
     Context: ReactUnity.ReactContext;
   }
   export declare class ReactContext {
-    constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: any, mergeLayouts?: boolean);
+    constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action, mergeLayouts?: boolean);
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
     IsDevServer: boolean;
@@ -51,10 +52,10 @@ export namespace ReactUnity {
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
-    OnRestart: any; // System.Action
-    Disposables: any; // System.Collections.Generic.List`1[System.IDisposable]
-    FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
-    scheduleLayout: ((callback?: any) => void);
+    OnRestart: System.Action;
+    Disposables: System.IDisposable[];
+    FontFamilies: System.Collections.Generic.Dictionary<string, ReactUnity.Types.FontReference>;
+    scheduleLayout: ((callback?: System.Action) => void);
     InsertStyle: ((style: string, importanceOffset?: number) => void);
     RemoveStyle: ((style: string) => void);
     ResolvePath: ((path: string) => string);
@@ -62,9 +63,9 @@ export namespace ReactUnity {
     CreateText: ((text: string) => ReactUnity.ITextComponent);
     CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ReactScript {
@@ -78,11 +79,12 @@ export namespace ReactUnity {
     ResourcesPath: string;
     UseDevServer: boolean;
     DevServer: string;
+    static Resource: ((path: string) => ReactUnity.ReactScript);
     GetResolvedSourcePath: (() => string);
-    GetScript: ((callback: any, useDevServer?: boolean, disableWarnings?: boolean) => any);
-    Equals: ((obj: any) => boolean);
+    GetScript: ((callback: ((arg0: string) => void), useDevServer?: boolean, disableWarnings?: boolean) => System.IDisposable);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum ScriptSource {
@@ -119,7 +121,7 @@ export namespace ReactUnity {
     hideFlags: UnityEngine.HideFlags;
     Globals: ReactUnity.Types.StringObjectDictionary;
     Script: ReactUnity.ReactScript;
-    PreloadScripts: any; // System.Collections.Generic.List`1[UnityEngine.TextAsset]
+    PreloadScripts: UnityEngine.TextAsset[];
     Restart: (() => void);
     Test: (() => void);
     TestDebug: (() => void);
@@ -127,55 +129,55 @@ export namespace ReactUnity {
     CancelInvoke: (() => void) | ((methodName: string) => void);
     Invoke: ((methodName: string, time: number) => void);
     InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-    StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-    StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-    StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+    StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+    StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+    StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
     StopAllCoroutines: (() => void);
-    GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-    GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-    GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-    GetComponentInParent: ((t: any) => UnityEngine.Component);
-    GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-    GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+    GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+    GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+    GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+    GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+    GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+    GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
     CompareTag: ((tag: string) => boolean);
-    SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-    SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-    BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+    SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+    SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+    BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ReactUnityAPI {
     constructor(engine: any);
     static StateHandlers: any; // System.Collections.Generic.Dictionary`2[System.String,System.Type]
     createText: ((text: string, host: ReactUnity.IHostComponent) => ReactUnity.IReactComponent);
     createElement: ((tag: string, text: string, host: ReactUnity.IHostComponent) => ReactUnity.IReactComponent);
-    appendChild: ((parent: any, child: any) => void);
-    appendChildToContainer: ((parent: any, child: any) => void);
-    insertBefore: ((parent: any, child: any, beforeChild: any) => void);
-    removeChild: ((parent: any, child: any) => void);
-    setText: ((instance: any, text: string) => void);
-    setProperty: ((element: any, property: string, value: any) => void);
-    setData: ((element: any, property: string, value: any) => void);
-    setEventListener: ((element: ReactUnity.IReactComponent, eventType: string, value: any) => void) | ((element: any, eventType: string, value: any) => void);
-    Equals: ((obj: any) => boolean);
+    appendChild: ((parent: System.Object, child: System.Object) => void);
+    appendChildToContainer: ((parent: System.Object, child: System.Object) => void);
+    insertBefore: ((parent: System.Object, child: System.Object, beforeChild: System.Object) => void);
+    removeChild: ((parent: System.Object, child: System.Object) => void);
+    setText: ((instance: System.Object, text: string) => void);
+    setProperty: ((element: System.Object, property: string, value: System.Object) => void);
+    setData: ((element: System.Object, property: string, value: System.Object) => void);
+    setEventListener: ((element: ReactUnity.IReactComponent, eventType: string, value: any) => void) | ((element: System.Object, eventType: string, value: System.Object) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ReactUnityRunner {
     constructor();
-    RunScript: ((script: string, ctx: ReactUnity.ReactContext, preload?: any, callback?: any) => void);
+    RunScript: ((script: string, ctx: ReactUnity.ReactContext, preload?: UnityEngine.TextAsset[], callback?: System.Action) => void);
     ExecuteScript: ((script: string) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class UGUIContext {
-    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: any);
+    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action);
     static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
     RootLayoutNode: any; // Facebook.Yoga.YogaNode
     Host: ReactUnity.IHostComponent;
@@ -187,20 +189,20 @@ export namespace ReactUnity {
     static textCreator: any; // System.Func`3[System.String,ReactUnity.UGUIContext,ReactUnity.ITextComponent]
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
-    OnRestart: any; // System.Action
-    Disposables: any; // System.Collections.Generic.List`1[System.IDisposable]
-    FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
+    OnRestart: System.Action;
+    Disposables: System.IDisposable[];
+    FontFamilies: System.Collections.Generic.Dictionary<string, ReactUnity.Types.FontReference>;
     CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
     CreateText: ((text: string) => ReactUnity.ITextComponent);
-    scheduleLayout: ((callback?: any) => void);
+    scheduleLayout: ((callback?: System.Action) => void);
     InsertStyle: ((style: string, importanceOffset?: number) => void);
     RemoveStyle: ((style: string) => void);
     ResolvePath: ((path: string) => string);
     CreateStaticScript: ((path: string) => ReactUnity.ReactScript);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class CalculateSizeFromContents {
@@ -232,25 +234,25 @@ export namespace ReactUnity {
     CancelInvoke: (() => void) | ((methodName: string) => void);
     Invoke: ((methodName: string, time: number) => void);
     InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-    StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-    StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-    StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+    StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+    StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+    StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
     StopAllCoroutines: (() => void);
-    GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-    GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-    GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-    GetComponentInParent: ((t: any) => UnityEngine.Component);
-    GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-    GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+    GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+    GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+    GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+    GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+    GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+    GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
     CompareTag: ((tag: string) => boolean);
-    SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-    SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-    BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+    SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+    SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+    BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export namespace Components {
     export declare class AnchorComponent {
@@ -258,9 +260,9 @@ export namespace ReactUnity {
       static AnchorDefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -268,12 +270,12 @@ export namespace ReactUnity {
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -282,12 +284,12 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       url: string;
       openInThisTab: boolean;
-      SetProperty: ((propertyName: string, value: any) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
@@ -299,18 +301,18 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ButtonComponent {
@@ -321,21 +323,21 @@ export namespace ReactUnity {
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Button: UnityEngine.UI.Button;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -344,7 +346,7 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
@@ -358,27 +360,27 @@ export namespace ReactUnity {
       RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ContainerComponent {
       constructor(context: ReactUnity.UGUIContext, tag: string);
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
@@ -387,12 +389,12 @@ export namespace ReactUnity {
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -401,7 +403,7 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       ResolveStyle: ((recursive?: boolean) => void);
@@ -415,19 +417,19 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class HostComponent {
@@ -437,9 +439,9 @@ export namespace ReactUnity {
       static HostDefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -447,12 +449,12 @@ export namespace ReactUnity {
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -461,7 +463,7 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       ApplyStyles: (() => void);
@@ -476,18 +478,18 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ImageComponent {
@@ -501,21 +503,21 @@ export namespace ReactUnity {
       Image: UnityEngine.UI.Image;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -524,10 +526,10 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
-      SetProperty: ((propertyName: string, value: any) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
@@ -539,18 +541,18 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class InputComponent {
@@ -561,21 +563,21 @@ export namespace ReactUnity {
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Value: string;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -584,7 +586,7 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       SetText: ((text: string) => void);
@@ -593,7 +595,7 @@ export namespace ReactUnity {
       ApplyStyles: (() => void);
       Focus: (() => void);
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       AddBefore: (() => void);
       RemoveBefore: (() => void);
@@ -602,17 +604,17 @@ export namespace ReactUnity {
       RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class RawImageComponent {
@@ -626,21 +628,21 @@ export namespace ReactUnity {
       Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -649,10 +651,10 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
-      SetProperty: ((propertyName: string, value: any) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
@@ -664,18 +666,18 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ReactComponent {
@@ -686,12 +688,12 @@ export namespace ReactUnity {
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -700,7 +702,7 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       static TagDefaultStyle: ReactUnity.Styling.NodeStyle;
@@ -708,22 +710,22 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class RenderTextureComponent {
@@ -735,21 +737,21 @@ export namespace ReactUnity {
       Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -758,11 +760,11 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       RenderTexture: UnityEngine.RenderTexture;
-      SetProperty: ((propertyName: string, value: any) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
@@ -774,18 +776,18 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ScrollComponent {
@@ -794,9 +796,9 @@ export namespace ReactUnity {
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       ScrollRect: UnityEngine.UI.ScrollRect;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
@@ -804,12 +806,12 @@ export namespace ReactUnity {
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -818,7 +820,7 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       ResolveStyle: ((recursive?: boolean) => void);
@@ -832,19 +834,19 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class TextComponent {
@@ -862,12 +864,12 @@ export namespace ReactUnity {
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -876,7 +878,7 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       SetText: ((text: string) => void);
@@ -885,20 +887,20 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ToggleComponent {
@@ -911,21 +913,21 @@ export namespace ReactUnity {
       Toggle: UnityEngine.UI.Toggle;
       Check: ReactUnity.Components.ImageComponent;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -934,12 +936,12 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       Focus: (() => void);
       SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
-      SetProperty: ((propertyName: string, value: any) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
@@ -950,18 +952,18 @@ export namespace ReactUnity {
       RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class VideoComponent {
@@ -973,21 +975,21 @@ export namespace ReactUnity {
       Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
-      Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
-      BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
-      Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
+      Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: any; // System.Dynamic.ExpandoObject
+      Inline: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -996,12 +998,12 @@ export namespace ReactUnity {
       IsPseudoElement: boolean;
       Tag: string;
       ClassName: string;
-      ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+      ClassList: System.Collections.Generic.HashSet<string>;
       TextContent: string;
       Name: string;
       VideoPlayer: UnityEngine.Video.VideoPlayer;
       RenderTexture: UnityEngine.RenderTexture;
-      SetProperty: ((propertyName: string, value: any) => void);
+      SetProperty: ((propertyName: string, value: System.Object) => void);
       ResolveStyle: ((recursive?: boolean) => void);
       ApplyLayoutStyles: (() => void);
       Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
@@ -1013,18 +1015,18 @@ export namespace ReactUnity {
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-      SetData: ((propertyName: string, value: any) => void);
-      ScheduleLayout: ((callback?: any) => void);
+      SetData: ((propertyName: string, value: System.Object) => void);
+      ScheduleLayout: ((callback?: System.Action) => void);
       ApplyStyles: (() => void);
       UpdateBackgroundGraphic: ((updateLayout: boolean, updateStyle: boolean) => ReactUnity.Styling.BorderAndBackground);
       QuerySelector: ((query: string) => ReactUnity.IReactComponent);
-      QuerySelectorAll: ((query: string) => any);
+      QuerySelectorAll: ((query: string) => ReactUnity.IReactComponent[]);
       GetRelativePosition: ((x: number, y: number) => UnityEngine.Vector2);
-      GetComponent: ((type: any) => any);
-      AddComponent: ((type: any) => any);
-      Equals: ((obj: any) => boolean);
+      GetComponent: ((type: System.Type) => System.Object);
+      AddComponent: ((type: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class VideoComponentSource {
@@ -1032,69 +1034,69 @@ export namespace ReactUnity {
       Url: string;
       Clip: UnityEngine.Video.VideoClip;
       Type: UnityEngine.Video.VideoSource;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
   export namespace DomProxies {
     export declare class ConsoleProxy {
       constructor(engine: any);
-      log: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
-      info: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
-      debug: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
-      warn: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
-      error: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
-      dir: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
+      log: ((msg: System.Object) => void) | ((msg: System.Object, ...subs: System.Object[]) => void);
+      info: ((msg: System.Object) => void) | ((msg: System.Object, ...subs: System.Object[]) => void);
+      debug: ((msg: System.Object) => void) | ((msg: System.Object, ...subs: System.Object[]) => void);
+      warn: ((msg: System.Object) => void) | ((msg: System.Object, ...subs: System.Object[]) => void);
+      error: ((msg: System.Object) => void) | ((msg: System.Object, ...subs: System.Object[]) => void);
+      dir: ((msg: System.Object) => void) | ((msg: System.Object, ...subs: System.Object[]) => void);
       clear: (() => void);
       assert: ((val: boolean) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class DocumentProxy {
-      constructor(context: ReactUnity.ReactContext, execute: any, origin: string);
+      constructor(context: ReactUnity.ReactContext, execute: (() => void), origin: string);
       head: ReactUnity.DomProxies.HeadProxy;
       origin: string;
-      execute: any; // System.Action`1[System.String]
+      execute: (() => void);
       context: ReactUnity.ReactContext;
       createElement: ((type: string) => ReactUnity.DomProxies.IDomElementProxy);
       createTextNode: ((text: string) => string);
-      querySelector: ((query: string) => any);
-      getElementById: ((query: string) => any);
-      getElementsByTagName: ((tagName: string) => any);
-      Equals: ((obj: any) => boolean);
+      querySelector: ((query: string) => System.Object);
+      getElementById: ((query: string) => System.Object);
+      getElementsByTagName: ((tagName: string) => ReactUnity.DomProxies.IDomElementProxy[]);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class IDomElementProxy {
+    export interface IDomElementProxy {
       OnAppend: (() => void);
       OnRemove: (() => void);
-      setAttribute: ((key: any, value: any) => void);
-      removeAttribute: ((key: any) => void);
+      setAttribute: ((key: System.Object, value: System.Object) => void);
+      removeAttribute: ((key: System.Object) => void);
       appendChild: ((text: string) => void);
       removeChild: ((text: string) => void);
     }
     export declare class DomElementProxyBase {
-      setAttribute: ((key: any, value: any) => void);
-      removeAttribute: ((key: any) => void);
-      Equals: ((obj: any) => boolean);
+      setAttribute: ((key: System.Object, value: System.Object) => void);
+      removeAttribute: ((key: System.Object) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class HeadProxy {
       constructor();
       appendChild: ((child: ReactUnity.DomProxies.IDomElementProxy) => void);
       removeChild: ((child: ReactUnity.DomProxies.IDomElementProxy) => void);
-      setAttribute: ((key: any, value: any) => void);
-      removeAttribute: ((key: any) => void);
-      Equals: ((obj: any) => boolean);
+      setAttribute: ((key: System.Object, value: System.Object) => void);
+      removeAttribute: ((key: System.Object) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ScriptProxy {
@@ -1103,25 +1105,25 @@ export namespace ReactUnity {
       charset: string;
       crossOrigin: string;
       timeout: number;
-      onload: any; // System.Action`1[ReactUnity.DomProxies.ScriptProxy]
-      onerror: any; // System.Action`1[ReactUnity.DomProxies.ScriptProxy]
+      onload: (() => void);
+      onerror: (() => void);
       document: ReactUnity.DomProxies.DocumentProxy;
       parentNode: ReactUnity.DomProxies.HeadProxy;
       OnAppend: (() => void);
       OnRemove: (() => void);
       appendChild: ((text: string) => void);
       removeChild: ((text: string) => void);
-      setAttribute: ((key: any, value: any) => void);
-      removeAttribute: ((key: any) => void);
-      Equals: ((obj: any) => boolean);
+      setAttribute: ((key: System.Object, value: System.Object) => void);
+      removeAttribute: ((key: System.Object) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class StyleProxy {
       constructor(document: ReactUnity.DomProxies.DocumentProxy);
       firstChild: string;
-      childNodes: any; // System.Collections.Generic.List`1[System.String]
+      childNodes: string[];
       enabled: boolean;
       document: ReactUnity.DomProxies.DocumentProxy;
       parentNode: ReactUnity.DomProxies.HeadProxy;
@@ -1129,11 +1131,11 @@ export namespace ReactUnity {
       OnRemove: (() => void);
       appendChild: ((text: string) => void);
       removeChild: ((text: string) => void);
-      setAttribute: ((key: any, value: any) => void);
-      removeAttribute: ((key: any) => void);
-      Equals: ((obj: any) => boolean);
+      setAttribute: ((key: System.Object, value: System.Object) => void);
+      removeAttribute: ((key: System.Object) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class LocalStorage {
@@ -1142,13 +1144,13 @@ export namespace ReactUnity {
       setItem: ((x: string, value: string) => void);
       getItem: ((x: string) => string);
       removeItem: ((x: string) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Location {
-      constructor(sourceLocation: string, restart: any);
+      constructor(sourceLocation: string, restart: System.Action);
       href: string;
       protocol: string;
       hostname: string;
@@ -1158,24 +1160,24 @@ export namespace ReactUnity {
       search: string;
       pathname: string;
       reload: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class WebSocketProxy {
       constructor(context: ReactUnity.ReactContext, url: string);
       constructor(context: ReactUnity.ReactContext, url: string, ...protocols: string[]);
       Onmessage: any; // Jint.Native.JsValue
-      onmessage: any; // System.Object
+      onmessage: System.Object;
       Onclose: any; // Jint.Native.JsValue
-      onclose: any; // System.Object
+      onclose: System.Object;
       Onopen: any; // Jint.Native.JsValue
-      onopen: any; // System.Object
+      onopen: System.Object;
       Onerror: any; // Jint.Native.JsValue
-      onerror: any; // System.Object
+      onerror: System.Object;
       Compression: any; // WebSocketSharp.CompressionMethod
-      Cookies: any; // System.Collections.Generic.IEnumerable`1[WebSocketSharp.Net.Cookie]
+      Cookies: System.Collections.Generic.IEnumerable<any>;
       Credentials: any; // WebSocketSharp.Net.NetworkCredential
       EmitOnPing: boolean;
       EnableRedirection: boolean;
@@ -1187,8 +1189,8 @@ export namespace ReactUnity {
       Protocol: string;
       ReadyState: any; // WebSocketSharp.WebSocketState
       SslConfiguration: any; // WebSocketSharp.Net.ClientSslConfiguration
-      Url: any; // System.Uri
-      WaitTime: any; // System.TimeSpan
+      Url: System.Uri;
+      WaitTime: System.TimeSpan;
       static CONNECTING: number;
       static OPEN: number;
       static CLOSING: number;
@@ -1197,19 +1199,19 @@ export namespace ReactUnity {
       close: ((code?: number, reason?: string) => void);
       Accept: (() => void);
       AcceptAsync: (() => void);
-      Close: (() => void) | ((code: any) => void) | ((code: any) => void) | ((code: any, reason: string) => void) | ((code: any, reason: string) => void);
-      CloseAsync: (() => void) | ((code: any) => void) | ((code: any) => void) | ((code: any, reason: string) => void) | ((code: any, reason: string) => void);
+      Close: (() => void) | ((code: System.UInt16) => void) | ((code: any) => void) | ((code: System.UInt16, reason: string) => void) | ((code: any, reason: string) => void);
+      CloseAsync: (() => void) | ((code: System.UInt16) => void) | ((code: any) => void) | ((code: System.UInt16, reason: string) => void) | ((code: any, reason: string) => void);
       Connect: (() => void);
       ConnectAsync: (() => void);
       Ping: (() => boolean) | ((message: string) => boolean);
-      Send: ((data: any[]) => void) | ((file: any) => void) | ((data: string) => void);
-      SendAsync: ((data: any[], completed: any) => void) | ((file: any, completed: any) => void) | ((data: string, completed: any) => void) | ((stream: any, length: number, completed: any) => void);
+      Send: ((data: System.Byte[]) => void) | ((file: System.IO.FileInfo) => void) | ((data: string) => void);
+      SendAsync: ((data: System.Byte[], completed: (() => void)) => void) | ((file: System.IO.FileInfo, completed: (() => void)) => void) | ((data: string, completed: (() => void)) => void) | ((stream: System.IO.Stream, length: number, completed: (() => void)) => void);
       SetCookie: ((cookie: any) => void);
       SetCredentials: ((username: string, password: string, preAuth: boolean) => void);
       SetProxy: ((url: string, username: string, password: string) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class XMLHttpRequest {
@@ -1218,9 +1220,9 @@ export namespace ReactUnity {
       origin: string;
       Onload: any; // Jint.Native.JsValue
       Onreadystatechange: any; // Jint.Native.JsValue
-      onerror: any; // System.Object
-      ontimeout: any; // System.Object
-      onabort: any; // System.Object
+      onerror: System.Object;
+      ontimeout: System.Object;
+      onabort: System.Object;
       withCredentials: boolean;
       timeout?: number;
       status: number;
@@ -1229,19 +1231,19 @@ export namespace ReactUnity {
       readyState: number;
       DONE: string;
       responseText: string;
-      onload: any; // System.Object
-      onreadystatechange: any; // System.Object
+      onload: System.Object;
+      onreadystatechange: System.Object;
       static dispatches: string[];
-      static allDone: any; // System.Threading.ManualResetEvent
+      static allDone: System.Threading.ManualResetEvent;
       open: ((method: string, url: string, async: boolean) => void);
-      setRequestHeader: ((name: any, value: any) => void);
-      append: ((name: any, value: any) => void);
+      setRequestHeader: ((name: System.Object, value: System.Object) => void);
+      append: ((name: System.Object, value: System.Object) => void);
       abort: (() => void);
-      send: ((o: any) => void);
+      send: ((o: System.Object) => void);
       getAllResponseHeaders: (() => string);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -1275,34 +1277,34 @@ export namespace ReactUnity {
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ReactScriptDrawer {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
-      fieldInfo: any; // System.Reflection.FieldInfo
+      fieldInfo: System.Reflection.FieldInfo;
       OnGUI: ((position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent) => void);
       GetPropertyHeight: ((property: any, label: UnityEngine.GUIContent) => number);
       CreatePropertyGUI: ((property: any) => UnityEngine.UIElements.VisualElement);
       CanCacheInspectorGUI: ((property: any) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class StringObjectPairDrawer {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
-      fieldInfo: any; // System.Reflection.FieldInfo
+      fieldInfo: System.Reflection.FieldInfo;
       OnGUI: ((position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent) => void);
       GetPropertyHeight: ((property: any, label: UnityEngine.GUIContent) => number);
       CreatePropertyGUI: ((property: any) => UnityEngine.UIElements.VisualElement);
       CanCacheInspectorGUI: ((property: any) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditStyleWindow {
@@ -1350,13 +1352,13 @@ export namespace ReactUnity {
       Close: (() => void);
       Repaint: (() => void);
       SendEvent: ((e: UnityEngine.Event) => boolean);
-      GetExtraPaneTypes: (() => any);
+      GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class QuickStartWindow {
       constructor();
@@ -1397,21 +1399,21 @@ export namespace ReactUnity {
       Close: (() => void);
       Repaint: (() => void);
       SendEvent: ((e: UnityEngine.Event) => boolean);
-      GetExtraPaneTypes: (() => any);
+      GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class EmscriptenBuildFlags {
       constructor();
       callbackOrder: number;
       OnPreprocessBuild: ((report: any) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export namespace Developer {
@@ -1421,15 +1423,15 @@ export namespace ReactUnity {
         static GenerateReactUnity: (() => void);
         static GenerateSystem: (() => void);
         static GetNameWithoutGenericArity: ((name: string) => string);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
     export namespace Renderer {
       export declare class EditorContext {
-        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: any);
+        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: System.Action);
         Host: ReactUnity.IHostComponent;
         Globals: ReactUnity.Types.StringObjectDictionary;
         IsDevServer: boolean;
@@ -1440,20 +1442,20 @@ export namespace ReactUnity {
         static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Renderer.Components.IEditorReactComponent`1[UnityEngine.UIElements.VisualElement]]]
         Parser: any; // ExCSS.StylesheetParser
         StyleTree: ReactUnity.StyleEngine.StyleTree;
-        OnRestart: any; // System.Action
-        Disposables: any; // System.Collections.Generic.List`1[System.IDisposable]
-        FontFamilies: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Types.FontReference]
+        OnRestart: System.Action;
+        Disposables: System.IDisposable[];
+        FontFamilies: System.Collections.Generic.Dictionary<string, ReactUnity.Types.FontReference>;
         CreateText: ((text: string) => ReactUnity.ITextComponent);
         CreateComponent: ((tag: string, text: string) => ReactUnity.IReactComponent);
-        scheduleLayout: ((callback?: any) => void);
+        scheduleLayout: ((callback?: System.Action) => void);
         InsertStyle: ((style: string, importanceOffset?: number) => void);
         RemoveStyle: ((style: string) => void);
         ResolvePath: ((path: string) => string);
         CreateStaticScript: ((path: string) => ReactUnity.ReactScript);
         Dispose: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class ReactEditorTester {
@@ -1478,8 +1480,8 @@ export namespace ReactUnity {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         static ShowDefaultWindow: (() => void);
-        OnEnable: (() => void);
-        Restart: (() => void);
+        Run: ((host?: UnityEngine.UIElements.VisualElement) => void);
+        Restart: ((host?: UnityEngine.UIElements.VisualElement) => void);
         BeginWindows: (() => void);
         EndWindows: (() => void);
         ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
@@ -1497,55 +1499,146 @@ export namespace ReactUnity {
         Close: (() => void);
         Repaint: (() => void);
         SendEvent: ((e: UnityEngine.Event) => boolean);
-        GetExtraPaneTypes: (() => any);
+        GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
         SetDirty: (() => void);
         GetInstanceID: (() => number);
         GetHashCode: (() => number);
-        Equals: ((other: any) => boolean);
+        Equals: ((other: System.Object) => boolean);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
+      }
+      export declare class ReactWindow {
+        rootVisualElement: UnityEngine.UIElements.VisualElement;
+        wantsMouseMove: boolean;
+        wantsMouseEnterLeaveWindow: boolean;
+        wantsLessLayoutEvents: boolean;
+        autoRepaintOnSceneChange: boolean;
+        maximized: boolean;
+        hasFocus: boolean;
+        docked: boolean;
+        hasUnsavedChanges: boolean;
+        saveChangesMessage: string;
+        minSize: UnityEngine.Vector2;
+        maxSize: UnityEngine.Vector2;
+        title: string;
+        titleContent: UnityEngine.GUIContent;
+        depthBufferBits: number;
+        antiAlias: number;
+        position: UnityEngine.Rect;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        Run: ((host?: UnityEngine.UIElements.VisualElement) => void);
+        Restart: ((host?: UnityEngine.UIElements.VisualElement) => void);
+        BeginWindows: (() => void);
+        EndWindows: (() => void);
+        ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
+        RemoveNotification: (() => void);
+        ShowTab: (() => void);
+        Focus: (() => void);
+        ShowUtility: (() => void);
+        ShowPopup: (() => void);
+        ShowModalUtility: (() => void);
+        ShowAsDropDown: ((buttonRect: UnityEngine.Rect, windowSize: UnityEngine.Vector2) => void);
+        Show: (() => void) | ((immediateDisplay: boolean) => void);
+        ShowAuxWindow: (() => void);
+        ShowModal: (() => void);
+        SaveChanges: (() => void);
+        Close: (() => void);
+        Repaint: (() => void);
+        SendEvent: ((e: UnityEngine.Event) => boolean);
+        GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
+        SetDirty: (() => void);
+        GetInstanceID: (() => number);
+        GetHashCode: (() => number);
+        Equals: ((other: System.Object) => boolean);
+        ToString: (() => string);
+        GetType: (() => System.Type);
       }
       export namespace Components {
+        export declare class EditorBaseFieldComponent<TElementType = any, TValueType = any> {
+          constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
+          Context: ReactUnity.Editor.Renderer.EditorContext;
+          Parent: ReactUnity.IContainerComponent;
+          Element: TElementType;
+          Layout: any; // Facebook.Yoga.YogaNode
+          LayoutValues: ReactUnity.Styling.LayoutValue[];
+          Style: ReactUnity.Styling.NodeStyle;
+          Inline: Record<string, any>;
+          IsPseudoElement: boolean;
+          Name: string;
+          Tag: string;
+          ClassName: string;
+          ClassList: System.Collections.Generic.HashSet<string>;
+          StateStyles: ReactUnity.Styling.StateStyles;
+          Data: System.Collections.Generic.Dictionary<string, System.Object>;
+          Children: ReactUnity.IReactComponent[];
+          BeforePseudo: ReactUnity.IReactComponent;
+          AfterPseudo: ReactUnity.IReactComponent;
+          BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
+          SetProperty: ((property: string, value: System.Object) => void);
+          SetValue: ((value: TValueType) => void);
+          SetValueWithoutNotify: ((value: TValueType) => void);
+          Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+          ApplyLayoutStyles: (() => void);
+          ApplyStyles: (() => void);
+          Destroy: (() => void);
+          ResolveStyle: ((recursive?: boolean) => void);
+          ScheduleLayout: ((callback?: System.Action) => void);
+          SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+          SetData: ((property: string, value: System.Object) => void);
+          GetComponent: ((type: System.Type) => System.Object);
+          AddComponent: ((type: System.Type) => System.Object);
+          RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          CaptureMouse: (() => void);
+          ReleaseMouse: (() => void);
+          HasMouseCapture: (() => boolean);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
         export declare class EditorButtonComponent {
           constructor(context: ReactUnity.Editor.Renderer.EditorContext);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.Button;
           Layout: any; // Facebook.Yoga.YogaNode
-          LayoutValues: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
+          LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
-          Inline: any; // System.Dynamic.ExpandoObject
+          Inline: Record<string, any>;
           IsPseudoElement: boolean;
           Name: string;
           Tag: string;
           ClassName: string;
-          ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+          ClassList: System.Collections.Generic.HashSet<string>;
           StateStyles: ReactUnity.Styling.StateStyles;
-          Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
-          Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+          Data: System.Collections.Generic.Dictionary<string, System.Object>;
+          Children: ReactUnity.IReactComponent[];
           BeforePseudo: ReactUnity.IReactComponent;
           AfterPseudo: ReactUnity.IReactComponent;
-          BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-          AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
           SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
           Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
           ApplyLayoutStyles: (() => void);
           ApplyStyles: (() => void);
           Destroy: (() => void);
           ResolveStyle: ((recursive?: boolean) => void);
-          ScheduleLayout: ((callback?: any) => void);
+          ScheduleLayout: ((callback?: System.Action) => void);
           SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
-          SetData: ((property: string, value: any) => void);
-          SetProperty: ((property: string, value: any) => void);
-          GetComponent: ((type: any) => any);
-          AddComponent: ((type: any) => any);
+          SetData: ((property: string, value: System.Object) => void);
+          SetProperty: ((property: string, value: System.Object) => void);
+          GetComponent: ((type: System.Type) => System.Object);
+          AddComponent: ((type: System.Type) => System.Object);
           RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
           CaptureMouse: (() => void);
           ReleaseMouse: (() => void);
           HasMouseCapture: (() => boolean);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class EditorHostComponent {
@@ -1554,43 +1647,87 @@ export namespace ReactUnity {
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.VisualElement;
           Layout: any; // Facebook.Yoga.YogaNode
-          LayoutValues: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
+          LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
-          Inline: any; // System.Dynamic.ExpandoObject
+          Inline: Record<string, any>;
           IsPseudoElement: boolean;
           Name: string;
           Tag: string;
           ClassName: string;
-          ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+          ClassList: System.Collections.Generic.HashSet<string>;
           StateStyles: ReactUnity.Styling.StateStyles;
-          Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
-          Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+          Data: System.Collections.Generic.Dictionary<string, System.Object>;
+          Children: ReactUnity.IReactComponent[];
           BeforePseudo: ReactUnity.IReactComponent;
           AfterPseudo: ReactUnity.IReactComponent;
-          BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-          AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
           Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
           ApplyLayoutStyles: (() => void);
           ApplyStyles: (() => void);
           Destroy: (() => void);
           ResolveStyle: ((recursive?: boolean) => void);
-          ScheduleLayout: ((callback?: any) => void);
+          ScheduleLayout: ((callback?: System.Action) => void);
           SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
-          SetData: ((property: string, value: any) => void);
+          SetData: ((property: string, value: System.Object) => void);
           SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-          SetProperty: ((property: string, value: any) => void);
-          GetComponent: ((type: any) => any);
-          AddComponent: ((type: any) => any);
+          SetProperty: ((property: string, value: System.Object) => void);
+          GetComponent: ((type: System.Type) => System.Object);
+          AddComponent: ((type: System.Type) => System.Object);
           RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
           CaptureMouse: (() => void);
           ReleaseMouse: (() => void);
           HasMouseCapture: (() => boolean);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
-        export declare class IEditorReactComponent<T = any> {
+        export declare class EditorIMGUIComponent {
+          constructor(context: ReactUnity.Editor.Renderer.EditorContext);
+          Context: ReactUnity.Editor.Renderer.EditorContext;
+          Parent: ReactUnity.IContainerComponent;
+          Element: UnityEngine.UIElements.IMGUIContainer;
+          Layout: any; // Facebook.Yoga.YogaNode
+          LayoutValues: ReactUnity.Styling.LayoutValue[];
+          Style: ReactUnity.Styling.NodeStyle;
+          Inline: Record<string, any>;
+          IsPseudoElement: boolean;
+          Name: string;
+          Tag: string;
+          ClassName: string;
+          ClassList: System.Collections.Generic.HashSet<string>;
+          StateStyles: ReactUnity.Styling.StateStyles;
+          Data: System.Collections.Generic.Dictionary<string, System.Object>;
+          Children: ReactUnity.IReactComponent[];
+          BeforePseudo: ReactUnity.IReactComponent;
+          AfterPseudo: ReactUnity.IReactComponent;
+          BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
+          MarkDirtyLayout: (() => void);
+          MarkDirtyRepaint: (() => void);
+          Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+          ApplyLayoutStyles: (() => void);
+          ApplyStyles: (() => void);
+          Destroy: (() => void);
+          ResolveStyle: ((recursive?: boolean) => void);
+          ScheduleLayout: ((callback?: System.Action) => void);
+          SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+          SetData: ((property: string, value: System.Object) => void);
+          SetProperty: ((property: string, value: System.Object) => void);
+          GetComponent: ((type: System.Type) => System.Object);
+          AddComponent: ((type: System.Type) => System.Object);
+          RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          CaptureMouse: (() => void);
+          ReleaseMouse: (() => void);
+          HasMouseCapture: (() => boolean);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export interface IEditorReactComponent<T = any> {
           Element: T;
         }
         export declare class EditorReactComponent<T = any> {
@@ -1600,40 +1737,40 @@ export namespace ReactUnity {
           Parent: ReactUnity.IContainerComponent;
           Element: T;
           Layout: any; // Facebook.Yoga.YogaNode
-          LayoutValues: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
+          LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
-          Inline: any; // System.Dynamic.ExpandoObject
+          Inline: Record<string, any>;
           IsPseudoElement: boolean;
           Name: string;
           Tag: string;
           ClassName: string;
-          ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+          ClassList: System.Collections.Generic.HashSet<string>;
           StateStyles: ReactUnity.Styling.StateStyles;
-          Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
-          Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+          Data: System.Collections.Generic.Dictionary<string, System.Object>;
+          Children: ReactUnity.IReactComponent[];
           BeforePseudo: ReactUnity.IReactComponent;
           AfterPseudo: ReactUnity.IReactComponent;
-          BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-          AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
           Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
           ApplyLayoutStyles: (() => void);
           ApplyStyles: (() => void);
           Destroy: (() => void);
           ResolveStyle: ((recursive?: boolean) => void);
-          ScheduleLayout: ((callback?: any) => void);
+          ScheduleLayout: ((callback?: System.Action) => void);
           SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
-          SetData: ((property: string, value: any) => void);
+          SetData: ((property: string, value: System.Object) => void);
           SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-          SetProperty: ((property: string, value: any) => void);
-          GetComponent: ((type: any) => any);
-          AddComponent: ((type: any) => any);
+          SetProperty: ((property: string, value: System.Object) => void);
+          GetComponent: ((type: System.Type) => System.Object);
+          AddComponent: ((type: System.Type) => System.Object);
           RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
           CaptureMouse: (() => void);
           ReleaseMouse: (() => void);
           HasMouseCapture: (() => boolean);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class EditorTextComponent {
@@ -1642,51 +1779,95 @@ export namespace ReactUnity {
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.Label;
           Layout: any; // Facebook.Yoga.YogaNode
-          LayoutValues: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
+          LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
-          Inline: any; // System.Dynamic.ExpandoObject
+          Inline: Record<string, any>;
           IsPseudoElement: boolean;
           Name: string;
           Tag: string;
           ClassName: string;
-          ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
+          ClassList: System.Collections.Generic.HashSet<string>;
           StateStyles: ReactUnity.Styling.StateStyles;
-          Data: any; // System.Collections.Generic.Dictionary`2[System.String,System.Object]
-          Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
+          Data: System.Collections.Generic.Dictionary<string, System.Object>;
+          Children: ReactUnity.IReactComponent[];
           BeforePseudo: ReactUnity.IReactComponent;
           AfterPseudo: ReactUnity.IReactComponent;
-          BeforeRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-          AfterRules: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+          BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
           SetText: ((text: string) => void);
           Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
           ApplyLayoutStyles: (() => void);
           ApplyStyles: (() => void);
           Destroy: (() => void);
           ResolveStyle: ((recursive?: boolean) => void);
-          ScheduleLayout: ((callback?: any) => void);
+          ScheduleLayout: ((callback?: System.Action) => void);
           SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
-          SetData: ((property: string, value: any) => void);
+          SetData: ((property: string, value: System.Object) => void);
           SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
-          SetProperty: ((property: string, value: any) => void);
-          GetComponent: ((type: any) => any);
-          AddComponent: ((type: any) => any);
+          SetProperty: ((property: string, value: System.Object) => void);
+          GetComponent: ((type: System.Type) => System.Object);
+          AddComponent: ((type: System.Type) => System.Object);
           RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
           CaptureMouse: (() => void);
           ReleaseMouse: (() => void);
           HasMouseCapture: (() => boolean);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EditorToggleComponent {
+          constructor(context: ReactUnity.Editor.Renderer.EditorContext);
+          Context: ReactUnity.Editor.Renderer.EditorContext;
+          Parent: ReactUnity.IContainerComponent;
+          Element: UnityEngine.UIElements.Toggle;
+          Layout: any; // Facebook.Yoga.YogaNode
+          LayoutValues: ReactUnity.Styling.LayoutValue[];
+          Style: ReactUnity.Styling.NodeStyle;
+          Inline: Record<string, any>;
+          IsPseudoElement: boolean;
+          Name: string;
+          Tag: string;
+          ClassName: string;
+          ClassList: System.Collections.Generic.HashSet<string>;
+          StateStyles: ReactUnity.Styling.StateStyles;
+          Data: System.Collections.Generic.Dictionary<string, System.Object>;
+          Children: ReactUnity.IReactComponent[];
+          BeforePseudo: ReactUnity.IReactComponent;
+          AfterPseudo: ReactUnity.IReactComponent;
+          BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+          SetProperty: ((property: string, value: System.Object) => void);
+          SetEventListener: ((eventName: string, callback: ReactUnity.Interop.Callback) => void);
+          SetValue: ((value: boolean) => void);
+          SetValueWithoutNotify: ((value: boolean) => void);
+          Accept: ((visitor: ReactUnity.Visitors.ReactComponentVisitor) => void);
+          ApplyLayoutStyles: (() => void);
+          ApplyStyles: (() => void);
+          Destroy: (() => void);
+          ResolveStyle: ((recursive?: boolean) => void);
+          ScheduleLayout: ((callback?: System.Action) => void);
+          SetParent: ((parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
+          SetData: ((property: string, value: System.Object) => void);
+          GetComponent: ((type: System.Type) => System.Object);
+          AddComponent: ((type: System.Type) => System.Object);
+          RegisterChild: ((child: ReactUnity.IReactComponent, index?: number) => void);
+          CaptureMouse: (() => void);
+          ReleaseMouse: (() => void);
+          HasMouseCapture: (() => boolean);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
       }
       export namespace Events {
         export declare class EditorEventHandlerMap {
-          static GetEventType: ((eventName: string) => any);
+          static GetEventType: ((eventName: string) => System.Type);
           static GetEventMethods: ((eventName: string) => any);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
       }
@@ -1703,9 +1884,9 @@ export namespace ReactUnity {
           static GetStyleLengthDouble: ((style: ReactUnity.Styling.NodeStyle, prop: any, prop2: any) => UnityEngine.UIElements.StyleLength);
           static GetStyleBorderRadius: ((style: ReactUnity.Styling.NodeStyle, prop: any) => UnityEngine.UIElements.StyleLength);
           static GetStyleBorderColor: ((style: ReactUnity.Styling.NodeStyle, prop: any) => UnityEngine.UIElements.StyleColor);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
       }
@@ -1742,25 +1923,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class BeginDragHandler {
       constructor();
@@ -1792,25 +1973,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class CancelHandler {
       constructor();
@@ -1842,25 +2023,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class DeselectHandler {
       constructor();
@@ -1892,25 +2073,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class DragHandler {
       constructor();
@@ -1942,25 +2123,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class DropHandler {
       constructor();
@@ -1992,25 +2173,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class EndDragHandler {
       constructor();
@@ -2042,34 +2223,34 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class EventHandlerMap {
-      static GetEventType: ((eventName: string) => any);
-      Equals: ((obj: any) => boolean);
+      static GetEventType: ((eventName: string) => System.Type);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class IEventHandler {
+    export interface IEventHandler {
       ClearListeners: (() => void);
     }
     export declare class KeyDownHandler {
@@ -2103,25 +2284,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class KeyEventData {
       constructor(eventSystem: UnityEngine.EventSystems.EventSystem, ctx: any);
@@ -2130,14 +2311,14 @@ export namespace ReactUnity {
       selectedObject: UnityEngine.GameObject;
       used: boolean;
       key: string;
-      input: any; // System.Type
+      input: System.Type;
       inputSystem: boolean;
       ctx: any; // UnityEngine.InputSystem.InputAction+CallbackContext
       Reset: (() => void);
       Use: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class MoveHandler {
@@ -2170,25 +2351,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PointerClickHandler {
       constructor();
@@ -2220,25 +2401,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PointerDownHandler {
       constructor();
@@ -2270,25 +2451,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PointerEnterHandler {
       constructor();
@@ -2320,25 +2501,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PointerExitHandler {
       constructor();
@@ -2370,25 +2551,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PointerUpHandler {
       constructor();
@@ -2420,25 +2601,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PotentialDragHandler {
       constructor();
@@ -2470,25 +2651,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ScrollHandler {
       constructor();
@@ -2520,25 +2701,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class SelectHandler {
       constructor();
@@ -2570,25 +2751,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class SubmitHandler {
       constructor();
@@ -2620,25 +2801,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class UpdateSelectedHandler {
       constructor();
@@ -2670,40 +2851,40 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace Helpers {
     export declare class CursorAPI {
       static SetCursor: ((cursor: string) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EventTypes {
       static GetEventType: ((eventName: string) => any);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -2733,62 +2914,62 @@ export namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       static Initialize: (() => void);
-      static AddCallOnLateUpdate: ((call: any) => void);
-      static OnUpdate: ((callback: any) => number);
-      static Timeout: ((callback: any, timeSeconds: number) => number);
-      static AnimationFrame: ((callback: any) => number);
-      static Interval: ((callback: any, intervalSeconds: number) => number);
-      static Immediate: ((callback: any) => number);
-      static StartDeferred: ((cr: any) => number) | ((cr: any, handle: number) => number);
+      static AddCallOnLateUpdate: ((call: System.Action) => void);
+      static OnUpdate: ((callback: System.Action) => number);
+      static Timeout: ((callback: System.Action, timeSeconds: number) => number);
+      static AnimationFrame: ((callback: System.Action) => number);
+      static Interval: ((callback: System.Action, intervalSeconds: number) => number);
+      static Immediate: ((callback: System.Action) => number);
+      static StartDeferred: ((cr: System.Collections.IEnumerator) => number) | ((cr: System.Collections.IEnumerator, handle: number) => number);
       static StopDeferred: ((cr: number) => void);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class Callback {
       constructor(callback: any);
-      constructor(callback: any);
-      callback: any; // System.Object
-      Call: (() => any) | ((...args: any[]) => any);
-      Equals: ((obj: any) => boolean);
+      constructor(callback: System.Object);
+      callback: System.Object;
+      Call: (() => System.Object) | ((...args: System.Object[]) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorDispatcher {
       static Initialize: (() => void);
-      static AddCallOnLateUpdate: ((call: any) => void);
-      static OnUpdate: ((callback: any) => number);
-      static Timeout: ((callback: any, timeSeconds: number) => number);
-      static AnimationFrame: ((callback: any) => number);
-      static Interval: ((callback: any, intervalSeconds: number) => number);
-      static Immediate: ((callback: any) => number);
-      static StartDeferred: ((cr: any) => number) | ((cr: any, handle: number) => number);
+      static AddCallOnLateUpdate: ((call: System.Action) => void);
+      static OnUpdate: ((callback: System.Action) => number);
+      static Timeout: ((callback: System.Action, timeSeconds: number) => number);
+      static AnimationFrame: ((callback: System.Action) => number);
+      static Interval: ((callback: System.Action, intervalSeconds: number) => number);
+      static Immediate: ((callback: System.Action) => number);
+      static StartDeferred: ((cr: System.Collections.IEnumerator) => number) | ((cr: System.Collections.IEnumerator, handle: number) => number);
       static StopDeferred: ((cr: number) => void);
       static StopAll: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class MainThreadDispatcher {
@@ -2816,65 +2997,65 @@ export namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       static Initialize: (() => void);
-      static AddCallOnLateUpdate: ((call: any) => void);
-      static OnUpdate: ((callback: any) => number);
-      static Timeout: ((callback: any, timeSeconds: number) => number);
-      static AnimationFrame: ((callback: any) => number);
-      static Interval: ((callback: any, intervalSeconds: number) => number);
-      static Immediate: ((callback: any) => number);
+      static AddCallOnLateUpdate: ((call: System.Action) => void);
+      static OnUpdate: ((callback: System.Action) => number);
+      static Timeout: ((callback: System.Action, timeSeconds: number) => number);
+      static AnimationFrame: ((callback: System.Action) => number);
+      static Interval: ((callback: System.Action, intervalSeconds: number) => number);
+      static Immediate: ((callback: System.Action) => number);
       static IsMainThread: (() => boolean);
-      static StartDeferred: ((cr: any) => number) | ((cr: any, handle: number) => number);
+      static StartDeferred: ((cr: System.Collections.IEnumerator) => number) | ((cr: System.Collections.IEnumerator, handle: number) => number);
       static StopDeferred: ((cr: number) => void);
       Awake: (() => void);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AdaptiveDispatcher_CoroutineHandle {
       constructor(handle: number);
       Handle: number;
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorDispatcher_CoroutineHandle {
       constructor(handle: number);
       Handle: number;
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class MainThreadDispatcher_CoroutineHandle {
       constructor(handle: number);
       Handle: number;
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -2914,25 +3095,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ReactElement {
       constructor();
@@ -2966,25 +3147,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ResponsiveElement {
       constructor();
@@ -3016,25 +3197,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class TextMeasurer {
       constructor();
@@ -3067,25 +3248,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace Schedulers {
@@ -3100,12 +3281,12 @@ export namespace ReactUnity {
       cancelAnimationFrame: ((handle: number) => void);
       clearImmediate: ((handle: number) => void);
       clearAllTimeouts: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class IUnityScheduler {
+    export interface IUnityScheduler {
       setImmediate: ((callback: ReactUnity.Interop.Callback) => number);
       setTimeout: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
       setInterval: ((callback: ReactUnity.Interop.Callback, timeout: number) => number);
@@ -3127,9 +3308,9 @@ export namespace ReactUnity {
       clearImmediate: ((handle: number) => void);
       cancelAnimationFrame: ((handle: number) => void);
       clearAllTimeouts: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class UnityScheduler {
@@ -3143,9 +3324,9 @@ export namespace ReactUnity {
       cancelAnimationFrame: ((handle: number) => void);
       clearImmediate: ((handle: number) => void);
       clearAllTimeouts: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -3181,25 +3362,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class CursorHandler {
       constructor();
@@ -3232,25 +3413,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class FocusStateHandler {
       constructor();
@@ -3283,25 +3464,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class FocusVisibleStateHandler {
       constructor();
@@ -3334,25 +3515,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class FocusWithinStateHandler {
       constructor();
@@ -3383,25 +3564,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class HoverStateHandler {
       constructor();
@@ -3434,128 +3615,128 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
-    export declare class IStateHandler {
+    export interface IStateHandler {
       ClearListeners: (() => void);
     }
   }
   export namespace StyleEngine {
     export declare class RuleHelpers {
       static ImportantSpecifity: number;
-      static SplitSelectorRegex: any; // System.Text.RegularExpressions.Regex
-      static NthChildRegex: any; // System.Text.RegularExpressions.Regex
-      static ParseSelector: ((selector: string, negated?: boolean) => any);
+      static SplitSelectorRegex: System.Text.RegularExpressions.Regex;
+      static NthChildRegex: System.Text.RegularExpressions.Regex;
+      static ParseSelector: ((selector: string, negated?: boolean) => ReactUnity.StyleEngine.RuleSelectorPart[]);
       static GetSpecificity: ((priority: any) => number);
       static GetRuleDic: ((rule: any, important: boolean) => any) | ((rule: any) => any);
-      static GetLayoutDic: ((rule: any, important: boolean) => any) | ((rule: any) => any);
+      static GetLayoutDic: ((rule: any, important: boolean) => ReactUnity.Styling.LayoutValue[]) | ((rule: any) => ReactUnity.Styling.LayoutValue[]);
       static NormalizeSelector: ((selector: string) => string);
       static GetSpecialName: ((value: string) => ReactUnity.Styling.Types.SpecialNames);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class StyleData {
       constructor();
-      Rules: any; // System.Collections.Generic.List`1[System.Collections.Generic.Dictionary`2[System.String,System.Object]]
-      Layouts: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
-      Equals: ((obj: any) => boolean);
+      Rules: System.Collections.Generic.Dictionary<string, System.Object>[];
+      Layouts: ReactUnity.Styling.LayoutValue[];
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class StyleTree {
       constructor(parser: any);
       Parser: any; // ExCSS.StylesheetParser
       Specifity: number;
-      LeafNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      BeforeNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      AfterNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
-      Tree: any; // ReactUnity.StyleEngine.RuleTree`1[ReactUnity.StyleEngine.StyleData]
-      Parent: any; // ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]
+      LeafNodes: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      BeforeNodes: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterNodes: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      Tree: ReactUnity.StyleEngine.RuleTree<ReactUnity.StyleEngine.StyleData>;
+      Parent: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>;
       Selector: string;
-      ParsedSelector: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleSelectorPart]
-      Children: any; // System.Collections.Generic.LinkedList`1[ReactUnity.StyleEngine.RuleTreeNode`1[ReactUnity.StyleEngine.StyleData]]
+      ParsedSelector: ReactUnity.StyleEngine.RuleSelectorPart[];
+      Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: ReactUnity.StyleEngine.StyleData;
-      AddStyle: ((rule: any, importanceOffset?: number, mergeLayouts?: boolean) => any);
-      GetMatchingRules: ((component: ReactUnity.IReactComponent) => any);
-      GetMatchingBefore: ((component: ReactUnity.IReactComponent) => any);
-      GetMatchingAfter: ((component: ReactUnity.IReactComponent) => any);
+      AddStyle: ((rule: any, importanceOffset?: number, mergeLayouts?: boolean) => ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[]);
+      GetMatchingRules: ((component: ReactUnity.IReactComponent) => System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>);
+      GetMatchingBefore: ((component: ReactUnity.IReactComponent) => System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>);
+      GetMatchingAfter: ((component: ReactUnity.IReactComponent) => System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>);
       GetMatchingChild: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => ReactUnity.IReactComponent);
-      GetMatchingChildren: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => any);
-      AddSelector: ((selectorText: string, importanceOffset?: number) => any);
-      AddChildCascading: ((selector: string) => any);
+      GetMatchingChildren: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => ReactUnity.IReactComponent[]);
+      AddSelector: ((selectorText: string, importanceOffset?: number) => ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[]);
+      AddChildCascading: ((selector: string) => ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>);
       Matches: ((component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent) => boolean);
-      CompareTo: ((other: any) => number);
-      Equals: ((obj: any) => boolean);
+      CompareTo: ((other: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>) => number);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class RuleTree<T = any> {
       constructor(parser: any);
       Parser: any; // ExCSS.StylesheetParser
       Specifity: number;
-      LeafNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
-      BeforeNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
-      AfterNodes: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
-      Tree: any; // ReactUnity.StyleEngine.RuleTree`1[T]
-      Parent: any; // ReactUnity.StyleEngine.RuleTreeNode`1[T]
+      LeafNodes: ReactUnity.StyleEngine.RuleTreeNode<T>[];
+      BeforeNodes: ReactUnity.StyleEngine.RuleTreeNode<T>[];
+      AfterNodes: ReactUnity.StyleEngine.RuleTreeNode<T>[];
+      Tree: ReactUnity.StyleEngine.RuleTree<T>;
+      Parent: ReactUnity.StyleEngine.RuleTreeNode<T>;
       Selector: string;
-      ParsedSelector: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleSelectorPart]
-      Children: any; // System.Collections.Generic.LinkedList`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
+      ParsedSelector: ReactUnity.StyleEngine.RuleSelectorPart[];
+      Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: T;
-      GetMatchingRules: ((component: ReactUnity.IReactComponent) => any);
-      GetMatchingBefore: ((component: ReactUnity.IReactComponent) => any);
-      GetMatchingAfter: ((component: ReactUnity.IReactComponent) => any);
+      GetMatchingRules: ((component: ReactUnity.IReactComponent) => System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>);
+      GetMatchingBefore: ((component: ReactUnity.IReactComponent) => System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>);
+      GetMatchingAfter: ((component: ReactUnity.IReactComponent) => System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>);
       GetMatchingChild: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => ReactUnity.IReactComponent);
-      GetMatchingChildren: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => any);
-      AddSelector: ((selectorText: string, importanceOffset?: number) => any);
-      AddChildCascading: ((selector: string) => any);
+      GetMatchingChildren: ((component: ReactUnity.IReactComponent, pseudoElement?: boolean) => ReactUnity.IReactComponent[]);
+      AddSelector: ((selectorText: string, importanceOffset?: number) => ReactUnity.StyleEngine.RuleTreeNode<T>[]);
+      AddChildCascading: ((selector: string) => ReactUnity.StyleEngine.RuleTreeNode<T>);
       Matches: ((component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent) => boolean);
-      CompareTo: ((other: any) => number);
-      Equals: ((obj: any) => boolean);
+      CompareTo: ((other: ReactUnity.StyleEngine.RuleTreeNode<T>) => number);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class RuleTreeNode<T = any> {
       constructor();
       Specifity: number;
-      Tree: any; // ReactUnity.StyleEngine.RuleTree`1[T]
-      Parent: any; // ReactUnity.StyleEngine.RuleTreeNode`1[T]
+      Tree: ReactUnity.StyleEngine.RuleTree<T>;
+      Parent: ReactUnity.StyleEngine.RuleTreeNode<T>;
       Selector: string;
-      ParsedSelector: any; // System.Collections.Generic.List`1[ReactUnity.StyleEngine.RuleSelectorPart]
-      Children: any; // System.Collections.Generic.LinkedList`1[ReactUnity.StyleEngine.RuleTreeNode`1[T]]
+      ParsedSelector: ReactUnity.StyleEngine.RuleSelectorPart[];
+      Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: T;
-      AddChildCascading: ((selector: string) => any);
+      AddChildCascading: ((selector: string) => ReactUnity.StyleEngine.RuleTreeNode<T>);
       Matches: ((component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent) => boolean);
-      CompareTo: ((other: any) => number);
-      Equals: ((obj: any) => boolean);
+      CompareTo: ((other: ReactUnity.StyleEngine.RuleTreeNode<T>) => number);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum RuleRelationType {
@@ -3601,12 +3782,12 @@ export namespace ReactUnity {
       Negated: boolean;
       Type: ReactUnity.StyleEngine.RuleSelectorPartType;
       Name: string;
-      Parameter: any; // System.Object
+      Parameter: System.Object;
       CompareTo: ((other: ReactUnity.StyleEngine.RuleSelectorPart) => number);
       Matches: ((component: ReactUnity.IReactComponent, scope?: ReactUnity.IReactComponent) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class NthChildParameter {
@@ -3614,16 +3795,16 @@ export namespace ReactUnity {
       A: number;
       B: number;
       Matches: ((index: number) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class IListInsertIntoSortedListExtensions {
-      static InsertIntoSortedList: ((list: any, value: any) => void) | ((list: any, value: any, comparison: any) => void);
-      Equals: ((obj: any) => boolean);
+      static InsertIntoSortedList: ((list: System.Collections.IList, value: System.IComparable) => void) | ((list: System.Collections.IList, value: System.IComparable, comparison: any) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -3638,11 +3819,11 @@ export namespace ReactUnity {
       SetBorderSize: ((layout: any) => void);
       SetBorderImage: ((sprite: UnityEngine.Sprite) => void);
       SetBorderColor: ((color: UnityEngine.Color) => void);
-      SetBackgroundColorAndImage: ((color: any, sprite: UnityEngine.Sprite) => void);
+      SetBackgroundColorAndImage: ((color: System.Nullable<UnityEngine.Color>, sprite: UnityEngine.Sprite) => void);
       SetBoxShadow: ((shadow: ReactUnity.Styling.Types.ShadowDefinition) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class BorderGraphic {
@@ -3650,9 +3831,9 @@ export namespace ReactUnity {
       static CreateBorderSpriteVector: ((tl: number, tr: number, bl: number, br: number) => UnityEngine.Sprite);
       static CreateBorderSprite: ((borderRadius: number) => UnityEngine.Sprite) | ((tl: number, tr: number, bl: number, br: number, antiAliasing?: boolean) => UnityEngine.Sprite);
       static CreateBorderSpriteRaster: ((tl: number, tr: number, bl: number, br: number, antiAliasing?: boolean) => UnityEngine.Sprite);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class IgnoreMaskImage {
@@ -3755,25 +3936,25 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class InvertedMaskImage {
       constructor();
@@ -3875,64 +4056,64 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
-    export declare class ILayoutProperty {
-      Set: ((node: any, value: any, defaultNode: any) => void);
+    export interface ILayoutProperty {
+      Set: ((node: any, value: System.Object, defaultNode: any) => void);
       SetDefault: ((node: any) => void) | ((node: any, defaultNode: any) => void);
-      Get: ((node: any) => any);
-      Serialize: ((value: any) => string);
+      Get: ((node: any) => System.Object);
+      Serialize: ((value: System.Object) => string);
     }
     export declare class LayoutValue {
-      constructor(prop: ReactUnity.Styling.ILayoutProperty, value: any);
+      constructor(prop: ReactUnity.Styling.ILayoutProperty, value: System.Object);
       prop: ReactUnity.Styling.ILayoutProperty;
-      value: any; // System.Object
-      Get: ((node: any) => any);
+      value: System.Object;
+      Get: ((node: any) => System.Object);
       Set: ((node: any, defaultNode: any) => void);
       SetDefault: ((node: any) => void) | ((node: any, defaultNode: any) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class LayoutProperty<T = any> {
       constructor(name: string, transitionable?: boolean, defaultValue?: T);
       name: string;
-      type: any; // System.Type
-      defaultValue: any; // System.Object
+      type: System.Type;
+      defaultValue: System.Object;
       transitionable: boolean;
       inherited: boolean;
       proxy: boolean;
-      propInfo: any; // System.Reflection.PropertyInfo
-      setter: any; // System.Action`2[Facebook.Yoga.YogaNode,T]
-      getter: any; // System.Func`2[Facebook.Yoga.YogaNode,T]
+      propInfo: System.Reflection.PropertyInfo;
+      setter: ((arg0: any) => void);
+      getter: ((arg0: any, arg1: T) => T);
       converter: ReactUnity.Styling.Parsers.IStyleConverter;
-      Set: ((node: any, value: any, defaultNode: any) => void);
+      Set: ((node: any, value: System.Object, defaultNode: any) => void);
       SetDefault: ((node: any) => void) | ((node: any, defaultNode: any) => void);
-      Get: ((node: any) => any);
-      Serialize: ((value: any) => string);
-      Convert: ((value: any) => any);
-      Equals: ((obj: any) => boolean);
+      Get: ((node: any) => System.Object);
+      Serialize: ((value: System.Object) => string);
+      Convert: ((value: System.Object) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class LayoutProperties {
@@ -3991,9 +4172,9 @@ export namespace ReactUnity {
       static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.ILayoutProperty]
       static AllProperties: ReactUnity.Styling.ILayoutProperty[];
       static GetProperty: ((name: string) => ReactUnity.Styling.ILayoutProperty);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class LinkedTextWatcher {
@@ -4026,33 +4207,33 @@ export namespace ReactUnity {
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class MaskAndImage {
       constructor(parent: UnityEngine.RectTransform);
       Mask: UnityEngine.UI.Mask;
       Image: UnityEngine.UI.Image;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class NodeStyle {
@@ -4094,58 +4275,58 @@ export namespace ReactUnity {
       appearance: ReactUnity.Styling.Types.Appearance;
       navigation: UnityEngine.UI.Navigation_Mode;
       fontSizeActual: number;
-      CssStyles: any; // System.Collections.Generic.List`1[System.Collections.Generic.Dictionary`2[System.String,System.Object]]
-      CssLayouts: any; // System.Collections.Generic.List`1[ReactUnity.Styling.LayoutValue]
+      CssStyles: System.Collections.Generic.Dictionary<string, System.Object>[];
+      CssLayouts: ReactUnity.Styling.LayoutValue[];
       Parent: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       CopyStyle: ((copyFrom: ReactUnity.Styling.NodeStyle) => void);
-      GetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean) => any);
-      SetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, value: any) => void);
+      GetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean) => System.Object);
+      SetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty, value: System.Object) => void);
       MarkChangesSeen: (() => void);
       HasValue: ((prop: ReactUnity.Styling.IStyleProperty) => boolean) | ((name: string) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class StateStyles {
       constructor(cmp: ReactUnity.IReactComponent);
-      Dic: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.NodeStyle]
+      Dic: System.Collections.Generic.Dictionary<string, ReactUnity.Styling.NodeStyle>;
       Component: ReactUnity.IReactComponent;
-      States: any; // System.Collections.Generic.HashSet`1[System.String]
-      ActiveStates: any; // System.Collections.Generic.List`1[ReactUnity.Styling.NodeStyle]
+      States: System.Collections.Generic.HashSet<string>;
+      ActiveStates: ReactUnity.Styling.NodeStyle[];
       SubscribeToState: ((state: string) => void);
       StartState: ((state: string) => boolean);
       EndState: ((state: string) => boolean);
-      GetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty) => any);
+      GetStyleValue: ((prop: ReactUnity.Styling.IStyleProperty) => System.Object);
       GetState: ((state: string) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class IStyleProperty {
+    export interface IStyleProperty {
       name: string;
-      type: any; // System.Type
-      defaultValue: any; // System.Object
+      type: System.Type;
+      defaultValue: System.Object;
       transitionable: boolean;
       inherited: boolean;
       proxy: boolean;
-      Convert: ((value: any) => any);
+      Convert: ((value: System.Object) => System.Object);
     }
     export declare class StyleProperty<T = any> {
-      constructor(name: string, defaultValue?: any, transitionable?: boolean, inherited?: boolean, proxy?: boolean, converter?: ReactUnity.Styling.Parsers.IStyleConverter);
+      constructor(name: string, defaultValue?: System.Object, transitionable?: boolean, inherited?: boolean, proxy?: boolean, converter?: ReactUnity.Styling.Parsers.IStyleConverter);
       name: string;
-      type: any; // System.Type
-      defaultValue: any; // System.Object
+      type: System.Type;
+      defaultValue: System.Object;
       transitionable: boolean;
       inherited: boolean;
       proxy: boolean;
       converter: ReactUnity.Styling.Parsers.IStyleConverter;
-      Convert: ((value: any) => any);
-      Equals: ((obj: any) => boolean);
+      Convert: ((value: System.Object) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class StyleProperties {
@@ -4186,156 +4367,156 @@ export namespace ReactUnity {
       static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
       static AllProperties: ReactUnity.Styling.IStyleProperty[];
       static GetStyleProperty: ((name: string) => ReactUnity.Styling.IStyleProperty);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export namespace Parsers {
       export declare class BoolConverter {
         constructor(truthyValues: string[], falsyValues: string[]);
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class ColorConverter {
         constructor();
-        FromString: ((value: string) => any);
-        Convert: ((value: any) => any);
-        Equals: ((obj: any) => boolean);
+        FromString: ((value: string) => System.Object);
+        Convert: ((value: System.Object) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class EnumConverter<T = any> {
         constructor();
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class FloatConverter {
         constructor();
-        static PxRegex: any; // System.Text.RegularExpressions.Regex
-        static PercentRegex: any; // System.Text.RegularExpressions.Regex
-        FromString: ((value: string) => any);
-        Convert: ((value: any) => any);
-        Equals: ((obj: any) => boolean);
+        static PxRegex: System.Text.RegularExpressions.Regex;
+        static PercentRegex: System.Text.RegularExpressions.Regex;
+        FromString: ((value: string) => System.Object);
+        Convert: ((value: System.Object) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class FontReferenceConverter {
         constructor();
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class GeneralConverter {
         constructor(baseConverter?: ReactUnity.Styling.Parsers.IStyleConverter);
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class IStyleParser {
-        FromString: ((value: string) => any);
+      export interface IStyleParser {
+        FromString: ((value: string) => System.Object);
       }
-      export declare class IStyleConverter {
-        Convert: ((value: any) => any);
+      export interface IStyleConverter {
+        Convert: ((value: System.Object) => System.Object);
       }
       export declare class ImageReferenceConverter {
         constructor();
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class IntConverter {
         constructor();
         FloatParser: ReactUnity.Styling.Parsers.FloatConverter;
-        FromString: ((value: string) => any);
-        Convert: ((value: any) => any);
-        Equals: ((obj: any) => boolean);
+        FromString: ((value: string) => System.Object);
+        Convert: ((value: System.Object) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class ShadowDefinitionConverter {
         constructor();
         ColorParser: ReactUnity.Styling.Parsers.ColorConverter;
         FloatParser: ReactUnity.Styling.Parsers.FloatConverter;
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class StringConverter {
         constructor();
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class UrlConverter {
         constructor();
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class Vector2Converter {
         constructor();
-        FromString: ((value: string) => any);
-        Convert: ((value: any) => any);
-        Equals: ((obj: any) => boolean);
+        FromString: ((value: string) => System.Object);
+        Convert: ((value: System.Object) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class VideoReferenceConverter {
         constructor();
-        Convert: ((value: any) => any);
-        FromString: ((value: string) => any);
-        Equals: ((obj: any) => boolean);
+        Convert: ((value: System.Object) => System.Object);
+        FromString: ((value: string) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class YogaValue2Converter {
         constructor();
-        FromString: ((value: string) => any);
-        Convert: ((value: any) => any);
-        Equals: ((obj: any) => boolean);
+        FromString: ((value: string) => System.Object);
+        Convert: ((value: System.Object) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class YogaValueConverter {
         constructor();
-        FromString: ((value: string) => any);
-        Convert: ((value: any) => any);
-        Equals: ((obj: any) => boolean);
+        FromString: ((value: string) => System.Object);
+        Convert: ((value: System.Object) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
@@ -4360,9 +4541,9 @@ export namespace ReactUnity {
         color: UnityEngine.Color;
         blur: number;
         inset: boolean;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum SpecialNames {
@@ -4390,27 +4571,27 @@ export namespace ReactUnity {
       Data = 8,
     }
     export declare class AssetReference<AssetType = any> {
-      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: System.Object);
       type: ReactUnity.Types.AssetReferenceType;
-      value: any; // System.Object
+      value: System.Object;
       static None: any; // ReactUnity.Types.AssetReference`1[AssetType]
-      Get: ((context: ReactUnity.ReactContext, callback: any) => void);
+      Get: ((context: ReactUnity.ReactContext, callback: (() => void)) => void);
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class FontReference {
-      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: System.Object);
       type: ReactUnity.Types.AssetReferenceType;
-      value: any; // System.Object
+      value: System.Object;
       static None: ReactUnity.Types.FontReference;
-      Get: ((context: ReactUnity.ReactContext, callback: any) => void);
+      Get: ((context: ReactUnity.ReactContext, callback: (() => void)) => void);
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum ImageFitMode {
@@ -4423,32 +4604,32 @@ export namespace ReactUnity {
       Fill = 6,
     }
     export declare class ImageReference {
-      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: System.Object);
       type: ReactUnity.Types.AssetReferenceType;
-      value: any; // System.Object
+      value: System.Object;
       static None: ReactUnity.Types.ImageReference;
       Dispose: (() => void);
-      Get: ((context: ReactUnity.ReactContext, callback: any) => void);
-      Equals: ((obj: any) => boolean);
+      Get: ((context: ReactUnity.ReactContext, callback: (() => void)) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class StringObjectPair {
       constructor();
       Key: string;
       Value: UnityEngine.Object;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class StringObjectDictionary {
       constructor();
-      Comparer: any; // System.Collections.Generic.IEqualityComparer`1[System.String]
+      Comparer: System.Collections.Generic.IEqualityComparer<string>;
       Count: number;
-      Keys: any; // System.Collections.Generic.Dictionary`2+KeyCollection[System.String,UnityEngine.Object]
-      Values: any; // System.Collections.Generic.Dictionary`2+ValueCollection[System.String,UnityEngine.Object]
+      Keys: System.Collections.Generic.Dictionary<string, UnityEngine.Object>;
+      Values: System.Collections.Generic.Dictionary<string, UnityEngine.Object>;
       GetValueOrDefault: ((key: string) => UnityEngine.Object);
       OnAfterDeserialize: (() => void);
       OnBeforeSerialize: (() => void);
@@ -4456,26 +4637,26 @@ export namespace ReactUnity {
       Clear: (() => void);
       ContainsKey: ((key: string) => boolean);
       ContainsValue: ((value: UnityEngine.Object) => boolean);
-      GetEnumerator: (() => any);
-      GetObjectData: ((info: any, context: any) => void);
-      OnDeserialization: ((sender: any) => void);
+      GetEnumerator: (() => System.Collections.Generic.Dictionary<string, UnityEngine.Object>);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      OnDeserialization: ((sender: System.Object) => void);
       Remove: ((key: string) => boolean);
       TryAdd: ((key: string, value: UnityEngine.Object) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class VideoReference {
-      constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
+      constructor(type: ReactUnity.Types.AssetReferenceType, value: System.Object);
       type: ReactUnity.Types.AssetReferenceType;
-      value: any; // System.Object
+      value: System.Object;
       static None: ReactUnity.Types.VideoReference;
-      Get: ((context: ReactUnity.ReactContext, callback: any) => void);
+      Get: ((context: ReactUnity.ReactContext, callback: (() => void)) => void);
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class YogaValue2 {
@@ -4485,27 +4666,27 @@ export namespace ReactUnity {
       static Zero: ReactUnity.Types.YogaValue2;
       static Auto: ReactUnity.Types.YogaValue2;
       static Center: ReactUnity.Types.YogaValue2;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace Visitors {
     export declare class ReactComponentVisitor {
       Visit: ((component: ReactUnity.IReactComponent) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class TextContentVisitor {
       constructor();
       Visit: ((component: ReactUnity.IReactComponent) => void);
       Get: ((component: ReactUnity.IReactComponent) => string);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -4537,30 +4718,30 @@ export namespace ReactUnity {
       enableTabText: boolean;
       showHtmlElement: boolean;
       OnSelect: (() => void);
-      CompareTo: ((other: ReactUnity.WebSupport.WebGLInput) => number) | ((obj: any) => number);
+      CompareTo: ((other: ReactUnity.WebSupport.WebGLInput) => number) | ((obj: System.Object) => number);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
       InvokeRepeating: ((methodName: string, time: number, repeatRate: number) => void);
-      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: any) => UnityEngine.Coroutine) | ((routine: any) => UnityEngine.Coroutine);
-      StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
-      StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
+      StartCoroutine: ((methodName: string) => UnityEngine.Coroutine) | ((methodName: string, value: System.Object) => UnityEngine.Coroutine) | ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StartCoroutine_Auto: ((routine: System.Collections.IEnumerator) => UnityEngine.Coroutine);
+      StopCoroutine: ((routine: System.Collections.IEnumerator) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
       StopAllCoroutines: (() => void);
-      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
-      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
-      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponentInParent: ((t: any) => UnityEngine.Component);
-      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
-      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      GetComponent: ((type: System.Type) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component) | ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: System.Type) => UnityEngine.Component);
+      GetComponentsInParent: ((t: System.Type, includeInactive: boolean) => UnityEngine.Component[]) | ((t: System.Type) => UnityEngine.Component[]);
+      GetComponents: ((type: System.Type) => UnityEngine.Component[]) | ((type: System.Type, results: UnityEngine.Component[]) => void);
       CompareTag: ((tag: string) => boolean);
-      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
-      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessageUpwards: ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: System.Object) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum ContentType {
       Standard = 0,
@@ -4579,7 +4760,7 @@ export namespace ReactUnity {
       MultiLineSubmit = 1,
       MultiLineNewline = 2,
     }
-    export declare class IInputField {
+    export interface IInputField {
       contentType: ReactUnity.WebSupport.ContentType;
       lineType: ReactUnity.WebSupport.LineType;
       fontSize: number;
@@ -4600,9 +4781,9 @@ export namespace ReactUnity {
     }
     export declare class WebGLWindow {
       static Focus: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }

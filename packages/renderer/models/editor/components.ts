@@ -1,16 +1,26 @@
 import { Events, ActionCallback } from './events';
 import { AssetReference } from '../properties/values';
 import { Style } from '../properties';
+import { ReactUnity, UnityEngine } from '../generated';
 
-export interface View extends Events {
+import Cmp = ReactUnity.Editor.Renderer.Components;
+type BaseCmp = Cmp.EditorReactComponent;
+export interface View<TSender = BaseCmp> extends Events<TSender> {
   name?: string;
   className?: string;
   style?: Style;
   focusable?: boolean;
 }
 
-export interface Button extends View {
-  onButtonClick?: ActionCallback;
+export interface BaseField<T, TSender = BaseCmp> extends View<TSender> {
+  value?: T;
+  onChange?: (ev: UnityEngine.UIElements.ChangeEvent<T>, sender: TSender) => void;
+  label?: string;
+  bindingPath?: string;
+}
+
+export interface Button<TSender = Cmp.EditorButtonComponent> extends View<TSender> {
+  onButtonClick?: ActionCallback<TSender>;
 }
 
 export interface Anchor extends View {
@@ -38,7 +48,11 @@ export interface Video extends Image {
 
 export type ToggleEvent = (val: boolean) => void;
 
-export interface Toggle extends View {
-  onChange?: ToggleEvent;
-  value?: boolean;
+export interface Toggle extends BaseField<boolean, Cmp.EditorToggleComponent> {
+  text?: string;
+}
+
+export interface IMGUI extends View<Cmp.EditorIMGUIComponent> {
+  onGUI?: ActionCallback<Cmp.EditorIMGUIComponent>;
+  cullingEnabled?: boolean;
 }

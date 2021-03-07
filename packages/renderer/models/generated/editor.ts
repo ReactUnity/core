@@ -1,7 +1,8 @@
 //
 // Types in assemblies: UnityEditor.CoreModule
-// Generated 7.03.2021 18:43:57
+// Generated 7.03.2021 22:05:05
 //
+import { System } from './system';
 import { UnityEngine,Unity } from './unity';
 
 export namespace UnityEditor {
@@ -13,7 +14,7 @@ export namespace UnityEditor {
     inspectorMode: UnityEditor.InspectorMode;
     hasComponentsWhichCannotBeMultiEdited: boolean;
     static sharedTracker: UnityEditor.ActiveEditorTracker;
-    Equals: ((o: any) => boolean);
+    Equals: ((o: System.Object) => boolean);
     GetHashCode: (() => number);
     Destroy: (() => void);
     GetVisible: ((index: number) => number);
@@ -24,35 +25,35 @@ export namespace UnityEditor {
     VerifyModifiedMonoBehaviours: (() => void);
     static MakeCustomEditor: ((obj: UnityEngine.Object) => UnityEditor.Editor);
     static HasCustomEditor: ((obj: UnityEngine.Object) => boolean);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ArrayUtility {
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssemblyReloadEvents {
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssemblyReloadEvents_AssemblyReloadCallback {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: (() => void);
-    BeginInvoke: ((callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum AssetDeleteResult {
@@ -62,9 +63,9 @@ export namespace UnityEditor {
   }
   export declare class AssetModificationProcessor {
     constructor();
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum AssetMoveResult {
@@ -80,11 +81,11 @@ export namespace UnityEditor {
     preview: UnityEngine.Texture2D;
     LogWarning: ((warning: string) => void) | ((warning: string, context: UnityEngine.Object) => void);
     LogError: ((warning: string) => void) | ((warning: string, context: UnityEngine.Object) => void);
-    GetVersion: (() => any);
+    GetVersion: (() => System.UInt32);
     GetPostprocessOrder: (() => number);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum BuildOptions {
@@ -143,10 +144,10 @@ export namespace UnityEditor {
     assetBundleVariant: string;
     assetNames: string[];
     addressableNames: string[];
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class BuildPlayerOptions {
     scenes: string[];
@@ -156,10 +157,10 @@ export namespace UnityEditor {
     target: UnityEditor.BuildTarget;
     options: UnityEditor.BuildOptions;
     extraScriptingDefines: string[];
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum PlayerConnectionInitiateMode {
     None = 0,
@@ -182,9 +183,9 @@ export namespace UnityEditor {
     static IsBuildTargetSupported: ((buildTargetGroup: UnityEditor.BuildTargetGroup, target: UnityEditor.BuildTarget) => boolean);
     static GetPlaybackEngineDirectory: ((target: UnityEditor.BuildTarget, options: UnityEditor.BuildOptions) => string) | ((buildTargetGroup: UnityEditor.BuildTargetGroup, target: UnityEditor.BuildTarget, options: UnityEditor.BuildOptions) => string);
     static GetPlayerConnectionInitiateMode: ((targetPlatform: UnityEditor.BuildTarget, buildOptions: UnityEditor.BuildOptions) => UnityEditor.PlayerConnectionInitiateMode);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class BuildPlayerWindow {
@@ -229,38 +230,38 @@ export namespace UnityEditor {
     Close: (() => void);
     Repaint: (() => void);
     SendEvent: ((e: UnityEngine.Event) => boolean);
-    GetExtraPaneTypes: (() => any);
+    GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class BuildPlayerWindow_BuildMethodException {
     constructor();
     constructor(message: string);
     Message: string;
-    Data: any; // System.Collections.IDictionary
-    InnerException: any; // System.Exception
-    TargetSite: any; // System.Reflection.MethodBase
+    Data: System.Collections.IDictionary;
+    InnerException: System.Exception;
+    TargetSite: System.Reflection.MethodBase;
     StackTrace: string;
     HelpLink: string;
     Source: string;
     HResult: number;
-    GetBaseException: (() => any);
+    GetBaseException: (() => System.Exception);
     ToString: (() => string);
-    GetObjectData: ((info: any, context: any) => void);
-    GetType: (() => any) | (() => any);
-    Equals: ((obj: any) => boolean);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    GetType: (() => System.Type) | (() => System.Type);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
   }
   export declare class BuildPlayerWindow_DefaultBuildMethods {
     static BuildPlayer: ((options: UnityEditor.BuildPlayerOptions) => void);
     static GetBuildPlayerOptions: ((defaultBuildPlayerOptions: UnityEditor.BuildPlayerOptions) => UnityEditor.BuildPlayerOptions);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum BuildTarget {
@@ -335,9 +336,9 @@ export namespace UnityEditor {
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum DragAndDropVisualMode {
     None = 0,
@@ -355,12 +356,12 @@ export namespace UnityEditor {
     static visualMode: UnityEditor.DragAndDropVisualMode;
     static PrepareStartDrag: (() => void);
     static StartDrag: ((title: string) => void);
-    static GetGenericData: ((type: string) => any);
-    static SetGenericData: ((type: string, data: any) => void);
+    static GetGenericData: ((type: string) => System.Object);
+    static SetGenericData: ((type: string, data: System.Object) => void);
     static AcceptDrag: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum GizmoType {
@@ -425,73 +426,73 @@ export namespace UnityEditor {
     static SaveScene: (() => boolean) | ((path: string) => boolean) | ((path: string, saveAsCopy: boolean) => boolean);
     static SaveCurrentSceneIfUserWantsTo: (() => boolean);
     static MarkSceneDirty: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorApplication_ProjectWindowItemCallback {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((guid: string, selectionRect: UnityEngine.Rect) => void);
-    BeginInvoke: ((guid: string, selectionRect: UnityEngine.Rect, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((guid: string, selectionRect: UnityEngine.Rect, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorApplication_HierarchyWindowItemCallback {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((instanceID: number, selectionRect: UnityEngine.Rect) => void);
-    BeginInvoke: ((instanceID: number, selectionRect: UnityEngine.Rect, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((instanceID: number, selectionRect: UnityEngine.Rect, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorApplication_CallbackFunction {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: (() => void);
-    BeginInvoke: ((callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorApplication_SerializedPropertyCallbackFunction {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((menu: UnityEditor.GenericMenu, property: UnityEditor.SerializedProperty) => void);
-    BeginInvoke: ((menu: UnityEditor.GenericMenu, property: UnityEditor.SerializedProperty, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((menu: UnityEditor.GenericMenu, property: UnityEditor.SerializedProperty, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum PlayModeStateChange {
@@ -512,10 +513,10 @@ export namespace UnityEditor {
     path: string;
     guid: UnityEditor.GUID;
     static GetActiveSceneList: ((scenes: UnityEditor.EditorBuildSettingsScene[]) => string[]);
-    CompareTo: ((obj: any) => number);
-    Equals: ((obj: any) => boolean);
+    CompareTo: ((obj: System.Object) => number);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorBuildSettings {
@@ -527,9 +528,9 @@ export namespace UnityEditor {
     static AddConfigObject: ((name: string, obj: UnityEngine.Object, overwrite: boolean) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class EditorGUI {
     constructor();
@@ -546,8 +547,8 @@ export namespace UnityEditor {
     static DoPasswordField: ((id: number, position: UnityEngine.Rect, password: string, style: UnityEngine.GUIStyle) => string) | ((id: number, position: UnityEngine.Rect, label: UnityEngine.GUIContent, password: string, style: UnityEngine.GUIStyle) => string);
     static Slider: ((position: UnityEngine.Rect, value: number, leftValue: number, rightValue: number) => number) | ((position: UnityEngine.Rect, label: string, value: number, leftValue: number, rightValue: number) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: number, leftValue: number, rightValue: number) => number) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, label: string) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, label: UnityEngine.GUIContent) => void);
     static IntSlider: ((position: UnityEngine.Rect, value: number, leftValue: number, rightValue: number) => number) | ((position: UnityEngine.Rect, label: string, value: number, leftValue: number, rightValue: number) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: number, leftValue: number, rightValue: number) => number) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, label: string) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, label: UnityEngine.GUIContent) => void);
-    static EnumFlagsField: ((position: UnityEngine.Rect, enumValue: any) => any) | ((position: UnityEngine.Rect, enumValue: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: string, enumValue: any) => any) | ((position: UnityEngine.Rect, label: string, enumValue: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: any) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: any, includeObsolete: boolean, style?: UnityEngine.GUIStyle) => any);
-    static ObjectField: ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, objType: any) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, objType: any, label: UnityEngine.GUIContent) => void) | ((position: UnityEngine.Rect, obj: UnityEngine.Object, objType: any, targetBeingEdited: UnityEngine.Object) => UnityEngine.Object) | ((position: UnityEngine.Rect, obj: UnityEngine.Object, objType: any, allowSceneObjects: boolean) => UnityEngine.Object) | ((position: UnityEngine.Rect, obj: UnityEngine.Object, objType: any) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: string, obj: UnityEngine.Object, objType: any, targetBeingEdited: UnityEngine.Object) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: string, obj: UnityEngine.Object, objType: any, allowSceneObjects: boolean) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: string, obj: UnityEngine.Object, objType: any) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: any, targetBeingEdited: UnityEngine.Object) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: any, allowSceneObjects: boolean) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: any) => UnityEngine.Object);
+    static EnumFlagsField: ((position: UnityEngine.Rect, enumValue: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, enumValue: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: string, enumValue: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, label: string, enumValue: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: System.Enum, includeObsolete: boolean, style?: UnityEngine.GUIStyle) => System.Enum);
+    static ObjectField: ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, objType: System.Type) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, objType: System.Type, label: UnityEngine.GUIContent) => void) | ((position: UnityEngine.Rect, obj: UnityEngine.Object, objType: System.Type, targetBeingEdited: UnityEngine.Object) => UnityEngine.Object) | ((position: UnityEngine.Rect, obj: UnityEngine.Object, objType: System.Type, allowSceneObjects: boolean) => UnityEngine.Object) | ((position: UnityEngine.Rect, obj: UnityEngine.Object, objType: System.Type) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: string, obj: UnityEngine.Object, objType: System.Type, targetBeingEdited: UnityEngine.Object) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: string, obj: UnityEngine.Object, objType: System.Type, allowSceneObjects: boolean) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: string, obj: UnityEngine.Object, objType: System.Type) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: System.Type, targetBeingEdited: UnityEngine.Object) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: System.Type, allowSceneObjects: boolean) => UnityEngine.Object) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: System.Type) => UnityEngine.Object);
     static IndentedRect: ((source: UnityEngine.Rect) => UnityEngine.Rect);
     static Vector2Field: ((position: UnityEngine.Rect, label: string, value: UnityEngine.Vector2) => UnityEngine.Vector2) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: UnityEngine.Vector2) => UnityEngine.Vector2);
     static Vector3Field: ((position: UnityEngine.Rect, label: string, value: UnityEngine.Vector3) => UnityEngine.Vector3) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: UnityEngine.Vector3) => UnityEngine.Vector3);
@@ -588,9 +589,9 @@ export namespace UnityEditor {
     static DelayedDoubleField: ((position: UnityEngine.Rect, value: number) => number) | ((position: UnityEngine.Rect, value: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: string, value: number) => number) | ((position: UnityEngine.Rect, label: string, value: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: number) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: number, style: UnityEngine.GUIStyle) => number);
     static IntField: ((position: UnityEngine.Rect, value: number) => number) | ((position: UnityEngine.Rect, value: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: string, value: number) => number) | ((position: UnityEngine.Rect, label: string, value: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: number) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: number, style: UnityEngine.GUIStyle) => number);
     static DelayedIntField: ((position: UnityEngine.Rect, value: number) => number) | ((position: UnityEngine.Rect, value: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: string, value: number) => number) | ((position: UnityEngine.Rect, label: string, value: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: number) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent) => void);
-    static LongField: ((position: UnityEngine.Rect, value: any) => any) | ((position: UnityEngine.Rect, value: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: string, value: any) => any) | ((position: UnityEngine.Rect, label: string, value: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: any) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: any, style: UnityEngine.GUIStyle) => any);
+    static LongField: ((position: UnityEngine.Rect, value: System.Int64) => System.Int64) | ((position: UnityEngine.Rect, value: System.Int64, style: UnityEngine.GUIStyle) => System.Int64) | ((position: UnityEngine.Rect, label: string, value: System.Int64) => System.Int64) | ((position: UnityEngine.Rect, label: string, value: System.Int64, style: UnityEngine.GUIStyle) => System.Int64) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: System.Int64) => System.Int64) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, value: System.Int64, style: UnityEngine.GUIStyle) => System.Int64);
     static Popup: ((position: UnityEngine.Rect, selectedIndex: number, displayedOptions: string[]) => number) | ((position: UnityEngine.Rect, selectedIndex: number, displayedOptions: string[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, selectedIndex: number, displayedOptions: UnityEngine.GUIContent[]) => number) | ((position: UnityEngine.Rect, selectedIndex: number, displayedOptions: UnityEngine.GUIContent[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: string, selectedIndex: number, displayedOptions: string[]) => number) | ((position: UnityEngine.Rect, label: string, selectedIndex: number, displayedOptions: string[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selectedIndex: number, displayedOptions: UnityEngine.GUIContent[]) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selectedIndex: number, displayedOptions: UnityEngine.GUIContent[], style: UnityEngine.GUIStyle) => number);
-    static EnumPopup: ((position: UnityEngine.Rect, selected: any) => any) | ((position: UnityEngine.Rect, selected: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: string, selected: any) => any) | ((position: UnityEngine.Rect, label: string, selected: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: any) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: any, checkEnabled: any, includeObsolete?: boolean, style?: UnityEngine.GUIStyle) => any);
+    static EnumPopup: ((position: UnityEngine.Rect, selected: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, selected: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: string, selected: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, label: string, selected: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: any, includeObsolete?: boolean, style?: UnityEngine.GUIStyle) => System.Enum);
     static IntPopup: ((position: UnityEngine.Rect, selectedValue: number, displayedOptions: string[], optionValues: number[]) => number) | ((position: UnityEngine.Rect, selectedValue: number, displayedOptions: string[], optionValues: number[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[]) => number) | ((position: UnityEngine.Rect, selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[]) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, displayedOptions: UnityEngine.GUIContent[], optionValues: number[]) => void) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], label: UnityEngine.GUIContent) => void) | ((position: UnityEngine.Rect, label: string, selectedValue: number, displayedOptions: string[], optionValues: number[]) => number) | ((position: UnityEngine.Rect, label: string, selectedValue: number, displayedOptions: string[], optionValues: number[], style: UnityEngine.GUIStyle) => number);
     static TagField: ((position: UnityEngine.Rect, tag: string) => string) | ((position: UnityEngine.Rect, tag: string, style: UnityEngine.GUIStyle) => string) | ((position: UnityEngine.Rect, label: string, tag: string) => string) | ((position: UnityEngine.Rect, label: string, tag: string, style: UnityEngine.GUIStyle) => string) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, tag: string) => string) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, tag: string, style: UnityEngine.GUIStyle) => string);
     static LayerField: ((position: UnityEngine.Rect, layer: number) => number) | ((position: UnityEngine.Rect, layer: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: string, layer: number) => number) | ((position: UnityEngine.Rect, label: string, layer: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, layer: number) => number) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, layer: number, style: UnityEngine.GUIStyle) => number);
@@ -598,58 +599,58 @@ export namespace UnityEditor {
     static Foldout: ((position: UnityEngine.Rect, foldout: boolean, content: string) => boolean) | ((position: UnityEngine.Rect, foldout: boolean, content: string, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, foldout: boolean, content: string, toggleOnLabelClick: boolean) => boolean) | ((position: UnityEngine.Rect, foldout: boolean, content: string, toggleOnLabelClick: boolean, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, foldout: boolean, content: UnityEngine.GUIContent) => boolean) | ((position: UnityEngine.Rect, foldout: boolean, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, foldout: boolean, content: UnityEngine.GUIContent, toggleOnLabelClick: boolean) => boolean) | ((position: UnityEngine.Rect, foldout: boolean, content: UnityEngine.GUIContent, toggleOnLabelClick: boolean, style: UnityEngine.GUIStyle) => boolean);
     static HandlePrefixLabel: ((totalPosition: UnityEngine.Rect, labelPosition: UnityEngine.Rect, label: UnityEngine.GUIContent, id: number) => void) | ((totalPosition: UnityEngine.Rect, labelPosition: UnityEngine.Rect, label: UnityEngine.GUIContent) => void) | ((totalPosition: UnityEngine.Rect, labelPosition: UnityEngine.Rect, label: UnityEngine.GUIContent, id: number, style: UnityEngine.GUIStyle) => void);
     static PropertyField: ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty) => boolean) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, includeChildren: boolean) => boolean) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent) => boolean) | ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent, includeChildren: boolean) => boolean);
-    static EnumMaskField: ((position: UnityEngine.Rect, enumValue: any) => any) | ((position: UnityEngine.Rect, enumValue: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: string, enumValue: any) => any) | ((position: UnityEngine.Rect, label: string, enumValue: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: any) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: any, style: UnityEngine.GUIStyle) => any);
-    static EnumMaskPopup: ((position: UnityEngine.Rect, label: string, selected: any) => any) | ((position: UnityEngine.Rect, label: string, selected: any, style: UnityEngine.GUIStyle) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: any) => any) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: any, style: UnityEngine.GUIStyle) => any);
+    static EnumMaskField: ((position: UnityEngine.Rect, enumValue: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, enumValue: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: string, enumValue: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, label: string, enumValue: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, enumValue: System.Enum, style: UnityEngine.GUIStyle) => System.Enum);
+    static EnumMaskPopup: ((position: UnityEngine.Rect, label: string, selected: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, label: string, selected: System.Enum, style: UnityEngine.GUIStyle) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum) => System.Enum) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, selected: System.Enum, style: UnityEngine.GUIStyle) => System.Enum);
     static BeginFoldoutHeaderGroup: ((position: UnityEngine.Rect, foldout: boolean, content: string, style?: UnityEngine.GUIStyle, menuAction?: any, menuIcon?: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, foldout: boolean, content: UnityEngine.GUIContent, style?: UnityEngine.GUIStyle, menuAction?: any, menuIcon?: UnityEngine.GUIStyle) => boolean);
     static EndFoldoutHeaderGroup: (() => void);
     static GradientField: ((position: UnityEngine.Rect, gradient: UnityEngine.Gradient) => UnityEngine.Gradient) | ((position: UnityEngine.Rect, label: string, gradient: UnityEngine.Gradient) => UnityEngine.Gradient) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, gradient: UnityEngine.Gradient) => UnityEngine.Gradient) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, gradient: UnityEngine.Gradient, hdr: boolean) => UnityEngine.Gradient) | ((position: UnityEngine.Rect, label: UnityEngine.GUIContent, gradient: UnityEngine.Gradient, hdr: boolean, colorSpace: UnityEngine.ColorSpace) => UnityEngine.Gradient);
     static DrawRect: ((rect: UnityEngine.Rect, color: UnityEngine.Color) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUI_DisabledGroupScope {
     constructor(disabled: boolean);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUI_DisabledScope {
     constructor(disabled: boolean);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class EditorGUI_ChangeCheckScope {
     constructor();
     changed: boolean;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUI_IndentLevelScope {
     constructor();
     constructor(increment: number);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUI_PropertyScope {
     constructor(totalPosition: UnityEngine.Rect, label: UnityEngine.GUIContent, property: UnityEditor.SerializedProperty);
     content: UnityEngine.GUIContent;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUILayout {
@@ -670,17 +671,17 @@ export namespace UnityEditor {
     static DelayedDoubleField: ((value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
     static IntField: ((value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
     static DelayedIntField: ((value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, value: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, value: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((property: UnityEditor.SerializedProperty, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void);
-    static LongField: ((value: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((value: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, value: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, value: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, value: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, value: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any);
+    static LongField: ((value: System.Int64, ...options: UnityEngine.GUILayoutOption[]) => System.Int64) | ((value: System.Int64, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Int64) | ((label: string, value: System.Int64, ...options: UnityEngine.GUILayoutOption[]) => System.Int64) | ((label: string, value: System.Int64, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Int64) | ((label: UnityEngine.GUIContent, value: System.Int64, ...options: UnityEngine.GUILayoutOption[]) => System.Int64) | ((label: UnityEngine.GUIContent, value: System.Int64, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Int64);
     static Slider: ((value: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, value: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, value: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, label: string, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, label: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void);
     static IntSlider: ((value: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, value: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, value: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, label: string, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, leftValue: number, rightValue: number, label: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void);
     static Popup: ((selectedIndex: number, displayedOptions: string[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((selectedIndex: number, displayedOptions: string[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selectedIndex: number, displayedOptions: UnityEngine.GUIContent[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((selectedIndex: number, displayedOptions: UnityEngine.GUIContent[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, selectedIndex: number, displayedOptions: string[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, selectedIndex: number, displayedOptions: string[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, selectedIndex: number, displayedOptions: string[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, selectedIndex: number, displayedOptions: UnityEngine.GUIContent[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, selectedIndex: number, displayedOptions: UnityEngine.GUIContent[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
-    static EnumPopup: ((selected: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((selected: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, selected: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, selected: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, selected: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, selected: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, selected: any, checkEnabled: any, includeObsolete: boolean, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, selected: any, checkEnabled: any, includeObsolete: boolean, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any);
+    static EnumPopup: ((selected: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: string, selected: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: string, selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, selected: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: any, includeObsolete: boolean, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, selected: System.Enum, checkEnabled: any, includeObsolete: boolean, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum);
     static IntPopup: ((selectedValue: number, displayedOptions: string[], optionValues: number[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((selectedValue: number, displayedOptions: string[], optionValues: number[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, selectedValue: number, displayedOptions: string[], optionValues: number[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, selectedValue: number, displayedOptions: string[], optionValues: number[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, selectedValue: number, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((property: UnityEditor.SerializedProperty, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], label: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, displayedOptions: UnityEngine.GUIContent[], optionValues: number[], label: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void);
     static TagField: ((tag: string, ...options: UnityEngine.GUILayoutOption[]) => string) | ((tag: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string) | ((label: string, tag: string, ...options: UnityEngine.GUILayoutOption[]) => string) | ((label: string, tag: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string) | ((label: UnityEngine.GUIContent, tag: string, ...options: UnityEngine.GUILayoutOption[]) => string) | ((label: UnityEngine.GUIContent, tag: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string);
     static LayerField: ((layer: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((layer: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, layer: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, layer: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, layer: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, layer: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
     static MaskField: ((label: UnityEngine.GUIContent, mask: number, displayedOptions: string[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, mask: number, displayedOptions: string[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: UnityEngine.GUIContent, mask: number, displayedOptions: string[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((label: string, mask: number, displayedOptions: string[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((mask: number, displayedOptions: string[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((mask: number, displayedOptions: string[], ...options: UnityEngine.GUILayoutOption[]) => number);
-    static EnumFlagsField: ((enumValue: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((enumValue: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, enumValue: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, enumValue: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, enumValue: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, enumValue: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, enumValue: any, includeObsolete: boolean, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, enumValue: any, includeObsolete: boolean, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any);
-    static ObjectField: ((obj: UnityEngine.Object, objType: any, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((obj: UnityEngine.Object, objType: any, targetBeingEdited: UnityEngine.Object, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((obj: UnityEngine.Object, objType: any, allowSceneObjects: boolean, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: string, obj: UnityEngine.Object, objType: any, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: string, obj: UnityEngine.Object, objType: any, targetBeingEdited: UnityEngine.Object, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: string, obj: UnityEngine.Object, objType: any, allowSceneObjects: boolean, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: any, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: any, targetBeingEdited: UnityEngine.Object, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: any, allowSceneObjects: boolean, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((property: UnityEditor.SerializedProperty, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, objType: any, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, objType: any, label: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void);
+    static EnumFlagsField: ((enumValue: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((enumValue: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: string, enumValue: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: string, enumValue: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, enumValue: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, enumValue: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, enumValue: System.Enum, includeObsolete: boolean, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, enumValue: System.Enum, includeObsolete: boolean, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum);
+    static ObjectField: ((obj: UnityEngine.Object, objType: System.Type, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((obj: UnityEngine.Object, objType: System.Type, targetBeingEdited: UnityEngine.Object, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((obj: UnityEngine.Object, objType: System.Type, allowSceneObjects: boolean, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: string, obj: UnityEngine.Object, objType: System.Type, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: string, obj: UnityEngine.Object, objType: System.Type, targetBeingEdited: UnityEngine.Object, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: string, obj: UnityEngine.Object, objType: System.Type, allowSceneObjects: boolean, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: System.Type, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: System.Type, targetBeingEdited: UnityEngine.Object, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((label: UnityEngine.GUIContent, obj: UnityEngine.Object, objType: System.Type, allowSceneObjects: boolean, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Object) | ((property: UnityEditor.SerializedProperty, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, objType: System.Type, ...options: UnityEngine.GUILayoutOption[]) => void) | ((property: UnityEditor.SerializedProperty, objType: System.Type, label: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void);
     static Vector2Field: ((label: string, value: UnityEngine.Vector2, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector2) | ((label: UnityEngine.GUIContent, value: UnityEngine.Vector2, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector2);
     static Vector3Field: ((label: string, value: UnityEngine.Vector3, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector3) | ((label: UnityEngine.GUIContent, value: UnityEngine.Vector3, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector3);
     static Vector4Field: ((label: string, value: UnityEngine.Vector4, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector4) | ((label: UnityEngine.GUIContent, value: UnityEngine.Vector4, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector4);
@@ -711,17 +712,17 @@ export namespace UnityEditor {
     static BeginBuildTargetSelectionGrouping: (() => UnityEditor.BuildTargetGroup);
     static EndBuildTargetSelectionGrouping: (() => void);
     static DropdownButton: ((content: UnityEngine.GUIContent, focusType: UnityEngine.FocusType, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((content: UnityEngine.GUIContent, focusType: UnityEngine.FocusType, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean);
-    static EnumMaskField: ((enumValue: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((enumValue: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, enumValue: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, enumValue: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, enumValue: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, enumValue: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any);
-    static EnumMaskPopup: ((label: string, selected: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: string, selected: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, selected: any, ...options: UnityEngine.GUILayoutOption[]) => any) | ((label: UnityEngine.GUIContent, selected: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => any);
+    static EnumMaskField: ((enumValue: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((enumValue: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: string, enumValue: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: string, enumValue: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, enumValue: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, enumValue: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum);
+    static EnumMaskPopup: ((label: string, selected: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: string, selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, selected: System.Enum, ...options: UnityEngine.GUILayoutOption[]) => System.Enum) | ((label: UnityEngine.GUIContent, selected: System.Enum, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => System.Enum);
     static BeginFoldoutHeaderGroup: ((foldout: boolean, content: string, style?: UnityEngine.GUIStyle, menuAction?: any, menuIcon?: UnityEngine.GUIStyle) => boolean) | ((foldout: boolean, content: UnityEngine.GUIContent, style?: UnityEngine.GUIStyle, menuAction?: any, menuIcon?: UnityEngine.GUIStyle) => boolean);
     static EndFoldoutHeaderGroup: (() => void);
     static GradientField: ((value: UnityEngine.Gradient, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Gradient) | ((label: string, value: UnityEngine.Gradient, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Gradient) | ((label: UnityEngine.GUIContent, value: UnityEngine.Gradient, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Gradient) | ((label: UnityEngine.GUIContent, value: UnityEngine.Gradient, hdr: boolean, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Gradient);
     static Knob: ((knobSize: UnityEngine.Vector2, value: number, minValue: number, maxValue: number, unit: string, backgroundColor: UnityEngine.Color, activeColor: UnityEngine.Color, showValue: boolean, ...options: UnityEngine.GUILayoutOption[]) => number);
     static EditorToolbarForTarget: ((target: UnityEngine.Object) => void) | ((content: UnityEngine.GUIContent, target: UnityEngine.Object) => void);
     static EditorToolbar: ((...tools: UnityEditor.EditorTools.EditorTool[]) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUILayout_ToggleGroupScope {
@@ -729,9 +730,9 @@ export namespace UnityEditor {
     constructor(label: UnityEngine.GUIContent, toggle: boolean);
     enabled: boolean;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUILayout_HorizontalScope {
@@ -739,9 +740,9 @@ export namespace UnityEditor {
     constructor(style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     rect: UnityEngine.Rect;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUILayout_VerticalScope {
@@ -749,9 +750,9 @@ export namespace UnityEditor {
     constructor(style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     rect: UnityEngine.Rect;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUILayout_ScrollViewScope {
@@ -763,18 +764,18 @@ export namespace UnityEditor {
     scrollPosition: UnityEngine.Vector2;
     handleScrollWheel: boolean;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUILayout_FadeGroupScope {
     constructor(value: number);
     visible: boolean;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum MouseCursor {
@@ -837,15 +838,15 @@ export namespace UnityEditor {
     static SetMainWindowPosition: ((position: UnityEngine.Rect) => void);
     static PointsToPixels: ((rect: UnityEngine.Rect) => UnityEngine.Rect) | ((position: UnityEngine.Vector2) => UnityEngine.Vector2);
     static PixelsToPoints: ((rect: UnityEngine.Rect) => UnityEngine.Rect) | ((position: UnityEngine.Vector2) => UnityEngine.Vector2);
-    static GetFlowLayoutedRects: ((rect: UnityEngine.Rect, style: UnityEngine.GUIStyle, horizontalSpacing: number, verticalSpacing: number, items: any) => any);
+    static GetFlowLayoutedRects: ((rect: UnityEngine.Rect, style: UnityEngine.GUIStyle, horizontalSpacing: number, verticalSpacing: number, items: string[]) => UnityEngine.Rect[]);
     static FindTexture: ((name: string) => UnityEngine.Texture2D);
     static TrTextContent: ((key: string, text: string, tooltip: string, icon: UnityEngine.Texture) => UnityEngine.GUIContent) | ((text: string, tooltip?: string, icon?: UnityEngine.Texture) => UnityEngine.GUIContent) | ((text: string, tooltip: string, iconName: string) => UnityEngine.GUIContent) | ((text: string, icon: UnityEngine.Texture) => UnityEngine.GUIContent);
     static TrTextContentWithIcon: ((text: string, icon: UnityEngine.Texture) => UnityEngine.GUIContent) | ((text: string, iconName: string) => UnityEngine.GUIContent) | ((text: string, tooltip: string, iconName: string) => UnityEngine.GUIContent) | ((text: string, tooltip: string, icon: UnityEngine.Texture) => UnityEngine.GUIContent) | ((text: string, tooltip: string, messageType: UnityEditor.MessageType) => UnityEngine.GUIContent) | ((text: string, messageType: UnityEditor.MessageType) => UnityEngine.GUIContent);
     static TrIconContent: ((iconName: string, tooltip?: string) => UnityEngine.GUIContent) | ((icon: UnityEngine.Texture, tooltip?: string) => UnityEngine.GUIContent);
     static TrTempContent: ((t: string) => UnityEngine.GUIContent) | ((texts: string[]) => UnityEngine.GUIContent[]) | ((texts: string[], tooltips: string[]) => UnityEngine.GUIContent[]);
     static IconContent: ((name: string) => UnityEngine.GUIContent) | ((name: string, text: string) => UnityEngine.GUIContent);
-    static ObjectContent: ((obj: UnityEngine.Object, type: any) => UnityEngine.GUIContent);
-    static HasObjectThumbnail: ((objType: any) => boolean);
+    static ObjectContent: ((obj: UnityEngine.Object, type: System.Type) => UnityEngine.GUIContent);
+    static HasObjectThumbnail: ((objType: System.Type) => boolean);
     static GetIconSize: (() => UnityEngine.Vector2);
     static GetBuiltinSkin: ((skin: UnityEditor.EditorSkin) => UnityEngine.GUISkin);
     static LoadRequired: ((path: string) => UnityEngine.Object);
@@ -861,17 +862,17 @@ export namespace UnityEditor {
     static AddCursorRect: ((position: UnityEngine.Rect, mouse: UnityEditor.MouseCursor) => void) | ((position: UnityEngine.Rect, mouse: UnityEditor.MouseCursor, controlID: number) => void);
     static GetObjectPickerObject: (() => UnityEngine.Object);
     static GetObjectPickerControlID: (() => number);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorGUIUtility_IconSizeScope {
     constructor(iconSizeWithinScope: UnityEngine.Vector2);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class SessionState {
@@ -894,9 +895,9 @@ export namespace UnityEditor {
     static EraseIntArray: ((key: string) => void);
     static SetIntArray: ((key: string, value: number[]) => void);
     static GetIntArray: ((key: string, defaultValue: number[]) => number[]);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorPrefs {
@@ -912,9 +913,9 @@ export namespace UnityEditor {
     static HasKey: ((key: string) => boolean);
     static DeleteKey: ((key: string) => void);
     static DeleteAll: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum SerializationMode {
@@ -1001,9 +1002,9 @@ export namespace UnityEditor {
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum EditorSettings_NamingScheme {
     SpaceParenthesis = 0,
@@ -1183,7 +1184,7 @@ export namespace UnityEditor {
     static androidReleaseMinification: UnityEditor.AndroidMinification;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    static activeBuildTargetChanged: any; // System.Action
+    static activeBuildTargetChanged: System.Action;
     static SwitchActiveBuildTarget: ((targetGroup: UnityEditor.BuildTargetGroup, target: UnityEditor.BuildTarget) => boolean) | ((target: UnityEditor.BuildTarget) => boolean);
     static SwitchActiveBuildTargetAsync: ((targetGroup: UnityEditor.BuildTargetGroup, target: UnityEditor.BuildTarget) => boolean);
     static GetBuildLocation: ((target: UnityEditor.BuildTarget) => string);
@@ -1192,9 +1193,9 @@ export namespace UnityEditor {
     static GetPlatformSettings: ((platformName: string, name: string) => string) | ((buildTargetGroup: string, platformName: string, name: string) => string);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum SemanticMergeMode {
     Off = 0,
@@ -1215,9 +1216,9 @@ export namespace UnityEditor {
     static SetConfigValue: ((name: string, value: string) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class EditorUtility {
     constructor();
@@ -1241,12 +1242,12 @@ export namespace UnityEditor {
     static ClearDirty: ((target: UnityEngine.Object) => void);
     static InvokeDiffTool: ((leftTitle: string, leftFile: string, rightTitle: string, rightFile: string, ancestorTitle: string, ancestorFile: string) => string);
     static CopySerialized: ((source: UnityEngine.Object, dest: UnityEngine.Object) => void);
-    static CopySerializedManagedFieldsOnly: ((source: any, dest: any) => void);
+    static CopySerializedManagedFieldsOnly: ((source: System.Object, dest: System.Object) => void);
     static CollectDependencies: ((roots: UnityEngine.Object[]) => UnityEngine.Object[]);
     static CollectDeepHierarchy: ((roots: UnityEngine.Object[]) => UnityEngine.Object[]);
     static UnloadUnusedAssets: (() => void);
     static UnloadUnusedAssetsIgnoreManagedReferences: (() => void);
-    static FormatBytes: ((bytes: any) => string) | ((bytes: number) => string);
+    static FormatBytes: ((bytes: System.Int64) => string) | ((bytes: number) => string);
     static DisplayProgressBar: ((title: string, info: string, progress: number) => void);
     static DisplayCancelableProgressBar: ((title: string, info: string, progress: number) => boolean);
     static ClearProgressBar: (() => void);
@@ -1258,7 +1259,7 @@ export namespace UnityEditor {
     static SetCameraAnimateMaterials: ((camera: UnityEngine.Camera, animate: boolean) => void);
     static SetCameraAnimateMaterialsTime: ((camera: UnityEngine.Camera, time: number) => void);
     static UpdateGlobalShaderProperties: ((time: number) => void);
-    static FindAsset: ((path: string, type: any) => UnityEngine.Object);
+    static FindAsset: ((path: string, type: System.Type) => UnityEngine.Object);
     static GetDirtyCount: ((instanceID: number) => number) | ((target: UnityEngine.Object) => number);
     static IsDirty: ((instanceID: number) => boolean) | ((target: UnityEngine.Object) => boolean);
     static FocusProjectWindow: (() => void);
@@ -1273,9 +1274,9 @@ export namespace UnityEditor {
     static GetDialogOptOutDecision: ((dialogOptOutDecisionType: UnityEditor.DialogOptOutDecisionType, dialogOptOutDecisionStorageKey: string) => boolean);
     static SetDialogOptOutDecision: ((dialogOptOutDecisionType: UnityEditor.DialogOptOutDecisionType, dialogOptOutDecisionStorageKey: string, optOutDecision: boolean) => void);
     static DisplayPopupMenu: ((position: UnityEngine.Rect, menuItemPath: string, command: UnityEditor.MenuCommand) => void);
-    static DisplayCustomMenu: ((position: UnityEngine.Rect, options: UnityEngine.GUIContent[], selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: any) => void) | ((position: UnityEngine.Rect, options: UnityEngine.GUIContent[], selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: any, showHotkey: boolean) => void) | ((position: UnityEngine.Rect, options: UnityEngine.GUIContent[], checkEnabled: any, selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: any, showHotkey?: boolean) => void);
+    static DisplayCustomMenu: ((position: UnityEngine.Rect, options: UnityEngine.GUIContent[], selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: System.Object) => void) | ((position: UnityEngine.Rect, options: UnityEngine.GUIContent[], selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: System.Object, showHotkey: boolean) => void) | ((position: UnityEngine.Rect, options: UnityEngine.GUIContent[], checkEnabled: any, selected: number, callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: System.Object, showHotkey?: boolean) => void);
     static SetSelectedWireframeHidden: ((renderer: UnityEngine.Renderer, enabled: boolean) => void);
-    static CreateGameObjectWithHideFlags: ((name: string, flags: UnityEngine.HideFlags, ...components: any[]) => UnityEngine.GameObject);
+    static CreateGameObjectWithHideFlags: ((name: string, flags: UnityEngine.HideFlags, ...components: System.Type[]) => UnityEngine.GameObject);
     static CompileCSharp: ((sources: string[], references: string[], defines: string[], outputFile: string) => string[]);
     static InstantiatePrefab: ((target: UnityEngine.Object) => UnityEngine.Object);
     static ReplacePrefab: ((go: UnityEngine.GameObject, targetPrefab: UnityEngine.Object, options: UnityEditor.ReplacePrefabOptions) => UnityEngine.GameObject) | ((go: UnityEngine.GameObject, targetPrefab: UnityEngine.Object) => UnityEngine.GameObject);
@@ -1285,26 +1286,26 @@ export namespace UnityEditor {
     static GetPrefabParent: ((source: UnityEngine.Object) => UnityEngine.Object);
     static FindPrefabRoot: ((source: UnityEngine.GameObject) => UnityEngine.GameObject);
     static ResetToPrefabState: ((source: UnityEngine.Object) => boolean);
-    static DisplayCustomMenuWithSeparators: ((position: UnityEngine.Rect, options: string[], enabled: boolean[], separator: boolean[], selected: number[], callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: any) => void);
-    Equals: ((obj: any) => boolean);
+    static DisplayCustomMenuWithSeparators: ((position: UnityEngine.Rect, options: string[], enabled: boolean[], separator: boolean[], selected: number[], callback: UnityEditor.EditorUtility_SelectMenuItemFunction, userData: System.Object) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorUtility_SelectMenuItemFunction {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
-    Invoke: ((userData: any, options: string[], selected: number) => void);
-    BeginInvoke: ((userData: any, options: string[], selected: number, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    Invoke: ((userData: System.Object, options: string[], selected: number) => void);
+    BeginInvoke: ((userData: System.Object, options: string[], selected: number, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum EditorSelectedRenderState {
@@ -1330,9 +1331,9 @@ export namespace UnityEditor {
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class EditorWindow {
     constructor();
@@ -1370,20 +1371,20 @@ export namespace UnityEditor {
     Show: (() => void) | ((immediateDisplay: boolean) => void);
     ShowAuxWindow: (() => void);
     ShowModal: (() => void);
-    static GetWindow: ((t: any, utility: boolean, title: string, focus: boolean) => UnityEditor.EditorWindow) | ((t: any, utility: boolean, title: string) => UnityEditor.EditorWindow) | ((t: any, utility: boolean) => UnityEditor.EditorWindow) | ((t: any) => UnityEditor.EditorWindow);
-    static GetWindowWithRect: ((t: any, rect: UnityEngine.Rect, utility: boolean, title: string) => UnityEditor.EditorWindow) | ((t: any, rect: UnityEngine.Rect, utility: boolean) => UnityEditor.EditorWindow) | ((t: any, rect: UnityEngine.Rect) => UnityEditor.EditorWindow);
-    static FocusWindowIfItsOpen: ((t: any) => void);
+    static GetWindow: ((t: System.Type, utility: boolean, title: string, focus: boolean) => UnityEditor.EditorWindow) | ((t: System.Type, utility: boolean, title: string) => UnityEditor.EditorWindow) | ((t: System.Type, utility: boolean) => UnityEditor.EditorWindow) | ((t: System.Type) => UnityEditor.EditorWindow);
+    static GetWindowWithRect: ((t: System.Type, rect: UnityEngine.Rect, utility: boolean, title: string) => UnityEditor.EditorWindow) | ((t: System.Type, rect: UnityEngine.Rect, utility: boolean) => UnityEditor.EditorWindow) | ((t: System.Type, rect: UnityEngine.Rect) => UnityEditor.EditorWindow);
+    static FocusWindowIfItsOpen: ((t: System.Type) => void);
     SaveChanges: (() => void);
     Close: (() => void);
     Repaint: (() => void);
     SendEvent: ((e: UnityEngine.Event) => boolean);
-    GetExtraPaneTypes: (() => any);
+    GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum ExportPackageOptions {
     Default = 0,
@@ -1402,9 +1403,9 @@ export namespace UnityEditor {
     static GetProjectRelativePath: ((path: string) => string);
     static ReplaceFile: ((src: string, dst: string) => void);
     static ReplaceDirectory: ((src: string, dst: string) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class GameObjectUtility {
@@ -1421,42 +1422,42 @@ export namespace UnityEditor {
     static SetParentAndAlign: ((child: UnityEngine.GameObject, parent: UnityEngine.GameObject) => void);
     static GetMonoBehavioursWithMissingScriptCount: ((go: UnityEngine.GameObject) => number);
     static RemoveMonoBehavioursWithMissingScript: ((go: UnityEngine.GameObject) => number);
-    static ModifyMaskIfGameObjectIsHiddenForPrefabModeInContext: ((sceneCullingMask: any, gameObject: UnityEngine.GameObject) => any);
+    static ModifyMaskIfGameObjectIsHiddenForPrefabModeInContext: ((sceneCullingMask: System.UInt64, gameObject: UnityEngine.GameObject) => System.UInt64);
     static GetNavMeshLayer: ((go: UnityEngine.GameObject) => number);
     static SetNavMeshLayer: ((go: UnityEngine.GameObject, areaIndex: number) => void);
     static GetNavMeshLayerFromName: ((name: string) => number);
     static GetNavMeshLayerNames: (() => string[]);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class GlobalObjectId {
-    targetObjectId: any; // System.UInt64
-    targetPrefabId: any; // System.UInt64
+    targetObjectId: System.UInt64;
+    targetPrefabId: System.UInt64;
     assetGUID: UnityEditor.GUID;
     identifierType: number;
     static GetGlobalObjectIdSlow: ((targetObject: UnityEngine.Object) => UnityEditor.GlobalObjectId) | ((instanceId: number) => UnityEditor.GlobalObjectId);
     static GetGlobalObjectIdsSlow: ((objects: UnityEngine.Object[], outputIdentifiers: UnityEditor.GlobalObjectId[]) => void) | ((instanceIds: number[], outputIdentifiers: UnityEditor.GlobalObjectId[]) => void);
     ToString: (() => string);
-    Equals: ((other: UnityEditor.GlobalObjectId) => boolean) | ((obj: any) => boolean);
+    Equals: ((other: UnityEditor.GlobalObjectId) => boolean) | ((obj: System.Object) => boolean);
     static GlobalObjectIdentifierToObjectSlow: ((id: UnityEditor.GlobalObjectId) => UnityEngine.Object);
     static GlobalObjectIdentifiersToObjectsSlow: ((identifiers: UnityEditor.GlobalObjectId[], outputObjects: UnityEngine.Object[]) => void);
     static GlobalObjectIdentifierToInstanceIDSlow: ((id: UnityEditor.GlobalObjectId) => number);
     static GlobalObjectIdentifiersToInstanceIDsSlow: ((identifiers: UnityEditor.GlobalObjectId[], outputInstanceIDs: number[]) => void);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class GUID {
     constructor(hexRepresentation: string);
-    Equals: ((obj: any) => boolean) | ((obj: UnityEditor.GUID) => boolean);
+    Equals: ((obj: System.Object) => boolean) | ((obj: UnityEditor.GUID) => boolean);
     GetHashCode: (() => number);
-    CompareTo: ((obj: any) => number) | ((rhs: UnityEditor.GUID) => number);
+    CompareTo: ((obj: System.Object) => number) | ((rhs: UnityEditor.GUID) => number);
     Empty: (() => boolean);
     ParseExact: ((hex: string) => boolean);
     static Generate: (() => UnityEditor.GUID);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class Handles {
     constructor();
@@ -1528,9 +1529,9 @@ export namespace UnityEditor {
     static DoPositionHandle: ((position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => UnityEngine.Vector3);
     static DoRotationHandle: ((rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3) => UnityEngine.Quaternion);
     static DoScaleHandle: ((scale: UnityEngine.Vector3, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number) => UnityEngine.Vector3);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Handles_DrawingScope {
@@ -1540,41 +1541,41 @@ export namespace UnityEditor {
     originalColor: UnityEngine.Color;
     originalMatrix: UnityEngine.Matrix4x4;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class Handles_CapFunction {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType) => void);
-    BeginInvoke: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Handles_SizeFunction {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((position: UnityEngine.Vector3) => number);
-    BeginInvoke: ((position: UnityEngine.Vector3, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => number);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((position: UnityEngine.Vector3, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => number);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class HandleUtility {
@@ -1614,37 +1615,37 @@ export namespace UnityEditor {
     static PickGameObject: ((position: UnityEngine.Vector2, selectPrefabRoot: boolean) => UnityEngine.GameObject) | ((position: UnityEngine.Vector2, selectPrefabRoot: boolean, ignore: UnityEngine.GameObject[]) => UnityEngine.GameObject) | ((position: UnityEngine.Vector2, selectPrefabRoot: boolean, ignore: UnityEngine.GameObject[], filter: UnityEngine.GameObject[]) => UnityEngine.GameObject);
     static PushCamera: ((camera: UnityEngine.Camera) => void);
     static PopCamera: ((camera: UnityEngine.Camera) => void);
-    static RaySnap: ((ray: UnityEngine.Ray) => any);
+    static RaySnap: ((ray: UnityEngine.Ray) => System.Object);
     static Repaint: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class HandleUtility_PickGameObjectCallback {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class HandleUtility_PlaceObjectDelegate {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Help {
@@ -1654,9 +1655,9 @@ export namespace UnityEditor {
     static ShowHelpForObject: ((obj: UnityEngine.Object) => void);
     static ShowHelpPage: ((page: string) => void);
     static BrowseURL: ((url: string) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum InspectorMode {
@@ -1714,20 +1715,20 @@ export namespace UnityEditor {
     FindAllAncestors: ((instanceIDs: number[]) => number[]);
     static ClearSceneObjectsFilter: (() => void);
     static FilterSingleSceneObject: ((instanceID: number, otherVisibilityState: boolean) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
-  export declare class IHasCustomMenu {
+  export interface IHasCustomMenu {
     AddItemsToMenu: ((menu: UnityEditor.GenericMenu) => void);
   }
   export declare class LODUtility {
     constructor();
     static CalculateLODGroupBoundingBox: ((group: UnityEngine.LODGroup) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class MaterialProperty {
@@ -1748,25 +1749,25 @@ export namespace UnityEditor {
     textureScaleAndOffset: UnityEngine.Vector4;
     ReadFromMaterialPropertyBlock: ((block: UnityEngine.MaterialPropertyBlock) => void);
     WriteToMaterialPropertyBlock: ((materialblock: UnityEngine.MaterialPropertyBlock, changedPropertyMask: number) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class MaterialProperty_ApplyPropertyCallback {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
-    Invoke: ((prop: UnityEditor.MaterialProperty, changeMask: number, previousValue: any) => boolean);
-    BeginInvoke: ((prop: UnityEditor.MaterialProperty, changeMask: number, previousValue: any, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => boolean);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    Invoke: ((prop: UnityEditor.MaterialProperty, changeMask: number, previousValue: System.Object) => boolean);
+    BeginInvoke: ((prop: UnityEditor.MaterialProperty, changeMask: number, previousValue: System.Object, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => boolean);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum MaterialProperty_PropType {
@@ -1799,9 +1800,9 @@ export namespace UnityEditor {
     static SetChecked: ((menuPath: string, isChecked: boolean) => void);
     static GetChecked: ((menuPath: string) => boolean);
     static GetEnabled: ((menuPath: string) => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class MenuCommand {
@@ -1809,9 +1810,9 @@ export namespace UnityEditor {
     constructor(inContext: UnityEngine.Object);
     context: UnityEngine.Object;
     userData: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class MeshUtility {
@@ -1820,35 +1821,35 @@ export namespace UnityEditor {
     static SetMeshCompression: ((mesh: UnityEngine.Mesh, compression: UnityEditor.ModelImporterMeshCompression) => void);
     static GetMeshCompression: ((mesh: UnityEngine.Mesh) => UnityEditor.ModelImporterMeshCompression);
     static SetPerTriangleUV2: ((src: UnityEngine.Mesh, triUV: UnityEngine.Vector2[]) => void);
-    static AcquireReadOnlyMeshData: ((mesh: UnityEngine.Mesh) => UnityEngine.Mesh_MeshDataArray) | ((meshes: UnityEngine.Mesh[]) => UnityEngine.Mesh_MeshDataArray) | ((meshes: any) => UnityEngine.Mesh_MeshDataArray);
-    Equals: ((obj: any) => boolean);
+    static AcquireReadOnlyMeshData: ((mesh: UnityEngine.Mesh) => UnityEngine.Mesh_MeshDataArray) | ((meshes: UnityEngine.Mesh[]) => UnityEngine.Mesh_MeshDataArray) | ((meshes: UnityEngine.Mesh[]) => UnityEngine.Mesh_MeshDataArray);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class MonoScript {
     constructor();
-    bytes: any[];
+    bytes: System.Byte[];
     text: string;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    GetClass: (() => any);
+    GetClass: (() => System.Type);
     static FromMonoBehaviour: ((behaviour: UnityEngine.MonoBehaviour) => UnityEditor.MonoScript);
     static FromScriptableObject: ((scriptableObject: UnityEngine.ScriptableObject) => UnityEditor.MonoScript);
     ToString: (() => string);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
-    GetType: (() => any);
+    Equals: ((other: System.Object) => boolean);
+    GetType: (() => System.Type);
   }
   export declare class ObjectFactory {
-    static CreateInstance: ((type: any) => UnityEngine.Object);
-    static AddComponent: ((gameObject: UnityEngine.GameObject, type: any) => UnityEngine.Component);
-    static CreateGameObject: ((scene: UnityEngine.SceneManagement.Scene, hideFlags: UnityEngine.HideFlags, name: string, ...types: any[]) => UnityEngine.GameObject) | ((name: string, ...types: any[]) => UnityEngine.GameObject);
+    static CreateInstance: ((type: System.Type) => UnityEngine.Object);
+    static AddComponent: ((gameObject: UnityEngine.GameObject, type: System.Type) => UnityEngine.Component);
+    static CreateGameObject: ((scene: UnityEngine.SceneManagement.Scene, hideFlags: UnityEngine.HideFlags, name: string, ...types: System.Type[]) => UnityEngine.GameObject) | ((name: string, ...types: System.Type[]) => UnityEngine.GameObject);
     static CreatePrimitive: ((type: UnityEngine.PrimitiveType) => UnityEngine.GameObject);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ObjectNames {
@@ -1861,19 +1862,19 @@ export namespace UnityEditor {
     static GetInspectorTitle: ((obj: UnityEngine.Object) => string);
     static MangleVariableName: ((name: string) => string);
     static GetPropertyEditorTitle: ((obj: UnityEngine.Object) => string);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PackageInfo {
     packagePath: string;
     jsonInfo: string;
     iconURL: string;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum ResolutionDialogSetting {
     Disabled = 0,
@@ -1984,7 +1985,7 @@ export namespace UnityEditor {
     static showUnitySplashScreen: boolean;
     static splashScreenStyle: UnityEditor.SplashScreenStyle;
     static cloudProjectId: string;
-    static productGUID: any; // System.Guid
+    static productGUID: System.Guid;
     static colorSpace: UnityEngine.ColorSpace;
     static defaultScreenWidth: number;
     static defaultScreenHeight: number;
@@ -2042,7 +2043,7 @@ export namespace UnityEditor {
     static xboxEnableKinect: boolean;
     static xboxEnableKinectAutoTracking: boolean;
     static xboxEnableSpeech: boolean;
-    static xboxSpeechDB: any; // System.UInt32
+    static xboxSpeechDB: System.UInt32;
     static gpuSkinning: boolean;
     static graphicsJobs: boolean;
     static graphicsJobMode: UnityEditor.GraphicsJobMode;
@@ -2089,7 +2090,7 @@ export namespace UnityEditor {
     static mobileRenderingPath: UnityEngine.RenderingPath;
     static bundleIdentifier: string;
     static vulkanEnableSetSRGBWrite: boolean;
-    static vulkanNumSwapchainBuffers: any; // System.UInt32
+    static vulkanNumSwapchainBuffers: System.UInt32;
     static vulkanEnableLateAcquireNextImage: boolean;
     static vulkanUseSWCommandBuffers: boolean;
     static vulkanEnablePreTransform: boolean;
@@ -2154,9 +2155,9 @@ export namespace UnityEditor {
     static SetVirtualRealitySupported: ((targetGroup: UnityEditor.BuildTargetGroup, value: boolean) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class PlayerSettings_Android {
     constructor();
@@ -2190,9 +2191,9 @@ export namespace UnityEditor {
     static minifyWithR8: boolean;
     static minifyRelease: boolean;
     static minifyDebug: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_iOS {
@@ -2233,9 +2234,9 @@ export namespace UnityEditor {
     static SetLaunchScreenImage: ((image: UnityEngine.Texture2D, type: UnityEditor.iOSLaunchScreenImageType) => void);
     static SetiPhoneLaunchScreenType: ((type: UnityEditor.iOSLaunchScreenType) => void);
     static SetiPadLaunchScreenType: ((type: UnityEditor.iOSLaunchScreenType) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_Facebook {
@@ -2245,9 +2246,9 @@ export namespace UnityEditor {
     static useCookies: boolean;
     static useStatus: boolean;
     static useFrictionlessRequests: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_Lumin {
@@ -2259,17 +2260,17 @@ export namespace UnityEditor {
     static isChannelApp: boolean;
     static versionCode: number;
     static versionName: string;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_macOS {
     constructor();
     static buildNumber: string;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_PS4 {
@@ -2350,9 +2351,9 @@ export namespace UnityEditor {
     static attribVROutputEnabled: boolean;
     static compatibilityPS5: boolean;
     static gpu800MHz: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum PlayerSettings_PS4_PS4AppCategory {
@@ -2387,10 +2388,10 @@ export namespace UnityEditor {
     duration: number;
     static Create: ((duration: number) => UnityEditor.PlayerSettings_SplashScreenLogo) | (() => UnityEditor.PlayerSettings_SplashScreenLogo) | ((duration: number, logo: UnityEngine.Sprite) => UnityEditor.PlayerSettings_SplashScreenLogo);
     static CreateWithUnityLogo: (() => UnityEditor.PlayerSettings_SplashScreenLogo) | ((duration: number) => UnityEditor.PlayerSettings_SplashScreenLogo);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class PlayerSettings_SplashScreen {
     constructor();
@@ -2407,9 +2408,9 @@ export namespace UnityEditor {
     static show: boolean;
     static showUnityLogo: boolean;
     static unityLogoStyle: UnityEditor.PlayerSettings_SplashScreen_UnityLogoStyle;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum PlayerSettings_SplashScreen_AnimationMode {
@@ -2501,9 +2502,9 @@ export namespace UnityEditor {
     static playerConnectionEnabled: boolean;
     static useNewStyleFilepaths: boolean;
     static GetRatingAge: ((category: UnityEditor.PlayerSettings_Switch_RatingCategories) => number);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum PlayerSettings_Switch_ScreenResolutionBehavior {
@@ -2581,9 +2582,9 @@ export namespace UnityEditor {
     static targetOSVersion: UnityEditor.tvOSTargetOSVersion;
     static targetOSVersionString: string;
     static requireExtendedGameController: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_WebGL {
@@ -2605,9 +2606,9 @@ export namespace UnityEditor {
     static wasmStreaming: boolean;
     static decompressionFallback: boolean;
     static wasmArithmeticExceptions: UnityEditor.WebGLWasmArithmeticExceptions;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum PlayerSettings_WSAApplicationShowName {
@@ -2708,18 +2709,18 @@ export namespace UnityEditor {
   export declare class PlayerSettings_WSASupportedFileType {
     contentType: string;
     fileType: string;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class PlayerSettings_WSAFileTypeAssociations {
     name: string;
     supportedFileTypes: UnityEditor.PlayerSettings_WSASupportedFileType[];
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class PlayerSettings_WSA {
     constructor();
@@ -2743,7 +2744,7 @@ export namespace UnityEditor {
     static inputSource: UnityEditor.PlayerSettings_WSAInputSource;
     static supportStreamingInstall: boolean;
     static lastRequiredScene: number;
-    static packageVersion: any; // System.Version
+    static packageVersion: System.Version;
     static certificateNotAfter?: any; // System.Nullable`1[System.DateTime]
     static splashScreenBackgroundColor?: any; // System.Nullable`1[UnityEngine.Color]
     static storeTileLogo80: string;
@@ -2795,17 +2796,17 @@ export namespace UnityEditor {
     static GetCapability: ((capability: UnityEditor.PlayerSettings_WSACapability) => boolean);
     static SetTargetDeviceFamily: ((family: UnityEditor.PlayerSettings_WSATargetFamily, value: boolean) => void);
     static GetTargetDeviceFamily: ((family: UnityEditor.PlayerSettings_WSATargetFamily) => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_WSA_Declarations {
     static protocolName: string;
     static fileTypeAssociations: UnityEditor.PlayerSettings_WSAFileTypeAssociations;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_XboxOne {
@@ -2819,7 +2820,7 @@ export namespace UnityEditor {
     static TitleId: string;
     static SCID: string;
     static EnableVariableGPU: boolean;
-    static PresentImmediateThreshold: any; // System.UInt32
+    static PresentImmediateThreshold: System.UInt32;
     static Enable7thCore: boolean;
     static DisableKinectGpuReservation: boolean;
     static EnablePIXSampling: boolean;
@@ -2835,7 +2836,7 @@ export namespace UnityEditor {
     static Description: string;
     static SocketNames: string[];
     static AllowedProductIds: string[];
-    static PersistentLocalStorageSize: any; // System.UInt32
+    static PersistentLocalStorageSize: System.UInt32;
     static EnableTypeOptimization: boolean;
     static monoLoggingLevel: number;
     static scriptCompiler: UnityEditor.ScriptCompiler;
@@ -2850,17 +2851,17 @@ export namespace UnityEditor {
     static UpdateAllowedProductId: ((idx: number, id: string) => void);
     static SetGameRating: ((name: string, value: number) => void);
     static GetGameRating: ((name: string) => number);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PlayerSettings_VRWindowsMixedReality {
     static depthBufferFormat: UnityEditor.PlayerSettings_VRWindowsMixedReality_DepthBufferFormat;
     static depthBufferSharingEnabled: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum PlayerSettings_VRWindowsMixedReality_DepthBufferFormat {
@@ -3026,10 +3027,10 @@ export namespace UnityEditor {
   }
   export declare class iOSDeviceRequirement {
     constructor();
-    values: any; // System.Collections.Generic.IDictionary`2[System.String,System.String]
-    Equals: ((obj: any) => boolean);
+    values: System.Collections.Generic.IDictionary<string, string>;
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum tvOSSdkVersion {
@@ -3081,9 +3082,9 @@ export namespace UnityEditor {
   }
   export declare class SaveAssetsProcessor {
     constructor();
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class SceneVisibilityManager {
@@ -3114,9 +3115,20 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
+  }
+  export declare class ScriptableSingleton<T = any> {
+    static instance: any; // T
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    SetDirty: (() => void);
+    GetInstanceID: (() => number);
+    GetHashCode: (() => number);
+    Equals: ((other: System.Object) => boolean);
+    ToString: (() => string);
+    GetType: (() => System.Type);
   }
   export declare class ScriptableWizard {
     constructor();
@@ -3144,7 +3156,7 @@ export namespace UnityEditor {
     position: UnityEngine.Rect;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    static DisplayWizard: ((title: string, klass: any, createButtonName: string) => UnityEditor.ScriptableWizard) | ((title: string, klass: any) => UnityEditor.ScriptableWizard) | ((title: string, klass: any, createButtonName: string, otherButtonName: string) => UnityEditor.ScriptableWizard);
+    static DisplayWizard: ((title: string, klass: System.Type, createButtonName: string) => UnityEditor.ScriptableWizard) | ((title: string, klass: System.Type) => UnityEditor.ScriptableWizard) | ((title: string, klass: System.Type, createButtonName: string, otherButtonName: string) => UnityEditor.ScriptableWizard);
     BeginWindows: (() => void);
     EndWindows: (() => void);
     ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
@@ -3162,13 +3174,13 @@ export namespace UnityEditor {
     Close: (() => void);
     Repaint: (() => void);
     SendEvent: ((e: UnityEngine.Event) => boolean);
-    GetExtraPaneTypes: (() => any);
+    GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum SelectionMode {
     Unfiltered = 0,
@@ -3193,14 +3205,14 @@ export namespace UnityEditor {
     static instanceIDs: number[];
     static assetGUIDs: string[];
     static count: number;
-    static selectionChanged: any; // System.Action
+    static selectionChanged: System.Action;
     static Contains: ((instanceID: number) => boolean) | ((obj: UnityEngine.Object) => boolean);
     static SetActiveObjectWithContext: ((obj: UnityEngine.Object, context: UnityEngine.Object) => void);
     static GetTransforms: ((mode: UnityEditor.SelectionMode) => UnityEngine.Transform[]);
-    static GetFiltered: ((type: any, mode: UnityEditor.SelectionMode) => UnityEngine.Object[]);
-    Equals: ((obj: any) => boolean);
+    static GetFiltered: ((type: System.Type, mode: UnityEditor.SelectionMode) => UnityEngine.Object[]);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class SerializedObject {
@@ -3225,9 +3237,9 @@ export namespace UnityEditor {
     ApplyModifiedPropertiesWithoutUndo: (() => boolean);
     CopyFromSerializedProperty: ((prop: UnityEditor.SerializedProperty) => void);
     CopyFromSerializedPropertyIfDifferent: ((prop: UnityEditor.SerializedProperty) => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum SerializedPropertyType {
@@ -3279,7 +3291,7 @@ export namespace UnityEditor {
     isDefaultOverride: boolean;
     propertyType: UnityEditor.SerializedPropertyType;
     intValue: number;
-    longValue: any; // System.Int64
+    longValue: System.Int64;
     boolValue: boolean;
     floatValue: number;
     doubleValue: number;
@@ -3287,7 +3299,7 @@ export namespace UnityEditor {
     colorValue: UnityEngine.Color;
     animationCurveValue: UnityEngine.AnimationCurve;
     objectReferenceValue: UnityEngine.Object;
-    managedReferenceValue: any; // System.Object
+    managedReferenceValue: System.Object;
     managedReferenceFullTypename: string;
     managedReferenceFieldTypename: string;
     objectReferenceInstanceIDValue: number;
@@ -3310,7 +3322,7 @@ export namespace UnityEditor {
     fixedBufferSize: number;
     Copy: (() => UnityEditor.SerializedProperty);
     FindPropertyRelative: ((relativePropertyPath: string) => UnityEditor.SerializedProperty);
-    GetEnumerator: (() => any);
+    GetEnumerator: (() => System.Collections.IEnumerator);
     GetArrayElementAtIndex: ((index: number) => UnityEditor.SerializedProperty);
     NextVisible: ((enterChildren: boolean) => boolean);
     ClearArray: (() => void);
@@ -3328,9 +3340,9 @@ export namespace UnityEditor {
     DeleteArrayElementAtIndex: ((index: number) => void);
     MoveArrayElement: ((srcIndex: number, dstIndex: number) => boolean);
     GetFixedBufferElementAtIndex: ((index: number) => UnityEditor.SerializedProperty);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum PreprocessorOverride {
@@ -3342,10 +3354,10 @@ export namespace UnityEditor {
     name: string;
     supported: boolean;
     hasErrors: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ShaderMessage {
     constructor(msg: string, sev?: UnityEditor.Rendering.ShaderCompilerMessageSeverity);
@@ -3355,10 +3367,10 @@ export namespace UnityEditor {
     line: number;
     platform: UnityEditor.Rendering.ShaderCompilerPlatform;
     severity: UnityEditor.Rendering.ShaderCompilerMessageSeverity;
-    Equals: ((other: UnityEditor.ShaderMessage) => boolean) | ((obj: any) => boolean);
+    Equals: ((other: UnityEditor.ShaderMessage) => boolean) | ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ShaderUtil {
     constructor();
@@ -3401,9 +3413,9 @@ export namespace UnityEditor {
     static IsShaderPropertyNonModifiableTexureProperty: ((s: UnityEngine.Shader, propertyIdx: number) => boolean);
     static GetShaderData: ((shader: UnityEngine.Shader) => UnityEditor.ShaderData);
     static ShaderHasError: ((shader: UnityEngine.Shader) => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum ShaderUtil_ShaderPropertyTexDim {
@@ -3426,25 +3438,25 @@ export namespace UnityEditor {
     SourceShader: UnityEngine.Shader;
     ActiveSubshader: UnityEditor.ShaderData_Subshader;
     GetSubshader: ((index: number) => UnityEditor.ShaderData_Subshader);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ShaderData_Subshader {
     PassCount: number;
     GetPass: ((passIndex: number) => UnityEditor.ShaderData_Pass);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ShaderData_Pass {
     SourceCode: string;
     Name: string;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum StaticEditorFlags {
@@ -3470,9 +3482,9 @@ export namespace UnityEditor {
     static Cancel: (() => void);
     static Clear: (() => void);
     static SetDefaultOcclusionBakeSettings: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class StaticOcclusionCullingVisualization {
@@ -3486,19 +3498,19 @@ export namespace UnityEditor {
     static isPreviewOcclusionCullingCameraInPVS: boolean;
     static previewOcclusionCamera: UnityEngine.Camera;
     static previewOcclucionCamera: UnityEngine.Camera;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class TypeCache {
-    static GetTypesWithAttribute: ((attrType: any) => UnityEditor.TypeCache_TypeCollection);
-    static GetMethodsWithAttribute: ((attrType: any) => UnityEditor.TypeCache_MethodCollection);
-    static GetFieldsWithAttribute: ((attrType: any) => UnityEditor.TypeCache_FieldInfoCollection);
-    static GetTypesDerivedFrom: ((parentType: any) => UnityEditor.TypeCache_TypeCollection);
-    Equals: ((obj: any) => boolean);
+    static GetTypesWithAttribute: ((attrType: System.Type) => UnityEditor.TypeCache_TypeCollection);
+    static GetMethodsWithAttribute: ((attrType: System.Type) => UnityEditor.TypeCache_MethodCollection);
+    static GetFieldsWithAttribute: ((attrType: System.Type) => UnityEditor.TypeCache_FieldInfoCollection);
+    static GetTypesDerivedFrom: ((parentType: System.Type) => UnityEditor.TypeCache_TypeCollection);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class TypeCache_TypeCollection {
@@ -3506,69 +3518,69 @@ export namespace UnityEditor {
     IsReadOnly: boolean;
     IsFixedSize: boolean;
     IsSynchronized: boolean;
-    Contains: ((item: any) => boolean) | ((item: any) => boolean);
+    Contains: ((item: System.Type) => boolean) | ((item: System.Object) => boolean);
     GetEnumerator: (() => UnityEditor.TypeCache_TypeCollection_Enumerator);
-    CopyTo: ((array: any[], arrayIndex: number) => void) | ((array: any, arrayIndex: number) => void);
-    IndexOf: ((item: any) => number) | ((item: any) => number);
-    Equals: ((obj: any) => boolean);
+    CopyTo: ((array: System.Type[], arrayIndex: number) => void) | ((array: System.Array, arrayIndex: number) => void);
+    IndexOf: ((item: System.Type) => number) | ((item: System.Object) => number);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class TypeCache_TypeCollection_Enumerator {
-    Current: any; // System.Type
+    Current: System.Type;
     Dispose: (() => void);
     MoveNext: (() => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class TypeCache_MethodCollection {
     Count: number;
     IsReadOnly: boolean;
     IsFixedSize: boolean;
     IsSynchronized: boolean;
-    Contains: ((item: any) => boolean) | ((item: any) => boolean);
+    Contains: ((item: System.Reflection.MethodInfo) => boolean) | ((item: System.Object) => boolean);
     GetEnumerator: (() => UnityEditor.TypeCache_MethodCollection_Enumerator);
-    CopyTo: ((array: any[], arrayIndex: number) => void) | ((array: any, arrayIndex: number) => void);
-    IndexOf: ((item: any) => number) | ((item: any) => number);
-    Equals: ((obj: any) => boolean);
+    CopyTo: ((array: System.Reflection.MethodInfo[], arrayIndex: number) => void) | ((array: System.Array, arrayIndex: number) => void);
+    IndexOf: ((item: System.Reflection.MethodInfo) => number) | ((item: System.Object) => number);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class TypeCache_MethodCollection_Enumerator {
-    Current: any; // System.Reflection.MethodInfo
+    Current: System.Reflection.MethodInfo;
     Dispose: (() => void);
     MoveNext: (() => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class TypeCache_FieldInfoCollection {
     Count: number;
     IsReadOnly: boolean;
     IsFixedSize: boolean;
     IsSynchronized: boolean;
-    Contains: ((item: any) => boolean) | ((item: any) => boolean);
+    Contains: ((item: System.Reflection.FieldInfo) => boolean) | ((item: System.Object) => boolean);
     GetEnumerator: (() => UnityEditor.TypeCache_FieldInfoCollection_Enumerator);
-    CopyTo: ((array: any[], arrayIndex: number) => void) | ((array: any, arrayIndex: number) => void);
-    IndexOf: ((item: any) => number) | ((item: any) => number);
-    Equals: ((obj: any) => boolean);
+    CopyTo: ((array: System.Reflection.FieldInfo[], arrayIndex: number) => void) | ((array: System.Array, arrayIndex: number) => void);
+    IndexOf: ((item: System.Reflection.FieldInfo) => number) | ((item: System.Object) => number);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class TypeCache_FieldInfoCollection_Enumerator {
-    Current: any; // System.Reflection.FieldInfo
+    Current: System.Reflection.FieldInfo;
     Dispose: (() => void);
     MoveNext: (() => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class Undo {
     constructor();
@@ -3580,7 +3592,7 @@ export namespace UnityEditor {
     static MoveGameObjectToScene: ((go: UnityEngine.GameObject, scene: UnityEngine.SceneManagement.Scene, name: string) => void);
     static RegisterCreatedObjectUndo: ((objectToUndo: UnityEngine.Object, name: string) => void);
     static DestroyObjectImmediate: ((objectToUndo: UnityEngine.Object) => void);
-    static AddComponent: ((gameObject: UnityEngine.GameObject, type: any) => UnityEngine.Component);
+    static AddComponent: ((gameObject: UnityEngine.GameObject, type: System.Type) => UnityEngine.Component);
     static RegisterImporterUndo: ((path: string, name: string) => void);
     static RegisterFullObjectHierarchyUndo: ((objectToUndo: UnityEngine.Object, name: string) => void) | ((objectToUndo: UnityEngine.Object) => void);
     static RecordObject: ((objectToUndo: UnityEngine.Object, name: string) => void);
@@ -3604,57 +3616,57 @@ export namespace UnityEditor {
     static RestoreSnapshot: (() => void);
     static RegisterSnapshot: (() => void);
     static RegisterSceneUndo: ((name: string) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Undo_UndoRedoCallback {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: (() => void);
-    BeginInvoke: ((callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Undo_WillFlushUndoRecord {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: (() => void);
-    BeginInvoke: ((callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Undo_PostprocessModifications {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((modifications: UnityEditor.UndoPropertyModification[]) => UnityEditor.UndoPropertyModification[]);
-    BeginInvoke: ((modifications: UnityEditor.UndoPropertyModification[], callback: any, object: any) => any);
-    EndInvoke: ((result: any) => UnityEditor.UndoPropertyModification[]);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((modifications: UnityEditor.UndoPropertyModification[], callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => UnityEditor.UndoPropertyModification[]);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class UnityStats {
@@ -3693,16 +3705,16 @@ export namespace UnityEditor {
     static visibleSkinnedMeshes: number;
     static animationComponentsPlaying: number;
     static animatorComponentsPlaying: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Unsupported {
     static useScriptableRenderPipeline: boolean;
     static CaptureScreenshotImmediate: ((filePath: string, x: number, y: number, width: number, height: number) => void);
     static GetSubmenusCommands: ((menuPath: string) => string[]);
-    static GetTypeFromFullName: ((fullName: string) => any);
+    static GetTypeFromFullName: ((fullName: string) => System.Type);
     static GetSubmenus: ((menuPath: string) => string[]);
     static GetSubmenusIncludingSeparators: ((menuPath: string) => string[]);
     static PrepareObjectContextMenu: ((c: UnityEngine.Object, contextUserData: number) => void);
@@ -3732,8 +3744,8 @@ export namespace UnityEditor {
     static PasteComponentFromPasteboard: ((go: UnityEngine.GameObject) => boolean);
     static PasteComponentValuesFromPasteboard: ((component: UnityEngine.Component) => boolean);
     static HasStateMachineTransitionDataInPasteboard: (() => boolean);
-    static AreAllParametersInDestination: ((transition: UnityEngine.Object, controller: UnityEditor.Animations.AnimatorController, missingParameters: any) => boolean);
-    static DestinationHasCompatibleParameterTypes: ((transition: UnityEngine.Object, controller: UnityEditor.Animations.AnimatorController, mismatchedParameters: any) => boolean);
+    static AreAllParametersInDestination: ((transition: UnityEngine.Object, controller: UnityEditor.Animations.AnimatorController, missingParameters: string[]) => boolean);
+    static DestinationHasCompatibleParameterTypes: ((transition: UnityEngine.Object, controller: UnityEditor.Animations.AnimatorController, mismatchedParameters: string[]) => boolean);
     static CanPasteParametersToTransition: ((transition: UnityEngine.Object, controller: UnityEditor.Animations.AnimatorController) => boolean);
     static CopyStateMachineTransitionParametersToPasteboard: ((transition: UnityEngine.Object, controller: UnityEditor.Animations.AnimatorController) => void);
     static PasteToStateMachineTransitionParametersFromPasteboard: ((transition: UnityEngine.Object, controller: UnityEditor.Animations.AnimatorController, conditions: boolean, parameters: boolean) => void);
@@ -3746,13 +3758,13 @@ export namespace UnityEditor {
     static SetApplicationSettingCompressAssetsOnImport: ((value: boolean) => void);
     static GetApplicationSettingCompressAssetsOnImport: (() => boolean);
     static GetLocalIdentifierInFile: ((instanceID: number) => number);
-    static GetLocalIdentifierInFileForPersistentObject: ((obj: UnityEngine.Object) => any);
+    static GetLocalIdentifierInFileForPersistentObject: ((obj: UnityEngine.Object) => System.UInt64);
     static IsHiddenFile: ((path: string) => boolean);
     static ClearSkinCache: (() => void);
     static GetRenderSettings: (() => UnityEngine.Object);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class UnwrapParam {
@@ -3760,17 +3772,17 @@ export namespace UnityEditor {
     areaError: number;
     hardAngle: number;
     packMargin: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class Unwrapping {
     static GeneratePerTriangleUV: ((src: UnityEngine.Mesh) => UnityEngine.Vector2[]) | ((src: UnityEngine.Mesh, settings: UnityEditor.UnwrapParam) => UnityEngine.Vector2[]);
     static GenerateSecondaryUVSet: ((src: UnityEngine.Mesh) => void) | ((src: UnityEngine.Mesh, settings: UnityEditor.UnwrapParam) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ExternalVersionControl {
@@ -3780,9 +3792,9 @@ export namespace UnityEditor {
     static Generic: string;
     static AssetServer: string;
     ToString: (() => string);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class VersionControlSettings {
     static mode: string;
@@ -3790,9 +3802,9 @@ export namespace UnityEditor {
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum VertexChannelCompressionFlags {
     None = 0,
@@ -3833,9 +3845,9 @@ export namespace UnityEditor {
     keepOriginalPositionXZ: boolean;
     heightFromFeet: boolean;
     mirror: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AnimationModeDriver {
@@ -3845,9 +3857,9 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class AnimationMode {
     constructor();
@@ -3864,29 +3876,29 @@ export namespace UnityEditor {
     static SamplePlayableGraph: ((graph: UnityEngine.Playables.PlayableGraph, index: number, time: number) => void);
     static AddPropertyModification: ((binding: UnityEditor.EditorCurveBinding, modification: UnityEditor.PropertyModification, keepPrefabOverride: boolean) => void);
     static AddEditorCurveBinding: ((gameObject: UnityEngine.GameObject, binding: UnityEditor.EditorCurveBinding) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ObjectReferenceKeyframe {
     time: number;
     value: UnityEngine.Object;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class AnimationClipCurveData {
     constructor();
     constructor(binding: UnityEditor.EditorCurveBinding);
     path: string;
-    type: any; // System.Type
+    type: System.Type;
     propertyName: string;
     curve: UnityEngine.AnimationCurve;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AnimationUtility {
@@ -3895,15 +3907,15 @@ export namespace UnityEditor {
     static GetAnimationClips: ((component: UnityEngine.Animation) => UnityEngine.AnimationClip[]) | ((gameObject: UnityEngine.GameObject) => UnityEngine.AnimationClip[]);
     static SetAnimationClips: ((animation: UnityEngine.Animation, clips: UnityEngine.AnimationClip[]) => void);
     static GetAnimatableBindings: ((targetObject: UnityEngine.GameObject, root: UnityEngine.GameObject) => UnityEditor.EditorCurveBinding[]);
-    static GetEditorCurveValueType: ((root: UnityEngine.GameObject, binding: UnityEditor.EditorCurveBinding) => any);
+    static GetEditorCurveValueType: ((root: UnityEngine.GameObject, binding: UnityEditor.EditorCurveBinding) => System.Type);
     static GetAnimatedObject: ((root: UnityEngine.GameObject, binding: UnityEditor.EditorCurveBinding) => UnityEngine.Object);
     static GetCurveBindings: ((clip: UnityEngine.AnimationClip) => UnityEditor.EditorCurveBinding[]);
     static GetObjectReferenceCurveBindings: ((clip: UnityEngine.AnimationClip) => UnityEditor.EditorCurveBinding[]);
     static GetObjectReferenceCurve: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding) => UnityEditor.ObjectReferenceKeyframe[]);
     static SetObjectReferenceCurve: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, keyframes: UnityEditor.ObjectReferenceKeyframe[]) => void);
     static SetObjectReferenceCurves: ((clip: UnityEngine.AnimationClip, bindings: UnityEditor.EditorCurveBinding[], keyframes: UnityEditor.ObjectReferenceKeyframe[][]) => void);
-    static GetEditorCurve: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding) => UnityEngine.AnimationCurve) | ((clip: UnityEngine.AnimationClip, relativePath: string, type: any, propertyName: string) => UnityEngine.AnimationCurve);
-    static SetEditorCurve: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, curve: UnityEngine.AnimationCurve) => void) | ((clip: UnityEngine.AnimationClip, relativePath: string, type: any, propertyName: string, curve: UnityEngine.AnimationCurve) => void);
+    static GetEditorCurve: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding) => UnityEngine.AnimationCurve) | ((clip: UnityEngine.AnimationClip, relativePath: string, type: System.Type, propertyName: string) => UnityEngine.AnimationCurve);
+    static SetEditorCurve: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, curve: UnityEngine.AnimationCurve) => void) | ((clip: UnityEngine.AnimationClip, relativePath: string, type: System.Type, propertyName: string, curve: UnityEngine.AnimationCurve) => void);
     static SetEditorCurves: ((clip: UnityEngine.AnimationClip, bindings: UnityEditor.EditorCurveBinding[], curves: UnityEngine.AnimationCurve[]) => void);
     static GetKeyLeftTangentMode: ((curve: UnityEngine.AnimationCurve, index: number) => UnityEditor.AnimationUtility_TangentMode);
     static GetKeyRightTangentMode: ((curve: UnityEngine.AnimationCurve, index: number) => UnityEditor.AnimationUtility_TangentMode);
@@ -3925,9 +3937,9 @@ export namespace UnityEditor {
     static StartAnimationMode: ((objects: UnityEngine.Object[]) => void);
     static StopAnimationMode: (() => void);
     static SetAnimationType: ((clip: UnityEngine.AnimationClip, type: UnityEditor.ModelImporterAnimationType) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum AnimationUtility_CurveModifiedType {
@@ -3943,34 +3955,34 @@ export namespace UnityEditor {
     ClampedAuto = 4,
   }
   export declare class AnimationUtility_OnCurveWasModified {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, type: UnityEditor.AnimationUtility_CurveModifiedType) => void);
-    BeginInvoke: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, type: UnityEditor.AnimationUtility_CurveModifiedType, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((clip: UnityEngine.AnimationClip, binding: UnityEditor.EditorCurveBinding, type: UnityEditor.AnimationUtility_CurveModifiedType, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorCurveBinding {
     isPPtrCurve: boolean;
     isDiscreteCurve: boolean;
-    type: any; // System.Type
+    type: System.Type;
     path: string;
     propertyName: string;
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean) | ((other: UnityEditor.EditorCurveBinding) => boolean);
-    static FloatCurve: ((inPath: string, inType: any, inPropertyName: string) => UnityEditor.EditorCurveBinding);
-    static PPtrCurve: ((inPath: string, inType: any, inPropertyName: string) => UnityEditor.EditorCurveBinding);
-    static DiscreteCurve: ((inPath: string, inType: any, inPropertyName: string) => UnityEditor.EditorCurveBinding);
+    Equals: ((other: System.Object) => boolean) | ((other: UnityEditor.EditorCurveBinding) => boolean);
+    static FloatCurve: ((inPath: string, inType: System.Type, inPropertyName: string) => UnityEditor.EditorCurveBinding);
+    static PPtrCurve: ((inPath: string, inType: System.Type, inPropertyName: string) => UnityEditor.EditorCurveBinding);
+    static DiscreteCurve: ((inPath: string, inType: System.Type, inPropertyName: string) => UnityEditor.EditorCurveBinding);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class AnimationWindow {
     animationClip: UnityEngine.AnimationClip;
@@ -4018,13 +4030,13 @@ export namespace UnityEditor {
     Close: (() => void);
     Repaint: (() => void);
     SendEvent: ((e: UnityEngine.Event) => boolean);
-    GetExtraPaneTypes: (() => any);
+    GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum DrawCameraMode {
     UserDefined = -2147483648,
@@ -4079,19 +4091,19 @@ export namespace UnityEditor {
     OnGUI: ((rect: UnityEngine.Rect) => void);
     OnOpen: (() => void);
     OnClose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssetDatabase {
     constructor();
-    static GlobalArtifactDependencyVersion: any; // System.UInt32
-    static GlobalArtifactProcessedVersion: any; // System.UInt32
+    static GlobalArtifactDependencyVersion: System.UInt32;
+    static GlobalArtifactProcessedVersion: System.UInt32;
     static onImportPackageItemsCompleted: any; // System.Action`1[System.String[]]
-    static CanOpenForEdit: ((assetOrMetaFilePaths: string[], outNotEditablePaths: any, statusQueryOptions?: UnityEditor.StatusQueryOptions) => void) | ((assetObject: UnityEngine.Object) => boolean) | ((assetObject: UnityEngine.Object, statusOptions: UnityEditor.StatusQueryOptions) => boolean) | ((assetOrMetaFilePath: string) => boolean) | ((assetOrMetaFilePath: string, statusOptions: UnityEditor.StatusQueryOptions) => boolean);
-    static IsOpenForEdit: ((assetOrMetaFilePaths: string[], outNotEditablePaths: any, statusQueryOptions?: UnityEditor.StatusQueryOptions) => void) | ((assetObject: UnityEngine.Object) => boolean) | ((assetObject: UnityEngine.Object, statusOptions: UnityEditor.StatusQueryOptions) => boolean) | ((assetOrMetaFilePath: string) => boolean) | ((assetOrMetaFilePath: string, statusOptions: UnityEditor.StatusQueryOptions) => boolean);
-    static MakeEditable: ((path: string) => boolean) | ((paths: string[], prompt?: string, outNotEditablePaths?: any) => boolean);
+    static CanOpenForEdit: ((assetOrMetaFilePaths: string[], outNotEditablePaths: string[], statusQueryOptions?: UnityEditor.StatusQueryOptions) => void) | ((assetObject: UnityEngine.Object) => boolean) | ((assetObject: UnityEngine.Object, statusOptions: UnityEditor.StatusQueryOptions) => boolean) | ((assetOrMetaFilePath: string) => boolean) | ((assetOrMetaFilePath: string, statusOptions: UnityEditor.StatusQueryOptions) => boolean);
+    static IsOpenForEdit: ((assetOrMetaFilePaths: string[], outNotEditablePaths: string[], statusQueryOptions?: UnityEditor.StatusQueryOptions) => void) | ((assetObject: UnityEngine.Object) => boolean) | ((assetObject: UnityEngine.Object, statusOptions: UnityEditor.StatusQueryOptions) => boolean) | ((assetOrMetaFilePath: string) => boolean) | ((assetOrMetaFilePath: string, statusOptions: UnityEditor.StatusQueryOptions) => boolean);
+    static MakeEditable: ((path: string) => boolean) | ((paths: string[], prompt?: string, outNotEditablePaths?: string[]) => boolean);
     static GetTextMetaDataPathFromAssetPath: ((path: string) => string);
     static FindAssets: ((filter: string) => string[]) | ((filter: string, searchInFolders: string[]) => string[]);
     static Contains: ((obj: UnityEngine.Object) => boolean) | ((instanceID: number) => boolean);
@@ -4110,9 +4122,9 @@ export namespace UnityEditor {
     static ExtractAsset: ((asset: UnityEngine.Object, newPath: string) => string);
     static RenameAsset: ((pathName: string, newName: string) => string);
     static MoveAssetToTrash: ((path: string) => boolean);
-    static MoveAssetsToTrash: ((paths: string[], outFailedPaths: any) => boolean);
+    static MoveAssetsToTrash: ((paths: string[], outFailedPaths: string[]) => boolean);
     static DeleteAsset: ((path: string) => boolean);
-    static DeleteAssets: ((paths: string[], outFailedPaths: any) => boolean);
+    static DeleteAssets: ((paths: string[], outFailedPaths: string[]) => boolean);
     static ImportAsset: ((path: string) => void) | ((path: string, options: UnityEditor.ImportAssetOptions) => void);
     static CopyAsset: ((path: string, newPath: string) => boolean);
     static WriteImportSettingsIfDirty: ((path: string) => boolean);
@@ -4125,10 +4137,10 @@ export namespace UnityEditor {
     static GetAssetOrScenePath: ((assetObject: UnityEngine.Object) => string);
     static GetTextMetaFilePathFromAssetPath: ((path: string) => string);
     static GetAssetPathFromTextMetaFilePath: ((path: string) => string);
-    static LoadAssetAtPath: ((assetPath: string, type: any) => UnityEngine.Object);
+    static LoadAssetAtPath: ((assetPath: string, type: System.Type) => UnityEngine.Object);
     static LoadMainAssetAtPath: ((assetPath: string) => UnityEngine.Object);
-    static GetMainAssetTypeAtPath: ((assetPath: string) => any);
-    static GetTypeFromPathAndFileID: ((assetPath: string, localIdentifierInFile: any) => any);
+    static GetMainAssetTypeAtPath: ((assetPath: string) => System.Type);
+    static GetTypeFromPathAndFileID: ((assetPath: string, localIdentifierInFile: System.Int64) => System.Type);
     static IsMainAssetAtPathLoaded: ((assetPath: string) => boolean);
     static LoadAllAssetRepresentationsAtPath: ((assetPath: string) => UnityEngine.Object[]);
     static LoadAllAssetsAtPath: ((assetPath: string) => UnityEngine.Object[]);
@@ -4158,7 +4170,7 @@ export namespace UnityEditor {
     static GetDependencies: ((pathName: string) => string[]) | ((pathName: string, recursive: boolean) => string[]) | ((pathNames: string[]) => string[]) | ((pathNames: string[], recursive: boolean) => string[]);
     static ExportPackage: ((assetPathName: string, fileName: string) => void) | ((assetPathName: string, fileName: string, flags: UnityEditor.ExportPackageOptions) => void) | ((assetPathNames: string[], fileName: string) => void) | ((assetPathNames: string[], fileName: string, flags: UnityEditor.ExportPackageOptions) => void);
     static IsMetaFileOpenForEdit: ((assetObject: UnityEngine.Object) => boolean) | ((assetObject: UnityEngine.Object, statusOptions: UnityEditor.StatusQueryOptions) => boolean);
-    static GetBuiltinExtraResource: ((type: any, path: string) => UnityEngine.Object);
+    static GetBuiltinExtraResource: ((type: System.Type, path: string) => UnityEngine.Object);
     static ForceReserializeAssets: ((assetPaths: any, options?: UnityEditor.ForceReserializeAssetsOptions) => void) | (() => void);
     static RemoveObjectFromAsset: ((objectToRemove: UnityEngine.Object) => void);
     static ImportPackage: ((packagePath: string, interactive: boolean) => void);
@@ -4166,57 +4178,57 @@ export namespace UnityEditor {
     static AllowAutoRefresh: (() => void);
     static ClearImporterOverride: ((path: string) => void);
     static IsCacheServerEnabled: (() => boolean);
-    static GetImporterOverride: ((path: string) => any);
-    static GetAvailableImporterTypes: ((path: string) => any[]);
-    static CanConnectToCacheServer: ((ip: string, port: any) => boolean);
+    static GetImporterOverride: ((path: string) => System.Type);
+    static GetAvailableImporterTypes: ((path: string) => System.Type[]);
+    static CanConnectToCacheServer: ((ip: string, port: System.UInt16) => boolean);
     static RefreshSettings: (() => void);
     static IsConnectedToCacheServer: (() => boolean);
     static ResetCacheServerReconnectTimer: (() => void);
     static CloseCacheServerConnection: (() => void);
     static GetCacheServerAddress: (() => string);
-    static GetCacheServerPort: (() => any);
+    static GetCacheServerPort: (() => System.UInt16);
     static GetCacheServerNamespacePrefix: (() => string);
     static GetCacheServerEnableDownload: (() => boolean);
     static GetCacheServerEnableUpload: (() => boolean);
     static IsDirectoryMonitoringEnabled: (() => boolean);
     static RegisterCustomDependency: ((dependency: string, hashOfValue: UnityEngine.Hash128) => void);
-    static UnregisterCustomDependencyPrefixFilter: ((prefixFilter: string) => any);
+    static UnregisterCustomDependencyPrefixFilter: ((prefixFilter: string) => System.UInt32);
     static IsAssetImportWorkerProcess: (() => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssetDatabase_ImportPackageCallback {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((packageName: string) => void);
-    BeginInvoke: ((packageName: string, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((packageName: string, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssetDatabase_ImportPackageFailedCallback {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((packageName: string, errorMessage: string) => void);
-    BeginInvoke: ((packageName: string, errorMessage: string, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((packageName: string, errorMessage: string, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum AssetStatus {
@@ -4244,9 +4256,9 @@ export namespace UnityEditor {
     changeFlags: number;
     previewPath: string;
     exists: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssetPreview {
@@ -4256,17 +4268,17 @@ export namespace UnityEditor {
     static IsLoadingAssetPreviews: (() => boolean);
     static SetPreviewTextureCacheSize: ((size: number) => void);
     static GetMiniThumbnail: ((obj: UnityEngine.Object) => UnityEngine.Texture2D);
-    static GetMiniTypeThumbnail: ((type: any) => UnityEngine.Texture2D);
-    Equals: ((obj: any) => boolean);
+    static GetMiniTypeThumbnail: ((type: System.Type) => UnityEngine.Texture2D);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssetImporter {
     constructor();
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -4277,29 +4289,29 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class AssetImporter_SourceAssetIdentifier {
     constructor(asset: UnityEngine.Object);
-    constructor(type: any, name: string);
-    type: any; // System.Type
+    constructor(type: System.Type, name: string);
+    type: System.Type;
     name: string;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class MaterialEditorExtensions {
     static PerformBumpMapCheck: ((material: UnityEngine.Material) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ComputeShaderImporter {
@@ -4307,7 +4319,7 @@ export namespace UnityEditor {
     preprocessorOverride: UnityEditor.PreprocessorOverride;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -4317,20 +4329,20 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class DDSImporter {
     constructor();
     isReadable: boolean;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -4340,13 +4352,13 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class IHVImageFormatImporter {
     constructor();
@@ -4360,7 +4372,7 @@ export namespace UnityEditor {
     streamingMipmapsPriority: number;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -4370,20 +4382,20 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ShaderImporter {
     constructor();
     preprocessorOverride: UnityEditor.PreprocessorOverride;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -4398,13 +4410,13 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class SpeedTreeImporter {
     constructor();
@@ -4437,7 +4449,7 @@ export namespace UnityEditor {
     windQualities: number[];
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -4450,13 +4462,13 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum SpeedTreeImporter_MaterialLocation {
     External = 0,
@@ -4518,7 +4530,7 @@ export namespace UnityEditor {
     ignorePngGamma: boolean;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -4541,13 +4553,13 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum TextureImporterFormat {
     Automatic = -1,
@@ -4712,10 +4724,10 @@ export namespace UnityEditor {
     alignment: number;
     pivot: UnityEngine.Vector2;
     border: UnityEngine.Vector4;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class TextureImporterSettings {
     constructor();
@@ -4759,7 +4771,7 @@ export namespace UnityEditor {
     spritePixelsPerUnit: number;
     spritePixelsToUnits: number;
     spriteTessellationDetail: number;
-    spriteExtrude: any; // System.UInt32
+    spriteExtrude: System.UInt32;
     spriteMeshType: UnityEngine.SpriteMeshType;
     spriteAlignment: number;
     spritePivot: UnityEngine.Vector2;
@@ -4778,9 +4790,9 @@ export namespace UnityEditor {
     static Equal: ((a: UnityEditor.TextureImporterSettings, b: UnityEditor.TextureImporterSettings) => boolean);
     CopyTo: ((target: UnityEditor.TextureImporterSettings) => void);
     ApplyTextureType: ((type: UnityEditor.TextureImporterType, applyAll: boolean) => void) | ((type: UnityEditor.TextureImporterType) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class TextureImporterPlatformSettings {
@@ -4796,9 +4808,9 @@ export namespace UnityEditor {
     allowsAlphaSplitting: boolean;
     androidETC2FallbackOverride: UnityEditor.AndroidETC2FallbackOverride;
     CopyTo: ((target: UnityEditor.TextureImporterPlatformSettings) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssetStoreAsset {
@@ -4815,9 +4827,9 @@ export namespace UnityEditor {
     packageID: number;
     previewImage: UnityEngine.Texture2D;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AudioCurveRendering {
@@ -4832,60 +4844,60 @@ export namespace UnityEditor {
     static DrawSymmetricFilledCurve: ((r: UnityEngine.Rect, eval: UnityEditor.AudioCurveRendering_AudioCurveAndColorEvaluator) => void);
     static DrawCurve: ((r: UnityEngine.Rect, eval: UnityEditor.AudioCurveRendering_AudioCurveEvaluator, curveColor: UnityEngine.Color) => void);
     static DrawGradientRect: ((r: UnityEngine.Rect, c1: UnityEngine.Color, c2: UnityEngine.Color, blend: number, horizontal: boolean) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AudioCurveRendering_AudioCurveEvaluator {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((x: number) => number);
-    BeginInvoke: ((x: number, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => number);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((x: number, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => number);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AudioCurveRendering_AudioCurveAndColorEvaluator {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AudioCurveRendering_AudioMinMaxCurveAndColorEvaluator {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class IAudioEffectPlugin {
     SetFloatParameter: ((name: string, value: number) => boolean);
     GetSampleRate: (() => number);
     IsPluginEditableAndEnabled: (() => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class IAudioEffectPluginGUI {
@@ -4893,9 +4905,9 @@ export namespace UnityEditor {
     Description: string;
     Vendor: string;
     OnGUI: ((plugin: UnityEditor.IAudioEffectPlugin) => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Sysroot {
@@ -4905,10 +4917,10 @@ export namespace UnityEditor {
     TargetPlatform: string;
     TargetArch: string;
     Initialize: (() => boolean);
-    GetIl2CppArguments: (() => any);
-    Equals: ((obj: any) => boolean);
+    GetIl2CppArguments: (() => System.Collections.Generic.IEnumerable<string>);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class CameraProjectionCache {
@@ -4917,25 +4929,25 @@ export namespace UnityEditor {
     WorldToGUIPoint: ((worldPoint: UnityEngine.Vector3) => UnityEngine.Vector2);
     GUIToScreenPoint: ((guiPoint: UnityEngine.Vector2) => UnityEngine.Vector2);
     ScreenToGUIPoint: ((screenPoint: UnityEngine.Vector2) => UnityEngine.Vector2);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class CommandHandler {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((context: UnityEditor.CommandExecuteContext) => void);
-    BeginInvoke: ((context: UnityEditor.CommandExecuteContext, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((context: UnityEditor.CommandExecuteContext, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum CommandHint {
@@ -4954,13 +4966,13 @@ export namespace UnityEditor {
   }
   export declare class CommandExecuteContext {
     constructor();
-    data: any; // System.Object
-    args: any[];
-    result: any; // System.Object
+    data: System.Object;
+    args: System.Object[];
+    result: System.Object;
     hint: UnityEditor.CommandHint;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class CommandService {
@@ -4968,10 +4980,10 @@ export namespace UnityEditor {
     static RegisterCommand: ((id: string, label: string, handler: UnityEditor.CommandHandler, hint?: UnityEditor.CommandHint) => void) | ((id: string, handler: UnityEditor.CommandHandler, hint?: UnityEditor.CommandHint) => void);
     static UnregisterCommand: ((id: string) => boolean);
     static Exists: ((id: string) => boolean);
-    static Execute: ((id: string) => any) | ((id: string, hint: UnityEditor.CommandHint) => any) | ((id: string, hint: UnityEditor.CommandHint, ...args: any[]) => any);
-    Equals: ((obj: any) => boolean);
+    static Execute: ((id: string) => System.Object) | ((id: string, hint: UnityEditor.CommandHint) => System.Object) | ((id: string, hint: UnityEditor.CommandHint, ...args: System.Object[]) => System.Object);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ModeService {
@@ -4983,18 +4995,18 @@ export namespace UnityEditor {
     static Update: (() => void);
     static HasContextMenu: ((menuId: string) => boolean);
     static PopupContextMenu: ((menuId: string) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ModeService_ModeChangedArgs {
     prevIndex: number;
     nextIndex: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum GameViewSizeGroupType {
     Standalone = 0,
@@ -5013,9 +5025,9 @@ export namespace UnityEditor {
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class LightmapEditorSettings {
     static lightmapper: UnityEditor.LightmapEditorSettings_Lightmapper;
@@ -5071,9 +5083,9 @@ export namespace UnityEditor {
     static giPathTracerFilter: UnityEditor.LightmapEditorSettings_PathTracerFilter;
     static maxAtlasWidth: number;
     static maxAtlasHeight: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum LightmapEditorSettings_Lightmapper {
@@ -5147,9 +5159,9 @@ export namespace UnityEditor {
     AssignToLightingSettings: ((lightingSettings: UnityEngine.LightingSettings) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class Lightmapping {
     static giWorkflowMode: UnityEditor.Lightmapping_GIWorkflowMode;
@@ -5180,9 +5192,9 @@ export namespace UnityEditor {
     static BakeSelected: (() => boolean);
     static BakeLightProbesOnlyAsync: (() => boolean);
     static BakeLightProbesOnly: (() => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum Lightmapping_GIWorkflowMode {
@@ -5191,35 +5203,35 @@ export namespace UnityEditor {
     Legacy = 2,
   }
   export declare class Lightmapping_OnStartedFunction {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: (() => void);
-    BeginInvoke: ((callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Lightmapping_OnCompletedFunction {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: (() => void);
-    BeginInvoke: ((callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class LightmapSnapshot {
@@ -5228,9 +5240,9 @@ export namespace UnityEditor {
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class EditorMaterialUtility {
     constructor();
@@ -5238,9 +5250,9 @@ export namespace UnityEditor {
     static IsBackgroundMaterial: ((material: UnityEngine.Material) => boolean);
     static SetShaderDefaults: ((shader: UnityEngine.Shader, name: string[], textures: UnityEngine.Texture[]) => void);
     static SetShaderNonModifiableDefaults: ((shader: UnityEngine.Shader, name: string[], textures: UnityEngine.Texture[]) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorSnapSettings {
@@ -5249,9 +5261,9 @@ export namespace UnityEditor {
     static rotate: number;
     static scale: number;
     static ResetSnapSettings: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ColorPickerHDRConfig {
@@ -5260,9 +5272,9 @@ export namespace UnityEditor {
     maxBrightness: number;
     minExposureValue: number;
     maxExposureValue: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorStyles {
@@ -5318,55 +5330,55 @@ export namespace UnityEditor {
     static toolbarSearchField: UnityEngine.GUIStyle;
     static FromUSS: ((ussStyleRuleName: string, ussInPlaceStyleOverride?: string) => UnityEngine.GUIStyle) | ((baseStyle: UnityEngine.GUIStyle, ussStyleRuleName: string, ussInPlaceStyleOverride?: string) => UnityEngine.GUIStyle);
     static ApplyUSS: ((style: UnityEngine.GUIStyle, ussStyleRuleName: string, ussInPlaceStyleOverride?: string) => UnityEngine.GUIStyle);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class GenericMenu {
     constructor();
     allowDuplicateNames: boolean;
-    AddItem: ((content: UnityEngine.GUIContent, on: boolean, func: UnityEditor.GenericMenu_MenuFunction) => void) | ((content: UnityEngine.GUIContent, on: boolean, func: UnityEditor.GenericMenu_MenuFunction2, userData: any) => void);
+    AddItem: ((content: UnityEngine.GUIContent, on: boolean, func: UnityEditor.GenericMenu_MenuFunction) => void) | ((content: UnityEngine.GUIContent, on: boolean, func: UnityEditor.GenericMenu_MenuFunction2, userData: System.Object) => void);
     AddDisabledItem: ((content: UnityEngine.GUIContent) => void) | ((content: UnityEngine.GUIContent, on: boolean) => void);
     AddSeparator: ((path: string) => void);
     GetItemCount: (() => number);
     ShowAsContext: (() => void);
     DropDown: ((position: UnityEngine.Rect) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class GenericMenu_MenuFunction {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: (() => void);
-    BeginInvoke: ((callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class GenericMenu_MenuFunction2 {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
-    Invoke: ((userData: any) => void);
-    BeginInvoke: ((userData: any, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    Invoke: ((userData: System.Object) => void);
+    BeginInvoke: ((userData: System.Object, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PopupWindowContent {
@@ -5375,9 +5387,9 @@ export namespace UnityEditor {
     GetWindowSize: (() => UnityEngine.Vector2);
     OnOpen: (() => void);
     OnClose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PopupWindow {
@@ -5417,13 +5429,13 @@ export namespace UnityEditor {
     Close: (() => void);
     Repaint: (() => void);
     SendEvent: ((e: UnityEngine.Event) => boolean);
-    GetExtraPaneTypes: (() => any);
+    GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum ViewTool {
     None = -1,
@@ -5470,9 +5482,9 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum TextureImporterCubemapConvolution {
     None = 0,
@@ -5519,9 +5531,9 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class CameraEditor_Settings {
     constructor(so: UnityEditor.SerializedObject);
@@ -5572,9 +5584,9 @@ export namespace UnityEditor {
     DrawMultiDisplay: (() => void);
     DrawTargetEye: (() => void);
     static DrawCameraWarnings: ((camera: UnityEngine.Camera) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class CameraEditorUtils {
@@ -5585,9 +5597,9 @@ export namespace UnityEditor {
     static GetFrustumAspectRatio: ((camera: UnityEngine.Camera) => number);
     static PerspectiveClipToWorld: ((clipToWorld: UnityEngine.Matrix4x4, viewPositionWS: UnityEngine.Vector3, positionCS: UnityEngine.Vector3) => UnityEngine.Vector3);
     static GetFrustumPlaneAt: ((clipToWorld: UnityEngine.Matrix4x4, viewPosition: UnityEngine.Vector3, distance: number, points: UnityEngine.Vector3[]) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ObjectPreview {
@@ -5604,9 +5616,9 @@ export namespace UnityEditor {
     GetInfoString: (() => string);
     DrawPreview: ((previewArea: UnityEngine.Rect) => void);
     ReloadPreviewInstances: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Editor {
@@ -5616,8 +5628,8 @@ export namespace UnityEditor {
     serializedObject: UnityEditor.SerializedObject;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    static CreateEditorWithContext: ((targetObjects: UnityEngine.Object[], context: UnityEngine.Object, editorType: any) => UnityEditor.Editor) | ((targetObjects: UnityEngine.Object[], context: UnityEngine.Object) => UnityEditor.Editor);
-    static CreateEditor: ((targetObject: UnityEngine.Object) => UnityEditor.Editor) | ((targetObject: UnityEngine.Object, editorType: any) => UnityEditor.Editor) | ((targetObjects: UnityEngine.Object[]) => UnityEditor.Editor) | ((targetObjects: UnityEngine.Object[], editorType: any) => UnityEditor.Editor);
+    static CreateEditorWithContext: ((targetObjects: UnityEngine.Object[], context: UnityEngine.Object, editorType: System.Type) => UnityEditor.Editor) | ((targetObjects: UnityEngine.Object[], context: UnityEngine.Object) => UnityEditor.Editor);
+    static CreateEditor: ((targetObject: UnityEngine.Object) => UnityEditor.Editor) | ((targetObject: UnityEngine.Object, editorType: System.Type) => UnityEditor.Editor) | ((targetObjects: UnityEngine.Object[]) => UnityEditor.Editor) | ((targetObjects: UnityEngine.Object[], editorType: System.Type) => UnityEditor.Editor);
     DrawDefaultInspector: (() => boolean);
     Repaint: (() => void);
     OnInspectorGUI: (() => void);
@@ -5640,9 +5652,9 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class LightEditor {
     constructor();
@@ -5673,9 +5685,9 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class LightEditor_Settings {
     constructor(so: UnityEditor.SerializedObject);
@@ -5738,9 +5750,9 @@ export namespace UnityEditor {
     DrawBakedShadowRadius: (() => void);
     DrawBakedShadowAngle: (() => void);
     DrawRuntimeShadow: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class MaterialEditor {
@@ -5829,17 +5841,17 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class MaterialPropertyDrawer {
     OnGUI: ((position: UnityEngine.Rect, prop: UnityEditor.MaterialProperty, label: UnityEngine.GUIContent, editor: UnityEditor.MaterialEditor) => void) | ((position: UnityEngine.Rect, prop: UnityEditor.MaterialProperty, label: string, editor: UnityEditor.MaterialEditor) => void);
     GetPropertyHeight: ((prop: UnityEditor.MaterialProperty, label: string, editor: UnityEditor.MaterialEditor) => number);
     Apply: ((prop: UnityEditor.MaterialProperty) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PreviewRenderUtility {
@@ -5866,9 +5878,9 @@ export namespace UnityEditor {
     InstantiatePrefabInScene: ((prefab: UnityEngine.GameObject) => UnityEngine.GameObject);
     DrawMesh: ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, mat: UnityEngine.Material, subMeshIndex: number) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, mat: UnityEngine.Material, subMeshIndex: number, customProperties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, m: UnityEngine.Matrix4x4, mat: UnityEngine.Material, subMeshIndex: number, customProperties: UnityEngine.MaterialPropertyBlock, probeAnchor: UnityEngine.Transform, useLightProbe: boolean) => void) | ((mesh: UnityEngine.Mesh, pos: UnityEngine.Vector3, rot: UnityEngine.Quaternion, mat: UnityEngine.Material, subMeshIndex: number) => void) | ((mesh: UnityEngine.Mesh, pos: UnityEngine.Vector3, rot: UnityEngine.Quaternion, mat: UnityEngine.Material, subMeshIndex: number, customProperties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, pos: UnityEngine.Vector3, rot: UnityEngine.Quaternion, mat: UnityEngine.Material, subMeshIndex: number, customProperties: UnityEngine.MaterialPropertyBlock, probeAnchor: UnityEngine.Transform) => void) | ((mesh: UnityEngine.Mesh, pos: UnityEngine.Vector3, rot: UnityEngine.Quaternion, mat: UnityEngine.Material, subMeshIndex: number, customProperties: UnityEngine.MaterialPropertyBlock, probeAnchor: UnityEngine.Transform, useLightProbe: boolean) => void) | ((mesh: UnityEngine.Mesh, pos: UnityEngine.Vector3, scale: UnityEngine.Vector3, rot: UnityEngine.Quaternion, mat: UnityEngine.Material, subMeshIndex: number, customProperties: UnityEngine.MaterialPropertyBlock, probeAnchor: UnityEngine.Transform, useLightProbe: boolean) => void);
     Render: ((allowScriptableRenderPipeline?: boolean, updatefov?: boolean) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ShaderGUI {
@@ -5878,17 +5890,17 @@ export namespace UnityEditor {
     OnMaterialPreviewSettingsGUI: ((materialEditor: UnityEditor.MaterialEditor) => void);
     OnClosed: ((material: UnityEngine.Material) => void);
     AssignNewShaderToMaterial: ((material: UnityEngine.Material, oldShader: UnityEngine.Shader, newShader: UnityEngine.Shader) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class TransformUtils {
     static GetInspectorRotation: ((t: UnityEngine.Transform) => UnityEngine.Vector3);
     static SetInspectorRotation: ((t: UnityEngine.Transform, r: UnityEngine.Vector3) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum BodyPart {
@@ -5924,15 +5936,15 @@ export namespace UnityEditor {
     SetTexture: ((texture: UnityEngine.Texture2D, layer?: number) => void);
     SetTextures: ((...textures: UnityEngine.Texture2D[]) => void);
     ToString: (() => string);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class PlatformIconKind {
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class PrefabUtility {
     constructor();
@@ -5980,10 +5992,10 @@ export namespace UnityEditor {
     static RevertRemovedComponent: ((instanceGameObject: UnityEngine.GameObject, assetComponent: UnityEngine.Component, action: UnityEditor.InteractionMode) => void);
     static ApplyAddedGameObject: ((gameObject: UnityEngine.GameObject, assetPath: string, action: UnityEditor.InteractionMode) => void);
     static RevertAddedGameObject: ((gameObject: UnityEngine.GameObject, action: UnityEditor.InteractionMode) => void);
-    static GetObjectOverrides: ((prefabInstance: UnityEngine.GameObject, includeDefaultOverrides?: boolean) => any);
-    static GetAddedComponents: ((prefabInstance: UnityEngine.GameObject) => any);
-    static GetRemovedComponents: ((prefabInstance: UnityEngine.GameObject) => any);
-    static GetAddedGameObjects: ((prefabInstance: UnityEngine.GameObject) => any);
+    static GetObjectOverrides: ((prefabInstance: UnityEngine.GameObject, includeDefaultOverrides?: boolean) => UnityEditor.SceneManagement.ObjectOverride[]);
+    static GetAddedComponents: ((prefabInstance: UnityEngine.GameObject) => UnityEditor.SceneManagement.AddedComponent[]);
+    static GetRemovedComponents: ((prefabInstance: UnityEngine.GameObject) => UnityEditor.SceneManagement.RemovedComponent[]);
+    static GetAddedGameObjects: ((prefabInstance: UnityEngine.GameObject) => UnityEditor.SceneManagement.AddedGameObject[]);
     static IsAnyPrefabInstanceRoot: ((gameObject: UnityEngine.GameObject) => boolean);
     static IsOutermostPrefabInstanceRoot: ((gameObject: UnityEngine.GameObject) => boolean);
     static GetPrefabAssetPathOfNearestInstanceRoot: ((instanceComponentOrGameObject: UnityEngine.Object) => string);
@@ -6004,25 +6016,25 @@ export namespace UnityEditor {
     static GetPrefabAssetType: ((componentOrGameObject: UnityEngine.Object) => UnityEditor.PrefabAssetType);
     static LoadPrefabContents: ((assetPath: string) => UnityEngine.GameObject);
     static UnloadPrefabContents: ((contentsRoot: UnityEngine.GameObject) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PrefabUtility_PrefabInstanceUpdated {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((instance: UnityEngine.GameObject) => void);
-    BeginInvoke: ((instance: UnityEngine.GameObject, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((instance: UnityEngine.GameObject, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PrefabUtility_EditPrefabContentsScope {
@@ -6030,10 +6042,10 @@ export namespace UnityEditor {
     assetPath: string;
     prefabContentsRoot: UnityEngine.GameObject;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum PrefabAssetType {
     NotAPrefab = 0,
@@ -6073,9 +6085,9 @@ export namespace UnityEditor {
     propertyPath: string;
     value: string;
     objectReference: UnityEngine.Object;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum SaveType {
@@ -6085,7 +6097,7 @@ export namespace UnityEditor {
   export declare class Progress {
     static running: boolean;
     static globalProgress: number;
-    static globalRemainingTime: any; // System.TimeSpan
+    static globalRemainingTime: System.TimeSpan;
     static Start: ((name: string, description?: string, options?: UnityEditor.Progress_Options, parentId?: number) => number);
     static Finish: ((id: number, status?: UnityEditor.Progress_Status) => void);
     static Remove: ((id: number) => number) | ((id: number, forceSynchronous: boolean) => number);
@@ -6105,8 +6117,8 @@ export namespace UnityEditor {
     static GetName: ((id: number) => string);
     static GetDescription: ((id: number) => string);
     static SetDescription: ((id: number, description: string) => void);
-    static GetStartDateTime: ((id: number) => any);
-    static GetUpdateDateTime: ((id: number) => any);
+    static GetStartDateTime: ((id: number) => System.Int64);
+    static GetUpdateDateTime: ((id: number) => System.Int64);
     static GetParentId: ((id: number) => number);
     static GetId: ((index: number) => number);
     static IsCancellable: ((id: number) => boolean);
@@ -6114,11 +6126,11 @@ export namespace UnityEditor {
     static GetStatus: ((id: number) => UnityEditor.Progress_Status);
     static GetOptions: ((id: number) => UnityEditor.Progress_Options);
     static SetTimeDisplayMode: ((id: number, displayMode: UnityEditor.Progress_TimeDisplayMode) => void);
-    static SetRemainingTime: ((id: number, seconds: any) => void);
+    static SetRemainingTime: ((id: number, seconds: System.Int64) => void);
     static SetPriority: ((id: number, priority: number) => void) | ((id: number, priority: UnityEditor.Progress_Priority) => void);
     static GetTimeDisplayMode: ((id: number) => UnityEditor.Progress_TimeDisplayMode);
     static Exists: ((id: number) => boolean);
-    static GetRemainingTime: ((id: number) => any);
+    static GetRemainingTime: ((id: number) => System.Int64);
     static GetPriority: ((id: number) => number);
     static ClearRemainingTime: ((id: number) => void);
     static SetStepLabel: ((id: number, label: string) => void);
@@ -6127,9 +6139,9 @@ export namespace UnityEditor {
     static EnumerateItems: (() => any);
     static GetProgressById: ((id: number) => UnityEditor.Progress_Item);
     static GetRunningProgressCount: (() => number);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum Progress_Status {
@@ -6168,13 +6180,13 @@ export namespace UnityEditor {
     totalSteps: number;
     stepLabel: string;
     parentId: number;
-    startTime: any; // System.DateTime
-    updateTime: any; // System.DateTime
+    startTime: System.DateTime;
+    updateTime: System.DateTime;
     status: UnityEditor.Progress_Status;
     options: UnityEditor.Progress_Options;
     timeDisplayMode: UnityEditor.Progress_TimeDisplayMode;
     priority: number;
-    remainingTime: any; // System.TimeSpan
+    remainingTime: System.TimeSpan;
     finished: boolean;
     running: boolean;
     paused: boolean;
@@ -6190,19 +6202,19 @@ export namespace UnityEditor {
     Resume: (() => boolean);
     Finish: ((finishedStatus?: UnityEditor.Progress_Status) => void);
     Remove: (() => number);
-    RegisterCancelCallback: ((callback: any) => void);
+    RegisterCancelCallback: ((callback: ((arg0: boolean) => boolean)) => void);
     UnregisterCancelCallback: (() => void);
-    RegisterPauseCallback: ((callback: any) => void);
+    RegisterPauseCallback: ((callback: ((arg0: boolean, arg1: boolean) => boolean)) => void);
     UnregisterPauseCallback: (() => void);
     SetDescription: ((newDescription: string) => void);
     SetTimeDisplayMode: ((mode: UnityEditor.Progress_TimeDisplayMode) => void);
-    SetRemainingTime: ((seconds: any) => void);
+    SetRemainingTime: ((seconds: System.Int64) => void);
     SetPriority: ((priority: number) => void) | ((priority: UnityEditor.Progress_Priority) => void);
     ClearRemainingTime: (() => void);
     SetStepLabel: ((label: string) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ProjectWindowUtil {
@@ -6219,9 +6231,9 @@ export namespace UnityEditor {
     static IsFolder: ((instanceID: number) => boolean);
     static GetContainingFolder: ((path: string) => string);
     static GetBaseFolders: ((folders: string[]) => string[]);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class SearchableEditorWindow {
@@ -6264,13 +6276,13 @@ export namespace UnityEditor {
     Close: (() => void);
     Repaint: (() => void);
     SendEvent: ((e: UnityEngine.Event) => boolean);
-    GetExtraPaneTypes: (() => any);
+    GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum SearchableEditorWindow_SearchMode {
     All = 0,
@@ -6289,23 +6301,23 @@ export namespace UnityEditor {
     GetContentTabs: (() => UnityEditor.LightingExplorerTab[]);
     OnEnable: (() => void);
     OnDisable: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class LightingExplorerTab {
-    constructor(title: string, objects: any, columns: any);
-    Equals: ((obj: any) => boolean);
+    constructor(title: string, objects: ((arg0: UnityEngine.Object[]) => UnityEngine.Object[]), columns: ((arg0: UnityEditor.LightingExplorerTableColumn[]) => UnityEditor.LightingExplorerTableColumn[]));
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class LightingExplorerTableColumn {
     constructor(type: UnityEditor.LightingExplorerTableColumn_DataType, headerContent: UnityEngine.GUIContent, propertyName?: string, width?: number, onGUIDelegate?: UnityEditor.LightingExplorerTableColumn_OnGUIDelegate, compareDelegate?: UnityEditor.LightingExplorerTableColumn_ComparePropertiesDelegate, copyDelegate?: UnityEditor.LightingExplorerTableColumn_CopyPropertiesDelegate, dependencyIndices?: number[]);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum LightingExplorerTableColumn_DataType {
@@ -6318,54 +6330,54 @@ export namespace UnityEditor {
     Custom = 20,
   }
   export declare class LightingExplorerTableColumn_OnGUIDelegate {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((r: UnityEngine.Rect, prop: UnityEditor.SerializedProperty, dependencies: UnityEditor.SerializedProperty[]) => void);
-    BeginInvoke: ((r: UnityEngine.Rect, prop: UnityEditor.SerializedProperty, dependencies: UnityEditor.SerializedProperty[], callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((r: UnityEngine.Rect, prop: UnityEditor.SerializedProperty, dependencies: UnityEditor.SerializedProperty[], callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class LightingExplorerTableColumn_ComparePropertiesDelegate {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((lhs: UnityEditor.SerializedProperty, rhs: UnityEditor.SerializedProperty) => number);
-    BeginInvoke: ((lhs: UnityEditor.SerializedProperty, rhs: UnityEditor.SerializedProperty, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => number);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((lhs: UnityEditor.SerializedProperty, rhs: UnityEditor.SerializedProperty, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => number);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class LightingExplorerTableColumn_CopyPropertiesDelegate {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((target: UnityEditor.SerializedProperty, source: UnityEditor.SerializedProperty) => void);
-    BeginInvoke: ((target: UnityEditor.SerializedProperty, source: UnityEditor.SerializedProperty, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((target: UnityEditor.SerializedProperty, source: UnityEditor.SerializedProperty, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
-  export declare class ILightingExplorerExtension {
+  export interface ILightingExplorerExtension {
     GetContentTabs: (() => UnityEditor.LightingExplorerTab[]);
     OnEnable: (() => void);
     OnDisable: (() => void);
@@ -6374,9 +6386,9 @@ export namespace UnityEditor {
     OnEnable: (() => void);
     OnDisable: (() => void);
     OnInspectorGUI: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PhysicsDebugWindow {
@@ -6419,23 +6431,23 @@ export namespace UnityEditor {
     Close: (() => void);
     Repaint: (() => void);
     SendEvent: ((e: UnityEngine.Event) => boolean);
-    GetExtraPaneTypes: (() => any);
+    GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class SceneModeUtility {
-    static SearchForType: ((type: any) => void);
-    static SearchBar: ((...types: any[]) => any);
+    static SearchForType: ((type: System.Type) => void);
+    static SearchBar: ((...types: System.Type[]) => System.Type);
     static StaticFlagField: ((label: string, property: UnityEditor.SerializedProperty, flag: number) => boolean);
     static SetStaticFlags: ((targetObjects: UnityEngine.Object[], changedFlags: number, flagValue: boolean) => boolean);
     static GetObjects: ((gameObjects: UnityEngine.Object[], includeChildren: boolean) => UnityEngine.GameObject[]);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class SceneView {
@@ -6456,7 +6468,7 @@ export namespace UnityEditor {
     cameraSettings: UnityEditor.SceneView_CameraSettings;
     lastSceneViewRotation: UnityEngine.Quaternion;
     cameraDistance: number;
-    static sceneViews: any; // System.Collections.ArrayList
+    static sceneViews: System.Collections.ArrayList;
     camera: UnityEngine.Camera;
     pivot: UnityEngine.Vector3;
     rotation: UnityEngine.Quaternion;
@@ -6525,22 +6537,22 @@ export namespace UnityEditor {
     Close: (() => void);
     Repaint: (() => void);
     SendEvent: ((e: UnityEngine.Event) => boolean);
-    GetExtraPaneTypes: (() => any);
+    GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class SceneView_CameraMode {
     drawMode: UnityEditor.DrawCameraMode;
     name: string;
     section: string;
-    Equals: ((otherObject: any) => boolean);
+    Equals: ((otherObject: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class SceneView_SceneViewState {
     constructor();
@@ -6566,25 +6578,25 @@ export namespace UnityEditor {
     IsAllOn: (() => boolean);
     Toggle: ((value: boolean) => void);
     SetAllEnabled: ((value: boolean) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class SceneView_OnSceneFunc {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((sceneView: UnityEditor.SceneView) => void);
-    BeginInvoke: ((sceneView: UnityEditor.SceneView, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => void);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((sceneView: UnityEditor.SceneView, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class SceneView_CameraSettings {
@@ -6601,9 +6613,9 @@ export namespace UnityEditor {
     farClip: number;
     dynamicClip: boolean;
     occlusionCulling: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class DecoratorDrawer {
@@ -6611,27 +6623,27 @@ export namespace UnityEditor {
     OnGUI: ((position: UnityEngine.Rect) => void);
     GetHeight: (() => number);
     CanCacheInspectorGUI: (() => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class GUIDrawer {
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PropertyDrawer {
     attribute: any; // UnityEngine.PropertyAttribute
-    fieldInfo: any; // System.Reflection.FieldInfo
+    fieldInfo: System.Reflection.FieldInfo;
     OnGUI: ((position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent) => void);
     CreatePropertyGUI: ((property: UnityEditor.SerializedProperty) => UnityEngine.UIElements.VisualElement);
     GetPropertyHeight: ((property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent) => number);
     CanCacheInspectorGUI: ((property: UnityEditor.SerializedProperty) => boolean);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum SettingsScope {
@@ -6639,18 +6651,18 @@ export namespace UnityEditor {
     Project = 1,
   }
   export declare class SettingsProvider {
-    constructor(path: string, scopes: UnityEditor.SettingsScope, keywords?: any);
+    constructor(path: string, scopes: UnityEditor.SettingsScope, keywords?: System.Collections.Generic.IEnumerable<string>);
     label: string;
     settingsPath: string;
     scope: UnityEditor.SettingsScope;
-    keywords: any; // System.Collections.Generic.IEnumerable`1[System.String]
-    guiHandler: any; // System.Action`1[System.String]
-    titleBarGuiHandler: any; // System.Action
-    footerBarGuiHandler: any; // System.Action
-    activateHandler: any; // System.Action`2[System.String,UnityEngine.UIElements.VisualElement]
-    deactivateHandler: any; // System.Action
-    hasSearchInterestHandler: any; // System.Func`2[System.String,System.Boolean]
-    inspectorUpdateHandler: any; // System.Action
+    keywords: System.Collections.Generic.IEnumerable<string>;
+    guiHandler: (() => void);
+    titleBarGuiHandler: System.Action;
+    footerBarGuiHandler: System.Action;
+    activateHandler: ((arg0: string) => void);
+    deactivateHandler: System.Action;
+    hasSearchInterestHandler: ((arg0: string, arg1: boolean) => boolean);
+    inspectorUpdateHandler: System.Action;
     OnActivate: ((searchContext: string, rootElement: UnityEngine.UIElements.VisualElement) => void);
     OnDeactivate: (() => void);
     HasSearchInterest: ((searchContext: string) => boolean);
@@ -6661,9 +6673,9 @@ export namespace UnityEditor {
     Repaint: (() => void);
     static GetSearchKeywordsFromSerializedObject: ((serializedObject: UnityEditor.SerializedObject) => any);
     static GetSearchKeywordsFromPath: ((path: string) => any);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class SettingsService {
@@ -6671,26 +6683,26 @@ export namespace UnityEditor {
     static OpenUserPreferences: ((settingsPath?: string) => UnityEditor.EditorWindow);
     static NotifySettingsProviderChanged: (() => void);
     static RepaintAllSettingsWindow: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class AssetSettingsProvider {
-    constructor(settingsWindowPath: string, editorCreator: any, keywords?: any);
-    constructor(settingsWindowPath: string, settingsGetter: any);
+    constructor(settingsWindowPath: string, editorCreator: ((arg0: UnityEditor.Editor) => UnityEditor.Editor), keywords?: System.Collections.Generic.IEnumerable<string>);
+    constructor(settingsWindowPath: string, settingsGetter: ((arg0: UnityEngine.Object) => UnityEngine.Object));
     settingsEditor: UnityEditor.Editor;
     label: string;
     settingsPath: string;
     scope: UnityEditor.SettingsScope;
-    keywords: any; // System.Collections.Generic.IEnumerable`1[System.String]
-    guiHandler: any; // System.Action`1[System.String]
-    titleBarGuiHandler: any; // System.Action
-    footerBarGuiHandler: any; // System.Action
-    activateHandler: any; // System.Action`2[System.String,UnityEngine.UIElements.VisualElement]
-    deactivateHandler: any; // System.Action
-    hasSearchInterestHandler: any; // System.Func`2[System.String,System.Boolean]
-    inspectorUpdateHandler: any; // System.Action
+    keywords: System.Collections.Generic.IEnumerable<string>;
+    guiHandler: (() => void);
+    titleBarGuiHandler: System.Action;
+    footerBarGuiHandler: System.Action;
+    activateHandler: ((arg0: string) => void);
+    deactivateHandler: System.Action;
+    hasSearchInterestHandler: ((arg0: string, arg1: boolean) => boolean);
+    inspectorUpdateHandler: System.Action;
     static CreateProviderFromAssetPath: ((settingsWindowPath: string, assetPath: string, keywords?: any) => UnityEditor.AssetSettingsProvider);
     static CreateProviderFromObject: ((settingsWindowPath: string, settingsObj: UnityEngine.Object, keywords?: any) => UnityEditor.AssetSettingsProvider);
     static CreateProviderFromResourcePath: ((settingsWindowPath: string, resourcePath: string, keywords?: any) => UnityEditor.AssetSettingsProvider);
@@ -6702,9 +6714,9 @@ export namespace UnityEditor {
     HasSearchInterest: ((searchContext: string) => boolean);
     OnInspectorUpdate: (() => void);
     Repaint: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class Highlighter {
@@ -6716,9 +6728,9 @@ export namespace UnityEditor {
     static Stop: (() => void);
     static Highlight: ((windowTitle: string, text: string) => boolean) | ((windowTitle: string, text: string, mode: UnityEditor.HighlightSearchMode) => boolean);
     static HighlightIdentifier: ((position: UnityEngine.Rect, identifier: string) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum HighlightSearchMode {
@@ -6743,22 +6755,22 @@ export namespace UnityEditor {
     UpdatePrefabInstances = 11,
   }
   export declare class ObjectChangeEvents {
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ObjectChangeEvents_ObjectChangeEventsHandler {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ChangeGameObjectParentEventArgs {
@@ -6768,102 +6780,102 @@ export namespace UnityEditor {
     newParentInstanceId: number;
     previousScene: UnityEngine.SceneManagement.Scene;
     newScene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ChangeSceneEventArgs {
     constructor(scene: UnityEngine.SceneManagement.Scene);
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class CreateGameObjectHierarchyEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ChangeGameObjectStructureHierarchyEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ChangeGameObjectStructureEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ChangeGameObjectOrComponentPropertiesEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class DestroyGameObjectHierarchyEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class CreateAssetObjectEventArgs {
     constructor(guid: UnityEditor.GUID, instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     guid: UnityEditor.GUID;
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class DestroyAssetObjectEventArgs {
     constructor(guid: UnityEditor.GUID, instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     guid: UnityEditor.GUID;
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ChangeAssetObjectPropertiesEventArgs {
     constructor(guid: UnityEditor.GUID, instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     guid: UnityEditor.GUID;
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class UpdatePrefabInstancesEventArgs {
-    constructor(scene: UnityEngine.SceneManagement.Scene, instanceIds: any);
+    constructor(scene: UnityEngine.SceneManagement.Scene, instanceIds: Unity.Collections.NativeArray<number>);
     scene: UnityEngine.SceneManagement.Scene;
-    instanceIds: any; // Unity.Collections.NativeArray`1+ReadOnly[System.Int32]
-    Equals: ((obj: any) => boolean);
+    instanceIds: Unity.Collections.NativeArray<number>;
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ObjectChangeEventStream {
     length: number;
@@ -6871,37 +6883,37 @@ export namespace UnityEditor {
     GetEventType: ((eventIdx: number) => UnityEditor.ObjectChangeKind);
     Clone: ((allocator: Unity.Collections.Allocator) => UnityEditor.ObjectChangeEventStream);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ObjectChangeEventStream_Builder {
     constructor(allocator: Unity.Collections.Allocator);
     eventCount: number;
     ToStream: ((allocator: Unity.Collections.Allocator) => UnityEditor.ObjectChangeEventStream);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class UndoPropertyModification {
     keepPrefabOverride: boolean;
     previousValue: UnityEditor.PropertyModification;
     currentValue: UnityEditor.PropertyModification;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class UndoSnapshot {
     constructor(objectsToUndo: UnityEngine.Object[]);
     Restore: (() => void);
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class CloudProjectSettings {
@@ -6914,16 +6926,16 @@ export namespace UnityEditor {
     static organizationId: string;
     static organizationName: string;
     static RefreshAccessToken: ((refresh: any) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class ExpressionEvaluator {
     constructor();
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class MathUtils {
@@ -6938,10 +6950,10 @@ export namespace UnityEditor {
     static GetSquadIntermediate: ((q0: UnityEngine.Quaternion, q1: UnityEngine.Quaternion, q2: UnityEngine.Quaternion) => UnityEngine.Quaternion);
     static Ease: ((t: number, k1: number, k2: number) => number);
     static Slerp: ((p: UnityEngine.Quaternion, q: UnityEngine.Quaternion, t: number) => UnityEngine.Quaternion);
-    static IntersectRayTriangle: ((ray: UnityEngine.Ray, v0: UnityEngine.Vector3, v1: UnityEngine.Vector3, v2: UnityEngine.Vector3, bidirectional: boolean) => any);
-    Equals: ((obj: any) => boolean);
+    static IntersectRayTriangle: ((ray: UnityEngine.Ray, v0: UnityEngine.Vector3, v1: UnityEngine.Vector3, v2: UnityEngine.Vector3, bidirectional: boolean) => System.Object);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum RemoveAssetOptions {
@@ -6967,10 +6979,10 @@ export namespace UnityEditor {
     ReserializeAssetsAndMetadata = 3,
   }
   export declare class CacheServerConnectionChangedParameters {
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum AudioImporterFormat {
     Native = -1,
@@ -6994,14 +7006,14 @@ export namespace UnityEditor {
   export declare class AudioImporterSampleSettings {
     loadType: UnityEngine.AudioClipLoadType;
     sampleRateSetting: UnityEditor.AudioSampleRateSetting;
-    sampleRateOverride: any; // System.UInt32
+    sampleRateOverride: System.UInt32;
     compressionFormat: UnityEngine.AudioCompressionFormat;
     quality: number;
     conversionMode: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class AudioImporter {
     constructor();
@@ -7017,7 +7029,7 @@ export namespace UnityEditor {
     threeD: boolean;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -7031,19 +7043,19 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class MonoImporter {
     constructor();
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -7059,22 +7071,22 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class MovieImporter {
     constructor();
     quality: number;
     linearTexture: boolean;
     duration: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PluginImporter {
@@ -7084,7 +7096,7 @@ export namespace UnityEditor {
     isNativePlugin: boolean;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -7114,28 +7126,28 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class PluginImporter_IncludeInBuildDelegate {
-    constructor(object: any, method: any);
-    Method: any; // System.Reflection.MethodInfo
-    Target: any; // System.Object
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
     Invoke: ((path: string) => boolean);
-    BeginInvoke: ((path: string, callback: any, object: any) => any);
-    EndInvoke: ((result: any) => boolean);
-    GetObjectData: ((info: any, context: any) => void);
-    Equals: ((obj: any) => boolean);
+    BeginInvoke: ((path: string, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => boolean);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetInvocationList: (() => any[]);
-    DynamicInvoke: ((...args: any[]) => any);
-    Clone: (() => any);
-    GetType: (() => any);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum VideoCodec {
@@ -7183,9 +7195,9 @@ export namespace UnityEditor {
     customHeight: number;
     bitrateMode: UnityEditor.VideoBitrateMode;
     spatialQuality: UnityEditor.VideoSpatialQuality;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class VideoClipImporter {
@@ -7193,8 +7205,8 @@ export namespace UnityEditor {
     quality: number;
     linearColor: boolean;
     useLegacyImporter: boolean;
-    sourceFileSize: any; // System.UInt64
-    outputFileSize: any; // System.UInt64
+    sourceFileSize: System.UInt64;
+    outputFileSize: System.UInt64;
     frameCount: number;
     frameRate: number;
     keepAlpha: boolean;
@@ -7206,13 +7218,13 @@ export namespace UnityEditor {
     sRGBClip: boolean;
     defaultTargetSettings: UnityEditor.VideoImporterTargetSettings;
     isPlayingPreview: boolean;
-    sourceAudioTrackCount: any; // System.UInt16
+    sourceAudioTrackCount: System.UInt16;
     pixelAspectRatioNumerator: number;
     pixelAspectRatioDenominator: number;
     transcodeSkipped: boolean;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -7227,19 +7239,19 @@ export namespace UnityEditor {
     GetResizeModeName: ((mode: UnityEditor.VideoResizeMode) => string);
     GetResizeWidth: ((mode: UnityEditor.VideoResizeMode) => number);
     GetResizeHeight: ((mode: UnityEditor.VideoResizeMode) => number);
-    GetSourceAudioChannelCount: ((audioTrackIdx: any) => any);
-    GetSourceAudioSampleRate: ((audioTrackIdx: any) => any);
-    Equals: ((rhs: UnityEditor.VideoClipImporter) => boolean) | ((other: any) => boolean);
+    GetSourceAudioChannelCount: ((audioTrackIdx: System.UInt16) => System.UInt16);
+    GetSourceAudioSampleRate: ((audioTrackIdx: System.UInt16) => System.UInt32);
+    Equals: ((rhs: UnityEditor.VideoClipImporter) => boolean) | ((other: System.Object) => boolean);
     SetAssetBundleNameAndVariant: ((assetBundleName: string, assetBundleVariant: string) => void);
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum MeshOptimizationFlags {
     PolygonOrder = 1,
@@ -7254,10 +7266,10 @@ export namespace UnityEditor {
   export declare class ClipAnimationInfoCurve {
     name: string;
     curve: UnityEngine.AnimationCurve;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ModelImporterClipAnimation {
     constructor();
@@ -7288,9 +7300,9 @@ export namespace UnityEditor {
     additiveReferencePoseFrame: number;
     hasAdditiveReferencePose: boolean;
     ConfigureClipFromMask: ((mask: UnityEngine.AvatarMask) => void);
-    Equals: ((o: any) => boolean);
+    Equals: ((o: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum ModelImporterGenerateMaterials {
@@ -7408,9 +7420,9 @@ export namespace UnityEditor {
     ClearTemplate: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class TakeInfo {
     name: string;
@@ -7420,10 +7432,10 @@ export namespace UnityEditor {
     bakeStartTime: number;
     bakeStopTime: number;
     sampleRate: number;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class ModelImporter {
     constructor();
@@ -7510,7 +7522,7 @@ export namespace UnityEditor {
     autoGenerateAvatarMappingIfUnspecified: boolean;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -7523,20 +7535,20 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class EditorJsonUtility {
-    static ToJson: ((obj: any) => string) | ((obj: any, prettyPrint: boolean) => string);
-    static FromJsonOverwrite: ((json: string, objectToOverwrite: any) => void);
-    Equals: ((obj: any) => boolean);
+    static ToJson: ((obj: System.Object) => string) | ((obj: System.Object, prettyPrint: boolean) => string);
+    static FromJsonOverwrite: ((json: string, objectToOverwrite: System.Object) => void);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class L10n {
@@ -7546,21 +7558,21 @@ export namespace UnityEditor {
     static TextContentWithIcon: ((text: string, icon: UnityEngine.Texture) => UnityEngine.GUIContent) | ((text: string, iconName: string) => UnityEngine.GUIContent) | ((text: string, tooltip: string, iconName: string) => UnityEngine.GUIContent) | ((text: string, tooltip: string, icon: UnityEngine.Texture) => UnityEngine.GUIContent) | ((text: string, tooltip: string, messageType: UnityEditor.MessageType) => UnityEngine.GUIContent) | ((text: string, messageType: UnityEditor.MessageType) => UnityEngine.GUIContent);
     static IconContent: ((iconName: string, tooltip?: string) => UnityEngine.GUIContent) | ((icon: UnityEngine.Texture, tooltip?: string) => UnityEngine.GUIContent);
     static TempContent: ((t: string) => UnityEngine.GUIContent) | ((texts: string[]) => UnityEngine.GUIContent[]) | ((texts: string[], tooltips: string[]) => UnityEngine.GUIContent[]);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class LocalizationGroup {
     constructor();
     constructor(behaviour: UnityEngine.Behaviour);
-    constructor(type: any);
-    constructor(obj: any);
+    constructor(type: System.Type);
+    constructor(obj: System.Object);
     locGroupName: string;
     Dispose: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class PhysicsVisualizationSettings {
@@ -7615,9 +7627,9 @@ export namespace UnityEditor {
     static HasMouseHighlight: (() => boolean);
     static UpdateMouseHighlight: ((screenPos: UnityEngine.Vector2) => void);
     static SetShowForAllFilters: ((selected: boolean) => void) | ((filterWorkflow: UnityEditor.PhysicsVisualizationSettings_FilterWorkflow, selected: boolean) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum PhysicsVisualizationSettings_FilterWorkflow {
@@ -7631,12 +7643,12 @@ export namespace UnityEditor {
   export declare class NetworkDetailStats {
     constructor();
     static NewProfilerTick: ((newTime: number) => void);
-    static SetStat: ((direction: UnityEditor.NetworkDetailStats_NetworkDirection, msgId: any, entryName: string, amount: number) => void);
-    static IncrementStat: ((direction: UnityEditor.NetworkDetailStats_NetworkDirection, msgId: any, entryName: string, amount: number) => void);
+    static SetStat: ((direction: UnityEditor.NetworkDetailStats_NetworkDirection, msgId: System.Int16, entryName: string, amount: number) => void);
+    static IncrementStat: ((direction: UnityEditor.NetworkDetailStats_NetworkDirection, msgId: System.Int16, entryName: string, amount: number) => void);
     static ResetAll: (() => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum NetworkDetailStats_NetworkDirection {
@@ -7653,18 +7665,18 @@ export namespace UnityEditor {
     nearPlane: number;
     farPlane: number;
     isPerspective: boolean;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class SketchUpImportScene {
     camera: UnityEditor.SketchUpImportCamera;
     name: string;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class SketchUpImporter {
     constructor();
@@ -7754,7 +7766,7 @@ export namespace UnityEditor {
     autoGenerateAvatarMappingIfUnspecified: boolean;
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -7769,13 +7781,13 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class TerrainLayerInspector {
     constructor();
@@ -7807,11 +7819,11 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
-  export declare class ITerrainLayerCustomUI {
+  export interface ITerrainLayerCustomUI {
     OnTerrainLayerGUI: ((terrainLayer: any, terrain: any) => boolean);
   }
   export declare class TerrainLayerUtility {
@@ -7821,9 +7833,9 @@ export namespace UnityEditor {
     static ValidateNormalMapTextureUI: ((texture: UnityEngine.Texture2D, normalMapTextureType: boolean) => void);
     static ValidateMaskMapTextureUI: ((texture: UnityEngine.Texture2D) => void);
     static TilingSettingsUI: ((terrainLayer: any) => void) | ((tileSize: UnityEditor.SerializedProperty, tileOffset: UnityEditor.SerializedProperty) => void);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export enum FontTextureCase {
@@ -7861,7 +7873,7 @@ export namespace UnityEditor {
     fontNames: string[];
     assetPath: string;
     importSettingsMissing: boolean;
-    assetTimeStamp: any; // System.UInt64
+    assetTimeStamp: System.UInt64;
     userData: string;
     assetBundleName: string;
     assetBundleVariant: string;
@@ -7872,13 +7884,13 @@ export namespace UnityEditor {
     SaveAndReimport: (() => void);
     AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
     RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-    GetExternalObjectMap: (() => any);
-    SupportsRemappedAssetType: ((type: any) => boolean);
+    GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+    SupportsRemappedAssetType: ((type: System.Type) => boolean);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export declare class GridPalette {
     constructor();
@@ -7890,9 +7902,9 @@ export namespace UnityEditor {
     SetDirty: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
-    Equals: ((other: any) => boolean);
+    Equals: ((other: System.Object) => boolean);
     ToString: (() => string);
-    GetType: (() => any);
+    GetType: (() => System.Type);
   }
   export enum GridPalette_CellSizing {
     Automatic = 0,
@@ -7901,25 +7913,25 @@ export namespace UnityEditor {
   export declare class EditorAnalytics {
     static enabled: boolean;
     static RegisterEventWithLimit: ((eventName: string, maxEventPerHour: number, maxItems: number, vendorKey: string) => UnityEngine.Analytics.AnalyticsResult) | ((eventName: string, maxEventPerHour: number, maxItems: number, vendorKey: string, ver: number) => UnityEngine.Analytics.AnalyticsResult);
-    static SendEventWithLimit: ((eventName: string, parameters: any) => UnityEngine.Analytics.AnalyticsResult) | ((eventName: string, parameters: any, ver: number) => UnityEngine.Analytics.AnalyticsResult);
+    static SendEventWithLimit: ((eventName: string, parameters: System.Object) => UnityEngine.Analytics.AnalyticsResult) | ((eventName: string, parameters: System.Object, ver: number) => UnityEngine.Analytics.AnalyticsResult);
     static SetEventWithLimitEndPoint: ((eventName: string, endPoint: string, ver: number) => UnityEngine.Analytics.AnalyticsResult);
     static SetEventWithLimitPriority: ((eventName: string, eventPriority: UnityEngine.Analytics.AnalyticsEventPriority, ver: number) => UnityEngine.Analytics.AnalyticsResult);
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export declare class EditorAnalyticsSessionInfo {
-    static id: any; // System.Int64
-    static sessionCount: any; // System.Int64
-    static elapsedTime: any; // System.Int64
-    static focusedElapsedTime: any; // System.Int64
-    static playbackElapsedTime: any; // System.Int64
-    static activeElapsedTime: any; // System.Int64
+    static id: System.Int64;
+    static sessionCount: System.Int64;
+    static elapsedTime: System.Int64;
+    static focusedElapsedTime: System.Int64;
+    static playbackElapsedTime: System.Int64;
+    static activeElapsedTime: System.Int64;
     static userId: string;
-    Equals: ((obj: any) => boolean);
+    Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
+    GetType: (() => System.Type);
     ToString: (() => string);
   }
   export namespace Advertisements {
@@ -7933,9 +7945,9 @@ export namespace UnityEditor {
       static SetPlatformEnabled: ((platform: UnityEngine.RuntimePlatform, value: boolean) => void);
       static GetPlatformGameId: ((platformName: string) => string);
       static SetPlatformGameId: ((platformName: string, gameId: string) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -7945,9 +7957,9 @@ export namespace UnityEditor {
       static OpenAreaSettings: (() => void);
       static DrawAgentDiagram: ((rect: UnityEngine.Rect, agentRadius: number, agentHeight: number, agentClimb: number, agentSlope: number) => void);
       static DrawBuildDebug: ((navMeshData: UnityEngine.AI.NavMeshData) => void) | ((navMeshData: UnityEngine.AI.NavMeshData, flags: UnityEngine.AI.NavMeshBuildDebugFlags) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class NavMeshBuilder {
@@ -7959,18 +7971,18 @@ export namespace UnityEditor {
       static ClearAllNavMeshes: (() => void);
       static Cancel: (() => void);
       static BuildNavMeshForMultipleScenes: ((paths: string[]) => void);
-      static CollectSourcesInStage: ((includedWorldBounds: UnityEngine.Bounds, includedLayerMask: number, geometry: UnityEngine.AI.NavMeshCollectGeometry, defaultArea: number, markups: any, stageProxy: UnityEngine.SceneManagement.Scene, results: any) => void) | ((root: UnityEngine.Transform, includedLayerMask: number, geometry: UnityEngine.AI.NavMeshCollectGeometry, defaultArea: number, markups: any, stageProxy: UnityEngine.SceneManagement.Scene, results: any) => void);
-      Equals: ((obj: any) => boolean);
+      static CollectSourcesInStage: ((includedWorldBounds: UnityEngine.Bounds, includedLayerMask: number, geometry: UnityEngine.AI.NavMeshCollectGeometry, defaultArea: number, markups: UnityEngine.AI.NavMeshBuildMarkup[], stageProxy: UnityEngine.SceneManagement.Scene, results: UnityEngine.AI.NavMeshBuildSource[]) => void) | ((root: UnityEngine.Transform, includedLayerMask: number, geometry: UnityEngine.AI.NavMeshCollectGeometry, defaultArea: number, markups: UnityEngine.AI.NavMeshBuildMarkup[], stageProxy: UnityEngine.SceneManagement.Scene, results: UnityEngine.AI.NavMeshBuildSource[]) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class NavMeshVisualizationSettings {
       constructor();
       static showNavigation: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -7982,41 +7994,63 @@ export namespace UnityEditor {
       static deviceStatsEnabledInBuild: boolean;
       static eventUrl: string;
       static configUrl: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AnalyticsSettings_RequireInBuildDelegate {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: (() => boolean);
-      BeginInvoke: ((callback: any, object: any) => any);
-      EndInvoke: ((result: any) => boolean);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => boolean);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class PerformanceReportingSettings {
       static enabled: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
   export namespace Android {
-    export declare class IPostGenerateGradleAndroidProject {
+    export interface IPostGenerateGradleAndroidProject {
       OnPostGenerateGradleAndroidProject: ((path: string) => void);
     }
   }
   export namespace AnimatedValues {
+    export declare class BaseAnimValueNonAlloc<T = any> {
+      isAnimating: boolean;
+      target: T;
+      value: T;
+      speed: number;
+      valueChanged: UnityEngine.Events.UnityEvent;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class BaseAnimValue<T = any> {
+      isAnimating: boolean;
+      target: T;
+      value: T;
+      speed: number;
+      valueChanged: UnityEngine.Events.UnityEvent;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
     export declare class AnimFloat {
       constructor(value: number);
       constructor(value: number, callback: UnityEngine.Events.UnityAction);
@@ -8025,9 +8059,9 @@ export namespace UnityEditor {
       value: number;
       speed: number;
       valueChanged: UnityEngine.Events.UnityEvent;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AnimVector3 {
@@ -8039,9 +8073,9 @@ export namespace UnityEditor {
       value: UnityEngine.Vector3;
       speed: number;
       valueChanged: UnityEngine.Events.UnityEvent;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AnimBool {
@@ -8056,9 +8090,9 @@ export namespace UnityEditor {
       speed: number;
       valueChanged: UnityEngine.Events.UnityEvent;
       Fade: ((from: number, to: number) => number);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AnimQuaternion {
@@ -8069,9 +8103,9 @@ export namespace UnityEditor {
       value: UnityEngine.Quaternion;
       speed: number;
       valueChanged: UnityEngine.Events.UnityEvent;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -8088,7 +8122,7 @@ export namespace UnityEditor {
       MakeUniqueLayerName: ((name: string) => string);
       static FindStateMachineBehaviourContext: ((behaviour: UnityEngine.StateMachineBehaviour) => UnityEditor.Animations.StateMachineBehaviourContext[]);
       static CreateStateMachineBehaviour: ((script: UnityEditor.MonoScript) => number);
-      AddEffectiveStateMachineBehaviour: ((stateMachineBehaviourType: any, state: UnityEditor.Animations.AnimatorState, layerIndex: number) => UnityEngine.StateMachineBehaviour);
+      AddEffectiveStateMachineBehaviour: ((stateMachineBehaviourType: System.Type, state: UnityEditor.Animations.AnimatorState, layerIndex: number) => UnityEngine.StateMachineBehaviour);
       AddLayer: ((name: string) => void) | ((layer: UnityEditor.Animations.AnimatorControllerLayer) => void);
       RemoveLayer: ((index: number) => void);
       AddParameter: ((name: string, type: UnityEngine.AnimatorControllerParameterType) => void) | ((paramater: UnityEngine.AnimatorControllerParameter) => void);
@@ -8103,9 +8137,9 @@ export namespace UnityEditor {
       GetStateEffectiveBehaviours: ((state: UnityEditor.Animations.AnimatorState, layerIndex: number) => UnityEngine.StateMachineBehaviour[]);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum AnimatorLayerBlendingMode {
       Override = 0,
@@ -8125,9 +8159,9 @@ export namespace UnityEditor {
       SetOverrideMotion: ((state: UnityEditor.Animations.AnimatorState, motion: UnityEngine.Motion) => void);
       GetOverrideBehaviours: ((state: UnityEditor.Animations.AnimatorState) => UnityEngine.StateMachineBehaviour[]);
       SetOverrideBehaviours: ((state: UnityEditor.Animations.AnimatorState, behaviours: UnityEngine.StateMachineBehaviour[]) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum BlendTreeType {
@@ -8145,10 +8179,10 @@ export namespace UnityEditor {
       cycleOffset: number;
       directBlendParameter: string;
       mirror: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class BlendTree {
       constructor();
@@ -8175,9 +8209,9 @@ export namespace UnityEditor {
       ValidateIfRetargetable: ((val: boolean) => boolean);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum AnimatorConditionMode {
       If = 1,
@@ -8198,10 +8232,10 @@ export namespace UnityEditor {
       mode: UnityEditor.Animations.AnimatorConditionMode;
       parameter: string;
       threshold: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AnimatorTransitionBase {
       solo: boolean;
@@ -8217,9 +8251,9 @@ export namespace UnityEditor {
       RemoveCondition: ((condition: UnityEditor.Animations.AnimatorCondition) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AnimatorTransition {
       constructor();
@@ -8236,9 +8270,9 @@ export namespace UnityEditor {
       RemoveCondition: ((condition: UnityEditor.Animations.AnimatorCondition) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AnimatorStateTransition {
       constructor();
@@ -8263,9 +8297,9 @@ export namespace UnityEditor {
       RemoveCondition: ((condition: UnityEditor.Animations.AnimatorCondition) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AnimatorState {
       constructor();
@@ -8291,32 +8325,32 @@ export namespace UnityEditor {
       uniqueNameHash: number;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      AddStateMachineBehaviour: ((stateMachineBehaviourType: any) => UnityEngine.StateMachineBehaviour);
+      AddStateMachineBehaviour: ((stateMachineBehaviourType: System.Type) => UnityEngine.StateMachineBehaviour);
       AddTransition: ((transition: UnityEditor.Animations.AnimatorStateTransition) => void) | ((destinationState: UnityEditor.Animations.AnimatorState) => UnityEditor.Animations.AnimatorStateTransition) | ((destinationStateMachine: UnityEditor.Animations.AnimatorStateMachine) => UnityEditor.Animations.AnimatorStateTransition) | ((destinationState: UnityEditor.Animations.AnimatorState, defaultExitTime: boolean) => UnityEditor.Animations.AnimatorStateTransition) | ((destinationStateMachine: UnityEditor.Animations.AnimatorStateMachine, defaultExitTime: boolean) => UnityEditor.Animations.AnimatorStateTransition);
       RemoveTransition: ((transition: UnityEditor.Animations.AnimatorStateTransition) => void);
       AddExitTransition: (() => UnityEditor.Animations.AnimatorStateTransition) | ((defaultExitTime: boolean) => UnityEditor.Animations.AnimatorStateTransition);
       GetMotion: (() => UnityEngine.Motion);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ChildAnimatorState {
       state: UnityEditor.Animations.AnimatorState;
       position: UnityEngine.Vector3;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ChildAnimatorStateMachine {
       stateMachine: UnityEditor.Animations.AnimatorStateMachine;
       position: UnityEngine.Vector3;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AnimatorStateMachine {
       constructor();
@@ -8334,7 +8368,7 @@ export namespace UnityEditor {
       hideFlags: UnityEngine.HideFlags;
       GetStateMachineTransitions: ((sourceStateMachine: UnityEditor.Animations.AnimatorStateMachine) => UnityEditor.Animations.AnimatorTransition[]);
       SetStateMachineTransitions: ((sourceStateMachine: UnityEditor.Animations.AnimatorStateMachine, transitions: UnityEditor.Animations.AnimatorTransition[]) => void);
-      AddStateMachineBehaviour: ((stateMachineBehaviourType: any) => UnityEngine.StateMachineBehaviour);
+      AddStateMachineBehaviour: ((stateMachineBehaviourType: System.Type) => UnityEngine.StateMachineBehaviour);
       MakeUniqueStateName: ((name: string) => string);
       MakeUniqueStateMachineName: ((name: string) => string);
       AddState: ((name: string) => UnityEditor.Animations.AnimatorState) | ((name: string, position: UnityEngine.Vector3) => UnityEditor.Animations.AnimatorState) | ((state: UnityEditor.Animations.AnimatorState, position: UnityEngine.Vector3) => void);
@@ -8350,18 +8384,18 @@ export namespace UnityEditor {
       RemoveEntryTransition: ((transition: UnityEditor.Animations.AnimatorTransition) => boolean);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class StateMachineBehaviourContext {
       constructor();
       animatorController: UnityEditor.Animations.AnimatorController;
       animatorObject: UnityEngine.Object;
       layerIndex: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class CurveFilterOptions {
@@ -8371,10 +8405,10 @@ export namespace UnityEditor {
       floatError: number;
       keyframeReduction: boolean;
       unrollRotation: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class GameObjectRecorder {
       constructor(root: UnityEngine.GameObject);
@@ -8384,19 +8418,19 @@ export namespace UnityEditor {
       isRecording: boolean;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      BindComponentsOfType: ((target: UnityEngine.GameObject, componentType: any, recursive: boolean) => void);
+      BindComponentsOfType: ((target: UnityEngine.GameObject, componentType: System.Type, recursive: boolean) => void);
       Bind: ((binding: UnityEditor.EditorCurveBinding) => void);
       BindAll: ((target: UnityEngine.GameObject, recursive: boolean) => void);
-      BindComponent: ((component: UnityEngine.Component) => void) | ((target: UnityEngine.GameObject, componentType: any, recursive: boolean) => void);
+      BindComponent: ((component: UnityEngine.Component) => void) | ((target: UnityEngine.GameObject, componentType: System.Type, recursive: boolean) => void);
       GetBindings: (() => UnityEditor.EditorCurveBinding[]);
       TakeSnapshot: ((dt: number) => void);
       SaveToClip: ((clip: UnityEngine.AnimationClip) => void) | ((clip: UnityEngine.AnimationClip, fps: number) => void) | ((clip: UnityEngine.AnimationClip, fps: number, filterOptions: UnityEditor.Animations.CurveFilterOptions) => void);
       ResetRecording: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace AssetImporters {
@@ -8407,15 +8441,15 @@ export namespace UnityEditor {
       GetResultPath: ((extension: string) => string);
       SetMainObject: ((obj: UnityEngine.Object) => void);
       AddObjectToAsset: ((identifier: string, obj: UnityEngine.Object) => void) | ((identifier: string, obj: UnityEngine.Object, thumbnail: UnityEngine.Texture2D) => void);
-      GetObjects: ((objects: any) => void);
+      GetObjects: ((objects: UnityEngine.Object[]) => void);
       DependsOnSourceAsset: ((path: string) => void) | ((guid: UnityEditor.GUID) => void);
       DependsOnArtifact: ((key: UnityEditor.Experimental.ArtifactKey) => void) | ((guid: UnityEditor.GUID) => void) | ((path: string) => void);
       DependsOnCustomDependency: ((dependency: string) => void);
       LogImportError: ((msg: string, obj?: UnityEngine.Object) => void);
       LogImportWarning: ((msg: string, obj?: UnityEngine.Object) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class TexturePropertyDescription {
@@ -8424,24 +8458,24 @@ export namespace UnityEditor {
       texture: UnityEngine.Texture;
       relativePath: string;
       path: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class MaterialDescription {
       constructor();
       materialName: string;
       Dispose: (() => void);
-      GetVector4PropertyNames: ((names: any) => void);
-      GetFloatPropertyNames: ((names: any) => void);
-      GetTexturePropertyNames: ((names: any) => void);
-      GetStringPropertyNames: ((names: any) => void);
+      GetVector4PropertyNames: ((names: string[]) => void);
+      GetFloatPropertyNames: ((names: string[]) => void);
+      GetTexturePropertyNames: ((names: string[]) => void);
+      GetStringPropertyNames: ((names: string[]) => void);
       HasAnimationCurveInClip: ((clipName: string, propertyName: string) => boolean);
       HasAnimationCurve: ((propertyName: string) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SpriteImportData {
@@ -8450,13 +8484,13 @@ export namespace UnityEditor {
       alignment: UnityEngine.SpriteAlignment;
       pivot: UnityEngine.Vector2;
       border: UnityEngine.Vector4;
-      outline: any; // System.Collections.Generic.List`1[UnityEngine.Vector2[]]
+      outline: UnityEngine.Vector2[][];
       tessellationDetail: number;
       spriteID: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class TextureGenerationOutput {
       texture: UnityEngine.Texture2D;
@@ -8464,10 +8498,10 @@ export namespace UnityEditor {
       importWarnings: string[];
       thumbNail: UnityEngine.Texture2D;
       sprites: UnityEngine.Sprite[];
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class SourceTextureInformation {
       constructor();
@@ -8475,9 +8509,9 @@ export namespace UnityEditor {
       height: number;
       containsAlpha: boolean;
       hdr: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class TextureGenerationSettings {
@@ -8491,16 +8525,16 @@ export namespace UnityEditor {
       spriteImportData: UnityEditor.AssetImporters.SpriteImportData[];
       spritePackingTag: string;
       secondarySpriteTextures: UnityEngine.SecondarySpriteTexture[];
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class TextureGenerator {
       static GenerateTexture: ((settings: UnityEditor.AssetImporters.TextureGenerationSettings, colorBuffer: any) => UnityEditor.AssetImporters.TextureGenerationOutput);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class FBXMaterialDescriptionPreprocessor {
@@ -8509,14 +8543,14 @@ export namespace UnityEditor {
       context: UnityEditor.AssetImporters.AssetImportContext;
       assetImporter: UnityEditor.AssetImporter;
       preview: UnityEngine.Texture2D;
-      GetVersion: (() => any);
+      GetVersion: (() => System.UInt32);
       GetPostprocessOrder: (() => number);
       OnPreprocessMaterialDescription: ((description: UnityEditor.AssetImporters.MaterialDescription, material: UnityEngine.Material, clips: UnityEngine.AnimationClip[]) => void);
       LogWarning: ((warning: string) => void) | ((warning: string, context: UnityEngine.Object) => void);
       LogError: ((warning: string) => void) | ((warning: string, context: UnityEngine.Object) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SketchupMaterialDescriptionPreprocessor {
@@ -8525,14 +8559,14 @@ export namespace UnityEditor {
       context: UnityEditor.AssetImporters.AssetImportContext;
       assetImporter: UnityEditor.AssetImporter;
       preview: UnityEngine.Texture2D;
-      GetVersion: (() => any);
+      GetVersion: (() => System.UInt32);
       GetPostprocessOrder: (() => number);
       OnPreprocessMaterialDescription: ((description: UnityEditor.AssetImporters.MaterialDescription, material: UnityEngine.Material, clips: UnityEngine.AnimationClip[]) => void);
       LogWarning: ((warning: string) => void) | ((warning: string, context: UnityEngine.Object) => void);
       LogError: ((warning: string) => void) | ((warning: string, context: UnityEngine.Object) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ThreeDSMaterialDescriptionPreprocessor {
@@ -8541,14 +8575,14 @@ export namespace UnityEditor {
       context: UnityEditor.AssetImporters.AssetImportContext;
       assetImporter: UnityEditor.AssetImporter;
       preview: UnityEngine.Texture2D;
-      GetVersion: (() => any);
+      GetVersion: (() => System.UInt32);
       GetPostprocessOrder: (() => number);
       OnPreprocessMaterialDescription: ((description: UnityEditor.AssetImporters.MaterialDescription, material: UnityEngine.Material, clips: UnityEngine.AnimationClip[]) => void);
       LogWarning: ((warning: string) => void) | ((warning: string, context: UnityEngine.Object) => void);
       LogError: ((warning: string) => void) | ((warning: string, context: UnityEngine.Object) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AssetImporterEditor {
@@ -8583,9 +8617,9 @@ export namespace UnityEditor {
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ScriptedImporterEditor {
       constructor();
@@ -8620,31 +8654,31 @@ export namespace UnityEditor {
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ScriptedImporter {
       assetPath: string;
       importSettingsMissing: boolean;
-      assetTimeStamp: any; // System.UInt64
+      assetTimeStamp: System.UInt64;
       userData: string;
       assetBundleName: string;
       assetBundleVariant: string;
       name: string;
       hideFlags: UnityEngine.HideFlags;
       OnImportAsset: ((ctx: UnityEditor.AssetImporters.AssetImportContext) => void);
-      SupportsRemappedAssetType: ((type: any) => boolean) | ((type: any) => boolean);
+      SupportsRemappedAssetType: ((type: System.Type) => boolean) | ((type: System.Type) => boolean);
       SetAssetBundleNameAndVariant: ((assetBundleName: string, assetBundleVariant: string) => void);
       SaveAndReimport: (() => void);
       AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
       RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-      GetExternalObjectMap: (() => any);
+      GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace Audio {
@@ -8653,115 +8687,115 @@ export namespace UnityEditor {
       SetFloatParameter: ((name: string, value: number) => boolean);
       GetSampleRate: (() => number);
       IsPluginEditableAndEnabled: (() => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
   export namespace Build {
     export declare class BuildFailedException {
       constructor(message: string);
-      constructor(innerException: any);
+      constructor(innerException: System.Exception);
       Message: string;
-      Data: any; // System.Collections.IDictionary
-      InnerException: any; // System.Exception
-      TargetSite: any; // System.Reflection.MethodBase
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
       StackTrace: string;
       HelpLink: string;
       Source: string;
       HResult: number;
-      GetBaseException: (() => any);
+      GetBaseException: (() => System.Exception);
       ToString: (() => string);
-      GetObjectData: ((info: any, context: any) => void);
-      GetType: (() => any) | (() => any);
-      Equals: ((obj: any) => boolean);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
     }
-    export declare class IOrderedCallback {
+    export interface IOrderedCallback {
       callbackOrder: number;
     }
-    export declare class IPreprocessBuild {
+    export interface IPreprocessBuild {
       OnPreprocessBuild: ((target: UnityEditor.BuildTarget, path: string) => void);
     }
-    export declare class IPreprocessBuildWithReport {
+    export interface IPreprocessBuildWithReport {
       OnPreprocessBuild: ((report: UnityEditor.Build.Reporting.BuildReport) => void);
     }
-    export declare class IFilterBuildAssemblies {
+    export interface IFilterBuildAssemblies {
       OnFilterAssemblies: ((buildOptions: UnityEditor.BuildOptions, assemblies: string[]) => string[]);
     }
-    export declare class IPostprocessBuild {
+    export interface IPostprocessBuild {
       OnPostprocessBuild: ((target: UnityEditor.BuildTarget, path: string) => void);
     }
-    export declare class IPostprocessBuildWithReport {
+    export interface IPostprocessBuildWithReport {
       OnPostprocessBuild: ((report: UnityEditor.Build.Reporting.BuildReport) => void);
     }
-    export declare class IPostBuildPlayerScriptDLLs {
+    export interface IPostBuildPlayerScriptDLLs {
       OnPostBuildPlayerScriptDLLs: ((report: UnityEditor.Build.Reporting.BuildReport) => void);
     }
-    export declare class IProcessScene {
+    export interface IProcessScene {
       OnProcessScene: ((scene: UnityEngine.SceneManagement.Scene) => void);
     }
-    export declare class IProcessSceneWithReport {
+    export interface IProcessSceneWithReport {
       OnProcessScene: ((scene: UnityEngine.SceneManagement.Scene, report: UnityEditor.Build.Reporting.BuildReport) => void);
     }
-    export declare class IActiveBuildTargetChanged {
+    export interface IActiveBuildTargetChanged {
       OnActiveBuildTargetChanged: ((previousTarget: UnityEditor.BuildTarget, newTarget: UnityEditor.BuildTarget) => void);
     }
-    export declare class IPreprocessShaders {
-      OnProcessShader: ((shader: UnityEngine.Shader, snippet: UnityEditor.Rendering.ShaderSnippetData, data: any) => void);
+    export interface IPreprocessShaders {
+      OnProcessShader: ((shader: UnityEngine.Shader, snippet: UnityEditor.Rendering.ShaderSnippetData, data: System.Collections.Generic.IList<UnityEditor.Rendering.ShaderCompilerData>) => void);
     }
-    export declare class IPreprocessComputeShaders {
-      OnProcessComputeShader: ((shader: UnityEngine.ComputeShader, kernelName: string, data: any) => void);
+    export interface IPreprocessComputeShaders {
+      OnProcessComputeShader: ((shader: UnityEngine.ComputeShader, kernelName: string, data: System.Collections.Generic.IList<UnityEditor.Rendering.ShaderCompilerData>) => void);
     }
-    export declare class IUnityLinkerProcessor {
+    export interface IUnityLinkerProcessor {
       GenerateAdditionalLinkXmlFile: ((report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.UnityLinker.UnityLinkerBuildPipelineData) => string);
       OnBeforeRun: ((report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.UnityLinker.UnityLinkerBuildPipelineData) => void);
       OnAfterRun: ((report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.UnityLinker.UnityLinkerBuildPipelineData) => void);
     }
-    export declare class IIl2CppProcessor {
+    export interface IIl2CppProcessor {
       OnBeforeConvertRun: ((report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.Il2Cpp.Il2CppBuildPipelineData) => void);
     }
     export namespace Content {
       export declare class SerializedLocation {
         fileName: string;
-        offset: any; // System.UInt64
-        size: any; // System.UInt64
-        Equals: ((obj: any) => boolean);
+        offset: System.UInt64;
+        size: System.UInt64;
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class ObjectSerializedInfo {
         serializedObject: UnityEditor.Build.Content.ObjectIdentifier;
         header: UnityEditor.Build.Content.SerializedLocation;
         rawData: UnityEditor.Build.Content.SerializedLocation;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class WriteResult {
-        serializedObjects: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.Build.Content.ObjectSerializedInfo]
-        resourceFiles: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.Build.Content.ResourceFile]
-        includedTypes: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[System.Type]
-        includedSerializeReferenceFQN: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[System.String]
-        Equals: ((obj: any) => boolean);
+        serializedObjects: UnityEditor.Build.Content.ObjectSerializedInfo[];
+        resourceFiles: UnityEditor.Build.Content.ResourceFile[];
+        includedTypes: System.Type[];
+        includedSerializeReferenceFQN: string[];
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class BuildReferenceMap {
         constructor();
         Dispose: (() => void);
         GetHash128: (() => UnityEngine.Hash128);
-        AddMapping: ((internalFileName: string, serializationIndex: any, objectID: UnityEditor.Build.Content.ObjectIdentifier, overwrite?: boolean) => void);
+        AddMapping: ((internalFileName: string, serializationIndex: System.Int64, objectID: UnityEditor.Build.Content.ObjectIdentifier, overwrite?: boolean) => void);
         AddMappings: ((internalFileName: string, objectIDs: UnityEditor.Build.Content.SerializationInfo[], overwrite?: boolean) => void);
         FilterToSubset: ((objectIds: UnityEditor.Build.Content.ObjectIdentifier[]) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetObjectData: ((info: any, context: any) => void);
-        GetType: (() => any);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum ContentBuildFlags {
@@ -8775,24 +8809,24 @@ export namespace UnityEditor {
         target: UnityEditor.BuildTarget;
         group: UnityEditor.BuildTargetGroup;
         buildFlags: UnityEditor.Build.Content.ContentBuildFlags;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class BuildUsageCache {
         constructor();
         Dispose: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class BuildUsageTagGlobal {
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class BuildUsageTagSet {
         constructor();
@@ -8801,10 +8835,10 @@ export namespace UnityEditor {
         GetObjectIdentifiers: (() => UnityEditor.Build.Content.ObjectIdentifier[]);
         UnionWith: ((other: UnityEditor.Build.Content.BuildUsageTagSet) => void);
         FilterToSubset: ((objectIds: UnityEditor.Build.Content.ObjectIdentifier[]) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetObjectData: ((info: any, context: any) => void);
-        GetType: (() => any);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum DependencyType {
@@ -8825,18 +8859,18 @@ export namespace UnityEditor {
         static GetPlayerDependenciesForObjects: ((objectIDs: UnityEditor.Build.Content.ObjectIdentifier[], target: UnityEditor.BuildTarget, typeDB: UnityEditor.Build.Player.TypeDB) => UnityEditor.Build.Content.ObjectIdentifier[]) | ((objectIDs: UnityEditor.Build.Content.ObjectIdentifier[], target: UnityEditor.BuildTarget, typeDB: UnityEditor.Build.Player.TypeDB, mode: UnityEditor.Build.Content.DependencyType) => UnityEditor.Build.Content.ObjectIdentifier[]) | ((objects: UnityEngine.Object[], target: UnityEditor.BuildTarget, typeDB: UnityEditor.Build.Player.TypeDB) => UnityEditor.Build.Content.ObjectIdentifier[]) | ((objects: UnityEngine.Object[], target: UnityEditor.BuildTarget, typeDB: UnityEditor.Build.Player.TypeDB, mode: UnityEditor.Build.Content.DependencyType) => UnityEditor.Build.Content.ObjectIdentifier[]);
         static GetPlayerAssetRepresentations: ((asset: UnityEditor.GUID, target: UnityEditor.BuildTarget) => UnityEditor.Build.Content.ObjectIdentifier[]);
         static CalculateBuildUsageTags: ((objectIDs: UnityEditor.Build.Content.ObjectIdentifier[], dependentObjectIDs: UnityEditor.Build.Content.ObjectIdentifier[], globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal, usageSet: UnityEditor.Build.Content.BuildUsageTagSet) => void) | ((objectIDs: UnityEditor.Build.Content.ObjectIdentifier[], dependentObjectIDs: UnityEditor.Build.Content.ObjectIdentifier[], globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, usageCache: UnityEditor.Build.Content.BuildUsageCache) => void);
-        static GetTypeForObject: ((objectID: UnityEditor.Build.Content.ObjectIdentifier) => any);
-        static GetTypeForObjects: ((objectIDs: UnityEditor.Build.Content.ObjectIdentifier[]) => any[]);
+        static GetTypeForObject: ((objectID: UnityEditor.Build.Content.ObjectIdentifier) => System.Type);
+        static GetTypeForObjects: ((objectIDs: UnityEditor.Build.Content.ObjectIdentifier[]) => System.Type[]);
         static WriteSerializedFile: ((outputFolder: string, parameters: UnityEditor.Build.Content.WriteParameters) => UnityEditor.Build.Content.WriteResult) | ((outputFolder: string, writeCommand: UnityEditor.Build.Content.WriteCommand, settings: UnityEditor.Build.Content.BuildSettings, globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, referenceMap: UnityEditor.Build.Content.BuildReferenceMap) => UnityEditor.Build.Content.WriteResult) | ((outputFolder: string, writeCommand: UnityEditor.Build.Content.WriteCommand, settings: UnityEditor.Build.Content.BuildSettings, globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, referenceMap: UnityEditor.Build.Content.BuildReferenceMap, bundleInfo: UnityEditor.Build.Content.AssetBundleInfo) => UnityEditor.Build.Content.WriteResult);
         static WriteSceneSerializedFile: ((outputFolder: string, parameters: UnityEditor.Build.Content.WriteSceneParameters) => UnityEditor.Build.Content.WriteResult) | ((outputFolder: string, scenePath: string, processedScene: string, writeCommand: UnityEditor.Build.Content.WriteCommand, settings: UnityEditor.Build.Content.BuildSettings, globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, referenceMap: UnityEditor.Build.Content.BuildReferenceMap) => UnityEditor.Build.Content.WriteResult) | ((outputFolder: string, scenePath: string, processedScene: string, writeCommand: UnityEditor.Build.Content.WriteCommand, settings: UnityEditor.Build.Content.BuildSettings, globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, referenceMap: UnityEditor.Build.Content.BuildReferenceMap, preloadInfo: UnityEditor.Build.Content.PreloadInfo) => UnityEditor.Build.Content.WriteResult) | ((outputFolder: string, scenePath: string, processedScene: string, writeCommand: UnityEditor.Build.Content.WriteCommand, settings: UnityEditor.Build.Content.BuildSettings, globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, referenceMap: UnityEditor.Build.Content.BuildReferenceMap, preloadInfo: UnityEditor.Build.Content.PreloadInfo, sceneBundleInfo: UnityEditor.Build.Content.SceneBundleInfo) => UnityEditor.Build.Content.WriteResult);
         static WriteGameManagersSerializedFile: ((outputFolder: string, parameters: UnityEditor.Build.Content.WriteManagerParameters) => UnityEditor.Build.Content.WriteResult);
-        static ArchiveAndCompress: ((resourceFiles: UnityEditor.Build.Content.ResourceFile[], outputBundlePath: string, compression: UnityEngine.BuildCompression) => any) | ((resourceFiles: UnityEditor.Build.Content.ResourceFile[], outputBundlePath: string, compression: UnityEngine.BuildCompression, stripUnityVersion: boolean) => any);
+        static ArchiveAndCompress: ((resourceFiles: UnityEditor.Build.Content.ResourceFile[], outputBundlePath: string, compression: UnityEngine.BuildCompression) => System.UInt32) | ((resourceFiles: UnityEditor.Build.Content.ResourceFile[], outputBundlePath: string, compression: UnityEngine.BuildCompression, stripUnityVersion: boolean) => System.UInt32);
         static StartProfileCapture: ((options: UnityEditor.Build.Content.ProfileCaptureOptions) => void);
         static StopProfileCapture: (() => UnityEditor.Build.Content.ContentBuildProfileEvent[]);
         static PrepareScene: ((scenePath: string, settings: UnityEditor.Build.Content.BuildSettings, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, outputFolder: string) => UnityEditor.Build.Content.SceneDependencyInfo) | ((scenePath: string, settings: UnityEditor.Build.Content.BuildSettings, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, usageCache: UnityEditor.Build.Content.BuildUsageCache, outputFolder: string) => UnityEditor.Build.Content.SceneDependencyInfo);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum CompressionType {
@@ -8857,10 +8891,10 @@ export namespace UnityEditor {
         static DefaultUncompressed: UnityEditor.Build.Content.BuildCompression;
         static DefaultLZ4: UnityEditor.Build.Content.BuildCompression;
         static DefaultLZMA: UnityEditor.Build.Content.BuildCompression;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export enum ProfileEventType {
         Begin = 0,
@@ -8872,23 +8906,23 @@ export namespace UnityEditor {
         IgnoreShortEvents = 1,
       }
       export declare class ContentBuildProfileEvent {
-        TimeMicroseconds: any; // System.UInt64
+        TimeMicroseconds: System.UInt64;
         Name: string;
         Metadata: string;
         Type: UnityEditor.Build.Content.ProfileEventType;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class GameManagerDependencyInfo {
-        managerObjects: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.Build.Content.ObjectIdentifier]
-        referencedObjects: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.Build.Content.ObjectIdentifier]
-        includedTypes: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[System.Type]
-        Equals: ((obj: any) => boolean);
+        managerObjects: UnityEditor.Build.Content.ObjectIdentifier[];
+        referencedObjects: UnityEditor.Build.Content.ObjectIdentifier[];
+        includedTypes: System.Type[];
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export enum FileType {
         NonAssetType = 0,
@@ -8898,62 +8932,62 @@ export namespace UnityEditor {
       }
       export declare class ObjectIdentifier {
         guid: UnityEditor.GUID;
-        localIdentifierInFile: any; // System.Int64
+        localIdentifierInFile: System.Int64;
         fileType: UnityEditor.Build.Content.FileType;
         filePath: string;
         ToString: (() => string);
-        Equals: ((obj: any) => boolean) | ((other: UnityEditor.Build.Content.ObjectIdentifier) => boolean);
+        Equals: ((obj: System.Object) => boolean) | ((other: UnityEditor.Build.Content.ObjectIdentifier) => boolean);
         GetHashCode: (() => number);
         static ToObject: ((objectId: UnityEditor.Build.Content.ObjectIdentifier) => UnityEngine.Object);
         static ToInstanceID: ((objectId: UnityEditor.Build.Content.ObjectIdentifier) => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class ResourceFile {
         fileName: string;
         fileAlias: string;
         serializedFile: boolean;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class SceneDependencyInfo {
         scene: string;
         processedScene: string;
-        referencedObjects: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.Build.Content.ObjectIdentifier]
-        includedTypes: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[System.Type]
+        referencedObjects: UnityEditor.Build.Content.ObjectIdentifier[];
+        includedTypes: System.Type[];
         globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class PreloadInfo {
         constructor();
-        preloadObjects: any; // System.Collections.Generic.List`1[UnityEditor.Build.Content.ObjectIdentifier]
-        Equals: ((obj: any) => boolean);
+        preloadObjects: UnityEditor.Build.Content.ObjectIdentifier[];
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class AssetLoadInfo {
         constructor();
         asset: UnityEditor.GUID;
         address: string;
-        includedObjects: any; // System.Collections.Generic.List`1[UnityEditor.Build.Content.ObjectIdentifier]
-        referencedObjects: any; // System.Collections.Generic.List`1[UnityEditor.Build.Content.ObjectIdentifier]
-        Equals: ((obj: any) => boolean);
+        includedObjects: UnityEditor.Build.Content.ObjectIdentifier[];
+        referencedObjects: UnityEditor.Build.Content.ObjectIdentifier[];
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class AssetBundleInfo {
         constructor();
         bundleName: string;
-        bundleAssets: any; // System.Collections.Generic.List`1[UnityEditor.Build.Content.AssetLoadInfo]
-        Equals: ((obj: any) => boolean);
+        bundleAssets: UnityEditor.Build.Content.AssetLoadInfo[];
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class SceneLoadInfo {
@@ -8961,37 +8995,37 @@ export namespace UnityEditor {
         asset: UnityEditor.GUID;
         address: string;
         internalName: string;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class SceneBundleInfo {
         constructor();
         bundleName: string;
-        bundleScenes: any; // System.Collections.Generic.List`1[UnityEditor.Build.Content.SceneLoadInfo]
-        Equals: ((obj: any) => boolean);
+        bundleScenes: UnityEditor.Build.Content.SceneLoadInfo[];
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class SerializationInfo {
         constructor();
         serializationObject: UnityEditor.Build.Content.ObjectIdentifier;
-        serializationIndex: any; // System.Int64
-        Equals: ((obj: any) => boolean);
+        serializationIndex: System.Int64;
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class WriteCommand {
         constructor();
         fileName: string;
         internalName: string;
-        serializeObjects: any; // System.Collections.Generic.List`1[UnityEditor.Build.Content.SerializationInfo]
-        Equals: ((obj: any) => boolean);
+        serializeObjects: UnityEditor.Build.Content.SerializationInfo[];
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class WriteParameters {
@@ -9002,10 +9036,10 @@ export namespace UnityEditor {
         referenceMap: UnityEditor.Build.Content.BuildReferenceMap;
         bundleInfo: UnityEditor.Build.Content.AssetBundleInfo;
         preloadInfo: UnityEditor.Build.Content.PreloadInfo;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class WriteSceneParameters {
         scenePath: string;
@@ -9016,19 +9050,19 @@ export namespace UnityEditor {
         referenceMap: UnityEditor.Build.Content.BuildReferenceMap;
         preloadInfo: UnityEditor.Build.Content.PreloadInfo;
         sceneBundleInfo: UnityEditor.Build.Content.SceneBundleInfo;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class WriteManagerParameters {
         settings: UnityEditor.Build.Content.BuildSettings;
         globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal;
         referenceMap: UnityEditor.Build.Content.BuildReferenceMap;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
     }
     export namespace Player {
@@ -9042,53 +9076,53 @@ export namespace UnityEditor {
         group: UnityEditor.BuildTargetGroup;
         options: UnityEditor.Build.Player.ScriptCompilationOptions;
         extraScriptingDefines: string[];
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class ScriptCompilationResult {
-        assemblies: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[System.String]
+        assemblies: string[];
         typeDB: UnityEditor.Build.Player.TypeDB;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class PlayerBuildInterface {
         static ExtraTypesProvider: any; // System.Func`1[System.Collections.Generic.IEnumerable`1[System.String]]
         static CompilePlayerScripts: ((input: UnityEditor.Build.Player.ScriptCompilationSettings, outputFolder: string) => UnityEditor.Build.Player.ScriptCompilationResult);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class TypeDbHelper {
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class TypeDB {
         Dispose: (() => void);
         GetHash128: (() => UnityEngine.Hash128);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetObjectData: ((info: any, context: any) => void);
-        GetType: (() => any);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
     export namespace Reporting {
       export declare class BuildFile {
-        id: any; // System.UInt32
+        id: System.UInt32;
         path: string;
         role: string;
-        size: any; // System.UInt64
+        size: System.UInt64;
         ToString: (() => string);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class BuildReport {
         files: UnityEditor.Build.Reporting.BuildFile[];
@@ -9101,9 +9135,9 @@ export namespace UnityEditor {
         hideFlags: UnityEngine.HideFlags;
         GetInstanceID: (() => number);
         GetHashCode: (() => number);
-        Equals: ((other: any) => boolean);
+        Equals: ((other: System.Object) => boolean);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export enum BuildResult {
         Unknown = 0,
@@ -9113,39 +9147,39 @@ export namespace UnityEditor {
       }
       export declare class BuildStep {
         name: string;
-        duration: any; // System.TimeSpan
+        duration: System.TimeSpan;
         messages: UnityEditor.Build.Reporting.BuildStepMessage[];
         depth: number;
         ToString: (() => string);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class BuildStepMessage {
         type: UnityEngine.LogType;
         content: string;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class BuildSummary {
-        buildStartedAt: any; // System.DateTime
+        buildStartedAt: System.DateTime;
         guid: UnityEditor.GUID;
         platform: UnityEditor.BuildTarget;
         platformGroup: UnityEditor.BuildTargetGroup;
         options: UnityEditor.BuildOptions;
         outputPath: string;
-        totalSize: any; // System.UInt64
-        totalTime: any; // System.TimeSpan
-        buildEndedAt: any; // System.DateTime
+        totalSize: System.UInt64;
+        totalTime: System.TimeSpan;
+        buildEndedAt: System.DateTime;
         totalErrors: number;
         totalWarnings: number;
         result: UnityEditor.Build.Reporting.BuildResult;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class CommonRoles {
         static scene: string;
@@ -9170,44 +9204,44 @@ export namespace UnityEditor {
         static globalGameManagers: string;
         static crashHandler: string;
         static engineLibrary: string;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class PackedAssetInfo {
-        id: any; // System.Int64
-        type: any; // System.Type
-        packedSize: any; // System.UInt64
-        offset: any; // System.UInt64
+        id: System.Int64;
+        type: System.Type;
+        packedSize: System.UInt64;
+        offset: System.UInt64;
         sourceAssetGUID: UnityEditor.GUID;
         sourceAssetPath: string;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class PackedAssets {
         constructor();
-        file: any; // System.UInt32
+        file: System.UInt32;
         shortPath: string;
-        overhead: any; // System.UInt64
+        overhead: System.UInt64;
         contents: UnityEditor.Build.Reporting.PackedAssetInfo[];
         name: string;
         hideFlags: UnityEngine.HideFlags;
         GetInstanceID: (() => number);
         GetHashCode: (() => number);
-        Equals: ((other: any) => boolean);
+        Equals: ((other: System.Object) => boolean);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class ScenesUsingAsset {
         assetPath: string;
         scenePaths: string[];
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class ScenesUsingAssets {
         constructor();
@@ -9216,22 +9250,22 @@ export namespace UnityEditor {
         hideFlags: UnityEngine.HideFlags;
         GetInstanceID: (() => number);
         GetHashCode: (() => number);
-        Equals: ((other: any) => boolean);
+        Equals: ((other: System.Object) => boolean);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class StrippingInfo {
         constructor();
-        includedModules: any; // System.Collections.Generic.IEnumerable`1[System.String]
+        includedModules: System.Collections.Generic.IEnumerable<string>;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        GetReasonsForIncluding: ((entityName: string) => any);
+        GetReasonsForIncluding: ((entityName: string) => System.Collections.Generic.IEnumerable<string>);
         SetDirty: (() => void);
         GetInstanceID: (() => number);
         GetHashCode: (() => number);
-        Equals: ((other: any) => boolean);
+        Equals: ((other: System.Object) => boolean);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
     }
   }
@@ -9257,9 +9291,9 @@ export namespace UnityEditor {
       static GetPrecompiledAssemblyPaths: ((precompiledAssemblySources: UnityEditor.Compilation.CompilationPipeline_PrecompiledAssemblySources) => string[]);
       static GetPrecompiledAssemblyPathFromAssemblyName: ((assemblyName: string) => string);
       static RequestScriptCompilation: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum CompilationPipeline_PrecompiledAssemblySources {
@@ -9300,45 +9334,45 @@ export namespace UnityEditor {
       defaultDefines: string[];
       status: UnityEditor.Compilation.AssemblyBuilderStatus;
       Build: (() => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AssemblyDefinitionException {
       constructor(message: string, ...filePaths: string[]);
       filePaths: string[];
       Message: string;
-      Data: any; // System.Collections.IDictionary
-      InnerException: any; // System.Exception
-      TargetSite: any; // System.Reflection.MethodBase
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
       StackTrace: string;
       HelpLink: string;
       Source: string;
       HResult: number;
-      GetBaseException: (() => any);
+      GetBaseException: (() => System.Exception);
       ToString: (() => string);
-      GetObjectData: ((info: any, context: any) => void);
-      GetType: (() => any) | (() => any);
-      Equals: ((obj: any) => boolean);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
     }
     export declare class PrecompiledAssemblyException {
       constructor(message: string, ...filePaths: string[]);
       filePaths: string[];
       Message: string;
-      Data: any; // System.Collections.IDictionary
-      InnerException: any; // System.Exception
-      TargetSite: any; // System.Reflection.MethodBase
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
       StackTrace: string;
       HelpLink: string;
       Source: string;
       HResult: number;
-      GetBaseException: (() => any);
+      GetBaseException: (() => System.Exception);
       ToString: (() => string);
-      GetObjectData: ((info: any, context: any) => void);
-      GetType: (() => any) | (() => any);
-      Equals: ((obj: any) => boolean);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
     }
     export enum AssemblyFlags {
@@ -9356,9 +9390,9 @@ export namespace UnityEditor {
       ApiCompatibilityLevel: UnityEditor.ApiCompatibilityLevel;
       ResponseFiles: string[];
       LanguageVersion: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum AssembliesType {
@@ -9389,9 +9423,9 @@ export namespace UnityEditor {
       flags: UnityEditor.Compilation.AssemblyFlags;
       compilerOptions: UnityEditor.Compilation.ScriptCompilerOptions;
       allReferences: string[];
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ResponseFileData {
@@ -9401,19 +9435,19 @@ export namespace UnityEditor {
       Errors: string[];
       OtherArguments: string[];
       Unsafe: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AssemblyDefinitionPlatform {
       Name: string;
       DisplayName: string;
       BuildTarget: UnityEditor.BuildTarget;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum CompilerMessageType {
       Error = 0,
@@ -9425,46 +9459,46 @@ export namespace UnityEditor {
       line: number;
       column: number;
       type: UnityEditor.Compilation.CompilerMessageType;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace Connect {
     export declare class UnityOAuth {
       static GetAuthorizationCodeAsync: ((clientId: string, callback: any) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class UnityOAuth_AuthCodeResponse {
       AuthCode: string;
-      Exception: any; // System.Exception
-      Equals: ((obj: any) => boolean);
+      Exception: System.Exception;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace CrashReporting {
     export declare class CrashReportingSettings {
       static enabled: boolean;
       static captureEditorExceptions: boolean;
-      static logBufferSize: any; // System.UInt32
-      Equals: ((obj: any) => boolean);
+      static logBufferSize: System.UInt32;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
   export namespace EditorTools {
-    export declare class IDrawSelectedHandles {
+    export interface IDrawSelectedHandles {
       OnDrawHandles: (() => void);
     }
     export declare class EditorTool {
-      targets: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.Object]
+      targets: System.Collections.Generic.IEnumerable<UnityEngine.Object>;
       target: UnityEngine.Object;
       toolbarIcon: UnityEngine.GUIContent;
       name: string;
@@ -9476,56 +9510,56 @@ export namespace UnityEditor {
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class EditorToolContext {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       OnToolGUI: ((window: UnityEditor.EditorWindow) => void);
-      ResolveTool: ((tool: UnityEditor.Tool) => any);
+      ResolveTool: ((tool: UnityEditor.Tool) => System.Type);
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class EditorTools {
-      static activeToolType: any; // System.Type
-      static SetActiveTool: ((type: any) => void) | ((tool: UnityEditor.EditorTools.EditorTool) => void);
+      static activeToolType: System.Type;
+      static SetActiveTool: ((type: System.Type) => void) | ((tool: UnityEditor.EditorTools.EditorTool) => void);
       static RestorePreviousTool: (() => void);
       static RestorePreviousPersistentTool: (() => void);
       static IsActiveTool: ((tool: UnityEditor.EditorTools.EditorTool) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class GameObjectToolContext {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       OnToolGUI: ((window: UnityEditor.EditorWindow) => void);
-      ResolveTool: ((tool: UnityEditor.Tool) => any);
+      ResolveTool: ((tool: UnityEditor.Tool) => System.Type);
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ToolManager {
-      static activeContextType: any; // System.Type
-      static activeToolType: any; // System.Type
-      static SetActiveContext: ((context: any) => void);
-      static SetActiveTool: ((type: any) => void) | ((tool: UnityEditor.EditorTools.EditorTool) => void);
+      static activeContextType: System.Type;
+      static activeToolType: System.Type;
+      static SetActiveContext: ((context: System.Type) => void);
+      static SetActiveTool: ((type: System.Type) => void) | ((tool: UnityEditor.EditorTools.EditorTool) => void);
       static RestorePreviousTool: (() => void);
       static RestorePreviousPersistentTool: (() => void);
       static IsActiveTool: ((tool: UnityEditor.EditorTools.EditorTool) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -9545,18 +9579,18 @@ export namespace UnityEditor {
       static RegisterBoolPersistentListener: ((unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: any, argument: boolean) => void);
       static AddStringPersistentListener: ((unityEvent: UnityEngine.Events.UnityEventBase, call: any, argument: string) => void);
       static RegisterStringPersistentListener: ((unityEvent: UnityEngine.Events.UnityEventBase, index: number, call: any, argument: string) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
   export namespace Experimental {
     export declare class BuildPipelineExperimental {
       static GetSessionIdForBuildTarget: ((target: UnityEditor.BuildTarget) => string);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorResources {
@@ -9574,14 +9608,14 @@ export namespace UnityEditor {
       static editorDefaultResourcesPath: string;
       static libraryBundlePath: string;
       static dataPath: string;
-      static Load: ((assetPath: string, type: any) => UnityEngine.Object);
+      static Load: ((assetPath: string, type: System.Type) => UnityEngine.Object);
       static GetAssetPath: ((obj: UnityEngine.Object) => string);
       static ExpandPath: ((path: string) => string);
       static GetFullPath: ((path: string) => string);
       static Exists: ((path: string) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AssetDatabaseExperimental {
@@ -9590,39 +9624,39 @@ export namespace UnityEditor {
       static ActiveOnDemandMode: UnityEditor.Experimental.AssetDatabaseExperimental_OnDemandMode;
       static ClearImporterOverride: ((path: string) => void);
       static IsCacheServerEnabled: (() => boolean);
-      static GetImporterOverride: ((path: string) => any);
-      static GetAvailableImporterTypes: ((path: string) => any[]);
-      static CanConnectToCacheServer: ((ip: string, port: any) => boolean);
+      static GetImporterOverride: ((path: string) => System.Type);
+      static GetAvailableImporterTypes: ((path: string) => System.Type[]);
+      static CanConnectToCacheServer: ((ip: string, port: System.UInt16) => boolean);
       static RefreshSettings: (() => void);
       static IsConnectedToCacheServer: (() => boolean);
       static GetCacheServerAddress: (() => string);
-      static GetCacheServerPort: (() => any);
+      static GetCacheServerPort: (() => System.UInt16);
       static GetCacheServerNamespacePrefix: (() => string);
       static GetCacheServerEnableDownload: (() => boolean);
       static GetCacheServerEnableUpload: (() => boolean);
       static IsDirectoryMonitoringEnabled: (() => boolean);
       static RegisterCustomDependency: ((dependency: string, hashOfValue: UnityEngine.Hash128) => void);
-      static UnregisterCustomDependencyPrefixFilter: ((prefixFilter: string) => any);
+      static UnregisterCustomDependencyPrefixFilter: ((prefixFilter: string) => System.UInt32);
       static IsAssetImportWorkerProcess: (() => boolean);
       static ReconnectToCacheServer: (() => void);
       static LookupArtifact: ((artifactKey: UnityEditor.Experimental.ArtifactKey) => UnityEditor.Experimental.ArtifactID);
       static ProduceArtifact: ((artifactKey: UnityEditor.Experimental.ArtifactKey) => UnityEditor.Experimental.ArtifactID);
       static ProduceArtifactAsync: ((artifactKey: UnityEditor.Experimental.ArtifactKey) => UnityEditor.Experimental.ArtifactID);
-      static ProduceArtifactsAsync: ((artifactKey: UnityEditor.GUID[], importerType?: any) => UnityEditor.Experimental.ArtifactID[]);
+      static ProduceArtifactsAsync: ((artifactKey: UnityEditor.GUID[], importerType?: System.Type) => UnityEditor.Experimental.ArtifactID[]);
       static ForceProduceArtifact: ((artifactKey: UnityEditor.Experimental.ArtifactKey) => UnityEditor.Experimental.ArtifactID);
-      static GetArtifactHash: ((guid: string, mode?: UnityEditor.Experimental.AssetDatabaseExperimental_ImportSyncMode) => UnityEngine.Hash128) | ((guid: string, importerType: any, mode?: UnityEditor.Experimental.AssetDatabaseExperimental_ImportSyncMode) => UnityEngine.Hash128);
+      static GetArtifactHash: ((guid: string, mode?: UnityEditor.Experimental.AssetDatabaseExperimental_ImportSyncMode) => UnityEngine.Hash128) | ((guid: string, importerType: System.Type, mode?: UnityEditor.Experimental.AssetDatabaseExperimental_ImportSyncMode) => UnityEngine.Hash128);
       static GetArtifactHashes: ((guids: string[], mode?: UnityEditor.Experimental.AssetDatabaseExperimental_ImportSyncMode) => UnityEngine.Hash128[]);
-      static GetOnDemandArtifactProgress: ((artifactKey: UnityEditor.Experimental.ArtifactKey) => UnityEditor.Experimental.OnDemandProgress) | ((guid: string) => UnityEditor.Experimental.OnDemandProgress) | ((guid: string, importerType: any) => UnityEditor.Experimental.OnDemandProgress);
-      Equals: ((obj: any) => boolean);
+      static GetOnDemandArtifactProgress: ((artifactKey: UnityEditor.Experimental.ArtifactKey) => UnityEditor.Experimental.OnDemandProgress) | ((guid: string) => UnityEditor.Experimental.OnDemandProgress) | ((guid: string, importerType: System.Type) => UnityEditor.Experimental.OnDemandProgress);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AssetDatabaseExperimental_CacheServerConnectionChangedParameters {
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum AssetDatabaseExperimental_OnDemandMode {
       Off = 0,
@@ -9638,18 +9672,18 @@ export namespace UnityEditor {
       cacheServer: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_CacheServerCounters;
       import: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_ImportCounters;
       ResetDeltas: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AssetDatabaseExperimental_AssetDatabaseCounters_Counter {
-      total: any; // System.Int64
-      delta: any; // System.Int64
-      Equals: ((obj: any) => boolean);
+      total: System.Int64;
+      delta: System.Int64;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AssetDatabaseExperimental_AssetDatabaseCounters_CacheServerCounters {
       metadataRequested: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
@@ -9667,10 +9701,10 @@ export namespace UnityEditor {
       artifactFilesFailedToUpload: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
       connects: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
       disconnects: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AssetDatabaseExperimental_AssetDatabaseCounters_ImportCounters {
       imported: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
@@ -9678,25 +9712,25 @@ export namespace UnityEditor {
       importedOutOfProcess: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
       refresh: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
       domainReload: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AssetMoveInfo {
       constructor(sourceAssetPath: string, destinationAssetPath: string);
       sourceAssetPath: string;
       destinationAssetPath: string;
-      Equals: ((other: UnityEditor.Experimental.AssetMoveInfo) => boolean) | ((obj: any) => boolean);
+      Equals: ((other: UnityEditor.Experimental.AssetMoveInfo) => boolean) | ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AssetsModifiedProcessor {
-      assetsReportedChanged: any; // System.Collections.Generic.HashSet`1[System.String]
-      Equals: ((obj: any) => boolean);
+      assetsReportedChanged: System.Collections.Generic.HashSet<string>;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Lightmapping {
@@ -9709,9 +9743,9 @@ export namespace UnityEditor {
       static Bake: ((targetScene: UnityEngine.SceneManagement.Scene) => boolean);
       static GetAdditionalBakedProbes: ((id: number, outBakedProbeSH: any, outBakedProbeValidity: any) => boolean) | ((id: number, outBakedProbeSH: any, outBakedProbeValidity: any, outBakedProbeOctahedralDepth: any) => boolean);
       static SetAdditionalBakedProbes: ((id: number, positions: UnityEngine.Vector3[]) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum OnDemandState {
@@ -9723,30 +9757,30 @@ export namespace UnityEditor {
     }
     export declare class ArtifactKey {
       constructor(g: UnityEditor.GUID);
-      constructor(guid: UnityEditor.GUID, importerType: any);
+      constructor(guid: UnityEditor.GUID, importerType: System.Type);
       isValid: boolean;
       guid: UnityEditor.GUID;
-      importerType: any; // System.Type
-      Equals: ((obj: any) => boolean);
+      importerType: System.Type;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ArtifactID {
       isValid: boolean;
       value: UnityEngine.Hash128;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class OnDemandProgress {
       state: UnityEditor.Experimental.OnDemandState;
       progress: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export namespace Build {
       export namespace AssetBundle {
@@ -9768,10 +9802,10 @@ export namespace UnityEditor {
           static DefaultUncompressed: UnityEditor.Experimental.Build.AssetBundle.BuildCompression;
           static DefaultLZ4: UnityEditor.Experimental.Build.AssetBundle.BuildCompression;
           static DefaultLZMA: UnityEditor.Experimental.Build.AssetBundle.BuildCompression;
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
-          GetType: (() => any);
+          GetType: (() => System.Type);
         }
       }
     }
@@ -9779,14 +9813,14 @@ export namespace UnityEditor {
       export declare class LicensingUtility {
         static HasEntitlement: ((entitlement: string) => boolean);
         static HasEntitlements: ((entitlements: string[]) => string[]);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
     export namespace Rendering {
-      export declare class IScriptableBakedReflectionSystem {
+      export interface IScriptableBakedReflectionSystem {
         stageCount: number;
         stateHashes: UnityEngine.Hash128[];
         Tick: ((sceneStateHash: UnityEditor.Experimental.Rendering.SceneStateHash, handle: UnityEditor.Experimental.Rendering.IScriptableBakedReflectionSystemStageNotifier) => void);
@@ -9795,7 +9829,7 @@ export namespace UnityEditor {
         Cancel: (() => void);
         BakeAllReflectionProbes: (() => boolean);
       }
-      export declare class IScriptableBakedReflectionSystemStageNotifier {
+      export interface IScriptableBakedReflectionSystemStageNotifier {
         EnterStage: ((stage: number, progressMessage: string, progress: number) => void);
         ExitStage: ((stage: number) => void);
         SetIsDone: ((isDone: boolean) => void);
@@ -9805,10 +9839,10 @@ export namespace UnityEditor {
         sceneObjectsHash: UnityEngine.Hash128;
         skySettingsHash: UnityEngine.Hash128;
         ambientProbeHash: UnityEngine.Hash128;
-        Equals: ((other: UnityEditor.Experimental.Rendering.SceneStateHash) => boolean) | ((obj: any) => boolean);
+        Equals: ((other: UnityEditor.Experimental.Rendering.SceneStateHash) => boolean) | ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class ScriptableBakedReflectionSystem {
         stageCount: number;
@@ -9818,16 +9852,16 @@ export namespace UnityEditor {
         Clear: (() => void);
         Cancel: (() => void);
         BakeAllReflectionProbes: (() => boolean);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class ScriptableBakedReflectionSystemSettings {
         static system: UnityEditor.Experimental.Rendering.IScriptableBakedReflectionSystem;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
@@ -9835,22 +9869,22 @@ export namespace UnityEditor {
       export declare class PlayerDataFileLocator {
         constructor();
         static Register: ((locator: UnityEditor.Experimental.RestService.PlayerDataFileLocator_Locator) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class PlayerDataFileLocator_Locator {
-        constructor(object: any, method: any);
-        Method: any; // System.Reflection.MethodInfo
-        Target: any; // System.Object
-        GetObjectData: ((info: any, context: any) => void);
-        Equals: ((obj: any) => boolean);
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any[]);
-        DynamicInvoke: ((...args: any[]) => any);
-        Clone: (() => any);
-        GetType: (() => any);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
@@ -9866,15 +9900,15 @@ export namespace UnityEditor {
         stageHandle: UnityEditor.SceneManagement.StageHandle;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        GetCombinedSceneCullingMaskForCamera: (() => any);
+        GetCombinedSceneCullingMaskForCamera: (() => System.UInt64);
         IsPartOfPrefabContents: ((gameObject: UnityEngine.GameObject) => boolean);
         ClearDirtiness: (() => void);
         SetDirty: (() => void);
         GetInstanceID: (() => number);
         GetHashCode: (() => number);
-        Equals: ((other: any) => boolean);
+        Equals: ((other: System.Object) => boolean);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export enum PrefabStage_Mode {
         InIsolation = 0,
@@ -9884,17 +9918,17 @@ export namespace UnityEditor {
         constructor();
         static GetCurrentPrefabStage: (() => UnityEditor.Experimental.SceneManagement.PrefabStage);
         static GetPrefabStage: ((gameObject: UnityEngine.GameObject) => UnityEditor.Experimental.SceneManagement.PrefabStage);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
     export namespace TerrainAPI {
       export declare class TerrainToolShortcutContext {
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum BrushGUIEditFlags {
@@ -9909,7 +9943,7 @@ export namespace UnityEditor {
         UI = 1,
         Scene = 2,
       }
-      export declare class IOnPaint {
+      export interface IOnPaint {
         brushTexture: UnityEngine.Texture;
         uv: UnityEngine.Vector2;
         brushStrength: number;
@@ -9919,7 +9953,7 @@ export namespace UnityEditor {
         RepaintAllInspectors: (() => void);
         Repaint: ((flags?: UnityEditor.Experimental.TerrainAPI.RepaintFlags) => void);
       }
-      export declare class IOnSceneGUI {
+      export interface IOnSceneGUI {
         sceneView: UnityEditor.SceneView;
         brushTexture: UnityEngine.Texture;
         brushStrength: number;
@@ -9928,17 +9962,36 @@ export namespace UnityEditor {
         raycastHit: any; // UnityEngine.RaycastHit
         Repaint: ((flags?: UnityEditor.Experimental.TerrainAPI.RepaintFlags) => void);
       }
-      export declare class IOnInspectorGUI {
+      export interface IOnInspectorGUI {
         ShowBrushesGUI: ((spacing: number) => void) | ((spacing: number, flags: UnityEditor.Experimental.TerrainAPI.BrushGUIEditFlags) => void) | ((spacing: number, flags: UnityEditor.Experimental.TerrainAPI.BrushGUIEditFlags, textureResolutionPerTile: number) => void);
         Repaint: ((flags?: UnityEditor.Experimental.TerrainAPI.RepaintFlags) => void);
+      }
+      export declare class TerrainPaintTool<T = any> {
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        GetName: (() => string);
+        GetDesc: (() => string);
+        OnEnable: (() => void);
+        OnDisable: (() => void);
+        OnEnterToolMode: (() => void);
+        OnExitToolMode: (() => void);
+        OnSceneGUI: ((terrain: any, editContext: UnityEditor.Experimental.TerrainAPI.IOnSceneGUI) => void);
+        OnInspectorGUI: ((terrain: any, editContext: UnityEditor.Experimental.TerrainAPI.IOnInspectorGUI) => void);
+        OnPaint: ((terrain: any, editContext: UnityEditor.Experimental.TerrainAPI.IOnPaint) => boolean);
+        SetDirty: (() => void);
+        GetInstanceID: (() => number);
+        GetHashCode: (() => number);
+        Equals: ((other: System.Object) => boolean);
+        ToString: (() => string);
+        GetType: (() => System.Type);
       }
       export declare class TerrainPaintUtilityEditor {
         static ShowDefaultPreviewBrush: ((terrain: any, brushTexture: UnityEngine.Texture, brushSize: number) => void);
         static GetDefaultBrushPreviewMaterial: (() => UnityEngine.Material);
         static DrawBrushPreview: ((heightmapPC: any, previewTexture: UnityEditor.Experimental.TerrainAPI.TerrainPaintUtilityEditor_BrushPreview, brushTexture: UnityEngine.Texture, brushXform: any, proceduralMaterial: UnityEngine.Material, materialPassIndex: number) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum TerrainPaintUtilityEditor_BrushPreview {
@@ -9955,32 +10008,32 @@ export namespace UnityEditor {
       udid: string;
       name: string;
       ToString: (() => string);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class Usb {
       constructor();
       static OnDevicesChanged: ((devices: UnityEditor.Hardware.UsbDevice[]) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Usb_OnDevicesChangedHandler {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((devices: UnityEditor.Hardware.UsbDevice[]) => void);
-      BeginInvoke: ((devices: UnityEditor.Hardware.UsbDevice[], callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((devices: UnityEditor.Hardware.UsbDevice[], callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum DevDeviceState {
@@ -10003,33 +10056,33 @@ export namespace UnityEditor {
       state: UnityEditor.Hardware.DevDeviceState;
       features: UnityEditor.Hardware.DevDeviceFeatures;
       ToString: (() => string);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class DevDeviceList {
       constructor();
       static OnChanged: (() => void);
       static GetDevices: (() => UnityEditor.Hardware.DevDevice[]);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class DevDeviceList_OnChangedHandler {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: (() => void);
-      BeginInvoke: ((callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -10038,9 +10091,9 @@ export namespace UnityEditor {
       constructor(target: UnityEditor.BuildTarget, inputDirectory: string);
       target: UnityEditor.BuildTarget;
       inputDirectory: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -10064,9 +10117,9 @@ export namespace UnityEditor {
         SetColorWithoutRadiusHandle: ((color: UnityEngine.Color, fillColorAlpha: number) => void);
         SetColorWithRadiusHandle: ((color: UnityEngine.Color, fillColorAlpha: number) => void);
         DrawHandle: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class JointAngularLimitHandle {
@@ -10092,9 +10145,9 @@ export namespace UnityEditor {
         angleHandleDrawFunction: UnityEditor.Handles_CapFunction;
         angleHandleSizeFunction: UnityEditor.Handles_SizeFunction;
         DrawHandle: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class BoxBoundsHandle {
@@ -10109,9 +10162,9 @@ export namespace UnityEditor {
         midpointHandleSizeFunction: UnityEditor.Handles_SizeFunction;
         SetColor: ((color: UnityEngine.Color) => void);
         DrawHandle: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class CapsuleBoundsHandle {
@@ -10128,9 +10181,9 @@ export namespace UnityEditor {
         midpointHandleSizeFunction: UnityEditor.Handles_SizeFunction;
         SetColor: ((color: UnityEngine.Color) => void);
         DrawHandle: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum CapsuleBoundsHandle_HeightAxis {
@@ -10150,9 +10203,9 @@ export namespace UnityEditor {
         static DefaultMidpointHandleSizeFunction: ((position: UnityEngine.Vector3) => number);
         SetColor: ((color: UnityEngine.Color) => void);
         DrawHandle: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum PrimitiveBoundsHandle_Axes {
@@ -10174,9 +10227,9 @@ export namespace UnityEditor {
         midpointHandleSizeFunction: UnityEditor.Handles_SizeFunction;
         SetColor: ((color: UnityEngine.Color) => void);
         DrawHandle: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class SearchField {
@@ -10187,25 +10240,25 @@ export namespace UnityEditor {
         HasFocus: (() => boolean);
         OnGUI: ((rect: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle, cancelButtonStyle: UnityEngine.GUIStyle, emptyCancelButtonStyle: UnityEngine.GUIStyle) => string) | ((rect: UnityEngine.Rect, text: string) => string) | ((text: string, ...options: UnityEngine.GUILayoutOption[]) => string);
         OnToolbarGUI: ((rect: UnityEngine.Rect, text: string) => string) | ((text: string, ...options: UnityEngine.GUILayoutOption[]) => string);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class SearchField_SearchFieldCallback {
-        constructor(object: any, method: any);
-        Method: any; // System.Reflection.MethodInfo
-        Target: any; // System.Object
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
         Invoke: (() => void);
-        BeginInvoke: ((callback: any, object: any) => any);
-        EndInvoke: ((result: any) => void);
-        GetObjectData: ((info: any, context: any) => void);
-        Equals: ((obj: any) => boolean);
+        BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any[]);
-        DynamicInvoke: ((...args: any[]) => any);
-        Clone: (() => any);
-        GetType: (() => any);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class MultiColumnHeader {
@@ -10226,34 +10279,34 @@ export namespace UnityEditor {
         ResizeToFit: (() => void);
         OnGUI: ((rect: UnityEngine.Rect, xScroll: number) => void);
         Repaint: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class MultiColumnHeader_HeaderCallback {
-        constructor(object: any, method: any);
-        Method: any; // System.Reflection.MethodInfo
-        Target: any; // System.Object
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
         Invoke: ((multiColumnHeader: UnityEditor.IMGUI.Controls.MultiColumnHeader) => void);
-        BeginInvoke: ((multiColumnHeader: UnityEditor.IMGUI.Controls.MultiColumnHeader, callback: any, object: any) => any);
-        EndInvoke: ((result: any) => void);
-        GetObjectData: ((info: any, context: any) => void);
-        Equals: ((obj: any) => boolean);
+        BeginInvoke: ((multiColumnHeader: UnityEditor.IMGUI.Controls.MultiColumnHeader, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any[]);
-        DynamicInvoke: ((...args: any[]) => any);
-        Clone: (() => any);
-        GetType: (() => any);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class MultiColumnHeader_DefaultGUI {
         static defaultHeight: number;
         static minimumHeight: number;
         static columnContentMargin: number;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class MultiColumnHeader_DefaultStyles {
@@ -10261,9 +10314,9 @@ export namespace UnityEditor {
         static columnHeaderRightAligned: UnityEngine.GUIStyle;
         static columnHeaderCenterAligned: UnityEngine.GUIStyle;
         static background: UnityEngine.GUIStyle;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class MultiColumnHeaderState {
@@ -10276,9 +10329,9 @@ export namespace UnityEditor {
         widthOfAllVisibleColumns: number;
         static CanOverwriteSerializedFields: ((source: UnityEditor.IMGUI.Controls.MultiColumnHeaderState, destination: UnityEditor.IMGUI.Controls.MultiColumnHeaderState) => boolean);
         static OverwriteSerializedFields: ((source: UnityEditor.IMGUI.Controls.MultiColumnHeaderState, destination: UnityEditor.IMGUI.Controls.MultiColumnHeaderState) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class MultiColumnHeaderState_Column {
@@ -10294,21 +10347,21 @@ export namespace UnityEditor {
         autoResize: boolean;
         allowToggleVisibility: boolean;
         canSort: boolean;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class TreeViewState {
         constructor();
-        selectedIDs: any; // System.Collections.Generic.List`1[System.Int32]
+        selectedIDs: number[];
         lastClickedID: number;
-        expandedIDs: any; // System.Collections.Generic.List`1[System.Int32]
+        expandedIDs: number[];
         searchString: string;
         scrollPos: UnityEngine.Vector2;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class TreeViewItem {
@@ -10320,15 +10373,15 @@ export namespace UnityEditor {
         displayName: string;
         depth: number;
         hasChildren: boolean;
-        children: any; // System.Collections.Generic.List`1[UnityEditor.IMGUI.Controls.TreeViewItem]
+        children: UnityEditor.IMGUI.Controls.TreeViewItem[];
         parent: UnityEditor.IMGUI.Controls.TreeViewItem;
         icon: UnityEngine.Texture2D;
         AddChild: ((child: UnityEditor.IMGUI.Controls.TreeViewItem) => void);
         CompareTo: ((other: UnityEditor.IMGUI.Controls.TreeViewItem) => number);
         ToString: (() => string);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class TreeView {
         constructor(state: UnityEditor.IMGUI.Controls.TreeViewState);
@@ -10341,15 +10394,15 @@ export namespace UnityEditor {
         searchString: string;
         Reload: (() => void);
         Repaint: (() => void);
-        GetRows: (() => any);
+        GetRows: (() => System.Collections.Generic.IList<UnityEditor.IMGUI.Controls.TreeViewItem>);
         ExpandAll: (() => void);
         CollapseAll: (() => void);
         SetExpandedRecursive: ((id: number, expanded: boolean) => void);
-        SetExpanded: ((id: number, expanded: boolean) => boolean) | ((ids: any) => void);
-        GetExpanded: (() => any);
+        SetExpanded: ((id: number, expanded: boolean) => boolean) | ((ids: System.Collections.Generic.IList<number>) => void);
+        GetExpanded: (() => System.Collections.Generic.IList<number>);
         IsExpanded: ((id: number) => boolean);
-        GetSelection: (() => any);
-        SetSelection: ((selectedIDs: any) => void) | ((selectedIDs: any, options: UnityEditor.IMGUI.Controls.TreeViewSelectionOptions) => void);
+        GetSelection: (() => System.Collections.Generic.IList<number>);
+        SetSelection: ((selectedIDs: System.Collections.Generic.IList<number>) => void) | ((selectedIDs: System.Collections.Generic.IList<number>, options: UnityEditor.IMGUI.Controls.TreeViewSelectionOptions) => void);
         IsSelected: ((id: number) => boolean);
         HasSelection: (() => boolean);
         HasFocus: (() => boolean);
@@ -10360,41 +10413,41 @@ export namespace UnityEditor {
         FrameItem: ((id: number) => void);
         OnGUI: ((rect: UnityEngine.Rect) => void);
         SelectAllRows: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class TreeView_DoFoldoutCallback {
-        constructor(object: any, method: any);
-        Method: any; // System.Reflection.MethodInfo
-        Target: any; // System.Object
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
         Invoke: ((position: UnityEngine.Rect, expandedState: boolean, style: UnityEngine.GUIStyle) => boolean);
-        BeginInvoke: ((position: UnityEngine.Rect, expandedState: boolean, style: UnityEngine.GUIStyle, callback: any, object: any) => any);
-        EndInvoke: ((result: any) => boolean);
-        GetObjectData: ((info: any, context: any) => void);
-        Equals: ((obj: any) => boolean);
+        BeginInvoke: ((position: UnityEngine.Rect, expandedState: boolean, style: UnityEngine.GUIStyle, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => boolean);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any[]);
-        DynamicInvoke: ((...args: any[]) => any);
-        Clone: (() => any);
-        GetType: (() => any);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class TreeView_GetNewSelectionFunction {
-        constructor(object: any, method: any);
-        Method: any; // System.Reflection.MethodInfo
-        Target: any; // System.Object
-        Invoke: ((clickedItem: UnityEditor.IMGUI.Controls.TreeViewItem, keepMultiSelection: boolean, useActionKeyAsShift: boolean) => any);
-        BeginInvoke: ((clickedItem: UnityEditor.IMGUI.Controls.TreeViewItem, keepMultiSelection: boolean, useActionKeyAsShift: boolean, callback: any, object: any) => any);
-        EndInvoke: ((result: any) => any);
-        GetObjectData: ((info: any, context: any) => void);
-        Equals: ((obj: any) => boolean);
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((clickedItem: UnityEditor.IMGUI.Controls.TreeViewItem, keepMultiSelection: boolean, useActionKeyAsShift: boolean) => number[]);
+        BeginInvoke: ((clickedItem: UnityEditor.IMGUI.Controls.TreeViewItem, keepMultiSelection: boolean, useActionKeyAsShift: boolean, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => number[]);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetInvocationList: (() => any[]);
-        DynamicInvoke: ((...args: any[]) => any);
-        Clone: (() => any);
-        GetType: (() => any);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class TreeView_DefaultGUI {
@@ -10403,9 +10456,9 @@ export namespace UnityEditor {
         static LabelRightAligned: ((rect: UnityEngine.Rect, label: string, selected: boolean, focused: boolean) => void);
         static BoldLabel: ((rect: UnityEngine.Rect, label: string, selected: boolean, focused: boolean) => void);
         static BoldLabelRightAligned: ((rect: UnityEngine.Rect, label: string, selected: boolean, focused: boolean) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class TreeView_DefaultStyles {
@@ -10416,9 +10469,9 @@ export namespace UnityEditor {
         static boldLabelRightAligned: UnityEngine.GUIStyle;
         static backgroundEven: UnityEngine.GUIStyle;
         static backgroundOdd: UnityEngine.GUIStyle;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export enum TreeViewSelectionOptions {
@@ -10432,28 +10485,28 @@ export namespace UnityEditor {
         icon: UnityEngine.Texture2D;
         id: number;
         enabled: boolean;
-        children: any; // System.Collections.Generic.IEnumerable`1[UnityEditor.IMGUI.Controls.AdvancedDropdownItem]
+        children: System.Collections.Generic.IEnumerable<UnityEditor.IMGUI.Controls.AdvancedDropdownItem>;
         AddChild: ((child: UnityEditor.IMGUI.Controls.AdvancedDropdownItem) => void);
-        CompareTo: ((o: any) => number);
+        CompareTo: ((o: System.Object) => number);
         AddSeparator: (() => void);
         ToString: (() => string);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
       export declare class AdvancedDropdownState {
         constructor();
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class AdvancedDropdown {
         constructor(state: UnityEditor.IMGUI.Controls.AdvancedDropdownState);
         Show: ((rect: UnityEngine.Rect) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
@@ -10462,21 +10515,21 @@ export namespace UnityEditor {
     export namespace Editor {
       export declare class Localization {
         static Tr: ((str: string) => string);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class LocalizationGroup {
         constructor();
         constructor(behaviour: UnityEngine.Behaviour);
-        constructor(type: any);
-        constructor(obj: any);
+        constructor(type: System.Type);
+        constructor(obj: System.Object);
         locGroupName: string;
         Dispose: (() => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
@@ -10484,17 +10537,17 @@ export namespace UnityEditor {
   export namespace Macros {
     export declare class MacroEvaluator {
       static Eval: ((macro: string) => string);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class MethodEvaluator {
-      static Eval: ((assemblyFile: string, typeName: string, methodName: string, paramTypes: any[], args: any[]) => any);
-      static ExecuteExternalCode: ((parcel: string) => any);
-      Equals: ((obj: any) => boolean);
+      static Eval: ((assemblyFile: string, typeName: string, methodName: string, paramTypes: System.Type[], args: System.Object[]) => System.Object);
+      static ExecuteExternalCode: ((parcel: string) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -10510,41 +10563,41 @@ export namespace UnityEditor {
       numerator: number;
       denominator: number;
       Set: ((numerator: number, denominator?: number) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class MediaTime {
-      constructor(seconds: any);
-      constructor(count: any, rateNumerator: any, rateDenominator?: any);
-      count: any; // System.Int64
+      constructor(seconds: System.Int64);
+      constructor(count: System.Int64, rateNumerator: System.UInt32, rateDenominator?: System.UInt32);
+      count: System.Int64;
       rate: UnityEditor.Media.MediaRational;
       static Invalid: UnityEditor.Media.MediaTime;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class VideoTrackAttributes {
       frameRate: UnityEditor.Media.MediaRational;
-      width: any; // System.UInt32
-      height: any; // System.UInt32
+      width: System.UInt32;
+      height: System.UInt32;
       includeAlpha: boolean;
       bitRateMode: UnityEditor.VideoBitrateMode;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class AudioTrackAttributes {
       sampleRate: UnityEditor.Media.MediaRational;
-      channelCount: any; // System.UInt16
+      channelCount: System.UInt16;
       language: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class MediaEncoder {
       constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackAttributes, audioAttrs: UnityEditor.Media.AudioTrackAttributes[]);
@@ -10552,22 +10605,22 @@ export namespace UnityEditor {
       constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackAttributes);
       constructor(filePath: string, audioAttrs: UnityEditor.Media.AudioTrackAttributes[]);
       constructor(filePath: string, audioAttrs: UnityEditor.Media.AudioTrackAttributes);
-      m_Ptr: any; // System.IntPtr
-      AddFrame: ((width: number, height: number, rowBytes: number, format: UnityEngine.TextureFormat, data: any) => boolean) | ((width: number, height: number, rowBytes: number, format: UnityEngine.TextureFormat, data: any, time: UnityEditor.Media.MediaTime) => boolean) | ((texture: UnityEngine.Texture2D) => boolean) | ((texture: UnityEngine.Texture2D, time: UnityEditor.Media.MediaTime) => boolean);
-      AddSamples: ((trackIndex: any, interleavedSamples: any) => boolean) | ((interleavedSamples: any) => boolean);
+      m_Ptr: System.IntPtr;
+      AddFrame: ((width: number, height: number, rowBytes: number, format: UnityEngine.TextureFormat, data: Unity.Collections.NativeArray<System.Byte>) => boolean) | ((width: number, height: number, rowBytes: number, format: UnityEngine.TextureFormat, data: Unity.Collections.NativeArray<System.Byte>, time: UnityEditor.Media.MediaTime) => boolean) | ((texture: UnityEngine.Texture2D) => boolean) | ((texture: UnityEngine.Texture2D, time: UnityEditor.Media.MediaTime) => boolean);
+      AddSamples: ((trackIndex: System.UInt16, interleavedSamples: Unity.Collections.NativeArray<number>) => boolean) | ((interleavedSamples: Unity.Collections.NativeArray<number>) => boolean);
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
   export namespace MemoryProfiler {
     export declare class MemorySnapshot {
       static RequestNewSnapshot: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class PackedMemorySnapshot {
@@ -10579,9 +10632,9 @@ export namespace UnityEditor {
       managedHeapSections: UnityEditor.MemoryProfiler.MemorySection[];
       typeDescriptions: UnityEditor.MemoryProfiler.TypeDescription[];
       virtualMachineInformation: UnityEditor.MemoryProfiler.VirtualMachineInformation;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class PackedNativeType {
@@ -10589,13 +10642,13 @@ export namespace UnityEditor {
       name: string;
       baseClassId: number;
       nativeBaseTypeArrayIndex: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PackedNativeUnityEngineObject {
-      constructor(name: string, instanceId: number, size: number, nativeTypeArrayIndex: number, hideFlags: UnityEngine.HideFlags, flags: UnityEditor.MemoryProfiler.PackedNativeUnityEngineObject_ObjectFlags, nativeObjectAddress: any);
+      constructor(name: string, instanceId: number, size: number, nativeTypeArrayIndex: number, hideFlags: UnityEngine.HideFlags, flags: UnityEditor.MemoryProfiler.PackedNativeUnityEngineObject_ObjectFlags, nativeObjectAddress: System.Int64);
       isPersistent: boolean;
       isDontDestroyOnLoad: boolean;
       isManager: boolean;
@@ -10605,11 +10658,11 @@ export namespace UnityEditor {
       classId: number;
       nativeTypeArrayIndex: number;
       hideFlags: UnityEngine.HideFlags;
-      nativeObjectAddress: any; // System.Int64
-      Equals: ((obj: any) => boolean);
+      nativeObjectAddress: System.Int64;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum PackedNativeUnityEngineObject_ObjectFlags {
       IsDontDestroyOnLoad = 1,
@@ -10617,48 +10670,48 @@ export namespace UnityEditor {
       IsManager = 4,
     }
     export declare class PackedGCHandle {
-      constructor(target: any);
-      target: any; // System.UInt64
-      Equals: ((obj: any) => boolean);
+      constructor(target: System.UInt64);
+      target: System.UInt64;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class Connection {
       constructor(from: number, to: number);
       from: number;
       to: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class MemorySection {
-      constructor(bytes: any[], startAddress: any);
-      bytes: any[];
-      startAddress: any; // System.UInt64
-      Equals: ((obj: any) => boolean);
+      constructor(bytes: System.Byte[], startAddress: System.UInt64);
+      bytes: System.Byte[];
+      startAddress: System.UInt64;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class TypeDescription {
-      constructor(name: string, assembly: string, fields: UnityEditor.MemoryProfiler.FieldDescription[], staticFieldBytes: any[], baseOrElementTypeIndes: number, size: number, typeInfoAddress: any, typeIndex: number, flags: UnityEditor.MemoryProfiler.TypeDescription_TypeFlags);
+      constructor(name: string, assembly: string, fields: UnityEditor.MemoryProfiler.FieldDescription[], staticFieldBytes: System.Byte[], baseOrElementTypeIndes: number, size: number, typeInfoAddress: System.UInt64, typeIndex: number, flags: UnityEditor.MemoryProfiler.TypeDescription_TypeFlags);
       isValueType: boolean;
       isArray: boolean;
       arrayRank: number;
       name: string;
       assembly: string;
       fields: UnityEditor.MemoryProfiler.FieldDescription[];
-      staticFieldBytes: any[];
+      staticFieldBytes: System.Byte[];
       baseOrElementTypeIndex: number;
       size: number;
-      typeInfoAddress: any; // System.UInt64
+      typeInfoAddress: System.UInt64;
       typeIndex: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum TypeDescription_TypeFlags {
       kNone = 0,
@@ -10672,10 +10725,10 @@ export namespace UnityEditor {
       offset: number;
       typeIndex: number;
       isStatic: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class VirtualMachineInformation {
       pointerSize: number;
@@ -10685,10 +10738,10 @@ export namespace UnityEditor {
       arraySizeOffsetInHeader: number;
       allocationGranularity: number;
       heapFormatVersion: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace MPE {
@@ -10701,36 +10754,36 @@ export namespace UnityEditor {
       Stop: (() => void);
       Close: (() => void) | ((channelName: string) => void);
       Tick: (() => void);
-      Send: ((data: string) => void) | ((data: any[]) => void) | ((connectionId: number, data: any[]) => void);
-      RegisterMessageHandler: ((handler: any) => any) | ((handler: any) => any);
-      UnregisterMessageHandler: ((handler: any) => void) | ((handler: any) => void);
+      Send: ((data: string) => void) | ((data: System.Byte[]) => void) | ((connectionId: number, data: System.Byte[]) => void);
+      RegisterMessageHandler: ((handler: (() => void)) => System.Action) | ((handler: (() => void)) => System.Action);
+      UnregisterMessageHandler: ((handler: (() => void)) => void) | ((handler: (() => void)) => void);
       NewRequestId: (() => number) | ((clientId: number) => number);
       GetChannelClientInfo: (() => UnityEditor.MPE.ChannelClientInfo) | ((channelName: string) => UnityEditor.MPE.ChannelClientInfo) | ((clientId: number) => UnityEditor.MPE.ChannelClientInfo);
       static GetOrCreateClient: ((channelName: string) => UnityEditor.MPE.ChannelClient);
       static Shutdown: (() => void);
       static GetChannelClientList: (() => UnityEditor.MPE.ChannelClientInfo[]);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ChannelClientScope {
-      constructor(autoTick: boolean, channelName: string, handler: any, closeClientOnExit?: boolean);
-      constructor(autoTick: boolean, channelName: string, handler: any, closeClientOnExit?: boolean);
+      constructor(autoTick: boolean, channelName: string, handler: (() => void), closeClientOnExit?: boolean);
+      constructor(autoTick: boolean, channelName: string, handler: (() => void), closeClientOnExit?: boolean);
       client: UnityEditor.MPE.ChannelClient;
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ChannelService {
-      static GetOrCreateChannel: ((channelName: string, handler: any) => any);
-      static RegisterMessageHandler: ((channelName: string, handler: any) => any);
+      static GetOrCreateChannel: ((channelName: string, handler: any) => System.Action);
+      static RegisterMessageHandler: ((channelName: string, handler: any) => System.Action);
       static UnregisterMessageHandler: ((channelName: string, handler: any) => void);
       static CloseChannel: ((channelName: string) => void);
-      static Broadcast: ((channelId: number, data: any[]) => void) | ((channelId: number, data: string) => void);
-      static Send: ((connectionId: number, data: any[]) => void) | ((connectionId: number, data: string) => void);
+      static Broadcast: ((channelId: number, data: System.Byte[]) => void) | ((channelId: number, data: string) => void);
+      static Send: ((connectionId: number, data: System.Byte[]) => void) | ((connectionId: number, data: string) => void);
       static GetAddress: (() => string);
       static GetPort: (() => number);
       static Start: (() => void);
@@ -10738,20 +10791,20 @@ export namespace UnityEditor {
       static IsRunning: (() => boolean);
       static GetChannelList: (() => UnityEditor.MPE.ChannelInfo[]);
       static GetChannelClientList: (() => UnityEditor.MPE.ChannelClientInfo[]);
-      static BroadcastBinary: ((channelId: number, data: any[]) => void);
+      static BroadcastBinary: ((channelId: number, data: System.Byte[]) => void);
       static ChannelNameToId: ((channelName: string) => number);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ChannelScope {
-      constructor(channelName: string, handler: any, closeChannelOnExit?: boolean);
+      constructor(channelName: string, handler: ((arg0: number) => void), closeChannelOnExit?: boolean);
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum EventDataSerialization {
       StandardJson = 0,
@@ -10761,18 +10814,18 @@ export namespace UnityEditor {
       static isConnected: boolean;
       static Start: (() => void);
       static Close: (() => void);
-      static RegisterEventHandler: ((eventType: string, handler: any) => any) | ((eventType: string, handler: any) => any);
+      static RegisterEventHandler: ((eventType: string, handler: any) => System.Action) | ((eventType: string, handler: any) => System.Action);
       static UnregisterEventHandler: ((eventType: string, handler: any) => void);
       static Clear: (() => void);
-      static Emit: ((eventType: string, args?: any, targetId?: number, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization) => void) | ((eventType: string, args: any[], targetId?: number, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization) => void);
+      static Emit: ((eventType: string, args?: System.Object, targetId?: number, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization) => void) | ((eventType: string, args: System.Object[], targetId?: number, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization) => void);
       static IsRequestPending: ((eventType: string) => boolean);
       static CancelRequest: ((eventType: string, message?: string) => boolean);
-      static Request: ((eventType: string, promiseHandler: any, args?: any, timeoutInMs?: any, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization) => void) | ((eventType: string, promiseHandler: any, args: any[], timeoutInMs?: any, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization) => void);
+      static Request: ((eventType: string, promiseHandler: any, args?: System.Object, timeoutInMs?: System.Int64, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization) => void) | ((eventType: string, promiseHandler: any, args: System.Object[], timeoutInMs?: System.Int64, eventDataSerialization?: UnityEditor.MPE.EventDataSerialization) => void);
       static Log: ((msg: string) => void) | ((msg: string, logType: UnityEngine.LogType) => void);
       static Tick: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum ProcessEvent {
@@ -10809,20 +10862,20 @@ export namespace UnityEditor {
       name: string;
       id: number;
       static invalidChannel: UnityEditor.MPE.ChannelInfo;
-      Equals: ((obj: UnityEditor.MPE.ChannelInfo) => boolean) | ((obj: any) => boolean);
+      Equals: ((obj: UnityEditor.MPE.ChannelInfo) => boolean) | ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ChannelClientInfo {
       name: string;
       clientId: number;
       connectionId: number;
       static invalidClient: UnityEditor.MPE.ChannelClientInfo;
-      Equals: ((obj: UnityEditor.MPE.ChannelClientInfo) => boolean) | ((obj: any) => boolean);
+      Equals: ((obj: UnityEditor.MPE.ChannelClientInfo) => boolean) | ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ProcessService {
       constructor();
@@ -10835,13 +10888,13 @@ export namespace UnityEditor {
       static GetSlaveProcessState: ((pid: number) => UnityEditor.MPE.ProcessState);
       static HasCapability: ((capName: string) => boolean);
       static ApplyPropertyModifications: ((modifications: UnityEditor.PropertyModification[]) => void);
-      static SerializeObject: ((instanceId: number) => any[]);
-      static DeserializeObject: ((bytes: any[]) => UnityEngine.Object);
+      static SerializeObject: ((instanceId: number) => System.Byte[]);
+      static DeserializeObject: ((bytes: System.Byte[]) => UnityEngine.Object);
       static EnableProfileConnection: ((dataPath: string) => number);
       static DisableProfileConnection: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -10849,23 +10902,23 @@ export namespace UnityEditor {
     export namespace PlayerConnection {
       export declare class PlayerConnectionGUIUtility {
         static GetConnectionState: ((parentWindow: UnityEditor.EditorWindow, connectedCallback?: any) => UnityEngine.Networking.PlayerConnection.IConnectionState);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class PlayerConnectionGUI {
         static ConnectionTargetSelectionDropdown: ((rect: UnityEngine.Rect, state: UnityEngine.Networking.PlayerConnection.IConnectionState, style?: UnityEngine.GUIStyle) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class PlayerConnectionGUILayout {
         static ConnectionTargetSelectionDropdown: ((state: UnityEngine.Networking.PlayerConnection.IConnectionState, style?: UnityEngine.GUIStyle) => void);
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class ConnectedPlayer {
@@ -10875,32 +10928,32 @@ export namespace UnityEditor {
         PlayerId: number;
         playerId: number;
         name: string;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class EditorConnection {
         constructor();
-        ConnectedPlayers: any; // System.Collections.Generic.List`1[UnityEditor.Networking.PlayerConnection.ConnectedPlayer]
+        ConnectedPlayers: UnityEditor.Networking.PlayerConnection.ConnectedPlayer[];
         name: string;
         hideFlags: UnityEngine.HideFlags;
         Initialize: (() => void);
-        Register: ((messageId: any, callback: any) => void);
-        Unregister: ((messageId: any, callback: any) => void);
-        RegisterConnection: ((callback: any) => void);
-        RegisterDisconnection: ((callback: any) => void);
-        UnregisterConnection: ((callback: any) => void);
-        UnregisterDisconnection: ((callback: any) => void);
-        Send: ((messageId: any, data: any[], playerId: number) => void) | ((messageId: any, data: any[]) => void);
-        TrySend: ((messageId: any, data: any[], playerId: number) => boolean) | ((messageId: any, data: any[]) => boolean);
+        Register: ((messageId: System.Guid, callback: UnityEngine.Events.UnityAction<UnityEngine.Networking.PlayerConnection.MessageEventArgs>) => void);
+        Unregister: ((messageId: System.Guid, callback: UnityEngine.Events.UnityAction<UnityEngine.Networking.PlayerConnection.MessageEventArgs>) => void);
+        RegisterConnection: ((callback: UnityEngine.Events.UnityAction<number>) => void);
+        RegisterDisconnection: ((callback: UnityEngine.Events.UnityAction<number>) => void);
+        UnregisterConnection: ((callback: UnityEngine.Events.UnityAction<number>) => void);
+        UnregisterDisconnection: ((callback: UnityEngine.Events.UnityAction<number>) => void);
+        Send: ((messageId: System.Guid, data: System.Byte[], playerId: number) => void) | ((messageId: System.Guid, data: System.Byte[]) => void);
+        TrySend: ((messageId: System.Guid, data: System.Byte[], playerId: number) => boolean) | ((messageId: System.Guid, data: System.Byte[]) => boolean);
         DisconnectAll: (() => void);
         SetDirty: (() => void);
         GetInstanceID: (() => number);
         GetHashCode: (() => number);
-        Equals: ((other: any) => boolean);
+        Equals: ((other: System.Object) => boolean);
         ToString: (() => string);
-        GetType: (() => any);
+        GetType: (() => System.Type);
       }
     }
   }
@@ -10909,16 +10962,16 @@ export namespace UnityEditor {
       name: string;
       email: string;
       url: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class BuildUtilities {
       static RegisterShouldIncludeInBuildCallback: ((cb: UnityEditor.PackageManager.IShouldIncludeInBuildCallback) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Client {
@@ -10932,25 +10985,25 @@ export namespace UnityEditor {
       static ResetToEditorDefaults: (() => UnityEditor.PackageManager.Requests.ResetToEditorDefaultsRequest);
       static Pack: ((packageFolder: string, targetFolder: string) => UnityEditor.PackageManager.Requests.PackRequest);
       static Resolve: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class DependencyInfo {
       version: string;
       name: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class Error {
       errorCode: UnityEditor.PackageManager.ErrorCode;
       message: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum ErrorCode {
@@ -10961,20 +11014,20 @@ export namespace UnityEditor {
       Conflict = 4,
     }
     export declare class Events {
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class GitInfo {
       hash: string;
       revision: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class IShouldIncludeInBuildCallback {
+    export interface IShouldIncludeInBuildCallback {
       PackageName: string;
       ShouldIncludeInBuild: ((path: string) => boolean);
     }
@@ -10988,9 +11041,9 @@ export namespace UnityEditor {
     }
     export declare class PackageCollection {
       error: UnityEditor.PackageManager.Error;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class PackageInfo {
@@ -11016,24 +11069,24 @@ export namespace UnityEditor {
       changelogUrl: string;
       licensesUrl: string;
       registry: UnityEditor.PackageManager.RegistryInfo;
-      datePublished?: any; // System.Nullable`1[System.DateTime]
+      datePublished?: System.Nullable<System.DateTime>;
       git: UnityEditor.PackageManager.GitInfo;
       repository: UnityEditor.PackageManager.RepositoryInfo;
       static FindForAssetPath: ((assetPath: string) => UnityEditor.PackageManager.PackageInfo);
-      static FindForAssembly: ((assembly: any) => UnityEditor.PackageManager.PackageInfo);
-      Equals: ((obj: any) => boolean);
+      static FindForAssembly: ((assembly: System.Reflection.Assembly) => UnityEditor.PackageManager.PackageInfo);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class PackageRegistrationEventArgs {
-      added: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.PackageManager.PackageInfo]
-      removed: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.PackageManager.PackageInfo]
-      changedFrom: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.PackageManager.PackageInfo]
-      changedTo: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[UnityEditor.PackageManager.PackageInfo]
-      Equals: ((obj: any) => boolean);
+      added: UnityEditor.PackageManager.PackageInfo[];
+      removed: UnityEditor.PackageManager.PackageInfo[];
+      changedFrom: UnityEditor.PackageManager.PackageInfo[];
+      changedTo: UnityEditor.PackageManager.PackageInfo[];
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum PackageSource {
@@ -11054,18 +11107,18 @@ export namespace UnityEditor {
     }
     export declare class PackOperationResult {
       tarballPath: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class RegistryInfo {
       name: string;
       url: string;
       isDefault: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class RepositoryInfo {
@@ -11073,9 +11126,9 @@ export namespace UnityEditor {
       url: string;
       revision: string;
       path: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum StatusCode {
@@ -11090,9 +11143,9 @@ export namespace UnityEditor {
       recommended: string;
       latest: string;
       latestCompatible: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export namespace Requests {
@@ -11101,9 +11154,9 @@ export namespace UnityEditor {
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class EmbedRequest {
@@ -11111,9 +11164,9 @@ export namespace UnityEditor {
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class ListRequest {
@@ -11121,9 +11174,9 @@ export namespace UnityEditor {
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class PackRequest {
@@ -11131,9 +11184,9 @@ export namespace UnityEditor {
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class RemoveRequest {
@@ -11141,18 +11194,19 @@ export namespace UnityEditor {
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class Request {
+      export declare class Request<T = any> {
+        Result: T;
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class SearchRequest {
@@ -11161,34 +11215,34 @@ export namespace UnityEditor {
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
       export declare class ResetToEditorDefaultsRequest {
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
-        Equals: ((obj: any) => boolean);
+        Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetType: (() => any);
+        GetType: (() => System.Type);
         ToString: (() => string);
       }
     }
   }
   export namespace Playables {
     export declare class PlayableOutputEditorExtensions {
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Utility {
       static GetAllGraphs: (() => UnityEngine.Playables.PlayableGraph[]);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -11201,9 +11255,9 @@ export namespace UnityEditor {
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class DefaultPresetSelectorReceiver {
       constructor();
@@ -11214,9 +11268,9 @@ export namespace UnityEditor {
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PresetSelector {
       constructor();
@@ -11258,13 +11312,13 @@ export namespace UnityEditor {
       Close: (() => void);
       Repaint: (() => void);
       SendEvent: ((e: UnityEngine.Event) => boolean);
-      GetExtraPaneTypes: (() => any);
+      GetExtraPaneTypes: (() => System.Collections.Generic.IEnumerable<System.Type>);
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class Preset {
       constructor(source: UnityEngine.Object);
@@ -11293,9 +11347,9 @@ export namespace UnityEditor {
       static IsObjectExcludedFromPresets: ((target: UnityEngine.Object) => boolean);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class DefaultPreset {
       constructor(filter: string, preset: UnityEditor.Presets.Preset);
@@ -11305,32 +11359,32 @@ export namespace UnityEditor {
       enabled: boolean;
       m_Filter: string;
       m_Preset: UnityEditor.Presets.Preset;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PresetType {
       constructor(o: UnityEngine.Object);
-      Equals: ((obj: any) => boolean) | ((other: UnityEditor.Presets.PresetType) => boolean);
+      Equals: ((obj: System.Object) => boolean) | ((other: UnityEditor.Presets.PresetType) => boolean);
       GetHashCode: (() => number);
       IsValid: (() => boolean);
       IsValidDefault: (() => boolean);
       GetManagedTypeName: (() => string);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace Profiling {
     export declare class ProfilerCategoryInfo {
-      id: any; // System.UInt16
+      id: System.UInt16;
       color: UnityEngine.Color32;
       name: string;
       flags: Unity.Profiling.ProfilerCategoryFlags;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class FrameDataView {
       valid: boolean;
@@ -11338,66 +11392,66 @@ export namespace UnityEditor {
       threadIndex: number;
       threadGroupName: string;
       threadName: string;
-      threadId: any; // System.UInt64
+      threadId: System.UInt64;
       frameStartTimeMs: number;
-      frameStartTimeNs: any; // System.UInt64
+      frameStartTimeNs: System.UInt64;
       frameTimeMs: number;
-      frameTimeNs: any; // System.UInt64
+      frameTimeNs: System.UInt64;
       frameGpuTimeMs: number;
-      frameGpuTimeNs: any; // System.UInt64
+      frameGpuTimeNs: System.UInt64;
       frameFps: number;
       sampleCount: number;
       maxDepth: number;
       static invalidMarkerId: number;
       Dispose: (() => void);
-      GetMarkerCategoryIndex: ((markerId: number) => any);
+      GetMarkerCategoryIndex: ((markerId: number) => System.UInt16);
       GetMarkerFlags: ((markerId: number) => Unity.Profiling.LowLevel.MarkerFlags);
       GetMarkerName: ((markerId: number) => string);
       GetMarkerMetadataInfo: ((markerId: number) => UnityEditor.Profiling.FrameDataView_MarkerMetadataInfo[]);
       GetMarkerId: ((markerName: string) => number);
-      GetMarkers: ((markerInfoList: any) => void);
-      GetCategoryInfo: ((id: any) => UnityEditor.Profiling.ProfilerCategoryInfo);
-      GetAllCategories: ((categoryInfoList: any) => void);
-      GetFrameMetaDataCount: ((id: any, tag: number) => number);
-      ResolveMethodInfo: ((addr: any) => UnityEditor.Profiling.FrameDataView_MethodInfo);
+      GetMarkers: ((markerInfoList: UnityEditor.Profiling.FrameDataView_MarkerInfo[]) => void);
+      GetCategoryInfo: ((id: System.UInt16) => UnityEditor.Profiling.ProfilerCategoryInfo);
+      GetAllCategories: ((categoryInfoList: UnityEditor.Profiling.ProfilerCategoryInfo[]) => void);
+      GetFrameMetaDataCount: ((id: System.Guid, tag: number) => number);
+      ResolveMethodInfo: ((addr: System.UInt64) => UnityEditor.Profiling.FrameDataView_MethodInfo);
       HasCounterValue: ((markerId: number) => boolean);
       GetCounterValueAsInt: ((markerId: number) => number);
-      GetCounterValueAsLong: ((markerId: number) => any);
+      GetCounterValueAsLong: ((markerId: number) => System.Int64);
       GetCounterValueAsFloat: ((markerId: number) => number);
       GetCounterValueAsDouble: ((markerId: number) => number);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class FrameDataView_MarkerMetadataInfo {
       type: Unity.Profiling.LowLevel.ProfilerMarkerDataType;
       unit: Unity.Profiling.ProfilerMarkerDataUnit;
       name: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class FrameDataView_MarkerInfo {
       id: number;
-      category: any; // System.UInt16
+      category: System.UInt16;
       flags: Unity.Profiling.LowLevel.MarkerFlags;
       name: string;
       metadataInfo: UnityEditor.Profiling.FrameDataView_MarkerMetadataInfo[];
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class FrameDataView_MethodInfo {
       methodName: string;
       sourceFileName: string;
-      sourceFileLine: any; // System.UInt32
-      Equals: ((obj: any) => boolean);
+      sourceFileLine: System.UInt32;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class HierarchyFrameDataView {
       viewMode: UnityEditor.Profiling.HierarchyFrameDataView_ViewModes;
@@ -11408,13 +11462,13 @@ export namespace UnityEditor {
       threadIndex: number;
       threadGroupName: string;
       threadName: string;
-      threadId: any; // System.UInt64
+      threadId: System.UInt64;
       frameStartTimeMs: number;
-      frameStartTimeNs: any; // System.UInt64
+      frameStartTimeNs: System.UInt64;
       frameTimeMs: number;
-      frameTimeNs: any; // System.UInt64
+      frameTimeNs: System.UInt64;
       frameGpuTimeMs: number;
-      frameGpuTimeNs: any; // System.UInt64
+      frameGpuTimeNs: System.UInt64;
       frameFps: number;
       sampleCount: number;
       maxDepth: number;
@@ -11433,12 +11487,12 @@ export namespace UnityEditor {
       GetRootItemID: (() => number);
       GetItemMarkerID: ((id: number) => number);
       GetItemMarkerFlags: ((id: number) => Unity.Profiling.LowLevel.MarkerFlags);
-      GetItemCategoryIndex: ((id: number) => any);
+      GetItemCategoryIndex: ((id: number) => System.UInt16);
       GetItemDepth: ((id: number) => number);
       HasItemChildren: ((id: number) => boolean);
-      GetItemChildren: ((id: number, outChildren: any) => void);
-      GetItemAncestors: ((id: number, outAncestors: any) => void);
-      GetItemDescendantsThatHaveChildren: ((id: number, outChildren: any) => void);
+      GetItemChildren: ((id: number, outChildren: number[]) => void);
+      GetItemAncestors: ((id: number, outAncestors: number[]) => void);
+      GetItemDescendantsThatHaveChildren: ((id: number, outChildren: number[]) => void);
       GetItemName: ((id: number) => string);
       GetItemInstanceID: ((id: number) => number);
       GetItemColumnData: ((id: number, column: number) => string);
@@ -11448,42 +11502,42 @@ export namespace UnityEditor {
       GetItemMetadataCount: ((id: number) => number);
       GetItemMetadata: ((id: number, index: number) => string);
       GetItemMetadataAsFloat: ((id: number, index: number) => number);
-      GetItemMetadataAsLong: ((id: number, index: number) => any);
+      GetItemMetadataAsLong: ((id: number, index: number) => System.Int64);
       GetItemMergedSamplesMetadataCount: ((id: number, sampleIndex: number) => number);
       GetItemMergedSamplesMetadata: ((id: number, sampleIndex: number, metadataIndex: number) => string);
       GetItemMergedSamplesMetadataAsFloat: ((id: number, sampleIndex: number, metadataIndex: number) => number);
-      GetItemMergedSamplesMetadataAsLong: ((id: number, sampleIndex: number, metadataIndex: number) => any);
+      GetItemMergedSamplesMetadataAsLong: ((id: number, sampleIndex: number, metadataIndex: number) => System.Int64);
       ResolveItemCallstack: ((id: number) => string);
-      GetItemCallstack: ((id: number, outCallstack: any) => void);
+      GetItemCallstack: ((id: number, outCallstack: System.UInt64[]) => void);
       GetItemMergedSamplesCount: ((id: number) => number);
-      GetItemMergedSamplesColumnData: ((id: number, column: number, outStrings: any) => void);
-      GetItemMergedSamplesColumnDataAsFloats: ((id: number, column: number, outValues: any) => void);
-      GetItemMergedSamplesColumnDataAsDoubles: ((id: number, column: number, outValues: any) => void);
-      GetItemMergedSamplesInstanceID: ((id: number, outInstanceIds: any) => void);
-      GetItemMergedSampleCallstack: ((id: number, sampleIndex: number, outCallstack: any) => void);
+      GetItemMergedSamplesColumnData: ((id: number, column: number, outStrings: string[]) => void);
+      GetItemMergedSamplesColumnDataAsFloats: ((id: number, column: number, outValues: number[]) => void);
+      GetItemMergedSamplesColumnDataAsDoubles: ((id: number, column: number, outValues: number[]) => void);
+      GetItemMergedSamplesInstanceID: ((id: number, outInstanceIds: number[]) => void);
+      GetItemMergedSampleCallstack: ((id: number, sampleIndex: number, outCallstack: System.UInt64[]) => void);
       ResolveItemMergedSampleCallstack: ((id: number, sampleIndex: number) => string);
-      GetItemMarkerIDPath: ((id: number, outFullIdPath: any) => void);
+      GetItemMarkerIDPath: ((id: number, outFullIdPath: number[]) => void);
       GetItemPath: ((id: number) => string);
       Sort: ((sortColumn: number, sortAscending: boolean) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       Dispose: (() => void);
-      GetMarkerCategoryIndex: ((markerId: number) => any);
+      GetMarkerCategoryIndex: ((markerId: number) => System.UInt16);
       GetMarkerFlags: ((markerId: number) => Unity.Profiling.LowLevel.MarkerFlags);
       GetMarkerName: ((markerId: number) => string);
       GetMarkerMetadataInfo: ((markerId: number) => UnityEditor.Profiling.FrameDataView_MarkerMetadataInfo[]);
       GetMarkerId: ((markerName: string) => number);
-      GetMarkers: ((markerInfoList: any) => void);
-      GetCategoryInfo: ((id: any) => UnityEditor.Profiling.ProfilerCategoryInfo);
-      GetAllCategories: ((categoryInfoList: any) => void);
-      GetFrameMetaDataCount: ((id: any, tag: number) => number);
-      ResolveMethodInfo: ((addr: any) => UnityEditor.Profiling.FrameDataView_MethodInfo);
+      GetMarkers: ((markerInfoList: UnityEditor.Profiling.FrameDataView_MarkerInfo[]) => void);
+      GetCategoryInfo: ((id: System.UInt16) => UnityEditor.Profiling.ProfilerCategoryInfo);
+      GetAllCategories: ((categoryInfoList: UnityEditor.Profiling.ProfilerCategoryInfo[]) => void);
+      GetFrameMetaDataCount: ((id: System.Guid, tag: number) => number);
+      ResolveMethodInfo: ((addr: System.UInt64) => UnityEditor.Profiling.FrameDataView_MethodInfo);
       HasCounterValue: ((markerId: number) => boolean);
       GetCounterValueAsInt: ((markerId: number) => number);
-      GetCounterValueAsLong: ((markerId: number) => any);
+      GetCounterValueAsLong: ((markerId: number) => System.Int64);
       GetCounterValueAsFloat: ((markerId: number) => number);
       GetCounterValueAsDouble: ((markerId: number) => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum HierarchyFrameDataView_ViewModes {
@@ -11497,208 +11551,215 @@ export namespace UnityEditor {
       threadIndex: number;
       threadGroupName: string;
       threadName: string;
-      threadId: any; // System.UInt64
+      threadId: System.UInt64;
       frameStartTimeMs: number;
-      frameStartTimeNs: any; // System.UInt64
+      frameStartTimeNs: System.UInt64;
       frameTimeMs: number;
-      frameTimeNs: any; // System.UInt64
+      frameTimeNs: System.UInt64;
       frameGpuTimeMs: number;
-      frameGpuTimeNs: any; // System.UInt64
+      frameGpuTimeNs: System.UInt64;
       frameFps: number;
       sampleCount: number;
       maxDepth: number;
       GetSampleStartTimeMs: ((sampleIndex: number) => number);
-      GetSampleStartTimeNs: ((sampleIndex: number) => any);
+      GetSampleStartTimeNs: ((sampleIndex: number) => System.UInt64);
       GetSampleTimeMs: ((sampleIndex: number) => number);
-      GetSampleTimeNs: ((sampleIndex: number) => any);
+      GetSampleTimeNs: ((sampleIndex: number) => System.UInt64);
       GetSampleMarkerId: ((sampleIndex: number) => number);
       GetSampleFlags: ((sampleIndex: number) => Unity.Profiling.LowLevel.MarkerFlags);
-      GetSampleCategoryIndex: ((sampleIndex: number) => any);
+      GetSampleCategoryIndex: ((sampleIndex: number) => System.UInt16);
       GetSampleName: ((sampleIndex: number) => string);
       GetSampleChildrenCount: ((sampleIndex: number) => number);
       GetSampleChildrenCountRecursive: ((sampleIndex: number) => number);
       GetSampleMetadataCount: ((sampleIndex: number) => number);
       GetSampleMetadataAsString: ((sampleIndex: number, metadataIndex: number) => string);
       GetSampleMetadataAsInt: ((sampleIndex: number, metadataIndex: number) => number);
-      GetSampleMetadataAsLong: ((sampleIndex: number, metadataIndex: number) => any);
+      GetSampleMetadataAsLong: ((sampleIndex: number, metadataIndex: number) => System.Int64);
       GetSampleMetadataAsFloat: ((sampleIndex: number, metadataIndex: number) => number);
       GetSampleMetadataAsDouble: ((sampleIndex: number, metadataIndex: number) => number);
-      GetSampleCallstack: ((sampleIndex: number, outCallstack: any) => void);
-      GetSampleFlowEvents: ((sampleIndex: number, outFlowEvents: any) => void);
-      GetFlowEvents: ((outFlowEvents: any) => void);
-      Equals: ((obj: any) => boolean);
+      GetSampleCallstack: ((sampleIndex: number, outCallstack: System.UInt64[]) => void);
+      GetSampleFlowEvents: ((sampleIndex: number, outFlowEvents: UnityEditor.Profiling.RawFrameDataView_FlowEvent[]) => void);
+      GetFlowEvents: ((outFlowEvents: UnityEditor.Profiling.RawFrameDataView_FlowEvent[]) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       Dispose: (() => void);
-      GetMarkerCategoryIndex: ((markerId: number) => any);
+      GetMarkerCategoryIndex: ((markerId: number) => System.UInt16);
       GetMarkerFlags: ((markerId: number) => Unity.Profiling.LowLevel.MarkerFlags);
       GetMarkerName: ((markerId: number) => string);
       GetMarkerMetadataInfo: ((markerId: number) => UnityEditor.Profiling.FrameDataView_MarkerMetadataInfo[]);
       GetMarkerId: ((markerName: string) => number);
-      GetMarkers: ((markerInfoList: any) => void);
-      GetCategoryInfo: ((id: any) => UnityEditor.Profiling.ProfilerCategoryInfo);
-      GetAllCategories: ((categoryInfoList: any) => void);
-      GetFrameMetaDataCount: ((id: any, tag: number) => number);
-      ResolveMethodInfo: ((addr: any) => UnityEditor.Profiling.FrameDataView_MethodInfo);
+      GetMarkers: ((markerInfoList: UnityEditor.Profiling.FrameDataView_MarkerInfo[]) => void);
+      GetCategoryInfo: ((id: System.UInt16) => UnityEditor.Profiling.ProfilerCategoryInfo);
+      GetAllCategories: ((categoryInfoList: UnityEditor.Profiling.ProfilerCategoryInfo[]) => void);
+      GetFrameMetaDataCount: ((id: System.Guid, tag: number) => number);
+      ResolveMethodInfo: ((addr: System.UInt64) => UnityEditor.Profiling.FrameDataView_MethodInfo);
       HasCounterValue: ((markerId: number) => boolean);
       GetCounterValueAsInt: ((markerId: number) => number);
-      GetCounterValueAsLong: ((markerId: number) => any);
+      GetCounterValueAsLong: ((markerId: number) => System.Int64);
       GetCounterValueAsFloat: ((markerId: number) => number);
       GetCounterValueAsDouble: ((markerId: number) => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class RawFrameDataView_FlowEvent {
       ParentSampleIndex: number;
-      FlowId: any; // System.UInt32
+      FlowId: System.UInt32;
       FlowEventType: Unity.Profiling.ProfilerFlowEventType;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export namespace Memory {
       export namespace Experimental {
-        export declare class ConnectionEntries {
-          from: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          to: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+        export declare class ArrayEntries<T = any> {
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class ConnectionEntries {
+          from: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          to: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class GCHandleEntries {
-          target: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          target: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class ManagedMemorySectionEntries {
-          bytes: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Byte[]]
-          startAddress: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          bytes: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Byte[]>;
+          startAddress: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class NativeObjectEntries {
-          objectName: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          instanceId: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          size: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          nativeTypeArrayIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          hideFlags: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[UnityEngine.HideFlags]
-          flags: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[UnityEditor.Profiling.Memory.Experimental.ObjectFlags]
-          nativeObjectAddress: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          rootReferenceId: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int64]
-          gcHandleIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          objectName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          instanceId: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          size: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          nativeTypeArrayIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          hideFlags: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<UnityEngine.HideFlags>;
+          flags: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<UnityEditor.Profiling.Memory.Experimental.ObjectFlags>;
+          nativeObjectAddress: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          rootReferenceId: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
+          gcHandleIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class NativeTypeEntries {
-          typeName: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          nativeBaseTypeArrayIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          typeName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          nativeBaseTypeArrayIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class TypeDescriptionEntries {
-          flags: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[UnityEditor.Profiling.Memory.Experimental.TypeFlags]
-          typeDescriptionName: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          assembly: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          fieldIndices: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32[]]
-          staticFieldBytes: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Byte[]]
-          baseOrElementTypeIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          size: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          typeInfoAddress: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          typeIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          flags: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<UnityEditor.Profiling.Memory.Experimental.TypeFlags>;
+          typeDescriptionName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          assembly: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          fieldIndices: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number[]>;
+          staticFieldBytes: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Byte[]>;
+          baseOrElementTypeIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          size: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          typeInfoAddress: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          typeIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class FieldDescriptionEntries {
-          fieldDescriptionName: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          offset: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          typeIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          isStatic: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Boolean]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          fieldDescriptionName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          offset: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          typeIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          isStatic: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<boolean>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class NativeMemoryLabelEntries {
-          memoryLabelName: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          memoryLabelName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class NativeRootReferenceEntries {
-          id: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int64]
-          areaName: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          objectName: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          accumulatedSize: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          id: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
+          areaName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          objectName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          accumulatedSize: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class NativeAllocationEntries {
-          memoryRegionIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          rootReferenceId: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int64]
-          allocationSiteId: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int64]
-          address: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          size: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          overheadSize: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          paddingSize: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          memoryRegionIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          rootReferenceId: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
+          allocationSiteId: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
+          address: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          size: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          overheadSize: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          paddingSize: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class NativeMemoryRegionEntries {
-          memoryRegionName: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          parentIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          addressBase: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          addressSize: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          firstAllocationIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          numAllocations: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          memoryRegionName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          parentIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          addressBase: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          addressSize: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          firstAllocationIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          numAllocations: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class NativeAllocationSiteEntries {
-          id: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int64]
-          memoryLabelIndex: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.Int32]
-          callstackSymbols: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64[]]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          id: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
+          memoryLabelIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
+          callstackSymbols: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64[]>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class NativeCallstackSymbolEntries {
-          symbol: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.UInt64]
-          readableStackTrace: any; // UnityEditor.Profiling.Memory.Experimental.ArrayEntries`1[System.String]
-          GetNumEntries: (() => any);
-          Equals: ((obj: any) => boolean);
+          symbol: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
+          readableStackTrace: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
+          GetNumEntries: (() => System.UInt32);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class PackedMemorySnapshot {
@@ -11716,19 +11777,19 @@ export namespace UnityEditor {
           nativeRootReferences: UnityEditor.Profiling.Memory.Experimental.NativeRootReferenceEntries;
           nativeTypes: UnityEditor.Profiling.Memory.Experimental.NativeTypeEntries;
           typeDescriptions: UnityEditor.Profiling.Memory.Experimental.TypeDescriptionEntries;
-          version: any; // System.UInt32
+          version: System.UInt32;
           metadata: UnityEngine.Profiling.Memory.Experimental.MetaData;
           filePath: string;
-          recordDate: any; // System.DateTime
+          recordDate: System.DateTime;
           captureFlags: UnityEngine.Profiling.Memory.Experimental.CaptureFlags;
           virtualMachineInformation: UnityEditor.Profiling.Memory.Experimental.VirtualMachineInformation;
           static Load: ((path: string) => UnityEditor.Profiling.Memory.Experimental.PackedMemorySnapshot);
           static Convert: ((snapshot: UnityEditor.MemoryProfiler.PackedMemorySnapshot, writePath: string) => boolean);
           static Save: ((snapshot: UnityEditor.Profiling.Memory.Experimental.PackedMemorySnapshot, writePath: string) => void);
           Dispose: (() => void);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export enum ObjectFlags {
@@ -11740,9 +11801,9 @@ export namespace UnityEditor {
           static IsDontDestroyOnLoad: ((flags: UnityEditor.Profiling.Memory.Experimental.ObjectFlags) => boolean);
           static IsPersistent: ((flags: UnityEditor.Profiling.Memory.Experimental.ObjectFlags) => boolean);
           static IsManager: ((flags: UnityEditor.Profiling.Memory.Experimental.ObjectFlags) => boolean);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export enum TypeFlags {
@@ -11755,9 +11816,9 @@ export namespace UnityEditor {
           static IsValueType: ((flags: UnityEditor.Profiling.Memory.Experimental.TypeFlags) => boolean);
           static IsArray: ((flags: UnityEditor.Profiling.Memory.Experimental.TypeFlags) => boolean);
           static ArrayRank: ((flags: UnityEditor.Profiling.Memory.Experimental.TypeFlags) => number);
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
-          GetType: (() => any);
+          GetType: (() => System.Type);
           ToString: (() => string);
         }
         export declare class VirtualMachineInformation {
@@ -11767,10 +11828,10 @@ export namespace UnityEditor {
           arrayBoundsOffsetInHeader: number;
           arraySizeOffsetInHeader: number;
           allocationGranularity: number;
-          Equals: ((obj: any) => boolean);
+          Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
-          GetType: (() => any);
+          GetType: (() => System.Type);
         }
       }
     }
@@ -11786,17 +11847,17 @@ export namespace UnityEditor {
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace Purchasing {
     export declare class PurchasingSettings {
       static enabled: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -11808,9 +11869,9 @@ export namespace UnityEditor {
       static SetTierSettings: ((target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.GraphicsTier, settings: UnityEditor.Rendering.TierSettings) => void) | ((target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.ShaderHardwareTier, settings: UnityEditor.Rendering.TierSettings) => void);
       static GetShaderSettingsForPlatform: ((target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.ShaderHardwareTier) => UnityEditor.Rendering.PlatformShaderSettings);
       static SetShaderSettingsForPlatform: ((target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.ShaderHardwareTier, settings: UnityEditor.Rendering.PlatformShaderSettings) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum ShaderQuality {
@@ -11823,10 +11884,10 @@ export namespace UnityEditor {
       color: UnityEngine.Color;
       minLuminance: number;
       maxLuminance: number;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class TierSettings {
       standardShaderQuality: UnityEditor.Rendering.ShaderQuality;
@@ -11841,36 +11902,36 @@ export namespace UnityEditor {
       semitransparentShadows: boolean;
       renderingPath: UnityEngine.RenderingPath;
       realtimeGICPUUsage: UnityEngine.Rendering.RealtimeGICPUUsage;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PlatformShaderSettings {
       cascadedShadowMaps: boolean;
       reflectionProbeBoxProjection: boolean;
       reflectionProbeBlending: boolean;
       standardShaderQuality: UnityEditor.Rendering.ShaderQuality;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class EditorCameraUtils {
       static RenderToCubemap: ((camera: UnityEngine.Camera, target: UnityEngine.Texture, faceMask: number, culledFlags: UnityEditor.StaticEditorFlags) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ShaderSnippetData {
       shaderType: UnityEditor.Rendering.ShaderType;
       passType: UnityEngine.Rendering.PassType;
       passName: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ShaderCompilerData {
       shaderRequirements: UnityEditor.Rendering.ShaderRequirements;
@@ -11878,10 +11939,10 @@ export namespace UnityEditor {
       shaderCompilerPlatform: UnityEditor.Rendering.ShaderCompilerPlatform;
       shaderKeywordSet: UnityEngine.Rendering.ShaderKeywordSet;
       platformKeywordSet: UnityEngine.Rendering.PlatformKeywordSet;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum ShaderCompilerPlatform {
       None = 0,
@@ -11934,9 +11995,9 @@ export namespace UnityEditor {
       Count = 7,
     }
     export declare class RenderPipelineEditorUtility {
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -11948,7 +12009,7 @@ export namespace UnityEditor {
       static previewSceneCount: number;
       static preventCrossSceneReferences: boolean;
       static playModeStartScene: UnityEditor.SceneAsset;
-      static DefaultSceneCullingMask: any; // System.UInt64
+      static DefaultSceneCullingMask: System.UInt64;
       static IsReloading: ((scene: UnityEngine.SceneManagement.Scene) => boolean);
       static OpenScene: ((scenePath: string, mode: UnityEditor.SceneManagement.OpenSceneMode) => UnityEngine.SceneManagement.Scene) | ((scenePath: string) => UnityEngine.SceneManagement.Scene);
       static NewScene: ((setup: UnityEditor.SceneManagement.NewSceneSetup, mode: UnityEditor.SceneManagement.NewSceneMode) => UnityEngine.SceneManagement.Scene) | ((setup: UnityEditor.SceneManagement.NewSceneSetup) => UnityEngine.SceneManagement.Scene);
@@ -11969,152 +12030,152 @@ export namespace UnityEditor {
       static GetSceneManagerSetup: (() => UnityEditor.SceneManagement.SceneSetup[]);
       static RestoreSceneManagerSetup: ((value: UnityEditor.SceneManagement.SceneSetup[]) => void);
       static DetectCrossSceneReferences: ((scene: UnityEngine.SceneManagement.Scene) => boolean);
-      static GetSceneCullingMask: ((scene: UnityEngine.SceneManagement.Scene) => any);
-      static SetSceneCullingMask: ((scene: UnityEngine.SceneManagement.Scene, sceneCullingMask: any) => void);
-      static CalculateAvailableSceneCullingMask: (() => any);
+      static GetSceneCullingMask: ((scene: UnityEngine.SceneManagement.Scene) => System.UInt64);
+      static SetSceneCullingMask: ((scene: UnityEngine.SceneManagement.Scene, sceneCullingMask: System.UInt64) => void);
+      static CalculateAvailableSceneCullingMask: (() => System.UInt64);
       static SaveScene: ((scene: UnityEngine.SceneManagement.Scene, dstScenePath: string) => boolean) | ((scene: UnityEngine.SceneManagement.Scene) => boolean) | ((scene: UnityEngine.SceneManagement.Scene, dstScenePath: string, saveAsCopy: boolean) => boolean);
       static LoadSceneInPlayMode: ((path: string, parameters: UnityEngine.SceneManagement.LoadSceneParameters) => UnityEngine.SceneManagement.Scene);
       static LoadSceneAsyncInPlayMode: ((path: string, parameters: UnityEngine.SceneManagement.LoadSceneParameters) => UnityEngine.AsyncOperation);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorSceneManager_NewSceneCreatedCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((scene: UnityEngine.SceneManagement.Scene, setup: UnityEditor.SceneManagement.NewSceneSetup, mode: UnityEditor.SceneManagement.NewSceneMode) => void);
-      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, setup: UnityEditor.SceneManagement.NewSceneSetup, mode: UnityEditor.SceneManagement.NewSceneMode, callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, setup: UnityEditor.SceneManagement.NewSceneSetup, mode: UnityEditor.SceneManagement.NewSceneMode, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorSceneManager_SceneOpeningCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((path: string, mode: UnityEditor.SceneManagement.OpenSceneMode) => void);
-      BeginInvoke: ((path: string, mode: UnityEditor.SceneManagement.OpenSceneMode, callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((path: string, mode: UnityEditor.SceneManagement.OpenSceneMode, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorSceneManager_SceneOpenedCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((scene: UnityEngine.SceneManagement.Scene, mode: UnityEditor.SceneManagement.OpenSceneMode) => void);
-      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, mode: UnityEditor.SceneManagement.OpenSceneMode, callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, mode: UnityEditor.SceneManagement.OpenSceneMode, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorSceneManager_SceneClosingCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((scene: UnityEngine.SceneManagement.Scene, removingScene: boolean) => void);
-      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, removingScene: boolean, callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, removingScene: boolean, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorSceneManager_SceneClosedCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((scene: UnityEngine.SceneManagement.Scene) => void);
-      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorSceneManager_SceneSavingCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((scene: UnityEngine.SceneManagement.Scene, path: string) => void);
-      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, path: string, callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, path: string, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorSceneManager_SceneSavedCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((scene: UnityEngine.SceneManagement.Scene) => void);
-      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class EditorSceneManager_SceneDirtiedCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
       Invoke: ((scene: UnityEngine.SceneManagement.Scene) => void);
-      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, callback: any, object: any) => any);
-      EndInvoke: ((result: any) => void);
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      BeginInvoke: ((scene: UnityEngine.SceneManagement.Scene, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SceneCullingMasks {
-      static DefaultSceneCullingMask: any; // System.UInt64
-      static GameViewObjects: any; // System.UInt64
-      static MainStageSceneViewObjects: any; // System.UInt64
-      Equals: ((obj: any) => boolean);
+      static DefaultSceneCullingMask: System.UInt64;
+      static GameViewObjects: System.UInt64;
+      static MainStageSceneViewObjects: System.UInt64;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum OpenSceneMode {
@@ -12136,9 +12197,9 @@ export namespace UnityEditor {
       static ReloadAllSceneHierarchies: (() => void);
       static CanSetNewParent: ((transform: UnityEngine.Transform, newParent: UnityEngine.Transform) => boolean);
       static CanMoveTransformToScene: ((transform: UnityEngine.Transform, scene: UnityEngine.SceneManagement.Scene) => boolean);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SceneHierarchyHooks_SubSceneInfo {
@@ -12148,18 +12209,18 @@ export namespace UnityEditor {
       sceneAsset: UnityEditor.SceneAsset;
       sceneName: string;
       color: UnityEngine.Color32;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PrefabOverride {
       Apply: ((prefabAssetPath: string, mode: UnityEditor.InteractionMode) => void) | (() => void) | ((prefabAssetPath: string) => void) | ((mode: UnityEditor.InteractionMode) => void);
       Revert: ((mode: UnityEditor.InteractionMode) => void) | (() => void);
       GetAssetObject: (() => UnityEngine.Object);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ObjectOverride {
@@ -12169,9 +12230,9 @@ export namespace UnityEditor {
       Apply: ((prefabAssetPath: string, mode: UnityEditor.InteractionMode) => void) | (() => void) | ((prefabAssetPath: string) => void) | ((mode: UnityEditor.InteractionMode) => void);
       Revert: ((mode: UnityEditor.InteractionMode) => void) | (() => void);
       GetAssetObject: (() => UnityEngine.Object);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AddedComponent {
@@ -12180,9 +12241,9 @@ export namespace UnityEditor {
       Apply: ((prefabAssetPath: string, mode: UnityEditor.InteractionMode) => void) | (() => void) | ((prefabAssetPath: string) => void) | ((mode: UnityEditor.InteractionMode) => void);
       Revert: ((mode: UnityEditor.InteractionMode) => void) | (() => void);
       GetAssetObject: (() => UnityEngine.Object);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class RemovedComponent {
@@ -12192,9 +12253,9 @@ export namespace UnityEditor {
       Apply: ((prefabAssetPath: string, mode: UnityEditor.InteractionMode) => void) | (() => void) | ((prefabAssetPath: string) => void) | ((mode: UnityEditor.InteractionMode) => void);
       Revert: ((mode: UnityEditor.InteractionMode) => void) | (() => void);
       GetAssetObject: (() => UnityEngine.Object);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AddedGameObject {
@@ -12204,9 +12265,9 @@ export namespace UnityEditor {
       Apply: ((prefabAssetPath: string, mode: UnityEditor.InteractionMode) => void) | (() => void) | ((prefabAssetPath: string) => void) | ((mode: UnityEditor.InteractionMode) => void);
       Revert: ((mode: UnityEditor.InteractionMode) => void) | (() => void);
       GetAssetObject: (() => UnityEngine.Object);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SceneSetup {
@@ -12215,9 +12276,9 @@ export namespace UnityEditor {
       isLoaded: boolean;
       isActive: boolean;
       isSubScene: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class MainStage {
@@ -12226,13 +12287,13 @@ export namespace UnityEditor {
       stageHandle: UnityEditor.SceneManagement.StageHandle;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      GetCombinedSceneCullingMaskForCamera: (() => any);
+      GetCombinedSceneCullingMaskForCamera: (() => System.UInt64);
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PreviewSceneStage {
       scene: UnityEngine.SceneManagement.Scene;
@@ -12240,34 +12301,34 @@ export namespace UnityEditor {
       assetPath: string;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      GetCombinedSceneCullingMaskForCamera: (() => any);
+      GetCombinedSceneCullingMaskForCamera: (() => System.UInt64);
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class Stage {
       assetPath: string;
       stageHandle: UnityEditor.SceneManagement.StageHandle;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      GetCombinedSceneCullingMaskForCamera: (() => any);
+      GetCombinedSceneCullingMaskForCamera: (() => System.UInt64);
       SetDirty: (() => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class StageHandle {
       Contains: ((gameObject: UnityEngine.GameObject) => boolean);
       IsValid: (() => boolean);
-      Equals: ((other: any) => boolean) | ((other: UnityEditor.SceneManagement.StageHandle) => boolean);
+      Equals: ((other: System.Object) => boolean) | ((other: UnityEditor.SceneManagement.StageHandle) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class StageUtility {
       static IsGameObjectRenderedByCamera: ((gameObject: UnityEngine.GameObject, camera: UnityEngine.Camera) => boolean);
@@ -12282,9 +12343,9 @@ export namespace UnityEditor {
       static GoBackToPreviousStage: (() => void);
       static GoToStage: ((stage: UnityEditor.SceneManagement.Stage, setAsFirstItemAfterMainStage: boolean) => void);
       static PlaceGameObjectInCurrentStage: ((gameObject: UnityEngine.GameObject) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -12294,9 +12355,9 @@ export namespace UnityEditor {
       static isAttached: boolean;
       static isEnabled: boolean;
       static Disconnect: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -12308,86 +12369,86 @@ export namespace UnityEditor {
       All = 3,
     }
     export declare class ObjectSelectorTargetInfo {
-      constructor(globalObjectId: UnityEditor.GlobalObjectId, targetObject?: UnityEngine.Object, type?: any);
+      constructor(globalObjectId: UnityEditor.GlobalObjectId, targetObject?: UnityEngine.Object, type?: System.Type);
       globalObjectId: UnityEditor.GlobalObjectId;
       targetObject: UnityEngine.Object;
-      type: any; // System.Type
+      type: System.Type;
       LoadObject: (() => UnityEngine.Object);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ObjectSelectorSearchContext {
       constructor();
-      guid: any; // System.Guid
+      guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
       currentObject: UnityEngine.Object;
       editedObjects: UnityEngine.Object[];
-      requiredTypes: any; // System.Collections.Generic.IEnumerable`1[System.Type]
-      requiredTypeNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      requiredTypes: System.Collections.Generic.IEnumerable<System.Type>;
+      requiredTypeNames: System.Collections.Generic.IEnumerable<string>;
       visibleObjects: UnityEditor.SearchService.VisibleObjects;
-      allowedInstanceIds: any; // System.Collections.Generic.IEnumerable`1[System.Int32]
-      selectorConstraint: any; // System.Func`4[UnityEditor.SearchService.ObjectSelectorTargetInfo,UnityEngine.Object[],UnityEditor.SearchService.ObjectSelectorSearchContext,System.Boolean]
-      Equals: ((obj: any) => boolean);
+      allowedInstanceIds: System.Collections.Generic.IEnumerable<number>;
+      selectorConstraint: ((arg0: UnityEditor.SearchService.ObjectSelectorTargetInfo, arg1: UnityEngine.Object[], arg2: UnityEditor.SearchService.ObjectSelectorSearchContext, arg3: boolean) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class IObjectSelectorEngine {
+    export interface IObjectSelectorEngine {
     }
     export declare class ObjectSelector {
       static EngineScope: UnityEditor.SearchService.SearchEngineScope;
       static RegisterEngine: ((engine: UnityEditor.SearchService.IObjectSelectorEngine) => void);
       static UnregisterEngine: ((engine: UnityEditor.SearchService.IObjectSelectorEngine) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ProjectSearchContext {
       constructor();
-      guid: any; // System.Guid
+      guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
-      requiredTypes: any; // System.Collections.Generic.IEnumerable`1[System.Type]
-      requiredTypeNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
-      Equals: ((obj: any) => boolean);
+      requiredTypes: System.Collections.Generic.IEnumerable<System.Type>;
+      requiredTypeNames: System.Collections.Generic.IEnumerable<string>;
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class IProjectSearchEngine {
+    export interface IProjectSearchEngine {
     }
     export declare class Project {
       static EngineScope: UnityEditor.SearchService.SearchEngineScope;
       static RegisterEngine: ((engine: UnityEditor.SearchService.IProjectSearchEngine) => void);
       static UnregisterEngine: ((engine: UnityEditor.SearchService.IProjectSearchEngine) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SceneSearchContext {
       constructor();
-      guid: any; // System.Guid
+      guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
-      requiredTypes: any; // System.Collections.Generic.IEnumerable`1[System.Type]
-      requiredTypeNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      requiredTypes: System.Collections.Generic.IEnumerable<System.Type>;
+      requiredTypeNames: System.Collections.Generic.IEnumerable<string>;
       rootProperty: UnityEditor.HierarchyProperty;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class ISceneSearchEngine {
+    export interface ISceneSearchEngine {
     }
     export declare class Scene {
       static EngineScope: UnityEditor.SearchService.SearchEngineScope;
       static RegisterEngine: ((engine: UnityEditor.SearchService.ISceneSearchEngine) => void);
       static UnregisterEngine: ((engine: UnityEditor.SearchService.ISceneSearchEngine) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum SearchEngineScope {
@@ -12395,21 +12456,27 @@ export namespace UnityEditor {
       Project = 1,
       ObjectSelector = 2,
     }
-    export declare class ISearchContext {
-      guid: any; // System.Guid
+    export interface ISearchContext {
+      guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
-      requiredTypes: any; // System.Collections.Generic.IEnumerable`1[System.Type]
-      requiredTypeNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
+      requiredTypes: System.Collections.Generic.IEnumerable<System.Type>;
+      requiredTypeNames: System.Collections.Generic.IEnumerable<string>;
     }
-    export declare class ISearchEngineBase {
+    export interface ISearchEngineBase {
       name: string;
       BeginSession: ((context: UnityEditor.SearchService.ISearchContext) => void);
       EndSession: ((context: UnityEditor.SearchService.ISearchContext) => void);
       BeginSearch: ((context: UnityEditor.SearchService.ISearchContext, query: string) => void);
       EndSearch: ((context: UnityEditor.SearchService.ISearchContext) => void);
     }
-    export declare class ISelectorEngine {
-      SelectObject: ((context: UnityEditor.SearchService.ISearchContext, onObjectSelectorClosed: any, onObjectSelectedUpdated: any) => boolean);
+    export interface ISearchEngine<T = any> {
+      Search: ((context: UnityEditor.SearchService.ISearchContext, query: string, asyncItemsReceived: (() => void)) => System.Collections.Generic.IEnumerable<T>);
+    }
+    export interface IFilterEngine<T = any> {
+      Filter: ((context: UnityEditor.SearchService.ISearchContext, query: string, objectToFilter: T) => boolean);
+    }
+    export interface ISelectorEngine {
+      SelectObject: ((context: UnityEditor.SearchService.ISearchContext, onObjectSelectorClosed: ((arg0: UnityEngine.Object) => void), onObjectSelectedUpdated: (() => void)) => boolean);
       SetSearchFilter: ((context: UnityEditor.SearchService.ISearchContext, searchFilter: string) => void);
     }
   }
@@ -12422,30 +12489,30 @@ export namespace UnityEditor {
       action: boolean;
       shift: boolean;
       ToString: (() => string);
-      Equals: ((other: UnityEditor.ShortcutManagement.KeyCombination) => boolean) | ((obj: any) => boolean);
+      Equals: ((other: UnityEditor.ShortcutManagement.KeyCombination) => boolean) | ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ShortcutBinding {
       constructor(keyCombination: UnityEditor.ShortcutManagement.KeyCombination);
       static empty: UnityEditor.ShortcutManagement.ShortcutBinding;
-      keyCombinationSequence: any; // System.Collections.Generic.IEnumerable`1[UnityEditor.ShortcutManagement.KeyCombination]
+      keyCombinationSequence: System.Collections.Generic.IEnumerable<UnityEditor.ShortcutManagement.KeyCombination>;
       ToString: (() => string);
-      Equals: ((other: UnityEditor.ShortcutManagement.ShortcutBinding) => boolean) | ((obj: any) => boolean);
+      Equals: ((other: UnityEditor.ShortcutManagement.ShortcutBinding) => boolean) | ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum ShortcutStage {
       Begin = 0,
       End = 1,
     }
     export declare class ShortcutArguments {
-      context: any; // System.Object
+      context: System.Object;
       stage: UnityEditor.ShortcutManagement.ShortcutStage;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export enum ShortcutModifiers {
       None = 0,
@@ -12453,15 +12520,15 @@ export namespace UnityEditor {
       Action = 2,
       Shift = 4,
     }
-    export declare class IShortcutManager {
+    export interface IShortcutManager {
       activeProfileId: string;
-      GetAvailableProfileIds: (() => any);
+      GetAvailableProfileIds: (() => System.Collections.Generic.IEnumerable<string>);
       IsProfileIdValid: ((profileId: string) => boolean);
       IsProfileReadOnly: ((profileId: string) => boolean);
       CreateProfile: ((profileId: string) => void);
       DeleteProfile: ((profileId: string) => void);
       RenameProfile: ((profileId: string, newProfileId: string) => void);
-      GetAvailableShortcutIds: (() => any);
+      GetAvailableShortcutIds: (() => System.Collections.Generic.IEnumerable<string>);
       GetShortcutBinding: ((shortcutId: string) => UnityEditor.ShortcutManagement.ShortcutBinding);
       RebindShortcut: ((shortcutId: string, binding: UnityEditor.ShortcutManagement.ShortcutBinding) => void);
       ClearShortcutOverride: ((shortcutId: string) => void);
@@ -12471,27 +12538,27 @@ export namespace UnityEditor {
       constructor(previousActiveProfileId: string, currentActiveProfileId: string);
       previousActiveProfileId: string;
       currentActiveProfileId: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ShortcutBindingChangedEventArgs {
       constructor(shortcutId: string, oldBinding: UnityEditor.ShortcutManagement.ShortcutBinding, newBinding: UnityEditor.ShortcutManagement.ShortcutBinding);
       shortcutId: string;
       oldBinding: UnityEditor.ShortcutManagement.ShortcutBinding;
       newBinding: UnityEditor.ShortcutManagement.ShortcutBinding;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class ShortcutManager {
       static instance: UnityEditor.ShortcutManagement.IShortcutManager;
       static defaultProfileId: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -12503,22 +12570,22 @@ export namespace UnityEditor {
       filterMode: UnityEngine.FilterMode;
       maxWidth: number;
       maxHeight: number;
-      paddingPower: any; // System.UInt32
+      paddingPower: System.UInt32;
       anisoLevel: number;
       generateMipMaps: boolean;
       enableRotation: boolean;
       allowsAlphaSplitting: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class PackerJob {
       AddAtlas: ((atlasName: string, settings: UnityEditor.Sprites.AtlasSettings) => void);
       AssignToAtlas: ((atlasName: string, sprite: UnityEngine.Sprite, packingMode: UnityEngine.SpritePackingMode, packingRotation: UnityEngine.SpritePackingRotation) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Packer {
@@ -12530,9 +12597,9 @@ export namespace UnityEditor {
       static GetTexturesForAtlas: ((atlasName: string) => UnityEngine.Texture2D[]);
       static GetAlphaTexturesForAtlas: ((atlasName: string) => UnityEngine.Texture2D[]);
       static RebuildAtlasCacheIfNeeded: ((target: UnityEditor.BuildTarget, displayProgressBar: boolean, execution: UnityEditor.Sprites.Packer_Execution) => void) | ((target: UnityEditor.BuildTarget, displayProgressBar: boolean) => void) | ((target: UnityEditor.BuildTarget) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum Packer_Execution {
@@ -12544,20 +12611,20 @@ export namespace UnityEditor {
       static GetSpriteTexture: ((sprite: UnityEngine.Sprite, getAtlasData: boolean) => UnityEngine.Texture2D);
       static GetSpriteMesh: ((sprite: UnityEngine.Sprite, getAtlasData: boolean) => UnityEngine.Vector2[]);
       static GetSpriteUVs: ((sprite: UnityEngine.Sprite, getAtlasData: boolean) => UnityEngine.Vector2[]);
-      static GetSpriteIndices: ((sprite: UnityEngine.Sprite, getAtlasData: boolean) => any[]);
-      Equals: ((obj: any) => boolean);
+      static GetSpriteIndices: ((sprite: UnityEngine.Sprite, getAtlasData: boolean) => System.UInt16[]);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class DataUtility {
       constructor();
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class IPackerPolicy {
+    export interface IPackerPolicy {
       AllowSequentialPacking: boolean;
       OnGroupAtlases: ((target: UnityEditor.BuildTarget, job: UnityEditor.Sprites.PackerJob, textureImporterInstanceIDs: number[]) => void);
       GetVersion: (() => number);
@@ -12567,18 +12634,18 @@ export namespace UnityEditor {
     export declare class SpriteEditorExtension {
       static GetSpriteID: ((sprite: UnityEngine.Sprite) => UnityEditor.GUID);
       static SetSpriteID: ((sprite: UnityEngine.Sprite, guid: UnityEditor.GUID) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SpriteAtlasUtility {
       constructor();
       static PackAllAtlases: ((target: UnityEditor.BuildTarget, canCancel?: boolean) => void);
       static PackAtlases: ((atlases: UnityEngine.U2D.SpriteAtlas[], target: UnityEditor.BuildTarget, canCancel?: boolean) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SpriteAtlasTextureSettings {
@@ -12587,20 +12654,20 @@ export namespace UnityEditor {
       generateMipMaps: boolean;
       readable: boolean;
       sRGB: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class SpriteAtlasPackingSettings {
       blockOffset: number;
       padding: number;
       enableRotation: boolean;
       enableTightPacking: boolean;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class SpriteAtlasExtensions {
       static Add: ((spriteAtlas: UnityEngine.U2D.SpriteAtlas, objects: UnityEngine.Object[]) => void);
@@ -12616,9 +12683,9 @@ export namespace UnityEditor {
       static SetIsVariant: ((spriteAtlas: UnityEngine.U2D.SpriteAtlas, value: boolean) => void);
       static SetMasterAtlas: ((spriteAtlas: UnityEngine.U2D.SpriteAtlas, value: UnityEngine.U2D.SpriteAtlas) => void);
       static SetVariantScale: ((spriteAtlas: UnityEngine.U2D.SpriteAtlas, value: number) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SpriteAtlasAsset {
@@ -12640,15 +12707,15 @@ export namespace UnityEditor {
       Remove: ((objects: UnityEngine.Object[]) => void);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
     export declare class SpriteAtlasImporter {
       constructor();
       assetPath: string;
       importSettingsMissing: boolean;
-      assetTimeStamp: any; // System.UInt64
+      assetTimeStamp: System.UInt64;
       userData: string;
       assetBundleName: string;
       assetBundleVariant: string;
@@ -12658,29 +12725,29 @@ export namespace UnityEditor {
       SaveAndReimport: (() => void);
       AddRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object) => void);
       RemoveRemap: ((identifier: UnityEditor.AssetImporter_SourceAssetIdentifier) => boolean);
-      GetExternalObjectMap: (() => any);
-      SupportsRemappedAssetType: ((type: any) => boolean);
+      GetExternalObjectMap: (() => System.Collections.Generic.Dictionary<UnityEditor.AssetImporter_SourceAssetIdentifier, UnityEngine.Object>);
+      SupportsRemappedAssetType: ((type: System.Type) => boolean);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
-      Equals: ((other: any) => boolean);
+      Equals: ((other: System.Object) => boolean);
       ToString: (() => string);
-      GetType: (() => any);
+      GetType: (() => System.Type);
     }
   }
   export namespace UIElements {
     export declare class UIElementsEntryPoint {
       static SetAntiAliasing: ((window: UnityEditor.EditorWindow, aa: number) => void);
       static GetAntiAliasing: ((window: UnityEditor.EditorWindow) => number);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class SerializedPropertyChangeEvent {
       constructor();
       changedProperty: UnityEditor.SerializedProperty;
-      eventTypeId: any; // System.Int64
-      timestamp: any; // System.Int64
+      eventTypeId: System.Int64;
+      timestamp: System.Int64;
       bubbles: boolean;
       tricklesDown: boolean;
       target: UnityEngine.UIElements.IEventHandler;
@@ -12697,9 +12764,9 @@ export namespace UnityEditor {
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
       PreventDefault: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -12708,9 +12775,9 @@ export namespace UnityEditor {
       constructor(target: UnityEditor.BuildTarget, inputDirectory: string);
       target: UnityEditor.BuildTarget;
       inputDirectory: string;
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -12735,9 +12802,9 @@ export namespace UnityEditor {
       IsOneOfStates: ((states: UnityEditor.VersionControl.Asset_States[]) => boolean);
       Edit: (() => void);
       Load: (() => UnityEngine.Object);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum Asset_States {
@@ -12772,9 +12839,9 @@ export namespace UnityEditor {
       id: string;
       static defaultID: string;
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Message {
@@ -12782,9 +12849,9 @@ export namespace UnityEditor {
       message: string;
       Dispose: (() => void);
       Show: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum Message_Severity {
@@ -12801,9 +12868,9 @@ export namespace UnityEditor {
       isRequired: boolean;
       isPassword: boolean;
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Plugin {
@@ -12811,9 +12878,9 @@ export namespace UnityEditor {
       name: string;
       configFields: UnityEditor.VersionControl.ConfigField[];
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Provider {
@@ -12869,35 +12936,35 @@ export namespace UnityEditor {
       static IncomingChangeSetAssets: ((changeset: UnityEditor.VersionControl.ChangeSet) => UnityEditor.VersionControl.Task) | ((changesetID: string) => UnityEditor.VersionControl.Task);
       static ChangeSetMove: ((assets: UnityEditor.VersionControl.AssetList, changeset: UnityEditor.VersionControl.ChangeSet) => UnityEditor.VersionControl.Task) | ((asset: UnityEditor.VersionControl.Asset, changeset: UnityEditor.VersionControl.ChangeSet) => UnityEditor.VersionControl.Task) | ((assets: UnityEditor.VersionControl.AssetList, changesetID: string) => UnityEditor.VersionControl.Task) | ((asset: UnityEditor.VersionControl.Asset, changesetID: string) => UnityEditor.VersionControl.Task);
       static GetAssetListFromSelection: (() => UnityEditor.VersionControl.AssetList);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Provider_PreSubmitCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class Provider_PreCheckoutCallback {
-      constructor(object: any, method: any);
-      Method: any; // System.Reflection.MethodInfo
-      Target: any; // System.Object
-      GetObjectData: ((info: any, context: any) => void);
-      Equals: ((obj: any) => boolean);
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetInvocationList: (() => any[]);
-      DynamicInvoke: ((...args: any[]) => any);
-      Clone: (() => any);
-      GetType: (() => any);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum CompletionAction {
@@ -12931,9 +12998,9 @@ export namespace UnityEditor {
       Wait: (() => void);
       SetCompletionAction: ((action: UnityEditor.VersionControl.CompletionAction) => void);
       Dispose: (() => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class AssetList {
@@ -12945,37 +13012,37 @@ export namespace UnityEditor {
       FilterCount: ((includeFolder: boolean, ...states: UnityEditor.VersionControl.Asset_States[]) => number);
       FilterChildren: (() => UnityEditor.VersionControl.AssetList);
       Add: ((item: UnityEditor.VersionControl.Asset) => void);
-      AddRange: ((collection: any) => void);
-      AsReadOnly: (() => any);
-      BinarySearch: ((index: number, count: number, item: UnityEditor.VersionControl.Asset, comparer: any) => number) | ((item: UnityEditor.VersionControl.Asset) => number) | ((item: UnityEditor.VersionControl.Asset, comparer: any) => number);
+      AddRange: ((collection: System.Collections.Generic.IEnumerable<UnityEditor.VersionControl.Asset>) => void);
+      AsReadOnly: (() => UnityEditor.VersionControl.Asset[]);
+      BinarySearch: ((index: number, count: number, item: UnityEditor.VersionControl.Asset, comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.Asset>) => number) | ((item: UnityEditor.VersionControl.Asset) => number) | ((item: UnityEditor.VersionControl.Asset, comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.Asset>) => number);
       Clear: (() => void);
       Contains: ((item: UnityEditor.VersionControl.Asset) => boolean);
       CopyTo: ((array: UnityEditor.VersionControl.Asset[]) => void) | ((index: number, array: UnityEditor.VersionControl.Asset[], arrayIndex: number, count: number) => void) | ((array: UnityEditor.VersionControl.Asset[], arrayIndex: number) => void);
-      Exists: ((match: any) => boolean);
-      Find: ((match: any) => UnityEditor.VersionControl.Asset);
-      FindAll: ((match: any) => any);
-      FindIndex: ((match: any) => number) | ((startIndex: number, match: any) => number) | ((startIndex: number, count: number, match: any) => number);
-      FindLast: ((match: any) => UnityEditor.VersionControl.Asset);
-      FindLastIndex: ((match: any) => number) | ((startIndex: number, match: any) => number) | ((startIndex: number, count: number, match: any) => number);
-      ForEach: ((action: any) => void);
-      GetEnumerator: (() => any);
-      GetRange: ((index: number, count: number) => any);
+      Exists: ((match: System.Predicate<UnityEditor.VersionControl.Asset>) => boolean);
+      Find: ((match: System.Predicate<UnityEditor.VersionControl.Asset>) => UnityEditor.VersionControl.Asset);
+      FindAll: ((match: System.Predicate<UnityEditor.VersionControl.Asset>) => UnityEditor.VersionControl.Asset[]);
+      FindIndex: ((match: System.Predicate<UnityEditor.VersionControl.Asset>) => number) | ((startIndex: number, match: System.Predicate<UnityEditor.VersionControl.Asset>) => number) | ((startIndex: number, count: number, match: System.Predicate<UnityEditor.VersionControl.Asset>) => number);
+      FindLast: ((match: System.Predicate<UnityEditor.VersionControl.Asset>) => UnityEditor.VersionControl.Asset);
+      FindLastIndex: ((match: System.Predicate<UnityEditor.VersionControl.Asset>) => number) | ((startIndex: number, match: System.Predicate<UnityEditor.VersionControl.Asset>) => number) | ((startIndex: number, count: number, match: System.Predicate<UnityEditor.VersionControl.Asset>) => number);
+      ForEach: ((action: (() => void)) => void);
+      GetEnumerator: (() => System.Collections.Generic.List<UnityEditor.VersionControl.Asset>);
+      GetRange: ((index: number, count: number) => UnityEditor.VersionControl.Asset[]);
       IndexOf: ((item: UnityEditor.VersionControl.Asset) => number) | ((item: UnityEditor.VersionControl.Asset, index: number) => number) | ((item: UnityEditor.VersionControl.Asset, index: number, count: number) => number);
       Insert: ((index: number, item: UnityEditor.VersionControl.Asset) => void);
-      InsertRange: ((index: number, collection: any) => void);
+      InsertRange: ((index: number, collection: System.Collections.Generic.IEnumerable<UnityEditor.VersionControl.Asset>) => void);
       LastIndexOf: ((item: UnityEditor.VersionControl.Asset) => number) | ((item: UnityEditor.VersionControl.Asset, index: number) => number) | ((item: UnityEditor.VersionControl.Asset, index: number, count: number) => number);
       Remove: ((item: UnityEditor.VersionControl.Asset) => boolean);
-      RemoveAll: ((match: any) => number);
+      RemoveAll: ((match: System.Predicate<UnityEditor.VersionControl.Asset>) => number);
       RemoveAt: ((index: number) => void);
       RemoveRange: ((index: number, count: number) => void);
       Reverse: (() => void) | ((index: number, count: number) => void);
-      Sort: (() => void) | ((comparer: any) => void) | ((index: number, count: number, comparer: any) => void) | ((comparison: any) => void);
+      Sort: (() => void) | ((comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.Asset>) => void) | ((index: number, count: number, comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.Asset>) => void) | ((comparison: System.Comparison<UnityEditor.VersionControl.Asset>) => void);
       ToArray: (() => UnityEditor.VersionControl.Asset[]);
       TrimExcess: (() => void);
-      TrueForAll: ((match: any) => boolean);
-      Equals: ((obj: any) => boolean);
+      TrueForAll: ((match: System.Predicate<UnityEditor.VersionControl.Asset>) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class ChangeSets {
@@ -12983,37 +13050,37 @@ export namespace UnityEditor {
       Capacity: number;
       Count: number;
       Add: ((item: UnityEditor.VersionControl.ChangeSet) => void);
-      AddRange: ((collection: any) => void);
-      AsReadOnly: (() => any);
-      BinarySearch: ((index: number, count: number, item: UnityEditor.VersionControl.ChangeSet, comparer: any) => number) | ((item: UnityEditor.VersionControl.ChangeSet) => number) | ((item: UnityEditor.VersionControl.ChangeSet, comparer: any) => number);
+      AddRange: ((collection: System.Collections.Generic.IEnumerable<UnityEditor.VersionControl.ChangeSet>) => void);
+      AsReadOnly: (() => UnityEditor.VersionControl.ChangeSet[]);
+      BinarySearch: ((index: number, count: number, item: UnityEditor.VersionControl.ChangeSet, comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.ChangeSet>) => number) | ((item: UnityEditor.VersionControl.ChangeSet) => number) | ((item: UnityEditor.VersionControl.ChangeSet, comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.ChangeSet>) => number);
       Clear: (() => void);
       Contains: ((item: UnityEditor.VersionControl.ChangeSet) => boolean);
       CopyTo: ((array: UnityEditor.VersionControl.ChangeSet[]) => void) | ((index: number, array: UnityEditor.VersionControl.ChangeSet[], arrayIndex: number, count: number) => void) | ((array: UnityEditor.VersionControl.ChangeSet[], arrayIndex: number) => void);
-      Exists: ((match: any) => boolean);
-      Find: ((match: any) => UnityEditor.VersionControl.ChangeSet);
-      FindAll: ((match: any) => any);
-      FindIndex: ((match: any) => number) | ((startIndex: number, match: any) => number) | ((startIndex: number, count: number, match: any) => number);
-      FindLast: ((match: any) => UnityEditor.VersionControl.ChangeSet);
-      FindLastIndex: ((match: any) => number) | ((startIndex: number, match: any) => number) | ((startIndex: number, count: number, match: any) => number);
-      ForEach: ((action: any) => void);
-      GetEnumerator: (() => any);
-      GetRange: ((index: number, count: number) => any);
+      Exists: ((match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => boolean);
+      Find: ((match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => UnityEditor.VersionControl.ChangeSet);
+      FindAll: ((match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => UnityEditor.VersionControl.ChangeSet[]);
+      FindIndex: ((match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => number) | ((startIndex: number, match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => number) | ((startIndex: number, count: number, match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => number);
+      FindLast: ((match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => UnityEditor.VersionControl.ChangeSet);
+      FindLastIndex: ((match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => number) | ((startIndex: number, match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => number) | ((startIndex: number, count: number, match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => number);
+      ForEach: ((action: (() => void)) => void);
+      GetEnumerator: (() => System.Collections.Generic.List<UnityEditor.VersionControl.ChangeSet>);
+      GetRange: ((index: number, count: number) => UnityEditor.VersionControl.ChangeSet[]);
       IndexOf: ((item: UnityEditor.VersionControl.ChangeSet) => number) | ((item: UnityEditor.VersionControl.ChangeSet, index: number) => number) | ((item: UnityEditor.VersionControl.ChangeSet, index: number, count: number) => number);
       Insert: ((index: number, item: UnityEditor.VersionControl.ChangeSet) => void);
-      InsertRange: ((index: number, collection: any) => void);
+      InsertRange: ((index: number, collection: System.Collections.Generic.IEnumerable<UnityEditor.VersionControl.ChangeSet>) => void);
       LastIndexOf: ((item: UnityEditor.VersionControl.ChangeSet) => number) | ((item: UnityEditor.VersionControl.ChangeSet, index: number) => number) | ((item: UnityEditor.VersionControl.ChangeSet, index: number, count: number) => number);
       Remove: ((item: UnityEditor.VersionControl.ChangeSet) => boolean);
-      RemoveAll: ((match: any) => number);
+      RemoveAll: ((match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => number);
       RemoveAt: ((index: number) => void);
       RemoveRange: ((index: number, count: number) => void);
       Reverse: (() => void) | ((index: number, count: number) => void);
-      Sort: (() => void) | ((comparer: any) => void) | ((index: number, count: number, comparer: any) => void) | ((comparison: any) => void);
+      Sort: (() => void) | ((comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.ChangeSet>) => void) | ((index: number, count: number, comparer: System.Collections.Generic.IComparer<UnityEditor.VersionControl.ChangeSet>) => void) | ((comparison: System.Comparison<UnityEditor.VersionControl.ChangeSet>) => void);
       ToArray: (() => UnityEditor.VersionControl.ChangeSet[]);
       TrimExcess: (() => void);
-      TrueForAll: ((match: any) => boolean);
-      Equals: ((obj: any) => boolean);
+      TrueForAll: ((match: System.Predicate<UnityEditor.VersionControl.ChangeSet>) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
     export enum CheckoutMode {
@@ -13052,9 +13119,9 @@ export namespace UnityEditor {
     export declare class SolutionGuidGenerator {
       static GuidForProject: ((projectName: string) => string);
       static GuidForSolution: ((projectName: string, sourceFileExtension: string) => string);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }
@@ -13062,9 +13129,9 @@ export namespace UnityEditor {
     export declare class BootOptions {
       constructor();
       static SetXRSDKPreInitLibrary: ((bootConfigPath: string, libraryName: string) => void);
-      Equals: ((obj: any) => boolean);
+      Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
-      GetType: (() => any);
+      GetType: (() => System.Type);
       ToString: (() => string);
     }
   }

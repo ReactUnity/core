@@ -1,10 +1,72 @@
 //
-// Types in assemblies: mscorlib, mscorlib, mscorlib, mscorlib, mscorlib
-// Generated 7.03.2021 18:43:16
+// Types in assemblies: mscorlib, mscorlib, System.Core, System, mscorlib, System, mscorlib
+// Generated 7.03.2021 22:03:41
 //
 
 
 export namespace System {
+  export declare class Memory<T = any> {
+    constructor(array: T[]);
+    constructor(array: T[], start: number, length: number);
+    static Empty: any; // System.Memory`1[T]
+    Length: number;
+    IsEmpty: boolean;
+    Span: System.Span<T>;
+    Slice: ((start: number) => System.Memory<T>) | ((start: number, length: number) => System.Memory<T>);
+    Retain: ((pin?: boolean) => System.Buffers.MemoryHandle);
+    ToArray: (() => T[]);
+    Equals: ((obj: System.Object) => boolean) | ((other: System.Memory<T>) => boolean);
+    GetHashCode: (() => number);
+    ToString: (() => string);
+    GetType: (() => System.Type);
+  }
+  export declare class ReadOnlyMemory<T = any> {
+    constructor(array: T[]);
+    constructor(array: T[], start: number, length: number);
+    static Empty: any; // System.ReadOnlyMemory`1[T]
+    Length: number;
+    IsEmpty: boolean;
+    Span: System.ReadOnlySpan<T>;
+    Slice: ((start: number) => System.ReadOnlyMemory<T>) | ((start: number, length: number) => System.ReadOnlyMemory<T>);
+    Retain: ((pin?: boolean) => System.Buffers.MemoryHandle);
+    ToArray: (() => T[]);
+    Equals: ((obj: System.Object) => boolean) | ((other: System.ReadOnlyMemory<T>) => boolean);
+    GetHashCode: (() => number);
+    ToString: (() => string);
+    GetType: (() => System.Type);
+  }
+  export declare class ReadOnlySpan<T = any> {
+    constructor(array: T[]);
+    constructor(array: T[], start: number, length: number);
+    Length: number;
+    IsEmpty: boolean;
+    static Empty: any; // System.ReadOnlySpan`1[T]
+    CopyTo: ((destination: System.Span<T>) => void);
+    TryCopyTo: ((destination: System.Span<T>) => boolean);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    Slice: ((start: number) => System.ReadOnlySpan<T>) | ((start: number, length: number) => System.ReadOnlySpan<T>);
+    ToArray: (() => T[]);
+    ToString: (() => string);
+    GetType: (() => System.Type);
+  }
+  export declare class Span<T = any> {
+    constructor(array: T[]);
+    constructor(array: T[], start: number, length: number);
+    Length: number;
+    IsEmpty: boolean;
+    static Empty: any; // System.Span`1[T]
+    Clear: (() => void);
+    Fill: ((value: T) => void);
+    CopyTo: ((destination: System.Span<T>) => void);
+    TryCopyTo: ((destination: System.Span<T>) => boolean);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    Slice: ((start: number) => System.Span<T>) | ((start: number, length: number) => System.Span<T>);
+    ToArray: (() => T[]);
+    ToString: (() => string);
+    GetType: (() => System.Type);
+  }
   export declare class SpanExtensions {
     static AsReadOnlySpan: ((text: string) => any);
     static IndexOf: ((span: any, value: System.Byte) => number) | ((span: any, value: any) => number) | ((span: any, value: System.Byte) => number) | ((span: any, value: any) => number);
@@ -22,12 +84,20 @@ export namespace System {
     GetType: (() => System.Type);
     ToString: (() => string);
   }
-  export declare class ValueTuple {
-    Equals: ((obj: System.Object) => boolean) | ((other: System.ValueTuple) => boolean);
-    CompareTo: ((other: System.ValueTuple) => number);
+  export declare class ValueTuple<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, TRest = any> {
+    constructor(item1: T1, item2: T2, item3: T3, item4: T4, item5: T5, item6: T6, item7: T7, rest: TRest);
+    Item1: T1;
+    Item2: T2;
+    Item3: T3;
+    Item4: T4;
+    Item5: T5;
+    Item6: T6;
+    Item7: T7;
+    Rest: TRest;
+    Equals: ((obj: System.Object) => boolean) | ((other: System.ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>) => boolean);
+    CompareTo: ((other: System.ValueTuple<T1, T2, T3, T4, T5, T6, T7, TRest>) => number);
     GetHashCode: (() => number);
     ToString: (() => string);
-    static Create: (() => System.ValueTuple);
     GetType: (() => System.Type);
   }
   export declare class Array {
@@ -62,21 +132,30 @@ export namespace System {
     GetType: (() => System.Type);
     ToString: (() => string);
   }
-  export declare class Tuple {
+  export declare class Tuple<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, TRest = any> {
+    constructor(item1: T1, item2: T2, item3: T3, item4: T4, item5: T5, item6: T6, item7: T7, rest: TRest);
+    Item1: T1;
+    Item2: T2;
+    Item3: T3;
+    Item4: T4;
+    Item5: T5;
+    Item6: T6;
+    Item7: T7;
+    Rest: TRest;
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => System.Type);
     ToString: (() => string);
+    GetType: (() => System.Type);
   }
   export declare class AggregateException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
-    constructor(innerExceptions: any);
+    constructor(innerExceptions: System.Collections.Generic.IEnumerable<System.Exception>);
     constructor(...innerExceptions: System.Exception[]);
-    constructor(message: string, innerExceptions: any);
+    constructor(message: string, innerExceptions: System.Collections.Generic.IEnumerable<System.Exception>);
     constructor(message: string, ...innerExceptions: System.Exception[]);
-    InnerExceptions: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[System.Exception]
+    InnerExceptions: System.Exception[];
     Message: string;
     Data: System.Collections.IDictionary;
     InnerException: System.Exception;
@@ -87,7 +166,7 @@ export namespace System {
     HResult: number;
     GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
     GetBaseException: (() => System.Exception);
-    Handle: ((predicate: any) => void);
+    Handle: ((predicate: ((arg0: System.Exception, arg1: boolean) => boolean)) => void);
     Flatten: (() => System.AggregateException);
     ToString: (() => string);
     GetType: (() => System.Type) | (() => System.Type);
@@ -111,6 +190,20 @@ export namespace System {
     GetArgument: ((index: number) => System.Object);
     ToString: ((formatProvider: System.IFormatProvider) => string) | (() => string);
     static Invariant: ((formattable: System.FormattableString) => string);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+  }
+  export declare class Lazy<T = any> {
+    constructor();
+    constructor(valueFactory: ((arg0: T) => T));
+    constructor(isThreadSafe: boolean);
+    constructor(mode: System.Threading.LazyThreadSafetyMode);
+    constructor(valueFactory: ((arg0: T) => T), isThreadSafe: boolean);
+    constructor(valueFactory: ((arg0: T) => T), mode: System.Threading.LazyThreadSafetyMode);
+    IsValueCreated: boolean;
+    Value: T;
+    ToString: (() => string);
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     GetType: (() => System.Type);
@@ -140,13 +233,77 @@ export namespace System {
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
   }
-  export declare class Action {
+  export declare class Action<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, T8 = any, T9 = any, T10 = any, T11 = any, T12 = any, T13 = any, T14 = any, T15 = any, T16 = any> {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
-    Invoke: (() => void);
-    BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    Invoke: ((arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16) => void);
+    BeginInvoke: ((arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
     EndInvoke: ((result: System.IAsyncResult) => void);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class Func<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, T8 = any, T9 = any, T10 = any, T11 = any, T12 = any, T13 = any, T14 = any, T15 = any, T16 = any, TResult = any> {
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    Invoke: ((arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16) => TResult);
+    BeginInvoke: ((arg1: T1, arg2: T2, arg3: T3, arg4: T4, arg5: T5, arg6: T6, arg7: T7, arg8: T8, arg9: T9, arg10: T10, arg11: T11, arg12: T12, arg13: T13, arg14: T14, arg15: T15, arg16: T16, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => TResult);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class Comparison<T = any> {
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    Invoke: ((x: T, y: T) => number);
+    BeginInvoke: ((x: T, y: T, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => number);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class Converter<TInput = any, TOutput = any> {
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    Invoke: ((input: TInput) => TOutput);
+    BeginInvoke: ((input: TInput, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => TOutput);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetInvocationList: (() => System.Delegate[]);
+    DynamicInvoke: ((...args: System.Object[]) => System.Object);
+    Clone: (() => System.Object);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class Predicate<T = any> {
+    constructor(object: System.Object, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: System.Object;
+    Invoke: ((obj: T) => boolean);
+    BeginInvoke: ((obj: T, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    EndInvoke: ((result: System.IAsyncResult) => boolean);
     GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
@@ -159,7 +316,7 @@ export namespace System {
   export declare class Activator {
     static CreateInstance: ((type: System.Type, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo) => System.Object) | ((type: System.Type, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Object) | ((type: System.Type, ...args: System.Object[]) => System.Object) | ((type: System.Type, args: System.Object[], activationAttributes: System.Object[]) => System.Object) | ((type: System.Type) => System.Object) | ((assemblyName: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((assemblyName: string, typeName: string, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle) | ((type: System.Type, nonPublic: boolean) => System.Object) | ((assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[], securityInfo: System.Security.Policy.Evidence) => System.Runtime.Remoting.ObjectHandle) | ((assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle) | ((domain: System.AppDomain, assemblyName: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((domain: System.AppDomain, assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[], securityAttributes: System.Security.Policy.Evidence) => System.Runtime.Remoting.ObjectHandle) | ((domain: System.AppDomain, assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle) | ((activationContext: System.ActivationContext) => System.Runtime.Remoting.ObjectHandle) | ((activationContext: System.ActivationContext, activationCustomData: string[]) => System.Runtime.Remoting.ObjectHandle);
     static CreateInstanceFrom: ((assemblyFile: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((assemblyFile: string, typeName: string, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle) | ((assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[], securityInfo: System.Security.Policy.Evidence) => System.Runtime.Remoting.ObjectHandle) | ((assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle) | ((domain: System.AppDomain, assemblyFile: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((domain: System.AppDomain, assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[], securityAttributes: System.Security.Policy.Evidence) => System.Runtime.Remoting.ObjectHandle) | ((domain: System.AppDomain, assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle);
-    static CreateComInstanceFrom: ((assemblyName: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((assemblyName: string, typeName: string, hashValue: System.Byte[], hashAlgorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm) => System.Runtime.Remoting.ObjectHandle);
+    static CreateComInstanceFrom: ((assemblyName: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((assemblyName: string, typeName: string, hashValue: System.Byte[], hashAlgorithm: any) => System.Runtime.Remoting.ObjectHandle);
     static GetObject: ((type: System.Type, url: string) => System.Object) | ((type: System.Type, url: string, state: System.Object) => System.Object);
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
@@ -309,6 +466,17 @@ export namespace System {
     GetType: (() => System.Type) | (() => System.Type);
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
+  }
+  export declare class ArraySegment<T = any> {
+    constructor(array: T[]);
+    constructor(array: T[], offset: number, count: number);
+    Array: T[];
+    Offset: number;
+    Count: number;
+    GetHashCode: (() => number);
+    Equals: ((obj: System.Object) => boolean) | ((obj: T[]) => boolean);
+    ToString: (() => string);
+    GetType: (() => System.Type);
   }
   export declare class ArrayTypeMismatchException {
     constructor();
@@ -1108,12 +1276,12 @@ export namespace System {
     GetType: (() => System.Type);
     ToString: (() => string);
   }
-  export declare class EventHandler {
+  export declare class EventHandler<TEventArgs = any> {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
-    Invoke: ((sender: System.Object, e: System.EventArgs) => void);
-    BeginInvoke: ((sender: System.Object, e: System.EventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+    Invoke: ((sender: System.Object, e: TEventArgs) => void);
+    BeginInvoke: ((sender: System.Object, e: TEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
     EndInvoke: ((result: System.IAsyncResult) => void);
     GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
     Equals: ((obj: System.Object) => boolean);
@@ -1252,7 +1420,7 @@ export namespace System {
     static NewGuid: (() => System.Guid);
     GetType: (() => System.Type);
   }
-  export declare class _AppDomain {
+  export interface _AppDomain {
     FriendlyName: string;
     BaseDirectory: string;
     RelativeSearchPath: string;
@@ -1284,7 +1452,7 @@ export namespace System {
     SetPrincipalPolicy: ((policy: System.Security.Principal.PrincipalPolicy) => void);
     SetThreadPrincipal: ((principal: System.Security.Principal.IPrincipal) => void);
   }
-  export declare class IAppDomainSetup {
+  export interface IAppDomainSetup {
     ApplicationBase: string;
     ApplicationName: string;
     CachePath: string;
@@ -1296,19 +1464,19 @@ export namespace System {
     ShadowCopyDirectories: string;
     ShadowCopyFiles: string;
   }
-  export declare class IAsyncResult {
+  export interface IAsyncResult {
     IsCompleted: boolean;
     AsyncWaitHandle: System.Threading.WaitHandle;
     AsyncState: System.Object;
     CompletedSynchronously: boolean;
   }
-  export declare class ICloneable {
+  export interface ICloneable {
     Clone: (() => System.Object);
   }
-  export declare class IComparable {
-    CompareTo: ((obj: System.Object) => number);
+  export interface IComparable<T = any> {
+    CompareTo: ((other: T) => number);
   }
-  export declare class IConvertible {
+  export interface IConvertible {
     GetTypeCode: (() => System.TypeCode);
     ToBoolean: ((provider: System.IFormatProvider) => boolean);
     ToChar: ((provider: System.IFormatProvider) => System.Char);
@@ -1327,16 +1495,19 @@ export namespace System {
     ToString: ((provider: System.IFormatProvider) => string);
     ToType: ((conversionType: System.Type, provider: System.IFormatProvider) => System.Object);
   }
-  export declare class ICustomFormatter {
+  export interface ICustomFormatter {
     Format: ((format: string, arg: System.Object, formatProvider: System.IFormatProvider) => string);
   }
-  export declare class IDisposable {
+  export interface IDisposable {
     Dispose: (() => void);
   }
-  export declare class IFormatProvider {
+  export interface IEquatable<T = any> {
+    Equals: ((other: T) => boolean);
+  }
+  export interface IFormatProvider {
     GetFormat: ((formatType: System.Type) => System.Object);
   }
-  export declare class IFormattable {
+  export interface IFormattable {
     ToString: ((format: string, formatProvider: System.IFormatProvider) => string);
   }
   export declare class IndexOutOfRangeException {
@@ -1506,7 +1677,18 @@ export namespace System {
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
   }
-  export declare class IServiceProvider {
+  export interface IObservable<T = any> {
+    Subscribe: ((observer: System.IObserver<T>) => System.IDisposable);
+  }
+  export interface IObserver<T = any> {
+    OnNext: ((value: T) => void);
+    OnError: ((error: System.Exception) => void);
+    OnCompleted: (() => void);
+  }
+  export interface IProgress<T = any> {
+    Report: ((value: T) => void);
+  }
+  export interface IServiceProvider {
     GetService: ((serviceType: System.Type) => System.Object);
   }
   export declare class Math {
@@ -1843,6 +2025,14 @@ export namespace System {
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
   }
+  export declare class Progress<T = any> {
+    constructor();
+    constructor(handler: (() => void));
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
   export declare class Random {
     constructor();
     constructor(Seed: number);
@@ -2094,7 +2284,7 @@ export namespace System {
     GetAdjustmentRules: (() => System.TimeZoneInfo_AdjustmentRule[]);
     GetAmbiguousTimeOffsets: ((dateTime: System.DateTime) => System.TimeSpan[]) | ((dateTimeOffset: System.DateTimeOffset) => System.TimeSpan[]);
     GetHashCode: (() => number);
-    static GetSystemTimeZones: (() => any);
+    static GetSystemTimeZones: (() => System.TimeZoneInfo[]);
     GetUtcOffset: ((dateTime: System.DateTime) => System.TimeSpan) | ((dateTimeOffset: System.DateTimeOffset) => System.TimeSpan);
     HasSameRules: ((other: System.TimeZoneInfo) => boolean);
     IsAmbiguousTime: ((dateTime: System.DateTime) => boolean) | ((dateTimeOffset: System.DateTimeOffset) => boolean);
@@ -2212,7 +2402,7 @@ export namespace System {
     UnderlyingSystemType: System.Type;
     IsSZArray: boolean;
     Name: string;
-    CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+    CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
     MetadataToken: number;
     static FilterAttribute: System.Reflection.MemberFilter;
     static FilterName: System.Reflection.MemberFilter;
@@ -2272,7 +2462,7 @@ export namespace System {
     static GetTypeFromHandle: ((handle: System.RuntimeTypeHandle) => System.Type);
     GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
     IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-    GetCustomAttributesData: (() => any);
+    GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
   }
   export declare class TypeAccessException {
     constructor();
@@ -2484,14 +2674,14 @@ export namespace System {
     AppendPrivatePath: ((path: string) => void);
     ClearPrivatePath: (() => void);
     ClearShadowCopyPath: (() => void);
-    CreateComInstanceFrom: ((assemblyName: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((assemblyFile: string, typeName: string, hashValue: System.Byte[], hashAlgorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm) => System.Runtime.Remoting.ObjectHandle);
+    CreateComInstanceFrom: ((assemblyName: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((assemblyFile: string, typeName: string, hashValue: System.Byte[], hashAlgorithm: any) => System.Runtime.Remoting.ObjectHandle);
     CreateInstance: ((assemblyName: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((assemblyName: string, typeName: string, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle) | ((assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[], securityAttributes: System.Security.Policy.Evidence) => System.Runtime.Remoting.ObjectHandle) | ((assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle);
     CreateInstanceAndUnwrap: ((assemblyName: string, typeName: string) => System.Object) | ((assemblyName: string, typeName: string, activationAttributes: System.Object[]) => System.Object) | ((assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[], securityAttributes: System.Security.Policy.Evidence) => System.Object) | ((assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Object);
     CreateInstanceFrom: ((assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle) | ((assemblyFile: string, typeName: string) => System.Runtime.Remoting.ObjectHandle) | ((assemblyFile: string, typeName: string, activationAttributes: System.Object[]) => System.Runtime.Remoting.ObjectHandle) | ((assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[], securityAttributes: System.Security.Policy.Evidence) => System.Runtime.Remoting.ObjectHandle);
     CreateInstanceFromAndUnwrap: ((assemblyFile: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Object) | ((assemblyName: string, typeName: string) => System.Object) | ((assemblyName: string, typeName: string, activationAttributes: System.Object[]) => System.Object) | ((assemblyName: string, typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[], securityAttributes: System.Security.Policy.Evidence) => System.Object);
-    DefineDynamicAssembly: ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, evidence: System.Security.Policy.Evidence) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, evidence: System.Security.Policy.Evidence) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, evidence: System.Security.Policy.Evidence, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, evidence: System.Security.Policy.Evidence, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, evidence: System.Security.Policy.Evidence, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet, isSynchronized: boolean) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, evidence: System.Security.Policy.Evidence, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet, isSynchronized: boolean, assemblyAttributes: any) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: any) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, isSynchronized: boolean, assemblyAttributes: any) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: any, securityContextSource: System.Security.SecurityContextSource) => System.Reflection.Emit.AssemblyBuilder);
+    DefineDynamicAssembly: ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, evidence: System.Security.Policy.Evidence) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, evidence: System.Security.Policy.Evidence) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, evidence: System.Security.Policy.Evidence, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, evidence: System.Security.Policy.Evidence, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, evidence: System.Security.Policy.Evidence, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet, isSynchronized: boolean) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, evidence: System.Security.Policy.Evidence, requiredPermissions: System.Security.PermissionSet, optionalPermissions: System.Security.PermissionSet, refusedPermissions: System.Security.PermissionSet, isSynchronized: boolean, assemblyAttributes: System.Collections.Generic.IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: System.Collections.Generic.IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, dir: string, isSynchronized: boolean, assemblyAttributes: System.Collections.Generic.IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: System.Collections.Generic.IEnumerable<System.Reflection.Emit.CustomAttributeBuilder>, securityContextSource: System.Security.SecurityContextSource) => System.Reflection.Emit.AssemblyBuilder);
     DoCallBack: ((callBackDelegate: System.CrossAppDomainDelegate) => void);
-    ExecuteAssembly: ((assemblyFile: string) => number) | ((assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence) => number) | ((assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence, args: string[]) => number) | ((assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence, args: string[], hashValue: System.Byte[], hashAlgorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm) => number) | ((assemblyFile: string, args: string[]) => number) | ((assemblyFile: string, args: string[], hashValue: System.Byte[], hashAlgorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm) => number);
+    ExecuteAssembly: ((assemblyFile: string) => number) | ((assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence) => number) | ((assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence, args: string[]) => number) | ((assemblyFile: string, assemblySecurity: System.Security.Policy.Evidence, args: string[], hashValue: System.Byte[], hashAlgorithm: any) => number) | ((assemblyFile: string, args: string[]) => number) | ((assemblyFile: string, args: string[], hashValue: System.Byte[], hashAlgorithm: any) => number);
     GetAssemblies: (() => System.Reflection.Assembly[]);
     GetData: ((name: string) => System.Object);
     GetType: (() => System.Type) | (() => System.Type);
@@ -2689,7 +2879,7 @@ export namespace System {
     SandboxInterop: boolean;
     GetConfigurationBytes: (() => System.Byte[]);
     SetConfigurationBytes: ((value: System.Byte[]) => void);
-    SetCompatibilitySwitches: ((switches: any) => void);
+    SetCompatibilitySwitches: ((switches: System.Collections.Generic.IEnumerable<string>) => void);
     SetNativeFunction: ((functionName: string, functionVersion: number, functionPointer: System.IntPtr) => void);
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
@@ -2882,12 +3072,15 @@ export namespace System {
     GetType: (() => System.Type);
     ToString: (() => string);
   }
-  export declare class Nullable {
-    static GetUnderlyingType: ((nullableType: System.Type) => System.Type);
-    Equals: ((obj: System.Object) => boolean);
+  export declare class Nullable<T = any> {
+    constructor(value: T);
+    HasValue: boolean;
+    Value: T;
+    Equals: ((other: System.Object) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => System.Type);
+    GetValueOrDefault: (() => T) | ((defaultValue: T) => T);
     ToString: (() => string);
+    GetType: (() => System.Type);
   }
   export declare class Object {
     constructor();
@@ -3045,20 +3238,284 @@ export namespace System {
     ToString: (() => string);
     GetType: (() => System.Type);
   }
-  export declare class WeakReference {
-    constructor(target: System.Object);
-    constructor(target: System.Object, trackResurrection: boolean);
-    IsAlive: boolean;
-    Target: System.Object;
-    TrackResurrection: boolean;
+  export declare class WeakReference<T = any> {
+    constructor(target: T);
+    constructor(target: T, trackResurrection: boolean);
     GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    SetTarget: ((target: T) => void);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class UriBuilder {
+    constructor();
+    constructor(uri: string);
+    constructor(uri: System.Uri);
+    constructor(schemeName: string, hostName: string);
+    constructor(scheme: string, host: string, portNumber: number);
+    constructor(scheme: string, host: string, port: number, pathValue: string);
+    constructor(scheme: string, host: string, port: number, path: string, extraValue: string);
+    Fragment: string;
+    Host: string;
+    Password: string;
+    Path: string;
+    Port: number;
+    Query: string;
+    Scheme: string;
+    Uri: System.Uri;
+    UserName: string;
+    Equals: ((rparam: System.Object) => boolean);
+    GetHashCode: (() => number);
+    ToString: (() => string);
+    GetType: (() => System.Type);
+  }
+  export enum GenericUriParserOptions {
+    Default = 0,
+    GenericAuthority = 1,
+    AllowEmptyAuthority = 2,
+    NoUserInfo = 4,
+    NoPort = 8,
+    NoQuery = 16,
+    NoFragment = 32,
+    DontConvertPathBackslashes = 64,
+    DontCompressPath = 128,
+    DontUnescapePathDotsAndSlashes = 256,
+    Idn = 512,
+    IriParsing = 1024,
+  }
+  export declare class GenericUriParser {
+    constructor(options: System.GenericUriParserOptions);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class Uri {
+    constructor(uriString: string);
+    constructor(uriString: string, dontEscape: boolean);
+    constructor(baseUri: System.Uri, relativeUri: string, dontEscape: boolean);
+    constructor(uriString: string, uriKind: System.UriKind);
+    constructor(baseUri: System.Uri, relativeUri: string);
+    constructor(baseUri: System.Uri, relativeUri: System.Uri);
+    AbsolutePath: string;
+    AbsoluteUri: string;
+    LocalPath: string;
+    Authority: string;
+    HostNameType: System.UriHostNameType;
+    IsDefaultPort: boolean;
+    IsFile: boolean;
+    IsLoopback: boolean;
+    PathAndQuery: string;
+    Segments: string[];
+    IsUnc: boolean;
+    Host: string;
+    Port: number;
+    Query: string;
+    Fragment: string;
+    Scheme: string;
+    OriginalString: string;
+    DnsSafeHost: string;
+    IdnHost: string;
+    IsAbsoluteUri: boolean;
+    UserEscaped: boolean;
+    UserInfo: string;
+    static UriSchemeFile: string;
+    static UriSchemeFtp: string;
+    static UriSchemeGopher: string;
+    static UriSchemeHttp: string;
+    static UriSchemeHttps: string;
+    static UriSchemeMailto: string;
+    static UriSchemeNews: string;
+    static UriSchemeNntp: string;
+    static UriSchemeNetTcp: string;
+    static UriSchemeNetPipe: string;
+    static SchemeDelimiter: string;
+    static CheckHostName: ((name: string) => System.UriHostNameType);
+    GetLeftPart: ((part: System.UriPartial) => string);
+    static HexEscape: ((character: System.Char) => string);
+    static IsHexEncoding: ((pattern: string, index: number) => boolean);
+    static CheckSchemeName: ((schemeName: string) => boolean);
+    static IsHexDigit: ((character: System.Char) => boolean);
+    static FromHex: ((digit: System.Char) => number);
+    GetHashCode: (() => number);
+    ToString: (() => string);
+    Equals: ((comparand: System.Object) => boolean);
+    MakeRelativeUri: ((uri: System.Uri) => System.Uri);
+    MakeRelative: ((toUri: System.Uri) => string);
+    GetComponents: ((components: System.UriComponents, format: System.UriFormat) => string);
+    static Compare: ((uri1: System.Uri, uri2: System.Uri, partsToCompare: System.UriComponents, compareFormat: System.UriFormat, comparisonType: System.StringComparison) => number);
+    IsWellFormedOriginalString: (() => boolean);
+    static IsWellFormedUriString: ((uriString: string, uriKind: System.UriKind) => boolean);
+    static UnescapeDataString: ((stringToUnescape: string) => string);
+    static EscapeUriString: ((stringToEscape: string) => string);
+    static EscapeDataString: ((stringToEscape: string) => string);
+    IsBaseOf: ((uri: System.Uri) => boolean);
+    GetType: (() => System.Type);
+  }
+  export declare class UriFormatException {
+    constructor();
+    constructor(textString: string);
+    constructor(textString: string, e: System.Exception);
+    Message: string;
+    Data: System.Collections.IDictionary;
+    InnerException: System.Exception;
+    TargetSite: System.Reflection.MethodBase;
+    StackTrace: string;
+    HelpLink: string;
+    Source: string;
+    HResult: number;
+    GetBaseException: (() => System.Exception);
+    ToString: (() => string);
+    GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+    GetType: (() => System.Type) | (() => System.Type);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+  }
+  export enum UriPartial {
+    Scheme = 0,
+    Authority = 1,
+    Path = 2,
+    Query = 3,
+  }
+  export enum UriKind {
+    RelativeOrAbsolute = 0,
+    Absolute = 1,
+    Relative = 2,
+  }
+  export enum UriComponents {
+    Scheme = 1,
+    UserInfo = 2,
+    Host = 4,
+    Port = 8,
+    Path = 16,
+    Query = 32,
+    Fragment = 64,
+    StrongPort = 128,
+    NormalizedHost = 256,
+    KeepDelimiter = 1073741824,
+    SerializationInfoString = -2147483648,
+    AbsoluteUri = 127,
+    HostAndPort = 132,
+    StrongAuthority = 134,
+    SchemeAndServer = 13,
+    HttpRequestUrl = 61,
+    PathAndQuery = 48,
+  }
+  export enum UriFormat {
+    UriEscaped = 1,
+    Unescaped = 2,
+    SafeUnescaped = 3,
+  }
+  export enum UriIdnScope {
+    None = 0,
+    AllExceptIntranet = 1,
+    All = 2,
+  }
+  export enum UriHostNameType {
+    Unknown = 0,
+    Basic = 1,
+    Dns = 2,
+    IPv4 = 3,
+    IPv6 = 4,
+  }
+  export declare class HttpStyleUriParser {
+    constructor();
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class FtpStyleUriParser {
+    constructor();
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class FileStyleUriParser {
+    constructor();
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class NewsStyleUriParser {
+    constructor();
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class GopherStyleUriParser {
+    constructor();
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class LdapStyleUriParser {
+    constructor();
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class NetPipeStyleUriParser {
+    constructor();
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class NetTcpStyleUriParser {
+    constructor();
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class UriParser {
+    static Register: ((uriParser: System.UriParser, schemeName: string, defaultPort: number) => void);
+    static IsKnownScheme: ((schemeName: string) => boolean);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class UriTypeConverter {
+    constructor();
+    CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+    CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+    ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+    ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+    IsValid: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean) | ((value: System.Object) => boolean);
+    ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+    ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+    ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+    ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+    CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+    GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+    GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+    GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+    GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+    GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+    GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+    Equals: ((obj: System.Object) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => System.Type);
+    ToString: (() => string);
+  }
+  export declare class StringNormalizationExtensions {
+    static IsNormalized: ((value: string) => boolean) | ((value: string, normalizationForm: System.Text.NormalizationForm) => boolean);
+    static Normalize: ((value: string) => string) | ((value: string, normalizationForm: System.Text.NormalizationForm) => string);
     Equals: ((obj: System.Object) => boolean);
     GetHashCode: (() => number);
     GetType: (() => System.Type);
     ToString: (() => string);
   }
   export namespace Buffers {
-    export declare class IRetainable {
+    export interface IRetainable {
       Retain: (() => void);
       Release: (() => boolean);
     }
@@ -3068,6 +3525,20 @@ export namespace System {
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => System.Type);
+    }
+    export declare class OwnedMemory<T = any> {
+      Length: number;
+      Span: System.Span<T>;
+      Memory: System.Memory<T>;
+      IsDisposed: boolean;
+      Pin: (() => System.Buffers.MemoryHandle);
+      Dispose: (() => void);
+      Retain: (() => void);
+      Release: (() => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
     }
     export namespace Binary {
       export declare class BinaryPrimitives {
@@ -3108,6 +3579,1550 @@ export namespace System {
         static TryWriteUInt16LittleEndian: ((buffer: any, value: System.UInt16) => boolean);
         static TryWriteUInt32LittleEndian: ((buffer: any, value: System.UInt32) => boolean);
         static TryWriteUInt64LittleEndian: ((buffer: any, value: System.UInt64) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+    }
+  }
+  export namespace CodeDom {
+    export declare class CodeObject {
+      constructor();
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum CodeTypeReferenceOptions {
+      GlobalReference = 1,
+      GenericTypeParameter = 2,
+    }
+    export declare class CodeTypeReference {
+      constructor();
+      constructor(type: System.Type);
+      constructor(type: System.Type, codeTypeReferenceOption: System.CodeDom.CodeTypeReferenceOptions);
+      constructor(typeName: string, codeTypeReferenceOption: System.CodeDom.CodeTypeReferenceOptions);
+      constructor(typeName: string);
+      constructor(typeName: string, ...typeArguments: System.CodeDom.CodeTypeReference[]);
+      constructor(typeParameter: System.CodeDom.CodeTypeParameter);
+      constructor(baseType: string, rank: number);
+      constructor(arrayType: System.CodeDom.CodeTypeReference, rank: number);
+      ArrayElementType: System.CodeDom.CodeTypeReference;
+      ArrayRank: number;
+      BaseType: string;
+      Options: System.CodeDom.CodeTypeReferenceOptions;
+      TypeArguments: System.CodeDom.CodeTypeReferenceCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeReferenceCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeTypeReferenceCollection);
+      constructor(value: System.CodeDom.CodeTypeReference[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeTypeReference) => number) | ((value: string) => void) | ((value: System.Type) => void);
+      AddRange: ((value: System.CodeDom.CodeTypeReference[]) => void) | ((value: System.CodeDom.CodeTypeReferenceCollection) => void);
+      Contains: ((value: System.CodeDom.CodeTypeReference) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeTypeReference[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeTypeReference) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeTypeReference) => void);
+      Remove: ((value: System.CodeDom.CodeTypeReference) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeArgumentReferenceExpression {
+      constructor();
+      constructor(parameterName: string);
+      ParameterName: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeArrayCreateExpression {
+      constructor();
+      constructor(createType: System.CodeDom.CodeTypeReference, ...initializers: System.CodeDom.CodeExpression[]);
+      constructor(createType: string, ...initializers: System.CodeDom.CodeExpression[]);
+      constructor(createType: System.Type, ...initializers: System.CodeDom.CodeExpression[]);
+      constructor(createType: System.CodeDom.CodeTypeReference, size: number);
+      constructor(createType: string, size: number);
+      constructor(createType: System.Type, size: number);
+      constructor(createType: System.CodeDom.CodeTypeReference, size: System.CodeDom.CodeExpression);
+      constructor(createType: string, size: System.CodeDom.CodeExpression);
+      constructor(createType: System.Type, size: System.CodeDom.CodeExpression);
+      CreateType: System.CodeDom.CodeTypeReference;
+      Initializers: System.CodeDom.CodeExpressionCollection;
+      Size: number;
+      SizeExpression: System.CodeDom.CodeExpression;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeArrayIndexerExpression {
+      constructor();
+      constructor(targetObject: System.CodeDom.CodeExpression, ...indices: System.CodeDom.CodeExpression[]);
+      TargetObject: System.CodeDom.CodeExpression;
+      Indices: System.CodeDom.CodeExpressionCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeAssignStatement {
+      constructor();
+      constructor(left: System.CodeDom.CodeExpression, right: System.CodeDom.CodeExpression);
+      Left: System.CodeDom.CodeExpression;
+      Right: System.CodeDom.CodeExpression;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeAttachEventStatement {
+      constructor();
+      constructor(eventRef: System.CodeDom.CodeEventReferenceExpression, listener: System.CodeDom.CodeExpression);
+      constructor(targetObject: System.CodeDom.CodeExpression, eventName: string, listener: System.CodeDom.CodeExpression);
+      Event: System.CodeDom.CodeEventReferenceExpression;
+      Listener: System.CodeDom.CodeExpression;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeAttributeArgument {
+      constructor();
+      constructor(value: System.CodeDom.CodeExpression);
+      constructor(name: string, value: System.CodeDom.CodeExpression);
+      Name: string;
+      Value: System.CodeDom.CodeExpression;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeAttributeArgumentCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeAttributeArgumentCollection);
+      constructor(value: System.CodeDom.CodeAttributeArgument[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeAttributeArgument) => number);
+      AddRange: ((value: System.CodeDom.CodeAttributeArgument[]) => void) | ((value: System.CodeDom.CodeAttributeArgumentCollection) => void);
+      Contains: ((value: System.CodeDom.CodeAttributeArgument) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeAttributeArgument[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeAttributeArgument) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeAttributeArgument) => void);
+      Remove: ((value: System.CodeDom.CodeAttributeArgument) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeAttributeDeclaration {
+      constructor();
+      constructor(name: string);
+      constructor(name: string, ...argumentsCS: System.CodeDom.CodeAttributeArgument[]);
+      constructor(attributeType: System.CodeDom.CodeTypeReference);
+      constructor(attributeType: System.CodeDom.CodeTypeReference, ...argumentsCS: System.CodeDom.CodeAttributeArgument[]);
+      Name: string;
+      Arguments: System.CodeDom.CodeAttributeArgumentCollection;
+      AttributeType: System.CodeDom.CodeTypeReference;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeAttributeDeclarationCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeAttributeDeclarationCollection);
+      constructor(value: System.CodeDom.CodeAttributeDeclaration[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeAttributeDeclaration) => number);
+      AddRange: ((value: System.CodeDom.CodeAttributeDeclaration[]) => void) | ((value: System.CodeDom.CodeAttributeDeclarationCollection) => void);
+      Contains: ((value: System.CodeDom.CodeAttributeDeclaration) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeAttributeDeclaration[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeAttributeDeclaration) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeAttributeDeclaration) => void);
+      Remove: ((value: System.CodeDom.CodeAttributeDeclaration) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeBaseReferenceExpression {
+      constructor();
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeBinaryOperatorExpression {
+      constructor();
+      constructor(left: System.CodeDom.CodeExpression, op: System.CodeDom.CodeBinaryOperatorType, right: System.CodeDom.CodeExpression);
+      Right: System.CodeDom.CodeExpression;
+      Left: System.CodeDom.CodeExpression;
+      Operator: System.CodeDom.CodeBinaryOperatorType;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum CodeBinaryOperatorType {
+      Add = 0,
+      Subtract = 1,
+      Multiply = 2,
+      Divide = 3,
+      Modulus = 4,
+      Assign = 5,
+      IdentityInequality = 6,
+      IdentityEquality = 7,
+      ValueEquality = 8,
+      BitwiseOr = 9,
+      BitwiseAnd = 10,
+      BooleanOr = 11,
+      BooleanAnd = 12,
+      LessThan = 13,
+      LessThanOrEqual = 14,
+      GreaterThan = 15,
+      GreaterThanOrEqual = 16,
+    }
+    export declare class CodeCastExpression {
+      constructor();
+      constructor(targetType: System.CodeDom.CodeTypeReference, expression: System.CodeDom.CodeExpression);
+      constructor(targetType: string, expression: System.CodeDom.CodeExpression);
+      constructor(targetType: System.Type, expression: System.CodeDom.CodeExpression);
+      TargetType: System.CodeDom.CodeTypeReference;
+      Expression: System.CodeDom.CodeExpression;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeCatchClause {
+      constructor();
+      constructor(localName: string);
+      constructor(localName: string, catchExceptionType: System.CodeDom.CodeTypeReference);
+      constructor(localName: string, catchExceptionType: System.CodeDom.CodeTypeReference, ...statements: System.CodeDom.CodeStatement[]);
+      LocalName: string;
+      CatchExceptionType: System.CodeDom.CodeTypeReference;
+      Statements: System.CodeDom.CodeStatementCollection;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeCatchClauseCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeCatchClauseCollection);
+      constructor(value: System.CodeDom.CodeCatchClause[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeCatchClause) => number);
+      AddRange: ((value: System.CodeDom.CodeCatchClause[]) => void) | ((value: System.CodeDom.CodeCatchClauseCollection) => void);
+      Contains: ((value: System.CodeDom.CodeCatchClause) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeCatchClause[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeCatchClause) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeCatchClause) => void);
+      Remove: ((value: System.CodeDom.CodeCatchClause) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeChecksumPragma {
+      constructor();
+      constructor(fileName: string, checksumAlgorithmId: System.Guid, checksumData: System.Byte[]);
+      FileName: string;
+      ChecksumAlgorithmId: System.Guid;
+      ChecksumData: System.Byte[];
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeComment {
+      constructor();
+      constructor(text: string);
+      constructor(text: string, docComment: boolean);
+      DocComment: boolean;
+      Text: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeCommentStatement {
+      constructor();
+      constructor(comment: System.CodeDom.CodeComment);
+      constructor(text: string);
+      constructor(text: string, docComment: boolean);
+      Comment: System.CodeDom.CodeComment;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeCommentStatementCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeCommentStatementCollection);
+      constructor(value: System.CodeDom.CodeCommentStatement[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeCommentStatement) => number);
+      AddRange: ((value: System.CodeDom.CodeCommentStatement[]) => void) | ((value: System.CodeDom.CodeCommentStatementCollection) => void);
+      Contains: ((value: System.CodeDom.CodeCommentStatement) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeCommentStatement[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeCommentStatement) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeCommentStatement) => void);
+      Remove: ((value: System.CodeDom.CodeCommentStatement) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeCompileUnit {
+      constructor();
+      Namespaces: System.CodeDom.CodeNamespaceCollection;
+      ReferencedAssemblies: System.Collections.Specialized.StringCollection;
+      AssemblyCustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeConditionStatement {
+      constructor();
+      constructor(condition: System.CodeDom.CodeExpression, ...trueStatements: System.CodeDom.CodeStatement[]);
+      constructor(condition: System.CodeDom.CodeExpression, trueStatements: System.CodeDom.CodeStatement[], falseStatements: System.CodeDom.CodeStatement[]);
+      Condition: System.CodeDom.CodeExpression;
+      TrueStatements: System.CodeDom.CodeStatementCollection;
+      FalseStatements: System.CodeDom.CodeStatementCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeConstructor {
+      constructor();
+      BaseConstructorArgs: System.CodeDom.CodeExpressionCollection;
+      ChainedConstructorArgs: System.CodeDom.CodeExpressionCollection;
+      ReturnType: System.CodeDom.CodeTypeReference;
+      Statements: System.CodeDom.CodeStatementCollection;
+      Parameters: System.CodeDom.CodeParameterDeclarationExpressionCollection;
+      PrivateImplementationType: System.CodeDom.CodeTypeReference;
+      ImplementationTypes: System.CodeDom.CodeTypeReferenceCollection;
+      ReturnTypeCustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      TypeParameters: System.CodeDom.CodeTypeParameterCollection;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeDefaultValueExpression {
+      constructor();
+      constructor(type: System.CodeDom.CodeTypeReference);
+      Type: System.CodeDom.CodeTypeReference;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeDelegateCreateExpression {
+      constructor();
+      constructor(delegateType: System.CodeDom.CodeTypeReference, targetObject: System.CodeDom.CodeExpression, methodName: string);
+      DelegateType: System.CodeDom.CodeTypeReference;
+      TargetObject: System.CodeDom.CodeExpression;
+      MethodName: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeDelegateInvokeExpression {
+      constructor();
+      constructor(targetObject: System.CodeDom.CodeExpression);
+      constructor(targetObject: System.CodeDom.CodeExpression, ...parameters: System.CodeDom.CodeExpression[]);
+      TargetObject: System.CodeDom.CodeExpression;
+      Parameters: System.CodeDom.CodeExpressionCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeDirectionExpression {
+      constructor();
+      constructor(direction: System.CodeDom.FieldDirection, expression: System.CodeDom.CodeExpression);
+      Expression: System.CodeDom.CodeExpression;
+      Direction: System.CodeDom.FieldDirection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeDirective {
+      constructor();
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeDirectiveCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeDirectiveCollection);
+      constructor(value: System.CodeDom.CodeDirective[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeDirective) => number);
+      AddRange: ((value: System.CodeDom.CodeDirective[]) => void) | ((value: System.CodeDom.CodeDirectiveCollection) => void);
+      Contains: ((value: System.CodeDom.CodeDirective) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeDirective[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeDirective) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeDirective) => void);
+      Remove: ((value: System.CodeDom.CodeDirective) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeEntryPointMethod {
+      constructor();
+      ReturnType: System.CodeDom.CodeTypeReference;
+      Statements: System.CodeDom.CodeStatementCollection;
+      Parameters: System.CodeDom.CodeParameterDeclarationExpressionCollection;
+      PrivateImplementationType: System.CodeDom.CodeTypeReference;
+      ImplementationTypes: System.CodeDom.CodeTypeReferenceCollection;
+      ReturnTypeCustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      TypeParameters: System.CodeDom.CodeTypeParameterCollection;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeEventReferenceExpression {
+      constructor();
+      constructor(targetObject: System.CodeDom.CodeExpression, eventName: string);
+      TargetObject: System.CodeDom.CodeExpression;
+      EventName: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeExpression {
+      constructor();
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeExpressionCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeExpressionCollection);
+      constructor(value: System.CodeDom.CodeExpression[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeExpression) => number);
+      AddRange: ((value: System.CodeDom.CodeExpression[]) => void) | ((value: System.CodeDom.CodeExpressionCollection) => void);
+      Contains: ((value: System.CodeDom.CodeExpression) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeExpression[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeExpression) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeExpression) => void);
+      Remove: ((value: System.CodeDom.CodeExpression) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeExpressionStatement {
+      constructor();
+      constructor(expression: System.CodeDom.CodeExpression);
+      Expression: System.CodeDom.CodeExpression;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeFieldReferenceExpression {
+      constructor();
+      constructor(targetObject: System.CodeDom.CodeExpression, fieldName: string);
+      TargetObject: System.CodeDom.CodeExpression;
+      FieldName: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeGotoStatement {
+      constructor();
+      constructor(label: string);
+      Label: string;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeIndexerExpression {
+      constructor();
+      constructor(targetObject: System.CodeDom.CodeExpression, ...indices: System.CodeDom.CodeExpression[]);
+      TargetObject: System.CodeDom.CodeExpression;
+      Indices: System.CodeDom.CodeExpressionCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeIterationStatement {
+      constructor();
+      constructor(initStatement: System.CodeDom.CodeStatement, testExpression: System.CodeDom.CodeExpression, incrementStatement: System.CodeDom.CodeStatement, ...statements: System.CodeDom.CodeStatement[]);
+      InitStatement: System.CodeDom.CodeStatement;
+      TestExpression: System.CodeDom.CodeExpression;
+      IncrementStatement: System.CodeDom.CodeStatement;
+      Statements: System.CodeDom.CodeStatementCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeLabeledStatement {
+      constructor();
+      constructor(label: string);
+      constructor(label: string, statement: System.CodeDom.CodeStatement);
+      Label: string;
+      Statement: System.CodeDom.CodeStatement;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeLinePragma {
+      constructor();
+      constructor(fileName: string, lineNumber: number);
+      FileName: string;
+      LineNumber: number;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeMemberEvent {
+      constructor();
+      Type: System.CodeDom.CodeTypeReference;
+      PrivateImplementationType: System.CodeDom.CodeTypeReference;
+      ImplementationTypes: System.CodeDom.CodeTypeReferenceCollection;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeMemberField {
+      constructor();
+      constructor(type: System.CodeDom.CodeTypeReference, name: string);
+      constructor(type: string, name: string);
+      constructor(type: System.Type, name: string);
+      Type: System.CodeDom.CodeTypeReference;
+      InitExpression: System.CodeDom.CodeExpression;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeMemberMethod {
+      constructor();
+      ReturnType: System.CodeDom.CodeTypeReference;
+      Statements: System.CodeDom.CodeStatementCollection;
+      Parameters: System.CodeDom.CodeParameterDeclarationExpressionCollection;
+      PrivateImplementationType: System.CodeDom.CodeTypeReference;
+      ImplementationTypes: System.CodeDom.CodeTypeReferenceCollection;
+      ReturnTypeCustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      TypeParameters: System.CodeDom.CodeTypeParameterCollection;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeMemberProperty {
+      constructor();
+      PrivateImplementationType: System.CodeDom.CodeTypeReference;
+      ImplementationTypes: System.CodeDom.CodeTypeReferenceCollection;
+      Type: System.CodeDom.CodeTypeReference;
+      HasGet: boolean;
+      HasSet: boolean;
+      GetStatements: System.CodeDom.CodeStatementCollection;
+      SetStatements: System.CodeDom.CodeStatementCollection;
+      Parameters: System.CodeDom.CodeParameterDeclarationExpressionCollection;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeMethodInvokeExpression {
+      constructor();
+      constructor(method: System.CodeDom.CodeMethodReferenceExpression, ...parameters: System.CodeDom.CodeExpression[]);
+      constructor(targetObject: System.CodeDom.CodeExpression, methodName: string, ...parameters: System.CodeDom.CodeExpression[]);
+      Method: System.CodeDom.CodeMethodReferenceExpression;
+      Parameters: System.CodeDom.CodeExpressionCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeMethodReturnStatement {
+      constructor();
+      constructor(expression: System.CodeDom.CodeExpression);
+      Expression: System.CodeDom.CodeExpression;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeNamespace {
+      constructor();
+      constructor(name: string);
+      Types: System.CodeDom.CodeTypeDeclarationCollection;
+      Imports: System.CodeDom.CodeNamespaceImportCollection;
+      Name: string;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeNamespaceCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeNamespaceCollection);
+      constructor(value: System.CodeDom.CodeNamespace[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeNamespace) => number);
+      AddRange: ((value: System.CodeDom.CodeNamespace[]) => void) | ((value: System.CodeDom.CodeNamespaceCollection) => void);
+      Contains: ((value: System.CodeDom.CodeNamespace) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeNamespace[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeNamespace) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeNamespace) => void);
+      Remove: ((value: System.CodeDom.CodeNamespace) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeNamespaceImport {
+      constructor();
+      constructor(nameSpace: string);
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Namespace: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeNamespaceImportCollection {
+      constructor();
+      Count: number;
+      Add: ((value: System.CodeDom.CodeNamespaceImport) => void);
+      AddRange: ((value: System.CodeDom.CodeNamespaceImport[]) => void);
+      Clear: (() => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeObjectCreateExpression {
+      constructor();
+      constructor(createType: System.CodeDom.CodeTypeReference, ...parameters: System.CodeDom.CodeExpression[]);
+      constructor(createType: string, ...parameters: System.CodeDom.CodeExpression[]);
+      constructor(createType: System.Type, ...parameters: System.CodeDom.CodeExpression[]);
+      CreateType: System.CodeDom.CodeTypeReference;
+      Parameters: System.CodeDom.CodeExpressionCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeParameterDeclarationExpression {
+      constructor();
+      constructor(type: System.CodeDom.CodeTypeReference, name: string);
+      constructor(type: string, name: string);
+      constructor(type: System.Type, name: string);
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      Direction: System.CodeDom.FieldDirection;
+      Type: System.CodeDom.CodeTypeReference;
+      Name: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeParameterDeclarationExpressionCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeParameterDeclarationExpressionCollection);
+      constructor(value: System.CodeDom.CodeParameterDeclarationExpression[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeParameterDeclarationExpression) => number);
+      AddRange: ((value: System.CodeDom.CodeParameterDeclarationExpression[]) => void) | ((value: System.CodeDom.CodeParameterDeclarationExpressionCollection) => void);
+      Contains: ((value: System.CodeDom.CodeParameterDeclarationExpression) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeParameterDeclarationExpression[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeParameterDeclarationExpression) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeParameterDeclarationExpression) => void);
+      Remove: ((value: System.CodeDom.CodeParameterDeclarationExpression) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodePrimitiveExpression {
+      constructor();
+      constructor(value: System.Object);
+      Value: System.Object;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodePropertyReferenceExpression {
+      constructor();
+      constructor(targetObject: System.CodeDom.CodeExpression, propertyName: string);
+      TargetObject: System.CodeDom.CodeExpression;
+      PropertyName: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodePropertySetValueReferenceExpression {
+      constructor();
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeRegionDirective {
+      constructor();
+      constructor(regionMode: System.CodeDom.CodeRegionMode, regionText: string);
+      RegionText: string;
+      RegionMode: System.CodeDom.CodeRegionMode;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum CodeRegionMode {
+      None = 0,
+      Start = 1,
+      End = 2,
+    }
+    export declare class CodeRemoveEventStatement {
+      constructor();
+      constructor(eventRef: System.CodeDom.CodeEventReferenceExpression, listener: System.CodeDom.CodeExpression);
+      constructor(targetObject: System.CodeDom.CodeExpression, eventName: string, listener: System.CodeDom.CodeExpression);
+      Event: System.CodeDom.CodeEventReferenceExpression;
+      Listener: System.CodeDom.CodeExpression;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeSnippetCompileUnit {
+      constructor();
+      constructor(value: string);
+      Value: string;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Namespaces: System.CodeDom.CodeNamespaceCollection;
+      ReferencedAssemblies: System.Collections.Specialized.StringCollection;
+      AssemblyCustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeSnippetExpression {
+      constructor();
+      constructor(value: string);
+      Value: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeSnippetStatement {
+      constructor();
+      constructor(value: string);
+      Value: string;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeSnippetTypeMember {
+      constructor();
+      constructor(text: string);
+      Text: string;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeStatement {
+      constructor();
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeStatementCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeStatementCollection);
+      constructor(value: System.CodeDom.CodeStatement[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeStatement) => number) | ((value: System.CodeDom.CodeExpression) => number);
+      AddRange: ((value: System.CodeDom.CodeStatement[]) => void) | ((value: System.CodeDom.CodeStatementCollection) => void);
+      Contains: ((value: System.CodeDom.CodeStatement) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeStatement[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeStatement) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeStatement) => void);
+      Remove: ((value: System.CodeDom.CodeStatement) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeThisReferenceExpression {
+      constructor();
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeThrowExceptionStatement {
+      constructor();
+      constructor(toThrow: System.CodeDom.CodeExpression);
+      ToThrow: System.CodeDom.CodeExpression;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTryCatchFinallyStatement {
+      constructor();
+      constructor(tryStatements: System.CodeDom.CodeStatement[], catchClauses: System.CodeDom.CodeCatchClause[]);
+      constructor(tryStatements: System.CodeDom.CodeStatement[], catchClauses: System.CodeDom.CodeCatchClause[], finallyStatements: System.CodeDom.CodeStatement[]);
+      TryStatements: System.CodeDom.CodeStatementCollection;
+      CatchClauses: System.CodeDom.CodeCatchClauseCollection;
+      FinallyStatements: System.CodeDom.CodeStatementCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeConstructor {
+      constructor();
+      ReturnType: System.CodeDom.CodeTypeReference;
+      Statements: System.CodeDom.CodeStatementCollection;
+      Parameters: System.CodeDom.CodeParameterDeclarationExpressionCollection;
+      PrivateImplementationType: System.CodeDom.CodeTypeReference;
+      ImplementationTypes: System.CodeDom.CodeTypeReferenceCollection;
+      ReturnTypeCustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      TypeParameters: System.CodeDom.CodeTypeParameterCollection;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeDeclaration {
+      constructor();
+      constructor(name: string);
+      TypeAttributes: System.Reflection.TypeAttributes;
+      BaseTypes: System.CodeDom.CodeTypeReferenceCollection;
+      IsClass: boolean;
+      IsStruct: boolean;
+      IsEnum: boolean;
+      IsInterface: boolean;
+      IsPartial: boolean;
+      Members: System.CodeDom.CodeTypeMemberCollection;
+      TypeParameters: System.CodeDom.CodeTypeParameterCollection;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeDeclarationCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeTypeDeclarationCollection);
+      constructor(value: System.CodeDom.CodeTypeDeclaration[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeTypeDeclaration) => number);
+      AddRange: ((value: System.CodeDom.CodeTypeDeclaration[]) => void) | ((value: System.CodeDom.CodeTypeDeclarationCollection) => void);
+      Contains: ((value: System.CodeDom.CodeTypeDeclaration) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeTypeDeclaration[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeTypeDeclaration) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeTypeDeclaration) => void);
+      Remove: ((value: System.CodeDom.CodeTypeDeclaration) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeDelegate {
+      constructor();
+      constructor(name: string);
+      ReturnType: System.CodeDom.CodeTypeReference;
+      Parameters: System.CodeDom.CodeParameterDeclarationExpressionCollection;
+      TypeAttributes: System.Reflection.TypeAttributes;
+      BaseTypes: System.CodeDom.CodeTypeReferenceCollection;
+      IsClass: boolean;
+      IsStruct: boolean;
+      IsEnum: boolean;
+      IsInterface: boolean;
+      IsPartial: boolean;
+      Members: System.CodeDom.CodeTypeMemberCollection;
+      TypeParameters: System.CodeDom.CodeTypeParameterCollection;
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeMember {
+      constructor();
+      Name: string;
+      Attributes: System.CodeDom.MemberAttributes;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      Comments: System.CodeDom.CodeCommentStatementCollection;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeMemberCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeTypeMemberCollection);
+      constructor(value: System.CodeDom.CodeTypeMember[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeTypeMember) => number);
+      AddRange: ((value: System.CodeDom.CodeTypeMember[]) => void) | ((value: System.CodeDom.CodeTypeMemberCollection) => void);
+      Contains: ((value: System.CodeDom.CodeTypeMember) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeTypeMember[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeTypeMember) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeTypeMember) => void);
+      Remove: ((value: System.CodeDom.CodeTypeMember) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeOfExpression {
+      constructor();
+      constructor(type: System.CodeDom.CodeTypeReference);
+      constructor(type: string);
+      constructor(type: System.Type);
+      Type: System.CodeDom.CodeTypeReference;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeParameter {
+      constructor();
+      constructor(name: string);
+      Name: string;
+      Constraints: System.CodeDom.CodeTypeReferenceCollection;
+      CustomAttributes: System.CodeDom.CodeAttributeDeclarationCollection;
+      HasConstructorConstraint: boolean;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeParameterCollection {
+      constructor();
+      constructor(value: System.CodeDom.CodeTypeParameterCollection);
+      constructor(value: System.CodeDom.CodeTypeParameter[]);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.CodeDom.CodeTypeParameter) => number) | ((value: string) => void);
+      AddRange: ((value: System.CodeDom.CodeTypeParameter[]) => void) | ((value: System.CodeDom.CodeTypeParameterCollection) => void);
+      Contains: ((value: System.CodeDom.CodeTypeParameter) => boolean);
+      CopyTo: ((array: System.CodeDom.CodeTypeParameter[], index: number) => void);
+      IndexOf: ((value: System.CodeDom.CodeTypeParameter) => number);
+      Insert: ((index: number, value: System.CodeDom.CodeTypeParameter) => void);
+      Remove: ((value: System.CodeDom.CodeTypeParameter) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeTypeReferenceExpression {
+      constructor();
+      constructor(type: System.CodeDom.CodeTypeReference);
+      constructor(type: string);
+      constructor(type: System.Type);
+      Type: System.CodeDom.CodeTypeReference;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeVariableDeclarationStatement {
+      constructor();
+      constructor(type: System.CodeDom.CodeTypeReference, name: string);
+      constructor(type: string, name: string);
+      constructor(type: System.Type, name: string);
+      constructor(type: System.CodeDom.CodeTypeReference, name: string, initExpression: System.CodeDom.CodeExpression);
+      constructor(type: string, name: string, initExpression: System.CodeDom.CodeExpression);
+      constructor(type: System.Type, name: string, initExpression: System.CodeDom.CodeExpression);
+      InitExpression: System.CodeDom.CodeExpression;
+      Name: string;
+      Type: System.CodeDom.CodeTypeReference;
+      LinePragma: System.CodeDom.CodeLinePragma;
+      StartDirectives: System.CodeDom.CodeDirectiveCollection;
+      EndDirectives: System.CodeDom.CodeDirectiveCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CodeVariableReferenceExpression {
+      constructor();
+      constructor(variableName: string);
+      VariableName: string;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum FieldDirection {
+      In = 0,
+      Out = 1,
+      Ref = 2,
+    }
+    export enum MemberAttributes {
+      Abstract = 1,
+      Final = 2,
+      Static = 3,
+      Override = 4,
+      Const = 5,
+      New = 16,
+      Overloaded = 256,
+      Assembly = 4096,
+      FamilyAndAssembly = 8192,
+      Family = 12288,
+      FamilyOrAssembly = 16384,
+      Private = 20480,
+      Public = 24576,
+      AccessMask = 61440,
+      ScopeMask = 15,
+      VTableMask = 240,
+    }
+    export declare class CodeMethodReferenceExpression {
+      constructor();
+      constructor(targetObject: System.CodeDom.CodeExpression, methodName: string);
+      constructor(targetObject: System.CodeDom.CodeExpression, methodName: string, ...typeParameters: System.CodeDom.CodeTypeReference[]);
+      TargetObject: System.CodeDom.CodeExpression;
+      MethodName: string;
+      TypeArguments: System.CodeDom.CodeTypeReferenceCollection;
+      UserData: System.Collections.IDictionary;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export namespace Compiler {
+      export declare class TempFileCollection {
+        constructor();
+        constructor(tempDir: string);
+        constructor(tempDir: string, keepFiles: boolean);
+        Count: number;
+        TempDir: string;
+        BasePath: string;
+        KeepFiles: boolean;
+        AddExtension: ((fileExtension: string) => string) | ((fileExtension: string, keepFile: boolean) => string);
+        AddFile: ((fileName: string, keepFile: boolean) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        CopyTo: ((fileNames: string[], start: number) => void);
+        Delete: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CodeCompiler {
+        GenerateCodeFromMember: ((member: System.CodeDom.CodeTypeMember, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CodeDomProvider {
+        FileExtension: string;
+        LanguageOptions: System.CodeDom.Compiler.LanguageOptions;
+        Site: System.ComponentModel.ISite;
+        Container: System.ComponentModel.IContainer;
+        static CreateProvider: ((language: string, providerOptions: any) => System.CodeDom.Compiler.CodeDomProvider) | ((language: string) => System.CodeDom.Compiler.CodeDomProvider);
+        static GetLanguageFromExtension: ((extension: string) => string);
+        static IsDefinedLanguage: ((language: string) => boolean);
+        static IsDefinedExtension: ((extension: string) => boolean);
+        static GetCompilerInfo: ((language: string) => System.CodeDom.Compiler.CompilerInfo);
+        static GetAllCompilerInfo: (() => System.CodeDom.Compiler.CompilerInfo[]);
+        CreateGenerator: (() => System.CodeDom.Compiler.ICodeGenerator) | ((output: System.IO.TextWriter) => System.CodeDom.Compiler.ICodeGenerator) | ((fileName: string) => System.CodeDom.Compiler.ICodeGenerator);
+        CreateCompiler: (() => System.CodeDom.Compiler.ICodeCompiler);
+        CreateParser: (() => System.CodeDom.Compiler.ICodeParser);
+        GetConverter: ((type: System.Type) => System.ComponentModel.TypeConverter);
+        CompileAssemblyFromDom: ((options: System.CodeDom.Compiler.CompilerParameters, ...compilationUnits: System.CodeDom.CodeCompileUnit[]) => System.CodeDom.Compiler.CompilerResults);
+        CompileAssemblyFromFile: ((options: System.CodeDom.Compiler.CompilerParameters, ...fileNames: string[]) => System.CodeDom.Compiler.CompilerResults);
+        CompileAssemblyFromSource: ((options: System.CodeDom.Compiler.CompilerParameters, ...sources: string[]) => System.CodeDom.Compiler.CompilerResults);
+        IsValidIdentifier: ((value: string) => boolean);
+        CreateEscapedIdentifier: ((value: string) => string);
+        CreateValidIdentifier: ((value: string) => string);
+        GetTypeOutput: ((type: System.CodeDom.CodeTypeReference) => string);
+        Supports: ((generatorSupport: System.CodeDom.Compiler.GeneratorSupport) => boolean);
+        GenerateCodeFromExpression: ((expression: System.CodeDom.CodeExpression, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromStatement: ((statement: System.CodeDom.CodeStatement, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromNamespace: ((codeNamespace: System.CodeDom.CodeNamespace, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromCompileUnit: ((compileUnit: System.CodeDom.CodeCompileUnit, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromType: ((codeType: System.CodeDom.CodeTypeDeclaration, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromMember: ((member: System.CodeDom.CodeTypeMember, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        Parse: ((codeStream: System.IO.TextReader) => System.CodeDom.CodeCompileUnit);
+        Dispose: (() => void);
+        ToString: (() => string);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class CodeGenerator {
+        GenerateCodeFromMember: ((member: System.CodeDom.CodeTypeMember, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        static IsValidLanguageIndependentIdentifier: ((value: string) => boolean);
+        static ValidateIdentifiers: ((e: System.CodeDom.CodeObject) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CodeGeneratorOptions {
+        constructor();
+        IndentString: string;
+        BracingStyle: string;
+        ElseOnClosing: boolean;
+        BlankLinesBetweenMembers: boolean;
+        VerbatimOrder: boolean;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CodeParser {
+        Parse: ((codeStream: System.IO.TextReader) => System.CodeDom.CodeCompileUnit);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CompilerError {
+        constructor();
+        constructor(fileName: string, line: number, column: number, errorNumber: string, errorText: string);
+        Line: number;
+        Column: number;
+        ErrorNumber: string;
+        ErrorText: string;
+        IsWarning: boolean;
+        FileName: string;
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class CompilerErrorCollection {
+        constructor();
+        constructor(value: System.CodeDom.Compiler.CompilerErrorCollection);
+        constructor(value: System.CodeDom.Compiler.CompilerError[]);
+        HasErrors: boolean;
+        HasWarnings: boolean;
+        Capacity: number;
+        Count: number;
+        Add: ((value: System.CodeDom.Compiler.CompilerError) => number);
+        AddRange: ((value: System.CodeDom.Compiler.CompilerError[]) => void) | ((value: System.CodeDom.Compiler.CompilerErrorCollection) => void);
+        Contains: ((value: System.CodeDom.Compiler.CompilerError) => boolean);
+        CopyTo: ((array: System.CodeDom.Compiler.CompilerError[], index: number) => void);
+        IndexOf: ((value: System.CodeDom.Compiler.CompilerError) => number);
+        Insert: ((index: number, value: System.CodeDom.Compiler.CompilerError) => void);
+        Remove: ((value: System.CodeDom.Compiler.CompilerError) => void);
+        Clear: (() => void);
+        RemoveAt: ((index: number) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CompilerInfo {
+        CodeDomProviderType: System.Type;
+        IsCodeDomProviderTypeValid: boolean;
+        GetLanguages: (() => string[]);
+        GetExtensions: (() => string[]);
+        CreateProvider: (() => System.CodeDom.Compiler.CodeDomProvider) | ((providerOptions: System.Collections.Generic.IDictionary<string, string>) => System.CodeDom.Compiler.CodeDomProvider);
+        CreateDefaultCompilerParameters: (() => System.CodeDom.Compiler.CompilerParameters);
+        GetHashCode: (() => number);
+        Equals: ((o: System.Object) => boolean);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CompilerParameters {
+        constructor();
+        constructor(assemblyNames: string[]);
+        constructor(assemblyNames: string[], outputName: string);
+        constructor(assemblyNames: string[], outputName: string, includeDebugInformation: boolean);
+        Evidence: System.Security.Policy.Evidence;
+        CoreAssemblyFileName: string;
+        GenerateExecutable: boolean;
+        GenerateInMemory: boolean;
+        ReferencedAssemblies: System.Collections.Specialized.StringCollection;
+        MainClass: string;
+        OutputAssembly: string;
+        TempFiles: System.CodeDom.Compiler.TempFileCollection;
+        IncludeDebugInformation: boolean;
+        TreatWarningsAsErrors: boolean;
+        WarningLevel: number;
+        CompilerOptions: string;
+        Win32Resource: string;
+        EmbeddedResources: System.Collections.Specialized.StringCollection;
+        LinkedResources: System.Collections.Specialized.StringCollection;
+        UserToken: System.IntPtr;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CompilerResults {
+        constructor(tempFiles: System.CodeDom.Compiler.TempFileCollection);
+        Evidence: System.Security.Policy.Evidence;
+        TempFiles: System.CodeDom.Compiler.TempFileCollection;
+        CompiledAssembly: System.Reflection.Assembly;
+        Errors: System.CodeDom.Compiler.CompilerErrorCollection;
+        Output: System.Collections.Specialized.StringCollection;
+        PathToAssembly: string;
+        NativeCompilerReturnValue: number;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum GeneratorSupport {
+        ArraysOfArrays = 1,
+        EntryPointMethod = 2,
+        GotoStatements = 4,
+        MultidimensionalArrays = 8,
+        StaticConstructors = 16,
+        TryCatchStatements = 32,
+        ReturnTypeAttributes = 64,
+        DeclareValueTypes = 128,
+        DeclareEnums = 256,
+        DeclareDelegates = 512,
+        DeclareInterfaces = 1024,
+        DeclareEvents = 2048,
+        AssemblyAttributes = 4096,
+        ParameterAttributes = 8192,
+        ReferenceParameters = 16384,
+        ChainedConstructorArguments = 32768,
+        NestedTypes = 65536,
+        MultipleInterfaceMembers = 131072,
+        PublicStaticMembers = 262144,
+        ComplexExpressions = 524288,
+        Win32Resources = 1048576,
+        Resources = 2097152,
+        PartialTypes = 4194304,
+        GenericTypeReference = 8388608,
+        GenericTypeDeclaration = 16777216,
+        DeclareIndexerProperties = 33554432,
+      }
+      export interface ICodeCompiler {
+        CompileAssemblyFromDom: ((options: System.CodeDom.Compiler.CompilerParameters, compilationUnit: System.CodeDom.CodeCompileUnit) => System.CodeDom.Compiler.CompilerResults);
+        CompileAssemblyFromFile: ((options: System.CodeDom.Compiler.CompilerParameters, fileName: string) => System.CodeDom.Compiler.CompilerResults);
+        CompileAssemblyFromSource: ((options: System.CodeDom.Compiler.CompilerParameters, source: string) => System.CodeDom.Compiler.CompilerResults);
+        CompileAssemblyFromDomBatch: ((options: System.CodeDom.Compiler.CompilerParameters, compilationUnits: System.CodeDom.CodeCompileUnit[]) => System.CodeDom.Compiler.CompilerResults);
+        CompileAssemblyFromFileBatch: ((options: System.CodeDom.Compiler.CompilerParameters, fileNames: string[]) => System.CodeDom.Compiler.CompilerResults);
+        CompileAssemblyFromSourceBatch: ((options: System.CodeDom.Compiler.CompilerParameters, sources: string[]) => System.CodeDom.Compiler.CompilerResults);
+      }
+      export interface ICodeGenerator {
+        IsValidIdentifier: ((value: string) => boolean);
+        ValidateIdentifier: ((value: string) => void);
+        CreateEscapedIdentifier: ((value: string) => string);
+        CreateValidIdentifier: ((value: string) => string);
+        GetTypeOutput: ((type: System.CodeDom.CodeTypeReference) => string);
+        Supports: ((supports: System.CodeDom.Compiler.GeneratorSupport) => boolean);
+        GenerateCodeFromExpression: ((e: System.CodeDom.CodeExpression, w: System.IO.TextWriter, o: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromStatement: ((e: System.CodeDom.CodeStatement, w: System.IO.TextWriter, o: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromNamespace: ((e: System.CodeDom.CodeNamespace, w: System.IO.TextWriter, o: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromCompileUnit: ((e: System.CodeDom.CodeCompileUnit, w: System.IO.TextWriter, o: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+        GenerateCodeFromType: ((e: System.CodeDom.CodeTypeDeclaration, w: System.IO.TextWriter, o: System.CodeDom.Compiler.CodeGeneratorOptions) => void);
+      }
+      export interface ICodeParser {
+        Parse: ((codeStream: System.IO.TextReader) => System.CodeDom.CodeCompileUnit);
+      }
+      export enum LanguageOptions {
+        None = 0,
+        CaseInsensitive = 1,
+      }
+      export declare class IndentedTextWriter {
+        constructor(writer: System.IO.TextWriter);
+        constructor(writer: System.IO.TextWriter, tabString: string);
+        Encoding: System.Text.Encoding;
+        NewLine: string;
+        Indent: number;
+        InnerWriter: System.IO.TextWriter;
+        FormatProvider: System.IFormatProvider;
+        static DefaultTabString: string;
+        Close: (() => void);
+        Flush: (() => void);
+        Write: ((s: string) => void) | ((value: boolean) => void) | ((value: System.Char) => void) | ((buffer: System.Char[]) => void) | ((buffer: System.Char[], index: number, count: number) => void) | ((value: number) => void) | ((value: number) => void) | ((value: number) => void) | ((value: System.Int64) => void) | ((value: System.Object) => void) | ((format: string, arg0: System.Object) => void) | ((format: string, arg0: System.Object, arg1: System.Object) => void) | ((format: string, ...arg: System.Object[]) => void) | ((value: System.UInt32) => void) | ((value: System.UInt64) => void) | ((value: System.Decimal) => void) | ((format: string, arg0: System.Object, arg1: System.Object, arg2: System.Object) => void);
+        WriteLineNoTabs: ((s: string) => void);
+        WriteLine: ((s: string) => void) | (() => void) | ((value: boolean) => void) | ((value: System.Char) => void) | ((buffer: System.Char[]) => void) | ((buffer: System.Char[], index: number, count: number) => void) | ((value: number) => void) | ((value: number) => void) | ((value: number) => void) | ((value: System.Int64) => void) | ((value: System.Object) => void) | ((format: string, arg0: System.Object) => void) | ((format: string, arg0: System.Object, arg1: System.Object) => void) | ((format: string, ...arg: System.Object[]) => void) | ((value: System.UInt32) => void) | ((value: System.UInt64) => void) | ((value: System.Decimal) => void) | ((format: string, arg0: System.Object, arg1: System.Object, arg2: System.Object) => void);
+        Dispose: (() => void);
+        WriteAsync: ((value: System.Char) => System.Threading.Tasks.Task) | ((value: string) => System.Threading.Tasks.Task) | ((buffer: System.Char[]) => System.Threading.Tasks.Task) | ((buffer: System.Char[], index: number, count: number) => System.Threading.Tasks.Task);
+        WriteLineAsync: ((value: System.Char) => System.Threading.Tasks.Task) | ((value: string) => System.Threading.Tasks.Task) | ((buffer: System.Char[]) => System.Threading.Tasks.Task) | ((buffer: System.Char[], index: number, count: number) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
+        FlushAsync: (() => System.Threading.Tasks.Task);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Executor {
+        static ExecWait: ((cmd: string, tempFiles: System.CodeDom.Compiler.TempFileCollection) => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type);
@@ -3286,16 +5301,16 @@ export namespace System {
       GetType: (() => System.Type);
       ToString: (() => string);
     }
-    export declare class ICollection {
+    export interface ICollection {
       Count: number;
       SyncRoot: System.Object;
       IsSynchronized: boolean;
       CopyTo: ((array: System.Array, index: number) => void);
     }
-    export declare class IComparer {
+    export interface IComparer {
       Compare: ((x: System.Object, y: System.Object) => number);
     }
-    export declare class IDictionary {
+    export interface IDictionary {
       Keys: System.Collections.ICollection;
       Values: System.Collections.ICollection;
       IsReadOnly: boolean;
@@ -3306,27 +5321,27 @@ export namespace System {
       GetEnumerator: (() => System.Collections.IDictionaryEnumerator);
       Remove: ((key: System.Object) => void);
     }
-    export declare class IDictionaryEnumerator {
+    export interface IDictionaryEnumerator {
       Key: System.Object;
       Value: System.Object;
       Entry: System.Collections.DictionaryEntry;
     }
-    export declare class IEnumerable {
+    export interface IEnumerable {
       GetEnumerator: (() => System.Collections.IEnumerator);
     }
-    export declare class IEnumerator {
+    export interface IEnumerator {
       Current: System.Object;
       MoveNext: (() => boolean);
       Reset: (() => void);
     }
-    export declare class IEqualityComparer {
+    export interface IEqualityComparer {
       Equals: ((x: System.Object, y: System.Object) => boolean);
       GetHashCode: ((obj: System.Object) => number);
     }
-    export declare class IHashCodeProvider {
+    export interface IHashCodeProvider {
       GetHashCode: ((obj: System.Object) => number);
     }
-    export declare class IList {
+    export interface IList {
       IsReadOnly: boolean;
       IsFixedSize: boolean;
       Add: ((value: System.Object) => number);
@@ -3337,10 +5352,10 @@ export namespace System {
       Remove: ((value: System.Object) => void);
       RemoveAt: ((index: number) => void);
     }
-    export declare class IStructuralComparable {
+    export interface IStructuralComparable {
       CompareTo: ((other: System.Object, comparer: System.Collections.IComparer) => number);
     }
-    export declare class IStructuralEquatable {
+    export interface IStructuralEquatable {
       Equals: ((other: System.Object, comparer: System.Collections.IEqualityComparer) => boolean);
       GetHashCode: ((comparer: System.Collections.IEqualityComparer) => number);
     }
@@ -3446,12 +5461,129 @@ export namespace System {
       ToString: (() => string);
     }
     export namespace Concurrent {
+      export declare class ConcurrentDictionary<TKey = any, TValue = any> {
+        constructor();
+        constructor(concurrencyLevel: number, capacity: number);
+        constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>);
+        constructor(comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        constructor(concurrencyLevel: number, collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        constructor(concurrencyLevel: number, capacity: number, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        Count: number;
+        IsEmpty: boolean;
+        Keys: System.Collections.Generic.ICollection<TKey>;
+        Values: System.Collections.Generic.ICollection<TValue>;
+        TryAdd: ((key: TKey, value: TValue) => boolean);
+        ContainsKey: ((key: TKey) => boolean);
+        TryUpdate: ((key: TKey, newValue: TValue, comparisonValue: TValue) => boolean);
+        Clear: (() => void);
+        ToArray: (() => System.Collections.Generic.KeyValuePair<TKey, TValue>[]);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>>);
+        GetOrAdd: ((key: TKey, valueFactory: ((arg0: TKey, arg1: TValue) => TValue)) => TValue) | ((key: TKey, value: TValue) => TValue);
+        AddOrUpdate: ((key: TKey, addValueFactory: ((arg0: TKey, arg1: TValue) => TValue), updateValueFactory: ((arg0: TKey, arg1: TValue, arg2: TValue) => TValue)) => TValue) | ((key: TKey, addValue: TValue, updateValueFactory: ((arg0: TKey, arg1: TValue, arg2: TValue) => TValue)) => TValue);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ConcurrentQueue<T = any> {
+        constructor();
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        IsEmpty: boolean;
+        Count: number;
+        ToArray: (() => T[]);
+        CopyTo: ((array: T[], index: number) => void);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+        Enqueue: ((item: T) => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ConcurrentStack<T = any> {
+        constructor();
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        IsEmpty: boolean;
+        Count: number;
+        Clear: (() => void);
+        CopyTo: ((array: T[], index: number) => void);
+        Push: ((item: T) => void);
+        PushRange: ((items: T[]) => void) | ((items: T[], startIndex: number, count: number) => void);
+        TryPopRange: ((items: T[]) => number) | ((items: T[], startIndex: number, count: number) => number);
+        ToArray: (() => T[]);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export interface IProducerConsumerCollection<T = any> {
+        CopyTo: ((array: T[], index: number) => void);
+        TryAdd: ((item: T) => boolean);
+        ToArray: (() => T[]);
+      }
+      export declare class OrderablePartitioner<TSource = any> {
+        KeysOrderedInEachPartition: boolean;
+        KeysOrderedAcrossPartitions: boolean;
+        KeysNormalized: boolean;
+        SupportsDynamicPartitions: boolean;
+        GetOrderablePartitions: ((partitionCount: number) => System.Collections.Generic.IList<System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<System.Int64, TSource>>>);
+        GetOrderableDynamicPartitions: (() => System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.Int64, TSource>>);
+        GetPartitions: ((partitionCount: number) => System.Collections.Generic.IList<System.Collections.Generic.IEnumerator<TSource>>);
+        GetDynamicPartitions: (() => System.Collections.Generic.IEnumerable<TSource>);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Partitioner<TSource = any> {
+        SupportsDynamicPartitions: boolean;
+        GetPartitions: ((partitionCount: number) => System.Collections.Generic.IList<System.Collections.Generic.IEnumerator<TSource>>);
+        GetDynamicPartitions: (() => System.Collections.Generic.IEnumerable<TSource>);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
       export enum EnumerablePartitionerOptions {
         None = 0,
         NoBuffering = 1,
       }
-      export declare class Partitioner {
-        static Create: ((fromInclusive: System.Int64, toExclusive: System.Int64) => any) | ((fromInclusive: System.Int64, toExclusive: System.Int64, rangeSize: System.Int64) => any) | ((fromInclusive: number, toExclusive: number) => any) | ((fromInclusive: number, toExclusive: number, rangeSize: number) => any);
+      export declare class ConcurrentBag<T = any> {
+        constructor();
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        Count: number;
+        IsEmpty: boolean;
+        Add: ((item: T) => void);
+        CopyTo: ((array: T[], index: number) => void);
+        ToArray: (() => T[]);
+        Clear: (() => void);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class BlockingCollection<T = any> {
+        constructor();
+        constructor(boundedCapacity: number);
+        constructor(collection: System.Collections.Concurrent.IProducerConsumerCollection<T>, boundedCapacity: number);
+        constructor(collection: System.Collections.Concurrent.IProducerConsumerCollection<T>);
+        BoundedCapacity: number;
+        IsAddingCompleted: boolean;
+        IsCompleted: boolean;
+        Count: number;
+        Add: ((item: T) => void) | ((item: T, cancellationToken: System.Threading.CancellationToken) => void);
+        TryAdd: ((item: T) => boolean) | ((item: T, timeout: System.TimeSpan) => boolean) | ((item: T, millisecondsTimeout: number) => boolean) | ((item: T, millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => boolean);
+        Take: (() => T) | ((cancellationToken: System.Threading.CancellationToken) => T);
+        static AddToAny: ((collections: any[], item: any) => number) | ((collections: any[], item: any, cancellationToken: System.Threading.CancellationToken) => number);
+        static TryAddToAny: ((collections: any[], item: any) => number) | ((collections: any[], item: any, timeout: System.TimeSpan) => number) | ((collections: any[], item: any, millisecondsTimeout: number) => number) | ((collections: any[], item: any, millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => number);
+        CompleteAdding: (() => void);
+        Dispose: (() => void);
+        ToArray: (() => T[]);
+        CopyTo: ((array: T[], index: number) => void);
+        GetConsumingEnumerable: (() => System.Collections.Generic.IEnumerable<T>) | ((cancellationToken: System.Threading.CancellationToken) => System.Collections.Generic.IEnumerable<T>);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type);
@@ -3465,11 +5597,101 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class KeyValuePair {
+      export declare class KeyValuePair<TKey = any, TValue = any> {
+        constructor(key: TKey, value: TValue);
+        Key: TKey;
+        Value: TValue;
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class Dictionary<TKey = any, TValue = any> {
+        constructor();
+        constructor(capacity: number);
+        constructor(comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        constructor(capacity: number, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
+        constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>);
+        constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        Comparer: System.Collections.Generic.IEqualityComparer<TKey>;
+        Count: number;
+        Keys: System.Collections.Generic.Dictionary<TKey, TValue>;
+        Values: System.Collections.Generic.Dictionary<TKey, TValue>;
+        Add: ((key: TKey, value: TValue) => void);
+        Clear: (() => void);
+        ContainsKey: ((key: TKey) => boolean);
+        ContainsValue: ((value: TValue) => boolean);
+        GetEnumerator: (() => System.Collections.Generic.Dictionary<TKey, TValue>);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        OnDeserialization: ((sender: System.Object) => void);
+        Remove: ((key: TKey) => boolean);
+        TryAdd: ((key: TKey, value: TValue) => boolean);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type);
         ToString: (() => string);
+      }
+      export declare class Comparer<T = any> {
+        static Default: any; // System.Collections.Generic.Comparer`1[T]
+        static Create: ((comparison: any) => any);
+        Compare: ((x: T, y: T) => number);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class EqualityComparer<T = any> {
+        static Default: any; // System.Collections.Generic.EqualityComparer`1[T]
+        Equals: ((x: T, y: T) => boolean) | ((obj: System.Object) => boolean);
+        GetHashCode: ((obj: T) => number) | (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export interface ICollection<T = any> {
+        Count: number;
+        IsReadOnly: boolean;
+        Add: ((item: T) => void);
+        Clear: (() => void);
+        Contains: ((item: T) => boolean);
+        CopyTo: ((array: T[], arrayIndex: number) => void);
+        Remove: ((item: T) => boolean);
+      }
+      export interface IComparer<T = any> {
+        Compare: ((x: T, y: T) => number);
+      }
+      export interface IDictionary<TKey = any, TValue = any> {
+        Keys: System.Collections.Generic.ICollection<TKey>;
+        Values: System.Collections.Generic.ICollection<TValue>;
+        ContainsKey: ((key: TKey) => boolean);
+        Add: ((key: TKey, value: TValue) => void);
+        Remove: ((key: TKey) => boolean);
+      }
+      export interface IEnumerable<T = any> {
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+      }
+      export interface IEnumerator<T = any> {
+        Current: T;
+      }
+      export interface IEqualityComparer<T = any> {
+        Equals: ((x: T, y: T) => boolean);
+        GetHashCode: ((obj: T) => number);
+      }
+      export interface IList<T = any> {
+        IndexOf: ((item: T) => number);
+        Insert: ((index: number, item: T) => void);
+        RemoveAt: ((index: number) => void);
+      }
+      export interface IReadOnlyCollection<T = any> {
+        Count: number;
+      }
+      export interface IReadOnlyDictionary<TKey = any, TValue = any> {
+        Keys: System.Collections.Generic.IEnumerable<TKey>;
+        Values: System.Collections.Generic.IEnumerable<TValue>;
+        ContainsKey: ((key: TKey) => boolean);
+      }
+      export interface IReadOnlyList<T = any> {
       }
       export declare class KeyNotFoundException {
         constructor();
@@ -3490,35 +5712,3187 @@ export namespace System {
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
       }
+      export declare class List<T = any> {
+        constructor();
+        constructor(capacity: number);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        Capacity: number;
+        Count: number;
+        Add: ((item: T) => void);
+        AddRange: ((collection: System.Collections.Generic.IEnumerable<T>) => void);
+        AsReadOnly: (() => T[]);
+        BinarySearch: ((index: number, count: number, item: T, comparer: System.Collections.Generic.IComparer<T>) => number) | ((item: T) => number) | ((item: T, comparer: System.Collections.Generic.IComparer<T>) => number);
+        Clear: (() => void);
+        Contains: ((item: T) => boolean);
+        CopyTo: ((array: T[]) => void) | ((index: number, array: T[], arrayIndex: number, count: number) => void) | ((array: T[], arrayIndex: number) => void);
+        Exists: ((match: System.Predicate<T>) => boolean);
+        Find: ((match: System.Predicate<T>) => T);
+        FindAll: ((match: System.Predicate<T>) => T[]);
+        FindIndex: ((match: System.Predicate<T>) => number) | ((startIndex: number, match: System.Predicate<T>) => number) | ((startIndex: number, count: number, match: System.Predicate<T>) => number);
+        FindLast: ((match: System.Predicate<T>) => T);
+        FindLastIndex: ((match: System.Predicate<T>) => number) | ((startIndex: number, match: System.Predicate<T>) => number) | ((startIndex: number, count: number, match: System.Predicate<T>) => number);
+        ForEach: ((action: (() => void)) => void);
+        GetEnumerator: (() => System.Collections.Generic.List<T>);
+        GetRange: ((index: number, count: number) => T[]);
+        IndexOf: ((item: T) => number) | ((item: T, index: number) => number) | ((item: T, index: number, count: number) => number);
+        Insert: ((index: number, item: T) => void);
+        InsertRange: ((index: number, collection: System.Collections.Generic.IEnumerable<T>) => void);
+        LastIndexOf: ((item: T) => number) | ((item: T, index: number) => number) | ((item: T, index: number, count: number) => number);
+        Remove: ((item: T) => boolean);
+        RemoveAll: ((match: System.Predicate<T>) => number);
+        RemoveAt: ((index: number) => void);
+        RemoveRange: ((index: number, count: number) => void);
+        Reverse: (() => void) | ((index: number, count: number) => void);
+        Sort: (() => void) | ((comparer: System.Collections.Generic.IComparer<T>) => void) | ((index: number, count: number, comparer: System.Collections.Generic.IComparer<T>) => void) | ((comparison: System.Comparison<T>) => void);
+        ToArray: (() => T[]);
+        TrimExcess: (() => void);
+        TrueForAll: ((match: System.Predicate<T>) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class HashSet<T = any> {
+        constructor();
+        constructor(comparer: System.Collections.Generic.IEqualityComparer<T>);
+        constructor(capacity: number);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>, comparer: System.Collections.Generic.IEqualityComparer<T>);
+        constructor(capacity: number, comparer: System.Collections.Generic.IEqualityComparer<T>);
+        Count: number;
+        Comparer: System.Collections.Generic.IEqualityComparer<T>;
+        Clear: (() => void);
+        Contains: ((item: T) => boolean);
+        CopyTo: ((array: T[], arrayIndex: number) => void) | ((array: T[]) => void) | ((array: T[], arrayIndex: number, count: number) => void);
+        Remove: ((item: T) => boolean);
+        GetEnumerator: (() => System.Collections.Generic.HashSet<T>);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        OnDeserialization: ((sender: System.Object) => void);
+        Add: ((item: T) => boolean);
+        UnionWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        IntersectWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        ExceptWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        SymmetricExceptWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        IsSubsetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsProperSubsetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsSupersetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsProperSupersetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        Overlaps: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        SetEquals: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        RemoveWhere: ((match: System.Predicate<T>) => number);
+        TrimExcess: (() => void);
+        static CreateSetComparer: (() => any);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class LinkedList<T = any> {
+        constructor();
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        Count: number;
+        First: System.Collections.Generic.LinkedListNode<T>;
+        Last: System.Collections.Generic.LinkedListNode<T>;
+        AddAfter: ((node: System.Collections.Generic.LinkedListNode<T>, value: T) => System.Collections.Generic.LinkedListNode<T>) | ((node: System.Collections.Generic.LinkedListNode<T>, newNode: System.Collections.Generic.LinkedListNode<T>) => void);
+        AddBefore: ((node: System.Collections.Generic.LinkedListNode<T>, value: T) => System.Collections.Generic.LinkedListNode<T>) | ((node: System.Collections.Generic.LinkedListNode<T>, newNode: System.Collections.Generic.LinkedListNode<T>) => void);
+        AddFirst: ((value: T) => System.Collections.Generic.LinkedListNode<T>) | ((node: System.Collections.Generic.LinkedListNode<T>) => void);
+        AddLast: ((value: T) => System.Collections.Generic.LinkedListNode<T>) | ((node: System.Collections.Generic.LinkedListNode<T>) => void);
+        Clear: (() => void);
+        Contains: ((value: T) => boolean);
+        CopyTo: ((array: T[], index: number) => void);
+        Find: ((value: T) => System.Collections.Generic.LinkedListNode<T>);
+        FindLast: ((value: T) => System.Collections.Generic.LinkedListNode<T>);
+        GetEnumerator: (() => System.Collections.Generic.LinkedList<T>);
+        Remove: ((value: T) => boolean) | ((node: System.Collections.Generic.LinkedListNode<T>) => void);
+        RemoveFirst: (() => void);
+        RemoveLast: (() => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        OnDeserialization: ((sender: System.Object) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class LinkedListNode<T = any> {
+        constructor(value: T);
+        List: System.Collections.Generic.LinkedList<T>;
+        Next: System.Collections.Generic.LinkedListNode<T>;
+        Previous: System.Collections.Generic.LinkedListNode<T>;
+        Value: T;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Queue<T = any> {
+        constructor();
+        constructor(capacity: number);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        Count: number;
+        Clear: (() => void);
+        CopyTo: ((array: T[], arrayIndex: number) => void);
+        Enqueue: ((item: T) => void);
+        GetEnumerator: (() => System.Collections.Generic.Queue<T>);
+        Dequeue: (() => T);
+        Peek: (() => T);
+        Contains: ((item: T) => boolean);
+        ToArray: (() => T[]);
+        TrimExcess: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SortedDictionary<TKey = any, TValue = any> {
+        constructor();
+        constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
+        constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IComparer<TKey>);
+        constructor(comparer: System.Collections.Generic.IComparer<TKey>);
+        Count: number;
+        Comparer: System.Collections.Generic.IComparer<TKey>;
+        Keys: System.Collections.Generic.SortedDictionary<TKey, TValue>;
+        Values: System.Collections.Generic.SortedDictionary<TKey, TValue>;
+        Add: ((key: TKey, value: TValue) => void);
+        Clear: (() => void);
+        ContainsKey: ((key: TKey) => boolean);
+        ContainsValue: ((value: TValue) => boolean);
+        CopyTo: ((array: System.Collections.Generic.KeyValuePair<TKey, TValue>[], index: number) => void);
+        GetEnumerator: (() => System.Collections.Generic.SortedDictionary<TKey, TValue>);
+        Remove: ((key: TKey) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SortedList<TKey = any, TValue = any> {
+        constructor();
+        constructor(capacity: number);
+        constructor(comparer: System.Collections.Generic.IComparer<TKey>);
+        constructor(capacity: number, comparer: System.Collections.Generic.IComparer<TKey>);
+        constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
+        constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IComparer<TKey>);
+        Capacity: number;
+        Comparer: System.Collections.Generic.IComparer<TKey>;
+        Count: number;
+        Keys: System.Collections.Generic.IList<TKey>;
+        Values: System.Collections.Generic.IList<TValue>;
+        Add: ((key: TKey, value: TValue) => void);
+        Clear: (() => void);
+        ContainsKey: ((key: TKey) => boolean);
+        ContainsValue: ((value: TValue) => boolean);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>>);
+        IndexOfKey: ((key: TKey) => number);
+        IndexOfValue: ((value: TValue) => number);
+        RemoveAt: ((index: number) => void);
+        Remove: ((key: TKey) => boolean);
+        TrimExcess: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SortedSet<T = any> {
+        constructor();
+        constructor(comparer: System.Collections.Generic.IComparer<T>);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>, comparer: System.Collections.Generic.IComparer<T>);
+        Count: number;
+        Comparer: System.Collections.Generic.IComparer<T>;
+        Min: T;
+        Max: T;
+        Add: ((item: T) => boolean);
+        Remove: ((item: T) => boolean);
+        Clear: (() => void);
+        Contains: ((item: T) => boolean);
+        CopyTo: ((array: T[]) => void) | ((array: T[], index: number) => void) | ((array: T[], index: number, count: number) => void);
+        GetEnumerator: (() => System.Collections.Generic.SortedSet<T>);
+        static CreateSetComparer: (() => any) | ((memberEqualityComparer: any) => any);
+        UnionWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        IntersectWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        ExceptWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        SymmetricExceptWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        IsSubsetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsProperSubsetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsSupersetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsProperSupersetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        SetEquals: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        Overlaps: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        RemoveWhere: ((match: System.Predicate<T>) => number);
+        Reverse: (() => System.Collections.Generic.IEnumerable<T>);
+        GetViewBetween: ((lowerValue: T, upperValue: T) => System.Collections.Generic.SortedSet<T>);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Stack<T = any> {
+        constructor();
+        constructor(capacity: number);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        Count: number;
+        Clear: (() => void);
+        Contains: ((item: T) => boolean);
+        CopyTo: ((array: T[], arrayIndex: number) => void);
+        GetEnumerator: (() => System.Collections.Generic.Stack<T>);
+        TrimExcess: (() => void);
+        Peek: (() => T);
+        Pop: (() => T);
+        Push: ((item: T) => void);
+        ToArray: (() => T[]);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export interface ISet<T = any> {
+        Add: ((item: T) => boolean);
+        UnionWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        IntersectWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        ExceptWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        SymmetricExceptWith: ((other: System.Collections.Generic.IEnumerable<T>) => void);
+        IsSubsetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsSupersetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsProperSupersetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        IsProperSubsetOf: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        Overlaps: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+        SetEquals: ((other: System.Collections.Generic.IEnumerable<T>) => boolean);
+      }
+    }
+    export namespace ObjectModel {
+      export declare class Collection<T = any> {
+        constructor();
+        constructor(list: System.Collections.Generic.IList<T>);
+        Count: number;
+        Add: ((item: T) => void);
+        Clear: (() => void);
+        CopyTo: ((array: T[], index: number) => void);
+        Contains: ((item: T) => boolean);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+        IndexOf: ((item: T) => number);
+        Insert: ((index: number, item: T) => void);
+        Remove: ((item: T) => boolean);
+        RemoveAt: ((index: number) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class KeyedCollection<TKey = any, TItem = any> {
+        Comparer: System.Collections.Generic.IEqualityComparer<TKey>;
+        Count: number;
+        Contains: ((key: TKey) => boolean) | ((item: TItem) => boolean);
+        Remove: ((key: TKey) => boolean) | ((item: TItem) => boolean);
+        Add: ((item: TItem) => void);
+        Clear: (() => void);
+        CopyTo: ((array: TItem[], index: number) => void);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<TItem>);
+        IndexOf: ((item: TItem) => number);
+        Insert: ((index: number, item: TItem) => void);
+        RemoveAt: ((index: number) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ReadOnlyCollection<T = any> {
+        constructor(list: System.Collections.Generic.IList<T>);
+        Count: number;
+        Contains: ((value: T) => boolean);
+        CopyTo: ((array: T[], index: number) => void);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+        IndexOf: ((value: T) => number);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ReadOnlyDictionary<TKey = any, TValue = any> {
+        constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
+        Keys: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
+        Values: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
+        Count: number;
+        ContainsKey: ((key: TKey) => boolean);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>>);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ObservableCollection<T = any> {
+        constructor();
+        constructor(list: T[]);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        Count: number;
+        Move: ((oldIndex: number, newIndex: number) => void);
+        Add: ((item: T) => void);
+        Clear: (() => void);
+        CopyTo: ((array: T[], index: number) => void);
+        Contains: ((item: T) => boolean);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+        IndexOf: ((item: T) => number);
+        Insert: ((index: number, item: T) => void);
+        Remove: ((item: T) => boolean);
+        RemoveAt: ((index: number) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ReadOnlyObservableCollection<T = any> {
+        constructor(list: T[]);
+        Count: number;
+        Contains: ((value: T) => boolean);
+        CopyTo: ((array: T[], index: number) => void);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+        IndexOf: ((value: T) => number);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+    }
+    export namespace Specialized {
+      export declare class BitVector32 {
+        constructor(data: number);
+        constructor(value: System.Collections.Specialized.BitVector32);
+        Data: number;
+        static CreateMask: (() => number) | ((previous: number) => number);
+        static CreateSection: ((maxValue: System.Int16) => System.Collections.Specialized.BitVector32_Section) | ((maxValue: System.Int16, previous: System.Collections.Specialized.BitVector32_Section) => System.Collections.Specialized.BitVector32_Section);
+        Equals: ((o: System.Object) => boolean);
+        GetHashCode: (() => number);
+        static ToString: ((value: System.Collections.Specialized.BitVector32) => string) | (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class BitVector32_Section {
+        Mask: System.Int16;
+        Offset: System.Int16;
+        Equals: ((o: System.Object) => boolean) | ((obj: System.Collections.Specialized.BitVector32_Section) => boolean);
+        GetHashCode: (() => number);
+        static ToString: ((value: System.Collections.Specialized.BitVector32_Section) => string) | (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class CollectionsUtil {
+        constructor();
+        static CreateCaseInsensitiveHashtable: (() => System.Collections.Hashtable) | ((capacity: number) => System.Collections.Hashtable) | ((d: System.Collections.IDictionary) => System.Collections.Hashtable);
+        static CreateCaseInsensitiveSortedList: (() => System.Collections.SortedList);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class HybridDictionary {
+        constructor();
+        constructor(initialSize: number);
+        constructor(caseInsensitive: boolean);
+        constructor(initialSize: number, caseInsensitive: boolean);
+        Count: number;
+        Keys: System.Collections.ICollection;
+        IsReadOnly: boolean;
+        IsFixedSize: boolean;
+        IsSynchronized: boolean;
+        SyncRoot: System.Object;
+        Values: System.Collections.ICollection;
+        Add: ((key: System.Object, value: System.Object) => void);
+        Clear: (() => void);
+        Contains: ((key: System.Object) => boolean);
+        CopyTo: ((array: System.Array, index: number) => void);
+        GetEnumerator: (() => System.Collections.IDictionaryEnumerator);
+        Remove: ((key: System.Object) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export interface INotifyCollectionChanged {
+      }
+      export interface IOrderedDictionary {
+        GetEnumerator: (() => System.Collections.IDictionaryEnumerator);
+        Insert: ((index: number, key: System.Object, value: System.Object) => void);
+        RemoveAt: ((index: number) => void);
+      }
+      export declare class ListDictionary {
+        constructor();
+        constructor(comparer: System.Collections.IComparer);
+        Count: number;
+        Keys: System.Collections.ICollection;
+        IsReadOnly: boolean;
+        IsFixedSize: boolean;
+        IsSynchronized: boolean;
+        SyncRoot: System.Object;
+        Values: System.Collections.ICollection;
+        Add: ((key: System.Object, value: System.Object) => void);
+        Clear: (() => void);
+        Contains: ((key: System.Object) => boolean);
+        CopyTo: ((array: System.Array, index: number) => void);
+        GetEnumerator: (() => System.Collections.IDictionaryEnumerator);
+        Remove: ((key: System.Object) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class NameObjectCollectionBase {
+        Count: number;
+        Keys: System.Collections.Specialized.NameObjectCollectionBase_KeysCollection;
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        OnDeserialization: ((sender: System.Object) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class NameObjectCollectionBase_KeysCollection {
+        Count: number;
+        Get: ((index: number) => string);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class NameValueCollection {
+        constructor();
+        constructor(col: System.Collections.Specialized.NameValueCollection);
+        constructor(hashProvider: System.Collections.IHashCodeProvider, comparer: System.Collections.IComparer);
+        constructor(capacity: number);
+        constructor(equalityComparer: System.Collections.IEqualityComparer);
+        constructor(capacity: number, equalityComparer: System.Collections.IEqualityComparer);
+        constructor(capacity: number, col: System.Collections.Specialized.NameValueCollection);
+        constructor(capacity: number, hashProvider: System.Collections.IHashCodeProvider, comparer: System.Collections.IComparer);
+        AllKeys: string[];
+        Count: number;
+        Keys: System.Collections.Specialized.NameObjectCollectionBase_KeysCollection;
+        Add: ((c: System.Collections.Specialized.NameValueCollection) => void) | ((name: string, value: string) => void);
+        Clear: (() => void);
+        CopyTo: ((dest: System.Array, index: number) => void);
+        HasKeys: (() => boolean);
+        Get: ((name: string) => string) | ((index: number) => string);
+        GetValues: ((name: string) => string[]) | ((index: number) => string[]);
+        Set: ((name: string, value: string) => void);
+        Remove: ((name: string) => void);
+        GetKey: ((index: number) => string);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        OnDeserialization: ((sender: System.Object) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum NotifyCollectionChangedAction {
+        Add = 0,
+        Remove = 1,
+        Replace = 2,
+        Move = 3,
+        Reset = 4,
+      }
+      export declare class NotifyCollectionChangedEventArgs {
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, changedItem: System.Object);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, changedItem: System.Object, index: number);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, changedItems: System.Collections.IList);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, changedItems: System.Collections.IList, startingIndex: number);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, newItem: System.Object, oldItem: System.Object);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, newItem: System.Object, oldItem: System.Object, index: number);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, newItems: System.Collections.IList, oldItems: System.Collections.IList);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, newItems: System.Collections.IList, oldItems: System.Collections.IList, startingIndex: number);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, changedItem: System.Object, index: number, oldIndex: number);
+        constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, changedItems: System.Collections.IList, index: number, oldIndex: number);
+        Action: System.Collections.Specialized.NotifyCollectionChangedAction;
+        NewItems: System.Collections.IList;
+        OldItems: System.Collections.IList;
+        NewStartingIndex: number;
+        OldStartingIndex: number;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class NotifyCollectionChangedEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.Collections.Specialized.NotifyCollectionChangedEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.Collections.Specialized.NotifyCollectionChangedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class OrderedDictionary {
+        constructor();
+        constructor(capacity: number);
+        constructor(comparer: System.Collections.IEqualityComparer);
+        constructor(capacity: number, comparer: System.Collections.IEqualityComparer);
+        Count: number;
+        IsReadOnly: boolean;
+        Keys: System.Collections.ICollection;
+        Values: System.Collections.ICollection;
+        Add: ((key: System.Object, value: System.Object) => void);
+        Clear: (() => void);
+        AsReadOnly: (() => System.Collections.Specialized.OrderedDictionary);
+        Contains: ((key: System.Object) => boolean);
+        CopyTo: ((array: System.Array, index: number) => void);
+        Insert: ((index: number, key: System.Object, value: System.Object) => void);
+        RemoveAt: ((index: number) => void);
+        Remove: ((key: System.Object) => void);
+        GetEnumerator: (() => System.Collections.IDictionaryEnumerator);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class StringCollection {
+        constructor();
+        Count: number;
+        IsReadOnly: boolean;
+        IsSynchronized: boolean;
+        SyncRoot: System.Object;
+        Add: ((value: string) => number);
+        AddRange: ((value: string[]) => void);
+        Clear: (() => void);
+        Contains: ((value: string) => boolean);
+        CopyTo: ((array: string[], index: number) => void);
+        GetEnumerator: (() => System.Collections.Specialized.StringEnumerator);
+        IndexOf: ((value: string) => number);
+        Insert: ((index: number, value: string) => void);
+        Remove: ((value: string) => void);
+        RemoveAt: ((index: number) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class StringEnumerator {
+        Current: string;
+        MoveNext: (() => boolean);
+        Reset: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class StringDictionary {
+        constructor();
+        Count: number;
+        IsSynchronized: boolean;
+        Keys: System.Collections.ICollection;
+        SyncRoot: System.Object;
+        Values: System.Collections.ICollection;
+        Add: ((key: string, value: string) => void);
+        Clear: (() => void);
+        ContainsKey: ((key: string) => boolean);
+        ContainsValue: ((value: string) => boolean);
+        CopyTo: ((array: System.Array, index: number) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Remove: ((key: string) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
     }
   }
-  export namespace Configuration {
-    export namespace Assemblies {
-      export declare class AssemblyHash {
-        constructor(algorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm, value: System.Byte[]);
-        constructor(value: System.Byte[]);
-        Algorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm;
-        static Empty: System.Configuration.Assemblies.AssemblyHash;
+  export namespace ComponentModel {
+    export declare class AddingNewEventArgs {
+      constructor();
+      constructor(newObject: System.Object);
+      NewObject: System.Object;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class AddingNewEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.AddingNewEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.AddingNewEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ArrayConverter {
+      constructor();
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      GetProperties: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      CanConvertFrom: ((sourceType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFrom: ((value: System.Object) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class AsyncCompletedEventArgs {
+      constructor();
+      constructor(error: System.Exception, cancelled: boolean, userState: System.Object);
+      Cancelled: boolean;
+      Error: System.Exception;
+      UserState: System.Object;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class AsyncCompletedEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.AsyncCompletedEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.AsyncCompletedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class AsyncOperation {
+      UserSuppliedState: System.Object;
+      SynchronizationContext: System.Threading.SynchronizationContext;
+      Post: ((d: System.Threading.SendOrPostCallback, arg: System.Object) => void);
+      PostOperationCompleted: ((d: System.Threading.SendOrPostCallback, arg: System.Object) => void);
+      OperationCompleted: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class AsyncOperationManager {
+      static SynchronizationContext: System.Threading.SynchronizationContext;
+      static CreateOperation: ((userSuppliedState: System.Object) => System.ComponentModel.AsyncOperation);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class AttributeCollection {
+      constructor(...attributes: any[]);
+      Count: number;
+      static Empty: System.ComponentModel.AttributeCollection;
+      static FromExisting: ((existing: System.ComponentModel.AttributeCollection, ...newAttributes: any[]) => System.ComponentModel.AttributeCollection);
+      Contains: ((attribute: any) => boolean) | ((attributes: any[]) => boolean);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Matches: ((attribute: any) => boolean) | ((attributes: any[]) => boolean);
+      CopyTo: ((array: System.Array, index: number) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class BackgroundWorker {
+      constructor();
+      CancellationPending: boolean;
+      IsBusy: boolean;
+      WorkerReportsProgress: boolean;
+      WorkerSupportsCancellation: boolean;
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      CancelAsync: (() => void);
+      ReportProgress: ((percentProgress: number) => void) | ((percentProgress: number, userState: System.Object) => void);
+      RunWorkerAsync: (() => void) | ((argument: System.Object) => void);
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class ComponentEditor {
+      EditComponent: ((component: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, component: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum BindableSupport {
+      No = 0,
+      Yes = 1,
+      Default = 2,
+    }
+    export enum BindingDirection {
+      OneWay = 0,
+      TwoWay = 1,
+    }
+    export declare class BindingList<T = any> {
+      constructor();
+      constructor(list: System.Collections.Generic.IList<T>);
+      RaiseListChangedEvents: boolean;
+      AllowNew: boolean;
+      AllowEdit: boolean;
+      AllowRemove: boolean;
+      Count: number;
+      ResetBindings: (() => void);
+      ResetItem: ((position: number) => void);
+      CancelNew: ((itemIndex: number) => void);
+      EndNew: ((itemIndex: number) => void);
+      AddNew: (() => T);
+      Add: ((item: T) => void);
+      Clear: (() => void);
+      CopyTo: ((array: T[], index: number) => void);
+      Contains: ((item: T) => boolean);
+      GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+      IndexOf: ((item: T) => number);
+      Insert: ((index: number, item: T) => void);
+      Remove: ((item: T) => boolean);
+      RemoveAt: ((index: number) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class BooleanConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      GetStandardValues: ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection) | (() => System.Collections.ICollection);
+      GetStandardValuesExclusive: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetStandardValuesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertTo: ((value: System.Object, destinationType: System.Type) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ByteConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CancelEventArgs {
+      constructor();
+      constructor(cancel: boolean);
+      Cancel: boolean;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CancelEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.CancelEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.CancelEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CharConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum CollectionChangeAction {
+      Add = 1,
+      Remove = 2,
+      Refresh = 3,
+    }
+    export declare class CollectionChangeEventArgs {
+      constructor(action: System.ComponentModel.CollectionChangeAction, element: System.Object);
+      Action: System.ComponentModel.CollectionChangeAction;
+      Element: System.Object;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CollectionChangeEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.CollectionChangeEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.CollectionChangeEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CollectionConverter {
+      constructor();
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      GetProperties: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      CanConvertFrom: ((sourceType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFrom: ((value: System.Object) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Component {
+      constructor();
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class ComponentCollection {
+      constructor(components: System.ComponentModel.IComponent[]);
+      Count: number;
+      CopyTo: ((array: System.ComponentModel.IComponent[], index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ComponentConverter {
+      constructor(type: System.Type);
+      GetProperties: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      GetStandardValues: ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection) | (() => System.Collections.ICollection);
+      GetStandardValuesExclusive: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetStandardValuesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ComponentResourceManager {
+      constructor();
+      constructor(t: System.Type);
+      BaseName: string;
+      IgnoreCase: boolean;
+      ResourceSetType: System.Type;
+      ApplyResources: ((value: System.Object, objectName: string) => void) | ((value: System.Object, objectName: string, culture: System.Globalization.CultureInfo) => void);
+      ReleaseAllResources: (() => void);
+      GetResourceSet: ((culture: System.Globalization.CultureInfo, createIfNotExists: boolean, tryParents: boolean) => System.Resources.ResourceSet);
+      GetString: ((name: string) => string) | ((name: string, culture: System.Globalization.CultureInfo) => string);
+      GetObject: ((name: string) => System.Object) | ((name: string, culture: System.Globalization.CultureInfo) => System.Object);
+      GetStream: ((name: string) => System.IO.UnmanagedMemoryStream) | ((name: string, culture: System.Globalization.CultureInfo) => System.IO.UnmanagedMemoryStream);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Container {
+      constructor();
+      Components: System.ComponentModel.ComponentCollection;
+      Add: ((component: System.ComponentModel.IComponent) => void) | ((component: System.ComponentModel.IComponent, name: string) => void);
+      Dispose: (() => void);
+      Remove: ((component: System.ComponentModel.IComponent) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ContainerFilterService {
+      FilterComponents: ((components: System.ComponentModel.ComponentCollection) => System.ComponentModel.ComponentCollection);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CultureInfoConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      GetStandardValues: ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection) | (() => System.Collections.ICollection);
+      GetStandardValuesExclusive: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetStandardValuesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CustomTypeDescriptor {
+      GetAttributes: (() => System.ComponentModel.AttributeCollection);
+      GetClassName: (() => string);
+      GetComponentName: (() => string);
+      GetConverter: (() => System.ComponentModel.TypeConverter);
+      GetDefaultEvent: (() => System.ComponentModel.EventDescriptor);
+      GetDefaultProperty: (() => System.ComponentModel.PropertyDescriptor);
+      GetEditor: ((editorBaseType: System.Type) => System.Object);
+      GetEvents: (() => System.ComponentModel.EventDescriptorCollection) | ((attributes: any[]) => System.ComponentModel.EventDescriptorCollection);
+      GetProperties: (() => System.ComponentModel.PropertyDescriptorCollection) | ((attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertyOwner: ((pd: System.ComponentModel.PropertyDescriptor) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DataErrorsChangedEventArgs {
+      constructor(propertyName: string);
+      PropertyName: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum DataObjectMethodType {
+      Fill = 0,
+      Select = 1,
+      Update = 2,
+      Insert = 3,
+      Delete = 4,
+    }
+    export declare class DateTimeConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DateTimeOffsetConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DecimalConverter {
+      constructor();
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum DesignerSerializationVisibility {
+      Hidden = 0,
+      Visible = 1,
+      Content = 2,
+    }
+    export declare class DoWorkEventArgs {
+      constructor(argument: System.Object);
+      Argument: System.Object;
+      Result: System.Object;
+      Cancel: boolean;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DoWorkEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.DoWorkEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.DoWorkEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DoubleConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum EditorBrowsableState {
+      Always = 0,
+      Never = 1,
+      Advanced = 2,
+    }
+    export declare class EnumConverter {
+      constructor(type: System.Type);
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      GetStandardValues: ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection) | (() => System.Collections.ICollection);
+      GetStandardValuesExclusive: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetStandardValuesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      IsValid: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean) | ((value: System.Object) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventDescriptor {
+      ComponentType: System.Type;
+      EventType: System.Type;
+      IsMulticast: boolean;
+      Attributes: System.ComponentModel.AttributeCollection;
+      Category: string;
+      Description: string;
+      IsBrowsable: boolean;
+      Name: string;
+      DesignTimeOnly: boolean;
+      DisplayName: string;
+      AddEventHandler: ((component: System.Object, value: System.Delegate) => void);
+      RemoveEventHandler: ((component: System.Object, value: System.Delegate) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventDescriptorCollection {
+      constructor(events: System.ComponentModel.EventDescriptor[]);
+      constructor(events: System.ComponentModel.EventDescriptor[], readOnly: boolean);
+      Count: number;
+      static Empty: System.ComponentModel.EventDescriptorCollection;
+      Add: ((value: System.ComponentModel.EventDescriptor) => number);
+      Clear: (() => void);
+      Contains: ((value: System.ComponentModel.EventDescriptor) => boolean);
+      Find: ((name: string, ignoreCase: boolean) => System.ComponentModel.EventDescriptor);
+      IndexOf: ((value: System.ComponentModel.EventDescriptor) => number);
+      Insert: ((index: number, value: System.ComponentModel.EventDescriptor) => void);
+      Remove: ((value: System.ComponentModel.EventDescriptor) => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Sort: (() => System.ComponentModel.EventDescriptorCollection) | ((names: string[]) => System.ComponentModel.EventDescriptorCollection) | ((names: string[], comparer: System.Collections.IComparer) => System.ComponentModel.EventDescriptorCollection) | ((comparer: System.Collections.IComparer) => System.ComponentModel.EventDescriptorCollection);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventHandlerList {
+      constructor();
+      AddHandler: ((key: System.Object, value: System.Delegate) => void);
+      AddHandlers: ((listToAddFrom: System.ComponentModel.EventHandlerList) => void);
+      Dispose: (() => void);
+      RemoveHandler: ((key: System.Object, value: System.Delegate) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ExpandableObjectConverter {
+      constructor();
+      GetProperties: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      CanConvertFrom: ((sourceType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFrom: ((value: System.Object) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertTo: ((value: System.Object, destinationType: System.Type) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class GuidConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class HandledEventArgs {
+      constructor();
+      constructor(defaultHandledValue: boolean);
+      Handled: boolean;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class HandledEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.HandledEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.HandledEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export interface IBindingList {
+      AllowNew: boolean;
+      AllowEdit: boolean;
+      AllowRemove: boolean;
+      SupportsChangeNotification: boolean;
+      SupportsSearching: boolean;
+      SupportsSorting: boolean;
+      IsSorted: boolean;
+      SortProperty: System.ComponentModel.PropertyDescriptor;
+      SortDirection: System.ComponentModel.ListSortDirection;
+      AddNew: (() => System.Object);
+      AddIndex: ((property: System.ComponentModel.PropertyDescriptor) => void);
+      ApplySort: ((property: System.ComponentModel.PropertyDescriptor, direction: System.ComponentModel.ListSortDirection) => void);
+      Find: ((property: System.ComponentModel.PropertyDescriptor, key: System.Object) => number);
+      RemoveIndex: ((property: System.ComponentModel.PropertyDescriptor) => void);
+      RemoveSort: (() => void);
+    }
+    export interface IBindingListView {
+      Filter: string;
+      SortDescriptions: System.ComponentModel.ListSortDescriptionCollection;
+      SupportsAdvancedSorting: boolean;
+      SupportsFiltering: boolean;
+      ApplySort: ((sorts: System.ComponentModel.ListSortDescriptionCollection) => void);
+      RemoveFilter: (() => void);
+    }
+    export interface ICancelAddNew {
+      CancelNew: ((itemIndex: number) => void);
+      EndNew: ((itemIndex: number) => void);
+    }
+    export interface IChangeTracking {
+      IsChanged: boolean;
+      AcceptChanges: (() => void);
+    }
+    export interface IComNativeDescriptorHandler {
+      GetAttributes: ((component: System.Object) => System.ComponentModel.AttributeCollection);
+      GetClassName: ((component: System.Object) => string);
+      GetConverter: ((component: System.Object) => System.ComponentModel.TypeConverter);
+      GetDefaultEvent: ((component: System.Object) => System.ComponentModel.EventDescriptor);
+      GetDefaultProperty: ((component: System.Object) => System.ComponentModel.PropertyDescriptor);
+      GetEditor: ((component: System.Object, baseEditorType: System.Type) => System.Object);
+      GetName: ((component: System.Object) => string);
+      GetEvents: ((component: System.Object) => System.ComponentModel.EventDescriptorCollection) | ((component: System.Object, attributes: any[]) => System.ComponentModel.EventDescriptorCollection);
+      GetProperties: ((component: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+    }
+    export interface IComponent {
+      Site: System.ComponentModel.ISite;
+    }
+    export interface IContainer {
+      Components: System.ComponentModel.ComponentCollection;
+      Add: ((component: System.ComponentModel.IComponent) => void) | ((component: System.ComponentModel.IComponent, name: string) => void);
+      Remove: ((component: System.ComponentModel.IComponent) => void);
+    }
+    export interface ICustomTypeDescriptor {
+      GetAttributes: (() => System.ComponentModel.AttributeCollection);
+      GetClassName: (() => string);
+      GetComponentName: (() => string);
+      GetConverter: (() => System.ComponentModel.TypeConverter);
+      GetDefaultEvent: (() => System.ComponentModel.EventDescriptor);
+      GetDefaultProperty: (() => System.ComponentModel.PropertyDescriptor);
+      GetEditor: ((editorBaseType: System.Type) => System.Object);
+      GetEvents: (() => System.ComponentModel.EventDescriptorCollection) | ((attributes: any[]) => System.ComponentModel.EventDescriptorCollection);
+      GetProperties: (() => System.ComponentModel.PropertyDescriptorCollection) | ((attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertyOwner: ((pd: System.ComponentModel.PropertyDescriptor) => System.Object);
+    }
+    export interface IDataErrorInfo {
+      Error: string;
+    }
+    export interface IEditableObject {
+      BeginEdit: (() => void);
+      EndEdit: (() => void);
+      CancelEdit: (() => void);
+    }
+    export interface IExtenderProvider {
+      CanExtend: ((extendee: System.Object) => boolean);
+    }
+    export interface IIntellisenseBuilder {
+      Name: string;
+    }
+    export interface IListSource {
+      ContainsListCollection: boolean;
+      GetList: (() => System.Collections.IList);
+    }
+    export interface INestedContainer {
+      Owner: System.ComponentModel.IComponent;
+    }
+    export interface INestedSite {
+      FullName: string;
+    }
+    export interface INotifyDataErrorInfo {
+      HasErrors: boolean;
+      GetErrors: ((propertyName: string) => System.Collections.IEnumerable);
+    }
+    export interface INotifyPropertyChanged {
+    }
+    export interface INotifyPropertyChanging {
+    }
+    export interface IRaiseItemChangedEvents {
+      RaisesItemChangedEvents: boolean;
+    }
+    export interface IRevertibleChangeTracking {
+      RejectChanges: (() => void);
+    }
+    export interface ISite {
+      Component: System.ComponentModel.IComponent;
+      Container: System.ComponentModel.IContainer;
+      DesignMode: boolean;
+      Name: string;
+    }
+    export interface ISupportInitialize {
+      BeginInit: (() => void);
+      EndInit: (() => void);
+    }
+    export interface ISupportInitializeNotification {
+      IsInitialized: boolean;
+    }
+    export interface ISynchronizeInvoke {
+      InvokeRequired: boolean;
+      BeginInvoke: ((method: System.Delegate, args: System.Object[]) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => System.Object);
+      Invoke: ((method: System.Delegate, args: System.Object[]) => System.Object);
+    }
+    export interface ITypeDescriptorContext {
+      Container: System.ComponentModel.IContainer;
+      Instance: System.Object;
+      PropertyDescriptor: System.ComponentModel.PropertyDescriptor;
+      OnComponentChanging: (() => boolean);
+      OnComponentChanged: (() => void);
+    }
+    export interface ITypedList {
+      GetListName: ((listAccessors: System.ComponentModel.PropertyDescriptor[]) => string);
+      GetItemProperties: ((listAccessors: System.ComponentModel.PropertyDescriptor[]) => System.ComponentModel.PropertyDescriptorCollection);
+    }
+    export declare class InstanceCreationEditor {
+      Text: string;
+      CreateInstance: ((context: System.ComponentModel.ITypeDescriptorContext, instanceType: System.Type) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Int16Converter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Int32Converter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Int64Converter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class InvalidAsynchronousStateException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, innerException: System.Exception);
+      Message: string;
+      ParamName: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetBaseException: (() => System.Exception);
+      ToString: (() => string);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+    }
+    export declare class InvalidEnumArgumentException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, innerException: System.Exception);
+      constructor(argumentName: string, invalidValue: number, enumClass: System.Type);
+      Message: string;
+      ParamName: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetBaseException: (() => System.Exception);
+      ToString: (() => string);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+    }
+    export declare class LicFileLicenseProvider {
+      constructor();
+      GetLicense: ((context: System.ComponentModel.LicenseContext, type: System.Type, instance: System.Object, allowExceptions: boolean) => System.ComponentModel.License);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class License {
+      LicenseKey: string;
+      Dispose: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class LicenseContext {
+      constructor();
+      UsageMode: System.ComponentModel.LicenseUsageMode;
+      GetSavedLicenseKey: ((type: System.Type, resourceAssembly: System.Reflection.Assembly) => string);
+      GetService: ((type: System.Type) => System.Object);
+      SetSavedLicenseKey: ((type: System.Type, key: string) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class LicenseException {
+      constructor(type: System.Type);
+      constructor(type: System.Type, instance: System.Object);
+      constructor(type: System.Type, instance: System.Object, message: string);
+      constructor(type: System.Type, instance: System.Object, message: string, innerException: System.Exception);
+      LicensedType: System.Type;
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetBaseException: (() => System.Exception);
+      ToString: (() => string);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+    }
+    export declare class LicenseManager {
+      static CurrentContext: System.ComponentModel.LicenseContext;
+      static UsageMode: System.ComponentModel.LicenseUsageMode;
+      static CreateWithContext: ((type: System.Type, creationContext: System.ComponentModel.LicenseContext) => System.Object) | ((type: System.Type, creationContext: System.ComponentModel.LicenseContext, args: System.Object[]) => System.Object);
+      static IsLicensed: ((type: System.Type) => boolean);
+      static IsValid: ((type: System.Type) => boolean);
+      static LockContext: ((contextUser: System.Object) => void);
+      static UnlockContext: ((contextUser: System.Object) => void);
+      static Validate: ((type: System.Type) => void) | ((type: System.Type, instance: System.Object) => System.ComponentModel.License);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class LicenseProvider {
+      GetLicense: ((context: System.ComponentModel.LicenseContext, type: System.Type, instance: System.Object, allowExceptions: boolean) => System.ComponentModel.License);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum LicenseUsageMode {
+      Runtime = 0,
+      Designtime = 1,
+    }
+    export declare class ListChangedEventArgs {
+      constructor(listChangedType: System.ComponentModel.ListChangedType, newIndex: number);
+      constructor(listChangedType: System.ComponentModel.ListChangedType, newIndex: number, propDesc: System.ComponentModel.PropertyDescriptor);
+      constructor(listChangedType: System.ComponentModel.ListChangedType, propDesc: System.ComponentModel.PropertyDescriptor);
+      constructor(listChangedType: System.ComponentModel.ListChangedType, newIndex: number, oldIndex: number);
+      ListChangedType: System.ComponentModel.ListChangedType;
+      NewIndex: number;
+      OldIndex: number;
+      PropertyDescriptor: System.ComponentModel.PropertyDescriptor;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ListChangedEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.ListChangedEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.ListChangedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum ListChangedType {
+      Reset = 0,
+      ItemAdded = 1,
+      ItemDeleted = 2,
+      ItemMoved = 3,
+      ItemChanged = 4,
+      PropertyDescriptorAdded = 5,
+      PropertyDescriptorDeleted = 6,
+      PropertyDescriptorChanged = 7,
+    }
+    export declare class ListSortDescription {
+      constructor(property: System.ComponentModel.PropertyDescriptor, direction: System.ComponentModel.ListSortDirection);
+      PropertyDescriptor: System.ComponentModel.PropertyDescriptor;
+      SortDirection: System.ComponentModel.ListSortDirection;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ListSortDescriptionCollection {
+      constructor();
+      constructor(sorts: System.ComponentModel.ListSortDescription[]);
+      Count: number;
+      Contains: ((value: System.Object) => boolean);
+      IndexOf: ((value: System.Object) => number);
+      CopyTo: ((array: System.Array, index: number) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum ListSortDirection {
+      Ascending = 0,
+      Descending = 1,
+    }
+    export declare class MarshalByValueComponent {
+      constructor();
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      DesignMode: boolean;
+      Dispose: (() => void);
+      GetService: ((service: System.Type) => System.Object);
+      ToString: (() => string);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class MaskedTextProvider {
+      constructor(mask: string);
+      constructor(mask: string, restrictToAscii: boolean);
+      constructor(mask: string, culture: System.Globalization.CultureInfo);
+      constructor(mask: string, culture: System.Globalization.CultureInfo, restrictToAscii: boolean);
+      constructor(mask: string, passwordChar: System.Char, allowPromptAsInput: boolean);
+      constructor(mask: string, culture: System.Globalization.CultureInfo, passwordChar: System.Char, allowPromptAsInput: boolean);
+      constructor(mask: string, culture: System.Globalization.CultureInfo, allowPromptAsInput: boolean, promptChar: System.Char, passwordChar: System.Char, restrictToAscii: boolean);
+      AllowPromptAsInput: boolean;
+      AssignedEditPositionCount: number;
+      AvailableEditPositionCount: number;
+      Culture: System.Globalization.CultureInfo;
+      static DefaultPasswordChar: System.Char;
+      EditPositionCount: number;
+      EditPositions: System.Collections.IEnumerator;
+      IncludeLiterals: boolean;
+      IncludePrompt: boolean;
+      AsciiOnly: boolean;
+      IsPassword: boolean;
+      static InvalidIndex: number;
+      LastAssignedPosition: number;
+      Length: number;
+      Mask: string;
+      MaskCompleted: boolean;
+      MaskFull: boolean;
+      PasswordChar: System.Char;
+      PromptChar: System.Char;
+      ResetOnPrompt: boolean;
+      ResetOnSpace: boolean;
+      SkipLiterals: boolean;
+      Clone: (() => System.Object);
+      Add: ((input: System.Char) => boolean) | ((input: string) => boolean);
+      Clear: (() => void);
+      FindAssignedEditPositionFrom: ((position: number, direction: boolean) => number);
+      FindAssignedEditPositionInRange: ((startPosition: number, endPosition: number, direction: boolean) => number);
+      FindEditPositionFrom: ((position: number, direction: boolean) => number);
+      FindEditPositionInRange: ((startPosition: number, endPosition: number, direction: boolean) => number);
+      FindNonEditPositionFrom: ((position: number, direction: boolean) => number);
+      FindNonEditPositionInRange: ((startPosition: number, endPosition: number, direction: boolean) => number);
+      FindUnassignedEditPositionFrom: ((position: number, direction: boolean) => number);
+      FindUnassignedEditPositionInRange: ((startPosition: number, endPosition: number, direction: boolean) => number);
+      static GetOperationResultFromHint: ((hint: System.ComponentModel.MaskedTextResultHint) => boolean);
+      InsertAt: ((input: System.Char, position: number) => boolean) | ((input: string, position: number) => boolean);
+      IsAvailablePosition: ((position: number) => boolean);
+      IsEditPosition: ((position: number) => boolean);
+      static IsValidInputChar: ((c: System.Char) => boolean);
+      static IsValidMaskChar: ((c: System.Char) => boolean);
+      static IsValidPasswordChar: ((c: System.Char) => boolean);
+      Remove: (() => boolean);
+      RemoveAt: ((position: number) => boolean) | ((startPosition: number, endPosition: number) => boolean);
+      Replace: ((input: System.Char, position: number) => boolean) | ((input: string, position: number) => boolean);
+      Set: ((input: string) => boolean);
+      ToDisplayString: (() => string);
+      ToString: (() => string) | ((ignorePasswordChar: boolean) => string) | ((startPosition: number, length: number) => string) | ((ignorePasswordChar: boolean, startPosition: number, length: number) => string) | ((includePrompt: boolean, includeLiterals: boolean) => string) | ((includePrompt: boolean, includeLiterals: boolean, startPosition: number, length: number) => string) | ((ignorePasswordChar: boolean, includePrompt: boolean, includeLiterals: boolean, startPosition: number, length: number) => string);
+      VerifyEscapeChar: ((input: System.Char, position: number) => boolean);
+      VerifyString: ((input: string) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export enum MaskedTextResultHint {
+      Unknown = 0,
+      CharacterEscaped = 1,
+      NoEffect = 2,
+      SideEffect = 3,
+      Success = 4,
+      AsciiCharacterExpected = -1,
+      AlphanumericCharacterExpected = -2,
+      DigitExpected = -3,
+      LetterExpected = -4,
+      SignedDigitExpected = -5,
+      InvalidInput = -51,
+      PromptCharNotAllowed = -52,
+      UnavailableEditPosition = -53,
+      NonEditPosition = -54,
+      PositionOutOfRange = -55,
+    }
+    export declare class MemberDescriptor {
+      Attributes: System.ComponentModel.AttributeCollection;
+      Category: string;
+      Description: string;
+      IsBrowsable: boolean;
+      Name: string;
+      DesignTimeOnly: boolean;
+      DisplayName: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class MultilineStringConverter {
+      constructor();
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      GetProperties: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      CanConvertFrom: ((sourceType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFrom: ((value: System.Object) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class NestedContainer {
+      constructor(owner: System.ComponentModel.IComponent);
+      Owner: System.ComponentModel.IComponent;
+      Components: System.ComponentModel.ComponentCollection;
+      Add: ((component: System.ComponentModel.IComponent) => void) | ((component: System.ComponentModel.IComponent, name: string) => void);
+      Dispose: (() => void);
+      Remove: ((component: System.ComponentModel.IComponent) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class NullableConverter {
+      constructor(type: System.Type);
+      NullableType: System.Type;
+      UnderlyingType: System.Type;
+      UnderlyingTypeConverter: System.ComponentModel.TypeConverter;
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CreateInstance: ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object) | ((propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetProperties: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetStandardValues: ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection) | (() => System.Collections.ICollection);
+      GetStandardValuesExclusive: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetStandardValuesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      IsValid: ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean) | ((value: System.Object) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ProgressChangedEventArgs {
+      constructor(progressPercentage: number, userState: System.Object);
+      ProgressPercentage: number;
+      UserState: System.Object;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ProgressChangedEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.ProgressChangedEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.ProgressChangedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class PropertyChangedEventArgs {
+      constructor(propertyName: string);
+      PropertyName: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class PropertyChangedEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.PropertyChangedEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.PropertyChangedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class PropertyChangingEventArgs {
+      constructor(propertyName: string);
+      PropertyName: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class PropertyChangingEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.PropertyChangingEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.PropertyChangingEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class PropertyDescriptor {
+      ComponentType: System.Type;
+      Converter: System.ComponentModel.TypeConverter;
+      IsLocalizable: boolean;
+      IsReadOnly: boolean;
+      SerializationVisibility: System.ComponentModel.DesignerSerializationVisibility;
+      PropertyType: System.Type;
+      SupportsChangeEvents: boolean;
+      Attributes: System.ComponentModel.AttributeCollection;
+      Category: string;
+      Description: string;
+      IsBrowsable: boolean;
+      Name: string;
+      DesignTimeOnly: boolean;
+      DisplayName: string;
+      AddValueChanged: ((component: System.Object, handler: System.EventHandler) => void);
+      CanResetValue: ((component: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetChildProperties: (() => System.ComponentModel.PropertyDescriptorCollection) | ((filter: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((instance: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((instance: System.Object, filter: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetEditor: ((editorBaseType: System.Type) => System.Object);
+      GetHashCode: (() => number);
+      GetValue: ((component: System.Object) => System.Object);
+      RemoveValueChanged: ((component: System.Object, handler: System.EventHandler) => void);
+      ResetValue: ((component: System.Object) => void);
+      SetValue: ((component: System.Object, value: System.Object) => void);
+      ShouldSerializeValue: ((component: System.Object) => boolean);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class PropertyDescriptorCollection {
+      constructor(properties: System.ComponentModel.PropertyDescriptor[]);
+      constructor(properties: System.ComponentModel.PropertyDescriptor[], readOnly: boolean);
+      Count: number;
+      static Empty: System.ComponentModel.PropertyDescriptorCollection;
+      Add: ((value: System.ComponentModel.PropertyDescriptor) => number);
+      Clear: (() => void);
+      Contains: ((value: System.ComponentModel.PropertyDescriptor) => boolean);
+      CopyTo: ((array: System.Array, index: number) => void);
+      Find: ((name: string, ignoreCase: boolean) => System.ComponentModel.PropertyDescriptor);
+      IndexOf: ((value: System.ComponentModel.PropertyDescriptor) => number);
+      Insert: ((index: number, value: System.ComponentModel.PropertyDescriptor) => void);
+      Remove: ((value: System.ComponentModel.PropertyDescriptor) => void);
+      RemoveAt: ((index: number) => void);
+      Sort: (() => System.ComponentModel.PropertyDescriptorCollection) | ((names: string[]) => System.ComponentModel.PropertyDescriptorCollection) | ((names: string[], comparer: System.Collections.IComparer) => System.ComponentModel.PropertyDescriptorCollection) | ((comparer: System.Collections.IComparer) => System.ComponentModel.PropertyDescriptorCollection);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ReferenceConverter {
+      constructor(type: System.Type);
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      GetStandardValues: ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection) | (() => System.Collections.ICollection);
+      GetStandardValuesExclusive: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetStandardValuesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class RefreshEventArgs {
+      constructor(componentChanged: System.Object);
+      constructor(typeChanged: System.Type);
+      ComponentChanged: System.Object;
+      TypeChanged: System.Type;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class RefreshEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((e: System.ComponentModel.RefreshEventArgs) => void);
+      BeginInvoke: ((e: System.ComponentModel.RefreshEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class RunWorkerCompletedEventArgs {
+      constructor(result: System.Object, error: System.Exception, cancelled: boolean);
+      Result: System.Object;
+      UserState: System.Object;
+      Cancelled: boolean;
+      Error: System.Exception;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class RunWorkerCompletedEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.ComponentModel.RunWorkerCompletedEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.ComponentModel.RunWorkerCompletedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class SByteConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class SingleConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class StringConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertTo: ((value: System.Object, destinationType: System.Type) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class SyntaxCheck {
+      static CheckMachineName: ((value: string) => boolean);
+      static CheckPath: ((value: string) => boolean);
+      static CheckRootedPath: ((value: string) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TimeSpanConverter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum ToolboxItemFilterType {
+      Allow = 0,
+      Custom = 1,
+      Prevent = 2,
+      Require = 3,
+    }
+    export declare class TypeConverter {
+      constructor();
+      CanConvertFrom: ((sourceType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean);
+      CanConvertTo: ((destinationType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean);
+      ConvertFrom: ((value: System.Object) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertTo: ((value: System.Object, destinationType: System.Type) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TypeConverter_StandardValuesCollection {
+      constructor(values: System.Collections.ICollection);
+      Count: number;
+      CopyTo: ((array: System.Array, index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TypeDescriptionProvider {
+      CreateInstance: ((provider: System.IServiceProvider, objectType: System.Type, argTypes: System.Type[], args: System.Object[]) => System.Object);
+      GetCache: ((instance: System.Object) => System.Collections.IDictionary);
+      GetExtendedTypeDescriptor: ((instance: System.Object) => System.ComponentModel.ICustomTypeDescriptor);
+      GetFullComponentName: ((component: System.Object) => string);
+      GetReflectionType: ((objectType: System.Type) => System.Type) | ((instance: System.Object) => System.Type) | ((objectType: System.Type, instance: System.Object) => System.Type);
+      GetRuntimeType: ((reflectionType: System.Type) => System.Type);
+      GetTypeDescriptor: ((objectType: System.Type) => System.ComponentModel.ICustomTypeDescriptor) | ((instance: System.Object) => System.ComponentModel.ICustomTypeDescriptor) | ((objectType: System.Type, instance: System.Object) => System.ComponentModel.ICustomTypeDescriptor);
+      IsSupportedType: ((type: System.Type) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TypeDescriptor {
+      static ComNativeDescriptorHandler: System.ComponentModel.IComNativeDescriptorHandler;
+      static ComObjectType: System.Type;
+      static InterfaceType: System.Type;
+      static AddAttributes: ((type: System.Type, ...attributes: any[]) => System.ComponentModel.TypeDescriptionProvider) | ((instance: System.Object, ...attributes: any[]) => System.ComponentModel.TypeDescriptionProvider);
+      static AddEditorTable: ((editorBaseType: System.Type, table: System.Collections.Hashtable) => void);
+      static AddProvider: ((provider: System.ComponentModel.TypeDescriptionProvider, type: System.Type) => void) | ((provider: System.ComponentModel.TypeDescriptionProvider, instance: System.Object) => void);
+      static AddProviderTransparent: ((provider: System.ComponentModel.TypeDescriptionProvider, type: System.Type) => void) | ((provider: System.ComponentModel.TypeDescriptionProvider, instance: System.Object) => void);
+      static CreateAssociation: ((primary: System.Object, secondary: System.Object) => void);
+      static CreateDesigner: ((component: System.ComponentModel.IComponent, designerBaseType: System.Type) => System.ComponentModel.Design.IDesigner);
+      static CreateEvent: ((componentType: System.Type, name: string, type: System.Type, ...attributes: any[]) => System.ComponentModel.EventDescriptor) | ((componentType: System.Type, oldEventDescriptor: System.ComponentModel.EventDescriptor, ...attributes: any[]) => System.ComponentModel.EventDescriptor);
+      static CreateInstance: ((provider: System.IServiceProvider, objectType: System.Type, argTypes: System.Type[], args: System.Object[]) => System.Object);
+      static CreateProperty: ((componentType: System.Type, name: string, type: System.Type, ...attributes: any[]) => System.ComponentModel.PropertyDescriptor) | ((componentType: System.Type, oldPropertyDescriptor: System.ComponentModel.PropertyDescriptor, ...attributes: any[]) => System.ComponentModel.PropertyDescriptor);
+      static GetAssociation: ((type: System.Type, primary: System.Object) => System.Object);
+      static GetAttributes: ((componentType: System.Type) => System.ComponentModel.AttributeCollection) | ((component: System.Object) => System.ComponentModel.AttributeCollection) | ((component: System.Object, noCustomTypeDesc: boolean) => System.ComponentModel.AttributeCollection);
+      static GetClassName: ((component: System.Object) => string) | ((component: System.Object, noCustomTypeDesc: boolean) => string) | ((componentType: System.Type) => string);
+      static GetComponentName: ((component: System.Object) => string) | ((component: System.Object, noCustomTypeDesc: boolean) => string);
+      static GetConverter: ((component: System.Object) => System.ComponentModel.TypeConverter) | ((component: System.Object, noCustomTypeDesc: boolean) => System.ComponentModel.TypeConverter) | ((type: System.Type) => System.ComponentModel.TypeConverter);
+      static GetDefaultEvent: ((componentType: System.Type) => System.ComponentModel.EventDescriptor) | ((component: System.Object) => System.ComponentModel.EventDescriptor) | ((component: System.Object, noCustomTypeDesc: boolean) => System.ComponentModel.EventDescriptor);
+      static GetDefaultProperty: ((componentType: System.Type) => System.ComponentModel.PropertyDescriptor) | ((component: System.Object) => System.ComponentModel.PropertyDescriptor) | ((component: System.Object, noCustomTypeDesc: boolean) => System.ComponentModel.PropertyDescriptor);
+      static GetEditor: ((component: System.Object, editorBaseType: System.Type) => System.Object) | ((component: System.Object, editorBaseType: System.Type, noCustomTypeDesc: boolean) => System.Object) | ((type: System.Type, editorBaseType: System.Type) => System.Object);
+      static GetEvents: ((componentType: System.Type) => System.ComponentModel.EventDescriptorCollection) | ((componentType: System.Type, attributes: any[]) => System.ComponentModel.EventDescriptorCollection) | ((component: System.Object) => System.ComponentModel.EventDescriptorCollection) | ((component: System.Object, noCustomTypeDesc: boolean) => System.ComponentModel.EventDescriptorCollection) | ((component: System.Object, attributes: any[]) => System.ComponentModel.EventDescriptorCollection) | ((component: System.Object, attributes: any[], noCustomTypeDesc: boolean) => System.ComponentModel.EventDescriptorCollection);
+      static GetFullComponentName: ((component: System.Object) => string);
+      static GetProperties: ((componentType: System.Type) => System.ComponentModel.PropertyDescriptorCollection) | ((componentType: System.Type, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((component: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((component: System.Object, noCustomTypeDesc: boolean) => System.ComponentModel.PropertyDescriptorCollection) | ((component: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection) | ((component: System.Object, attributes: any[], noCustomTypeDesc: boolean) => System.ComponentModel.PropertyDescriptorCollection);
+      static GetProvider: ((type: System.Type) => System.ComponentModel.TypeDescriptionProvider) | ((instance: System.Object) => System.ComponentModel.TypeDescriptionProvider);
+      static GetReflectionType: ((type: System.Type) => System.Type) | ((instance: System.Object) => System.Type);
+      static Refresh: ((component: System.Object) => void) | ((type: System.Type) => void) | ((module: System.Reflection.Module) => void) | ((assembly: System.Reflection.Assembly) => void);
+      static RemoveAssociation: ((primary: System.Object, secondary: System.Object) => void);
+      static RemoveAssociations: ((primary: System.Object) => void);
+      static RemoveProvider: ((provider: System.ComponentModel.TypeDescriptionProvider, type: System.Type) => void) | ((provider: System.ComponentModel.TypeDescriptionProvider, instance: System.Object) => void);
+      static RemoveProviderTransparent: ((provider: System.ComponentModel.TypeDescriptionProvider, type: System.Type) => void) | ((provider: System.ComponentModel.TypeDescriptionProvider, instance: System.Object) => void);
+      static SortDescriptorArray: ((infos: System.Collections.IList) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TypeListConverter {
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      GetStandardValues: ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection) | (() => System.Collections.ICollection);
+      GetStandardValuesExclusive: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      GetStandardValuesSupported: ((context: System.ComponentModel.ITypeDescriptorContext) => boolean) | (() => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class UInt16Converter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class UInt32Converter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class UInt64Converter {
+      constructor();
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class WarningException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, helpUrl: string);
+      constructor(message: string, innerException: System.Exception);
+      constructor(message: string, helpUrl: string, helpTopic: string);
+      HelpUrl: string;
+      HelpTopic: string;
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetBaseException: (() => System.Exception);
+      ToString: (() => string);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+    }
+    export declare class Win32Exception {
+      constructor();
+      constructor(error: number);
+      constructor(error: number, message: string);
+      constructor(message: string);
+      constructor(message: string, innerException: System.Exception);
+      NativeErrorCode: number;
+      ErrorCode: number;
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      static InitializeErrorMessages1: (() => void);
+      static InitializeErrorMessages2: (() => void);
+      static InitializeErrorMessages3: (() => void);
+      static InitializeErrorMessages4: (() => void);
+      static InitializeErrorMessages5: (() => void);
+      static InitializeErrorMessages6: (() => void);
+      static InitializeErrorMessages7: (() => void);
+      static InitializeErrorMessages8: (() => void);
+      static InitializeErrorMessages9: (() => void);
+      static InitializeErrorMessages10: (() => void);
+      static InitializeErrorMessages11: (() => void);
+      static InitializeErrorMessages12: (() => void);
+      static InitializeErrorMessages13: (() => void);
+      static InitializeErrorMessages14: (() => void);
+      static InitializeErrorMessages15: (() => void);
+      ToString: (() => string);
+      GetBaseException: (() => System.Exception);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+    }
+    export declare class BaseNumberConverter {
+      CanConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean) | ((sourceType: System.Type) => boolean);
+      ConvertFrom: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object) | ((value: System.Object) => System.Object);
+      ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+      CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, t: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+      ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+      ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+      ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+      ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+      CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+      GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+      GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+      GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+      IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum InheritanceLevel {
+      Inherited = 1,
+      InheritedReadOnly = 2,
+      NotInherited = 3,
+    }
+    export enum PropertyTabScope {
+      Static = 0,
+      Global = 1,
+      Document = 2,
+      Component = 3,
+    }
+    export enum RefreshProperties {
+      None = 0,
+      All = 1,
+      Repaint = 2,
+    }
+    export namespace Design {
+      export declare class TypeDescriptionProviderService {
+        GetProvider: ((instance: System.Object) => System.ComponentModel.TypeDescriptionProvider) | ((type: System.Type) => System.ComponentModel.TypeDescriptionProvider);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ActiveDesignerEventArgs {
+        constructor(oldDesigner: System.ComponentModel.Design.IDesignerHost, newDesigner: System.ComponentModel.Design.IDesignerHost);
+        OldDesigner: System.ComponentModel.Design.IDesignerHost;
+        NewDesigner: System.ComponentModel.Design.IDesignerHost;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ActiveDesignerEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.ComponentModel.Design.ActiveDesignerEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.ComponentModel.Design.ActiveDesignerEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
         Clone: (() => System.Object);
-        GetValue: (() => System.Byte[]);
-        SetValue: ((value: System.Byte[]) => void);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CheckoutException {
+        constructor();
+        constructor(message: string);
+        constructor(message: string, errorCode: number);
+        constructor(message: string, innerException: System.Exception);
+        ErrorCode: number;
+        Message: string;
+        Data: System.Collections.IDictionary;
+        InnerException: System.Exception;
+        TargetSite: System.Reflection.MethodBase;
+        StackTrace: string;
+        HelpLink: string;
+        Source: string;
+        HResult: number;
+        static Canceled: System.ComponentModel.Design.CheckoutException;
+        ToString: (() => string);
+        GetBaseException: (() => System.Exception);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type) | (() => System.Type);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+      }
+      export declare class CommandID {
+        constructor(menuGroup: System.Guid, commandID: number);
+        ID: number;
+        Guid: System.Guid;
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
         GetType: (() => System.Type);
       }
-      export enum AssemblyHashAlgorithm {
-        None = 0,
-        MD5 = 32771,
-        SHA1 = 32772,
-        SHA256 = 32780,
-        SHA384 = 32781,
-        SHA512 = 32782,
+      export declare class ComponentChangedEventArgs {
+        constructor(component: System.Object, member: System.ComponentModel.MemberDescriptor, oldValue: System.Object, newValue: System.Object);
+        Component: System.Object;
+        Member: System.ComponentModel.MemberDescriptor;
+        NewValue: System.Object;
+        OldValue: System.Object;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
       }
-      export enum AssemblyVersionCompatibility {
-        SameMachine = 1,
-        SameProcess = 2,
-        SameDomain = 3,
+      export declare class ComponentChangedEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.ComponentModel.Design.ComponentChangedEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.ComponentModel.Design.ComponentChangedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ComponentChangingEventArgs {
+        constructor(component: System.Object, member: System.ComponentModel.MemberDescriptor);
+        Component: System.Object;
+        Member: System.ComponentModel.MemberDescriptor;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ComponentChangingEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.ComponentModel.Design.ComponentChangingEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.ComponentModel.Design.ComponentChangingEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ComponentEventArgs {
+        constructor(component: System.ComponentModel.IComponent);
+        Component: System.ComponentModel.IComponent;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ComponentEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.ComponentModel.Design.ComponentEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.ComponentModel.Design.ComponentEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ComponentRenameEventArgs {
+        constructor(component: System.Object, oldName: string, newName: string);
+        Component: System.Object;
+        OldName: string;
+        NewName: string;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ComponentRenameEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.ComponentModel.Design.ComponentRenameEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.ComponentModel.Design.ComponentRenameEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerOptionService {
+        Options: System.ComponentModel.Design.DesignerOptionService_DesignerOptionCollection;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerOptionService_DesignerOptionCollection {
+        Count: number;
+        Name: string;
+        Parent: System.ComponentModel.Design.DesignerOptionService_DesignerOptionCollection;
+        Properties: System.ComponentModel.PropertyDescriptorCollection;
+        CopyTo: ((array: System.Array, index: number) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        IndexOf: ((value: System.ComponentModel.Design.DesignerOptionService_DesignerOptionCollection) => number);
+        ShowDialog: (() => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerTransaction {
+        Canceled: boolean;
+        Committed: boolean;
+        Description: string;
+        Cancel: (() => void);
+        Commit: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerTransactionCloseEventArgs {
+        constructor(commit: boolean);
+        constructor(commit: boolean, lastTransaction: boolean);
+        TransactionCommitted: boolean;
+        LastTransaction: boolean;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerTransactionCloseEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.ComponentModel.Design.DesignerTransactionCloseEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.ComponentModel.Design.DesignerTransactionCloseEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerVerb {
+        constructor(text: string, handler: System.EventHandler);
+        constructor(text: string, handler: System.EventHandler, startCommandID: System.ComponentModel.Design.CommandID);
+        Description: string;
+        Text: string;
+        Checked: boolean;
+        Enabled: boolean;
+        Properties: System.Collections.IDictionary;
+        Supported: boolean;
+        Visible: boolean;
+        CommandID: System.ComponentModel.Design.CommandID;
+        OleStatus: number;
+        ToString: (() => string);
+        Invoke: (() => void) | ((arg: System.Object) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class DesignerVerbCollection {
+        constructor();
+        constructor(value: System.ComponentModel.Design.DesignerVerb[]);
+        Capacity: number;
+        Count: number;
+        Add: ((value: System.ComponentModel.Design.DesignerVerb) => number);
+        AddRange: ((value: System.ComponentModel.Design.DesignerVerb[]) => void) | ((value: System.ComponentModel.Design.DesignerVerbCollection) => void);
+        Insert: ((index: number, value: System.ComponentModel.Design.DesignerVerb) => void);
+        IndexOf: ((value: System.ComponentModel.Design.DesignerVerb) => number);
+        Contains: ((value: System.ComponentModel.Design.DesignerVerb) => boolean);
+        Remove: ((value: System.ComponentModel.Design.DesignerVerb) => void);
+        CopyTo: ((array: System.ComponentModel.Design.DesignerVerb[], index: number) => void);
+        Clear: (() => void);
+        RemoveAt: ((index: number) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesigntimeLicenseContext {
+        constructor();
+        UsageMode: System.ComponentModel.LicenseUsageMode;
+        GetSavedLicenseKey: ((type: System.Type, resourceAssembly: System.Reflection.Assembly) => string);
+        SetSavedLicenseKey: ((type: System.Type, key: string) => void);
+        GetService: ((type: System.Type) => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesigntimeLicenseContextSerializer {
+        static Serialize: ((o: System.IO.Stream, cryptoKey: string, context: System.ComponentModel.Design.DesigntimeLicenseContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerCollection {
+        constructor(designers: System.ComponentModel.Design.IDesignerHost[]);
+        constructor(designers: System.Collections.IList);
+        Count: number;
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerEventArgs {
+        constructor(host: System.ComponentModel.Design.IDesignerHost);
+        Designer: System.ComponentModel.Design.IDesignerHost;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DesignerEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.ComponentModel.Design.DesignerEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.ComponentModel.Design.DesignerEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum HelpContextType {
+        Ambient = 0,
+        Window = 1,
+        Selection = 2,
+        ToolWindowSelection = 3,
+      }
+      export enum HelpKeywordType {
+        F1Keyword = 0,
+        GeneralKeyword = 1,
+        FilterKeyword = 2,
+      }
+      export interface IComponentChangeService {
+        OnComponentChanged: ((component: System.Object, member: System.ComponentModel.MemberDescriptor, oldValue: System.Object, newValue: System.Object) => void);
+        OnComponentChanging: ((component: System.Object, member: System.ComponentModel.MemberDescriptor) => void);
+      }
+      export interface IComponentDiscoveryService {
+        GetComponentTypes: ((designerHost: System.ComponentModel.Design.IDesignerHost, baseType: System.Type) => System.Collections.ICollection);
+      }
+      export interface IComponentInitializer {
+        InitializeExistingComponent: ((defaultValues: System.Collections.IDictionary) => void);
+        InitializeNewComponent: ((defaultValues: System.Collections.IDictionary) => void);
+      }
+      export interface IDesigner {
+        Component: System.ComponentModel.IComponent;
+        Verbs: System.ComponentModel.Design.DesignerVerbCollection;
+        DoDefaultAction: (() => void);
+        Initialize: ((component: System.ComponentModel.IComponent) => void);
+      }
+      export interface IDesignerEventService {
+        ActiveDesigner: System.ComponentModel.Design.IDesignerHost;
+        Designers: System.ComponentModel.Design.DesignerCollection;
+      }
+      export interface IDesignerFilter {
+        PostFilterAttributes: ((attributes: System.Collections.IDictionary) => void);
+        PostFilterEvents: ((events: System.Collections.IDictionary) => void);
+        PostFilterProperties: ((properties: System.Collections.IDictionary) => void);
+        PreFilterAttributes: ((attributes: System.Collections.IDictionary) => void);
+        PreFilterEvents: ((events: System.Collections.IDictionary) => void);
+        PreFilterProperties: ((properties: System.Collections.IDictionary) => void);
+      }
+      export interface IDesignerHost {
+        Loading: boolean;
+        InTransaction: boolean;
+        Container: System.ComponentModel.IContainer;
+        RootComponent: System.ComponentModel.IComponent;
+        RootComponentClassName: string;
+        TransactionDescription: string;
+        Activate: (() => void);
+        CreateComponent: ((componentClass: System.Type) => System.ComponentModel.IComponent) | ((componentClass: System.Type, name: string) => System.ComponentModel.IComponent);
+        CreateTransaction: (() => System.ComponentModel.Design.DesignerTransaction) | ((description: string) => System.ComponentModel.Design.DesignerTransaction);
+        DestroyComponent: ((component: System.ComponentModel.IComponent) => void);
+        GetDesigner: ((component: System.ComponentModel.IComponent) => System.ComponentModel.Design.IDesigner);
+        GetType: ((typeName: string) => System.Type);
+      }
+      export interface IDesignerHostTransactionState {
+        IsClosingTransaction: boolean;
+      }
+      export interface IDesignerOptionService {
+        GetOptionValue: ((pageName: string, valueName: string) => System.Object);
+        SetOptionValue: ((pageName: string, valueName: string, value: System.Object) => void);
+      }
+      export interface IDictionaryService {
+        GetKey: ((value: System.Object) => System.Object);
+        GetValue: ((key: System.Object) => System.Object);
+        SetValue: ((key: System.Object, value: System.Object) => void);
+      }
+      export interface IEventBindingService {
+        CreateUniqueMethodName: ((component: System.ComponentModel.IComponent, e: System.ComponentModel.EventDescriptor) => string);
+        GetCompatibleMethods: ((e: System.ComponentModel.EventDescriptor) => System.Collections.ICollection);
+        GetEvent: ((property: System.ComponentModel.PropertyDescriptor) => System.ComponentModel.EventDescriptor);
+        GetEventProperties: ((events: System.ComponentModel.EventDescriptorCollection) => System.ComponentModel.PropertyDescriptorCollection);
+        GetEventProperty: ((e: System.ComponentModel.EventDescriptor) => System.ComponentModel.PropertyDescriptor);
+        ShowCode: (() => boolean) | ((lineNumber: number) => boolean) | ((component: System.ComponentModel.IComponent, e: System.ComponentModel.EventDescriptor) => boolean);
+      }
+      export interface IExtenderListService {
+        GetExtenderProviders: (() => System.ComponentModel.IExtenderProvider[]);
+      }
+      export interface IExtenderProviderService {
+        AddExtenderProvider: ((provider: System.ComponentModel.IExtenderProvider) => void);
+        RemoveExtenderProvider: ((provider: System.ComponentModel.IExtenderProvider) => void);
+      }
+      export interface IHelpService {
+        AddContextAttribute: ((name: string, value: string, keywordType: System.ComponentModel.Design.HelpKeywordType) => void);
+        ClearContextAttributes: (() => void);
+        CreateLocalContext: ((contextType: System.ComponentModel.Design.HelpContextType) => System.ComponentModel.Design.IHelpService);
+        RemoveContextAttribute: ((name: string, value: string) => void);
+        RemoveLocalContext: ((localContext: System.ComponentModel.Design.IHelpService) => void);
+        ShowHelpFromKeyword: ((helpKeyword: string) => void);
+        ShowHelpFromUrl: ((helpUrl: string) => void);
+      }
+      export interface IInheritanceService {
+        AddInheritedComponents: ((component: System.ComponentModel.IComponent, container: System.ComponentModel.IContainer) => void);
+        GetInheritanceAttribute: ((component: System.ComponentModel.IComponent) => any);
+      }
+      export interface IMenuCommandService {
+        Verbs: System.ComponentModel.Design.DesignerVerbCollection;
+        AddCommand: ((command: System.ComponentModel.Design.MenuCommand) => void);
+        AddVerb: ((verb: System.ComponentModel.Design.DesignerVerb) => void);
+        FindCommand: ((commandID: System.ComponentModel.Design.CommandID) => System.ComponentModel.Design.MenuCommand);
+        GlobalInvoke: ((commandID: System.ComponentModel.Design.CommandID) => boolean);
+        RemoveCommand: ((command: System.ComponentModel.Design.MenuCommand) => void);
+        RemoveVerb: ((verb: System.ComponentModel.Design.DesignerVerb) => void);
+        ShowContextMenu: ((menuID: System.ComponentModel.Design.CommandID, x: number, y: number) => void);
+      }
+      export interface IReferenceService {
+        GetComponent: ((reference: System.Object) => System.ComponentModel.IComponent);
+        GetReference: ((name: string) => System.Object);
+        GetName: ((reference: System.Object) => string);
+        GetReferences: (() => System.Object[]) | ((baseType: System.Type) => System.Object[]);
+      }
+      export interface IResourceService {
+        GetResourceReader: ((info: System.Globalization.CultureInfo) => System.Resources.IResourceReader);
+        GetResourceWriter: ((info: System.Globalization.CultureInfo) => System.Resources.IResourceWriter);
+      }
+      export interface IRootDesigner {
+        SupportedTechnologies: System.ComponentModel.Design.ViewTechnology[];
+        GetView: ((technology: System.ComponentModel.Design.ViewTechnology) => System.Object);
+      }
+      export interface ISelectionService {
+        PrimarySelection: System.Object;
+        SelectionCount: number;
+        GetComponentSelected: ((component: System.Object) => boolean);
+        GetSelectedComponents: (() => System.Collections.ICollection);
+        SetSelectedComponents: ((components: System.Collections.ICollection) => void) | ((components: System.Collections.ICollection, selectionType: System.ComponentModel.Design.SelectionTypes) => void);
+      }
+      export interface IServiceContainer {
+        AddService: ((serviceType: System.Type, serviceInstance: System.Object) => void) | ((serviceType: System.Type, serviceInstance: System.Object, promote: boolean) => void) | ((serviceType: System.Type, callback: System.ComponentModel.Design.ServiceCreatorCallback) => void) | ((serviceType: System.Type, callback: System.ComponentModel.Design.ServiceCreatorCallback, promote: boolean) => void);
+        RemoveService: ((serviceType: System.Type) => void) | ((serviceType: System.Type, promote: boolean) => void);
+      }
+      export interface ITreeDesigner {
+        Children: System.Collections.ICollection;
+        Parent: System.ComponentModel.Design.IDesigner;
+      }
+      export interface ITypeDescriptorFilterService {
+        FilterAttributes: ((component: System.ComponentModel.IComponent, attributes: System.Collections.IDictionary) => boolean);
+        FilterEvents: ((component: System.ComponentModel.IComponent, events: System.Collections.IDictionary) => boolean);
+        FilterProperties: ((component: System.ComponentModel.IComponent, properties: System.Collections.IDictionary) => boolean);
+      }
+      export interface ITypeDiscoveryService {
+        GetTypes: ((baseType: System.Type, excludeGlobalTypes: boolean) => System.Collections.ICollection);
+      }
+      export interface ITypeResolutionService {
+        GetAssembly: ((name: System.Reflection.AssemblyName) => System.Reflection.Assembly) | ((name: System.Reflection.AssemblyName, throwOnError: boolean) => System.Reflection.Assembly);
+        GetType: ((name: string) => System.Type) | ((name: string, throwOnError: boolean) => System.Type) | ((name: string, throwOnError: boolean, ignoreCase: boolean) => System.Type);
+        ReferenceAssembly: ((name: System.Reflection.AssemblyName) => void);
+        GetPathOfAssembly: ((name: System.Reflection.AssemblyName) => string);
+      }
+      export declare class MenuCommand {
+        constructor(handler: System.EventHandler, command: System.ComponentModel.Design.CommandID);
+        Checked: boolean;
+        Enabled: boolean;
+        Properties: System.Collections.IDictionary;
+        Supported: boolean;
+        Visible: boolean;
+        CommandID: System.ComponentModel.Design.CommandID;
+        OleStatus: number;
+        Invoke: (() => void) | ((arg: System.Object) => void);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export enum SelectionTypes {
+        Auto = 1,
+        Normal = 1,
+        Replace = 2,
+        MouseDown = 4,
+        MouseUp = 8,
+        Click = 16,
+        Primary = 16,
+        Toggle = 32,
+        Add = 64,
+        Remove = 128,
+        Valid = 31,
+      }
+      export declare class ServiceCreatorCallback {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type) => System.Object);
+        BeginInvoke: ((container: System.ComponentModel.Design.IServiceContainer, serviceType: System.Type, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => System.Object);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ServiceContainer {
+        constructor();
+        constructor(parentProvider: System.IServiceProvider);
+        AddService: ((serviceType: System.Type, serviceInstance: System.Object) => void) | ((serviceType: System.Type, serviceInstance: System.Object, promote: boolean) => void) | ((serviceType: System.Type, callback: System.ComponentModel.Design.ServiceCreatorCallback) => void) | ((serviceType: System.Type, callback: System.ComponentModel.Design.ServiceCreatorCallback, promote: boolean) => void);
+        Dispose: (() => void);
+        GetService: ((serviceType: System.Type) => System.Object);
+        RemoveService: ((serviceType: System.Type) => void) | ((serviceType: System.Type, promote: boolean) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class StandardCommands {
+        constructor();
+        static AlignBottom: System.ComponentModel.Design.CommandID;
+        static AlignHorizontalCenters: System.ComponentModel.Design.CommandID;
+        static AlignLeft: System.ComponentModel.Design.CommandID;
+        static AlignRight: System.ComponentModel.Design.CommandID;
+        static AlignToGrid: System.ComponentModel.Design.CommandID;
+        static AlignTop: System.ComponentModel.Design.CommandID;
+        static AlignVerticalCenters: System.ComponentModel.Design.CommandID;
+        static ArrangeBottom: System.ComponentModel.Design.CommandID;
+        static ArrangeRight: System.ComponentModel.Design.CommandID;
+        static BringForward: System.ComponentModel.Design.CommandID;
+        static BringToFront: System.ComponentModel.Design.CommandID;
+        static CenterHorizontally: System.ComponentModel.Design.CommandID;
+        static CenterVertically: System.ComponentModel.Design.CommandID;
+        static ViewCode: System.ComponentModel.Design.CommandID;
+        static DocumentOutline: System.ComponentModel.Design.CommandID;
+        static Copy: System.ComponentModel.Design.CommandID;
+        static Cut: System.ComponentModel.Design.CommandID;
+        static Delete: System.ComponentModel.Design.CommandID;
+        static Group: System.ComponentModel.Design.CommandID;
+        static HorizSpaceConcatenate: System.ComponentModel.Design.CommandID;
+        static HorizSpaceDecrease: System.ComponentModel.Design.CommandID;
+        static HorizSpaceIncrease: System.ComponentModel.Design.CommandID;
+        static HorizSpaceMakeEqual: System.ComponentModel.Design.CommandID;
+        static Paste: System.ComponentModel.Design.CommandID;
+        static Properties: System.ComponentModel.Design.CommandID;
+        static Redo: System.ComponentModel.Design.CommandID;
+        static MultiLevelRedo: System.ComponentModel.Design.CommandID;
+        static SelectAll: System.ComponentModel.Design.CommandID;
+        static SendBackward: System.ComponentModel.Design.CommandID;
+        static SendToBack: System.ComponentModel.Design.CommandID;
+        static SizeToControl: System.ComponentModel.Design.CommandID;
+        static SizeToControlHeight: System.ComponentModel.Design.CommandID;
+        static SizeToControlWidth: System.ComponentModel.Design.CommandID;
+        static SizeToFit: System.ComponentModel.Design.CommandID;
+        static SizeToGrid: System.ComponentModel.Design.CommandID;
+        static SnapToGrid: System.ComponentModel.Design.CommandID;
+        static TabOrder: System.ComponentModel.Design.CommandID;
+        static Undo: System.ComponentModel.Design.CommandID;
+        static MultiLevelUndo: System.ComponentModel.Design.CommandID;
+        static Ungroup: System.ComponentModel.Design.CommandID;
+        static VertSpaceConcatenate: System.ComponentModel.Design.CommandID;
+        static VertSpaceDecrease: System.ComponentModel.Design.CommandID;
+        static VertSpaceIncrease: System.ComponentModel.Design.CommandID;
+        static VertSpaceMakeEqual: System.ComponentModel.Design.CommandID;
+        static ShowGrid: System.ComponentModel.Design.CommandID;
+        static ViewGrid: System.ComponentModel.Design.CommandID;
+        static Replace: System.ComponentModel.Design.CommandID;
+        static PropertiesWindow: System.ComponentModel.Design.CommandID;
+        static LockControls: System.ComponentModel.Design.CommandID;
+        static F1Help: System.ComponentModel.Design.CommandID;
+        static ArrangeIcons: System.ComponentModel.Design.CommandID;
+        static LineupIcons: System.ComponentModel.Design.CommandID;
+        static ShowLargeIcons: System.ComponentModel.Design.CommandID;
+        static VerbFirst: System.ComponentModel.Design.CommandID;
+        static VerbLast: System.ComponentModel.Design.CommandID;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class StandardToolWindows {
+        constructor();
+        static ObjectBrowser: System.Guid;
+        static OutputWindow: System.Guid;
+        static ProjectExplorer: System.Guid;
+        static PropertyBrowser: System.Guid;
+        static RelatedLinks: System.Guid;
+        static ServerExplorer: System.Guid;
+        static TaskList: System.Guid;
+        static Toolbox: System.Guid;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum ViewTechnology {
+        Passthrough = 0,
+        WindowsForms = 1,
+        Default = 2,
+      }
+      export namespace Serialization {
+        export declare class ComponentSerializationService {
+          CreateStore: (() => System.ComponentModel.Design.Serialization.SerializationStore);
+          LoadStore: ((stream: System.IO.Stream) => System.ComponentModel.Design.Serialization.SerializationStore);
+          Serialize: ((store: System.ComponentModel.Design.Serialization.SerializationStore, value: System.Object) => void);
+          SerializeAbsolute: ((store: System.ComponentModel.Design.Serialization.SerializationStore, value: System.Object) => void);
+          SerializeMember: ((store: System.ComponentModel.Design.Serialization.SerializationStore, owningObject: System.Object, member: System.ComponentModel.MemberDescriptor) => void);
+          SerializeMemberAbsolute: ((store: System.ComponentModel.Design.Serialization.SerializationStore, owningObject: System.Object, member: System.ComponentModel.MemberDescriptor) => void);
+          Deserialize: ((store: System.ComponentModel.Design.Serialization.SerializationStore) => System.Collections.ICollection) | ((store: System.ComponentModel.Design.Serialization.SerializationStore, container: System.ComponentModel.IContainer) => System.Collections.ICollection);
+          DeserializeTo: ((store: System.ComponentModel.Design.Serialization.SerializationStore, container: System.ComponentModel.IContainer, validateRecycledTypes: boolean, applyDefaults: boolean) => void) | ((store: System.ComponentModel.Design.Serialization.SerializationStore, container: System.ComponentModel.IContainer) => void) | ((store: System.ComponentModel.Design.Serialization.SerializationStore, container: System.ComponentModel.IContainer, validateRecycledTypes: boolean) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class ContextStack {
+          constructor();
+          Current: System.Object;
+          Append: ((context: System.Object) => void);
+          Pop: (() => System.Object);
+          Push: ((context: System.Object) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class DesignerLoader {
+          Loading: boolean;
+          BeginLoad: ((host: System.ComponentModel.Design.Serialization.IDesignerLoaderHost) => void);
+          Dispose: (() => void);
+          Flush: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export interface IDesignerLoaderHost {
+          EndLoad: ((baseClassName: string, successful: boolean, errorCollection: System.Collections.ICollection) => void);
+          Reload: (() => void);
+        }
+        export interface IDesignerLoaderHost2 {
+          IgnoreErrorsDuringReload: boolean;
+          CanReloadWithErrors: boolean;
+        }
+        export interface IDesignerLoaderService {
+          AddLoadDependency: (() => void);
+          DependentLoadComplete: ((successful: boolean, errorCollection: System.Collections.ICollection) => void);
+          Reload: (() => boolean);
+        }
+        export interface IDesignerSerializationManager {
+          Context: System.ComponentModel.Design.Serialization.ContextStack;
+          Properties: System.ComponentModel.PropertyDescriptorCollection;
+          AddSerializationProvider: ((provider: System.ComponentModel.Design.Serialization.IDesignerSerializationProvider) => void);
+          CreateInstance: ((type: System.Type, argumentsCS: System.Collections.ICollection, name: string, addToContainer: boolean) => System.Object);
+          GetInstance: ((name: string) => System.Object);
+          GetName: ((value: System.Object) => string);
+          GetSerializer: ((objectType: System.Type, serializerType: System.Type) => System.Object);
+          GetType: ((typeName: string) => System.Type);
+          RemoveSerializationProvider: ((provider: System.ComponentModel.Design.Serialization.IDesignerSerializationProvider) => void);
+          ReportError: ((errorInformation: System.Object) => void);
+          SetName: ((instance: System.Object, name: string) => void);
+        }
+        export interface IDesignerSerializationProvider {
+          GetSerializer: ((manager: System.ComponentModel.Design.Serialization.IDesignerSerializationManager, currentSerializer: System.Object, objectType: System.Type, serializerType: System.Type) => System.Object);
+        }
+        export interface IDesignerSerializationService {
+          Deserialize: ((serializationData: System.Object) => System.Collections.ICollection);
+          Serialize: ((objects: System.Collections.ICollection) => System.Object);
+        }
+        export interface INameCreationService {
+          CreateName: ((container: System.ComponentModel.IContainer, dataType: System.Type) => string);
+          IsValidName: ((name: string) => boolean);
+          ValidateName: ((name: string) => void);
+        }
+        export declare class InstanceDescriptor {
+          constructor(member: System.Reflection.MemberInfo, argumentsCS: System.Collections.ICollection);
+          constructor(member: System.Reflection.MemberInfo, argumentsCS: System.Collections.ICollection, isComplete: boolean);
+          Arguments: System.Collections.ICollection;
+          IsComplete: boolean;
+          MemberInfo: System.Reflection.MemberInfo;
+          Invoke: (() => System.Object);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class MemberRelationshipService {
+          SupportsRelationship: ((source: System.ComponentModel.Design.Serialization.MemberRelationship, relationship: System.ComponentModel.Design.Serialization.MemberRelationship) => boolean);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class MemberRelationship {
+          constructor(owner: System.Object, member: System.ComponentModel.MemberDescriptor);
+          IsEmpty: boolean;
+          Member: System.ComponentModel.MemberDescriptor;
+          Owner: System.Object;
+          static Empty: System.ComponentModel.Design.Serialization.MemberRelationship;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          ToString: (() => string);
+          GetType: (() => System.Type);
+        }
+        export declare class ResolveNameEventArgs {
+          constructor(name: string);
+          Name: string;
+          Value: System.Object;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class ResolveNameEventHandler {
+          constructor(object: System.Object, method: System.IntPtr);
+          Method: System.Reflection.MethodInfo;
+          Target: System.Object;
+          Invoke: ((sender: System.Object, e: System.ComponentModel.Design.Serialization.ResolveNameEventArgs) => void);
+          BeginInvoke: ((sender: System.Object, e: System.ComponentModel.Design.Serialization.ResolveNameEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+          EndInvoke: ((result: System.IAsyncResult) => void);
+          GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetInvocationList: (() => System.Delegate[]);
+          DynamicInvoke: ((...args: System.Object[]) => System.Object);
+          Clone: (() => System.Object);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class SerializationStore {
+          Errors: System.Collections.ICollection;
+          Close: (() => void);
+          Save: ((stream: System.IO.Stream) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
       }
     }
   }
@@ -3605,6 +8979,1269 @@ export namespace System {
       GetHashCode: (() => number);
       GetType: (() => System.Type);
     }
+    export declare class EventSchemaTraceListener {
+      constructor(fileName: string);
+      constructor(fileName: string, name: string);
+      constructor(fileName: string, name: string, bufferSize: number);
+      constructor(fileName: string, name: string, bufferSize: number, logRetentionOption: System.Diagnostics.TraceLogRetentionOption);
+      constructor(fileName: string, name: string, bufferSize: number, logRetentionOption: System.Diagnostics.TraceLogRetentionOption, maximumFileSize: System.Int64);
+      constructor(fileName: string, name: string, bufferSize: number, logRetentionOption: System.Diagnostics.TraceLogRetentionOption, maximumFileSize: System.Int64, maximumNumberOfFiles: number);
+      BufferSize: number;
+      MaximumFileSize: System.Int64;
+      MaximumNumberOfFiles: number;
+      TraceLogRetentionOption: System.Diagnostics.TraceLogRetentionOption;
+      Writer: System.IO.TextWriter;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      Name: string;
+      IsThreadSafe: boolean;
+      IndentLevel: number;
+      IndentSize: number;
+      Filter: System.Diagnostics.TraceFilter;
+      TraceOutputOptions: System.Diagnostics.TraceOptions;
+      Close: (() => void);
+      Flush: (() => void);
+      Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      Dispose: (() => void);
+      Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void);
+      TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum TraceLogRetentionOption {
+      LimitedCircularFiles = 1,
+      LimitedSequentialFiles = 3,
+      SingleFileBoundedSize = 4,
+      SingleFileUnboundedSize = 2,
+      UnlimitedSequentialFiles = 0,
+    }
+    export declare class UnescapedXmlDiagnosticData {
+      constructor(xmlPayload: string);
+      UnescapedXml: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class BooleanSwitch {
+      constructor(displayName: string, description: string);
+      constructor(displayName: string, description: string, defaultSwitchValue: string);
+      Enabled: boolean;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      DisplayName: string;
+      Description: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ConsoleTraceListener {
+      constructor();
+      constructor(useErrorStream: boolean);
+      Writer: System.IO.TextWriter;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      Name: string;
+      IsThreadSafe: boolean;
+      IndentLevel: number;
+      IndentSize: number;
+      Filter: System.Diagnostics.TraceFilter;
+      TraceOutputOptions: System.Diagnostics.TraceOptions;
+      Close: (() => void);
+      Flush: (() => void);
+      Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      Dispose: (() => void);
+      Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void);
+      TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CorrelationManager {
+      ActivityId: System.Guid;
+      LogicalOperationStack: System.Collections.Stack;
+      StartLogicalOperation: ((operationId: System.Object) => void) | (() => void);
+      StopLogicalOperation: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Debug {
+      static Listeners: System.Diagnostics.TraceListenerCollection;
+      static AutoFlush: boolean;
+      static IndentLevel: number;
+      static IndentSize: number;
+      static Flush: (() => void);
+      static Close: (() => void);
+      static Assert: ((condition: boolean) => void) | ((condition: boolean, message: string) => void) | ((condition: boolean, message: string, detailMessage: string) => void) | ((condition: boolean, message: string, detailMessageFormat: string, ...args: System.Object[]) => void);
+      static Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      static Print: ((message: string) => void) | ((format: string, ...args: System.Object[]) => void);
+      static Write: ((message: string) => void) | ((value: System.Object) => void) | ((message: string, category: string) => void) | ((value: System.Object, category: string) => void);
+      static WriteLine: ((message: string) => void) | ((value: System.Object) => void) | ((message: string, category: string) => void) | ((value: System.Object, category: string) => void) | ((format: string, ...args: System.Object[]) => void);
+      static WriteIf: ((condition: boolean, message: string) => void) | ((condition: boolean, value: System.Object) => void) | ((condition: boolean, message: string, category: string) => void) | ((condition: boolean, value: System.Object, category: string) => void);
+      static WriteLineIf: ((condition: boolean, message: string) => void) | ((condition: boolean, value: System.Object) => void) | ((condition: boolean, message: string, category: string) => void) | ((condition: boolean, value: System.Object, category: string) => void);
+      static Indent: (() => void);
+      static Unindent: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DelimitedListTraceListener {
+      constructor(stream: System.IO.Stream);
+      constructor(stream: System.IO.Stream, name: string);
+      constructor(writer: System.IO.TextWriter);
+      constructor(writer: System.IO.TextWriter, name: string);
+      constructor(fileName: string);
+      constructor(fileName: string, name: string);
+      Delimiter: string;
+      Writer: System.IO.TextWriter;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      Name: string;
+      IsThreadSafe: boolean;
+      IndentLevel: number;
+      IndentSize: number;
+      Filter: System.Diagnostics.TraceFilter;
+      TraceOutputOptions: System.Diagnostics.TraceOptions;
+      TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void);
+      TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      Close: (() => void);
+      Flush: (() => void);
+      Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      Dispose: (() => void);
+      Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventTypeFilter {
+      constructor(level: System.Diagnostics.SourceLevels);
+      EventType: System.Diagnostics.SourceLevels;
+      ShouldTrace: ((cache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, formatOrMessage: string, args: System.Object[], data1: System.Object, data: System.Object[]) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class SourceFilter {
+      constructor(source: string);
+      Source: string;
+      ShouldTrace: ((cache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, formatOrMessage: string, args: System.Object[], data1: System.Object, data: System.Object[]) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum SourceLevels {
+      Off = 0,
+      Critical = 1,
+      Error = 3,
+      Warning = 7,
+      Information = 15,
+      Verbose = 31,
+      ActivityTracing = 65280,
+      All = -1,
+    }
+    export declare class SourceSwitch {
+      constructor(name: string);
+      constructor(displayName: string, defaultSwitchValue: string);
+      Level: System.Diagnostics.SourceLevels;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      DisplayName: string;
+      Description: string;
+      ShouldTrace: ((eventType: System.Diagnostics.TraceEventType) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Switch {
+      Attributes: System.Collections.Specialized.StringDictionary;
+      DisplayName: string;
+      Description: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TextWriterTraceListener {
+      constructor();
+      constructor(stream: System.IO.Stream);
+      constructor(stream: System.IO.Stream, name: string);
+      constructor(writer: System.IO.TextWriter);
+      constructor(writer: System.IO.TextWriter, name: string);
+      constructor(fileName: string);
+      constructor(fileName: string, name: string);
+      Writer: System.IO.TextWriter;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      Name: string;
+      IsThreadSafe: boolean;
+      IndentLevel: number;
+      IndentSize: number;
+      Filter: System.Diagnostics.TraceFilter;
+      TraceOutputOptions: System.Diagnostics.TraceOptions;
+      Close: (() => void);
+      Flush: (() => void);
+      Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      Dispose: (() => void);
+      Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void);
+      TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Trace {
+      static Listeners: System.Diagnostics.TraceListenerCollection;
+      static AutoFlush: boolean;
+      static UseGlobalLock: boolean;
+      static CorrelationManager: System.Diagnostics.CorrelationManager;
+      static IndentLevel: number;
+      static IndentSize: number;
+      static Flush: (() => void);
+      static Close: (() => void);
+      static Assert: ((condition: boolean) => void) | ((condition: boolean, message: string) => void) | ((condition: boolean, message: string, detailMessage: string) => void);
+      static Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      static Refresh: (() => void);
+      static TraceInformation: ((message: string) => void) | ((format: string, ...args: System.Object[]) => void);
+      static TraceWarning: ((message: string) => void) | ((format: string, ...args: System.Object[]) => void);
+      static TraceError: ((message: string) => void) | ((format: string, ...args: System.Object[]) => void);
+      static Write: ((message: string) => void) | ((value: System.Object) => void) | ((message: string, category: string) => void) | ((value: System.Object, category: string) => void);
+      static WriteLine: ((message: string) => void) | ((value: System.Object) => void) | ((message: string, category: string) => void) | ((value: System.Object, category: string) => void);
+      static WriteIf: ((condition: boolean, message: string) => void) | ((condition: boolean, value: System.Object) => void) | ((condition: boolean, message: string, category: string) => void) | ((condition: boolean, value: System.Object, category: string) => void);
+      static WriteLineIf: ((condition: boolean, message: string) => void) | ((condition: boolean, value: System.Object) => void) | ((condition: boolean, message: string, category: string) => void) | ((condition: boolean, value: System.Object, category: string) => void);
+      static Indent: (() => void);
+      static Unindent: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TraceEventCache {
+      constructor();
+      Callstack: string;
+      LogicalOperationStack: System.Collections.Stack;
+      DateTime: System.DateTime;
+      ProcessId: number;
+      ThreadId: string;
+      Timestamp: System.Int64;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum TraceEventType {
+      Critical = 1,
+      Error = 2,
+      Warning = 4,
+      Information = 8,
+      Verbose = 16,
+      Start = 256,
+      Stop = 512,
+      Suspend = 1024,
+      Resume = 2048,
+      Transfer = 4096,
+    }
+    export declare class TraceFilter {
+      ShouldTrace: ((cache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, formatOrMessage: string, args: System.Object[], data1: System.Object, data: System.Object[]) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum TraceLevel {
+      Off = 0,
+      Error = 1,
+      Warning = 2,
+      Info = 3,
+      Verbose = 4,
+    }
+    export declare class TraceListener {
+      Attributes: System.Collections.Specialized.StringDictionary;
+      Name: string;
+      IsThreadSafe: boolean;
+      IndentLevel: number;
+      IndentSize: number;
+      Filter: System.Diagnostics.TraceFilter;
+      TraceOutputOptions: System.Diagnostics.TraceOptions;
+      Dispose: (() => void);
+      Close: (() => void);
+      Flush: (() => void);
+      Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void);
+      TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TraceListenerCollection {
+      Count: number;
+      Add: ((listener: System.Diagnostics.TraceListener) => number);
+      AddRange: ((value: System.Diagnostics.TraceListener[]) => void) | ((value: System.Diagnostics.TraceListenerCollection) => void);
+      Clear: (() => void);
+      Contains: ((listener: System.Diagnostics.TraceListener) => boolean);
+      CopyTo: ((listeners: System.Diagnostics.TraceListener[], index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      IndexOf: ((listener: System.Diagnostics.TraceListener) => number);
+      Insert: ((index: number, listener: System.Diagnostics.TraceListener) => void);
+      Remove: ((listener: System.Diagnostics.TraceListener) => void) | ((name: string) => void);
+      RemoveAt: ((index: number) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum TraceOptions {
+      None = 0,
+      LogicalOperationStack = 1,
+      DateTime = 2,
+      Timestamp = 4,
+      ProcessId = 8,
+      ThreadId = 16,
+      Callstack = 32,
+    }
+    export declare class TraceSource {
+      constructor(name: string);
+      constructor(name: string, defaultLevel: System.Diagnostics.SourceLevels);
+      Attributes: System.Collections.Specialized.StringDictionary;
+      Name: string;
+      Listeners: System.Diagnostics.TraceListenerCollection;
+      Switch: System.Diagnostics.SourceSwitch;
+      Close: (() => void);
+      Flush: (() => void);
+      TraceEvent: ((eventType: System.Diagnostics.TraceEventType, id: number) => void) | ((eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void);
+      TraceData: ((eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      TraceInformation: ((message: string) => void) | ((format: string, ...args: System.Object[]) => void);
+      TraceTransfer: ((id: number, message: string, relatedActivityId: System.Guid) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class TraceSwitch {
+      constructor(displayName: string, description: string);
+      constructor(displayName: string, description: string, defaultSwitchValue: string);
+      Level: System.Diagnostics.TraceLevel;
+      TraceError: boolean;
+      TraceWarning: boolean;
+      TraceInfo: boolean;
+      TraceVerbose: boolean;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      DisplayName: string;
+      Description: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class XmlWriterTraceListener {
+      constructor(stream: System.IO.Stream);
+      constructor(stream: System.IO.Stream, name: string);
+      constructor(writer: System.IO.TextWriter);
+      constructor(writer: System.IO.TextWriter, name: string);
+      constructor(filename: string);
+      constructor(filename: string, name: string);
+      Writer: System.IO.TextWriter;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      Name: string;
+      IsThreadSafe: boolean;
+      IndentLevel: number;
+      IndentSize: number;
+      Filter: System.Diagnostics.TraceFilter;
+      TraceOutputOptions: System.Diagnostics.TraceOptions;
+      Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      Fail: ((message: string, detailMessage: string) => void) | ((message: string) => void);
+      TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void);
+      TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      Close: (() => void);
+      TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+      Flush: (() => void);
+      Dispose: (() => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Process {
+      constructor();
+      ExitCode: number;
+      HasExited: boolean;
+      ExitTime: System.DateTime;
+      Handle: System.IntPtr;
+      SafeHandle: any; // Microsoft.Win32.SafeHandles.SafeProcessHandle
+      Id: number;
+      MachineName: string;
+      MaxWorkingSet: System.IntPtr;
+      MinWorkingSet: System.IntPtr;
+      PriorityClass: System.Diagnostics.ProcessPriorityClass;
+      PrivilegedProcessorTime: System.TimeSpan;
+      StartInfo: System.Diagnostics.ProcessStartInfo;
+      StartTime: System.DateTime;
+      SynchronizingObject: System.ComponentModel.ISynchronizeInvoke;
+      TotalProcessorTime: System.TimeSpan;
+      UserProcessorTime: System.TimeSpan;
+      EnableRaisingEvents: boolean;
+      StandardInput: System.IO.StreamWriter;
+      StandardOutput: System.IO.StreamReader;
+      StandardError: System.IO.StreamReader;
+      BasePriority: number;
+      HandleCount: number;
+      MainModule: System.Diagnostics.ProcessModule;
+      MainWindowHandle: System.IntPtr;
+      MainWindowTitle: string;
+      Modules: System.Diagnostics.ProcessModuleCollection;
+      NonpagedSystemMemorySize: number;
+      PagedMemorySize: number;
+      PagedSystemMemorySize: number;
+      PeakPagedMemorySize: number;
+      PeakVirtualMemorySize: number;
+      PeakWorkingSet: number;
+      NonpagedSystemMemorySize64: System.Int64;
+      PagedMemorySize64: System.Int64;
+      PagedSystemMemorySize64: System.Int64;
+      PeakPagedMemorySize64: System.Int64;
+      PeakVirtualMemorySize64: System.Int64;
+      PeakWorkingSet64: System.Int64;
+      PriorityBoostEnabled: boolean;
+      PrivateMemorySize: number;
+      SessionId: number;
+      ProcessName: string;
+      ProcessorAffinity: System.IntPtr;
+      Responding: boolean;
+      Threads: System.Diagnostics.ProcessThreadCollection;
+      VirtualMemorySize: number;
+      WorkingSet: number;
+      PrivateMemorySize64: System.Int64;
+      VirtualMemorySize64: System.Int64;
+      WorkingSet64: System.Int64;
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      Close: (() => void);
+      static EnterDebugMode: (() => void);
+      static LeaveDebugMode: (() => void);
+      static GetProcessById: ((processId: number) => System.Diagnostics.Process) | ((processId: number, machineName: string) => System.Diagnostics.Process);
+      static GetProcessesByName: ((processName: string) => System.Diagnostics.Process[]) | ((processName: string, machineName: string) => System.Diagnostics.Process[]);
+      static GetProcesses: (() => System.Diagnostics.Process[]) | ((machineName: string) => System.Diagnostics.Process[]);
+      static GetCurrentProcess: (() => System.Diagnostics.Process);
+      Refresh: (() => void);
+      Start: (() => boolean) | ((fileName: string, userName: string, password: System.Security.SecureString, domain: string) => System.Diagnostics.Process) | ((fileName: string, argumentsCS: string, userName: string, password: System.Security.SecureString, domain: string) => System.Diagnostics.Process) | ((fileName: string) => System.Diagnostics.Process) | ((fileName: string, argumentsCS: string) => System.Diagnostics.Process) | ((startInfo: System.Diagnostics.ProcessStartInfo) => System.Diagnostics.Process);
+      Kill: (() => void);
+      ToString: (() => string);
+      WaitForExit: ((milliseconds: number) => boolean) | (() => void);
+      WaitForInputIdle: ((milliseconds: number) => boolean) | (() => boolean);
+      BeginOutputReadLine: (() => void);
+      BeginErrorReadLine: (() => void);
+      CancelOutputRead: (() => void);
+      CancelErrorRead: (() => void);
+      CloseMainWindow: (() => boolean);
+      Dispose: (() => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class ProcessModuleCollection {
+      constructor(processModules: System.Diagnostics.ProcessModule[]);
+      Count: number;
+      IndexOf: ((module: System.Diagnostics.ProcessModule) => number);
+      Contains: ((module: System.Diagnostics.ProcessModule) => boolean);
+      CopyTo: ((array: System.Diagnostics.ProcessModule[], index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ProcessStartInfo {
+      constructor();
+      constructor(fileName: string);
+      constructor(fileName: string, argumentsCS: string);
+      Verb: string;
+      Arguments: string;
+      CreateNoWindow: boolean;
+      EnvironmentVariables: System.Collections.Specialized.StringDictionary;
+      Environment: System.Collections.Generic.IDictionary<string, string>;
+      RedirectStandardInput: boolean;
+      RedirectStandardOutput: boolean;
+      RedirectStandardError: boolean;
+      StandardErrorEncoding: System.Text.Encoding;
+      StandardOutputEncoding: System.Text.Encoding;
+      UseShellExecute: boolean;
+      UserName: string;
+      Password: System.Security.SecureString;
+      PasswordInClearText: string;
+      Domain: string;
+      LoadUserProfile: boolean;
+      FileName: string;
+      WorkingDirectory: string;
+      ErrorDialog: boolean;
+      ErrorDialogParentHandle: System.IntPtr;
+      WindowStyle: System.Diagnostics.ProcessWindowStyle;
+      Verbs: string[];
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ProcessThreadCollection {
+      constructor(processThreads: System.Diagnostics.ProcessThread[]);
+      Count: number;
+      Add: ((thread: System.Diagnostics.ProcessThread) => number);
+      Insert: ((index: number, thread: System.Diagnostics.ProcessThread) => void);
+      IndexOf: ((thread: System.Diagnostics.ProcessThread) => number);
+      Contains: ((thread: System.Diagnostics.ProcessThread) => boolean);
+      Remove: ((thread: System.Diagnostics.ProcessThread) => void);
+      CopyTo: ((array: System.Diagnostics.ProcessThread[], index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CounterCreationData {
+      constructor();
+      constructor(counterName: string, counterHelp: string, counterType: System.Diagnostics.PerformanceCounterType);
+      CounterHelp: string;
+      CounterName: string;
+      CounterType: System.Diagnostics.PerformanceCounterType;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CounterCreationDataCollection {
+      constructor();
+      constructor(value: System.Diagnostics.CounterCreationData[]);
+      constructor(value: System.Diagnostics.CounterCreationDataCollection);
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.Diagnostics.CounterCreationData) => number);
+      AddRange: ((value: System.Diagnostics.CounterCreationData[]) => void) | ((value: System.Diagnostics.CounterCreationDataCollection) => void);
+      Contains: ((value: System.Diagnostics.CounterCreationData) => boolean);
+      CopyTo: ((array: System.Diagnostics.CounterCreationData[], index: number) => void);
+      IndexOf: ((value: System.Diagnostics.CounterCreationData) => number);
+      Insert: ((index: number, value: System.Diagnostics.CounterCreationData) => void);
+      Remove: ((value: System.Diagnostics.CounterCreationData) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CounterSample {
+      constructor(rawValue: System.Int64, baseValue: System.Int64, counterFrequency: System.Int64, systemFrequency: System.Int64, timeStamp: System.Int64, timeStamp100nSec: System.Int64, counterType: System.Diagnostics.PerformanceCounterType);
+      constructor(rawValue: System.Int64, baseValue: System.Int64, counterFrequency: System.Int64, systemFrequency: System.Int64, timeStamp: System.Int64, timeStamp100nSec: System.Int64, counterType: System.Diagnostics.PerformanceCounterType, counterTimeStamp: System.Int64);
+      BaseValue: System.Int64;
+      CounterFrequency: System.Int64;
+      CounterTimeStamp: System.Int64;
+      CounterType: System.Diagnostics.PerformanceCounterType;
+      RawValue: System.Int64;
+      SystemFrequency: System.Int64;
+      TimeStamp: System.Int64;
+      TimeStamp100nSec: System.Int64;
+      static Empty: System.Diagnostics.CounterSample;
+      static Calculate: ((counterSample: System.Diagnostics.CounterSample) => number) | ((counterSample: System.Diagnostics.CounterSample, nextCounterSample: System.Diagnostics.CounterSample) => number);
+      Equals: ((o: System.Object) => boolean) | ((sample: System.Diagnostics.CounterSample) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => System.Type);
+    }
+    export declare class CounterSampleCalculator {
+      static ComputeCounterValue: ((newSample: System.Diagnostics.CounterSample) => number) | ((oldSample: System.Diagnostics.CounterSample, newSample: System.Diagnostics.CounterSample) => number);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DataReceivedEventArgs {
+      Data: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DataReceivedEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.Diagnostics.DataReceivedEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.Diagnostics.DataReceivedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DefaultTraceListener {
+      constructor();
+      AssertUiEnabled: boolean;
+      LogFileName: string;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      Name: string;
+      IsThreadSafe: boolean;
+      IndentLevel: number;
+      IndentSize: number;
+      Filter: System.Diagnostics.TraceFilter;
+      TraceOutputOptions: System.Diagnostics.TraceOptions;
+      Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      Dispose: (() => void);
+      Close: (() => void);
+      Flush: (() => void);
+      TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void);
+      TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DiagnosticsConfigurationHandler {
+      constructor();
+      Create: ((parent: System.Object, configContext: System.Object, section: any) => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EntryWrittenEventArgs {
+      constructor();
+      constructor(entry: System.Diagnostics.EventLogEntry);
+      Entry: System.Diagnostics.EventLogEntry;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EntryWrittenEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.Diagnostics.EntryWrittenEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.Diagnostics.EntryWrittenEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventInstance {
+      constructor(instanceId: System.Int64, categoryId: number);
+      constructor(instanceId: System.Int64, categoryId: number, entryType: System.Diagnostics.EventLogEntryType);
+      CategoryId: number;
+      EntryType: System.Diagnostics.EventLogEntryType;
+      InstanceId: System.Int64;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventLog {
+      constructor();
+      constructor(logName: string);
+      constructor(logName: string, machineName: string);
+      constructor(logName: string, machineName: string, source: string);
+      EnableRaisingEvents: boolean;
+      Entries: System.Diagnostics.EventLogEntryCollection;
+      Log: string;
+      LogDisplayName: string;
+      MachineName: string;
+      Source: string;
+      SynchronizingObject: System.ComponentModel.ISynchronizeInvoke;
+      OverflowAction: System.Diagnostics.OverflowAction;
+      MinimumRetentionDays: number;
+      MaximumKilobytes: System.Int64;
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      ModifyOverflowPolicy: ((action: System.Diagnostics.OverflowAction, retentionDays: number) => void);
+      RegisterDisplayName: ((resourceFile: string, resourceId: System.Int64) => void);
+      BeginInit: (() => void);
+      Clear: (() => void);
+      Close: (() => void);
+      static CreateEventSource: ((source: string, logName: string) => void) | ((source: string, logName: string, machineName: string) => void) | ((sourceData: System.Diagnostics.EventSourceCreationData) => void);
+      static Delete: ((logName: string) => void) | ((logName: string, machineName: string) => void);
+      static DeleteEventSource: ((source: string) => void) | ((source: string, machineName: string) => void);
+      EndInit: (() => void);
+      static Exists: ((logName: string) => boolean) | ((logName: string, machineName: string) => boolean);
+      static GetEventLogs: (() => System.Diagnostics.EventLog[]) | ((machineName: string) => System.Diagnostics.EventLog[]);
+      static LogNameFromSourceName: ((source: string, machineName: string) => string);
+      static SourceExists: ((source: string) => boolean) | ((source: string, machineName: string) => boolean);
+      WriteEntry: ((message: string) => void) | ((message: string, type: System.Diagnostics.EventLogEntryType) => void) | ((message: string, type: System.Diagnostics.EventLogEntryType, eventID: number) => void) | ((message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: System.Int16) => void) | ((message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: System.Int16, rawData: System.Byte[]) => void) | ((source: string, message: string) => void) | ((source: string, message: string, type: System.Diagnostics.EventLogEntryType) => void) | ((source: string, message: string, type: System.Diagnostics.EventLogEntryType, eventID: number) => void) | ((source: string, message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: System.Int16) => void) | ((source: string, message: string, type: System.Diagnostics.EventLogEntryType, eventID: number, category: System.Int16, rawData: System.Byte[]) => void);
+      WriteEvent: ((instance: System.Diagnostics.EventInstance, ...values: System.Object[]) => void) | ((instance: System.Diagnostics.EventInstance, data: System.Byte[], ...values: System.Object[]) => void) | ((source: string, instance: System.Diagnostics.EventInstance, ...values: System.Object[]) => void) | ((source: string, instance: System.Diagnostics.EventInstance, data: System.Byte[], ...values: System.Object[]) => void);
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class EventLogEntry {
+      Category: string;
+      CategoryNumber: System.Int16;
+      Data: System.Byte[];
+      EntryType: System.Diagnostics.EventLogEntryType;
+      EventID: number;
+      Index: number;
+      InstanceId: System.Int64;
+      MachineName: string;
+      Message: string;
+      ReplacementStrings: string[];
+      Source: string;
+      TimeGenerated: System.DateTime;
+      TimeWritten: System.DateTime;
+      UserName: string;
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      Equals: ((otherEntry: System.Diagnostics.EventLogEntry) => boolean) | ((obj: System.Object) => boolean);
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class EventLogEntryCollection {
+      Count: number;
+      CopyTo: ((entries: System.Diagnostics.EventLogEntry[], index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum EventLogEntryType {
+      Error = 1,
+      Warning = 2,
+      Information = 4,
+      SuccessAudit = 8,
+      FailureAudit = 16,
+    }
+    export declare class EventLogPermission {
+      constructor();
+      constructor(permissionAccessEntries: System.Diagnostics.EventLogPermissionEntry[]);
+      constructor(state: System.Security.Permissions.PermissionState);
+      constructor(permissionAccess: System.Diagnostics.EventLogPermissionAccess, machineName: string);
+      PermissionEntries: System.Diagnostics.EventLogPermissionEntryCollection;
+      Copy: (() => System.Security.IPermission);
+      FromXml: ((securityElement: System.Security.SecurityElement) => void);
+      Intersect: ((target: System.Security.IPermission) => System.Security.IPermission);
+      IsSubsetOf: ((target: System.Security.IPermission) => boolean);
+      IsUnrestricted: (() => boolean);
+      ToXml: (() => System.Security.SecurityElement);
+      Union: ((target: System.Security.IPermission) => System.Security.IPermission);
+      Assert: (() => void);
+      Demand: (() => void);
+      Deny: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      PermitOnly: (() => void);
+      GetType: (() => System.Type);
+    }
+    export enum EventLogPermissionAccess {
+      None = 0,
+      Browse = 2,
+      Instrument = 6,
+      Audit = 10,
+      Write = 16,
+      Administer = 48,
+    }
+    export declare class EventLogPermissionEntry {
+      constructor(permissionAccess: System.Diagnostics.EventLogPermissionAccess, machineName: string);
+      MachineName: string;
+      PermissionAccess: System.Diagnostics.EventLogPermissionAccess;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventLogPermissionEntryCollection {
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.Diagnostics.EventLogPermissionEntry) => number);
+      AddRange: ((value: System.Diagnostics.EventLogPermissionEntry[]) => void) | ((value: System.Diagnostics.EventLogPermissionEntryCollection) => void);
+      Contains: ((value: System.Diagnostics.EventLogPermissionEntry) => boolean);
+      CopyTo: ((array: System.Diagnostics.EventLogPermissionEntry[], index: number) => void);
+      IndexOf: ((value: System.Diagnostics.EventLogPermissionEntry) => number);
+      Insert: ((index: number, value: System.Diagnostics.EventLogPermissionEntry) => void);
+      Remove: ((value: System.Diagnostics.EventLogPermissionEntry) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventLogTraceListener {
+      constructor();
+      constructor(eventLog: System.Diagnostics.EventLog);
+      constructor(source: string);
+      EventLog: System.Diagnostics.EventLog;
+      Name: string;
+      Attributes: System.Collections.Specialized.StringDictionary;
+      IsThreadSafe: boolean;
+      IndentLevel: number;
+      IndentSize: number;
+      Filter: System.Diagnostics.TraceFilter;
+      TraceOutputOptions: System.Diagnostics.TraceOptions;
+      Close: (() => void);
+      Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+      TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, severity: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, severity: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+      TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, severity: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, severity: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void);
+      Dispose: (() => void);
+      Flush: (() => void);
+      Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+      TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EventSourceCreationData {
+      constructor(source: string, logName: string);
+      CategoryCount: number;
+      CategoryResourceFile: string;
+      LogName: string;
+      MachineName: string;
+      MessageResourceFile: string;
+      ParameterResourceFile: string;
+      Source: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class FileVersionInfo {
+      Comments: string;
+      CompanyName: string;
+      FileBuildPart: number;
+      FileDescription: string;
+      FileMajorPart: number;
+      FileMinorPart: number;
+      FileName: string;
+      FilePrivatePart: number;
+      FileVersion: string;
+      InternalName: string;
+      IsDebug: boolean;
+      IsPatched: boolean;
+      IsPreRelease: boolean;
+      IsPrivateBuild: boolean;
+      IsSpecialBuild: boolean;
+      Language: string;
+      LegalCopyright: string;
+      LegalTrademarks: string;
+      OriginalFilename: string;
+      PrivateBuild: string;
+      ProductBuildPart: number;
+      ProductMajorPart: number;
+      ProductMinorPart: number;
+      ProductName: string;
+      ProductPrivatePart: number;
+      ProductVersion: string;
+      SpecialBuild: string;
+      static GetVersionInfo: ((fileName: string) => System.Diagnostics.FileVersionInfo);
+      ToString: (() => string);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export interface ICollectData {
+      CloseData: (() => void);
+    }
+    export declare class InstanceData {
+      constructor(instanceName: string, sample: System.Diagnostics.CounterSample);
+      InstanceName: string;
+      RawValue: System.Int64;
+      Sample: System.Diagnostics.CounterSample;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class InstanceDataCollection {
+      constructor(counterName: string);
+      CounterName: string;
+      Keys: System.Collections.ICollection;
+      Values: System.Collections.ICollection;
+      Count: number;
+      Contains: ((instanceName: string) => boolean);
+      CopyTo: ((instances: System.Diagnostics.InstanceData[], index: number) => void) | ((array: System.Array, index: number) => void);
+      Clear: (() => void);
+      GetEnumerator: (() => System.Collections.IDictionaryEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class InstanceDataCollectionCollection {
+      constructor();
+      Keys: System.Collections.ICollection;
+      Values: System.Collections.ICollection;
+      Count: number;
+      Contains: ((counterName: string) => boolean);
+      CopyTo: ((counters: System.Diagnostics.InstanceDataCollection[], index: number) => void) | ((array: System.Array, index: number) => void);
+      Clear: (() => void);
+      GetEnumerator: (() => System.Collections.IDictionaryEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum OverflowAction {
+      DoNotOverwrite = -1,
+      OverwriteAsNeeded = 0,
+      OverwriteOlder = 1,
+    }
+    export declare class PerformanceCounter {
+      constructor();
+      constructor(categoryName: string, counterName: string);
+      constructor(categoryName: string, counterName: string, readOnly: boolean);
+      constructor(categoryName: string, counterName: string, instanceName: string);
+      constructor(categoryName: string, counterName: string, instanceName: string, readOnly: boolean);
+      constructor(categoryName: string, counterName: string, instanceName: string, machineName: string);
+      CategoryName: string;
+      CounterHelp: string;
+      CounterName: string;
+      CounterType: System.Diagnostics.PerformanceCounterType;
+      InstanceLifetime: System.Diagnostics.PerformanceCounterInstanceLifetime;
+      InstanceName: string;
+      MachineName: string;
+      RawValue: System.Int64;
+      ReadOnly: boolean;
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      static DefaultFileMappingSize: number;
+      BeginInit: (() => void);
+      EndInit: (() => void);
+      Close: (() => void);
+      static CloseSharedResources: (() => void);
+      Decrement: (() => System.Int64);
+      Increment: (() => System.Int64);
+      IncrementBy: ((value: System.Int64) => System.Int64);
+      NextSample: (() => System.Diagnostics.CounterSample);
+      NextValue: (() => number);
+      RemoveInstance: (() => void);
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class PerformanceCounterCategory {
+      constructor();
+      constructor(categoryName: string);
+      constructor(categoryName: string, machineName: string);
+      CategoryHelp: string;
+      CategoryName: string;
+      MachineName: string;
+      CategoryType: System.Diagnostics.PerformanceCounterCategoryType;
+      CounterExists: ((counterName: string) => boolean) | ((counterName: string, categoryName: string) => boolean) | ((counterName: string, categoryName: string, machineName: string) => boolean);
+      static Create: ((categoryName: string, categoryHelp: string, counterData: System.Diagnostics.CounterCreationDataCollection) => System.Diagnostics.PerformanceCounterCategory) | ((categoryName: string, categoryHelp: string, counterName: string, counterHelp: string) => System.Diagnostics.PerformanceCounterCategory) | ((categoryName: string, categoryHelp: string, categoryType: System.Diagnostics.PerformanceCounterCategoryType, counterData: System.Diagnostics.CounterCreationDataCollection) => System.Diagnostics.PerformanceCounterCategory) | ((categoryName: string, categoryHelp: string, categoryType: System.Diagnostics.PerformanceCounterCategoryType, counterName: string, counterHelp: string) => System.Diagnostics.PerformanceCounterCategory);
+      static Delete: ((categoryName: string) => void);
+      static Exists: ((categoryName: string) => boolean) | ((categoryName: string, machineName: string) => boolean);
+      static GetCategories: (() => System.Diagnostics.PerformanceCounterCategory[]) | ((machineName: string) => System.Diagnostics.PerformanceCounterCategory[]);
+      GetCounters: (() => System.Diagnostics.PerformanceCounter[]) | ((instanceName: string) => System.Diagnostics.PerformanceCounter[]);
+      GetInstanceNames: (() => string[]);
+      InstanceExists: ((instanceName: string) => boolean) | ((instanceName: string, categoryName: string) => boolean) | ((instanceName: string, categoryName: string, machineName: string) => boolean);
+      ReadCategory: (() => System.Diagnostics.InstanceDataCollectionCollection);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum PerformanceCounterCategoryType {
+      SingleInstance = 0,
+      MultiInstance = 1,
+      Unknown = -1,
+    }
+    export enum PerformanceCounterInstanceLifetime {
+      Global = 0,
+      Process = 1,
+    }
+    export declare class PerformanceCounterManager {
+      constructor();
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class PerformanceCounterPermission {
+      constructor();
+      constructor(permissionAccessEntries: System.Diagnostics.PerformanceCounterPermissionEntry[]);
+      constructor(state: System.Security.Permissions.PermissionState);
+      constructor(permissionAccess: System.Diagnostics.PerformanceCounterPermissionAccess, machineName: string, categoryName: string);
+      PermissionEntries: System.Diagnostics.PerformanceCounterPermissionEntryCollection;
+      Copy: (() => System.Security.IPermission);
+      FromXml: ((securityElement: System.Security.SecurityElement) => void);
+      Intersect: ((target: System.Security.IPermission) => System.Security.IPermission);
+      IsSubsetOf: ((target: System.Security.IPermission) => boolean);
+      IsUnrestricted: (() => boolean);
+      ToXml: (() => System.Security.SecurityElement);
+      Union: ((target: System.Security.IPermission) => System.Security.IPermission);
+      Assert: (() => void);
+      Demand: (() => void);
+      Deny: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      PermitOnly: (() => void);
+      GetType: (() => System.Type);
+    }
+    export enum PerformanceCounterPermissionAccess {
+      None = 0,
+      Browse = 1,
+      Read = 1,
+      Write = 2,
+      Instrument = 3,
+      Administer = 7,
+    }
+    export declare class PerformanceCounterPermissionEntry {
+      constructor(permissionAccess: System.Diagnostics.PerformanceCounterPermissionAccess, machineName: string, categoryName: string);
+      CategoryName: string;
+      MachineName: string;
+      PermissionAccess: System.Diagnostics.PerformanceCounterPermissionAccess;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class PerformanceCounterPermissionEntryCollection {
+      Capacity: number;
+      Count: number;
+      Add: ((value: System.Diagnostics.PerformanceCounterPermissionEntry) => number);
+      AddRange: ((value: System.Diagnostics.PerformanceCounterPermissionEntry[]) => void) | ((value: System.Diagnostics.PerformanceCounterPermissionEntryCollection) => void);
+      Contains: ((value: System.Diagnostics.PerformanceCounterPermissionEntry) => boolean);
+      CopyTo: ((array: System.Diagnostics.PerformanceCounterPermissionEntry[], index: number) => void);
+      IndexOf: ((value: System.Diagnostics.PerformanceCounterPermissionEntry) => number);
+      Insert: ((index: number, value: System.Diagnostics.PerformanceCounterPermissionEntry) => void);
+      Remove: ((value: System.Diagnostics.PerformanceCounterPermissionEntry) => void);
+      Clear: (() => void);
+      RemoveAt: ((index: number) => void);
+      GetEnumerator: (() => System.Collections.IEnumerator);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum PerformanceCounterType {
+      NumberOfItemsHEX32 = 0,
+      NumberOfItemsHEX64 = 256,
+      NumberOfItems32 = 65536,
+      NumberOfItems64 = 65792,
+      CounterDelta32 = 4195328,
+      CounterDelta64 = 4195584,
+      SampleCounter = 4260864,
+      CountPerTimeInterval32 = 4523008,
+      CountPerTimeInterval64 = 4523264,
+      RateOfCountsPerSecond32 = 272696320,
+      RateOfCountsPerSecond64 = 272696576,
+      RawFraction = 537003008,
+      CounterTimer = 541132032,
+      Timer100Ns = 542180608,
+      SampleFraction = 549585920,
+      CounterTimerInverse = 557909248,
+      Timer100NsInverse = 558957824,
+      CounterMultiTimer = 574686464,
+      CounterMultiTimer100Ns = 575735040,
+      CounterMultiTimerInverse = 591463680,
+      CounterMultiTimer100NsInverse = 592512256,
+      AverageTimer32 = 805438464,
+      ElapsedTime = 807666944,
+      AverageCount64 = 1073874176,
+      SampleBase = 1073939457,
+      AverageBase = 1073939458,
+      RawBase = 1073939459,
+      CounterMultiBase = 1107494144,
+    }
+    export declare class ProcessModule {
+      BaseAddress: System.IntPtr;
+      EntryPointAddress: System.IntPtr;
+      FileName: string;
+      FileVersionInfo: System.Diagnostics.FileVersionInfo;
+      ModuleMemorySize: number;
+      ModuleName: string;
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      ToString: (() => string);
+      Dispose: (() => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export enum ProcessPriorityClass {
+      AboveNormal = 32768,
+      BelowNormal = 16384,
+      High = 128,
+      Idle = 64,
+      Normal = 32,
+      RealTime = 256,
+    }
+    export declare class ProcessThread {
+      BasePriority: number;
+      CurrentPriority: number;
+      Id: number;
+      IdealProcessor: number;
+      PriorityBoostEnabled: boolean;
+      PriorityLevel: System.Diagnostics.ThreadPriorityLevel;
+      PrivilegedProcessorTime: System.TimeSpan;
+      ProcessorAffinity: System.IntPtr;
+      StartAddress: System.IntPtr;
+      StartTime: System.DateTime;
+      ThreadState: System.Diagnostics.ThreadState;
+      TotalProcessorTime: System.TimeSpan;
+      UserProcessorTime: System.TimeSpan;
+      WaitReason: System.Diagnostics.ThreadWaitReason;
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      ResetIdealProcessor: (() => void);
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export enum ProcessWindowStyle {
+      Hidden = 1,
+      Maximized = 3,
+      Minimized = 2,
+      Normal = 0,
+    }
+    export declare class Stopwatch {
+      constructor();
+      Elapsed: System.TimeSpan;
+      ElapsedMilliseconds: System.Int64;
+      ElapsedTicks: System.Int64;
+      IsRunning: boolean;
+      static Frequency: System.Int64;
+      static IsHighResolution: boolean;
+      static GetTimestamp: (() => System.Int64);
+      static StartNew: (() => System.Diagnostics.Stopwatch);
+      Reset: (() => void);
+      Start: (() => void);
+      Stop: (() => void);
+      Restart: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum ThreadPriorityLevel {
+      AboveNormal = 1,
+      BelowNormal = -1,
+      Highest = 2,
+      Idle = -15,
+      Lowest = -2,
+      Normal = 0,
+      TimeCritical = 15,
+    }
+    export enum ThreadState {
+      Initialized = 0,
+      Ready = 1,
+      Running = 2,
+      Standby = 3,
+      Terminated = 4,
+      Transition = 6,
+      Unknown = 7,
+      Wait = 5,
+    }
+    export enum ThreadWaitReason {
+      EventPairHigh = 7,
+      EventPairLow = 8,
+      ExecutionDelay = 4,
+      Executive = 0,
+      FreePage = 1,
+      LpcReceive = 9,
+      LpcReply = 10,
+      PageIn = 2,
+      PageOut = 12,
+      Suspended = 5,
+      SystemAllocation = 3,
+      Unknown = 13,
+      UserRequest = 6,
+      VirtualMemory = 11,
+    }
+    export declare class StackFrameExtensions {
+      static GetNativeImageBase: ((stackFrame: System.Diagnostics.StackFrame) => System.IntPtr);
+      static GetNativeIP: ((stackFrame: System.Diagnostics.StackFrame) => System.IntPtr);
+      static HasILOffset: ((stackFrame: System.Diagnostics.StackFrame) => boolean);
+      static HasMethod: ((stackFrame: System.Diagnostics.StackFrame) => boolean);
+      static HasNativeImage: ((stackFrame: System.Diagnostics.StackFrame) => boolean);
+      static HasSource: ((stackFrame: System.Diagnostics.StackFrame) => boolean);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
     export namespace Contracts {
       export declare class Contract {
         static Assume: ((condition: boolean) => void) | ((condition: boolean, userMessage: string) => void);
@@ -3654,14 +10291,608 @@ export namespace System {
         }
       }
     }
+    export namespace Eventing {
+      export declare class EventDescriptor {
+        constructor(id: number, version: System.Byte, channel: System.Byte, level: System.Byte, opcode: System.Byte, task: number, keywords: System.Int64);
+        Channel: System.Byte;
+        EventId: number;
+        Keywords: System.Int64;
+        Level: System.Byte;
+        Opcode: System.Byte;
+        Task: number;
+        Version: System.Byte;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class EventProvider {
+        constructor(providerGuid: System.Guid);
+        Close: (() => void);
+        static CreateActivityId: (() => System.Guid);
+        Dispose: (() => void);
+        static GetLastWriteEventError: (() => System.Diagnostics.Eventing.EventProvider_WriteEventErrorCode);
+        IsEnabled: (() => boolean) | ((level: System.Byte, keywords: System.Int64) => boolean);
+        WriteMessageEvent: ((eventMessage: string) => boolean) | ((eventMessage: string, eventLevel: System.Byte, eventKeywords: System.Int64) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum EventProvider_WriteEventErrorCode {
+        EventTooBig = 2,
+        NoError = 0,
+        NoFreeBuffers = 1,
+      }
+      export declare class EventProviderTraceListener {
+        constructor(providerId: string);
+        constructor(providerId: string, name: string);
+        constructor(providerId: string, name: string, delimiter: string);
+        Delimiter: string;
+        Attributes: System.Collections.Specialized.StringDictionary;
+        Name: string;
+        IsThreadSafe: boolean;
+        IndentLevel: number;
+        IndentSize: number;
+        Filter: System.Diagnostics.TraceFilter;
+        TraceOutputOptions: System.Diagnostics.TraceOptions;
+        Write: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+        WriteLine: ((message: string) => void) | ((o: System.Object) => void) | ((message: string, category: string) => void) | ((o: System.Object, category: string) => void);
+        Dispose: (() => void);
+        Close: (() => void);
+        Flush: (() => void);
+        Fail: ((message: string) => void) | ((message: string, detailMessage: string) => void);
+        TraceData: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, data: System.Object) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, ...data: System.Object[]) => void);
+        TraceEvent: ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, message: string) => void) | ((eventCache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, format: string, ...args: System.Object[]) => void);
+        TraceTransfer: ((eventCache: System.Diagnostics.TraceEventCache, source: string, id: number, message: string, relatedActivityId: System.Guid) => void);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export namespace Reader {
+        export declare class EventBookmark {
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventKeyword {
+          DisplayName: string;
+          Name: string;
+          Value: System.Int64;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLevel {
+          DisplayName: string;
+          Name: string;
+          Value: number;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLogConfiguration {
+          constructor(logName: string);
+          constructor(logName: string, session: System.Diagnostics.Eventing.Reader.EventLogSession);
+          IsClassicLog: boolean;
+          IsEnabled: boolean;
+          LogFilePath: string;
+          LogIsolation: System.Diagnostics.Eventing.Reader.EventLogIsolation;
+          LogMode: System.Diagnostics.Eventing.Reader.EventLogMode;
+          LogName: string;
+          LogType: System.Diagnostics.Eventing.Reader.EventLogType;
+          MaximumSizeInBytes: System.Int64;
+          OwningProviderName: string;
+          ProviderBufferSize?: number;
+          ProviderControlGuid?: System.Nullable<System.Guid>;
+          ProviderKeywords?: System.Nullable<System.Int64>;
+          ProviderLatency?: number;
+          ProviderLevel?: number;
+          ProviderMaximumNumberOfBuffers?: number;
+          ProviderMinimumNumberOfBuffers?: number;
+          ProviderNames: System.Collections.Generic.IEnumerable<string>;
+          SecurityDescriptor: string;
+          Dispose: (() => void);
+          SaveChanges: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLogSession {
+          constructor();
+          constructor(server: string);
+          constructor(server: string, domain: string, user: string, password: System.Security.SecureString, logOnType: System.Diagnostics.Eventing.Reader.SessionAuthentication);
+          static GlobalSession: System.Diagnostics.Eventing.Reader.EventLogSession;
+          CancelCurrentOperations: (() => void);
+          ClearLog: ((logName: string) => void) | ((logName: string, backupPath: string) => void);
+          Dispose: (() => void);
+          ExportLog: ((path: string, pathType: System.Diagnostics.Eventing.Reader.PathType, query: string, targetFilePath: string) => void) | ((path: string, pathType: System.Diagnostics.Eventing.Reader.PathType, query: string, targetFilePath: string, tolerateQueryErrors: boolean) => void);
+          ExportLogAndMessages: ((path: string, pathType: System.Diagnostics.Eventing.Reader.PathType, query: string, targetFilePath: string) => void) | ((path: string, pathType: System.Diagnostics.Eventing.Reader.PathType, query: string, targetFilePath: string, tolerateQueryErrors: boolean, targetCultureInfo: System.Globalization.CultureInfo) => void);
+          GetLogInformation: ((logName: string, pathType: System.Diagnostics.Eventing.Reader.PathType) => System.Diagnostics.Eventing.Reader.EventLogInformation);
+          GetLogNames: (() => System.Collections.Generic.IEnumerable<string>);
+          GetProviderNames: (() => System.Collections.Generic.IEnumerable<string>);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export enum SessionAuthentication {
+          Default = 0,
+          Kerberos = 2,
+          Negotiate = 1,
+          Ntlm = 3,
+        }
+        export enum PathType {
+          FilePath = 2,
+          LogName = 1,
+        }
+        export declare class EventLogInformation {
+          Attributes?: number;
+          CreationTime?: System.Nullable<System.DateTime>;
+          FileSize?: System.Nullable<System.Int64>;
+          IsLogFull?: boolean;
+          LastAccessTime?: System.Nullable<System.DateTime>;
+          LastWriteTime?: System.Nullable<System.DateTime>;
+          OldestRecordNumber?: System.Nullable<System.Int64>;
+          RecordCount?: System.Nullable<System.Int64>;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export enum EventLogIsolation {
+          Application = 0,
+          Custom = 2,
+          System = 1,
+        }
+        export enum EventLogMode {
+          AutoBackup = 1,
+          Circular = 0,
+          Retain = 2,
+        }
+        export enum EventLogType {
+          Administrative = 0,
+          Analytical = 2,
+          Debug = 3,
+          Operational = 1,
+        }
+        export declare class EventLogException {
+          constructor();
+          constructor(message: string);
+          constructor(message: string, innerException: System.Exception);
+          Message: string;
+          Data: System.Collections.IDictionary;
+          InnerException: System.Exception;
+          TargetSite: System.Reflection.MethodBase;
+          StackTrace: string;
+          HelpLink: string;
+          Source: string;
+          HResult: number;
+          GetBaseException: (() => System.Exception);
+          ToString: (() => string);
+          GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+          GetType: (() => System.Type) | (() => System.Type);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+        }
+        export declare class EventLogInvalidDataException {
+          constructor();
+          constructor(message: string);
+          constructor(message: string, innerException: System.Exception);
+          Message: string;
+          Data: System.Collections.IDictionary;
+          InnerException: System.Exception;
+          TargetSite: System.Reflection.MethodBase;
+          StackTrace: string;
+          HelpLink: string;
+          Source: string;
+          HResult: number;
+          GetBaseException: (() => System.Exception);
+          ToString: (() => string);
+          GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+          GetType: (() => System.Type) | (() => System.Type);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+        }
+        export declare class EventLogLink {
+          DisplayName: string;
+          IsImported: boolean;
+          LogName: string;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLogNotFoundException {
+          constructor();
+          constructor(message: string);
+          constructor(message: string, innerException: System.Exception);
+          Message: string;
+          Data: System.Collections.IDictionary;
+          InnerException: System.Exception;
+          TargetSite: System.Reflection.MethodBase;
+          StackTrace: string;
+          HelpLink: string;
+          Source: string;
+          HResult: number;
+          GetBaseException: (() => System.Exception);
+          ToString: (() => string);
+          GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+          GetType: (() => System.Type) | (() => System.Type);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+        }
+        export declare class EventLogPropertySelector {
+          constructor(propertyQueries: System.Collections.Generic.IEnumerable<string>);
+          Dispose: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLogProviderDisabledException {
+          constructor();
+          constructor(message: string);
+          constructor(message: string, innerException: System.Exception);
+          Message: string;
+          Data: System.Collections.IDictionary;
+          InnerException: System.Exception;
+          TargetSite: System.Reflection.MethodBase;
+          StackTrace: string;
+          HelpLink: string;
+          Source: string;
+          HResult: number;
+          GetBaseException: (() => System.Exception);
+          ToString: (() => string);
+          GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+          GetType: (() => System.Type) | (() => System.Type);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+        }
+        export declare class EventLogQuery {
+          constructor(path: string, pathType: System.Diagnostics.Eventing.Reader.PathType);
+          constructor(path: string, pathType: System.Diagnostics.Eventing.Reader.PathType, query: string);
+          ReverseDirection: boolean;
+          Session: System.Diagnostics.Eventing.Reader.EventLogSession;
+          TolerateQueryErrors: boolean;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLogReader {
+          constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery);
+          constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery, bookmark: System.Diagnostics.Eventing.Reader.EventBookmark);
+          constructor(path: string);
+          constructor(path: string, pathType: System.Diagnostics.Eventing.Reader.PathType);
+          BatchSize: number;
+          LogStatus: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventLogStatus>;
+          CancelReading: (() => void);
+          Dispose: (() => void);
+          ReadEvent: (() => System.Diagnostics.Eventing.Reader.EventRecord) | ((timeout: System.TimeSpan) => System.Diagnostics.Eventing.Reader.EventRecord);
+          Seek: ((bookmark: System.Diagnostics.Eventing.Reader.EventBookmark) => void) | ((bookmark: System.Diagnostics.Eventing.Reader.EventBookmark, offset: System.Int64) => void) | ((origin: System.IO.SeekOrigin, offset: System.Int64) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLogStatus {
+          LogName: string;
+          StatusCode: number;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventRecord {
+          ActivityId?: System.Nullable<System.Guid>;
+          Bookmark: System.Diagnostics.Eventing.Reader.EventBookmark;
+          Id: number;
+          Keywords?: System.Nullable<System.Int64>;
+          KeywordsDisplayNames: System.Collections.Generic.IEnumerable<string>;
+          Level?: System.Nullable<System.Byte>;
+          LevelDisplayName: string;
+          LogName: string;
+          MachineName: string;
+          Opcode?: System.Nullable<System.Int16>;
+          OpcodeDisplayName: string;
+          ProcessId?: number;
+          Properties: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventProperty>;
+          ProviderId?: System.Nullable<System.Guid>;
+          ProviderName: string;
+          Qualifiers?: number;
+          RecordId?: System.Nullable<System.Int64>;
+          RelatedActivityId?: System.Nullable<System.Guid>;
+          Task?: number;
+          TaskDisplayName: string;
+          ThreadId?: number;
+          TimeCreated?: System.Nullable<System.DateTime>;
+          UserId: System.Security.Principal.SecurityIdentifier;
+          Version?: System.Nullable<System.Byte>;
+          Dispose: (() => void);
+          FormatDescription: (() => string) | ((values: System.Collections.Generic.IEnumerable<System.Object>) => string);
+          ToXml: (() => string);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventProperty {
+          Value: System.Object;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLogReadingException {
+          constructor();
+          constructor(message: string);
+          constructor(message: string, innerException: System.Exception);
+          Message: string;
+          Data: System.Collections.IDictionary;
+          InnerException: System.Exception;
+          TargetSite: System.Reflection.MethodBase;
+          StackTrace: string;
+          HelpLink: string;
+          Source: string;
+          HResult: number;
+          GetBaseException: (() => System.Exception);
+          ToString: (() => string);
+          GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+          GetType: (() => System.Type) | (() => System.Type);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+        }
+        export declare class EventLogRecord {
+          ActivityId?: System.Nullable<System.Guid>;
+          Bookmark: System.Diagnostics.Eventing.Reader.EventBookmark;
+          ContainerLog: string;
+          Id: number;
+          Keywords?: System.Nullable<System.Int64>;
+          KeywordsDisplayNames: System.Collections.Generic.IEnumerable<string>;
+          Level?: System.Nullable<System.Byte>;
+          LevelDisplayName: string;
+          LogName: string;
+          MachineName: string;
+          MatchedQueryIds: System.Collections.Generic.IEnumerable<number>;
+          Opcode?: System.Nullable<System.Int16>;
+          OpcodeDisplayName: string;
+          ProcessId?: number;
+          Properties: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventProperty>;
+          ProviderId?: System.Nullable<System.Guid>;
+          ProviderName: string;
+          Qualifiers?: number;
+          RecordId?: System.Nullable<System.Int64>;
+          RelatedActivityId?: System.Nullable<System.Guid>;
+          Task?: number;
+          TaskDisplayName: string;
+          ThreadId?: number;
+          TimeCreated?: System.Nullable<System.DateTime>;
+          UserId: System.Security.Principal.SecurityIdentifier;
+          Version?: System.Nullable<System.Byte>;
+          FormatDescription: (() => string) | ((values: System.Collections.Generic.IEnumerable<System.Object>) => string);
+          GetPropertyValues: ((propertySelector: System.Diagnostics.Eventing.Reader.EventLogPropertySelector) => System.Collections.Generic.IList<System.Object>);
+          ToXml: (() => string);
+          Dispose: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventLogWatcher {
+          constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery);
+          constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery, bookmark: System.Diagnostics.Eventing.Reader.EventBookmark);
+          constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery, bookmark: System.Diagnostics.Eventing.Reader.EventBookmark, readExistingEvents: boolean);
+          constructor(path: string);
+          Enabled: boolean;
+          Dispose: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventRecordWrittenEventArgs {
+          EventException: System.Exception;
+          EventRecord: System.Diagnostics.Eventing.Reader.EventRecord;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventMetadata {
+          Description: string;
+          Id: System.Int64;
+          Keywords: System.Collections.Generic.IEnumerable<System.Diagnostics.Eventing.Reader.EventKeyword>;
+          Level: System.Diagnostics.Eventing.Reader.EventLevel;
+          LogLink: System.Diagnostics.Eventing.Reader.EventLogLink;
+          Opcode: System.Diagnostics.Eventing.Reader.EventOpcode;
+          Task: System.Diagnostics.Eventing.Reader.EventTask;
+          Template: string;
+          Version: System.Byte;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventOpcode {
+          DisplayName: string;
+          Name: string;
+          Value: number;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class EventTask {
+          DisplayName: string;
+          EventGuid: System.Guid;
+          Name: string;
+          Value: number;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class ProviderMetadata {
+          constructor(providerName: string);
+          constructor(providerName: string, session: System.Diagnostics.Eventing.Reader.EventLogSession, targetCultureInfo: System.Globalization.CultureInfo);
+          DisplayName: string;
+          Events: System.Collections.Generic.IEnumerable<System.Diagnostics.Eventing.Reader.EventMetadata>;
+          HelpLink: System.Uri;
+          Id: System.Guid;
+          Keywords: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventKeyword>;
+          Levels: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventLevel>;
+          LogLinks: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventLogLink>;
+          MessageFilePath: string;
+          Name: string;
+          Opcodes: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventOpcode>;
+          ParameterFilePath: string;
+          ResourceFilePath: string;
+          Tasks: System.Collections.Generic.IList<System.Diagnostics.Eventing.Reader.EventTask>;
+          Dispose: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export enum StandardEventKeywords {
+          AuditFailure = 4503599627370496,
+          AuditSuccess = 9007199254740992,
+          CorrelationHint = 4503599627370496,
+          CorrelationHint2 = 18014398509481984,
+          EventLogClassic = 36028797018963968,
+          None = 0,
+          ResponseTime = 281474976710656,
+          Sqm = 2251799813685248,
+          WdiContext = 562949953421312,
+          WdiDiagnostic = 1125899906842624,
+        }
+        export enum StandardEventLevel {
+          Critical = 1,
+          Error = 2,
+          Informational = 4,
+          LogAlways = 0,
+          Verbose = 5,
+          Warning = 3,
+        }
+        export enum StandardEventOpcode {
+          DataCollectionStart = 3,
+          DataCollectionStop = 4,
+          Extension = 5,
+          Info = 0,
+          Receive = 240,
+          Reply = 6,
+          Resume = 7,
+          Send = 9,
+          Start = 1,
+          Stop = 2,
+          Suspend = 8,
+        }
+        export enum StandardEventTask {
+          None = 0,
+        }
+      }
+    }
+    export namespace PerformanceData {
+      export declare class CounterData {
+        RawValue: System.Int64;
+        Value: System.Int64;
+        Decrement: (() => void);
+        Increment: (() => void);
+        IncrementBy: ((value: System.Int64) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CounterSet {
+        constructor(providerGuid: System.Guid, counterSetGuid: System.Guid, instanceType: System.Diagnostics.PerformanceData.CounterSetInstanceType);
+        AddCounter: ((counterId: number, counterType: System.Diagnostics.PerformanceData.CounterType) => void) | ((counterId: number, counterType: System.Diagnostics.PerformanceData.CounterType, counterName: string) => void);
+        CreateCounterSetInstance: ((instanceName: string) => System.Diagnostics.PerformanceData.CounterSetInstance);
+        Dispose: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum CounterSetInstanceType {
+        GlobalAggregate = 4,
+        GlobalAggregateWithHistory = 11,
+        InstanceAggregate = 22,
+        Multiple = 2,
+        MultipleAggregate = 6,
+        Single = 0,
+      }
+      export enum CounterType {
+        AverageBase = 1073939458,
+        AverageCount64 = 1073874176,
+        AverageTimer32 = 805438464,
+        Delta32 = 4195328,
+        Delta64 = 4195584,
+        ElapsedTime = 807666944,
+        LargeQueueLength = 4523264,
+        MultiTimerBase = 1107494144,
+        MultiTimerPercentageActive = 574686464,
+        MultiTimerPercentageActive100Ns = 575735040,
+        MultiTimerPercentageNotActive = 591463680,
+        MultiTimerPercentageNotActive100Ns = 592512256,
+        ObjectSpecificTimer = 543229184,
+        PercentageActive = 541132032,
+        PercentageActive100Ns = 542180608,
+        PercentageNotActive = 557909248,
+        PercentageNotActive100Ns = 558957824,
+        PrecisionObjectSpecificTimer = 543622400,
+        PrecisionSystemTimer = 541525248,
+        PrecisionTimer100Ns = 542573824,
+        QueueLength = 4523008,
+        QueueLength100Ns = 5571840,
+        QueueLengthObjectTime = 6620416,
+        RateOfCountPerSecond32 = 272696320,
+        RateOfCountPerSecond64 = 272696576,
+        RawBase32 = 1073939459,
+        RawBase64 = 1073939712,
+        RawData32 = 65536,
+        RawData64 = 65792,
+        RawDataHex32 = 0,
+        RawDataHex64 = 256,
+        RawFraction32 = 537003008,
+        RawFraction64 = 537003264,
+        SampleBase = 1073939457,
+        SampleCounter = 4260864,
+        SampleFraction = 549585920,
+      }
+      export declare class CounterSetInstance {
+        Counters: System.Diagnostics.PerformanceData.CounterSetInstanceCounterDataSet;
+        Dispose: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CounterSetInstanceCounterDataSet {
+        Dispose: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+    }
     export namespace SymbolStore {
-      export declare class ISymbolBinder {
+      export interface ISymbolBinder {
         GetReader: ((importer: number, filename: string, searchPath: string) => System.Diagnostics.SymbolStore.ISymbolReader);
       }
-      export declare class ISymbolBinder1 {
+      export interface ISymbolBinder1 {
         GetReader: ((importer: System.IntPtr, filename: string, searchPath: string) => System.Diagnostics.SymbolStore.ISymbolReader);
       }
-      export declare class ISymbolDocument {
+      export interface ISymbolDocument {
         CheckSumAlgorithmId: System.Guid;
         DocumentType: System.Guid;
         HasEmbeddedSource: boolean;
@@ -3673,11 +10904,11 @@ export namespace System {
         GetCheckSum: (() => System.Byte[]);
         GetSourceRange: ((startLine: number, startColumn: number, endLine: number, endColumn: number) => System.Byte[]);
       }
-      export declare class ISymbolDocumentWriter {
+      export interface ISymbolDocumentWriter {
         SetCheckSum: ((algorithmId: System.Guid, checkSum: System.Byte[]) => void);
         SetSource: ((source: System.Byte[]) => void);
       }
-      export declare class ISymbolMethod {
+      export interface ISymbolMethod {
         RootScope: System.Diagnostics.SymbolStore.ISymbolScope;
         SequencePointCount: number;
         Token: System.Diagnostics.SymbolStore.SymbolToken;
@@ -3689,12 +10920,12 @@ export namespace System {
         GetSequencePoints: ((offsets: number[], documents: System.Diagnostics.SymbolStore.ISymbolDocument[], lines: number[], columns: number[], endLines: number[], endColumns: number[]) => void);
         GetSourceStartEnd: ((docs: System.Diagnostics.SymbolStore.ISymbolDocument[], lines: number[], columns: number[]) => boolean);
       }
-      export declare class ISymbolNamespace {
+      export interface ISymbolNamespace {
         Name: string;
         GetNamespaces: (() => System.Diagnostics.SymbolStore.ISymbolNamespace[]);
         GetVariables: (() => System.Diagnostics.SymbolStore.ISymbolVariable[]);
       }
-      export declare class ISymbolReader {
+      export interface ISymbolReader {
         UserEntryPoint: System.Diagnostics.SymbolStore.SymbolToken;
         GetDocument: ((url: string, language: System.Guid, languageVendor: System.Guid, documentType: System.Guid) => System.Diagnostics.SymbolStore.ISymbolDocument);
         GetDocuments: (() => System.Diagnostics.SymbolStore.ISymbolDocument[]);
@@ -3705,7 +10936,7 @@ export namespace System {
         GetSymAttribute: ((parent: System.Diagnostics.SymbolStore.SymbolToken, name: string) => System.Byte[]);
         GetVariables: ((parent: System.Diagnostics.SymbolStore.SymbolToken) => System.Diagnostics.SymbolStore.ISymbolVariable[]);
       }
-      export declare class ISymbolScope {
+      export interface ISymbolScope {
         EndOffset: number;
         Method: System.Diagnostics.SymbolStore.ISymbolMethod;
         Parent: System.Diagnostics.SymbolStore.ISymbolScope;
@@ -3714,7 +10945,7 @@ export namespace System {
         GetLocals: (() => System.Diagnostics.SymbolStore.ISymbolVariable[]);
         GetNamespaces: (() => System.Diagnostics.SymbolStore.ISymbolNamespace[]);
       }
-      export declare class ISymbolVariable {
+      export interface ISymbolVariable {
         AddressField1: number;
         AddressField2: number;
         AddressField3: number;
@@ -3725,7 +10956,7 @@ export namespace System {
         StartOffset: number;
         GetSignature: (() => System.Byte[]);
       }
-      export declare class ISymbolWriter {
+      export interface ISymbolWriter {
         Close: (() => void);
         CloseMethod: (() => void);
         CloseNamespace: (() => void);
@@ -3877,7 +11108,7 @@ export namespace System {
       export declare class EventListener {
         constructor();
         Dispose: (() => void);
-        EnableEvents: ((eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel) => void) | ((eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel, matchAnyKeyword: System.Diagnostics.Tracing.EventKeywords) => void) | ((eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel, matchAnyKeyword: System.Diagnostics.Tracing.EventKeywords, argumentsCS: any) => void);
+        EnableEvents: ((eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel) => void) | ((eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel, matchAnyKeyword: System.Diagnostics.Tracing.EventKeywords) => void) | ((eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel, matchAnyKeyword: System.Diagnostics.Tracing.EventKeywords, argumentsCS: System.Collections.Generic.IDictionary<string, string>) => void);
         DisableEvents: ((eventSource: System.Diagnostics.Tracing.EventSource) => void);
         static EventSourceIndex: ((eventSource: System.Diagnostics.Tracing.EventSource) => number);
         Equals: ((obj: System.Object) => boolean);
@@ -3887,7 +11118,7 @@ export namespace System {
       }
       export declare class EventCommandEventArgs {
         Command: System.Diagnostics.Tracing.EventCommand;
-        Arguments: any; // System.Collections.Generic.IDictionary`2[System.String,System.String]
+        Arguments: System.Collections.Generic.IDictionary<string, string>;
         EnableEvent: ((eventId: number) => boolean);
         DisableEvent: ((eventId: number) => boolean);
         Equals: ((obj: System.Object) => boolean);
@@ -3908,8 +11139,8 @@ export namespace System {
         EventId: number;
         ActivityId: System.Guid;
         RelatedActivityId: System.Guid;
-        Payload: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[System.Object]
-        PayloadNames: any; // System.Collections.ObjectModel.ReadOnlyCollection`1[System.String]
+        Payload: System.Object[];
+        PayloadNames: string[];
         EventSource: System.Diagnostics.Tracing.EventSource;
         Keywords: System.Diagnostics.Tracing.EventKeywords;
         Opcode: System.Diagnostics.Tracing.EventOpcode;
@@ -3999,6 +11230,246 @@ export namespace System {
         CorrelationHint = 4503599627370496,
         EventLogClassic = 36028797018963968,
       }
+    }
+  }
+  export namespace Dynamic {
+    export declare class BinaryOperationBinder {
+      ReturnType: System.Type;
+      Operation: System.Linq.Expressions.ExpressionType;
+      FallbackBinaryOperation: ((target: System.Dynamic.DynamicMetaObject, arg: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, arg: System.Dynamic.DynamicMetaObject, errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class BindingRestrictions {
+      static Empty: System.Dynamic.BindingRestrictions;
+      Merge: ((restrictions: System.Dynamic.BindingRestrictions) => System.Dynamic.BindingRestrictions);
+      static GetTypeRestriction: ((expression: System.Linq.Expressions.Expression, type: System.Type) => System.Dynamic.BindingRestrictions);
+      static GetInstanceRestriction: ((expression: System.Linq.Expressions.Expression, instance: System.Object) => System.Dynamic.BindingRestrictions);
+      static GetExpressionRestriction: ((expression: System.Linq.Expressions.Expression) => System.Dynamic.BindingRestrictions);
+      static Combine: ((contributingObjects: any) => System.Dynamic.BindingRestrictions);
+      ToExpression: (() => System.Linq.Expressions.Expression);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CallInfo {
+      constructor(argCount: number, ...argNames: string[]);
+      constructor(argCount: number, argNames: System.Collections.Generic.IEnumerable<string>);
+      ArgumentCount: number;
+      ArgumentNames: string[];
+      GetHashCode: (() => number);
+      Equals: ((obj: System.Object) => boolean);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ConvertBinder {
+      Type: System.Type;
+      Explicit: boolean;
+      ReturnType: System.Type;
+      FallbackConvert: ((target: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class CreateInstanceBinder {
+      ReturnType: System.Type;
+      CallInfo: System.Dynamic.CallInfo;
+      FallbackCreateInstance: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[], errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DeleteIndexBinder {
+      ReturnType: System.Type;
+      CallInfo: System.Dynamic.CallInfo;
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      FallbackDeleteIndex: ((target: System.Dynamic.DynamicMetaObject, indexes: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, indexes: System.Dynamic.DynamicMetaObject[], errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DeleteMemberBinder {
+      Name: string;
+      IgnoreCase: boolean;
+      ReturnType: System.Type;
+      FallbackDeleteMember: ((target: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DynamicMetaObject {
+      constructor(expression: System.Linq.Expressions.Expression, restrictions: System.Dynamic.BindingRestrictions);
+      constructor(expression: System.Linq.Expressions.Expression, restrictions: System.Dynamic.BindingRestrictions, value: System.Object);
+      Expression: System.Linq.Expressions.Expression;
+      Restrictions: System.Dynamic.BindingRestrictions;
+      Value: System.Object;
+      HasValue: boolean;
+      RuntimeType: System.Type;
+      LimitType: System.Type;
+      static EmptyMetaObjects: System.Dynamic.DynamicMetaObject[];
+      BindConvert: ((binder: System.Dynamic.ConvertBinder) => System.Dynamic.DynamicMetaObject);
+      BindGetMember: ((binder: System.Dynamic.GetMemberBinder) => System.Dynamic.DynamicMetaObject);
+      BindSetMember: ((binder: System.Dynamic.SetMemberBinder, value: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      BindDeleteMember: ((binder: System.Dynamic.DeleteMemberBinder) => System.Dynamic.DynamicMetaObject);
+      BindGetIndex: ((binder: System.Dynamic.GetIndexBinder, indexes: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      BindSetIndex: ((binder: System.Dynamic.SetIndexBinder, indexes: System.Dynamic.DynamicMetaObject[], value: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      BindDeleteIndex: ((binder: System.Dynamic.DeleteIndexBinder, indexes: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      BindInvokeMember: ((binder: System.Dynamic.InvokeMemberBinder, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      BindInvoke: ((binder: System.Dynamic.InvokeBinder, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      BindCreateInstance: ((binder: System.Dynamic.CreateInstanceBinder, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      BindUnaryOperation: ((binder: System.Dynamic.UnaryOperationBinder) => System.Dynamic.DynamicMetaObject);
+      BindBinaryOperation: ((binder: System.Dynamic.BinaryOperationBinder, arg: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      GetDynamicMemberNames: (() => System.Collections.Generic.IEnumerable<string>);
+      static Create: ((value: System.Object, expression: System.Linq.Expressions.Expression) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DynamicMetaObjectBinder {
+      ReturnType: System.Type;
+      Bind: ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression) | ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class DynamicObject {
+      TrySetMember: ((binder: System.Dynamic.SetMemberBinder, value: System.Object) => boolean);
+      TryDeleteMember: ((binder: System.Dynamic.DeleteMemberBinder) => boolean);
+      TrySetIndex: ((binder: System.Dynamic.SetIndexBinder, indexes: System.Object[], value: System.Object) => boolean);
+      TryDeleteIndex: ((binder: System.Dynamic.DeleteIndexBinder, indexes: System.Object[]) => boolean);
+      GetDynamicMemberNames: (() => System.Collections.Generic.IEnumerable<string>);
+      GetMetaObject: ((parameter: System.Linq.Expressions.Expression) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ExpandoObject {
+      constructor();
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class GetIndexBinder {
+      ReturnType: System.Type;
+      CallInfo: System.Dynamic.CallInfo;
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      FallbackGetIndex: ((target: System.Dynamic.DynamicMetaObject, indexes: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, indexes: System.Dynamic.DynamicMetaObject[], errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class GetMemberBinder {
+      ReturnType: System.Type;
+      Name: string;
+      IgnoreCase: boolean;
+      FallbackGetMember: ((target: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export interface IDynamicMetaObjectProvider {
+      GetMetaObject: ((parameter: System.Linq.Expressions.Expression) => System.Dynamic.DynamicMetaObject);
+    }
+    export interface IInvokeOnGetBinder {
+      InvokeOnGet: boolean;
+    }
+    export declare class InvokeBinder {
+      ReturnType: System.Type;
+      CallInfo: System.Dynamic.CallInfo;
+      FallbackInvoke: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[], errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class InvokeMemberBinder {
+      ReturnType: System.Type;
+      Name: string;
+      IgnoreCase: boolean;
+      CallInfo: System.Dynamic.CallInfo;
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      FallbackInvokeMember: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[], errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      FallbackInvoke: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[], errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class SetIndexBinder {
+      ReturnType: System.Type;
+      CallInfo: System.Dynamic.CallInfo;
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      FallbackSetIndex: ((target: System.Dynamic.DynamicMetaObject, indexes: System.Dynamic.DynamicMetaObject[], value: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, indexes: System.Dynamic.DynamicMetaObject[], value: System.Dynamic.DynamicMetaObject, errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class SetMemberBinder {
+      ReturnType: System.Type;
+      Name: string;
+      IgnoreCase: boolean;
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      FallbackSetMember: ((target: System.Dynamic.DynamicMetaObject, value: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, value: System.Dynamic.DynamicMetaObject, errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class UnaryOperationBinder {
+      ReturnType: System.Type;
+      Operation: System.Linq.Expressions.ExpressionType;
+      FallbackUnaryOperation: ((target: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject) | ((target: System.Dynamic.DynamicMetaObject, errorSuggestion: System.Dynamic.DynamicMetaObject) => System.Dynamic.DynamicMetaObject);
+      Bind: ((target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+      GetUpdateExpression: ((type: System.Type) => System.Linq.Expressions.Expression);
+      Defer: ((target: System.Dynamic.DynamicMetaObject, ...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject) | ((...args: System.Dynamic.DynamicMetaObject[]) => System.Dynamic.DynamicMetaObject);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
     }
   }
   export namespace Globalization {
@@ -5179,15 +12650,15 @@ export namespace System {
       WriteTimeout: number;
       Flush: (() => void);
       FlushAsync: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
-      Read: ((array: System.Byte[], offset: number, count: number) => number) | ((destination: any) => number);
+      Read: ((array: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
       BeginRead: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
       EndRead: ((asyncResult: System.IAsyncResult) => number);
-      ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => any) | ((buffer: System.Byte[], offset: number, count: number) => any) | ((destination: any, cancellationToken?: System.Threading.CancellationToken) => any);
+      ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
       ReadByte: (() => number);
-      Write: ((array: System.Byte[], offset: number, count: number) => void) | ((source: any) => void);
+      Write: ((array: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
       BeginWrite: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
       EndWrite: ((asyncResult: System.IAsyncResult) => void);
-      WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: any, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+      WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
       WriteByte: ((value: System.Byte) => void);
       Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
       SetLength: ((value: System.Int64) => void);
@@ -5446,15 +12917,15 @@ export namespace System {
       Flush: (() => void);
       FlushAsync: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
       GetBuffer: (() => System.Byte[]);
-      Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: any) => number);
-      ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => any) | ((buffer: System.Byte[], offset: number, count: number) => any) | ((destination: any, cancellationToken?: System.Threading.CancellationToken) => any);
+      Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+      ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
       ReadByte: (() => number);
       CopyToAsync: ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task);
       Seek: ((offset: System.Int64, loc: System.IO.SeekOrigin) => System.Int64);
       SetLength: ((value: System.Int64) => void);
       ToArray: (() => System.Byte[]);
-      Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: any) => void);
-      WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: any, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+      Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+      WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
       WriteByte: ((value: System.Byte) => void);
       WriteTo: ((stream: System.IO.Stream) => void);
       CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
@@ -5509,15 +12980,15 @@ export namespace System {
       FlushAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
       BeginRead: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
       EndRead: ((asyncResult: System.IAsyncResult) => number);
-      ReadAsync: ((buffer: System.Byte[], offset: number, count: number) => any) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => any) | ((destination: any, cancellationToken?: System.Threading.CancellationToken) => any);
+      ReadAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
       BeginWrite: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
       EndWrite: ((asyncResult: System.IAsyncResult) => void);
-      WriteAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: any, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+      WriteAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
       Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
       SetLength: ((value: System.Int64) => void);
-      Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: any) => number);
+      Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
       ReadByte: (() => number);
-      Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: any) => void);
+      Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
       WriteByte: ((value: System.Byte) => void);
       static Synchronized: ((stream: System.IO.Stream) => System.IO.Stream);
       CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
@@ -5551,10 +13022,10 @@ export namespace System {
       ReadToEnd: (() => string);
       ReadBlock: ((buffer: System.Char[], index: number, count: number) => number);
       ReadLine: (() => string);
-      ReadLineAsync: (() => any);
-      ReadToEndAsync: (() => any);
-      ReadAsync: ((buffer: System.Char[], index: number, count: number) => any);
-      ReadBlockAsync: ((buffer: System.Char[], index: number, count: number) => any);
+      ReadLineAsync: (() => System.Threading.Tasks.Task<string>);
+      ReadToEndAsync: (() => System.Threading.Tasks.Task<string>);
+      ReadAsync: ((buffer: System.Char[], index: number, count: number) => System.Threading.Tasks.Task<number>);
+      ReadBlockAsync: ((buffer: System.Char[], index: number, count: number) => System.Threading.Tasks.Task<number>);
       Dispose: (() => void);
       CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
       GetLifetimeService: (() => System.Object);
@@ -5602,10 +13073,10 @@ export namespace System {
       Read: (() => number) | ((buffer: System.Char[], index: number, count: number) => number);
       ReadToEnd: (() => string);
       ReadLine: (() => string);
-      ReadLineAsync: (() => any);
-      ReadToEndAsync: (() => any);
-      ReadBlockAsync: ((buffer: System.Char[], index: number, count: number) => any);
-      ReadAsync: ((buffer: System.Char[], index: number, count: number) => any);
+      ReadLineAsync: (() => System.Threading.Tasks.Task<string>);
+      ReadToEndAsync: (() => System.Threading.Tasks.Task<string>);
+      ReadBlockAsync: ((buffer: System.Char[], index: number, count: number) => System.Threading.Tasks.Task<number>);
+      ReadAsync: ((buffer: System.Char[], index: number, count: number) => System.Threading.Tasks.Task<number>);
       Dispose: (() => void);
       ReadBlock: ((buffer: System.Char[], index: number, count: number) => number);
       CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
@@ -5650,10 +13121,10 @@ export namespace System {
       ReadToEnd: (() => string);
       ReadBlock: ((buffer: System.Char[], index: number, count: number) => number);
       ReadLine: (() => string);
-      ReadLineAsync: (() => any);
-      ReadToEndAsync: (() => any);
-      ReadAsync: ((buffer: System.Char[], index: number, count: number) => any);
-      ReadBlockAsync: ((buffer: System.Char[], index: number, count: number) => any);
+      ReadLineAsync: (() => System.Threading.Tasks.Task<string>);
+      ReadToEndAsync: (() => System.Threading.Tasks.Task<string>);
+      ReadAsync: ((buffer: System.Char[], index: number, count: number) => System.Threading.Tasks.Task<number>);
+      ReadBlockAsync: ((buffer: System.Char[], index: number, count: number) => System.Threading.Tasks.Task<number>);
       static Synchronized: ((reader: System.IO.TextReader) => System.IO.TextReader);
       CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
       GetLifetimeService: (() => System.Object);
@@ -5725,13 +13196,13 @@ export namespace System {
       WriteTimeout: number;
       Flush: (() => void);
       FlushAsync: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
-      Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: any) => number);
-      ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => any) | ((buffer: System.Byte[], offset: number, count: number) => any) | ((destination: any, cancellationToken?: System.Threading.CancellationToken) => any);
+      Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+      ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
       ReadByte: (() => number);
       Seek: ((offset: System.Int64, loc: System.IO.SeekOrigin) => System.Int64);
       SetLength: ((value: System.Int64) => void);
-      Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: any) => void);
-      WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: any, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+      Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+      WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
       WriteByte: ((value: System.Byte) => void);
       CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
       CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
@@ -5774,9 +13245,9 @@ export namespace System {
       ToString: (() => string);
       GetAccessControl: (() => System.Security.AccessControl.DirectorySecurity) | ((includeSections: System.Security.AccessControl.AccessControlSections) => System.Security.AccessControl.DirectorySecurity);
       SetAccessControl: ((directorySecurity: System.Security.AccessControl.DirectorySecurity) => void);
-      EnumerateDirectories: (() => any) | ((searchPattern: string) => any) | ((searchPattern: string, searchOption: System.IO.SearchOption) => any);
-      EnumerateFiles: (() => any) | ((searchPattern: string) => any) | ((searchPattern: string, searchOption: System.IO.SearchOption) => any);
-      EnumerateFileSystemInfos: (() => any) | ((searchPattern: string) => any) | ((searchPattern: string, searchOption: System.IO.SearchOption) => any);
+      EnumerateDirectories: (() => System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo>) | ((searchPattern: string) => System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo>) | ((searchPattern: string, searchOption: System.IO.SearchOption) => System.Collections.Generic.IEnumerable<System.IO.DirectoryInfo>);
+      EnumerateFiles: (() => System.Collections.Generic.IEnumerable<System.IO.FileInfo>) | ((searchPattern: string) => System.Collections.Generic.IEnumerable<System.IO.FileInfo>) | ((searchPattern: string, searchOption: System.IO.SearchOption) => System.Collections.Generic.IEnumerable<System.IO.FileInfo>);
+      EnumerateFileSystemInfos: (() => System.Collections.Generic.IEnumerable<System.IO.FileSystemInfo>) | ((searchPattern: string) => System.Collections.Generic.IEnumerable<System.IO.FileSystemInfo>) | ((searchPattern: string, searchOption: System.IO.SearchOption) => System.Collections.Generic.IEnumerable<System.IO.FileSystemInfo>);
       Refresh: (() => void);
       GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
       CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
@@ -5935,10 +13406,10 @@ export namespace System {
       WriteTimeout: number;
       ReadByte: (() => number);
       WriteByte: ((value: System.Byte) => void);
-      Read: ((array: System.Byte[], offset: number, count: number) => number) | ((destination: any) => number);
+      Read: ((array: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
       BeginRead: ((array: System.Byte[], offset: number, numBytes: number, userCallback: System.AsyncCallback, stateObject: System.Object) => System.IAsyncResult);
       EndRead: ((asyncResult: System.IAsyncResult) => number);
-      Write: ((array: System.Byte[], offset: number, count: number) => void) | ((source: any) => void);
+      Write: ((array: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
       BeginWrite: ((array: System.Byte[], offset: number, numBytes: number, userCallback: System.AsyncCallback, stateObject: System.Object) => System.IAsyncResult);
       EndWrite: ((asyncResult: System.IAsyncResult) => void);
       Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
@@ -5949,8 +13420,8 @@ export namespace System {
       GetAccessControl: (() => System.Security.AccessControl.FileSecurity);
       SetAccessControl: ((fileSecurity: System.Security.AccessControl.FileSecurity) => void);
       FlushAsync: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
-      ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => any) | ((buffer: System.Byte[], offset: number, count: number) => any) | ((destination: any, cancellationToken?: System.Threading.CancellationToken) => any);
-      WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: any, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+      ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+      WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
       CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
       CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
       Close: (() => void);
@@ -5998,8 +13469,271 @@ export namespace System {
       Current = 1,
       End = 2,
     }
+    export enum HandleInheritability {
+      None = 0,
+      Inheritable = 1,
+    }
+    export declare class ErrorEventArgs {
+      constructor(exception: System.Exception);
+      GetException: (() => System.Exception);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ErrorEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.IO.ErrorEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.IO.ErrorEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class FileSystemEventArgs {
+      constructor(changeType: System.IO.WatcherChangeTypes, directory: string, name: string);
+      ChangeType: System.IO.WatcherChangeTypes;
+      FullPath: string;
+      Name: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class FileSystemEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.IO.FileSystemEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.IO.FileSystemEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class FileSystemWatcher {
+      constructor();
+      constructor(path: string);
+      constructor(path: string, filter: string);
+      EnableRaisingEvents: boolean;
+      Filter: string;
+      IncludeSubdirectories: boolean;
+      InternalBufferSize: number;
+      NotifyFilter: System.IO.NotifyFilters;
+      Path: string;
+      Site: System.ComponentModel.ISite;
+      SynchronizingObject: System.ComponentModel.ISynchronizeInvoke;
+      Container: System.ComponentModel.IContainer;
+      BeginInit: (() => void);
+      EndInit: (() => void);
+      WaitForChanged: ((changeType: System.IO.WatcherChangeTypes) => System.IO.WaitForChangedResult) | ((changeType: System.IO.WatcherChangeTypes, timeout: number) => System.IO.WaitForChangedResult);
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class InternalBufferOverflowException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, inner: System.Exception);
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetBaseException: (() => System.Exception);
+      ToString: (() => string);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+    }
+    export declare class InvalidDataException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, innerException: System.Exception);
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetBaseException: (() => System.Exception);
+      ToString: (() => string);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+    }
+    export enum NotifyFilters {
+      Attributes = 4,
+      CreationTime = 64,
+      DirectoryName = 2,
+      FileName = 1,
+      LastAccess = 32,
+      LastWrite = 16,
+      Security = 256,
+      Size = 8,
+    }
+    export declare class RenamedEventArgs {
+      constructor(changeType: System.IO.WatcherChangeTypes, directory: string, name: string, oldName: string);
+      OldFullPath: string;
+      OldName: string;
+      ChangeType: System.IO.WatcherChangeTypes;
+      FullPath: string;
+      Name: string;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class RenamedEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.IO.RenamedEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.IO.RenamedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class WaitForChangedResult {
+      ChangeType: System.IO.WatcherChangeTypes;
+      Name: string;
+      OldName: string;
+      TimedOut: boolean;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => System.Type);
+    }
+    export enum WatcherChangeTypes {
+      All = 15,
+      Changed = 4,
+      Created = 1,
+      Deleted = 2,
+      Renamed = 8,
+    }
+    export namespace Compression {
+      export enum CompressionLevel {
+        Optimal = 0,
+        Fastest = 1,
+        NoCompression = 2,
+      }
+      export enum CompressionMode {
+        Decompress = 0,
+        Compress = 1,
+      }
+      export declare class GZipStream {
+        constructor(stream: System.IO.Stream, mode: System.IO.Compression.CompressionMode);
+        constructor(stream: System.IO.Stream, mode: System.IO.Compression.CompressionMode, leaveOpen: boolean);
+        constructor(stream: System.IO.Stream, compressionLevel: System.IO.Compression.CompressionLevel);
+        constructor(stream: System.IO.Stream, compressionLevel: System.IO.Compression.CompressionLevel, leaveOpen: boolean);
+        CanRead: boolean;
+        CanWrite: boolean;
+        CanSeek: boolean;
+        Length: System.Int64;
+        Position: System.Int64;
+        BaseStream: System.IO.Stream;
+        CanTimeout: boolean;
+        ReadTimeout: number;
+        WriteTimeout: number;
+        Flush: (() => void);
+        Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
+        SetLength: ((value: System.Int64) => void);
+        ReadByte: (() => number);
+        BeginRead: ((array: System.Byte[], offset: number, count: number, asyncCallback: System.AsyncCallback, asyncState: System.Object) => System.IAsyncResult);
+        EndRead: ((asyncResult: System.IAsyncResult) => number);
+        Read: ((array: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        BeginWrite: ((array: System.Byte[], offset: number, count: number, asyncCallback: System.AsyncCallback, asyncState: System.Object) => System.IAsyncResult);
+        EndWrite: ((asyncResult: System.IAsyncResult) => void);
+        Write: ((array: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        CopyTo: ((destination: System.IO.Stream, bufferSize: number) => void) | ((destination: System.IO.Stream) => void);
+        ReadAsync: ((array: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>);
+        WriteAsync: ((array: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task);
+        FlushAsync: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
+        CopyToAsync: ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task);
+        Close: (() => void);
+        Dispose: (() => void);
+        WriteByte: ((value: System.Byte) => void);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DeflateStream {
+        constructor(stream: System.IO.Stream, mode: System.IO.Compression.CompressionMode);
+        constructor(stream: System.IO.Stream, mode: System.IO.Compression.CompressionMode, leaveOpen: boolean);
+        constructor(stream: System.IO.Stream, compressionLevel: System.IO.Compression.CompressionLevel);
+        constructor(stream: System.IO.Stream, compressionLevel: System.IO.Compression.CompressionLevel, leaveOpen: boolean);
+        BaseStream: System.IO.Stream;
+        CanRead: boolean;
+        CanSeek: boolean;
+        CanWrite: boolean;
+        Length: System.Int64;
+        Position: System.Int64;
+        CanTimeout: boolean;
+        ReadTimeout: number;
+        WriteTimeout: number;
+        Read: ((array: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        Write: ((array: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        Flush: (() => void);
+        BeginRead: ((array: System.Byte[], offset: number, count: number, asyncCallback: System.AsyncCallback, asyncState: System.Object) => System.IAsyncResult);
+        BeginWrite: ((array: System.Byte[], offset: number, count: number, asyncCallback: System.AsyncCallback, asyncState: System.Object) => System.IAsyncResult);
+        EndRead: ((asyncResult: System.IAsyncResult) => number);
+        EndWrite: ((asyncResult: System.IAsyncResult) => void);
+        Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
+        SetLength: ((value: System.Int64) => void);
+        CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
+        Close: (() => void);
+        Dispose: (() => void);
+        FlushAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        ReadByte: (() => number);
+        WriteByte: ((value: System.Byte) => void);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+    }
     export namespace IsolatedStorage {
-      export declare class INormalizeForIsolatedStorage {
+      export interface INormalizeForIsolatedStorage {
         Normalize: (() => System.Object);
       }
       export declare class IsolatedStorage {
@@ -6114,19 +13848,19 @@ export namespace System {
         EndRead: ((asyncResult: System.IAsyncResult) => number);
         EndWrite: ((asyncResult: System.IAsyncResult) => void);
         Flush: (() => void) | ((flushToDisk: boolean) => void);
-        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: any) => number);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
         ReadByte: (() => number);
         Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
         SetLength: ((value: System.Int64) => void);
-        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: any) => void);
+        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
         WriteByte: ((value: System.Byte) => void);
         Lock: ((position: System.Int64, length: System.Int64) => void);
         Unlock: ((position: System.Int64, length: System.Int64) => void);
         GetAccessControl: (() => System.Security.AccessControl.FileSecurity);
         SetAccessControl: ((fileSecurity: System.Security.AccessControl.FileSecurity) => void);
         FlushAsync: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
-        ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => any) | ((buffer: System.Byte[], offset: number, count: number) => any) | ((destination: any, cancellationToken?: System.Threading.CancellationToken) => any);
-        WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: any, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
         CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
         CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
         Close: (() => void);
@@ -6162,6 +13896,1564 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
+    }
+    export namespace MemoryMappedFiles {
+      export enum MemoryMappedFileAccess {
+        ReadWrite = 0,
+        Read = 1,
+        Write = 2,
+        CopyOnWrite = 3,
+        ReadExecute = 4,
+        ReadWriteExecute = 5,
+      }
+      export enum MemoryMappedFileOptions {
+        None = 0,
+        DelayAllocatePages = 67108864,
+      }
+      export enum MemoryMappedFileRights {
+        CopyOnWrite = 1,
+        Write = 2,
+        Read = 4,
+        Execute = 8,
+        Delete = 65536,
+        ReadPermissions = 131072,
+        ChangePermissions = 262144,
+        TakeOwnership = 524288,
+        ReadWrite = 6,
+        ReadExecute = 12,
+        ReadWriteExecute = 14,
+        FullControl = 983055,
+        AccessSystemSecurity = 16777216,
+      }
+      export declare class MemoryMappedFileSecurity {
+        constructor();
+        AccessRightType: System.Type;
+        AccessRuleType: System.Type;
+        AuditRuleType: System.Type;
+        AreAccessRulesCanonical: boolean;
+        AreAccessRulesProtected: boolean;
+        AreAuditRulesCanonical: boolean;
+        AreAuditRulesProtected: boolean;
+        AccessRuleFactory: ((identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType) => System.Security.AccessControl.AccessRule);
+        AddAccessRule: ((rule: System.Security.AccessControl.AccessRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        RemoveAccessRule: ((rule: System.Security.AccessControl.AccessRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => boolean);
+        RemoveAccessRuleAll: ((rule: System.Security.AccessControl.AccessRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        RemoveAccessRuleSpecific: ((rule: System.Security.AccessControl.AccessRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        ResetAccessRule: ((rule: System.Security.AccessControl.AccessRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        SetAccessRule: ((rule: System.Security.AccessControl.AccessRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        AuditRuleFactory: ((identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags) => System.Security.AccessControl.AuditRule);
+        AddAuditRule: ((rule: System.Security.AccessControl.AuditRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        RemoveAuditRule: ((rule: System.Security.AccessControl.AuditRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => boolean);
+        RemoveAuditRuleAll: ((rule: System.Security.AccessControl.AuditRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        RemoveAuditRuleSpecific: ((rule: System.Security.AccessControl.AuditRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        SetAuditRule: ((rule: System.Security.AccessControl.AuditRule<System.IO.MemoryMappedFiles.MemoryMappedFileRights>) => void);
+        GetAccessRules: ((includeExplicit: boolean, includeInherited: boolean, targetType: System.Type) => System.Security.AccessControl.AuthorizationRuleCollection);
+        GetAuditRules: ((includeExplicit: boolean, includeInherited: boolean, targetType: System.Type) => System.Security.AccessControl.AuthorizationRuleCollection);
+        GetGroup: ((targetType: System.Type) => System.Security.Principal.IdentityReference);
+        GetOwner: ((targetType: System.Type) => System.Security.Principal.IdentityReference);
+        GetSecurityDescriptorBinaryForm: (() => System.Byte[]);
+        GetSecurityDescriptorSddlForm: ((includeSections: System.Security.AccessControl.AccessControlSections) => string);
+        PurgeAccessRules: ((identity: System.Security.Principal.IdentityReference) => void);
+        PurgeAuditRules: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetAccessRuleProtection: ((isProtected: boolean, preserveInheritance: boolean) => void);
+        SetAuditRuleProtection: ((isProtected: boolean, preserveInheritance: boolean) => void);
+        SetGroup: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetOwner: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetSecurityDescriptorBinaryForm: ((binaryForm: System.Byte[]) => void) | ((binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections) => void);
+        SetSecurityDescriptorSddlForm: ((sddlForm: string) => void) | ((sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class MemoryMappedViewAccessor {
+        SafeMemoryMappedViewHandle: any; // Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle
+        PointerOffset: System.Int64;
+        Capacity: System.Int64;
+        CanRead: boolean;
+        CanWrite: boolean;
+        Flush: (() => void);
+        Dispose: (() => void);
+        ReadBoolean: ((position: System.Int64) => boolean);
+        ReadByte: ((position: System.Int64) => System.Byte);
+        ReadChar: ((position: System.Int64) => System.Char);
+        ReadInt16: ((position: System.Int64) => System.Int16);
+        ReadInt32: ((position: System.Int64) => number);
+        ReadInt64: ((position: System.Int64) => System.Int64);
+        ReadDecimal: ((position: System.Int64) => System.Decimal);
+        ReadSingle: ((position: System.Int64) => number);
+        ReadDouble: ((position: System.Int64) => number);
+        ReadSByte: ((position: System.Int64) => System.SByte);
+        ReadUInt16: ((position: System.Int64) => System.UInt16);
+        ReadUInt32: ((position: System.Int64) => System.UInt32);
+        ReadUInt64: ((position: System.Int64) => System.UInt64);
+        Write: ((position: System.Int64, value: boolean) => void) | ((position: System.Int64, value: System.Byte) => void) | ((position: System.Int64, value: System.Char) => void) | ((position: System.Int64, value: System.Int16) => void) | ((position: System.Int64, value: number) => void) | ((position: System.Int64, value: System.Int64) => void) | ((position: System.Int64, value: System.Decimal) => void) | ((position: System.Int64, value: number) => void) | ((position: System.Int64, value: number) => void) | ((position: System.Int64, value: System.SByte) => void) | ((position: System.Int64, value: System.UInt16) => void) | ((position: System.Int64, value: System.UInt32) => void) | ((position: System.Int64, value: System.UInt64) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class MemoryMappedViewStream {
+        SafeMemoryMappedViewHandle: any; // Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle
+        PointerOffset: System.Int64;
+        CanRead: boolean;
+        CanSeek: boolean;
+        CanWrite: boolean;
+        Length: System.Int64;
+        Capacity: System.Int64;
+        Position: System.Int64;
+        CanTimeout: boolean;
+        ReadTimeout: number;
+        WriteTimeout: number;
+        SetLength: ((value: System.Int64) => void);
+        Flush: (() => void);
+        FlushAsync: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        ReadByte: (() => number);
+        Seek: ((offset: System.Int64, loc: System.IO.SeekOrigin) => System.Int64);
+        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        WriteByte: ((value: System.Byte) => void);
+        CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
+        Close: (() => void);
+        Dispose: (() => void);
+        BeginRead: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        EndRead: ((asyncResult: System.IAsyncResult) => number);
+        BeginWrite: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        EndWrite: ((asyncResult: System.IAsyncResult) => void);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class MemoryMappedFile {
+        SafeMemoryMappedFileHandle: any; // Microsoft.Win32.SafeHandles.SafeMemoryMappedFileHandle
+        static CreateFromFile: ((path: string) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((path: string, mode: System.IO.FileMode) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((path: string, mode: System.IO.FileMode, mapName: string) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((path: string, mode: System.IO.FileMode, mapName: string, capacity: System.Int64) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((path: string, mode: System.IO.FileMode, mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((fileStream: System.IO.FileStream, mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, inheritability: System.IO.HandleInheritability, leaveOpen: boolean) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((fileStream: System.IO.FileStream, mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability, leaveOpen: boolean) => System.IO.MemoryMappedFiles.MemoryMappedFile);
+        static CreateNew: ((mapName: string, capacity: System.Int64) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, inheritability: System.IO.HandleInheritability) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability) => System.IO.MemoryMappedFiles.MemoryMappedFile);
+        static CreateOrOpen: ((mapName: string, capacity: System.Int64) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, inheritability: System.IO.HandleInheritability) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((mapName: string, capacity: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess, options: System.IO.MemoryMappedFiles.MemoryMappedFileOptions, memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity, inheritability: System.IO.HandleInheritability) => System.IO.MemoryMappedFiles.MemoryMappedFile);
+        static OpenExisting: ((mapName: string) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((mapName: string, desiredAccessRights: System.IO.MemoryMappedFiles.MemoryMappedFileRights) => System.IO.MemoryMappedFiles.MemoryMappedFile) | ((mapName: string, desiredAccessRights: System.IO.MemoryMappedFiles.MemoryMappedFileRights, inheritability: System.IO.HandleInheritability) => System.IO.MemoryMappedFiles.MemoryMappedFile);
+        CreateViewStream: (() => System.IO.MemoryMappedFiles.MemoryMappedViewStream) | ((offset: System.Int64, size: System.Int64) => System.IO.MemoryMappedFiles.MemoryMappedViewStream) | ((offset: System.Int64, size: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess) => System.IO.MemoryMappedFiles.MemoryMappedViewStream);
+        CreateViewAccessor: (() => System.IO.MemoryMappedFiles.MemoryMappedViewAccessor) | ((offset: System.Int64, size: System.Int64) => System.IO.MemoryMappedFiles.MemoryMappedViewAccessor) | ((offset: System.Int64, size: System.Int64, access: System.IO.MemoryMappedFiles.MemoryMappedFileAccess) => System.IO.MemoryMappedFiles.MemoryMappedViewAccessor);
+        Dispose: (() => void);
+        GetAccessControl: (() => System.IO.MemoryMappedFiles.MemoryMappedFileSecurity);
+        SetAccessControl: ((memoryMappedFileSecurity: System.IO.MemoryMappedFiles.MemoryMappedFileSecurity) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+    }
+    export namespace Pipes {
+      export declare class AnonymousPipeClientStream {
+        constructor(pipeHandleAsString: string);
+        constructor(direction: System.IO.Pipes.PipeDirection, pipeHandleAsString: string);
+        constructor(direction: System.IO.Pipes.PipeDirection, safePipeHandle: any);
+        ReadMode: System.IO.Pipes.PipeTransmissionMode;
+        TransmissionMode: System.IO.Pipes.PipeTransmissionMode;
+        CanRead: boolean;
+        CanSeek: boolean;
+        CanWrite: boolean;
+        InBufferSize: number;
+        IsAsync: boolean;
+        IsConnected: boolean;
+        IsMessageComplete: boolean;
+        OutBufferSize: number;
+        SafePipeHandle: any; // Microsoft.Win32.SafeHandles.SafePipeHandle
+        Length: System.Int64;
+        Position: System.Int64;
+        CanTimeout: boolean;
+        ReadTimeout: number;
+        WriteTimeout: number;
+        SetLength: ((value: System.Int64) => void);
+        Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
+        GetAccessControl: (() => System.IO.Pipes.PipeSecurity);
+        SetAccessControl: ((pipeSecurity: System.IO.Pipes.PipeSecurity) => void);
+        WaitForPipeDrain: (() => void);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        ReadByte: (() => number);
+        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        WriteByte: ((value: System.Byte) => void);
+        Flush: (() => void);
+        BeginRead: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        BeginWrite: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        EndRead: ((asyncResult: System.IAsyncResult) => number);
+        EndWrite: ((asyncResult: System.IAsyncResult) => void);
+        CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
+        Close: (() => void);
+        Dispose: (() => void);
+        FlushAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class AnonymousPipeServerStream {
+        constructor();
+        constructor(direction: System.IO.Pipes.PipeDirection);
+        constructor(direction: System.IO.Pipes.PipeDirection, inheritability: System.IO.HandleInheritability);
+        constructor(direction: System.IO.Pipes.PipeDirection, inheritability: System.IO.HandleInheritability, bufferSize: number);
+        constructor(direction: System.IO.Pipes.PipeDirection, inheritability: System.IO.HandleInheritability, bufferSize: number, pipeSecurity: System.IO.Pipes.PipeSecurity);
+        constructor(direction: System.IO.Pipes.PipeDirection, serverSafePipeHandle: any, clientSafePipeHandle: any);
+        ClientSafePipeHandle: any; // Microsoft.Win32.SafeHandles.SafePipeHandle
+        ReadMode: System.IO.Pipes.PipeTransmissionMode;
+        TransmissionMode: System.IO.Pipes.PipeTransmissionMode;
+        CanRead: boolean;
+        CanSeek: boolean;
+        CanWrite: boolean;
+        InBufferSize: number;
+        IsAsync: boolean;
+        IsConnected: boolean;
+        IsMessageComplete: boolean;
+        OutBufferSize: number;
+        SafePipeHandle: any; // Microsoft.Win32.SafeHandles.SafePipeHandle
+        Length: System.Int64;
+        Position: System.Int64;
+        CanTimeout: boolean;
+        ReadTimeout: number;
+        WriteTimeout: number;
+        DisposeLocalCopyOfClientHandle: (() => void);
+        GetClientHandleAsString: (() => string);
+        SetLength: ((value: System.Int64) => void);
+        Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
+        GetAccessControl: (() => System.IO.Pipes.PipeSecurity);
+        SetAccessControl: ((pipeSecurity: System.IO.Pipes.PipeSecurity) => void);
+        WaitForPipeDrain: (() => void);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        ReadByte: (() => number);
+        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        WriteByte: ((value: System.Byte) => void);
+        Flush: (() => void);
+        BeginRead: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        BeginWrite: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        EndRead: ((asyncResult: System.IAsyncResult) => number);
+        EndWrite: ((asyncResult: System.IAsyncResult) => void);
+        CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
+        Close: (() => void);
+        Dispose: (() => void);
+        FlushAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class NamedPipeClientStream {
+        constructor(pipeName: string);
+        constructor(serverName: string, pipeName: string);
+        constructor(serverName: string, pipeName: string, direction: System.IO.Pipes.PipeDirection);
+        constructor(serverName: string, pipeName: string, direction: System.IO.Pipes.PipeDirection, options: System.IO.Pipes.PipeOptions);
+        constructor(serverName: string, pipeName: string, direction: System.IO.Pipes.PipeDirection, options: System.IO.Pipes.PipeOptions, impersonationLevel: System.Security.Principal.TokenImpersonationLevel);
+        constructor(serverName: string, pipeName: string, direction: System.IO.Pipes.PipeDirection, options: System.IO.Pipes.PipeOptions, impersonationLevel: System.Security.Principal.TokenImpersonationLevel, inheritability: System.IO.HandleInheritability);
+        constructor(direction: System.IO.Pipes.PipeDirection, isAsync: boolean, isConnected: boolean, safePipeHandle: any);
+        constructor(serverName: string, pipeName: string, desiredAccessRights: System.IO.Pipes.PipeAccessRights, options: System.IO.Pipes.PipeOptions, impersonationLevel: System.Security.Principal.TokenImpersonationLevel, inheritability: System.IO.HandleInheritability);
+        NumberOfServerInstances: number;
+        CanRead: boolean;
+        CanSeek: boolean;
+        CanWrite: boolean;
+        InBufferSize: number;
+        IsAsync: boolean;
+        IsConnected: boolean;
+        IsMessageComplete: boolean;
+        OutBufferSize: number;
+        ReadMode: System.IO.Pipes.PipeTransmissionMode;
+        SafePipeHandle: any; // Microsoft.Win32.SafeHandles.SafePipeHandle
+        TransmissionMode: System.IO.Pipes.PipeTransmissionMode;
+        Length: System.Int64;
+        Position: System.Int64;
+        CanTimeout: boolean;
+        ReadTimeout: number;
+        WriteTimeout: number;
+        Connect: (() => void) | ((timeout: number) => void);
+        ConnectAsync: (() => System.Threading.Tasks.Task) | ((timeout: number) => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((timeout: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        SetLength: ((value: System.Int64) => void);
+        Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
+        GetAccessControl: (() => System.IO.Pipes.PipeSecurity);
+        SetAccessControl: ((pipeSecurity: System.IO.Pipes.PipeSecurity) => void);
+        WaitForPipeDrain: (() => void);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        ReadByte: (() => number);
+        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        WriteByte: ((value: System.Byte) => void);
+        Flush: (() => void);
+        BeginRead: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        BeginWrite: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        EndRead: ((asyncResult: System.IAsyncResult) => number);
+        EndWrite: ((asyncResult: System.IAsyncResult) => void);
+        CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
+        Close: (() => void);
+        Dispose: (() => void);
+        FlushAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class NamedPipeServerStream {
+        constructor(pipeName: string);
+        constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection);
+        constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection, maxNumberOfServerInstances: number);
+        constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection, maxNumberOfServerInstances: number, transmissionMode: System.IO.Pipes.PipeTransmissionMode);
+        constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection, maxNumberOfServerInstances: number, transmissionMode: System.IO.Pipes.PipeTransmissionMode, options: System.IO.Pipes.PipeOptions);
+        constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection, maxNumberOfServerInstances: number, transmissionMode: System.IO.Pipes.PipeTransmissionMode, options: System.IO.Pipes.PipeOptions, inBufferSize: number, outBufferSize: number);
+        constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection, maxNumberOfServerInstances: number, transmissionMode: System.IO.Pipes.PipeTransmissionMode, options: System.IO.Pipes.PipeOptions, inBufferSize: number, outBufferSize: number, pipeSecurity: System.IO.Pipes.PipeSecurity);
+        constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection, maxNumberOfServerInstances: number, transmissionMode: System.IO.Pipes.PipeTransmissionMode, options: System.IO.Pipes.PipeOptions, inBufferSize: number, outBufferSize: number, pipeSecurity: System.IO.Pipes.PipeSecurity, inheritability: System.IO.HandleInheritability);
+        constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection, maxNumberOfServerInstances: number, transmissionMode: System.IO.Pipes.PipeTransmissionMode, options: System.IO.Pipes.PipeOptions, inBufferSize: number, outBufferSize: number, pipeSecurity: System.IO.Pipes.PipeSecurity, inheritability: System.IO.HandleInheritability, additionalAccessRights: System.IO.Pipes.PipeAccessRights);
+        constructor(direction: System.IO.Pipes.PipeDirection, isAsync: boolean, isConnected: boolean, safePipeHandle: any);
+        CanRead: boolean;
+        CanSeek: boolean;
+        CanWrite: boolean;
+        InBufferSize: number;
+        IsAsync: boolean;
+        IsConnected: boolean;
+        IsMessageComplete: boolean;
+        OutBufferSize: number;
+        ReadMode: System.IO.Pipes.PipeTransmissionMode;
+        SafePipeHandle: any; // Microsoft.Win32.SafeHandles.SafePipeHandle
+        TransmissionMode: System.IO.Pipes.PipeTransmissionMode;
+        Length: System.Int64;
+        Position: System.Int64;
+        CanTimeout: boolean;
+        ReadTimeout: number;
+        WriteTimeout: number;
+        static MaxAllowedServerInstances: number;
+        Disconnect: (() => void);
+        RunAsClient: ((impersonationWorker: System.IO.Pipes.PipeStreamImpersonationWorker) => void);
+        WaitForConnection: (() => void);
+        WaitForConnectionAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        GetImpersonationUserName: (() => string);
+        BeginWaitForConnection: ((callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        EndWaitForConnection: ((asyncResult: System.IAsyncResult) => void);
+        SetLength: ((value: System.Int64) => void);
+        Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
+        GetAccessControl: (() => System.IO.Pipes.PipeSecurity);
+        SetAccessControl: ((pipeSecurity: System.IO.Pipes.PipeSecurity) => void);
+        WaitForPipeDrain: (() => void);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        ReadByte: (() => number);
+        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        WriteByte: ((value: System.Byte) => void);
+        Flush: (() => void);
+        BeginRead: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        BeginWrite: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        EndRead: ((asyncResult: System.IAsyncResult) => number);
+        EndWrite: ((asyncResult: System.IAsyncResult) => void);
+        CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
+        Close: (() => void);
+        Dispose: (() => void);
+        FlushAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum PipeAccessRights {
+        ReadData = 1,
+        WriteData = 2,
+        CreateNewInstance = 4,
+        ReadExtendedAttributes = 8,
+        WriteExtendedAttributes = 16,
+        ReadAttributes = 128,
+        WriteAttributes = 256,
+        Delete = 65536,
+        ReadPermissions = 131072,
+        ChangePermissions = 262144,
+        TakeOwnership = 524288,
+        Synchronize = 1048576,
+        AccessSystemSecurity = 16777216,
+        Read = 131209,
+        Write = 274,
+        ReadWrite = 131483,
+        FullControl = 2032031,
+      }
+      export declare class PipeAccessRule {
+        constructor(identity: System.Security.Principal.IdentityReference, rights: System.IO.Pipes.PipeAccessRights, type: System.Security.AccessControl.AccessControlType);
+        constructor(identity: string, rights: System.IO.Pipes.PipeAccessRights, type: System.Security.AccessControl.AccessControlType);
+        PipeAccessRights: System.IO.Pipes.PipeAccessRights;
+        AccessControlType: System.Security.AccessControl.AccessControlType;
+        IdentityReference: System.Security.Principal.IdentityReference;
+        InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
+        IsInherited: boolean;
+        PropagationFlags: System.Security.AccessControl.PropagationFlags;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class PipeAuditRule {
+        constructor(identity: System.Security.Principal.IdentityReference, rights: System.IO.Pipes.PipeAccessRights, flags: System.Security.AccessControl.AuditFlags);
+        constructor(identity: string, rights: System.IO.Pipes.PipeAccessRights, flags: System.Security.AccessControl.AuditFlags);
+        PipeAccessRights: System.IO.Pipes.PipeAccessRights;
+        AuditFlags: System.Security.AccessControl.AuditFlags;
+        IdentityReference: System.Security.Principal.IdentityReference;
+        InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
+        IsInherited: boolean;
+        PropagationFlags: System.Security.AccessControl.PropagationFlags;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum PipeDirection {
+        In = 1,
+        Out = 2,
+        InOut = 3,
+      }
+      export enum PipeOptions {
+        None = 0,
+        WriteThrough = -2147483648,
+        Asynchronous = 1073741824,
+      }
+      export declare class PipeSecurity {
+        constructor();
+        AccessRightType: System.Type;
+        AccessRuleType: System.Type;
+        AuditRuleType: System.Type;
+        AreAccessRulesCanonical: boolean;
+        AreAccessRulesProtected: boolean;
+        AreAuditRulesCanonical: boolean;
+        AreAuditRulesProtected: boolean;
+        AccessRuleFactory: ((identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType) => System.Security.AccessControl.AccessRule);
+        AddAccessRule: ((rule: System.IO.Pipes.PipeAccessRule) => void);
+        AddAuditRule: ((rule: System.IO.Pipes.PipeAuditRule) => void);
+        AuditRuleFactory: ((identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags) => System.Security.AccessControl.AuditRule);
+        RemoveAccessRule: ((rule: System.IO.Pipes.PipeAccessRule) => boolean);
+        RemoveAccessRuleSpecific: ((rule: System.IO.Pipes.PipeAccessRule) => void);
+        RemoveAuditRule: ((rule: System.IO.Pipes.PipeAuditRule) => boolean);
+        RemoveAuditRuleAll: ((rule: System.IO.Pipes.PipeAuditRule) => void);
+        RemoveAuditRuleSpecific: ((rule: System.IO.Pipes.PipeAuditRule) => void);
+        ResetAccessRule: ((rule: System.IO.Pipes.PipeAccessRule) => void);
+        SetAccessRule: ((rule: System.IO.Pipes.PipeAccessRule) => void);
+        SetAuditRule: ((rule: System.IO.Pipes.PipeAuditRule) => void);
+        GetAccessRules: ((includeExplicit: boolean, includeInherited: boolean, targetType: System.Type) => System.Security.AccessControl.AuthorizationRuleCollection);
+        GetAuditRules: ((includeExplicit: boolean, includeInherited: boolean, targetType: System.Type) => System.Security.AccessControl.AuthorizationRuleCollection);
+        GetGroup: ((targetType: System.Type) => System.Security.Principal.IdentityReference);
+        GetOwner: ((targetType: System.Type) => System.Security.Principal.IdentityReference);
+        GetSecurityDescriptorBinaryForm: (() => System.Byte[]);
+        GetSecurityDescriptorSddlForm: ((includeSections: System.Security.AccessControl.AccessControlSections) => string);
+        PurgeAccessRules: ((identity: System.Security.Principal.IdentityReference) => void);
+        PurgeAuditRules: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetAccessRuleProtection: ((isProtected: boolean, preserveInheritance: boolean) => void);
+        SetAuditRuleProtection: ((isProtected: boolean, preserveInheritance: boolean) => void);
+        SetGroup: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetOwner: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetSecurityDescriptorBinaryForm: ((binaryForm: System.Byte[]) => void) | ((binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections) => void);
+        SetSecurityDescriptorSddlForm: ((sddlForm: string) => void) | ((sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class PipeStream {
+        CanRead: boolean;
+        CanSeek: boolean;
+        CanWrite: boolean;
+        InBufferSize: number;
+        IsAsync: boolean;
+        IsConnected: boolean;
+        IsMessageComplete: boolean;
+        OutBufferSize: number;
+        ReadMode: System.IO.Pipes.PipeTransmissionMode;
+        SafePipeHandle: any; // Microsoft.Win32.SafeHandles.SafePipeHandle
+        TransmissionMode: System.IO.Pipes.PipeTransmissionMode;
+        Length: System.Int64;
+        Position: System.Int64;
+        CanTimeout: boolean;
+        ReadTimeout: number;
+        WriteTimeout: number;
+        SetLength: ((value: System.Int64) => void);
+        Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
+        GetAccessControl: (() => System.IO.Pipes.PipeSecurity);
+        SetAccessControl: ((pipeSecurity: System.IO.Pipes.PipeSecurity) => void);
+        WaitForPipeDrain: (() => void);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        ReadByte: (() => number);
+        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        WriteByte: ((value: System.Byte) => void);
+        Flush: (() => void);
+        BeginRead: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        BeginWrite: ((buffer: System.Byte[], offset: number, count: number, callback: System.AsyncCallback, state: System.Object) => System.IAsyncResult);
+        EndRead: ((asyncResult: System.IAsyncResult) => number);
+        EndWrite: ((asyncResult: System.IAsyncResult) => void);
+        CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
+        Close: (() => void);
+        Dispose: (() => void);
+        FlushAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class PipeStreamImpersonationWorker {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: (() => void);
+        BeginInvoke: ((callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum PipeTransmissionMode {
+        Byte = 0,
+        Message = 1,
+      }
+    }
+    export namespace Ports {
+      export enum Handshake {
+        None = 0,
+        XOnXOff = 1,
+        RequestToSend = 2,
+        RequestToSendXOnXOff = 3,
+      }
+      export enum Parity {
+        None = 0,
+        Odd = 1,
+        Even = 2,
+        Mark = 3,
+        Space = 4,
+      }
+      export enum SerialData {
+        Chars = 1,
+        Eof = 2,
+      }
+      export enum SerialError {
+        RXOver = 1,
+        Overrun = 2,
+        RXParity = 4,
+        Frame = 8,
+        TXFull = 256,
+      }
+      export declare class SerialErrorReceivedEventArgs {
+        EventType: System.IO.Ports.SerialError;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum SerialPinChange {
+        CtsChanged = 8,
+        DsrChanged = 16,
+        CDChanged = 32,
+        Break = 64,
+        Ring = 256,
+      }
+      export declare class SerialPinChangedEventArgs {
+        EventType: System.IO.Ports.SerialPinChange;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SerialPort {
+        constructor();
+        constructor(container: System.ComponentModel.IContainer);
+        constructor(portName: string);
+        constructor(portName: string, baudRate: number);
+        constructor(portName: string, baudRate: number, parity: System.IO.Ports.Parity);
+        constructor(portName: string, baudRate: number, parity: System.IO.Ports.Parity, dataBits: number);
+        constructor(portName: string, baudRate: number, parity: System.IO.Ports.Parity, dataBits: number, stopBits: System.IO.Ports.StopBits);
+        BaseStream: System.IO.Stream;
+        BaudRate: number;
+        BreakState: boolean;
+        BytesToRead: number;
+        BytesToWrite: number;
+        CDHolding: boolean;
+        CtsHolding: boolean;
+        DataBits: number;
+        DiscardNull: boolean;
+        DsrHolding: boolean;
+        DtrEnable: boolean;
+        Encoding: System.Text.Encoding;
+        Handshake: System.IO.Ports.Handshake;
+        IsOpen: boolean;
+        NewLine: string;
+        Parity: System.IO.Ports.Parity;
+        ParityReplace: System.Byte;
+        PortName: string;
+        ReadBufferSize: number;
+        ReadTimeout: number;
+        ReceivedBytesThreshold: number;
+        RtsEnable: boolean;
+        StopBits: System.IO.Ports.StopBits;
+        WriteBufferSize: number;
+        WriteTimeout: number;
+        Site: System.ComponentModel.ISite;
+        Container: System.ComponentModel.IContainer;
+        static InfiniteTimeout: number;
+        Close: (() => void);
+        DiscardInBuffer: (() => void);
+        DiscardOutBuffer: (() => void);
+        static GetPortNames: (() => string[]);
+        Open: (() => void);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((buffer: System.Char[], offset: number, count: number) => number);
+        ReadByte: (() => number);
+        ReadChar: (() => number);
+        ReadExisting: (() => string);
+        ReadLine: (() => string);
+        ReadTo: ((value: string) => string);
+        Write: ((text: string) => void) | ((buffer: System.Byte[], offset: number, count: number) => void) | ((buffer: System.Char[], offset: number, count: number) => void);
+        WriteLine: ((text: string) => void);
+        Dispose: (() => void);
+        ToString: (() => string);
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class SerialDataReceivedEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.IO.Ports.SerialDataReceivedEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.IO.Ports.SerialDataReceivedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SerialPinChangedEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.IO.Ports.SerialPinChangedEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.IO.Ports.SerialPinChangedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SerialErrorReceivedEventHandler {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((sender: System.Object, e: System.IO.Ports.SerialErrorReceivedEventArgs) => void);
+        BeginInvoke: ((sender: System.Object, e: System.IO.Ports.SerialErrorReceivedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => void);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SerialDataReceivedEventArgs {
+        EventType: System.IO.Ports.SerialData;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum StopBits {
+        None = 0,
+        One = 1,
+        Two = 2,
+        OnePointFive = 3,
+      }
+    }
+  }
+  export namespace Linq {
+    export interface IQueryable<T = any> {
+    }
+    export interface IQueryProvider {
+      CreateQuery: ((expression: System.Linq.Expressions.Expression) => System.Linq.IQueryable);
+      Execute: ((expression: System.Linq.Expressions.Expression) => System.Object);
+    }
+    export interface IOrderedQueryable<T = any> {
+    }
+    export declare class OrderedParallelQuery<TSource = any> {
+      GetEnumerator: (() => System.Collections.Generic.IEnumerator<TSource>);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ParallelQuery<TSource = any> {
+      GetEnumerator: (() => System.Collections.Generic.IEnumerator<TSource>);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ParallelEnumerable {
+      static AsOrdered: ((source: System.Linq.ParallelQuery) => System.Linq.ParallelQuery);
+      static AsParallel: ((source: System.Collections.IEnumerable) => System.Linq.ParallelQuery);
+      static Range: ((start: number, count: number) => any);
+      static Sum: ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Int64) | ((source: any) => any) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      static Min: ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Int64) | ((source: any) => any) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      static Max: ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Int64) | ((source: any) => any) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      static Average: ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export enum ParallelExecutionMode {
+      Default = 0,
+      ForceParallelism = 1,
+    }
+    export enum ParallelMergeOptions {
+      Default = 0,
+      NotBuffered = 1,
+      AutoBuffered = 2,
+      FullyBuffered = 3,
+    }
+    export declare class EnumerableExecutor<T = any> {
+      constructor(expression: System.Linq.Expressions.Expression);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class EnumerableQuery<T = any> {
+      constructor(enumerable: System.Collections.Generic.IEnumerable<T>);
+      constructor(expression: System.Linq.Expressions.Expression);
+      ToString: (() => string);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class Queryable {
+      static AsQueryable: ((source: System.Collections.IEnumerable) => System.Linq.IQueryable);
+      static Sum: ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Int64) | ((source: any) => any) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      static Average: ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Enumerable {
+      static Average: ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      static Max: ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Int64) | ((source: any) => any) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      static Min: ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Int64) | ((source: any) => any) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      static Range: ((start: number, count: number) => any);
+      static Sum: ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Int64) | ((source: any) => any) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => number) | ((source: any) => System.Decimal) | ((source: any) => any);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export interface IGrouping<TKey = any, TElement = any> {
+      Key: TKey;
+    }
+    export interface ILookup<TKey = any, TElement = any> {
+      Count: number;
+      Contains: ((key: TKey) => boolean);
+    }
+    export declare class Lookup<TKey = any, TElement = any> {
+      Count: number;
+      Contains: ((key: TKey) => boolean);
+      GetEnumerator: (() => System.Collections.Generic.IEnumerator<System.Linq.IGrouping<TKey, TElement>>);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export interface IOrderedEnumerable<TElement = any> {
+    }
+    export namespace Expressions {
+      export declare class BinaryExpression {
+        CanReduce: boolean;
+        Right: System.Linq.Expressions.Expression;
+        Left: System.Linq.Expressions.Expression;
+        Method: System.Reflection.MethodInfo;
+        Conversion: System.Linq.Expressions.LambdaExpression;
+        IsLifted: boolean;
+        IsLiftedToNull: boolean;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Type: System.Type;
+        Update: ((left: System.Linq.Expressions.Expression, conversion: System.Linq.Expressions.LambdaExpression, right: System.Linq.Expressions.Expression) => System.Linq.Expressions.BinaryExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class Expression<TDelegate = any> {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Parameters: System.Linq.Expressions.ParameterExpression[];
+        Name: string;
+        Body: System.Linq.Expressions.Expression;
+        ReturnType: System.Type;
+        TailCall: boolean;
+        CanReduce: boolean;
+        Compile: (() => TDelegate) | ((preferInterpretation: boolean) => TDelegate) | ((debugInfoGenerator: System.Runtime.CompilerServices.DebugInfoGenerator) => TDelegate) | (() => System.Delegate) | ((preferInterpretation: boolean) => System.Delegate) | ((debugInfoGenerator: System.Runtime.CompilerServices.DebugInfoGenerator) => System.Delegate);
+        Update: ((body: System.Linq.Expressions.Expression, parameters: System.Collections.Generic.IEnumerable<System.Linq.Expressions.ParameterExpression>) => System.Linq.Expressions.Expression<TDelegate>);
+        CompileToMethod: ((method: System.Reflection.Emit.MethodBuilder) => void) | ((method: System.Reflection.Emit.MethodBuilder, debugInfoGenerator: System.Runtime.CompilerServices.DebugInfoGenerator) => void);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class BlockExpression {
+        Expressions: System.Linq.Expressions.Expression[];
+        Variables: System.Linq.Expressions.ParameterExpression[];
+        Result: System.Linq.Expressions.Expression;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Type: System.Type;
+        CanReduce: boolean;
+        Update: ((variables: System.Collections.Generic.IEnumerable<System.Linq.Expressions.ParameterExpression>, expressions: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>) => System.Linq.Expressions.BlockExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class CatchBlock {
+        Variable: System.Linq.Expressions.ParameterExpression;
+        Test: System.Type;
+        Body: System.Linq.Expressions.Expression;
+        Filter: System.Linq.Expressions.Expression;
+        ToString: (() => string);
+        Update: ((variable: System.Linq.Expressions.ParameterExpression, filter: System.Linq.Expressions.Expression, body: System.Linq.Expressions.Expression) => System.Linq.Expressions.CatchBlock);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class ConditionalExpression {
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Type: System.Type;
+        Test: System.Linq.Expressions.Expression;
+        IfTrue: System.Linq.Expressions.Expression;
+        IfFalse: System.Linq.Expressions.Expression;
+        CanReduce: boolean;
+        Update: ((test: System.Linq.Expressions.Expression, ifTrue: System.Linq.Expressions.Expression, ifFalse: System.Linq.Expressions.Expression) => System.Linq.Expressions.ConditionalExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class ConstantExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Value: System.Object;
+        CanReduce: boolean;
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class DebugInfoExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        StartLine: number;
+        StartColumn: number;
+        EndLine: number;
+        EndColumn: number;
+        Document: System.Linq.Expressions.SymbolDocumentInfo;
+        IsClear: boolean;
+        CanReduce: boolean;
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class DefaultExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        CanReduce: boolean;
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class DynamicExpression {
+        CanReduce: boolean;
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Binder: System.Runtime.CompilerServices.CallSiteBinder;
+        DelegateType: System.Type;
+        Arguments: System.Linq.Expressions.Expression[];
+        Reduce: (() => System.Linq.Expressions.Expression);
+        Update: ((argumentsCS: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>) => System.Linq.Expressions.DynamicExpression);
+        static Dynamic: ((binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, ...argumentsCS: System.Linq.Expressions.Expression[]) => System.Linq.Expressions.DynamicExpression) | ((binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, argumentsCS: any) => System.Linq.Expressions.DynamicExpression) | ((binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, arg0: System.Linq.Expressions.Expression) => System.Linq.Expressions.DynamicExpression) | ((binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression) => System.Linq.Expressions.DynamicExpression) | ((binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression, arg2: System.Linq.Expressions.Expression) => System.Linq.Expressions.DynamicExpression) | ((binder: System.Runtime.CompilerServices.CallSiteBinder, returnType: System.Type, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression, arg2: System.Linq.Expressions.Expression, arg3: System.Linq.Expressions.Expression) => System.Linq.Expressions.DynamicExpression);
+        static MakeDynamic: ((delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, argumentsCS: any) => System.Linq.Expressions.DynamicExpression) | ((delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, ...argumentsCS: System.Linq.Expressions.Expression[]) => System.Linq.Expressions.DynamicExpression) | ((delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, arg0: System.Linq.Expressions.Expression) => System.Linq.Expressions.DynamicExpression) | ((delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression) => System.Linq.Expressions.DynamicExpression) | ((delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression, arg2: System.Linq.Expressions.Expression) => System.Linq.Expressions.DynamicExpression) | ((delegateType: System.Type, binder: System.Runtime.CompilerServices.CallSiteBinder, arg0: System.Linq.Expressions.Expression, arg1: System.Linq.Expressions.Expression, arg2: System.Linq.Expressions.Expression, arg3: System.Linq.Expressions.Expression) => System.Linq.Expressions.DynamicExpression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class DynamicExpressionVisitor {
+        constructor();
+        Visit: ((node: System.Linq.Expressions.Expression) => System.Linq.Expressions.Expression) | ((nodes: System.Linq.Expressions.Expression[]) => System.Linq.Expressions.Expression[]);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ElementInit {
+        AddMethod: System.Reflection.MethodInfo;
+        Arguments: System.Linq.Expressions.Expression[];
+        ArgumentCount: number;
+        GetArgument: ((index: number) => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Update: ((argumentsCS: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>) => System.Linq.Expressions.ElementInit);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export enum ExpressionType {
+        Add = 0,
+        AddChecked = 1,
+        And = 2,
+        AndAlso = 3,
+        ArrayLength = 4,
+        ArrayIndex = 5,
+        Call = 6,
+        Coalesce = 7,
+        Conditional = 8,
+        Constant = 9,
+        Convert = 10,
+        ConvertChecked = 11,
+        Divide = 12,
+        Equal = 13,
+        ExclusiveOr = 14,
+        GreaterThan = 15,
+        GreaterThanOrEqual = 16,
+        Invoke = 17,
+        Lambda = 18,
+        LeftShift = 19,
+        LessThan = 20,
+        LessThanOrEqual = 21,
+        ListInit = 22,
+        MemberAccess = 23,
+        MemberInit = 24,
+        Modulo = 25,
+        Multiply = 26,
+        MultiplyChecked = 27,
+        Negate = 28,
+        UnaryPlus = 29,
+        NegateChecked = 30,
+        New = 31,
+        NewArrayInit = 32,
+        NewArrayBounds = 33,
+        Not = 34,
+        NotEqual = 35,
+        Or = 36,
+        OrElse = 37,
+        Parameter = 38,
+        Power = 39,
+        Quote = 40,
+        RightShift = 41,
+        Subtract = 42,
+        SubtractChecked = 43,
+        TypeAs = 44,
+        TypeIs = 45,
+        Assign = 46,
+        Block = 47,
+        DebugInfo = 48,
+        Decrement = 49,
+        Dynamic = 50,
+        Default = 51,
+        Extension = 52,
+        Goto = 53,
+        Increment = 54,
+        Index = 55,
+        Label = 56,
+        RuntimeVariables = 57,
+        Loop = 58,
+        Switch = 59,
+        Throw = 60,
+        Try = 61,
+        Unbox = 62,
+        AddAssign = 63,
+        AndAssign = 64,
+        DivideAssign = 65,
+        ExclusiveOrAssign = 66,
+        LeftShiftAssign = 67,
+        ModuloAssign = 68,
+        MultiplyAssign = 69,
+        OrAssign = 70,
+        PowerAssign = 71,
+        RightShiftAssign = 72,
+        SubtractAssign = 73,
+        AddAssignChecked = 74,
+        MultiplyAssignChecked = 75,
+        SubtractAssignChecked = 76,
+        PreIncrementAssign = 77,
+        PreDecrementAssign = 78,
+        PostIncrementAssign = 79,
+        PostDecrementAssign = 80,
+        TypeEqual = 81,
+        OnesComplement = 82,
+        IsTrue = 83,
+        IsFalse = 84,
+      }
+      export declare class ExpressionVisitor {
+        Visit: ((node: System.Linq.Expressions.Expression) => System.Linq.Expressions.Expression) | ((nodes: System.Linq.Expressions.Expression[]) => System.Linq.Expressions.Expression[]);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum GotoExpressionKind {
+        Goto = 0,
+        Return = 1,
+        Break = 2,
+        Continue = 3,
+      }
+      export declare class GotoExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Value: System.Linq.Expressions.Expression;
+        Target: System.Linq.Expressions.LabelTarget;
+        Kind: System.Linq.Expressions.GotoExpressionKind;
+        CanReduce: boolean;
+        Update: ((target: System.Linq.Expressions.LabelTarget, value: System.Linq.Expressions.Expression) => System.Linq.Expressions.GotoExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export interface IArgumentProvider {
+        ArgumentCount: number;
+        GetArgument: ((index: number) => System.Linq.Expressions.Expression);
+      }
+      export interface IDynamicExpression {
+        DelegateType: System.Type;
+        Rewrite: ((args: System.Linq.Expressions.Expression[]) => System.Linq.Expressions.Expression);
+        CreateCallSite: (() => System.Object);
+      }
+      export declare class IndexExpression {
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Type: System.Type;
+        Object: System.Linq.Expressions.Expression;
+        Indexer: System.Reflection.PropertyInfo;
+        Arguments: System.Linq.Expressions.Expression[];
+        ArgumentCount: number;
+        CanReduce: boolean;
+        Update: ((object: System.Linq.Expressions.Expression, argumentsCS: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>) => System.Linq.Expressions.IndexExpression);
+        GetArgument: ((index: number) => System.Linq.Expressions.Expression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class InvocationExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Expression: System.Linq.Expressions.Expression;
+        Arguments: System.Linq.Expressions.Expression[];
+        ArgumentCount: number;
+        CanReduce: boolean;
+        Update: ((expression: System.Linq.Expressions.Expression, argumentsCS: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>) => System.Linq.Expressions.InvocationExpression);
+        GetArgument: ((index: number) => System.Linq.Expressions.Expression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class LabelExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Target: System.Linq.Expressions.LabelTarget;
+        DefaultValue: System.Linq.Expressions.Expression;
+        CanReduce: boolean;
+        Update: ((target: System.Linq.Expressions.LabelTarget, defaultValue: System.Linq.Expressions.Expression) => System.Linq.Expressions.LabelExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class LabelTarget {
+        Name: string;
+        Type: System.Type;
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class LambdaExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Parameters: System.Linq.Expressions.ParameterExpression[];
+        Name: string;
+        Body: System.Linq.Expressions.Expression;
+        ReturnType: System.Type;
+        TailCall: boolean;
+        CanReduce: boolean;
+        Compile: (() => System.Delegate) | ((preferInterpretation: boolean) => System.Delegate) | ((debugInfoGenerator: System.Runtime.CompilerServices.DebugInfoGenerator) => System.Delegate);
+        CompileToMethod: ((method: System.Reflection.Emit.MethodBuilder) => void) | ((method: System.Reflection.Emit.MethodBuilder, debugInfoGenerator: System.Runtime.CompilerServices.DebugInfoGenerator) => void);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class ListInitExpression {
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Type: System.Type;
+        CanReduce: boolean;
+        NewExpression: System.Linq.Expressions.NewExpression;
+        Initializers: System.Linq.Expressions.ElementInit[];
+        Reduce: (() => System.Linq.Expressions.Expression);
+        Update: ((newExpression: System.Linq.Expressions.NewExpression, initializers: System.Collections.Generic.IEnumerable<System.Linq.Expressions.ElementInit>) => System.Linq.Expressions.ListInitExpression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class LoopExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Body: System.Linq.Expressions.Expression;
+        BreakLabel: System.Linq.Expressions.LabelTarget;
+        ContinueLabel: System.Linq.Expressions.LabelTarget;
+        CanReduce: boolean;
+        Update: ((breakLabel: System.Linq.Expressions.LabelTarget, continueLabel: System.Linq.Expressions.LabelTarget, body: System.Linq.Expressions.Expression) => System.Linq.Expressions.LoopExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class MemberAssignment {
+        Expression: System.Linq.Expressions.Expression;
+        BindingType: System.Linq.Expressions.MemberBindingType;
+        Member: System.Reflection.MemberInfo;
+        Update: ((expression: System.Linq.Expressions.Expression) => System.Linq.Expressions.MemberAssignment);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export enum MemberBindingType {
+        Assignment = 0,
+        MemberBinding = 1,
+        ListBinding = 2,
+      }
+      export declare class MemberBinding {
+        BindingType: System.Linq.Expressions.MemberBindingType;
+        Member: System.Reflection.MemberInfo;
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class MemberExpression {
+        Member: System.Reflection.MemberInfo;
+        Expression: System.Linq.Expressions.Expression;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Type: System.Type;
+        CanReduce: boolean;
+        Update: ((expression: System.Linq.Expressions.Expression) => System.Linq.Expressions.MemberExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class MemberInitExpression {
+        Type: System.Type;
+        CanReduce: boolean;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        NewExpression: System.Linq.Expressions.NewExpression;
+        Bindings: System.Linq.Expressions.MemberBinding[];
+        Reduce: (() => System.Linq.Expressions.Expression);
+        Update: ((newExpression: System.Linq.Expressions.NewExpression, bindings: System.Collections.Generic.IEnumerable<System.Linq.Expressions.MemberBinding>) => System.Linq.Expressions.MemberInitExpression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class MemberListBinding {
+        Initializers: System.Linq.Expressions.ElementInit[];
+        BindingType: System.Linq.Expressions.MemberBindingType;
+        Member: System.Reflection.MemberInfo;
+        Update: ((initializers: System.Collections.Generic.IEnumerable<System.Linq.Expressions.ElementInit>) => System.Linq.Expressions.MemberListBinding);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class MemberMemberBinding {
+        Bindings: System.Linq.Expressions.MemberBinding[];
+        BindingType: System.Linq.Expressions.MemberBindingType;
+        Member: System.Reflection.MemberInfo;
+        Update: ((bindings: System.Collections.Generic.IEnumerable<System.Linq.Expressions.MemberBinding>) => System.Linq.Expressions.MemberMemberBinding);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class MethodCallExpression {
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Type: System.Type;
+        Method: System.Reflection.MethodInfo;
+        Object: System.Linq.Expressions.Expression;
+        Arguments: System.Linq.Expressions.Expression[];
+        ArgumentCount: number;
+        CanReduce: boolean;
+        Update: ((object: System.Linq.Expressions.Expression, argumentsCS: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>) => System.Linq.Expressions.MethodCallExpression);
+        GetArgument: ((index: number) => System.Linq.Expressions.Expression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class NewArrayExpression {
+        Type: System.Type;
+        Expressions: System.Linq.Expressions.Expression[];
+        NodeType: System.Linq.Expressions.ExpressionType;
+        CanReduce: boolean;
+        Update: ((expressions: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>) => System.Linq.Expressions.NewArrayExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class NewExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Constructor: System.Reflection.ConstructorInfo;
+        Arguments: System.Linq.Expressions.Expression[];
+        ArgumentCount: number;
+        Members: System.Reflection.MemberInfo[];
+        CanReduce: boolean;
+        GetArgument: ((index: number) => System.Linq.Expressions.Expression);
+        Update: ((argumentsCS: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>) => System.Linq.Expressions.NewExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class ParameterExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Name: string;
+        IsByRef: boolean;
+        CanReduce: boolean;
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class RuntimeVariablesExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Variables: System.Linq.Expressions.ParameterExpression[];
+        CanReduce: boolean;
+        Update: ((variables: System.Collections.Generic.IEnumerable<System.Linq.Expressions.ParameterExpression>) => System.Linq.Expressions.RuntimeVariablesExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class SwitchCase {
+        TestValues: System.Linq.Expressions.Expression[];
+        Body: System.Linq.Expressions.Expression;
+        ToString: (() => string);
+        Update: ((testValues: System.Collections.Generic.IEnumerable<System.Linq.Expressions.Expression>, body: System.Linq.Expressions.Expression) => System.Linq.Expressions.SwitchCase);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class SwitchExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        SwitchValue: System.Linq.Expressions.Expression;
+        Cases: System.Linq.Expressions.SwitchCase[];
+        DefaultBody: System.Linq.Expressions.Expression;
+        Comparison: System.Reflection.MethodInfo;
+        CanReduce: boolean;
+        Update: ((switchValue: System.Linq.Expressions.Expression, cases: System.Collections.Generic.IEnumerable<System.Linq.Expressions.SwitchCase>, defaultBody: System.Linq.Expressions.Expression) => System.Linq.Expressions.SwitchExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class SymbolDocumentInfo {
+        FileName: string;
+        Language: System.Guid;
+        LanguageVendor: System.Guid;
+        DocumentType: System.Guid;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class TryExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Body: System.Linq.Expressions.Expression;
+        Handlers: System.Linq.Expressions.CatchBlock[];
+        Finally: System.Linq.Expressions.Expression;
+        Fault: System.Linq.Expressions.Expression;
+        CanReduce: boolean;
+        Update: ((body: System.Linq.Expressions.Expression, handlers: System.Collections.Generic.IEnumerable<System.Linq.Expressions.CatchBlock>, finallyCS: System.Linq.Expressions.Expression, fault: System.Linq.Expressions.Expression) => System.Linq.Expressions.TryExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class TypeBinaryExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Expression: System.Linq.Expressions.Expression;
+        TypeOperand: System.Type;
+        CanReduce: boolean;
+        Update: ((expression: System.Linq.Expressions.Expression) => System.Linq.Expressions.TypeBinaryExpression);
+        Reduce: (() => System.Linq.Expressions.Expression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class UnaryExpression {
+        Type: System.Type;
+        NodeType: System.Linq.Expressions.ExpressionType;
+        Operand: System.Linq.Expressions.Expression;
+        Method: System.Reflection.MethodInfo;
+        IsLifted: boolean;
+        IsLiftedToNull: boolean;
+        CanReduce: boolean;
+        Reduce: (() => System.Linq.Expressions.Expression);
+        Update: ((operand: System.Linq.Expressions.Expression) => System.Linq.Expressions.UnaryExpression);
+        ReduceAndCheck: (() => System.Linq.Expressions.Expression);
+        ReduceExtensions: (() => System.Linq.Expressions.Expression);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+    }
+  }
+  export namespace Management {
+    export namespace Instrumentation {
+      export declare class InstanceNotFoundException {
+        constructor();
+        constructor(message: string);
+        constructor(message: string, innerException: System.Exception);
+        Message: string;
+        Data: System.Collections.IDictionary;
+        InnerException: System.Exception;
+        TargetSite: System.Reflection.MethodBase;
+        StackTrace: string;
+        HelpLink: string;
+        Source: string;
+        HResult: number;
+        GetBaseException: (() => System.Exception);
+        ToString: (() => string);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type) | (() => System.Type);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+      }
+      export declare class InstrumentationException {
+        constructor();
+        constructor(innerException: System.Exception);
+        constructor(message: string);
+        constructor(message: string, innerException: System.Exception);
+        Message: string;
+        Data: System.Collections.IDictionary;
+        InnerException: System.Exception;
+        TargetSite: System.Reflection.MethodBase;
+        StackTrace: string;
+        HelpLink: string;
+        Source: string;
+        HResult: number;
+        GetBaseException: (() => System.Exception);
+        ToString: (() => string);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type) | (() => System.Type);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+      }
+      export declare class InstrumentationBaseException {
+        constructor();
+        constructor(message: string);
+        constructor(message: string, innerException: System.Exception);
+        Message: string;
+        Data: System.Collections.IDictionary;
+        InnerException: System.Exception;
+        TargetSite: System.Reflection.MethodBase;
+        StackTrace: string;
+        HelpLink: string;
+        Source: string;
+        HResult: number;
+        GetBaseException: (() => System.Exception);
+        ToString: (() => string);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type) | (() => System.Type);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+      }
+      export enum ManagementConfigurationType {
+        Apply = 0,
+        OnCommit = 1,
+      }
+      export enum ManagementHostingModel {
+        Decoupled = 0,
+        LocalService = 2,
+        LocalSystem = 3,
+        NetworkService = 1,
+      }
+    }
+  }
+  export namespace Media {
+    export declare class SoundPlayer {
+      constructor();
+      constructor(stream: System.IO.Stream);
+      constructor(soundLocation: string);
+      IsLoadCompleted: boolean;
+      LoadTimeout: number;
+      SoundLocation: string;
+      Stream: System.IO.Stream;
+      Tag: System.Object;
+      Site: System.ComponentModel.ISite;
+      Container: System.ComponentModel.IContainer;
+      Load: (() => void);
+      LoadAsync: (() => void);
+      Play: (() => void);
+      PlayLooping: (() => void);
+      PlaySync: (() => void);
+      Stop: (() => void);
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class SystemSound {
+      Play: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class SystemSounds {
+      static Asterisk: System.Media.SystemSound;
+      static Beep: System.Media.SystemSound;
+      static Exclamation: System.Media.SystemSound;
+      static Hand: System.Media.SystemSound;
+      static Question: System.Media.SystemSound;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
     }
   }
   export namespace Reflection {
@@ -6316,7 +15608,7 @@ export namespace System {
       NotNullableValueTypeConstraint = 8,
       DefaultConstructorConstraint = 16,
     }
-    export declare class ICustomAttributeProvider {
+    export interface ICustomAttributeProvider {
       GetCustomAttributes: ((attributeType: System.Type, inherit: boolean) => System.Object[]) | ((inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
     }
@@ -6356,7 +15648,7 @@ export namespace System {
       Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
     }
-    export declare class IReflect {
+    export interface IReflect {
       UnderlyingSystemType: System.Type;
       GetMethod: ((name: string, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, types: System.Type[], modifiers: System.Reflection.ParameterModifier[]) => System.Reflection.MethodInfo) | ((name: string, bindingAttr: System.Reflection.BindingFlags) => System.Reflection.MethodInfo);
       GetMethods: ((bindingAttr: System.Reflection.BindingFlags) => System.Reflection.MethodInfo[]);
@@ -6368,7 +15660,7 @@ export namespace System {
       GetMembers: ((bindingAttr: System.Reflection.BindingFlags) => System.Reflection.MemberInfo[]);
       InvokeMember: ((name: string, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, target: System.Object, args: System.Object[], modifiers: System.Reflection.ParameterModifier[], culture: System.Globalization.CultureInfo, namedParameters: string[]) => System.Object);
     }
-    export declare class IReflectableType {
+    export interface IReflectableType {
       GetTypeInfo: (() => System.Reflection.TypeInfo);
     }
     export declare class ManifestResourceInfo {
@@ -6407,12 +15699,12 @@ export namespace System {
       Name: string;
       DeclaringType: System.Type;
       ReflectedType: System.Type;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       Module: System.Reflection.Module;
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       GetType: (() => System.Type);
@@ -6483,7 +15775,7 @@ export namespace System {
       Name: string;
       DeclaringType: System.Type;
       ReflectedType: System.Type;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       Module: System.Reflection.Module;
       static GetMethodFromHandle: ((handle: System.RuntimeMethodHandle) => System.Reflection.MethodBase) | ((handle: System.RuntimeMethodHandle, declaringType: System.RuntimeTypeHandle) => System.Reflection.MethodBase);
@@ -6497,7 +15789,7 @@ export namespace System {
       GetMethodBody: (() => System.Reflection.MethodBody);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       GetType: (() => System.Type);
       ToString: (() => string);
     }
@@ -6556,7 +15848,7 @@ export namespace System {
       Name: string;
       DeclaringType: System.Type;
       ReflectedType: System.Type;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       Module: System.Reflection.Module;
       Equals: ((obj: System.Object) => boolean);
@@ -6572,7 +15864,7 @@ export namespace System {
       GetMethodBody: (() => System.Reflection.MethodBody);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       GetType: (() => System.Type);
       ToString: (() => string);
     }
@@ -6758,14 +16050,14 @@ export namespace System {
       UnderlyingSystemType: System.Type;
       IsSZArray: boolean;
       GenericTypeParameters: System.Type[];
-      DeclaredConstructors: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.ConstructorInfo]
-      DeclaredEvents: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.EventInfo]
-      DeclaredFields: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.FieldInfo]
-      DeclaredMembers: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MemberInfo]
-      DeclaredMethods: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MethodInfo]
-      DeclaredNestedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.TypeInfo]
-      DeclaredProperties: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.PropertyInfo]
-      ImplementedInterfaces: any; // System.Collections.Generic.IEnumerable`1[System.Type]
+      DeclaredConstructors: System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo>;
+      DeclaredEvents: System.Collections.Generic.IEnumerable<System.Reflection.EventInfo>;
+      DeclaredFields: System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo>;
+      DeclaredMembers: System.Collections.Generic.IEnumerable<System.Reflection.MemberInfo>;
+      DeclaredMethods: System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>;
+      DeclaredNestedTypes: System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo>;
+      DeclaredProperties: System.Collections.Generic.IEnumerable<System.Reflection.PropertyInfo>;
+      ImplementedInterfaces: System.Collections.Generic.IEnumerable<System.Type>;
       MemberType: System.Reflection.MemberTypes;
       DeclaringType: System.Type;
       DeclaringMethod: System.Reflection.MethodBase;
@@ -6816,7 +16108,7 @@ export namespace System {
       IsSecurityCritical: boolean;
       IsSecuritySafeCritical: boolean;
       IsSecurityTransparent: boolean;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       IsAssignableFrom: ((typeInfo: System.Reflection.TypeInfo) => boolean) | ((c: System.Type) => boolean);
       InvokeMember: ((name: string, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, target: System.Object, args: System.Object[], modifiers: System.Reflection.ParameterModifier[], culture: System.Globalization.CultureInfo, namedParameters: string[]) => System.Object) | ((name: string, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, target: System.Object, args: System.Object[], culture: System.Globalization.CultureInfo) => System.Object) | ((name: string, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, target: System.Object, args: System.Object[]) => System.Object);
       GetConstructors: ((bindingAttr: System.Reflection.BindingFlags) => System.Reflection.ConstructorInfo[]) | (() => System.Reflection.ConstructorInfo[]);
@@ -6840,7 +16132,7 @@ export namespace System {
       GetDeclaredEvent: ((name: string) => System.Reflection.EventInfo);
       GetDeclaredField: ((name: string) => System.Reflection.FieldInfo);
       GetDeclaredMethod: ((name: string) => System.Reflection.MethodInfo);
-      GetDeclaredMethods: ((name: string) => any);
+      GetDeclaredMethods: ((name: string) => System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>);
       GetDeclaredNestedType: ((name: string) => System.Reflection.TypeInfo);
       GetDeclaredProperty: ((name: string) => System.Reflection.PropertyInfo);
       MakePointerType: (() => System.Type);
@@ -6869,7 +16161,7 @@ export namespace System {
       Equals: ((o: System.Object) => boolean) | ((o: System.Type) => boolean);
       GetHashCode: (() => number);
       GetType: (() => System.Type) | (() => System.Type);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
     }
     export declare class TypeFilter {
       constructor(object: System.Object, method: System.IntPtr);
@@ -6889,14 +16181,14 @@ export namespace System {
     }
     export declare class TypeInfo {
       GenericTypeParameters: System.Type[];
-      DeclaredConstructors: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.ConstructorInfo]
-      DeclaredEvents: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.EventInfo]
-      DeclaredFields: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.FieldInfo]
-      DeclaredMembers: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MemberInfo]
-      DeclaredMethods: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MethodInfo]
-      DeclaredNestedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.TypeInfo]
-      DeclaredProperties: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.PropertyInfo]
-      ImplementedInterfaces: any; // System.Collections.Generic.IEnumerable`1[System.Type]
+      DeclaredConstructors: System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo>;
+      DeclaredEvents: System.Collections.Generic.IEnumerable<System.Reflection.EventInfo>;
+      DeclaredFields: System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo>;
+      DeclaredMembers: System.Collections.Generic.IEnumerable<System.Reflection.MemberInfo>;
+      DeclaredMethods: System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>;
+      DeclaredNestedTypes: System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo>;
+      DeclaredProperties: System.Collections.Generic.IEnumerable<System.Reflection.PropertyInfo>;
+      ImplementedInterfaces: System.Collections.Generic.IEnumerable<System.Type>;
       MemberType: System.Reflection.MemberTypes;
       DeclaringType: System.Type;
       DeclaringMethod: System.Reflection.MethodBase;
@@ -6959,14 +16251,14 @@ export namespace System {
       UnderlyingSystemType: System.Type;
       IsSZArray: boolean;
       Name: string;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       AsType: (() => System.Type);
       IsAssignableFrom: ((typeInfo: System.Reflection.TypeInfo) => boolean) | ((c: System.Type) => boolean);
       GetDeclaredEvent: ((name: string) => System.Reflection.EventInfo);
       GetDeclaredField: ((name: string) => System.Reflection.FieldInfo);
       GetDeclaredMethod: ((name: string) => System.Reflection.MethodInfo);
-      GetDeclaredMethods: ((name: string) => any);
+      GetDeclaredMethods: ((name: string) => System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>);
       GetDeclaredNestedType: ((name: string) => System.Reflection.TypeInfo);
       GetDeclaredProperty: ((name: string) => System.Reflection.PropertyInfo);
       MakePointerType: (() => System.Type);
@@ -7013,7 +16305,7 @@ export namespace System {
       GetType: (() => System.Type) | (() => System.Type);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
     }
     export declare class Assembly {
       CodeBase: string;
@@ -7031,10 +16323,10 @@ export namespace System {
       ManifestModule: System.Reflection.Module;
       GlobalAssemblyCache: boolean;
       IsDynamic: boolean;
-      DefinedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.TypeInfo]
-      ExportedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Type]
-      Modules: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.Module]
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      DefinedTypes: System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo>;
+      ExportedTypes: System.Collections.Generic.IEnumerable<System.Type>;
+      Modules: System.Collections.Generic.IEnumerable<System.Reflection.Module>;
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
@@ -7049,7 +16341,7 @@ export namespace System {
       static CreateQualifiedName: ((assemblyName: string, typeName: string) => string);
       static GetAssembly: ((type: System.Type) => System.Reflection.Assembly);
       static GetEntryAssembly: (() => System.Reflection.Assembly);
-      static LoadFrom: ((assemblyFile: string) => System.Reflection.Assembly) | ((assemblyFile: string, securityEvidence: System.Security.Policy.Evidence) => System.Reflection.Assembly) | ((assemblyFile: string, securityEvidence: System.Security.Policy.Evidence, hashValue: System.Byte[], hashAlgorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm) => System.Reflection.Assembly) | ((assemblyFile: string, hashValue: System.Byte[], hashAlgorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm) => System.Reflection.Assembly);
+      static LoadFrom: ((assemblyFile: string) => System.Reflection.Assembly) | ((assemblyFile: string, securityEvidence: System.Security.Policy.Evidence) => System.Reflection.Assembly) | ((assemblyFile: string, securityEvidence: System.Security.Policy.Evidence, hashValue: System.Byte[], hashAlgorithm: any) => System.Reflection.Assembly) | ((assemblyFile: string, hashValue: System.Byte[], hashAlgorithm: any) => System.Reflection.Assembly);
       static UnsafeLoadFrom: ((assemblyFile: string) => System.Reflection.Assembly);
       static LoadFile: ((path: string, securityEvidence: System.Security.Policy.Evidence) => System.Reflection.Assembly) | ((path: string) => System.Reflection.Assembly);
       static Load: ((assemblyString: string) => System.Reflection.Assembly) | ((assemblyString: string, assemblySecurity: System.Security.Policy.Evidence) => System.Reflection.Assembly) | ((assemblyRef: System.Reflection.AssemblyName) => System.Reflection.Assembly) | ((assemblyRef: System.Reflection.AssemblyName, assemblySecurity: System.Security.Policy.Evidence) => System.Reflection.Assembly) | ((rawAssembly: System.Byte[]) => System.Reflection.Assembly) | ((rawAssembly: System.Byte[], rawSymbolStore: System.Byte[]) => System.Reflection.Assembly) | ((rawAssembly: System.Byte[], rawSymbolStore: System.Byte[], securityEvidence: System.Security.Policy.Evidence) => System.Reflection.Assembly) | ((rawAssembly: System.Byte[], rawSymbolStore: System.Byte[], securityContextSource: System.Security.SecurityContextSource) => System.Reflection.Assembly);
@@ -7066,7 +16358,7 @@ export namespace System {
       GetManifestResourceInfo: ((resourceName: string) => System.Reflection.ManifestResourceInfo);
       GetHashCode: (() => number);
       Equals: ((o: System.Object) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       GetModule: ((name: string) => System.Reflection.Module);
       GetReferencedAssemblies: (() => System.Reflection.AssemblyName[]);
       GetSatelliteAssembly: ((culture: System.Globalization.CultureInfo) => System.Reflection.Assembly) | ((culture: System.Globalization.CultureInfo, version: System.Version) => System.Reflection.Assembly);
@@ -7081,10 +16373,10 @@ export namespace System {
       CultureInfo: System.Globalization.CultureInfo;
       Flags: System.Reflection.AssemblyNameFlags;
       FullName: string;
-      HashAlgorithm: System.Configuration.Assemblies.AssemblyHashAlgorithm;
+      HashAlgorithm: any; // System.Configuration.Assemblies.AssemblyHashAlgorithm
       KeyPair: System.Reflection.StrongNameKeyPair;
       Version: System.Version;
-      VersionCompatibility: System.Configuration.Assemblies.AssemblyVersionCompatibility;
+      VersionCompatibility: any; // System.Configuration.Assemblies.AssemblyVersionCompatibility
       CultureName: string;
       ContentType: System.Reflection.AssemblyContentType;
       ToString: (() => string);
@@ -7129,7 +16421,7 @@ export namespace System {
       Name: string;
       DeclaringType: System.Type;
       ReflectedType: System.Type;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       Module: System.Reflection.Module;
       static ConstructorName: string;
@@ -7143,14 +16435,14 @@ export namespace System {
       GetMethodBody: (() => System.Reflection.MethodBody);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       GetType: (() => System.Type);
       ToString: (() => string);
     }
     export declare class CustomAttributeData {
       Constructor: System.Reflection.ConstructorInfo;
-      ConstructorArguments: any; // System.Collections.Generic.IList`1[System.Reflection.CustomAttributeTypedArgument]
-      NamedArguments: any; // System.Collections.Generic.IList`1[System.Reflection.CustomAttributeNamedArgument]
+      ConstructorArguments: System.Collections.Generic.IList<System.Reflection.CustomAttributeTypedArgument>;
+      NamedArguments: System.Collections.Generic.IList<System.Reflection.CustomAttributeNamedArgument>;
       AttributeType: System.Type;
       static GetCustomAttributes: ((target: System.Reflection.Assembly) => any) | ((target: System.Reflection.MemberInfo) => any) | ((target: System.Reflection.Module) => any) | ((target: System.Reflection.ParameterInfo) => any);
       ToString: (() => string);
@@ -7211,7 +16503,7 @@ export namespace System {
       Name: string;
       DeclaringType: System.Type;
       ReflectedType: System.Type;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       Module: System.Reflection.Module;
       AddEventHandler: ((target: System.Object, handler: System.Delegate) => void);
@@ -7224,7 +16516,7 @@ export namespace System {
       GetHashCode: (() => number);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       GetType: (() => System.Type);
       ToString: (() => string);
     }
@@ -7264,7 +16556,7 @@ export namespace System {
       Name: string;
       DeclaringType: System.Type;
       ReflectedType: System.Type;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       Module: System.Reflection.Module;
       GetValue: ((obj: System.Object) => System.Object);
@@ -7279,7 +16571,7 @@ export namespace System {
       GetHashCode: (() => number);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       GetType: (() => System.Type);
       ToString: (() => string);
     }
@@ -7299,8 +16591,8 @@ export namespace System {
       GetType: (() => System.Type);
     }
     export declare class MethodBody {
-      ExceptionHandlingClauses: any; // System.Collections.Generic.IList`1[System.Reflection.ExceptionHandlingClause]
-      LocalVariables: any; // System.Collections.Generic.IList`1[System.Reflection.LocalVariableInfo]
+      ExceptionHandlingClauses: System.Collections.Generic.IList<System.Reflection.ExceptionHandlingClause>;
+      LocalVariables: System.Collections.Generic.IList<System.Reflection.LocalVariableInfo>;
       InitLocals: boolean;
       LocalSignatureMetadataToken: number;
       MaxStackSize: number;
@@ -7319,7 +16611,7 @@ export namespace System {
       ModuleVersionId: System.Guid;
       FullyQualifiedName: string;
       MetadataToken: number;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       static FilterTypeName: System.Reflection.TypeFilter;
       static FilterTypeNameIgnoreCase: System.Reflection.TypeFilter;
       GetField: ((name: string) => System.Reflection.FieldInfo) | ((name: string, bindingAttr: System.Reflection.BindingFlags) => System.Reflection.FieldInfo);
@@ -7338,7 +16630,7 @@ export namespace System {
       IsResource: (() => boolean);
       FindTypes: ((filter: System.Reflection.TypeFilter, filterCriteria: System.Object) => System.Type[]);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
       ResolveSignature: ((metadataToken: number) => System.Byte[]);
       ResolveString: ((metadataToken: number) => string);
@@ -7372,7 +16664,7 @@ export namespace System {
       Member: System.Reflection.MemberInfo;
       Name: string;
       Position: number;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       HasDefaultValue: boolean;
       DefaultValue: System.Object;
       RawDefaultValue: System.Object;
@@ -7383,7 +16675,7 @@ export namespace System {
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
       GetRequiredCustomModifiers: (() => System.Type[]);
       GetOptionalCustomModifiers: (() => System.Type[]);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       GetType: (() => System.Type);
@@ -7408,7 +16700,7 @@ export namespace System {
       Name: string;
       DeclaringType: System.Type;
       ReflectedType: System.Type;
-      CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+      CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
       MetadataToken: number;
       Module: System.Reflection.Module;
       GetAccessors: (() => System.Reflection.MethodInfo[]) | ((nonPublic: boolean) => System.Reflection.MethodInfo[]);
@@ -7425,7 +16717,7 @@ export namespace System {
       GetHashCode: (() => number);
       GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
       IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
-      GetCustomAttributesData: (() => any);
+      GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       GetType: (() => System.Type);
       ToString: (() => string);
     }
@@ -7438,6 +16730,9 @@ export namespace System {
       GetHashCode: (() => number);
       GetType: (() => System.Type);
       ToString: (() => string);
+    }
+    export interface ICustomTypeProvider {
+      GetCustomType: (() => System.Type);
     }
     export namespace Emit {
       export declare class ExceptionHandler {
@@ -7470,10 +16765,10 @@ export namespace System {
         PermissionSet: System.Security.PermissionSet;
         SecurityRuleSet: System.Security.SecurityRuleSet;
         IsFullyTrusted: boolean;
-        DefinedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.TypeInfo]
-        ExportedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Type]
-        Modules: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.Module]
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        DefinedTypes: System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo>;
+        ExportedTypes: System.Collections.Generic.IEnumerable<System.Type>;
+        Modules: System.Collections.Generic.IEnumerable<System.Reflection.Module>;
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         AddResourceFile: ((name: string, fileName: string) => void) | ((name: string, fileName: string, attribute: System.Reflection.ResourceAttributes) => void);
         static DefineDynamicAssembly: ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess) => System.Reflection.Emit.AssemblyBuilder) | ((name: System.Reflection.AssemblyName, access: System.Reflection.Emit.AssemblyBuilderAccess, assemblyAttributes: any) => System.Reflection.Emit.AssemblyBuilder);
         DefineDynamicModule: ((name: string) => System.Reflection.Emit.ModuleBuilder) | ((name: string, emitSymbolInfo: boolean) => System.Reflection.Emit.ModuleBuilder) | ((name: string, fileName: string) => System.Reflection.Emit.ModuleBuilder) | ((name: string, fileName: string, emitSymbolInfo: boolean) => System.Reflection.Emit.ModuleBuilder);
@@ -7506,7 +16801,7 @@ export namespace System {
         ToString: (() => string);
         LoadModule: ((moduleName: string, rawModule: System.Byte[]) => System.Reflection.Module) | ((moduleName: string, rawModule: System.Byte[], rawSymbolStore: System.Byte[]) => System.Reflection.Module);
         CreateInstance: ((typeName: string) => System.Object) | ((typeName: string, ignoreCase: boolean) => System.Object) | ((typeName: string, ignoreCase: boolean, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]) => System.Object);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       }
       export enum AssemblyBuilderAccess {
         Run = 1,
@@ -7547,7 +16842,7 @@ export namespace System {
         IsAbstract: boolean;
         IsSpecialName: boolean;
         IsConstructor: boolean;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         MetadataToken: number;
         GetMethodImplementationFlags: (() => System.Reflection.MethodImplAttributes);
         GetParameters: (() => System.Reflection.ParameterInfo[]);
@@ -7557,7 +16852,7 @@ export namespace System {
         IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
         GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
         GetILGenerator: (() => System.Reflection.Emit.ILGenerator) | ((streamSize: number) => System.Reflection.Emit.ILGenerator);
-        SetMethodBody: ((il: System.Byte[], maxStack: number, localSignature: System.Byte[], exceptionHandlers: any, tokenFixups: any) => void);
+        SetMethodBody: ((il: System.Byte[], maxStack: number, localSignature: System.Byte[], exceptionHandlers: System.Collections.Generic.IEnumerable<System.Reflection.Emit.ExceptionHandler>, tokenFixups: System.Collections.Generic.IEnumerable<number>) => void);
         SetCustomAttribute: ((customBuilder: System.Reflection.Emit.CustomAttributeBuilder) => void) | ((con: System.Reflection.ConstructorInfo, binaryAttribute: System.Byte[]) => void);
         SetImplementationFlags: ((attributes: System.Reflection.MethodImplAttributes) => void);
         GetModule: (() => System.Reflection.Module);
@@ -7568,7 +16863,7 @@ export namespace System {
         GetHashCode: (() => number);
         GetGenericArguments: (() => System.Type[]);
         GetMethodBody: (() => System.Reflection.MethodBody);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
         GetType: (() => System.Type);
       }
       export declare class CustomAttributeBuilder {
@@ -7633,7 +16928,7 @@ export namespace System {
         IsAbstract: boolean;
         IsSpecialName: boolean;
         IsConstructor: boolean;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         MetadataToken: number;
         CreateDelegate: ((delegateType: System.Type) => System.Delegate) | ((delegateType: System.Type, target: System.Object) => System.Delegate);
         DefineParameter: ((position: number, attributes: System.Reflection.ParameterAttributes, parameterName: string) => System.Reflection.Emit.ParameterBuilder);
@@ -7652,7 +16947,7 @@ export namespace System {
         GetGenericMethodDefinition: (() => System.Reflection.MethodInfo);
         MakeGenericMethod: ((...typeArguments: System.Type[]) => System.Reflection.MethodInfo);
         GetMethodBody: (() => System.Reflection.MethodBody);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
         GetType: (() => System.Type);
       }
       export declare class EnumBuilder {
@@ -7672,14 +16967,14 @@ export namespace System {
         UnderlyingSystemType: System.Type;
         IsConstructedGenericType: boolean;
         GenericTypeParameters: System.Type[];
-        DeclaredConstructors: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.ConstructorInfo]
-        DeclaredEvents: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.EventInfo]
-        DeclaredFields: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.FieldInfo]
-        DeclaredMembers: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MemberInfo]
-        DeclaredMethods: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MethodInfo]
-        DeclaredNestedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.TypeInfo]
-        DeclaredProperties: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.PropertyInfo]
-        ImplementedInterfaces: any; // System.Collections.Generic.IEnumerable`1[System.Type]
+        DeclaredConstructors: System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo>;
+        DeclaredEvents: System.Collections.Generic.IEnumerable<System.Reflection.EventInfo>;
+        DeclaredFields: System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo>;
+        DeclaredMembers: System.Collections.Generic.IEnumerable<System.Reflection.MemberInfo>;
+        DeclaredMethods: System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>;
+        DeclaredNestedTypes: System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo>;
+        DeclaredProperties: System.Collections.Generic.IEnumerable<System.Reflection.PropertyInfo>;
+        ImplementedInterfaces: System.Collections.Generic.IEnumerable<System.Type>;
         MemberType: System.Reflection.MemberTypes;
         DeclaringMethod: System.Reflection.MethodBase;
         StructLayoutAttribute: any; // System.Runtime.InteropServices.StructLayoutAttribute
@@ -7729,7 +17024,7 @@ export namespace System {
         IsSecuritySafeCritical: boolean;
         IsSecurityTransparent: boolean;
         IsSZArray: boolean;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         MetadataToken: number;
         CreateType: (() => System.Type);
         CreateTypeInfo: (() => System.Reflection.TypeInfo);
@@ -7762,7 +17057,7 @@ export namespace System {
         GetDeclaredEvent: ((name: string) => System.Reflection.EventInfo);
         GetDeclaredField: ((name: string) => System.Reflection.FieldInfo);
         GetDeclaredMethod: ((name: string) => System.Reflection.MethodInfo);
-        GetDeclaredMethods: ((name: string) => any);
+        GetDeclaredMethods: ((name: string) => System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>);
         GetDeclaredNestedType: ((name: string) => System.Reflection.TypeInfo);
         GetDeclaredProperty: ((name: string) => System.Reflection.PropertyInfo);
         GetArrayRank: (() => number);
@@ -7787,7 +17082,7 @@ export namespace System {
         Equals: ((o: System.Object) => boolean) | ((o: System.Type) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type) | (() => System.Type);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       }
       export declare class EventBuilder {
         AddOtherMethod: ((mdBuilder: System.Reflection.Emit.MethodBuilder) => void);
@@ -7833,7 +17128,7 @@ export namespace System {
         IsSecurityCritical: boolean;
         IsSecuritySafeCritical: boolean;
         IsSecurityTransparent: boolean;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         MetadataToken: number;
         GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
         GetToken: (() => System.Reflection.Emit.FieldToken);
@@ -7851,7 +17146,7 @@ export namespace System {
         GetRawConstantValue: (() => System.Object);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
         GetType: (() => System.Type);
         ToString: (() => string);
       }
@@ -7895,14 +17190,14 @@ export namespace System {
         GenericParameterPosition: number;
         DeclaringMethod: System.Reflection.MethodBase;
         GenericTypeParameters: System.Type[];
-        DeclaredConstructors: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.ConstructorInfo]
-        DeclaredEvents: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.EventInfo]
-        DeclaredFields: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.FieldInfo]
-        DeclaredMembers: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MemberInfo]
-        DeclaredMethods: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MethodInfo]
-        DeclaredNestedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.TypeInfo]
-        DeclaredProperties: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.PropertyInfo]
-        ImplementedInterfaces: any; // System.Collections.Generic.IEnumerable`1[System.Type]
+        DeclaredConstructors: System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo>;
+        DeclaredEvents: System.Collections.Generic.IEnumerable<System.Reflection.EventInfo>;
+        DeclaredFields: System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo>;
+        DeclaredMembers: System.Collections.Generic.IEnumerable<System.Reflection.MemberInfo>;
+        DeclaredMethods: System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>;
+        DeclaredNestedTypes: System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo>;
+        DeclaredProperties: System.Collections.Generic.IEnumerable<System.Reflection.PropertyInfo>;
+        ImplementedInterfaces: System.Collections.Generic.IEnumerable<System.Type>;
         MemberType: System.Reflection.MemberTypes;
         StructLayoutAttribute: any; // System.Runtime.InteropServices.StructLayoutAttribute
         TypeInitializer: System.Reflection.ConstructorInfo;
@@ -7946,7 +17241,7 @@ export namespace System {
         IsSecuritySafeCritical: boolean;
         IsSecurityTransparent: boolean;
         IsSZArray: boolean;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         MetadataToken: number;
         SetBaseTypeConstraint: ((baseTypeConstraint: System.Type) => void);
         SetInterfaceConstraints: ((...interfaceConstraints: System.Type[]) => void);
@@ -7987,7 +17282,7 @@ export namespace System {
         GetDeclaredEvent: ((name: string) => System.Reflection.EventInfo);
         GetDeclaredField: ((name: string) => System.Reflection.FieldInfo);
         GetDeclaredMethod: ((name: string) => System.Reflection.MethodInfo);
-        GetDeclaredMethods: ((name: string) => any);
+        GetDeclaredMethods: ((name: string) => System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>);
         GetDeclaredNestedType: ((name: string) => System.Reflection.TypeInfo);
         GetDeclaredProperty: ((name: string) => System.Reflection.PropertyInfo);
         GetArrayRank: (() => number);
@@ -8004,7 +17299,7 @@ export namespace System {
         GetEnumName: ((value: System.Object) => string);
         IsEquivalentTo: ((other: System.Type) => boolean);
         GetType: (() => System.Type) | (() => System.Type);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       }
       export declare class ILGenerator {
         ILOffset: number;
@@ -8081,7 +17376,7 @@ export namespace System {
         IsAbstract: boolean;
         IsSpecialName: boolean;
         IsConstructor: boolean;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         MetadataToken: number;
         GetToken: (() => System.Reflection.Emit.MethodToken);
         GetBaseDefinition: (() => System.Reflection.MethodInfo);
@@ -8089,7 +17384,7 @@ export namespace System {
         GetParameters: (() => System.Reflection.ParameterInfo[]);
         GetModule: (() => System.Reflection.Module);
         CreateMethodBody: ((il: System.Byte[], count: number) => void);
-        SetMethodBody: ((il: System.Byte[], maxStack: number, localSignature: System.Byte[], exceptionHandlers: any, tokenFixups: any) => void);
+        SetMethodBody: ((il: System.Byte[], maxStack: number, localSignature: System.Byte[], exceptionHandlers: System.Collections.Generic.IEnumerable<System.Reflection.Emit.ExceptionHandler>, tokenFixups: System.Collections.Generic.IEnumerable<number>) => void);
         Invoke: ((obj: System.Object, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, parameters: System.Object[], culture: System.Globalization.CultureInfo) => System.Object) | ((obj: System.Object, parameters: System.Object[]) => System.Object);
         IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
         GetCustomAttributes: ((inherit: boolean) => System.Object[]) | ((attributeType: System.Type, inherit: boolean) => System.Object[]);
@@ -8112,7 +17407,7 @@ export namespace System {
         SetSignature: ((returnType: System.Type, returnTypeRequiredCustomModifiers: System.Type[], returnTypeOptionalCustomModifiers: System.Type[], parameterTypes: System.Type[], parameterTypeRequiredCustomModifiers: System.Type[][], parameterTypeOptionalCustomModifiers: System.Type[][]) => void);
         CreateDelegate: ((delegateType: System.Type) => System.Delegate) | ((delegateType: System.Type, target: System.Object) => System.Delegate);
         GetMethodBody: (() => System.Reflection.MethodBody);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
         GetType: (() => System.Type);
       }
       export declare class MethodRental {
@@ -8141,7 +17436,7 @@ export namespace System {
         MetadataToken: number;
         ModuleHandle: System.ModuleHandle;
         MDStreamVersion: number;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         IsTransient: (() => boolean);
         CreateGlobalFunctions: (() => void);
         DefineInitializedData: ((name: string, data: System.Byte[], attributes: System.Reflection.FieldAttributes) => System.Reflection.Emit.FieldBuilder);
@@ -8161,9 +17456,9 @@ export namespace System {
         DefineManifestResource: ((name: string, stream: System.IO.Stream, attribute: System.Reflection.ResourceAttributes) => void);
         SetSymCustomAttribute: ((name: string, data: System.Byte[]) => void);
         SetUserEntryPoint: ((entryPoint: System.Reflection.MethodInfo) => void);
-        GetMethodToken: ((method: System.Reflection.MethodInfo) => System.Reflection.Emit.MethodToken) | ((method: System.Reflection.MethodInfo, optionalParameterTypes: any) => System.Reflection.Emit.MethodToken);
+        GetMethodToken: ((method: System.Reflection.MethodInfo) => System.Reflection.Emit.MethodToken) | ((method: System.Reflection.MethodInfo, optionalParameterTypes: System.Collections.Generic.IEnumerable<System.Type>) => System.Reflection.Emit.MethodToken);
         GetArrayMethodToken: ((arrayClass: System.Type, methodName: string, callingConvention: System.Reflection.CallingConventions, returnType: System.Type, parameterTypes: System.Type[]) => System.Reflection.Emit.MethodToken);
-        GetConstructorToken: ((con: System.Reflection.ConstructorInfo) => System.Reflection.Emit.MethodToken) | ((constructor: System.Reflection.ConstructorInfo, optionalParameterTypes: any) => System.Reflection.Emit.MethodToken);
+        GetConstructorToken: ((con: System.Reflection.ConstructorInfo) => System.Reflection.Emit.MethodToken) | ((constructor: System.Reflection.ConstructorInfo, optionalParameterTypes: System.Collections.Generic.IEnumerable<System.Type>) => System.Reflection.Emit.MethodToken);
         GetFieldToken: ((field: System.Reflection.FieldInfo) => System.Reflection.Emit.FieldToken);
         GetSignatureToken: ((sigBytes: System.Byte[], sigLength: number) => System.Reflection.Emit.SignatureToken) | ((sigHelper: System.Reflection.Emit.SignatureHelper) => System.Reflection.Emit.SignatureToken);
         GetStringConstant: ((str: string) => System.Reflection.Emit.StringToken);
@@ -8186,7 +17481,7 @@ export namespace System {
         GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
         ToString: (() => string);
         FindTypes: ((filter: System.Reflection.TypeFilter, filterCriteria: System.Object) => System.Type[]);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
         GetSignerCertificate: (() => System.Security.Cryptography.X509Certificates.X509Certificate);
       }
       export declare class OpCode {
@@ -8518,7 +17813,7 @@ export namespace System {
         SetMethod: System.Reflection.MethodInfo;
         IsSpecialName: boolean;
         MemberType: System.Reflection.MemberTypes;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         MetadataToken: number;
         AddOtherMethod: ((mdBuilder: System.Reflection.Emit.MethodBuilder) => void);
         GetAccessors: ((nonPublic: boolean) => System.Reflection.MethodInfo[]) | (() => System.Reflection.MethodInfo[]);
@@ -8539,7 +17834,7 @@ export namespace System {
         GetRawConstantValue: (() => System.Object);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
         GetType: (() => System.Type);
         ToString: (() => string);
       }
@@ -8636,14 +17931,14 @@ export namespace System {
         DeclaringMethod: System.Reflection.MethodBase;
         IsConstructedGenericType: boolean;
         GenericTypeParameters: System.Type[];
-        DeclaredConstructors: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.ConstructorInfo]
-        DeclaredEvents: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.EventInfo]
-        DeclaredFields: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.FieldInfo]
-        DeclaredMembers: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MemberInfo]
-        DeclaredMethods: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.MethodInfo]
-        DeclaredNestedTypes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.TypeInfo]
-        DeclaredProperties: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.PropertyInfo]
-        ImplementedInterfaces: any; // System.Collections.Generic.IEnumerable`1[System.Type]
+        DeclaredConstructors: System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo>;
+        DeclaredEvents: System.Collections.Generic.IEnumerable<System.Reflection.EventInfo>;
+        DeclaredFields: System.Collections.Generic.IEnumerable<System.Reflection.FieldInfo>;
+        DeclaredMembers: System.Collections.Generic.IEnumerable<System.Reflection.MemberInfo>;
+        DeclaredMethods: System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>;
+        DeclaredNestedTypes: System.Collections.Generic.IEnumerable<System.Reflection.TypeInfo>;
+        DeclaredProperties: System.Collections.Generic.IEnumerable<System.Reflection.PropertyInfo>;
+        ImplementedInterfaces: System.Collections.Generic.IEnumerable<System.Type>;
         MemberType: System.Reflection.MemberTypes;
         StructLayoutAttribute: any; // System.Runtime.InteropServices.StructLayoutAttribute
         TypeInitializer: System.Reflection.ConstructorInfo;
@@ -8686,7 +17981,7 @@ export namespace System {
         IsSecuritySafeCritical: boolean;
         IsSecurityTransparent: boolean;
         IsSZArray: boolean;
-        CustomAttributes: any; // System.Collections.Generic.IEnumerable`1[System.Reflection.CustomAttributeData]
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
         MetadataToken: number;
         static UnspecifiedTypeSize: number;
         IsSubclassOf: ((c: System.Type) => boolean);
@@ -8742,7 +18037,7 @@ export namespace System {
         GetDeclaredEvent: ((name: string) => System.Reflection.EventInfo);
         GetDeclaredField: ((name: string) => System.Reflection.FieldInfo);
         GetDeclaredMethod: ((name: string) => System.Reflection.MethodInfo);
-        GetDeclaredMethods: ((name: string) => any);
+        GetDeclaredMethods: ((name: string) => System.Collections.Generic.IEnumerable<System.Reflection.MethodInfo>);
         GetDeclaredNestedType: ((name: string) => System.Reflection.TypeInfo);
         GetDeclaredProperty: ((name: string) => System.Reflection.PropertyInfo);
         GetArrayRank: (() => number);
@@ -8761,7 +18056,7 @@ export namespace System {
         Equals: ((o: System.Object) => boolean) | ((o: System.Type) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type) | (() => System.Type);
-        GetCustomAttributesData: (() => any);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
       }
       export declare class TypeToken {
         Token: number;
@@ -8797,11 +18092,11 @@ export namespace System {
     }
   }
   export namespace Resources {
-    export declare class IResourceReader {
+    export interface IResourceReader {
       Close: (() => void);
       GetEnumerator: (() => System.Collections.IDictionaryEnumerator);
     }
-    export declare class IResourceWriter {
+    export interface IResourceWriter {
       AddResource: ((name: string, value: string) => void) | ((name: string, value: System.Object) => void) | ((name: string, value: System.Byte[]) => void);
       Close: (() => void);
       Generate: (() => void);
@@ -8896,7 +18191,7 @@ export namespace System {
     export declare class ResourceWriter {
       constructor(fileName: string);
       constructor(stream: System.IO.Stream);
-      TypeNameConverter: any; // System.Func`2[System.Type,System.String]
+      TypeNameConverter: ((arg0: System.Type, arg1: string) => string);
       AddResource: ((name: string, value: string) => void) | ((name: string, value: System.Object) => void) | ((name: string, value: System.IO.Stream) => void) | ((name: string, value: System.IO.Stream, closeAfterWrite: boolean) => void) | ((name: string, value: System.Byte[]) => void);
       AddResourceData: ((name: string, typeName: string, serializedData: System.Byte[]) => void);
       Close: (() => void);
@@ -8950,7 +18245,35 @@ export namespace System {
       ToString: (() => string);
     }
     export namespace CompilerServices {
-      export declare class ITuple {
+      export declare class AsyncValueTaskMethodBuilder<TResult = any> {
+        Task: System.Threading.Tasks.ValueTask<TResult>;
+        static Create: (() => any);
+        SetStateMachine: ((stateMachine: System.Runtime.CompilerServices.IAsyncStateMachine) => void);
+        SetResult: ((result: TResult) => void);
+        SetException: ((exception: System.Exception) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class ConfiguredValueTaskAwaitable<TResult = any> {
+        GetAwaiter: (() => System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<TResult>);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class ValueTaskAwaiter<TResult = any> {
+        IsCompleted: boolean;
+        GetResult: (() => TResult);
+        OnCompleted: ((continuation: System.Action) => void);
+        UnsafeOnCompleted: ((continuation: System.Action) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export interface ITuple {
         Length: number;
       }
       export declare class RuntimeFeature {
@@ -8979,11 +18302,11 @@ export namespace System {
         ToString: (() => string);
         GetType: (() => System.Type);
       }
-      export declare class AsyncTaskMethodBuilder {
-        Task: System.Threading.Tasks.Task;
-        static Create: (() => System.Runtime.CompilerServices.AsyncTaskMethodBuilder);
+      export declare class AsyncTaskMethodBuilder<TResult = any> {
+        Task: System.Threading.Tasks.Task<TResult>;
+        static Create: (() => any);
         SetStateMachine: ((stateMachine: System.Runtime.CompilerServices.IAsyncStateMachine) => void);
-        SetResult: (() => void);
+        SetResult: ((result: TResult) => void);
         SetException: ((exception: System.Exception) => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
@@ -8997,14 +18320,14 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class IAsyncStateMachine {
+      export interface IAsyncStateMachine {
         MoveNext: (() => void);
         SetStateMachine: ((stateMachine: System.Runtime.CompilerServices.IAsyncStateMachine) => void);
       }
-      export declare class INotifyCompletion {
+      export interface INotifyCompletion {
         OnCompleted: ((continuation: System.Action) => void);
       }
-      export declare class ICriticalNotifyCompletion {
+      export interface ICriticalNotifyCompletion {
         UnsafeOnCompleted: ((continuation: System.Action) => void);
       }
       export declare class RuntimeWrappedException {
@@ -9024,18 +18347,18 @@ export namespace System {
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
       }
-      export declare class TaskAwaiter {
+      export declare class TaskAwaiter<TResult = any> {
         IsCompleted: boolean;
         OnCompleted: ((continuation: System.Action) => void);
         UnsafeOnCompleted: ((continuation: System.Action) => void);
-        GetResult: (() => void);
+        GetResult: (() => TResult);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
         GetType: (() => System.Type);
       }
-      export declare class ConfiguredTaskAwaitable {
-        GetAwaiter: (() => System.Runtime.CompilerServices.ConfiguredTaskAwaitable_ConfiguredTaskAwaiter);
+      export declare class ConfiguredTaskAwaitable<TResult = any> {
+        GetAwaiter: (() => System.Runtime.CompilerServices.ConfiguredTaskAwaitable<TResult>);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
@@ -9198,6 +18521,17 @@ export namespace System {
         OPTIL = 2,
         Runtime = 3,
       }
+      export declare class ConditionalWeakTable<TKey = any, TValue = any> {
+        constructor();
+        Add: ((key: TKey, value: TValue) => void);
+        Remove: ((key: TKey) => boolean);
+        GetOrCreateValue: ((key: TKey) => TValue);
+        GetValue: ((key: TKey, createValueCallback: System.Runtime.CompilerServices.ConditionalWeakTable<TKey, TValue>) => TValue);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
       export declare class RuntimeHelpers {
         static OffsetToStringData: number;
         static InitializeArray: ((array: System.Array, fldHandle: System.RuntimeFieldHandle) => void);
@@ -9250,6 +18584,126 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
+      export declare class RuntimeOps {
+        static ExpandoTrySetValue: ((expando: Record<string, any>, indexClass: System.Object, index: number, value: System.Object, name: string, ignoreCase: boolean) => System.Object);
+        static ExpandoTryDeleteValue: ((expando: Record<string, any>, indexClass: System.Object, index: number, name: string, ignoreCase: boolean) => boolean);
+        static ExpandoCheckVersion: ((expando: Record<string, any>, version: System.Object) => boolean);
+        static ExpandoPromoteClass: ((expando: Record<string, any>, oldClass: System.Object, newClass: System.Object) => void);
+        static Quote: ((expression: System.Linq.Expressions.Expression, hoistedLocals: System.Object, locals: System.Object[]) => System.Linq.Expressions.Expression);
+        static MergeRuntimeVariables: ((first: System.Runtime.CompilerServices.IRuntimeVariables, second: System.Runtime.CompilerServices.IRuntimeVariables, indexes: number[]) => System.Runtime.CompilerServices.IRuntimeVariables);
+        static CreateRuntimeVariables: ((data: System.Object[], indexes: System.Int64[]) => System.Runtime.CompilerServices.IRuntimeVariables) | (() => System.Runtime.CompilerServices.IRuntimeVariables);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CallSite<T = any> {
+        Update: T;
+        Binder: System.Runtime.CompilerServices.CallSiteBinder;
+        Target: T;
+        static Create: ((binder: System.Runtime.CompilerServices.CallSiteBinder) => any);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CallSiteBinder {
+        static UpdateLabel: System.Linq.Expressions.LabelTarget;
+        Bind: ((args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget) => System.Linq.Expressions.Expression);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CallSiteHelpers {
+        static IsInternalFrame: ((mb: System.Reflection.MethodBase) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CallSiteOps {
+        static SetNotMatched: ((site: System.Runtime.CompilerServices.CallSite) => boolean);
+        static GetMatch: ((site: System.Runtime.CompilerServices.CallSite) => boolean);
+        static ClearMatch: ((site: System.Runtime.CompilerServices.CallSite) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Closure {
+        constructor(constants: System.Object[], locals: System.Object[]);
+        Constants: System.Object[];
+        Locals: System.Object[];
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DebugInfoGenerator {
+        static CreatePdbGenerator: (() => System.Runtime.CompilerServices.DebugInfoGenerator);
+        MarkSequencePoint: ((method: System.Linq.Expressions.LambdaExpression, ilOffset: number, sequencePoint: System.Linq.Expressions.DebugInfoExpression) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export interface IRuntimeVariables {
+        Count: number;
+      }
+      export declare class ReadOnlyCollectionBuilder<T = any> {
+        constructor();
+        constructor(capacity: number);
+        constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        Capacity: number;
+        Count: number;
+        IndexOf: ((item: T) => number);
+        Insert: ((index: number, item: T) => void);
+        RemoveAt: ((index: number) => void);
+        Add: ((item: T) => void);
+        Clear: (() => void);
+        Contains: ((item: T) => boolean);
+        CopyTo: ((array: T[], arrayIndex: number) => void);
+        Remove: ((item: T) => boolean);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<T>);
+        Reverse: (() => void) | ((index: number, count: number) => void);
+        ToArray: (() => T[]);
+        ToReadOnlyCollection: (() => T[]);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class RuleCache<T = any> {
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class StrongBox<T = any> {
+        constructor();
+        constructor(value: T);
+        Value: T;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export interface IStrongBox {
+        Value: System.Object;
+      }
+      export declare class ExecutionScope {
+        Parent: System.Runtime.CompilerServices.ExecutionScope;
+        Globals: System.Object[];
+        Locals: System.Object[];
+        CreateHoistedLocals: (() => System.Object[]);
+        CreateDelegate: ((indexLambda: number, locals: System.Object[]) => System.Delegate);
+        IsolateExpression: ((expression: System.Linq.Expressions.Expression, locals: System.Object[]) => System.Linq.Expressions.Expression);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
     }
     export namespace ConstrainedExecution {
       export declare class CriticalFinalizerObject {
@@ -9272,7 +18726,7 @@ export namespace System {
     }
     export namespace DesignerServices {
       export declare class WindowsRuntimeDesignerContext {
-        constructor(paths: any, name: string);
+        constructor(paths: System.Collections.Generic.IEnumerable<string>, name: string);
         Name: string;
         GetAssembly: ((assemblyName: string) => System.Reflection.Assembly);
         GetType: ((typeName: string) => System.Type) | (() => System.Type);
@@ -9626,13 +19080,13 @@ export namespace System {
         ToString: (() => string);
         GetType: (() => System.Type);
       }
-      export declare class ICustomAdapter {
+      export interface ICustomAdapter {
         GetUnderlyingObject: (() => System.Object);
       }
-      export declare class ICustomFactory {
+      export interface ICustomFactory {
         CreateInstance: ((serverType: System.Type) => System.MarshalByRefObject);
       }
-      export declare class ICustomMarshaler {
+      export interface ICustomMarshaler {
         MarshalNativeToManaged: ((pNativeData: System.IntPtr) => System.Object);
         MarshalManagedToNative: ((ManagedObj: System.Object) => System.IntPtr);
         CleanUpNativeData: ((pNativeData: System.IntPtr) => void);
@@ -9644,7 +19098,7 @@ export namespace System {
         NotHandled = 1,
         Failed = 2,
       }
-      export declare class ICustomQueryInterface {
+      export interface ICustomQueryInterface {
       }
       export declare class InvalidComObjectException {
         constructor();
@@ -9688,7 +19142,7 @@ export namespace System {
         None = 0,
         SetCodeBase = 1,
       }
-      export declare class IRegistrationServices {
+      export interface IRegistrationServices {
         RegisterAssembly: ((assembly: System.Reflection.Assembly, flags: System.Runtime.InteropServices.AssemblyRegistrationFlags) => boolean);
         UnregisterAssembly: ((assembly: System.Reflection.Assembly) => boolean);
         GetRegistrableTypesInAssembly: ((assembly: System.Reflection.Assembly) => System.Type[]);
@@ -9830,7 +19284,7 @@ export namespace System {
         ToString: (() => string);
         GetType: (() => System.Type);
       }
-      export declare class UCOMIEnumConnections {
+      export interface UCOMIEnumConnections {
         Skip: ((celt: number) => number);
         Reset: (() => void);
       }
@@ -10066,7 +19520,7 @@ export namespace System {
         VARFLAG_FREPLACEABLE = 2048,
         VARFLAG_FIMMEDIATEBIND = 4096,
       }
-      export declare class UCOMITypeInfo {
+      export interface UCOMITypeInfo {
         GetIDsOfNames: ((rgszNames: string[], cNames: number, pMemId: number[]) => void);
         ReleaseTypeAttr: ((pTypeAttr: System.IntPtr) => void);
         ReleaseFuncDesc: ((pFuncDesc: System.IntPtr) => void);
@@ -10177,18 +19631,18 @@ export namespace System {
         Normal = 2,
         Pinned = 3,
       }
-      export declare class ITypeLibConverter {
+      export interface ITypeLibConverter {
         ConvertAssemblyToTypeLib: ((assembly: System.Reflection.Assembly, typeLibName: string, flags: System.Runtime.InteropServices.TypeLibExporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibExporterNotifySink) => System.Object);
         ConvertTypeLibToAssembly: ((typeLib: System.Object, asmFileName: string, flags: number, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: System.Byte[], keyPair: System.Reflection.StrongNameKeyPair, unsafeInterfaces: boolean) => System.Reflection.Emit.AssemblyBuilder) | ((typeLib: System.Object, asmFileName: string, flags: System.Runtime.InteropServices.TypeLibImporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: System.Byte[], keyPair: System.Reflection.StrongNameKeyPair, asmNamespace: string, asmVersion: System.Version) => System.Reflection.Emit.AssemblyBuilder);
       }
-      export declare class ITypeLibExporterNameProvider {
+      export interface ITypeLibExporterNameProvider {
         GetNames: (() => string[]);
       }
-      export declare class ITypeLibExporterNotifySink {
+      export interface ITypeLibExporterNotifySink {
         ReportEvent: ((eventKind: System.Runtime.InteropServices.ExporterEventKind, eventCode: number, eventMsg: string) => void);
         ResolveRef: ((assembly: System.Reflection.Assembly) => System.Object);
       }
-      export declare class ITypeLibImporterNotifySink {
+      export interface ITypeLibImporterNotifySink {
         ReportEvent: ((eventKind: System.Runtime.InteropServices.ImporterEventKind, eventCode: number, eventMsg: string) => void);
         ResolveRef: ((typeLib: System.Object) => System.Reflection.Assembly);
       }
@@ -10442,54 +19896,54 @@ export namespace System {
         NoDefineVersionResource = 8192,
         ImportAsArm = 16384,
       }
-      export declare class UCOMIBindCtx {
+      export interface UCOMIBindCtx {
         RegisterObjectBound: ((punk: System.Object) => void);
         RevokeObjectBound: ((punk: System.Object) => void);
         ReleaseBoundObjects: (() => void);
         RegisterObjectParam: ((pszKey: string, punk: System.Object) => void);
         RevokeObjectParam: ((pszKey: string) => void);
       }
-      export declare class UCOMIConnectionPoint {
+      export interface UCOMIConnectionPoint {
         Unadvise: ((dwCookie: number) => void);
       }
-      export declare class UCOMIConnectionPointContainer {
+      export interface UCOMIConnectionPointContainer {
       }
-      export declare class UCOMIEnumConnectionPoints {
+      export interface UCOMIEnumConnectionPoints {
         Skip: ((celt: number) => number);
         Reset: (() => number);
       }
-      export declare class UCOMIEnumMoniker {
+      export interface UCOMIEnumMoniker {
         Skip: ((celt: number) => number);
         Reset: (() => number);
       }
-      export declare class UCOMIEnumString {
+      export interface UCOMIEnumString {
         Skip: ((celt: number) => number);
         Reset: (() => number);
       }
-      export declare class UCOMIEnumVARIANT {
+      export interface UCOMIEnumVARIANT {
         Next: ((celt: number, rgvar: number, pceltFetched: number) => number);
         Skip: ((celt: number) => number);
         Reset: (() => number);
         Clone: ((ppenum: number) => void);
       }
-      export declare class UCOMIMoniker {
+      export interface UCOMIMoniker {
         IsDirty: (() => number);
         Load: ((pStm: System.Runtime.InteropServices.UCOMIStream) => void);
         Save: ((pStm: System.Runtime.InteropServices.UCOMIStream, fClearDirty: boolean) => void);
         IsEqual: ((pmkOtherMoniker: System.Runtime.InteropServices.UCOMIMoniker) => void);
         IsRunning: ((pbc: System.Runtime.InteropServices.UCOMIBindCtx, pmkToLeft: System.Runtime.InteropServices.UCOMIMoniker, pmkNewlyRunning: System.Runtime.InteropServices.UCOMIMoniker) => void);
       }
-      export declare class UCOMIPersistFile {
+      export interface UCOMIPersistFile {
         IsDirty: (() => number);
         Load: ((pszFileName: string, dwMode: number) => void);
         Save: ((pszFileName: string, fRemember: boolean) => void);
         SaveCompleted: ((pszFileName: string) => void);
       }
-      export declare class UCOMIRunningObjectTable {
+      export interface UCOMIRunningObjectTable {
         Revoke: ((dwRegister: number) => void);
         IsRunning: ((pmkObjectName: System.Runtime.InteropServices.UCOMIMoniker) => void);
       }
-      export declare class UCOMIStream {
+      export interface UCOMIStream {
         Read: ((pv: System.Byte[], cb: number, pcbRead: System.IntPtr) => void);
         Write: ((pv: System.Byte[], cb: number, pcbWritten: System.IntPtr) => void);
         Seek: ((dlibMove: System.Int64, dwOrigin: number, plibNewPosition: System.IntPtr) => void);
@@ -10500,17 +19954,17 @@ export namespace System {
         LockRegion: ((libOffset: System.Int64, cb: System.Int64, dwLockType: number) => void);
         UnlockRegion: ((libOffset: System.Int64, cb: System.Int64, dwLockType: number) => void);
       }
-      export declare class UCOMITypeComp {
+      export interface UCOMITypeComp {
       }
-      export declare class UCOMITypeLib {
+      export interface UCOMITypeLib {
         GetTypeInfoCount: (() => number);
         IsName: ((szNameBuf: string, lHashVal: number) => boolean);
         ReleaseTLibAttr: ((pTLibAttr: System.IntPtr) => void);
       }
-      export declare class _Activator {
+      export interface _Activator {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _Assembly {
+      export interface _Assembly {
         CodeBase: string;
         EscapedCodeBase: string;
         FullName: string;
@@ -10541,19 +19995,19 @@ export namespace System {
         GetModule: ((name: string) => System.Reflection.Module);
         GetReferencedAssemblies: (() => System.Reflection.AssemblyName[]);
       }
-      export declare class _AssemblyBuilder {
+      export interface _AssemblyBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _AssemblyName {
+      export interface _AssemblyName {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _Attribute {
+      export interface _Attribute {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _ConstructorBuilder {
+      export interface _ConstructorBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _ConstructorInfo {
+      export interface _ConstructorInfo {
         Attributes: System.Reflection.MethodAttributes;
         CallingConvention: System.Reflection.CallingConventions;
         DeclaringType: System.Type;
@@ -10588,16 +20042,16 @@ export namespace System {
         IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
         ToString: (() => string);
       }
-      export declare class _CustomAttributeBuilder {
+      export interface _CustomAttributeBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _EnumBuilder {
+      export interface _EnumBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _EventBuilder {
+      export interface _EventBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _EventInfo {
+      export interface _EventInfo {
         Attributes: System.Reflection.EventAttributes;
         DeclaringType: System.Type;
         EventHandlerType: System.Type;
@@ -10619,7 +20073,7 @@ export namespace System {
         RemoveEventHandler: ((target: System.Object, handler: System.Delegate) => void);
         ToString: (() => string);
       }
-      export declare class _Exception {
+      export interface _Exception {
         HelpLink: string;
         InnerException: System.Exception;
         Message: string;
@@ -10633,10 +20087,10 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class _FieldBuilder {
+      export interface _FieldBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _FieldInfo {
+      export interface _FieldInfo {
         Attributes: System.Reflection.FieldAttributes;
         DeclaringType: System.Type;
         FieldHandle: System.RuntimeFieldHandle;
@@ -10668,13 +20122,13 @@ export namespace System {
         SetValueDirect: ((obj: System.TypedReference, value: System.Object) => void);
         ToString: (() => string);
       }
-      export declare class _ILGenerator {
+      export interface _ILGenerator {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _LocalBuilder {
+      export interface _LocalBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _MemberInfo {
+      export interface _MemberInfo {
         DeclaringType: System.Type;
         MemberType: System.Reflection.MemberTypes;
         Name: string;
@@ -10687,7 +20141,7 @@ export namespace System {
         ToString: (() => string);
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _MethodBase {
+      export interface _MethodBase {
         Attributes: System.Reflection.MethodAttributes;
         CallingConvention: System.Reflection.CallingConventions;
         DeclaringType: System.Type;
@@ -10719,10 +20173,10 @@ export namespace System {
         IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
         ToString: (() => string);
       }
-      export declare class _MethodBuilder {
+      export interface _MethodBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _MethodInfo {
+      export interface _MethodInfo {
         Attributes: System.Reflection.MethodAttributes;
         CallingConvention: System.Reflection.CallingConventions;
         DeclaringType: System.Type;
@@ -10757,25 +20211,25 @@ export namespace System {
         IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
         ToString: (() => string);
       }
-      export declare class _MethodRental {
+      export interface _MethodRental {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _Module {
+      export interface _Module {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _ModuleBuilder {
+      export interface _ModuleBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _ParameterBuilder {
+      export interface _ParameterBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _ParameterInfo {
+      export interface _ParameterInfo {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _PropertyBuilder {
+      export interface _PropertyBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _PropertyInfo {
+      export interface _PropertyInfo {
         Attributes: System.Reflection.PropertyAttributes;
         CanRead: boolean;
         CanWrite: boolean;
@@ -10799,13 +20253,13 @@ export namespace System {
         SetValue: ((obj: System.Object, value: System.Object, index: System.Object[]) => void) | ((obj: System.Object, value: System.Object, invokeAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, index: System.Object[], culture: System.Globalization.CultureInfo) => void);
         ToString: (() => string);
       }
-      export declare class _SignatureHelper {
+      export interface _SignatureHelper {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _Thread {
+      export interface _Thread {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
       }
-      export declare class _Type {
+      export interface _Type {
         Assembly: System.Reflection.Assembly;
         AssemblyQualifiedName: string;
         Attributes: System.Reflection.TypeAttributes;
@@ -10886,8 +20340,61 @@ export namespace System {
         IsSubclassOf: ((c: System.Type) => boolean);
         ToString: (() => string);
       }
-      export declare class _TypeBuilder {
+      export interface _TypeBuilder {
         GetTypeInfo: ((iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr) => void);
+      }
+      export declare class ComAwareEventInfo {
+        constructor(type: System.Type, eventName: string);
+        Attributes: System.Reflection.EventAttributes;
+        DeclaringType: System.Type;
+        Name: string;
+        ReflectedType: System.Type;
+        EventHandlerType: System.Type;
+        IsMulticast: boolean;
+        IsSpecialName: boolean;
+        MemberType: System.Reflection.MemberTypes;
+        AddMethod: System.Reflection.MethodInfo;
+        RaiseMethod: System.Reflection.MethodInfo;
+        RemoveMethod: System.Reflection.MethodInfo;
+        CustomAttributes: System.Collections.Generic.IEnumerable<System.Reflection.CustomAttributeData>;
+        MetadataToken: number;
+        Module: System.Reflection.Module;
+        AddEventHandler: ((target: System.Object, handler: System.Delegate) => void);
+        RemoveEventHandler: ((target: System.Object, handler: System.Delegate) => void);
+        GetAddMethod: ((nonPublic: boolean) => System.Reflection.MethodInfo) | (() => System.Reflection.MethodInfo);
+        GetRaiseMethod: ((nonPublic: boolean) => System.Reflection.MethodInfo) | (() => System.Reflection.MethodInfo);
+        GetRemoveMethod: ((nonPublic: boolean) => System.Reflection.MethodInfo) | (() => System.Reflection.MethodInfo);
+        GetCustomAttributes: ((attributeType: System.Type, inherit: boolean) => System.Object[]) | ((inherit: boolean) => System.Object[]);
+        IsDefined: ((attributeType: System.Type, inherit: boolean) => boolean);
+        GetOtherMethods: ((nonPublic: boolean) => System.Reflection.MethodInfo[]) | (() => System.Reflection.MethodInfo[]);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetCustomAttributesData: (() => System.Collections.Generic.IList<System.Reflection.CustomAttributeData>);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class HandleCollector {
+        constructor(name: string, initialThreshold: number);
+        constructor(name: string, initialThreshold: number, maximumThreshold: number);
+        Count: number;
+        InitialThreshold: number;
+        MaximumThreshold: number;
+        Name: string;
+        Add: (() => void);
+        Remove: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class StandardOleMarshalObject {
+        CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+        GetLifetimeService: (() => System.Object);
+        InitializeLifetimeService: (() => System.Object);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
       }
       export namespace ComTypes {
         export declare class BIND_OPTS {
@@ -10900,19 +20407,19 @@ export namespace System {
           ToString: (() => string);
           GetType: (() => System.Type);
         }
-        export declare class IBindCtx {
+        export interface IBindCtx {
           RegisterObjectBound: ((punk: System.Object) => void);
           RevokeObjectBound: ((punk: System.Object) => void);
           ReleaseBoundObjects: (() => void);
           RegisterObjectParam: ((pszKey: string, punk: System.Object) => void);
           RevokeObjectParam: ((pszKey: string) => number);
         }
-        export declare class IConnectionPoint {
+        export interface IConnectionPoint {
           Unadvise: ((dwCookie: number) => void);
         }
-        export declare class IConnectionPointContainer {
+        export interface IConnectionPointContainer {
         }
-        export declare class IEnumConnectionPoints {
+        export interface IEnumConnectionPoints {
           Next: ((celt: number, rgelt: System.Runtime.InteropServices.ComTypes.IConnectionPoint[], pceltFetched: System.IntPtr) => number);
           Skip: ((celt: number) => number);
           Reset: (() => void);
@@ -10925,22 +20432,22 @@ export namespace System {
           ToString: (() => string);
           GetType: (() => System.Type);
         }
-        export declare class IEnumConnections {
+        export interface IEnumConnections {
           Next: ((celt: number, rgelt: System.Runtime.InteropServices.ComTypes.CONNECTDATA[], pceltFetched: System.IntPtr) => number);
           Skip: ((celt: number) => number);
           Reset: (() => void);
         }
-        export declare class IEnumMoniker {
+        export interface IEnumMoniker {
           Next: ((celt: number, rgelt: System.Runtime.InteropServices.ComTypes.IMoniker[], pceltFetched: System.IntPtr) => number);
           Skip: ((celt: number) => number);
           Reset: (() => void);
         }
-        export declare class IEnumString {
+        export interface IEnumString {
           Next: ((celt: number, rgelt: string[], pceltFetched: System.IntPtr) => number);
           Skip: ((celt: number) => number);
           Reset: (() => void);
         }
-        export declare class IEnumVARIANT {
+        export interface IEnumVARIANT {
           Next: ((celt: number, rgVar: System.Object[], pceltFetched: System.IntPtr) => number);
           Skip: ((celt: number) => number);
           Reset: (() => number);
@@ -10954,20 +20461,20 @@ export namespace System {
           ToString: (() => string);
           GetType: (() => System.Type);
         }
-        export declare class IMoniker {
+        export interface IMoniker {
           IsDirty: (() => number);
           Load: ((pStm: System.Runtime.InteropServices.ComTypes.IStream) => void);
           Save: ((pStm: System.Runtime.InteropServices.ComTypes.IStream, fClearDirty: boolean) => void);
           IsEqual: ((pmkOtherMoniker: System.Runtime.InteropServices.ComTypes.IMoniker) => number);
           IsRunning: ((pbc: System.Runtime.InteropServices.ComTypes.IBindCtx, pmkToLeft: System.Runtime.InteropServices.ComTypes.IMoniker, pmkNewlyRunning: System.Runtime.InteropServices.ComTypes.IMoniker) => number);
         }
-        export declare class IPersistFile {
+        export interface IPersistFile {
           IsDirty: (() => number);
           Load: ((pszFileName: string, dwMode: number) => void);
           Save: ((pszFileName: string, fRemember: boolean) => void);
           SaveCompleted: ((pszFileName: string) => void);
         }
-        export declare class IRunningObjectTable {
+        export interface IRunningObjectTable {
           Register: ((grfFlags: number, punkObject: System.Object, pmkObjectName: System.Runtime.InteropServices.ComTypes.IMoniker) => number);
           Revoke: ((dwRegister: number) => void);
           IsRunning: ((pmkObjectName: System.Runtime.InteropServices.ComTypes.IMoniker) => number);
@@ -10989,7 +20496,7 @@ export namespace System {
           ToString: (() => string);
           GetType: (() => System.Type);
         }
-        export declare class IStream {
+        export interface IStream {
           Read: ((pv: System.Byte[], cb: number, pcbRead: System.IntPtr) => void);
           Write: ((pv: System.Byte[], cb: number, pcbWritten: System.IntPtr) => void);
           Seek: ((dlibMove: System.Int64, dwOrigin: number, plibNewPosition: System.IntPtr) => void);
@@ -11017,7 +20524,7 @@ export namespace System {
           ToString: (() => string);
           GetType: (() => System.Type);
         }
-        export declare class ITypeComp {
+        export interface ITypeComp {
         }
         export enum TYPEKIND {
           TKIND_ENUM = 0,
@@ -11259,14 +20766,14 @@ export namespace System {
           VARFLAG_FREPLACEABLE = 2048,
           VARFLAG_FIMMEDIATEBIND = 4096,
         }
-        export declare class ITypeInfo {
+        export interface ITypeInfo {
           GetIDsOfNames: ((rgszNames: string[], cNames: number, pMemId: number[]) => void);
           GetDllEntry: ((memid: number, invKind: System.Runtime.InteropServices.ComTypes.INVOKEKIND, pBstrDllName: System.IntPtr, pBstrName: System.IntPtr, pwOrdinal: System.IntPtr) => void);
           ReleaseTypeAttr: ((pTypeAttr: System.IntPtr) => void);
           ReleaseFuncDesc: ((pFuncDesc: System.IntPtr) => void);
           ReleaseVarDesc: ((pVarDesc: System.IntPtr) => void);
         }
-        export declare class ITypeInfo2 {
+        export interface ITypeInfo2 {
           GetIDsOfNames: ((rgszNames: string[], cNames: number, pMemId: number[]) => void);
           GetDllEntry: ((memid: number, invKind: System.Runtime.InteropServices.ComTypes.INVOKEKIND, pBstrDllName: System.IntPtr, pBstrName: System.IntPtr, pwOrdinal: System.IntPtr) => void);
           ReleaseTypeAttr: ((pTypeAttr: System.IntPtr) => void);
@@ -11302,20 +20809,99 @@ export namespace System {
           ToString: (() => string);
           GetType: (() => System.Type);
         }
-        export declare class ITypeLib {
+        export interface ITypeLib {
           GetTypeInfoCount: (() => number);
           IsName: ((szNameBuf: string, lHashVal: number) => boolean);
           ReleaseTLibAttr: ((pTLibAttr: System.IntPtr) => void);
         }
-        export declare class ITypeLib2 {
+        export interface ITypeLib2 {
           GetTypeInfoCount: (() => number);
           IsName: ((szNameBuf: string, lHashVal: number) => boolean);
           ReleaseTLibAttr: ((pTLibAttr: System.IntPtr) => void);
           GetAllCustData: ((pCustData: System.IntPtr) => void);
         }
+        export enum ADVF {
+          ADVF_NODATA = 1,
+          ADVF_PRIMEFIRST = 2,
+          ADVF_ONLYONCE = 4,
+          ADVFCACHE_NOHANDLER = 8,
+          ADVFCACHE_FORCEBUILTIN = 16,
+          ADVFCACHE_ONSAVE = 32,
+          ADVF_DATAONSTOP = 64,
+        }
+        export enum DATADIR {
+          DATADIR_GET = 1,
+          DATADIR_SET = 2,
+        }
+        export enum DVASPECT {
+          DVASPECT_CONTENT = 1,
+          DVASPECT_THUMBNAIL = 2,
+          DVASPECT_ICON = 4,
+          DVASPECT_DOCPRINT = 8,
+        }
+        export declare class FORMATETC {
+          cfFormat: System.Int16;
+          dwAspect: System.Runtime.InteropServices.ComTypes.DVASPECT;
+          lindex: number;
+          ptd: System.IntPtr;
+          tymed: System.Runtime.InteropServices.ComTypes.TYMED;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          ToString: (() => string);
+          GetType: (() => System.Type);
+        }
+        export interface IAdviseSink {
+          OnClose: (() => void);
+          OnRename: ((moniker: System.Runtime.InteropServices.ComTypes.IMoniker) => void);
+          OnSave: (() => void);
+          OnViewChange: ((aspect: number, index: number) => void);
+        }
+        export interface IDataObject {
+          DUnadvise: ((connection: number) => void);
+          EnumFormatEtc: ((direction: System.Runtime.InteropServices.ComTypes.DATADIR) => System.Runtime.InteropServices.ComTypes.IEnumFORMATETC);
+        }
+        export interface IEnumFORMATETC {
+          Next: ((celt: number, rgelt: System.Runtime.InteropServices.ComTypes.FORMATETC[], pceltFetched: number[]) => number);
+          Reset: (() => number);
+          Skip: ((celt: number) => number);
+        }
+        export interface IEnumSTATDATA {
+          Next: ((celt: number, rgelt: System.Runtime.InteropServices.ComTypes.STATDATA[], pceltFetched: number[]) => number);
+          Reset: (() => number);
+          Skip: ((celt: number) => number);
+        }
+        export declare class STATDATA {
+          advf: System.Runtime.InteropServices.ComTypes.ADVF;
+          advSink: System.Runtime.InteropServices.ComTypes.IAdviseSink;
+          connection: number;
+          formatetc: System.Runtime.InteropServices.ComTypes.FORMATETC;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          ToString: (() => string);
+          GetType: (() => System.Type);
+        }
+        export declare class STGMEDIUM {
+          pUnkForRelease: System.Object;
+          tymed: System.Runtime.InteropServices.ComTypes.TYMED;
+          unionmember: System.IntPtr;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          ToString: (() => string);
+          GetType: (() => System.Type);
+        }
+        export enum TYMED {
+          TYMED_HGLOBAL = 1,
+          TYMED_FILE = 2,
+          TYMED_ISTREAM = 4,
+          TYMED_ISTORAGE = 8,
+          TYMED_GDI = 16,
+          TYMED_MFPICT = 32,
+          TYMED_ENHMF = 64,
+          TYMED_NULL = 0,
+        }
       }
       export namespace Expando {
-        export declare class IExpando {
+        export interface IExpando {
           AddField: ((name: string) => System.Reflection.FieldInfo);
           AddProperty: ((name: string) => System.Reflection.PropertyInfo);
           AddMethod: ((name: string, method: System.Delegate) => System.Reflection.MethodInfo);
@@ -11329,7 +20915,17 @@ export namespace System {
           ToString: (() => string);
           GetType: (() => System.Type);
         }
-        export declare class IActivationFactory {
+        export declare class EventRegistrationTokenTable<T = any> {
+          constructor();
+          InvocationList: T;
+          AddEventHandler: ((handler: T) => System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken);
+          RemoveEventHandler: ((token: System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken) => void) | ((handler: T) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export interface IActivationFactory {
           ActivateInstance: (() => System.Object);
         }
         export declare class WindowsRuntimeMarshal {
@@ -11346,7 +20942,7 @@ export namespace System {
         export declare class DesignerNamespaceResolveEventArgs {
           constructor(namespaceName: string);
           NamespaceName: string;
-          ResolvedAssemblyFiles: any; // System.Collections.ObjectModel.Collection`1[System.String]
+          ResolvedAssemblyFiles: string[];
           Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
           GetType: (() => System.Type);
@@ -11356,7 +20952,7 @@ export namespace System {
           constructor(namespaceName: string, requestingAssembly: System.Reflection.Assembly);
           NamespaceName: string;
           RequestingAssembly: System.Reflection.Assembly;
-          ResolvedAssemblies: any; // System.Collections.ObjectModel.Collection`1[System.Reflection.Assembly]
+          ResolvedAssemblies: System.Reflection.Assembly[];
           Equals: ((obj: System.Object) => boolean);
           GetHashCode: (() => number);
           GetType: (() => System.Type);
@@ -11402,16 +20998,16 @@ export namespace System {
         Off = 1,
         RemoteOnly = 2,
       }
-      export declare class IChannelInfo {
+      export interface IChannelInfo {
         ChannelData: System.Object[];
       }
-      export declare class IEnvoyInfo {
+      export interface IEnvoyInfo {
         EnvoySinks: System.Runtime.Remoting.Messaging.IMessageSink;
       }
-      export declare class IObjectHandle {
+      export interface IObjectHandle {
         Unwrap: (() => System.Object);
       }
-      export declare class IRemotingTypeInfo {
+      export interface IRemotingTypeInfo {
         TypeName: string;
         CanCastTo: ((fromType: System.Type, o: System.Object) => boolean);
       }
@@ -11630,19 +21226,19 @@ export namespace System {
           Process = 16,
           Machine = 20,
         }
-        export declare class IActivator {
+        export interface IActivator {
           Level: System.Runtime.Remoting.Activation.ActivatorLevel;
           NextActivator: System.Runtime.Remoting.Activation.IActivator;
           Activate: ((msg: System.Runtime.Remoting.Activation.IConstructionCallMessage) => System.Runtime.Remoting.Activation.IConstructionReturnMessage);
         }
-        export declare class IConstructionCallMessage {
+        export interface IConstructionCallMessage {
           ActivationType: System.Type;
           ActivationTypeName: string;
           Activator: System.Runtime.Remoting.Activation.IActivator;
           CallSiteActivationAttributes: System.Object[];
           ContextProperties: System.Collections.IList;
         }
-        export declare class IConstructionReturnMessage {
+        export interface IConstructionReturnMessage {
         }
       }
       export namespace Channels {
@@ -11742,80 +21338,80 @@ export namespace System {
           GetType: (() => System.Type);
           ToString: (() => string);
         }
-        export declare class IChannel {
+        export interface IChannel {
           ChannelName: string;
           ChannelPriority: number;
         }
-        export declare class IChannelDataStore {
+        export interface IChannelDataStore {
           ChannelUris: string[];
         }
-        export declare class IChannelReceiver {
+        export interface IChannelReceiver {
           ChannelData: System.Object;
           GetUrlsForUri: ((objectURI: string) => string[]);
           StartListening: ((data: System.Object) => void);
           StopListening: ((data: System.Object) => void);
         }
-        export declare class IChannelReceiverHook {
+        export interface IChannelReceiverHook {
           ChannelScheme: string;
           ChannelSinkChain: System.Runtime.Remoting.Channels.IServerChannelSink;
           WantsToListen: boolean;
           AddHookChannelUri: ((channelUri: string) => void);
         }
-        export declare class IChannelSender {
+        export interface IChannelSender {
         }
-        export declare class IChannelSinkBase {
+        export interface IChannelSinkBase {
           Properties: System.Collections.IDictionary;
         }
-        export declare class IClientChannelSink {
+        export interface IClientChannelSink {
           NextChannelSink: System.Runtime.Remoting.Channels.IClientChannelSink;
           AsyncProcessRequest: ((sinkStack: System.Runtime.Remoting.Channels.IClientChannelSinkStack, msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders, stream: System.IO.Stream) => void);
           AsyncProcessResponse: ((sinkStack: System.Runtime.Remoting.Channels.IClientResponseChannelSinkStack, state: System.Object, headers: System.Runtime.Remoting.Channels.ITransportHeaders, stream: System.IO.Stream) => void);
           GetRequestStream: ((msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders) => System.IO.Stream);
         }
-        export declare class IClientChannelSinkProvider {
+        export interface IClientChannelSinkProvider {
           Next: System.Runtime.Remoting.Channels.IClientChannelSinkProvider;
           CreateSink: ((channel: System.Runtime.Remoting.Channels.IChannelSender, url: string, remoteChannelData: System.Object) => System.Runtime.Remoting.Channels.IClientChannelSink);
         }
-        export declare class IClientChannelSinkStack {
+        export interface IClientChannelSinkStack {
           Pop: ((sink: System.Runtime.Remoting.Channels.IClientChannelSink) => System.Object);
           Push: ((sink: System.Runtime.Remoting.Channels.IClientChannelSink, state: System.Object) => void);
         }
-        export declare class IClientFormatterSink {
+        export interface IClientFormatterSink {
         }
-        export declare class IClientFormatterSinkProvider {
+        export interface IClientFormatterSinkProvider {
         }
-        export declare class IClientResponseChannelSinkStack {
+        export interface IClientResponseChannelSinkStack {
           AsyncProcessResponse: ((headers: System.Runtime.Remoting.Channels.ITransportHeaders, stream: System.IO.Stream) => void);
           DispatchException: ((e: System.Exception) => void);
           DispatchReplyMessage: ((msg: System.Runtime.Remoting.Messaging.IMessage) => void);
         }
-        export declare class ISecurableChannel {
+        export interface ISecurableChannel {
           IsSecured: boolean;
         }
-        export declare class IServerChannelSink {
+        export interface IServerChannelSink {
           NextChannelSink: System.Runtime.Remoting.Channels.IServerChannelSink;
           AsyncProcessResponse: ((sinkStack: System.Runtime.Remoting.Channels.IServerResponseChannelSinkStack, state: System.Object, msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders, stream: System.IO.Stream) => void);
           GetResponseStream: ((sinkStack: System.Runtime.Remoting.Channels.IServerResponseChannelSinkStack, state: System.Object, msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders) => System.IO.Stream);
         }
-        export declare class IServerChannelSinkProvider {
+        export interface IServerChannelSinkProvider {
           Next: System.Runtime.Remoting.Channels.IServerChannelSinkProvider;
           CreateSink: ((channel: System.Runtime.Remoting.Channels.IChannelReceiver) => System.Runtime.Remoting.Channels.IServerChannelSink);
           GetChannelData: ((channelData: System.Runtime.Remoting.Channels.IChannelDataStore) => void);
         }
-        export declare class IServerChannelSinkStack {
+        export interface IServerChannelSinkStack {
           Pop: ((sink: System.Runtime.Remoting.Channels.IServerChannelSink) => System.Object);
           Push: ((sink: System.Runtime.Remoting.Channels.IServerChannelSink, state: System.Object) => void);
           ServerCallback: ((ar: System.IAsyncResult) => void);
           Store: ((sink: System.Runtime.Remoting.Channels.IServerChannelSink, state: System.Object) => void);
           StoreAndDispatch: ((sink: System.Runtime.Remoting.Channels.IServerChannelSink, state: System.Object) => void);
         }
-        export declare class IServerFormatterSinkProvider {
+        export interface IServerFormatterSinkProvider {
         }
-        export declare class IServerResponseChannelSinkStack {
+        export interface IServerResponseChannelSinkStack {
           AsyncProcessResponse: ((msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders, stream: System.IO.Stream) => void);
           GetResponseStream: ((msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders) => System.IO.Stream);
         }
-        export declare class ITransportHeaders {
+        export interface ITransportHeaders {
           GetEnumerator: (() => System.Collections.IEnumerator);
         }
         export declare class ServerChannelSinkStack {
@@ -11903,42 +21499,42 @@ export namespace System {
           GetType: (() => System.Type);
           ToString: (() => string);
         }
-        export declare class IContextAttribute {
+        export interface IContextAttribute {
           GetPropertiesForNewContext: ((msg: System.Runtime.Remoting.Activation.IConstructionCallMessage) => void);
           IsContextOK: ((ctx: System.Runtime.Remoting.Contexts.Context, msg: System.Runtime.Remoting.Activation.IConstructionCallMessage) => boolean);
         }
-        export declare class IContextProperty {
+        export interface IContextProperty {
           Name: string;
           Freeze: ((newContext: System.Runtime.Remoting.Contexts.Context) => void);
           IsNewContextOK: ((newCtx: System.Runtime.Remoting.Contexts.Context) => boolean);
         }
-        export declare class IContextPropertyActivator {
+        export interface IContextPropertyActivator {
           CollectFromClientContext: ((msg: System.Runtime.Remoting.Activation.IConstructionCallMessage) => void);
           CollectFromServerContext: ((msg: System.Runtime.Remoting.Activation.IConstructionReturnMessage) => void);
           DeliverClientContextToServerContext: ((msg: System.Runtime.Remoting.Activation.IConstructionCallMessage) => boolean);
           DeliverServerContextToClientContext: ((msg: System.Runtime.Remoting.Activation.IConstructionReturnMessage) => boolean);
           IsOKToActivate: ((msg: System.Runtime.Remoting.Activation.IConstructionCallMessage) => boolean);
         }
-        export declare class IContributeClientContextSink {
+        export interface IContributeClientContextSink {
           GetClientContextSink: ((nextSink: System.Runtime.Remoting.Messaging.IMessageSink) => System.Runtime.Remoting.Messaging.IMessageSink);
         }
-        export declare class IContributeDynamicSink {
+        export interface IContributeDynamicSink {
           GetDynamicSink: (() => System.Runtime.Remoting.Contexts.IDynamicMessageSink);
         }
-        export declare class IContributeEnvoySink {
+        export interface IContributeEnvoySink {
           GetEnvoySink: ((obj: System.MarshalByRefObject, nextSink: System.Runtime.Remoting.Messaging.IMessageSink) => System.Runtime.Remoting.Messaging.IMessageSink);
         }
-        export declare class IContributeObjectSink {
+        export interface IContributeObjectSink {
           GetObjectSink: ((obj: System.MarshalByRefObject, nextSink: System.Runtime.Remoting.Messaging.IMessageSink) => System.Runtime.Remoting.Messaging.IMessageSink);
         }
-        export declare class IContributeServerContextSink {
+        export interface IContributeServerContextSink {
           GetServerContextSink: ((nextSink: System.Runtime.Remoting.Messaging.IMessageSink) => System.Runtime.Remoting.Messaging.IMessageSink);
         }
-        export declare class IDynamicMessageSink {
+        export interface IDynamicMessageSink {
           ProcessMessageFinish: ((replyMsg: System.Runtime.Remoting.Messaging.IMessage, bCliSide: boolean, bAsync: boolean) => void);
           ProcessMessageStart: ((reqMsg: System.Runtime.Remoting.Messaging.IMessage, bCliSide: boolean, bAsync: boolean) => void);
         }
-        export declare class IDynamicProperty {
+        export interface IDynamicProperty {
           Name: string;
         }
       }
@@ -11959,7 +21555,7 @@ export namespace System {
           GetType: (() => System.Type);
           ToString: (() => string);
         }
-        export declare class ILease {
+        export interface ILease {
           CurrentLeaseTime: System.TimeSpan;
           CurrentState: System.Runtime.Remoting.Lifetime.LeaseState;
           InitialLeaseTime: System.TimeSpan;
@@ -11969,7 +21565,7 @@ export namespace System {
           Renew: ((renewalTime: System.TimeSpan) => System.TimeSpan);
           Unregister: ((obj: System.Runtime.Remoting.Lifetime.ISponsor) => void);
         }
-        export declare class ISponsor {
+        export interface ISponsor {
           Renewal: ((lease: System.Runtime.Remoting.Lifetime.ILease) => System.TimeSpan);
         }
         export enum LeaseState {
@@ -12006,7 +21602,7 @@ export namespace System {
           GetType: (() => System.Type);
           ToString: (() => string);
         }
-        export declare class ILogicalThreadAffinative {
+        export interface ILogicalThreadAffinative {
         }
         export declare class LogicalCallContext {
           HasInfo: boolean;
@@ -12128,24 +21724,24 @@ export namespace System {
           GetType: (() => System.Type);
           ToString: (() => string);
         }
-        export declare class IMessage {
+        export interface IMessage {
           Properties: System.Collections.IDictionary;
         }
-        export declare class IMessageCtrl {
+        export interface IMessageCtrl {
           Cancel: ((msToCancel: number) => void);
         }
-        export declare class IMessageSink {
+        export interface IMessageSink {
           NextSink: System.Runtime.Remoting.Messaging.IMessageSink;
           SyncProcessMessage: ((msg: System.Runtime.Remoting.Messaging.IMessage) => System.Runtime.Remoting.Messaging.IMessage);
           AsyncProcessMessage: ((msg: System.Runtime.Remoting.Messaging.IMessage, replySink: System.Runtime.Remoting.Messaging.IMessageSink) => System.Runtime.Remoting.Messaging.IMessageCtrl);
         }
-        export declare class IMethodCallMessage {
+        export interface IMethodCallMessage {
           InArgCount: number;
           InArgs: System.Object[];
           GetInArg: ((argNum: number) => System.Object);
           GetInArgName: ((index: number) => string);
         }
-        export declare class IMethodMessage {
+        export interface IMethodMessage {
           ArgCount: number;
           Args: System.Object[];
           HasVarArgs: boolean;
@@ -12158,7 +21754,7 @@ export namespace System {
           GetArg: ((argNum: number) => System.Object);
           GetArgName: ((index: number) => string);
         }
-        export declare class IMethodReturnMessage {
+        export interface IMethodReturnMessage {
           Exception: System.Exception;
           OutArgCount: number;
           OutArgs: System.Object[];
@@ -12166,7 +21762,7 @@ export namespace System {
           GetOutArg: ((argNum: number) => System.Object);
           GetOutArgName: ((index: number) => string);
         }
-        export declare class IRemotingFormatter {
+        export interface IRemotingFormatter {
           Deserialize: ((serializationStream: System.IO.Stream, handler: System.Runtime.Remoting.Messaging.HeaderHandler) => System.Object);
           Serialize: ((serializationStream: System.IO.Stream, graph: System.Object, headers: System.Runtime.Remoting.Messaging.Header[]) => void);
         }
@@ -12353,7 +21949,7 @@ export namespace System {
           Choice = 2,
         }
         export namespace W3cXsd2001 {
-          export declare class ISoapXsd {
+          export interface ISoapXsd {
             GetXsdType: (() => string);
           }
           export declare class SoapAnyUri {
@@ -12763,7 +22359,7 @@ export namespace System {
           GetType: (() => System.Type);
           ToString: (() => string);
         }
-        export declare class ITrackingHandler {
+        export interface ITrackingHandler {
           DisconnectedObject: ((obj: System.Object) => void);
           MarshaledObject: ((obj: System.Object, or: System.Runtime.Remoting.ObjRef) => void);
           UnmarshaledObject: ((obj: System.Object, or: System.Runtime.Remoting.ObjRef) => void);
@@ -12828,17 +22424,17 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class IDeserializationCallback {
+      export interface IDeserializationCallback {
         OnDeserialization: ((sender: System.Object) => void);
       }
-      export declare class IFormatter {
+      export interface IFormatter {
         SurrogateSelector: System.Runtime.Serialization.ISurrogateSelector;
         Binder: System.Runtime.Serialization.SerializationBinder;
         Context: System.Runtime.Serialization.StreamingContext;
         Deserialize: ((serializationStream: System.IO.Stream) => System.Object);
         Serialize: ((serializationStream: System.IO.Stream, graph: System.Object) => void);
       }
-      export declare class IFormatterConverter {
+      export interface IFormatterConverter {
         Convert: ((value: System.Object, type: System.Type) => System.Object) | ((value: System.Object, typeCode: System.TypeCode) => System.Object);
         ToBoolean: ((value: System.Object) => boolean);
         ToChar: ((value: System.Object) => System.Char);
@@ -12856,17 +22452,17 @@ export namespace System {
         ToDateTime: ((value: System.Object) => System.DateTime);
         ToString: ((value: System.Object) => string);
       }
-      export declare class IObjectReference {
+      export interface IObjectReference {
         GetRealObject: ((context: System.Runtime.Serialization.StreamingContext) => System.Object);
       }
-      export declare class ISerializable {
+      export interface ISerializable {
         GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
       }
-      export declare class ISerializationSurrogate {
+      export interface ISerializationSurrogate {
         GetObjectData: ((obj: System.Object, info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
         SetObjectData: ((obj: System.Object, info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext, selector: System.Runtime.Serialization.ISurrogateSelector) => System.Object);
       }
-      export declare class ISurrogateSelector {
+      export interface ISurrogateSelector {
         ChainSelector: ((selector: System.Runtime.Serialization.ISurrogateSelector) => void);
         GetNextSelector: (() => System.Runtime.Serialization.ISurrogateSelector);
       }
@@ -12900,7 +22496,7 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class ISafeSerializationData {
+      export interface ISafeSerializationData {
         CompleteDeserialization: ((deserialized: System.Object) => void);
       }
       export declare class SerializationBinder {
@@ -13038,11 +22634,11 @@ export namespace System {
           Low = 2,
           Full = 3,
         }
-        export declare class IFieldInfo {
+        export interface IFieldInfo {
           FieldNames: string[];
           FieldTypes: System.Type[];
         }
-        export declare class ISoapMessage {
+        export interface ISoapMessage {
           ParamNames: string[];
           ParamValues: System.Object[];
           ParamTypes: System.Type[];
@@ -13161,6 +22757,19 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
+      export declare class FrameworkName {
+        constructor(identifier: string, version: System.Version);
+        constructor(identifier: string, version: System.Version, profile: string);
+        constructor(frameworkName: string);
+        Identifier: string;
+        Version: System.Version;
+        Profile: string;
+        FullName: string;
+        Equals: ((obj: System.Object) => boolean) | ((other: System.Runtime.Versioning.FrameworkName) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
     }
   }
   export namespace Security {
@@ -13264,25 +22873,25 @@ export namespace System {
       HostResolvePolicy = 16,
       AllFlags = 31,
     }
-    export declare class IEvidenceFactory {
+    export interface IEvidenceFactory {
       Evidence: System.Security.Policy.Evidence;
     }
-    export declare class IPermission {
+    export interface IPermission {
       Copy: (() => System.Security.IPermission);
       Demand: (() => void);
       Intersect: ((target: System.Security.IPermission) => System.Security.IPermission);
       IsSubsetOf: ((target: System.Security.IPermission) => boolean);
       Union: ((target: System.Security.IPermission) => System.Security.IPermission);
     }
-    export declare class ISecurityEncodable {
+    export interface ISecurityEncodable {
       FromXml: ((e: System.Security.SecurityElement) => void);
       ToXml: (() => System.Security.SecurityElement);
     }
-    export declare class ISecurityPolicyEncodable {
+    export interface ISecurityPolicyEncodable {
       FromXml: ((e: System.Security.SecurityElement, level: System.Security.Policy.PolicyLevel) => void);
       ToXml: ((level: System.Security.Policy.PolicyLevel) => System.Security.SecurityElement);
     }
-    export declare class IStackWalk {
+    export interface IStackWalk {
       Assert: (() => void);
       Demand: (() => void);
       Deny: (() => void);
@@ -13545,6 +23154,22 @@ export namespace System {
       GetHashCode: (() => number);
       GetType: (() => System.Type);
     }
+    export enum ManifestKinds {
+      Application = 2,
+      ApplicationAndDeployment = 3,
+      Deployment = 1,
+      None = 0,
+    }
+    export declare class SecureStringMarshal {
+      static SecureStringToCoTaskMemAnsi: ((s: System.Security.SecureString) => System.IntPtr);
+      static SecureStringToGlobalAllocAnsi: ((s: System.Security.SecureString) => System.IntPtr);
+      static SecureStringToCoTaskMemUnicode: ((s: System.Security.SecureString) => System.IntPtr);
+      static SecureStringToGlobalAllocUnicode: ((s: System.Security.SecureString) => System.IntPtr);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
     export namespace AccessControl {
       export enum AccessControlActions {
         None = 0,
@@ -13571,7 +23196,12 @@ export namespace System {
         Allow = 0,
         Deny = 1,
       }
-      export declare class AccessRule {
+      export declare class AccessRule<T = any> {
+        constructor(identity: string, rights: T, type: System.Security.AccessControl.AccessControlType);
+        constructor(identity: System.Security.Principal.IdentityReference, rights: T, type: System.Security.AccessControl.AccessControlType);
+        constructor(identity: string, rights: T, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType);
+        constructor(identity: System.Security.Principal.IdentityReference, rights: T, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType);
+        Rights: T;
         AccessControlType: System.Security.AccessControl.AccessControlType;
         IdentityReference: System.Security.Principal.IdentityReference;
         InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
@@ -13634,7 +23264,12 @@ export namespace System {
         Success = 1,
         Failure = 2,
       }
-      export declare class AuditRule {
+      export declare class AuditRule<T = any> {
+        constructor(identity: string, rights: T, flags: System.Security.AccessControl.AuditFlags);
+        constructor(identity: System.Security.Principal.IdentityReference, rights: T, flags: System.Security.AccessControl.AuditFlags);
+        constructor(identity: string, rights: T, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags);
+        constructor(identity: System.Security.Principal.IdentityReference, rights: T, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags);
+        Rights: T;
         AuditFlags: System.Security.AccessControl.AuditFlags;
         IdentityReference: System.Security.Principal.IdentityReference;
         InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
@@ -14464,7 +24099,7 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class ObjectSecurity {
+      export declare class ObjectSecurity<T = any> {
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
         AuditRuleType: System.Type;
@@ -14473,12 +24108,24 @@ export namespace System {
         AreAuditRulesCanonical: boolean;
         AreAuditRulesProtected: boolean;
         AccessRuleFactory: ((identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType) => System.Security.AccessControl.AccessRule);
+        AddAccessRule: ((rule: System.Security.AccessControl.AccessRule<T>) => void);
+        RemoveAccessRule: ((rule: System.Security.AccessControl.AccessRule<T>) => boolean);
+        RemoveAccessRuleAll: ((rule: System.Security.AccessControl.AccessRule<T>) => void);
+        RemoveAccessRuleSpecific: ((rule: System.Security.AccessControl.AccessRule<T>) => void);
+        ResetAccessRule: ((rule: System.Security.AccessControl.AccessRule<T>) => void);
+        SetAccessRule: ((rule: System.Security.AccessControl.AccessRule<T>) => void);
         AuditRuleFactory: ((identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags) => System.Security.AccessControl.AuditRule);
+        AddAuditRule: ((rule: System.Security.AccessControl.AuditRule<T>) => void);
+        RemoveAuditRule: ((rule: System.Security.AccessControl.AuditRule<T>) => boolean);
+        RemoveAuditRuleAll: ((rule: System.Security.AccessControl.AuditRule<T>) => void);
+        RemoveAuditRuleSpecific: ((rule: System.Security.AccessControl.AuditRule<T>) => void);
+        SetAuditRule: ((rule: System.Security.AccessControl.AuditRule<T>) => void);
+        GetAccessRules: ((includeExplicit: boolean, includeInherited: boolean, targetType: System.Type) => System.Security.AccessControl.AuthorizationRuleCollection);
+        GetAuditRules: ((includeExplicit: boolean, includeInherited: boolean, targetType: System.Type) => System.Security.AccessControl.AuthorizationRuleCollection);
         GetGroup: ((targetType: System.Type) => System.Security.Principal.IdentityReference);
         GetOwner: ((targetType: System.Type) => System.Security.Principal.IdentityReference);
         GetSecurityDescriptorBinaryForm: (() => System.Byte[]);
         GetSecurityDescriptorSddlForm: ((includeSections: System.Security.AccessControl.AccessControlSections) => string);
-        static IsSddlConversionSupported: (() => boolean);
         PurgeAccessRules: ((identity: System.Security.Principal.IdentityReference) => void);
         PurgeAuditRules: ((identity: System.Security.Principal.IdentityReference) => void);
         SetAccessRuleProtection: ((isProtected: boolean, preserveInheritance: boolean) => void);
@@ -14710,6 +24357,314 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
+      export declare class SemaphoreAccessRule {
+        constructor(identity: System.Security.Principal.IdentityReference, eventRights: System.Security.AccessControl.SemaphoreRights, type: System.Security.AccessControl.AccessControlType);
+        constructor(identity: string, eventRights: System.Security.AccessControl.SemaphoreRights, type: System.Security.AccessControl.AccessControlType);
+        SemaphoreRights: System.Security.AccessControl.SemaphoreRights;
+        AccessControlType: System.Security.AccessControl.AccessControlType;
+        IdentityReference: System.Security.Principal.IdentityReference;
+        InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
+        IsInherited: boolean;
+        PropagationFlags: System.Security.AccessControl.PropagationFlags;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SemaphoreAuditRule {
+        constructor(identity: System.Security.Principal.IdentityReference, eventRights: System.Security.AccessControl.SemaphoreRights, flags: System.Security.AccessControl.AuditFlags);
+        SemaphoreRights: System.Security.AccessControl.SemaphoreRights;
+        AuditFlags: System.Security.AccessControl.AuditFlags;
+        IdentityReference: System.Security.Principal.IdentityReference;
+        InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
+        IsInherited: boolean;
+        PropagationFlags: System.Security.AccessControl.PropagationFlags;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum SemaphoreRights {
+        Modify = 2,
+        Delete = 65536,
+        ReadPermissions = 131072,
+        ChangePermissions = 262144,
+        TakeOwnership = 524288,
+        Synchronize = 1048576,
+        FullControl = 2031619,
+      }
+      export declare class SemaphoreSecurity {
+        constructor();
+        constructor(name: string, includeSections: System.Security.AccessControl.AccessControlSections);
+        AccessRightType: System.Type;
+        AccessRuleType: System.Type;
+        AuditRuleType: System.Type;
+        AreAccessRulesCanonical: boolean;
+        AreAccessRulesProtected: boolean;
+        AreAuditRulesCanonical: boolean;
+        AreAuditRulesProtected: boolean;
+        AccessRuleFactory: ((identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType) => System.Security.AccessControl.AccessRule);
+        AddAccessRule: ((rule: System.Security.AccessControl.SemaphoreAccessRule) => void);
+        RemoveAccessRule: ((rule: System.Security.AccessControl.SemaphoreAccessRule) => boolean);
+        RemoveAccessRuleAll: ((rule: System.Security.AccessControl.SemaphoreAccessRule) => void);
+        RemoveAccessRuleSpecific: ((rule: System.Security.AccessControl.SemaphoreAccessRule) => void);
+        ResetAccessRule: ((rule: System.Security.AccessControl.SemaphoreAccessRule) => void);
+        SetAccessRule: ((rule: System.Security.AccessControl.SemaphoreAccessRule) => void);
+        AuditRuleFactory: ((identityReference: System.Security.Principal.IdentityReference, accessMask: number, isInherited: boolean, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags) => System.Security.AccessControl.AuditRule);
+        AddAuditRule: ((rule: System.Security.AccessControl.SemaphoreAuditRule) => void);
+        RemoveAuditRule: ((rule: System.Security.AccessControl.SemaphoreAuditRule) => boolean);
+        RemoveAuditRuleAll: ((rule: System.Security.AccessControl.SemaphoreAuditRule) => void);
+        RemoveAuditRuleSpecific: ((rule: System.Security.AccessControl.SemaphoreAuditRule) => void);
+        SetAuditRule: ((rule: System.Security.AccessControl.SemaphoreAuditRule) => void);
+        GetAccessRules: ((includeExplicit: boolean, includeInherited: boolean, targetType: System.Type) => System.Security.AccessControl.AuthorizationRuleCollection);
+        GetAuditRules: ((includeExplicit: boolean, includeInherited: boolean, targetType: System.Type) => System.Security.AccessControl.AuthorizationRuleCollection);
+        GetGroup: ((targetType: System.Type) => System.Security.Principal.IdentityReference);
+        GetOwner: ((targetType: System.Type) => System.Security.Principal.IdentityReference);
+        GetSecurityDescriptorBinaryForm: (() => System.Byte[]);
+        GetSecurityDescriptorSddlForm: ((includeSections: System.Security.AccessControl.AccessControlSections) => string);
+        PurgeAccessRules: ((identity: System.Security.Principal.IdentityReference) => void);
+        PurgeAuditRules: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetAccessRuleProtection: ((isProtected: boolean, preserveInheritance: boolean) => void);
+        SetAuditRuleProtection: ((isProtected: boolean, preserveInheritance: boolean) => void);
+        SetGroup: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetOwner: ((identity: System.Security.Principal.IdentityReference) => void);
+        SetSecurityDescriptorBinaryForm: ((binaryForm: System.Byte[]) => void) | ((binaryForm: System.Byte[], includeSections: System.Security.AccessControl.AccessControlSections) => void);
+        SetSecurityDescriptorSddlForm: ((sddlForm: string) => void) | ((sddlForm: string, includeSections: System.Security.AccessControl.AccessControlSections) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+    }
+    export namespace Authentication {
+      export declare class AuthenticationException {
+        constructor();
+        constructor(message: string);
+        constructor(message: string, innerException: System.Exception);
+        Message: string;
+        Data: System.Collections.IDictionary;
+        InnerException: System.Exception;
+        TargetSite: System.Reflection.MethodBase;
+        StackTrace: string;
+        HelpLink: string;
+        Source: string;
+        HResult: number;
+        GetBaseException: (() => System.Exception);
+        ToString: (() => string);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type) | (() => System.Type);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+      }
+      export enum CipherAlgorithmType {
+        None = 0,
+        Null = 24576,
+        Aes = 26129,
+        Aes128 = 26126,
+        Aes192 = 26127,
+        Aes256 = 26128,
+        Des = 26113,
+        Rc2 = 26114,
+        Rc4 = 26625,
+        TripleDes = 26115,
+      }
+      export enum ExchangeAlgorithmType {
+        None = 0,
+        DiffieHellman = 43522,
+        RsaKeyX = 41984,
+        RsaSign = 9216,
+      }
+      export enum HashAlgorithmType {
+        None = 0,
+        Md5 = 32771,
+        Sha1 = 32772,
+        Sha256 = 32780,
+        Sha384 = 32781,
+        Sha512 = 32782,
+      }
+      export declare class InvalidCredentialException {
+        constructor();
+        constructor(message: string);
+        constructor(message: string, innerException: System.Exception);
+        Message: string;
+        Data: System.Collections.IDictionary;
+        InnerException: System.Exception;
+        TargetSite: System.Reflection.MethodBase;
+        StackTrace: string;
+        HelpLink: string;
+        Source: string;
+        HResult: number;
+        GetBaseException: (() => System.Exception);
+        ToString: (() => string);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type) | (() => System.Type);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+      }
+      export enum SslProtocols {
+        None = 0,
+        Ssl2 = 12,
+        Ssl3 = 48,
+        Tls = 192,
+        Tls11 = 768,
+        Tls12 = 3072,
+        Default = 240,
+      }
+      export namespace ExtendedProtection {
+        export declare class ServiceNameCollection {
+          constructor(items: System.Collections.ICollection);
+          Count: number;
+          Merge: ((serviceName: string) => System.Security.Authentication.ExtendedProtection.ServiceNameCollection) | ((serviceNames: System.Collections.IEnumerable) => System.Security.Authentication.ExtendedProtection.ServiceNameCollection);
+          Contains: ((searchServiceName: string) => boolean);
+          GetEnumerator: (() => System.Collections.IEnumerator);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export enum TokenBindingType {
+          Provided = 0,
+          Referred = 1,
+        }
+        export declare class TokenBinding {
+          BindingType: System.Security.Authentication.ExtendedProtection.TokenBindingType;
+          GetRawTokenBindingId: (() => System.Byte[]);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class ChannelBinding {
+          Size: number;
+          IsInvalid: boolean;
+          IsClosed: boolean;
+          DangerousGetHandle: (() => System.IntPtr);
+          Close: (() => void);
+          Dispose: (() => void);
+          SetHandleAsInvalid: (() => void);
+          DangerousRelease: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export enum ChannelBindingKind {
+          Unknown = 0,
+          Unique = 25,
+          Endpoint = 26,
+        }
+        export declare class ExtendedProtectionPolicy {
+          constructor(policyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement);
+          constructor(policyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement, customChannelBinding: System.Security.Authentication.ExtendedProtection.ChannelBinding);
+          constructor(policyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement, protectionScenario: System.Security.Authentication.ExtendedProtection.ProtectionScenario, customServiceNames: System.Collections.ICollection);
+          constructor(policyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement, protectionScenario: System.Security.Authentication.ExtendedProtection.ProtectionScenario, customServiceNames: System.Security.Authentication.ExtendedProtection.ServiceNameCollection);
+          CustomChannelBinding: System.Security.Authentication.ExtendedProtection.ChannelBinding;
+          CustomServiceNames: System.Security.Authentication.ExtendedProtection.ServiceNameCollection;
+          static OSSupportsExtendedProtection: boolean;
+          PolicyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement;
+          ProtectionScenario: System.Security.Authentication.ExtendedProtection.ProtectionScenario;
+          ToString: (() => string);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+        }
+        export declare class ExtendedProtectionPolicyTypeConverter {
+          constructor();
+          CanConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type) => boolean) | ((destinationType: System.Type) => boolean);
+          ConvertTo: ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type) => System.Object) | ((value: System.Object, destinationType: System.Type) => System.Object);
+          CanConvertFrom: ((sourceType: System.Type) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type) => boolean);
+          ConvertFrom: ((value: System.Object) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => System.Object);
+          ConvertFromInvariantString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object);
+          ConvertFromString: ((text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, text: string) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, text: string) => System.Object);
+          ConvertToInvariantString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string);
+          ConvertToString: ((value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => string) | ((context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object) => string);
+          CreateInstance: ((propertyValues: System.Collections.IDictionary) => System.Object) | ((context: System.ComponentModel.ITypeDescriptorContext, propertyValues: System.Collections.IDictionary) => System.Object);
+          GetCreateInstanceSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+          GetProperties: ((value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => System.ComponentModel.PropertyDescriptorCollection) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]) => System.ComponentModel.PropertyDescriptorCollection);
+          GetPropertiesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+          GetStandardValues: (() => System.Collections.ICollection) | ((context: System.ComponentModel.ITypeDescriptorContext) => System.ComponentModel.TypeConverter_StandardValuesCollection);
+          GetStandardValuesExclusive: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+          GetStandardValuesSupported: (() => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext) => boolean);
+          IsValid: ((value: System.Object) => boolean) | ((context: System.ComponentModel.ITypeDescriptorContext, value: System.Object) => boolean);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export enum PolicyEnforcement {
+          Never = 0,
+          WhenSupported = 1,
+          Always = 2,
+        }
+        export enum ProtectionScenario {
+          TransportSelected = 0,
+          TrustedProxy = 1,
+        }
+        export namespace Configuration {
+          export declare class ExtendedProtectionPolicyElement {
+            constructor();
+            CustomServiceNames: System.Security.Authentication.ExtendedProtection.Configuration.ServiceNameElementCollection;
+            PolicyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement;
+            ProtectionScenario: System.Security.Authentication.ExtendedProtection.ProtectionScenario;
+            ElementInformation: any; // System.Configuration.ElementInformation
+            LockAllAttributesExcept: any; // System.Configuration.ConfigurationLockCollection
+            LockAllElementsExcept: any; // System.Configuration.ConfigurationLockCollection
+            LockAttributes: any; // System.Configuration.ConfigurationLockCollection
+            LockElements: any; // System.Configuration.ConfigurationLockCollection
+            LockItem: boolean;
+            CurrentConfiguration: any; // System.Configuration.Configuration
+            BuildPolicy: (() => System.Security.Authentication.ExtendedProtection.ExtendedProtectionPolicy);
+            Equals: ((compareTo: System.Object) => boolean);
+            GetHashCode: (() => number);
+            IsReadOnly: (() => boolean);
+            GetType: (() => System.Type);
+            ToString: (() => string);
+          }
+          export declare class ServiceNameElement {
+            constructor();
+            Name: string;
+            ElementInformation: any; // System.Configuration.ElementInformation
+            LockAllAttributesExcept: any; // System.Configuration.ConfigurationLockCollection
+            LockAllElementsExcept: any; // System.Configuration.ConfigurationLockCollection
+            LockAttributes: any; // System.Configuration.ConfigurationLockCollection
+            LockElements: any; // System.Configuration.ConfigurationLockCollection
+            LockItem: boolean;
+            CurrentConfiguration: any; // System.Configuration.Configuration
+            Equals: ((compareTo: System.Object) => boolean);
+            GetHashCode: (() => number);
+            IsReadOnly: (() => boolean);
+            GetType: (() => System.Type);
+            ToString: (() => string);
+          }
+          export declare class ServiceNameElementCollection {
+            constructor();
+            CollectionType: any; // System.Configuration.ConfigurationElementCollectionType
+            Count: number;
+            EmitClear: boolean;
+            IsSynchronized: boolean;
+            SyncRoot: System.Object;
+            ElementInformation: any; // System.Configuration.ElementInformation
+            LockAllAttributesExcept: any; // System.Configuration.ConfigurationLockCollection
+            LockAllElementsExcept: any; // System.Configuration.ConfigurationLockCollection
+            LockAttributes: any; // System.Configuration.ConfigurationLockCollection
+            LockElements: any; // System.Configuration.ConfigurationLockCollection
+            LockItem: boolean;
+            CurrentConfiguration: any; // System.Configuration.Configuration
+            Add: ((element: System.Security.Authentication.ExtendedProtection.Configuration.ServiceNameElement) => void);
+            Clear: (() => void);
+            IndexOf: ((element: System.Security.Authentication.ExtendedProtection.Configuration.ServiceNameElement) => number);
+            Remove: ((name: string) => void) | ((element: System.Security.Authentication.ExtendedProtection.Configuration.ServiceNameElement) => void);
+            RemoveAt: ((index: number) => void);
+            CopyTo: ((array: any[], index: number) => void);
+            Equals: ((compareTo: System.Object) => boolean);
+            GetHashCode: (() => number);
+            GetEnumerator: (() => System.Collections.IEnumerator);
+            IsReadOnly: (() => boolean);
+            GetType: (() => System.Type);
+            ToString: (() => string);
+          }
+        }
+      }
     }
     export namespace Claims {
       export declare class Claim {
@@ -14722,7 +24677,7 @@ export namespace System {
         constructor(type: string, value: string, valueType: string, issuer: string, originalIssuer: string, subject: System.Security.Claims.ClaimsIdentity);
         Issuer: string;
         OriginalIssuer: string;
-        Properties: any; // System.Collections.Generic.IDictionary`2[System.String,System.String]
+        Properties: System.Collections.Generic.IDictionary<string, string>;
         Subject: System.Security.Claims.ClaimsIdentity;
         Type: string;
         Value: string;
@@ -14830,19 +24785,19 @@ export namespace System {
       export declare class ClaimsIdentity {
         constructor();
         constructor(identity: System.Security.Principal.IIdentity);
-        constructor(claims: any);
+        constructor(claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
         constructor(authenticationType: string);
-        constructor(claims: any, authenticationType: string);
-        constructor(identity: System.Security.Principal.IIdentity, claims: any);
+        constructor(claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>, authenticationType: string);
+        constructor(identity: System.Security.Principal.IIdentity, claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
         constructor(authenticationType: string, nameType: string, roleType: string);
-        constructor(claims: any, authenticationType: string, nameType: string, roleType: string);
-        constructor(identity: System.Security.Principal.IIdentity, claims: any, authenticationType: string, nameType: string, roleType: string);
+        constructor(claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>, authenticationType: string, nameType: string, roleType: string);
+        constructor(identity: System.Security.Principal.IIdentity, claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>, authenticationType: string, nameType: string, roleType: string);
         constructor(reader: System.IO.BinaryReader);
         AuthenticationType: string;
         IsAuthenticated: boolean;
         Actor: System.Security.Claims.ClaimsIdentity;
         BootstrapContext: System.Object;
-        Claims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
+        Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         Label: string;
         Name: string;
         NameClaimType: string;
@@ -14852,12 +24807,12 @@ export namespace System {
         static DefaultRoleClaimType: string;
         Clone: (() => System.Security.Claims.ClaimsIdentity);
         AddClaim: ((claim: System.Security.Claims.Claim) => void);
-        AddClaims: ((claims: any) => void);
+        AddClaims: ((claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) => void);
         TryRemoveClaim: ((claim: System.Security.Claims.Claim) => boolean);
         RemoveClaim: ((claim: System.Security.Claims.Claim) => void);
-        FindAll: ((match: any) => any) | ((type: string) => any);
-        HasClaim: ((match: any) => boolean) | ((type: string, value: string) => boolean);
-        FindFirst: ((match: any) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
+        FindAll: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) | ((type: string) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
+        HasClaim: ((match: System.Predicate<System.Security.Claims.Claim>) => boolean) | ((type: string, value: string) => boolean);
+        FindFirst: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
         WriteTo: ((writer: System.IO.BinaryWriter) => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
@@ -14866,24 +24821,31 @@ export namespace System {
       }
       export declare class ClaimsPrincipal {
         constructor();
-        constructor(identities: any);
+        constructor(identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>);
         constructor(identity: System.Security.Principal.IIdentity);
         constructor(principal: System.Security.Principal.IPrincipal);
         constructor(reader: System.IO.BinaryReader);
         static PrimaryIdentitySelector: any; // System.Func`2[System.Collections.Generic.IEnumerable`1[System.Security.Claims.ClaimsIdentity],System.Security.Claims.ClaimsIdentity]
         static ClaimsPrincipalSelector: any; // System.Func`1[System.Security.Claims.ClaimsPrincipal]
-        Claims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
+        Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         static Current: System.Security.Claims.ClaimsPrincipal;
-        Identities: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.ClaimsIdentity]
+        Identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>;
         Identity: System.Security.Principal.IIdentity;
         Clone: (() => System.Security.Claims.ClaimsPrincipal);
         AddIdentity: ((identity: System.Security.Claims.ClaimsIdentity) => void);
-        AddIdentities: ((identities: any) => void);
-        FindAll: ((match: any) => any) | ((type: string) => any);
-        FindFirst: ((match: any) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
-        HasClaim: ((match: any) => boolean) | ((type: string, value: string) => boolean);
+        AddIdentities: ((identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>) => void);
+        FindAll: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) | ((type: string) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
+        FindFirst: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
+        HasClaim: ((match: System.Predicate<System.Security.Claims.Claim>) => boolean) | ((type: string, value: string) => boolean);
         IsInRole: ((role: string) => boolean);
         WriteTo: ((writer: System.IO.BinaryWriter) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DynamicRoleClaimProvider {
+        static AddDynamicRoleClaims: ((claimsIdentity: System.Security.Claims.ClaimsIdentity, claims: any) => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type);
@@ -15160,10 +25122,10 @@ export namespace System {
         FlushAsync: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | (() => System.Threading.Tasks.Task);
         Seek: ((offset: System.Int64, origin: System.IO.SeekOrigin) => System.Int64);
         SetLength: ((value: System.Int64) => void);
-        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: any) => number);
-        ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => any) | ((buffer: System.Byte[], offset: number, count: number) => any) | ((destination: any, cancellationToken?: System.Threading.CancellationToken) => any);
-        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: any) => void);
-        WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: any, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
+        Read: ((buffer: System.Byte[], offset: number, count: number) => number) | ((destination: System.Span<System.Byte>) => number);
+        ReadAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<number>) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task<number>) | ((destination: System.Memory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.ValueTask<number>);
+        Write: ((buffer: System.Byte[], offset: number, count: number) => void) | ((source: System.ReadOnlySpan<System.Byte>) => void);
+        WriteAsync: ((buffer: System.Byte[], offset: number, count: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((buffer: System.Byte[], offset: number, count: number) => System.Threading.Tasks.Task) | ((source: System.ReadOnlyMemory<System.Byte>, cancellationToken?: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
         Clear: (() => void);
         CopyToAsync: ((destination: System.IO.Stream) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number) => System.Threading.Tasks.Task) | ((destination: System.IO.Stream, bufferSize: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
         CopyTo: ((destination: System.IO.Stream) => void) | ((destination: System.IO.Stream, bufferSize: number) => void);
@@ -15472,7 +25434,7 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class ICryptoTransform {
+      export interface ICryptoTransform {
         InputBlockSize: number;
         OutputBlockSize: number;
         CanTransformMultipleBlocks: boolean;
@@ -16194,7 +26156,7 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class ICspAsymmetricAlgorithm {
+      export interface ICspAsymmetricAlgorithm {
         CspKeyContainerInfo: System.Security.Cryptography.CspKeyContainerInfo;
         ExportCspBlob: ((includePrivateParameters: boolean) => System.Byte[]);
         ImportCspBlob: ((rawData: System.Byte[]) => void);
@@ -16276,6 +26238,885 @@ export namespace System {
         GetType: (() => System.Type);
         ToString: (() => string);
       }
+      export declare class IncrementalHash {
+        AlgorithmName: System.Security.Cryptography.HashAlgorithmName;
+        AppendData: ((data: System.Byte[]) => void) | ((data: System.Byte[], offset: number, count: number) => void);
+        GetHashAndReset: (() => System.Byte[]);
+        Dispose: (() => void);
+        static CreateHash: ((hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Security.Cryptography.IncrementalHash);
+        static CreateHMAC: ((hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, key: System.Byte[]) => System.Security.Cryptography.IncrementalHash);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class AesManaged {
+        constructor();
+        FeedbackSize: number;
+        IV: System.Byte[];
+        Key: System.Byte[];
+        KeySize: number;
+        Mode: System.Security.Cryptography.CipherMode;
+        Padding: System.Security.Cryptography.PaddingMode;
+        BlockSize: number;
+        LegalBlockSizes: System.Security.Cryptography.KeySizes[];
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        CreateDecryptor: (() => System.Security.Cryptography.ICryptoTransform) | ((key: System.Byte[], iv: System.Byte[]) => System.Security.Cryptography.ICryptoTransform);
+        CreateEncryptor: (() => System.Security.Cryptography.ICryptoTransform) | ((key: System.Byte[], iv: System.Byte[]) => System.Security.Cryptography.ICryptoTransform);
+        GenerateIV: (() => void);
+        GenerateKey: (() => void);
+        Dispose: (() => void);
+        Clear: (() => void);
+        ValidKeySize: ((bitLength: number) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CngAlgorithm {
+        constructor(algorithm: string);
+        Algorithm: string;
+        static Rsa: System.Security.Cryptography.CngAlgorithm;
+        static ECDiffieHellman: System.Security.Cryptography.CngAlgorithm;
+        static ECDiffieHellmanP256: System.Security.Cryptography.CngAlgorithm;
+        static ECDiffieHellmanP384: System.Security.Cryptography.CngAlgorithm;
+        static ECDiffieHellmanP521: System.Security.Cryptography.CngAlgorithm;
+        static ECDsa: System.Security.Cryptography.CngAlgorithm;
+        static ECDsaP256: System.Security.Cryptography.CngAlgorithm;
+        static ECDsaP384: System.Security.Cryptography.CngAlgorithm;
+        static ECDsaP521: System.Security.Cryptography.CngAlgorithm;
+        static MD5: System.Security.Cryptography.CngAlgorithm;
+        static Sha1: System.Security.Cryptography.CngAlgorithm;
+        static Sha256: System.Security.Cryptography.CngAlgorithm;
+        static Sha384: System.Security.Cryptography.CngAlgorithm;
+        static Sha512: System.Security.Cryptography.CngAlgorithm;
+        Equals: ((obj: System.Object) => boolean) | ((other: System.Security.Cryptography.CngAlgorithm) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class CngAlgorithmGroup {
+        constructor(algorithmGroup: string);
+        AlgorithmGroup: string;
+        static DiffieHellman: System.Security.Cryptography.CngAlgorithmGroup;
+        static Dsa: System.Security.Cryptography.CngAlgorithmGroup;
+        static ECDiffieHellman: System.Security.Cryptography.CngAlgorithmGroup;
+        static ECDsa: System.Security.Cryptography.CngAlgorithmGroup;
+        static Rsa: System.Security.Cryptography.CngAlgorithmGroup;
+        Equals: ((obj: System.Object) => boolean) | ((other: System.Security.Cryptography.CngAlgorithmGroup) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export enum CngKeyHandleOpenOptions {
+        None = 0,
+        EphemeralKey = 1,
+      }
+      export declare class CngKey {
+        constructor();
+        AlgorithmGroup: System.Security.Cryptography.CngAlgorithmGroup;
+        Algorithm: System.Security.Cryptography.CngAlgorithm;
+        ExportPolicy: System.Security.Cryptography.CngExportPolicies;
+        Handle: any; // Microsoft.Win32.SafeHandles.SafeNCryptKeyHandle
+        IsEphemeral: boolean;
+        IsMachineKey: boolean;
+        KeyName: string;
+        KeySize: number;
+        KeyUsage: System.Security.Cryptography.CngKeyUsages;
+        ParentWindowHandle: System.IntPtr;
+        Provider: System.Security.Cryptography.CngProvider;
+        ProviderHandle: any; // Microsoft.Win32.SafeHandles.SafeNCryptProviderHandle
+        UniqueName: string;
+        UIPolicy: System.Security.Cryptography.CngUIPolicy;
+        static Create: ((algorithm: System.Security.Cryptography.CngAlgorithm) => System.Security.Cryptography.CngKey) | ((algorithm: System.Security.Cryptography.CngAlgorithm, keyName: string) => System.Security.Cryptography.CngKey) | ((algorithm: System.Security.Cryptography.CngAlgorithm, keyName: string, creationParameters: System.Security.Cryptography.CngKeyCreationParameters) => System.Security.Cryptography.CngKey);
+        Delete: (() => void);
+        Dispose: (() => void);
+        static Exists: ((keyName: string) => boolean) | ((keyName: string, provider: System.Security.Cryptography.CngProvider) => boolean) | ((keyName: string, provider: System.Security.Cryptography.CngProvider, options: System.Security.Cryptography.CngKeyOpenOptions) => boolean);
+        static Import: ((keyBlob: System.Byte[], format: System.Security.Cryptography.CngKeyBlobFormat) => System.Security.Cryptography.CngKey) | ((keyBlob: System.Byte[], format: System.Security.Cryptography.CngKeyBlobFormat, provider: System.Security.Cryptography.CngProvider) => System.Security.Cryptography.CngKey);
+        Export: ((format: System.Security.Cryptography.CngKeyBlobFormat) => System.Byte[]);
+        GetProperty: ((name: string, options: System.Security.Cryptography.CngPropertyOptions) => System.Security.Cryptography.CngProperty);
+        HasProperty: ((name: string, options: System.Security.Cryptography.CngPropertyOptions) => boolean);
+        static Open: ((keyName: string) => System.Security.Cryptography.CngKey) | ((keyName: string, provider: System.Security.Cryptography.CngProvider) => System.Security.Cryptography.CngKey) | ((keyName: string, provider: System.Security.Cryptography.CngProvider, openOptions: System.Security.Cryptography.CngKeyOpenOptions) => System.Security.Cryptography.CngKey) | ((keyHandle: any, keyHandleOpenOptions: System.Security.Cryptography.CngKeyHandleOpenOptions) => System.Security.Cryptography.CngKey);
+        SetProperty: ((property: System.Security.Cryptography.CngProperty) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CngKeyBlobFormat {
+        constructor(format: string);
+        Format: string;
+        static EccPrivateBlob: System.Security.Cryptography.CngKeyBlobFormat;
+        static EccPublicBlob: System.Security.Cryptography.CngKeyBlobFormat;
+        static EccFullPrivateBlob: System.Security.Cryptography.CngKeyBlobFormat;
+        static EccFullPublicBlob: System.Security.Cryptography.CngKeyBlobFormat;
+        static GenericPrivateBlob: System.Security.Cryptography.CngKeyBlobFormat;
+        static GenericPublicBlob: System.Security.Cryptography.CngKeyBlobFormat;
+        static OpaqueTransportBlob: System.Security.Cryptography.CngKeyBlobFormat;
+        static Pkcs8PrivateBlob: System.Security.Cryptography.CngKeyBlobFormat;
+        Equals: ((obj: System.Object) => boolean) | ((other: System.Security.Cryptography.CngKeyBlobFormat) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class CngKeyCreationParameters {
+        constructor();
+        ExportPolicy?: System.Nullable<System.Security.Cryptography.CngExportPolicies>;
+        KeyCreationOptions: System.Security.Cryptography.CngKeyCreationOptions;
+        KeyUsage?: System.Nullable<System.Security.Cryptography.CngKeyUsages>;
+        ParentWindowHandle: System.IntPtr;
+        Parameters: System.Security.Cryptography.CngPropertyCollection;
+        Provider: System.Security.Cryptography.CngProvider;
+        UIPolicy: System.Security.Cryptography.CngUIPolicy;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CngProperty {
+        constructor(name: string, value: System.Byte[], options: System.Security.Cryptography.CngPropertyOptions);
+        Name: string;
+        Options: System.Security.Cryptography.CngPropertyOptions;
+        GetValue: (() => System.Byte[]);
+        Equals: ((obj: System.Object) => boolean) | ((other: System.Security.Cryptography.CngProperty) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class CngPropertyCollection {
+        constructor();
+        Count: number;
+        Add: ((item: System.Security.Cryptography.CngProperty) => void);
+        Clear: (() => void);
+        CopyTo: ((array: System.Security.Cryptography.CngProperty[], index: number) => void);
+        Contains: ((item: System.Security.Cryptography.CngProperty) => boolean);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<System.Security.Cryptography.CngProperty>);
+        IndexOf: ((item: System.Security.Cryptography.CngProperty) => number);
+        Insert: ((index: number, item: System.Security.Cryptography.CngProperty) => void);
+        Remove: ((item: System.Security.Cryptography.CngProperty) => boolean);
+        RemoveAt: ((index: number) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class CngProvider {
+        constructor(provider: string);
+        Provider: string;
+        static MicrosoftSmartCardKeyStorageProvider: System.Security.Cryptography.CngProvider;
+        static MicrosoftSoftwareKeyStorageProvider: System.Security.Cryptography.CngProvider;
+        Equals: ((obj: System.Object) => boolean) | ((other: System.Security.Cryptography.CngProvider) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class CngUIPolicy {
+        constructor(protectionLevel: System.Security.Cryptography.CngUIProtectionLevels);
+        constructor(protectionLevel: System.Security.Cryptography.CngUIProtectionLevels, friendlyName: string);
+        constructor(protectionLevel: System.Security.Cryptography.CngUIProtectionLevels, friendlyName: string, description: string);
+        constructor(protectionLevel: System.Security.Cryptography.CngUIProtectionLevels, friendlyName: string, description: string, useContext: string);
+        constructor(protectionLevel: System.Security.Cryptography.CngUIProtectionLevels, friendlyName: string, description: string, useContext: string, creationTitle: string);
+        CreationTitle: string;
+        Description: string;
+        FriendlyName: string;
+        ProtectionLevel: System.Security.Cryptography.CngUIProtectionLevels;
+        UseContext: string;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ECDiffieHellman {
+        KeyExchangeAlgorithm: string;
+        SignatureAlgorithm: string;
+        PublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey;
+        KeySize: number;
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        static Create: (() => System.Security.Cryptography.ECDiffieHellman) | ((algorithm: string) => System.Security.Cryptography.ECDiffieHellman) | ((curve: System.Security.Cryptography.ECCurve) => System.Security.Cryptography.ECDiffieHellman) | ((parameters: System.Security.Cryptography.ECParameters) => System.Security.Cryptography.ECDiffieHellman);
+        DeriveKeyMaterial: ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey) => System.Byte[]);
+        DeriveKeyFromHash: ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]) | ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, secretPrepend: System.Byte[], secretAppend: System.Byte[]) => System.Byte[]);
+        DeriveKeyFromHmac: ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: System.Byte[]) => System.Byte[]) | ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: System.Byte[], secretPrepend: System.Byte[], secretAppend: System.Byte[]) => System.Byte[]);
+        DeriveKeyTls: ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, prfLabel: System.Byte[], prfSeed: System.Byte[]) => System.Byte[]);
+        ExportParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.ECParameters);
+        ExportExplicitParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.ECParameters);
+        ImportParameters: ((parameters: System.Security.Cryptography.ECParameters) => void);
+        GenerateKey: ((curve: System.Security.Cryptography.ECCurve) => void);
+        Dispose: (() => void);
+        Clear: (() => void);
+        FromXmlString: ((xmlString: string) => void);
+        ToXmlString: ((includePrivateParameters: boolean) => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ECDiffieHellmanPublicKey {
+        Dispose: (() => void);
+        ToByteArray: (() => System.Byte[]);
+        ToXmlString: (() => string);
+        ExportParameters: (() => System.Security.Cryptography.ECParameters);
+        ExportExplicitParameters: (() => System.Security.Cryptography.ECParameters);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ECDsa {
+        KeyExchangeAlgorithm: string;
+        SignatureAlgorithm: string;
+        KeySize: number;
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        static Create: (() => System.Security.Cryptography.ECDsa) | ((algorithm: string) => System.Security.Cryptography.ECDsa) | ((curve: System.Security.Cryptography.ECCurve) => System.Security.Cryptography.ECDsa) | ((parameters: System.Security.Cryptography.ECParameters) => System.Security.Cryptography.ECDsa);
+        SignHash: ((hash: System.Byte[]) => System.Byte[]);
+        VerifyHash: ((hash: System.Byte[], signature: System.Byte[]) => boolean);
+        SignData: ((data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]) | ((data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]) | ((data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]);
+        VerifyData: ((data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean) | ((data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean) | ((data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean);
+        ExportParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.ECParameters);
+        ExportExplicitParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.ECParameters);
+        ImportParameters: ((parameters: System.Security.Cryptography.ECParameters) => void);
+        GenerateKey: ((curve: System.Security.Cryptography.ECCurve) => void);
+        Dispose: (() => void);
+        Clear: (() => void);
+        FromXmlString: ((xmlString: string) => void);
+        ToXmlString: ((includePrivateParameters: boolean) => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ECDsaCng {
+        constructor();
+        constructor(keySize: number);
+        constructor(key: System.Security.Cryptography.CngKey);
+        constructor(curve: System.Security.Cryptography.ECCurve);
+        HashAlgorithm: System.Security.Cryptography.CngAlgorithm;
+        Key: System.Security.Cryptography.CngKey;
+        KeyExchangeAlgorithm: string;
+        SignatureAlgorithm: string;
+        KeySize: number;
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        SignHash: ((hash: System.Byte[]) => System.Byte[]);
+        VerifyHash: ((hash: System.Byte[], signature: System.Byte[]) => boolean);
+        FromXmlString: ((xml: string, format: System.Security.Cryptography.ECKeyXmlFormat) => void) | ((xmlString: string) => void);
+        SignData: ((data: System.Byte[]) => System.Byte[]) | ((data: System.IO.Stream) => System.Byte[]) | ((data: System.Byte[], offset: number, count: number) => System.Byte[]) | ((data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]) | ((data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]) | ((data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]);
+        ToXmlString: ((format: System.Security.Cryptography.ECKeyXmlFormat) => string) | ((includePrivateParameters: boolean) => string);
+        VerifyData: ((data: System.Byte[], signature: System.Byte[]) => boolean) | ((data: System.IO.Stream, signature: System.Byte[]) => boolean) | ((data: System.Byte[], offset: number, count: number, signature: System.Byte[]) => boolean) | ((data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean) | ((data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean) | ((data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean);
+        ExportParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.ECParameters);
+        ExportExplicitParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.ECParameters);
+        ImportParameters: ((parameters: System.Security.Cryptography.ECParameters) => void);
+        GenerateKey: ((curve: System.Security.Cryptography.ECCurve) => void);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum ECKeyXmlFormat {
+        Rfc4050 = 0,
+      }
+      export enum CngExportPolicies {
+        None = 0,
+        AllowExport = 1,
+        AllowPlaintextExport = 2,
+        AllowArchiving = 4,
+        AllowPlaintextArchiving = 8,
+      }
+      export enum CngKeyCreationOptions {
+        None = 0,
+        MachineKey = 32,
+        OverwriteExistingKey = 128,
+      }
+      export enum CngKeyOpenOptions {
+        None = 0,
+        UserKey = 0,
+        MachineKey = 32,
+        Silent = 64,
+      }
+      export enum CngKeyUsages {
+        None = 0,
+        Decryption = 1,
+        Signing = 2,
+        KeyAgreement = 4,
+        AllUsages = 16777215,
+      }
+      export enum CngPropertyOptions {
+        None = 0,
+        CustomProperty = 1073741824,
+        Persist = -2147483648,
+      }
+      export enum CngUIProtectionLevels {
+        None = 0,
+        ProtectKey = 1,
+        ForceHighProtection = 2,
+      }
+      export declare class RSACng {
+        constructor();
+        constructor(keySize: number);
+        constructor(key: System.Security.Cryptography.CngKey);
+        Key: System.Security.Cryptography.CngKey;
+        KeyExchangeAlgorithm: string;
+        SignatureAlgorithm: string;
+        KeySize: number;
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        ExportParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.RSAParameters);
+        ImportParameters: ((parameters: System.Security.Cryptography.RSAParameters) => void);
+        Encrypt: ((data: System.Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding) => System.Byte[]);
+        Decrypt: ((data: System.Byte[], padding: System.Security.Cryptography.RSAEncryptionPadding) => System.Byte[]);
+        SignHash: ((hash: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding) => System.Byte[]);
+        VerifyHash: ((hash: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding) => boolean);
+        SignData: ((data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding) => System.Byte[]) | ((data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding) => System.Byte[]) | ((data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding) => System.Byte[]);
+        VerifyData: ((data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding) => boolean) | ((data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding) => boolean) | ((data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, padding: System.Security.Cryptography.RSASignaturePadding) => boolean);
+        DecryptValue: ((rgb: System.Byte[]) => System.Byte[]);
+        EncryptValue: ((rgb: System.Byte[]) => System.Byte[]);
+        FromXmlString: ((xmlString: string) => void);
+        ToXmlString: ((includePrivateParameters: boolean) => string);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class AesCng {
+        constructor();
+        constructor(keyName: string);
+        constructor(keyName: string, provider: System.Security.Cryptography.CngProvider);
+        constructor(keyName: string, provider: System.Security.Cryptography.CngProvider, openOptions: System.Security.Cryptography.CngKeyOpenOptions);
+        Key: System.Byte[];
+        KeySize: number;
+        BlockSize: number;
+        FeedbackSize: number;
+        IV: System.Byte[];
+        LegalBlockSizes: System.Security.Cryptography.KeySizes[];
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        Mode: System.Security.Cryptography.CipherMode;
+        Padding: System.Security.Cryptography.PaddingMode;
+        CreateDecryptor: (() => System.Security.Cryptography.ICryptoTransform) | ((rgbKey: System.Byte[], rgbIV: System.Byte[]) => System.Security.Cryptography.ICryptoTransform);
+        CreateEncryptor: (() => System.Security.Cryptography.ICryptoTransform) | ((rgbKey: System.Byte[], rgbIV: System.Byte[]) => System.Security.Cryptography.ICryptoTransform);
+        GenerateIV: (() => void);
+        GenerateKey: (() => void);
+        Dispose: (() => void);
+        Clear: (() => void);
+        ValidKeySize: ((bitLength: number) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class AesCryptoServiceProvider {
+        constructor();
+        IV: System.Byte[];
+        Key: System.Byte[];
+        KeySize: number;
+        FeedbackSize: number;
+        Mode: System.Security.Cryptography.CipherMode;
+        Padding: System.Security.Cryptography.PaddingMode;
+        BlockSize: number;
+        LegalBlockSizes: System.Security.Cryptography.KeySizes[];
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        GenerateIV: (() => void);
+        GenerateKey: (() => void);
+        CreateDecryptor: ((key: System.Byte[], iv: System.Byte[]) => System.Security.Cryptography.ICryptoTransform) | (() => System.Security.Cryptography.ICryptoTransform);
+        CreateEncryptor: ((key: System.Byte[], iv: System.Byte[]) => System.Security.Cryptography.ICryptoTransform) | (() => System.Security.Cryptography.ICryptoTransform);
+        Dispose: (() => void);
+        Clear: (() => void);
+        ValidKeySize: ((bitLength: number) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ECCurve {
+        IsCharacteristic2: boolean;
+        IsExplicit: boolean;
+        IsNamed: boolean;
+        IsPrime: boolean;
+        Oid: System.Security.Cryptography.Oid;
+        A: System.Byte[];
+        B: System.Byte[];
+        Cofactor: System.Byte[];
+        CurveType: System.Security.Cryptography.ECCurve_ECCurveType;
+        G: System.Security.Cryptography.ECPoint;
+        Hash?: System.Nullable<System.Security.Cryptography.HashAlgorithmName>;
+        Order: System.Byte[];
+        Polynomial: System.Byte[];
+        Prime: System.Byte[];
+        Seed: System.Byte[];
+        static CreateFromFriendlyName: ((oidFriendlyName: string) => System.Security.Cryptography.ECCurve);
+        static CreateFromOid: ((curveOid: System.Security.Cryptography.Oid) => System.Security.Cryptography.ECCurve);
+        static CreateFromValue: ((oidValue: string) => System.Security.Cryptography.ECCurve);
+        Validate: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export enum ECCurve_ECCurveType {
+        Implicit = 0,
+        PrimeShortWeierstrass = 1,
+        PrimeTwistedEdwards = 2,
+        PrimeMontgomery = 3,
+        Characteristic2 = 4,
+        Named = 5,
+      }
+      export declare class ECCurve_NamedCurves {
+        static brainpoolP160r1: System.Security.Cryptography.ECCurve;
+        static brainpoolP160t1: System.Security.Cryptography.ECCurve;
+        static brainpoolP192r1: System.Security.Cryptography.ECCurve;
+        static brainpoolP192t1: System.Security.Cryptography.ECCurve;
+        static brainpoolP224r1: System.Security.Cryptography.ECCurve;
+        static brainpoolP224t1: System.Security.Cryptography.ECCurve;
+        static brainpoolP256r1: System.Security.Cryptography.ECCurve;
+        static brainpoolP256t1: System.Security.Cryptography.ECCurve;
+        static brainpoolP320r1: System.Security.Cryptography.ECCurve;
+        static brainpoolP320t1: System.Security.Cryptography.ECCurve;
+        static brainpoolP384r1: System.Security.Cryptography.ECCurve;
+        static brainpoolP384t1: System.Security.Cryptography.ECCurve;
+        static brainpoolP512r1: System.Security.Cryptography.ECCurve;
+        static brainpoolP512t1: System.Security.Cryptography.ECCurve;
+        static nistP256: System.Security.Cryptography.ECCurve;
+        static nistP384: System.Security.Cryptography.ECCurve;
+        static nistP521: System.Security.Cryptography.ECCurve;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ECParameters {
+        Curve: System.Security.Cryptography.ECCurve;
+        D: System.Byte[];
+        Q: System.Security.Cryptography.ECPoint;
+        Validate: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class ECPoint {
+        X: System.Byte[];
+        Y: System.Byte[];
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => System.Type);
+      }
+      export declare class MD5Cng {
+        constructor();
+        HashSize: number;
+        Hash: System.Byte[];
+        InputBlockSize: number;
+        OutputBlockSize: number;
+        CanTransformMultipleBlocks: boolean;
+        CanReuseTransform: boolean;
+        Initialize: (() => void);
+        ComputeHash: ((inputStream: System.IO.Stream) => System.Byte[]) | ((buffer: System.Byte[]) => System.Byte[]) | ((buffer: System.Byte[], offset: number, count: number) => System.Byte[]);
+        TransformBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number) => number);
+        TransformFinalBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number) => System.Byte[]);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SHA1Cng {
+        constructor();
+        HashSize: number;
+        Hash: System.Byte[];
+        InputBlockSize: number;
+        OutputBlockSize: number;
+        CanTransformMultipleBlocks: boolean;
+        CanReuseTransform: boolean;
+        Initialize: (() => void);
+        ComputeHash: ((inputStream: System.IO.Stream) => System.Byte[]) | ((buffer: System.Byte[]) => System.Byte[]) | ((buffer: System.Byte[], offset: number, count: number) => System.Byte[]);
+        TransformBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number) => number);
+        TransformFinalBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number) => System.Byte[]);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SHA256Cng {
+        constructor();
+        HashSize: number;
+        Hash: System.Byte[];
+        InputBlockSize: number;
+        OutputBlockSize: number;
+        CanTransformMultipleBlocks: boolean;
+        CanReuseTransform: boolean;
+        Initialize: (() => void);
+        ComputeHash: ((inputStream: System.IO.Stream) => System.Byte[]) | ((buffer: System.Byte[]) => System.Byte[]) | ((buffer: System.Byte[], offset: number, count: number) => System.Byte[]);
+        TransformBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number) => number);
+        TransformFinalBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number) => System.Byte[]);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SHA256CryptoServiceProvider {
+        constructor();
+        HashSize: number;
+        Hash: System.Byte[];
+        InputBlockSize: number;
+        OutputBlockSize: number;
+        CanTransformMultipleBlocks: boolean;
+        CanReuseTransform: boolean;
+        Initialize: (() => void);
+        ComputeHash: ((inputStream: System.IO.Stream) => System.Byte[]) | ((buffer: System.Byte[]) => System.Byte[]) | ((buffer: System.Byte[], offset: number, count: number) => System.Byte[]);
+        TransformBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number) => number);
+        TransformFinalBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number) => System.Byte[]);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SHA384Cng {
+        constructor();
+        HashSize: number;
+        Hash: System.Byte[];
+        InputBlockSize: number;
+        OutputBlockSize: number;
+        CanTransformMultipleBlocks: boolean;
+        CanReuseTransform: boolean;
+        Initialize: (() => void);
+        ComputeHash: ((inputStream: System.IO.Stream) => System.Byte[]) | ((buffer: System.Byte[]) => System.Byte[]) | ((buffer: System.Byte[], offset: number, count: number) => System.Byte[]);
+        TransformBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number) => number);
+        TransformFinalBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number) => System.Byte[]);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SHA384CryptoServiceProvider {
+        constructor();
+        HashSize: number;
+        Hash: System.Byte[];
+        InputBlockSize: number;
+        OutputBlockSize: number;
+        CanTransformMultipleBlocks: boolean;
+        CanReuseTransform: boolean;
+        Initialize: (() => void);
+        ComputeHash: ((inputStream: System.IO.Stream) => System.Byte[]) | ((buffer: System.Byte[]) => System.Byte[]) | ((buffer: System.Byte[], offset: number, count: number) => System.Byte[]);
+        TransformBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number) => number);
+        TransformFinalBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number) => System.Byte[]);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SHA512Cng {
+        constructor();
+        HashSize: number;
+        Hash: System.Byte[];
+        InputBlockSize: number;
+        OutputBlockSize: number;
+        CanTransformMultipleBlocks: boolean;
+        CanReuseTransform: boolean;
+        Initialize: (() => void);
+        ComputeHash: ((inputStream: System.IO.Stream) => System.Byte[]) | ((buffer: System.Byte[]) => System.Byte[]) | ((buffer: System.Byte[], offset: number, count: number) => System.Byte[]);
+        TransformBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number) => number);
+        TransformFinalBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number) => System.Byte[]);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class SHA512CryptoServiceProvider {
+        constructor();
+        HashSize: number;
+        Hash: System.Byte[];
+        InputBlockSize: number;
+        OutputBlockSize: number;
+        CanTransformMultipleBlocks: boolean;
+        CanReuseTransform: boolean;
+        Initialize: (() => void);
+        ComputeHash: ((inputStream: System.IO.Stream) => System.Byte[]) | ((buffer: System.Byte[]) => System.Byte[]) | ((buffer: System.Byte[], offset: number, count: number) => System.Byte[]);
+        TransformBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number) => number);
+        TransformFinalBlock: ((inputBuffer: System.Byte[], inputOffset: number, inputCount: number) => System.Byte[]);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class TripleDESCng {
+        constructor();
+        constructor(keyName: string);
+        constructor(keyName: string, provider: System.Security.Cryptography.CngProvider);
+        constructor(keyName: string, provider: System.Security.Cryptography.CngProvider, openOptions: System.Security.Cryptography.CngKeyOpenOptions);
+        Key: System.Byte[];
+        KeySize: number;
+        BlockSize: number;
+        FeedbackSize: number;
+        IV: System.Byte[];
+        LegalBlockSizes: System.Security.Cryptography.KeySizes[];
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        Mode: System.Security.Cryptography.CipherMode;
+        Padding: System.Security.Cryptography.PaddingMode;
+        CreateDecryptor: (() => System.Security.Cryptography.ICryptoTransform) | ((rgbKey: System.Byte[], rgbIV: System.Byte[]) => System.Security.Cryptography.ICryptoTransform);
+        CreateEncryptor: (() => System.Security.Cryptography.ICryptoTransform) | ((rgbKey: System.Byte[], rgbIV: System.Byte[]) => System.Security.Cryptography.ICryptoTransform);
+        GenerateIV: (() => void);
+        GenerateKey: (() => void);
+        Dispose: (() => void);
+        Clear: (() => void);
+        ValidKeySize: ((bitLength: number) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class DSACng {
+        constructor();
+        constructor(keySize: number);
+        constructor(key: System.Security.Cryptography.CngKey);
+        Key: System.Security.Cryptography.CngKey;
+        KeySize: number;
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        SignatureAlgorithm: string;
+        KeyExchangeAlgorithm: string;
+        CreateSignature: ((rgbHash: System.Byte[]) => System.Byte[]);
+        ExportParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.DSAParameters);
+        ImportParameters: ((parameters: System.Security.Cryptography.DSAParameters) => void);
+        VerifySignature: ((rgbHash: System.Byte[], rgbSignature: System.Byte[]) => boolean);
+        SignData: ((data: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]) | ((data: System.Byte[], offset: number, count: number, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]) | ((data: System.IO.Stream, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]);
+        VerifyData: ((data: System.Byte[], signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean) | ((data: System.Byte[], offset: number, count: number, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean) | ((data: System.IO.Stream, signature: System.Byte[], hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => boolean);
+        FromXmlString: ((xmlString: string) => void);
+        ToXmlString: ((includePrivateParameters: boolean) => string);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ECDiffieHellmanCng {
+        constructor();
+        constructor(keySize: number);
+        constructor(key: System.Security.Cryptography.CngKey);
+        constructor(curve: System.Security.Cryptography.ECCurve);
+        HashAlgorithm: System.Security.Cryptography.CngAlgorithm;
+        HmacKey: System.Byte[];
+        Key: System.Security.Cryptography.CngKey;
+        KeyDerivationFunction: System.Security.Cryptography.ECDiffieHellmanKeyDerivationFunction;
+        Label: System.Byte[];
+        PublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey;
+        SecretAppend: System.Byte[];
+        SecretPrepend: System.Byte[];
+        Seed: System.Byte[];
+        UseSecretAgreementAsHmacKey: boolean;
+        KeyExchangeAlgorithm: string;
+        SignatureAlgorithm: string;
+        KeySize: number;
+        LegalKeySizes: System.Security.Cryptography.KeySizes[];
+        DeriveKeyMaterial: ((otherPartyPublicKey: System.Security.Cryptography.CngKey) => System.Byte[]) | ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey) => System.Byte[]);
+        DeriveSecretAgreementHandle: ((otherPartyPublicKey: System.Security.Cryptography.CngKey) => any) | ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey) => any);
+        FromXmlString: ((xml: string, format: System.Security.Cryptography.ECKeyXmlFormat) => void) | ((xmlString: string) => void);
+        ToXmlString: ((format: System.Security.Cryptography.ECKeyXmlFormat) => string) | ((includePrivateParameters: boolean) => string);
+        DeriveKeyFromHash: ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName) => System.Byte[]) | ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, secretPrepend: System.Byte[], secretAppend: System.Byte[]) => System.Byte[]);
+        DeriveKeyFromHmac: ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: System.Byte[]) => System.Byte[]) | ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, hashAlgorithm: System.Security.Cryptography.HashAlgorithmName, hmacKey: System.Byte[], secretPrepend: System.Byte[], secretAppend: System.Byte[]) => System.Byte[]);
+        DeriveKeyTls: ((otherPartyPublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey, prfLabel: System.Byte[], prfSeed: System.Byte[]) => System.Byte[]);
+        ExportParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.ECParameters);
+        ExportExplicitParameters: ((includePrivateParameters: boolean) => System.Security.Cryptography.ECParameters);
+        ImportParameters: ((parameters: System.Security.Cryptography.ECParameters) => void);
+        GenerateKey: ((curve: System.Security.Cryptography.ECCurve) => void);
+        Dispose: (() => void);
+        Clear: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum ECDiffieHellmanKeyDerivationFunction {
+        Hash = 0,
+        Hmac = 1,
+        Tls = 2,
+      }
+      export declare class ECDiffieHellmanCngPublicKey {
+        BlobFormat: System.Security.Cryptography.CngKeyBlobFormat;
+        static FromByteArray: ((publicKeyBlob: System.Byte[], format: System.Security.Cryptography.CngKeyBlobFormat) => System.Security.Cryptography.ECDiffieHellmanPublicKey);
+        static FromXmlString: ((xml: string) => System.Security.Cryptography.ECDiffieHellmanCngPublicKey);
+        Import: (() => System.Security.Cryptography.CngKey);
+        Dispose: (() => void);
+        ToByteArray: (() => System.Byte[]);
+        ToXmlString: (() => string);
+        ExportParameters: (() => System.Security.Cryptography.ECParameters);
+        ExportExplicitParameters: (() => System.Security.Cryptography.ECParameters);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ManifestSignatureInformation {
+        AuthenticodeSignature: System.Security.Cryptography.X509Certificates.AuthenticodeSignatureInformation;
+        Manifest: System.Security.ManifestKinds;
+        StrongNameSignature: System.Security.Cryptography.StrongNameSignatureInformation;
+        static VerifySignature: ((application: System.ActivationContext) => System.Security.Cryptography.ManifestSignatureInformationCollection) | ((application: System.ActivationContext, manifests: System.Security.ManifestKinds) => System.Security.Cryptography.ManifestSignatureInformationCollection) | ((application: System.ActivationContext, manifests: System.Security.ManifestKinds, revocationFlag: System.Security.Cryptography.X509Certificates.X509RevocationFlag, revocationMode: System.Security.Cryptography.X509Certificates.X509RevocationMode) => System.Security.Cryptography.ManifestSignatureInformationCollection);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum SignatureVerificationResult {
+        AssemblyIdentityMismatch = 1,
+        BadDigest = -2146869232,
+        BadSignatureFormat = -2146762749,
+        BasicConstraintsNotObserved = -2146869223,
+        CertificateExpired = -2146762495,
+        CertificateExplicitlyDistrusted = -2146762479,
+        CertificateMalformed = -2146762488,
+        CertificateNotExplicitlyTrusted = -2146762748,
+        CertificateRevoked = -2146762484,
+        CertificateUsageNotAllowed = -2146762490,
+        ContainingSignatureInvalid = 2,
+        CouldNotBuildChain = -2146762486,
+        GenericTrustFailure = -2146762485,
+        InvalidCertificateName = -2146762476,
+        InvalidCertificatePolicy = -2146762477,
+        InvalidCertificateRole = -2146762493,
+        InvalidCertificateSignature = -2146869244,
+        InvalidCertificateUsage = -2146762480,
+        InvalidCountersignature = -2146869245,
+        InvalidSignerCertificate = -2146869246,
+        InvalidTimePeriodNesting = -2146762494,
+        InvalidTimestamp = -2146869243,
+        IssuerChainingError = -2146762489,
+        MissingSignature = -2146762496,
+        PathLengthConstraintViolated = -2146762492,
+        PublicKeyTokenMismatch = 3,
+        PublisherMismatch = 4,
+        RevocationCheckFailure = -2146762482,
+        SystemError = -2146869247,
+        UnknownCriticalExtension = -2146762491,
+        UnknownTrustProvider = -2146762751,
+        UnknownVerificationAction = -2146762750,
+        UntrustedCertificationAuthority = -2146762478,
+        UntrustedRootCertificate = -2146762487,
+        UntrustedTestRootCertificate = -2146762483,
+        Valid = 0,
+      }
+      export declare class StrongNameSignatureInformation {
+        HashAlgorithm: string;
+        HResult: number;
+        IsValid: boolean;
+        PublicKey: System.Security.Cryptography.AsymmetricAlgorithm;
+        VerificationResult: System.Security.Cryptography.SignatureVerificationResult;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class ManifestSignatureInformationCollection {
+        Count: number;
+        Contains: ((value: System.Security.Cryptography.ManifestSignatureInformation) => boolean);
+        CopyTo: ((array: System.Security.Cryptography.ManifestSignatureInformation[], index: number) => void);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<System.Security.Cryptography.ManifestSignatureInformation>);
+        IndexOf: ((value: System.Security.Cryptography.ManifestSignatureInformation) => number);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export enum OidGroup {
+        All = 0,
+        HashAlgorithm = 1,
+        EncryptionAlgorithm = 2,
+        PublicKeyAlgorithm = 3,
+        SignatureAlgorithm = 4,
+        Attribute = 5,
+        ExtensionOrAttribute = 6,
+        EnhancedKeyUsage = 7,
+        Policy = 8,
+        Template = 9,
+        KeyDerivationFunction = 10,
+      }
+      export declare class Oid {
+        constructor();
+        constructor(oid: string);
+        constructor(value: string, friendlyName: string);
+        constructor(oid: System.Security.Cryptography.Oid);
+        Value: string;
+        FriendlyName: string;
+        static FromFriendlyName: ((friendlyName: string, group: System.Security.Cryptography.OidGroup) => System.Security.Cryptography.Oid);
+        static FromOidValue: ((oidValue: string, group: System.Security.Cryptography.OidGroup) => System.Security.Cryptography.Oid);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class OidCollection {
+        constructor();
+        Count: number;
+        IsSynchronized: boolean;
+        SyncRoot: System.Object;
+        Add: ((oid: System.Security.Cryptography.Oid) => number);
+        GetEnumerator: (() => System.Security.Cryptography.OidEnumerator);
+        CopyTo: ((array: System.Security.Cryptography.Oid[], index: number) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class OidEnumerator {
+        Current: System.Security.Cryptography.Oid;
+        MoveNext: (() => boolean);
+        Reset: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class AsnEncodedData {
+        constructor(oid: string, rawData: System.Byte[]);
+        constructor(oid: System.Security.Cryptography.Oid, rawData: System.Byte[]);
+        constructor(asnEncodedData: System.Security.Cryptography.AsnEncodedData);
+        constructor(rawData: System.Byte[]);
+        Oid: System.Security.Cryptography.Oid;
+        RawData: System.Byte[];
+        CopyFrom: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => void);
+        Format: ((multiLine: boolean) => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class AsnEncodedDataCollection {
+        constructor();
+        constructor(asnEncodedData: System.Security.Cryptography.AsnEncodedData);
+        Count: number;
+        IsSynchronized: boolean;
+        SyncRoot: System.Object;
+        Add: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => number);
+        CopyTo: ((array: System.Security.Cryptography.AsnEncodedData[], index: number) => void);
+        GetEnumerator: (() => System.Security.Cryptography.AsnEncodedDataEnumerator);
+        Remove: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class AsnEncodedDataEnumerator {
+        Current: System.Security.Cryptography.AsnEncodedData;
+        MoveNext: (() => boolean);
+        Reset: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
       export namespace X509Certificates {
         export enum X509ContentType {
           Unknown = 0,
@@ -16340,6 +27181,549 @@ export namespace System {
           Dispose: (() => void);
           Reset: (() => void);
           GetType: (() => System.Type);
+        }
+        export enum TrustStatus {
+          Untrusted = 0,
+          UnknownIdentity = 1,
+          KnownIdentity = 2,
+          Trusted = 3,
+        }
+        export declare class ECDsaCertificateExtensions {
+          static GetECDsaPrivateKey: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => System.Security.Cryptography.ECDsa);
+          static GetECDsaPublicKey: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => System.Security.Cryptography.ECDsa);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class RSACertificateExtensions {
+          static GetRSAPrivateKey: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => System.Security.Cryptography.RSA);
+          static GetRSAPublicKey: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => System.Security.Cryptography.RSA);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class AuthenticodeSignatureInformation {
+          Description: string;
+          DescriptionUrl: System.Uri;
+          HashAlgorithm: string;
+          HResult: number;
+          SignatureChain: System.Security.Cryptography.X509Certificates.X509Chain;
+          SigningCertificate: System.Security.Cryptography.X509Certificates.X509Certificate2;
+          Timestamp: System.Security.Cryptography.X509Certificates.TimestampInformation;
+          TrustStatus: System.Security.Cryptography.X509Certificates.TrustStatus;
+          VerificationResult: System.Security.Cryptography.SignatureVerificationResult;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class TimestampInformation {
+          HashAlgorithm: string;
+          HResult: number;
+          IsValid: boolean;
+          SignatureChain: System.Security.Cryptography.X509Certificates.X509Chain;
+          SigningCertificate: System.Security.Cryptography.X509Certificates.X509Certificate2;
+          Timestamp: System.DateTime;
+          VerificationResult: System.Security.Cryptography.SignatureVerificationResult;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class DSACertificateExtensions {
+          static GetDSAPrivateKey: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => System.Security.Cryptography.DSA);
+          static GetDSAPublicKey: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => System.Security.Cryptography.DSA);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export enum OpenFlags {
+          ReadOnly = 0,
+          ReadWrite = 1,
+          MaxAllowed = 2,
+          OpenExistingOnly = 4,
+          IncludeArchived = 8,
+        }
+        export enum StoreLocation {
+          CurrentUser = 1,
+          LocalMachine = 2,
+        }
+        export enum StoreName {
+          AddressBook = 1,
+          AuthRoot = 2,
+          CertificateAuthority = 3,
+          Disallowed = 4,
+          My = 5,
+          Root = 6,
+          TrustedPeople = 7,
+          TrustedPublisher = 8,
+        }
+        export enum X500DistinguishedNameFlags {
+          None = 0,
+          Reversed = 1,
+          UseSemicolons = 16,
+          DoNotUsePlusSign = 32,
+          DoNotUseQuotes = 64,
+          UseCommas = 128,
+          UseNewLines = 256,
+          UseUTF8Encoding = 4096,
+          UseT61Encoding = 8192,
+          ForceUTF8Encoding = 16384,
+        }
+        export enum X509ChainStatusFlags {
+          NoError = 0,
+          NotTimeValid = 1,
+          NotTimeNested = 2,
+          Revoked = 4,
+          NotSignatureValid = 8,
+          NotValidForUsage = 16,
+          UntrustedRoot = 32,
+          RevocationStatusUnknown = 64,
+          Cyclic = 128,
+          InvalidExtension = 256,
+          InvalidPolicyConstraints = 512,
+          InvalidBasicConstraints = 1024,
+          InvalidNameConstraints = 2048,
+          HasNotSupportedNameConstraint = 4096,
+          HasNotDefinedNameConstraint = 8192,
+          HasNotPermittedNameConstraint = 16384,
+          HasExcludedNameConstraint = 32768,
+          PartialChain = 65536,
+          CtlNotTimeValid = 131072,
+          CtlNotSignatureValid = 262144,
+          CtlNotValidForUsage = 524288,
+          OfflineRevocation = 16777216,
+          NoIssuanceChainPolicy = 33554432,
+          ExplicitDistrust = 67108864,
+          HasNotSupportedCriticalExtension = 134217728,
+          HasWeakSignature = 1048576,
+        }
+        export enum X509FindType {
+          FindByThumbprint = 0,
+          FindBySubjectName = 1,
+          FindBySubjectDistinguishedName = 2,
+          FindByIssuerName = 3,
+          FindByIssuerDistinguishedName = 4,
+          FindBySerialNumber = 5,
+          FindByTimeValid = 6,
+          FindByTimeNotYetValid = 7,
+          FindByTimeExpired = 8,
+          FindByTemplateName = 9,
+          FindByApplicationPolicy = 10,
+          FindByCertificatePolicy = 11,
+          FindByExtension = 12,
+          FindByKeyUsage = 13,
+          FindBySubjectKeyIdentifier = 14,
+        }
+        export enum X509IncludeOption {
+          None = 0,
+          ExcludeRoot = 1,
+          EndCertOnly = 2,
+          WholeChain = 3,
+        }
+        export enum X509KeyUsageFlags {
+          None = 0,
+          EncipherOnly = 1,
+          CrlSign = 2,
+          KeyCertSign = 4,
+          KeyAgreement = 8,
+          DataEncipherment = 16,
+          KeyEncipherment = 32,
+          NonRepudiation = 64,
+          DigitalSignature = 128,
+          DecipherOnly = 32768,
+        }
+        export enum X509NameType {
+          SimpleName = 0,
+          EmailName = 1,
+          UpnName = 2,
+          DnsName = 3,
+          DnsFromAlternativeName = 4,
+          UrlName = 5,
+        }
+        export enum X509RevocationFlag {
+          EndCertificateOnly = 0,
+          EntireChain = 1,
+          ExcludeRoot = 2,
+        }
+        export enum X509RevocationMode {
+          NoCheck = 0,
+          Online = 1,
+          Offline = 2,
+        }
+        export enum X509SubjectKeyIdentifierHashAlgorithm {
+          Sha1 = 0,
+          ShortSha1 = 1,
+          CapiSha1 = 2,
+        }
+        export enum X509VerificationFlags {
+          NoFlag = 0,
+          IgnoreNotTimeValid = 1,
+          IgnoreCtlNotTimeValid = 2,
+          IgnoreNotTimeNested = 4,
+          IgnoreInvalidBasicConstraints = 8,
+          AllowUnknownCertificateAuthority = 16,
+          IgnoreWrongUsage = 32,
+          IgnoreInvalidName = 64,
+          IgnoreInvalidPolicy = 128,
+          IgnoreEndRevocationUnknown = 256,
+          IgnoreCtlSignerRevocationUnknown = 512,
+          IgnoreCertificateAuthorityRevocationUnknown = 1024,
+          IgnoreRootRevocationUnknown = 2048,
+          AllFlags = 4095,
+        }
+        export declare class PublicKey {
+          constructor(oid: System.Security.Cryptography.Oid, parameters: System.Security.Cryptography.AsnEncodedData, keyValue: System.Security.Cryptography.AsnEncodedData);
+          EncodedKeyValue: System.Security.Cryptography.AsnEncodedData;
+          EncodedParameters: System.Security.Cryptography.AsnEncodedData;
+          Key: System.Security.Cryptography.AsymmetricAlgorithm;
+          Oid: System.Security.Cryptography.Oid;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X500DistinguishedName {
+          constructor(encodedDistinguishedName: System.Security.Cryptography.AsnEncodedData);
+          constructor(encodedDistinguishedName: System.Byte[]);
+          constructor(distinguishedName: string);
+          constructor(distinguishedName: string, flag: System.Security.Cryptography.X509Certificates.X500DistinguishedNameFlags);
+          constructor(distinguishedName: System.Security.Cryptography.X509Certificates.X500DistinguishedName);
+          Name: string;
+          Oid: System.Security.Cryptography.Oid;
+          RawData: System.Byte[];
+          Decode: ((flag: System.Security.Cryptography.X509Certificates.X500DistinguishedNameFlags) => string);
+          Format: ((multiLine: boolean) => string);
+          CopyFrom: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509BasicConstraintsExtension {
+          constructor();
+          constructor(encodedBasicConstraints: System.Security.Cryptography.AsnEncodedData, critical: boolean);
+          constructor(certificateAuthority: boolean, hasPathLengthConstraint: boolean, pathLengthConstraint: number, critical: boolean);
+          CertificateAuthority: boolean;
+          HasPathLengthConstraint: boolean;
+          PathLengthConstraint: number;
+          Critical: boolean;
+          Oid: System.Security.Cryptography.Oid;
+          RawData: System.Byte[];
+          CopyFrom: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => void);
+          Format: ((multiLine: boolean) => string);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509Certificate2 {
+          constructor();
+          constructor(rawData: System.Byte[]);
+          constructor(rawData: System.Byte[], password: string);
+          constructor(rawData: System.Byte[], password: System.Security.SecureString);
+          constructor(rawData: System.Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
+          constructor(rawData: System.Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
+          constructor(fileName: string);
+          constructor(fileName: string, password: string);
+          constructor(fileName: string, password: System.Security.SecureString);
+          constructor(fileName: string, password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
+          constructor(fileName: string, password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags);
+          constructor(handle: System.IntPtr);
+          constructor(certificate: System.Security.Cryptography.X509Certificates.X509Certificate);
+          Archived: boolean;
+          Extensions: System.Security.Cryptography.X509Certificates.X509ExtensionCollection;
+          FriendlyName: string;
+          HasPrivateKey: boolean;
+          IssuerName: System.Security.Cryptography.X509Certificates.X500DistinguishedName;
+          NotAfter: System.DateTime;
+          NotBefore: System.DateTime;
+          PrivateKey: System.Security.Cryptography.AsymmetricAlgorithm;
+          PublicKey: System.Security.Cryptography.X509Certificates.PublicKey;
+          RawData: System.Byte[];
+          SerialNumber: string;
+          SignatureAlgorithm: System.Security.Cryptography.Oid;
+          SubjectName: System.Security.Cryptography.X509Certificates.X500DistinguishedName;
+          Thumbprint: string;
+          Version: number;
+          Issuer: string;
+          Subject: string;
+          Handle: System.IntPtr;
+          GetNameInfo: ((nameType: System.Security.Cryptography.X509Certificates.X509NameType, forIssuer: boolean) => string);
+          Import: ((rawData: System.Byte[]) => void) | ((rawData: System.Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags) => void) | ((rawData: System.Byte[], password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags) => void) | ((fileName: string) => void) | ((fileName: string, password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags) => void) | ((fileName: string, password: System.Security.SecureString, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags) => void);
+          Export: ((contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: string) => System.Byte[]) | ((contentType: System.Security.Cryptography.X509Certificates.X509ContentType) => System.Byte[]) | ((contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: System.Security.SecureString) => System.Byte[]);
+          Reset: (() => void);
+          ToString: (() => string) | ((verbose: boolean) => string);
+          Verify: (() => boolean);
+          static GetCertContentType: ((rawData: System.Byte[]) => System.Security.Cryptography.X509Certificates.X509ContentType) | ((fileName: string) => System.Security.Cryptography.X509Certificates.X509ContentType);
+          Equals: ((other: System.Security.Cryptography.X509Certificates.X509Certificate) => boolean) | ((obj: System.Object) => boolean);
+          GetCertHash: (() => System.Byte[]);
+          GetCertHashString: (() => string);
+          GetEffectiveDateString: (() => string);
+          GetExpirationDateString: (() => string);
+          GetFormat: (() => string);
+          GetHashCode: (() => number);
+          GetIssuerName: (() => string);
+          GetKeyAlgorithm: (() => string);
+          GetKeyAlgorithmParameters: (() => System.Byte[]);
+          GetKeyAlgorithmParametersString: (() => string);
+          GetName: (() => string);
+          GetPublicKey: (() => System.Byte[]);
+          GetPublicKeyString: (() => string);
+          GetRawCertData: (() => System.Byte[]);
+          GetRawCertDataString: (() => string);
+          GetSerialNumber: (() => System.Byte[]);
+          GetSerialNumberString: (() => string);
+          Dispose: (() => void);
+          GetType: (() => System.Type);
+        }
+        export declare class X509Certificate2Collection {
+          constructor();
+          constructor(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection);
+          constructor(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2);
+          constructor(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2[]);
+          Capacity: number;
+          Count: number;
+          Add: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => number) | ((value: System.Security.Cryptography.X509Certificates.X509Certificate) => number);
+          AddRange: ((certificates: System.Security.Cryptography.X509Certificates.X509Certificate2[]) => void) | ((certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection) => void) | ((value: System.Security.Cryptography.X509Certificates.X509Certificate[]) => void) | ((value: System.Security.Cryptography.X509Certificates.X509CertificateCollection) => void);
+          Contains: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => boolean) | ((value: System.Security.Cryptography.X509Certificates.X509Certificate) => boolean);
+          Export: ((contentType: System.Security.Cryptography.X509Certificates.X509ContentType) => System.Byte[]) | ((contentType: System.Security.Cryptography.X509Certificates.X509ContentType, password: string) => System.Byte[]);
+          Find: ((findType: System.Security.Cryptography.X509Certificates.X509FindType, findValue: System.Object, validOnly: boolean) => System.Security.Cryptography.X509Certificates.X509Certificate2Collection);
+          GetEnumerator: (() => System.Security.Cryptography.X509Certificates.X509Certificate2Enumerator) | (() => System.Security.Cryptography.X509Certificates.X509CertificateCollection_X509CertificateEnumerator) | (() => System.Collections.IEnumerator);
+          Import: ((rawData: System.Byte[]) => void) | ((rawData: System.Byte[], password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags) => void) | ((fileName: string) => void) | ((fileName: string, password: string, keyStorageFlags: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags) => void);
+          Insert: ((index: number, certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => void) | ((index: number, value: System.Security.Cryptography.X509Certificates.X509Certificate) => void);
+          Remove: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => void) | ((value: System.Security.Cryptography.X509Certificates.X509Certificate) => void);
+          RemoveRange: ((certificates: System.Security.Cryptography.X509Certificates.X509Certificate2[]) => void) | ((certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection) => void);
+          CopyTo: ((array: System.Security.Cryptography.X509Certificates.X509Certificate[], index: number) => void);
+          GetHashCode: (() => number);
+          IndexOf: ((value: System.Security.Cryptography.X509Certificates.X509Certificate) => number);
+          Clear: (() => void);
+          RemoveAt: ((index: number) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509Certificate2Enumerator {
+          Current: System.Security.Cryptography.X509Certificates.X509Certificate2;
+          MoveNext: (() => boolean);
+          Reset: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509CertificateCollection {
+          constructor();
+          constructor(value: System.Security.Cryptography.X509Certificates.X509Certificate[]);
+          constructor(value: System.Security.Cryptography.X509Certificates.X509CertificateCollection);
+          Capacity: number;
+          Count: number;
+          Add: ((value: System.Security.Cryptography.X509Certificates.X509Certificate) => number);
+          AddRange: ((value: System.Security.Cryptography.X509Certificates.X509Certificate[]) => void) | ((value: System.Security.Cryptography.X509Certificates.X509CertificateCollection) => void);
+          Contains: ((value: System.Security.Cryptography.X509Certificates.X509Certificate) => boolean);
+          CopyTo: ((array: System.Security.Cryptography.X509Certificates.X509Certificate[], index: number) => void);
+          GetEnumerator: (() => System.Security.Cryptography.X509Certificates.X509CertificateCollection_X509CertificateEnumerator) | (() => System.Collections.IEnumerator);
+          GetHashCode: (() => number);
+          IndexOf: ((value: System.Security.Cryptography.X509Certificates.X509Certificate) => number);
+          Insert: ((index: number, value: System.Security.Cryptography.X509Certificates.X509Certificate) => void);
+          Remove: ((value: System.Security.Cryptography.X509Certificates.X509Certificate) => void);
+          Clear: (() => void);
+          RemoveAt: ((index: number) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509CertificateCollection_X509CertificateEnumerator {
+          constructor(mappings: System.Security.Cryptography.X509Certificates.X509CertificateCollection);
+          Current: System.Security.Cryptography.X509Certificates.X509Certificate;
+          MoveNext: (() => boolean);
+          Reset: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509Chain {
+          constructor();
+          constructor(useMachineContext: boolean);
+          constructor(chainContext: System.IntPtr);
+          ChainContext: System.IntPtr;
+          ChainElements: System.Security.Cryptography.X509Certificates.X509ChainElementCollection;
+          ChainPolicy: System.Security.Cryptography.X509Certificates.X509ChainPolicy;
+          ChainStatus: System.Security.Cryptography.X509Certificates.X509ChainStatus[];
+          SafeHandle: any; // Microsoft.Win32.SafeHandles.SafeX509ChainHandle
+          Build: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => boolean);
+          Reset: (() => void);
+          static Create: (() => System.Security.Cryptography.X509Certificates.X509Chain);
+          Dispose: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509ChainElement {
+          Certificate: System.Security.Cryptography.X509Certificates.X509Certificate2;
+          ChainElementStatus: System.Security.Cryptography.X509Certificates.X509ChainStatus[];
+          Information: string;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509ChainElementCollection {
+          Count: number;
+          IsSynchronized: boolean;
+          SyncRoot: System.Object;
+          CopyTo: ((array: System.Security.Cryptography.X509Certificates.X509ChainElement[], index: number) => void);
+          GetEnumerator: (() => System.Security.Cryptography.X509Certificates.X509ChainElementEnumerator);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509ChainElementEnumerator {
+          Current: System.Security.Cryptography.X509Certificates.X509ChainElement;
+          MoveNext: (() => boolean);
+          Reset: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509ChainPolicy {
+          constructor();
+          ApplicationPolicy: System.Security.Cryptography.OidCollection;
+          CertificatePolicy: System.Security.Cryptography.OidCollection;
+          ExtraStore: System.Security.Cryptography.X509Certificates.X509Certificate2Collection;
+          RevocationFlag: System.Security.Cryptography.X509Certificates.X509RevocationFlag;
+          RevocationMode: System.Security.Cryptography.X509Certificates.X509RevocationMode;
+          UrlRetrievalTimeout: System.TimeSpan;
+          VerificationFlags: System.Security.Cryptography.X509Certificates.X509VerificationFlags;
+          VerificationTime: System.DateTime;
+          Reset: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509ChainStatus {
+          Status: System.Security.Cryptography.X509Certificates.X509ChainStatusFlags;
+          StatusInformation: string;
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          ToString: (() => string);
+          GetType: (() => System.Type);
+        }
+        export declare class X509EnhancedKeyUsageExtension {
+          constructor();
+          constructor(encodedEnhancedKeyUsages: System.Security.Cryptography.AsnEncodedData, critical: boolean);
+          constructor(enhancedKeyUsages: System.Security.Cryptography.OidCollection, critical: boolean);
+          EnhancedKeyUsages: System.Security.Cryptography.OidCollection;
+          Critical: boolean;
+          Oid: System.Security.Cryptography.Oid;
+          RawData: System.Byte[];
+          CopyFrom: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => void);
+          Format: ((multiLine: boolean) => string);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509Extension {
+          constructor(encodedExtension: System.Security.Cryptography.AsnEncodedData, critical: boolean);
+          constructor(oid: System.Security.Cryptography.Oid, rawData: System.Byte[], critical: boolean);
+          constructor(oid: string, rawData: System.Byte[], critical: boolean);
+          Critical: boolean;
+          Oid: System.Security.Cryptography.Oid;
+          RawData: System.Byte[];
+          CopyFrom: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => void);
+          Format: ((multiLine: boolean) => string);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509ExtensionCollection {
+          constructor();
+          Count: number;
+          IsSynchronized: boolean;
+          SyncRoot: System.Object;
+          Add: ((extension: System.Security.Cryptography.X509Certificates.X509Extension) => number);
+          CopyTo: ((array: System.Security.Cryptography.X509Certificates.X509Extension[], index: number) => void);
+          GetEnumerator: (() => System.Security.Cryptography.X509Certificates.X509ExtensionEnumerator);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509ExtensionEnumerator {
+          Current: System.Security.Cryptography.X509Certificates.X509Extension;
+          MoveNext: (() => boolean);
+          Reset: (() => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509KeyUsageExtension {
+          constructor();
+          constructor(encodedKeyUsage: System.Security.Cryptography.AsnEncodedData, critical: boolean);
+          constructor(keyUsages: System.Security.Cryptography.X509Certificates.X509KeyUsageFlags, critical: boolean);
+          KeyUsages: System.Security.Cryptography.X509Certificates.X509KeyUsageFlags;
+          Critical: boolean;
+          Oid: System.Security.Cryptography.Oid;
+          RawData: System.Byte[];
+          CopyFrom: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => void);
+          Format: ((multiLine: boolean) => string);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509Store {
+          constructor();
+          constructor(storeName: string);
+          constructor(storeName: System.Security.Cryptography.X509Certificates.StoreName);
+          constructor(storeLocation: System.Security.Cryptography.X509Certificates.StoreLocation);
+          constructor(storeName: System.Security.Cryptography.X509Certificates.StoreName, storeLocation: System.Security.Cryptography.X509Certificates.StoreLocation);
+          constructor(storeHandle: System.IntPtr);
+          constructor(storeName: string, storeLocation: System.Security.Cryptography.X509Certificates.StoreLocation);
+          Certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection;
+          Location: System.Security.Cryptography.X509Certificates.StoreLocation;
+          Name: string;
+          StoreHandle: System.IntPtr;
+          Add: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => void);
+          AddRange: ((certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection) => void);
+          Close: (() => void);
+          Dispose: (() => void);
+          Open: ((flags: System.Security.Cryptography.X509Certificates.OpenFlags) => void);
+          Remove: ((certificate: System.Security.Cryptography.X509Certificates.X509Certificate2) => void);
+          RemoveRange: ((certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection) => void);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
+        }
+        export declare class X509SubjectKeyIdentifierExtension {
+          constructor();
+          constructor(encodedSubjectKeyIdentifier: System.Security.Cryptography.AsnEncodedData, critical: boolean);
+          constructor(subjectKeyIdentifier: System.Byte[], critical: boolean);
+          constructor(subjectKeyIdentifier: string, critical: boolean);
+          constructor(key: System.Security.Cryptography.X509Certificates.PublicKey, critical: boolean);
+          constructor(key: System.Security.Cryptography.X509Certificates.PublicKey, algorithm: System.Security.Cryptography.X509Certificates.X509SubjectKeyIdentifierHashAlgorithm, critical: boolean);
+          SubjectKeyIdentifier: string;
+          Critical: boolean;
+          Oid: System.Security.Cryptography.Oid;
+          RawData: System.Byte[];
+          CopyFrom: ((asnEncodedData: System.Security.Cryptography.AsnEncodedData) => void);
+          Format: ((multiLine: boolean) => string);
+          Equals: ((obj: System.Object) => boolean);
+          GetHashCode: (() => number);
+          GetType: (() => System.Type);
+          ToString: (() => string);
         }
       }
     }
@@ -16464,7 +27848,7 @@ export namespace System {
         MayLeakOnAbort = 256,
         All = 511,
       }
-      export declare class IUnrestrictedPermission {
+      export interface IUnrestrictedPermission {
         IsUnrestricted: (() => boolean);
       }
       export enum IsolatedStorageContainment {
@@ -16860,6 +28244,90 @@ export namespace System {
         PermitOnly: (() => void);
         GetType: (() => System.Type);
       }
+      export enum TypeDescriptorPermissionFlags {
+        NoFlags = 0,
+        RestrictedRegistrationAccess = 1,
+      }
+      export declare class TypeDescriptorPermission {
+        constructor(state: System.Security.Permissions.PermissionState);
+        constructor(flag: System.Security.Permissions.TypeDescriptorPermissionFlags);
+        Flags: System.Security.Permissions.TypeDescriptorPermissionFlags;
+        IsUnrestricted: (() => boolean);
+        Union: ((target: System.Security.IPermission) => System.Security.IPermission);
+        IsSubsetOf: ((target: System.Security.IPermission) => boolean);
+        Intersect: ((target: System.Security.IPermission) => System.Security.IPermission);
+        Copy: (() => System.Security.IPermission);
+        ToXml: (() => System.Security.SecurityElement);
+        FromXml: ((securityElement: System.Security.SecurityElement) => void);
+        Assert: (() => void);
+        Demand: (() => void);
+        Deny: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        PermitOnly: (() => void);
+        GetType: (() => System.Type);
+      }
+      export declare class ResourcePermissionBase {
+        static Any: string;
+        static Local: string;
+        Copy: (() => System.Security.IPermission);
+        FromXml: ((securityElement: System.Security.SecurityElement) => void);
+        Intersect: ((target: System.Security.IPermission) => System.Security.IPermission);
+        IsSubsetOf: ((target: System.Security.IPermission) => boolean);
+        IsUnrestricted: (() => boolean);
+        ToXml: (() => System.Security.SecurityElement);
+        Union: ((target: System.Security.IPermission) => System.Security.IPermission);
+        Assert: (() => void);
+        Demand: (() => void);
+        Deny: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        PermitOnly: (() => void);
+        GetType: (() => System.Type);
+      }
+      export declare class ResourcePermissionBaseEntry {
+        constructor();
+        constructor(permissionAccess: number, permissionAccessPath: string[]);
+        PermissionAccess: number;
+        PermissionAccessPath: string[];
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class StorePermission {
+        constructor(state: System.Security.Permissions.PermissionState);
+        constructor(flag: System.Security.Permissions.StorePermissionFlags);
+        Flags: System.Security.Permissions.StorePermissionFlags;
+        IsUnrestricted: (() => boolean);
+        Copy: (() => System.Security.IPermission);
+        Intersect: ((target: System.Security.IPermission) => System.Security.IPermission);
+        Union: ((target: System.Security.IPermission) => System.Security.IPermission);
+        IsSubsetOf: ((target: System.Security.IPermission) => boolean);
+        FromXml: ((securityElement: System.Security.SecurityElement) => void);
+        ToXml: (() => System.Security.SecurityElement);
+        Assert: (() => void);
+        Demand: (() => void);
+        Deny: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        PermitOnly: (() => void);
+        GetType: (() => System.Type);
+      }
+      export enum StorePermissionFlags {
+        NoFlags = 0,
+        CreateStore = 1,
+        DeleteStore = 2,
+        EnumerateStores = 4,
+        OpenStore = 16,
+        AddToStore = 32,
+        RemoveFromStore = 64,
+        EnumerateCertificates = 128,
+        AllFlags = 247,
+      }
     }
     export namespace Policy {
       export declare class AllMembershipCondition {
@@ -16917,13 +28385,13 @@ export namespace System {
       export declare class ApplicationTrust {
         constructor();
         constructor(applicationIdentity: System.ApplicationIdentity);
-        constructor(defaultGrantSet: System.Security.PermissionSet, fullTrustAssemblies: any);
+        constructor(defaultGrantSet: System.Security.PermissionSet, fullTrustAssemblies: System.Collections.Generic.IEnumerable<System.Security.Policy.StrongName>);
         ApplicationIdentity: System.ApplicationIdentity;
         DefaultGrantSet: System.Security.Policy.PolicyStatement;
         ExtraInfo: System.Object;
         IsApplicationTrustedToRun: boolean;
         Persist: boolean;
-        FullTrustAssemblies: any; // System.Collections.Generic.IList`1[System.Security.Policy.StrongName]
+        FullTrustAssemblies: System.Collections.Generic.IList<System.Security.Policy.StrongName>;
         FromXml: ((element: System.Security.SecurityElement) => void);
         ToXml: (() => System.Security.SecurityElement);
         Clone: (() => System.Security.Policy.EvidenceBase);
@@ -17124,13 +28592,13 @@ export namespace System {
         ToString: (() => string);
         GetType: (() => System.Type);
       }
-      export declare class IApplicationTrustManager {
+      export interface IApplicationTrustManager {
         DetermineApplicationTrust: ((activationContext: System.ActivationContext, context: System.Security.Policy.TrustManagerContext) => System.Security.Policy.ApplicationTrust);
       }
-      export declare class IIdentityPermissionFactory {
+      export interface IIdentityPermissionFactory {
         CreateIdentityPermission: ((evidence: System.Security.Policy.Evidence) => System.Security.IPermission);
       }
-      export declare class IMembershipCondition {
+      export interface IMembershipCondition {
         Check: ((evidence: System.Security.Policy.Evidence) => boolean);
         Copy: (() => System.Security.Policy.IMembershipCondition);
         Equals: ((obj: System.Object) => boolean);
@@ -17406,7 +28874,7 @@ export namespace System {
       export declare class GenericIdentity {
         constructor(name: string);
         constructor(name: string, type: string);
-        Claims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
+        Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         Name: string;
         AuthenticationType: string;
         IsAuthenticated: boolean;
@@ -17417,12 +28885,12 @@ export namespace System {
         RoleClaimType: string;
         Clone: (() => System.Security.Claims.ClaimsIdentity);
         AddClaim: ((claim: System.Security.Claims.Claim) => void);
-        AddClaims: ((claims: any) => void);
+        AddClaims: ((claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) => void);
         TryRemoveClaim: ((claim: System.Security.Claims.Claim) => boolean);
         RemoveClaim: ((claim: System.Security.Claims.Claim) => void);
-        FindAll: ((match: any) => any) | ((type: string) => any);
-        HasClaim: ((match: any) => boolean) | ((type: string, value: string) => boolean);
-        FindFirst: ((match: any) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
+        FindAll: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) | ((type: string) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
+        HasClaim: ((match: System.Predicate<System.Security.Claims.Claim>) => boolean) | ((type: string, value: string) => boolean);
+        FindFirst: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
         WriteTo: ((writer: System.IO.BinaryWriter) => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
@@ -17432,27 +28900,27 @@ export namespace System {
       export declare class GenericPrincipal {
         constructor(identity: System.Security.Principal.IIdentity, roles: string[]);
         Identity: System.Security.Principal.IIdentity;
-        Claims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
-        Identities: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.ClaimsIdentity]
+        Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        Identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>;
         IsInRole: ((role: string) => boolean);
         Clone: (() => System.Security.Claims.ClaimsPrincipal);
         AddIdentity: ((identity: System.Security.Claims.ClaimsIdentity) => void);
-        AddIdentities: ((identities: any) => void);
-        FindAll: ((match: any) => any) | ((type: string) => any);
-        FindFirst: ((match: any) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
-        HasClaim: ((match: any) => boolean) | ((type: string, value: string) => boolean);
+        AddIdentities: ((identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>) => void);
+        FindAll: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) | ((type: string) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
+        FindFirst: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
+        HasClaim: ((match: System.Predicate<System.Security.Claims.Claim>) => boolean) | ((type: string, value: string) => boolean);
         WriteTo: ((writer: System.IO.BinaryWriter) => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type);
         ToString: (() => string);
       }
-      export declare class IIdentity {
+      export interface IIdentity {
         AuthenticationType: string;
         IsAuthenticated: boolean;
         Name: string;
       }
-      export declare class IPrincipal {
+      export interface IPrincipal {
         Identity: System.Security.Principal.IIdentity;
         IsInRole: ((role: string) => boolean);
       }
@@ -17494,7 +28962,7 @@ export namespace System {
         Clear: (() => void);
         Contains: ((identity: System.Security.Principal.IdentityReference) => boolean);
         CopyTo: ((array: System.Security.Principal.IdentityReference[], offset: number) => void);
-        GetEnumerator: (() => any);
+        GetEnumerator: (() => System.Collections.Generic.IEnumerator<System.Security.Principal.IdentityReference>);
         Remove: ((identity: System.Security.Principal.IdentityReference) => boolean);
         Translate: ((targetType: System.Type) => System.Security.Principal.IdentityReferenceCollection) | ((targetType: System.Type, forceSuccess: boolean) => System.Security.Principal.IdentityReferenceCollection);
         Equals: ((obj: System.Object) => boolean);
@@ -17697,11 +29165,11 @@ export namespace System {
         Owner: System.Security.Principal.SecurityIdentifier;
         User: System.Security.Principal.SecurityIdentifier;
         AccessToken: any; // Microsoft.Win32.SafeHandles.SafeAccessTokenHandle
-        DeviceClaims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
-        UserClaims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
+        DeviceClaims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        UserClaims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         Actor: System.Security.Claims.ClaimsIdentity;
         BootstrapContext: System.Object;
-        Claims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
+        Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         Label: string;
         NameClaimType: string;
         RoleClaimType: string;
@@ -17713,12 +29181,12 @@ export namespace System {
         static RunImpersonated: ((safeAccessTokenHandle: any, action: System.Action) => void);
         Clone: (() => System.Security.Claims.ClaimsIdentity);
         AddClaim: ((claim: System.Security.Claims.Claim) => void);
-        AddClaims: ((claims: any) => void);
+        AddClaims: ((claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) => void);
         TryRemoveClaim: ((claim: System.Security.Claims.Claim) => boolean);
         RemoveClaim: ((claim: System.Security.Claims.Claim) => void);
-        FindAll: ((match: any) => any) | ((type: string) => any);
-        HasClaim: ((match: any) => boolean) | ((type: string, value: string) => boolean);
-        FindFirst: ((match: any) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
+        FindAll: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) | ((type: string) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
+        HasClaim: ((match: System.Predicate<System.Security.Claims.Claim>) => boolean) | ((type: string, value: string) => boolean);
+        FindFirst: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
         WriteTo: ((writer: System.IO.BinaryWriter) => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
@@ -17736,17 +29204,17 @@ export namespace System {
       export declare class WindowsPrincipal {
         constructor(ntIdentity: System.Security.Principal.WindowsIdentity);
         Identity: System.Security.Principal.IIdentity;
-        DeviceClaims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
-        UserClaims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
-        Claims: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.Claim]
-        Identities: any; // System.Collections.Generic.IEnumerable`1[System.Security.Claims.ClaimsIdentity]
+        DeviceClaims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        UserClaims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
+        Identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>;
         IsInRole: ((rid: number) => boolean) | ((role: string) => boolean) | ((role: System.Security.Principal.WindowsBuiltInRole) => boolean) | ((sid: System.Security.Principal.SecurityIdentifier) => boolean);
         Clone: (() => System.Security.Claims.ClaimsPrincipal);
         AddIdentity: ((identity: System.Security.Claims.ClaimsIdentity) => void);
-        AddIdentities: ((identities: any) => void);
-        FindAll: ((match: any) => any) | ((type: string) => any);
-        FindFirst: ((match: any) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
-        HasClaim: ((match: any) => boolean) | ((type: string, value: string) => boolean);
+        AddIdentities: ((identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>) => void);
+        FindAll: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>) | ((type: string) => System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
+        FindFirst: ((match: System.Predicate<System.Security.Claims.Claim>) => System.Security.Claims.Claim) | ((type: string) => System.Security.Claims.Claim);
+        HasClaim: ((match: System.Predicate<System.Security.Claims.Claim>) => boolean) | ((type: string, value: string) => boolean);
         WriteTo: ((writer: System.IO.BinaryWriter) => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
@@ -18220,6 +29688,186 @@ export namespace System {
       FormKC = 5,
       FormKD = 6,
     }
+    export namespace RegularExpressions {
+      export declare class Regex {
+        constructor(pattern: string);
+        constructor(pattern: string, options: System.Text.RegularExpressions.RegexOptions);
+        constructor(pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan);
+        static CacheSize: number;
+        Options: System.Text.RegularExpressions.RegexOptions;
+        MatchTimeout: System.TimeSpan;
+        RightToLeft: boolean;
+        static InfiniteMatchTimeout: System.TimeSpan;
+        static Escape: ((str: string) => string);
+        static Unescape: ((str: string) => string);
+        ToString: (() => string);
+        GetGroupNames: (() => string[]);
+        GetGroupNumbers: (() => number[]);
+        GroupNameFromNumber: ((i: number) => string);
+        GroupNumberFromName: ((name: string) => number);
+        static IsMatch: ((input: string, pattern: string) => boolean) | ((input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions) => boolean) | ((input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan) => boolean) | ((input: string) => boolean) | ((input: string, startat: number) => boolean);
+        static Match: ((input: string, pattern: string) => System.Text.RegularExpressions.Match) | ((input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions) => System.Text.RegularExpressions.Match) | ((input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan) => System.Text.RegularExpressions.Match) | ((input: string) => System.Text.RegularExpressions.Match) | ((input: string, startat: number) => System.Text.RegularExpressions.Match) | ((input: string, beginning: number, length: number) => System.Text.RegularExpressions.Match);
+        static Matches: ((input: string, pattern: string) => System.Text.RegularExpressions.MatchCollection) | ((input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions) => System.Text.RegularExpressions.MatchCollection) | ((input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan) => System.Text.RegularExpressions.MatchCollection) | ((input: string) => System.Text.RegularExpressions.MatchCollection) | ((input: string, startat: number) => System.Text.RegularExpressions.MatchCollection);
+        static Replace: ((input: string, pattern: string, replacement: string) => string) | ((input: string, pattern: string, replacement: string, options: System.Text.RegularExpressions.RegexOptions) => string) | ((input: string, pattern: string, replacement: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan) => string) | ((input: string, replacement: string) => string) | ((input: string, replacement: string, count: number) => string) | ((input: string, replacement: string, count: number, startat: number) => string) | ((input: string, pattern: string, evaluator: System.Text.RegularExpressions.MatchEvaluator) => string) | ((input: string, pattern: string, evaluator: System.Text.RegularExpressions.MatchEvaluator, options: System.Text.RegularExpressions.RegexOptions) => string) | ((input: string, pattern: string, evaluator: System.Text.RegularExpressions.MatchEvaluator, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan) => string) | ((input: string, evaluator: System.Text.RegularExpressions.MatchEvaluator) => string) | ((input: string, evaluator: System.Text.RegularExpressions.MatchEvaluator, count: number) => string) | ((input: string, evaluator: System.Text.RegularExpressions.MatchEvaluator, count: number, startat: number) => string);
+        static Split: ((input: string, pattern: string) => string[]) | ((input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions) => string[]) | ((input: string, pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan) => string[]) | ((input: string) => string[]) | ((input: string, count: number) => string[]) | ((input: string, count: number, startat: number) => string[]);
+        static CompileToAssembly: ((regexinfos: System.Text.RegularExpressions.RegexCompilationInfo[], assemblyname: System.Reflection.AssemblyName) => void) | ((regexinfos: System.Text.RegularExpressions.RegexCompilationInfo[], assemblyname: System.Reflection.AssemblyName, attributes: System.Reflection.Emit.CustomAttributeBuilder[]) => void) | ((regexinfos: System.Text.RegularExpressions.RegexCompilationInfo[], assemblyname: System.Reflection.AssemblyName, attributes: System.Reflection.Emit.CustomAttributeBuilder[], resourceFile: string) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class MatchEvaluator {
+        constructor(object: System.Object, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: System.Object;
+        Invoke: ((match: System.Text.RegularExpressions.Match) => string);
+        BeginInvoke: ((match: System.Text.RegularExpressions.Match, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+        EndInvoke: ((result: System.IAsyncResult) => string);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetInvocationList: (() => System.Delegate[]);
+        DynamicInvoke: ((...args: System.Object[]) => System.Object);
+        Clone: (() => System.Object);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Capture {
+        Index: number;
+        Length: number;
+        Value: string;
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class CaptureCollection {
+        SyncRoot: System.Object;
+        IsSynchronized: boolean;
+        IsReadOnly: boolean;
+        Count: number;
+        CopyTo: ((array: System.Array, arrayIndex: number) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class RegexCompilationInfo {
+        constructor(pattern: string, options: System.Text.RegularExpressions.RegexOptions, name: string, fullnamespace: string, ispublic: boolean);
+        constructor(pattern: string, options: System.Text.RegularExpressions.RegexOptions, name: string, fullnamespace: string, ispublic: boolean, matchTimeout: System.TimeSpan);
+        Pattern: string;
+        Options: System.Text.RegularExpressions.RegexOptions;
+        Name: string;
+        Namespace: string;
+        IsPublic: boolean;
+        MatchTimeout: System.TimeSpan;
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Group {
+        Success: boolean;
+        Name: string;
+        Captures: System.Text.RegularExpressions.CaptureCollection;
+        Index: number;
+        Length: number;
+        Value: string;
+        static Synchronized: ((inner: System.Text.RegularExpressions.Group) => System.Text.RegularExpressions.Group);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class GroupCollection {
+        SyncRoot: System.Object;
+        IsSynchronized: boolean;
+        IsReadOnly: boolean;
+        Count: number;
+        CopyTo: ((array: System.Array, arrayIndex: number) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Match {
+        static Empty: System.Text.RegularExpressions.Match;
+        Groups: System.Text.RegularExpressions.GroupCollection;
+        Success: boolean;
+        Name: string;
+        Captures: System.Text.RegularExpressions.CaptureCollection;
+        Index: number;
+        Length: number;
+        Value: string;
+        NextMatch: (() => System.Text.RegularExpressions.Match);
+        Result: ((replacement: string) => string);
+        static Synchronized: ((inner: System.Text.RegularExpressions.Match) => System.Text.RegularExpressions.Match);
+        ToString: (() => string);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+      }
+      export declare class MatchCollection {
+        Count: number;
+        SyncRoot: System.Object;
+        IsSynchronized: boolean;
+        IsReadOnly: boolean;
+        CopyTo: ((array: System.Array, arrayIndex: number) => void);
+        GetEnumerator: (() => System.Collections.IEnumerator);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class RegexMatchTimeoutException {
+        constructor(regexInput: string, regexPattern: string, matchTimeout: System.TimeSpan);
+        constructor();
+        constructor(message: string);
+        constructor(message: string, inner: System.Exception);
+        Pattern: string;
+        Input: string;
+        MatchTimeout: System.TimeSpan;
+        Message: string;
+        Data: System.Collections.IDictionary;
+        InnerException: System.Exception;
+        TargetSite: System.Reflection.MethodBase;
+        StackTrace: string;
+        HelpLink: string;
+        Source: string;
+        HResult: number;
+        GetBaseException: (() => System.Exception);
+        ToString: (() => string);
+        GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+        GetType: (() => System.Type) | (() => System.Type);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+      }
+      export enum RegexOptions {
+        None = 0,
+        IgnoreCase = 1,
+        Multiline = 2,
+        ExplicitCapture = 4,
+        Compiled = 8,
+        Singleline = 16,
+        IgnorePatternWhitespace = 32,
+        RightToLeft = 64,
+        ECMAScript = 256,
+        CultureInvariant = 512,
+      }
+      export declare class RegexRunner {
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class RegexRunnerFactory {
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+    }
   }
   export namespace Threading {
     export declare class CancellationToken {
@@ -18228,7 +29876,7 @@ export namespace System {
       IsCancellationRequested: boolean;
       CanBeCanceled: boolean;
       WaitHandle: System.Threading.WaitHandle;
-      Register: ((callback: System.Action) => System.Threading.CancellationTokenRegistration) | ((callback: System.Action, useSynchronizationContext: boolean) => System.Threading.CancellationTokenRegistration) | ((callback: any, state: System.Object) => System.Threading.CancellationTokenRegistration) | ((callback: any, state: System.Object, useSynchronizationContext: boolean) => System.Threading.CancellationTokenRegistration);
+      Register: ((callback: System.Action) => System.Threading.CancellationTokenRegistration) | ((callback: System.Action, useSynchronizationContext: boolean) => System.Threading.CancellationTokenRegistration) | ((callback: (() => void), state: System.Object) => System.Threading.CancellationTokenRegistration) | ((callback: (() => void), state: System.Object, useSynchronizationContext: boolean) => System.Threading.CancellationTokenRegistration);
       Equals: ((other: System.Threading.CancellationToken) => boolean) | ((other: System.Object) => boolean);
       GetHashCode: (() => number);
       ThrowIfCancellationRequested: (() => void);
@@ -18307,7 +29955,7 @@ export namespace System {
       CurrentCount: number;
       AvailableWaitHandle: System.Threading.WaitHandle;
       Wait: (() => void) | ((cancellationToken: System.Threading.CancellationToken) => void) | ((timeout: System.TimeSpan) => boolean) | ((timeout: System.TimeSpan, cancellationToken: System.Threading.CancellationToken) => boolean) | ((millisecondsTimeout: number) => boolean) | ((millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => boolean);
-      WaitAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((millisecondsTimeout: number) => any) | ((timeout: System.TimeSpan) => any) | ((timeout: System.TimeSpan, cancellationToken: System.Threading.CancellationToken) => any) | ((millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => any);
+      WaitAsync: (() => System.Threading.Tasks.Task) | ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((millisecondsTimeout: number) => System.Threading.Tasks.Task<boolean>) | ((timeout: System.TimeSpan) => System.Threading.Tasks.Task<boolean>) | ((timeout: System.TimeSpan, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<boolean>) | ((millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<boolean>);
       Release: (() => number) | ((releaseCount: number) => number);
       Dispose: (() => void);
       Equals: ((obj: System.Object) => boolean);
@@ -18335,6 +29983,20 @@ export namespace System {
       Equals: ((obj: System.Object) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
+      GetType: (() => System.Type);
+    }
+    export declare class ThreadLocal<T = any> {
+      constructor();
+      constructor(trackAllValues: boolean);
+      constructor(valueFactory: ((arg0: T) => T));
+      constructor(valueFactory: ((arg0: T) => T), trackAllValues: boolean);
+      Value: T;
+      Values: System.Collections.Generic.IList<T>;
+      IsValueCreated: boolean;
+      Dispose: (() => void);
+      ToString: (() => string);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
       GetType: (() => System.Type);
     }
     export declare class AbandonedMutexException {
@@ -18365,6 +30027,24 @@ export namespace System {
       STA = 0,
       MTA = 1,
       Unknown = 2,
+    }
+    export declare class AsyncLocal<T = any> {
+      constructor();
+      constructor(valueChangedHandler: (() => void));
+      Value: T;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class AsyncLocalValueChangedArgs<T = any> {
+      PreviousValue: T;
+      CurrentValue: T;
+      ThreadContextChanged: boolean;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => System.Type);
     }
     export declare class AutoResetEvent {
       constructor(initialState: boolean);
@@ -19028,7 +30708,138 @@ export namespace System {
       GetType: (() => System.Type);
       ToString: (() => string);
     }
+    export enum LockRecursionPolicy {
+      NoRecursion = 0,
+      SupportsRecursion = 1,
+    }
+    export declare class ReaderWriterLockSlim {
+      constructor();
+      constructor(recursionPolicy: System.Threading.LockRecursionPolicy);
+      IsReadLockHeld: boolean;
+      IsUpgradeableReadLockHeld: boolean;
+      IsWriteLockHeld: boolean;
+      RecursionPolicy: System.Threading.LockRecursionPolicy;
+      CurrentReadCount: number;
+      RecursiveReadCount: number;
+      RecursiveUpgradeCount: number;
+      RecursiveWriteCount: number;
+      WaitingReadCount: number;
+      WaitingUpgradeCount: number;
+      WaitingWriteCount: number;
+      EnterReadLock: (() => void);
+      TryEnterReadLock: ((timeout: System.TimeSpan) => boolean) | ((millisecondsTimeout: number) => boolean);
+      EnterWriteLock: (() => void);
+      TryEnterWriteLock: ((timeout: System.TimeSpan) => boolean) | ((millisecondsTimeout: number) => boolean);
+      EnterUpgradeableReadLock: (() => void);
+      TryEnterUpgradeableReadLock: ((timeout: System.TimeSpan) => boolean) | ((millisecondsTimeout: number) => boolean);
+      ExitReadLock: (() => void);
+      ExitWriteLock: (() => void);
+      ExitUpgradeableReadLock: (() => void);
+      Dispose: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class BarrierPostPhaseException {
+      constructor();
+      constructor(innerException: System.Exception);
+      constructor(message: string);
+      constructor(message: string, innerException: System.Exception);
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetBaseException: (() => System.Exception);
+      ToString: (() => string);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      GetType: (() => System.Type) | (() => System.Type);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+    }
+    export declare class Barrier {
+      constructor(participantCount: number);
+      constructor(participantCount: number, postPhaseAction: (() => void));
+      ParticipantsRemaining: number;
+      ParticipantCount: number;
+      CurrentPhaseNumber: System.Int64;
+      AddParticipant: (() => System.Int64);
+      AddParticipants: ((participantCount: number) => System.Int64);
+      RemoveParticipant: (() => void);
+      RemoveParticipants: ((participantCount: number) => void);
+      SignalAndWait: (() => void) | ((cancellationToken: System.Threading.CancellationToken) => void) | ((timeout: System.TimeSpan) => boolean) | ((timeout: System.TimeSpan, cancellationToken: System.Threading.CancellationToken) => boolean) | ((millisecondsTimeout: number) => boolean) | ((millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => boolean);
+      Dispose: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Semaphore {
+      constructor(initialCount: number, maximumCount: number);
+      constructor(initialCount: number, maximumCount: number, name: string);
+      Handle: System.IntPtr;
+      SafeWaitHandle: any; // Microsoft.Win32.SafeHandles.SafeWaitHandle
+      static OpenExisting: ((name: string) => System.Threading.Semaphore) | ((name: string, rights: System.Security.AccessControl.SemaphoreRights) => System.Threading.Semaphore);
+      Release: (() => number) | ((releaseCount: number) => number);
+      GetAccessControl: (() => System.Security.AccessControl.SemaphoreSecurity);
+      SetAccessControl: ((semaphoreSecurity: System.Security.AccessControl.SemaphoreSecurity) => void);
+      WaitOne: ((millisecondsTimeout: number, exitContext: boolean) => boolean) | ((timeout: System.TimeSpan, exitContext: boolean) => boolean) | (() => boolean) | ((millisecondsTimeout: number) => boolean) | ((timeout: System.TimeSpan) => boolean);
+      Close: (() => void);
+      Dispose: (() => void);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ThreadExceptionEventArgs {
+      constructor(t: System.Exception);
+      Exception: System.Exception;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class ThreadExceptionEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.Threading.ThreadExceptionEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.Threading.ThreadExceptionEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
     export namespace Tasks {
+      export declare class ValueTask<TResult = any> {
+        constructor(result: TResult);
+        constructor(task: System.Threading.Tasks.Task<TResult>);
+        IsCompleted: boolean;
+        IsCompletedSuccessfully: boolean;
+        IsFaulted: boolean;
+        IsCanceled: boolean;
+        Result: TResult;
+        GetHashCode: (() => number);
+        Equals: ((obj: System.Object) => boolean) | ((other: System.Threading.Tasks.ValueTask<TResult>) => boolean);
+        AsTask: (() => System.Threading.Tasks.Task<TResult>);
+        GetAwaiter: (() => System.Runtime.CompilerServices.ValueTaskAwaiter<TResult>);
+        ConfigureAwait: ((continueOnCapturedContext: boolean) => System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<TResult>);
+        ToString: (() => string);
+        static CreateAsyncMethodBuilder: (() => any);
+        GetType: (() => System.Type);
+      }
       export declare class ConcurrentExclusiveSchedulerPair {
         constructor();
         constructor(taskScheduler: System.Threading.Tasks.TaskScheduler);
@@ -19038,6 +30849,57 @@ export namespace System {
         ConcurrentScheduler: System.Threading.Tasks.TaskScheduler;
         ExclusiveScheduler: System.Threading.Tasks.TaskScheduler;
         Complete: (() => void);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class Task<TResult = any> {
+        constructor(functionCS: ((arg0: TResult) => TResult));
+        constructor(functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken);
+        constructor(functionCS: ((arg0: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: ((arg0: System.Object, arg1: TResult) => TResult), state: System.Object);
+        constructor(functionCS: ((arg0: System.Object, arg1: TResult) => TResult), state: System.Object, cancellationToken: System.Threading.CancellationToken);
+        constructor(functionCS: ((arg0: System.Object, arg1: TResult) => TResult), state: System.Object, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: ((arg0: System.Object, arg1: TResult) => TResult), state: System.Object, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        Result: TResult;
+        static Factory: any; // System.Threading.Tasks.TaskFactory`1[TResult]
+        Id: number;
+        Exception: System.AggregateException;
+        Status: System.Threading.Tasks.TaskStatus;
+        IsCanceled: boolean;
+        IsCompleted: boolean;
+        IsCompletedSuccessfully: boolean;
+        CreationOptions: System.Threading.Tasks.TaskCreationOptions;
+        AsyncState: System.Object;
+        IsFaulted: boolean;
+        GetAwaiter: (() => System.Runtime.CompilerServices.TaskAwaiter<TResult>) | (() => System.Runtime.CompilerServices.TaskAwaiter);
+        ConfigureAwait: ((continueOnCapturedContext: boolean) => System.Runtime.CompilerServices.ConfiguredTaskAwaitable<TResult>) | ((continueOnCapturedContext: boolean) => System.Runtime.CompilerServices.ConfiguredTaskAwaitable);
+        ContinueWith: ((continuationAction: (() => void)) => System.Threading.Tasks.Task) | ((continuationAction: (() => void), cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((continuationAction: (() => void), scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: (() => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task) | ((continuationAction: (() => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: System.Object) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: System.Object, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: System.Object, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: System.Object, continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: System.Object, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: (() => void)) => System.Threading.Tasks.Task) | ((continuationAction: (() => void), cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((continuationAction: (() => void), scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: (() => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task) | ((continuationAction: (() => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: System.Object) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: System.Object, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: System.Object, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: System.Object, continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task) | ((continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: System.Object, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task);
+        Start: (() => void) | ((scheduler: System.Threading.Tasks.TaskScheduler) => void);
+        RunSynchronously: (() => void) | ((scheduler: System.Threading.Tasks.TaskScheduler) => void);
+        Dispose: (() => void);
+        Wait: (() => void) | ((timeout: System.TimeSpan) => boolean) | ((cancellationToken: System.Threading.CancellationToken) => void) | ((millisecondsTimeout: number) => boolean) | ((millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => boolean);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+      export declare class TaskFactory<TResult = any> {
+        constructor();
+        constructor(cancellationToken: System.Threading.CancellationToken);
+        constructor(scheduler: System.Threading.Tasks.TaskScheduler);
+        constructor(creationOptions: System.Threading.Tasks.TaskCreationOptions, continuationOptions: System.Threading.Tasks.TaskContinuationOptions);
+        constructor(cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler);
+        CancellationToken: System.Threading.CancellationToken;
+        Scheduler: System.Threading.Tasks.TaskScheduler;
+        CreationOptions: System.Threading.Tasks.TaskCreationOptions;
+        ContinuationOptions: System.Threading.Tasks.TaskContinuationOptions;
+        StartNew: ((functionCS: ((arg0: TResult) => TResult)) => System.Threading.Tasks.Task<TResult>) | ((functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<TResult>) | ((functionCS: ((arg0: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions) => System.Threading.Tasks.Task<TResult>) | ((functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task<TResult>) | ((functionCS: ((arg0: System.Object, arg1: TResult) => TResult), state: System.Object) => System.Threading.Tasks.Task<TResult>) | ((functionCS: ((arg0: System.Object, arg1: TResult) => TResult), state: System.Object, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<TResult>) | ((functionCS: ((arg0: System.Object, arg1: TResult) => TResult), state: System.Object, creationOptions: System.Threading.Tasks.TaskCreationOptions) => System.Threading.Tasks.Task<TResult>) | ((functionCS: ((arg0: System.Object, arg1: TResult) => TResult), state: System.Object, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task<TResult>);
+        FromAsync: ((asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult)) => System.Threading.Tasks.Task<TResult>) | ((asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions) => System.Threading.Tasks.Task<TResult>) | ((asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task<TResult>) | ((beginMethod: ((arg0: System.AsyncCallback, arg1: System.Object, arg2: System.IAsyncResult) => System.IAsyncResult), endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult), state: System.Object) => System.Threading.Tasks.Task<TResult>) | ((beginMethod: ((arg0: System.AsyncCallback, arg1: System.Object, arg2: System.IAsyncResult) => System.IAsyncResult), endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult), state: System.Object, creationOptions: System.Threading.Tasks.TaskCreationOptions) => System.Threading.Tasks.Task<TResult>);
+        ContinueWhenAll: ((tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[], arg1: TResult) => TResult)) => System.Threading.Tasks.Task<TResult>) | ((tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[], arg1: TResult) => TResult), cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<TResult>) | ((tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[], arg1: TResult) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task<TResult>) | ((tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[], arg1: TResult) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task<TResult>);
+        ContinueWhenAny: ((tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task, arg1: TResult) => TResult)) => System.Threading.Tasks.Task<TResult>) | ((tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task, arg1: TResult) => TResult), cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task<TResult>) | ((tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task, arg1: TResult) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task<TResult>) | ((tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task, arg1: TResult) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task<TResult>);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type);
@@ -19065,7 +30927,7 @@ export namespace System {
         ShouldExitCurrentIteration: boolean;
         IsStopped: boolean;
         IsExceptional: boolean;
-        LowestBreakIteration?: any; // System.Nullable`1[System.Int64]
+        LowestBreakIteration?: System.Nullable<System.Int64>;
         Stop: (() => void);
         Break: (() => void);
         Equals: ((obj: System.Object) => boolean);
@@ -19075,7 +30937,7 @@ export namespace System {
       }
       export declare class ParallelLoopResult {
         IsCompleted: boolean;
-        LowestBreakIteration?: any; // System.Nullable`1[System.Int64]
+        LowestBreakIteration?: System.Nullable<System.Int64>;
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
@@ -19090,48 +30952,6 @@ export namespace System {
         RanToCompletion = 5,
         Canceled = 6,
         Faulted = 7,
-      }
-      export declare class Task {
-        constructor(action: System.Action);
-        constructor(action: System.Action, cancellationToken: System.Threading.CancellationToken);
-        constructor(action: System.Action, creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        constructor(action: System.Action, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        constructor(action: any, state: System.Object);
-        constructor(action: any, state: System.Object, cancellationToken: System.Threading.CancellationToken);
-        constructor(action: any, state: System.Object, creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        constructor(action: any, state: System.Object, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        Id: number;
-        static CurrentId?: number;
-        Exception: System.AggregateException;
-        Status: System.Threading.Tasks.TaskStatus;
-        IsCanceled: boolean;
-        IsCompleted: boolean;
-        IsCompletedSuccessfully: boolean;
-        CreationOptions: System.Threading.Tasks.TaskCreationOptions;
-        AsyncState: System.Object;
-        static Factory: System.Threading.Tasks.TaskFactory;
-        static CompletedTask: System.Threading.Tasks.Task;
-        IsFaulted: boolean;
-        Start: (() => void) | ((scheduler: System.Threading.Tasks.TaskScheduler) => void);
-        RunSynchronously: (() => void) | ((scheduler: System.Threading.Tasks.TaskScheduler) => void);
-        Dispose: (() => void);
-        GetAwaiter: (() => System.Runtime.CompilerServices.TaskAwaiter);
-        ConfigureAwait: ((continueOnCapturedContext: boolean) => System.Runtime.CompilerServices.ConfiguredTaskAwaitable);
-        static Yield: (() => System.Runtime.CompilerServices.YieldAwaitable);
-        Wait: (() => void) | ((timeout: System.TimeSpan) => boolean) | ((cancellationToken: System.Threading.CancellationToken) => void) | ((millisecondsTimeout: number) => boolean) | ((millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => boolean);
-        ContinueWith: ((continuationAction: any) => System.Threading.Tasks.Task) | ((continuationAction: any, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((continuationAction: any, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task) | ((continuationAction: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: any, state: System.Object) => System.Threading.Tasks.Task) | ((continuationAction: any, state: System.Object, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((continuationAction: any, state: System.Object, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((continuationAction: any, state: System.Object, continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task) | ((continuationAction: any, state: System.Object, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task);
-        static WaitAll: ((...tasks: System.Threading.Tasks.Task[]) => void) | ((tasks: System.Threading.Tasks.Task[], timeout: System.TimeSpan) => boolean) | ((tasks: System.Threading.Tasks.Task[], millisecondsTimeout: number) => boolean) | ((tasks: System.Threading.Tasks.Task[], cancellationToken: System.Threading.CancellationToken) => void) | ((tasks: System.Threading.Tasks.Task[], millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => boolean);
-        static WaitAny: ((...tasks: System.Threading.Tasks.Task[]) => number) | ((tasks: System.Threading.Tasks.Task[], timeout: System.TimeSpan) => number) | ((tasks: System.Threading.Tasks.Task[], cancellationToken: System.Threading.CancellationToken) => number) | ((tasks: System.Threading.Tasks.Task[], millisecondsTimeout: number) => number) | ((tasks: System.Threading.Tasks.Task[], millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken) => number);
-        static FromException: ((exception: System.Exception) => System.Threading.Tasks.Task);
-        static FromCanceled: ((cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
-        static Run: ((action: System.Action) => System.Threading.Tasks.Task) | ((action: System.Action, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((functionCS: any) => System.Threading.Tasks.Task) | ((functionCS: any, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
-        static Delay: ((delay: System.TimeSpan) => System.Threading.Tasks.Task) | ((delay: System.TimeSpan, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((millisecondsDelay: number) => System.Threading.Tasks.Task) | ((millisecondsDelay: number, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task);
-        static WhenAll: ((tasks: any) => System.Threading.Tasks.Task) | ((...tasks: System.Threading.Tasks.Task[]) => System.Threading.Tasks.Task);
-        static WhenAny: ((...tasks: System.Threading.Tasks.Task[]) => any) | ((tasks: any) => any);
-        Equals: ((obj: System.Object) => boolean);
-        GetHashCode: (() => number);
-        GetType: (() => System.Type);
-        ToString: (() => string);
       }
       export enum TaskCreationOptions {
         None = 0,
@@ -19181,20 +31001,18 @@ export namespace System {
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
       }
-      export declare class TaskFactory {
+      export declare class TaskCompletionSource<TResult = any> {
         constructor();
-        constructor(cancellationToken: System.Threading.CancellationToken);
-        constructor(scheduler: System.Threading.Tasks.TaskScheduler);
-        constructor(creationOptions: System.Threading.Tasks.TaskCreationOptions, continuationOptions: System.Threading.Tasks.TaskContinuationOptions);
-        constructor(cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler);
-        CancellationToken: System.Threading.CancellationToken;
-        Scheduler: System.Threading.Tasks.TaskScheduler;
-        CreationOptions: System.Threading.Tasks.TaskCreationOptions;
-        ContinuationOptions: System.Threading.Tasks.TaskContinuationOptions;
-        StartNew: ((action: System.Action) => System.Threading.Tasks.Task) | ((action: System.Action, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((action: System.Action, creationOptions: System.Threading.Tasks.TaskCreationOptions) => System.Threading.Tasks.Task) | ((action: System.Action, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((action: any, state: System.Object) => System.Threading.Tasks.Task) | ((action: any, state: System.Object, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((action: any, state: System.Object, creationOptions: System.Threading.Tasks.TaskCreationOptions) => System.Threading.Tasks.Task) | ((action: any, state: System.Object, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task);
-        FromAsync: ((asyncResult: System.IAsyncResult, endMethod: any) => System.Threading.Tasks.Task) | ((asyncResult: System.IAsyncResult, endMethod: any, creationOptions: System.Threading.Tasks.TaskCreationOptions) => System.Threading.Tasks.Task) | ((asyncResult: System.IAsyncResult, endMethod: any, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task) | ((beginMethod: any, endMethod: any, state: System.Object) => System.Threading.Tasks.Task) | ((beginMethod: any, endMethod: any, state: System.Object, creationOptions: System.Threading.Tasks.TaskCreationOptions) => System.Threading.Tasks.Task);
-        ContinueWhenAll: ((tasks: System.Threading.Tasks.Task[], continuationAction: any) => System.Threading.Tasks.Task) | ((tasks: System.Threading.Tasks.Task[], continuationAction: any, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((tasks: System.Threading.Tasks.Task[], continuationAction: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task) | ((tasks: System.Threading.Tasks.Task[], continuationAction: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task);
-        ContinueWhenAny: ((tasks: System.Threading.Tasks.Task[], continuationAction: any) => System.Threading.Tasks.Task) | ((tasks: System.Threading.Tasks.Task[], continuationAction: any, cancellationToken: System.Threading.CancellationToken) => System.Threading.Tasks.Task) | ((tasks: System.Threading.Tasks.Task[], continuationAction: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions) => System.Threading.Tasks.Task) | ((tasks: System.Threading.Tasks.Task[], continuationAction: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler) => System.Threading.Tasks.Task);
+        constructor(creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(state: System.Object);
+        constructor(state: System.Object, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        Task: System.Threading.Tasks.Task<TResult>;
+        TrySetException: ((exception: System.Exception) => boolean) | ((exceptions: System.Collections.Generic.IEnumerable<System.Exception>) => boolean);
+        SetException: ((exception: System.Exception) => void) | ((exceptions: System.Collections.Generic.IEnumerable<System.Exception>) => void);
+        TrySetResult: ((result: TResult) => boolean);
+        SetResult: ((result: TResult) => void);
+        TrySetCanceled: (() => boolean) | ((cancellationToken: System.Threading.CancellationToken) => boolean);
+        SetCanceled: (() => void);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
         GetType: (() => System.Type);
@@ -19240,6 +31058,99 @@ export namespace System {
         GetType: (() => System.Type) | (() => System.Type);
         Equals: ((obj: System.Object) => boolean);
         GetHashCode: (() => number);
+      }
+      export declare class TaskExtensions {
+        static Unwrap: ((task: any) => System.Threading.Tasks.Task);
+        Equals: ((obj: System.Object) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => System.Type);
+        ToString: (() => string);
+      }
+    }
+  }
+  export namespace Timers {
+    export declare class ElapsedEventHandler {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke: ((sender: System.Object, e: System.Timers.ElapsedEventArgs) => void);
+      BeginInvoke: ((sender: System.Object, e: System.Timers.ElapsedEventArgs, callback: System.AsyncCallback, object: System.Object) => System.IAsyncResult);
+      EndInvoke: ((result: System.IAsyncResult) => void);
+      GetObjectData: ((info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext) => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => System.Delegate[]);
+      DynamicInvoke: ((...args: System.Object[]) => System.Object);
+      Clone: (() => System.Object);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+    export declare class Timer {
+      constructor();
+      constructor(interval: number);
+      AutoReset: boolean;
+      Enabled: boolean;
+      Interval: number;
+      Site: System.ComponentModel.ISite;
+      SynchronizingObject: System.ComponentModel.ISynchronizeInvoke;
+      Container: System.ComponentModel.IContainer;
+      BeginInit: (() => void);
+      Close: (() => void);
+      EndInit: (() => void);
+      Start: (() => void);
+      Stop: (() => void);
+      Dispose: (() => void);
+      ToString: (() => string);
+      CreateObjRef: ((requestedType: System.Type) => System.Runtime.Remoting.ObjRef);
+      GetLifetimeService: (() => System.Object);
+      InitializeLifetimeService: (() => System.Object);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+    }
+    export declare class ElapsedEventArgs {
+      SignalTime: System.DateTime;
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => System.Type);
+      ToString: (() => string);
+    }
+  }
+  export namespace Web {
+    export declare class AspNetHostingPermission {
+      constructor(level: System.Web.AspNetHostingPermissionLevel);
+      constructor(state: System.Security.Permissions.PermissionState);
+      Level: System.Web.AspNetHostingPermissionLevel;
+      IsUnrestricted: (() => boolean);
+      Copy: (() => System.Security.IPermission);
+      FromXml: ((securityElement: System.Security.SecurityElement) => void);
+      ToXml: (() => System.Security.SecurityElement);
+      Intersect: ((target: System.Security.IPermission) => System.Security.IPermission);
+      IsSubsetOf: ((target: System.Security.IPermission) => boolean);
+      Union: ((target: System.Security.IPermission) => System.Security.IPermission);
+      Assert: (() => void);
+      Demand: (() => void);
+      Deny: (() => void);
+      Equals: ((obj: System.Object) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      PermitOnly: (() => void);
+      GetType: (() => System.Type);
+    }
+    export enum AspNetHostingPermissionLevel {
+      None = 100,
+      Minimal = 200,
+      Low = 300,
+      Medium = 400,
+      High = 500,
+      Unrestricted = 600,
+    }
+  }
+  export namespace Windows {
+    export namespace Input {
+      export interface ICommand {
+        CanExecute: ((parameter: System.Object) => boolean);
+        Execute: ((parameter: System.Object) => void);
       }
     }
   }
