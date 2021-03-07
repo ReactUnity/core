@@ -285,7 +285,7 @@ namespace ReactUnity.Editor.Renderer.Components
             // No event to add
             if (fun == null) return;
 
-            EventCallback<EventBase> callAction = (e) => fun.Call(e);
+            EventCallback<EventBase> callAction = (e) => fun.Call(e, this);
 
             register.Invoke(Element, new object[] { callAction, TrickleDown.NoTrickleDown });
             EventHandlers[eventName] = callAction;

@@ -10,7 +10,6 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public EditorButtonComponent(EditorContext context) : base(context, "button")
         {
-            Element = new Button();
         }
 
         public override void SetEventListener(string eventName, Callback callback)
@@ -23,7 +22,7 @@ namespace ReactUnity.Editor.Renderer.Components
                         Element.clicked -= previousClickEvent;
                         previousClickEvent = null;
                     }
-                    if (callback != null) Element.clicked += (previousClickEvent = () => callback.Call(null));
+                    if (callback != null) Element.clicked += (previousClickEvent = () => callback.Call(this));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);

@@ -6,7 +6,6 @@ namespace ReactUnity.Editor.Renderer.Components
     {
         public EditorTextComponent(string text, EditorContext context, string tag) : base(context, tag)
         {
-            Element = new Label();
             Element.text = text;
         }
 
