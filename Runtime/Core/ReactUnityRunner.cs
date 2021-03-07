@@ -67,7 +67,14 @@ namespace ReactUnity
         {
             engine = new Jint.Engine(x =>
             {
-                x.AllowClr();
+                x.AllowClr(
+                    typeof(System.Convert).Assembly,
+                    typeof(UnityEngine.Component).Assembly,
+#if UNITY_EDITOR
+                    typeof(UnityEditor.EditorWindow).Assembly,
+                    typeof(UnityEngine.UIElements.StyleLength).Assembly
+#endif
+                );
                 x.CatchClrExceptions(ex =>
                 {
                     Debug.LogException(ex);
@@ -90,14 +97,10 @@ namespace ReactUnity
             CreateConsole(engine);
             CreateLocalStorage(engine);
             CreateScheduler(engine, context);
-            engine.SetValue("YogaValue", typeof(Facebook.Yoga.YogaValue));
-            engine.SetValue("Color", typeof(Color));
-            engine.SetValue("ShadowDefinition", typeof(ShadowDefinition));
-            engine.SetValue("Vector2", typeof(Vector2));
-            engine.SetValue("Vector3", typeof(Vector3));
-            engine.SetValue("Rect", typeof(Rect));
-            engine.SetValue("RectOffset", typeof(RectOffset));
-            engine.SetValue("Action", typeof(Action));
+            engine.SetValue("UnityEngine", new Jint.Runtime.Interop.NamespaceReference(engine, "UnityEngine"));
+#if UNITY_EDITOR
+            engine.SetValue("UnityEditor", new Jint.Runtime.Interop.NamespaceReference(engine, "UnityEditor"));
+#endif
 
             // Load polyfills
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);

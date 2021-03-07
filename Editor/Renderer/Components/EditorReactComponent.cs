@@ -335,5 +335,26 @@ namespace ReactUnity.Editor.Renderer.Components
                 else Element.Add(u.Element);
             }
         }
+
+        public void CaptureMouse()
+        {
+            MouseCaptureController.CaptureMouse(Element);
+        }
+
+        public void ReleaseMouse()
+        {
+            MouseCaptureController.ReleaseMouse(Element);
+        }
+
+        public bool HasMouseCapture()
+        {
+            return MouseCaptureController.HasMouseCapture(Element);
+        }
+
+        public void StartDrag()
+        {
+            UnityEditor.DragAndDrop.visualMode = UnityEditor.DragAndDropVisualMode.Move;
+            UnityEditor.DragAndDrop.StartDrag(Name);
+        }
     }
 }
