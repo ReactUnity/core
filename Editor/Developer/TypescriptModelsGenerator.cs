@@ -24,7 +24,10 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.Input).Assembly,
                     typeof(UnityEngine.Animator).Assembly,
                     typeof(UnityEngine.Event).Assembly,
+                    typeof(UnityEngine.BuildCompression).Assembly,
+                    typeof(UnityEngine.Analytics.Analytics).Assembly,
                     typeof(UnityEngine.UIElements.VisualElement).Assembly,
+                    typeof(UnityEngine.AI.NavMesh).Assembly,
                     //#if REACT_INPUT_SYSTEM
                     //                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
                     //                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
@@ -48,7 +51,7 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEditor.EditorWindow).Assembly,
                 },
                 new List<string> { "UnityEditor" },
-                new List<string> { "UnityEngine.InputSystem" },
+                new List<string> { "UnityEngine.InputSystem", "UnityEngine.Experimental" },
                 new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" } },
                 new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" }
             );
@@ -183,14 +186,14 @@ namespace ReactUnity.Editor.Developer
                             sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
                     }
 
-                    var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public)
+                    var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
                         .Where(x => !x.IsSpecialName &&
                                     x.GetIndexParameters().Length == 0 &&
                                     !x.PropertyType.IsPointer);
-                    var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public)
+                    var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
                         .Where(x => !x.IsSpecialName &&
                                     !x.FieldType.IsPointer);
-                    var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                    var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
                         .Where(x => !x.IsSpecialName &&
                                     !(x.ReturnType.IsByRef || x.ReturnType.IsPointer) &&
                                     !x.GetParameters().Any(p => p.ParameterType.IsByRef || p.ParameterType.IsPointer) &&
@@ -296,11 +299,15 @@ namespace ReactUnity.Editor.Developer
         static string getTypeScriptString(ParameterInfo info)
         {
             var typeString = getTypesScriptType(info.ParameterType, true);
+            var isParams = info.GetCustomAttribute(typeof(ParamArrayAttribute), false) != null;
 
-            return string.Format("{0}{2}: {1}",
-                info.Name == "arguments" ? "argumentsCS" : info.Name,
+            var keywords = new HashSet<string> { "arguments", "function" };
+
+            return string.Format("{3}{0}{2}: {1}",
+                keywords.Contains(info.Name) ? info.Name + "CS" : info.Name,
                 typeString,
-                info.IsOptional ? "?" : ""
+                info.IsOptional ? "?" : "",
+                isParams ? "..." : ""
             );
         }
 

@@ -350,11 +350,5 @@ namespace ReactUnity.Editor.Renderer.Components
         {
             return MouseCaptureController.HasMouseCapture(Element);
         }
-
-        public void StartDrag()
-        {
-            UnityEditor.DragAndDrop.visualMode = UnityEditor.DragAndDropVisualMode.Move;
-            UnityEditor.DragAndDrop.StartDrag(Name);
-        }
     }
 }
