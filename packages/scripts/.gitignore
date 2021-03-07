@@ -13,5 +13,3 @@ yarn-error.log*
 /.changelog
 .npm/
 yarn.lock
-
-!temp/react-dev-utils-11.0.3-hotfix.tgz
