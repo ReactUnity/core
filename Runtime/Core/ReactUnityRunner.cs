@@ -69,11 +69,12 @@ namespace ReactUnity
             {
                 x.AllowClr(
                     typeof(System.Convert).Assembly,
-                    typeof(UnityEngine.Component).Assembly,
 #if UNITY_EDITOR
                     typeof(UnityEditor.EditorWindow).Assembly,
-                    typeof(UnityEngine.UIElements.StyleLength).Assembly
+                    typeof(UnityEngine.GUILayout).Assembly,
+                    typeof(UnityEngine.UIElements.StyleLength).Assembly,
 #endif
+                    typeof(UnityEngine.Component).Assembly
                 );
                 x.CatchClrExceptions(ex =>
                 {
