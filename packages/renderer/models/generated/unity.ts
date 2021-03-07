@@ -1,6 +1,6 @@
 //
-// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.UIElementsModule
-// Generated 7.03.2021 17:06:06
+// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.AIModule
+// Generated 7.03.2021 18:44:05
 //
 
 
@@ -20,6 +20,7 @@ export namespace Unity {
       Disabled = 1,
     }
     export declare class NativeLeakDetection {
+      static Mode: Unity.Collections.NativeLeakDetectionMode;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -48,6 +49,28 @@ export namespace Unity {
           NotAllocatedFromJob = 2,
         }
         export declare class AtomicSafetyHandle {
+          static Create: (() => Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle);
+          static GetTempUnsafePtrSliceHandle: (() => Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle);
+          static GetTempMemoryHandle: (() => Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle);
+          static IsTempMemoryHandle: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => boolean);
+          static Release: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => void);
+          static SetAllowSecondaryVersionWriting: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle, allowWriting: boolean) => void);
+          static SetBumpSecondaryVersionOnScheduleWrite: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle, value: boolean) => void);
+          static SetAllowReadOrWriteAccess: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle, allowReadWriteAccess: boolean) => void);
+          static GetAllowReadOrWriteAccess: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => boolean);
+          static CheckWriteAndBumpSecondaryVersion: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => void);
+          static EnforceAllBufferJobsHaveCompleted: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => Unity.Collections.LowLevel.Unsafe.EnforceJobResult);
+          static EnforceAllBufferJobsHaveCompletedAndRelease: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => Unity.Collections.LowLevel.Unsafe.EnforceJobResult);
+          static EnforceAllBufferJobsHaveCompletedAndDisableReadWrite: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => Unity.Collections.LowLevel.Unsafe.EnforceJobResult);
+          static CheckDeallocateAndThrow: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => void);
+          static CheckGetSecondaryDataPointerAndThrow: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => void);
+          static GetReaderArray: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle, maxCount: number, output: any) => number);
+          static GetWriter: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => Unity.Jobs.JobHandle);
+          static CheckReadAndThrow: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => void);
+          static CheckWriteAndThrow: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => void);
+          static CheckExistsAndThrow: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => void);
+          static GetReaderName: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle, readerIndex: number) => string);
+          static GetWriterName: ((handle: Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle) => string);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
@@ -72,6 +95,13 @@ export namespace Unity {
           ToString: (() => string);
         }
         export declare class UnsafeUtility {
+          static GetFieldOffset: ((field: any) => number);
+          static ReleaseGCObject: ((gcHandle: any) => void);
+          static IsValidAllocator: ((allocator: Unity.Collections.Allocator) => boolean);
+          static SizeOf: ((type: any) => number);
+          static IsBlittable: ((type: any) => boolean);
+          static IsUnmanaged: ((type: any) => boolean);
+          static IsValidNativeContainerElementType: ((type: any) => boolean);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -160,6 +190,14 @@ export namespace Unity {
           GetType: (() => any);
         }
         export declare class AsyncReadManagerMetrics {
+          static IsEnabled: (() => boolean);
+          static ClearCompletedMetrics: (() => void);
+          static GetMetrics: ((filters: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetricsFilters, flags: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics_Flags) => Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric[]) | ((outMetrics: any, filters: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetricsFilters, flags: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics_Flags) => void) | ((flags: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics_Flags) => Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric[]) | ((outMetrics: any, flags: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics_Flags) => void);
+          static StartCollectingMetrics: (() => void);
+          static StopCollectingMetrics: (() => void);
+          static GetCurrentSummaryMetrics: ((flags: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics_Flags) => Unity.IO.LowLevel.Unsafe.AsyncReadManagerSummaryMetrics) | ((metricsFilters: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetricsFilters, flags: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics_Flags) => Unity.IO.LowLevel.Unsafe.AsyncReadManagerSummaryMetrics);
+          static GetSummaryOfMetrics: ((metrics: Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric[]) => Unity.IO.LowLevel.Unsafe.AsyncReadManagerSummaryMetrics) | ((metrics: any) => Unity.IO.LowLevel.Unsafe.AsyncReadManagerSummaryMetrics) | ((metrics: Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric[], metricsFilters: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetricsFilters) => Unity.IO.LowLevel.Unsafe.AsyncReadManagerSummaryMetrics) | ((metrics: any, metricsFilters: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetricsFilters) => Unity.IO.LowLevel.Unsafe.AsyncReadManagerSummaryMetrics);
+          static GetTotalSizeOfNonASRMReadsBytes: ((emptyAfterRead: boolean) => any);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -267,6 +305,10 @@ export namespace Unity {
     export declare class JobHandle {
       IsCompleted: boolean;
       Complete: (() => void);
+      static CompleteAll: ((jobs: any) => void);
+      static ScheduleBatchedJobs: (() => void);
+      static CombineDependencies: ((job0: Unity.Jobs.JobHandle, job1: Unity.Jobs.JobHandle) => Unity.Jobs.JobHandle) | ((job0: Unity.Jobs.JobHandle, job1: Unity.Jobs.JobHandle, job2: Unity.Jobs.JobHandle) => Unity.Jobs.JobHandle) | ((jobs: any) => Unity.Jobs.JobHandle) | ((jobs: any) => Unity.Jobs.JobHandle);
+      static CheckFenceIsDependencyOrDidSyncFence: ((jobHandle: Unity.Jobs.JobHandle, dependsOn: Unity.Jobs.JobHandle) => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -298,13 +340,21 @@ export namespace Unity {
           ParallelFor = 1,
         }
         export declare class JobsUtility {
+          static IsExecutingJob: boolean;
+          static JobDebuggerEnabled: boolean;
+          static JobCompilerEnabled: boolean;
+          static JobWorkerMaximumCount: number;
+          static JobWorkerCount: number;
+          static MaxJobThreadCount: number;
+          static CacheLineSize: number;
+          static CreateJobReflectionData: ((type: any, jobType: Unity.Jobs.LowLevel.Unsafe.JobType, managedJobFunction0: any, managedJobFunction1?: any, managedJobFunction2?: any) => any) | ((type: any, managedJobFunction0: any, managedJobFunction1?: any, managedJobFunction2?: any) => any) | ((wrapperJobType: any, userJobType: any, jobType: Unity.Jobs.LowLevel.Unsafe.JobType, managedJobFunction0: any) => any) | ((wrapperJobType: any, userJobType: any, managedJobFunction0: any) => any);
+          static ResetJobWorkerCount: (() => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
           ToString: (() => string);
         }
         export declare class JobsUtility_JobScheduleParameters {
-          constructor(i_jobData: any, i_reflectionData: any, i_dependency: Unity.Jobs.JobHandle, i_scheduleMode: Unity.Jobs.LowLevel.Unsafe.ScheduleMode);
           Dependency: Unity.Jobs.JobHandle;
           ScheduleMode: number;
           ReflectionData: any; // System.IntPtr
@@ -322,6 +372,23 @@ export namespace Unity {
       constructor(categoryName: string);
       Name: string;
       Color: UnityEngine.Color32;
+      static Render: Unity.Profiling.ProfilerCategory;
+      static Scripts: Unity.Profiling.ProfilerCategory;
+      static Gui: Unity.Profiling.ProfilerCategory;
+      static Physics: Unity.Profiling.ProfilerCategory;
+      static Animation: Unity.Profiling.ProfilerCategory;
+      static Ai: Unity.Profiling.ProfilerCategory;
+      static Audio: Unity.Profiling.ProfilerCategory;
+      static Video: Unity.Profiling.ProfilerCategory;
+      static Particles: Unity.Profiling.ProfilerCategory;
+      static Lighting: Unity.Profiling.ProfilerCategory;
+      static Network: Unity.Profiling.ProfilerCategory;
+      static Loading: Unity.Profiling.ProfilerCategory;
+      static Vr: Unity.Profiling.ProfilerCategory;
+      static Input: Unity.Profiling.ProfilerCategory;
+      static Memory: Unity.Profiling.ProfilerCategory;
+      static VirtualTexturing: Unity.Profiling.ProfilerCategory;
+      static Internal: Unity.Profiling.ProfilerCategory;
       ToString: (() => string);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -333,9 +400,7 @@ export namespace Unity {
     }
     export declare class ProfilerMarker {
       constructor(name: string);
-      constructor(name: any, nameLen: number);
       constructor(category: Unity.Profiling.ProfilerCategory, name: string);
-      constructor(category: Unity.Profiling.ProfilerCategory, name: any, nameLen: number);
       Handle: any; // System.IntPtr
       Begin: (() => void) | ((contextUnityObject: UnityEngine.Object) => void);
       End: (() => void);
@@ -392,7 +457,6 @@ export namespace Unity {
       constructor(statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
       constructor(categoryName: string, statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
       constructor(category: Unity.Profiling.ProfilerCategory, statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
-      constructor(category: Unity.Profiling.ProfilerCategory, statName: any, statNameLen: number, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
       constructor(marker: Unity.Profiling.ProfilerMarker, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
       constructor(statHandle: Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
       Valid: boolean;
@@ -406,6 +470,7 @@ export namespace Unity {
       Count: number;
       IsRunning: boolean;
       WrappedAround: boolean;
+      static StartNew: ((category: Unity.Profiling.ProfilerCategory, statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions) => Unity.Profiling.ProfilerRecorder) | ((marker: Unity.Profiling.ProfilerMarker, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions) => Unity.Profiling.ProfilerRecorder);
       Start: (() => void);
       Stop: (() => void);
       Reset: (() => void);
@@ -453,6 +518,8 @@ export namespace Unity {
         }
         export declare class ProfilerRecorderHandle {
           Valid: boolean;
+          static GetDescription: ((handle: Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle) => Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderDescription);
+          static GetAvailable: ((outRecorderHandleList: any) => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           ToString: (() => string);
@@ -477,6 +544,34 @@ export namespace Unity {
           GetType: (() => any);
         }
         export declare class ProfilerUnsafeUtility {
+          static Timestamp: any; // System.Int64
+          static TimestampToNanosecondsConversionRatio: Unity.Profiling.LowLevel.Unsafe.ProfilerUnsafeUtility_TimestampConversionRatio;
+          static CategoryRender: any; // System.UInt16
+          static CategoryScripts: any; // System.UInt16
+          static CategoryGUI: any; // System.UInt16
+          static CategoryPhysics: any; // System.UInt16
+          static CategoryAnimation: any; // System.UInt16
+          static CategoryAi: any; // System.UInt16
+          static CategoryAudio: any; // System.UInt16
+          static CategoryVideo: any; // System.UInt16
+          static CategoryParticles: any; // System.UInt16
+          static CategoryLighting: any; // System.UInt16
+          static CategoryLightning: any; // System.UInt16
+          static CategoryNetwork: any; // System.UInt16
+          static CategoryLoading: any; // System.UInt16
+          static CategoryOther: any; // System.UInt16
+          static CategoryVr: any; // System.UInt16
+          static CategoryAllocation: any; // System.UInt16
+          static CategoryInternal: any; // System.UInt16
+          static CategoryInput: any; // System.UInt16
+          static CategoryVirtualTexturing: any; // System.UInt16
+          static GetCategoryDescription: ((categoryId: any) => Unity.Profiling.LowLevel.Unsafe.ProfilerCategoryDescription);
+          static CreateMarker: ((name: string, categoryId: any, flags: Unity.Profiling.LowLevel.MarkerFlags, metadataCount: number) => any);
+          static SetMarkerMetadata: ((markerPtr: any, index: number, name: string, type: any, unit: any) => void);
+          static BeginSample: ((markerPtr: any) => void);
+          static EndSample: ((markerPtr: any) => void);
+          static CreateFlow: ((categoryId: any) => any);
+          static FlowEvent: ((flowId: any, flowEventType: Unity.Profiling.ProfilerFlowEventType) => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -530,6 +625,9 @@ export namespace Unity {
       }
       export declare class HybridV2ShaderReflection {
         constructor();
+        static GetDOTSReflectionVersionNumber: (() => any);
+        static GetDOTSInstancingCbuffers: ((shader: UnityEngine.Shader) => any);
+        static GetDOTSInstancingProperties: ((shader: UnityEngine.Shader) => any);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -661,6 +759,12 @@ export namespace UnityEngine {
     id: number;
     name: string;
     value: number;
+    static layers: UnityEngine.SortingLayer[];
+    static GetLayerValueFromID: ((id: number) => number);
+    static GetLayerValueFromName: ((name: string) => number);
+    static NameToID: ((name: string) => number);
+    static IDToName: ((id: number) => string);
+    static IsValid: ((id: number) => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
@@ -698,7 +802,7 @@ export namespace UnityEngine {
     Clamp = 1,
   }
   export declare class AnimationCurve {
-    constructor(keys: UnityEngine.Keyframe[]);
+    constructor(...keys: UnityEngine.Keyframe[]);
     constructor();
     keys: UnityEngine.Keyframe[];
     length: number;
@@ -709,6 +813,9 @@ export namespace UnityEngine {
     MoveKey: ((index: number, key: UnityEngine.Keyframe) => number);
     RemoveKey: ((index: number) => void);
     SmoothTangents: ((index: number, weight: number) => void);
+    static Constant: ((timeStart: number, timeEnd: number, value: number) => UnityEngine.AnimationCurve);
+    static Linear: ((timeStart: number, valueStart: number, timeEnd: number, valueEnd: number) => UnityEngine.AnimationCurve);
+    static EaseInOut: ((timeStart: number, valueStart: number, timeEnd: number, valueEnd: number) => UnityEngine.AnimationCurve);
     Equals: ((o: any) => boolean) | ((other: UnityEngine.AnimationCurve) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -716,6 +823,72 @@ export namespace UnityEngine {
   }
   export declare class Application {
     constructor();
+    static isLoadingLevel: boolean;
+    static streamedBytes: number;
+    static webSecurityEnabled: boolean;
+    static isPlaying: boolean;
+    static isFocused: boolean;
+    static buildGUID: string;
+    static runInBackground: boolean;
+    static isBatchMode: boolean;
+    static dataPath: string;
+    static streamingAssetsPath: string;
+    static persistentDataPath: string;
+    static temporaryCachePath: string;
+    static absoluteURL: string;
+    static unityVersion: string;
+    static version: string;
+    static installerName: string;
+    static identifier: string;
+    static installMode: UnityEngine.ApplicationInstallMode;
+    static sandboxType: UnityEngine.ApplicationSandboxType;
+    static productName: string;
+    static companyName: string;
+    static cloudProjectId: string;
+    static targetFrameRate: number;
+    static stackTraceLogType: UnityEngine.StackTraceLogType;
+    static consoleLogPath: string;
+    static backgroundLoadingPriority: UnityEngine.ThreadPriority;
+    static genuine: boolean;
+    static genuineCheckAvailable: boolean;
+    static isShowingSplashScreen: boolean;
+    static platform: UnityEngine.RuntimePlatform;
+    static isMobilePlatform: boolean;
+    static isConsolePlatform: boolean;
+    static systemLanguage: UnityEngine.SystemLanguage;
+    static internetReachability: UnityEngine.NetworkReachability;
+    static isPlayer: boolean;
+    static levelCount: number;
+    static loadedLevel: number;
+    static loadedLevelName: string;
+    static isEditor: boolean;
+    static Quit: ((exitCode: number) => void) | (() => void);
+    static CancelQuit: (() => void);
+    static Unload: (() => void);
+    static GetStreamProgressForLevel: ((levelIndex: number) => number) | ((levelName: string) => number);
+    static CanStreamedLevelBeLoaded: ((levelIndex: number) => boolean) | ((levelName: string) => boolean);
+    static IsPlaying: ((obj: UnityEngine.Object) => boolean);
+    static GetBuildTags: (() => string[]);
+    static SetBuildTags: ((buildTags: string[]) => void);
+    static HasProLicense: (() => boolean);
+    static ExternalEval: ((script: string) => void);
+    static RequestAdvertisingIdentifierAsync: ((delegateMethod: UnityEngine.Application_AdvertisingIdentifierCallback) => boolean);
+    static OpenURL: ((url: string) => void);
+    static ForceCrash: ((mode: number) => void);
+    static GetStackTraceLogType: ((logType: UnityEngine.LogType) => UnityEngine.StackTraceLogType);
+    static SetStackTraceLogType: ((logType: UnityEngine.LogType, stackTraceType: UnityEngine.StackTraceLogType) => void);
+    static RequestUserAuthorization: ((mode: UnityEngine.UserAuthorization) => UnityEngine.AsyncOperation);
+    static HasUserAuthorization: ((mode: UnityEngine.UserAuthorization) => boolean);
+    static ExternalCall: ((functionName: string, ...args: any[]) => void);
+    static DontDestroyOnLoad: ((o: UnityEngine.Object) => void);
+    static CaptureScreenshot: ((filename: string, superSize: number) => void) | ((filename: string) => void);
+    static RegisterLogCallback: ((handler: UnityEngine.Application_LogCallback) => void);
+    static RegisterLogCallbackThreaded: ((handler: UnityEngine.Application_LogCallback) => void);
+    static LoadLevel: ((index: number) => void) | ((name: string) => void);
+    static LoadLevelAdditive: ((index: number) => void) | ((name: string) => void);
+    static LoadLevelAsync: ((index: number) => UnityEngine.AsyncOperation) | ((levelName: string) => UnityEngine.AsyncOperation);
+    static LoadLevelAdditiveAsync: ((index: number) => UnityEngine.AsyncOperation) | ((levelName: string) => UnityEngine.AsyncOperation);
+    static UnloadLevel: ((index: number) => boolean) | ((scenePath: string) => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -732,7 +905,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -748,7 +921,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -764,7 +937,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -848,6 +1021,35 @@ export namespace UnityEngine {
   }
   export declare class Caching {
     constructor();
+    static compressionEnabled: boolean;
+    static ready: boolean;
+    static spaceUsed: number;
+    static spaceOccupied: any; // System.Int64
+    static spaceAvailable: number;
+    static spaceFree: any; // System.Int64
+    static maximumAvailableDiskSpace: any; // System.Int64
+    static expirationDelay: number;
+    static cacheCount: number;
+    static defaultCache: UnityEngine.Cache;
+    static currentCacheForWriting: UnityEngine.Cache;
+    static ClearCache: (() => boolean) | ((expiration: number) => boolean);
+    static ClearCachedVersion: ((assetBundleName: string, hash: UnityEngine.Hash128) => boolean);
+    static ClearOtherCachedVersions: ((assetBundleName: string, hash: UnityEngine.Hash128) => boolean);
+    static ClearAllCachedVersions: ((assetBundleName: string) => boolean);
+    static GetCachedVersions: ((assetBundleName: string, outCachedVersions: any) => void);
+    static IsVersionCached: ((url: string, version: number) => boolean) | ((url: string, hash: UnityEngine.Hash128) => boolean) | ((cachedBundle: UnityEngine.CachedAssetBundle) => boolean);
+    static MarkAsUsed: ((url: string, version: number) => boolean) | ((url: string, hash: UnityEngine.Hash128) => boolean) | ((cachedBundle: UnityEngine.CachedAssetBundle) => boolean);
+    static SetNoBackupFlag: ((url: string, version: number) => void) | ((url: string, hash: UnityEngine.Hash128) => void) | ((cachedBundle: UnityEngine.CachedAssetBundle) => void);
+    static ResetNoBackupFlag: ((url: string, version: number) => void) | ((url: string, hash: UnityEngine.Hash128) => void) | ((cachedBundle: UnityEngine.CachedAssetBundle) => void);
+    static GetVersionFromCache: ((url: string) => number);
+    static AddCache: ((cachePath: string) => UnityEngine.Cache);
+    static GetCacheAt: ((cacheIndex: number) => UnityEngine.Cache);
+    static GetCacheByPath: ((cachePath: string) => UnityEngine.Cache);
+    static GetAllCachePaths: ((cachePaths: any) => void);
+    static RemoveCache: ((cache: UnityEngine.Cache) => boolean);
+    static MoveCacheBefore: ((src: UnityEngine.Cache, dst: UnityEngine.Cache) => void);
+    static MoveCacheAfter: ((src: UnityEngine.Cache, dst: UnityEngine.Cache) => void);
+    static CleanCache: (() => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -904,6 +1106,8 @@ export namespace UnityEngine {
     nonJitteredProjectionMatrix: UnityEngine.Matrix4x4;
     useJitteredProjectionMatrixForTransparentRendering: boolean;
     previousViewProjectionMatrix: UnityEngine.Matrix4x4;
+    static main: UnityEngine.Camera;
+    static current: UnityEngine.Camera;
     scene: UnityEngine.SceneManagement.Scene;
     stereoEnabled: boolean;
     stereoSeparation: number;
@@ -911,8 +1115,11 @@ export namespace UnityEngine {
     areVRStereoViewMatricesWithinSingleCullTolerance: boolean;
     stereoTargetEye: UnityEngine.StereoTargetEyeMask;
     stereoActiveEye: UnityEngine.Camera_MonoOrStereoscopicEye;
+    static allCamerasCount: number;
+    static allCameras: UnityEngine.Camera[];
     commandBufferCount: number;
     isOrthoGraphic: boolean;
+    static mainCamera: UnityEngine.Camera;
     near: number;
     far: number;
     fov: number;
@@ -938,6 +1145,9 @@ export namespace UnityEngine {
     particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static onPreCull: UnityEngine.Camera_CameraCallback;
+    static onPreRender: UnityEngine.Camera_CameraCallback;
+    static onPostRender: UnityEngine.Camera_CameraCallback;
     Reset: (() => void);
     ResetTransparencySortSettings: (() => void);
     ResetAspect: (() => void);
@@ -959,6 +1169,10 @@ export namespace UnityEngine {
     ViewportPointToRay: ((pos: UnityEngine.Vector3, eye: UnityEngine.Camera_MonoOrStereoscopicEye) => UnityEngine.Ray) | ((pos: UnityEngine.Vector3) => UnityEngine.Ray);
     ScreenPointToRay: ((pos: UnityEngine.Vector3, eye: UnityEngine.Camera_MonoOrStereoscopicEye) => UnityEngine.Ray) | ((pos: UnityEngine.Vector3) => UnityEngine.Ray);
     CalculateFrustumCorners: ((viewport: UnityEngine.Rect, z: number, eye: UnityEngine.Camera_MonoOrStereoscopicEye, outCorners: UnityEngine.Vector3[]) => void);
+    static FocalLengthToFieldOfView: ((focalLength: number, sensorSize: number) => number);
+    static FieldOfViewToFocalLength: ((fieldOfView: number, sensorSize: number) => number);
+    static HorizontalToVerticalFieldOfView: ((horizontalFieldOfView: number, aspectRatio: number) => number);
+    static VerticalToHorizontalFieldOfView: ((verticalFieldOfView: number, aspectRatio: number) => number);
     GetStereoNonJitteredProjectionMatrix: ((eye: UnityEngine.Camera_StereoscopicEye) => UnityEngine.Matrix4x4);
     GetStereoViewMatrix: ((eye: UnityEngine.Camera_StereoscopicEye) => UnityEngine.Matrix4x4);
     CopyStereoDeviceProjectionMatrixToNonJittered: ((eye: UnityEngine.Camera_StereoscopicEye) => void);
@@ -967,11 +1181,13 @@ export namespace UnityEngine {
     ResetStereoProjectionMatrices: (() => void);
     SetStereoViewMatrix: ((eye: UnityEngine.Camera_StereoscopicEye, matrix: UnityEngine.Matrix4x4) => void);
     ResetStereoViewMatrices: (() => void);
+    static GetAllCameras: ((cameras: UnityEngine.Camera[]) => number);
     RenderToCubemap: ((cubemap: UnityEngine.Cubemap, faceMask: number) => boolean) | ((cubemap: UnityEngine.Cubemap) => boolean) | ((cubemap: UnityEngine.RenderTexture, faceMask: number) => boolean) | ((cubemap: UnityEngine.RenderTexture) => boolean) | ((cubemap: UnityEngine.RenderTexture, faceMask: number, stereoEye: UnityEngine.Camera_MonoOrStereoscopicEye) => boolean);
     Render: (() => void);
     RenderWithShader: ((shader: UnityEngine.Shader, replacementTag: string) => void);
     RenderDontRestore: (() => void);
     SubmitRenderRequests: ((renderRequests: any) => void);
+    static SetupCurrent: ((cur: UnityEngine.Camera) => void);
     CopyFrom: ((other: UnityEngine.Camera) => void);
     RemoveCommandBuffers: ((evt: UnityEngine.Rendering.CameraEvent) => void);
     RemoveAllCommandBuffers: (() => void);
@@ -1083,7 +1299,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -1141,7 +1357,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -1210,6 +1426,10 @@ export namespace UnityEngine {
     realtimeTexture: UnityEngine.RenderTexture;
     texture: UnityEngine.Texture;
     textureHDRDecodeValues: UnityEngine.Vector4;
+    static minBakedCubemapResolution: number;
+    static maxBakedCubemapResolution: number;
+    static defaultTextureHDRDecodeValues: UnityEngine.Vector4;
+    static defaultTexture: UnityEngine.Texture;
     enabled: boolean;
     isActiveAndEnabled: boolean;
     transform: UnityEngine.Transform;
@@ -1233,6 +1453,7 @@ export namespace UnityEngine {
     Reset: (() => void);
     RenderProbe: (() => number) | ((targetTexture: UnityEngine.RenderTexture) => number);
     IsFinishedRendering: ((renderId: number) => boolean);
+    static BlendCubemap: ((src: UnityEngine.Texture, dst: UnityEngine.Texture, blend: number, target: UnityEngine.RenderTexture) => boolean);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
     GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
@@ -1254,8 +1475,11 @@ export namespace UnityEngine {
     ReflectionProbeRemoved = 1,
   }
   export declare class CrashReport {
+    static reports: UnityEngine.CrashReport[];
+    static lastReport: UnityEngine.CrashReport;
     time: any; // System.DateTime
     text: string;
+    static RemoveAll: (() => void);
     Remove: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
@@ -1264,6 +1488,26 @@ export namespace UnityEngine {
   }
   export declare class Debug {
     constructor();
+    static unityLogger: UnityEngine.ILogger;
+    static developerConsoleVisible: boolean;
+    static isDebugBuild: boolean;
+    static logger: UnityEngine.ILogger;
+    static DrawLine: ((start: UnityEngine.Vector3, end: UnityEngine.Vector3, color: UnityEngine.Color, duration: number) => void) | ((start: UnityEngine.Vector3, end: UnityEngine.Vector3, color: UnityEngine.Color) => void) | ((start: UnityEngine.Vector3, end: UnityEngine.Vector3) => void) | ((start: UnityEngine.Vector3, end: UnityEngine.Vector3, color: UnityEngine.Color, duration: number, depthTest: boolean) => void);
+    static DrawRay: ((start: UnityEngine.Vector3, dir: UnityEngine.Vector3, color: UnityEngine.Color, duration: number) => void) | ((start: UnityEngine.Vector3, dir: UnityEngine.Vector3, color: UnityEngine.Color) => void) | ((start: UnityEngine.Vector3, dir: UnityEngine.Vector3) => void) | ((start: UnityEngine.Vector3, dir: UnityEngine.Vector3, color: UnityEngine.Color, duration: number, depthTest: boolean) => void);
+    static Break: (() => void);
+    static DebugBreak: (() => void);
+    static Log: ((message: any) => void) | ((message: any, context: UnityEngine.Object) => void);
+    static LogFormat: ((format: string, ...args: any[]) => void) | ((context: UnityEngine.Object, format: string, ...args: any[]) => void) | ((logType: UnityEngine.LogType, logOptions: UnityEngine.LogOption, context: UnityEngine.Object, format: string, ...args: any[]) => void);
+    static LogError: ((message: any) => void) | ((message: any, context: UnityEngine.Object) => void);
+    static LogErrorFormat: ((format: string, ...args: any[]) => void) | ((context: UnityEngine.Object, format: string, ...args: any[]) => void);
+    static ClearDeveloperConsole: (() => void);
+    static LogException: ((exception: any) => void) | ((exception: any, context: UnityEngine.Object) => void);
+    static LogWarning: ((message: any) => void) | ((message: any, context: UnityEngine.Object) => void);
+    static LogWarningFormat: ((format: string, ...args: any[]) => void) | ((context: UnityEngine.Object, format: string, ...args: any[]) => void);
+    static Assert: ((condition: boolean) => void) | ((condition: boolean, context: UnityEngine.Object) => void) | ((condition: boolean, message: any) => void) | ((condition: boolean, message: string) => void) | ((condition: boolean, message: any, context: UnityEngine.Object) => void) | ((condition: boolean, message: string, context: UnityEngine.Object) => void) | ((condition: boolean, format: string, ...args: any[]) => void);
+    static AssertFormat: ((condition: boolean, format: string, ...args: any[]) => void) | ((condition: boolean, context: UnityEngine.Object, format: string, ...args: any[]) => void);
+    static LogAssertion: ((message: any) => void) | ((message: any, context: UnityEngine.Object) => void);
+    static LogAssertionFormat: ((format: string, ...args: any[]) => void) | ((context: UnityEngine.Object, format: string, ...args: any[]) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1281,6 +1525,7 @@ export namespace UnityEngine {
   }
   export declare class EventProvider {
     constructor();
+    static WriteCustomEvent: ((value: number, text: string) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1345,6 +1590,9 @@ export namespace UnityEngine {
   }
   export declare class GeometryUtility {
     constructor();
+    static CalculateFrustumPlanes: ((camera: UnityEngine.Camera) => UnityEngine.Plane[]) | ((worldToProjectionMatrix: UnityEngine.Matrix4x4) => UnityEngine.Plane[]) | ((camera: UnityEngine.Camera, planes: UnityEngine.Plane[]) => void) | ((worldToProjectionMatrix: UnityEngine.Matrix4x4, planes: UnityEngine.Plane[]) => void);
+    static CalculateBounds: ((positions: UnityEngine.Vector3[], transform: UnityEngine.Matrix4x4) => UnityEngine.Bounds);
+    static TestPlanesAABB: ((planes: UnityEngine.Plane[], bounds: UnityEngine.Bounds) => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1360,7 +1608,7 @@ export namespace UnityEngine {
     SetNormalAndPosition: ((inNormal: UnityEngine.Vector3, inPoint: UnityEngine.Vector3) => void);
     Set3Points: ((a: UnityEngine.Vector3, b: UnityEngine.Vector3, c: UnityEngine.Vector3) => void);
     Flip: (() => void);
-    Translate: ((translation: UnityEngine.Vector3) => void);
+    Translate: ((translation: UnityEngine.Vector3) => void) | ((plane: UnityEngine.Plane, translation: UnityEngine.Vector3) => UnityEngine.Plane);
     ClosestPointOnPlane: ((point: UnityEngine.Vector3) => UnityEngine.Vector3);
     GetDistanceToPoint: ((point: UnityEngine.Vector3) => number);
     GetSide: ((point: UnityEngine.Vector3) => boolean);
@@ -1394,6 +1642,7 @@ export namespace UnityEngine {
     constructor(x: number, y: number, width: number, height: number);
     constructor(position: UnityEngine.Vector2, size: UnityEngine.Vector2);
     constructor(source: UnityEngine.Rect);
+    static zero: UnityEngine.Rect;
     x: number;
     y: number;
     position: UnityEngine.Vector2;
@@ -1411,9 +1660,12 @@ export namespace UnityEngine {
     right: number;
     top: number;
     bottom: number;
+    static MinMaxRect: ((xmin: number, ymin: number, xmax: number, ymax: number) => UnityEngine.Rect);
     Set: ((x: number, y: number, width: number, height: number) => void);
     Contains: ((point: UnityEngine.Vector2) => boolean) | ((point: UnityEngine.Vector3) => boolean) | ((point: UnityEngine.Vector3, allowInverse: boolean) => boolean);
     Overlaps: ((other: UnityEngine.Rect) => boolean) | ((other: UnityEngine.Rect, allowInverse: boolean) => boolean);
+    static NormalizedToPoint: ((rectangle: UnityEngine.Rect, normalizedRectCoordinates: UnityEngine.Vector2) => UnityEngine.Vector2);
+    static PointToNormalized: ((rectangle: UnityEngine.Rect, point: UnityEngine.Vector2) => UnityEngine.Vector2);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Rect) => boolean);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
@@ -1474,6 +1726,15 @@ export namespace UnityEngine {
   }
   export declare class DynamicGI {
     constructor();
+    static indirectScale: number;
+    static updateThreshold: number;
+    static materialUpdateTimeSlice: number;
+    static synchronousMode: boolean;
+    static isConverged: boolean;
+    static SetEmissive: ((renderer: UnityEngine.Renderer, color: UnityEngine.Color) => void);
+    static SetEnvironmentData: ((input: number[]) => void);
+    static UpdateEnvironment: (() => void);
+    static UpdateMaterials: ((renderer: UnityEngine.Renderer) => void) | ((renderer: UnityEngine.Object) => void) | ((renderer: UnityEngine.Object, x: number, y: number, width: number, height: number) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1563,6 +1824,21 @@ export namespace UnityEngine {
   }
   export declare class Gizmos {
     constructor();
+    static color: UnityEngine.Color;
+    static matrix: UnityEngine.Matrix4x4;
+    static exposure: UnityEngine.Texture;
+    static probeSize: number;
+    static DrawLine: ((from: UnityEngine.Vector3, to: UnityEngine.Vector3) => void);
+    static DrawWireSphere: ((center: UnityEngine.Vector3, radius: number) => void);
+    static DrawSphere: ((center: UnityEngine.Vector3, radius: number) => void);
+    static DrawWireCube: ((center: UnityEngine.Vector3, size: UnityEngine.Vector3) => void);
+    static DrawCube: ((center: UnityEngine.Vector3, size: UnityEngine.Vector3) => void);
+    static DrawMesh: ((mesh: UnityEngine.Mesh, submeshIndex: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, scale: UnityEngine.Vector3) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3) => void) | ((mesh: UnityEngine.Mesh) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, scale: UnityEngine.Vector3) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, position: UnityEngine.Vector3) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number) => void);
+    static DrawWireMesh: ((mesh: UnityEngine.Mesh, submeshIndex: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, scale: UnityEngine.Vector3) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3) => void) | ((mesh: UnityEngine.Mesh) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, scale: UnityEngine.Vector3) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, position: UnityEngine.Vector3) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number) => void);
+    static DrawIcon: ((center: UnityEngine.Vector3, name: string, allowScaling: boolean) => void) | ((center: UnityEngine.Vector3, name: string, allowScaling: boolean, tint: UnityEngine.Color) => void) | ((center: UnityEngine.Vector3, name: string) => void);
+    static DrawGUITexture: ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number, mat: UnityEngine.Material) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, mat: UnityEngine.Material) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number) => void);
+    static DrawFrustum: ((center: UnityEngine.Vector3, fov: number, maxRange: number, minRange: number, aspect: number) => void);
+    static DrawRay: ((r: UnityEngine.Ray) => void) | ((from: UnityEngine.Vector3, direction: UnityEngine.Vector3) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1669,6 +1945,7 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class CustomRenderTextureManager {
+    static GetAllCustomRenderTextures: ((currentCustomRenderTextures: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1684,9 +1961,13 @@ export namespace UnityEngine {
     active: boolean;
     requiresBlitToBackbuffer: boolean;
     requiresSrgbBlitToBackbuffer: boolean;
+    static main: UnityEngine.Display;
+    static displays: UnityEngine.Display[];
     Activate: (() => void) | ((width: number, height: number, refreshRate: number) => void);
     SetParams: ((width: number, height: number, x: number, y: number) => void);
     SetRenderingResolution: ((w: number, h: number) => void);
+    static MultiDisplayLicense: (() => boolean);
+    static RelativeMouseAt: ((inputMouseCoordinates: UnityEngine.Vector3) => UnityEngine.Vector3);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1703,7 +1984,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -1716,6 +1997,8 @@ export namespace UnityEngine {
   }
   export declare class SleepTimeout {
     constructor();
+    static NeverSleep: number;
+    static SystemSetting: number;
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1723,6 +2006,26 @@ export namespace UnityEngine {
   }
   export declare class Screen {
     constructor();
+    static width: number;
+    static height: number;
+    static dpi: number;
+    static currentResolution: UnityEngine.Resolution;
+    static resolutions: UnityEngine.Resolution[];
+    static fullScreen: boolean;
+    static fullScreenMode: UnityEngine.FullScreenMode;
+    static safeArea: UnityEngine.Rect;
+    static cutouts: UnityEngine.Rect[];
+    static autorotateToPortrait: boolean;
+    static autorotateToPortraitUpsideDown: boolean;
+    static autorotateToLandscapeLeft: boolean;
+    static autorotateToLandscapeRight: boolean;
+    static orientation: UnityEngine.ScreenOrientation;
+    static sleepTimeout: number;
+    static brightness: number;
+    static GetResolution: UnityEngine.Resolution[];
+    static showCursor: boolean;
+    static lockCursor: boolean;
+    static SetResolution: ((width: number, height: number, fullscreenMode: UnityEngine.FullScreenMode, preferredRefreshRate: number) => void) | ((width: number, height: number, fullscreenMode: UnityEngine.FullScreenMode) => void) | ((width: number, height: number, fullscreen: boolean, preferredRefreshRate: number) => void) | ((width: number, height: number, fullscreen: boolean) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1744,6 +2047,39 @@ export namespace UnityEngine {
   }
   export declare class Graphics {
     constructor();
+    static activeColorGamut: UnityEngine.ColorGamut;
+    static activeTier: UnityEngine.Rendering.GraphicsTier;
+    static preserveFramebufferAlpha: boolean;
+    static minOpenGLESVersion: UnityEngine.Rendering.OpenGLESVersion;
+    static activeColorBuffer: UnityEngine.RenderBuffer;
+    static activeDepthBuffer: UnityEngine.RenderBuffer;
+    static deviceName: string;
+    static deviceVendor: string;
+    static deviceVersion: string;
+    static ClearRandomWriteTargets: (() => void);
+    static ExecuteCommandBuffer: ((buffer: UnityEngine.Rendering.CommandBuffer) => void);
+    static ExecuteCommandBufferAsync: ((buffer: UnityEngine.Rendering.CommandBuffer, queueType: UnityEngine.Rendering.ComputeQueueType) => void);
+    static SetRenderTarget: ((rt: UnityEngine.RenderTexture, mipLevel: number, face: UnityEngine.CubemapFace, depthSlice: number) => void) | ((colorBuffer: UnityEngine.RenderBuffer, depthBuffer: UnityEngine.RenderBuffer, mipLevel: number, face: UnityEngine.CubemapFace, depthSlice: number) => void) | ((colorBuffers: UnityEngine.RenderBuffer[], depthBuffer: UnityEngine.RenderBuffer) => void) | ((setup: UnityEngine.RenderTargetSetup) => void) | ((rt: UnityEngine.RenderTexture) => void) | ((rt: UnityEngine.RenderTexture, mipLevel: number) => void) | ((rt: UnityEngine.RenderTexture, mipLevel: number, face: UnityEngine.CubemapFace) => void) | ((colorBuffer: UnityEngine.RenderBuffer, depthBuffer: UnityEngine.RenderBuffer) => void) | ((colorBuffer: UnityEngine.RenderBuffer, depthBuffer: UnityEngine.RenderBuffer, mipLevel: number) => void) | ((colorBuffer: UnityEngine.RenderBuffer, depthBuffer: UnityEngine.RenderBuffer, mipLevel: number, face: UnityEngine.CubemapFace) => void);
+    static SetRandomWriteTarget: ((index: number, uav: UnityEngine.RenderTexture) => void) | ((index: number, uav: UnityEngine.ComputeBuffer, preserveCounterValue: boolean) => void) | ((index: number, uav: UnityEngine.GraphicsBuffer, preserveCounterValue: boolean) => void) | ((index: number, uav: UnityEngine.ComputeBuffer) => void) | ((index: number, uav: UnityEngine.GraphicsBuffer) => void);
+    static CopyTexture: ((src: UnityEngine.Texture, dst: UnityEngine.Texture) => void) | ((src: UnityEngine.Texture, srcElement: number, dst: UnityEngine.Texture, dstElement: number) => void) | ((src: UnityEngine.Texture, srcElement: number, srcMip: number, dst: UnityEngine.Texture, dstElement: number, dstMip: number) => void) | ((src: UnityEngine.Texture, srcElement: number, srcMip: number, srcX: number, srcY: number, srcWidth: number, srcHeight: number, dst: UnityEngine.Texture, dstElement: number, dstMip: number, dstX: number, dstY: number) => void);
+    static ConvertTexture: ((src: UnityEngine.Texture, dst: UnityEngine.Texture) => boolean) | ((src: UnityEngine.Texture, srcElement: number, dst: UnityEngine.Texture, dstElement: number) => boolean);
+    static CreateAsyncGraphicsFence: ((stage: UnityEngine.Rendering.SynchronisationStage) => UnityEngine.Rendering.GraphicsFence) | (() => UnityEngine.Rendering.GraphicsFence);
+    static CreateGraphicsFence: ((fenceType: UnityEngine.Rendering.GraphicsFenceType, stage: UnityEngine.Rendering.SynchronisationStageFlags) => UnityEngine.Rendering.GraphicsFence);
+    static WaitOnAsyncGraphicsFence: ((fence: UnityEngine.Rendering.GraphicsFence) => void) | ((fence: UnityEngine.Rendering.GraphicsFence, stage: UnityEngine.Rendering.SynchronisationStage) => void);
+    static DrawTexture: ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, sourceRect: UnityEngine.Rect, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number, color: UnityEngine.Color, mat: UnityEngine.Material, pass: number) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, sourceRect: UnityEngine.Rect, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number, mat: UnityEngine.Material, pass: number) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number, mat: UnityEngine.Material, pass: number) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, mat: UnityEngine.Material, pass: number) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, sourceRect: UnityEngine.Rect, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number, color: UnityEngine.Color, mat: UnityEngine.Material) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, sourceRect: UnityEngine.Rect, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number, color: UnityEngine.Color) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, sourceRect: UnityEngine.Rect, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number, mat: UnityEngine.Material) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, sourceRect: UnityEngine.Rect, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number, mat: UnityEngine.Material) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, leftBorder: number, rightBorder: number, topBorder: number, bottomBorder: number) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture, mat: UnityEngine.Material) => void) | ((screenRect: UnityEngine.Rect, texture: UnityEngine.Texture) => void);
+    static DrawMeshNow: ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, materialIndex: number) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, materialIndex: number) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4) => void);
+    static DrawMesh: ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: boolean, receiveShadows: boolean, useLightProbes: boolean) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, probeAnchor: UnityEngine.Transform, useLightProbes: boolean) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: boolean, receiveShadows: boolean, useLightProbes: boolean) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, probeAnchor: UnityEngine.Transform, lightProbeUsage: UnityEngine.Rendering.LightProbeUsage, lightProbeProxyVolume: UnityEngine.LightProbeProxyVolume) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, materialIndex: number) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, materialIndex: number) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: boolean) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: boolean, receiveShadows: boolean) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean) => void) | ((mesh: UnityEngine.Mesh, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, probeAnchor: UnityEngine.Transform) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: boolean) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: boolean, receiveShadows: boolean) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, probeAnchor: UnityEngine.Transform) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, probeAnchor: UnityEngine.Transform, useLightProbes: boolean) => void) | ((mesh: UnityEngine.Mesh, matrix: UnityEngine.Matrix4x4, material: UnityEngine.Material, layer: number, camera: UnityEngine.Camera, submeshIndex: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, probeAnchor: UnityEngine.Transform, lightProbeUsage: UnityEngine.Rendering.LightProbeUsage) => void);
+    static DrawMeshInstanced: ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[], count: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number, camera: UnityEngine.Camera, lightProbeUsage: UnityEngine.Rendering.LightProbeUsage, lightProbeProxyVolume: UnityEngine.LightProbeProxyVolume) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: any, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number, camera: UnityEngine.Camera, lightProbeUsage: UnityEngine.Rendering.LightProbeUsage, lightProbeProxyVolume: UnityEngine.LightProbeProxyVolume) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[]) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[], count: number) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[], count: number, properties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[], count: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[], count: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[], count: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[], count: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number, camera: UnityEngine.Camera) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: UnityEngine.Matrix4x4[], count: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number, camera: UnityEngine.Camera, lightProbeUsage: UnityEngine.Rendering.LightProbeUsage) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: any) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: any, properties: UnityEngine.MaterialPropertyBlock) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: any, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: any, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: any, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: any, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number, camera: UnityEngine.Camera) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, matrices: any, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number, camera: UnityEngine.Camera, lightProbeUsage: UnityEngine.Rendering.LightProbeUsage) => void);
+    static DrawMeshInstancedProcedural: ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, bounds: UnityEngine.Bounds, count: number, properties?: UnityEngine.MaterialPropertyBlock, castShadows?: UnityEngine.Rendering.ShadowCastingMode, receiveShadows?: boolean, layer?: number, camera?: UnityEngine.Camera, lightProbeUsage?: UnityEngine.Rendering.LightProbeUsage, lightProbeProxyVolume?: UnityEngine.LightProbeProxyVolume) => void);
+    static DrawMeshInstancedIndirect: ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, bounds: UnityEngine.Bounds, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number, camera: UnityEngine.Camera, lightProbeUsage: UnityEngine.Rendering.LightProbeUsage, lightProbeProxyVolume: UnityEngine.LightProbeProxyVolume) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, bounds: UnityEngine.Bounds, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset: number, properties: UnityEngine.MaterialPropertyBlock, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, layer: number, camera: UnityEngine.Camera, lightProbeUsage: UnityEngine.Rendering.LightProbeUsage, lightProbeProxyVolume: UnityEngine.LightProbeProxyVolume) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, bounds: UnityEngine.Bounds, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset?: number, properties?: UnityEngine.MaterialPropertyBlock, castShadows?: UnityEngine.Rendering.ShadowCastingMode, receiveShadows?: boolean, layer?: number, camera?: UnityEngine.Camera, lightProbeUsage?: UnityEngine.Rendering.LightProbeUsage) => void) | ((mesh: UnityEngine.Mesh, submeshIndex: number, material: UnityEngine.Material, bounds: UnityEngine.Bounds, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset?: number, properties?: UnityEngine.MaterialPropertyBlock, castShadows?: UnityEngine.Rendering.ShadowCastingMode, receiveShadows?: boolean, layer?: number, camera?: UnityEngine.Camera, lightProbeUsage?: UnityEngine.Rendering.LightProbeUsage) => void);
+    static DrawProceduralNow: ((topology: UnityEngine.MeshTopology, vertexCount: number, instanceCount?: number) => void) | ((topology: UnityEngine.MeshTopology, indexBuffer: UnityEngine.GraphicsBuffer, indexCount: number, instanceCount?: number) => void);
+    static DrawProceduralIndirectNow: ((topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset?: number) => void) | ((topology: UnityEngine.MeshTopology, indexBuffer: UnityEngine.GraphicsBuffer, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset?: number) => void) | ((topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset?: number) => void) | ((topology: UnityEngine.MeshTopology, indexBuffer: UnityEngine.GraphicsBuffer, bufferWithArgs: UnityEngine.GraphicsBuffer, argsOffset?: number) => void);
+    static DrawProcedural: ((material: UnityEngine.Material, bounds: UnityEngine.Bounds, topology: UnityEngine.MeshTopology, vertexCount: number, instanceCount?: number, camera?: UnityEngine.Camera, properties?: UnityEngine.MaterialPropertyBlock, castShadows?: UnityEngine.Rendering.ShadowCastingMode, receiveShadows?: boolean, layer?: number) => void) | ((material: UnityEngine.Material, bounds: UnityEngine.Bounds, topology: UnityEngine.MeshTopology, indexBuffer: UnityEngine.GraphicsBuffer, indexCount: number, instanceCount?: number, camera?: UnityEngine.Camera, properties?: UnityEngine.MaterialPropertyBlock, castShadows?: UnityEngine.Rendering.ShadowCastingMode, receiveShadows?: boolean, layer?: number) => void) | ((topology: UnityEngine.MeshTopology, vertexCount: number, instanceCount?: number) => void);
+    static DrawProceduralIndirect: ((material: UnityEngine.Material, bounds: UnityEngine.Bounds, topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset?: number, camera?: UnityEngine.Camera, properties?: UnityEngine.MaterialPropertyBlock, castShadows?: UnityEngine.Rendering.ShadowCastingMode, receiveShadows?: boolean, layer?: number) => void) | ((material: UnityEngine.Material, bounds: UnityEngine.Bounds, topology: UnityEngine.MeshTopology, indexBuffer: UnityEngine.GraphicsBuffer, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset?: number, camera?: UnityEngine.Camera, properties?: UnityEngine.MaterialPropertyBlock, castShadows?: UnityEngine.Rendering.ShadowCastingMode, receiveShadows?: boolean, layer?: number) => void) | ((topology: UnityEngine.MeshTopology, bufferWithArgs: UnityEngine.ComputeBuffer, argsOffset?: number) => void);
+    static Blit: ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture) => void) | ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture, sourceDepthSlice: number, destDepthSlice: number) => void) | ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture, scale: UnityEngine.Vector2, offset: UnityEngine.Vector2) => void) | ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture, scale: UnityEngine.Vector2, offset: UnityEngine.Vector2, sourceDepthSlice: number, destDepthSlice: number) => void) | ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture, mat: UnityEngine.Material, pass: number) => void) | ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture, mat: UnityEngine.Material, pass: number, destDepthSlice: number) => void) | ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture, mat: UnityEngine.Material) => void) | ((source: UnityEngine.Texture, mat: UnityEngine.Material, pass: number) => void) | ((source: UnityEngine.Texture, mat: UnityEngine.Material, pass: number, destDepthSlice: number) => void) | ((source: UnityEngine.Texture, mat: UnityEngine.Material) => void);
+    static BlitMultiTap: ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture, mat: UnityEngine.Material, ...offsets: UnityEngine.Vector2[]) => void) | ((source: UnityEngine.Texture, dest: UnityEngine.RenderTexture, mat: UnityEngine.Material, destDepthSlice: number, ...offsets: UnityEngine.Vector2[]) => void);
+    static CreateGPUFence: ((stage: UnityEngine.Rendering.SynchronisationStage) => UnityEngine.Rendering.GPUFence) | (() => UnityEngine.Rendering.GPUFence);
+    static WaitOnGPUFence: ((fence: UnityEngine.Rendering.GPUFence, stage: UnityEngine.Rendering.SynchronisationStage) => void) | ((fence: UnityEngine.Rendering.GPUFence) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1751,12 +2087,51 @@ export namespace UnityEngine {
   }
   export declare class GL {
     constructor();
+    static wireframe: boolean;
+    static sRGBWrite: boolean;
+    static invertCulling: boolean;
+    static modelview: UnityEngine.Matrix4x4;
+    static TRIANGLES: number;
+    static TRIANGLE_STRIP: number;
+    static QUADS: number;
+    static LINES: number;
+    static LINE_STRIP: number;
+    static Vertex3: ((x: number, y: number, z: number) => void);
+    static Vertex: ((v: UnityEngine.Vector3) => void);
+    static TexCoord3: ((x: number, y: number, z: number) => void);
+    static TexCoord: ((v: UnityEngine.Vector3) => void);
+    static TexCoord2: ((x: number, y: number) => void);
+    static MultiTexCoord3: ((unit: number, x: number, y: number, z: number) => void);
+    static MultiTexCoord: ((unit: number, v: UnityEngine.Vector3) => void);
+    static MultiTexCoord2: ((unit: number, x: number, y: number) => void);
+    static Color: ((c: UnityEngine.Color) => void);
+    static Flush: (() => void);
+    static RenderTargetBarrier: (() => void);
+    static MultMatrix: ((m: UnityEngine.Matrix4x4) => void);
+    static IssuePluginEvent: ((eventID: number) => void) | ((callback: any, eventID: number) => void);
+    static SetRevertBackfacing: ((revertBackFaces: boolean) => void);
+    static PushMatrix: (() => void);
+    static PopMatrix: (() => void);
+    static LoadIdentity: (() => void);
+    static LoadOrtho: (() => void);
+    static LoadPixelMatrix: (() => void) | ((left: number, right: number, bottom: number, top: number) => void);
+    static LoadProjectionMatrix: ((mat: UnityEngine.Matrix4x4) => void);
+    static InvalidateState: (() => void);
+    static GetGPUProjectionMatrix: ((proj: UnityEngine.Matrix4x4, renderIntoTexture: boolean) => UnityEngine.Matrix4x4);
+    static Begin: ((mode: number) => void);
+    static End: (() => void);
+    static Clear: ((clearDepth: boolean, clearColor: boolean, backgroundColor: UnityEngine.Color, depth: number) => void) | ((clearDepth: boolean, clearColor: boolean, backgroundColor: UnityEngine.Color) => void);
+    static Viewport: ((pixelRect: UnityEngine.Rect) => void);
+    static ClearWithSkybox: ((clearDepth: boolean, camera: UnityEngine.Camera) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
   export declare class ScalableBufferManager {
+    static widthScaleFactor: number;
+    static heightScaleFactor: number;
+    static ResizeBuffers: ((widthScale: number, heightScale: number) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1776,6 +2151,11 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class FrameTimingManager {
+    static CaptureFrameTimings: (() => void);
+    static GetLatestTimings: ((numFrames: any, timings: UnityEngine.FrameTiming[]) => any);
+    static GetVSyncsPerSecond: (() => number);
+    static GetGpuTimerFrequency: (() => any);
+    static GetCpuTimerFrequency: (() => any);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1796,6 +2176,11 @@ export namespace UnityEngine {
     ToString: (() => string);
   }
   export declare class LightmapSettings {
+    static lightmaps: UnityEngine.LightmapData[];
+    static lightmapsMode: UnityEngine.LightmapsMode;
+    static lightProbes: UnityEngine.LightProbes;
+    static lightmapsModeLegacy: UnityEngine.LightmapsModeLegacy;
+    static bakedColorSpace: UnityEngine.ColorSpace;
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
@@ -1812,6 +2197,9 @@ export namespace UnityEngine {
     coefficients: number[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static Tetrahedralize: (() => void);
+    static TetrahedralizeAsync: (() => void);
+    static CalculateInterpolatedLightAndOcclusionProbes: ((positions: UnityEngine.Vector3[], lightProbes: UnityEngine.Rendering.SphericalHarmonicsL2[], occlusionProbes: UnityEngine.Vector4[]) => void) | ((positions: any, lightProbes: any, occlusionProbes: any) => void);
     GetInterpolatedLightProbe: ((position: UnityEngine.Vector3, renderer: UnityEngine.Renderer, coefficients: number[]) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
@@ -1824,6 +2212,7 @@ export namespace UnityEngine {
     D3DHDRDisplayBitDepth16 = 1,
   }
   export declare class HDROutputSettings {
+    static main: UnityEngine.HDROutputSettings;
     active: boolean;
     available: boolean;
     automaticHDRTonemapping: boolean;
@@ -1835,7 +2224,9 @@ export namespace UnityEngine {
     maxToneMapLuminance: number;
     minToneMapLuminance: number;
     HDRModeChangeRequested: boolean;
+    static displays: UnityEngine.HDROutputSettings[];
     RequestHDRModeChange: ((enabled: boolean) => void);
+    static SetPaperWhiteInNits: ((paperWhite: number) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1874,8 +2265,52 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class QualitySettings {
+    static currentLevel: UnityEngine.QualityLevel;
+    static pixelLightCount: number;
+    static shadows: UnityEngine.ShadowQuality;
+    static shadowProjection: UnityEngine.ShadowProjection;
+    static shadowCascades: number;
+    static shadowDistance: number;
+    static shadowResolution: UnityEngine.ShadowResolution;
+    static shadowmaskMode: UnityEngine.ShadowmaskMode;
+    static shadowNearPlaneOffset: number;
+    static shadowCascade2Split: number;
+    static shadowCascade4Split: UnityEngine.Vector3;
+    static lodBias: number;
+    static anisotropicFiltering: UnityEngine.AnisotropicFiltering;
+    static masterTextureLimit: number;
+    static maximumLODLevel: number;
+    static particleRaycastBudget: number;
+    static softParticles: boolean;
+    static softVegetation: boolean;
+    static vSyncCount: number;
+    static antiAliasing: number;
+    static asyncUploadTimeSlice: number;
+    static asyncUploadBufferSize: number;
+    static asyncUploadPersistentBuffer: boolean;
+    static realtimeReflectionProbes: boolean;
+    static billboardsFaceCameraPosition: boolean;
+    static resolutionScalingFixedDPIFactor: number;
+    static renderPipeline: UnityEngine.Rendering.RenderPipelineAsset;
+    static blendWeights: UnityEngine.BlendWeights;
+    static skinWeights: UnityEngine.SkinWeights;
+    static streamingMipmapsActive: boolean;
+    static streamingMipmapsMemoryBudget: number;
+    static streamingMipmapsRenderersPerFrame: number;
+    static streamingMipmapsMaxLevelReduction: number;
+    static streamingMipmapsAddAllCameras: boolean;
+    static streamingMipmapsMaxFileIORequests: number;
+    static maxQueuedFrames: number;
+    static names: string[];
+    static desiredColorSpace: UnityEngine.ColorSpace;
+    static activeColorSpace: UnityEngine.ColorSpace;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static IncreaseLevel: ((applyExpensiveChanges: boolean) => void) | (() => void);
+    static DecreaseLevel: ((applyExpensiveChanges: boolean) => void) | (() => void);
+    static SetQualityLevel: ((index: number) => void) | ((index: number, applyExpensiveChanges: boolean) => void);
+    static GetRenderPipelineAssetAt: ((index: number) => UnityEngine.Rendering.RenderPipelineAsset);
+    static GetQualityLevel: (() => number);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
@@ -1883,6 +2318,7 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class RendererExtensions {
+    static UpdateGIMaterials: ((renderer: UnityEngine.Renderer) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -1949,7 +2385,10 @@ export namespace UnityEngine {
     SetUVs: ((channel: number, uvs: any) => void) | ((channel: number, uvs: any) => void) | ((channel: number, uvs: any) => void) | ((channel: number, uvs: any, start: number, length: number) => void) | ((channel: number, uvs: any, start: number, length: number, flags: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((channel: number, uvs: any, start: number, length: number) => void) | ((channel: number, uvs: any, start: number, length: number, flags: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((channel: number, uvs: any, start: number, length: number) => void) | ((channel: number, uvs: any, start: number, length: number, flags: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((channel: number, uvs: UnityEngine.Vector2[]) => void) | ((channel: number, uvs: UnityEngine.Vector3[]) => void) | ((channel: number, uvs: UnityEngine.Vector4[]) => void) | ((channel: number, uvs: UnityEngine.Vector2[], start: number, length: number) => void) | ((channel: number, uvs: UnityEngine.Vector2[], start: number, length: number, flags: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((channel: number, uvs: UnityEngine.Vector3[], start: number, length: number) => void) | ((channel: number, uvs: UnityEngine.Vector3[], start: number, length: number, flags: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((channel: number, uvs: UnityEngine.Vector4[], start: number, length: number) => void) | ((channel: number, uvs: UnityEngine.Vector4[], start: number, length: number, flags: UnityEngine.Rendering.MeshUpdateFlags) => void);
     GetUVs: ((channel: number, uvs: any) => void) | ((channel: number, uvs: any) => void) | ((channel: number, uvs: any) => void);
     GetVertexAttributes: (() => UnityEngine.Rendering.VertexAttributeDescriptor[]) | ((attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => number) | ((attributes: any) => number);
-    SetVertexBufferParams: ((vertexCount: number, attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => void) | ((vertexCount: number, attributes: any) => void);
+    SetVertexBufferParams: ((vertexCount: number, ...attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => void) | ((vertexCount: number, attributes: any) => void);
+    static AcquireReadOnlyMeshData: ((mesh: UnityEngine.Mesh) => UnityEngine.Mesh_MeshDataArray) | ((meshes: UnityEngine.Mesh[]) => UnityEngine.Mesh_MeshDataArray) | ((meshes: any) => UnityEngine.Mesh_MeshDataArray);
+    static AllocateWritableMeshData: ((meshCount: number) => UnityEngine.Mesh_MeshDataArray);
+    static ApplyAndDisposeWritableMeshData: ((data: UnityEngine.Mesh_MeshDataArray, mesh: UnityEngine.Mesh, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((data: UnityEngine.Mesh_MeshDataArray, meshes: UnityEngine.Mesh[], flags?: UnityEngine.Rendering.MeshUpdateFlags) => void) | ((data: UnityEngine.Mesh_MeshDataArray, meshes: any, flags?: UnityEngine.Rendering.MeshUpdateFlags) => void);
     GetTriangles: ((submesh: number) => number[]) | ((submesh: number, applyBaseVertex: boolean) => number[]) | ((triangles: any, submesh: number) => void) | ((triangles: any, submesh: number, applyBaseVertex: boolean) => void) | ((triangles: any, submesh: number, applyBaseVertex?: boolean) => void);
     GetIndices: ((submesh: number) => number[]) | ((submesh: number, applyBaseVertex: boolean) => number[]) | ((indices: any, submesh: number) => void) | ((indices: any, submesh: number, applyBaseVertex: boolean) => void) | ((indices: any, submesh: number, applyBaseVertex?: boolean) => void);
     GetIndexStart: ((submesh: number) => any);
@@ -1992,7 +2431,7 @@ export namespace UnityEngine {
     GetTangents: ((outTangents: any) => void);
     GetColors: ((outColors: any) => void) | ((outColors: any) => void);
     GetUVs: ((channel: number, outUVs: any) => void) | ((channel: number, outUVs: any) => void) | ((channel: number, outUVs: any) => void);
-    SetVertexBufferParams: ((vertexCount: number, attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => void) | ((vertexCount: number, attributes: any) => void);
+    SetVertexBufferParams: ((vertexCount: number, ...attributes: UnityEngine.Rendering.VertexAttributeDescriptor[]) => void) | ((vertexCount: number, attributes: any) => void);
     SetIndexBufferParams: ((indexCount: number, format: UnityEngine.Rendering.IndexFormat) => void);
     GetIndices: ((outIndices: any, submesh: number, applyBaseVertex?: boolean) => void) | ((outIndices: any, submesh: number, applyBaseVertex?: boolean) => void);
     GetSubMesh: ((index: number) => UnityEngine.Rendering.SubMeshDescriptor);
@@ -2135,14 +2574,45 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class Shader {
+    static globalShaderHardwareTier: UnityEngine.Rendering.ShaderHardwareTier;
     maximumLOD: number;
+    static globalMaximumLOD: number;
     isSupported: boolean;
+    static globalRenderPipeline: string;
     renderQueue: number;
     passCount: number;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static SetGlobalTexGenMode: ((propertyName: string, mode: UnityEngine.TexGenMode) => void);
+    static SetGlobalTextureMatrixName: ((propertyName: string, matrixName: string) => void);
+    static Find: ((name: string) => UnityEngine.Shader);
+    static EnableKeyword: ((keyword: string) => void);
+    static DisableKeyword: ((keyword: string) => void);
+    static IsKeywordEnabled: ((keyword: string) => boolean);
+    static WarmupAllShaders: (() => void);
+    static PropertyToID: ((name: string) => number);
     GetDependency: ((name: string) => UnityEngine.Shader);
     FindPassTagValue: ((passIndex: number, tagName: UnityEngine.Rendering.ShaderTagId) => UnityEngine.Rendering.ShaderTagId);
+    static SetGlobalFloat: ((name: string, value: number) => void) | ((nameID: number, value: number) => void);
+    static SetGlobalInt: ((name: string, value: number) => void) | ((nameID: number, value: number) => void);
+    static SetGlobalVector: ((name: string, value: UnityEngine.Vector4) => void) | ((nameID: number, value: UnityEngine.Vector4) => void);
+    static SetGlobalColor: ((name: string, value: UnityEngine.Color) => void) | ((nameID: number, value: UnityEngine.Color) => void);
+    static SetGlobalMatrix: ((name: string, value: UnityEngine.Matrix4x4) => void) | ((nameID: number, value: UnityEngine.Matrix4x4) => void);
+    static SetGlobalTexture: ((name: string, value: UnityEngine.Texture) => void) | ((nameID: number, value: UnityEngine.Texture) => void) | ((name: string, value: UnityEngine.RenderTexture, element: UnityEngine.Rendering.RenderTextureSubElement) => void) | ((nameID: number, value: UnityEngine.RenderTexture, element: UnityEngine.Rendering.RenderTextureSubElement) => void);
+    static SetGlobalBuffer: ((name: string, value: UnityEngine.ComputeBuffer) => void) | ((nameID: number, value: UnityEngine.ComputeBuffer) => void) | ((name: string, value: UnityEngine.GraphicsBuffer) => void) | ((nameID: number, value: UnityEngine.GraphicsBuffer) => void);
+    static SetGlobalConstantBuffer: ((name: string, value: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((nameID: number, value: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((name: string, value: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((nameID: number, value: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
+    static SetGlobalFloatArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
+    static SetGlobalVectorArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: UnityEngine.Vector4[]) => void) | ((nameID: number, values: UnityEngine.Vector4[]) => void);
+    static SetGlobalMatrixArray: ((name: string, values: any) => void) | ((nameID: number, values: any) => void) | ((name: string, values: UnityEngine.Matrix4x4[]) => void) | ((nameID: number, values: UnityEngine.Matrix4x4[]) => void);
+    static GetGlobalFloat: ((name: string) => number) | ((nameID: number) => number);
+    static GetGlobalInt: ((name: string) => number) | ((nameID: number) => number);
+    static GetGlobalVector: ((name: string) => UnityEngine.Vector4) | ((nameID: number) => UnityEngine.Vector4);
+    static GetGlobalColor: ((name: string) => UnityEngine.Color) | ((nameID: number) => UnityEngine.Color);
+    static GetGlobalMatrix: ((name: string) => UnityEngine.Matrix4x4) | ((nameID: number) => UnityEngine.Matrix4x4);
+    static GetGlobalTexture: ((name: string) => UnityEngine.Texture) | ((nameID: number) => UnityEngine.Texture);
+    static GetGlobalFloatArray: ((name: string) => number[]) | ((nameID: number) => number[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
+    static GetGlobalVectorArray: ((name: string) => UnityEngine.Vector4[]) | ((nameID: number) => UnityEngine.Vector4[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
+    static GetGlobalMatrixArray: ((name: string) => UnityEngine.Matrix4x4[]) | ((nameID: number) => UnityEngine.Matrix4x4[]) | ((name: string, values: any) => void) | ((nameID: number, values: any) => void);
     GetPropertyCount: (() => number);
     FindPropertyIndex: ((propertyName: string) => number);
     GetPropertyName: ((propertyIndex: number) => string);
@@ -2409,6 +2879,31 @@ export namespace UnityEngine {
     ToString: (() => string);
   }
   export declare class RenderSettings {
+    static ambientSkyboxAmount: number;
+    static fog: boolean;
+    static fogStartDistance: number;
+    static fogEndDistance: number;
+    static fogMode: UnityEngine.FogMode;
+    static fogColor: UnityEngine.Color;
+    static fogDensity: number;
+    static ambientMode: UnityEngine.Rendering.AmbientMode;
+    static ambientSkyColor: UnityEngine.Color;
+    static ambientEquatorColor: UnityEngine.Color;
+    static ambientGroundColor: UnityEngine.Color;
+    static ambientIntensity: number;
+    static ambientLight: UnityEngine.Color;
+    static subtractiveShadowColor: UnityEngine.Color;
+    static skybox: UnityEngine.Material;
+    static sun: UnityEngine.Light;
+    static ambientProbe: UnityEngine.Rendering.SphericalHarmonicsL2;
+    static customReflection: UnityEngine.Cubemap;
+    static reflectionIntensity: number;
+    static reflectionBounces: number;
+    static defaultReflectionMode: UnityEngine.Rendering.DefaultReflectionMode;
+    static defaultReflectionResolution: number;
+    static haloStrength: number;
+    static flareStrength: number;
+    static flareFadeSpeed: number;
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID: (() => number);
@@ -2434,6 +2929,7 @@ export namespace UnityEngine {
     shaderKeywords: string[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static Create: ((scriptContents: string) => UnityEngine.Material);
     HasProperty: ((nameID: number) => boolean) | ((name: string) => boolean);
     EnableKeyword: ((keyword: string) => void);
     DisableKeyword: ((keyword: string) => void);
@@ -2493,6 +2989,7 @@ export namespace UnityEngine {
     GetData: ((data: any) => void) | ((data: any, managedBufferStartIndex: number, computeBufferStartIndex: number, count: number) => void);
     GetNativeBufferPtr: (() => any);
     SetCounterValue: ((counterValue: any) => void);
+    static CopyCount: ((src: UnityEngine.ComputeBuffer, dst: UnityEngine.ComputeBuffer, dstOffsetBytes: number) => void) | ((src: UnityEngine.GraphicsBuffer, dst: UnityEngine.ComputeBuffer, dstOffsetBytes: number) => void) | ((src: UnityEngine.ComputeBuffer, dst: UnityEngine.GraphicsBuffer, dstOffsetBytes: number) => void) | ((src: UnityEngine.GraphicsBuffer, dst: UnityEngine.GraphicsBuffer, dstOffsetBytes: number) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -2692,6 +3189,7 @@ export namespace UnityEngine {
     areaSize: UnityEngine.Vector2;
     lightmapBakeType: UnityEngine.LightmapBakeType;
     commandBufferCount: number;
+    static pixelLightCount: number;
     shadowConstantBias: number;
     shadowObjectSizeBias: number;
     attenuate: boolean;
@@ -2726,6 +3224,7 @@ export namespace UnityEngine {
     RemoveCommandBuffers: ((evt: UnityEngine.Rendering.LightEvent) => void);
     RemoveAllCommandBuffers: (() => void);
     GetCommandBuffers: ((evt: UnityEngine.Rendering.LightEvent) => UnityEngine.Rendering.CommandBuffer[]);
+    static GetLights: ((type: UnityEngine.LightType, layer: number) => UnityEngine.Light[]);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
     GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
@@ -3182,6 +3681,7 @@ export namespace UnityEngine {
   }
   export declare class LightProbeProxyVolume {
     constructor();
+    static isFeatureSupported: boolean;
     boundsGlobal: UnityEngine.Bounds;
     sizeCustom: UnityEngine.Vector3;
     originCustom: UnityEngine.Vector3;
@@ -3503,6 +4003,7 @@ export namespace UnityEngine {
   }
   export declare class LineUtility {
     constructor();
+    static Simplify: ((points: any, tolerance: number, pointsToKeep: any) => void) | ((points: any, tolerance: number, simplifiedPoints: any) => void) | ((points: any, tolerance: number, pointsToKeep: any) => void) | ((points: any, tolerance: number, simplifiedPoints: any) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -3531,6 +4032,7 @@ export namespace UnityEngine {
     fadeMode: UnityEngine.LODFadeMode;
     animateCrossFading: boolean;
     enabled: boolean;
+    static crossFadeAnimationDuration: number;
     transform: UnityEngine.Transform;
     gameObject: UnityEngine.GameObject;
     tag: string;
@@ -3604,7 +4106,9 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class Texture {
+    static masterTextureLimit: number;
     mipmapCount: number;
+    static anisotropicFiltering: UnityEngine.AnisotropicFiltering;
     graphicsFormat: UnityEngine.Experimental.Rendering.GraphicsFormat;
     width: number;
     height: number;
@@ -3620,11 +4124,28 @@ export namespace UnityEngine {
     texelSize: UnityEngine.Vector2;
     updateCount: any; // System.UInt32
     imageContentsHash: UnityEngine.Hash128;
+    static totalTextureMemory: any; // System.UInt64
+    static desiredTextureMemory: any; // System.UInt64
+    static targetTextureMemory: any; // System.UInt64
+    static currentTextureMemory: any; // System.UInt64
+    static nonStreamingTextureMemory: any; // System.UInt64
+    static streamingMipmapUploadCount: any; // System.UInt64
+    static streamingRendererCount: any; // System.UInt64
+    static streamingTextureCount: any; // System.UInt64
+    static nonStreamingTextureCount: any; // System.UInt64
+    static streamingTexturePendingLoadCount: any; // System.UInt64
+    static streamingTextureLoadingCount: any; // System.UInt64
+    static streamingTextureForceLoadAll: boolean;
+    static streamingTextureDiscardUnusedMips: boolean;
+    static allowThreadedTextureCreation: boolean;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static GenerateAllMips: number;
+    static SetGlobalAnisotropicFilteringLimits: ((forcedMin: number, globalMax: number) => void);
     GetNativeTexturePtr: (() => any);
     GetNativeTextureID: (() => number);
     IncrementUpdateCount: (() => void);
+    static SetStreamingTextureMaterialDebugProperties: (() => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
@@ -3640,6 +4161,12 @@ export namespace UnityEngine {
     constructor(width: number, height: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean);
     constructor(width: number, height: number);
     format: UnityEngine.TextureFormat;
+    static whiteTexture: UnityEngine.Texture2D;
+    static blackTexture: UnityEngine.Texture2D;
+    static redTexture: UnityEngine.Texture2D;
+    static grayTexture: UnityEngine.Texture2D;
+    static linearGrayTexture: UnityEngine.Texture2D;
+    static normalTexture: UnityEngine.Texture2D;
     isReadable: boolean;
     vtOnly: boolean;
     streamingMipmaps: boolean;
@@ -3677,6 +4204,7 @@ export namespace UnityEngine {
     GetPixels: ((x: number, y: number, blockWidth: number, blockHeight: number, miplevel: number) => UnityEngine.Color[]) | ((x: number, y: number, blockWidth: number, blockHeight: number) => UnityEngine.Color[]) | ((miplevel: number) => UnityEngine.Color[]) | (() => UnityEngine.Color[]);
     GetPixels32: ((miplevel: number) => UnityEngine.Color32[]) | (() => UnityEngine.Color32[]);
     PackTextures: ((textures: UnityEngine.Texture2D[], padding: number, maximumAtlasSize: number, makeNoLongerReadable: boolean) => UnityEngine.Rect[]) | ((textures: UnityEngine.Texture2D[], padding: number, maximumAtlasSize: number) => UnityEngine.Rect[]) | ((textures: UnityEngine.Texture2D[], padding: number) => UnityEngine.Rect[]);
+    static CreateExternalTexture: ((width: number, height: number, format: UnityEngine.TextureFormat, mipChain: boolean, linear: boolean, nativeTex: any) => UnityEngine.Texture2D);
     SetPixel: ((x: number, y: number, color: UnityEngine.Color) => void) | ((x: number, y: number, color: UnityEngine.Color, mipLevel: number) => void);
     SetPixels: ((x: number, y: number, blockWidth: number, blockHeight: number, colors: UnityEngine.Color[], miplevel: number) => void) | ((x: number, y: number, blockWidth: number, blockHeight: number, colors: UnityEngine.Color[]) => void) | ((colors: UnityEngine.Color[], miplevel: number) => void) | ((colors: UnityEngine.Color[]) => void);
     GetPixel: ((x: number, y: number) => UnityEngine.Color) | ((x: number, y: number, mipLevel: number) => UnityEngine.Color);
@@ -3685,6 +4213,7 @@ export namespace UnityEngine {
     Apply: ((updateMipmaps: boolean, makeNoLongerReadable: boolean) => void) | ((updateMipmaps: boolean) => void) | (() => void);
     Resize: ((width: number, height: number) => boolean) | ((width: number, height: number, format: UnityEngine.TextureFormat, hasMipMap: boolean) => boolean) | ((width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, hasMipMap: boolean) => boolean);
     ReadPixels: ((source: UnityEngine.Rect, destX: number, destY: number, recalculateMipMaps: boolean) => void) | ((source: UnityEngine.Rect, destX: number, destY: number) => void);
+    static GenerateAtlas: ((sizes: UnityEngine.Vector2[], padding: number, atlasSize: number, results: any) => boolean);
     SetPixels32: ((colors: UnityEngine.Color32[], miplevel: number) => void) | ((colors: UnityEngine.Color32[]) => void) | ((x: number, y: number, blockWidth: number, blockHeight: number, colors: UnityEngine.Color32[], miplevel: number) => void) | ((x: number, y: number, blockWidth: number, blockHeight: number, colors: UnityEngine.Color32[]) => void);
     GetNativeTexturePtr: (() => any);
     GetNativeTextureID: (() => number);
@@ -3739,6 +4268,7 @@ export namespace UnityEngine {
     SetPixels: ((colors: UnityEngine.Color[], face: UnityEngine.CubemapFace, miplevel: number) => void) | ((colors: UnityEngine.Color[], face: UnityEngine.CubemapFace) => void);
     ClearRequestedMipmapLevel: (() => void);
     IsRequestedMipmapLevelLoaded: (() => boolean);
+    static CreateExternalTexture: ((width: number, format: UnityEngine.TextureFormat, mipmap: boolean, nativeTex: any) => UnityEngine.Cubemap);
     SetPixel: ((face: UnityEngine.CubemapFace, x: number, y: number, color: UnityEngine.Color) => void);
     GetPixel: ((face: UnityEngine.CubemapFace, x: number, y: number) => UnityEngine.Color);
     Apply: ((updateMipmaps: boolean, makeNoLongerReadable: boolean) => void) | ((updateMipmaps: boolean) => void) | (() => void);
@@ -3784,6 +4314,7 @@ export namespace UnityEngine {
     GetPixels32: ((miplevel: number) => UnityEngine.Color32[]) | (() => UnityEngine.Color32[]);
     SetPixels: ((colors: UnityEngine.Color[], miplevel: number) => void) | ((colors: UnityEngine.Color[]) => void);
     SetPixels32: ((colors: UnityEngine.Color32[], miplevel: number) => void) | ((colors: UnityEngine.Color32[]) => void);
+    static CreateExternalTexture: ((width: number, height: number, depth: number, format: UnityEngine.TextureFormat, mipChain: boolean, nativeTex: any) => UnityEngine.Texture3D);
     Apply: ((updateMipmaps: boolean, makeNoLongerReadable: boolean) => void) | ((updateMipmaps: boolean) => void) | (() => void);
     SetPixel: ((x: number, y: number, z: number, color: UnityEngine.Color) => void) | ((x: number, y: number, z: number, color: UnityEngine.Color, mipLevel: number) => void);
     GetPixel: ((x: number, y: number, z: number) => UnityEngine.Color) | ((x: number, y: number, z: number, mipLevel: number) => UnityEngine.Color);
@@ -3804,6 +4335,7 @@ export namespace UnityEngine {
     constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipCount: number, linear: boolean);
     constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean, linear: boolean);
     constructor(width: number, height: number, depth: number, textureFormat: UnityEngine.TextureFormat, mipChain: boolean);
+    static allSlices: number;
     depth: number;
     format: UnityEngine.TextureFormat;
     isReadable: boolean;
@@ -3944,6 +4476,7 @@ export namespace UnityEngine {
     enableRandomWrite: boolean;
     useDynamicScale: boolean;
     isPowerOfTwo: boolean;
+    static active: UnityEngine.RenderTexture;
     colorBuffer: UnityEngine.RenderBuffer;
     depthBuffer: UnityEngine.RenderBuffer;
     depth: number;
@@ -3951,6 +4484,7 @@ export namespace UnityEngine {
     generateMips: boolean;
     isCubemap: boolean;
     isVolume: boolean;
+    static enabled: boolean;
     mipmapCount: number;
     isReadable: boolean;
     wrapMode: UnityEngine.TextureWrapMode;
@@ -3975,6 +4509,9 @@ export namespace UnityEngine {
     IsCreated: (() => boolean);
     GenerateMips: (() => void);
     ConvertToEquirect: ((equirect: UnityEngine.RenderTexture, eye?: UnityEngine.Camera_MonoOrStereoscopicEye) => void);
+    static SupportsStencil: ((rt: UnityEngine.RenderTexture) => boolean);
+    static ReleaseTemporary: ((temp: UnityEngine.RenderTexture) => void);
+    static GetTemporary: ((desc: UnityEngine.RenderTextureDescriptor) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, antiAliasing: number, memorylessMode: UnityEngine.RenderTextureMemoryless, vrUsage: UnityEngine.VRTextureUsage, useDynamicScale: boolean) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, antiAliasing: number, memorylessMode: UnityEngine.RenderTextureMemoryless, vrUsage: UnityEngine.VRTextureUsage) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, antiAliasing: number, memorylessMode: UnityEngine.RenderTextureMemoryless) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, antiAliasing: number) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite, antiAliasing: number, memorylessMode: UnityEngine.RenderTextureMemoryless, vrUsage: UnityEngine.VRTextureUsage, useDynamicScale: boolean) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite, antiAliasing: number, memorylessMode: UnityEngine.RenderTextureMemoryless, vrUsage: UnityEngine.VRTextureUsage) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite, antiAliasing: number, memorylessMode: UnityEngine.RenderTextureMemoryless) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite, antiAliasing: number) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number, format: UnityEngine.RenderTextureFormat) => UnityEngine.RenderTexture) | ((width: number, height: number, depthBuffer: number) => UnityEngine.RenderTexture) | ((width: number, height: number) => UnityEngine.RenderTexture);
     SetBorderColor: ((color: UnityEngine.Color) => void);
     GetTexelOffset: (() => UnityEngine.Vector2);
     GetNativeTexturePtr: (() => any);
@@ -4135,6 +4672,14 @@ export namespace UnityEngine {
   }
   export declare class Handheld {
     constructor();
+    static use32BitDisplayBuffer: boolean;
+    static PlayFullScreenMovie: ((path: string, bgColor: UnityEngine.Color, controlMode: UnityEngine.FullScreenMovieControlMode, scalingMode: UnityEngine.FullScreenMovieScalingMode) => boolean) | ((path: string, bgColor: UnityEngine.Color, controlMode: UnityEngine.FullScreenMovieControlMode) => boolean) | ((path: string, bgColor: UnityEngine.Color) => boolean) | ((path: string) => boolean);
+    static Vibrate: (() => void);
+    static SetActivityIndicatorStyle: ((style: UnityEngine.iOS.ActivityIndicatorStyle) => void) | ((style: UnityEngine.AndroidActivityIndicatorStyle) => void);
+    static GetActivityIndicatorStyle: (() => number);
+    static StartActivityIndicator: (() => void);
+    static StopActivityIndicator: (() => void);
+    static ClearShaderCache: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4146,6 +4691,8 @@ export namespace UnityEngine {
     isValid: boolean;
     CompareTo: ((rhs: UnityEngine.Hash128) => number) | ((obj: any) => number);
     ToString: (() => string);
+    static Parse: ((hashString: string) => UnityEngine.Hash128);
+    static Compute: ((data: string) => UnityEngine.Hash128) | ((val: number) => UnityEngine.Hash128) | ((val: number) => UnityEngine.Hash128);
     Append: ((data: string) => void) | ((val: number) => void) | ((val: number) => void);
     Equals: ((obj: any) => boolean) | ((obj: UnityEngine.Hash128) => boolean);
     GetHashCode: (() => number);
@@ -4174,6 +4721,9 @@ export namespace UnityEngine {
   }
   export declare class Cursor {
     constructor();
+    static visible: boolean;
+    static lockState: UnityEngine.CursorLockMode;
+    static SetCursor: ((texture: UnityEngine.Texture2D, hotspot: UnityEngine.Vector2, cursorMode: UnityEngine.CursorMode) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4547,6 +5097,19 @@ export namespace UnityEngine {
   }
   export declare class iPhoneSettings {
     constructor();
+    static screenOrientation: UnityEngine.iPhoneScreenOrientation;
+    static uniqueIdentifier: string;
+    static name: string;
+    static model: string;
+    static systemName: string;
+    static internetReachability: UnityEngine.iPhoneNetworkReachability;
+    static systemVersion: string;
+    static generation: UnityEngine.iPhoneGeneration;
+    static verticalOrientation: boolean;
+    static screenCanDarken: boolean;
+    static locationServiceEnabledByUser: boolean;
+    static StartLocationServiceUpdates: ((desiredAccuracyInMeters: number, updateDistanceInMeters: number) => void) | ((desiredAccuracyInMeters: number) => void) | (() => void);
+    static StopLocationServiceUpdates: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4588,6 +5151,11 @@ export namespace UnityEngine {
   }
   export declare class iPhoneUtils {
     constructor();
+    static isApplicationGenuine: boolean;
+    static isApplicationGenuineAvailable: boolean;
+    static PlayMovie: ((path: string, bgColor: UnityEngine.Color, controlMode: UnityEngine.iPhoneMovieControlMode, scalingMode: UnityEngine.iPhoneMovieScalingMode) => void) | ((path: string, bgColor: UnityEngine.Color, controlMode: UnityEngine.iPhoneMovieControlMode) => void) | ((path: string, bgColor: UnityEngine.Color) => void);
+    static PlayMovieURL: ((url: string, bgColor: UnityEngine.Color, controlMode: UnityEngine.iPhoneMovieControlMode, scalingMode: UnityEngine.iPhoneMovieScalingMode) => void) | ((url: string, bgColor: UnityEngine.Color, controlMode: UnityEngine.iPhoneMovieControlMode) => void) | ((url: string, bgColor: UnityEngine.Color) => void);
+    static Vibrate: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4606,8 +5174,11 @@ export namespace UnityEngine {
   export declare class iPhoneKeyboard {
     constructor();
     text: string;
+    static hideInput: boolean;
     active: boolean;
     done: boolean;
+    static area: UnityEngine.Rect;
+    static visible: boolean;
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4633,6 +5204,15 @@ export namespace UnityEngine {
   }
   export declare class iPhoneInput {
     constructor();
+    static orientation: UnityEngine.iPhoneOrientation;
+    static accelerationEvents: UnityEngine.iPhoneAccelerationEvent[];
+    static touches: UnityEngine.iPhoneTouch[];
+    static touchCount: number;
+    static multiTouchEnabled: boolean;
+    static accelerationEventCount: number;
+    static acceleration: UnityEngine.Vector3;
+    static GetTouch: ((index: number) => UnityEngine.iPhoneTouch);
+    static GetAccelerationEvent: ((index: number) => UnityEngine.iPhoneAccelerationEvent);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4640,6 +5220,12 @@ export namespace UnityEngine {
   }
   export declare class iPhone {
     constructor();
+    static generation: UnityEngine.iPhoneGeneration;
+    static vendorIdentifier: string;
+    static advertisingIdentifier: string;
+    static advertisingTrackingEnabled: boolean;
+    static SetNoBackupFlag: ((path: string) => void);
+    static ResetNoBackupFlag: ((path: string) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4689,6 +5275,7 @@ export namespace UnityEngine {
     alertLaunchImage: string;
     applicationIconBadgeNumber: number;
     soundName: string;
+    static defaultSoundName: string;
     userInfo: any; // System.Collections.IDictionary
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
@@ -4715,6 +5302,7 @@ export namespace UnityEngine {
   }
   export declare class NotificationServices {
     constructor();
+    static RegisterForRemoteNotificationTypes: ((notificationTypes: UnityEngine.RemoteNotificationType) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4727,6 +5315,7 @@ export namespace UnityEngine {
     layout: UnityEngine.ADBannerView_Layout;
     position: UnityEngine.Vector2;
     size: UnityEngine.Vector2;
+    static IsAvailable: ((type: UnityEngine.ADBannerView_Type) => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4761,7 +5350,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -4777,7 +5366,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -4785,6 +5374,7 @@ export namespace UnityEngine {
   export declare class ADInterstitialAd {
     constructor(autoReload: boolean);
     constructor();
+    static isAvailable: boolean;
     loaded: boolean;
     Show: (() => void);
     ReloadAd: (() => void);
@@ -4804,7 +5394,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -4817,11 +5407,11 @@ export namespace UnityEngine {
     Log: ((logType: UnityEngine.LogType, message: any) => void) | ((logType: UnityEngine.LogType, message: any, context: UnityEngine.Object) => void) | ((logType: UnityEngine.LogType, tag: string, message: any) => void) | ((logType: UnityEngine.LogType, tag: string, message: any, context: UnityEngine.Object) => void) | ((message: any) => void) | ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
     LogWarning: ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
     LogError: ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
-    LogFormat: ((logType: UnityEngine.LogType, format: string, args: any[]) => void);
+    LogFormat: ((logType: UnityEngine.LogType, format: string, ...args: any[]) => void);
     LogException: ((exception: any) => void);
   }
   export declare class ILogHandler {
-    LogFormat: ((logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, args: any[]) => void);
+    LogFormat: ((logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, ...args: any[]) => void);
     LogException: ((exception: any, context: UnityEngine.Object) => void);
   }
   export declare class Logger {
@@ -4833,7 +5423,7 @@ export namespace UnityEngine {
     Log: ((logType: UnityEngine.LogType, message: any) => void) | ((logType: UnityEngine.LogType, message: any, context: UnityEngine.Object) => void) | ((logType: UnityEngine.LogType, tag: string, message: any) => void) | ((logType: UnityEngine.LogType, tag: string, message: any, context: UnityEngine.Object) => void) | ((message: any) => void) | ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
     LogWarning: ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
     LogError: ((tag: string, message: any) => void) | ((tag: string, message: any, context: UnityEngine.Object) => void);
-    LogFormat: ((logType: UnityEngine.LogType, format: string, args: any[]) => void) | ((logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, args: any[]) => void);
+    LogFormat: ((logType: UnityEngine.LogType, format: string, ...args: any[]) => void) | ((logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, ...args: any[]) => void);
     LogException: ((exception: any) => void) | ((exception: any, context: UnityEngine.Object) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
@@ -4843,6 +5433,17 @@ export namespace UnityEngine {
   export declare class Color {
     constructor(r: number, g: number, b: number, a: number);
     constructor(r: number, g: number, b: number);
+    static red: UnityEngine.Color;
+    static green: UnityEngine.Color;
+    static blue: UnityEngine.Color;
+    static white: UnityEngine.Color;
+    static black: UnityEngine.Color;
+    static yellow: UnityEngine.Color;
+    static cyan: UnityEngine.Color;
+    static magenta: UnityEngine.Color;
+    static gray: UnityEngine.Color;
+    static grey: UnityEngine.Color;
+    static clear: UnityEngine.Color;
     grayscale: number;
     linear: UnityEngine.Color;
     gamma: UnityEngine.Color;
@@ -4854,6 +5455,9 @@ export namespace UnityEngine {
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Color) => boolean);
+    static Lerp: ((a: UnityEngine.Color, b: UnityEngine.Color, t: number) => UnityEngine.Color);
+    static LerpUnclamped: ((a: UnityEngine.Color, b: UnityEngine.Color, t: number) => UnityEngine.Color);
+    static HSVToRGB: ((H: number, S: number, V: number) => UnityEngine.Color) | ((H: number, S: number, V: number, hdr: boolean) => UnityEngine.Color);
     GetType: (() => any);
   }
   export declare class Color32 {
@@ -4862,6 +5466,8 @@ export namespace UnityEngine {
     g: any; // System.Byte
     b: any; // System.Byte
     a: any; // System.Byte
+    static Lerp: ((a: UnityEngine.Color32, b: UnityEngine.Color32, t: number) => UnityEngine.Color32);
+    static LerpUnclamped: ((a: UnityEngine.Color32, b: UnityEngine.Color32, t: number) => UnityEngine.Color32);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
@@ -4869,6 +5475,8 @@ export namespace UnityEngine {
   }
   export declare class ColorUtility {
     constructor();
+    static ToHtmlStringRGB: ((color: UnityEngine.Color) => string);
+    static ToHtmlStringRGBA: ((color: UnityEngine.Color) => string);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -4929,6 +5537,8 @@ export namespace UnityEngine {
     decomposeProjection: UnityEngine.FrustumPlanes;
     inverse: UnityEngine.Matrix4x4;
     transpose: UnityEngine.Matrix4x4;
+    static zero: UnityEngine.Matrix4x4;
+    static identity: UnityEngine.Matrix4x4;
     m00: number;
     m10: number;
     m20: number;
@@ -4946,7 +5556,15 @@ export namespace UnityEngine {
     m23: number;
     m33: number;
     ValidTRS: (() => boolean);
+    static Determinant: ((m: UnityEngine.Matrix4x4) => number);
+    static TRS: ((pos: UnityEngine.Vector3, q: UnityEngine.Quaternion, s: UnityEngine.Vector3) => UnityEngine.Matrix4x4);
     SetTRS: ((pos: UnityEngine.Vector3, q: UnityEngine.Quaternion, s: UnityEngine.Vector3) => void);
+    static Inverse: ((m: UnityEngine.Matrix4x4) => UnityEngine.Matrix4x4);
+    static Transpose: ((m: UnityEngine.Matrix4x4) => UnityEngine.Matrix4x4);
+    static Ortho: ((left: number, right: number, bottom: number, top: number, zNear: number, zFar: number) => UnityEngine.Matrix4x4);
+    static Perspective: ((fov: number, aspect: number, zNear: number, zFar: number) => UnityEngine.Matrix4x4);
+    static LookAt: ((from: UnityEngine.Vector3, to: UnityEngine.Vector3, up: UnityEngine.Vector3) => UnityEngine.Matrix4x4);
+    static Frustum: ((left: number, right: number, bottom: number, top: number, zNear: number, zFar: number) => UnityEngine.Matrix4x4) | ((fp: UnityEngine.FrustumPlanes) => UnityEngine.Matrix4x4);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Matrix4x4) => boolean);
     GetColumn: ((index: number) => UnityEngine.Vector4);
@@ -4957,6 +5575,9 @@ export namespace UnityEngine {
     MultiplyPoint3x4: ((point: UnityEngine.Vector3) => UnityEngine.Vector3);
     MultiplyVector: ((vector: UnityEngine.Vector3) => UnityEngine.Vector3);
     TransformPlane: ((plane: UnityEngine.Plane) => UnityEngine.Plane);
+    static Scale: ((vector: UnityEngine.Vector3) => UnityEngine.Matrix4x4);
+    static Translate: ((vector: UnityEngine.Vector3) => UnityEngine.Matrix4x4);
+    static Rotate: ((q: UnityEngine.Quaternion) => UnityEngine.Matrix4x4);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     GetType: (() => any);
   }
@@ -4966,40 +5587,142 @@ export namespace UnityEngine {
     normalized: UnityEngine.Vector3;
     magnitude: number;
     sqrMagnitude: number;
+    static zero: UnityEngine.Vector3;
+    static one: UnityEngine.Vector3;
+    static forward: UnityEngine.Vector3;
+    static back: UnityEngine.Vector3;
+    static up: UnityEngine.Vector3;
+    static down: UnityEngine.Vector3;
+    static left: UnityEngine.Vector3;
+    static right: UnityEngine.Vector3;
+    static positiveInfinity: UnityEngine.Vector3;
+    static negativeInfinity: UnityEngine.Vector3;
+    static fwd: UnityEngine.Vector3;
+    static kEpsilon: number;
+    static kEpsilonNormalSqrt: number;
     x: number;
     y: number;
     z: number;
+    static Slerp: ((a: UnityEngine.Vector3, b: UnityEngine.Vector3, t: number) => UnityEngine.Vector3);
+    static SlerpUnclamped: ((a: UnityEngine.Vector3, b: UnityEngine.Vector3, t: number) => UnityEngine.Vector3);
+    static RotateTowards: ((current: UnityEngine.Vector3, target: UnityEngine.Vector3, maxRadiansDelta: number, maxMagnitudeDelta: number) => UnityEngine.Vector3);
+    static Lerp: ((a: UnityEngine.Vector3, b: UnityEngine.Vector3, t: number) => UnityEngine.Vector3);
+    static LerpUnclamped: ((a: UnityEngine.Vector3, b: UnityEngine.Vector3, t: number) => UnityEngine.Vector3);
+    static MoveTowards: ((current: UnityEngine.Vector3, target: UnityEngine.Vector3, maxDistanceDelta: number) => UnityEngine.Vector3);
     Set: ((newX: number, newY: number, newZ: number) => void);
-    Scale: ((scale: UnityEngine.Vector3) => void);
+    static Scale: ((a: UnityEngine.Vector3, b: UnityEngine.Vector3) => UnityEngine.Vector3) | ((scale: UnityEngine.Vector3) => void);
+    static Cross: ((lhs: UnityEngine.Vector3, rhs: UnityEngine.Vector3) => UnityEngine.Vector3);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Vector3) => boolean);
-    Normalize: (() => void);
+    static Reflect: ((inDirection: UnityEngine.Vector3, inNormal: UnityEngine.Vector3) => UnityEngine.Vector3);
+    static Normalize: ((value: UnityEngine.Vector3) => UnityEngine.Vector3) | (() => void);
+    static Dot: ((lhs: UnityEngine.Vector3, rhs: UnityEngine.Vector3) => number);
+    static Project: ((vector: UnityEngine.Vector3, onNormal: UnityEngine.Vector3) => UnityEngine.Vector3);
+    static ProjectOnPlane: ((vector: UnityEngine.Vector3, planeNormal: UnityEngine.Vector3) => UnityEngine.Vector3);
+    static Angle: ((from: UnityEngine.Vector3, to: UnityEngine.Vector3) => number);
+    static SignedAngle: ((from: UnityEngine.Vector3, to: UnityEngine.Vector3, axis: UnityEngine.Vector3) => number);
+    static Distance: ((a: UnityEngine.Vector3, b: UnityEngine.Vector3) => number);
+    static ClampMagnitude: ((vector: UnityEngine.Vector3, maxLength: number) => UnityEngine.Vector3);
+    static Magnitude: ((vector: UnityEngine.Vector3) => number);
+    static SqrMagnitude: ((vector: UnityEngine.Vector3) => number);
+    static Min: ((lhs: UnityEngine.Vector3, rhs: UnityEngine.Vector3) => UnityEngine.Vector3);
+    static Max: ((lhs: UnityEngine.Vector3, rhs: UnityEngine.Vector3) => UnityEngine.Vector3);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
+    static AngleBetween: ((from: UnityEngine.Vector3, to: UnityEngine.Vector3) => number);
+    static Exclude: ((excludeThis: UnityEngine.Vector3, fromThat: UnityEngine.Vector3) => UnityEngine.Vector3);
     GetType: (() => any);
   }
   export declare class Quaternion {
     constructor(x: number, y: number, z: number, w: number);
+    static identity: UnityEngine.Quaternion;
     eulerAngles: UnityEngine.Vector3;
     normalized: UnityEngine.Quaternion;
     x: number;
     y: number;
     z: number;
     w: number;
+    static kEpsilon: number;
+    static FromToRotation: ((fromDirection: UnityEngine.Vector3, toDirection: UnityEngine.Vector3) => UnityEngine.Quaternion);
+    static Inverse: ((rotation: UnityEngine.Quaternion) => UnityEngine.Quaternion);
+    static Slerp: ((a: UnityEngine.Quaternion, b: UnityEngine.Quaternion, t: number) => UnityEngine.Quaternion);
+    static SlerpUnclamped: ((a: UnityEngine.Quaternion, b: UnityEngine.Quaternion, t: number) => UnityEngine.Quaternion);
+    static Lerp: ((a: UnityEngine.Quaternion, b: UnityEngine.Quaternion, t: number) => UnityEngine.Quaternion);
+    static LerpUnclamped: ((a: UnityEngine.Quaternion, b: UnityEngine.Quaternion, t: number) => UnityEngine.Quaternion);
+    static AngleAxis: ((angle: number, axis: UnityEngine.Vector3) => UnityEngine.Quaternion);
+    static LookRotation: ((forward: UnityEngine.Vector3, upwards: UnityEngine.Vector3) => UnityEngine.Quaternion) | ((forward: UnityEngine.Vector3) => UnityEngine.Quaternion);
     Set: ((newX: number, newY: number, newZ: number, newW: number) => void);
+    static Dot: ((a: UnityEngine.Quaternion, b: UnityEngine.Quaternion) => number);
     SetLookRotation: ((view: UnityEngine.Vector3) => void) | ((view: UnityEngine.Vector3, up: UnityEngine.Vector3) => void);
+    static Angle: ((a: UnityEngine.Quaternion, b: UnityEngine.Quaternion) => number);
+    static Euler: ((x: number, y: number, z: number) => UnityEngine.Quaternion) | ((euler: UnityEngine.Vector3) => UnityEngine.Quaternion);
     SetFromToRotation: ((fromDirection: UnityEngine.Vector3, toDirection: UnityEngine.Vector3) => void);
-    Normalize: (() => void);
+    static RotateTowards: ((from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, maxDegreesDelta: number) => UnityEngine.Quaternion);
+    static Normalize: ((q: UnityEngine.Quaternion) => UnityEngine.Quaternion) | (() => void);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Quaternion) => boolean);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
+    static EulerRotation: ((x: number, y: number, z: number) => UnityEngine.Quaternion) | ((euler: UnityEngine.Vector3) => UnityEngine.Quaternion);
     SetEulerRotation: ((x: number, y: number, z: number) => void) | ((euler: UnityEngine.Vector3) => void);
     ToEuler: (() => UnityEngine.Vector3);
+    static EulerAngles: ((x: number, y: number, z: number) => UnityEngine.Quaternion) | ((euler: UnityEngine.Vector3) => UnityEngine.Quaternion);
     SetEulerAngles: ((x: number, y: number, z: number) => void) | ((euler: UnityEngine.Vector3) => void);
-    ToEulerAngles: (() => UnityEngine.Vector3);
+    static ToEulerAngles: ((rotation: UnityEngine.Quaternion) => UnityEngine.Vector3) | (() => UnityEngine.Vector3);
     SetAxisAngle: ((axis: UnityEngine.Vector3, angle: number) => void);
+    static AxisAngle: ((axis: UnityEngine.Vector3, angle: number) => UnityEngine.Quaternion);
     GetType: (() => any);
   }
   export declare class Mathf {
+    static PI: number;
+    static Infinity: number;
+    static NegativeInfinity: number;
+    static Deg2Rad: number;
+    static Rad2Deg: number;
+    static Epsilon: number;
+    static ClosestPowerOfTwo: ((value: number) => number);
+    static IsPowerOfTwo: ((value: number) => boolean);
+    static NextPowerOfTwo: ((value: number) => number);
+    static GammaToLinearSpace: ((value: number) => number);
+    static LinearToGammaSpace: ((value: number) => number);
+    static CorrelatedColorTemperatureToRGB: ((kelvin: number) => UnityEngine.Color);
+    static FloatToHalf: ((val: number) => any);
+    static HalfToFloat: ((val: any) => number);
+    static PerlinNoise: ((x: number, y: number) => number);
+    static Sin: ((f: number) => number);
+    static Cos: ((f: number) => number);
+    static Tan: ((f: number) => number);
+    static Asin: ((f: number) => number);
+    static Acos: ((f: number) => number);
+    static Atan: ((f: number) => number);
+    static Atan2: ((y: number, x: number) => number);
+    static Sqrt: ((f: number) => number);
+    static Abs: ((f: number) => number) | ((value: number) => number);
+    static Min: ((a: number, b: number) => number) | ((...values: number[]) => number) | ((a: number, b: number) => number) | ((...values: number[]) => number);
+    static Max: ((a: number, b: number) => number) | ((...values: number[]) => number) | ((a: number, b: number) => number) | ((...values: number[]) => number);
+    static Pow: ((f: number, p: number) => number);
+    static Exp: ((power: number) => number);
+    static Log: ((f: number, p: number) => number) | ((f: number) => number);
+    static Log10: ((f: number) => number);
+    static Ceil: ((f: number) => number);
+    static Floor: ((f: number) => number);
+    static Round: ((f: number) => number);
+    static CeilToInt: ((f: number) => number);
+    static FloorToInt: ((f: number) => number);
+    static RoundToInt: ((f: number) => number);
+    static Sign: ((f: number) => number);
+    static Clamp: ((value: number, min: number, max: number) => number) | ((value: number, min: number, max: number) => number);
+    static Clamp01: ((value: number) => number);
+    static Lerp: ((a: number, b: number, t: number) => number);
+    static LerpUnclamped: ((a: number, b: number, t: number) => number);
+    static LerpAngle: ((a: number, b: number, t: number) => number);
+    static MoveTowards: ((current: number, target: number, maxDelta: number) => number);
+    static MoveTowardsAngle: ((current: number, target: number, maxDelta: number) => number);
+    static SmoothStep: ((from: number, to: number, t: number) => number);
+    static Gamma: ((value: number, absmax: number, gamma: number) => number);
+    static Approximately: ((a: number, b: number) => boolean);
+    static Repeat: ((t: number, length: number) => number);
+    static PingPong: ((t: number, length: number) => number);
+    static InverseLerp: ((a: number, b: number, value: number) => number);
+    static DeltaAngle: ((current: number, target: number) => number);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
@@ -5010,15 +5733,37 @@ export namespace UnityEngine {
     normalized: UnityEngine.Vector2;
     magnitude: number;
     sqrMagnitude: number;
+    static zero: UnityEngine.Vector2;
+    static one: UnityEngine.Vector2;
+    static up: UnityEngine.Vector2;
+    static down: UnityEngine.Vector2;
+    static left: UnityEngine.Vector2;
+    static right: UnityEngine.Vector2;
+    static positiveInfinity: UnityEngine.Vector2;
+    static negativeInfinity: UnityEngine.Vector2;
     x: number;
     y: number;
+    static kEpsilon: number;
+    static kEpsilonNormalSqrt: number;
     Set: ((newX: number, newY: number) => void);
-    Scale: ((scale: UnityEngine.Vector2) => void);
+    static Lerp: ((a: UnityEngine.Vector2, b: UnityEngine.Vector2, t: number) => UnityEngine.Vector2);
+    static LerpUnclamped: ((a: UnityEngine.Vector2, b: UnityEngine.Vector2, t: number) => UnityEngine.Vector2);
+    static MoveTowards: ((current: UnityEngine.Vector2, target: UnityEngine.Vector2, maxDistanceDelta: number) => UnityEngine.Vector2);
+    static Scale: ((a: UnityEngine.Vector2, b: UnityEngine.Vector2) => UnityEngine.Vector2) | ((scale: UnityEngine.Vector2) => void);
     Normalize: (() => void);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Vector2) => boolean);
-    SqrMagnitude: (() => number);
+    static Reflect: ((inDirection: UnityEngine.Vector2, inNormal: UnityEngine.Vector2) => UnityEngine.Vector2);
+    static Perpendicular: ((inDirection: UnityEngine.Vector2) => UnityEngine.Vector2);
+    static Dot: ((lhs: UnityEngine.Vector2, rhs: UnityEngine.Vector2) => number);
+    static Angle: ((from: UnityEngine.Vector2, to: UnityEngine.Vector2) => number);
+    static SignedAngle: ((from: UnityEngine.Vector2, to: UnityEngine.Vector2) => number);
+    static Distance: ((a: UnityEngine.Vector2, b: UnityEngine.Vector2) => number);
+    static ClampMagnitude: ((vector: UnityEngine.Vector2, maxLength: number) => UnityEngine.Vector2);
+    static SqrMagnitude: ((a: UnityEngine.Vector2) => number) | (() => number);
+    static Min: ((lhs: UnityEngine.Vector2, rhs: UnityEngine.Vector2) => UnityEngine.Vector2);
+    static Max: ((lhs: UnityEngine.Vector2, rhs: UnityEngine.Vector2) => UnityEngine.Vector2);
     GetType: (() => any);
   }
   export declare class Vector2Int {
@@ -5027,9 +5772,21 @@ export namespace UnityEngine {
     y: number;
     magnitude: number;
     sqrMagnitude: number;
+    static zero: UnityEngine.Vector2Int;
+    static one: UnityEngine.Vector2Int;
+    static up: UnityEngine.Vector2Int;
+    static down: UnityEngine.Vector2Int;
+    static left: UnityEngine.Vector2Int;
+    static right: UnityEngine.Vector2Int;
     Set: ((x: number, y: number) => void);
-    Scale: ((scale: UnityEngine.Vector2Int) => void);
+    static Distance: ((a: UnityEngine.Vector2Int, b: UnityEngine.Vector2Int) => number);
+    static Min: ((lhs: UnityEngine.Vector2Int, rhs: UnityEngine.Vector2Int) => UnityEngine.Vector2Int);
+    static Max: ((lhs: UnityEngine.Vector2Int, rhs: UnityEngine.Vector2Int) => UnityEngine.Vector2Int);
+    static Scale: ((a: UnityEngine.Vector2Int, b: UnityEngine.Vector2Int) => UnityEngine.Vector2Int) | ((scale: UnityEngine.Vector2Int) => void);
     Clamp: ((min: UnityEngine.Vector2Int, max: UnityEngine.Vector2Int) => void);
+    static FloorToInt: ((v: UnityEngine.Vector2) => UnityEngine.Vector2Int);
+    static CeilToInt: ((v: UnityEngine.Vector2) => UnityEngine.Vector2Int);
+    static RoundToInt: ((v: UnityEngine.Vector2) => UnityEngine.Vector2Int);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Vector2Int) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
@@ -5042,9 +5799,23 @@ export namespace UnityEngine {
     z: number;
     magnitude: number;
     sqrMagnitude: number;
+    static zero: UnityEngine.Vector3Int;
+    static one: UnityEngine.Vector3Int;
+    static up: UnityEngine.Vector3Int;
+    static down: UnityEngine.Vector3Int;
+    static left: UnityEngine.Vector3Int;
+    static right: UnityEngine.Vector3Int;
+    static forward: UnityEngine.Vector3Int;
+    static back: UnityEngine.Vector3Int;
     Set: ((x: number, y: number, z: number) => void);
-    Scale: ((scale: UnityEngine.Vector3Int) => void);
+    static Distance: ((a: UnityEngine.Vector3Int, b: UnityEngine.Vector3Int) => number);
+    static Min: ((lhs: UnityEngine.Vector3Int, rhs: UnityEngine.Vector3Int) => UnityEngine.Vector3Int);
+    static Max: ((lhs: UnityEngine.Vector3Int, rhs: UnityEngine.Vector3Int) => UnityEngine.Vector3Int);
+    static Scale: ((a: UnityEngine.Vector3Int, b: UnityEngine.Vector3Int) => UnityEngine.Vector3Int) | ((scale: UnityEngine.Vector3Int) => void);
     Clamp: ((min: UnityEngine.Vector3Int, max: UnityEngine.Vector3Int) => void);
+    static FloorToInt: ((v: UnityEngine.Vector3) => UnityEngine.Vector3Int);
+    static CeilToInt: ((v: UnityEngine.Vector3) => UnityEngine.Vector3Int);
+    static RoundToInt: ((v: UnityEngine.Vector3) => UnityEngine.Vector3Int);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Vector3Int) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
@@ -5057,17 +5828,31 @@ export namespace UnityEngine {
     normalized: UnityEngine.Vector4;
     magnitude: number;
     sqrMagnitude: number;
+    static zero: UnityEngine.Vector4;
+    static one: UnityEngine.Vector4;
+    static positiveInfinity: UnityEngine.Vector4;
+    static negativeInfinity: UnityEngine.Vector4;
+    static kEpsilon: number;
     x: number;
     y: number;
     z: number;
     w: number;
     Set: ((newX: number, newY: number, newZ: number, newW: number) => void);
-    Scale: ((scale: UnityEngine.Vector4) => void);
+    static Lerp: ((a: UnityEngine.Vector4, b: UnityEngine.Vector4, t: number) => UnityEngine.Vector4);
+    static LerpUnclamped: ((a: UnityEngine.Vector4, b: UnityEngine.Vector4, t: number) => UnityEngine.Vector4);
+    static MoveTowards: ((current: UnityEngine.Vector4, target: UnityEngine.Vector4, maxDistanceDelta: number) => UnityEngine.Vector4);
+    static Scale: ((a: UnityEngine.Vector4, b: UnityEngine.Vector4) => UnityEngine.Vector4) | ((scale: UnityEngine.Vector4) => void);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.Vector4) => boolean);
-    Normalize: (() => void);
+    static Normalize: ((a: UnityEngine.Vector4) => UnityEngine.Vector4) | (() => void);
+    static Dot: ((a: UnityEngine.Vector4, b: UnityEngine.Vector4) => number);
+    static Project: ((a: UnityEngine.Vector4, b: UnityEngine.Vector4) => UnityEngine.Vector4);
+    static Distance: ((a: UnityEngine.Vector4, b: UnityEngine.Vector4) => number);
+    static Magnitude: ((a: UnityEngine.Vector4) => number);
+    static Min: ((lhs: UnityEngine.Vector4, rhs: UnityEngine.Vector4) => UnityEngine.Vector4);
+    static Max: ((lhs: UnityEngine.Vector4, rhs: UnityEngine.Vector4) => UnityEngine.Vector4);
     ToString: (() => string) | ((format: string) => string) | ((format: string, formatProvider: any) => string);
-    SqrMagnitude: (() => number);
+    static SqrMagnitude: ((a: UnityEngine.Vector4) => number) | (() => number);
     GetType: (() => any);
   }
   export enum RPCMode {
@@ -5099,6 +5884,7 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class NetworkViewID {
+    static unassigned: UnityEngine.NetworkViewID;
     isMine: boolean;
     owner: UnityEngine.NetworkPlayer;
     Equals: ((obj: any) => boolean);
@@ -5134,7 +5920,7 @@ export namespace UnityEngine {
     particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    RPC: ((name: string, mode: UnityEngine.RPCMode, args: any[]) => void) | ((name: string, target: UnityEngine.NetworkPlayer, args: any[]) => void);
+    RPC: ((name: string, mode: UnityEngine.RPCMode, ...args: any[]) => void) | ((name: string, target: UnityEngine.NetworkPlayer, ...args: any[]) => void);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
     GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
@@ -5153,6 +5939,46 @@ export namespace UnityEngine {
   }
   export declare class Network {
     constructor();
+    static incomingPassword: string;
+    static logLevel: UnityEngine.NetworkLogLevel;
+    static connections: UnityEngine.NetworkPlayer[];
+    static player: UnityEngine.NetworkPlayer;
+    static isClient: boolean;
+    static isServer: boolean;
+    static peerType: UnityEngine.NetworkPeerType;
+    static sendRate: number;
+    static isMessageQueueRunning: boolean;
+    static time: number;
+    static minimumAllocatableViewIDs: number;
+    static useNat: boolean;
+    static natFacilitatorIP: string;
+    static natFacilitatorPort: number;
+    static connectionTesterIP: string;
+    static connectionTesterPort: number;
+    static maxConnections: number;
+    static proxyIP: string;
+    static proxyPort: number;
+    static useProxy: boolean;
+    static proxyPassword: string;
+    static InitializeServer: ((connections: number, listenPort: number, useNat: boolean) => UnityEngine.NetworkConnectionError) | ((connections: number, listenPort: number) => UnityEngine.NetworkConnectionError);
+    static InitializeSecurity: (() => void);
+    static Connect: ((IP: string, remotePort: number) => UnityEngine.NetworkConnectionError) | ((IP: string, remotePort: number, password: string) => UnityEngine.NetworkConnectionError) | ((IPs: string[], remotePort: number) => UnityEngine.NetworkConnectionError) | ((IPs: string[], remotePort: number, password: string) => UnityEngine.NetworkConnectionError) | ((GUID: string) => UnityEngine.NetworkConnectionError) | ((GUID: string, password: string) => UnityEngine.NetworkConnectionError) | ((hostData: UnityEngine.HostData) => UnityEngine.NetworkConnectionError) | ((hostData: UnityEngine.HostData, password: string) => UnityEngine.NetworkConnectionError);
+    static Disconnect: (() => void) | ((timeout: number) => void);
+    static CloseConnection: ((target: UnityEngine.NetworkPlayer, sendDisconnectionNotification: boolean) => void);
+    static AllocateViewID: (() => UnityEngine.NetworkViewID);
+    static Instantiate: ((prefab: UnityEngine.Object, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, group: number) => UnityEngine.Object);
+    static Destroy: ((viewID: UnityEngine.NetworkViewID) => void) | ((gameObject: UnityEngine.GameObject) => void);
+    static DestroyPlayerObjects: ((playerID: UnityEngine.NetworkPlayer) => void);
+    static RemoveRPCs: ((playerID: UnityEngine.NetworkPlayer) => void) | ((playerID: UnityEngine.NetworkPlayer, group: number) => void) | ((viewID: UnityEngine.NetworkViewID) => void);
+    static RemoveRPCsInGroup: ((group: number) => void);
+    static SetLevelPrefix: ((prefix: number) => void);
+    static GetLastPing: ((player: UnityEngine.NetworkPlayer) => number);
+    static GetAveragePing: ((player: UnityEngine.NetworkPlayer) => number);
+    static SetReceivingEnabled: ((player: UnityEngine.NetworkPlayer, group: number, enabled: boolean) => void);
+    static SetSendingEnabled: ((group: number, enabled: boolean) => void) | ((player: UnityEngine.NetworkPlayer, group: number, enabled: boolean) => void);
+    static TestConnection: (() => UnityEngine.ConnectionTesterStatus) | ((forceTest: boolean) => UnityEngine.ConnectionTesterStatus);
+    static TestConnectionNAT: (() => UnityEngine.ConnectionTesterStatus) | ((forceTest: boolean) => UnityEngine.ConnectionTesterStatus);
+    static HavePublicAddress: (() => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5186,6 +6012,15 @@ export namespace UnityEngine {
   }
   export declare class MasterServer {
     constructor();
+    static ipAddress: string;
+    static port: number;
+    static updateRate: number;
+    static dedicatedServer: boolean;
+    static RequestHostList: ((gameTypeName: string) => void);
+    static PollHostList: (() => UnityEngine.HostData[]);
+    static RegisterHost: ((gameTypeName: string, gameName: string) => void) | ((gameTypeName: string, gameName: string, comment: string) => void);
+    static UnregisterHost: (() => void);
+    static ClearHostList: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5230,6 +6065,16 @@ export namespace UnityEngine {
   }
   export declare class PlayerPrefs {
     constructor();
+    static SetInt: ((key: string, value: number) => void);
+    static GetInt: ((key: string, defaultValue: number) => number) | ((key: string) => number);
+    static SetFloat: ((key: string, value: number) => void);
+    static GetFloat: ((key: string, defaultValue: number) => number) | ((key: string) => number);
+    static SetString: ((key: string, value: string) => void);
+    static GetString: ((key: string, defaultValue: string) => string) | ((key: string) => string);
+    static HasKey: ((key: string) => boolean);
+    static DeleteKey: ((key: string) => void);
+    static DeleteAll: (() => void);
+    static Save: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5239,12 +6084,25 @@ export namespace UnityEngine {
     constructor(name: string);
     constructor(other: UnityEngine.PropertyName);
     constructor(id: number);
+    static IsNullOrEmpty: ((prop: UnityEngine.PropertyName) => boolean);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean) | ((other: UnityEngine.PropertyName) => boolean);
     ToString: (() => string);
     GetType: (() => any);
   }
   export declare class Random {
+    static state: UnityEngine.Random_State;
+    static value: number;
+    static insideUnitSphere: UnityEngine.Vector3;
+    static insideUnitCircle: UnityEngine.Vector2;
+    static onUnitSphere: UnityEngine.Vector3;
+    static rotation: UnityEngine.Quaternion;
+    static rotationUniform: UnityEngine.Quaternion;
+    static seed: number;
+    static InitState: ((seed: number) => void);
+    static Range: ((minInclusive: number, maxInclusive: number) => number) | ((minInclusive: number, maxExclusive: number) => number);
+    static RandomRange: ((min: number, max: number) => number) | ((min: number, max: number) => number);
+    static ColorHSV: (() => UnityEngine.Color) | ((hueMin: number, hueMax: number) => UnityEngine.Color) | ((hueMin: number, hueMax: number, saturationMin: number, saturationMax: number) => UnityEngine.Color) | ((hueMin: number, hueMax: number, saturationMin: number, saturationMax: number, valueMin: number, valueMax: number) => UnityEngine.Color) | ((hueMin: number, hueMax: number, saturationMin: number, saturationMax: number, valueMin: number, valueMax: number, alphaMin: number, alphaMax: number) => UnityEngine.Color);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5269,6 +6127,7 @@ export namespace UnityEngine {
     ToString: (() => string);
   }
   export declare class ResourcesAPI {
+    static overrideAPI: UnityEngine.ResourcesAPI;
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5276,6 +6135,16 @@ export namespace UnityEngine {
   }
   export declare class Resources {
     constructor();
+    static FindObjectsOfTypeAll: ((type: any) => UnityEngine.Object[]);
+    static Load: ((path: string) => UnityEngine.Object) | ((path: string, systemTypeInstance: any) => UnityEngine.Object);
+    static LoadAsync: ((path: string) => UnityEngine.ResourceRequest) | ((path: string, type: any) => UnityEngine.ResourceRequest);
+    static LoadAll: ((path: string, systemTypeInstance: any) => UnityEngine.Object[]) | ((path: string) => UnityEngine.Object[]);
+    static GetBuiltinResource: ((type: any, path: string) => UnityEngine.Object);
+    static UnloadAsset: ((assetToUnload: UnityEngine.Object) => void);
+    static UnloadUnusedAssets: (() => UnityEngine.AsyncOperation);
+    static InstanceIDToObject: ((instanceID: number) => UnityEngine.Object);
+    static InstanceIDToObjectList: ((instanceIDs: any, objects: any) => void);
+    static LoadAssetAtPath: ((assetPath: string, type: any) => UnityEngine.Object);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5385,7 +6254,7 @@ export namespace UnityEngine {
   export declare class GameObject {
     constructor(name: string);
     constructor();
-    constructor(name: string, components: any[]);
+    constructor(name: string, ...components: any[]);
     transform: UnityEngine.Transform;
     layer: number;
     active: boolean;
@@ -5411,12 +6280,14 @@ export namespace UnityEngine {
     particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static CreatePrimitive: ((type: UnityEngine.PrimitiveType) => UnityEngine.GameObject);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((type: any, includeInactive: boolean) => UnityEngine.Component) | ((type: any) => UnityEngine.Component);
     GetComponentInParent: ((type: any, includeInactive: boolean) => UnityEngine.Component) | ((type: any) => UnityEngine.Component);
     GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
     GetComponentsInChildren: ((type: any) => UnityEngine.Component[]) | ((type: any, includeInactive: boolean) => UnityEngine.Component[]);
     GetComponentsInParent: ((type: any) => UnityEngine.Component[]) | ((type: any, includeInactive: boolean) => UnityEngine.Component[]);
+    static FindWithTag: ((tag: string) => UnityEngine.GameObject);
     SendMessageUpwards: ((methodName: string, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void);
     SendMessage: ((methodName: string, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void);
     BroadcastMessage: ((methodName: string, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void);
@@ -5424,6 +6295,9 @@ export namespace UnityEngine {
     SetActive: ((value: boolean) => void);
     SetActiveRecursively: ((state: boolean) => void);
     CompareTag: ((tag: string) => boolean);
+    static FindGameObjectWithTag: ((tag: string) => UnityEngine.GameObject);
+    static FindGameObjectsWithTag: ((tag: string) => UnityEngine.GameObject[]);
+    static Find: ((name: string) => UnityEngine.GameObject);
     SampleAnimation: ((clip: UnityEngine.Object, time: number) => void);
     PlayAnimation: ((animation: UnityEngine.Object) => void);
     StopAnimation: (() => void);
@@ -5435,6 +6309,9 @@ export namespace UnityEngine {
   }
   export declare class LayerMask {
     value: number;
+    static LayerToName: ((layer: number) => string);
+    static NameToLayer: ((layerName: string) => number);
+    static GetMask: ((...layerNames: string[]) => number);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
@@ -5472,6 +6349,7 @@ export namespace UnityEngine {
     StartCoroutine_Auto: ((routine: any) => UnityEngine.Coroutine);
     StopCoroutine: ((routine: any) => void) | ((routine: UnityEngine.Coroutine) => void) | ((methodName: string) => void);
     StopAllCoroutines: (() => void);
+    static print: ((message: any) => void);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
     GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
@@ -5510,6 +6388,7 @@ export namespace UnityEngine {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     SetDirty: (() => void);
+    static CreateInstance: ((className: string) => UnityEngine.ScriptableObject) | ((type: any) => UnityEngine.ScriptableObject);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
@@ -5517,6 +6396,8 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class StackTraceUtility {
+    static ExtractStackTrace: (() => string);
+    static ExtractStringFromException: ((exception: any) => string);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5635,6 +6516,16 @@ export namespace UnityEngine {
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
+    static Instantiate: ((original: UnityEngine.Object, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => UnityEngine.Object) | ((original: UnityEngine.Object, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, parent: UnityEngine.Transform) => UnityEngine.Object) | ((original: UnityEngine.Object) => UnityEngine.Object) | ((original: UnityEngine.Object, parent: UnityEngine.Transform) => UnityEngine.Object) | ((original: UnityEngine.Object, parent: UnityEngine.Transform, instantiateInWorldSpace: boolean) => UnityEngine.Object);
+    static Destroy: ((obj: UnityEngine.Object, t: number) => void) | ((obj: UnityEngine.Object) => void);
+    static DestroyImmediate: ((obj: UnityEngine.Object, allowDestroyingAssets: boolean) => void) | ((obj: UnityEngine.Object) => void);
+    static FindObjectsOfType: ((type: any) => UnityEngine.Object[]) | ((type: any, includeInactive: boolean) => UnityEngine.Object[]);
+    static DontDestroyOnLoad: ((target: UnityEngine.Object) => void);
+    static DestroyObject: ((obj: UnityEngine.Object, t: number) => void) | ((obj: UnityEngine.Object) => void);
+    static FindSceneObjectsOfType: ((type: any) => UnityEngine.Object[]);
+    static FindObjectsOfTypeIncludingAssets: ((type: any) => UnityEngine.Object[]);
+    static FindObjectsOfTypeAll: ((type: any) => UnityEngine.Object[]);
+    static FindObjectOfType: ((type: any) => UnityEngine.Object) | ((type: any, includeInactive: boolean) => UnityEngine.Object);
     ToString: (() => string);
     GetType: (() => any);
   }
@@ -5702,15 +6593,17 @@ export namespace UnityEngine {
   }
   export declare class Security {
     constructor();
+    static LoadAndVerifyAssembly: ((assemblyData: any[], authorizationKey: string) => any) | ((assemblyData: any[]) => any);
+    static PrefetchSocketPolicy: ((ip: string, atPort: number) => boolean) | ((ip: string, atPort: number, timeout: number) => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
   export declare class Types {
+    static GetType: ((typeName: string, assemblyName: string) => any) | (() => any);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
-    GetType: (() => any);
     ToString: (() => string);
   }
   export declare class ISerializationCallbackReceiver {
@@ -5730,6 +6623,7 @@ export namespace UnityEngine {
     SetData: ((data: any) => void) | ((data: any, managedBufferStartIndex: number, computeBufferStartIndex: number, count: number) => void);
     GetData: ((data: any) => void) | ((data: any, managedBufferStartIndex: number, computeBufferStartIndex: number, count: number) => void);
     SetCounterValue: ((counterValue: any) => void);
+    static CopyCount: ((src: UnityEngine.ComputeBuffer, dst: UnityEngine.ComputeBuffer, dstOffsetBytes: number) => void);
     GetNativeBufferPtr: (() => any);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
@@ -5755,7 +6649,7 @@ export namespace UnityEngine {
     GetType: (() => any);
   }
   export declare class ShaderVariantCollection_ShaderVariant {
-    constructor(shader: UnityEngine.Shader, passType: UnityEngine.Rendering.PassType, keywords: string[]);
+    constructor(shader: UnityEngine.Shader, passType: UnityEngine.Rendering.PassType, ...keywords: string[]);
     shader: UnityEngine.Shader;
     passType: UnityEngine.Rendering.PassType;
     keywords: string[];
@@ -5783,8 +6677,8 @@ export namespace UnityEngine {
     EnableKeyword: ((keyword: string) => void);
     DisableKeyword: ((keyword: string) => void);
     IsKeywordEnabled: ((keyword: string) => boolean);
-    SetFloats: ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
-    SetInts: ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
+    SetFloats: ((name: string, ...values: number[]) => void) | ((nameID: number, ...values: number[]) => void);
+    SetInts: ((name: string, ...values: number[]) => void) | ((nameID: number, ...values: number[]) => void);
     SetBool: ((name: string, val: boolean) => void) | ((nameID: number, val: boolean) => void);
     SetConstantBuffer: ((nameID: number, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((name: string, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((nameID: number, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((name: string, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
     DispatchIndirect: ((kernelIndex: number, argsBuffer: UnityEngine.ComputeBuffer, argsOffset: any) => void) | ((kernelIndex: number, argsBuffer: UnityEngine.ComputeBuffer) => void) | ((kernelIndex: number, argsBuffer: UnityEngine.GraphicsBuffer, argsOffset: any) => void) | ((kernelIndex: number, argsBuffer: UnityEngine.GraphicsBuffer) => void);
@@ -5802,6 +6696,7 @@ export namespace UnityEngine {
     All = 7,
   }
   export declare class Snapping {
+    static Snap: ((val: number, snap: number) => number) | ((val: UnityEngine.Vector2, snap: UnityEngine.Vector2) => UnityEngine.Vector2) | ((val: UnityEngine.Vector3, snap: UnityEngine.Vector3, axis?: UnityEngine.SnapAxis) => UnityEngine.Vector3);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5809,6 +6704,7 @@ export namespace UnityEngine {
   }
   export declare class StaticBatchingUtility {
     constructor();
+    static Combine: ((staticBatchRoot: UnityEngine.GameObject) => void) | ((gos: UnityEngine.GameObject[], staticBatchRoot: UnityEngine.GameObject) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5835,6 +6731,104 @@ export namespace UnityEngine {
   }
   export declare class SystemInfo {
     constructor();
+    static batteryLevel: number;
+    static batteryStatus: UnityEngine.BatteryStatus;
+    static operatingSystem: string;
+    static operatingSystemFamily: UnityEngine.OperatingSystemFamily;
+    static processorType: string;
+    static processorFrequency: number;
+    static processorCount: number;
+    static systemMemorySize: number;
+    static deviceUniqueIdentifier: string;
+    static deviceName: string;
+    static deviceModel: string;
+    static supportsAccelerometer: boolean;
+    static supportsGyroscope: boolean;
+    static supportsLocationService: boolean;
+    static supportsVibration: boolean;
+    static supportsAudio: boolean;
+    static deviceType: UnityEngine.DeviceType;
+    static graphicsMemorySize: number;
+    static graphicsDeviceName: string;
+    static graphicsDeviceVendor: string;
+    static graphicsDeviceID: number;
+    static graphicsDeviceVendorID: number;
+    static graphicsDeviceType: UnityEngine.Rendering.GraphicsDeviceType;
+    static graphicsUVStartsAtTop: boolean;
+    static graphicsDeviceVersion: string;
+    static graphicsShaderLevel: number;
+    static graphicsMultiThreaded: boolean;
+    static renderingThreadingMode: UnityEngine.Rendering.RenderingThreadingMode;
+    static hasHiddenSurfaceRemovalOnGPU: boolean;
+    static hasDynamicUniformArrayIndexingInFragmentShaders: boolean;
+    static supportsShadows: boolean;
+    static supportsRawShadowDepthSampling: boolean;
+    static supportsMotionVectors: boolean;
+    static supports3DTextures: boolean;
+    static supportsCompressed3DTextures: boolean;
+    static supports2DArrayTextures: boolean;
+    static supports3DRenderTextures: boolean;
+    static supportsCubemapArrayTextures: boolean;
+    static copyTextureSupport: UnityEngine.Rendering.CopyTextureSupport;
+    static supportsComputeShaders: boolean;
+    static supportsConservativeRaster: boolean;
+    static supportsMultiview: boolean;
+    static supportsGeometryShaders: boolean;
+    static supportsTessellationShaders: boolean;
+    static supportsRenderTargetArrayIndexFromVertexShader: boolean;
+    static supportsInstancing: boolean;
+    static supportsHardwareQuadTopology: boolean;
+    static supports32bitsIndexBuffer: boolean;
+    static supportsSparseTextures: boolean;
+    static supportedRenderTargetCount: number;
+    static supportsSeparatedRenderTargetsBlend: boolean;
+    static supportedRandomWriteTargetCount: number;
+    static supportsMultisampledTextures: number;
+    static supportsMultisampled2DArrayTextures: boolean;
+    static supportsMultisampleAutoResolve: boolean;
+    static supportsTextureWrapMirrorOnce: number;
+    static usesReversedZBuffer: boolean;
+    static npotSupport: UnityEngine.NPOTSupport;
+    static maxTextureSize: number;
+    static maxCubemapSize: number;
+    static maxComputeBufferInputsVertex: number;
+    static maxComputeBufferInputsFragment: number;
+    static maxComputeBufferInputsGeometry: number;
+    static maxComputeBufferInputsDomain: number;
+    static maxComputeBufferInputsHull: number;
+    static maxComputeBufferInputsCompute: number;
+    static maxComputeWorkGroupSize: number;
+    static maxComputeWorkGroupSizeX: number;
+    static maxComputeWorkGroupSizeY: number;
+    static maxComputeWorkGroupSizeZ: number;
+    static supportsAsyncCompute: boolean;
+    static supportsGpuRecorder: boolean;
+    static supportsGraphicsFence: boolean;
+    static supportsAsyncGPUReadback: boolean;
+    static supportsRayTracing: boolean;
+    static supportsSetConstantBuffer: boolean;
+    static constantBufferOffsetAlignment: number;
+    static minConstantBufferOffsetAlignment: boolean;
+    static hasMipMaxLevel: boolean;
+    static supportsMipStreaming: boolean;
+    static usesLoadStoreActions: boolean;
+    static hdrDisplaySupportFlags: UnityEngine.HDRDisplaySupportFlags;
+    static supportsRenderTextures: boolean;
+    static supportsRenderToCubemap: boolean;
+    static supportsImageEffects: boolean;
+    static supportsStencil: number;
+    static graphicsPixelFillrate: number;
+    static supportsVertexPrograms: boolean;
+    static supportsGPUFence: boolean;
+    static unsupportedIdentifier: string;
+    static SupportsRenderTextureFormat: ((format: UnityEngine.RenderTextureFormat) => boolean);
+    static SupportsBlendingOnRenderTextureFormat: ((format: UnityEngine.RenderTextureFormat) => boolean);
+    static SupportsTextureFormat: ((format: UnityEngine.TextureFormat) => boolean);
+    static SupportsVertexAttributeFormat: ((format: UnityEngine.Rendering.VertexAttributeFormat, dimension: number) => boolean);
+    static IsFormatSupported: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat, usage: UnityEngine.Experimental.Rendering.FormatUsage) => boolean);
+    static GetCompatibleFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat, usage: UnityEngine.Experimental.Rendering.FormatUsage) => UnityEngine.Experimental.Rendering.GraphicsFormat);
+    static GetGraphicsFormat: ((format: UnityEngine.Experimental.Rendering.DefaultFormat) => UnityEngine.Experimental.Rendering.GraphicsFormat);
+    static GetRenderTextureSupportedMSAASampleCount: ((desc: UnityEngine.RenderTextureDescriptor) => number);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5842,6 +6836,31 @@ export namespace UnityEngine {
   }
   export declare class Time {
     constructor();
+    static time: number;
+    static timeAsDouble: number;
+    static timeSinceLevelLoad: number;
+    static timeSinceLevelLoadAsDouble: number;
+    static deltaTime: number;
+    static fixedTime: number;
+    static fixedTimeAsDouble: number;
+    static unscaledTime: number;
+    static unscaledTimeAsDouble: number;
+    static fixedUnscaledTime: number;
+    static fixedUnscaledTimeAsDouble: number;
+    static unscaledDeltaTime: number;
+    static fixedUnscaledDeltaTime: number;
+    static fixedDeltaTime: number;
+    static maximumDeltaTime: number;
+    static smoothDeltaTime: number;
+    static maximumParticleDeltaTime: number;
+    static timeScale: number;
+    static frameCount: number;
+    static renderedFrameCount: number;
+    static realtimeSinceStartup: number;
+    static realtimeSinceStartupAsDouble: number;
+    static captureDeltaTime: number;
+    static captureFramerate: number;
+    static inFixedTimeStep: boolean;
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5849,7 +6868,10 @@ export namespace UnityEngine {
   }
   export declare class TouchScreenKeyboard {
     constructor(text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean, multiline: boolean, secure: boolean, alert: boolean, textPlaceholder: string, characterLimit: number);
+    static isSupported: boolean;
+    static isInPlaceEditingAllowed: boolean;
     text: string;
+    static hideInput: boolean;
     active: boolean;
     done: boolean;
     wasCanceled: boolean;
@@ -5860,6 +6882,9 @@ export namespace UnityEngine {
     selection: UnityEngine.RangeInt;
     type: UnityEngine.TouchScreenKeyboardType;
     targetDisplay: number;
+    static area: UnityEngine.Rect;
+    static visible: boolean;
+    static Open: ((text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean, multiline: boolean, secure: boolean, alert: boolean, textPlaceholder: string, characterLimit: number) => UnityEngine.TouchScreenKeyboard) | ((text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean, multiline: boolean, secure: boolean, alert: boolean, textPlaceholder: string) => UnityEngine.TouchScreenKeyboard) | ((text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean, multiline: boolean, secure: boolean, alert: boolean) => UnityEngine.TouchScreenKeyboard) | ((text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean, multiline: boolean, secure: boolean) => UnityEngine.TouchScreenKeyboard) | ((text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean, multiline: boolean) => UnityEngine.TouchScreenKeyboard) | ((text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean) => UnityEngine.TouchScreenKeyboard) | ((text: string, keyboardType: UnityEngine.TouchScreenKeyboardType) => UnityEngine.TouchScreenKeyboard) | ((text: string) => UnityEngine.TouchScreenKeyboard);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5888,6 +6913,8 @@ export namespace UnityEngine {
   }
   export declare class UnityEventQueueSystem {
     constructor();
+    static GenerateEventIdForPayload: ((eventPayloadName: string) => string);
+    static GetGlobalEventQueue: (() => any);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -5898,6 +6925,7 @@ export namespace UnityEngine {
     forward: UnityEngine.Vector3;
     right: UnityEngine.Vector3;
     up: UnityEngine.Vector3;
+    static identity: UnityEngine.Pose;
     position: UnityEngine.Vector3;
     rotation: UnityEngine.Quaternion;
     ToString: (() => string) | ((format: string) => string);
@@ -5934,6 +6962,8 @@ export namespace UnityEngine {
     Pivot = 49152,
   }
   export declare class DrivenRectTransformTracker {
+    static StopRecordingUndo: (() => void);
+    static StartRecordingUndo: (() => void);
     Add: ((driver: UnityEngine.Object, rectTransform: UnityEngine.RectTransform, drivenProperties: UnityEngine.DrivenTransformProperties) => void);
     Clear: ((revertValues: boolean) => void) | (() => void);
     Equals: ((obj: any) => boolean);
@@ -6055,7 +7085,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -6301,6 +7331,7 @@ export namespace UnityEngine {
     GetPhysicsShape: ((shapeIdx: number, physicsShape: any) => number);
     OverridePhysicsShape: ((physicsShapes: any) => void);
     OverrideGeometry: ((vertices: UnityEngine.Vector2[], triangles: any[]) => void);
+    static Create: ((texture: UnityEngine.Texture2D, rect: UnityEngine.Rect, pivot: UnityEngine.Vector2, pixelsPerUnit: number, extrude: any, meshType: UnityEngine.SpriteMeshType, border: UnityEngine.Vector4, generateFallbackPhysicsShape: boolean) => UnityEngine.Sprite) | ((texture: UnityEngine.Texture2D, rect: UnityEngine.Rect, pivot: UnityEngine.Vector2, pixelsPerUnit: number, extrude: any, meshType: UnityEngine.SpriteMeshType, border: UnityEngine.Vector4) => UnityEngine.Sprite) | ((texture: UnityEngine.Texture2D, rect: UnityEngine.Rect, pivot: UnityEngine.Vector2, pixelsPerUnit: number, extrude: any, meshType: UnityEngine.SpriteMeshType) => UnityEngine.Sprite) | ((texture: UnityEngine.Texture2D, rect: UnityEngine.Rect, pivot: UnityEngine.Vector2, pixelsPerUnit: number, extrude: any) => UnityEngine.Sprite) | ((texture: UnityEngine.Texture2D, rect: UnityEngine.Rect, pivot: UnityEngine.Vector2, pixelsPerUnit: number) => UnityEngine.Sprite) | ((texture: UnityEngine.Texture2D, rect: UnityEngine.Rect, pivot: UnityEngine.Vector2) => UnityEngine.Sprite);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
@@ -6309,6 +7340,17 @@ export namespace UnityEngine {
   }
   export declare class AudioSettings {
     constructor();
+    static driverCaps: UnityEngine.AudioSpeakerMode;
+    static driverCapabilities: UnityEngine.AudioSpeakerMode;
+    static speakerMode: UnityEngine.AudioSpeakerMode;
+    static dspTime: number;
+    static outputSampleRate: number;
+    static SetDSPBufferSize: ((bufferLength: number, numBuffers: number) => void);
+    static GetSpatializerPluginNames: (() => string[]);
+    static GetSpatializerPluginName: (() => string);
+    static SetSpatializerPluginName: ((pluginName: string) => void);
+    static GetConfiguration: (() => UnityEngine.AudioConfiguration);
+    static Reset: ((config: UnityEngine.AudioConfiguration) => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -6325,12 +7367,17 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
   export declare class AudioSettings_Mobile {
+    static muteState: boolean;
+    static stopAudioOutputOnMute: boolean;
+    static audioOutputStarted: boolean;
+    static StartAudioOutput: (() => void);
+    static StopAudioOutput: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -6400,6 +7447,7 @@ export namespace UnityEngine {
     Stop: (() => void);
     Pause: (() => void);
     UnPause: (() => void);
+    static PlayClipAtPoint: ((clip: UnityEngine.AudioClip, position: UnityEngine.Vector3) => void) | ((clip: UnityEngine.AudioClip, position: UnityEngine.Vector3, volume: number) => void);
     SetCustomCurve: ((type: UnityEngine.AudioSourceCurveType, curve: UnityEngine.AnimationCurve) => void);
     GetCustomCurve: ((type: UnityEngine.AudioSourceCurveType) => UnityEngine.AnimationCurve);
     GetOutputData: ((numSamples: number, channel: number) => number[]) | ((samples: number[], channel: number) => void);
@@ -6675,6 +7723,7 @@ export namespace UnityEngine {
     UnloadAudioData: (() => boolean);
     GetData: ((data: number[], offsetSamples: number) => boolean);
     SetData: ((data: number[], offsetSamples: number) => boolean);
+    static Create: ((name: string, lengthSamples: number, channels: number, frequency: number, _3D: boolean, stream: boolean) => UnityEngine.AudioClip) | ((name: string, lengthSamples: number, channels: number, frequency: number, _3D: boolean, stream: boolean, pcmreadercallback: UnityEngine.AudioClip_PCMReaderCallback) => UnityEngine.AudioClip) | ((name: string, lengthSamples: number, channels: number, frequency: number, _3D: boolean, stream: boolean, pcmreadercallback: UnityEngine.AudioClip_PCMReaderCallback, pcmsetpositioncallback: UnityEngine.AudioClip_PCMSetPositionCallback) => UnityEngine.AudioClip) | ((name: string, lengthSamples: number, channels: number, frequency: number, stream: boolean) => UnityEngine.AudioClip) | ((name: string, lengthSamples: number, channels: number, frequency: number, stream: boolean, pcmreadercallback: UnityEngine.AudioClip_PCMReaderCallback) => UnityEngine.AudioClip) | ((name: string, lengthSamples: number, channels: number, frequency: number, stream: boolean, pcmreadercallback: UnityEngine.AudioClip_PCMReaderCallback, pcmsetpositioncallback: UnityEngine.AudioClip_PCMSetPositionCallback) => UnityEngine.AudioClip);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
     Equals: ((other: any) => boolean);
@@ -6692,7 +7741,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -6708,7 +7757,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -6753,6 +7802,8 @@ export namespace UnityEngine {
   }
   export declare class AudioListener {
     constructor();
+    static volume: number;
+    static pause: boolean;
     velocityUpdateMode: UnityEngine.AudioVelocityUpdateMode;
     enabled: boolean;
     isActiveAndEnabled: boolean;
@@ -6774,6 +7825,8 @@ export namespace UnityEngine {
     particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static GetOutputData: ((numSamples: number, channel: number) => number[]) | ((samples: number[], channel: number) => void);
+    static GetSpectrumData: ((numSamples: number, channel: number, window: UnityEngine.FFTWindow) => number[]) | ((samples: number[], channel: number, window: UnityEngine.FFTWindow) => void);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
     GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
@@ -6974,6 +8027,11 @@ export namespace UnityEngine {
   }
   export declare class Microphone {
     constructor();
+    static devices: string[];
+    static Start: ((deviceName: string, loop: boolean, lengthSec: number, frequency: number) => UnityEngine.AudioClip);
+    static End: ((deviceName: string) => void);
+    static IsRecording: ((deviceName: string) => boolean);
+    static GetPosition: ((deviceName: string) => number);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -6981,6 +8039,10 @@ export namespace UnityEngine {
   }
   export declare class AudioRenderer {
     constructor();
+    static Start: (() => boolean);
+    static Stop: (() => boolean);
+    static GetSampleCountForCaptureFrame: (() => number);
+    static Render: ((buffer: any) => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -7051,6 +8113,7 @@ export namespace UnityEngine {
     constructor(requestedWidth: number, requestedHeight: number, requestedFPS: number);
     constructor(requestedWidth: number, requestedHeight: number);
     constructor();
+    static devices: UnityEngine.WebCamDevice[];
     isPlaying: boolean;
     deviceName: string;
     requestedFPS: number;
@@ -7186,6 +8249,9 @@ export namespace UnityEngine {
     GetAlpha: (() => number);
     SetAlpha: ((alpha: number) => void);
     GetInheritedAlpha: (() => number);
+    static SplitUIVertexStreams: ((verts: any, positions: any, colors: any, uv0S: any, uv1S: any, normals: any, tangents: any, indices: any) => void) | ((verts: any, positions: any, colors: any, uv0S: any, uv1S: any, uv2S: any, uv3S: any, normals: any, tangents: any, indices: any) => void);
+    static CreateUIVertexStream: ((verts: any, positions: any, colors: any, uv0S: any, uv1S: any, normals: any, tangents: any, indices: any) => void) | ((verts: any, positions: any, colors: any, uv0S: any, uv1S: any, uv2S: any, uv3S: any, normals: any, tangents: any, indices: any) => void);
+    static AddUIVertexStream: ((verts: any, positions: any, colors: any, uv0S: any, uv1S: any, normals: any, tangents: any) => void) | ((verts: any, positions: any, colors: any, uv0S: any, uv1S: any, uv2S: any, uv3S: any, normals: any, tangents: any) => void);
     SetVertices: ((vertices: any) => void) | ((vertices: UnityEngine.UIVertex[], size: number) => void);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
@@ -7214,12 +8280,20 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
   export declare class RectTransformUtility {
+    static PixelAdjustPoint: ((point: UnityEngine.Vector2, elementTransform: UnityEngine.Transform, canvas: UnityEngine.Canvas) => UnityEngine.Vector2);
+    static PixelAdjustRect: ((rectTransform: UnityEngine.RectTransform, canvas: UnityEngine.Canvas) => UnityEngine.Rect);
+    static RectangleContainsScreenPoint: ((rect: UnityEngine.RectTransform, screenPoint: UnityEngine.Vector2) => boolean) | ((rect: UnityEngine.RectTransform, screenPoint: UnityEngine.Vector2, cam: UnityEngine.Camera) => boolean) | ((rect: UnityEngine.RectTransform, screenPoint: UnityEngine.Vector2, cam: UnityEngine.Camera, offset: UnityEngine.Vector4) => boolean);
+    static ScreenPointToRay: ((cam: UnityEngine.Camera, screenPos: UnityEngine.Vector2) => UnityEngine.Ray);
+    static WorldToScreenPoint: ((cam: UnityEngine.Camera, worldPoint: UnityEngine.Vector3) => UnityEngine.Vector2);
+    static CalculateRelativeRectTransformBounds: ((root: UnityEngine.Transform, child: UnityEngine.Transform) => UnityEngine.Bounds) | ((trans: UnityEngine.Transform) => UnityEngine.Bounds);
+    static FlipLayoutOnAxis: ((rect: UnityEngine.RectTransform, axis: number, keepPositioning: boolean, recursive: boolean) => void);
+    static FlipLayoutAxes: ((rect: UnityEngine.RectTransform, keepPositioning: boolean, recursive: boolean) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -7280,6 +8354,10 @@ export namespace UnityEngine {
     particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static GetDefaultCanvasTextMaterial: (() => UnityEngine.Material);
+    static GetDefaultCanvasMaterial: (() => UnityEngine.Material);
+    static GetETC1SupportedCanvasMaterial: (() => UnityEngine.Material);
+    static ForceUpdateCanvases: (() => void);
     GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
     GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
     GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
@@ -7307,12 +8385,15 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
   export declare class UISystemProfilerApi {
+    static BeginSample: ((type: UnityEngine.UISystemProfilerApi_SampleType) => void);
+    static EndSample: ((type: UnityEngine.UISystemProfilerApi_SampleType) => void);
+    static AddMarker: ((name: string, obj: UnityEngine.Object) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -7523,6 +8604,7 @@ export namespace UnityEngine {
     uv1: UnityEngine.Vector4;
     uv2: UnityEngine.Vector4;
     uv3: UnityEngine.Vector4;
+    static simpleVert: UnityEngine.UIVertex;
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     ToString: (() => string);
@@ -7541,7 +8623,11 @@ export namespace UnityEngine {
     textureRebuildCallback: UnityEngine.Font_FontTextureRebuildCallback;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static CreateDynamicFontFromOSFont: ((fontname: string, size: number) => UnityEngine.Font) | ((fontnames: string[], size: number) => UnityEngine.Font);
+    static GetMaxVertsForString: ((str: string) => number);
     HasCharacter: ((c: any) => boolean);
+    static GetOSInstalledFontNames: (() => string[]);
+    static GetPathsToOSFonts: (() => string[]);
     RequestCharactersInTexture: ((characters: string, size: number, style: UnityEngine.FontStyle) => void) | ((characters: string, size: number) => void) | ((characters: string) => void);
     GetInstanceID: (() => number);
     GetHashCode: (() => number);
@@ -7560,12 +8646,17 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
   }
   export declare class AndroidInput {
+    static touchCountSecondary: number;
+    static secondaryTouchEnabled: boolean;
+    static secondaryTouchWidth: number;
+    static secondaryTouchHeight: number;
+    static GetSecondaryTouch: ((index: number) => UnityEngine.Touch);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -7683,6 +8774,50 @@ export namespace UnityEngine {
   }
   export declare class Input {
     constructor();
+    static simulateMouseWithTouches: boolean;
+    static anyKey: boolean;
+    static anyKeyDown: boolean;
+    static inputString: string;
+    static mousePosition: UnityEngine.Vector3;
+    static mouseScrollDelta: UnityEngine.Vector2;
+    static imeCompositionMode: UnityEngine.IMECompositionMode;
+    static compositionString: string;
+    static imeIsSelected: boolean;
+    static compositionCursorPos: UnityEngine.Vector2;
+    static eatKeyPressOnTextFieldFocus: boolean;
+    static mousePresent: boolean;
+    static touchCount: number;
+    static touchPressureSupported: boolean;
+    static stylusTouchSupported: boolean;
+    static touchSupported: boolean;
+    static multiTouchEnabled: boolean;
+    static isGyroAvailable: boolean;
+    static deviceOrientation: UnityEngine.DeviceOrientation;
+    static acceleration: UnityEngine.Vector3;
+    static compensateSensors: boolean;
+    static accelerationEventCount: number;
+    static backButtonLeavesApp: boolean;
+    static location: UnityEngine.LocationService;
+    static compass: UnityEngine.Compass;
+    static gyro: UnityEngine.Gyroscope;
+    static touches: UnityEngine.Touch[];
+    static accelerationEvents: UnityEngine.AccelerationEvent[];
+    static GetAxis: ((axisName: string) => number);
+    static GetAxisRaw: ((axisName: string) => number);
+    static GetButton: ((buttonName: string) => boolean);
+    static GetButtonDown: ((buttonName: string) => boolean);
+    static GetButtonUp: ((buttonName: string) => boolean);
+    static GetMouseButton: ((button: number) => boolean);
+    static GetMouseButtonDown: ((button: number) => boolean);
+    static GetMouseButtonUp: ((button: number) => boolean);
+    static ResetInputAxes: (() => void);
+    static IsJoystickPreconfigured: ((joystickName: string) => boolean);
+    static GetJoystickNames: (() => string[]);
+    static GetTouch: ((index: number) => UnityEngine.Touch);
+    static GetAccelerationEvent: ((index: number) => UnityEngine.AccelerationEvent);
+    static GetKey: ((key: UnityEngine.KeyCode) => boolean) | ((name: string) => boolean);
+    static GetKeyUp: ((key: UnityEngine.KeyCode) => boolean) | ((name: string) => boolean);
+    static GetKeyDown: ((key: UnityEngine.KeyCode) => boolean) | ((name: string) => boolean);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -7820,6 +8955,7 @@ export namespace UnityEngine {
     StartRecording: ((frameCount: number) => void);
     StopRecording: (() => void);
     HasState: ((layerIndex: number, stateID: number) => boolean);
+    static StringToHash: ((name: string) => number);
     Update: ((deltaTime: number) => void);
     Rebind: (() => void);
     ApplyBuiltinRootMotion: (() => void);
@@ -8159,6 +9295,8 @@ export namespace UnityEngine {
   }
   export declare class AnimatorUtility {
     constructor();
+    static OptimizeTransformHierarchy: ((go: UnityEngine.GameObject, exposedTransforms: string[]) => void);
+    static DeoptimizeTransformHierarchy: ((go: UnityEngine.GameObject) => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8359,6 +9497,8 @@ export namespace UnityEngine {
   }
   export declare class AvatarBuilder {
     constructor();
+    static BuildHumanAvatar: ((go: UnityEngine.GameObject, humanDescription: UnityEngine.HumanDescription) => UnityEngine.Avatar);
+    static BuildGenericAvatar: ((go: UnityEngine.GameObject, rootMotionTransformName: string) => UnityEngine.Avatar);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8422,6 +9562,18 @@ export namespace UnityEngine {
   }
   export declare class HumanTrait {
     constructor();
+    static MuscleCount: number;
+    static MuscleName: string[];
+    static BoneCount: number;
+    static BoneName: string[];
+    static RequiredBoneCount: number;
+    static MuscleFromBone: ((i: number, dofIndex: number) => number);
+    static BoneFromMuscle: ((i: number) => number);
+    static RequiredBone: ((i: number) => boolean);
+    static GetMuscleDefaultMin: ((i: number) => number);
+    static GetMuscleDefaultMax: ((i: number) => number);
+    static GetBoneDefaultHierarchyMass: ((i: number) => number);
+    static GetParentBone: ((i: number) => number);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8480,10 +9632,14 @@ export namespace UnityEngine {
     capsLock: boolean;
     numeric: boolean;
     functionKey: boolean;
+    static current: UnityEngine.Event;
     isKey: boolean;
     isMouse: boolean;
     isScrollWheel: boolean;
     GetTypeForControl: ((controlID: number) => UnityEngine.EventType);
+    static PopEvent: ((outEvent: UnityEngine.Event) => boolean);
+    static GetEventCount: (() => number);
+    static KeyboardEvent: ((key: string) => UnityEngine.Event);
     GetHashCode: (() => number);
     Equals: ((obj: any) => boolean);
     ToString: (() => string);
@@ -8547,6 +9703,50 @@ export namespace UnityEngine {
   }
   export declare class GUI {
     constructor();
+    static color: UnityEngine.Color;
+    static backgroundColor: UnityEngine.Color;
+    static contentColor: UnityEngine.Color;
+    static changed: boolean;
+    static enabled: boolean;
+    static depth: number;
+    static skin: UnityEngine.GUISkin;
+    static matrix: UnityEngine.Matrix4x4;
+    static tooltip: string;
+    static SetNextControlName: ((name: string) => void);
+    static GetNameOfFocusedControl: (() => string);
+    static FocusControl: ((name: string) => void);
+    static DragWindow: ((position: UnityEngine.Rect) => void) | (() => void);
+    static BringWindowToFront: ((windowID: number) => void);
+    static BringWindowToBack: ((windowID: number) => void);
+    static FocusWindow: ((windowID: number) => void);
+    static UnfocusWindow: (() => void);
+    static Label: ((position: UnityEngine.Rect, text: string) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent) => void) | ((position: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => void);
+    static DrawTexture: ((position: UnityEngine.Rect, image: UnityEngine.Texture) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, scaleMode: UnityEngine.ScaleMode) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, scaleMode: UnityEngine.ScaleMode, alphaBlend: boolean) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, scaleMode: UnityEngine.ScaleMode, alphaBlend: boolean, imageAspect: number) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, scaleMode: UnityEngine.ScaleMode, alphaBlend: boolean, imageAspect: number, color: UnityEngine.Color, borderWidth: number, borderRadius: number) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, scaleMode: UnityEngine.ScaleMode, alphaBlend: boolean, imageAspect: number, color: UnityEngine.Color, borderWidths: UnityEngine.Vector4, borderRadius: number) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, scaleMode: UnityEngine.ScaleMode, alphaBlend: boolean, imageAspect: number, color: UnityEngine.Color, borderWidths: UnityEngine.Vector4, borderRadiuses: UnityEngine.Vector4) => void);
+    static DrawTextureWithTexCoords: ((position: UnityEngine.Rect, image: UnityEngine.Texture, texCoords: UnityEngine.Rect) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, texCoords: UnityEngine.Rect, alphaBlend: boolean) => void);
+    static Box: ((position: UnityEngine.Rect, text: string) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent) => void) | ((position: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => void);
+    static Button: ((position: UnityEngine.Rect, text: string) => boolean) | ((position: UnityEngine.Rect, image: UnityEngine.Texture) => boolean) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent) => boolean) | ((position: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => boolean);
+    static RepeatButton: ((position: UnityEngine.Rect, text: string) => boolean) | ((position: UnityEngine.Rect, image: UnityEngine.Texture) => boolean) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent) => boolean) | ((position: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => boolean);
+    static TextField: ((position: UnityEngine.Rect, text: string) => string) | ((position: UnityEngine.Rect, text: string, maxLength: number) => string) | ((position: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle) => string) | ((position: UnityEngine.Rect, text: string, maxLength: number, style: UnityEngine.GUIStyle) => string);
+    static PasswordField: ((position: UnityEngine.Rect, password: string, maskChar: any) => string) | ((position: UnityEngine.Rect, password: string, maskChar: any, maxLength: number) => string) | ((position: UnityEngine.Rect, password: string, maskChar: any, style: UnityEngine.GUIStyle) => string) | ((position: UnityEngine.Rect, password: string, maskChar: any, maxLength: number, style: UnityEngine.GUIStyle) => string);
+    static TextArea: ((position: UnityEngine.Rect, text: string) => string) | ((position: UnityEngine.Rect, text: string, maxLength: number) => string) | ((position: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle) => string) | ((position: UnityEngine.Rect, text: string, maxLength: number, style: UnityEngine.GUIStyle) => string);
+    static Toggle: ((position: UnityEngine.Rect, value: boolean, text: string) => boolean) | ((position: UnityEngine.Rect, value: boolean, image: UnityEngine.Texture) => boolean) | ((position: UnityEngine.Rect, value: boolean, content: UnityEngine.GUIContent) => boolean) | ((position: UnityEngine.Rect, value: boolean, text: string, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, value: boolean, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, value: boolean, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => boolean) | ((position: UnityEngine.Rect, id: number, value: boolean, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => boolean);
+    static Toolbar: ((position: UnityEngine.Rect, selected: number, texts: string[]) => number) | ((position: UnityEngine.Rect, selected: number, images: UnityEngine.Texture[]) => number) | ((position: UnityEngine.Rect, selected: number, contents: UnityEngine.GUIContent[]) => number) | ((position: UnityEngine.Rect, selected: number, texts: string[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, selected: number, images: UnityEngine.Texture[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, selected: number, contents: UnityEngine.GUIContent[], style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, selected: number, contents: UnityEngine.GUIContent[], style: UnityEngine.GUIStyle, buttonSize: UnityEngine.GUI_ToolbarButtonSize) => number);
+    static SelectionGrid: ((position: UnityEngine.Rect, selected: number, texts: string[], xCount: number) => number) | ((position: UnityEngine.Rect, selected: number, images: UnityEngine.Texture[], xCount: number) => number) | ((position: UnityEngine.Rect, selected: number, content: UnityEngine.GUIContent[], xCount: number) => number) | ((position: UnityEngine.Rect, selected: number, texts: string[], xCount: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, selected: number, images: UnityEngine.Texture[], xCount: number, style: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, selected: number, contents: UnityEngine.GUIContent[], xCount: number, style: UnityEngine.GUIStyle) => number);
+    static HorizontalSlider: ((position: UnityEngine.Rect, value: number, leftValue: number, rightValue: number) => number) | ((position: UnityEngine.Rect, value: number, leftValue: number, rightValue: number, slider: UnityEngine.GUIStyle, thumb: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, value: number, leftValue: number, rightValue: number, slider: UnityEngine.GUIStyle, thumb: UnityEngine.GUIStyle, thumbExtent: UnityEngine.GUIStyle) => number);
+    static VerticalSlider: ((position: UnityEngine.Rect, value: number, topValue: number, bottomValue: number) => number) | ((position: UnityEngine.Rect, value: number, topValue: number, bottomValue: number, slider: UnityEngine.GUIStyle, thumb: UnityEngine.GUIStyle) => number) | ((position: UnityEngine.Rect, value: number, topValue: number, bottomValue: number, slider: UnityEngine.GUIStyle, thumb: UnityEngine.GUIStyle, thumbExtent: UnityEngine.GUIStyle) => number);
+    static Slider: ((position: UnityEngine.Rect, value: number, size: number, start: number, end: number, slider: UnityEngine.GUIStyle, thumb: UnityEngine.GUIStyle, horiz: boolean, id: number, thumbExtent?: UnityEngine.GUIStyle) => number);
+    static HorizontalScrollbar: ((position: UnityEngine.Rect, value: number, size: number, leftValue: number, rightValue: number) => number) | ((position: UnityEngine.Rect, value: number, size: number, leftValue: number, rightValue: number, style: UnityEngine.GUIStyle) => number);
+    static VerticalScrollbar: ((position: UnityEngine.Rect, value: number, size: number, topValue: number, bottomValue: number) => number) | ((position: UnityEngine.Rect, value: number, size: number, topValue: number, bottomValue: number, style: UnityEngine.GUIStyle) => number);
+    static BeginClip: ((position: UnityEngine.Rect, scrollOffset: UnityEngine.Vector2, renderOffset: UnityEngine.Vector2, resetOffset: boolean) => void) | ((position: UnityEngine.Rect) => void);
+    static BeginGroup: ((position: UnityEngine.Rect) => void) | ((position: UnityEngine.Rect, text: string) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent) => void) | ((position: UnityEngine.Rect, style: UnityEngine.GUIStyle) => void) | ((position: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => void);
+    static EndGroup: (() => void);
+    static EndClip: (() => void);
+    static BeginScrollView: ((position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect) => UnityEngine.Vector2) | ((position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean) => UnityEngine.Vector2) | ((position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle) => UnityEngine.Vector2) | ((position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle) => UnityEngine.Vector2);
+    static EndScrollView: (() => void) | ((handleScrollWheel: boolean) => void);
+    static ScrollTo: ((position: UnityEngine.Rect) => void);
+    static ScrollTowards: ((position: UnityEngine.Rect, maxDelta: number) => boolean);
+    static Window: ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, text: string) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, image: UnityEngine.Texture) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, content: UnityEngine.GUIContent) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, text: string, style: UnityEngine.GUIStyle) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, title: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => UnityEngine.Rect);
+    static ModalWindow: ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, text: string) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, image: UnityEngine.Texture) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, content: UnityEngine.GUIContent) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, text: string, style: UnityEngine.GUIStyle) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => UnityEngine.Rect) | ((id: number, clientRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => UnityEngine.Rect);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8567,7 +9767,7 @@ export namespace UnityEngine {
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetInvocationList: (() => any[]);
-    DynamicInvoke: ((args: any[]) => any);
+    DynamicInvoke: ((...args: any[]) => any);
     Clone: (() => any);
     GetType: (() => any);
     ToString: (() => string);
@@ -8626,6 +9826,7 @@ export namespace UnityEngine {
     text: string;
     image: UnityEngine.Texture;
     tooltip: string;
+    static none: UnityEngine.GUIContent;
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8660,17 +9861,50 @@ export namespace UnityEngine {
   }
   export declare class GUILayout {
     constructor();
+    static Label: ((image: UnityEngine.Texture, ...options: UnityEngine.GUILayoutOption[]) => void) | ((text: string, ...options: UnityEngine.GUILayoutOption[]) => void) | ((content: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void) | ((image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void);
+    static Box: ((image: UnityEngine.Texture, ...options: UnityEngine.GUILayoutOption[]) => void) | ((text: string, ...options: UnityEngine.GUILayoutOption[]) => void) | ((content: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => void) | ((image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void);
+    static Button: ((image: UnityEngine.Texture, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((text: string, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((content: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean);
+    static RepeatButton: ((image: UnityEngine.Texture, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((text: string, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((content: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean);
+    static TextField: ((text: string, ...options: UnityEngine.GUILayoutOption[]) => string) | ((text: string, maxLength: number, ...options: UnityEngine.GUILayoutOption[]) => string) | ((text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string) | ((text: string, maxLength: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string);
+    static PasswordField: ((password: string, maskChar: any, ...options: UnityEngine.GUILayoutOption[]) => string) | ((password: string, maskChar: any, maxLength: number, ...options: UnityEngine.GUILayoutOption[]) => string) | ((password: string, maskChar: any, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string) | ((password: string, maskChar: any, maxLength: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string);
+    static TextArea: ((text: string, ...options: UnityEngine.GUILayoutOption[]) => string) | ((text: string, maxLength: number, ...options: UnityEngine.GUILayoutOption[]) => string) | ((text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string) | ((text: string, maxLength: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => string);
+    static Toggle: ((value: boolean, image: UnityEngine.Texture, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((value: boolean, text: string, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((value: boolean, content: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((value: boolean, image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((value: boolean, text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean) | ((value: boolean, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => boolean);
+    static Toolbar: ((selected: number, texts: string[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, images: UnityEngine.Texture[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, contents: UnityEngine.GUIContent[], ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, texts: string[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, images: UnityEngine.Texture[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, texts: string[], style: UnityEngine.GUIStyle, buttonSize: UnityEngine.GUI_ToolbarButtonSize, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, images: UnityEngine.Texture[], style: UnityEngine.GUIStyle, buttonSize: UnityEngine.GUI_ToolbarButtonSize, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, contents: UnityEngine.GUIContent[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, contents: UnityEngine.GUIContent[], style: UnityEngine.GUIStyle, buttonSize: UnityEngine.GUI_ToolbarButtonSize, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, contents: UnityEngine.GUIContent[], enabled: boolean[], style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, contents: UnityEngine.GUIContent[], enabled: boolean[], style: UnityEngine.GUIStyle, buttonSize: UnityEngine.GUI_ToolbarButtonSize, ...options: UnityEngine.GUILayoutOption[]) => number);
+    static SelectionGrid: ((selected: number, texts: string[], xCount: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, images: UnityEngine.Texture[], xCount: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, content: UnityEngine.GUIContent[], xCount: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, texts: string[], xCount: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, images: UnityEngine.Texture[], xCount: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number) | ((selected: number, contents: UnityEngine.GUIContent[], xCount: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
+    static HorizontalSlider: ((value: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((value: number, leftValue: number, rightValue: number, slider: UnityEngine.GUIStyle, thumb: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
+    static VerticalSlider: ((value: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((value: number, leftValue: number, rightValue: number, slider: UnityEngine.GUIStyle, thumb: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
+    static HorizontalScrollbar: ((value: number, size: number, leftValue: number, rightValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((value: number, size: number, leftValue: number, rightValue: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
+    static VerticalScrollbar: ((value: number, size: number, topValue: number, bottomValue: number, ...options: UnityEngine.GUILayoutOption[]) => number) | ((value: number, size: number, topValue: number, bottomValue: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => number);
+    static Space: ((pixels: number) => void);
+    static FlexibleSpace: (() => void);
+    static BeginHorizontal: ((...options: UnityEngine.GUILayoutOption[]) => void) | ((style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void);
+    static EndHorizontal: (() => void);
+    static BeginVertical: ((...options: UnityEngine.GUILayoutOption[]) => void) | ((style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void) | ((content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => void);
+    static EndVertical: (() => void);
+    static BeginArea: ((screenRect: UnityEngine.Rect) => void) | ((screenRect: UnityEngine.Rect, text: string) => void) | ((screenRect: UnityEngine.Rect, image: UnityEngine.Texture) => void) | ((screenRect: UnityEngine.Rect, content: UnityEngine.GUIContent) => void) | ((screenRect: UnityEngine.Rect, style: UnityEngine.GUIStyle) => void) | ((screenRect: UnityEngine.Rect, text: string, style: UnityEngine.GUIStyle) => void) | ((screenRect: UnityEngine.Rect, image: UnityEngine.Texture, style: UnityEngine.GUIStyle) => void) | ((screenRect: UnityEngine.Rect, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => void);
+    static EndArea: (() => void);
+    static BeginScrollView: ((scrollPosition: UnityEngine.Vector2, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector2) | ((scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector2) | ((scrollPosition: UnityEngine.Vector2, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector2) | ((scrollPosition: UnityEngine.Vector2, style: UnityEngine.GUIStyle) => UnityEngine.Vector2) | ((scrollPosition: UnityEngine.Vector2, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector2) | ((scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector2) | ((scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, background: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Vector2);
+    static EndScrollView: (() => void);
+    static Window: ((id: number, screenRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, text: string, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((id: number, screenRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, image: UnityEngine.Texture, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((id: number, screenRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, content: UnityEngine.GUIContent, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((id: number, screenRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((id: number, screenRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((id: number, screenRect: UnityEngine.Rect, func: UnityEngine.GUI_WindowFunction, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect);
+    static Width: ((width: number) => UnityEngine.GUILayoutOption);
+    static MinWidth: ((minWidth: number) => UnityEngine.GUILayoutOption);
+    static MaxWidth: ((maxWidth: number) => UnityEngine.GUILayoutOption);
+    static Height: ((height: number) => UnityEngine.GUILayoutOption);
+    static MinHeight: ((minHeight: number) => UnityEngine.GUILayoutOption);
+    static MaxHeight: ((maxHeight: number) => UnityEngine.GUILayoutOption);
+    static ExpandWidth: ((expand: boolean) => UnityEngine.GUILayoutOption);
+    static ExpandHeight: ((expand: boolean) => UnityEngine.GUILayoutOption);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
     ToString: (() => string);
   }
   export declare class GUILayout_HorizontalScope {
-    constructor(options: UnityEngine.GUILayoutOption[]);
-    constructor(style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(text: string, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(image: UnityEngine.Texture, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(...options: UnityEngine.GUILayoutOption[]);
+    constructor(style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
@@ -8678,11 +9912,11 @@ export namespace UnityEngine {
     ToString: (() => string);
   }
   export declare class GUILayout_VerticalScope {
-    constructor(options: UnityEngine.GUILayoutOption[]);
-    constructor(style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(text: string, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(image: UnityEngine.Texture, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(...options: UnityEngine.GUILayoutOption[]);
+    constructor(style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(image: UnityEngine.Texture, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     Dispose: (() => void);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
@@ -8704,12 +9938,12 @@ export namespace UnityEngine {
     ToString: (() => string);
   }
   export declare class GUILayout_ScrollViewScope {
-    constructor(scrollPosition: UnityEngine.Vector2, options: UnityEngine.GUILayoutOption[]);
-    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, options: UnityEngine.GUILayoutOption[]);
-    constructor(scrollPosition: UnityEngine.Vector2, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(scrollPosition: UnityEngine.Vector2, style: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
-    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, background: UnityEngine.GUIStyle, options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
+    constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, background: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     scrollPosition: UnityEngine.Vector2;
     handleScrollWheel: boolean;
     Dispose: (() => void);
@@ -8726,6 +9960,11 @@ export namespace UnityEngine {
   }
   export declare class GUILayoutUtility {
     constructor();
+    static BeginGroup: ((GroupName: string) => void);
+    static EndGroup: ((groupName: string) => void);
+    static GetRect: ((content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle) => UnityEngine.Rect) | ((content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((width: number, height: number) => UnityEngine.Rect) | ((width: number, height: number, style: UnityEngine.GUIStyle) => UnityEngine.Rect) | ((width: number, height: number, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((width: number, height: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((minWidth: number, maxWidth: number, minHeight: number, maxHeight: number) => UnityEngine.Rect) | ((minWidth: number, maxWidth: number, minHeight: number, maxHeight: number, style: UnityEngine.GUIStyle) => UnityEngine.Rect) | ((minWidth: number, maxWidth: number, minHeight: number, maxHeight: number, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((minWidth: number, maxWidth: number, minHeight: number, maxHeight: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect);
+    static GetLastRect: (() => UnityEngine.Rect);
+    static GetAspectRect: ((aspect: number) => UnityEngine.Rect) | ((aspect: number, style: UnityEngine.GUIStyle) => UnityEngine.Rect) | ((aspect: number, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect) | ((aspect: number, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]) => UnityEngine.Rect);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8821,6 +10060,7 @@ export namespace UnityEngine {
     padding: UnityEngine.RectOffset;
     overflow: UnityEngine.RectOffset;
     lineHeight: number;
+    static none: UnityEngine.GUIStyle;
     isHeightDependantOnWidth: boolean;
     Draw: ((position: UnityEngine.Rect, isHover: boolean, isActive: boolean, on: boolean, hasKeyboardFocus: boolean) => void) | ((position: UnityEngine.Rect, text: string, isHover: boolean, isActive: boolean, on: boolean, hasKeyboardFocus: boolean) => void) | ((position: UnityEngine.Rect, image: UnityEngine.Texture, isHover: boolean, isActive: boolean, on: boolean, hasKeyboardFocus: boolean) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, isHover: boolean, isActive: boolean, on: boolean, hasKeyboardFocus: boolean) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, controlID: number) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, controlID: number, on: boolean) => void) | ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, controlID: number, on: boolean, hover: boolean) => void);
     DrawCursor: ((position: UnityEngine.Rect, content: UnityEngine.GUIContent, controlID: number, character: number) => void);
@@ -8858,6 +10098,21 @@ export namespace UnityEngine {
   }
   export declare class GUIUtility {
     constructor();
+    static hasModalWindow: boolean;
+    static systemCopyBuffer: string;
+    static hotControl: number;
+    static keyboardControl: number;
+    static GetControlID: ((hint: number, focusType: UnityEngine.FocusType, rect: UnityEngine.Rect) => number) | ((focus: UnityEngine.FocusType) => number) | ((contents: UnityEngine.GUIContent, focus: UnityEngine.FocusType) => number) | ((focus: UnityEngine.FocusType, position: UnityEngine.Rect) => number) | ((contents: UnityEngine.GUIContent, focus: UnityEngine.FocusType, position: UnityEngine.Rect) => number) | ((hint: number, focus: UnityEngine.FocusType) => number);
+    static GetStateObject: ((t: any, controlID: number) => any);
+    static QueryStateObject: ((t: any, controlID: number) => any);
+    static ExitGUI: (() => void);
+    static GUIToScreenPoint: ((guiPoint: UnityEngine.Vector2) => UnityEngine.Vector2);
+    static GUIToScreenRect: ((guiRect: UnityEngine.Rect) => UnityEngine.Rect);
+    static ScreenToGUIPoint: ((screenPoint: UnityEngine.Vector2) => UnityEngine.Vector2);
+    static ScreenToGUIRect: ((screenRect: UnityEngine.Rect) => UnityEngine.Rect);
+    static RotateAroundPivot: ((angle: number, pivotPoint: UnityEngine.Vector2) => void);
+    static ScaleAroundPivot: ((scale: UnityEngine.Vector2, pivotPoint: UnityEngine.Vector2) => void);
+    static AlignRectToDevice: ((rect: UnityEngine.Rect) => UnityEngine.Rect);
     Equals: ((obj: any) => boolean);
     GetHashCode: (() => number);
     GetType: (() => any);
@@ -8973,8 +10228,760 @@ export namespace UnityEngine {
     WORDS = 0,
     PARAGRAPHS = 1,
   }
+  export enum AssetBundleLoadResult {
+    Success = 0,
+    Cancelled = 1,
+    NotMatchingCrc = 2,
+    FailedCache = 3,
+    NotValidAssetBundle = 4,
+    NoSerializedData = 5,
+    NotCompatible = 6,
+    AlreadyLoaded = 7,
+    FailedRead = 8,
+    FailedDecompression = 9,
+    FailedWrite = 10,
+    FailedDeleteRecompressionTarget = 11,
+    RecompressionTargetIsLoaded = 12,
+    RecompressionTargetExistsButNotArchive = 13,
+  }
+  export declare class AssetBundle {
+    mainAsset: UnityEngine.Object;
+    isStreamedSceneAssetBundle: boolean;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    static UnloadAllAssetBundles: ((unloadAllObjects: boolean) => void);
+    static GetAllLoadedAssetBundles: (() => any);
+    static LoadFromFileAsync: ((path: string) => UnityEngine.AssetBundleCreateRequest) | ((path: string, crc: any) => UnityEngine.AssetBundleCreateRequest) | ((path: string, crc: any, offset: any) => UnityEngine.AssetBundleCreateRequest);
+    static LoadFromFile: ((path: string) => UnityEngine.AssetBundle) | ((path: string, crc: any) => UnityEngine.AssetBundle) | ((path: string, crc: any, offset: any) => UnityEngine.AssetBundle);
+    static LoadFromMemoryAsync: ((binary: any[]) => UnityEngine.AssetBundleCreateRequest) | ((binary: any[], crc: any) => UnityEngine.AssetBundleCreateRequest);
+    static LoadFromMemory: ((binary: any[]) => UnityEngine.AssetBundle) | ((binary: any[], crc: any) => UnityEngine.AssetBundle);
+    static LoadFromStreamAsync: ((stream: any, crc: any, managedReadBufferSize: any) => UnityEngine.AssetBundleCreateRequest) | ((stream: any, crc: any) => UnityEngine.AssetBundleCreateRequest) | ((stream: any) => UnityEngine.AssetBundleCreateRequest);
+    static LoadFromStream: ((stream: any, crc: any, managedReadBufferSize: any) => UnityEngine.AssetBundle) | ((stream: any, crc: any) => UnityEngine.AssetBundle) | ((stream: any) => UnityEngine.AssetBundle);
+    Contains: ((name: string) => boolean);
+    Load: ((name: string) => UnityEngine.Object);
+    LoadAll: (() => UnityEngine.Object[]);
+    LoadAsset: ((name: string) => UnityEngine.Object) | ((name: string, type: any) => UnityEngine.Object);
+    LoadAssetAsync: ((name: string) => UnityEngine.AssetBundleRequest) | ((name: string, type: any) => UnityEngine.AssetBundleRequest);
+    LoadAssetWithSubAssets: ((name: string) => UnityEngine.Object[]) | ((name: string, type: any) => UnityEngine.Object[]);
+    LoadAssetWithSubAssetsAsync: ((name: string) => UnityEngine.AssetBundleRequest) | ((name: string, type: any) => UnityEngine.AssetBundleRequest);
+    LoadAllAssets: (() => UnityEngine.Object[]) | ((type: any) => UnityEngine.Object[]);
+    LoadAllAssetsAsync: (() => UnityEngine.AssetBundleRequest) | ((type: any) => UnityEngine.AssetBundleRequest);
+    AllAssetNames: (() => string[]);
+    Unload: ((unloadAllLoadedObjects: boolean) => void);
+    GetAllAssetNames: (() => string[]);
+    GetAllScenePaths: (() => string[]);
+    static RecompressAssetBundleAsync: ((inputPath: string, outputPath: string, method: UnityEngine.BuildCompression, expectedCRC?: any, priority?: UnityEngine.ThreadPriority) => UnityEngine.AssetBundleRecompressOperation);
+    static CreateFromFile: ((path: string) => UnityEngine.AssetBundle);
+    static CreateFromMemory: ((binary: any[]) => UnityEngine.AssetBundleCreateRequest);
+    static CreateFromMemoryImmediate: ((binary: any[]) => UnityEngine.AssetBundle);
+    GetInstanceID: (() => number);
+    GetHashCode: (() => number);
+    Equals: ((other: any) => boolean);
+    ToString: (() => string);
+    GetType: (() => any);
+  }
+  export declare class AssetBundleCreateRequest {
+    constructor();
+    assetBundle: UnityEngine.AssetBundle;
+    isDone: boolean;
+    progress: number;
+    priority: number;
+    allowSceneActivation: boolean;
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => any);
+    ToString: (() => string);
+  }
+  export declare class AssetBundleManifest {
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    GetAllAssetBundles: (() => string[]);
+    GetAllAssetBundlesWithVariant: (() => string[]);
+    GetAssetBundleHash: ((assetBundleName: string) => UnityEngine.Hash128);
+    GetDirectDependencies: ((assetBundleName: string) => string[]);
+    GetAllDependencies: ((assetBundleName: string) => string[]);
+    GetInstanceID: (() => number);
+    GetHashCode: (() => number);
+    Equals: ((other: any) => boolean);
+    ToString: (() => string);
+    GetType: (() => any);
+  }
+  export declare class AssetBundleRecompressOperation {
+    constructor();
+    humanReadableResult: string;
+    inputPath: string;
+    outputPath: string;
+    result: UnityEngine.AssetBundleLoadResult;
+    success: boolean;
+    isDone: boolean;
+    progress: number;
+    priority: number;
+    allowSceneActivation: boolean;
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => any);
+    ToString: (() => string);
+  }
+  export declare class AssetBundleRequest {
+    constructor();
+    asset: UnityEngine.Object;
+    allAssets: UnityEngine.Object[];
+    isDone: boolean;
+    progress: number;
+    priority: number;
+    allowSceneActivation: boolean;
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => any);
+    ToString: (() => string);
+  }
+  export enum CompressionType {
+    None = 0,
+    Lzma = 1,
+    Lz4 = 2,
+    Lz4HC = 3,
+  }
+  export enum CompressionLevel {
+    None = 0,
+    Fastest = 1,
+    Fast = 2,
+    Normal = 3,
+    High = 4,
+    Maximum = 5,
+  }
+  export declare class BuildCompression {
+    compression: UnityEngine.CompressionType;
+    level: UnityEngine.CompressionLevel;
+    blockSize: any; // System.UInt32
+    static Uncompressed: UnityEngine.BuildCompression;
+    static LZ4: UnityEngine.BuildCompression;
+    static LZMA: UnityEngine.BuildCompression;
+    static UncompressedRuntime: UnityEngine.BuildCompression;
+    static LZ4Runtime: UnityEngine.BuildCompression;
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    ToString: (() => string);
+    GetType: (() => any);
+  }
+  export declare class RemoteSettings {
+    static CallOnUpdate: (() => void);
+    static ForceUpdate: (() => void);
+    static WasLastUpdatedFromServer: (() => boolean);
+    static GetInt: ((key: string) => number) | ((key: string, defaultValue: number) => number);
+    static GetLong: ((key: string) => any) | ((key: string, defaultValue: any) => any);
+    static GetFloat: ((key: string) => number) | ((key: string, defaultValue: number) => number);
+    static GetString: ((key: string) => string) | ((key: string, defaultValue: string) => string);
+    static GetBool: ((key: string) => boolean) | ((key: string, defaultValue: boolean) => boolean);
+    static HasKey: ((key: string) => boolean);
+    static GetCount: (() => number);
+    static GetKeys: (() => string[]);
+    static GetObject: ((type: any, key?: string) => any) | ((key: string, defaultValue: any) => any);
+    static GetDictionary: ((key?: string) => any);
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => any);
+    ToString: (() => string);
+  }
+  export declare class RemoteSettings_UpdatedEventHandler {
+    constructor(object: any, method: any);
+    Method: any; // System.Reflection.MethodInfo
+    Target: any; // System.Object
+    Invoke: (() => void);
+    BeginInvoke: ((callback: any, object: any) => any);
+    EndInvoke: ((result: any) => void);
+    GetObjectData: ((info: any, context: any) => void);
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    GetInvocationList: (() => any[]);
+    DynamicInvoke: ((...args: any[]) => any);
+    Clone: (() => any);
+    GetType: (() => any);
+    ToString: (() => string);
+  }
+  export declare class RemoteConfigSettings {
+    constructor(configKey: string);
+    Dispose: (() => void);
+    static QueueConfig: ((name: string, param: any, ver?: number, prefix?: string) => boolean);
+    static SendDeviceInfoInConfigRequest: (() => boolean);
+    static AddSessionTag: ((tag: string) => void);
+    ForceUpdate: (() => void);
+    WasLastUpdatedFromServer: (() => boolean);
+    GetInt: ((key: string) => number) | ((key: string, defaultValue: number) => number);
+    GetLong: ((key: string) => any) | ((key: string, defaultValue: any) => any);
+    GetFloat: ((key: string) => number) | ((key: string, defaultValue: number) => number);
+    GetString: ((key: string) => string) | ((key: string, defaultValue: string) => string);
+    GetBool: ((key: string) => boolean) | ((key: string, defaultValue: boolean) => boolean);
+    HasKey: ((key: string) => boolean);
+    GetCount: (() => number);
+    GetKeys: (() => string[]);
+    GetObject: ((type: any, key?: string) => any) | ((key: string, defaultValue: any) => any);
+    GetDictionary: ((key?: string) => any);
+    Equals: ((obj: any) => boolean);
+    GetHashCode: (() => number);
+    GetType: (() => any);
+    ToString: (() => string);
+  }
+  export namespace AI {
+    export enum NavMeshPathStatus {
+      PathComplete = 0,
+      PathPartial = 1,
+      PathInvalid = 2,
+    }
+    export declare class NavMeshPath {
+      constructor();
+      corners: UnityEngine.Vector3[];
+      status: UnityEngine.AI.NavMeshPathStatus;
+      GetCornersNonAlloc: ((results: UnityEngine.Vector3[]) => number);
+      ClearCorners: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class NavMeshBuilder {
+      static CollectSources: ((includedWorldBounds: UnityEngine.Bounds, includedLayerMask: number, geometry: UnityEngine.AI.NavMeshCollectGeometry, defaultArea: number, markups: any, results: any) => void) | ((root: UnityEngine.Transform, includedLayerMask: number, geometry: UnityEngine.AI.NavMeshCollectGeometry, defaultArea: number, markups: any, results: any) => void);
+      static BuildNavMeshData: ((buildSettings: UnityEngine.AI.NavMeshBuildSettings, sources: any, localBounds: UnityEngine.Bounds, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => UnityEngine.AI.NavMeshData);
+      static UpdateNavMeshData: ((data: UnityEngine.AI.NavMeshData, buildSettings: UnityEngine.AI.NavMeshBuildSettings, sources: any, localBounds: UnityEngine.Bounds) => boolean);
+      static UpdateNavMeshDataAsync: ((data: UnityEngine.AI.NavMeshData, buildSettings: UnityEngine.AI.NavMeshBuildSettings, sources: any, localBounds: UnityEngine.Bounds) => UnityEngine.AsyncOperation);
+      static Cancel: ((data: UnityEngine.AI.NavMeshData) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum ObstacleAvoidanceType {
+      NoObstacleAvoidance = 0,
+      LowQualityObstacleAvoidance = 1,
+      MedQualityObstacleAvoidance = 2,
+      GoodQualityObstacleAvoidance = 3,
+      HighQualityObstacleAvoidance = 4,
+    }
+    export declare class NavMeshAgent {
+      constructor();
+      destination: UnityEngine.Vector3;
+      stoppingDistance: number;
+      velocity: UnityEngine.Vector3;
+      nextPosition: UnityEngine.Vector3;
+      steeringTarget: UnityEngine.Vector3;
+      desiredVelocity: UnityEngine.Vector3;
+      remainingDistance: number;
+      baseOffset: number;
+      isOnOffMeshLink: boolean;
+      currentOffMeshLinkData: UnityEngine.AI.OffMeshLinkData;
+      nextOffMeshLinkData: UnityEngine.AI.OffMeshLinkData;
+      autoTraverseOffMeshLink: boolean;
+      autoBraking: boolean;
+      autoRepath: boolean;
+      hasPath: boolean;
+      pathPending: boolean;
+      isPathStale: boolean;
+      pathStatus: UnityEngine.AI.NavMeshPathStatus;
+      pathEndPosition: UnityEngine.Vector3;
+      isStopped: boolean;
+      path: UnityEngine.AI.NavMeshPath;
+      navMeshOwner: UnityEngine.Object;
+      agentTypeID: number;
+      walkableMask: number;
+      areaMask: number;
+      speed: number;
+      angularSpeed: number;
+      acceleration: number;
+      updatePosition: boolean;
+      updateRotation: boolean;
+      updateUpAxis: boolean;
+      radius: number;
+      height: number;
+      obstacleAvoidanceType: UnityEngine.AI.ObstacleAvoidanceType;
+      avoidancePriority: number;
+      isOnNavMesh: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      SetDestination: ((target: UnityEngine.Vector3) => boolean);
+      ActivateCurrentOffMeshLink: ((activated: boolean) => void);
+      CompleteOffMeshLink: (() => void);
+      Warp: ((newPosition: UnityEngine.Vector3) => boolean);
+      Move: ((offset: UnityEngine.Vector3) => void);
+      Stop: (() => void) | ((stopUpdates: boolean) => void);
+      Resume: (() => void);
+      ResetPath: (() => void);
+      SetPath: ((path: UnityEngine.AI.NavMeshPath) => boolean);
+      CalculatePath: ((targetPosition: UnityEngine.Vector3, path: UnityEngine.AI.NavMeshPath) => boolean);
+      SetLayerCost: ((layer: number, cost: number) => void);
+      GetLayerCost: ((layer: number) => number);
+      SetAreaCost: ((areaIndex: number, areaCost: number) => void);
+      GetAreaCost: ((areaIndex: number) => number);
+      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: any) => UnityEngine.Component);
+      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      CompareTag: ((tag: string) => boolean);
+      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export enum NavMeshObstacleShape {
+      Capsule = 0,
+      Box = 1,
+    }
+    export declare class NavMeshObstacle {
+      constructor();
+      height: number;
+      radius: number;
+      velocity: UnityEngine.Vector3;
+      carving: boolean;
+      carveOnlyStationary: boolean;
+      carvingMoveThreshold: number;
+      carvingTimeToStationary: number;
+      shape: UnityEngine.AI.NavMeshObstacleShape;
+      center: UnityEngine.Vector3;
+      size: UnityEngine.Vector3;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: any) => UnityEngine.Component);
+      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      CompareTag: ((tag: string) => boolean);
+      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export enum OffMeshLinkType {
+      LinkTypeManual = 0,
+      LinkTypeDropDown = 1,
+      LinkTypeJumpAcross = 2,
+    }
+    export declare class OffMeshLinkData {
+      valid: boolean;
+      activated: boolean;
+      linkType: UnityEngine.AI.OffMeshLinkType;
+      startPos: UnityEngine.Vector3;
+      endPos: UnityEngine.Vector3;
+      offMeshLink: UnityEngine.AI.OffMeshLink;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class OffMeshLink {
+      constructor();
+      activated: boolean;
+      occupied: boolean;
+      costOverride: number;
+      biDirectional: boolean;
+      navMeshLayer: number;
+      area: number;
+      autoUpdatePositions: boolean;
+      startTransform: UnityEngine.Transform;
+      endTransform: UnityEngine.Transform;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      UpdatePositions: (() => void);
+      GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
+      GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
+      GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponentInParent: ((t: any) => UnityEngine.Component);
+      GetComponentsInParent: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
+      GetComponents: ((type: any) => UnityEngine.Component[]) | ((type: any, results: any) => void);
+      CompareTag: ((tag: string) => boolean);
+      SendMessageUpwards: ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      SendMessage: ((methodName: string, value: any) => void) | ((methodName: string) => void) | ((methodName: string, value: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      BroadcastMessage: ((methodName: string, parameter: any, options: UnityEngine.SendMessageOptions) => void) | ((methodName: string, parameter: any) => void) | ((methodName: string) => void) | ((methodName: string, options: UnityEngine.SendMessageOptions) => void);
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshHit {
+      position: UnityEngine.Vector3;
+      normal: UnityEngine.Vector3;
+      distance: number;
+      mask: number;
+      hit: boolean;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshTriangulation {
+      layers: number[];
+      vertices: UnityEngine.Vector3[];
+      indices: number[];
+      areas: number[];
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshData {
+      constructor();
+      constructor(agentTypeID: number);
+      sourceBounds: UnityEngine.Bounds;
+      position: UnityEngine.Vector3;
+      rotation: UnityEngine.Quaternion;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      GetInstanceID: (() => number);
+      GetHashCode: (() => number);
+      Equals: ((other: any) => boolean);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshDataInstance {
+      valid: boolean;
+      owner: UnityEngine.Object;
+      Remove: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshLinkData {
+      startPosition: UnityEngine.Vector3;
+      endPosition: UnityEngine.Vector3;
+      costModifier: number;
+      bidirectional: boolean;
+      width: number;
+      area: number;
+      agentTypeID: number;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshLinkInstance {
+      valid: boolean;
+      owner: UnityEngine.Object;
+      Remove: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshQueryFilter {
+      areaMask: number;
+      agentTypeID: number;
+      GetAreaCost: ((areaIndex: number) => number);
+      SetAreaCost: ((areaIndex: number, cost: number) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMesh {
+      static avoidancePredictionTime: number;
+      static pathfindingIterationsPerFrame: number;
+      static AllAreas: number;
+      static onPreUpdate: UnityEngine.AI.NavMesh_OnNavMeshPreUpdate;
+      static CalculatePath: ((sourcePosition: UnityEngine.Vector3, targetPosition: UnityEngine.Vector3, areaMask: number, path: UnityEngine.AI.NavMeshPath) => boolean) | ((sourcePosition: UnityEngine.Vector3, targetPosition: UnityEngine.Vector3, filter: UnityEngine.AI.NavMeshQueryFilter, path: UnityEngine.AI.NavMeshPath) => boolean);
+      static SetLayerCost: ((layer: number, cost: number) => void);
+      static GetLayerCost: ((layer: number) => number);
+      static GetNavMeshLayerFromName: ((layerName: string) => number);
+      static SetAreaCost: ((areaIndex: number, cost: number) => void);
+      static GetAreaCost: ((areaIndex: number) => number);
+      static GetAreaFromName: ((areaName: string) => number);
+      static CalculateTriangulation: (() => UnityEngine.AI.NavMeshTriangulation);
+      static AddOffMeshLinks: (() => void);
+      static RestoreNavMesh: (() => void);
+      static AddNavMeshData: ((navMeshData: UnityEngine.AI.NavMeshData) => UnityEngine.AI.NavMeshDataInstance) | ((navMeshData: UnityEngine.AI.NavMeshData, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => UnityEngine.AI.NavMeshDataInstance);
+      static RemoveNavMeshData: ((handle: UnityEngine.AI.NavMeshDataInstance) => void);
+      static AddLink: ((link: UnityEngine.AI.NavMeshLinkData) => UnityEngine.AI.NavMeshLinkInstance) | ((link: UnityEngine.AI.NavMeshLinkData, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion) => UnityEngine.AI.NavMeshLinkInstance);
+      static RemoveLink: ((handle: UnityEngine.AI.NavMeshLinkInstance) => void);
+      static CreateSettings: (() => UnityEngine.AI.NavMeshBuildSettings);
+      static RemoveSettings: ((agentTypeID: number) => void);
+      static GetSettingsByID: ((agentTypeID: number) => UnityEngine.AI.NavMeshBuildSettings);
+      static GetSettingsCount: (() => number);
+      static GetSettingsByIndex: ((index: number) => UnityEngine.AI.NavMeshBuildSettings);
+      static GetSettingsNameFromID: ((agentTypeID: number) => string);
+      static RemoveAllNavMeshData: (() => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class NavMesh_OnNavMeshPreUpdate {
+      constructor(object: any, method: any);
+      Method: any; // System.Reflection.MethodInfo
+      Target: any; // System.Object
+      Invoke: (() => void);
+      BeginInvoke: ((callback: any, object: any) => any);
+      EndInvoke: ((result: any) => void);
+      GetObjectData: ((info: any, context: any) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((...args: any[]) => any);
+      Clone: (() => any);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum NavMeshBuildDebugFlags {
+      None = 0,
+      InputGeometry = 1,
+      Voxels = 2,
+      Regions = 4,
+      RawContours = 8,
+      SimplifiedContours = 16,
+      PolygonMeshes = 32,
+      PolygonMeshesDetail = 64,
+      All = 127,
+    }
+    export enum NavMeshBuildSourceShape {
+      Mesh = 0,
+      Terrain = 1,
+      Box = 2,
+      Sphere = 3,
+      Capsule = 4,
+      ModifierBox = 5,
+    }
+    export enum NavMeshCollectGeometry {
+      RenderMeshes = 0,
+      PhysicsColliders = 1,
+    }
+    export declare class NavMeshBuildSource {
+      transform: UnityEngine.Matrix4x4;
+      size: UnityEngine.Vector3;
+      shape: UnityEngine.AI.NavMeshBuildSourceShape;
+      area: number;
+      sourceObject: UnityEngine.Object;
+      component: UnityEngine.Component;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshBuildMarkup {
+      overrideArea: boolean;
+      area: number;
+      ignoreFromBuild: boolean;
+      root: UnityEngine.Transform;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshBuildSettings {
+      agentTypeID: number;
+      agentRadius: number;
+      agentHeight: number;
+      agentSlope: number;
+      agentClimb: number;
+      minRegionArea: number;
+      overrideVoxelSize: boolean;
+      voxelSize: number;
+      overrideTileSize: boolean;
+      tileSize: number;
+      maxJobWorkers: any; // System.UInt32
+      preserveTilesOutsideBounds: boolean;
+      debug: UnityEngine.AI.NavMeshBuildDebugSettings;
+      ValidationReport: ((buildBounds: UnityEngine.Bounds) => string[]);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+    export declare class NavMeshBuildDebugSettings {
+      flags: UnityEngine.AI.NavMeshBuildDebugFlags;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      ToString: (() => string);
+      GetType: (() => any);
+    }
+  }
+  export namespace Analytics {
+    export declare class ContinuousEvent {
+      constructor();
+      static ConfigureCustomEvent: ((customEventName: string, metricName: string, interval: number, period: number, enabled?: boolean) => UnityEngine.Analytics.AnalyticsResult);
+      static ConfigureEvent: ((eventName: string, metricName: string, interval: number, period: number, enabled?: boolean, ver?: number, prefix?: string) => UnityEngine.Analytics.AnalyticsResult);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum AnalyticsSessionState {
+      kSessionStopped = 0,
+      kSessionStarted = 1,
+      kSessionPaused = 2,
+      kSessionResumed = 3,
+    }
+    export declare class AnalyticsSessionInfo {
+      static sessionState: UnityEngine.Analytics.AnalyticsSessionState;
+      static sessionId: any; // System.Int64
+      static sessionCount: any; // System.Int64
+      static sessionElapsedTime: any; // System.Int64
+      static sessionFirstRun: boolean;
+      static userId: string;
+      static customUserId: string;
+      static customDeviceId: string;
+      static identityToken: string;
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class AnalyticsSessionInfo_SessionStateChanged {
+      constructor(object: any, method: any);
+      Method: any; // System.Reflection.MethodInfo
+      Target: any; // System.Object
+      Invoke: ((sessionState: UnityEngine.Analytics.AnalyticsSessionState, sessionId: any, sessionElapsedTime: any, sessionChanged: boolean) => void);
+      BeginInvoke: ((sessionState: UnityEngine.Analytics.AnalyticsSessionState, sessionId: any, sessionElapsedTime: any, sessionChanged: boolean, callback: any, object: any) => any);
+      EndInvoke: ((result: any) => void);
+      GetObjectData: ((info: any, context: any) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((...args: any[]) => any);
+      Clone: (() => any);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class AnalyticsSessionInfo_IdentityTokenChanged {
+      constructor(object: any, method: any);
+      Method: any; // System.Reflection.MethodInfo
+      Target: any; // System.Object
+      Invoke: ((token: string) => void);
+      BeginInvoke: ((token: string, callback: any, object: any) => any);
+      EndInvoke: ((result: any) => void);
+      GetObjectData: ((info: any, context: any) => void);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetInvocationList: (() => any[]);
+      DynamicInvoke: ((...args: any[]) => any);
+      Clone: (() => any);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export declare class Analytics {
+      static initializeOnStartup: boolean;
+      static playerOptedOut: boolean;
+      static eventUrl: string;
+      static configUrl: string;
+      static limitUserTracking: boolean;
+      static deviceStatsEnabled: boolean;
+      static enabled: boolean;
+      static ResumeInitialization: (() => UnityEngine.Analytics.AnalyticsResult);
+      static FlushEvents: (() => UnityEngine.Analytics.AnalyticsResult);
+      static SetUserId: ((userId: string) => UnityEngine.Analytics.AnalyticsResult);
+      static SetUserGender: ((gender: UnityEngine.Analytics.Gender) => UnityEngine.Analytics.AnalyticsResult);
+      static SetUserBirthYear: ((birthYear: number) => UnityEngine.Analytics.AnalyticsResult);
+      static Transaction: ((productId: string, amount: any, currency: string) => UnityEngine.Analytics.AnalyticsResult) | ((productId: string, amount: any, currency: string, receiptPurchaseData: string, signature: string) => UnityEngine.Analytics.AnalyticsResult) | ((productId: string, amount: any, currency: string, receiptPurchaseData: string, signature: string, usingIAPService: boolean) => UnityEngine.Analytics.AnalyticsResult);
+      static CustomEvent: ((customEventName: string) => UnityEngine.Analytics.AnalyticsResult) | ((customEventName: string, position: UnityEngine.Vector3) => UnityEngine.Analytics.AnalyticsResult) | ((customEventName: string, eventData: any) => UnityEngine.Analytics.AnalyticsResult);
+      static EnableCustomEvent: ((customEventName: string, enabled: boolean) => UnityEngine.Analytics.AnalyticsResult);
+      static IsCustomEventEnabled: ((customEventName: string) => UnityEngine.Analytics.AnalyticsResult);
+      static RegisterEvent: ((eventName: string, maxEventPerHour: number, maxItems: number, vendorKey?: string, prefix?: string) => UnityEngine.Analytics.AnalyticsResult) | ((eventName: string, maxEventPerHour: number, maxItems: number, vendorKey: string, ver: number, prefix?: string) => UnityEngine.Analytics.AnalyticsResult);
+      static SendEvent: ((eventName: string, parameters: any, ver?: number, prefix?: string) => UnityEngine.Analytics.AnalyticsResult);
+      static SetEventEndPoint: ((eventName: string, endPoint: string, ver?: number, prefix?: string) => UnityEngine.Analytics.AnalyticsResult);
+      static SetEventPriority: ((eventName: string, eventPriority: UnityEngine.Analytics.AnalyticsEventPriority, ver?: number, prefix?: string) => UnityEngine.Analytics.AnalyticsResult);
+      static EnableEvent: ((eventName: string, enabled: boolean, ver?: number, prefix?: string) => UnityEngine.Analytics.AnalyticsResult);
+      static IsEventEnabled: ((eventName: string, ver?: number, prefix?: string) => UnityEngine.Analytics.AnalyticsResult);
+      Equals: ((obj: any) => boolean);
+      GetHashCode: (() => number);
+      GetType: (() => any);
+      ToString: (() => string);
+    }
+    export enum Gender {
+      Male = 0,
+      Female = 1,
+      Unknown = 2,
+    }
+    export enum AnalyticsResult {
+      Ok = 0,
+      NotInitialized = 1,
+      AnalyticsDisabled = 2,
+      TooManyItems = 3,
+      SizeLimitReached = 4,
+      TooManyRequests = 5,
+      InvalidData = 6,
+      UnsupportedPlatform = 7,
+    }
+    export enum AnalyticsEventPriority {
+      FlushQueueFlag = 1,
+      CacheImmediatelyFlag = 2,
+      AllowInStopModeFlag = 4,
+      SendImmediateFlag = 8,
+      NoCachingFlag = 16,
+      NoRetryFlag = 32,
+      NormalPriorityEvent = 0,
+      NormalPriorityEvent_WithCaching = 2,
+      NormalPriorityEvent_NoRetryNoCaching = 48,
+      HighPriorityEvent = 1,
+      HighPriorityEvent_InStopMode = 5,
+      HighestPriorityEvent = 9,
+      HighestPriorityEvent_NoRetryNoCaching = 49,
+    }
+  }
   export namespace Animations {
     export declare class AnimationPlayableBinding {
+      static Create: ((name: string, key: UnityEngine.Object) => UnityEngine.Playables.PlayableBinding);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -9055,6 +11062,7 @@ export namespace UnityEngine {
       None = 4,
     }
     export declare class AnimationClipPlayable {
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, clip: UnityEngine.AnimationClip) => UnityEngine.Animations.AnimationClipPlayable);
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Animations.AnimationClipPlayable) => boolean) | ((obj: any) => boolean);
       GetAnimationClip: (() => UnityEngine.AnimationClip);
@@ -9110,6 +11118,8 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class AnimationLayerMixerPlayable {
+      static Null: UnityEngine.Animations.AnimationLayerMixerPlayable;
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, inputCount?: number) => UnityEngine.Animations.AnimationLayerMixerPlayable);
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Animations.AnimationLayerMixerPlayable) => boolean) | ((obj: any) => boolean);
       IsLayerAdditive: ((layerIndex: any) => boolean);
@@ -9120,6 +11130,8 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class AnimationMixerPlayable {
+      static Null: UnityEngine.Animations.AnimationMixerPlayable;
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, inputCount?: number, normalizeWeights?: boolean) => UnityEngine.Animations.AnimationMixerPlayable);
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Animations.AnimationMixerPlayable) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -9133,6 +11145,8 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class AnimationPlayableOutput {
+      static Null: UnityEngine.Animations.AnimationPlayableOutput;
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, name: string, target: UnityEngine.Animator) => UnityEngine.Animations.AnimationPlayableOutput);
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
       GetTarget: (() => UnityEngine.Animator);
       SetTarget: ((value: UnityEngine.Animator) => void);
@@ -9142,6 +11156,7 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class AnimationScriptPlayable {
+      static Null: UnityEngine.Animations.AnimationScriptPlayable;
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Animations.AnimationScriptPlayable) => boolean) | ((obj: any) => boolean);
       SetProcessInputs: ((value: boolean) => void);
@@ -9241,18 +11256,26 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class AnimationSceneHandleUtility {
+      static ReadInts: ((stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any) => void);
+      static ReadFloats: ((stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class AnimationStreamHandleUtility {
+      static WriteInts: ((stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any, useMask: boolean) => void);
+      static WriteFloats: ((stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any, useMask: boolean) => void);
+      static ReadInts: ((stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any) => void);
+      static ReadFloats: ((stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class AnimatorControllerPlayable {
+      static Null: UnityEngine.Animations.AnimatorControllerPlayable;
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, controller: UnityEngine.RuntimeAnimatorController) => UnityEngine.Animations.AnimatorControllerPlayable);
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       SetHandle: ((handle: UnityEngine.Playables.PlayableHandle) => void);
       Equals: ((other: UnityEngine.Animations.AnimatorControllerPlayable) => boolean) | ((obj: any) => boolean);
@@ -9295,6 +11318,14 @@ export namespace UnityEngine {
       Int = 10,
     }
     export declare class AnimatorJobExtensions {
+      static AddJobDependency: ((animator: UnityEngine.Animator, jobHandle: Unity.Jobs.JobHandle) => void);
+      static BindStreamTransform: ((animator: UnityEngine.Animator, transform: UnityEngine.Transform) => UnityEngine.Animations.TransformStreamHandle);
+      static BindStreamProperty: ((animator: UnityEngine.Animator, transform: UnityEngine.Transform, type: any, property: string) => UnityEngine.Animations.PropertyStreamHandle) | ((animator: UnityEngine.Animator, transform: UnityEngine.Transform, type: any, property: string, isObjectReference: boolean) => UnityEngine.Animations.PropertyStreamHandle);
+      static BindCustomStreamProperty: ((animator: UnityEngine.Animator, property: string, type: UnityEngine.Animations.CustomStreamPropertyType) => UnityEngine.Animations.PropertyStreamHandle);
+      static BindSceneTransform: ((animator: UnityEngine.Animator, transform: UnityEngine.Transform) => UnityEngine.Animations.TransformSceneHandle);
+      static BindSceneProperty: ((animator: UnityEngine.Animator, transform: UnityEngine.Transform, type: any, property: string) => UnityEngine.Animations.PropertySceneHandle) | ((animator: UnityEngine.Animator, transform: UnityEngine.Transform, type: any, property: string, isObjectReference: boolean) => UnityEngine.Animations.PropertySceneHandle);
+      static ResolveAllStreamHandles: ((animator: UnityEngine.Animator) => void);
+      static ResolveAllSceneHandles: ((animator: UnityEngine.Animator) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -9537,6 +11568,8 @@ export namespace UnityEngine {
       humanPartDof: UnityEngine.HumanPartDof;
       dof: number;
       name: string;
+      static muscleHandleCount: number;
+      static GetMuscleHandles: ((muscleHandles: UnityEngine.Animations.MuscleHandle[]) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -9606,6 +11639,12 @@ export namespace UnityEngine {
       GPUTraceDocument = 2,
     }
     export declare class FrameCapture {
+      static IsDestinationSupported: ((dest: UnityEngine.Apple.FrameCaptureDestination) => boolean);
+      static BeginCaptureToXcode: (() => void);
+      static BeginCaptureToFile: ((path: string) => void);
+      static EndCapture: (() => void);
+      static CaptureNextFrameToXcode: (() => void);
+      static CaptureNextFrameToFile: ((path: string) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -9613,6 +11652,27 @@ export namespace UnityEngine {
     }
     export namespace ReplayKit {
       export declare class ReplayKit {
+        static APIAvailable: boolean;
+        static broadcastingAPIAvailable: boolean;
+        static recordingAvailable: boolean;
+        static isRecording: boolean;
+        static isBroadcasting: boolean;
+        static isBroadcastingPaused: boolean;
+        static isPreviewControllerActive: boolean;
+        static cameraEnabled: boolean;
+        static microphoneEnabled: boolean;
+        static broadcastURL: string;
+        static lastError: string;
+        static StartRecording: ((enableMicrophone: boolean, enableCamera: boolean) => boolean) | ((enableMicrophone: boolean) => boolean) | (() => boolean);
+        static StartBroadcasting: ((callback: UnityEngine.Apple.ReplayKit.ReplayKit_BroadcastStatusCallback, enableMicrophone: boolean, enableCamera: boolean) => void) | ((callback: UnityEngine.Apple.ReplayKit.ReplayKit_BroadcastStatusCallback, enableMicrophone: boolean) => void) | ((callback: UnityEngine.Apple.ReplayKit.ReplayKit_BroadcastStatusCallback) => void);
+        static StopRecording: (() => boolean);
+        static StopBroadcasting: (() => void);
+        static PauseBroadcasting: (() => void);
+        static ResumeBroadcasting: (() => void);
+        static Preview: (() => boolean);
+        static Discard: (() => boolean);
+        static ShowCameraPreviewAt: ((posX: number, posY: number) => boolean) | ((posX: number, posY: number, width: number, height: number) => boolean);
+        static HideCameraPreview: (() => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -9629,7 +11689,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -9638,6 +11698,10 @@ export namespace UnityEngine {
     export namespace TV {
       export declare class Remote {
         constructor();
+        static allowExitToHome: boolean;
+        static allowRemoteRotation: boolean;
+        static reportAbsoluteDpadValues: boolean;
+        static touchesEnabled: boolean;
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -9647,7 +11711,17 @@ export namespace UnityEngine {
   }
   export namespace Assertions {
     export declare class Assert {
-      Equals: ((obj: any) => boolean);
+      static raiseExceptions: boolean;
+      static Equals: ((obj1: any, obj2: any) => boolean) | ((obj: any) => boolean);
+      static ReferenceEquals: ((obj1: any, obj2: any) => boolean);
+      static IsTrue: ((condition: boolean) => void) | ((condition: boolean, message: string) => void);
+      static IsFalse: ((condition: boolean) => void) | ((condition: boolean, message: string) => void);
+      static AreApproximatelyEqual: ((expected: number, actual: number) => void) | ((expected: number, actual: number, message: string) => void) | ((expected: number, actual: number, tolerance: number) => void) | ((expected: number, actual: number, tolerance: number, message: string) => void);
+      static AreNotApproximatelyEqual: ((expected: number, actual: number) => void) | ((expected: number, actual: number, message: string) => void) | ((expected: number, actual: number, tolerance: number) => void) | ((expected: number, actual: number, tolerance: number, message: string) => void);
+      static AreEqual: ((expected: UnityEngine.Object, actual: UnityEngine.Object, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: number, actual: number) => void) | ((expected: number, actual: number, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void);
+      static AreNotEqual: ((expected: UnityEngine.Object, actual: UnityEngine.Object, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: number, actual: number) => void) | ((expected: number, actual: number, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void) | ((expected: any, actual: any) => void) | ((expected: any, actual: any, message: string) => void);
+      static IsNull: ((value: UnityEngine.Object, message: string) => void);
+      static IsNotNull: ((value: UnityEngine.Object, message: string) => void);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
@@ -9675,14 +11749,22 @@ export namespace UnityEngine {
         constructor(relative: boolean);
         constructor(error: number);
         constructor(error: number, relative: boolean);
+        static s_ComparerWithDefaultTolerance: UnityEngine.Assertions.Comparers.FloatComparer;
+        static kEpsilon: number;
         Equals: ((a: number, b: number) => boolean) | ((obj: any) => boolean);
         GetHashCode: ((obj: number) => number) | (() => number);
+        static AreEqual: ((expected: number, actual: number, error: number) => boolean);
+        static AreEqualRelative: ((expected: number, actual: number, error: number) => boolean);
         GetType: (() => any);
         ToString: (() => string);
       }
     }
     export namespace Must {
       export declare class MustExtensions {
+        static MustBeTrue: ((value: boolean) => void) | ((value: boolean, message: string) => void);
+        static MustBeFalse: ((value: boolean) => void) | ((value: boolean, message: string) => void);
+        static MustBeApproximatelyEqual: ((actual: number, expected: number) => void) | ((actual: number, expected: number, message: string) => void) | ((actual: number, expected: number, tolerance: number) => void) | ((actual: number, expected: number, tolerance: number, message: string) => void);
+        static MustNotBeApproximatelyEqual: ((actual: number, expected: number) => void) | ((actual: number, expected: number, message: string) => void) | ((actual: number, expected: number, tolerance: number) => void) | ((actual: number, expected: number, tolerance: number, message: string) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -9692,6 +11774,7 @@ export namespace UnityEngine {
   }
   export namespace Audio {
     export declare class AudioClipPlayable {
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, clip: UnityEngine.AudioClip, looping: boolean) => UnityEngine.Audio.AudioClipPlayable);
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Audio.AudioClipPlayable) => boolean) | ((obj: any) => boolean);
       GetClip: (() => UnityEngine.AudioClip);
@@ -9738,6 +11821,7 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class AudioMixerPlayable {
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, inputCount?: number, normalizeInputVolumes?: boolean) => UnityEngine.Audio.AudioMixerPlayable);
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       Equals: ((other: UnityEngine.Audio.AudioMixerPlayable) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -9756,12 +11840,15 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class AudioPlayableBinding {
+      static Create: ((name: string, key: UnityEngine.Object) => UnityEngine.Playables.PlayableBinding);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class AudioPlayableOutput {
+      static Null: UnityEngine.Audio.AudioPlayableOutput;
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, name: string, target: UnityEngine.AudioSource) => UnityEngine.Audio.AudioPlayableOutput);
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
       GetTarget: (() => UnityEngine.AudioSource);
       SetTarget: ((value: UnityEngine.AudioSource) => void);
@@ -9782,12 +11869,18 @@ export namespace UnityEngine {
       MonoAbort = 4,
     }
     export declare class Utils {
+      static ForceCrash: ((crashCategory: UnityEngine.Diagnostics.ForcedCrashCategory) => void);
+      static NativeAssert: ((message: string) => void);
+      static NativeError: ((message: string) => void);
+      static NativeWarning: ((message: string) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class PlayerConnection {
+      static connected: boolean;
+      static SendFile: ((remoteFilePath: string, data: any[]) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -9816,6 +11909,7 @@ export namespace UnityEngine {
       SetPersistentListenerState: ((index: number, state: UnityEngine.Events.UnityEventCallState) => void);
       RemoveAllListeners: (() => void);
       ToString: (() => string);
+      static GetValidMethodInfo: ((obj: any, functionName: string, argumentTypes: any[]) => any) | ((objectType: any, functionName: string, argumentTypes: any[]) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -9831,7 +11925,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -9984,6 +12078,7 @@ export namespace UnityEngine {
       OnCancel: ((eventData: UnityEngine.EventSystems.BaseEventData) => void);
     }
     export declare class EventSystem {
+      static current: UnityEngine.EventSystems.EventSystem;
       sendNavigationEvents: boolean;
       pixelDragThreshold: number;
       currentInputModule: UnityEngine.EventSystems.BaseInputModule;
@@ -10130,6 +12225,23 @@ export namespace UnityEngine {
       Cancel = 16,
     }
     export declare class ExecuteEvents {
+      static pointerEnterHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerEnterHandler]
+      static pointerExitHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerExitHandler]
+      static pointerDownHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerDownHandler]
+      static pointerUpHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerUpHandler]
+      static pointerClickHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerClickHandler]
+      static initializePotentialDrag: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IInitializePotentialDragHandler]
+      static beginDragHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IBeginDragHandler]
+      static dragHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IDragHandler]
+      static endDragHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IEndDragHandler]
+      static dropHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IDropHandler]
+      static scrollHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IScrollHandler]
+      static updateSelectedHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IUpdateSelectedHandler]
+      static selectHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.ISelectHandler]
+      static deselectHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IDeselectHandler]
+      static moveHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IMoveHandler]
+      static submitHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.ISubmitHandler]
+      static cancelHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.ICancelHandler]
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -10282,6 +12394,10 @@ export namespace UnityEngine {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static kMouseLeftId: number;
+      static kMouseRightId: number;
+      static kMouseMiddleId: number;
+      static kFakeTouchesId: number;
       IsPointerOverGameObject: ((pointerId: number) => boolean);
       ToString: (() => string);
       Process: (() => void);
@@ -10742,12 +12858,88 @@ export namespace UnityEngine {
     }
   }
   export namespace Experimental {
+    export namespace AI {
+      export declare class PolygonId {
+        IsNull: (() => boolean);
+        GetHashCode: (() => number);
+        Equals: ((rhs: UnityEngine.Experimental.AI.PolygonId) => boolean) | ((obj: any) => boolean);
+        ToString: (() => string);
+        GetType: (() => any);
+      }
+      export declare class NavMeshLocation {
+        polygon: UnityEngine.Experimental.AI.PolygonId;
+        position: UnityEngine.Vector3;
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => any);
+      }
+      export enum PathQueryStatus {
+        Failure = -2147483648,
+        Success = 1073741824,
+        InProgress = 536870912,
+        StatusDetailMask = 16777215,
+        WrongMagic = 1,
+        WrongVersion = 2,
+        OutOfMemory = 4,
+        InvalidParam = 8,
+        BufferTooSmall = 16,
+        OutOfNodes = 32,
+        PartialResult = 64,
+      }
+      export enum NavMeshPolyTypes {
+        Ground = 0,
+        OffMeshConnection = 1,
+      }
+      export declare class NavMeshWorld {
+        IsValid: (() => boolean);
+        static GetDefaultWorld: (() => UnityEngine.Experimental.AI.NavMeshWorld);
+        AddDependency: ((job: Unity.Jobs.JobHandle) => void);
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => any);
+      }
+      export declare class NavMeshQuery {
+        constructor(world: UnityEngine.Experimental.AI.NavMeshWorld, allocator: Unity.Collections.Allocator, pathNodePoolSize?: number);
+        Dispose: (() => void);
+        BeginFindPath: ((start: UnityEngine.Experimental.AI.NavMeshLocation, end: UnityEngine.Experimental.AI.NavMeshLocation, areaMask?: number, costs?: any) => UnityEngine.Experimental.AI.PathQueryStatus);
+        GetPathResult: ((path: any) => number);
+        IsValid: ((polygon: UnityEngine.Experimental.AI.PolygonId) => boolean) | ((location: UnityEngine.Experimental.AI.NavMeshLocation) => boolean);
+        GetAgentTypeIdForPolygon: ((polygon: UnityEngine.Experimental.AI.PolygonId) => number);
+        CreateLocation: ((position: UnityEngine.Vector3, polygon: UnityEngine.Experimental.AI.PolygonId) => UnityEngine.Experimental.AI.NavMeshLocation);
+        MapLocation: ((position: UnityEngine.Vector3, extents: UnityEngine.Vector3, agentTypeID: number, areaMask?: number) => UnityEngine.Experimental.AI.NavMeshLocation);
+        MoveLocations: ((locations: any, targets: any, areaMasks: any) => void);
+        MoveLocationsInSameAreas: ((locations: any, targets: any, areaMask?: number) => void);
+        MoveLocation: ((location: UnityEngine.Experimental.AI.NavMeshLocation, target: UnityEngine.Vector3, areaMask?: number) => UnityEngine.Experimental.AI.NavMeshLocation);
+        PolygonLocalToWorldMatrix: ((polygon: UnityEngine.Experimental.AI.PolygonId) => UnityEngine.Matrix4x4);
+        PolygonWorldToLocalMatrix: ((polygon: UnityEngine.Experimental.AI.PolygonId) => UnityEngine.Matrix4x4);
+        GetPolygonType: ((polygon: UnityEngine.Experimental.AI.PolygonId) => UnityEngine.Experimental.AI.NavMeshPolyTypes);
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        ToString: (() => string);
+        GetType: (() => any);
+      }
+    }
     export namespace Animations {
       export enum AnimationStreamSource {
         DefaultValues = 0,
         PreviousInputs = 1,
       }
       export declare class AnimationPlayableOutputExtensions {
+        static GetAnimationStreamSource: ((output: UnityEngine.Animations.AnimationPlayableOutput) => UnityEngine.Experimental.Animations.AnimationStreamSource);
+        static SetAnimationStreamSource: ((output: UnityEngine.Animations.AnimationPlayableOutput, streamSource: UnityEngine.Experimental.Animations.AnimationStreamSource) => void);
+        static GetSortingOrder: ((output: UnityEngine.Animations.AnimationPlayableOutput) => any);
+        static SetSortingOrder: ((output: UnityEngine.Animations.AnimationPlayableOutput, sortingOrder: any) => void);
+        Equals: ((obj: any) => boolean);
+        GetHashCode: (() => number);
+        GetType: (() => any);
+        ToString: (() => string);
+      }
+    }
+    export namespace AssetBundlePatching {
+      export declare class AssetBundleUtility {
+        static PatchAssetBundles: ((bundles: UnityEngine.AssetBundle[], filenames: string[]) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -10768,6 +12960,7 @@ export namespace UnityEngine {
         freeSampleFrameCountLowThreshold: any; // System.UInt32
         enableSampleFramesAvailableEvents: boolean;
         enableSilencePadding: boolean;
+        static consumeSampleFramesNativeFunction: UnityEngine.Experimental.Audio.AudioSampleProvider_ConsumeSampleFramesNativeFunction;
         Dispose: (() => void);
         ConsumeSampleFrames: ((sampleFrames: any) => any);
         SetSampleFramesAvailableNativeHandler: ((handler: UnityEngine.Experimental.Audio.AudioSampleProvider_SampleFramesEventNativeFunction, userData: any) => void);
@@ -10790,7 +12983,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -10806,7 +12999,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -10822,7 +13015,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -10860,6 +13053,8 @@ export namespace UnityEngine {
         green: number;
         blue: number;
         intensity: number;
+        static Convert: ((color: UnityEngine.Color, intensity: number) => UnityEngine.Experimental.GlobalIllumination.LinearColor);
+        static Black: (() => UnityEngine.Experimental.GlobalIllumination.LinearColor);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
@@ -10984,6 +13179,7 @@ export namespace UnityEngine {
         instanceID: number;
         scale: number;
         sizes: UnityEngine.Vector2;
+        static Defaults: (() => UnityEngine.Experimental.GlobalIllumination.Cookie);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         ToString: (() => string);
@@ -11013,12 +13209,18 @@ export namespace UnityEngine {
         GetType: (() => any);
       }
       export declare class LightmapperUtils {
+        static Extract: ((baketype: UnityEngine.LightmapBakeType) => UnityEngine.Experimental.GlobalIllumination.LightMode);
+        static ExtractIndirect: ((l: UnityEngine.Light) => UnityEngine.Experimental.GlobalIllumination.LinearColor);
+        static ExtractInnerCone: ((l: UnityEngine.Light) => number);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
       export declare class Lightmapping {
+        static SetDelegate: ((del: UnityEngine.Experimental.GlobalIllumination.Lightmapping_RequestLightsDelegate) => void);
+        static GetDelegate: (() => UnityEngine.Experimental.GlobalIllumination.Lightmapping_RequestLightsDelegate);
+        static ResetDelegate: (() => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -11035,13 +13237,14 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
       }
       export declare class RenderSettings {
         constructor();
+        static useRadianceAmbientProbe: boolean;
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -11050,6 +13253,7 @@ export namespace UnityEngine {
     }
     export namespace Playables {
       export declare class CameraPlayable {
+        static Create: ((graph: UnityEngine.Playables.PlayableGraph, camera: UnityEngine.Camera) => UnityEngine.Experimental.Playables.CameraPlayable);
         GetHandle: (() => UnityEngine.Playables.PlayableHandle);
         Equals: ((other: UnityEngine.Experimental.Playables.CameraPlayable) => boolean) | ((obj: any) => boolean);
         GetCamera: (() => UnityEngine.Camera);
@@ -11059,6 +13263,7 @@ export namespace UnityEngine {
         GetType: (() => any);
       }
       export declare class MaterialEffectPlayable {
+        static Create: ((graph: UnityEngine.Playables.PlayableGraph, material: UnityEngine.Material, pass?: number) => UnityEngine.Experimental.Playables.MaterialEffectPlayable);
         GetHandle: (() => UnityEngine.Playables.PlayableHandle);
         Equals: ((other: UnityEngine.Experimental.Playables.MaterialEffectPlayable) => boolean) | ((obj: any) => boolean);
         GetMaterial: (() => UnityEngine.Material);
@@ -11070,6 +13275,7 @@ export namespace UnityEngine {
         GetType: (() => any);
       }
       export declare class TextureMixerPlayable {
+        static Create: ((graph: UnityEngine.Playables.PlayableGraph) => UnityEngine.Experimental.Playables.TextureMixerPlayable);
         GetHandle: (() => UnityEngine.Playables.PlayableHandle);
         Equals: ((other: UnityEngine.Experimental.Playables.TextureMixerPlayable) => boolean) | ((obj: any) => boolean);
         GetHashCode: (() => number);
@@ -11077,12 +13283,15 @@ export namespace UnityEngine {
         GetType: (() => any);
       }
       export declare class TexturePlayableBinding {
+        static Create: ((name: string, key: UnityEngine.Object) => UnityEngine.Playables.PlayableBinding);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
       export declare class TexturePlayableOutput {
+        static Null: UnityEngine.Experimental.Playables.TexturePlayableOutput;
+        static Create: ((graph: UnityEngine.Playables.PlayableGraph, name: string, target: UnityEngine.RenderTexture) => UnityEngine.Experimental.Playables.TexturePlayableOutput);
         GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
         GetTarget: (() => UnityEngine.RenderTexture);
         SetTarget: ((value: UnityEngine.RenderTexture) => void);
@@ -11104,12 +13313,16 @@ export namespace UnityEngine {
         ToString: (() => string);
       }
       export declare class ScriptableRuntimeReflectionSystemSettings {
+        static system: UnityEngine.Experimental.Rendering.IScriptableRuntimeReflectionSystem;
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
         ToString: (() => string);
       }
       export declare class ExternalGPUProfiler {
+        static BeginGPUCapture: (() => void);
+        static EndGPUCapture: (() => void);
+        static IsAttached: (() => boolean);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -11126,6 +13339,8 @@ export namespace UnityEngine {
         WaitForPresent = 3,
       }
       export declare class GraphicsDeviceSettings {
+        static waitForPresentSyncPoint: UnityEngine.Experimental.Rendering.WaitForPresentSyncPoint;
+        static graphicsJobsSyncPoint: UnityEngine.Experimental.Rendering.GraphicsJobsSyncPoint;
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -11303,6 +13518,55 @@ export namespace UnityEngine {
       }
       export declare class GraphicsFormatUtility {
         constructor();
+        static GetGraphicsFormat: ((format: UnityEngine.TextureFormat, isSRGB: boolean) => UnityEngine.Experimental.Rendering.GraphicsFormat) | ((format: UnityEngine.RenderTextureFormat, isSRGB: boolean) => UnityEngine.Experimental.Rendering.GraphicsFormat) | ((format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite) => UnityEngine.Experimental.Rendering.GraphicsFormat);
+        static GetTextureFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.TextureFormat);
+        static IsSRGBFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsSwizzleFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static GetSRGBFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.Experimental.Rendering.GraphicsFormat);
+        static GetLinearFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.Experimental.Rendering.GraphicsFormat);
+        static GetRenderTextureFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.RenderTextureFormat);
+        static GetColorComponentCount: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => any);
+        static GetAlphaComponentCount: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => any);
+        static GetComponentCount: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => any);
+        static GetFormatString: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => string);
+        static IsCompressedFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsPackedFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static Is16BitPackedFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static ConvertToAlphaFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.Experimental.Rendering.GraphicsFormat);
+        static IsAlphaOnlyFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsAlphaTestFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static HasAlphaChannel: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsDepthFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsStencilFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsIEEE754Format: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsFloatFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsHalfFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsUnsignedFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsSignedFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsNormFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsUNormFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsSNormFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsIntegerFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsUIntFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsSIntFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsXRFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsDXTCFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsRGTCFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsBPTCFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsBCFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsPVRTCFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsETCFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsEACFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsASTCFormat: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => boolean);
+        static IsCrunchFormat: ((format: UnityEngine.TextureFormat) => boolean);
+        static GetSwizzleR: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.Rendering.FormatSwizzle);
+        static GetSwizzleG: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.Rendering.FormatSwizzle);
+        static GetSwizzleB: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.Rendering.FormatSwizzle);
+        static GetSwizzleA: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => UnityEngine.Rendering.FormatSwizzle);
+        static GetBlockSize: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => any);
+        static GetBlockWidth: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => any);
+        static GetBlockHeight: ((format: UnityEngine.Experimental.Rendering.GraphicsFormat) => any);
+        static ComputeMipmapSize: ((width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat) => any) | ((width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat) => any);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -11352,6 +13616,8 @@ export namespace UnityEngine {
         GetType: (() => any);
       }
       export declare class ShaderWarmup {
+        static WarmupShader: ((shader: UnityEngine.Shader, setup: UnityEngine.Experimental.Rendering.ShaderWarmupSetup) => void);
+        static WarmupShaderFromCollection: ((collection: UnityEngine.ShaderVariantCollection, shader: UnityEngine.Shader, setup: UnityEngine.Experimental.Rendering.ShaderWarmupSetup) => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -11373,8 +13639,8 @@ export namespace UnityEngine {
         SetShaderPass: ((passName: string) => void);
         SetTextureFromGlobal: ((nameID: number, globalTextureNameID: number) => void) | ((name: string, globalTextureName: string) => void);
         Dispatch: ((rayGenFunctionName: string, width: number, height: number, depth: number, camera?: UnityEngine.Camera) => void);
-        SetFloats: ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
-        SetInts: ((name: string, values: number[]) => void) | ((nameID: number, values: number[]) => void);
+        SetFloats: ((name: string, ...values: number[]) => void) | ((nameID: number, ...values: number[]) => void);
+        SetInts: ((name: string, ...values: number[]) => void) | ((nameID: number, ...values: number[]) => void);
         SetBool: ((name: string, val: boolean) => void) | ((nameID: number, val: boolean) => void);
         SetConstantBuffer: ((nameID: number, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((name: string, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((nameID: number, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((name: string, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
         GetInstanceID: (() => number);
@@ -11386,6 +13652,7 @@ export namespace UnityEngine {
     }
     export namespace Video {
       export declare class VideoClipPlayable {
+        static Create: ((graph: UnityEngine.Playables.PlayableGraph, clip: UnityEngine.Video.VideoClip, looping: boolean) => UnityEngine.Experimental.Video.VideoClipPlayable);
         GetHandle: (() => UnityEngine.Playables.PlayableHandle);
         Equals: ((other: UnityEngine.Experimental.Video.VideoClipPlayable) => boolean) | ((obj: any) => boolean);
         GetClip: (() => UnityEngine.Video.VideoClip);
@@ -11401,6 +13668,7 @@ export namespace UnityEngine {
         GetType: (() => any);
       }
       export declare class VideoPlayerExtensions {
+        static GetAudioSampleProvider: ((vp: UnityEngine.Video.VideoPlayer, trackIndex: any) => UnityEngine.Experimental.Audio.AudioSampleProvider);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -11416,6 +13684,7 @@ export namespace UnityEngine {
       layout: UnityEngine.iOS.ADBannerView_Layout;
       position: UnityEngine.Vector2;
       size: UnityEngine.Vector2;
+      static IsAvailable: ((type: UnityEngine.iOS.ADBannerView_Type) => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11450,7 +13719,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -11466,7 +13735,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -11482,7 +13751,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -11490,6 +13759,7 @@ export namespace UnityEngine {
     export declare class ADInterstitialAd {
       constructor(autoReload: boolean);
       constructor();
+      static isAvailable: boolean;
       loaded: boolean;
       Show: (() => void);
       ReloadAd: (() => void);
@@ -11509,7 +13779,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -11525,7 +13795,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -11599,6 +13869,18 @@ export namespace UnityEngine {
     }
     export declare class Device {
       constructor();
+      static systemVersion: string;
+      static generation: UnityEngine.iOS.DeviceGeneration;
+      static vendorIdentifier: string;
+      static advertisingIdentifier: string;
+      static advertisingTrackingEnabled: boolean;
+      static hideHomeButton: boolean;
+      static lowPowerModeEnabled: boolean;
+      static wantsSoftwareDimming: boolean;
+      static deferSystemGesturesMode: UnityEngine.iOS.SystemGestureDeferMode;
+      static SetNoBackupFlag: ((path: string) => void);
+      static ResetNoBackupFlag: ((path: string) => void);
+      static RequestStoreReview: (() => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11648,6 +13930,7 @@ export namespace UnityEngine {
       alertLaunchImage: string;
       soundName: string;
       applicationIconBadgeNumber: number;
+      static defaultSoundName: string;
       userInfo: any; // System.Collections.IDictionary
       hasAction: boolean;
       Equals: ((obj: any) => boolean);
@@ -11669,6 +13952,24 @@ export namespace UnityEngine {
     }
     export declare class NotificationServices {
       constructor();
+      static localNotificationCount: number;
+      static remoteNotificationCount: number;
+      static enabledNotificationTypes: UnityEngine.iOS.NotificationType;
+      static registrationError: string;
+      static deviceToken: any[];
+      static localNotifications: UnityEngine.iOS.LocalNotification[];
+      static remoteNotifications: UnityEngine.iOS.RemoteNotification[];
+      static scheduledLocalNotifications: UnityEngine.iOS.LocalNotification[];
+      static ClearLocalNotifications: (() => void);
+      static ClearRemoteNotifications: (() => void);
+      static RegisterForNotifications: ((notificationTypes: UnityEngine.iOS.NotificationType) => void) | ((notificationTypes: UnityEngine.iOS.NotificationType, registerForRemote: boolean) => void);
+      static ScheduleLocalNotification: ((notification: UnityEngine.iOS.LocalNotification) => void);
+      static PresentLocalNotificationNow: ((notification: UnityEngine.iOS.LocalNotification) => void);
+      static CancelLocalNotification: ((notification: UnityEngine.iOS.LocalNotification) => void);
+      static CancelAllLocalNotifications: (() => void);
+      static UnregisterForRemoteNotifications: (() => void);
+      static GetLocalNotification: ((index: number) => UnityEngine.iOS.LocalNotification);
+      static GetRemoteNotification: ((index: number) => UnityEngine.iOS.RemoteNotification);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11697,6 +13998,8 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class OnDemandResources {
+      static enabled: boolean;
+      static PreloadAsync: ((tags: string[]) => UnityEngine.iOS.OnDemandResourcesRequest);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11766,13 +14069,16 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class PlayerLoop {
       constructor();
+      static GetDefaultPlayerLoop: (() => UnityEngine.LowLevel.PlayerLoopSystem);
+      static GetCurrentPlayerLoop: (() => UnityEngine.LowLevel.PlayerLoopSystem);
+      static SetPlayerLoop: ((loop: UnityEngine.LowLevel.PlayerLoopSystem) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -11812,6 +14118,7 @@ export namespace UnityEngine {
       }
       export declare class PlayerConnection {
         constructor();
+        static instance: UnityEngine.Networking.PlayerConnection.PlayerConnection;
         isConnected: boolean;
         name: string;
         hideFlags: UnityEngine.HideFlags;
@@ -11895,6 +14202,8 @@ export namespace UnityEngine {
       None = 2,
     }
     export declare class Playable {
+      static Null: UnityEngine.Playables.Playable;
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, inputCount?: number) => UnityEngine.Playables.Playable);
       GetHandle: (() => UnityEngine.Playables.PlayableHandle);
       GetPlayableType: (() => any);
       Equals: ((other: UnityEngine.Playables.Playable) => boolean) | ((obj: any) => boolean);
@@ -11950,6 +14259,8 @@ export namespace UnityEngine {
       outputTargetType: any; // System.Type
       sourceBindingType: any; // System.Type
       streamType: UnityEngine.Playables.DataStreamType;
+      static None: UnityEngine.Playables.PlayableBinding[];
+      static DefaultDuration: number;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -11975,6 +14286,7 @@ export namespace UnityEngine {
       GetRootPlayable: ((index: number) => UnityEngine.Playables.Playable);
       GetOutput: ((index: number) => UnityEngine.Playables.PlayableOutput);
       Evaluate: (() => void) | ((deltaTime: number) => void);
+      static Create: (() => UnityEngine.Playables.PlayableGraph) | ((name: string) => UnityEngine.Playables.PlayableGraph);
       Destroy: (() => void);
       IsValid: (() => boolean);
       IsPlaying: (() => boolean);
@@ -12000,12 +14312,14 @@ export namespace UnityEngine {
       Delayed = 2,
     }
     export declare class PlayableHandle {
+      static Null: UnityEngine.Playables.PlayableHandle;
       Equals: ((p: any) => boolean) | ((other: UnityEngine.Playables.PlayableHandle) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
     export declare class PlayableOutput {
+      static Null: UnityEngine.Playables.PlayableOutput;
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
       GetPlayableOutputType: (() => any);
       Equals: ((other: UnityEngine.Playables.PlayableOutput) => boolean) | ((obj: any) => boolean);
@@ -12020,18 +14334,22 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class PlayableOutputHandle {
+      static Null: UnityEngine.Playables.PlayableOutputHandle;
       GetHashCode: (() => number);
       Equals: ((p: any) => boolean) | ((other: UnityEngine.Playables.PlayableOutputHandle) => boolean);
       ToString: (() => string);
       GetType: (() => any);
     }
     export declare class ScriptPlayableBinding {
+      static Create: ((name: string, key: UnityEngine.Object, type: any) => UnityEngine.Playables.PlayableBinding);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class ScriptPlayableOutput {
+      static Null: UnityEngine.Playables.ScriptPlayableOutput;
+      static Create: ((graph: UnityEngine.Playables.PlayableGraph, name: string) => UnityEngine.Playables.ScriptPlayableOutput);
       GetHandle: (() => UnityEngine.Playables.PlayableOutputHandle);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -12039,6 +14357,7 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class AnimationPlayableUtilities {
+      static Play: ((animator: UnityEngine.Animator, playable: UnityEngine.Playables.Playable, graph: UnityEngine.Playables.PlayableGraph) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -12839,6 +15158,40 @@ export namespace UnityEngine {
       VirtualTexturing = 13,
     }
     export declare class Profiler {
+      static supported: boolean;
+      static logFile: string;
+      static enableBinaryLog: boolean;
+      static maxUsedMemory: number;
+      static enabled: boolean;
+      static enableAllocationCallstacks: boolean;
+      static areaCount: number;
+      static maxNumberOfSamplesPerFrame: number;
+      static usedHeapSize: any; // System.UInt32
+      static usedHeapSizeLong: any; // System.Int64
+      static SetAreaEnabled: ((area: UnityEngine.Profiling.ProfilerArea, enabled: boolean) => void);
+      static GetAreaEnabled: ((area: UnityEngine.Profiling.ProfilerArea) => boolean);
+      static AddFramesFromFile: ((file: string) => void);
+      static BeginThreadProfiling: ((threadGroupName: string, threadName: string) => void);
+      static EndThreadProfiling: (() => void);
+      static BeginSample: ((name: string) => void) | ((name: string, targetObject: UnityEngine.Object) => void);
+      static EndSample: (() => void);
+      static GetRuntimeMemorySize: ((o: UnityEngine.Object) => number);
+      static GetRuntimeMemorySizeLong: ((o: UnityEngine.Object) => any);
+      static GetMonoHeapSize: (() => any);
+      static GetMonoHeapSizeLong: (() => any);
+      static GetMonoUsedSize: (() => any);
+      static GetMonoUsedSizeLong: (() => any);
+      static SetTempAllocatorRequestedSize: ((size: any) => boolean);
+      static GetTempAllocatorSize: (() => any);
+      static GetTotalAllocatedMemory: (() => any);
+      static GetTotalAllocatedMemoryLong: (() => any);
+      static GetTotalUnusedReservedMemory: (() => any);
+      static GetTotalUnusedReservedMemoryLong: (() => any);
+      static GetTotalReservedMemory: (() => any);
+      static GetTotalReservedMemoryLong: (() => any);
+      static GetTotalFragmentationInfo: ((stats: any) => any);
+      static GetAllocatedMemoryForGraphicsDriver: (() => any);
+      static EmitFrameMetaData: ((id: any, tag: number, data: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -12851,6 +15204,7 @@ export namespace UnityEngine {
       gpuElapsedNanoseconds: any; // System.Int64
       sampleBlockCount: number;
       gpuSampleBlockCount: number;
+      static Get: ((samplerName: string) => UnityEngine.Profiling.Recorder);
       FilterToCurrentThread: (() => void);
       CollectFromAllThreads: (() => void);
       Equals: ((obj: any) => boolean);
@@ -12862,6 +15216,8 @@ export namespace UnityEngine {
       isValid: boolean;
       name: string;
       GetRecorder: (() => UnityEngine.Profiling.Recorder);
+      static Get: ((name: string) => UnityEngine.Profiling.Sampler);
+      static GetNames: ((names: any) => number);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -12870,6 +15226,7 @@ export namespace UnityEngine {
     export declare class CustomSampler {
       isValid: boolean;
       name: string;
+      static Create: ((name: string, collectGpuData?: boolean) => UnityEngine.Profiling.CustomSampler);
       Begin: (() => void) | ((targetObject: UnityEngine.Object) => void);
       End: (() => void);
       GetRecorder: (() => UnityEngine.Profiling.Recorder);
@@ -12910,6 +15267,8 @@ export namespace UnityEngine {
         }
         export declare class MemoryProfiler {
           constructor();
+          static TakeSnapshot: ((path: string, finishCallback: any, captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags) => void) | ((path: string, finishCallback: any, screenshotCallback: any, captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags) => void);
+          static TakeTempSnapshot: ((finishCallback: any, captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags) => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -12935,6 +15294,8 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class AsyncGPUReadback {
+      static WaitAllRequests: (() => void);
+      static Request: ((src: UnityEngine.ComputeBuffer, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.ComputeBuffer, size: number, offset: number, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.GraphicsBuffer, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.GraphicsBuffer, size: number, offset: number, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.Texture, mipIndex?: number, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.Texture, mipIndex: number, dstFormat: UnityEngine.TextureFormat, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.Texture, mipIndex: number, dstFormat: UnityEngine.Experimental.Rendering.GraphicsFormat, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, dstFormat: UnityEngine.TextureFormat, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest) | ((src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, dstFormat: UnityEngine.Experimental.Rendering.GraphicsFormat, callback?: any) => UnityEngine.Rendering.AsyncGPUReadbackRequest);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -12953,6 +15314,9 @@ export namespace UnityEngine {
     }
     export declare class PIX {
       constructor();
+      static BeginGPUCapture: (() => void);
+      static EndGPUCapture: (() => void);
+      static IsAttached: (() => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13307,6 +15671,7 @@ export namespace UnityEngine {
       constructor(tex: UnityEngine.Texture);
       constructor(tex: UnityEngine.Texture, mipLevel?: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
       constructor(buf: UnityEngine.RenderBuffer, mipLevel?: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
+      static AllDepthSlices: number;
       ToString: (() => string);
       GetHashCode: (() => number);
       Equals: ((rhs: UnityEngine.Rendering.RenderTargetIdentifier) => boolean) | ((obj: any) => boolean);
@@ -13520,8 +15885,28 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class GraphicsSettings {
+      static transparencySortMode: UnityEngine.TransparencySortMode;
+      static transparencySortAxis: UnityEngine.Vector3;
+      static realtimeDirectRectangularAreaLights: boolean;
+      static lightsUseLinearIntensity: boolean;
+      static lightsUseColorTemperature: boolean;
+      static defaultRenderingLayerMask: any; // System.UInt32
+      static useScriptableRenderPipelineBatching: boolean;
+      static logWhenShaderIsCompiled: boolean;
+      static disableBuiltinCustomRenderTextureUpdate: boolean;
+      static videoShadersIncludeMode: UnityEngine.Rendering.VideoShadersIncludeMode;
+      static currentRenderPipeline: UnityEngine.Rendering.RenderPipelineAsset;
+      static renderPipelineAsset: UnityEngine.Rendering.RenderPipelineAsset;
+      static defaultRenderPipeline: UnityEngine.Rendering.RenderPipelineAsset;
+      static allConfiguredRenderPipelines: UnityEngine.Rendering.RenderPipelineAsset[];
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static HasShaderDefine: ((tier: UnityEngine.Rendering.GraphicsTier, defineHash: UnityEngine.Rendering.BuiltinShaderDefine) => boolean) | ((defineHash: UnityEngine.Rendering.BuiltinShaderDefine) => boolean);
+      static GetGraphicsSettings: (() => UnityEngine.Object);
+      static SetShaderMode: ((type: UnityEngine.Rendering.BuiltinShaderType, mode: UnityEngine.Rendering.BuiltinShaderMode) => void);
+      static GetShaderMode: ((type: UnityEngine.Rendering.BuiltinShaderType) => UnityEngine.Rendering.BuiltinShaderMode);
+      static SetCustomShader: ((type: UnityEngine.Rendering.BuiltinShaderType, shader: UnityEngine.Shader) => void);
+      static GetCustomShader: ((type: UnityEngine.Rendering.BuiltinShaderType) => UnityEngine.Shader);
       GetInstanceID: (() => number);
       GetHashCode: (() => number);
       Equals: ((other: any) => boolean);
@@ -13530,6 +15915,9 @@ export namespace UnityEngine {
     }
     export declare class OnDemandRendering {
       constructor();
+      static willCurrentFrameRender: boolean;
+      static renderFrameInterval: number;
+      static effectiveRenderFrameRate: number;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13586,8 +15974,8 @@ export namespace UnityEngine {
       CreateAsyncGraphicsFence: (() => UnityEngine.Rendering.GraphicsFence) | ((stage: UnityEngine.Rendering.SynchronisationStage) => UnityEngine.Rendering.GraphicsFence);
       CreateGraphicsFence: ((fenceType: UnityEngine.Rendering.GraphicsFenceType, stage: UnityEngine.Rendering.SynchronisationStageFlags) => UnityEngine.Rendering.GraphicsFence);
       WaitOnAsyncGraphicsFence: ((fence: UnityEngine.Rendering.GraphicsFence) => void) | ((fence: UnityEngine.Rendering.GraphicsFence, stage: UnityEngine.Rendering.SynchronisationStage) => void) | ((fence: UnityEngine.Rendering.GraphicsFence, stage: UnityEngine.Rendering.SynchronisationStageFlags) => void);
-      SetComputeFloatParams: ((computeShader: UnityEngine.ComputeShader, name: string, values: number[]) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, values: number[]) => void);
-      SetComputeIntParams: ((computeShader: UnityEngine.ComputeShader, name: string, values: number[]) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, values: number[]) => void);
+      SetComputeFloatParams: ((computeShader: UnityEngine.ComputeShader, name: string, ...values: number[]) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, ...values: number[]) => void);
+      SetComputeIntParams: ((computeShader: UnityEngine.ComputeShader, name: string, ...values: number[]) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, ...values: number[]) => void);
       SetComputeTextureParam: ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, rt: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, rt: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, rt: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number, element: UnityEngine.Rendering.RenderTextureSubElement) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, rt: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number, element: UnityEngine.Rendering.RenderTextureSubElement) => void);
       SetComputeBufferParam: ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, buffer: UnityEngine.ComputeBuffer) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, buffer: UnityEngine.ComputeBuffer) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, nameID: number, buffer: UnityEngine.GraphicsBuffer) => void) | ((computeShader: UnityEngine.ComputeShader, kernelIndex: number, name: string, buffer: UnityEngine.GraphicsBuffer) => void);
       SetComputeConstantBufferParam: ((computeShader: UnityEngine.ComputeShader, nameID: number, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((computeShader: UnityEngine.ComputeShader, name: string, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((computeShader: UnityEngine.ComputeShader, nameID: number, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((computeShader: UnityEngine.ComputeShader, name: string, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
@@ -13598,13 +15986,13 @@ export namespace UnityEngine {
       SetRayTracingConstantBufferParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, buffer: UnityEngine.ComputeBuffer, offset: number, size: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, buffer: UnityEngine.GraphicsBuffer, offset: number, size: number) => void);
       SetRayTracingTextureParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, rt: UnityEngine.Rendering.RenderTargetIdentifier) => void);
       SetRayTracingFloatParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: number) => void);
-      SetRayTracingFloatParams: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: number[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: number[]) => void);
+      SetRayTracingFloatParams: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, ...values: number[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, ...values: number[]) => void);
       SetRayTracingIntParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: number) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: number) => void);
-      SetRayTracingIntParams: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: number[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: number[]) => void);
+      SetRayTracingIntParams: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, ...values: number[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, ...values: number[]) => void);
       SetRayTracingVectorParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: UnityEngine.Vector4) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: UnityEngine.Vector4) => void);
-      SetRayTracingVectorArrayParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: UnityEngine.Vector4[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: UnityEngine.Vector4[]) => void);
+      SetRayTracingVectorArrayParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, ...values: UnityEngine.Vector4[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, ...values: UnityEngine.Vector4[]) => void);
       SetRayTracingMatrixParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, val: UnityEngine.Matrix4x4) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, val: UnityEngine.Matrix4x4) => void);
-      SetRayTracingMatrixArrayParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, values: UnityEngine.Matrix4x4[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, values: UnityEngine.Matrix4x4[]) => void);
+      SetRayTracingMatrixArrayParam: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, name: string, ...values: UnityEngine.Matrix4x4[]) => void) | ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, nameID: number, ...values: UnityEngine.Matrix4x4[]) => void);
       DispatchRays: ((rayTracingShader: UnityEngine.Experimental.Rendering.RayTracingShader, rayGenName: string, width: any, height: any, depth: any, camera?: UnityEngine.Camera) => void);
       GenerateMips: ((rt: UnityEngine.Rendering.RenderTargetIdentifier) => void) | ((rt: UnityEngine.RenderTexture) => void);
       ResolveAntiAliasedSurface: ((rt: UnityEngine.RenderTexture, target?: UnityEngine.RenderTexture) => void);
@@ -13640,6 +16028,8 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class CommandBufferExtensions {
+      static SwitchIntoFastMemory: ((cmd: UnityEngine.Rendering.CommandBuffer, rid: UnityEngine.Rendering.RenderTargetIdentifier, fastMemoryFlags: UnityEngine.Rendering.FastMemoryFlags, residency: number, copyContents: boolean) => void);
+      static SwitchOutOfFastMemory: ((cmd: UnityEngine.Rendering.CommandBuffer, rid: UnityEngine.Rendering.RenderTargetIdentifier, copyContents: boolean) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13647,6 +16037,10 @@ export namespace UnityEngine {
     }
     export declare class SplashScreen {
       constructor();
+      static isFinished: boolean;
+      static Begin: (() => void);
+      static Stop: ((stopBehavior: UnityEngine.Rendering.SplashScreen_StopBehavior) => void);
+      static Draw: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13723,7 +16117,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -13751,6 +16145,7 @@ export namespace UnityEngine {
     }
     export declare class BlendState {
       constructor(separateMRTBlend?: boolean, alphaToMask?: boolean);
+      static defaultValue: UnityEngine.Rendering.BlendState;
       separateMRTBlendStates: boolean;
       alphaToMask: boolean;
       blendState0: UnityEngine.Rendering.RenderTargetBlendState;
@@ -13803,6 +16198,10 @@ export namespace UnityEngine {
       stereoSeparationDistance: number;
       accurateOcclusionThreshold: number;
       maximumPortalCullingJobs: number;
+      static cullingJobsLowerLimit: number;
+      static cullingJobsUpperLimit: number;
+      static maximumCullingPlaneCount: number;
+      static layerCount: number;
       GetLayerCullingDistance: ((layerIndex: number) => number);
       SetLayerCullingDistance: ((layerIndex: number, distance: number) => void);
       GetCullingPlane: ((index: number) => UnityEngine.Plane);
@@ -13831,6 +16230,7 @@ export namespace UnityEngine {
     }
     export declare class DepthState {
       constructor(writeEnabled?: boolean, compareFunction?: UnityEngine.Rendering.CompareFunction);
+      static defaultValue: UnityEngine.Rendering.DepthState;
       writeEnabled: boolean;
       compareFunction: UnityEngine.Rendering.CompareFunction;
       Equals: ((other: UnityEngine.Rendering.DepthState) => boolean) | ((obj: any) => boolean);
@@ -13847,6 +16247,7 @@ export namespace UnityEngine {
       overrideMaterial: UnityEngine.Material;
       overrideMaterialPassIndex: number;
       mainLightIndex: number;
+      static maxShaderPasses: number;
       GetShaderPassName: ((index: number) => UnityEngine.Rendering.ShaderTagId);
       SetShaderPassName: ((index: number, shaderPassName: UnityEngine.Rendering.ShaderTagId) => void);
       Equals: ((other: UnityEngine.Rendering.DrawingSettings) => boolean) | ((obj: any) => boolean);
@@ -13856,6 +16257,7 @@ export namespace UnityEngine {
     }
     export declare class FilteringSettings {
       constructor(renderQueueRange?: any, layerMask?: number, renderingLayerMask?: any, excludeMotionVectorObjects?: number);
+      static defaultValue: UnityEngine.Rendering.FilteringSettings;
       renderQueueRange: UnityEngine.Rendering.RenderQueueRange;
       layerMask: number;
       renderingLayerMask: any; // System.UInt32
@@ -13902,6 +16304,7 @@ export namespace UnityEngine {
       conservative: boolean;
       offsetUnits: number;
       offsetFactor: number;
+      static defaultValue: UnityEngine.Rendering.RasterState;
       Equals: ((other: UnityEngine.Rendering.RasterState) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -13950,6 +16353,7 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class RenderPipelineManager {
+      static currentPipeline: UnityEngine.Rendering.RenderPipeline;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -13957,8 +16361,13 @@ export namespace UnityEngine {
     }
     export declare class RenderQueueRange {
       constructor(lowerBound: number, upperBound: number);
+      static all: UnityEngine.Rendering.RenderQueueRange;
+      static opaque: UnityEngine.Rendering.RenderQueueRange;
+      static transparent: UnityEngine.Rendering.RenderQueueRange;
       lowerBound: number;
       upperBound: number;
+      static minimumBound: number;
+      static maximumBound: number;
       Equals: ((other: UnityEngine.Rendering.RenderQueueRange) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -13987,6 +16396,7 @@ export namespace UnityEngine {
     }
     export declare class RenderTargetBlendState {
       constructor(writeMask?: UnityEngine.Rendering.ColorWriteMask, sourceColorBlendMode?: UnityEngine.Rendering.BlendMode, destinationColorBlendMode?: UnityEngine.Rendering.BlendMode, sourceAlphaBlendMode?: UnityEngine.Rendering.BlendMode, destinationAlphaBlendMode?: UnityEngine.Rendering.BlendMode, colorBlendOperation?: UnityEngine.Rendering.BlendOp, alphaBlendOperation?: UnityEngine.Rendering.BlendOp);
+      static defaultValue: UnityEngine.Rendering.RenderTargetBlendState;
       writeMask: UnityEngine.Rendering.ColorWriteMask;
       sourceColorBlendMode: UnityEngine.Rendering.BlendMode;
       destinationColorBlendMode: UnityEngine.Rendering.BlendMode;
@@ -14014,6 +16424,8 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class ScriptableRenderContext {
+      static EmitWorldGeometryForSceneView: ((cullingCamera: UnityEngine.Camera) => void);
+      static EmitGeometryForCamera: ((camera: UnityEngine.Camera) => void);
       BeginRenderPass: ((width: number, height: number, samples: number, attachments: any, depthAttachmentIndex?: number) => void);
       BeginScopedRenderPass: ((width: number, height: number, samples: number, attachments: any, depthAttachmentIndex?: number) => UnityEngine.Rendering.ScopedRenderPass);
       BeginSubPass: ((colors: any, inputs: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => void) | ((colors: any, inputs: any, isDepthStencilReadOnly?: boolean) => void) | ((colors: any, isDepthReadOnly: boolean, isStencilReadOnly: boolean) => void) | ((colors: any, isDepthStencilReadOnly?: boolean) => void);
@@ -14040,6 +16452,7 @@ export namespace UnityEngine {
     export declare class ShaderTagId {
       constructor(name: string);
       name: string;
+      static none: UnityEngine.Rendering.ShaderTagId;
       Equals: ((obj: any) => boolean) | ((other: UnityEngine.Rendering.ShaderTagId) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -14060,6 +16473,7 @@ export namespace UnityEngine {
       cullingPlaneCount: number;
       cullingSphere: UnityEngine.Vector4;
       shadowCascadeBlendCullingFactor: number;
+      static maximumCullingPlaneCount: number;
       GetCullingPlane: ((index: number) => UnityEngine.Plane);
       SetCullingPlane: ((index: number, plane: UnityEngine.Plane) => void);
       Equals: ((other: UnityEngine.Rendering.ShadowSplitData) => boolean) | ((obj: any) => boolean);
@@ -14083,6 +16497,7 @@ export namespace UnityEngine {
       constructor(lowerBound: any, upperBound: any);
       lowerBound: any; // System.Int16
       upperBound: any; // System.Int16
+      static all: UnityEngine.Rendering.SortingLayerRange;
       Equals: ((other: UnityEngine.Rendering.SortingLayerRange) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -14108,6 +16523,7 @@ export namespace UnityEngine {
     export declare class StencilState {
       constructor(enabled?: boolean, readMask?: any, writeMask?: any, compareFunction?: UnityEngine.Rendering.CompareFunction, passOperation?: UnityEngine.Rendering.StencilOp, failOperation?: UnityEngine.Rendering.StencilOp, zFailOperation?: UnityEngine.Rendering.StencilOp);
       constructor(enabled: boolean, readMask: any, writeMask: any, compareFunctionFront: UnityEngine.Rendering.CompareFunction, passOperationFront: UnityEngine.Rendering.StencilOp, failOperationFront: UnityEngine.Rendering.StencilOp, zFailOperationFront: UnityEngine.Rendering.StencilOp, compareFunctionBack: UnityEngine.Rendering.CompareFunction, passOperationBack: UnityEngine.Rendering.StencilOp, failOperationBack: UnityEngine.Rendering.StencilOp, zFailOperationBack: UnityEngine.Rendering.StencilOp);
+      static defaultValue: UnityEngine.Rendering.StencilState;
       enabled: boolean;
       readMask: any; // System.Byte
       writeMask: any; // System.Byte
@@ -14130,6 +16546,7 @@ export namespace UnityEngine {
     }
     export declare class SupportedRenderingFeatures {
       constructor();
+      static active: UnityEngine.Rendering.SupportedRenderingFeatures;
       reflectionProbeModes: UnityEngine.Rendering.SupportedRenderingFeatures_ReflectionProbeModes;
       defaultMixedLightingModes: UnityEngine.Rendering.SupportedRenderingFeatures_LightmapMixedBakeModes;
       mixedLightingModes: UnityEngine.Rendering.SupportedRenderingFeatures_LightmapMixedBakeModes;
@@ -14221,9 +16638,12 @@ export namespace UnityEngine {
       constructor(shader: UnityEngine.Shader, keywordName: string);
       constructor(shader: UnityEngine.ComputeShader, keywordName: string);
       index: number;
+      static GetGlobalKeywordName: ((index: UnityEngine.Rendering.ShaderKeyword) => string);
+      static GetGlobalKeywordType: ((index: UnityEngine.Rendering.ShaderKeyword) => UnityEngine.Rendering.ShaderKeywordType);
+      static IsKeywordLocal: ((index: UnityEngine.Rendering.ShaderKeyword) => boolean);
+      static GetKeywordName: ((shader: UnityEngine.Shader, index: UnityEngine.Rendering.ShaderKeyword) => string) | ((shader: UnityEngine.ComputeShader, index: UnityEngine.Rendering.ShaderKeyword) => string) | (() => string);
+      static GetKeywordType: ((shader: UnityEngine.Shader, index: UnityEngine.Rendering.ShaderKeyword) => UnityEngine.Rendering.ShaderKeywordType) | ((shader: UnityEngine.ComputeShader, index: UnityEngine.Rendering.ShaderKeyword) => UnityEngine.Rendering.ShaderKeywordType) | (() => UnityEngine.Rendering.ShaderKeywordType);
       IsValid: (() => boolean);
-      GetKeywordType: (() => UnityEngine.Rendering.ShaderKeywordType);
-      GetKeywordName: (() => string);
       GetName: (() => string);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
@@ -14284,6 +16704,7 @@ export namespace UnityEngine {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static UpdateAllSortingGroups: (() => void);
       GetComponent: ((type: any) => UnityEngine.Component) | ((type: string) => UnityEngine.Component);
       GetComponentInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component) | ((t: any) => UnityEngine.Component);
       GetComponentsInChildren: ((t: any, includeInactive: boolean) => UnityEngine.Component[]) | ((t: any) => UnityEngine.Component[]);
@@ -14319,6 +16740,7 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class SceneManagerAPI {
+      static overrideAPI: UnityEngine.SceneManagement.SceneManagerAPI;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14326,6 +16748,22 @@ export namespace UnityEngine {
     }
     export declare class SceneManager {
       constructor();
+      static sceneCount: number;
+      static sceneCountInBuildSettings: number;
+      static GetActiveScene: (() => UnityEngine.SceneManagement.Scene);
+      static SetActiveScene: ((scene: UnityEngine.SceneManagement.Scene) => boolean);
+      static GetSceneByPath: ((scenePath: string) => UnityEngine.SceneManagement.Scene);
+      static GetSceneByName: ((name: string) => UnityEngine.SceneManagement.Scene);
+      static GetSceneByBuildIndex: ((buildIndex: number) => UnityEngine.SceneManagement.Scene);
+      static GetSceneAt: ((index: number) => UnityEngine.SceneManagement.Scene);
+      static CreateScene: ((sceneName: string, parameters: UnityEngine.SceneManagement.CreateSceneParameters) => UnityEngine.SceneManagement.Scene) | ((sceneName: string) => UnityEngine.SceneManagement.Scene);
+      static MergeScenes: ((sourceScene: UnityEngine.SceneManagement.Scene, destinationScene: UnityEngine.SceneManagement.Scene) => void);
+      static MoveGameObjectToScene: ((go: UnityEngine.GameObject, scene: UnityEngine.SceneManagement.Scene) => void);
+      static GetAllScenes: (() => UnityEngine.SceneManagement.Scene[]);
+      static LoadScene: ((sceneName: string, mode: UnityEngine.SceneManagement.LoadSceneMode) => void) | ((sceneName: string) => void) | ((sceneName: string, parameters: UnityEngine.SceneManagement.LoadSceneParameters) => UnityEngine.SceneManagement.Scene) | ((sceneBuildIndex: number, mode: UnityEngine.SceneManagement.LoadSceneMode) => void) | ((sceneBuildIndex: number) => void) | ((sceneBuildIndex: number, parameters: UnityEngine.SceneManagement.LoadSceneParameters) => UnityEngine.SceneManagement.Scene);
+      static LoadSceneAsync: ((sceneBuildIndex: number, mode: UnityEngine.SceneManagement.LoadSceneMode) => UnityEngine.AsyncOperation) | ((sceneBuildIndex: number) => UnityEngine.AsyncOperation) | ((sceneBuildIndex: number, parameters: UnityEngine.SceneManagement.LoadSceneParameters) => UnityEngine.AsyncOperation) | ((sceneName: string, mode: UnityEngine.SceneManagement.LoadSceneMode) => UnityEngine.AsyncOperation) | ((sceneName: string) => UnityEngine.AsyncOperation) | ((sceneName: string, parameters: UnityEngine.SceneManagement.LoadSceneParameters) => UnityEngine.AsyncOperation);
+      static UnloadScene: ((scene: UnityEngine.SceneManagement.Scene) => boolean) | ((sceneBuildIndex: number) => boolean) | ((sceneName: string) => boolean);
+      static UnloadSceneAsync: ((sceneBuildIndex: number) => UnityEngine.AsyncOperation) | ((sceneName: string) => UnityEngine.AsyncOperation) | ((scene: UnityEngine.SceneManagement.Scene) => UnityEngine.AsyncOperation) | ((sceneBuildIndex: number, options: UnityEngine.SceneManagement.UnloadSceneOptions) => UnityEngine.AsyncOperation) | ((sceneName: string, options: UnityEngine.SceneManagement.UnloadSceneOptions) => UnityEngine.AsyncOperation) | ((scene: UnityEngine.SceneManagement.Scene, options: UnityEngine.SceneManagement.UnloadSceneOptions) => UnityEngine.AsyncOperation);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14363,6 +16801,8 @@ export namespace UnityEngine {
       UnloadAllEmbeddedSceneObjects = 1,
     }
     export declare class SceneUtility {
+      static GetScenePathByBuildIndex: ((buildIndex: number) => string);
+      static GetBuildIndexByScenePath: ((scenePath: string) => number);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14371,6 +16811,10 @@ export namespace UnityEngine {
   }
   export namespace Scripting {
     export declare class GarbageCollector {
+      static GCMode: UnityEngine.Scripting.GarbageCollector_Mode;
+      static isIncremental: boolean;
+      static incrementalTimeSliceNanoseconds: any; // System.UInt64
+      static CollectIncremental: ((nanoseconds?: any) => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14396,6 +16840,10 @@ export namespace UnityEngine {
   export namespace Sprites {
     export declare class DataUtility {
       constructor();
+      static GetInnerUV: ((sprite: UnityEngine.Sprite) => UnityEngine.Vector4);
+      static GetOuterUV: ((sprite: UnityEngine.Sprite) => UnityEngine.Vector4);
+      static GetPadding: ((sprite: UnityEngine.Sprite) => UnityEngine.Vector4);
+      static GetMinSize: ((sprite: UnityEngine.Sprite) => UnityEngine.Vector2);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14425,6 +16873,12 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class Coverage {
+      static enabled: boolean;
+      static GetSequencePointsFor: ((method: any) => UnityEngine.TestTools.CoveredSequencePoint[]);
+      static GetStatsFor: ((method: any) => UnityEngine.TestTools.CoveredMethodStats) | ((methods: any[]) => UnityEngine.TestTools.CoveredMethodStats[]) | ((type: any) => UnityEngine.TestTools.CoveredMethodStats[]);
+      static GetStatsForAllCoveredMethods: (() => UnityEngine.TestTools.CoveredMethodStats[]);
+      static ResetFor: ((method: any) => void);
+      static ResetAll: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14434,6 +16888,10 @@ export namespace UnityEngine {
   export namespace tvOS {
     export declare class Remote {
       constructor();
+      static allowExitToHome: boolean;
+      static allowRemoteRotation: boolean;
+      static reportAbsoluteDpadValues: boolean;
+      static touchesEnabled: boolean;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14446,6 +16904,13 @@ export namespace UnityEngine {
     }
     export declare class Device {
       constructor();
+      static systemVersion: string;
+      static generation: UnityEngine.tvOS.DeviceGeneration;
+      static vendorIdentifier: string;
+      static advertisingIdentifier: string;
+      static advertisingTrackingEnabled: boolean;
+      static SetNoBackupFlag: ((path: string) => void);
+      static ResetNoBackupFlag: ((path: string) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14454,6 +16919,7 @@ export namespace UnityEngine {
   }
   export namespace U2D {
     export declare class PixelPerfectRendering {
+      static pixelSnapSpacing: number;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14471,12 +16937,22 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class SpriteDataAccessExtensions {
+      static GetBindPoses: ((sprite: UnityEngine.Sprite) => any);
+      static SetBindPoses: ((sprite: UnityEngine.Sprite, src: any) => void);
+      static GetIndices: ((sprite: UnityEngine.Sprite) => any);
+      static SetIndices: ((sprite: UnityEngine.Sprite, src: any) => void);
+      static GetBones: ((sprite: UnityEngine.Sprite) => UnityEngine.U2D.SpriteBone[]);
+      static SetBones: ((sprite: UnityEngine.Sprite, src: UnityEngine.U2D.SpriteBone[]) => void);
+      static HasVertexAttribute: ((sprite: UnityEngine.Sprite, channel: UnityEngine.Rendering.VertexAttribute) => boolean);
+      static SetVertexCount: ((sprite: UnityEngine.Sprite, count: number) => void);
+      static GetVertexCount: ((sprite: UnityEngine.Sprite) => number);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class SpriteRendererDataAccessExtensions {
+      static DeactivateDeformableBuffer: ((renderer: UnityEngine.SpriteRenderer) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14610,6 +17086,14 @@ export namespace UnityEngine {
       IsDestroyed: (() => boolean);
     }
     export declare class CanvasUpdateRegistry {
+      static instance: UnityEngine.UI.CanvasUpdateRegistry;
+      static RegisterCanvasElementForLayoutRebuild: ((element: UnityEngine.UI.ICanvasElement) => void);
+      static TryRegisterCanvasElementForLayoutRebuild: ((element: UnityEngine.UI.ICanvasElement) => boolean);
+      static RegisterCanvasElementForGraphicRebuild: ((element: UnityEngine.UI.ICanvasElement) => void);
+      static TryRegisterCanvasElementForGraphicRebuild: ((element: UnityEngine.UI.ICanvasElement) => boolean);
+      static UnRegisterCanvasElementForRebuild: ((element: UnityEngine.UI.ICanvasElement) => void);
+      static IsRebuildingLayout: (() => boolean);
+      static IsRebuildingGraphics: (() => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14623,13 +17107,17 @@ export namespace UnityEngine {
       disabledColor: UnityEngine.Color;
       colorMultiplier: number;
       fadeDuration: number;
+      static defaultColorBlock: UnityEngine.UI.ColorBlock;
       Equals: ((obj: any) => boolean) | ((other: UnityEngine.UI.ColorBlock) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
       GetType: (() => any);
     }
     export declare class ClipperRegistry {
+      static instance: UnityEngine.UI.ClipperRegistry;
       Cull: (() => void);
+      static Register: ((c: UnityEngine.UI.IClipper) => void);
+      static Unregister: ((c: UnityEngine.UI.IClipper) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14653,6 +17141,18 @@ export namespace UnityEngine {
       SetClipSoftness: ((clipSoftness: UnityEngine.Vector2) => void);
     }
     export declare class DefaultControls {
+      static factory: UnityEngine.UI.DefaultControls_IFactoryControls;
+      static CreatePanel: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateButton: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateText: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateImage: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateRawImage: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateSlider: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateScrollbar: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateToggle: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateInputField: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateDropdown: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
+      static CreateScrollView: ((resources: UnityEngine.UI.DefaultControls_Resources) => UnityEngine.GameObject);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14750,6 +17250,7 @@ export namespace UnityEngine {
     }
     export declare class FontData {
       constructor();
+      static defaultFontData: UnityEngine.UI.FontData;
       font: UnityEngine.Font;
       fontSize: number;
       fontStyle: UnityEngine.FontStyle;
@@ -14768,12 +17269,15 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class FontUpdateTracker {
+      static TrackText: ((t: UnityEngine.UI.Text) => void);
+      static UntrackText: ((t: UnityEngine.UI.Text) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class Graphic {
+      static defaultGraphicMaterial: UnityEngine.Material;
       color: UnityEngine.Color;
       raycastTarget: boolean;
       raycastPadding: UnityEngine.Vector4;
@@ -14913,12 +17417,21 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class GraphicRebuildTracker {
+      static TrackGraphic: ((g: UnityEngine.UI.Graphic) => void);
+      static UnTrackGraphic: ((g: UnityEngine.UI.Graphic) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class GraphicRegistry {
+      static instance: UnityEngine.UI.GraphicRegistry;
+      static RegisterGraphicForCanvas: ((c: UnityEngine.Canvas, graphic: UnityEngine.UI.Graphic) => void);
+      static RegisterRaycastGraphicForCanvas: ((c: UnityEngine.Canvas, graphic: UnityEngine.UI.Graphic) => void);
+      static UnregisterGraphicForCanvas: ((c: UnityEngine.Canvas, graphic: UnityEngine.UI.Graphic) => void);
+      static UnregisterRaycastGraphicForCanvas: ((c: UnityEngine.Canvas, graphic: UnityEngine.UI.Graphic) => void);
+      static GetGraphicsForCanvas: ((canvas: UnityEngine.Canvas) => any);
+      static GetRaycastableGraphicsForCanvas: ((canvas: UnityEngine.Canvas) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -14944,6 +17457,7 @@ export namespace UnityEngine {
       eventAlphaThreshold: number;
       alphaHitTestMinimumThreshold: number;
       useSpriteMesh: boolean;
+      static defaultETC1GraphicMaterial: UnityEngine.Material;
       mainTexture: UnityEngine.Texture;
       hasBorder: boolean;
       pixelsPerUnitMultiplier: number;
@@ -15699,7 +18213,9 @@ export namespace UnityEngine {
       constructor();
       transform: UnityEngine.Transform;
       IsDestroyed: (() => boolean);
+      static ForceRebuildLayoutImmediate: ((layoutRoot: UnityEngine.RectTransform) => void);
       Rebuild: ((executing: UnityEngine.UI.CanvasUpdate) => void);
+      static MarkLayoutForRebuild: ((rect: UnityEngine.RectTransform) => void);
       LayoutComplete: (() => void);
       GraphicUpdateComplete: (() => void);
       GetHashCode: (() => number);
@@ -15708,6 +18224,16 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class LayoutUtility {
+      static GetMinSize: ((rect: UnityEngine.RectTransform, axis: number) => number);
+      static GetPreferredSize: ((rect: UnityEngine.RectTransform, axis: number) => number);
+      static GetFlexibleSize: ((rect: UnityEngine.RectTransform, axis: number) => number);
+      static GetMinWidth: ((rect: UnityEngine.RectTransform) => number);
+      static GetPreferredWidth: ((rect: UnityEngine.RectTransform) => number);
+      static GetFlexibleWidth: ((rect: UnityEngine.RectTransform) => number);
+      static GetMinHeight: ((rect: UnityEngine.RectTransform) => number);
+      static GetPreferredHeight: ((rect: UnityEngine.RectTransform) => number);
+      static GetFlexibleHeight: ((rect: UnityEngine.RectTransform) => number);
+      static GetLayoutProperty: ((rect: UnityEngine.RectTransform, property: any, defaultValue: number) => number);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -15841,6 +18367,13 @@ export namespace UnityEngine {
     }
     export declare class MaskUtilities {
       constructor();
+      static Notify2DMaskStateChanged: ((mask: UnityEngine.Component) => void);
+      static NotifyStencilStateChanged: ((mask: UnityEngine.Component) => void);
+      static FindRootSortOverrideCanvas: ((start: UnityEngine.Transform) => UnityEngine.Transform);
+      static GetStencilDepth: ((transform: UnityEngine.Transform, stopAfter: UnityEngine.Transform) => number);
+      static IsDescendantOrSelf: ((father: UnityEngine.Transform, child: UnityEngine.Transform) => boolean);
+      static GetRectMaskForClippable: ((clippable: UnityEngine.UI.IClippable) => UnityEngine.UI.RectMask2D);
+      static GetRectMasksForClip: ((clipper: UnityEngine.UI.RectMask2D, masks: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -15947,6 +18480,7 @@ export namespace UnityEngine {
       selectOnDown: UnityEngine.UI.Selectable;
       selectOnLeft: UnityEngine.UI.Selectable;
       selectOnRight: UnityEngine.UI.Selectable;
+      static defaultNavigation: UnityEngine.UI.Navigation;
       Equals: ((other: UnityEngine.UI.Navigation) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -16279,6 +18813,9 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class Selectable {
+      static allSelectablesArray: UnityEngine.UI.Selectable[];
+      static allSelectableCount: number;
+      static allSelectables: any; // System.Collections.Generic.List`1[UnityEngine.UI.Selectable]
       navigation: UnityEngine.UI.Navigation;
       transition: UnityEngine.UI.Selectable_Transition;
       colors: UnityEngine.UI.ColorBlock;
@@ -16310,6 +18847,7 @@ export namespace UnityEngine {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static AllSelectablesNoAlloc: ((selectables: UnityEngine.UI.Selectable[]) => number);
       IsInteractable: (() => boolean);
       FindSelectable: ((dir: UnityEngine.Vector3) => UnityEngine.UI.Selectable);
       FindSelectableOnLeft: (() => UnityEngine.UI.Selectable);
@@ -16449,6 +18987,9 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class StencilMaterial {
+      static Add: ((baseMat: UnityEngine.Material, stencilID: number) => UnityEngine.Material) | ((baseMat: UnityEngine.Material, stencilID: number, operation: UnityEngine.Rendering.StencilOp, compareFunction: UnityEngine.Rendering.CompareFunction, colorWriteMask: UnityEngine.Rendering.ColorWriteMask) => UnityEngine.Material) | ((baseMat: UnityEngine.Material, stencilID: number, operation: UnityEngine.Rendering.StencilOp, compareFunction: UnityEngine.Rendering.CompareFunction, colorWriteMask: UnityEngine.Rendering.ColorWriteMask, readMask: number, writeMask: number) => UnityEngine.Material);
+      static Remove: ((customMat: UnityEngine.Material) => void);
+      static ClearAll: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -16516,6 +19057,7 @@ export namespace UnityEngine {
       hideFlags: UnityEngine.HideFlags;
       FontTextureChanged: (() => void);
       GetGenerationSettings: ((extents: UnityEngine.Vector2) => UnityEngine.TextGenerationSettings);
+      static GetTextAnchorPivot: ((anchor: UnityEngine.TextAnchor) => UnityEngine.Vector2);
       CalculateLayoutInputHorizontal: (() => void);
       CalculateLayoutInputVertical: (() => void);
       OnRebuildRequested: (() => void);
@@ -16968,7 +19510,7 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class DefaultControls_IFactoryControls {
-      CreateGameObject: ((name: string, components: any[]) => UnityEngine.GameObject);
+      CreateGameObject: ((name: string, ...components: any[]) => UnityEngine.GameObject);
     }
     export declare class DefaultControls_Resources {
       standard: UnityEngine.Sprite;
@@ -17104,7 +19646,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -17471,6 +20013,8 @@ export namespace UnityEngine {
       status: UnityEngine.UIElements.DropdownMenuAction_Status;
       eventInfo: UnityEngine.UIElements.DropdownMenuEventInfo;
       userData: any; // System.Object
+      static AlwaysEnabled: ((a: UnityEngine.UIElements.DropdownMenuAction) => UnityEngine.UIElements.DropdownMenuAction_Status);
+      static AlwaysDisabled: ((a: UnityEngine.UIElements.DropdownMenuAction) => UnityEngine.UIElements.DropdownMenuAction_Status);
       UpdateActionStatus: ((eventInfo: UnityEngine.UIElements.DropdownMenuEventInfo) => void);
       Execute: (() => void);
       Equals: ((obj: any) => boolean);
@@ -17531,6 +20075,8 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class FocusChangeDirection {
+      static unspecified: UnityEngine.UIElements.FocusChangeDirection;
+      static none: UnityEngine.UIElements.FocusChangeDirection;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -17587,6 +20133,7 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
       MarkDirtyLayout: (() => void);
       HandleEvent: ((evt: UnityEngine.UIElements.EventBase) => void);
       Dispose: (() => void);
@@ -17769,6 +20316,10 @@ export namespace UnityEngine {
       MiddleMouse = 2,
     }
     export declare class MouseCaptureController {
+      static IsMouseCaptured: (() => boolean);
+      static HasMouseCapture: ((handler: UnityEngine.UIElements.IEventHandler) => boolean);
+      static CaptureMouse: ((handler: UnityEngine.UIElements.IEventHandler) => void);
+      static ReleaseMouse: ((handler: UnityEngine.UIElements.IEventHandler) => void) | (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -17801,6 +20352,10 @@ export namespace UnityEngine {
       PickAll: ((point: UnityEngine.Vector2, picked: any) => UnityEngine.UIElements.VisualElement);
     }
     export declare class PointerCaptureHelper {
+      static HasPointerCapture: ((handler: UnityEngine.UIElements.IEventHandler, pointerId: number) => boolean);
+      static CapturePointer: ((handler: UnityEngine.UIElements.IEventHandler, pointerId: number) => void);
+      static ReleasePointer: ((handler: UnityEngine.UIElements.IEventHandler, pointerId: number) => void) | ((panel: UnityEngine.UIElements.IPanel, pointerId: number) => void);
+      static GetCapturingElement: ((panel: UnityEngine.UIElements.IPanel, pointerId: number) => UnityEngine.UIElements.IEventHandler);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -18028,6 +20583,7 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
       MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
@@ -18104,6 +20660,8 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class UQueryExtensions {
+      static Q: ((e: UnityEngine.UIElements.VisualElement, name?: string, ...classes: string[]) => UnityEngine.UIElements.VisualElement) | ((e: UnityEngine.UIElements.VisualElement, name?: string, className?: string) => UnityEngine.UIElements.VisualElement);
+      static Query: ((e: UnityEngine.UIElements.VisualElement, name?: string, ...classes: string[]) => any) | ((e: UnityEngine.UIElements.VisualElement, name?: string, className?: string) => any) | ((e: UnityEngine.UIElements.VisualElement) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -18148,6 +20706,7 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static disabledUssClassName: string;
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
       SetEnabled: ((value: boolean) => void);
@@ -18239,6 +20798,13 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class VisualElementExtensions {
+      static WorldToLocal: ((ele: UnityEngine.UIElements.VisualElement, p: UnityEngine.Vector2) => UnityEngine.Vector2) | ((ele: UnityEngine.UIElements.VisualElement, r: UnityEngine.Rect) => UnityEngine.Rect);
+      static LocalToWorld: ((ele: UnityEngine.UIElements.VisualElement, p: UnityEngine.Vector2) => UnityEngine.Vector2) | ((ele: UnityEngine.UIElements.VisualElement, r: UnityEngine.Rect) => UnityEngine.Rect);
+      static ChangeCoordinatesTo: ((src: UnityEngine.UIElements.VisualElement, dest: UnityEngine.UIElements.VisualElement, point: UnityEngine.Vector2) => UnityEngine.Vector2) | ((src: UnityEngine.UIElements.VisualElement, dest: UnityEngine.UIElements.VisualElement, rect: UnityEngine.Rect) => UnityEngine.Rect);
+      static StretchToParentSize: ((elem: UnityEngine.UIElements.VisualElement) => void);
+      static StretchToParentWidth: ((elem: UnityEngine.UIElements.VisualElement) => void);
+      static AddManipulator: ((ele: UnityEngine.UIElements.VisualElement, manipulator: UnityEngine.UIElements.IManipulator) => void);
+      static RemoveManipulator: ((ele: UnityEngine.UIElements.VisualElement, manipulator: UnityEngine.UIElements.IManipulator) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -18248,6 +20814,8 @@ export namespace UnityEngine {
       animation: UnityEngine.UIElements.Experimental.ITransitionAnimations;
     }
     export declare class VisualElementFocusChangeDirection {
+      static left: UnityEngine.UIElements.FocusChangeDirection;
+      static right: UnityEngine.UIElements.FocusChangeDirection;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -18307,6 +20875,7 @@ export namespace UnityEngine {
       Release: (() => void);
     }
     export declare class IBindingExtensions {
+      static IsBound: ((control: UnityEngine.UIElements.IBindable) => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -18347,6 +20916,7 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
       SetEnabled: ((value: boolean) => void);
@@ -18446,6 +21016,7 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
       MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
@@ -18554,6 +21125,9 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static toggleUssClassName: string;
+      static contentUssClassName: string;
       SetValueWithoutNotify: ((newValue: boolean) => void);
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
@@ -18667,6 +21241,12 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static labelUssClassName: string;
+      static iconUssClassName: string;
+      static iconInfoUssClassName: string;
+      static iconwarningUssClassName: string;
+      static iconErrorUssClassName: string;
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
       SetEnabled: ((value: boolean) => void);
@@ -18776,6 +21356,7 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
       SetEnabled: ((value: boolean) => void);
@@ -18891,6 +21472,7 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
       MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
@@ -19019,6 +21601,13 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static borderUssClassName: string;
+      static itemUssClassName: string;
+      static dragHoverBarUssClassName: string;
+      static itemDragHoverUssClassName: string;
+      static itemSelectedVariantUssClassName: string;
+      static itemAlternativeBackgroundUssClassName: string;
       OnKeyDown: ((evt: UnityEngine.UIElements.KeyDownEvent) => void);
       ScrollToItem: ((index: number) => void);
       AddToSelection: ((index: number) => void);
@@ -19143,6 +21732,13 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static labelUssClassName: string;
+      static inputUssClassName: string;
+      static trackerUssClassName: string;
+      static draggerUssClassName: string;
+      static minThumbUssClassName: string;
+      static maxThumbUssClassName: string;
       SetValueWithoutNotify: ((newValue: UnityEngine.Vector2) => void);
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
@@ -19252,6 +21848,8 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static contentUssClassName: string;
       MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
@@ -19362,6 +21960,7 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
       SetAction: ((clickEvent: any, delay: any, interval: any) => void);
       MeasureTextSize: ((textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode) => UnityEngine.Vector2);
       Focus: (() => void);
@@ -19475,6 +22074,12 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static horizontalVariantUssClassName: string;
+      static verticalVariantUssClassName: string;
+      static sliderUssClassName: string;
+      static lowButtonUssClassName: string;
+      static highButtonUssClassName: string;
       Adjust: ((factor: number) => void);
       ScrollPageUp: (() => void) | ((factor: number) => void);
       ScrollPageDown: (() => void) | ((factor: number) => void);
@@ -19598,6 +22203,15 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static viewportUssClassName: string;
+      static contentUssClassName: string;
+      static hScrollerUssClassName: string;
+      static vScrollerUssClassName: string;
+      static horizontalVariantUssClassName: string;
+      static verticalVariantUssClassName: string;
+      static verticalHorizontalVariantUssClassName: string;
+      static scrollVariantUssClassName: string;
       ScrollTo: ((child: UnityEngine.UIElements.VisualElement) => void);
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
@@ -19720,6 +22334,9 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static labelUssClassName: string;
+      static inputUssClassName: string;
       SetValueWithoutNotify: ((newValue: number) => void);
       AdjustDragElement: ((factor: number) => void);
       Focus: (() => void);
@@ -19838,6 +22455,9 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static labelUssClassName: string;
+      static inputUssClassName: string;
       SetValueWithoutNotify: ((newValue: number) => void);
       AdjustDragElement: ((factor: number) => void);
       Focus: (() => void);
@@ -19964,6 +22584,9 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static labelUssClassName: string;
+      static inputUssClassName: string;
       SelectRange: ((rangeCursorIndex: number, selectionIndex: number) => void);
       SetValueWithoutNotify: ((newValue: string) => void);
       SelectAll: (() => void);
@@ -20077,6 +22700,12 @@ export namespace UnityEngine {
       focusable: boolean;
       tabIndex: number;
       delegatesFocus: boolean;
+      static ussClassName: string;
+      static labelUssClassName: string;
+      static inputUssClassName: string;
+      static noTextVariantUssClassName: string;
+      static checkmarkUssClassName: string;
+      static textUssClassName: string;
       SetValueWithoutNotify: ((newValue: boolean) => void);
       Focus: (() => void);
       SendEvent: ((e: UnityEngine.UIElements.EventBase) => void);
@@ -20453,6 +23082,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((systemEvent: UnityEngine.Event) => UnityEngine.UIElements.DragExitedEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -20561,6 +23191,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((systemEvent: UnityEngine.Event) => UnityEngine.UIElements.DragUpdatedEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -20782,6 +23413,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((previousData: string, newData: string) => UnityEngine.UIElements.InputEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -20882,6 +23514,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((oldRect: UnityEngine.Rect, newRect: UnityEngine.Rect) => UnityEngine.UIElements.GeometryChangedEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -20932,6 +23565,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((systemEvent: UnityEngine.Event) => UnityEngine.UIElements.MouseDownEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -20968,6 +23602,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((systemEvent: UnityEngine.Event) => UnityEngine.UIElements.MouseUpEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -21004,6 +23639,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((systemEvent: UnityEngine.Event) => UnityEngine.UIElements.MouseMoveEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -21077,6 +23713,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((systemEvent: UnityEngine.Event) => UnityEngine.UIElements.WheelEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -21221,6 +23858,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((systemEvent: UnityEngine.Event) => UnityEngine.UIElements.MouseLeaveWindowEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -21331,6 +23969,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((triggerEvent: UnityEngine.UIElements.EventBase, menu: UnityEngine.UIElements.DropdownMenu, target: UnityEngine.UIElements.IEventHandler, menuManager: UnityEngine.UIElements.ContextualMenuManager) => UnityEngine.UIElements.ContextualMenuPopulateEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -21395,12 +24034,23 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class PointerType {
+      static mouse: string;
+      static touch: string;
+      static pen: string;
+      static unknown: string;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class PointerId {
+      static maxPointers: number;
+      static invalidPointerId: number;
+      static mousePointerId: number;
+      static touchPointerIdBase: number;
+      static touchPointerCount: number;
+      static penPointerIdBase: number;
+      static penPointerCount: number;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -21967,6 +24617,7 @@ export namespace UnityEngine {
       dispatch: boolean;
       imguiEvent: UnityEngine.Event;
       originalMousePosition: UnityEngine.Vector2;
+      static GetPooled: ((systemEvent: UnityEngine.Event) => UnityEngine.UIElements.IMGUIEvent);
       Dispose: (() => void);
       StopPropagation: (() => void);
       StopImmediatePropagation: (() => void);
@@ -21977,6 +24628,7 @@ export namespace UnityEngine {
       ToString: (() => string);
     }
     export declare class Vertex {
+      static nearZ: number;
       position: UnityEngine.Vector3;
       tint: UnityEngine.Color32;
       uv: UnityEngine.Vector2;
@@ -22010,6 +24662,8 @@ export namespace UnityEngine {
       constructor(t: UnityEngine.Texture2D);
       texture: UnityEngine.Texture2D;
       vectorImage: UnityEngine.UIElements.VectorImage;
+      static FromTexture2D: ((t: UnityEngine.Texture2D) => UnityEngine.UIElements.Background);
+      static FromVectorImage: ((vi: UnityEngine.UIElements.VectorImage) => UnityEngine.UIElements.Background);
       Equals: ((other: UnityEngine.UIElements.Background) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -22026,6 +24680,7 @@ export namespace UnityEngine {
       constructor(value: number, unit: UnityEngine.UIElements.LengthUnit);
       value: number;
       unit: UnityEngine.UIElements.LengthUnit;
+      static Percent: ((value: number) => UnityEngine.UIElements.Length);
       Equals: ((other: UnityEngine.UIElements.Length) => boolean) | ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -22605,6 +25260,7 @@ export namespace UnityEngine {
       target: UnityEngine.UIElements.VisualElement;
       visualTreeAsset: UnityEngine.UIElements.VisualTreeAsset;
       slotInsertionPoints: any; // System.Collections.Generic.Dictionary`2[System.String,UnityEngine.UIElements.VisualElement]
+      static Default: UnityEngine.UIElements.CreationContext;
       Equals: ((obj: any) => boolean) | ((other: UnityEngine.UIElements.CreationContext) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -22612,6 +25268,32 @@ export namespace UnityEngine {
     }
     export namespace Experimental {
       export declare class Easing {
+        static Step: ((t: number) => number);
+        static Linear: ((t: number) => number);
+        static InSine: ((t: number) => number);
+        static OutSine: ((t: number) => number);
+        static InOutSine: ((t: number) => number);
+        static InQuad: ((t: number) => number);
+        static OutQuad: ((t: number) => number);
+        static InOutQuad: ((t: number) => number);
+        static InCubic: ((t: number) => number);
+        static OutCubic: ((t: number) => number);
+        static InOutCubic: ((t: number) => number);
+        static InPower: ((t: number, power: number) => number);
+        static OutPower: ((t: number, power: number) => number);
+        static InOutPower: ((t: number, power: number) => number);
+        static InBounce: ((t: number) => number);
+        static OutBounce: ((t: number) => number);
+        static InOutBounce: ((t: number) => number);
+        static InElastic: ((t: number) => number);
+        static OutElastic: ((t: number) => number);
+        static InOutElastic: ((t: number) => number);
+        static InBack: ((t: number) => number) | ((t: number, s: number) => number);
+        static OutBack: ((t: number) => number) | ((t: number, s: number) => number);
+        static InOutBack: ((t: number) => number) | ((t: number, s: number) => number);
+        static InCirc: ((t: number) => number);
+        static OutCirc: ((t: number) => number);
+        static InOutCirc: ((t: number) => number);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -22773,6 +25455,7 @@ export namespace UnityEngine {
       pixelAspectRatioNumerator: any; // System.UInt32
       pixelAspectRatioDenominator: any; // System.UInt32
       audioTrackCount: any; // System.UInt16
+      static controlledAudioTrackMaxCount: any; // System.UInt16
       controlledAudioTrackCount: any; // System.UInt16
       audioOutputMode: UnityEngine.Video.VideoAudioOutputMode;
       canSetDirectAudioVolume: boolean;
@@ -22840,7 +25523,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -22856,7 +25539,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -22872,7 +25555,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -22888,7 +25571,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -22896,30 +25579,45 @@ export namespace UnityEngine {
   }
   export namespace Windows {
     export declare class LicenseInformation {
+      static isOnAppTrial: boolean;
+      static PurchaseApp: (() => string);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class CrashReporting {
+      static crashReportFolder: string;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class Crypto {
+      static ComputeMD5Hash: ((buffer: any[]) => any[]);
+      static ComputeSHA1Hash: ((buffer: any[]) => any[]);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class Directory {
+      static temporaryFolder: string;
+      static localFolder: string;
+      static roamingFolder: string;
+      static CreateDirectory: ((path: string) => void);
+      static Exists: ((path: string) => boolean);
+      static Delete: ((path: string) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class File {
+      static ReadAllBytes: ((path: string) => any[]);
+      static WriteAllBytes: ((path: string, bytes: any[]) => void);
+      static Exists: ((path: string) => boolean);
+      static Delete: ((path: string) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -22927,6 +25625,10 @@ export namespace UnityEngine {
     }
     export namespace Speech {
       export declare class PhraseRecognitionSystem {
+        static isSupported: boolean;
+        static Status: UnityEngine.Windows.Speech.SpeechSystemStatus;
+        static Restart: (() => void);
+        static Shutdown: (() => void);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -22943,7 +25645,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -22959,7 +25661,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -22985,7 +25687,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23017,7 +25719,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23033,7 +25735,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23049,7 +25751,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23065,7 +25767,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23160,6 +25862,8 @@ export namespace UnityEngine {
         JPG = 1,
       }
       export declare class PhotoCapture {
+        static SupportedResolutions: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.Resolution]
+        static CreateAsync: ((showHolograms: boolean, onCreatedCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnCaptureResourceCreatedCallback) => void) | ((onCreatedCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnCaptureResourceCreatedCallback) => void);
         StartPhotoModeAsync: ((setupParams: UnityEngine.Windows.WebCam.CameraParameters, onPhotoModeStartedCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnPhotoModeStartedCallback) => void);
         StopPhotoModeAsync: ((onPhotoModeStoppedCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnPhotoModeStoppedCallback) => void);
         TakePhotoAsync: ((filename: string, fileOutputFormat: UnityEngine.Windows.WebCam.PhotoCaptureFileOutputFormat, onCapturedPhotoToDiskCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnCapturedToDiskCallback) => void) | ((onCapturedPhotoToMemoryCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnCapturedToMemoryCallback) => void);
@@ -23194,7 +25898,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23210,7 +25914,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23226,7 +25930,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23242,7 +25946,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23258,7 +25962,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23277,7 +25981,10 @@ export namespace UnityEngine {
         ToString: (() => string);
       }
       export declare class VideoCapture {
+        static SupportedResolutions: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.Resolution]
         IsRecording: boolean;
+        static GetSupportedFrameRatesForResolution: ((resolution: UnityEngine.Resolution) => any);
+        static CreateAsync: ((showHolograms: boolean, onCreatedCallback: UnityEngine.Windows.WebCam.VideoCapture_OnVideoCaptureResourceCreatedCallback) => void) | ((onCreatedCallback: UnityEngine.Windows.WebCam.VideoCapture_OnVideoCaptureResourceCreatedCallback) => void);
         StartVideoModeAsync: ((setupParams: UnityEngine.Windows.WebCam.CameraParameters, audioState: UnityEngine.Windows.WebCam.VideoCapture_AudioState, onVideoModeStartedCallback: UnityEngine.Windows.WebCam.VideoCapture_OnVideoModeStartedCallback) => void);
         StopVideoModeAsync: ((onVideoModeStoppedCallback: UnityEngine.Windows.WebCam.VideoCapture_OnVideoModeStoppedCallback) => void);
         StartRecordingAsync: ((filename: string, onStartedRecordingVideoCallback: UnityEngine.Windows.WebCam.VideoCapture_OnStartedRecordingVideoCallback) => void);
@@ -23319,7 +26026,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23335,7 +26042,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23351,7 +26058,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23367,7 +26074,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23383,7 +26090,7 @@ export namespace UnityEngine {
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetInvocationList: (() => any[]);
-        DynamicInvoke: ((args: any[]) => any);
+        DynamicInvoke: ((...args: any[]) => any);
         Clone: (() => any);
         GetType: (() => any);
         ToString: (() => string);
@@ -23401,6 +26108,7 @@ export namespace UnityEngine {
       }
       export declare class WebCam {
         constructor();
+        static Mode: UnityEngine.Windows.WebCam.WebCamMode;
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -23432,7 +26140,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -23448,7 +26156,7 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
@@ -23469,19 +26177,26 @@ export namespace UnityEngine {
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetInvocationList: (() => any[]);
-      DynamicInvoke: ((args: any[]) => any);
+      DynamicInvoke: ((...args: any[]) => any);
       Clone: (() => any);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class Application {
       constructor();
+      static arguments: string;
+      static advertisingIdentifier: string;
+      static InvokeOnAppThread: ((item: UnityEngine.WSA.AppCallbackItem, waitUntilDone: boolean) => void);
+      static InvokeOnUIThread: ((item: UnityEngine.WSA.AppCallbackItem, waitUntilDone: boolean) => void);
+      static RunningOnAppThread: (() => boolean);
+      static RunningOnUIThread: (() => boolean);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class Cursor {
+      static SetCustomCursor: ((id: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -23505,6 +26220,9 @@ export namespace UnityEngine {
     }
     export declare class Launcher {
       constructor();
+      static LaunchFile: ((folder: UnityEngine.WSA.Folder, relativeFilePath: string, showWarning: boolean) => void);
+      static LaunchFileWithPicker: ((fileExtension: string) => void);
+      static LaunchUri: ((uri: string, showWarning: boolean) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -23636,9 +26354,11 @@ export namespace UnityEngine {
       GetType: (() => any);
     }
     export declare class Tile {
+      static main: UnityEngine.WSA.Tile;
       id: string;
       hasUserConsent: boolean;
       exists: boolean;
+      static GetTemplate: ((templ: UnityEngine.WSA.TileTemplate) => string);
       Update: ((xml: string) => void) | ((medium: string, wide: string, large: string, text: string) => void);
       PeriodicUpdate: ((uri: string, interval: number) => void);
       StopPeriodicUpdate: (() => void);
@@ -23647,7 +26367,12 @@ export namespace UnityEngine {
       RemoveBadge: (() => void);
       PeriodicBadgeUpdate: ((uri: string, interval: number) => void);
       StopPeriodicBadgeUpdate: (() => void);
+      static Exists: ((tileId: string) => boolean);
+      static CreateOrUpdateSecondary: ((data: UnityEngine.WSA.SecondaryTileData) => UnityEngine.WSA.Tile) | ((data: UnityEngine.WSA.SecondaryTileData, pos: UnityEngine.Vector2) => UnityEngine.WSA.Tile) | ((data: UnityEngine.WSA.SecondaryTileData, area: UnityEngine.Rect) => UnityEngine.WSA.Tile);
+      static GetSecondary: ((tileId: string) => UnityEngine.WSA.Tile);
+      static GetSecondaries: (() => UnityEngine.WSA.Tile[]);
       Delete: (() => void) | ((pos: UnityEngine.Vector2) => void) | ((area: UnityEngine.Rect) => void);
+      static DeleteSecondary: ((tileId: string) => void) | ((tileId: string, pos: UnityEngine.Vector2) => void) | ((tileId: string, area: UnityEngine.Rect) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -23658,6 +26383,8 @@ export namespace UnityEngine {
       activated: boolean;
       dismissed: boolean;
       dismissedByUser: boolean;
+      static GetTemplate: ((templ: UnityEngine.WSA.ToastTemplate) => string);
+      static Create: ((xml: string) => UnityEngine.WSA.Toast) | ((image: string, text: string) => UnityEngine.WSA.Toast);
       Show: (() => void);
       Hide: (() => void);
       Equals: ((obj: any) => boolean);

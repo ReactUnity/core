@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 7.03.2021 17:05:32
+// Generated 7.03.2021 18:49:47
 //
 import { UnityEngine } from './unity';
 
@@ -149,6 +149,7 @@ export namespace ReactUnity {
   }
   export declare class ReactUnityAPI {
     constructor(engine: any);
+    static StateHandlers: any; // System.Collections.Generic.Dictionary`2[System.String,System.Type]
     createText: ((text: string, host: ReactUnity.IHostComponent) => ReactUnity.IReactComponent);
     createElement: ((tag: string, text: string, host: ReactUnity.IHostComponent) => ReactUnity.IReactComponent);
     appendChild: ((parent: any, child: any) => void);
@@ -175,12 +176,15 @@ export namespace ReactUnity {
   }
   export declare class UGUIContext {
     constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: any);
+    static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
     RootLayoutNode: any; // Facebook.Yoga.YogaNode
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
     IsDevServer: boolean;
     Script: ReactUnity.ReactScript;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
+    static defaultCreator: any; // System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]
+    static textCreator: any; // System.Func`3[System.String,ReactUnity.UGUIContext,ReactUnity.ITextComponent]
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: any; // System.Action
@@ -251,6 +255,7 @@ export namespace ReactUnity {
   export namespace Components {
     export declare class AnchorComponent {
       constructor(context: ReactUnity.UGUIContext);
+      static AnchorDefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Container: UnityEngine.RectTransform;
       Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
@@ -310,6 +315,8 @@ export namespace ReactUnity {
     }
     export declare class ButtonComponent {
       constructor(context: ReactUnity.UGUIContext);
+      static ButtonDefaultStyle: ReactUnity.Styling.NodeStyle;
+      static ButtonDefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Button: UnityEngine.UI.Button;
@@ -427,6 +434,7 @@ export namespace ReactUnity {
       constructor(host: UnityEngine.RectTransform, context: ReactUnity.UGUIContext);
       Width: number;
       Height: number;
+      static HostDefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Container: UnityEngine.RectTransform;
       Children: any; // System.Collections.Generic.List`1[ReactUnity.IReactComponent]
@@ -484,6 +492,8 @@ export namespace ReactUnity {
     }
     export declare class ImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
+      static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
+      static ImageDefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Measurer: ReactUnity.Layout.ImageMeasurer;
@@ -545,6 +555,8 @@ export namespace ReactUnity {
     }
     export declare class InputComponent {
       constructor(text: string, context: ReactUnity.UGUIContext);
+      static InputDefaultLayout: any; // Facebook.Yoga.YogaNode
+      static InputDefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Value: string;
@@ -605,6 +617,8 @@ export namespace ReactUnity {
     }
     export declare class RawImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
+      static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
+      static ImageDefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Measurer: ReactUnity.Layout.ImageMeasurer;
@@ -689,6 +703,8 @@ export namespace ReactUnity {
       ClassList: any; // System.Collections.Generic.HashSet`1[System.String]
       TextContent: string;
       Name: string;
+      static TagDefaultStyle: ReactUnity.Styling.NodeStyle;
+      static TagDefaultLayout: any; // Facebook.Yoga.YogaNode
       Destroy: (() => void);
       SetParent: ((parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean) => void);
       SetEventListener: ((eventName: string, fun: ReactUnity.Interop.Callback) => void);
@@ -774,6 +790,7 @@ export namespace ReactUnity {
     }
     export declare class ScrollComponent {
       constructor(Context: ReactUnity.UGUIContext);
+      static ScrollDefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       ScrollRect: UnityEngine.UI.ScrollRect;
       Container: UnityEngine.RectTransform;
@@ -833,6 +850,7 @@ export namespace ReactUnity {
     export declare class TextComponent {
       constructor(text: string, context: ReactUnity.UGUIContext, tag: string);
       constructor(linkedTo: ReactUnity.Components.TextComponent);
+      static TextDefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Text: any; // TMPro.TextMeshProUGUI
       Width: number;
@@ -885,6 +903,8 @@ export namespace ReactUnity {
     }
     export declare class ToggleComponent {
       constructor(context: ReactUnity.UGUIContext);
+      static ToggleDefaultStyle: ReactUnity.Styling.NodeStyle;
+      static ToggleDefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
       Value: boolean;
@@ -1021,12 +1041,12 @@ export namespace ReactUnity {
   export namespace DomProxies {
     export declare class ConsoleProxy {
       constructor(engine: any);
-      log: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
-      info: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
-      debug: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
-      warn: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
-      error: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
-      dir: ((msg: any) => void) | ((msg: any, subs: any[]) => void);
+      log: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
+      info: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
+      debug: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
+      warn: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
+      error: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
+      dir: ((msg: any) => void) | ((msg: any, ...subs: any[]) => void);
       clear: (() => void);
       assert: ((val: boolean) => void);
       Equals: ((obj: any) => boolean);
@@ -1118,6 +1138,7 @@ export namespace ReactUnity {
     }
     export declare class LocalStorage {
       constructor();
+      static LocalStoragePrefix: string;
       setItem: ((x: string, value: string) => void);
       getItem: ((x: string) => string);
       removeItem: ((x: string) => void);
@@ -1144,7 +1165,7 @@ export namespace ReactUnity {
     }
     export declare class WebSocketProxy {
       constructor(context: ReactUnity.ReactContext, url: string);
-      constructor(context: ReactUnity.ReactContext, url: string, protocols: string[]);
+      constructor(context: ReactUnity.ReactContext, url: string, ...protocols: string[]);
       Onmessage: any; // Jint.Native.JsValue
       onmessage: any; // System.Object
       Onclose: any; // Jint.Native.JsValue
@@ -1168,6 +1189,10 @@ export namespace ReactUnity {
       SslConfiguration: any; // WebSocketSharp.Net.ClientSslConfiguration
       Url: any; // System.Uri
       WaitTime: any; // System.TimeSpan
+      static CONNECTING: number;
+      static OPEN: number;
+      static CLOSING: number;
+      static CLOSED: number;
       binaryType: string;
       close: ((code?: number, reason?: string) => void);
       Accept: (() => void);
@@ -1206,6 +1231,8 @@ export namespace ReactUnity {
       responseText: string;
       onload: any; // System.Object
       onreadystatechange: any; // System.Object
+      static dispatches: string[];
+      static allDone: any; // System.Threading.ManualResetEvent
       open: ((method: string, url: string, async: boolean) => void);
       setRequestHeader: ((name: any, value: any) => void);
       append: ((name: any, value: any) => void);
@@ -1305,6 +1332,7 @@ export namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       AutoApply: boolean;
+      static Open: (() => void);
       BeginWindows: (() => void);
       EndWindows: (() => void);
       ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
@@ -1351,6 +1379,7 @@ export namespace ReactUnity {
       position: UnityEngine.Rect;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static Open: (() => void);
       BeginWindows: (() => void);
       EndWindows: (() => void);
       ShowNotification: ((notification: UnityEngine.GUIContent) => void) | ((notification: UnityEngine.GUIContent, fadeoutWait: number) => void);
@@ -1387,6 +1416,11 @@ export namespace ReactUnity {
     }
     export namespace Developer {
       export declare class TypescriptModelsGenerator {
+        static GenerateUnity: (() => void);
+        static GenerateEditor: (() => void);
+        static GenerateReactUnity: (() => void);
+        static GenerateSystem: (() => void);
+        static GetNameWithoutGenericArity: ((name: string) => string);
         Equals: ((obj: any) => boolean);
         GetHashCode: (() => number);
         GetType: (() => any);
@@ -1401,6 +1435,9 @@ export namespace ReactUnity {
         IsDevServer: boolean;
         Script: ReactUnity.ReactScript;
         Scheduler: ReactUnity.Schedulers.IUnityScheduler;
+        static defaultCreator: any; // System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Renderer.Components.IEditorReactComponent`1[UnityEngine.UIElements.VisualElement]]
+        static textCreator: any; // System.Func`3[System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.ITextComponent]
+        static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Renderer.Components.IEditorReactComponent`1[UnityEngine.UIElements.VisualElement]]]
         Parser: any; // ExCSS.StylesheetParser
         StyleTree: ReactUnity.StyleEngine.StyleTree;
         OnRestart: any; // System.Action
@@ -1440,6 +1477,7 @@ export namespace ReactUnity {
         position: UnityEngine.Rect;
         name: string;
         hideFlags: UnityEngine.HideFlags;
+        static ShowDefaultWindow: (() => void);
         OnEnable: (() => void);
         Restart: (() => void);
         BeginWindows: (() => void);
@@ -1505,7 +1543,6 @@ export namespace ReactUnity {
           CaptureMouse: (() => void);
           ReleaseMouse: (() => void);
           HasMouseCapture: (() => boolean);
-          StartDrag: (() => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -1548,7 +1585,6 @@ export namespace ReactUnity {
           CaptureMouse: (() => void);
           ReleaseMouse: (() => void);
           HasMouseCapture: (() => boolean);
-          StartDrag: (() => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -1595,7 +1631,6 @@ export namespace ReactUnity {
           CaptureMouse: (() => void);
           ReleaseMouse: (() => void);
           HasMouseCapture: (() => boolean);
-          StartDrag: (() => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -1639,7 +1674,6 @@ export namespace ReactUnity {
           CaptureMouse: (() => void);
           ReleaseMouse: (() => void);
           HasMouseCapture: (() => boolean);
-          StartDrag: (() => void);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -1648,6 +1682,8 @@ export namespace ReactUnity {
       }
       export namespace Events {
         export declare class EditorEventHandlerMap {
+          static GetEventType: ((eventName: string) => any);
+          static GetEventMethods: ((eventName: string) => any);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -1656,6 +1692,17 @@ export namespace ReactUnity {
       }
       export namespace Styling {
         export declare class StylingHelpers {
+          static TextAlignMap: any; // System.Collections.Generic.Dictionary`2[TMPro.TextAlignmentOptions,UnityEngine.TextAnchor]
+          static YogaValueToStyleLength: ((value: any) => UnityEngine.UIElements.StyleLength);
+          static NormalizeFloat: ((value: number) => number);
+          static ConvertFontStyle: ((style: any, weight: any) => UnityEngine.FontStyle);
+          static GetStyleColor: ((style: ReactUnity.Styling.NodeStyle, prop: any) => UnityEngine.UIElements.StyleColor);
+          static GetStyleFloat: ((style: ReactUnity.Styling.NodeStyle, prop: any) => UnityEngine.UIElements.StyleFloat);
+          static GetStyleFloatDouble: ((style: ReactUnity.Styling.NodeStyle, prop: any, prop2: any) => UnityEngine.UIElements.StyleFloat);
+          static GetStyleLength: ((style: ReactUnity.Styling.NodeStyle, prop: any) => UnityEngine.UIElements.StyleLength);
+          static GetStyleLengthDouble: ((style: ReactUnity.Styling.NodeStyle, prop: any, prop2: any) => UnityEngine.UIElements.StyleLength);
+          static GetStyleBorderRadius: ((style: ReactUnity.Styling.NodeStyle, prop: any) => UnityEngine.UIElements.StyleLength);
+          static GetStyleBorderColor: ((style: ReactUnity.Styling.NodeStyle, prop: any) => UnityEngine.UIElements.StyleColor);
           Equals: ((obj: any) => boolean);
           GetHashCode: (() => number);
           GetType: (() => any);
@@ -2016,6 +2063,7 @@ export namespace ReactUnity {
       GetType: (() => any);
     }
     export declare class EventHandlerMap {
+      static GetEventType: ((eventName: string) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -2645,12 +2693,14 @@ export namespace ReactUnity {
   }
   export namespace Helpers {
     export declare class CursorAPI {
+      static SetCursor: ((cursor: string) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class EventTypes {
+      static GetEventType: ((eventName: string) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -2682,6 +2732,15 @@ export namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static Initialize: (() => void);
+      static AddCallOnLateUpdate: ((call: any) => void);
+      static OnUpdate: ((callback: any) => number);
+      static Timeout: ((callback: any, timeSeconds: number) => number);
+      static AnimationFrame: ((callback: any) => number);
+      static Interval: ((callback: any, intervalSeconds: number) => number);
+      static Immediate: ((callback: any) => number);
+      static StartDeferred: ((cr: any) => number) | ((cr: any, handle: number) => number);
+      static StopDeferred: ((cr: number) => void);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
       Invoke: ((methodName: string, time: number) => void);
@@ -2710,13 +2769,23 @@ export namespace ReactUnity {
       constructor(callback: any);
       constructor(callback: any);
       callback: any; // System.Object
-      Call: (() => any) | ((args: any[]) => any);
+      Call: (() => any) | ((...args: any[]) => any);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
       ToString: (() => string);
     }
     export declare class EditorDispatcher {
+      static Initialize: (() => void);
+      static AddCallOnLateUpdate: ((call: any) => void);
+      static OnUpdate: ((callback: any) => number);
+      static Timeout: ((callback: any, timeSeconds: number) => number);
+      static AnimationFrame: ((callback: any) => number);
+      static Interval: ((callback: any, intervalSeconds: number) => number);
+      static Immediate: ((callback: any) => number);
+      static StartDeferred: ((cr: any) => number) | ((cr: any, handle: number) => number);
+      static StopDeferred: ((cr: number) => void);
+      static StopAll: (() => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -2746,6 +2815,16 @@ export namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static Initialize: (() => void);
+      static AddCallOnLateUpdate: ((call: any) => void);
+      static OnUpdate: ((callback: any) => number);
+      static Timeout: ((callback: any, timeSeconds: number) => number);
+      static AnimationFrame: ((callback: any) => number);
+      static Interval: ((callback: any, intervalSeconds: number) => number);
+      static Immediate: ((callback: any) => number);
+      static IsMainThread: (() => boolean);
+      static StartDeferred: ((cr: any) => number) | ((cr: any, handle: number) => number);
+      static StopDeferred: ((cr: number) => void);
       Awake: (() => void);
       IsInvoking: (() => boolean) | ((methodName: string) => boolean);
       CancelInvoke: (() => void) | ((methodName: string) => void);
@@ -3381,6 +3460,15 @@ export namespace ReactUnity {
   }
   export namespace StyleEngine {
     export declare class RuleHelpers {
+      static ImportantSpecifity: number;
+      static SplitSelectorRegex: any; // System.Text.RegularExpressions.Regex
+      static NthChildRegex: any; // System.Text.RegularExpressions.Regex
+      static ParseSelector: ((selector: string, negated?: boolean) => any);
+      static GetSpecificity: ((priority: any) => number);
+      static GetRuleDic: ((rule: any, important: boolean) => any) | ((rule: any) => any);
+      static GetLayoutDic: ((rule: any, important: boolean) => any) | ((rule: any) => any);
+      static NormalizeSelector: ((selector: string) => string);
+      static GetSpecialName: ((value: string) => ReactUnity.Styling.Types.SpecialNames);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -3532,6 +3620,7 @@ export namespace ReactUnity {
       GetType: (() => any);
     }
     export declare class IListInsertIntoSortedListExtensions {
+      static InsertIntoSortedList: ((list: any, value: any) => void) | ((list: any, value: any, comparison: any) => void);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -3557,6 +3646,10 @@ export namespace ReactUnity {
       ToString: (() => string);
     }
     export declare class BorderGraphic {
+      static SpriteCache: any; // System.Collections.Generic.Dictionary`2[System.String,UnityEngine.Sprite]
+      static CreateBorderSpriteVector: ((tl: number, tr: number, bl: number, br: number) => UnityEngine.Sprite);
+      static CreateBorderSprite: ((borderRadius: number) => UnityEngine.Sprite) | ((tl: number, tr: number, bl: number, br: number, antiAliasing?: boolean) => UnityEngine.Sprite);
+      static CreateBorderSpriteRaster: ((tl: number, tr: number, bl: number, br: number, antiAliasing?: boolean) => UnityEngine.Sprite);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -3843,6 +3936,61 @@ export namespace ReactUnity {
       ToString: (() => string);
     }
     export declare class LayoutProperties {
+      static StyleDirection: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaDirection]
+      static FlexDirection: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaFlexDirection]
+      static JustifyContent: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaJustify]
+      static Display: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaDisplay]
+      static AlignItems: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaAlign]
+      static AlignSelf: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaAlign]
+      static AlignContent: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaAlign]
+      static PositionType: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaPositionType]
+      static Wrap: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaWrap]
+      static Overflow: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaOverflow]
+      static FlexGrow: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static FlexShrink: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static FlexBasis: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static Width: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static Height: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MinWidth: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MinHeight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MaxWidth: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MaxHeight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static AspectRatio: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static Left: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static Right: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static Top: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static Bottom: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static Start: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static End: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static Margin: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MarginLeft: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MarginRight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MarginTop: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MarginBottom: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MarginStart: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MarginEnd: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MarginHorizontal: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static MarginVertical: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static Padding: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static PaddingLeft: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static PaddingRight: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static PaddingTop: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static PaddingBottom: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static PaddingStart: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static PaddingEnd: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static PaddingHorizontal: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static PaddingVertical: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaValue]
+      static BorderWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static BorderLeftWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static BorderRightWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static BorderTopWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static BorderBottomWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static BorderStartWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static BorderEndWidth: any; // ReactUnity.Styling.LayoutProperty`1[System.Single]
+      static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.ILayoutProperty]
+      static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.ILayoutProperty]
+      static AllProperties: ReactUnity.Styling.ILayoutProperty[];
+      static GetProperty: ((name: string) => ReactUnity.Styling.ILayoutProperty);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -4001,6 +4149,43 @@ export namespace ReactUnity {
       ToString: (() => string);
     }
     export declare class StyleProperties {
+      static opacity: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
+      static zIndex: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
+      static visibility: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
+      static cursor: any; // ReactUnity.Styling.StyleProperty`1[System.String]
+      static pointerEvents: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Styling.Types.PointerEvents]
+      static backgroundColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static backgroundImage: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.ImageReference]
+      static borderRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
+      static borderTopLeftRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
+      static borderTopRightRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
+      static borderBottomLeftRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
+      static borderBottomRightRadius: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
+      static borderColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static borderLeftColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static borderRightColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static borderTopColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static borderBottomColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static boxShadow: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Styling.Types.ShadowDefinition]
+      static transformOrigin: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
+      static translate: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
+      static scale: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector2]
+      static rotate: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
+      static fontFamily: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.FontReference]
+      static color: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
+      static fontWeight: any; // ReactUnity.Styling.StyleProperty`1[TMPro.FontWeight]
+      static fontStyle: any; // ReactUnity.Styling.StyleProperty`1[TMPro.FontStyles]
+      static fontSize: any; // ReactUnity.Styling.StyleProperty`1[Facebook.Yoga.YogaValue]
+      static textAlign: any; // ReactUnity.Styling.StyleProperty`1[TMPro.TextAlignmentOptions]
+      static textOverflow: any; // ReactUnity.Styling.StyleProperty`1[TMPro.TextOverflowModes]
+      static textWrap: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
+      static content: any; // ReactUnity.Styling.StyleProperty`1[System.String]
+      static appearance: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Styling.Types.Appearance]
+      static navigation: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.UI.Navigation+Mode]
+      static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
+      static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
+      static AllProperties: ReactUnity.Styling.IStyleProperty[];
+      static GetStyleProperty: ((name: string) => ReactUnity.Styling.IStyleProperty);
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
@@ -4036,6 +4221,8 @@ export namespace ReactUnity {
       }
       export declare class FloatConverter {
         constructor();
+        static PxRegex: any; // System.Text.RegularExpressions.Regex
+        static PercentRegex: any; // System.Text.RegularExpressions.Regex
         FromString: ((value: string) => any);
         Convert: ((value: any) => any);
         Equals: ((obj: any) => boolean);
@@ -4206,6 +4393,7 @@ export namespace ReactUnity {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
+      static None: any; // ReactUnity.Types.AssetReference`1[AssetType]
       Get: ((context: ReactUnity.ReactContext, callback: any) => void);
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
@@ -4217,6 +4405,7 @@ export namespace ReactUnity {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
+      static None: ReactUnity.Types.FontReference;
       Get: ((context: ReactUnity.ReactContext, callback: any) => void);
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
@@ -4237,6 +4426,7 @@ export namespace ReactUnity {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
+      static None: ReactUnity.Types.ImageReference;
       Dispose: (() => void);
       Get: ((context: ReactUnity.ReactContext, callback: any) => void);
       Equals: ((obj: any) => boolean);
@@ -4280,6 +4470,7 @@ export namespace ReactUnity {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
+      static None: ReactUnity.Types.VideoReference;
       Get: ((context: ReactUnity.ReactContext, callback: any) => void);
       Dispose: (() => void);
       Equals: ((obj: any) => boolean);
@@ -4291,6 +4482,9 @@ export namespace ReactUnity {
       constructor(x: any, y: any);
       X: any; // Facebook.Yoga.YogaValue
       Y: any; // Facebook.Yoga.YogaValue
+      static Zero: ReactUnity.Types.YogaValue2;
+      static Auto: ReactUnity.Types.YogaValue2;
+      static Center: ReactUnity.Types.YogaValue2;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       ToString: (() => string);
@@ -4405,6 +4599,7 @@ export namespace ReactUnity {
       Rebuild: (() => void);
     }
     export declare class WebGLWindow {
+      static Focus: boolean;
       Equals: ((obj: any) => boolean);
       GetHashCode: (() => number);
       GetType: (() => any);
