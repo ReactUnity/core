@@ -44,7 +44,7 @@ declare module 'react/jsx-runtime' {
       repeat: BaseElement;
       scroller: BaseElement;
       list: BaseElement;
-      imgui: BaseElement;
+      imgui: Components.IMGUI;
       template: BaseElement;
 
       color: BaseFieldElementSimple<UnityEngine.Color>;
