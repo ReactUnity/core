@@ -1,1 +1,1 @@
-/// <reference types="@reactunity/scripts/lib/react-unity-editor" />
+/// <reference types="@reactunity/scripts/editor" />
