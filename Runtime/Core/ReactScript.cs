@@ -21,6 +21,15 @@ namespace ReactUnity
         public string DevServerFile => DevServer + DevServerFilename;
 
 
+        public static ReactScript Resource(string path)
+        {
+            return new ReactScript()
+            {
+                ScriptSource = ScriptSource.Resource,
+                SourcePath = path,
+            };
+        }
+
         public string SourceLocation
         {
             get

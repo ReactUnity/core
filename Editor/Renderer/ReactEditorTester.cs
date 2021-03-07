@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Renderer
 {
-    public class ReactEditorTester : EditorWindow
+    public class ReactEditorTester : ReactWindow
     {
         [MenuItem("React/Editor Tester")]
         public static void ShowDefaultWindow()
@@ -19,11 +19,7 @@ namespace ReactUnity.Editor.Renderer
             wnd.titleContent = new GUIContent("React Editor Tester");
         }
 
-        IDisposable ScriptWatchDisposable;
-        ReactUnityRunner runner;
-        EditorContext context;
-
-        public void OnEnable()
+        protected override void OnEnable()
         {
             var uiAsset = EditorResourcesHelper.EditorTester;
             var ui = uiAsset.CloneTree();
@@ -42,10 +38,10 @@ namespace ReactUnity.Editor.Renderer
             useDevServer.SetValueWithoutNotify(EditorPrefs.GetBool("ReactUnity.EditorTester.useDevServer", false));
             devServer.SetValueWithoutNotify(EditorPrefs.GetString("ReactUnity.EditorTester.devServer", "http://localhost:3000"));
 
-            rootVisualElement.Q<Button>("run").clicked += Run;
+            rootVisualElement.Q<Button>("run").clicked += () => Restart(rootVisualElement.Q("root"));
         }
 
-        ReactScript GetScript()
+        protected override ReactScript GetScript()
         {
             var source = rootVisualElement.Q<TextField>("source");
             var useDevServer = rootVisualElement.Q<Toggle>("useDevServer");
@@ -71,41 +67,6 @@ namespace ReactUnity.Editor.Renderer
                 UseDevServer = useDevServerVal,
                 DevServer = devServerVal,
             };
-        }
-
-        void Run()
-        {
-            var host = rootVisualElement.Q("root");
-            if (host == null) return;
-
-            host.Clear();
-            var src = GetScript();
-
-            AdaptiveDispatcher.Initialize();
-            runner = new ReactUnityRunner();
-
-            ScriptWatchDisposable = src.GetScript((sc, isDevServer) =>
-            {
-                context = new EditorContext(host, new StringObjectDictionary(), src, new EditorScheduler(), isDevServer, Restart);
-                runner.RunScript(sc, context);
-            }, true, true);
-        }
-
-        private void OnDestroy()
-        {
-            if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
-            EditorDispatcher.StopAll();
-
-            context?.Dispose();
-            runner = null;
-            context = null;
-            ScriptWatchDisposable = null;
-        }
-
-        public void Restart()
-        {
-            OnDestroy();
-            Run();
         }
     }
 }
