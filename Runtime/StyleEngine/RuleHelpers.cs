@@ -162,7 +162,7 @@ namespace ReactUnity.StyleEngine
                 if (hasCssStyle)
                 {
                     if (dic == null) dic = new List<LayoutValue>();
-                    dic.Add(new LayoutValue(prop, prop.Parse(item.Value)));
+                    dic.Add(new LayoutValue(prop, prop.Convert(item.Value)));
                 }
             }
             return dic;
@@ -192,7 +192,7 @@ namespace ReactUnity.StyleEngine
                 if (hasCssStyle)
                 {
                     if (dic == null) dic = new List<LayoutValue>();
-                    dic.Add(new LayoutValue(prop, prop.Parse(item.Value)));
+                    dic.Add(new LayoutValue(prop, prop.Convert(item.Value)));
                 }
             }
             return dic;

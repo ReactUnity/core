@@ -25,13 +25,12 @@ namespace ReactUnity.Editor.Renderer.Components
     {
         private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
 
-        public static readonly YogaNode DefaultLayout = new YogaNode();
-
         public EditorContext Context { get; }
         public IContainerComponent Parent { get; private set; }
         public T Element { get; protected set; }
 
         public YogaNode Layout { get; private set; }
+        public List<LayoutValue> LayoutValues { get; private set; } = new List<LayoutValue>();
         public NodeStyle Style { get; private set; }
         public ExpandoObject Inline { get; protected set; } = new ExpandoObject();
 
@@ -85,82 +84,98 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public void ApplyLayoutStyles()
         {
-            Element.style.flexDirection = (FlexDirection) Layout.FlexDirection;
-            Element.style.flexWrap = (Wrap) Layout.Wrap;
-            Element.style.flexGrow = Layout.FlexGrow;
-            Element.style.flexShrink = Layout.FlexShrink;
+            Element.style.flexDirection = StylingHelpers.GetStyleEnumCustom<FlexDirection>(Style, LayoutProperties.FlexDirection);
+            Element.style.flexWrap = StylingHelpers.GetStyleEnumCustom<Wrap>(Style, LayoutProperties.Wrap);
+            Element.style.flexGrow = StylingHelpers.GetStyleFloat(Style, LayoutProperties.FlexGrow);
+            Element.style.flexShrink = StylingHelpers.GetStyleFloat(Style, LayoutProperties.FlexShrink);
 
-            Element.style.width = StylingHelpers.YogaValueToStyleLength(Layout.Width);
-            Element.style.height = StylingHelpers.YogaValueToStyleLength(Layout.Height);
-            Element.style.flexBasis = StylingHelpers.YogaValueToStyleLength(Layout.FlexBasis);
+            Element.style.width = StylingHelpers.GetStyleLength(Style, LayoutProperties.Width);
+            Element.style.height = StylingHelpers.GetStyleLength(Style, LayoutProperties.Height);
+            Element.style.flexBasis = StylingHelpers.GetStyleLength(Style, LayoutProperties.FlexBasis);
 
-            Element.style.minWidth = StylingHelpers.YogaValueToStyleLength(Layout.MinWidth);
-            Element.style.minHeight = StylingHelpers.YogaValueToStyleLength(Layout.MinHeight);
-            Element.style.maxWidth = StylingHelpers.YogaValueToStyleLength(Layout.MaxWidth);
-            Element.style.maxHeight = StylingHelpers.YogaValueToStyleLength(Layout.MaxHeight);
+            Element.style.minWidth = StylingHelpers.GetStyleLength(Style, LayoutProperties.MinWidth);
+            Element.style.minHeight = StylingHelpers.GetStyleLength(Style, LayoutProperties.MinHeight);
+            Element.style.maxWidth = StylingHelpers.GetStyleLength(Style, LayoutProperties.MaxWidth);
+            Element.style.maxHeight = StylingHelpers.GetStyleLength(Style, LayoutProperties.MaxHeight);
 
-            Element.style.paddingBottom = StylingHelpers.YogaValueToStyleLength(Layout.PaddingBottom);
-            Element.style.paddingTop = StylingHelpers.YogaValueToStyleLength(Layout.PaddingTop);
-            Element.style.paddingLeft = StylingHelpers.YogaValueToStyleLength(Layout.PaddingLeft);
-            Element.style.paddingRight = StylingHelpers.YogaValueToStyleLength(Layout.PaddingRight);
+            Element.style.paddingBottom = StylingHelpers.GetStyleLengthDouble(Style, LayoutProperties.PaddingBottom, LayoutProperties.Padding);
+            Element.style.paddingTop = StylingHelpers.GetStyleLengthDouble(Style, LayoutProperties.PaddingTop, LayoutProperties.Padding);
+            Element.style.paddingLeft = StylingHelpers.GetStyleLengthDouble(Style, LayoutProperties.PaddingLeft, LayoutProperties.Padding);
+            Element.style.paddingRight = StylingHelpers.GetStyleLengthDouble(Style, LayoutProperties.PaddingRight, LayoutProperties.Padding);
 
-            Element.style.marginBottom = StylingHelpers.YogaValueToStyleLength(Layout.MarginBottom);
-            Element.style.marginTop = StylingHelpers.YogaValueToStyleLength(Layout.MarginTop);
-            Element.style.marginLeft = StylingHelpers.YogaValueToStyleLength(Layout.MarginLeft);
-            Element.style.marginRight = StylingHelpers.YogaValueToStyleLength(Layout.MarginRight);
+            Element.style.marginBottom = StylingHelpers.GetStyleLengthDouble(Style, LayoutProperties.MarginBottom, LayoutProperties.Margin);
+            Element.style.marginTop = StylingHelpers.GetStyleLengthDouble(Style, LayoutProperties.MarginTop, LayoutProperties.Margin);
+            Element.style.marginLeft = StylingHelpers.GetStyleLengthDouble(Style, LayoutProperties.MarginLeft, LayoutProperties.Margin);
+            Element.style.marginRight = StylingHelpers.GetStyleLengthDouble(Style, LayoutProperties.MarginRight, LayoutProperties.Margin);
 
-            Element.style.left = StylingHelpers.YogaValueToStyleLength(Layout.Left);
-            Element.style.right = StylingHelpers.YogaValueToStyleLength(Layout.Right);
-            Element.style.top = StylingHelpers.YogaValueToStyleLength(Layout.Top);
-            Element.style.bottom = StylingHelpers.YogaValueToStyleLength(Layout.Bottom);
+            Element.style.left = StylingHelpers.GetStyleLength(Style, LayoutProperties.Left);
+            Element.style.right = StylingHelpers.GetStyleLength(Style, LayoutProperties.Right);
+            Element.style.top = StylingHelpers.GetStyleLength(Style, LayoutProperties.Top);
+            Element.style.bottom = StylingHelpers.GetStyleLength(Style, LayoutProperties.Bottom);
 
-            Element.style.borderLeftWidth = StylingHelpers.NormalizeFloat(Layout.BorderLeftWidth);
-            Element.style.borderRightWidth = StylingHelpers.NormalizeFloat(Layout.BorderRightWidth);
-            Element.style.borderTopWidth = StylingHelpers.NormalizeFloat(Layout.BorderTopWidth);
-            Element.style.borderBottomWidth = StylingHelpers.NormalizeFloat(Layout.BorderBottomWidth);
+            Element.style.borderLeftWidth = StylingHelpers.GetStyleFloatDouble(Style, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
+            Element.style.borderRightWidth = StylingHelpers.GetStyleFloatDouble(Style, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
+            Element.style.borderTopWidth = StylingHelpers.GetStyleFloatDouble(Style, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
+            Element.style.borderBottomWidth = StylingHelpers.GetStyleFloatDouble(Style, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
 
-            Element.style.display = (DisplayStyle) Layout.Display;
-            Element.style.position = (Position) Layout.PositionType;
-            Element.style.overflow = (Overflow) Layout.Overflow;
+            Element.style.display = StylingHelpers.GetStyleEnumCustom<DisplayStyle>(Style, LayoutProperties.Display);
+            Element.style.position = StylingHelpers.GetStyleEnumCustom<Position>(Style, LayoutProperties.PositionType);
+            Element.style.overflow = StylingHelpers.GetStyleEnumCustom<Overflow>(Style, LayoutProperties.Overflow);
 
-            Element.style.alignContent = (Align) Layout.AlignContent;
-            Element.style.alignItems = (Align) Layout.AlignItems;
-            Element.style.alignSelf = (Align) Layout.AlignSelf;
-            Element.style.justifyContent = (Justify) Layout.JustifyContent;
+            Element.style.alignContent = StylingHelpers.GetStyleEnumCustom<Align>(Style, LayoutProperties.AlignContent);
+            Element.style.alignItems = StylingHelpers.GetStyleEnumCustom<Align>(Style, LayoutProperties.AlignItems);
+            Element.style.alignSelf = StylingHelpers.GetStyleEnumCustom<Align>(Style, LayoutProperties.AlignSelf);
+            Element.style.justifyContent = StylingHelpers.GetStyleEnumCustom<Justify>(Style, LayoutProperties.JustifyContent);
         }
 
         public virtual void ApplyStyles()
         {
-            Element.style.backgroundColor = Style.backgroundColor;
-            Element.style.color = Style.color;
-            Element.style.textOverflow = (TextOverflow) Style.textOverflow;
-            Element.style.visibility = Style.visibility ? Visibility.Visible : Visibility.Hidden;
-            Element.style.opacity = Style.opacity;
-            Element.style.fontSize = Style.fontSizeActual;
-            Element.style.whiteSpace = Style.textWrap ? WhiteSpace.Normal : WhiteSpace.NoWrap;
+            Element.style.backgroundColor = StylingHelpers.GetStyleColor(Style, StyleProperties.backgroundColor);
+            Element.style.color = StylingHelpers.GetStyleColor(Style, StyleProperties.color);
+            Element.style.textOverflow = StylingHelpers.GetStyleEnumCustom<TextOverflow>(Style, StyleProperties.textOverflow);
+            Element.style.visibility = StylingHelpers.GetStyleBoolToEnum(Style, StyleProperties.visibility, Visibility.Visible, Visibility.Hidden);
+            Element.style.opacity = StylingHelpers.GetStyleFloat(Style, StyleProperties.opacity);
+            Element.style.whiteSpace = StylingHelpers.GetStyleBoolToEnum(Style, StyleProperties.textWrap, WhiteSpace.Normal, WhiteSpace.NoWrap);
 
-            Element.style.borderBottomLeftRadius = Style.borderBottomLeftRadius;
-            Element.style.borderBottomRightRadius = Style.borderBottomRightRadius;
-            Element.style.borderTopLeftRadius = Style.borderTopLeftRadius;
-            Element.style.borderTopRightRadius = Style.borderTopRightRadius;
+            if (Style.HasValue(StyleProperties.fontSize)) Element.style.fontSize = Style.fontSizeActual;
+            else Element.style.fontSize = StyleKeyword.Null;
 
-            Element.style.borderBottomColor = Style.borderBottomColor;
-            Element.style.borderTopColor = Style.borderTopColor;
-            Element.style.borderLeftColor = Style.borderLeftColor;
-            Element.style.borderRightColor = Style.borderRightColor;
+            Element.style.borderBottomLeftRadius = StylingHelpers.GetStyleBorderRadius(Style, StyleProperties.borderBottomLeftRadius);
+            Element.style.borderBottomRightRadius = StylingHelpers.GetStyleBorderRadius(Style, StyleProperties.borderBottomRightRadius);
+            Element.style.borderTopLeftRadius = StylingHelpers.GetStyleBorderRadius(Style, StyleProperties.borderTopLeftRadius);
+            Element.style.borderTopRightRadius = StylingHelpers.GetStyleBorderRadius(Style, StyleProperties.borderTopRightRadius);
 
-            Style.backgroundImage?.Get(Context, tx => Element.style.backgroundImage = tx);
-            Element.style.unityFontStyleAndWeight = StylingHelpers.ConvertFontStyle(Style.fontStyle, Style.fontWeight);
+            Element.style.borderBottomColor = StylingHelpers.GetStyleBorderColor(Style, StyleProperties.borderBottomColor);
+            Element.style.borderTopColor = StylingHelpers.GetStyleBorderColor(Style, StyleProperties.borderTopColor);
+            Element.style.borderLeftColor = StylingHelpers.GetStyleBorderColor(Style, StyleProperties.borderLeftColor);
+            Element.style.borderRightColor = StylingHelpers.GetStyleBorderColor(Style, StyleProperties.borderRightColor);
 
-            if (StylingHelpers.TextAlignMap.TryGetValue(Style.textAlign, out var value)) Element.style.unityTextAlign = value;
-            else Element.style.unityTextAlign = TextAnchor.MiddleCenter;
+            if (Style.HasValue(StyleProperties.backgroundImage)) Style.backgroundImage?.Get(Context, tx => Element.style.backgroundImage = tx);
+            else Element.style.backgroundImage = StyleKeyword.Null;
 
-            Element.style.unityBackgroundImageTintColor = Style.backgroundColor;
-            if (Style.fontFamily != null) Style.fontFamily?.Get(Context, x =>
+            if (Style.HasValue(StyleProperties.fontStyle) || Style.HasValue(StyleProperties.fontWeight))
+                Element.style.unityFontStyleAndWeight = StylingHelpers.ConvertFontStyle(Style.fontStyle, Style.fontWeight);
+            else Element.style.unityFontStyleAndWeight = StyleKeyword.Null;
+
+            if (Style.HasValue(StyleProperties.textAlign))
             {
-                if (x?.sourceFontFile) Element.style.unityFont = x?.sourceFontFile;
-                else Element.style.unityFont = EditorResourcesHelper.DefaultFont;
-            });
+                if (StylingHelpers.TextAlignMap.TryGetValue(Style.textAlign, out var value)) Element.style.unityTextAlign = value;
+                else Element.style.unityTextAlign = TextAnchor.MiddleCenter;
+            }
+            else Element.style.unityTextAlign = StyleKeyword.Null;
+
+            if (Style.HasValue(StyleProperties.backgroundColor)) Element.style.unityBackgroundImageTintColor = Style.backgroundColor;
+            else Element.style.unityBackgroundImageTintColor = StyleKeyword.Null;
+
+            if (Style.HasValue(StyleProperties.fontFamily))
+            {
+                if (Style.fontFamily != null) Style.fontFamily?.Get(Context, x =>
+                {
+                    if (x?.sourceFontFile) Element.style.unityFont = x?.sourceFontFile;
+                    else Element.style.unityFont = EditorResourcesHelper.DefaultFont;
+                });
+            }
+            else Element.style.unityFont = StyleKeyword.Null;
         }
 
         public void Destroy()
@@ -174,7 +189,8 @@ namespace ReactUnity.Editor.Renderer.Components
 
 
             var inlineStyles = RuleHelpers.GetRuleDic(Inline);
-            var inlineLayouts = RuleHelpers.GetLayoutDic(Inline) ?? new List<LayoutValue>();
+            var inlineLayouts = RuleHelpers.GetLayoutDic(Inline);
+            if (inlineLayouts != null) foreach (var l in inlineLayouts) inlineStyles[l.prop.name] = l.value;
 
             List<RuleTreeNode<StyleData>> matchingRules;
             if (Tag == "_before") matchingRules = Parent.BeforeRules;
@@ -189,15 +205,6 @@ namespace ReactUnity.Editor.Renderer.Components
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
             Style.CssStyles = cssStyles;
-
-
-            if (Style.CssLayouts != null)
-                foreach (var item in Style.CssLayouts) item.SetDefault(Layout, DefaultLayout);
-            Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
-
-            for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
-            inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
-            for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
 
             ApplyStyles();
             ApplyLayoutStyles();

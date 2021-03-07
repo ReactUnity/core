@@ -16,7 +16,7 @@ namespace ReactUnity.StyleEngine
     {
         public StyleTree(StylesheetParser parser) : base(parser) { }
 
-        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0)
+        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0, bool mergeLayouts = false)
         {
             var added = AddSelector(rule.SelectorText, importanceOffset);
             var addedList = added.ToList();
@@ -30,7 +30,8 @@ namespace ReactUnity.StyleEngine
                 var lay = RuleHelpers.GetLayoutDic(style, false);
                 if (lay != null)
                 {
-                    leaf.Data.Layouts.AddRange(lay);
+                    if (mergeLayouts) leaf.Data.Rules.Add(lay.ToDictionary(x => x.prop.name, x => x.value));
+                    else leaf.Data.Layouts.AddRange(lay);
                 }
 
                 var importantDic = RuleHelpers.GetRuleDic(style, true);
@@ -44,7 +45,8 @@ namespace ReactUnity.StyleEngine
 
                     if (importantLay != null)
                     {
-                        importantLeaf.Data.Layouts.AddRange(importantLay);
+                        if (mergeLayouts) leaf.Data.Rules.Add(importantLay.ToDictionary(x => x.prop.name, x => x.value));
+                        else importantLeaf.Data.Layouts.AddRange(importantLay);
                     }
 
                     added.Add(importantLeaf);

@@ -34,13 +34,16 @@ namespace ReactUnity
 
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
 
-        public ReactContext(StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
+        private bool mergeLayouts;
+
+        public ReactContext(StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart, bool mergeLayouts = false)
         {
             Globals = globals;
             Script = script;
             IsDevServer = isDevServer;
             Scheduler = scheduler;
             OnRestart = onRestart ?? (() => { });
+            this.mergeLayouts = mergeLayouts;
 
             Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
@@ -67,7 +70,7 @@ namespace ReactUnity
 
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
             {
-                StyleTree.AddStyle(rule, importanceOffset);
+                StyleTree.AddStyle(rule, importanceOffset, mergeLayouts);
             }
 
             Host.ResolveStyle(true);

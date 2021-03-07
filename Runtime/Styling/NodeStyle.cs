@@ -301,6 +301,11 @@ namespace ReactUnity.Styling
             HasInheritedChanges = false;
         }
 
+        public bool HasValue(IStyleProperty prop)
+        {
+            return HasValue(prop.name);
+        }
+
         public bool HasValue(string name)
         {
             return StyleMap.ContainsKey(name) ||
