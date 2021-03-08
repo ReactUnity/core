@@ -135,13 +135,15 @@ namespace ReactUnity.Editor.Renderer.Styling
 
         public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<int> prop)
         {
-            if (style.HasValue(prop.name) || style.HasValue(StyleProperties.borderRadius)) return style.GetStyleValue<int>(prop);
+            if (style.HasValue(prop.name)) return style.GetStyleValue<int>(prop);
+            if (style.HasValue(StyleProperties.borderRadius)) return style.borderRadius;
             else return StyleKeyword.Null;
         }
 
         public static StyleColor GetStyleBorderColor(NodeStyle style, StyleProperty<Color> prop)
         {
-            if (style.HasValue(prop.name) || style.HasValue(StyleProperties.borderColor)) return style.GetStyleValue<Color>(prop);
+            if (style.HasValue(prop.name)) return style.GetStyleValue<Color>(prop);
+            if (style.HasValue(StyleProperties.borderColor)) return style.borderColor;
             else return StyleKeyword.Null;
         }
     }
