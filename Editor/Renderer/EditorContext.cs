@@ -84,6 +84,8 @@ namespace ReactUnity.Editor.Renderer
             InsertStyle(EditorResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
 
+            hostElement.styleSheets.Add(EditorResourcesHelper.UtilityStylesheet);
+
             EditorDispatcher.AddCallOnLateUpdate(() =>
             {
                 if (Scheduled)

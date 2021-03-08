@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,5 +16,9 @@ namespace ReactUnity.Editor.Renderer.Styling
 
         private static Font defaultFont;
         public static Font DefaultFont => defaultFont ??= Resources.Load<Font>("ReactUnity/fonts/sans-serif");
+
+        private static StyleSheet utilityStylesheet;
+        public static StyleSheet UtilityStylesheet => utilityStylesheet ??= Resources.Load<StyleSheet>("ReactUnity/editor/styles/react-unity-utils");
+        public const string UtilityCursorClassPrefix = "react-unity_cursor_";
     }
 }

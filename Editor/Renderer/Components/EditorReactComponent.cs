@@ -52,6 +52,7 @@ namespace ReactUnity.Editor.Renderer.Components
 
 
         Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
+        private string currentCursor = null;
 
         public EditorReactComponent(T element, EditorContext context, string tag)
         {
@@ -157,6 +158,12 @@ namespace ReactUnity.Editor.Renderer.Components
                 Element.style.unityFontStyleAndWeight = StylingHelpers.ConvertFontStyle(Style.fontStyle, Style.fontWeight);
             else Element.style.unityFontStyleAndWeight = StyleKeyword.Null;
 
+
+            if (Style.HasValue(StyleProperties.backgroundImage) && Style.HasValue(StyleProperties.backgroundColor))
+                Element.style.unityBackgroundImageTintColor = Style.backgroundColor;
+            else Element.style.unityBackgroundImageTintColor = StyleKeyword.Null;
+
+
             if (Style.HasValue(StyleProperties.textAlign))
             {
                 if (StylingHelpers.TextAlignMap.TryGetValue(Style.textAlign, out var value)) Element.style.unityTextAlign = value;
@@ -164,8 +171,6 @@ namespace ReactUnity.Editor.Renderer.Components
             }
             else Element.style.unityTextAlign = StyleKeyword.Null;
 
-            if (Style.HasValue(StyleProperties.backgroundColor)) Element.style.unityBackgroundImageTintColor = Style.backgroundColor;
-            else Element.style.unityBackgroundImageTintColor = StyleKeyword.Null;
 
             if (Style.HasValue(StyleProperties.fontFamily))
             {
@@ -176,6 +181,30 @@ namespace ReactUnity.Editor.Renderer.Components
                 });
             }
             else Element.style.unityFont = StyleKeyword.Null;
+
+
+            if (Style.HasValue(StyleProperties.cursor))
+            {
+                var cursor = EditorResourcesHelper.UtilityCursorClassPrefix + Style.cursor;
+                if (currentCursor != cursor)
+                {
+                    if (currentCursor != null)
+                    {
+                        Element.RemoveFromClassList(currentCursor);
+                        currentCursor = null;
+                    }
+                    if (cursor != null)
+                    {
+                        currentCursor = cursor;
+                        Element.AddToClassList(currentCursor);
+                    }
+                }
+            }
+            else if (currentCursor != null)
+            {
+                Element.RemoveFromClassList(currentCursor);
+                currentCursor = null;
+            }
         }
 
         public void Destroy()
