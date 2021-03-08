@@ -1,12 +1,12 @@
 //
 // Types in assemblies: UnityEditor.CoreModule
-// Generated 7.03.2021 23:18:53
+// Generated 9.03.2021 02:10:14
 //
 import { System } from './system';
 import { UnityEngine,Unity } from './unity';
 
-export namespace UnityEditor {
-  export declare class ActiveEditorTracker {
+export declare namespace UnityEditor {
+  export class ActiveEditorTracker {
     constructor();
     activeEditors: UnityEditor.Editor[];
     isDirty: boolean;
@@ -28,19 +28,19 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ArrayUtility {
+  export class ArrayUtility {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssemblyReloadEvents {
+  export class AssemblyReloadEvents {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssemblyReloadEvents_AssemblyReloadCallback {
+  export class AssemblyReloadEvents_AssemblyReloadCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -61,7 +61,7 @@ export namespace UnityEditor {
     FailedDelete = 1,
     DidDelete = 2,
   }
-  export declare class AssetModificationProcessor {
+  export class AssetModificationProcessor {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
@@ -73,7 +73,7 @@ export namespace UnityEditor {
     FailedMove = 1,
     DidMove = 2,
   }
-  export declare class AssetPostprocessor {
+  export class AssetPostprocessor {
     constructor();
     assetPath: string;
     context: UnityEditor.AssetImporters.AssetImportContext;
@@ -141,7 +141,7 @@ export namespace UnityEditor {
     DisableLoadAssetByFileNameWithExtension = 8192,
     AssetBundleStripUnityVersion = 32768,
   }
-  export declare class AssetBundleBuild {
+  export class AssetBundleBuild {
     assetBundleName: string;
     assetBundleVariant: string;
     assetNames: string[];
@@ -151,7 +151,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class BuildPlayerOptions {
+  export class BuildPlayerOptions {
     scenes: string[];
     locationPathName: string;
     assetBundleManifestPath: string;
@@ -169,7 +169,7 @@ export namespace UnityEditor {
     PlayerConnectsToHost = 1,
     PlayerListens = 2,
   }
-  export declare class BuildPipeline {
+  export class BuildPipeline {
     constructor();
     static isBuildingPlayer: boolean;
     static GetBuildTargetGroup(platform: UnityEditor.BuildTarget): UnityEditor.BuildTargetGroup;
@@ -195,7 +195,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class BuildPlayerWindow {
+  export class BuildPlayerWindow {
     constructor();
     rootVisualElement: UnityEngine.UIElements.VisualElement;
     wantsMouseMove: boolean;
@@ -247,7 +247,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class BuildPlayerWindow_BuildMethodException {
+  export class BuildPlayerWindow_BuildMethodException {
     constructor();
     constructor(message: string);
     Message: string;
@@ -266,7 +266,7 @@ export namespace UnityEditor {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class BuildPlayerWindow_DefaultBuildMethods {
+  export class BuildPlayerWindow_DefaultBuildMethods {
     static BuildPlayer(options: UnityEditor.BuildPlayerOptions): void;
     static GetBuildPlayerOptions(defaultBuildPlayerOptions: UnityEditor.BuildPlayerOptions): UnityEditor.BuildPlayerOptions;
     Equals(obj: System.Object): boolean;
@@ -341,7 +341,7 @@ export namespace UnityEditor {
     Stadia = 29,
     CloudRendering = 30,
   }
-  export declare class DefaultAsset {
+  export class DefaultAsset {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID(): number;
@@ -358,7 +358,7 @@ export namespace UnityEditor {
     Generic = 4,
     Rejected = 32,
   }
-  export declare class DragAndDrop {
+  export class DragAndDrop {
     constructor();
     static objectReferences: UnityEngine.Object[];
     static paths: string[];
@@ -384,7 +384,7 @@ export namespace UnityEditor {
     NotSelected = -127,
     SelectedOrChild = -127,
   }
-  export declare class EditorApplication {
+  export class EditorApplication {
     constructor();
     static isPlaying: boolean;
     static isPlayingOrWillChangePlaymode: boolean;
@@ -443,7 +443,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorApplication_ProjectWindowItemCallback {
+  export class EditorApplication_ProjectWindowItemCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -459,7 +459,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorApplication_HierarchyWindowItemCallback {
+  export class EditorApplication_HierarchyWindowItemCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -475,7 +475,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorApplication_CallbackFunction {
+  export class EditorApplication_CallbackFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -491,7 +491,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorApplication_SerializedPropertyCallbackFunction {
+  export class EditorApplication_SerializedPropertyCallbackFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -517,7 +517,7 @@ export namespace UnityEditor {
     Paused = 0,
     Unpaused = 1,
   }
-  export declare class EditorBuildSettingsScene {
+  export class EditorBuildSettingsScene {
     constructor();
     constructor(path: string, enabled: boolean);
     constructor(guid: UnityEditor.GUID, enabled: boolean);
@@ -531,7 +531,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorBuildSettings {
+  export class EditorBuildSettings {
     static scenes: UnityEditor.EditorBuildSettingsScene[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -544,7 +544,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class EditorGUI {
+  export class EditorGUI {
     constructor();
     static showMixedValue: boolean;
     static actionKey: boolean;
@@ -842,7 +842,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUI_DisabledGroupScope {
+  export class EditorGUI_DisabledGroupScope {
     constructor(disabled: boolean);
     Dispose(): void;
     Equals(obj: System.Object): boolean;
@@ -850,7 +850,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUI_DisabledScope {
+  export class EditorGUI_DisabledScope {
     constructor(disabled: boolean);
     Dispose(): void;
     Equals(obj: System.Object): boolean;
@@ -858,7 +858,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class EditorGUI_ChangeCheckScope {
+  export class EditorGUI_ChangeCheckScope {
     constructor();
     changed: boolean;
     Dispose(): void;
@@ -867,7 +867,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUI_IndentLevelScope {
+  export class EditorGUI_IndentLevelScope {
     constructor();
     constructor(increment: number);
     Dispose(): void;
@@ -876,7 +876,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUI_PropertyScope {
+  export class EditorGUI_PropertyScope {
     constructor(totalPosition: UnityEngine.Rect, label: UnityEngine.GUIContent, property: UnityEditor.SerializedProperty);
     content: UnityEngine.GUIContent;
     Dispose(): void;
@@ -885,7 +885,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUILayout {
+  export class EditorGUILayout {
     constructor();
     static Foldout(foldout: boolean, content: string): boolean;
     static Foldout(foldout: boolean, content: string, style: UnityEngine.GUIStyle): boolean;
@@ -1171,7 +1171,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUILayout_ToggleGroupScope {
+  export class EditorGUILayout_ToggleGroupScope {
     constructor(label: string, toggle: boolean);
     constructor(label: UnityEngine.GUIContent, toggle: boolean);
     enabled: boolean;
@@ -1181,7 +1181,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUILayout_HorizontalScope {
+  export class EditorGUILayout_HorizontalScope {
     constructor(...options: UnityEngine.GUILayoutOption[]);
     constructor(style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     rect: UnityEngine.Rect;
@@ -1191,7 +1191,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUILayout_VerticalScope {
+  export class EditorGUILayout_VerticalScope {
     constructor(...options: UnityEngine.GUILayoutOption[]);
     constructor(style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     rect: UnityEngine.Rect;
@@ -1201,7 +1201,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUILayout_ScrollViewScope {
+  export class EditorGUILayout_ScrollViewScope {
     constructor(scrollPosition: UnityEngine.Vector2, ...options: UnityEngine.GUILayoutOption[]);
     constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, ...options: UnityEngine.GUILayoutOption[]);
     constructor(scrollPosition: UnityEngine.Vector2, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
@@ -1215,7 +1215,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUILayout_FadeGroupScope {
+  export class EditorGUILayout_FadeGroupScope {
     constructor(value: number);
     visible: boolean;
     Dispose(): void;
@@ -1257,7 +1257,7 @@ export namespace UnityEditor {
     Inspector = 1,
     Scene = 2,
   }
-  export declare class EditorGUIUtility {
+  export class EditorGUIUtility {
     constructor();
     static whiteTexture: UnityEngine.Texture2D;
     static systemCopyBuffer: string;
@@ -1338,7 +1338,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorGUIUtility_IconSizeScope {
+  export class EditorGUIUtility_IconSizeScope {
     constructor(iconSizeWithinScope: UnityEngine.Vector2);
     Dispose(): void;
     Equals(obj: System.Object): boolean;
@@ -1346,7 +1346,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SessionState {
+  export class SessionState {
     constructor();
     static SetBool(key: string, value: boolean): void;
     static GetBool(key: string, defaultValue: boolean): boolean;
@@ -1371,7 +1371,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorPrefs {
+  export class EditorPrefs {
     constructor();
     static SetInt(key: string, value: number): void;
     static GetInt(key: string, defaultValue: number): number;
@@ -1429,7 +1429,7 @@ export namespace UnityEditor {
     DisableDomainReload = 1,
     DisableSceneReload = 2,
   }
-  export declare class EditorSettings {
+  export class EditorSettings {
     static unityRemoteDevice: string;
     static unityRemoteCompression: string;
     static unityRemoteResolution: string;
@@ -1590,7 +1590,7 @@ export namespace UnityEditor {
     Proguard = 1,
     Gradle = 2,
   }
-  export declare class EditorUserBuildSettings {
+  export class EditorUserBuildSettings {
     static selectedBuildTargetGroup: UnityEditor.BuildTargetGroup;
     static selectedStandaloneTarget: UnityEditor.BuildTarget;
     static ps4BuildSubtarget: UnityEditor.PS4BuildSubtarget;
@@ -1680,7 +1680,7 @@ export namespace UnityEditor {
     Premerge = 1,
     Ask = 2,
   }
-  export declare class EditorUserSettings {
+  export class EditorUserSettings {
     static AutomaticAdd: boolean;
     static WorkOffline: boolean;
     static showFailedCheckout: boolean;
@@ -1698,7 +1698,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class EditorUtility {
+  export class EditorUtility {
     constructor();
     static audioMasterMute: boolean;
     static scriptCompilationFailed: boolean;
@@ -1783,7 +1783,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorUtility_SelectMenuItemFunction {
+  export class EditorUtility_SelectMenuItemFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -1817,7 +1817,7 @@ export namespace UnityEditor {
     ForThisMachine = 0,
     ForThisSession = 1,
   }
-  export declare class SceneAsset {
+  export class SceneAsset {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID(): number;
@@ -1826,7 +1826,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class EditorWindow {
+  export class EditorWindow {
     constructor();
     rootVisualElement: UnityEngine.UIElements.VisualElement;
     wantsMouseMove: boolean;
@@ -1891,7 +1891,7 @@ export namespace UnityEditor {
     IncludeDependencies = 4,
     IncludeLibraryAssets = 8,
   }
-  export declare class FileUtil {
+  export class FileUtil {
     constructor();
     static DeleteFileOrDirectory(path: string): boolean;
     static CopyFileOrDirectory(source: string, dest: string): void;
@@ -1906,7 +1906,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GameObjectUtility {
+  export class GameObjectUtility {
     constructor();
     static GetStaticEditorFlags(go: UnityEngine.GameObject): UnityEditor.StaticEditorFlags;
     static SetStaticEditorFlags(go: UnityEngine.GameObject, flags: UnityEditor.StaticEditorFlags): void;
@@ -1930,7 +1930,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GlobalObjectId {
+  export class GlobalObjectId {
     targetObjectId: System.UInt64;
     targetPrefabId: System.UInt64;
     assetGUID: UnityEditor.GUID;
@@ -1949,7 +1949,7 @@ export namespace UnityEditor {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class GUID {
+  export class GUID {
     constructor(hexRepresentation: string);
     Equals(obj: System.Object): boolean;
     Equals(obj: UnityEditor.GUID): boolean;
@@ -1962,7 +1962,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Handles {
+  export class Handles {
     constructor();
     static lighting: boolean;
     static color: UnityEngine.Color;
@@ -2072,7 +2072,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Handles_DrawingScope {
+  export class Handles_DrawingScope {
     constructor(color: UnityEngine.Color);
     constructor(matrix: UnityEngine.Matrix4x4);
     constructor(color: UnityEngine.Color, matrix: UnityEngine.Matrix4x4);
@@ -2084,7 +2084,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Handles_CapFunction {
+  export class Handles_CapFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -2100,7 +2100,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Handles_SizeFunction {
+  export class Handles_SizeFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -2116,7 +2116,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class HandleUtility {
+  export class HandleUtility {
     constructor();
     static acceleration: number;
     static niceMouseDelta: number;
@@ -2163,7 +2163,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class HandleUtility_PickGameObjectCallback {
+  export class HandleUtility_PickGameObjectCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -2176,7 +2176,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class HandleUtility_PlaceObjectDelegate {
+  export class HandleUtility_PlaceObjectDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -2189,7 +2189,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Help {
+  export class Help {
     constructor();
     static HasHelpForObject(obj: UnityEngine.Object): boolean;
     static GetHelpURLForObject(obj: UnityEngine.Object): string;
@@ -2214,7 +2214,7 @@ export namespace UnityEditor {
     NonTexture = 0,
     Texture = 1,
   }
-  export declare class HierarchyProperty {
+  export class HierarchyProperty {
     constructor(hierarchyType: UnityEditor.HierarchyType);
     constructor(hierarchyType: UnityEditor.HierarchyType, forceImport: boolean);
     constructor(rootPath: string);
@@ -2264,7 +2264,7 @@ export namespace UnityEditor {
   export interface IHasCustomMenu {
     AddItemsToMenu(menu: UnityEditor.GenericMenu): void;
   }
-  export declare class LODUtility {
+  export class LODUtility {
     constructor();
     static CalculateLODGroupBoundingBox(group: UnityEngine.LODGroup): void;
     Equals(obj: System.Object): boolean;
@@ -2272,7 +2272,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MaterialProperty {
+  export class MaterialProperty {
     constructor();
     targets: UnityEngine.Object[];
     type: UnityEditor.MaterialProperty_PropType;
@@ -2295,7 +2295,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MaterialProperty_ApplyPropertyCallback {
+  export class MaterialProperty_ApplyPropertyCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -2336,7 +2336,7 @@ export namespace UnityEditor {
     Cube = 4,
     Any = 6,
   }
-  export declare class Menu {
+  export class Menu {
     constructor();
     static SetChecked(menuPath: string, isChecked: boolean): void;
     static GetChecked(menuPath: string): boolean;
@@ -2346,7 +2346,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MenuCommand {
+  export class MenuCommand {
     constructor(inContext: UnityEngine.Object, inUserData: number);
     constructor(inContext: UnityEngine.Object);
     context: UnityEngine.Object;
@@ -2356,7 +2356,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MeshUtility {
+  export class MeshUtility {
     constructor();
     static Optimize(mesh: UnityEngine.Mesh): void;
     static SetMeshCompression(mesh: UnityEngine.Mesh, compression: UnityEditor.ModelImporterMeshCompression): void;
@@ -2370,7 +2370,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MonoScript {
+  export class MonoScript {
     constructor();
     bytes: System.Byte[];
     text: string;
@@ -2385,7 +2385,7 @@ export namespace UnityEditor {
     Equals(other: System.Object): boolean;
     GetType(): System.Type;
   }
-  export declare class ObjectFactory {
+  export class ObjectFactory {
     static CreateInstance(type: System.Type): UnityEngine.Object;
     static AddComponent(gameObject: UnityEngine.GameObject, type: System.Type): UnityEngine.Component;
     static CreateGameObject(scene: UnityEngine.SceneManagement.Scene, hideFlags: UnityEngine.HideFlags, name: string, ...types: System.Type[]): UnityEngine.GameObject;
@@ -2396,7 +2396,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ObjectNames {
+  export class ObjectNames {
     constructor();
     static NicifyVariableName(name: string): string;
     static GetClassName(obj: UnityEngine.Object): string;
@@ -2411,7 +2411,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PackageInfo {
+  export class PackageInfo {
     packagePath: string;
     jsonInfo: string;
     iconURL: string;
@@ -2523,7 +2523,7 @@ export namespace UnityEditor {
     XYZ = 0,
     DXT5nm = 1,
   }
-  export declare class PlayerSettings {
+  export class PlayerSettings {
     static companyName: string;
     static productName: string;
     static showUnitySplashScreen: boolean;
@@ -2716,7 +2716,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class PlayerSettings_Android {
+  export class PlayerSettings_Android {
     constructor();
     static targetDevice: UnityEditor.AndroidTargetDevice;
     static disableDepthAndStencilBuffers: boolean;
@@ -2753,7 +2753,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_iOS {
+  export class PlayerSettings_iOS {
     constructor();
     static exitOnSuspend: boolean;
     static targetResolution: UnityEditor.iOSTargetResolution;
@@ -2796,7 +2796,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_Facebook {
+  export class PlayerSettings_Facebook {
     constructor();
     static sdkVersion: string;
     static appId: string;
@@ -2808,7 +2808,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_Lumin {
+  export class PlayerSettings_Lumin {
     constructor();
     static iconModelFolderPath: string;
     static iconPortalFolderPath: string;
@@ -2822,7 +2822,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_macOS {
+  export class PlayerSettings_macOS {
     constructor();
     static buildNumber: string;
     Equals(obj: System.Object): boolean;
@@ -2830,7 +2830,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_PS4 {
+  export class PlayerSettings_PS4 {
     constructor();
     static npTrophyPackPath: string;
     static npAgeRating: number;
@@ -2939,7 +2939,7 @@ export namespace UnityEditor {
     ForceDefault = 1,
     DynamicModeAtRuntime = 2,
   }
-  export declare class PlayerSettings_SplashScreenLogo {
+  export class PlayerSettings_SplashScreenLogo {
     logo: UnityEngine.Sprite;
     static unityLogo: UnityEngine.Sprite;
     duration: number;
@@ -2953,7 +2953,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class PlayerSettings_SplashScreen {
+  export class PlayerSettings_SplashScreen {
     constructor();
     static animationMode: UnityEditor.PlayerSettings_SplashScreen_AnimationMode;
     static animationBackgroundZoom: number;
@@ -2986,7 +2986,7 @@ export namespace UnityEditor {
     DarkOnLight = 0,
     LightOnDark = 1,
   }
-  export declare class PlayerSettings_Switch {
+  export class PlayerSettings_Switch {
     constructor();
     static socketMemoryPoolSize: number;
     static socketAllocatorPoolSize: number;
@@ -3135,7 +3135,7 @@ export namespace UnityEditor {
     JoyLeft = 256,
     JoyRight = 65536,
   }
-  export declare class PlayerSettings_tvOS {
+  export class PlayerSettings_tvOS {
     constructor();
     static sdkVersion: UnityEditor.tvOSSdkVersion;
     static buildNumber: string;
@@ -3147,7 +3147,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_WebGL {
+  export class PlayerSettings_WebGL {
     constructor();
     static memorySize: number;
     static exceptionSupport: UnityEditor.WebGLExceptionSupport;
@@ -3266,7 +3266,7 @@ export namespace UnityEditor {
     IndependentInputSource = 1,
     SwapChainPanel = 2,
   }
-  export declare class PlayerSettings_WSASupportedFileType {
+  export class PlayerSettings_WSASupportedFileType {
     contentType: string;
     fileType: string;
     Equals(obj: System.Object): boolean;
@@ -3274,7 +3274,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class PlayerSettings_WSAFileTypeAssociations {
+  export class PlayerSettings_WSAFileTypeAssociations {
     name: string;
     supportedFileTypes: UnityEditor.PlayerSettings_WSASupportedFileType[];
     Equals(obj: System.Object): boolean;
@@ -3282,7 +3282,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class PlayerSettings_WSA {
+  export class PlayerSettings_WSA {
     constructor();
     static transparentSwapchain: boolean;
     static packageName: string;
@@ -3361,7 +3361,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_WSA_Declarations {
+  export class PlayerSettings_WSA_Declarations {
     static protocolName: string;
     static fileTypeAssociations: UnityEditor.PlayerSettings_WSAFileTypeAssociations;
     Equals(obj: System.Object): boolean;
@@ -3369,7 +3369,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_XboxOne {
+  export class PlayerSettings_XboxOne {
     constructor();
     static XTitleMemory: number;
     static defaultLoggingLevel: UnityEditor.XboxOneLoggingLevel;
@@ -3416,7 +3416,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerSettings_VRWindowsMixedReality {
+  export class PlayerSettings_VRWindowsMixedReality {
     static depthBufferFormat: UnityEditor.PlayerSettings_VRWindowsMixedReality_DepthBufferFormat;
     static depthBufferSharingEnabled: boolean;
     Equals(obj: System.Object): boolean;
@@ -3585,7 +3585,7 @@ export namespace UnityEditor {
     Development = 1,
     Distribution = 2,
   }
-  export declare class iOSDeviceRequirement {
+  export class iOSDeviceRequirement {
     constructor();
     values: System.Collections.Generic.IDictionary<string, string>;
     Equals(obj: System.Object): boolean;
@@ -3640,14 +3640,14 @@ export namespace UnityEditor {
     Mono = 0,
     Roslyn = 1,
   }
-  export declare class SaveAssetsProcessor {
+  export class SaveAssetsProcessor {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SceneVisibilityManager {
+  export class SceneVisibilityManager {
     constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -3692,7 +3692,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ScriptableSingleton<T = any> {
+  export class ScriptableSingleton<T = any> {
     static instance: any; // T
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -3703,7 +3703,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ScriptableWizard {
+  export class ScriptableWizard {
     constructor();
     helpString: string;
     errorString: string;
@@ -3769,7 +3769,7 @@ export namespace UnityEditor {
     DeepAssets = 32,
     OnlyUserModifiable = 8,
   }
-  export declare class Selection {
+  export class Selection {
     constructor();
     static transforms: UnityEngine.Transform[];
     static activeTransform: UnityEngine.Transform;
@@ -3793,7 +3793,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SerializedObject {
+  export class SerializedObject {
     constructor(obj: UnityEngine.Object);
     constructor(obj: UnityEngine.Object, context: UnityEngine.Object);
     constructor(objs: UnityEngine.Object[]);
@@ -3848,7 +3848,7 @@ export namespace UnityEditor {
     BoundsInt = 23,
     ManagedReference = 24,
   }
-  export declare class SerializedProperty {
+  export class SerializedProperty {
     serializedObject: UnityEditor.SerializedObject;
     exposedReferenceValue: UnityEngine.Object;
     hasMultipleDifferentValues: boolean;
@@ -3929,7 +3929,7 @@ export namespace UnityEditor {
     ForcePlatformPreprocessor = 1,
     ForceCachingPreprocessor = 2,
   }
-  export declare class ShaderInfo {
+  export class ShaderInfo {
     name: string;
     supported: boolean;
     hasErrors: boolean;
@@ -3938,7 +3938,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ShaderMessage {
+  export class ShaderMessage {
     constructor(msg: string, sev?: UnityEditor.Rendering.ShaderCompilerMessageSeverity);
     message: string;
     messageDetails: string;
@@ -3952,7 +3952,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ShaderUtil {
+  export class ShaderUtil {
     constructor();
     static hardwareSupportsRectRenderTexture: boolean;
     static anythingCompiling: boolean;
@@ -4016,7 +4016,7 @@ export namespace UnityEditor {
     Range = 3,
     TexEnv = 4,
   }
-  export declare class ShaderData {
+  export class ShaderData {
     ActiveSubshaderIndex: number;
     SubshaderCount: number;
     SourceShader: UnityEngine.Shader;
@@ -4027,7 +4027,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ShaderData_Subshader {
+  export class ShaderData_Subshader {
     PassCount: number;
     GetPass(passIndex: number): UnityEditor.ShaderData_Pass;
     Equals(obj: System.Object): boolean;
@@ -4035,7 +4035,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ShaderData_Pass {
+  export class ShaderData_Pass {
     SourceCode: string;
     Name: string;
     Equals(obj: System.Object): boolean;
@@ -4053,7 +4053,7 @@ export namespace UnityEditor {
     ReflectionProbeStatic = 64,
     LightmapStatic = 1,
   }
-  export declare class StaticOcclusionCulling {
+  export class StaticOcclusionCulling {
     static isRunning: boolean;
     static smallestOccluder: number;
     static smallestHole: number;
@@ -4071,7 +4071,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class StaticOcclusionCullingVisualization {
+  export class StaticOcclusionCullingVisualization {
     static showOcclusionCulling: boolean;
     static showPreVisualization: boolean;
     static showViewVolumes: boolean;
@@ -4087,7 +4087,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class TypeCache {
+  export class TypeCache {
     static GetTypesWithAttribute(attrType: System.Type): UnityEditor.TypeCache_TypeCollection;
     static GetMethodsWithAttribute(attrType: System.Type): UnityEditor.TypeCache_MethodCollection;
     static GetFieldsWithAttribute(attrType: System.Type): UnityEditor.TypeCache_FieldInfoCollection;
@@ -4097,7 +4097,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class TypeCache_TypeCollection {
+  export class TypeCache_TypeCollection {
     Count: number;
     IsReadOnly: boolean;
     IsFixedSize: boolean;
@@ -4114,7 +4114,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TypeCache_TypeCollection_Enumerator {
+  export class TypeCache_TypeCollection_Enumerator {
     Current: System.Type;
     Dispose(): void;
     MoveNext(): boolean;
@@ -4123,7 +4123,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TypeCache_MethodCollection {
+  export class TypeCache_MethodCollection {
     Count: number;
     IsReadOnly: boolean;
     IsFixedSize: boolean;
@@ -4140,7 +4140,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TypeCache_MethodCollection_Enumerator {
+  export class TypeCache_MethodCollection_Enumerator {
     Current: System.Reflection.MethodInfo;
     Dispose(): void;
     MoveNext(): boolean;
@@ -4149,7 +4149,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TypeCache_FieldInfoCollection {
+  export class TypeCache_FieldInfoCollection {
     Count: number;
     IsReadOnly: boolean;
     IsFixedSize: boolean;
@@ -4166,7 +4166,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TypeCache_FieldInfoCollection_Enumerator {
+  export class TypeCache_FieldInfoCollection_Enumerator {
     Current: System.Reflection.FieldInfo;
     Dispose(): void;
     MoveNext(): boolean;
@@ -4175,7 +4175,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Undo {
+  export class Undo {
     constructor();
     static undoRedoPerformed: UnityEditor.Undo_UndoRedoCallback;
     static willFlushUndoRecord: UnityEditor.Undo_WillFlushUndoRecord;
@@ -4219,7 +4219,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Undo_UndoRedoCallback {
+  export class Undo_UndoRedoCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -4235,7 +4235,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Undo_WillFlushUndoRecord {
+  export class Undo_WillFlushUndoRecord {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -4251,7 +4251,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Undo_PostprocessModifications {
+  export class Undo_PostprocessModifications {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -4267,7 +4267,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UnityStats {
+  export class UnityStats {
     constructor();
     static batches: number;
     static drawCalls: number;
@@ -4308,7 +4308,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Unsupported {
+  export class Unsupported {
     static useScriptableRenderPipeline: boolean;
     static CaptureScreenshotImmediate(filePath: string, x: number, y: number, width: number, height: number): void;
     static GetSubmenusCommands(menuPath: string): string[];
@@ -4366,7 +4366,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UnwrapParam {
+  export class UnwrapParam {
     angleError: number;
     areaError: number;
     hardAngle: number;
@@ -4376,7 +4376,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Unwrapping {
+  export class Unwrapping {
     static GeneratePerTriangleUV(src: UnityEngine.Mesh): UnityEngine.Vector2[];
     static GeneratePerTriangleUV(src: UnityEngine.Mesh, settings: UnityEditor.UnwrapParam): UnityEngine.Vector2[];
     static GenerateSecondaryUVSet(src: UnityEngine.Mesh): void;
@@ -4386,7 +4386,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ExternalVersionControl {
+  export class ExternalVersionControl {
     constructor(value: string);
     static Disabled: string;
     static AutoDetect: string;
@@ -4397,7 +4397,7 @@ export namespace UnityEditor {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class VersionControlSettings {
+  export class VersionControlSettings {
     static mode: string;
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -4426,7 +4426,7 @@ export namespace UnityEditor {
     kUV3 = 64,
     kTangent = 128,
   }
-  export declare class AnimationClipSettings {
+  export class AnimationClipSettings {
     constructor();
     additiveReferencePoseClip: UnityEngine.AnimationClip;
     additiveReferencePoseTime: number;
@@ -4451,7 +4451,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AnimationModeDriver {
+  export class AnimationModeDriver {
     constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -4462,7 +4462,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AnimationMode {
+  export class AnimationMode {
     constructor();
     static animatedPropertyColor: UnityEngine.Color;
     static recordedPropertyColor: UnityEngine.Color;
@@ -4485,7 +4485,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ObjectReferenceKeyframe {
+  export class ObjectReferenceKeyframe {
     time: number;
     value: UnityEngine.Object;
     Equals(obj: System.Object): boolean;
@@ -4493,7 +4493,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AnimationClipCurveData {
+  export class AnimationClipCurveData {
     constructor();
     constructor(binding: UnityEditor.EditorCurveBinding);
     path: string;
@@ -4505,7 +4505,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AnimationUtility {
+  export class AnimationUtility {
     constructor();
     static onCurveWasModified: UnityEditor.AnimationUtility_OnCurveWasModified;
     static GetAnimationClips(component: UnityEngine.Animation): UnityEngine.AnimationClip[];
@@ -4562,7 +4562,7 @@ export namespace UnityEditor {
     Constant = 3,
     ClampedAuto = 4,
   }
-  export declare class AnimationUtility_OnCurveWasModified {
+  export class AnimationUtility_OnCurveWasModified {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -4578,7 +4578,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorCurveBinding {
+  export class EditorCurveBinding {
     isPPtrCurve: boolean;
     isDiscreteCurve: boolean;
     type: System.Type;
@@ -4593,7 +4593,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AnimationWindow {
+  export class AnimationWindow {
     animationClip: UnityEngine.AnimationClip;
     previewing: boolean;
     canPreview: boolean;
@@ -4695,7 +4695,7 @@ export namespace UnityEditor {
     BakedLightmapCulling = 34,
     GIContributorsReceivers = 35,
   }
-  export declare class SceneViewCameraWindow {
+  export class SceneViewCameraWindow {
     constructor(sceneView: UnityEditor.SceneView);
     editorWindow: UnityEditor.EditorWindow;
     GetWindowSize(): UnityEngine.Vector2;
@@ -4707,7 +4707,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetDatabase {
+  export class AssetDatabase {
     constructor();
     static GlobalArtifactDependencyVersion: System.UInt32;
     static GlobalArtifactProcessedVersion: System.UInt32;
@@ -4847,7 +4847,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetDatabase_ImportPackageCallback {
+  export class AssetDatabase_ImportPackageCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -4863,7 +4863,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetDatabase_ImportPackageFailedCallback {
+  export class AssetDatabase_ImportPackageFailedCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -4892,7 +4892,7 @@ export namespace UnityEditor {
     Ignored = 8,
     BadState = 9,
   }
-  export declare class AssetsItem {
+  export class AssetsItem {
     constructor();
     guid: string;
     pathName: string;
@@ -4909,7 +4909,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetPreview {
+  export class AssetPreview {
     constructor();
     static GetAssetPreview(asset: UnityEngine.Object): UnityEngine.Texture2D;
     static IsLoadingAssetPreview(instanceID: number): boolean;
@@ -4922,7 +4922,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetImporter {
+  export class AssetImporter {
     constructor();
     assetPath: string;
     importSettingsMissing: boolean;
@@ -4945,7 +4945,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AssetImporter_SourceAssetIdentifier {
+  export class AssetImporter_SourceAssetIdentifier {
     constructor(asset: UnityEngine.Object);
     constructor(type: System.Type, name: string);
     type: System.Type;
@@ -4955,14 +4955,14 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MaterialEditorExtensions {
+  export class MaterialEditorExtensions {
     static PerformBumpMapCheck(material: UnityEngine.Material): void;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ComputeShaderImporter {
+  export class ComputeShaderImporter {
     constructor();
     preprocessorOverride: UnityEditor.PreprocessorOverride;
     assetPath: string;
@@ -4985,7 +4985,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class DDSImporter {
+  export class DDSImporter {
     constructor();
     isReadable: boolean;
     assetPath: string;
@@ -5008,7 +5008,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class IHVImageFormatImporter {
+  export class IHVImageFormatImporter {
     constructor();
     isReadable: boolean;
     filterMode: UnityEngine.FilterMode;
@@ -5038,7 +5038,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ShaderImporter {
+  export class ShaderImporter {
     constructor();
     preprocessorOverride: UnityEditor.PreprocessorOverride;
     assetPath: string;
@@ -5066,7 +5066,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SpeedTreeImporter {
+  export class SpeedTreeImporter {
     constructor();
     hasImported: boolean;
     materialFolderPath: string;
@@ -5122,7 +5122,7 @@ export namespace UnityEditor {
     External = 0,
     InPrefab = 1,
   }
-  export declare class TextureImporter {
+  export class TextureImporter {
     constructor();
     textureFormat: UnityEditor.TextureImporterFormat;
     maxTextureSize: number;
@@ -5369,7 +5369,7 @@ export namespace UnityEditor {
     Quality16Bit = 2,
     Quality32BitDownscaled = 3,
   }
-  export declare class SpriteMetaData {
+  export class SpriteMetaData {
     name: string;
     rect: UnityEngine.Rect;
     alignment: number;
@@ -5380,7 +5380,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TextureImporterSettings {
+  export class TextureImporterSettings {
     constructor();
     textureType: UnityEditor.TextureImporterType;
     textureShape: UnityEditor.TextureImporterShape;
@@ -5447,7 +5447,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class TextureImporterPlatformSettings {
+  export class TextureImporterPlatformSettings {
     constructor();
     name: string;
     overridden: boolean;
@@ -5465,7 +5465,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetStoreAsset {
+  export class AssetStoreAsset {
     constructor();
     Preview: UnityEngine.Object;
     HasLivePreview: boolean;
@@ -5484,7 +5484,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioCurveRendering {
+  export class AudioCurveRendering {
     constructor();
     static kAudioOrange: UnityEngine.Color;
     static BeginCurveFrame(r: UnityEngine.Rect): UnityEngine.Rect;
@@ -5502,7 +5502,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioCurveRendering_AudioCurveEvaluator {
+  export class AudioCurveRendering_AudioCurveEvaluator {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -5518,7 +5518,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioCurveRendering_AudioCurveAndColorEvaluator {
+  export class AudioCurveRendering_AudioCurveAndColorEvaluator {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -5531,7 +5531,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioCurveRendering_AudioMinMaxCurveAndColorEvaluator {
+  export class AudioCurveRendering_AudioMinMaxCurveAndColorEvaluator {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -5544,7 +5544,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class IAudioEffectPlugin {
+  export class IAudioEffectPlugin {
     SetFloatParameter(name: string, value: number): boolean;
     GetSampleRate(): number;
     IsPluginEditableAndEnabled(): boolean;
@@ -5553,7 +5553,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class IAudioEffectPluginGUI {
+  export class IAudioEffectPluginGUI {
     Name: string;
     Description: string;
     Vendor: string;
@@ -5563,7 +5563,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Sysroot {
+  export class Sysroot {
     Name: string;
     HostPlatform: string;
     HostArch: string;
@@ -5576,7 +5576,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class CameraProjectionCache {
+  export class CameraProjectionCache {
     constructor(camera: UnityEngine.Camera);
     WorldToScreenPoint(worldPoint: UnityEngine.Vector3): UnityEngine.Vector2;
     WorldToGUIPoint(worldPoint: UnityEngine.Vector3): UnityEngine.Vector2;
@@ -5587,7 +5587,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CommandHandler {
+  export class CommandHandler {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -5617,7 +5617,7 @@ export namespace UnityEditor {
     UserDefined = -2147483648,
     Any = -1,
   }
-  export declare class CommandExecuteContext {
+  export class CommandExecuteContext {
     constructor();
     data: System.Object;
     args: System.Object[];
@@ -5628,7 +5628,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class CommandService {
+  export class CommandService {
     static GetCommandLabel(commandId: string): string;
     static RegisterCommand(id: string, label: string, handler: UnityEditor.CommandHandler, hint?: UnityEditor.CommandHint): void;
     static RegisterCommand(id: string, handler: UnityEditor.CommandHandler, hint?: UnityEditor.CommandHint): void;
@@ -5642,7 +5642,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ModeService {
+  export class ModeService {
     static modeNames: string[];
     static modeCount: number;
     static currentId: string;
@@ -5656,7 +5656,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ModeService_ModeChangedArgs {
+  export class ModeService_ModeChangedArgs {
     prevIndex: number;
     nextIndex: number;
     Equals(obj: System.Object): boolean;
@@ -5676,7 +5676,7 @@ export namespace UnityEditor {
     N3DS = 8,
     HMD = 9,
   }
-  export declare class LightingDataAsset {
+  export class LightingDataAsset {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetInstanceID(): number;
@@ -5685,7 +5685,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LightmapEditorSettings {
+  export class LightmapEditorSettings {
     static lightmapper: UnityEditor.LightmapEditorSettings_Lightmapper;
     static lightmapsMode: UnityEngine.LightmapsMode;
     static mixedBakeMode: UnityEngine.MixedLightingMode;
@@ -5787,7 +5787,7 @@ export namespace UnityEditor {
     High = 0,
     Low = 1,
   }
-  export declare class LightmapParameters {
+  export class LightmapParameters {
     constructor();
     resolution: number;
     clusterResolution: number;
@@ -5819,7 +5819,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Lightmapping {
+  export class Lightmapping {
     static giWorkflowMode: UnityEditor.Lightmapping_GIWorkflowMode;
     static realtimeGI: boolean;
     static bakedGI: boolean;
@@ -5858,7 +5858,7 @@ export namespace UnityEditor {
     OnDemand = 1,
     Legacy = 2,
   }
-  export declare class Lightmapping_OnStartedFunction {
+  export class Lightmapping_OnStartedFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -5874,7 +5874,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Lightmapping_OnCompletedFunction {
+  export class Lightmapping_OnCompletedFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -5890,7 +5890,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LightmapSnapshot {
+  export class LightmapSnapshot {
     constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -5900,7 +5900,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class EditorMaterialUtility {
+  export class EditorMaterialUtility {
     constructor();
     static ResetDefaultTextures(material: UnityEngine.Material, overrideSetTextures: boolean): void;
     static IsBackgroundMaterial(material: UnityEngine.Material): boolean;
@@ -5911,7 +5911,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorSnapSettings {
+  export class EditorSnapSettings {
     static gridSnapEnabled: boolean;
     static move: UnityEngine.Vector3;
     static rotate: number;
@@ -5922,7 +5922,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ColorPickerHDRConfig {
+  export class ColorPickerHDRConfig {
     constructor(minBrightness: number, maxBrightness: number, minExposureValue: number, maxExposureValue: number);
     minBrightness: number;
     maxBrightness: number;
@@ -5933,7 +5933,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorStyles {
+  export class EditorStyles {
     constructor();
     static label: UnityEngine.GUIStyle;
     static miniLabel: UnityEngine.GUIStyle;
@@ -5992,7 +5992,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GenericMenu {
+  export class GenericMenu {
     constructor();
     allowDuplicateNames: boolean;
     AddItem(content: UnityEngine.GUIContent, on: boolean, func: UnityEditor.GenericMenu_MenuFunction): void;
@@ -6008,7 +6008,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GenericMenu_MenuFunction {
+  export class GenericMenu_MenuFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -6024,7 +6024,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GenericMenu_MenuFunction2 {
+  export class GenericMenu_MenuFunction2 {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -6040,7 +6040,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PopupWindowContent {
+  export class PopupWindowContent {
     editorWindow: UnityEditor.EditorWindow;
     OnGUI(rect: UnityEngine.Rect): void;
     GetWindowSize(): UnityEngine.Vector2;
@@ -6051,7 +6051,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PopupWindow {
+  export class PopupWindow {
     rootVisualElement: UnityEngine.UIElements.VisualElement;
     wantsMouseMove: boolean;
     wantsMouseEnterLeaveWindow: boolean;
@@ -6124,7 +6124,7 @@ export namespace UnityEditor {
     Custom = 6,
     None = -1,
   }
-  export declare class Tools {
+  export class Tools {
     constructor();
     static current: UnityEditor.Tool;
     static viewTool: UnityEditor.ViewTool;
@@ -6159,7 +6159,7 @@ export namespace UnityEditor {
     Off = 2,
     Encoded = 3,
   }
-  export declare class CameraEditor {
+  export class CameraEditor {
     constructor();
     target: UnityEngine.Object;
     targets: UnityEngine.Object[];
@@ -6197,7 +6197,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CameraEditor_Settings {
+  export class CameraEditor_Settings {
     constructor(so: UnityEditor.SerializedObject);
     static ApertureFormatNames: any; // System.Collections.Generic.IEnumerable`1[System.String]
     static ApertureFormatValues: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.Vector2]
@@ -6251,7 +6251,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class CameraEditorUtils {
+  export class CameraEditorUtils {
     static GameViewAspectRatio: number;
     static HandleFrustum(c: UnityEngine.Camera, cameraEditorTargetIndex: number): void;
     static DrawFrustumGizmo(camera: UnityEngine.Camera): void;
@@ -6264,7 +6264,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ObjectPreview {
+  export class ObjectPreview {
     constructor();
     target: UnityEngine.Object;
     Initialize(targets: UnityEngine.Object[]): void;
@@ -6283,7 +6283,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Editor {
+  export class Editor {
     constructor();
     target: UnityEngine.Object;
     targets: UnityEngine.Object[];
@@ -6322,7 +6322,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LightEditor {
+  export class LightEditor {
     constructor();
     target: UnityEngine.Object;
     targets: UnityEngine.Object[];
@@ -6355,7 +6355,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LightEditor_Settings {
+  export class LightEditor_Settings {
     constructor(so: UnityEditor.SerializedObject);
     lightType: UnityEditor.SerializedProperty;
     lightShape: UnityEditor.SerializedProperty;
@@ -6422,7 +6422,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MaterialEditor {
+  export class MaterialEditor {
     constructor();
     isVisible: boolean;
     customShaderGUI: UnityEditor.ShaderGUI;
@@ -6553,7 +6553,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MaterialPropertyDrawer {
+  export class MaterialPropertyDrawer {
     OnGUI(position: UnityEngine.Rect, prop: UnityEditor.MaterialProperty, label: UnityEngine.GUIContent, editor: UnityEditor.MaterialEditor): void;
     OnGUI(position: UnityEngine.Rect, prop: UnityEditor.MaterialProperty, label: string, editor: UnityEditor.MaterialEditor): void;
     GetPropertyHeight(prop: UnityEditor.MaterialProperty, label: string, editor: UnityEditor.MaterialEditor): number;
@@ -6563,7 +6563,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PreviewRenderUtility {
+  export class PreviewRenderUtility {
     constructor(renderFullScene: boolean);
     constructor(renderFullScene: boolean, pixelPerfect: boolean);
     constructor();
@@ -6600,7 +6600,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ShaderGUI {
+  export class ShaderGUI {
     OnGUI(materialEditor: UnityEditor.MaterialEditor, properties: UnityEditor.MaterialProperty[]): void;
     OnMaterialPreviewGUI(materialEditor: UnityEditor.MaterialEditor, r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
     OnMaterialInteractivePreviewGUI(materialEditor: UnityEditor.MaterialEditor, r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
@@ -6612,7 +6612,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class TransformUtils {
+  export class TransformUtils {
     static GetInspectorRotation(t: UnityEngine.Transform): UnityEngine.Vector3;
     static SetInspectorRotation(t: UnityEngine.Transform, r: UnityEngine.Vector3): void;
     Equals(obj: System.Object): boolean;
@@ -6641,7 +6641,7 @@ export namespace UnityEditor {
     BoneLenghtIsZero = 4,
     Valid = 5,
   }
-  export declare class PlatformIcon {
+  export class PlatformIcon {
     layerCount: number;
     maxLayerCount: number;
     minLayerCount: number;
@@ -6657,13 +6657,13 @@ export namespace UnityEditor {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class PlatformIconKind {
+  export class PlatformIconKind {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class PrefabUtility {
+  export class PrefabUtility {
     constructor();
     static prefabInstanceUpdated: UnityEditor.PrefabUtility_PrefabInstanceUpdated;
     static GetPrefabObject(targetObject: UnityEngine.Object): UnityEngine.Object;
@@ -6743,7 +6743,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PrefabUtility_PrefabInstanceUpdated {
+  export class PrefabUtility_PrefabInstanceUpdated {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -6759,7 +6759,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PrefabUtility_EditPrefabContentsScope {
+  export class PrefabUtility_EditPrefabContentsScope {
     constructor(assetPath: string);
     assetPath: string;
     prefabContentsRoot: UnityEngine.GameObject;
@@ -6801,7 +6801,7 @@ export namespace UnityEditor {
     ConnectToPrefab = 1,
     ReplaceNameBased = 2,
   }
-  export declare class PropertyModification {
+  export class PropertyModification {
     constructor();
     target: UnityEngine.Object;
     propertyPath: string;
@@ -6816,7 +6816,7 @@ export namespace UnityEditor {
     Binary = 0,
     Text = 1,
   }
-  export declare class Progress {
+  export class Progress {
     static running: boolean;
     static globalProgress: number;
     static globalRemainingTime: System.TimeSpan;
@@ -6898,7 +6898,7 @@ export namespace UnityEditor {
     Normal = 6,
     High = 10,
   }
-  export declare class Progress_Item {
+  export class Progress_Item {
     name: string;
     description: string;
     id: number;
@@ -6948,7 +6948,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ProjectWindowUtil {
+  export class ProjectWindowUtil {
     constructor();
     static CreateNewGUISkin(): void;
     static CreateAsset(asset: UnityEngine.Object, pathName: string): void;
@@ -6967,7 +6967,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SearchableEditorWindow {
+  export class SearchableEditorWindow {
     constructor();
     rootVisualElement: UnityEngine.UIElements.VisualElement;
     wantsMouseMove: boolean;
@@ -7029,7 +7029,7 @@ export namespace UnityEditor {
     Name = 1,
     Type = 2,
   }
-  export declare class DefaultLightingExplorerExtension {
+  export class DefaultLightingExplorerExtension {
     constructor();
     GetContentTabs(): UnityEditor.LightingExplorerTab[];
     OnEnable(): void;
@@ -7039,14 +7039,14 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LightingExplorerTab {
+  export class LightingExplorerTab {
     constructor(title: string, objects: ((arg0: UnityEngine.Object[]) => UnityEngine.Object[]), columns: ((arg0: UnityEditor.LightingExplorerTableColumn[]) => UnityEditor.LightingExplorerTableColumn[]));
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LightingExplorerTableColumn {
+  export class LightingExplorerTableColumn {
     constructor(type: UnityEditor.LightingExplorerTableColumn_DataType, headerContent: UnityEngine.GUIContent, propertyName?: string, width?: number, onGUIDelegate?: UnityEditor.LightingExplorerTableColumn_OnGUIDelegate, compareDelegate?: UnityEditor.LightingExplorerTableColumn_ComparePropertiesDelegate, copyDelegate?: UnityEditor.LightingExplorerTableColumn_CopyPropertiesDelegate, dependencyIndices?: number[]);
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
@@ -7062,7 +7062,7 @@ export namespace UnityEditor {
     Color = 5,
     Custom = 20,
   }
-  export declare class LightingExplorerTableColumn_OnGUIDelegate {
+  export class LightingExplorerTableColumn_OnGUIDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -7078,7 +7078,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LightingExplorerTableColumn_ComparePropertiesDelegate {
+  export class LightingExplorerTableColumn_ComparePropertiesDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -7094,7 +7094,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LightingExplorerTableColumn_CopyPropertiesDelegate {
+  export class LightingExplorerTableColumn_CopyPropertiesDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -7115,7 +7115,7 @@ export namespace UnityEditor {
     OnEnable(): void;
     OnDisable(): void;
   }
-  export declare class LightingWindowEnvironmentSection {
+  export class LightingWindowEnvironmentSection {
     OnEnable(): void;
     OnDisable(): void;
     OnInspectorGUI(): void;
@@ -7124,7 +7124,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PhysicsDebugWindow {
+  export class PhysicsDebugWindow {
     constructor();
     rootVisualElement: UnityEngine.UIElements.VisualElement;
     wantsMouseMove: boolean;
@@ -7174,7 +7174,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SceneModeUtility {
+  export class SceneModeUtility {
     static SearchForType(type: System.Type): void;
     static SearchBar(...types: System.Type[]): System.Type;
     static StaticFlagField(label: string, property: UnityEditor.SerializedProperty, flag: number): boolean;
@@ -7185,7 +7185,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SceneView {
+  export class SceneView {
     constructor();
     static lastActiveSceneView: UnityEditor.SceneView;
     static currentDrawingSceneView: UnityEditor.SceneView;
@@ -7290,7 +7290,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SceneView_CameraMode {
+  export class SceneView_CameraMode {
     drawMode: UnityEditor.DrawCameraMode;
     name: string;
     section: string;
@@ -7299,7 +7299,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SceneView_SceneViewState {
+  export class SceneView_SceneViewState {
     constructor();
     constructor(other: UnityEditor.SceneView_SceneViewState);
     showMaterialUpdate: boolean;
@@ -7328,7 +7328,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SceneView_OnSceneFunc {
+  export class SceneView_OnSceneFunc {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -7344,7 +7344,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SceneView_CameraSettings {
+  export class SceneView_CameraSettings {
     constructor();
     speed: number;
     speedNormalized: number;
@@ -7363,7 +7363,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class DecoratorDrawer {
+  export class DecoratorDrawer {
     attribute: any; // UnityEngine.PropertyAttribute
     OnGUI(position: UnityEngine.Rect): void;
     GetHeight(): number;
@@ -7373,13 +7373,13 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUIDrawer {
+  export class GUIDrawer {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PropertyDrawer {
+  export class PropertyDrawer {
     attribute: any; // UnityEngine.PropertyAttribute
     fieldInfo: System.Reflection.FieldInfo;
     OnGUI(position: UnityEngine.Rect, property: UnityEditor.SerializedProperty, label: UnityEngine.GUIContent): void;
@@ -7395,7 +7395,7 @@ export namespace UnityEditor {
     User = 0,
     Project = 1,
   }
-  export declare class SettingsProvider {
+  export class SettingsProvider {
     constructor(path: string, scopes: UnityEditor.SettingsScope, keywords?: System.Collections.Generic.IEnumerable<string>);
     label: string;
     settingsPath: string;
@@ -7423,7 +7423,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SettingsService {
+  export class SettingsService {
     static OpenProjectSettings(settingsPath?: string): UnityEditor.EditorWindow;
     static OpenUserPreferences(settingsPath?: string): UnityEditor.EditorWindow;
     static NotifySettingsProviderChanged(): void;
@@ -7433,7 +7433,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetSettingsProvider {
+  export class AssetSettingsProvider {
     constructor(settingsWindowPath: string, editorCreator: ((arg0: UnityEditor.Editor) => UnityEditor.Editor), keywords?: System.Collections.Generic.IEnumerable<string>);
     constructor(settingsWindowPath: string, settingsGetter: ((arg0: UnityEngine.Object) => UnityEngine.Object));
     settingsEditor: UnityEditor.Editor;
@@ -7464,7 +7464,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Highlighter {
+  export class Highlighter {
     constructor();
     static activeText: string;
     static activeRect: UnityEngine.Rect;
@@ -7500,13 +7500,13 @@ export namespace UnityEditor {
     ChangeAssetObjectProperties = 10,
     UpdatePrefabInstances = 11,
   }
-  export declare class ObjectChangeEvents {
+  export class ObjectChangeEvents {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ObjectChangeEvents_ObjectChangeEventsHandler {
+  export class ObjectChangeEvents_ObjectChangeEventsHandler {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -7519,7 +7519,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ChangeGameObjectParentEventArgs {
+  export class ChangeGameObjectParentEventArgs {
     constructor(instanceId: number, previousScene: UnityEngine.SceneManagement.Scene, previousParentInstanceId: number, newScene: UnityEngine.SceneManagement.Scene, newParentInstanceId: number);
     instanceId: number;
     previousParentInstanceId: number;
@@ -7531,7 +7531,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ChangeSceneEventArgs {
+  export class ChangeSceneEventArgs {
     constructor(scene: UnityEngine.SceneManagement.Scene);
     scene: UnityEngine.SceneManagement.Scene;
     Equals(obj: System.Object): boolean;
@@ -7539,7 +7539,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CreateGameObjectHierarchyEventArgs {
+  export class CreateGameObjectHierarchyEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
@@ -7548,7 +7548,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ChangeGameObjectStructureHierarchyEventArgs {
+  export class ChangeGameObjectStructureHierarchyEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
@@ -7557,7 +7557,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ChangeGameObjectStructureEventArgs {
+  export class ChangeGameObjectStructureEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
@@ -7566,7 +7566,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ChangeGameObjectOrComponentPropertiesEventArgs {
+  export class ChangeGameObjectOrComponentPropertiesEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
@@ -7575,7 +7575,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class DestroyGameObjectHierarchyEventArgs {
+  export class DestroyGameObjectHierarchyEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
@@ -7584,7 +7584,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CreateAssetObjectEventArgs {
+  export class CreateAssetObjectEventArgs {
     constructor(guid: UnityEditor.GUID, instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     guid: UnityEditor.GUID;
     instanceId: number;
@@ -7594,7 +7594,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class DestroyAssetObjectEventArgs {
+  export class DestroyAssetObjectEventArgs {
     constructor(guid: UnityEditor.GUID, instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     guid: UnityEditor.GUID;
     instanceId: number;
@@ -7604,7 +7604,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ChangeAssetObjectPropertiesEventArgs {
+  export class ChangeAssetObjectPropertiesEventArgs {
     constructor(guid: UnityEditor.GUID, instanceId: number, scene: UnityEngine.SceneManagement.Scene);
     guid: UnityEditor.GUID;
     instanceId: number;
@@ -7614,7 +7614,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class UpdatePrefabInstancesEventArgs {
+  export class UpdatePrefabInstancesEventArgs {
     constructor(scene: UnityEngine.SceneManagement.Scene, instanceIds: Unity.Collections.NativeArray<number>);
     scene: UnityEngine.SceneManagement.Scene;
     instanceIds: Unity.Collections.NativeArray<number>;
@@ -7623,7 +7623,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ObjectChangeEventStream {
+  export class ObjectChangeEventStream {
     length: number;
     isCreated: boolean;
     GetEventType(eventIdx: number): UnityEditor.ObjectChangeKind;
@@ -7634,7 +7634,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ObjectChangeEventStream_Builder {
+  export class ObjectChangeEventStream_Builder {
     constructor(allocator: Unity.Collections.Allocator);
     eventCount: number;
     ToStream(allocator: Unity.Collections.Allocator): UnityEditor.ObjectChangeEventStream;
@@ -7644,7 +7644,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class UndoPropertyModification {
+  export class UndoPropertyModification {
     keepPrefabOverride: boolean;
     previousValue: UnityEditor.PropertyModification;
     currentValue: UnityEditor.PropertyModification;
@@ -7653,7 +7653,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class UndoSnapshot {
+  export class UndoSnapshot {
     constructor(objectsToUndo: UnityEngine.Object[]);
     Restore(): void;
     Dispose(): void;
@@ -7662,7 +7662,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class CloudProjectSettings {
+  export class CloudProjectSettings {
     constructor();
     static userId: string;
     static userName: string;
@@ -7677,14 +7677,14 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ExpressionEvaluator {
+  export class ExpressionEvaluator {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MathUtils {
+  export class MathUtils {
     constructor();
     static GetQuatLength(q: UnityEngine.Quaternion): number;
     static GetQuatConjugate(q: UnityEngine.Quaternion): UnityEngine.Quaternion;
@@ -7724,7 +7724,7 @@ export namespace UnityEditor {
     ReserializeMetadata = 2,
     ReserializeAssetsAndMetadata = 3,
   }
-  export declare class CacheServerConnectionChangedParameters {
+  export class CacheServerConnectionChangedParameters {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     ToString(): string;
@@ -7749,7 +7749,7 @@ export namespace UnityEditor {
     OptimizeSampleRate = 1,
     OverrideSampleRate = 2,
   }
-  export declare class AudioImporterSampleSettings {
+  export class AudioImporterSampleSettings {
     loadType: UnityEngine.AudioClipLoadType;
     sampleRateSetting: UnityEditor.AudioSampleRateSetting;
     sampleRateOverride: System.UInt32;
@@ -7761,7 +7761,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioImporter {
+  export class AudioImporter {
     constructor();
     defaultSampleSettings: UnityEditor.AudioImporterSampleSettings;
     forceToMono: boolean;
@@ -7797,7 +7797,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MonoImporter {
+  export class MonoImporter {
     constructor();
     assetPath: string;
     importSettingsMissing: boolean;
@@ -7825,7 +7825,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MovieImporter {
+  export class MovieImporter {
     constructor();
     quality: number;
     linearTexture: boolean;
@@ -7835,7 +7835,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PluginImporter {
+  export class PluginImporter {
     constructor();
     DefineConstraints: string[];
     isPreloaded: boolean;
@@ -7890,7 +7890,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class PluginImporter_IncludeInBuildDelegate {
+  export class PluginImporter_IncludeInBuildDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -7941,7 +7941,7 @@ export namespace UnityEditor {
     NoScaling = 0,
     Stretch = 5,
   }
-  export declare class VideoImporterTargetSettings {
+  export class VideoImporterTargetSettings {
     constructor();
     enableTranscoding: boolean;
     codec: UnityEditor.VideoCodec;
@@ -7956,7 +7956,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class VideoClipImporter {
+  export class VideoClipImporter {
     constructor();
     quality: number;
     linearColor: boolean;
@@ -8020,7 +8020,7 @@ export namespace UnityEditor {
     CopyFromOther = 1,
     None = 3,
   }
-  export declare class ClipAnimationInfoCurve {
+  export class ClipAnimationInfoCurve {
     name: string;
     curve: UnityEngine.AnimationCurve;
     Equals(obj: System.Object): boolean;
@@ -8028,7 +8028,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ModelImporterClipAnimation {
+  export class ModelImporterClipAnimation {
     constructor();
     takeName: string;
     name: string;
@@ -8168,7 +8168,7 @@ export namespace UnityEditor {
     Standard = 0,
     Custom = 1,
   }
-  export declare class HumanTemplate {
+  export class HumanTemplate {
     constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -8181,7 +8181,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TakeInfo {
+  export class TakeInfo {
     name: string;
     defaultClipName: string;
     startTime: number;
@@ -8194,7 +8194,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ModelImporter {
+  export class ModelImporter {
     constructor();
     generateMaterials: UnityEditor.ModelImporterGenerateMaterials;
     importMaterials: boolean;
@@ -8300,7 +8300,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class EditorJsonUtility {
+  export class EditorJsonUtility {
     static ToJson(obj: System.Object): string;
     static ToJson(obj: System.Object, prettyPrint: boolean): string;
     static FromJsonOverwrite(json: string, objectToOverwrite: System.Object): void;
@@ -8309,7 +8309,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class L10n {
+  export class L10n {
     static Tr(str: string): string;
     static Tr(str_list: string[]): string[];
     static Tr(str: string, groupName: string): string;
@@ -8333,7 +8333,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LocalizationGroup {
+  export class LocalizationGroup {
     constructor();
     constructor(behaviour: UnityEngine.Behaviour);
     constructor(type: System.Type);
@@ -8345,7 +8345,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PhysicsVisualizationSettings {
+  export class PhysicsVisualizationSettings {
     static devOptions: boolean;
     static dirtyCount: number;
     static filterWorkflow: UnityEditor.PhysicsVisualizationSettings_FilterWorkflow;
@@ -8437,7 +8437,7 @@ export namespace UnityEditor {
     Convex = 0,
     NonConvex = 1,
   }
-  export declare class NetworkDetailStats {
+  export class NetworkDetailStats {
     constructor();
     static NewProfilerTick(newTime: number): void;
     static SetStat(direction: UnityEditor.NetworkDetailStats_NetworkDirection, msgId: System.Int16, entryName: string, amount: number): void;
@@ -8452,7 +8452,7 @@ export namespace UnityEditor {
     Incoming = 0,
     Outgoing = 1,
   }
-  export declare class SketchUpImportCamera {
+  export class SketchUpImportCamera {
     position: UnityEngine.Vector3;
     lookAt: UnityEngine.Vector3;
     up: UnityEngine.Vector3;
@@ -8467,7 +8467,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SketchUpImportScene {
+  export class SketchUpImportScene {
     camera: UnityEditor.SketchUpImportCamera;
     name: string;
     Equals(obj: System.Object): boolean;
@@ -8475,7 +8475,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SketchUpImporter {
+  export class SketchUpImporter {
     constructor();
     latitude: number;
     longitude: number;
@@ -8586,7 +8586,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TerrainLayerInspector {
+  export class TerrainLayerInspector {
     constructor();
     target: UnityEngine.Object;
     targets: UnityEngine.Object[];
@@ -8623,7 +8623,7 @@ export namespace UnityEditor {
   export interface ITerrainLayerCustomUI {
     OnTerrainLayerGUI(terrainLayer: any, terrain: any): boolean;
   }
-  export declare class TerrainLayerUtility {
+  export class TerrainLayerUtility {
     static ShowTerrainLayersSelectionHelper(terrain: any, activeTerrainLayer: number): number;
     static ValidateDiffuseTextureUI(texture: UnityEngine.Texture2D): void;
     static CheckNormalMapTextureType(texture: UnityEngine.Texture2D): boolean;
@@ -8655,7 +8655,7 @@ export namespace UnityEditor {
     FaceAscender = 1,
     FaceBoundingBox = 2,
   }
-  export declare class TrueTypeFontImporter {
+  export class TrueTypeFontImporter {
     constructor();
     fontSize: number;
     includeFontData: boolean;
@@ -8690,7 +8690,7 @@ export namespace UnityEditor {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class GridPalette {
+  export class GridPalette {
     constructor();
     transparencySortMode: UnityEngine.TransparencySortMode;
     transparencySortAxis: UnityEngine.Vector3;
@@ -8708,7 +8708,7 @@ export namespace UnityEditor {
     Automatic = 0,
     Manual = 100,
   }
-  export declare class EditorAnalytics {
+  export class EditorAnalytics {
     static enabled: boolean;
     static RegisterEventWithLimit(eventName: string, maxEventPerHour: number, maxItems: number, vendorKey: string): UnityEngine.Analytics.AnalyticsResult;
     static RegisterEventWithLimit(eventName: string, maxEventPerHour: number, maxItems: number, vendorKey: string, ver: number): UnityEngine.Analytics.AnalyticsResult;
@@ -8721,7 +8721,7 @@ export namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EditorAnalyticsSessionInfo {
+  export class EditorAnalyticsSessionInfo {
     static id: System.Int64;
     static sessionCount: System.Int64;
     static elapsedTime: System.Int64;
@@ -8735,7 +8735,7 @@ export namespace UnityEditor {
     ToString(): string;
   }
   export namespace Advertisements {
-    export declare class AdvertisementSettings {
+    export class AdvertisementSettings {
       static enabled: boolean;
       static testMode: boolean;
       static initializeOnStartup: boolean;
@@ -8752,7 +8752,7 @@ export namespace UnityEditor {
     }
   }
   export namespace AI {
-    export declare class NavMeshEditorHelpers {
+    export class NavMeshEditorHelpers {
       static OpenAgentSettings(agentTypeID: number): void;
       static OpenAreaSettings(): void;
       static DrawAgentDiagram(rect: UnityEngine.Rect, agentRadius: number, agentHeight: number, agentClimb: number, agentSlope: number): void;
@@ -8763,7 +8763,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NavMeshBuilder {
+    export class NavMeshBuilder {
       constructor();
       static navMeshSettingsObject: UnityEngine.Object;
       static isRunning: boolean;
@@ -8779,7 +8779,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NavMeshVisualizationSettings {
+    export class NavMeshVisualizationSettings {
       constructor();
       static showNavigation: number;
       Equals(obj: System.Object): boolean;
@@ -8789,7 +8789,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Analytics {
-    export declare class AnalyticsSettings {
+    export class AnalyticsSettings {
       static enabled: boolean;
       static testMode: boolean;
       static initializeOnStartup: boolean;
@@ -8801,7 +8801,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnalyticsSettings_RequireInBuildDelegate {
+    export class AnalyticsSettings_RequireInBuildDelegate {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -8817,7 +8817,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PerformanceReportingSettings {
+    export class PerformanceReportingSettings {
       static enabled: boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -8831,7 +8831,7 @@ export namespace UnityEditor {
     }
   }
   export namespace AnimatedValues {
-    export declare class BaseAnimValueNonAlloc<T = any> {
+    export class BaseAnimValueNonAlloc<T = any> {
       isAnimating: boolean;
       target: T;
       value: T;
@@ -8842,7 +8842,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BaseAnimValue<T = any> {
+    export class BaseAnimValue<T = any> {
       isAnimating: boolean;
       target: T;
       value: T;
@@ -8853,7 +8853,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnimFloat {
+    export class AnimFloat {
       constructor(value: number);
       constructor(value: number, callback: UnityEngine.Events.UnityAction);
       isAnimating: boolean;
@@ -8866,7 +8866,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnimVector3 {
+    export class AnimVector3 {
       constructor();
       constructor(value: UnityEngine.Vector3);
       constructor(value: UnityEngine.Vector3, callback: UnityEngine.Events.UnityAction);
@@ -8880,7 +8880,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnimBool {
+    export class AnimBool {
       constructor();
       constructor(value: boolean);
       constructor(callback: UnityEngine.Events.UnityAction);
@@ -8897,7 +8897,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnimQuaternion {
+    export class AnimQuaternion {
       constructor(value: UnityEngine.Quaternion);
       constructor(value: UnityEngine.Quaternion, callback: UnityEngine.Events.UnityAction);
       isAnimating: boolean;
@@ -8912,7 +8912,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Animations {
-    export declare class AnimatorController {
+    export class AnimatorController {
       constructor();
       layers: UnityEditor.Animations.AnimatorControllerLayer[];
       parameters: UnityEngine.AnimatorControllerParameter[];
@@ -8953,7 +8953,7 @@ export namespace UnityEditor {
       Override = 0,
       Additive = 1,
     }
-    export declare class AnimatorControllerLayer {
+    export class AnimatorControllerLayer {
       constructor();
       name: string;
       stateMachine: UnityEditor.Animations.AnimatorStateMachine;
@@ -8979,7 +8979,7 @@ export namespace UnityEditor {
       FreeformCartesian2D = 3,
       Direct = 4,
     }
-    export declare class ChildMotion {
+    export class ChildMotion {
       motion: UnityEngine.Motion;
       threshold: number;
       position: UnityEngine.Vector2;
@@ -8992,7 +8992,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class BlendTree {
+    export class BlendTree {
       constructor();
       blendParameter: string;
       blendParameterY: string;
@@ -9039,7 +9039,7 @@ export namespace UnityEditor {
       SourceThenDestination = 3,
       DestinationThenSource = 4,
     }
-    export declare class AnimatorCondition {
+    export class AnimatorCondition {
       mode: UnityEditor.Animations.AnimatorConditionMode;
       parameter: string;
       threshold: number;
@@ -9048,7 +9048,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimatorTransitionBase {
+    export class AnimatorTransitionBase {
       solo: boolean;
       mute: boolean;
       isExit: boolean;
@@ -9066,7 +9066,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimatorTransition {
+    export class AnimatorTransition {
       constructor();
       solo: boolean;
       mute: boolean;
@@ -9085,7 +9085,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimatorStateTransition {
+    export class AnimatorStateTransition {
       constructor();
       duration: number;
       offset: number;
@@ -9112,7 +9112,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimatorState {
+    export class AnimatorState {
       constructor();
       nameHash: number;
       motion: UnityEngine.Motion;
@@ -9152,7 +9152,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ChildAnimatorState {
+    export class ChildAnimatorState {
       state: UnityEditor.Animations.AnimatorState;
       position: UnityEngine.Vector3;
       Equals(obj: System.Object): boolean;
@@ -9160,7 +9160,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ChildAnimatorStateMachine {
+    export class ChildAnimatorStateMachine {
       stateMachine: UnityEditor.Animations.AnimatorStateMachine;
       position: UnityEngine.Vector3;
       Equals(obj: System.Object): boolean;
@@ -9168,7 +9168,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimatorStateMachine {
+    export class AnimatorStateMachine {
       constructor();
       states: UnityEditor.Animations.ChildAnimatorState[];
       stateMachines: UnityEditor.Animations.ChildAnimatorStateMachine[];
@@ -9212,7 +9212,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StateMachineBehaviourContext {
+    export class StateMachineBehaviourContext {
       constructor();
       animatorController: UnityEditor.Animations.AnimatorController;
       animatorObject: UnityEngine.Object;
@@ -9222,7 +9222,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CurveFilterOptions {
+    export class CurveFilterOptions {
       positionError: number;
       rotationError: number;
       scaleError: number;
@@ -9234,7 +9234,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class GameObjectRecorder {
+    export class GameObjectRecorder {
       constructor(root: UnityEngine.GameObject);
       constructor();
       root: UnityEngine.GameObject;
@@ -9261,7 +9261,7 @@ export namespace UnityEditor {
     }
   }
   export namespace AssetImporters {
-    export declare class AssetImportContext {
+    export class AssetImportContext {
       assetPath: string;
       selectedBuildTarget: UnityEditor.BuildTarget;
       mainObject: UnityEngine.Object;
@@ -9283,7 +9283,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TexturePropertyDescription {
+    export class TexturePropertyDescription {
       offset: UnityEngine.Vector2;
       scale: UnityEngine.Vector2;
       texture: UnityEngine.Texture;
@@ -9294,7 +9294,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class MaterialDescription {
+    export class MaterialDescription {
       constructor();
       materialName: string;
       Dispose(): void;
@@ -9309,7 +9309,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpriteImportData {
+    export class SpriteImportData {
       name: string;
       rect: UnityEngine.Rect;
       alignment: UnityEngine.SpriteAlignment;
@@ -9323,7 +9323,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TextureGenerationOutput {
+    export class TextureGenerationOutput {
       texture: UnityEngine.Texture2D;
       importInspectorWarnings: string;
       importWarnings: string[];
@@ -9334,7 +9334,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SourceTextureInformation {
+    export class SourceTextureInformation {
       constructor();
       width: number;
       height: number;
@@ -9345,7 +9345,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextureGenerationSettings {
+    export class TextureGenerationSettings {
       constructor(type: UnityEditor.TextureImporterType);
       assetPath: string;
       qualifyForSpritePacking: boolean;
@@ -9361,14 +9361,14 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TextureGenerator {
+    export class TextureGenerator {
       static GenerateTexture(settings: UnityEditor.AssetImporters.TextureGenerationSettings, colorBuffer: any): UnityEditor.AssetImporters.TextureGenerationOutput;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FBXMaterialDescriptionPreprocessor {
+    export class FBXMaterialDescriptionPreprocessor {
       constructor();
       assetPath: string;
       context: UnityEditor.AssetImporters.AssetImportContext;
@@ -9386,7 +9386,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SketchupMaterialDescriptionPreprocessor {
+    export class SketchupMaterialDescriptionPreprocessor {
       constructor();
       assetPath: string;
       context: UnityEditor.AssetImporters.AssetImportContext;
@@ -9404,7 +9404,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ThreeDSMaterialDescriptionPreprocessor {
+    export class ThreeDSMaterialDescriptionPreprocessor {
       constructor();
       assetPath: string;
       context: UnityEditor.AssetImporters.AssetImportContext;
@@ -9422,7 +9422,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AssetImporterEditor {
+    export class AssetImporterEditor {
       showImportedObject: boolean;
       target: UnityEngine.Object;
       targets: UnityEngine.Object[];
@@ -9458,7 +9458,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScriptedImporterEditor {
+    export class ScriptedImporterEditor {
       constructor();
       showImportedObject: boolean;
       target: UnityEngine.Object;
@@ -9495,7 +9495,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScriptedImporter {
+    export class ScriptedImporter {
       assetPath: string;
       importSettingsMissing: boolean;
       assetTimeStamp: System.UInt64;
@@ -9520,7 +9520,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Audio {
-    export declare class AudioMixerEffectPlugin {
+    export class AudioMixerEffectPlugin {
       constructor();
       SetFloatParameter(name: string, value: number): boolean;
       GetSampleRate(): number;
@@ -9532,7 +9532,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Build {
-    export declare class BuildFailedException {
+    export class BuildFailedException {
       constructor(message: string);
       constructor(innerException: System.Exception);
       Message: string;
@@ -9596,7 +9596,7 @@ export namespace UnityEditor {
       OnBeforeConvertRun(report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.Il2Cpp.Il2CppBuildPipelineData): void;
     }
     export namespace Content {
-      export declare class SerializedLocation {
+      export class SerializedLocation {
         fileName: string;
         offset: System.UInt64;
         size: System.UInt64;
@@ -9605,7 +9605,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ObjectSerializedInfo {
+      export class ObjectSerializedInfo {
         serializedObject: UnityEditor.Build.Content.ObjectIdentifier;
         header: UnityEditor.Build.Content.SerializedLocation;
         rawData: UnityEditor.Build.Content.SerializedLocation;
@@ -9614,7 +9614,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class WriteResult {
+      export class WriteResult {
         serializedObjects: UnityEditor.Build.Content.ObjectSerializedInfo[];
         resourceFiles: UnityEditor.Build.Content.ResourceFile[];
         includedTypes: System.Type[];
@@ -9624,7 +9624,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class BuildReferenceMap {
+      export class BuildReferenceMap {
         constructor();
         Dispose(): void;
         GetHash128(): UnityEngine.Hash128;
@@ -9643,7 +9643,7 @@ export namespace UnityEditor {
         StripUnityVersion = 2,
         DevelopmentBuild = 4,
       }
-      export declare class BuildSettings {
+      export class BuildSettings {
         typeDB: UnityEditor.Build.Player.TypeDB;
         target: UnityEditor.BuildTarget;
         group: UnityEditor.BuildTargetGroup;
@@ -9653,7 +9653,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class BuildUsageCache {
+      export class BuildUsageCache {
         constructor();
         Dispose(): void;
         Equals(obj: System.Object): boolean;
@@ -9661,13 +9661,13 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class BuildUsageTagGlobal {
+      export class BuildUsageTagGlobal {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class BuildUsageTagSet {
+      export class BuildUsageTagSet {
         constructor();
         Dispose(): void;
         GetHash128(): UnityEngine.Hash128;
@@ -9686,7 +9686,7 @@ export namespace UnityEditor {
         ValidReferences = 4,
         DefaultDependencies = 5,
       }
-      export declare class ContentBuildInterface {
+      export class ContentBuildInterface {
         static GenerateAssetBundleBuilds(): UnityEditor.AssetBundleBuild[];
         static GetGlobalUsageFromGraphicsSettings(): UnityEditor.Build.Content.BuildUsageTagGlobal;
         static ObjectIsSupportedInBuild(targetObject: UnityEngine.Object): boolean;
@@ -9744,7 +9744,7 @@ export namespace UnityEditor {
         High = 4,
         Maximum = 5,
       }
-      export declare class BuildCompression {
+      export class BuildCompression {
         static DefaultUncompressed: UnityEditor.Build.Content.BuildCompression;
         static DefaultLZ4: UnityEditor.Build.Content.BuildCompression;
         static DefaultLZMA: UnityEditor.Build.Content.BuildCompression;
@@ -9762,7 +9762,7 @@ export namespace UnityEditor {
         None = 0,
         IgnoreShortEvents = 1,
       }
-      export declare class ContentBuildProfileEvent {
+      export class ContentBuildProfileEvent {
         TimeMicroseconds: System.UInt64;
         Name: string;
         Metadata: string;
@@ -9772,7 +9772,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class GameManagerDependencyInfo {
+      export class GameManagerDependencyInfo {
         managerObjects: UnityEditor.Build.Content.ObjectIdentifier[];
         referencedObjects: UnityEditor.Build.Content.ObjectIdentifier[];
         includedTypes: System.Type[];
@@ -9787,7 +9787,7 @@ export namespace UnityEditor {
         SerializedAssetType = 2,
         MetaAssetType = 3,
       }
-      export declare class ObjectIdentifier {
+      export class ObjectIdentifier {
         guid: UnityEditor.GUID;
         localIdentifierInFile: System.Int64;
         fileType: UnityEditor.Build.Content.FileType;
@@ -9800,7 +9800,7 @@ export namespace UnityEditor {
         static ToInstanceID(objectId: UnityEditor.Build.Content.ObjectIdentifier): number;
         GetType(): System.Type;
       }
-      export declare class ResourceFile {
+      export class ResourceFile {
         fileName: string;
         fileAlias: string;
         serializedFile: boolean;
@@ -9809,7 +9809,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class SceneDependencyInfo {
+      export class SceneDependencyInfo {
         scene: string;
         processedScene: string;
         referencedObjects: UnityEditor.Build.Content.ObjectIdentifier[];
@@ -9820,7 +9820,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class PreloadInfo {
+      export class PreloadInfo {
         constructor();
         preloadObjects: UnityEditor.Build.Content.ObjectIdentifier[];
         Equals(obj: System.Object): boolean;
@@ -9828,7 +9828,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AssetLoadInfo {
+      export class AssetLoadInfo {
         constructor();
         asset: UnityEditor.GUID;
         address: string;
@@ -9839,7 +9839,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AssetBundleInfo {
+      export class AssetBundleInfo {
         constructor();
         bundleName: string;
         bundleAssets: UnityEditor.Build.Content.AssetLoadInfo[];
@@ -9848,7 +9848,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SceneLoadInfo {
+      export class SceneLoadInfo {
         constructor();
         asset: UnityEditor.GUID;
         address: string;
@@ -9858,7 +9858,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SceneBundleInfo {
+      export class SceneBundleInfo {
         constructor();
         bundleName: string;
         bundleScenes: UnityEditor.Build.Content.SceneLoadInfo[];
@@ -9867,7 +9867,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SerializationInfo {
+      export class SerializationInfo {
         constructor();
         serializationObject: UnityEditor.Build.Content.ObjectIdentifier;
         serializationIndex: System.Int64;
@@ -9876,7 +9876,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class WriteCommand {
+      export class WriteCommand {
         constructor();
         fileName: string;
         internalName: string;
@@ -9886,7 +9886,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class WriteParameters {
+      export class WriteParameters {
         writeCommand: UnityEditor.Build.Content.WriteCommand;
         settings: UnityEditor.Build.Content.BuildSettings;
         globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal;
@@ -9899,7 +9899,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class WriteSceneParameters {
+      export class WriteSceneParameters {
         scenePath: string;
         writeCommand: UnityEditor.Build.Content.WriteCommand;
         settings: UnityEditor.Build.Content.BuildSettings;
@@ -9913,7 +9913,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class WriteManagerParameters {
+      export class WriteManagerParameters {
         settings: UnityEditor.Build.Content.BuildSettings;
         globalUsage: UnityEditor.Build.Content.BuildUsageTagGlobal;
         referenceMap: UnityEditor.Build.Content.BuildReferenceMap;
@@ -9929,7 +9929,7 @@ export namespace UnityEditor {
         DevelopmentBuild = 1,
         Assertions = 2,
       }
-      export declare class ScriptCompilationSettings {
+      export class ScriptCompilationSettings {
         target: UnityEditor.BuildTarget;
         group: UnityEditor.BuildTargetGroup;
         options: UnityEditor.Build.Player.ScriptCompilationOptions;
@@ -9939,7 +9939,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ScriptCompilationResult {
+      export class ScriptCompilationResult {
         assemblies: string[];
         typeDB: UnityEditor.Build.Player.TypeDB;
         Equals(obj: System.Object): boolean;
@@ -9947,7 +9947,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class PlayerBuildInterface {
+      export class PlayerBuildInterface {
         static ExtraTypesProvider: any; // System.Func`1[System.Collections.Generic.IEnumerable`1[System.String]]
         static CompilePlayerScripts(input: UnityEditor.Build.Player.ScriptCompilationSettings, outputFolder: string): UnityEditor.Build.Player.ScriptCompilationResult;
         Equals(obj: System.Object): boolean;
@@ -9955,13 +9955,13 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TypeDbHelper {
+      export class TypeDbHelper {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TypeDB {
+      export class TypeDB {
         Dispose(): void;
         GetHash128(): UnityEngine.Hash128;
         Equals(obj: System.Object): boolean;
@@ -9972,7 +9972,7 @@ export namespace UnityEditor {
       }
     }
     export namespace Reporting {
-      export declare class BuildFile {
+      export class BuildFile {
         id: System.UInt32;
         path: string;
         role: string;
@@ -9982,7 +9982,7 @@ export namespace UnityEditor {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class BuildReport {
+      export class BuildReport {
         files: UnityEditor.Build.Reporting.BuildFile[];
         steps: UnityEditor.Build.Reporting.BuildStep[];
         summary: UnityEditor.Build.Reporting.BuildSummary;
@@ -10003,7 +10003,7 @@ export namespace UnityEditor {
         Failed = 2,
         Cancelled = 3,
       }
-      export declare class BuildStep {
+      export class BuildStep {
         name: string;
         duration: System.TimeSpan;
         messages: UnityEditor.Build.Reporting.BuildStepMessage[];
@@ -10013,7 +10013,7 @@ export namespace UnityEditor {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class BuildStepMessage {
+      export class BuildStepMessage {
         type: UnityEngine.LogType;
         content: string;
         Equals(obj: System.Object): boolean;
@@ -10021,7 +10021,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class BuildSummary {
+      export class BuildSummary {
         buildStartedAt: System.DateTime;
         guid: UnityEditor.GUID;
         platform: UnityEditor.BuildTarget;
@@ -10039,7 +10039,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class CommonRoles {
+      export class CommonRoles {
         static scene: string;
         static sharedAssets: string;
         static resourcesFile: string;
@@ -10067,7 +10067,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PackedAssetInfo {
+      export class PackedAssetInfo {
         id: System.Int64;
         type: System.Type;
         packedSize: System.UInt64;
@@ -10079,7 +10079,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class PackedAssets {
+      export class PackedAssets {
         constructor();
         file: System.UInt32;
         shortPath: string;
@@ -10093,7 +10093,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ScenesUsingAsset {
+      export class ScenesUsingAsset {
         assetPath: string;
         scenePaths: string[];
         Equals(obj: System.Object): boolean;
@@ -10101,7 +10101,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ScenesUsingAssets {
+      export class ScenesUsingAssets {
         constructor();
         list: UnityEditor.Build.Reporting.ScenesUsingAsset[];
         name: string;
@@ -10112,7 +10112,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class StrippingInfo {
+      export class StrippingInfo {
         constructor();
         includedModules: System.Collections.Generic.IEnumerable<string>;
         name: string;
@@ -10128,7 +10128,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Compilation {
-    export declare class CompilationPipeline {
+    export class CompilationPipeline {
       static codeOptimization: UnityEditor.Compilation.CodeOptimization;
       static GetSystemAssemblyDirectories(apiCompatibilityLevel: UnityEditor.ApiCompatibilityLevel): string[];
       static ParseResponseFile(relativePath: string, projectDirectory: string, systemReferenceDirectories: string[]): UnityEditor.Compilation.ResponseFileData;
@@ -10177,7 +10177,7 @@ export namespace UnityEditor {
       None = 0,
       UseEngineModules = 1,
     }
-    export declare class AssemblyBuilder {
+    export class AssemblyBuilder {
       constructor(assemblyPath: string, ...scriptPaths: string[]);
       scriptPaths: string[];
       assemblyPath: string;
@@ -10198,7 +10198,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AssemblyDefinitionException {
+    export class AssemblyDefinitionException {
       constructor(message: string, ...filePaths: string[]);
       filePaths: string[];
       Message: string;
@@ -10217,7 +10217,7 @@ export namespace UnityEditor {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class PrecompiledAssemblyException {
+    export class PrecompiledAssemblyException {
       constructor(message: string, ...filePaths: string[]);
       filePaths: string[];
       Message: string;
@@ -10240,7 +10240,7 @@ export namespace UnityEditor {
       None = 0,
       EditorAssembly = 1,
     }
-    export declare class ScriptCompilerOptions {
+    export class ScriptCompilerOptions {
       constructor();
       RoslynAnalyzerRulesetPath: string;
       RoslynAnalyzerDllPaths: string[];
@@ -10270,7 +10270,7 @@ export namespace UnityEditor {
       Debug = 1,
       Release = 2,
     }
-    export declare class Assembly {
+    export class Assembly {
       constructor(name: string, outputPath: string, sourceFiles: string[], defines: string[], assemblyReferences: UnityEditor.Compilation.Assembly[], compiledAssemblyReferences: string[], flags: UnityEditor.Compilation.AssemblyFlags);
       constructor(name: string, outputPath: string, sourceFiles: string[], defines: string[], assemblyReferences: UnityEditor.Compilation.Assembly[], compiledAssemblyReferences: string[], flags: UnityEditor.Compilation.AssemblyFlags, compilerOptions: UnityEditor.Compilation.ScriptCompilerOptions);
       constructor(name: string, outputPath: string, sourceFiles: string[], defines: string[], assemblyReferences: UnityEditor.Compilation.Assembly[], compiledAssemblyReferences: string[], flags: UnityEditor.Compilation.AssemblyFlags, compilerOptions: UnityEditor.Compilation.ScriptCompilerOptions, rootNamespace: string);
@@ -10289,7 +10289,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ResponseFileData {
+    export class ResponseFileData {
       constructor();
       Defines: string[];
       FullPathReferences: string[];
@@ -10301,7 +10301,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AssemblyDefinitionPlatform {
+    export class AssemblyDefinitionPlatform {
       Name: string;
       DisplayName: string;
       BuildTarget: UnityEditor.BuildTarget;
@@ -10314,7 +10314,7 @@ export namespace UnityEditor {
       Error = 0,
       Warning = 1,
     }
-    export declare class CompilerMessage {
+    export class CompilerMessage {
       message: string;
       file: string;
       line: number;
@@ -10327,14 +10327,14 @@ export namespace UnityEditor {
     }
   }
   export namespace Connect {
-    export declare class UnityOAuth {
+    export class UnityOAuth {
       static GetAuthorizationCodeAsync(clientId: string, callback: any): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UnityOAuth_AuthCodeResponse {
+    export class UnityOAuth_AuthCodeResponse {
       AuthCode: string;
       Exception: System.Exception;
       Equals(obj: System.Object): boolean;
@@ -10344,7 +10344,7 @@ export namespace UnityEditor {
     }
   }
   export namespace CrashReporting {
-    export declare class CrashReportingSettings {
+    export class CrashReportingSettings {
       static enabled: boolean;
       static captureEditorExceptions: boolean;
       static logBufferSize: System.UInt32;
@@ -10358,7 +10358,7 @@ export namespace UnityEditor {
     export interface IDrawSelectedHandles {
       OnDrawHandles(): void;
     }
-    export declare class EditorTool {
+    export class EditorTool {
       targets: System.Collections.Generic.IEnumerable<UnityEngine.Object>;
       target: UnityEngine.Object;
       toolbarIcon: UnityEngine.GUIContent;
@@ -10375,7 +10375,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EditorToolContext {
+    export class EditorToolContext {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       OnToolGUI(window: UnityEditor.EditorWindow): void;
@@ -10387,7 +10387,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EditorTools {
+    export class EditorTools {
       static activeToolType: System.Type;
       static SetActiveTool(type: System.Type): void;
       static SetActiveTool(tool: UnityEditor.EditorTools.EditorTool): void;
@@ -10399,7 +10399,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class GameObjectToolContext {
+    export class GameObjectToolContext {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       OnToolGUI(window: UnityEditor.EditorWindow): void;
@@ -10411,7 +10411,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ToolManager {
+    export class ToolManager {
       static activeContextType: System.Type;
       static activeToolType: System.Type;
       static SetActiveContext(context: System.Type): void;
@@ -10427,7 +10427,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Events {
-    export declare class UnityEventTools {
+    export class UnityEventTools {
       static AddPersistentListener(unityEvent: UnityEngine.Events.UnityEventBase): void;
       static RemovePersistentListener(unityEvent: UnityEngine.Events.UnityEventBase, index: number): void;
       static AddPersistentListener(unityEvent: UnityEngine.Events.UnityEvent, call: UnityEngine.Events.UnityAction): void;
@@ -10451,14 +10451,14 @@ export namespace UnityEditor {
     }
   }
   export namespace Experimental {
-    export declare class BuildPipelineExperimental {
+    export class BuildPipelineExperimental {
       static GetSessionIdForBuildTarget(target: UnityEditor.BuildTarget): string;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorResources {
+    export class EditorResources {
       constructor();
       static normalSkinIndex: number;
       static darkSkinIndex: number;
@@ -10483,7 +10483,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AssetDatabaseExperimental {
+    export class AssetDatabaseExperimental {
       constructor();
       static counters: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters;
       static ActiveOnDemandMode: UnityEditor.Experimental.AssetDatabaseExperimental_OnDemandMode;
@@ -10520,7 +10520,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AssetDatabaseExperimental_CacheServerConnectionChangedParameters {
+    export class AssetDatabaseExperimental_CacheServerConnectionChangedParameters {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
@@ -10536,7 +10536,7 @@ export namespace UnityEditor {
       Queue = 1,
       Poll = 2,
     }
-    export declare class AssetDatabaseExperimental_AssetDatabaseCounters {
+    export class AssetDatabaseExperimental_AssetDatabaseCounters {
       cacheServer: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_CacheServerCounters;
       import: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_ImportCounters;
       ResetDeltas(): void;
@@ -10545,7 +10545,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AssetDatabaseExperimental_AssetDatabaseCounters_Counter {
+    export class AssetDatabaseExperimental_AssetDatabaseCounters_Counter {
       total: System.Int64;
       delta: System.Int64;
       Equals(obj: System.Object): boolean;
@@ -10553,7 +10553,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AssetDatabaseExperimental_AssetDatabaseCounters_CacheServerCounters {
+    export class AssetDatabaseExperimental_AssetDatabaseCounters_CacheServerCounters {
       metadataRequested: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
       metadataDownloaded: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
       metadataFailedToDownload: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
@@ -10574,7 +10574,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AssetDatabaseExperimental_AssetDatabaseCounters_ImportCounters {
+    export class AssetDatabaseExperimental_AssetDatabaseCounters_ImportCounters {
       imported: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
       importedInProcess: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
       importedOutOfProcess: UnityEditor.Experimental.AssetDatabaseExperimental_AssetDatabaseCounters_Counter;
@@ -10585,7 +10585,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AssetMoveInfo {
+    export class AssetMoveInfo {
       constructor(sourceAssetPath: string, destinationAssetPath: string);
       sourceAssetPath: string;
       destinationAssetPath: string;
@@ -10595,14 +10595,14 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AssetsModifiedProcessor {
+    export class AssetsModifiedProcessor {
       assetsReportedChanged: System.Collections.Generic.HashSet<string>;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Lightmapping {
+    export class Lightmapping {
       constructor();
       static probesIgnoreDirectEnvironment: boolean;
       static extractAmbientOcclusion: boolean;
@@ -10625,7 +10625,7 @@ export namespace UnityEditor {
       Available = 3,
       Failed = 4,
     }
-    export declare class ArtifactKey {
+    export class ArtifactKey {
       constructor(g: UnityEditor.GUID);
       constructor(guid: UnityEditor.GUID, importerType: System.Type);
       isValid: boolean;
@@ -10636,7 +10636,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ArtifactID {
+    export class ArtifactID {
       isValid: boolean;
       value: UnityEngine.Hash128;
       Equals(obj: System.Object): boolean;
@@ -10644,7 +10644,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class OnDemandProgress {
+    export class OnDemandProgress {
       state: UnityEditor.Experimental.OnDemandState;
       progress: number;
       Equals(obj: System.Object): boolean;
@@ -10668,7 +10668,7 @@ export namespace UnityEditor {
           High = 4,
           Maximum = 5,
         }
-        export declare class BuildCompression {
+        export class BuildCompression {
           static DefaultUncompressed: UnityEditor.Experimental.Build.AssetBundle.BuildCompression;
           static DefaultLZ4: UnityEditor.Experimental.Build.AssetBundle.BuildCompression;
           static DefaultLZMA: UnityEditor.Experimental.Build.AssetBundle.BuildCompression;
@@ -10680,7 +10680,7 @@ export namespace UnityEditor {
       }
     }
     export namespace Licensing {
-      export declare class LicensingUtility {
+      export class LicensingUtility {
         static HasEntitlement(entitlement: string): boolean;
         static HasEntitlements(entitlements: string[]): string[];
         Equals(obj: System.Object): boolean;
@@ -10704,7 +10704,7 @@ export namespace UnityEditor {
         ExitStage(stage: number): void;
         SetIsDone(isDone: boolean): void;
       }
-      export declare class SceneStateHash {
+      export class SceneStateHash {
         constructor(sceneObjectsHash: UnityEngine.Hash128, skySettingsHash: UnityEngine.Hash128, ambientProbeHash: UnityEngine.Hash128);
         sceneObjectsHash: UnityEngine.Hash128;
         skySettingsHash: UnityEngine.Hash128;
@@ -10715,7 +10715,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ScriptableBakedReflectionSystem {
+      export class ScriptableBakedReflectionSystem {
         stageCount: number;
         stateHashes: UnityEngine.Hash128[];
         Tick(sceneStateHash: UnityEditor.Experimental.Rendering.SceneStateHash, handle: UnityEditor.Experimental.Rendering.IScriptableBakedReflectionSystemStageNotifier): void;
@@ -10728,7 +10728,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ScriptableBakedReflectionSystemSettings {
+      export class ScriptableBakedReflectionSystemSettings {
         static system: UnityEditor.Experimental.Rendering.IScriptableBakedReflectionSystem;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -10737,7 +10737,7 @@ export namespace UnityEditor {
       }
     }
     export namespace RestService {
-      export declare class PlayerDataFileLocator {
+      export class PlayerDataFileLocator {
         constructor();
         static Register(locator: UnityEditor.Experimental.RestService.PlayerDataFileLocator_Locator): void;
         Equals(obj: System.Object): boolean;
@@ -10745,7 +10745,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PlayerDataFileLocator_Locator {
+      export class PlayerDataFileLocator_Locator {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -10760,7 +10760,7 @@ export namespace UnityEditor {
       }
     }
     export namespace SceneManagement {
-      export declare class PrefabStage {
+      export class PrefabStage {
         prefabContentsRoot: UnityEngine.GameObject;
         openedFromInstanceRoot: UnityEngine.GameObject;
         openedFromInstanceObject: UnityEngine.GameObject;
@@ -10785,7 +10785,7 @@ export namespace UnityEditor {
         InIsolation = 0,
         InContext = 1,
       }
-      export declare class PrefabStageUtility {
+      export class PrefabStageUtility {
         constructor();
         static GetCurrentPrefabStage(): UnityEditor.Experimental.SceneManagement.PrefabStage;
         static GetPrefabStage(gameObject: UnityEngine.GameObject): UnityEditor.Experimental.SceneManagement.PrefabStage;
@@ -10796,7 +10796,7 @@ export namespace UnityEditor {
       }
     }
     export namespace TerrainAPI {
-      export declare class TerrainToolShortcutContext {
+      export class TerrainToolShortcutContext {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -10839,7 +10839,7 @@ export namespace UnityEditor {
         ShowBrushesGUI(spacing: number, flags: UnityEditor.Experimental.TerrainAPI.BrushGUIEditFlags, textureResolutionPerTile: number): void;
         Repaint(flags?: UnityEditor.Experimental.TerrainAPI.RepaintFlags): void;
       }
-      export declare class TerrainPaintTool<T = any> {
+      export class TerrainPaintTool<T = any> {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         GetName(): string;
@@ -10858,7 +10858,7 @@ export namespace UnityEditor {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class TerrainPaintUtilityEditor {
+      export class TerrainPaintUtilityEditor {
         static ShowDefaultPreviewBrush(terrain: any, brushTexture: UnityEngine.Texture, brushSize: number): void;
         static GetDefaultBrushPreviewMaterial(): UnityEngine.Material;
         static DrawBrushPreview(heightmapPC: any, previewTexture: UnityEditor.Experimental.TerrainAPI.TerrainPaintUtilityEditor_BrushPreview, brushTexture: UnityEngine.Texture, brushXform: any, proceduralMaterial: UnityEngine.Material, materialPassIndex: number): void;
@@ -10874,7 +10874,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Hardware {
-    export declare class UsbDevice {
+    export class UsbDevice {
       vendorId: number;
       productId: number;
       revision: number;
@@ -10885,7 +10885,7 @@ export namespace UnityEditor {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Usb {
+    export class Usb {
       constructor();
       static OnDevicesChanged(devices: UnityEditor.Hardware.UsbDevice[]): void;
       Equals(obj: System.Object): boolean;
@@ -10893,7 +10893,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Usb_OnDevicesChangedHandler {
+    export class Usb_OnDevicesChangedHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -10918,7 +10918,7 @@ export namespace UnityEditor {
       PlayerConnection = 1,
       RemoteConnection = 2,
     }
-    export declare class DevDevice {
+    export class DevDevice {
       constructor(id: string, name: string, type: string, module: string, state: UnityEditor.Hardware.DevDeviceState, features: UnityEditor.Hardware.DevDeviceFeatures);
       isConnected: boolean;
       static none: UnityEditor.Hardware.DevDevice;
@@ -10933,7 +10933,7 @@ export namespace UnityEditor {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class DevDeviceList {
+    export class DevDeviceList {
       constructor();
       static OnChanged(): void;
       static GetDevices(): UnityEditor.Hardware.DevDevice[];
@@ -10942,7 +10942,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DevDeviceList_OnChangedHandler {
+    export class DevDeviceList_OnChangedHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -10960,7 +10960,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Il2Cpp {
-    export declare class Il2CppBuildPipelineData {
+    export class Il2CppBuildPipelineData {
       constructor(target: UnityEditor.BuildTarget, inputDirectory: string);
       target: UnityEditor.BuildTarget;
       inputDirectory: string;
@@ -10972,7 +10972,7 @@ export namespace UnityEditor {
   }
   export namespace IMGUI {
     export namespace Controls {
-      export declare class ArcHandle {
+      export class ArcHandle {
         constructor();
         angle: number;
         radius: number;
@@ -10995,7 +10995,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class JointAngularLimitHandle {
+      export class JointAngularLimitHandle {
         constructor();
         xMin: number;
         xMax: number;
@@ -11023,7 +11023,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class BoxBoundsHandle {
+      export class BoxBoundsHandle {
         constructor(controlIDHint: number);
         constructor();
         size: UnityEngine.Vector3;
@@ -11040,7 +11040,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CapsuleBoundsHandle {
+      export class CapsuleBoundsHandle {
         constructor(controlIDHint: number);
         constructor();
         heightAxis: UnityEditor.IMGUI.Controls.CapsuleBoundsHandle_HeightAxis;
@@ -11064,7 +11064,7 @@ export namespace UnityEditor {
         Y = 1,
         Z = 2,
       }
-      export declare class PrimitiveBoundsHandle {
+      export class PrimitiveBoundsHandle {
         constructor(controlIDHint: number);
         constructor();
         center: UnityEngine.Vector3;
@@ -11088,7 +11088,7 @@ export namespace UnityEditor {
         Z = 4,
         All = 7,
       }
-      export declare class SphereBoundsHandle {
+      export class SphereBoundsHandle {
         constructor(controlIDHint: number);
         constructor();
         radius: number;
@@ -11105,7 +11105,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SearchField {
+      export class SearchField {
         constructor();
         searchFieldControlID: number;
         autoSetFocusOnFindCommand: boolean;
@@ -11121,7 +11121,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SearchField_SearchFieldCallback {
+      export class SearchField_SearchFieldCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -11137,7 +11137,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MultiColumnHeader {
+      export class MultiColumnHeader {
         constructor(state: UnityEditor.IMGUI.Controls.MultiColumnHeaderState);
         sortedColumnIndex: number;
         state: UnityEditor.IMGUI.Controls.MultiColumnHeaderState;
@@ -11160,7 +11160,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MultiColumnHeader_HeaderCallback {
+      export class MultiColumnHeader_HeaderCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -11176,7 +11176,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MultiColumnHeader_DefaultGUI {
+      export class MultiColumnHeader_DefaultGUI {
         static defaultHeight: number;
         static minimumHeight: number;
         static columnContentMargin: number;
@@ -11185,7 +11185,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MultiColumnHeader_DefaultStyles {
+      export class MultiColumnHeader_DefaultStyles {
         static columnHeader: UnityEngine.GUIStyle;
         static columnHeaderRightAligned: UnityEngine.GUIStyle;
         static columnHeaderCenterAligned: UnityEngine.GUIStyle;
@@ -11195,7 +11195,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MultiColumnHeaderState {
+      export class MultiColumnHeaderState {
         constructor(columns: UnityEditor.IMGUI.Controls.MultiColumnHeaderState_Column[]);
         sortedColumnIndex: number;
         maximumNumberOfSortedColumns: number;
@@ -11210,7 +11210,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MultiColumnHeaderState_Column {
+      export class MultiColumnHeaderState_Column {
         constructor();
         width: number;
         sortedAscending: boolean;
@@ -11228,7 +11228,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TreeViewState {
+      export class TreeViewState {
         constructor();
         selectedIDs: number[];
         lastClickedID: number;
@@ -11240,7 +11240,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TreeViewItem {
+      export class TreeViewItem {
         constructor();
         constructor(id: number);
         constructor(id: number, depth: number);
@@ -11259,7 +11259,7 @@ export namespace UnityEditor {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class TreeView {
+      export class TreeView {
         constructor(state: UnityEditor.IMGUI.Controls.TreeViewState);
         constructor(state: UnityEditor.IMGUI.Controls.TreeViewState, multiColumnHeader: UnityEditor.IMGUI.Controls.MultiColumnHeader);
         state: UnityEditor.IMGUI.Controls.TreeViewState;
@@ -11297,7 +11297,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TreeView_DoFoldoutCallback {
+      export class TreeView_DoFoldoutCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -11313,7 +11313,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TreeView_GetNewSelectionFunction {
+      export class TreeView_GetNewSelectionFunction {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -11329,7 +11329,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TreeView_DefaultGUI {
+      export class TreeView_DefaultGUI {
         static FoldoutLabel(rect: UnityEngine.Rect, label: string, selected: boolean, focused: boolean): void;
         static Label(rect: UnityEngine.Rect, label: string, selected: boolean, focused: boolean): void;
         static LabelRightAligned(rect: UnityEngine.Rect, label: string, selected: boolean, focused: boolean): void;
@@ -11340,7 +11340,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TreeView_DefaultStyles {
+      export class TreeView_DefaultStyles {
         static foldoutLabel: UnityEngine.GUIStyle;
         static label: UnityEngine.GUIStyle;
         static labelRightAligned: UnityEngine.GUIStyle;
@@ -11358,7 +11358,7 @@ export namespace UnityEditor {
         FireSelectionChanged = 1,
         RevealAndFrame = 2,
       }
-      export declare class AdvancedDropdownItem {
+      export class AdvancedDropdownItem {
         constructor(name: string);
         name: string;
         icon: UnityEngine.Texture2D;
@@ -11373,14 +11373,14 @@ export namespace UnityEditor {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class AdvancedDropdownState {
+      export class AdvancedDropdownState {
         constructor();
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AdvancedDropdown {
+      export class AdvancedDropdown {
         constructor(state: UnityEditor.IMGUI.Controls.AdvancedDropdownState);
         Show(rect: UnityEngine.Rect): void;
         Equals(obj: System.Object): boolean;
@@ -11392,14 +11392,14 @@ export namespace UnityEditor {
   }
   export namespace Localization {
     export namespace Editor {
-      export declare class Localization {
+      export class Localization {
         static Tr(str: string): string;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class LocalizationGroup {
+      export class LocalizationGroup {
         constructor();
         constructor(behaviour: UnityEngine.Behaviour);
         constructor(type: System.Type);
@@ -11414,14 +11414,14 @@ export namespace UnityEditor {
     }
   }
   export namespace Macros {
-    export declare class MacroEvaluator {
+    export class MacroEvaluator {
       static Eval(macro: string): string;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MethodEvaluator {
+    export class MethodEvaluator {
       static Eval(assemblyFile: string, typeName: string, methodName: string, paramTypes: System.Type[], args: System.Object[]): System.Object;
       static ExecuteExternalCode(parcel: string): System.Object;
       Equals(obj: System.Object): boolean;
@@ -11431,7 +11431,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Media {
-    export declare class MediaRational {
+    export class MediaRational {
       constructor(numerator: number);
       constructor(numerator: number, denominator: number);
       inverse: UnityEditor.Media.MediaRational;
@@ -11447,7 +11447,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class MediaTime {
+    export class MediaTime {
       constructor(seconds: System.Int64);
       constructor(count: System.Int64, rateNumerator: System.UInt32, rateDenominator?: System.UInt32);
       count: System.Int64;
@@ -11458,7 +11458,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class VideoTrackAttributes {
+    export class VideoTrackAttributes {
       frameRate: UnityEditor.Media.MediaRational;
       width: System.UInt32;
       height: System.UInt32;
@@ -11469,7 +11469,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AudioTrackAttributes {
+    export class AudioTrackAttributes {
       sampleRate: UnityEditor.Media.MediaRational;
       channelCount: System.UInt16;
       language: string;
@@ -11478,7 +11478,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class MediaEncoder {
+    export class MediaEncoder {
       constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackAttributes, audioAttrs: UnityEditor.Media.AudioTrackAttributes[]);
       constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackAttributes, audioAttrs: UnityEditor.Media.AudioTrackAttributes);
       constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackAttributes);
@@ -11499,14 +11499,14 @@ export namespace UnityEditor {
     }
   }
   export namespace MemoryProfiler {
-    export declare class MemorySnapshot {
+    export class MemorySnapshot {
       static RequestNewSnapshot(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PackedMemorySnapshot {
+    export class PackedMemorySnapshot {
       constructor(snapshot: UnityEditor.Profiling.Memory.Experimental.PackedMemorySnapshot);
       nativeTypes: UnityEditor.MemoryProfiler.PackedNativeType[];
       nativeObjects: UnityEditor.MemoryProfiler.PackedNativeUnityEngineObject[];
@@ -11520,7 +11520,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PackedNativeType {
+    export class PackedNativeType {
       constructor(name: string, nativeBaseTypeArrayIndex: number);
       name: string;
       baseClassId: number;
@@ -11530,7 +11530,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PackedNativeUnityEngineObject {
+    export class PackedNativeUnityEngineObject {
       constructor(name: string, instanceId: number, size: number, nativeTypeArrayIndex: number, hideFlags: UnityEngine.HideFlags, flags: UnityEditor.MemoryProfiler.PackedNativeUnityEngineObject_ObjectFlags, nativeObjectAddress: System.Int64);
       isPersistent: boolean;
       isDontDestroyOnLoad: boolean;
@@ -11552,7 +11552,7 @@ export namespace UnityEditor {
       IsPersistent = 2,
       IsManager = 4,
     }
-    export declare class PackedGCHandle {
+    export class PackedGCHandle {
       constructor(target: System.UInt64);
       target: System.UInt64;
       Equals(obj: System.Object): boolean;
@@ -11560,7 +11560,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Connection {
+    export class Connection {
       constructor(from: number, to: number);
       from: number;
       to: number;
@@ -11569,7 +11569,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class MemorySection {
+    export class MemorySection {
       constructor(bytes: System.Byte[], startAddress: System.UInt64);
       bytes: System.Byte[];
       startAddress: System.UInt64;
@@ -11578,7 +11578,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TypeDescription {
+    export class TypeDescription {
       constructor(name: string, assembly: string, fields: UnityEditor.MemoryProfiler.FieldDescription[], staticFieldBytes: System.Byte[], baseOrElementTypeIndes: number, size: number, typeInfoAddress: System.UInt64, typeIndex: number, flags: UnityEditor.MemoryProfiler.TypeDescription_TypeFlags);
       isValueType: boolean;
       isArray: boolean;
@@ -11602,7 +11602,7 @@ export namespace UnityEditor {
       kArray = 2,
       kArrayRankMask = -65536,
     }
-    export declare class FieldDescription {
+    export class FieldDescription {
       constructor(name: string, offset: number, typeIndex: number, isStatic: boolean);
       name: string;
       offset: number;
@@ -11613,7 +11613,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class VirtualMachineInformation {
+    export class VirtualMachineInformation {
       pointerSize: number;
       objectHeaderSize: number;
       arrayHeaderSize: number;
@@ -11628,7 +11628,7 @@ export namespace UnityEditor {
     }
   }
   export namespace MPE {
-    export declare class ChannelClient {
+    export class ChannelClient {
       clientId: number;
       channelName: string;
       isAutoTick: boolean;
@@ -11658,7 +11658,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ChannelClientScope {
+    export class ChannelClientScope {
       constructor(autoTick: boolean, channelName: string, handler: (() => void), closeClientOnExit?: boolean);
       constructor(autoTick: boolean, channelName: string, handler: (() => void), closeClientOnExit?: boolean);
       client: UnityEditor.MPE.ChannelClient;
@@ -11668,7 +11668,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ChannelService {
+    export class ChannelService {
       static GetOrCreateChannel(channelName: string, handler: any): System.Action;
       static RegisterMessageHandler(channelName: string, handler: any): System.Action;
       static UnregisterMessageHandler(channelName: string, handler: any): void;
@@ -11691,7 +11691,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ChannelScope {
+    export class ChannelScope {
       constructor(channelName: string, handler: ((arg0: number) => void), closeChannelOnExit?: boolean);
       Dispose(): void;
       Equals(obj: System.Object): boolean;
@@ -11703,7 +11703,7 @@ export namespace UnityEditor {
       StandardJson = 0,
       JsonUtility = 1,
     }
-    export declare class EventService {
+    export class EventService {
       static isConnected: boolean;
       static Start(): void;
       static Close(): void;
@@ -11755,7 +11755,7 @@ export namespace UnityEditor {
       UMP_RUNNING = 3,
       Running = 3,
     }
-    export declare class ChannelInfo {
+    export class ChannelInfo {
       name: string;
       id: number;
       static invalidChannel: UnityEditor.MPE.ChannelInfo;
@@ -11765,7 +11765,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ChannelClientInfo {
+    export class ChannelClientInfo {
       name: string;
       clientId: number;
       connectionId: number;
@@ -11776,7 +11776,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ProcessService {
+    export class ProcessService {
       constructor();
       static level: UnityEditor.MPE.ProcessLevel;
       static roleName: string;
@@ -11799,28 +11799,28 @@ export namespace UnityEditor {
   }
   export namespace Networking {
     export namespace PlayerConnection {
-      export declare class PlayerConnectionGUIUtility {
+      export class PlayerConnectionGUIUtility {
         static GetConnectionState(parentWindow: UnityEditor.EditorWindow, connectedCallback?: any): UnityEngine.Networking.PlayerConnection.IConnectionState;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PlayerConnectionGUI {
+      export class PlayerConnectionGUI {
         static ConnectionTargetSelectionDropdown(rect: UnityEngine.Rect, state: UnityEngine.Networking.PlayerConnection.IConnectionState, style?: UnityEngine.GUIStyle): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PlayerConnectionGUILayout {
+      export class PlayerConnectionGUILayout {
         static ConnectionTargetSelectionDropdown(state: UnityEngine.Networking.PlayerConnection.IConnectionState, style?: UnityEngine.GUIStyle): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ConnectedPlayer {
+      export class ConnectedPlayer {
         constructor();
         constructor(playerId: number);
         constructor(playerId: number, name: string);
@@ -11832,7 +11832,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EditorConnection {
+      export class EditorConnection {
         constructor();
         ConnectedPlayers: UnityEditor.Networking.PlayerConnection.ConnectedPlayer[];
         name: string;
@@ -11859,7 +11859,7 @@ export namespace UnityEditor {
     }
   }
   export namespace PackageManager {
-    export declare class AuthorInfo {
+    export class AuthorInfo {
       name: string;
       email: string;
       url: string;
@@ -11868,14 +11868,14 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BuildUtilities {
+    export class BuildUtilities {
       static RegisterShouldIncludeInBuildCallback(cb: UnityEditor.PackageManager.IShouldIncludeInBuildCallback): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Client {
+    export class Client {
       static LogLevel: UnityEditor.PackageManager.LogLevel;
       static List(offlineMode: boolean, includeIndirectDependencies: boolean): UnityEditor.PackageManager.Requests.ListRequest;
       static List(offlineMode: boolean): UnityEditor.PackageManager.Requests.ListRequest;
@@ -11895,7 +11895,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DependencyInfo {
+    export class DependencyInfo {
       version: string;
       name: string;
       Equals(obj: System.Object): boolean;
@@ -11903,7 +11903,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Error {
+    export class Error {
       errorCode: UnityEditor.PackageManager.ErrorCode;
       message: string;
       Equals(obj: System.Object): boolean;
@@ -11918,13 +11918,13 @@ export namespace UnityEditor {
       InvalidParameter = 3,
       Conflict = 4,
     }
-    export declare class Events {
+    export class Events {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class GitInfo {
+    export class GitInfo {
       hash: string;
       revision: string;
       Equals(obj: System.Object): boolean;
@@ -11944,14 +11944,14 @@ export namespace UnityEditor {
       Debug = 4,
       Silly = 5,
     }
-    export declare class PackageCollection {
+    export class PackageCollection {
       error: UnityEditor.PackageManager.Error;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PackageInfo {
+    export class PackageInfo {
       packageId: string;
       isDirectDependency: boolean;
       version: string;
@@ -11984,7 +11984,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PackageRegistrationEventArgs {
+    export class PackageRegistrationEventArgs {
       added: UnityEditor.PackageManager.PackageInfo[];
       removed: UnityEditor.PackageManager.PackageInfo[];
       changedFrom: UnityEditor.PackageManager.PackageInfo[];
@@ -12010,14 +12010,14 @@ export namespace UnityEditor {
       Error = 3,
       Available = 4,
     }
-    export declare class PackOperationResult {
+    export class PackOperationResult {
       tarballPath: string;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RegistryInfo {
+    export class RegistryInfo {
       name: string;
       url: string;
       isDefault: boolean;
@@ -12026,7 +12026,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RepositoryInfo {
+    export class RepositoryInfo {
       type: string;
       url: string;
       revision: string;
@@ -12041,7 +12041,7 @@ export namespace UnityEditor {
       Success = 1,
       Failure = 2,
     }
-    export declare class VersionsInfo {
+    export class VersionsInfo {
       all: string[];
       compatible: string[];
       verified: string;
@@ -12054,7 +12054,7 @@ export namespace UnityEditor {
       ToString(): string;
     }
     export namespace Requests {
-      export declare class AddRequest {
+      export class AddRequest {
         Result: UnityEditor.PackageManager.PackageInfo;
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
@@ -12064,7 +12064,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EmbedRequest {
+      export class EmbedRequest {
         Result: UnityEditor.PackageManager.PackageInfo;
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
@@ -12074,7 +12074,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ListRequest {
+      export class ListRequest {
         Result: UnityEditor.PackageManager.PackageCollection;
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
@@ -12084,7 +12084,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PackRequest {
+      export class PackRequest {
         Result: UnityEditor.PackageManager.PackOperationResult;
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
@@ -12094,7 +12094,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RemoveRequest {
+      export class RemoveRequest {
         PackageIdOrName: string;
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
@@ -12104,7 +12104,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Request<T = any> {
+      export class Request<T = any> {
         Result: T;
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
@@ -12114,7 +12114,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SearchRequest {
+      export class SearchRequest {
         PackageIdOrName: string;
         Result: UnityEditor.PackageManager.PackageInfo[];
         Status: UnityEditor.PackageManager.StatusCode;
@@ -12125,7 +12125,7 @@ export namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ResetToEditorDefaultsRequest {
+      export class ResetToEditorDefaultsRequest {
         Status: UnityEditor.PackageManager.StatusCode;
         IsCompleted: boolean;
         Error: UnityEditor.PackageManager.Error;
@@ -12137,13 +12137,13 @@ export namespace UnityEditor {
     }
   }
   export namespace Playables {
-    export declare class PlayableOutputEditorExtensions {
+    export class PlayableOutputEditorExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Utility {
+    export class Utility {
       static GetAllGraphs(): UnityEngine.Playables.PlayableGraph[];
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -12152,7 +12152,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Presets {
-    export declare class PresetSelectorReceiver {
+    export class PresetSelectorReceiver {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       OnSelectionChanged(selection: UnityEditor.Presets.Preset): void;
@@ -12164,7 +12164,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class DefaultPresetSelectorReceiver {
+    export class DefaultPresetSelectorReceiver {
       constructor();
       name: string;
       hideFlags: UnityEngine.HideFlags;
@@ -12177,7 +12177,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PresetSelector {
+    export class PresetSelector {
       constructor();
       rootVisualElement: UnityEngine.UIElements.VisualElement;
       wantsMouseMove: boolean;
@@ -12229,7 +12229,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Preset {
+    export class Preset {
       constructor(source: UnityEngine.Object);
       PropertyModifications: UnityEditor.PropertyModification[];
       excludedProperties: string[];
@@ -12261,7 +12261,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class DefaultPreset {
+    export class DefaultPreset {
       constructor(filter: string, preset: UnityEditor.Presets.Preset);
       constructor(filter: string, preset: UnityEditor.Presets.Preset, enabled: boolean);
       filter: string;
@@ -12274,7 +12274,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PresetType {
+    export class PresetType {
       constructor(o: UnityEngine.Object);
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -12287,7 +12287,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Profiling {
-    export declare class ProfilerCategoryInfo {
+    export class ProfilerCategoryInfo {
       id: System.UInt16;
       color: UnityEngine.Color32;
       name: string;
@@ -12297,7 +12297,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FrameDataView {
+    export class FrameDataView {
       valid: boolean;
       frameIndex: number;
       threadIndex: number;
@@ -12335,7 +12335,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FrameDataView_MarkerMetadataInfo {
+    export class FrameDataView_MarkerMetadataInfo {
       type: Unity.Profiling.LowLevel.ProfilerMarkerDataType;
       unit: Unity.Profiling.ProfilerMarkerDataUnit;
       name: string;
@@ -12344,7 +12344,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FrameDataView_MarkerInfo {
+    export class FrameDataView_MarkerInfo {
       id: number;
       category: System.UInt16;
       flags: Unity.Profiling.LowLevel.MarkerFlags;
@@ -12355,7 +12355,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FrameDataView_MethodInfo {
+    export class FrameDataView_MethodInfo {
       methodName: string;
       sourceFileName: string;
       sourceFileLine: System.UInt32;
@@ -12364,7 +12364,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class HierarchyFrameDataView {
+    export class HierarchyFrameDataView {
       viewMode: UnityEditor.Profiling.HierarchyFrameDataView_ViewModes;
       sortColumn: number;
       sortColumnAscending: boolean;
@@ -12456,7 +12456,7 @@ export namespace UnityEditor {
       MergeSamplesWithTheSameName = 1,
       HideEditorOnlySamples = 2,
     }
-    export declare class RawFrameDataView {
+    export class RawFrameDataView {
       valid: boolean;
       frameIndex: number;
       threadIndex: number;
@@ -12512,7 +12512,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RawFrameDataView_FlowEvent {
+    export class RawFrameDataView_FlowEvent {
       ParentSampleIndex: number;
       FlowId: System.UInt32;
       FlowEventType: Unity.Profiling.ProfilerFlowEventType;
@@ -12523,14 +12523,14 @@ export namespace UnityEditor {
     }
     export namespace Memory {
       export namespace Experimental {
-        export declare class ArrayEntries<T = any> {
+        export class ArrayEntries<T = any> {
           GetNumEntries(): System.UInt32;
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ConnectionEntries {
+        export class ConnectionEntries {
           from: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           to: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           GetNumEntries(): System.UInt32;
@@ -12539,7 +12539,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class GCHandleEntries {
+        export class GCHandleEntries {
           target: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
           GetNumEntries(): System.UInt32;
           Equals(obj: System.Object): boolean;
@@ -12547,7 +12547,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ManagedMemorySectionEntries {
+        export class ManagedMemorySectionEntries {
           bytes: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Byte[]>;
           startAddress: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
           GetNumEntries(): System.UInt32;
@@ -12556,7 +12556,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeObjectEntries {
+        export class NativeObjectEntries {
           objectName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           instanceId: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           size: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
@@ -12572,7 +12572,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeTypeEntries {
+        export class NativeTypeEntries {
           typeName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           nativeBaseTypeArrayIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           GetNumEntries(): System.UInt32;
@@ -12581,7 +12581,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class TypeDescriptionEntries {
+        export class TypeDescriptionEntries {
           flags: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<UnityEditor.Profiling.Memory.Experimental.TypeFlags>;
           typeDescriptionName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           assembly: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
@@ -12597,7 +12597,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class FieldDescriptionEntries {
+        export class FieldDescriptionEntries {
           fieldDescriptionName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           offset: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           typeIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
@@ -12608,7 +12608,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeMemoryLabelEntries {
+        export class NativeMemoryLabelEntries {
           memoryLabelName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           GetNumEntries(): System.UInt32;
           Equals(obj: System.Object): boolean;
@@ -12616,7 +12616,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeRootReferenceEntries {
+        export class NativeRootReferenceEntries {
           id: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
           areaName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           objectName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
@@ -12627,7 +12627,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeAllocationEntries {
+        export class NativeAllocationEntries {
           memoryRegionIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           rootReferenceId: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
           allocationSiteId: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
@@ -12641,7 +12641,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeMemoryRegionEntries {
+        export class NativeMemoryRegionEntries {
           memoryRegionName: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           parentIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           addressBase: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
@@ -12654,7 +12654,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeAllocationSiteEntries {
+        export class NativeAllocationSiteEntries {
           id: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.Int64>;
           memoryLabelIndex: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<number>;
           callstackSymbols: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64[]>;
@@ -12664,7 +12664,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeCallstackSymbolEntries {
+        export class NativeCallstackSymbolEntries {
           symbol: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<System.UInt64>;
           readableStackTrace: UnityEditor.Profiling.Memory.Experimental.ArrayEntries<string>;
           GetNumEntries(): System.UInt32;
@@ -12673,7 +12673,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class PackedMemorySnapshot {
+        export class PackedMemorySnapshot {
           connections: UnityEditor.Profiling.Memory.Experimental.ConnectionEntries;
           fieldDescriptions: UnityEditor.Profiling.Memory.Experimental.FieldDescriptionEntries;
           gcHandles: UnityEditor.Profiling.Memory.Experimental.GCHandleEntries;
@@ -12708,7 +12708,7 @@ export namespace UnityEditor {
           IsPersistent = 2,
           IsManager = 4,
         }
-        export declare class ObjectFlagsExtensions {
+        export class ObjectFlagsExtensions {
           static IsDontDestroyOnLoad(flags: UnityEditor.Profiling.Memory.Experimental.ObjectFlags): boolean;
           static IsPersistent(flags: UnityEditor.Profiling.Memory.Experimental.ObjectFlags): boolean;
           static IsManager(flags: UnityEditor.Profiling.Memory.Experimental.ObjectFlags): boolean;
@@ -12723,7 +12723,7 @@ export namespace UnityEditor {
           kArray = 2,
           kArrayRankMask = -65536,
         }
-        export declare class TypeFlagsExtensions {
+        export class TypeFlagsExtensions {
           static IsValueType(flags: UnityEditor.Profiling.Memory.Experimental.TypeFlags): boolean;
           static IsArray(flags: UnityEditor.Profiling.Memory.Experimental.TypeFlags): boolean;
           static ArrayRank(flags: UnityEditor.Profiling.Memory.Experimental.TypeFlags): number;
@@ -12732,7 +12732,7 @@ export namespace UnityEditor {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class VirtualMachineInformation {
+        export class VirtualMachineInformation {
           pointerSize: number;
           objectHeaderSize: number;
           arrayHeaderSize: number;
@@ -12748,7 +12748,7 @@ export namespace UnityEditor {
     }
   }
   export namespace ProjectWindowCallback {
-    export declare class EndNameEditAction {
+    export class EndNameEditAction {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       OnEnable(): void;
@@ -12764,7 +12764,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Purchasing {
-    export declare class PurchasingSettings {
+    export class PurchasingSettings {
       static enabled: boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -12773,7 +12773,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Rendering {
-    export declare class EditorGraphicsSettings {
+    export class EditorGraphicsSettings {
       constructor();
       static albedoSwatches: UnityEditor.Rendering.AlbedoSwatchInfo[];
       static GetTierSettings(target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.GraphicsTier): UnityEditor.Rendering.TierSettings;
@@ -12792,7 +12792,7 @@ export namespace UnityEditor {
       Medium = 1,
       High = 2,
     }
-    export declare class AlbedoSwatchInfo {
+    export class AlbedoSwatchInfo {
       name: string;
       color: UnityEngine.Color;
       minLuminance: number;
@@ -12802,7 +12802,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TierSettings {
+    export class TierSettings {
       standardShaderQuality: UnityEditor.Rendering.ShaderQuality;
       hdrMode: UnityEngine.Rendering.CameraHDRMode;
       reflectionProbeBoxProjection: boolean;
@@ -12820,7 +12820,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PlatformShaderSettings {
+    export class PlatformShaderSettings {
       cascadedShadowMaps: boolean;
       reflectionProbeBoxProjection: boolean;
       reflectionProbeBlending: boolean;
@@ -12830,14 +12830,14 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EditorCameraUtils {
+    export class EditorCameraUtils {
       static RenderToCubemap(camera: UnityEngine.Camera, target: UnityEngine.Texture, faceMask: number, culledFlags: UnityEditor.StaticEditorFlags): boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ShaderSnippetData {
+    export class ShaderSnippetData {
       shaderType: UnityEditor.Rendering.ShaderType;
       passType: UnityEngine.Rendering.PassType;
       passName: string;
@@ -12846,7 +12846,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ShaderCompilerData {
+    export class ShaderCompilerData {
       shaderRequirements: UnityEditor.Rendering.ShaderRequirements;
       graphicsTier: UnityEngine.Rendering.GraphicsTier;
       shaderCompilerPlatform: UnityEditor.Rendering.ShaderCompilerPlatform;
@@ -12907,7 +12907,7 @@ export namespace UnityEditor {
       RayTracing = 7,
       Count = 7,
     }
-    export declare class RenderPipelineEditorUtility {
+    export class RenderPipelineEditorUtility {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -12915,7 +12915,7 @@ export namespace UnityEditor {
     }
   }
   export namespace SceneManagement {
-    export declare class EditorSceneManager {
+    export class EditorSceneManager {
       constructor();
       static loadedSceneCount: number;
       static loadedRootSceneCount: number;
@@ -12958,7 +12958,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorSceneManager_NewSceneCreatedCallback {
+    export class EditorSceneManager_NewSceneCreatedCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -12974,7 +12974,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorSceneManager_SceneOpeningCallback {
+    export class EditorSceneManager_SceneOpeningCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -12990,7 +12990,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorSceneManager_SceneOpenedCallback {
+    export class EditorSceneManager_SceneOpenedCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -13006,7 +13006,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorSceneManager_SceneClosingCallback {
+    export class EditorSceneManager_SceneClosingCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -13022,7 +13022,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorSceneManager_SceneClosedCallback {
+    export class EditorSceneManager_SceneClosedCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -13038,7 +13038,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorSceneManager_SceneSavingCallback {
+    export class EditorSceneManager_SceneSavingCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -13054,7 +13054,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorSceneManager_SceneSavedCallback {
+    export class EditorSceneManager_SceneSavedCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -13070,7 +13070,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorSceneManager_SceneDirtiedCallback {
+    export class EditorSceneManager_SceneDirtiedCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -13086,7 +13086,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SceneCullingMasks {
+    export class SceneCullingMasks {
       static DefaultSceneCullingMask: System.UInt64;
       static GameViewObjects: System.UInt64;
       static MainStageSceneViewObjects: System.UInt64;
@@ -13108,7 +13108,7 @@ export namespace UnityEditor {
       EmptyScene = 0,
       DefaultGameObjects = 1,
     }
-    export declare class SceneHierarchyHooks {
+    export class SceneHierarchyHooks {
       static provideSubScenes: any; // System.Func`1[UnityEditor.SceneManagement.SceneHierarchyHooks+SubSceneInfo[]]
       static provideSubSceneName: any; // System.Func`2[UnityEditor.SceneManagement.SceneHierarchyHooks+SubSceneInfo,System.String]
       static ReloadAllSceneHierarchies(): void;
@@ -13119,7 +13119,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SceneHierarchyHooks_SubSceneInfo {
+    export class SceneHierarchyHooks_SubSceneInfo {
       isValid: boolean;
       transform: UnityEngine.Transform;
       scene: UnityEngine.SceneManagement.Scene;
@@ -13131,7 +13131,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PrefabOverride {
+    export class PrefabOverride {
       Apply(prefabAssetPath: string, mode: UnityEditor.InteractionMode): void;
       Revert(mode: UnityEditor.InteractionMode): void;
       Apply(): void;
@@ -13144,7 +13144,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ObjectOverride {
+    export class ObjectOverride {
       constructor();
       instanceObject: UnityEngine.Object;
       coupledOverride: UnityEditor.SceneManagement.PrefabOverride;
@@ -13160,7 +13160,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AddedComponent {
+    export class AddedComponent {
       constructor();
       instanceComponent: UnityEngine.Component;
       Apply(prefabAssetPath: string, mode: UnityEditor.InteractionMode): void;
@@ -13175,7 +13175,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RemovedComponent {
+    export class RemovedComponent {
       constructor();
       containingInstanceGameObject: UnityEngine.GameObject;
       assetComponent: UnityEngine.Component;
@@ -13191,7 +13191,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AddedGameObject {
+    export class AddedGameObject {
       constructor();
       instanceGameObject: UnityEngine.GameObject;
       siblingIndex: number;
@@ -13207,7 +13207,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SceneSetup {
+    export class SceneSetup {
       constructor();
       path: string;
       isLoaded: boolean;
@@ -13218,7 +13218,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MainStage {
+    export class MainStage {
       constructor();
       assetPath: string;
       stageHandle: UnityEditor.SceneManagement.StageHandle;
@@ -13232,7 +13232,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreviewSceneStage {
+    export class PreviewSceneStage {
       scene: UnityEngine.SceneManagement.Scene;
       stageHandle: UnityEditor.SceneManagement.StageHandle;
       assetPath: string;
@@ -13246,7 +13246,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Stage {
+    export class Stage {
       assetPath: string;
       stageHandle: UnityEditor.SceneManagement.StageHandle;
       name: string;
@@ -13259,7 +13259,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StageHandle {
+    export class StageHandle {
       Contains(gameObject: UnityEngine.GameObject): boolean;
       IsValid(): boolean;
       Equals(other: System.Object): boolean;
@@ -13268,7 +13268,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StageUtility {
+    export class StageUtility {
       static IsGameObjectRenderedByCamera(gameObject: UnityEngine.GameObject, camera: UnityEngine.Camera): boolean;
       static IsGameObjectRenderedByCameraAndPartOfEditableScene(gameObject: UnityEngine.GameObject, camera: UnityEngine.Camera): boolean;
       static GetCurrentStage(): UnityEditor.SceneManagement.Stage;
@@ -13290,7 +13290,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Scripting {
-    export declare class ManagedDebugger {
+    export class ManagedDebugger {
       constructor();
       static isAttached: boolean;
       static isEnabled: boolean;
@@ -13308,7 +13308,7 @@ export namespace UnityEditor {
       Scene = 2,
       All = 3,
     }
-    export declare class ObjectSelectorTargetInfo {
+    export class ObjectSelectorTargetInfo {
       constructor(globalObjectId: UnityEditor.GlobalObjectId, targetObject?: UnityEngine.Object, type?: System.Type);
       globalObjectId: UnityEditor.GlobalObjectId;
       targetObject: UnityEngine.Object;
@@ -13319,7 +13319,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ObjectSelectorSearchContext {
+    export class ObjectSelectorSearchContext {
       constructor();
       guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
@@ -13337,7 +13337,7 @@ export namespace UnityEditor {
     }
     export interface IObjectSelectorEngine {
     }
-    export declare class ObjectSelector {
+    export class ObjectSelector {
       static EngineScope: UnityEditor.SearchService.SearchEngineScope;
       static RegisterEngine(engine: UnityEditor.SearchService.IObjectSelectorEngine): void;
       static UnregisterEngine(engine: UnityEditor.SearchService.IObjectSelectorEngine): void;
@@ -13346,7 +13346,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ProjectSearchContext {
+    export class ProjectSearchContext {
       constructor();
       guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
@@ -13359,7 +13359,7 @@ export namespace UnityEditor {
     }
     export interface IProjectSearchEngine {
     }
-    export declare class Project {
+    export class Project {
       static EngineScope: UnityEditor.SearchService.SearchEngineScope;
       static RegisterEngine(engine: UnityEditor.SearchService.IProjectSearchEngine): void;
       static UnregisterEngine(engine: UnityEditor.SearchService.IProjectSearchEngine): void;
@@ -13368,7 +13368,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SceneSearchContext {
+    export class SceneSearchContext {
       constructor();
       guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
@@ -13382,7 +13382,7 @@ export namespace UnityEditor {
     }
     export interface ISceneSearchEngine {
     }
-    export declare class Scene {
+    export class Scene {
       static EngineScope: UnityEditor.SearchService.SearchEngineScope;
       static RegisterEngine(engine: UnityEditor.SearchService.ISceneSearchEngine): void;
       static UnregisterEngine(engine: UnityEditor.SearchService.ISceneSearchEngine): void;
@@ -13421,7 +13421,7 @@ export namespace UnityEditor {
     }
   }
   export namespace ShortcutManagement {
-    export declare class KeyCombination {
+    export class KeyCombination {
       constructor(keyCode: UnityEngine.KeyCode, shortcutModifiers?: UnityEditor.ShortcutManagement.ShortcutModifiers);
       keyCode: UnityEngine.KeyCode;
       modifiers: UnityEditor.ShortcutManagement.ShortcutModifiers;
@@ -13434,7 +13434,7 @@ export namespace UnityEditor {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ShortcutBinding {
+    export class ShortcutBinding {
       constructor(keyCombination: UnityEditor.ShortcutManagement.KeyCombination);
       static empty: UnityEditor.ShortcutManagement.ShortcutBinding;
       keyCombinationSequence: System.Collections.Generic.IEnumerable<UnityEditor.ShortcutManagement.KeyCombination>;
@@ -13448,7 +13448,7 @@ export namespace UnityEditor {
       Begin = 0,
       End = 1,
     }
-    export declare class ShortcutArguments {
+    export class ShortcutArguments {
       context: System.Object;
       stage: UnityEditor.ShortcutManagement.ShortcutStage;
       Equals(obj: System.Object): boolean;
@@ -13476,7 +13476,7 @@ export namespace UnityEditor {
       ClearShortcutOverride(shortcutId: string): void;
       IsShortcutOverridden(shortcutId: string): boolean;
     }
-    export declare class ActiveProfileChangedEventArgs {
+    export class ActiveProfileChangedEventArgs {
       constructor(previousActiveProfileId: string, currentActiveProfileId: string);
       previousActiveProfileId: string;
       currentActiveProfileId: string;
@@ -13485,7 +13485,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ShortcutBindingChangedEventArgs {
+    export class ShortcutBindingChangedEventArgs {
       constructor(shortcutId: string, oldBinding: UnityEditor.ShortcutManagement.ShortcutBinding, newBinding: UnityEditor.ShortcutManagement.ShortcutBinding);
       shortcutId: string;
       oldBinding: UnityEditor.ShortcutManagement.ShortcutBinding;
@@ -13495,7 +13495,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ShortcutManager {
+    export class ShortcutManager {
       static instance: UnityEditor.ShortcutManagement.IShortcutManager;
       static defaultProfileId: string;
       Equals(obj: System.Object): boolean;
@@ -13505,7 +13505,7 @@ export namespace UnityEditor {
     }
   }
   export namespace Sprites {
-    export declare class AtlasSettings {
+    export class AtlasSettings {
       format: UnityEngine.TextureFormat;
       colorSpace: UnityEngine.ColorSpace;
       compressionQuality: number;
@@ -13522,7 +13522,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PackerJob {
+    export class PackerJob {
       AddAtlas(atlasName: string, settings: UnityEditor.Sprites.AtlasSettings): void;
       AssignToAtlas(atlasName: string, sprite: UnityEngine.Sprite, packingMode: UnityEngine.SpritePackingMode, packingRotation: UnityEngine.SpritePackingRotation): void;
       Equals(obj: System.Object): boolean;
@@ -13530,7 +13530,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Packer {
+    export class Packer {
       constructor();
       static atlasNames: string[];
       static Policies: string[];
@@ -13550,7 +13550,7 @@ export namespace UnityEditor {
       Normal = 0,
       ForceRegroup = 1,
     }
-    export declare class SpriteUtility {
+    export class SpriteUtility {
       constructor();
       static GetSpriteTexture(sprite: UnityEngine.Sprite, getAtlasData: boolean): UnityEngine.Texture2D;
       static GetSpriteMesh(sprite: UnityEngine.Sprite, getAtlasData: boolean): UnityEngine.Vector2[];
@@ -13561,7 +13561,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DataUtility {
+    export class DataUtility {
       constructor();
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -13575,7 +13575,7 @@ export namespace UnityEditor {
     }
   }
   export namespace U2D {
-    export declare class SpriteEditorExtension {
+    export class SpriteEditorExtension {
       static GetSpriteID(sprite: UnityEngine.Sprite): UnityEditor.GUID;
       static SetSpriteID(sprite: UnityEngine.Sprite, guid: UnityEditor.GUID): void;
       Equals(obj: System.Object): boolean;
@@ -13583,7 +13583,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpriteAtlasUtility {
+    export class SpriteAtlasUtility {
       constructor();
       static PackAllAtlases(target: UnityEditor.BuildTarget, canCancel?: boolean): void;
       static PackAtlases(atlases: UnityEngine.U2D.SpriteAtlas[], target: UnityEditor.BuildTarget, canCancel?: boolean): void;
@@ -13592,7 +13592,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpriteAtlasTextureSettings {
+    export class SpriteAtlasTextureSettings {
       anisoLevel: number;
       filterMode: UnityEngine.FilterMode;
       generateMipMaps: boolean;
@@ -13603,7 +13603,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SpriteAtlasPackingSettings {
+    export class SpriteAtlasPackingSettings {
       blockOffset: number;
       padding: number;
       enableRotation: boolean;
@@ -13613,7 +13613,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SpriteAtlasExtensions {
+    export class SpriteAtlasExtensions {
       static Add(spriteAtlas: UnityEngine.U2D.SpriteAtlas, objects: UnityEngine.Object[]): void;
       static Remove(spriteAtlas: UnityEngine.U2D.SpriteAtlas, objects: UnityEngine.Object[]): void;
       static GetPackables(spriteAtlas: UnityEngine.U2D.SpriteAtlas): UnityEngine.Object[];
@@ -13632,7 +13632,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpriteAtlasAsset {
+    export class SpriteAtlasAsset {
       constructor();
       isVariant: boolean;
       name: string;
@@ -13655,7 +13655,7 @@ export namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SpriteAtlasImporter {
+    export class SpriteAtlasImporter {
       constructor();
       assetPath: string;
       importSettingsMissing: boolean;
@@ -13679,7 +13679,7 @@ export namespace UnityEditor {
     }
   }
   export namespace UIElements {
-    export declare class UIElementsEntryPoint {
+    export class UIElementsEntryPoint {
       static SetAntiAliasing(window: UnityEditor.EditorWindow, aa: number): void;
       static GetAntiAliasing(window: UnityEditor.EditorWindow): number;
       Equals(obj: System.Object): boolean;
@@ -13687,7 +13687,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SerializedPropertyChangeEvent {
+    export class SerializedPropertyChangeEvent {
       constructor();
       changedProperty: UnityEditor.SerializedProperty;
       eventTypeId: System.Int64;
@@ -13715,7 +13715,7 @@ export namespace UnityEditor {
     }
   }
   export namespace UnityLinker {
-    export declare class UnityLinkerBuildPipelineData {
+    export class UnityLinkerBuildPipelineData {
       constructor(target: UnityEditor.BuildTarget, inputDirectory: string);
       target: UnityEditor.BuildTarget;
       inputDirectory: string;
@@ -13726,7 +13726,7 @@ export namespace UnityEditor {
     }
   }
   export namespace VersionControl {
-    export declare class Asset {
+    export class Asset {
       constructor(clientPath: string);
       state: UnityEditor.VersionControl.Asset_States;
       path: string;
@@ -13774,7 +13774,7 @@ export namespace UnityEditor {
       Unversioned = 262144,
       Exclusive = 524288,
     }
-    export declare class ChangeSet {
+    export class ChangeSet {
       constructor();
       constructor(description: string);
       constructor(description: string, revision: string);
@@ -13788,7 +13788,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Message {
+    export class Message {
       severity: UnityEditor.VersionControl.Message_Severity;
       message: string;
       Dispose(): void;
@@ -13805,7 +13805,7 @@ export namespace UnityEditor {
       Warning = 3,
       Error = 4,
     }
-    export declare class ConfigField {
+    export class ConfigField {
       name: string;
       label: string;
       description: string;
@@ -13817,7 +13817,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Plugin {
+    export class Plugin {
       static availablePlugins: UnityEditor.VersionControl.Plugin[];
       name: string;
       configFields: UnityEditor.VersionControl.ConfigField[];
@@ -13827,7 +13827,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Provider {
+    export class Provider {
       constructor();
       static enabled: boolean;
       static isActive: boolean;
@@ -13922,7 +13922,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Provider_PreSubmitCallback {
+    export class Provider_PreSubmitCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -13935,7 +13935,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Provider_PreCheckoutCallback {
+    export class Provider_PreCheckoutCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -13964,7 +13964,7 @@ export namespace UnityEditor {
       ConflictingFiles = 4,
       UnaddedFiles = 8,
     }
-    export declare class Task {
+    export class Task {
       userIdentifier: number;
       text: string;
       description: string;
@@ -13984,7 +13984,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AssetList {
+    export class AssetList {
       constructor();
       constructor(src: UnityEditor.VersionControl.AssetList);
       Capacity: number;
@@ -14042,7 +14042,7 @@ export namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ChangeSets {
+    export class ChangeSets {
       constructor();
       Capacity: number;
       Count: number;
@@ -14129,7 +14129,7 @@ export namespace UnityEditor {
     }
   }
   export namespace VisualStudioIntegration {
-    export declare class SolutionGuidGenerator {
+    export class SolutionGuidGenerator {
       static GuidForProject(projectName: string): string;
       static GuidForSolution(projectName: string, sourceFileExtension: string): string;
       Equals(obj: System.Object): boolean;
@@ -14139,7 +14139,7 @@ export namespace UnityEditor {
     }
   }
   export namespace XR {
-    export declare class BootOptions {
+    export class BootOptions {
       constructor();
       static SetXRSDKPreInitLibrary(bootConfigPath: string, libraryName: string): void;
       Equals(obj: System.Object): boolean;

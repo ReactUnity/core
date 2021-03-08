@@ -1,11 +1,11 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 7.03.2021 23:20:09
+// Generated 9.03.2021 02:10:26
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
 
-export namespace ReactUnity {
+export declare namespace ReactUnity {
   export interface IReactComponent {
     Parent: ReactUnity.IContainerComponent;
     IsPseudoElement: boolean;
@@ -43,7 +43,7 @@ export namespace ReactUnity {
   export interface IHostComponent {
     Context: ReactUnity.ReactContext;
   }
-  export declare class ReactContext {
+  export class ReactContext {
     constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action, mergeLayouts?: boolean);
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
@@ -68,7 +68,7 @@ export namespace ReactUnity {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ReactScript {
+  export class ReactScript {
     constructor();
     DevServerFile: string;
     SourceLocation: string;
@@ -94,7 +94,7 @@ export namespace ReactUnity {
     Resource = 3,
     Text = 4,
   }
-  export declare class ReactUnity {
+  export class ReactUnity {
     constructor();
     Root: UnityEngine.RectTransform;
     useGUILayout: boolean;
@@ -169,7 +169,7 @@ export namespace ReactUnity {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ReactUnityAPI {
+  export class ReactUnityAPI {
     constructor(engine: any);
     static StateHandlers: any; // System.Collections.Generic.Dictionary`2[System.String,System.Type]
     createText(text: string, host: ReactUnity.IHostComponent): ReactUnity.IReactComponent;
@@ -183,12 +183,13 @@ export namespace ReactUnity {
     setData(element: System.Object, property: string, value: System.Object): void;
     setEventListener(element: ReactUnity.IReactComponent, eventType: string, value: any): void;
     setEventListener(element: System.Object, eventType: string, value: System.Object): void;
+    getVersion(): string;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ReactUnityRunner {
+  export class ReactUnityRunner {
     constructor();
     RunScript(script: string, ctx: ReactUnity.ReactContext, preload?: UnityEngine.TextAsset[], callback?: System.Action): void;
     ExecuteScript(script: string): void;
@@ -197,7 +198,7 @@ export namespace ReactUnity {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UGUIContext {
+  export class UGUIContext {
     constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action);
     static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
     RootLayoutNode: any; // Facebook.Yoga.YogaNode
@@ -226,7 +227,7 @@ export namespace ReactUnity {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class CalculateSizeFromContents {
+  export class CalculateSizeFromContents {
     constructor();
     Layout: any; // Facebook.Yoga.YogaNode
     useGUILayout: boolean;
@@ -296,7 +297,7 @@ export namespace ReactUnity {
     GetType(): System.Type;
   }
   export namespace Components {
-    export declare class AnchorComponent {
+    export class AnchorComponent {
       constructor(context: ReactUnity.UGUIContext);
       static AnchorDefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
@@ -356,7 +357,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ButtonComponent {
+    export class ButtonComponent {
       constructor(context: ReactUnity.UGUIContext);
       static ButtonDefaultStyle: ReactUnity.Styling.NodeStyle;
       static ButtonDefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -416,7 +417,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ContainerComponent {
+    export class ContainerComponent {
       constructor(context: ReactUnity.UGUIContext, tag: string);
       Container: UnityEngine.RectTransform;
       Children: ReactUnity.IReactComponent[];
@@ -473,7 +474,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class HostComponent {
+    export class HostComponent {
       constructor(host: UnityEngine.RectTransform, context: ReactUnity.UGUIContext);
       Width: number;
       Height: number;
@@ -533,7 +534,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ImageComponent {
+    export class ImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
       static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
       static ImageDefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -596,7 +597,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class InputComponent {
+    export class InputComponent {
       constructor(text: string, context: ReactUnity.UGUIContext);
       static InputDefaultLayout: any; // Facebook.Yoga.YogaNode
       static InputDefaultStyle: ReactUnity.Styling.NodeStyle;
@@ -658,7 +659,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RawImageComponent {
+    export class RawImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
       static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
       static ImageDefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -721,7 +722,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ReactComponent {
+    export class ReactComponent {
       constructor(context: ReactUnity.UGUIContext, tag: string);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -769,7 +770,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RenderTextureComponent {
+    export class RenderTextureComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -831,7 +832,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ScrollComponent {
+    export class ScrollComponent {
       constructor(Context: ReactUnity.UGUIContext);
       static ScrollDefaultLayout: any; // Facebook.Yoga.YogaNode
       DefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -890,7 +891,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextComponent {
+    export class TextComponent {
       constructor(text: string, context: ReactUnity.UGUIContext, tag: string);
       constructor(linkedTo: ReactUnity.Components.TextComponent);
       static TextDefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -944,7 +945,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ToggleComponent {
+    export class ToggleComponent {
       constructor(context: ReactUnity.UGUIContext);
       static ToggleDefaultStyle: ReactUnity.Styling.NodeStyle;
       static ToggleDefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -1007,7 +1008,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VideoComponent {
+    export class VideoComponent {
       constructor(context: ReactUnity.UGUIContext);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: any; // Facebook.Yoga.YogaNode
@@ -1070,7 +1071,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VideoComponentSource {
+    export class VideoComponentSource {
       constructor();
       Url: string;
       Clip: UnityEngine.Video.VideoClip;
@@ -1082,7 +1083,7 @@ export namespace ReactUnity {
     }
   }
   export namespace DomProxies {
-    export declare class ConsoleProxy {
+    export class ConsoleProxy {
       constructor(engine: any);
       log(msg: System.Object): void;
       log(msg: System.Object, ...subs: System.Object[]): void;
@@ -1103,7 +1104,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DocumentProxy {
+    export class DocumentProxy {
       constructor(context: ReactUnity.ReactContext, execute: (() => void), origin: string);
       head: ReactUnity.DomProxies.HeadProxy;
       origin: string;
@@ -1127,7 +1128,7 @@ export namespace ReactUnity {
       appendChild(text: string): void;
       removeChild(text: string): void;
     }
-    export declare class DomElementProxyBase {
+    export class DomElementProxyBase {
       setAttribute(key: System.Object, value: System.Object): void;
       removeAttribute(key: System.Object): void;
       Equals(obj: System.Object): boolean;
@@ -1135,7 +1136,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class HeadProxy {
+    export class HeadProxy {
       constructor();
       appendChild(child: ReactUnity.DomProxies.IDomElementProxy): void;
       removeChild(child: ReactUnity.DomProxies.IDomElementProxy): void;
@@ -1146,7 +1147,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ScriptProxy {
+    export class ScriptProxy {
       constructor(document: ReactUnity.DomProxies.DocumentProxy);
       src: string;
       charset: string;
@@ -1167,7 +1168,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StyleProxy {
+    export class StyleProxy {
       constructor(document: ReactUnity.DomProxies.DocumentProxy);
       firstChild: string;
       childNodes: string[];
@@ -1185,7 +1186,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LocalStorage {
+    export class LocalStorage {
       constructor();
       static LocalStoragePrefix: string;
       setItem(x: string, value: string): void;
@@ -1196,7 +1197,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Location {
+    export class Location {
       constructor(sourceLocation: string, restart: System.Action);
       href: string;
       protocol: string;
@@ -1212,7 +1213,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WebSocketProxy {
+    export class WebSocketProxy {
       constructor(context: ReactUnity.ReactContext, url: string);
       constructor(context: ReactUnity.ReactContext, url: string, ...protocols: string[]);
       Onmessage: any; // Jint.Native.JsValue
@@ -1275,7 +1276,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class XMLHttpRequest {
+    export class XMLHttpRequest {
       constructor();
       constructor(origin: string);
       origin: string;
@@ -1309,7 +1310,7 @@ export namespace ReactUnity {
     }
   }
   export namespace Editor {
-    export declare class ReactElementDrawer {
+    export class ReactElementDrawer {
       constructor();
       target: UnityEngine.Object;
       targets: UnityEngine.Object[];
@@ -1342,7 +1343,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ReactScriptDrawer {
+    export class ReactScriptDrawer {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: System.Reflection.FieldInfo;
@@ -1355,7 +1356,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StringObjectPairDrawer {
+    export class StringObjectPairDrawer {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: System.Reflection.FieldInfo;
@@ -1368,7 +1369,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditStyleWindow {
+    export class EditStyleWindow {
       constructor();
       PreviousComponent: ReactUnity.Layout.ReactElement;
       CurrentStyle: ReactUnity.Styling.NodeStyle;
@@ -1423,7 +1424,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class QuickStartWindow {
+    export class QuickStartWindow {
       constructor();
       rootVisualElement: UnityEngine.UIElements.VisualElement;
       wantsMouseMove: boolean;
@@ -1472,7 +1473,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EmscriptenBuildFlags {
+    export class EmscriptenBuildFlags {
       constructor();
       callbackOrder: number;
       OnPreprocessBuild(report: any): void;
@@ -1482,7 +1483,7 @@ export namespace ReactUnity {
       ToString(): string;
     }
     export namespace Developer {
-      export declare class TypescriptModelsGenerator {
+      export class TypescriptModelsGenerator {
         static GenerateUnity(): void;
         static GenerateEditor(): void;
         static GenerateReactUnity(): void;
@@ -1495,7 +1496,7 @@ export namespace ReactUnity {
       }
     }
     export namespace Renderer {
-      export declare class EditorContext {
+      export class EditorContext {
         constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: System.Action);
         Host: ReactUnity.IHostComponent;
         Globals: ReactUnity.Types.StringObjectDictionary;
@@ -1523,7 +1524,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ReactEditorTester {
+      export class ReactEditorTester {
         constructor();
         rootVisualElement: UnityEngine.UIElements.VisualElement;
         wantsMouseMove: boolean;
@@ -1574,7 +1575,7 @@ export namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ReactWindow {
+      export class ReactWindow {
         rootVisualElement: UnityEngine.UIElements.VisualElement;
         wantsMouseMove: boolean;
         wantsMouseEnterLeaveWindow: boolean;
@@ -1624,7 +1625,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
       }
       export namespace Components {
-        export declare class EditorBaseFieldComponent<TElementType = any, TValueType = any> {
+        export class EditorBaseFieldComponent<TElementType = any, TValueType = any> {
           constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
@@ -1668,7 +1669,7 @@ export namespace ReactUnity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EditorButtonComponent {
+        export class EditorButtonComponent {
           constructor(context: ReactUnity.Editor.Renderer.EditorContext);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
@@ -1710,7 +1711,7 @@ export namespace ReactUnity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EditorHostComponent {
+        export class EditorHostComponent {
           constructor(element: UnityEngine.UIElements.VisualElement, ctx: ReactUnity.Editor.Renderer.EditorContext);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
@@ -1752,7 +1753,7 @@ export namespace ReactUnity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EditorIMGUIComponent {
+        export class EditorIMGUIComponent {
           constructor(context: ReactUnity.Editor.Renderer.EditorContext);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
@@ -1799,7 +1800,7 @@ export namespace ReactUnity {
         export interface IEditorReactComponent<T = any> {
           Element: T;
         }
-        export declare class EditorReactComponent<T = any> {
+        export class EditorReactComponent<T = any> {
           constructor(element: T, context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
           constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
           Context: ReactUnity.Editor.Renderer.EditorContext;
@@ -1842,7 +1843,7 @@ export namespace ReactUnity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EditorTextComponent {
+        export class EditorTextComponent {
           constructor(text: string, context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
@@ -1885,7 +1886,7 @@ export namespace ReactUnity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EditorToggleComponent {
+        export class EditorToggleComponent {
           constructor(context: ReactUnity.Editor.Renderer.EditorContext);
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
@@ -1931,7 +1932,7 @@ export namespace ReactUnity {
         }
       }
       export namespace Events {
-        export declare class EditorEventHandlerMap {
+        export class EditorEventHandlerMap {
           static GetEventType(eventName: string): System.Type;
           static GetEventMethods(eventName: string): any;
           Equals(obj: System.Object): boolean;
@@ -1941,7 +1942,7 @@ export namespace ReactUnity {
         }
       }
       export namespace Styling {
-        export declare class StylingHelpers {
+        export class StylingHelpers {
           static TextAlignMap: any; // System.Collections.Generic.Dictionary`2[TMPro.TextAlignmentOptions,UnityEngine.TextAnchor]
           static YogaValueToStyleLength(value: any): UnityEngine.UIElements.StyleLength;
           static NormalizeFloat(value: number): number;
@@ -1962,7 +1963,7 @@ export namespace ReactUnity {
     }
   }
   export namespace EventHandlers {
-    export declare class AnchorClickHandler {
+    export class AnchorClickHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2032,7 +2033,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class BeginDragHandler {
+    export class BeginDragHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2102,7 +2103,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CancelHandler {
+    export class CancelHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2172,7 +2173,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class DeselectHandler {
+    export class DeselectHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2242,7 +2243,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class DragHandler {
+    export class DragHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2312,7 +2313,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class DropHandler {
+    export class DropHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2382,7 +2383,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EndDragHandler {
+    export class EndDragHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2452,7 +2453,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EventHandlerMap {
+    export class EventHandlerMap {
       static GetEventType(eventName: string): System.Type;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -2462,7 +2463,7 @@ export namespace ReactUnity {
     export interface IEventHandler {
       ClearListeners(): void;
     }
-    export declare class KeyDownHandler {
+    export class KeyDownHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2533,7 +2534,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class KeyEventData {
+    export class KeyEventData {
       constructor(eventSystem: UnityEngine.EventSystems.EventSystem, ctx: any);
       constructor(eventSystem: UnityEngine.EventSystems.EventSystem, inputSystem?: boolean);
       currentInputModule: UnityEngine.EventSystems.BaseInputModule;
@@ -2550,7 +2551,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MoveHandler {
+    export class MoveHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2620,7 +2621,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PointerClickHandler {
+    export class PointerClickHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2690,7 +2691,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PointerDownHandler {
+    export class PointerDownHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2760,7 +2761,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PointerEnterHandler {
+    export class PointerEnterHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2830,7 +2831,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PointerExitHandler {
+    export class PointerExitHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2900,7 +2901,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PointerUpHandler {
+    export class PointerUpHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -2970,7 +2971,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PotentialDragHandler {
+    export class PotentialDragHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3040,7 +3041,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScrollHandler {
+    export class ScrollHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3110,7 +3111,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SelectHandler {
+    export class SelectHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3180,7 +3181,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SubmitHandler {
+    export class SubmitHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3250,7 +3251,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class UpdateSelectedHandler {
+    export class UpdateSelectedHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3322,14 +3323,14 @@ export namespace ReactUnity {
     }
   }
   export namespace Helpers {
-    export declare class CursorAPI {
+    export class CursorAPI {
       static SetCursor(cursor: string): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventTypes {
+    export class EventTypes {
       static GetEventType(eventName: string): any;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -3338,7 +3339,7 @@ export namespace ReactUnity {
     }
   }
   export namespace Interop {
-    export declare class AdaptiveDispatcher {
+    export class AdaptiveDispatcher {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3416,7 +3417,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Callback {
+    export class Callback {
       constructor(callback: any);
       constructor(callback: System.Object);
       callback: System.Object;
@@ -3427,7 +3428,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorDispatcher {
+    export class EditorDispatcher {
       static Initialize(): void;
       static AddCallOnLateUpdate(call: System.Action): void;
       static OnUpdate(callback: System.Action): number;
@@ -3444,7 +3445,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MainThreadDispatcher {
+    export class MainThreadDispatcher {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3524,7 +3525,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AdaptiveDispatcher_CoroutineHandle {
+    export class AdaptiveDispatcher_CoroutineHandle {
       constructor(handle: number);
       Handle: number;
       Dispose(): void;
@@ -3533,7 +3534,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EditorDispatcher_CoroutineHandle {
+    export class EditorDispatcher_CoroutineHandle {
       constructor(handle: number);
       Handle: number;
       Dispose(): void;
@@ -3542,7 +3543,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MainThreadDispatcher_CoroutineHandle {
+    export class MainThreadDispatcher_CoroutineHandle {
       constructor(handle: number);
       Handle: number;
       Dispose(): void;
@@ -3553,7 +3554,7 @@ export namespace ReactUnity {
     }
   }
   export namespace Layout {
-    export declare class ImageMeasurer {
+    export class ImageMeasurer {
       constructor();
       FitMode: ReactUnity.Types.ImageFitMode;
       Sprite: UnityEngine.Sprite;
@@ -3628,7 +3629,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ReactElement {
+    export class ReactElement {
       constructor();
       Layout: any; // Facebook.Yoga.YogaNode
       Style: ReactUnity.Styling.NodeStyle;
@@ -3700,7 +3701,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ResponsiveElement {
+    export class ResponsiveElement {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3770,7 +3771,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TextMeasurer {
+    export class TextMeasurer {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3843,7 +3844,7 @@ export namespace ReactUnity {
     }
   }
   export namespace Schedulers {
-    export declare class EditorScheduler {
+    export class EditorScheduler {
       constructor();
       setTimeout(callback: ReactUnity.Interop.Callback, timeout: number): number;
       setInterval(callback: ReactUnity.Interop.Callback, timeout: number): number;
@@ -3870,7 +3871,7 @@ export namespace ReactUnity {
       cancelAnimationFrame(handle: number): void;
       clearAllTimeouts(): void;
     }
-    export declare class NoScheduler {
+    export class NoScheduler {
       constructor();
       setTimeout(callback: ReactUnity.Interop.Callback, timeout: number): number;
       setInterval(callback: ReactUnity.Interop.Callback, timeout: number): number;
@@ -3886,7 +3887,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UnityScheduler {
+    export class UnityScheduler {
       constructor();
       setTimeout(callback: ReactUnity.Interop.Callback, timeout: number): number;
       setInterval(callback: ReactUnity.Interop.Callback, timeout: number): number;
@@ -3904,7 +3905,7 @@ export namespace ReactUnity {
     }
   }
   export namespace StateHandlers {
-    export declare class ActiveStateHandler {
+    export class ActiveStateHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -3975,7 +3976,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CursorHandler {
+    export class CursorHandler {
       constructor();
       Cursor: string;
       useGUILayout: boolean;
@@ -4046,7 +4047,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FocusStateHandler {
+    export class FocusStateHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -4117,7 +4118,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FocusVisibleStateHandler {
+    export class FocusVisibleStateHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -4188,7 +4189,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FocusWithinStateHandler {
+    export class FocusWithinStateHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -4257,7 +4258,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class HoverStateHandler {
+    export class HoverStateHandler {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -4333,7 +4334,7 @@ export namespace ReactUnity {
     }
   }
   export namespace StyleEngine {
-    export declare class RuleHelpers {
+    export class RuleHelpers {
       static ImportantSpecifity: number;
       static SplitSelectorRegex: System.Text.RegularExpressions.Regex;
       static NthChildRegex: System.Text.RegularExpressions.Regex;
@@ -4350,7 +4351,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StyleData {
+    export class StyleData {
       constructor();
       Rules: System.Collections.Generic.Dictionary<string, System.Object>[];
       Layouts: ReactUnity.Styling.LayoutValue[];
@@ -4359,7 +4360,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StyleTree {
+    export class StyleTree {
       constructor(parser: any);
       Parser: any; // ExCSS.StylesheetParser
       Specifity: number;
@@ -4388,7 +4389,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RuleTree<T = any> {
+    export class RuleTree<T = any> {
       constructor(parser: any);
       Parser: any; // ExCSS.StylesheetParser
       Specifity: number;
@@ -4416,7 +4417,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RuleTreeNode<T = any> {
+    export class RuleTreeNode<T = any> {
       constructor();
       Specifity: number;
       Tree: ReactUnity.StyleEngine.RuleTree<T>;
@@ -4472,7 +4473,7 @@ export namespace ReactUnity {
       Special = 1001,
       State = 2000,
     }
-    export declare class RuleSelectorPart {
+    export class RuleSelectorPart {
       constructor();
       Negated: boolean;
       Type: ReactUnity.StyleEngine.RuleSelectorPartType;
@@ -4485,7 +4486,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NthChildParameter {
+    export class NthChildParameter {
       constructor(value: string);
       A: number;
       B: number;
@@ -4495,7 +4496,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class IListInsertIntoSortedListExtensions {
+    export class IListInsertIntoSortedListExtensions {
       static InsertIntoSortedList(list: System.Collections.IList, value: System.IComparable): void;
       static InsertIntoSortedList(list: System.Collections.IList, value: System.IComparable, comparison: any): void;
       Equals(obj: System.Object): boolean;
@@ -4505,7 +4506,7 @@ export namespace ReactUnity {
     }
   }
   export namespace Styling {
-    export declare class BorderAndBackground {
+    export class BorderAndBackground {
       constructor(parent: UnityEngine.RectTransform);
       Root: UnityEngine.RectTransform;
       Border: UnityEngine.RectTransform;
@@ -4522,7 +4523,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BorderGraphic {
+    export class BorderGraphic {
       static SpriteCache: any; // System.Collections.Generic.Dictionary`2[System.String,UnityEngine.Sprite]
       static CreateBorderSpriteVector(tl: number, tr: number, bl: number, br: number): UnityEngine.Sprite;
       static CreateBorderSprite(borderRadius: number): UnityEngine.Sprite;
@@ -4533,7 +4534,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class IgnoreMaskImage {
+    export class IgnoreMaskImage {
       constructor();
       materialForRendering: UnityEngine.Material;
       sprite: UnityEngine.Sprite;
@@ -4674,7 +4675,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class InvertedMaskImage {
+    export class InvertedMaskImage {
       constructor();
       materialForRendering: UnityEngine.Material;
       sprite: UnityEngine.Sprite;
@@ -4822,7 +4823,7 @@ export namespace ReactUnity {
       Get(node: any): System.Object;
       Serialize(value: System.Object): string;
     }
-    export declare class LayoutValue {
+    export class LayoutValue {
       constructor(prop: ReactUnity.Styling.ILayoutProperty, value: System.Object);
       prop: ReactUnity.Styling.ILayoutProperty;
       value: System.Object;
@@ -4835,7 +4836,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LayoutProperty<T = any> {
+    export class LayoutProperty<T = any> {
       constructor(name: string, transitionable?: boolean, defaultValue?: T);
       name: string;
       type: System.Type;
@@ -4858,7 +4859,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LayoutProperties {
+    export class LayoutProperties {
       static StyleDirection: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaDirection]
       static FlexDirection: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaFlexDirection]
       static JustifyContent: any; // ReactUnity.Styling.LayoutProperty`1[Facebook.Yoga.YogaJustify]
@@ -4919,7 +4920,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LinkedTextWatcher {
+    export class LinkedTextWatcher {
       constructor();
       WatchedText: ReactUnity.Components.TextComponent;
       LinkedText: ReactUnity.Components.TextComponent;
@@ -4989,7 +4990,7 @@ export namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class MaskAndImage {
+    export class MaskAndImage {
       constructor(parent: UnityEngine.RectTransform);
       Mask: UnityEngine.UI.Mask;
       Image: UnityEngine.UI.Image;
@@ -4998,7 +4999,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NodeStyle {
+    export class NodeStyle {
       constructor();
       constructor(stateStyles: ReactUnity.Styling.StateStyles);
       constructor(defaultStyle: ReactUnity.Styling.NodeStyle, stateStyles: ReactUnity.Styling.StateStyles);
@@ -5052,7 +5053,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StateStyles {
+    export class StateStyles {
       constructor(cmp: ReactUnity.IReactComponent);
       Dic: System.Collections.Generic.Dictionary<string, ReactUnity.Styling.NodeStyle>;
       Component: ReactUnity.IReactComponent;
@@ -5077,7 +5078,7 @@ export namespace ReactUnity {
       proxy: boolean;
       Convert(value: System.Object): System.Object;
     }
-    export declare class StyleProperty<T = any> {
+    export class StyleProperty<T = any> {
       constructor(name: string, defaultValue?: System.Object, transitionable?: boolean, inherited?: boolean, proxy?: boolean, converter?: ReactUnity.Styling.Parsers.IStyleConverter);
       name: string;
       type: System.Type;
@@ -5092,7 +5093,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StyleProperties {
+    export class StyleProperties {
       static opacity: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static zIndex: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
       static visibility: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
@@ -5136,7 +5137,7 @@ export namespace ReactUnity {
       ToString(): string;
     }
     export namespace Parsers {
-      export declare class BoolConverter {
+      export class BoolConverter {
         constructor(truthyValues: string[], falsyValues: string[]);
         Convert(value: System.Object): System.Object;
         FromString(value: string): System.Object;
@@ -5145,7 +5146,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ColorConverter {
+      export class ColorConverter {
         constructor();
         FromString(value: string): System.Object;
         Convert(value: System.Object): System.Object;
@@ -5154,7 +5155,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EnumConverter<T = any> {
+      export class EnumConverter<T = any> {
         constructor();
         Convert(value: System.Object): System.Object;
         FromString(value: string): System.Object;
@@ -5163,7 +5164,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FloatConverter {
+      export class FloatConverter {
         constructor();
         static PxRegex: System.Text.RegularExpressions.Regex;
         static PercentRegex: System.Text.RegularExpressions.Regex;
@@ -5174,7 +5175,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FontReferenceConverter {
+      export class FontReferenceConverter {
         constructor();
         Convert(value: System.Object): System.Object;
         FromString(value: string): System.Object;
@@ -5183,7 +5184,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class GeneralConverter {
+      export class GeneralConverter {
         constructor(baseConverter?: ReactUnity.Styling.Parsers.IStyleConverter);
         Convert(value: System.Object): System.Object;
         FromString(value: string): System.Object;
@@ -5198,7 +5199,7 @@ export namespace ReactUnity {
       export interface IStyleConverter {
         Convert(value: System.Object): System.Object;
       }
-      export declare class ImageReferenceConverter {
+      export class ImageReferenceConverter {
         constructor();
         Convert(value: System.Object): System.Object;
         FromString(value: string): System.Object;
@@ -5207,7 +5208,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IntConverter {
+      export class IntConverter {
         constructor();
         FloatParser: ReactUnity.Styling.Parsers.FloatConverter;
         FromString(value: string): System.Object;
@@ -5217,7 +5218,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ShadowDefinitionConverter {
+      export class ShadowDefinitionConverter {
         constructor();
         ColorParser: ReactUnity.Styling.Parsers.ColorConverter;
         FloatParser: ReactUnity.Styling.Parsers.FloatConverter;
@@ -5228,7 +5229,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StringConverter {
+      export class StringConverter {
         constructor();
         Convert(value: System.Object): System.Object;
         FromString(value: string): System.Object;
@@ -5237,7 +5238,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class UrlConverter {
+      export class UrlConverter {
         constructor();
         Convert(value: System.Object): System.Object;
         FromString(value: string): System.Object;
@@ -5246,7 +5247,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Vector2Converter {
+      export class Vector2Converter {
         constructor();
         FromString(value: string): System.Object;
         Convert(value: System.Object): System.Object;
@@ -5255,7 +5256,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class VideoReferenceConverter {
+      export class VideoReferenceConverter {
         constructor();
         Convert(value: System.Object): System.Object;
         FromString(value: string): System.Object;
@@ -5264,7 +5265,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class YogaValue2Converter {
+      export class YogaValue2Converter {
         constructor();
         FromString(value: string): System.Object;
         Convert(value: System.Object): System.Object;
@@ -5273,7 +5274,7 @@ export namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class YogaValueConverter {
+      export class YogaValueConverter {
         constructor();
         FromString(value: string): System.Object;
         Convert(value: System.Object): System.Object;
@@ -5296,7 +5297,7 @@ export namespace ReactUnity {
         All = 1,
         None = 2,
       }
-      export declare class ShadowDefinition {
+      export class ShadowDefinition {
         constructor();
         constructor(offset: UnityEngine.Vector2, spread: UnityEngine.Vector2, color: UnityEngine.Color, blur: number, inset?: boolean);
         offset: UnityEngine.Vector2;
@@ -5333,7 +5334,7 @@ export namespace ReactUnity {
       Procedural = 7,
       Data = 8,
     }
-    export declare class AssetReference<AssetType = any> {
+    export class AssetReference<AssetType = any> {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: System.Object);
       type: ReactUnity.Types.AssetReferenceType;
       value: System.Object;
@@ -5345,7 +5346,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FontReference {
+    export class FontReference {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: System.Object);
       type: ReactUnity.Types.AssetReferenceType;
       value: System.Object;
@@ -5366,7 +5367,7 @@ export namespace ReactUnity {
       FitEnd = 5,
       Fill = 6,
     }
-    export declare class ImageReference {
+    export class ImageReference {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: System.Object);
       type: ReactUnity.Types.AssetReferenceType;
       value: System.Object;
@@ -5378,7 +5379,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StringObjectPair {
+    export class StringObjectPair {
       constructor();
       Key: string;
       Value: UnityEngine.Object;
@@ -5387,7 +5388,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StringObjectDictionary {
+    export class StringObjectDictionary {
       constructor();
       Comparer: System.Collections.Generic.IEqualityComparer<string>;
       Count: number;
@@ -5410,7 +5411,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VideoReference {
+    export class VideoReference {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: System.Object);
       type: ReactUnity.Types.AssetReferenceType;
       value: System.Object;
@@ -5422,7 +5423,7 @@ export namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class YogaValue2 {
+    export class YogaValue2 {
       constructor(x: any, y: any);
       X: any; // Facebook.Yoga.YogaValue
       Y: any; // Facebook.Yoga.YogaValue
@@ -5436,14 +5437,14 @@ export namespace ReactUnity {
     }
   }
   export namespace Visitors {
-    export declare class ReactComponentVisitor {
+    export class ReactComponentVisitor {
       Visit(component: ReactUnity.IReactComponent): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextContentVisitor {
+    export class TextContentVisitor {
       constructor();
       Visit(component: ReactUnity.IReactComponent): void;
       Get(component: ReactUnity.IReactComponent): string;
@@ -5454,7 +5455,7 @@ export namespace ReactUnity {
     }
   }
   export namespace WebSupport {
-    export declare class WebGLInput {
+    export class WebGLInput {
       constructor();
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -5563,7 +5564,7 @@ export namespace ReactUnity {
       DeactivateInputField(): void;
       Rebuild(): void;
     }
-    export declare class WebGLWindow {
+    export class WebGLWindow {
       static Focus: boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;

@@ -1,10 +1,10 @@
 //
 // Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.AIModule
-// Generated 7.03.2021 23:13:37
+// Generated 9.03.2021 02:09:42
 //
 import { System } from './system';
 
-export namespace Unity {
+export declare namespace Unity {
   export namespace Collections {
     export enum Allocator {
       Invalid = 0,
@@ -19,7 +19,7 @@ export namespace Unity {
       Enabled = 2,
       Disabled = 1,
     }
-    export declare class NativeLeakDetection {
+    export class NativeLeakDetection {
       static Mode: Unity.Collections.NativeLeakDetectionMode;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -30,7 +30,7 @@ export namespace Unity {
       UninitializedMemory = 0,
       ClearMemory = 1,
     }
-    export declare class NativeArray<T = any> {
+    export class NativeArray<T = any> {
       constructor(length: number, allocator: Unity.Collections.Allocator, options?: Unity.Collections.NativeArrayOptions);
       constructor(array: T[], allocator: Unity.Collections.Allocator);
       constructor(array: Unity.Collections.NativeArray<T>, allocator: Unity.Collections.Allocator);
@@ -67,13 +67,13 @@ export namespace Unity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NativeSliceExtensions {
+    export class NativeSliceExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NativeSlice<T = any> {
+    export class NativeSlice<T = any> {
       constructor(slice: Unity.Collections.NativeSlice<T>, start: number);
       constructor(slice: Unity.Collections.NativeSlice<T>, start: number, length: number);
       constructor(array: Unity.Collections.NativeArray<T>);
@@ -105,7 +105,7 @@ export namespace Unity {
           DeallocatedFromJob = 1,
           NotAllocatedFromJob = 2,
         }
-        export declare class AtomicSafetyHandle {
+        export class AtomicSafetyHandle {
           static Create(): Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle;
           static GetTempUnsafePtrSliceHandle(): Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle;
           static GetTempMemoryHandle(): Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle;
@@ -133,25 +133,25 @@ export namespace Unity {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class DisposeSentinel {
+        export class DisposeSentinel {
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeArrayUnsafeUtility {
+        export class NativeArrayUnsafeUtility {
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NativeSliceUnsafeUtility {
+        export class NativeSliceUnsafeUtility {
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class UnsafeUtility {
+        export class UnsafeUtility {
           static GetFieldOffset(field: System.Reflection.FieldInfo): number;
           static ReleaseGCObject(gcHandle: System.UInt64): void;
           static IsValidAllocator(allocator: Unity.Collections.Allocator): boolean;
@@ -170,7 +170,7 @@ export namespace Unity {
   export namespace IO {
     export namespace LowLevel {
       export namespace Unsafe {
-        export declare class ReadCommand {
+        export class ReadCommand {
           Offset: System.Int64;
           Size: System.Int64;
           Equals(obj: System.Object): boolean;
@@ -197,7 +197,7 @@ export namespace Unity {
           PriorityLow = 0,
           PriorityHigh = 1,
         }
-        export declare class ReadHandle {
+        export class ReadHandle {
           JobHandle: Unity.Jobs.JobHandle;
           Status: Unity.IO.LowLevel.Unsafe.ReadStatus;
           IsValid(): boolean;
@@ -207,7 +207,7 @@ export namespace Unity {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class AsyncReadManager {
+        export class AsyncReadManager {
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -225,7 +225,7 @@ export namespace Unity {
           Sync = 0,
           Async = 1,
         }
-        export declare class AsyncReadManagerRequestMetric {
+        export class AsyncReadManagerRequestMetric {
           AssetName: string;
           FileName: string;
           OffsetBytes: System.UInt64;
@@ -246,7 +246,7 @@ export namespace Unity {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class AsyncReadManagerMetrics {
+        export class AsyncReadManagerMetrics {
           static IsEnabled(): boolean;
           static ClearCompletedMetrics(): void;
           static GetMetrics(filters: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetricsFilters, flags: Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics_Flags): Unity.IO.LowLevel.Unsafe.AsyncReadManagerRequestMetric[];
@@ -271,7 +271,7 @@ export namespace Unity {
           None = 0,
           ClearOnRead = 1,
         }
-        export declare class AsyncReadManagerSummaryMetrics {
+        export class AsyncReadManagerSummaryMetrics {
           constructor();
           TotalBytesRead: System.UInt64;
           AverageBandwidthMBPerSecond: number;
@@ -300,7 +300,7 @@ export namespace Unity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class AsyncReadManagerMetricsFilters {
+        export class AsyncReadManagerMetricsFilters {
           constructor();
           constructor(typeID: System.UInt64);
           constructor(state: Unity.IO.LowLevel.Unsafe.ProcessingState);
@@ -334,7 +334,7 @@ export namespace Unity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class VirtualFileSystem {
+        export class VirtualFileSystem {
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -347,7 +347,7 @@ export namespace Unity {
     export interface IJob {
       Execute(): void;
     }
-    export declare class IJobExtensions {
+    export class IJobExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -356,7 +356,7 @@ export namespace Unity {
     export interface IJobFor {
       Execute(index: number): void;
     }
-    export declare class IJobForExtensions {
+    export class IJobForExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -365,13 +365,13 @@ export namespace Unity {
     export interface IJobParallelFor {
       Execute(index: number): void;
     }
-    export declare class IJobParallelForExtensions {
+    export class IJobParallelForExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class JobHandle {
+    export class JobHandle {
       IsCompleted: boolean;
       Complete(): void;
       static CompleteAll(jobs: any): void;
@@ -388,27 +388,27 @@ export namespace Unity {
     }
     export namespace LowLevel {
       export namespace Unsafe {
-        export declare class BatchQueryJob<CommandT = any, ResultT = any> {
+        export class BatchQueryJob<CommandT = any, ResultT = any> {
           constructor(commands: Unity.Collections.NativeArray<CommandT>, results: Unity.Collections.NativeArray<ResultT>);
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class BatchQueryJobStruct<T = any> {
+        export class BatchQueryJobStruct<T = any> {
           static Initialize(): System.IntPtr;
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class JobHandleUnsafeUtility {
+        export class JobHandleUnsafeUtility {
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class JobRanges {
+        export class JobRanges {
           TotalIterationCount: number;
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
@@ -425,7 +425,7 @@ export namespace Unity {
           Single = 0,
           ParallelFor = 1,
         }
-        export declare class JobsUtility {
+        export class JobsUtility {
           static IsExecutingJob: boolean;
           static JobDebuggerEnabled: boolean;
           static JobCompilerEnabled: boolean;
@@ -443,7 +443,7 @@ export namespace Unity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class JobsUtility_JobScheduleParameters {
+        export class JobsUtility_JobScheduleParameters {
           Dependency: Unity.Jobs.JobHandle;
           ScheduleMode: number;
           ReflectionData: System.IntPtr;
@@ -457,7 +457,7 @@ export namespace Unity {
     }
   }
   export namespace Profiling {
-    export declare class ProfilerCategory {
+    export class ProfilerCategory {
       constructor(categoryName: string);
       Name: string;
       Color: UnityEngine.Color32;
@@ -487,7 +487,7 @@ export namespace Unity {
       None = 0,
       Builtin = 1,
     }
-    export declare class ProfilerMarker {
+    export class ProfilerMarker {
       constructor(name: string);
       constructor(category: Unity.Profiling.ProfilerCategory, name: string);
       Handle: System.IntPtr;
@@ -500,7 +500,7 @@ export namespace Unity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ProfilerMarker_AutoScope {
+    export class ProfilerMarker_AutoScope {
       Dispose(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -535,7 +535,7 @@ export namespace Unity {
       SumAllSamplesInFrame = 16,
       Default = 24,
     }
-    export declare class ProfilerRecorderSample {
+    export class ProfilerRecorderSample {
       Value: System.Int64;
       Count: System.Int64;
       Equals(obj: System.Object): boolean;
@@ -543,7 +543,7 @@ export namespace Unity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ProfilerRecorder {
+    export class ProfilerRecorder {
       constructor(statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
       constructor(categoryName: string, statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
       constructor(category: Unity.Profiling.ProfilerCategory, statName: string, capacity?: number, options?: Unity.Profiling.ProfilerRecorderOptions);
@@ -595,7 +595,7 @@ export namespace Unity {
         Blob8 = 11,
       }
       export namespace Unsafe {
-        export declare class ProfilerRecorderDescription {
+        export class ProfilerRecorderDescription {
           Category: Unity.Profiling.ProfilerCategory;
           Flags: Unity.Profiling.LowLevel.MarkerFlags;
           DataType: Unity.Profiling.LowLevel.ProfilerMarkerDataType;
@@ -607,7 +607,7 @@ export namespace Unity {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class ProfilerRecorderHandle {
+        export class ProfilerRecorderHandle {
           Valid: boolean;
           static GetDescription(handle: Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle): Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderDescription;
           static GetAvailable(outRecorderHandleList: Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle[]): void;
@@ -616,7 +616,7 @@ export namespace Unity {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class ProfilerMarkerData {
+        export class ProfilerMarkerData {
           Type: System.Byte;
           Size: System.UInt32;
           Equals(obj: System.Object): boolean;
@@ -624,7 +624,7 @@ export namespace Unity {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class ProfilerCategoryDescription {
+        export class ProfilerCategoryDescription {
           Name: string;
           Id: System.UInt16;
           Color: UnityEngine.Color32;
@@ -634,7 +634,7 @@ export namespace Unity {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class ProfilerUnsafeUtility {
+        export class ProfilerUnsafeUtility {
           static Timestamp: System.Int64;
           static TimestampToNanosecondsConversionRatio: Unity.Profiling.LowLevel.Unsafe.ProfilerUnsafeUtility_TimestampConversionRatio;
           static CategoryRender: System.UInt16;
@@ -668,7 +668,7 @@ export namespace Unity {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ProfilerUnsafeUtility_TimestampConversionRatio {
+        export class ProfilerUnsafeUtility_TimestampConversionRatio {
           Numerator: System.Int64;
           Denominator: System.Int64;
           Equals(obj: System.Object): boolean;
@@ -681,7 +681,7 @@ export namespace Unity {
   }
   export namespace Rendering {
     export namespace HybridV2 {
-      export declare class DOTSInstancingCbuffer {
+      export class DOTSInstancingCbuffer {
         NameID: number;
         CbufferIndex: number;
         SizeBytes: number;
@@ -700,7 +700,7 @@ export namespace Unity {
         Bool = 6,
         Struct = 7,
       }
-      export declare class DOTSInstancingProperty {
+      export class DOTSInstancingProperty {
         MetadataNameID: number;
         ConstantNameID: number;
         CbufferIndex: number;
@@ -714,7 +714,7 @@ export namespace Unity {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class HybridV2ShaderReflection {
+      export class HybridV2ShaderReflection {
         constructor();
         static GetDOTSReflectionVersionNumber(): System.UInt32;
         static GetDOTSInstancingCbuffers(shader: UnityEngine.Shader): any;
@@ -727,7 +727,7 @@ export namespace Unity {
     }
   }
 }
-export namespace UnityEngine {
+export declare namespace UnityEngine {
   export enum SendMessageOptions {
     RequireReceiver = 0,
     DontRequireReceiver = 1,
@@ -846,7 +846,7 @@ export namespace UnityEngine {
     Normal = 2,
     High = 4,
   }
-  export declare class SortingLayer {
+  export class SortingLayer {
     id: number;
     name: string;
     value: number;
@@ -867,7 +867,7 @@ export namespace UnityEngine {
     Out = 2,
     Both = 3,
   }
-  export declare class Keyframe {
+  export class Keyframe {
     constructor(time: number, value: number);
     constructor(time: number, value: number, inTangent: number, outTangent: number);
     constructor(time: number, value: number, inTangent: number, outTangent: number, inWeight: number, outWeight: number);
@@ -892,7 +892,7 @@ export namespace UnityEngine {
     ClampForever = 8,
     Clamp = 1,
   }
-  export declare class AnimationCurve {
+  export class AnimationCurve {
     constructor(...keys: UnityEngine.Keyframe[]);
     constructor();
     keys: UnityEngine.Keyframe[];
@@ -914,7 +914,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Application {
+  export class Application {
     constructor();
     static isLoadingLevel: boolean;
     static streamedBytes: number;
@@ -996,7 +996,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Application_AdvertisingIdentifierCallback {
+  export class Application_AdvertisingIdentifierCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -1012,7 +1012,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Application_LowMemoryCallback {
+  export class Application_LowMemoryCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -1028,7 +1028,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Application_LogCallback {
+  export class Application_LogCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -1087,7 +1087,7 @@ export namespace UnityEngine {
     VAG = 23,
     AUDIOQUEUE = 24,
   }
-  export declare class CachedAssetBundle {
+  export class CachedAssetBundle {
     constructor(name: string, hash: UnityEngine.Hash128);
     name: string;
     hash: UnityEngine.Hash128;
@@ -1096,7 +1096,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Cache {
+  export class Cache {
     valid: boolean;
     ready: boolean;
     readOnly: boolean;
@@ -1114,7 +1114,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CacheIndex {
+  export class CacheIndex {
     name: string;
     bytesUsed: number;
     expires: number;
@@ -1123,7 +1123,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Caching {
+  export class Caching {
     constructor();
     static compressionEnabled: boolean;
     static ready: boolean;
@@ -1168,7 +1168,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Camera {
+  export class Camera {
     constructor();
     nearClipPlane: number;
     farClipPlane: number;
@@ -1368,7 +1368,7 @@ export namespace UnityEngine {
     Vertical = 0,
     Horizontal = 1,
   }
-  export declare class Camera_GateFitParameters {
+  export class Camera_GateFitParameters {
     constructor(mode: UnityEngine.Camera_GateFitMode, aspect: number);
     mode: UnityEngine.Camera_GateFitMode;
     aspect: number;
@@ -1414,7 +1414,7 @@ export namespace UnityEngine {
     UV7 = 7,
     UV8 = 8,
   }
-  export declare class Camera_RenderRequest {
+  export class Camera_RenderRequest {
     constructor(mode: UnityEngine.Camera_RenderRequestMode, rt: UnityEngine.RenderTexture);
     constructor(mode: UnityEngine.Camera_RenderRequestMode, space: UnityEngine.Camera_RenderRequestOutputSpace, rt: UnityEngine.RenderTexture);
     isValid: boolean;
@@ -1426,7 +1426,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Camera_CameraCallback {
+  export class Camera_CameraCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -1442,7 +1442,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class BoundingSphere {
+  export class BoundingSphere {
     constructor(pos: UnityEngine.Vector3, rad: number);
     constructor(packedSphere: UnityEngine.Vector4);
     position: UnityEngine.Vector3;
@@ -1452,7 +1452,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CullingGroupEvent {
+  export class CullingGroupEvent {
     index: number;
     isVisible: boolean;
     wasVisible: boolean;
@@ -1465,7 +1465,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CullingGroup {
+  export class CullingGroup {
     constructor();
     onStateChanged: UnityEngine.CullingGroup_StateChanged;
     enabled: boolean;
@@ -1487,7 +1487,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class CullingGroup_StateChanged {
+  export class CullingGroup_StateChanged {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -1503,7 +1503,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class FlareLayer {
+  export class FlareLayer {
     enabled: boolean;
     isActiveAndEnabled: boolean;
     transform: UnityEngine.Transform;
@@ -1554,7 +1554,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ReflectionProbe {
+  export class ReflectionProbe {
     constructor();
     type: UnityEngine.Rendering.ReflectionProbeType;
     size: UnityEngine.Vector3;
@@ -1644,7 +1644,7 @@ export namespace UnityEngine {
     ReflectionProbeAdded = 0,
     ReflectionProbeRemoved = 1,
   }
-  export declare class CrashReport {
+  export class CrashReport {
     static reports: UnityEngine.CrashReport[];
     static lastReport: UnityEngine.CrashReport;
     time: System.DateTime;
@@ -1656,7 +1656,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Debug {
+  export class Debug {
     constructor();
     static unityLogger: UnityEngine.ILogger;
     static developerConsoleVisible: boolean;
@@ -1706,13 +1706,13 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ExposedPropertyResolver {
+  export class ExposedPropertyResolver {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ExposedReference<T = any> {
+  export class ExposedReference<T = any> {
     exposedName: UnityEngine.PropertyName;
     defaultValue: UnityEngine.Object;
     Resolve(resolver: UnityEngine.IExposedPropertyTable): T;
@@ -1725,7 +1725,7 @@ export namespace UnityEngine {
     SetReferenceValue(id: UnityEngine.PropertyName, value: UnityEngine.Object): void;
     ClearReferenceValue(id: UnityEngine.PropertyName): void;
   }
-  export declare class EventProvider {
+  export class EventProvider {
     constructor();
     static WriteCustomEvent(value: number, text: string): void;
     Equals(obj: System.Object): boolean;
@@ -1733,7 +1733,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Bounds {
+  export class Bounds {
     constructor(center: UnityEngine.Vector3, size: UnityEngine.Vector3);
     center: UnityEngine.Vector3;
     size: UnityEngine.Vector3;
@@ -1758,7 +1758,7 @@ export namespace UnityEngine {
     ClosestPoint(point: UnityEngine.Vector3): UnityEngine.Vector3;
     GetType(): System.Type;
   }
-  export declare class BoundsInt {
+  export class BoundsInt {
     constructor(xMin: number, yMin: number, zMin: number, sizeX: number, sizeY: number, sizeZ: number);
     constructor(position: UnityEngine.Vector3Int, size: UnityEngine.Vector3Int);
     x: number;
@@ -1787,7 +1787,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class BoundsInt_PositionEnumerator {
+  export class BoundsInt_PositionEnumerator {
     constructor(min: UnityEngine.Vector3Int, max: UnityEngine.Vector3Int);
     Current: UnityEngine.Vector3Int;
     GetEnumerator(): UnityEngine.BoundsInt_PositionEnumerator;
@@ -1798,7 +1798,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class GeometryUtility {
+  export class GeometryUtility {
     constructor();
     static CalculateFrustumPlanes(camera: UnityEngine.Camera): UnityEngine.Plane[];
     static CalculateFrustumPlanes(worldToProjectionMatrix: UnityEngine.Matrix4x4): UnityEngine.Plane[];
@@ -1811,7 +1811,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Plane {
+  export class Plane {
     constructor(inNormal: UnityEngine.Vector3, inPoint: UnityEngine.Vector3);
     constructor(inNormal: UnityEngine.Vector3, d: number);
     constructor(a: UnityEngine.Vector3, b: UnityEngine.Vector3, c: UnityEngine.Vector3);
@@ -1834,7 +1834,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Ray {
+  export class Ray {
     constructor(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3);
     origin: UnityEngine.Vector3;
     direction: UnityEngine.Vector3;
@@ -1846,7 +1846,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Ray2D {
+  export class Ray2D {
     constructor(origin: UnityEngine.Vector2, direction: UnityEngine.Vector2);
     origin: UnityEngine.Vector2;
     direction: UnityEngine.Vector2;
@@ -1858,7 +1858,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Rect {
+  export class Rect {
     constructor(x: number, y: number, width: number, height: number);
     constructor(position: UnityEngine.Vector2, size: UnityEngine.Vector2);
     constructor(source: UnityEngine.Rect);
@@ -1897,7 +1897,7 @@ export namespace UnityEngine {
     ToString(format: string, formatProvider: System.IFormatProvider): string;
     GetType(): System.Type;
   }
-  export declare class RectInt {
+  export class RectInt {
     constructor(xMin: number, yMin: number, width: number, height: number);
     constructor(position: UnityEngine.Vector2Int, size: UnityEngine.Vector2Int);
     x: number;
@@ -1926,7 +1926,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class RectInt_PositionEnumerator {
+  export class RectInt_PositionEnumerator {
     constructor(min: UnityEngine.Vector2Int, max: UnityEngine.Vector2Int);
     Current: UnityEngine.Vector2Int;
     GetEnumerator(): UnityEngine.RectInt_PositionEnumerator;
@@ -1937,7 +1937,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RectOffset {
+  export class RectOffset {
     constructor();
     constructor(left: number, right: number, top: number, bottom: number);
     left: number;
@@ -1955,7 +1955,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class DynamicGI {
+  export class DynamicGI {
     constructor();
     static indirectScale: number;
     static updateThreshold: number;
@@ -1973,7 +1973,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LightingSettings {
+  export class LightingSettings {
     constructor();
     bakedGI: boolean;
     realtimeGI: boolean;
@@ -2055,7 +2055,7 @@ export namespace UnityEngine {
     ATrous = 1,
     None = 2,
   }
-  export declare class Gizmos {
+  export class Gizmos {
     constructor();
     static color: UnityEngine.Color;
     static matrix: UnityEngine.Matrix4x4;
@@ -2097,7 +2097,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class BillboardAsset {
+  export class BillboardAsset {
     constructor();
     width: number;
     height: number;
@@ -2126,7 +2126,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class BillboardRenderer {
+  export class BillboardRenderer {
     constructor();
     billboard: UnityEngine.BillboardAsset;
     lightmapTilingOffset: UnityEngine.Vector4;
@@ -2219,14 +2219,14 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CustomRenderTextureManager {
+  export class CustomRenderTextureManager {
     static GetAllCustomRenderTextures(currentCustomRenderTextures: UnityEngine.CustomRenderTexture[]): void;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Display {
+  export class Display {
     renderingWidth: number;
     renderingHeight: number;
     systemWidth: number;
@@ -2249,7 +2249,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Display_DisplaysUpdatedDelegate {
+  export class Display_DisplaysUpdatedDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -2271,7 +2271,7 @@ export namespace UnityEngine {
     MaximizedWindow = 2,
     Windowed = 3,
   }
-  export declare class SleepTimeout {
+  export class SleepTimeout {
     constructor();
     static NeverSleep: number;
     static SystemSetting: number;
@@ -2280,7 +2280,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Screen {
+  export class Screen {
     constructor();
     static width: number;
     static height: number;
@@ -2310,7 +2310,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class RenderBuffer {
+  export class RenderBuffer {
     GetNativeRenderBufferPtr(): System.IntPtr;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
@@ -2324,7 +2324,7 @@ export namespace UnityEngine {
     StreamOut = 3,
     SubUpdates = 4,
   }
-  export declare class Graphics {
+  export class Graphics {
     constructor();
     static activeColorGamut: UnityEngine.ColorGamut;
     static activeTier: UnityEngine.Rendering.GraphicsTier;
@@ -2463,7 +2463,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GL {
+  export class GL {
     constructor();
     static wireframe: boolean;
     static sRGBWrite: boolean;
@@ -2509,7 +2509,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ScalableBufferManager {
+  export class ScalableBufferManager {
     static widthScaleFactor: number;
     static heightScaleFactor: number;
     static ResizeBuffers(widthScale: number, heightScale: number): void;
@@ -2518,7 +2518,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class FrameTiming {
+  export class FrameTiming {
     cpuTimePresentCalled: System.UInt64;
     cpuFrameTime: number;
     cpuTimeFrameComplete: System.UInt64;
@@ -2531,7 +2531,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class FrameTimingManager {
+  export class FrameTimingManager {
     static CaptureFrameTimings(): void;
     static GetLatestTimings(numFrames: System.UInt32, timings: UnityEngine.FrameTiming[]): System.UInt32;
     static GetVSyncsPerSecond(): number;
@@ -2542,7 +2542,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LightmapData {
+  export class LightmapData {
     constructor();
     lightmapLight: UnityEngine.Texture2D;
     lightmapColor: UnityEngine.Texture2D;
@@ -2556,7 +2556,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LightmapSettings {
+  export class LightmapSettings {
     static lightmaps: UnityEngine.LightmapData[];
     static lightmapsMode: UnityEngine.LightmapsMode;
     static lightProbes: UnityEngine.LightProbes;
@@ -2570,7 +2570,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LightProbes {
+  export class LightProbes {
     positions: UnityEngine.Vector3[];
     bakedProbes: UnityEngine.Rendering.SphericalHarmonicsL2[];
     count: number;
@@ -2593,7 +2593,7 @@ export namespace UnityEngine {
     D3DHDRDisplayBitDepth10 = 0,
     D3DHDRDisplayBitDepth16 = 1,
   }
-  export declare class HDROutputSettings {
+  export class HDROutputSettings {
     static main: UnityEngine.HDROutputSettings;
     active: boolean;
     available: boolean;
@@ -2614,7 +2614,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Resolution {
+  export class Resolution {
     width: number;
     height: number;
     refreshRate: number;
@@ -2623,7 +2623,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class RenderTargetSetup {
+  export class RenderTargetSetup {
     constructor(color: UnityEngine.RenderBuffer[], depth: UnityEngine.RenderBuffer, mip: number, face: UnityEngine.CubemapFace, colorLoad: UnityEngine.Rendering.RenderBufferLoadAction[], colorStore: UnityEngine.Rendering.RenderBufferStoreAction[], depthLoad: UnityEngine.Rendering.RenderBufferLoadAction, depthStore: UnityEngine.Rendering.RenderBufferStoreAction);
     constructor(color: UnityEngine.RenderBuffer, depth: UnityEngine.RenderBuffer);
     constructor(color: UnityEngine.RenderBuffer, depth: UnityEngine.RenderBuffer, mipLevel: number);
@@ -2646,7 +2646,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class QualitySettings {
+  export class QualitySettings {
     static currentLevel: UnityEngine.QualityLevel;
     static pixelLightCount: number;
     static shadows: UnityEngine.ShadowQuality;
@@ -2702,14 +2702,14 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RendererExtensions {
+  export class RendererExtensions {
     static UpdateGIMaterials(renderer: UnityEngine.Renderer): void;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Mesh {
+  export class Mesh {
     constructor();
     uv1: UnityEngine.Vector2[];
     indexFormat: UnityEngine.Rendering.IndexFormat;
@@ -2894,7 +2894,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Mesh_MeshData {
+  export class Mesh_MeshData {
     vertexCount: number;
     vertexBufferCount: number;
     indexFormat: UnityEngine.Rendering.IndexFormat;
@@ -2922,7 +2922,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Mesh_MeshDataArray {
+  export class Mesh_MeshDataArray {
     Length: number;
     Dispose(): void;
     Equals(obj: System.Object): boolean;
@@ -2930,7 +2930,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Renderer {
+  export class Renderer {
     constructor();
     lightmapTilingOffset: UnityEngine.Vector4;
     lightProbeAnchor: UnityEngine.Transform;
@@ -3022,7 +3022,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Projector {
+  export class Projector {
     constructor();
     isOrthoGraphic: boolean;
     orthoGraphicSize: number;
@@ -3084,7 +3084,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Shader {
+  export class Shader {
     static globalShaderHardwareTier: UnityEngine.Rendering.ShaderHardwareTier;
     maximumLOD: number;
     static globalMaximumLOD: number;
@@ -3186,7 +3186,7 @@ export namespace UnityEngine {
     Dual = 1,
     Directional = 2,
   }
-  export declare class TrailRenderer {
+  export class TrailRenderer {
     constructor();
     numPositions: number;
     time: number;
@@ -3312,7 +3312,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LineRenderer {
+  export class LineRenderer {
     constructor();
     numPositions: number;
     startWidth: number;
@@ -3435,7 +3435,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MaterialPropertyBlock {
+  export class MaterialPropertyBlock {
     constructor();
     isEmpty: boolean;
     AddFloat(name: string, value: number): void;
@@ -3520,7 +3520,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class RenderSettings {
+  export class RenderSettings {
     static ambientSkyboxAmount: number;
     static fog: boolean;
     static fogStartDistance: number;
@@ -3554,7 +3554,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Material {
+  export class Material {
     constructor(shader: UnityEngine.Shader);
     constructor(source: UnityEngine.Material);
     constructor(contents: string);
@@ -3672,7 +3672,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class GraphicsBuffer {
+  export class GraphicsBuffer {
     constructor(target: UnityEngine.GraphicsBuffer_Target, count: number, stride: number);
     count: number;
     stride: number;
@@ -3704,7 +3704,7 @@ export namespace UnityEngine {
     IndirectArguments = 256,
     Constant = 512,
   }
-  export declare class OcclusionPortal {
+  export class OcclusionPortal {
     constructor();
     open: boolean;
     transform: UnityEngine.Transform;
@@ -3755,7 +3755,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class OcclusionArea {
+  export class OcclusionArea {
     constructor();
     center: UnityEngine.Vector3;
     size: UnityEngine.Vector3;
@@ -3807,7 +3807,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Flare {
+  export class Flare {
     constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -3817,7 +3817,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LensFlare {
+  export class LensFlare {
     constructor();
     brightness: number;
     fadeSpeed: number;
@@ -3873,7 +3873,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LightBakingOutput {
+  export class LightBakingOutput {
     probeOcclusionLightIndex: number;
     occlusionMaskChannel: number;
     lightmapBakeType: UnityEngine.LightmapBakeType;
@@ -3889,7 +3889,7 @@ export namespace UnityEngine {
     NonLightmappedOnly = 1,
     Everything = 2,
   }
-  export declare class Light {
+  export class Light {
     constructor();
     type: UnityEngine.LightType;
     shape: UnityEngine.LightShape;
@@ -3998,7 +3998,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Skybox {
+  export class Skybox {
     constructor();
     material: UnityEngine.Material;
     enabled: boolean;
@@ -4051,7 +4051,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MeshFilter {
+  export class MeshFilter {
     constructor();
     sharedMesh: UnityEngine.Mesh;
     mesh: UnityEngine.Mesh;
@@ -4464,7 +4464,7 @@ export namespace UnityEngine {
     EmissiveIsBlack = 4,
     AnyEmissive = 3,
   }
-  export declare class LightProbeProxyVolume {
+  export class LightProbeProxyVolume {
     constructor();
     static isFeatureSupported: boolean;
     boundsGlobal: UnityEngine.Bounds;
@@ -4586,7 +4586,7 @@ export namespace UnityEngine {
     Local = 1,
     TransformZ = 1,
   }
-  export declare class SkinnedMeshRenderer {
+  export class SkinnedMeshRenderer {
     constructor();
     quality: UnityEngine.SkinQuality;
     updateWhenOffscreen: boolean;
@@ -4690,7 +4690,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MeshRenderer {
+  export class MeshRenderer {
     constructor();
     additionalVertexStreams: UnityEngine.Mesh;
     enlightenVertexStream: UnityEngine.Mesh;
@@ -4793,7 +4793,7 @@ export namespace UnityEngine {
     Baked = 2,
     Mixed = 1,
   }
-  export declare class LightProbeGroup {
+  export class LightProbeGroup {
     constructor();
     probePositions: UnityEngine.Vector3[];
     dering: boolean;
@@ -4847,7 +4847,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LineUtility {
+  export class LineUtility {
     constructor();
     static Simplify(points: UnityEngine.Vector3[], tolerance: number, pointsToKeep: number[]): void;
     static Simplify(points: UnityEngine.Vector3[], tolerance: number, simplifiedPoints: UnityEngine.Vector3[]): void;
@@ -4863,7 +4863,7 @@ export namespace UnityEngine {
     CrossFade = 1,
     SpeedTree = 2,
   }
-  export declare class LOD {
+  export class LOD {
     constructor(screenRelativeTransitionHeight: number, renderers: UnityEngine.Renderer[]);
     screenRelativeTransitionHeight: number;
     fadeTransitionWidth: number;
@@ -4873,7 +4873,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LODGroup {
+  export class LODGroup {
     constructor();
     localReferencePoint: UnityEngine.Vector3;
     size: number;
@@ -4935,7 +4935,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class BoneWeight {
+  export class BoneWeight {
     weight0: number;
     weight1: number;
     weight2: number;
@@ -4950,7 +4950,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class BoneWeight1 {
+  export class BoneWeight1 {
     weight: number;
     boneIndex: number;
     Equals(other: System.Object): boolean;
@@ -4959,7 +4959,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CombineInstance {
+  export class CombineInstance {
     mesh: UnityEngine.Mesh;
     subMeshIndex: number;
     transform: UnityEngine.Matrix4x4;
@@ -4970,7 +4970,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Texture {
+  export class Texture {
     static masterTextureLimit: number;
     mipmapCount: number;
     static anisotropicFiltering: UnityEngine.AnisotropicFiltering;
@@ -5017,7 +5017,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Texture2D {
+  export class Texture2D {
     constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, mipCount: number, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
@@ -5117,7 +5117,7 @@ export namespace UnityEngine {
     CompressRLE = 4,
     CompressPIZ = 8,
   }
-  export declare class Cubemap {
+  export class Cubemap {
     constructor(width: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, format: UnityEngine.TextureFormat, mipCount: number);
@@ -5172,7 +5172,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Texture3D {
+  export class Texture3D {
     constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags, mipCount: number);
@@ -5228,7 +5228,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Texture2DArray {
+  export class Texture2DArray {
     constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags, mipCount: number);
@@ -5276,7 +5276,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CubemapArray {
+  export class CubemapArray {
     constructor(width: number, cubemapCount: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, cubemapCount: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags);
     constructor(width: number, cubemapCount: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, flags: UnityEngine.Experimental.Rendering.TextureCreationFlags, mipCount: number);
@@ -5323,7 +5323,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SparseTexture {
+  export class SparseTexture {
     constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.DefaultFormat, mipCount: number);
     constructor(width: number, height: number, format: UnityEngine.Experimental.Rendering.GraphicsFormat, mipCount: number);
     constructor(width: number, height: number, textureFormat: UnityEngine.TextureFormat, mipCount: number);
@@ -5361,7 +5361,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RenderTexture {
+  export class RenderTexture {
     constructor(desc: UnityEngine.RenderTextureDescriptor);
     constructor(textureToCopy: UnityEngine.RenderTexture);
     constructor(width: number, height: number, depth: number, format: UnityEngine.Experimental.Rendering.DefaultFormat);
@@ -5450,7 +5450,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CustomRenderTextureUpdateZone {
+  export class CustomRenderTextureUpdateZone {
     updateZoneCenter: UnityEngine.Vector3;
     updateZoneSize: UnityEngine.Vector3;
     rotation: number;
@@ -5461,7 +5461,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CustomRenderTexture {
+  export class CustomRenderTexture {
     constructor(width: number, height: number, format: UnityEngine.RenderTextureFormat, readWrite: UnityEngine.RenderTextureReadWrite);
     constructor(width: number, height: number, format: UnityEngine.RenderTextureFormat);
     constructor(width: number, height: number);
@@ -5549,7 +5549,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RenderTextureDescriptor {
+  export class RenderTextureDescriptor {
     constructor(width: number, height: number);
     constructor(width: number, height: number, colorFormat: UnityEngine.RenderTextureFormat);
     constructor(width: number, height: number, colorFormat: UnityEngine.RenderTextureFormat, depthBufferBits: number);
@@ -5600,7 +5600,7 @@ export namespace UnityEngine {
     Small = 2,
     InversedSmall = 3,
   }
-  export declare class Handheld {
+  export class Handheld {
     constructor();
     static use32BitDisplayBuffer: boolean;
     static PlayFullScreenMovie(path: string, bgColor: UnityEngine.Color, controlMode: UnityEngine.FullScreenMovieControlMode, scalingMode: UnityEngine.FullScreenMovieScalingMode): boolean;
@@ -5619,7 +5619,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Hash128 {
+  export class Hash128 {
     constructor(u32_0: System.UInt32, u32_1: System.UInt32, u32_2: System.UInt32, u32_3: System.UInt32);
     constructor(u64_0: System.UInt64, u64_1: System.UInt64);
     isValid: boolean;
@@ -5638,13 +5638,13 @@ export namespace UnityEngine {
     CompareTo(obj: System.Object): number;
     GetType(): System.Type;
   }
-  export declare class HashUtilities {
+  export class HashUtilities {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class HashUnsafeUtilities {
+  export class HashUnsafeUtilities {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -5659,7 +5659,7 @@ export namespace UnityEngine {
     Locked = 1,
     Confined = 2,
   }
-  export declare class Cursor {
+  export class Cursor {
     constructor();
     static visible: boolean;
     static lockState: UnityEngine.CursorLockMode;
@@ -6035,7 +6035,7 @@ export namespace UnityEngine {
     iPadUnknown = 20,
     iPodTouchUnknown = 21,
   }
-  export declare class iPhoneSettings {
+  export class iPhoneSettings {
     constructor();
     static screenOrientation: UnityEngine.iPhoneScreenOrientation;
     static uniqueIdentifier: string;
@@ -6064,7 +6064,7 @@ export namespace UnityEngine {
     Ended = 3,
     Canceled = 4,
   }
-  export declare class iPhoneTouch {
+  export class iPhoneTouch {
     positionDelta: UnityEngine.Vector2;
     timeDelta: number;
     fingerId: number;
@@ -6091,7 +6091,7 @@ export namespace UnityEngine {
     AspectFill = 2,
     Fill = 3,
   }
-  export declare class iPhoneUtils {
+  export class iPhoneUtils {
     constructor();
     static isApplicationGenuine: boolean;
     static isApplicationGenuineAvailable: boolean;
@@ -6117,7 +6117,7 @@ export namespace UnityEngine {
     NamePhonePad = 6,
     EmailAddress = 7,
   }
-  export declare class iPhoneKeyboard {
+  export class iPhoneKeyboard {
     constructor();
     text: string;
     static hideInput: boolean;
@@ -6130,7 +6130,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class iPhoneAccelerationEvent {
+  export class iPhoneAccelerationEvent {
     timeDelta: number;
     acceleration: UnityEngine.Vector3;
     deltaTime: number;
@@ -6148,7 +6148,7 @@ export namespace UnityEngine {
     FaceUp = 5,
     FaceDown = 6,
   }
-  export declare class iPhoneInput {
+  export class iPhoneInput {
     constructor();
     static orientation: UnityEngine.iPhoneOrientation;
     static accelerationEvents: UnityEngine.iPhoneAccelerationEvent[];
@@ -6164,7 +6164,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class iPhone {
+  export class iPhone {
     constructor();
     static generation: UnityEngine.iPhoneGeneration;
     static vendorIdentifier: string;
@@ -6209,7 +6209,7 @@ export namespace UnityEngine {
     WeekdayOrdinal = 9,
     Quarter = 10,
   }
-  export declare class LocalNotification {
+  export class LocalNotification {
     constructor();
     fireDate: System.DateTime;
     timeZone: string;
@@ -6228,7 +6228,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class RemoteNotification {
+  export class RemoteNotification {
     constructor();
     alertBody: string;
     hasAction: boolean;
@@ -6246,7 +6246,7 @@ export namespace UnityEngine {
     Sound = 2,
     Alert = 3,
   }
-  export declare class NotificationServices {
+  export class NotificationServices {
     constructor();
     static RegisterForRemoteNotificationTypes(notificationTypes: UnityEngine.RemoteNotificationType): void;
     Equals(obj: System.Object): boolean;
@@ -6254,7 +6254,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ADBannerView {
+  export class ADBannerView {
     constructor(type: UnityEngine.ADBannerView_Type, layout: UnityEngine.ADBannerView_Layout);
     loaded: boolean;
     visible: boolean;
@@ -6285,7 +6285,7 @@ export namespace UnityEngine {
     Banner = 0,
     MediumRect = 1,
   }
-  export declare class ADBannerView_BannerWasClickedDelegate {
+  export class ADBannerView_BannerWasClickedDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -6301,7 +6301,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ADBannerView_BannerWasLoadedDelegate {
+  export class ADBannerView_BannerWasLoadedDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -6317,7 +6317,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ADInterstitialAd {
+  export class ADInterstitialAd {
     constructor(autoReload: boolean);
     constructor();
     static isAvailable: boolean;
@@ -6329,7 +6329,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ADInterstitialAd_InterstitialWasLoadedDelegate {
+  export class ADInterstitialAd_InterstitialWasLoadedDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -6368,7 +6368,7 @@ export namespace UnityEngine {
     LogFormat(logType: UnityEngine.LogType, context: UnityEngine.Object, format: string, ...args: System.Object[]): void;
     LogException(exception: System.Exception, context: UnityEngine.Object): void;
   }
-  export declare class Logger {
+  export class Logger {
     constructor(logHandler: UnityEngine.ILogHandler);
     logHandler: UnityEngine.ILogHandler;
     logEnabled: boolean;
@@ -6394,7 +6394,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Color {
+  export class Color {
     constructor(r: number, g: number, b: number, a: number);
     constructor(r: number, g: number, b: number);
     static red: UnityEngine.Color;
@@ -6428,7 +6428,7 @@ export namespace UnityEngine {
     static HSVToRGB(H: number, S: number, V: number, hdr: boolean): UnityEngine.Color;
     GetType(): System.Type;
   }
-  export declare class Color32 {
+  export class Color32 {
     constructor(r: System.Byte, g: System.Byte, b: System.Byte, a: System.Byte);
     r: System.Byte;
     g: System.Byte;
@@ -6443,7 +6443,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ColorUtility {
+  export class ColorUtility {
     constructor();
     static ToHtmlStringRGB(color: UnityEngine.Color): string;
     static ToHtmlStringRGBA(color: UnityEngine.Color): string;
@@ -6452,7 +6452,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GradientColorKey {
+  export class GradientColorKey {
     constructor(col: UnityEngine.Color, time: number);
     color: UnityEngine.Color;
     time: number;
@@ -6461,7 +6461,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class GradientAlphaKey {
+  export class GradientAlphaKey {
     constructor(alpha: number, time: number);
     alpha: number;
     time: number;
@@ -6474,7 +6474,7 @@ export namespace UnityEngine {
     Blend = 0,
     Fixed = 1,
   }
-  export declare class Gradient {
+  export class Gradient {
     constructor();
     colorKeys: UnityEngine.GradientColorKey[];
     alphaKeys: UnityEngine.GradientAlphaKey[];
@@ -6487,7 +6487,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class FrustumPlanes {
+  export class FrustumPlanes {
     left: number;
     right: number;
     bottom: number;
@@ -6499,7 +6499,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Matrix4x4 {
+  export class Matrix4x4 {
     constructor(column0: UnityEngine.Vector4, column1: UnityEngine.Vector4, column2: UnityEngine.Vector4, column3: UnityEngine.Vector4);
     rotation: UnityEngine.Quaternion;
     lossyScale: UnityEngine.Vector3;
@@ -6556,7 +6556,7 @@ export namespace UnityEngine {
     ToString(format: string, formatProvider: System.IFormatProvider): string;
     GetType(): System.Type;
   }
-  export declare class Vector3 {
+  export class Vector3 {
     constructor(x: number, y: number, z: number);
     constructor(x: number, y: number);
     normalized: UnityEngine.Vector3;
@@ -6612,7 +6612,7 @@ export namespace UnityEngine {
     static Exclude(excludeThis: UnityEngine.Vector3, fromThat: UnityEngine.Vector3): UnityEngine.Vector3;
     GetType(): System.Type;
   }
-  export declare class Quaternion {
+  export class Quaternion {
     constructor(x: number, y: number, z: number, w: number);
     static identity: UnityEngine.Quaternion;
     eulerAngles: UnityEngine.Vector3;
@@ -6663,7 +6663,7 @@ export namespace UnityEngine {
     static AxisAngle(axis: UnityEngine.Vector3, angle: number): UnityEngine.Quaternion;
     GetType(): System.Type;
   }
-  export declare class Mathf {
+  export class Mathf {
     static PI: number;
     static Infinity: number;
     static NegativeInfinity: number;
@@ -6729,7 +6729,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Vector2 {
+  export class Vector2 {
     constructor(x: number, y: number);
     normalized: UnityEngine.Vector2;
     magnitude: number;
@@ -6772,7 +6772,7 @@ export namespace UnityEngine {
     static Max(lhs: UnityEngine.Vector2, rhs: UnityEngine.Vector2): UnityEngine.Vector2;
     GetType(): System.Type;
   }
-  export declare class Vector2Int {
+  export class Vector2Int {
     constructor(x: number, y: number);
     x: number;
     y: number;
@@ -6802,7 +6802,7 @@ export namespace UnityEngine {
     ToString(format: string, formatProvider: System.IFormatProvider): string;
     GetType(): System.Type;
   }
-  export declare class Vector3Int {
+  export class Vector3Int {
     constructor(x: number, y: number, z: number);
     x: number;
     y: number;
@@ -6835,7 +6835,7 @@ export namespace UnityEngine {
     ToString(format: string, formatProvider: System.IFormatProvider): string;
     GetType(): System.Type;
   }
-  export declare class Vector4 {
+  export class Vector4 {
     constructor(x: number, y: number, z: number, w: number);
     constructor(x: number, y: number, z: number);
     constructor(x: number, y: number);
@@ -6891,7 +6891,7 @@ export namespace UnityEngine {
   }
   export enum NetworkLogLevel {
   }
-  export declare class NetworkPlayer {
+  export class NetworkPlayer {
     constructor(ip: string, port: number);
     ipAddress: string;
     port: number;
@@ -6903,7 +6903,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class NetworkViewID {
+  export class NetworkViewID {
     static unassigned: UnityEngine.NetworkViewID;
     isMine: boolean;
     owner: UnityEngine.NetworkPlayer;
@@ -6912,7 +6912,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class NetworkView {
+  export class NetworkView {
     constructor();
     observed: UnityEngine.Component;
     stateSynchronization: UnityEngine.NetworkStateSynchronization;
@@ -6972,7 +6972,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Network {
+  export class Network {
     constructor();
     static incomingPassword: string;
     static logLevel: UnityEngine.NetworkLogLevel;
@@ -7034,7 +7034,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class BitStream {
+  export class BitStream {
     constructor();
     isReading: boolean;
     isWriting: boolean;
@@ -7043,7 +7043,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class HostData {
+  export class HostData {
     constructor();
     useNat: boolean;
     gameType: string;
@@ -7060,7 +7060,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MasterServer {
+  export class MasterServer {
     constructor();
     static ipAddress: string;
     static port: number;
@@ -7077,7 +7077,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class NetworkMessageInfo {
+  export class NetworkMessageInfo {
     timestamp: number;
     sender: UnityEngine.NetworkPlayer;
     networkView: UnityEngine.NetworkView;
@@ -7086,7 +7086,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Ping {
+  export class Ping {
     constructor(address: string);
     isDone: boolean;
     time: number;
@@ -7097,7 +7097,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PlayerPrefsException {
+  export class PlayerPrefsException {
     constructor(error: string);
     Message: string;
     Data: System.Collections.IDictionary;
@@ -7115,7 +7115,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class PlayerPrefs {
+  export class PlayerPrefs {
     constructor();
     static SetInt(key: string, value: number): void;
     static GetInt(key: string, defaultValue: number): number;
@@ -7135,7 +7135,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class PropertyName {
+  export class PropertyName {
     constructor(name: string);
     constructor(other: UnityEngine.PropertyName);
     constructor(id: number);
@@ -7146,7 +7146,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Random {
+  export class Random {
     static state: UnityEngine.Random_State;
     static value: number;
     static insideUnitSphere: UnityEngine.Vector3;
@@ -7170,13 +7170,13 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Random_State {
+  export class Random_State {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ResourceRequest {
+  export class ResourceRequest {
     constructor();
     asset: UnityEngine.Object;
     isDone: boolean;
@@ -7188,14 +7188,14 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ResourcesAPI {
+  export class ResourcesAPI {
     static overrideAPI: UnityEngine.ResourcesAPI;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Resources {
+  export class Resources {
     constructor();
     static FindObjectsOfTypeAll(type: System.Type): UnityEngine.Object[];
     static Load(path: string): UnityEngine.Object;
@@ -7215,7 +7215,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AsyncOperation {
+  export class AsyncOperation {
     constructor();
     isDone: boolean;
     progress: number;
@@ -7226,7 +7226,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Behaviour {
+  export class Behaviour {
     constructor();
     enabled: boolean;
     isActiveAndEnabled: boolean;
@@ -7278,7 +7278,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Component {
+  export class Component {
     constructor();
     transform: UnityEngine.Transform;
     gameObject: UnityEngine.GameObject;
@@ -7328,13 +7328,13 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Coroutine {
+  export class Coroutine {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class CustomYieldInstruction {
+  export class CustomYieldInstruction {
     keepWaiting: boolean;
     Current: System.Object;
     MoveNext(): boolean;
@@ -7344,7 +7344,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GameObject {
+  export class GameObject {
     constructor(name: string);
     constructor();
     constructor(name: string, ...components: System.Type[]);
@@ -7416,7 +7416,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LayerMask {
+  export class LayerMask {
     value: number;
     static LayerToName(layer: number): string;
     static NameToLayer(layerName: string): number;
@@ -7426,7 +7426,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class LazyLoadReference<T = any> {
+  export class LazyLoadReference<T = any> {
     constructor(asset: T);
     constructor(instanceID: number);
     isSet: boolean;
@@ -7438,7 +7438,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MonoBehaviour {
+  export class MonoBehaviour {
     constructor();
     useGUILayout: boolean;
     runInEditMode: boolean;
@@ -7507,7 +7507,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RangeInt {
+  export class RangeInt {
     constructor(start: number, length: number);
     end: number;
     start: number;
@@ -7524,7 +7524,7 @@ export namespace UnityEngine {
     BeforeSplashScreen = 3,
     SubsystemRegistration = 4,
   }
-  export declare class ScriptableObject {
+  export class ScriptableObject {
     constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -7537,7 +7537,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class StackTraceUtility {
+  export class StackTraceUtility {
     static ExtractStackTrace(): string;
     static ExtractStringFromException(exception: System.Object): string;
     Equals(obj: System.Object): boolean;
@@ -7545,7 +7545,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UnityException {
+  export class UnityException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -7565,7 +7565,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class MissingComponentException {
+  export class MissingComponentException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -7585,7 +7585,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class UnassignedReferenceException {
+  export class UnassignedReferenceException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -7605,7 +7605,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class MissingReferenceException {
+  export class MissingReferenceException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -7625,7 +7625,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class TextAsset {
+  export class TextAsset {
     constructor();
     constructor(text: string);
     bytes: System.Byte[];
@@ -7638,7 +7638,7 @@ export namespace UnityEngine {
     Equals(other: System.Object): boolean;
     GetType(): System.Type;
   }
-  export declare class TrackedReference {
+  export class TrackedReference {
     Equals(o: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -7655,7 +7655,7 @@ export namespace UnityEngine {
     DontSave = 52,
     HideAndDontSave = 61,
   }
-  export declare class Object {
+  export class Object {
     constructor();
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -7684,28 +7684,28 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class WaitForEndOfFrame {
+  export class WaitForEndOfFrame {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class WaitForFixedUpdate {
+  export class WaitForFixedUpdate {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class WaitForSeconds {
+  export class WaitForSeconds {
     constructor(seconds: number);
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class WaitForSecondsRealtime {
+  export class WaitForSecondsRealtime {
     constructor(time: number);
     waitTime: number;
     keepWaiting: boolean;
@@ -7717,7 +7717,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class WaitUntil {
+  export class WaitUntil {
     constructor(predicate: ((arg0: boolean) => boolean));
     keepWaiting: boolean;
     Current: System.Object;
@@ -7728,7 +7728,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class WaitWhile {
+  export class WaitWhile {
     constructor(predicate: ((arg0: boolean) => boolean));
     keepWaiting: boolean;
     Current: System.Object;
@@ -7739,14 +7739,14 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class YieldInstruction {
+  export class YieldInstruction {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Security {
+  export class Security {
     constructor();
     static LoadAndVerifyAssembly(assemblyData: System.Byte[], authorizationKey: string): System.Reflection.Assembly;
     static LoadAndVerifyAssembly(assemblyData: System.Byte[]): System.Reflection.Assembly;
@@ -7757,7 +7757,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Types {
+  export class Types {
     static GetType(typeName: string, assemblyName: string): System.Type;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
@@ -7768,7 +7768,7 @@ export namespace UnityEngine {
     OnBeforeSerialize(): void;
     OnAfterDeserialize(): void;
   }
-  export declare class ComputeBuffer {
+  export class ComputeBuffer {
     constructor(count: number, stride: number);
     constructor(count: number, stride: number, type: UnityEngine.ComputeBufferType);
     constructor(count: number, stride: number, type: UnityEngine.ComputeBufferType, usage: UnityEngine.ComputeBufferMode);
@@ -7790,7 +7790,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ShaderVariantCollection {
+  export class ShaderVariantCollection {
     constructor();
     shaderCount: number;
     variantCount: number;
@@ -7808,7 +7808,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ShaderVariantCollection_ShaderVariant {
+  export class ShaderVariantCollection_ShaderVariant {
     constructor(shader: UnityEngine.Shader, passType: UnityEngine.Rendering.PassType, ...keywords: string[]);
     shader: UnityEngine.Shader;
     passType: UnityEngine.Rendering.PassType;
@@ -7818,7 +7818,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ComputeShader {
+  export class ComputeShader {
     shaderKeywords: string[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -7879,7 +7879,7 @@ export namespace UnityEngine {
     Z = 4,
     All = 7,
   }
-  export declare class Snapping {
+  export class Snapping {
     static Snap(val: number, snap: number): number;
     static Snap(val: UnityEngine.Vector2, snap: UnityEngine.Vector2): UnityEngine.Vector2;
     static Snap(val: UnityEngine.Vector3, snap: UnityEngine.Vector3, axis?: UnityEngine.SnapAxis): UnityEngine.Vector3;
@@ -7888,7 +7888,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class StaticBatchingUtility {
+  export class StaticBatchingUtility {
     constructor();
     static Combine(staticBatchRoot: UnityEngine.GameObject): void;
     static Combine(gos: UnityEngine.GameObject[], staticBatchRoot: UnityEngine.GameObject): void;
@@ -7916,7 +7916,7 @@ export namespace UnityEngine {
     Console = 2,
     Desktop = 3,
   }
-  export declare class SystemInfo {
+  export class SystemInfo {
     constructor();
     static batteryLevel: number;
     static batteryStatus: UnityEngine.BatteryStatus;
@@ -8021,7 +8021,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Time {
+  export class Time {
     constructor();
     static time: number;
     static timeAsDouble: number;
@@ -8053,7 +8053,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class TouchScreenKeyboard {
+  export class TouchScreenKeyboard {
     constructor(text: string, keyboardType: UnityEngine.TouchScreenKeyboardType, autocorrection: boolean, multiline: boolean, secure: boolean, alert: boolean, textPlaceholder: string, characterLimit: number);
     static isSupported: boolean;
     static isInPlaceEditingAllowed: boolean;
@@ -8105,7 +8105,7 @@ export namespace UnityEngine {
     DecimalPad = 11,
     OneTimeCode = 12,
   }
-  export declare class UnityEventQueueSystem {
+  export class UnityEventQueueSystem {
     constructor();
     static GenerateEventIdForPayload(eventPayloadName: string): string;
     static GetGlobalEventQueue(): System.IntPtr;
@@ -8114,7 +8114,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Pose {
+  export class Pose {
     constructor(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion);
     forward: UnityEngine.Vector3;
     right: UnityEngine.Vector3;
@@ -8158,7 +8158,7 @@ export namespace UnityEngine {
     SizeDelta = 12288,
     Pivot = 49152,
   }
-  export declare class DrivenRectTransformTracker {
+  export class DrivenRectTransformTracker {
     static StopRecordingUndo(): void;
     static StartRecordingUndo(): void;
     Add(driver: UnityEngine.Object, rectTransform: UnityEngine.RectTransform, drivenProperties: UnityEngine.DrivenTransformProperties): void;
@@ -8169,7 +8169,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RectTransform {
+  export class RectTransform {
     constructor();
     rect: UnityEngine.Rect;
     anchorMin: UnityEngine.Vector2;
@@ -8307,7 +8307,7 @@ export namespace UnityEngine {
     Horizontal = 0,
     Vertical = 1,
   }
-  export declare class RectTransform_ReapplyDrivenProperties {
+  export class RectTransform_ReapplyDrivenProperties {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -8323,7 +8323,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Transform {
+  export class Transform {
     position: UnityEngine.Vector3;
     localPosition: UnityEngine.Vector3;
     eulerAngles: UnityEngine.Vector3;
@@ -8450,7 +8450,7 @@ export namespace UnityEngine {
     VisibleInsideMask = 1,
     VisibleOutsideMask = 2,
   }
-  export declare class SpriteRenderer {
+  export class SpriteRenderer {
     constructor();
     sprite: UnityEngine.Sprite;
     drawMode: UnityEngine.SpriteDrawMode;
@@ -8583,7 +8583,7 @@ export namespace UnityEngine {
     Center = 0,
     Pivot = 1,
   }
-  export declare class SecondarySpriteTexture {
+  export class SecondarySpriteTexture {
     name: string;
     texture: UnityEngine.Texture2D;
     Equals(obj: System.Object): boolean;
@@ -8591,7 +8591,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Sprite {
+  export class Sprite {
     bounds: UnityEngine.Bounds;
     rect: UnityEngine.Rect;
     border: UnityEngine.Vector4;
@@ -8627,7 +8627,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioSettings {
+  export class AudioSettings {
     constructor();
     static driverCaps: UnityEngine.AudioSpeakerMode;
     static driverCapabilities: UnityEngine.AudioSpeakerMode;
@@ -8645,7 +8645,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioSettings_AudioConfigurationChangeHandler {
+  export class AudioSettings_AudioConfigurationChangeHandler {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -8661,7 +8661,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioSettings_Mobile {
+  export class AudioSettings_Mobile {
     static muteState: boolean;
     static stopAudioOutputOnMute: boolean;
     static audioOutputStarted: boolean;
@@ -8672,7 +8672,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioSource {
+  export class AudioSource {
     constructor();
     panLevel: number;
     pan: number;
@@ -8778,7 +8778,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioLowPassFilter {
+  export class AudioLowPassFilter {
     constructor();
     lowpassResonaceQ: number;
     customCutoffCurve: UnityEngine.AnimationCurve;
@@ -8834,7 +8834,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioHighPassFilter {
+  export class AudioHighPassFilter {
     constructor();
     highpassResonaceQ: number;
     cutoffFrequency: number;
@@ -8889,7 +8889,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioReverbFilter {
+  export class AudioReverbFilter {
     constructor();
     lFReference: number;
     reverbPreset: UnityEngine.AudioReverbPreset;
@@ -8974,7 +8974,7 @@ export namespace UnityEngine {
     Loaded = 2,
     Failed = 3,
   }
-  export declare class AudioConfiguration {
+  export class AudioConfiguration {
     speakerMode: UnityEngine.AudioSpeakerMode;
     dspBufferSize: number;
     sampleRate: number;
@@ -9056,7 +9056,7 @@ export namespace UnityEngine {
     Psychotic = 26,
     User = 27,
   }
-  export declare class AudioClip {
+  export class AudioClip {
     length: number;
     samples: number;
     channels: number;
@@ -9085,7 +9085,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioClip_PCMReaderCallback {
+  export class AudioClip_PCMReaderCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -9101,7 +9101,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioClip_PCMSetPositionCallback {
+  export class AudioClip_PCMSetPositionCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -9117,7 +9117,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioBehaviour {
+  export class AudioBehaviour {
     constructor();
     enabled: boolean;
     isActiveAndEnabled: boolean;
@@ -9169,7 +9169,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioListener {
+  export class AudioListener {
     constructor();
     static volume: number;
     static pause: boolean;
@@ -9228,7 +9228,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioReverbZone {
+  export class AudioReverbZone {
     constructor();
     minDistance: number;
     maxDistance: number;
@@ -9297,7 +9297,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioDistortionFilter {
+  export class AudioDistortionFilter {
     constructor();
     distortionLevel: number;
     enabled: boolean;
@@ -9350,7 +9350,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioEchoFilter {
+  export class AudioEchoFilter {
     constructor();
     delay: number;
     decayRatio: number;
@@ -9406,7 +9406,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AudioChorusFilter {
+  export class AudioChorusFilter {
     constructor();
     dryMix: number;
     wetMix1: number;
@@ -9466,7 +9466,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Microphone {
+  export class Microphone {
     constructor();
     static devices: string[];
     static Start(deviceName: string, loop: boolean, lengthSec: number, frequency: number): UnityEngine.AudioClip;
@@ -9478,7 +9478,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AudioRenderer {
+  export class AudioRenderer {
     constructor();
     static Start(): boolean;
     static Stop(): boolean;
@@ -9489,7 +9489,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MovieTexture {
+  export class MovieTexture {
     audioClip: UnityEngine.AudioClip;
     loop: boolean;
     isPlaying: boolean;
@@ -9535,7 +9535,7 @@ export namespace UnityEngine {
     ColorAndDepth = 3,
     UltraWideAngle = 4,
   }
-  export declare class WebCamDevice {
+  export class WebCamDevice {
     name: string;
     isFrontFacing: boolean;
     kind: UnityEngine.WebCamKind;
@@ -9547,7 +9547,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class WebCamTexture {
+  export class WebCamTexture {
     constructor(deviceName: string, requestedWidth: number, requestedHeight: number, requestedFPS: number);
     constructor(deviceName: string, requestedWidth: number, requestedHeight: number);
     constructor(deviceName: string);
@@ -9603,7 +9603,7 @@ export namespace UnityEngine {
   export interface ICanvasRaycastFilter {
     IsRaycastLocationValid(sp: UnityEngine.Vector2, eventCamera: UnityEngine.Camera): boolean;
   }
-  export declare class CanvasGroup {
+  export class CanvasGroup {
     constructor();
     alpha: number;
     interactable: boolean;
@@ -9660,7 +9660,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CanvasRenderer {
+  export class CanvasRenderer {
     constructor();
     hasPopInstruction: boolean;
     materialCount: number;
@@ -9746,7 +9746,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CanvasRenderer_OnRequestRebuild {
+  export class CanvasRenderer_OnRequestRebuild {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -9762,7 +9762,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class RectTransformUtility {
+  export class RectTransformUtility {
     static PixelAdjustPoint(point: UnityEngine.Vector2, elementTransform: UnityEngine.Transform, canvas: UnityEngine.Canvas): UnityEngine.Vector2;
     static PixelAdjustRect(rectTransform: UnityEngine.RectTransform, canvas: UnityEngine.Canvas): UnityEngine.Rect;
     static RectangleContainsScreenPoint(rect: UnityEngine.RectTransform, screenPoint: UnityEngine.Vector2): boolean;
@@ -9792,7 +9792,7 @@ export namespace UnityEngine {
     Normal = 8,
     Tangent = 16,
   }
-  export declare class Canvas {
+  export class Canvas {
     constructor();
     renderMode: UnityEngine.RenderMode;
     isRootCanvas: boolean;
@@ -9868,7 +9868,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Canvas_WillRenderCanvases {
+  export class Canvas_WillRenderCanvases {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -9884,7 +9884,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UISystemProfilerApi {
+  export class UISystemProfilerApi {
     static BeginSample(type: UnityEngine.UISystemProfilerApi_SampleType): void;
     static EndSample(type: UnityEngine.UISystemProfilerApi_SampleType): void;
     static AddMarker(name: string, obj: UnityEngine.Object): void;
@@ -9903,7 +9903,7 @@ export namespace UnityEngine {
     Italic = 2,
     BoldAndItalic = 3,
   }
-  export declare class GUIText {
+  export class GUIText {
     constructor();
     text: boolean;
     material: UnityEngine.Material;
@@ -9922,7 +9922,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class TextGenerationSettings {
+  export class TextGenerationSettings {
     font: UnityEngine.Font;
     color: UnityEngine.Color;
     fontSize: number;
@@ -9947,7 +9947,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TextGenerator {
+  export class TextGenerator {
     constructor();
     constructor(initialCapacity: number);
     characterCountVisible: number;
@@ -9999,7 +9999,7 @@ export namespace UnityEngine {
     Truncate = 0,
     Overflow = 1,
   }
-  export declare class TextMesh {
+  export class TextMesh {
     constructor();
     text: string;
     font: UnityEngine.Font;
@@ -10061,7 +10061,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class CharacterInfo {
+  export class CharacterInfo {
     advance: number;
     glyphWidth: number;
     glyphHeight: number;
@@ -10086,7 +10086,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class UICharInfo {
+  export class UICharInfo {
     cursorPos: UnityEngine.Vector2;
     charWidth: number;
     Equals(obj: System.Object): boolean;
@@ -10094,7 +10094,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class UILineInfo {
+  export class UILineInfo {
     startCharIdx: number;
     height: number;
     topY: number;
@@ -10104,7 +10104,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class UIVertex {
+  export class UIVertex {
     position: UnityEngine.Vector3;
     normal: UnityEngine.Vector3;
     tangent: UnityEngine.Vector4;
@@ -10119,7 +10119,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Font {
+  export class Font {
     constructor();
     constructor(name: string);
     material: UnityEngine.Material;
@@ -10147,7 +10147,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Font_FontTextureRebuildCallback {
+  export class Font_FontTextureRebuildCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -10163,7 +10163,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AndroidInput {
+  export class AndroidInput {
     static touchCountSecondary: number;
     static secondaryTouchEnabled: boolean;
     static secondaryTouchWidth: number;
@@ -10191,7 +10191,7 @@ export namespace UnityEngine {
     Indirect = 1,
     Stylus = 2,
   }
-  export declare class Touch {
+  export class Touch {
     fingerId: number;
     position: UnityEngine.Vector2;
     rawPosition: UnityEngine.Vector2;
@@ -10220,7 +10220,7 @@ export namespace UnityEngine {
     FaceUp = 5,
     FaceDown = 6,
   }
-  export declare class AccelerationEvent {
+  export class AccelerationEvent {
     acceleration: UnityEngine.Vector3;
     deltaTime: number;
     Equals(obj: System.Object): boolean;
@@ -10228,7 +10228,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Gyroscope {
+  export class Gyroscope {
     rotationRate: UnityEngine.Vector3;
     rotationRateUnbiased: UnityEngine.Vector3;
     gravity: UnityEngine.Vector3;
@@ -10241,7 +10241,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LocationInfo {
+  export class LocationInfo {
     latitude: number;
     longitude: number;
     altitude: number;
@@ -10259,7 +10259,7 @@ export namespace UnityEngine {
     Running = 2,
     Failed = 3,
   }
-  export declare class LocationService {
+  export class LocationService {
     constructor();
     isEnabledByUser: boolean;
     status: UnityEngine.LocationServiceStatus;
@@ -10273,7 +10273,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Compass {
+  export class Compass {
     constructor();
     magneticHeading: number;
     trueHeading: number;
@@ -10286,7 +10286,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Input {
+  export class Input {
     constructor();
     static simulateMouseWithTouches: boolean;
     static anyKey: boolean;
@@ -10340,7 +10340,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AnimationInfo {
+  export class AnimationInfo {
     clip: UnityEngine.AnimationClip;
     weight: number;
     Equals(obj: System.Object): boolean;
@@ -10348,7 +10348,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Animator {
+  export class Animator {
     constructor();
     isOptimizable: boolean;
     isHuman: boolean;
@@ -10561,7 +10561,7 @@ export namespace UnityEngine {
   export interface IAnimationClipSource {
     GetAnimationClips(results: UnityEngine.AnimationClip[]): void;
   }
-  export declare class StateMachineBehaviour {
+  export class StateMachineBehaviour {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     OnStateEnter(animator: UnityEngine.Animator, stateInfo: UnityEngine.AnimatorStateInfo, layerIndex: number): void;
@@ -10608,7 +10608,7 @@ export namespace UnityEngine {
     BasedOnClipBounds = 2,
     BasedOnUserBounds = 3,
   }
-  export declare class Animation {
+  export class Animation {
     constructor();
     clip: UnityEngine.AnimationClip;
     playAutomatically: boolean;
@@ -10702,7 +10702,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AnimationState {
+  export class AnimationState {
     constructor();
     enabled: boolean;
     weight: number;
@@ -10724,7 +10724,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AnimationEvent {
+  export class AnimationEvent {
     constructor();
     data: string;
     stringParameter: string;
@@ -10744,7 +10744,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AnimationClip {
+  export class AnimationClip {
     constructor();
     length: number;
     frameRate: number;
@@ -10825,7 +10825,7 @@ export namespace UnityEngine {
     AnimatePhysics = 1,
     UnscaledTime = 2,
   }
-  export declare class AnimatorClipInfo {
+  export class AnimatorClipInfo {
     clip: UnityEngine.AnimationClip;
     weight: number;
     Equals(obj: System.Object): boolean;
@@ -10833,7 +10833,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AnimatorStateInfo {
+  export class AnimatorStateInfo {
     fullPathHash: number;
     nameHash: number;
     shortNameHash: number;
@@ -10850,7 +10850,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AnimatorTransitionInfo {
+  export class AnimatorTransitionInfo {
     fullPathHash: number;
     nameHash: number;
     userNameHash: number;
@@ -10865,7 +10865,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MatchTargetWeightMask {
+  export class MatchTargetWeightMask {
     constructor(positionXYZWeight: UnityEngine.Vector3, rotationWeight: number);
     positionXYZWeight: UnityEngine.Vector3;
     rotationWeight: number;
@@ -10874,7 +10874,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AnimatorControllerParameter {
+  export class AnimatorControllerParameter {
     constructor();
     name: string;
     nameHash: number;
@@ -10887,7 +10887,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AnimationClipPair {
+  export class AnimationClipPair {
     constructor();
     originalClip: UnityEngine.AnimationClip;
     overrideClip: UnityEngine.AnimationClip;
@@ -10896,7 +10896,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AnimatorOverrideController {
+  export class AnimatorOverrideController {
     constructor();
     constructor(controller: UnityEngine.RuntimeAnimatorController);
     runtimeAnimatorController: UnityEngine.RuntimeAnimatorController;
@@ -10913,7 +10913,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AnimatorUtility {
+  export class AnimatorUtility {
     constructor();
     static OptimizeTransformHierarchy(go: UnityEngine.GameObject, exposedTransforms: string[]): void;
     static DeoptimizeTransformHierarchy(go: UnityEngine.GameObject): void;
@@ -11056,7 +11056,7 @@ export namespace UnityEngine {
     RightLittleDistal = 53,
     LastBone = 55,
   }
-  export declare class Avatar {
+  export class Avatar {
     isValid: boolean;
     isHuman: boolean;
     humanDescription: UnityEngine.HumanDescription;
@@ -11068,7 +11068,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SkeletonBone {
+  export class SkeletonBone {
     transformModified: number;
     name: string;
     position: UnityEngine.Vector3;
@@ -11079,7 +11079,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class HumanLimit {
+  export class HumanLimit {
     useDefaultValues: boolean;
     min: UnityEngine.Vector3;
     max: UnityEngine.Vector3;
@@ -11090,7 +11090,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class HumanBone {
+  export class HumanBone {
     boneName: string;
     humanName: string;
     limit: UnityEngine.HumanLimit;
@@ -11099,7 +11099,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class HumanDescription {
+  export class HumanDescription {
     upperArmTwist: number;
     lowerArmTwist: number;
     upperLegTwist: number;
@@ -11115,7 +11115,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AvatarBuilder {
+  export class AvatarBuilder {
     constructor();
     static BuildHumanAvatar(go: UnityEngine.GameObject, humanDescription: UnityEngine.HumanDescription): UnityEngine.Avatar;
     static BuildGenericAvatar(go: UnityEngine.GameObject, rootMotionTransformName: string): UnityEngine.Avatar;
@@ -11140,7 +11140,7 @@ export namespace UnityEngine {
     RightHandIK = 12,
     LastBodyPart = 13,
   }
-  export declare class AvatarMask {
+  export class AvatarMask {
     constructor();
     humanoidBodyPartCount: number;
     transformCount: number;
@@ -11162,7 +11162,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class HumanPose {
+  export class HumanPose {
     bodyPosition: UnityEngine.Vector3;
     bodyRotation: UnityEngine.Quaternion;
     muscles: number[];
@@ -11171,7 +11171,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class HumanPoseHandler {
+  export class HumanPoseHandler {
     constructor(avatar: UnityEngine.Avatar, root: UnityEngine.Transform);
     constructor(avatar: UnityEngine.Avatar, jointPaths: string[]);
     Dispose(): void;
@@ -11182,7 +11182,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class HumanTrait {
+  export class HumanTrait {
     constructor();
     static MuscleCount: number;
     static MuscleName: string[];
@@ -11201,7 +11201,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Motion {
+  export class Motion {
     averageDuration: number;
     averageAngularSpeed: number;
     averageSpeed: UnityEngine.Vector3;
@@ -11219,7 +11219,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RuntimeAnimatorController {
+  export class RuntimeAnimatorController {
     animationClips: UnityEngine.AnimationClip[];
     name: string;
     hideFlags: UnityEngine.HideFlags;
@@ -11229,7 +11229,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Event {
+  export class Event {
     constructor();
     constructor(displayIndex: number);
     constructor(other: UnityEngine.Event);
@@ -11323,7 +11323,7 @@ export namespace UnityEngine {
     Touch = 1,
     Pen = 2,
   }
-  export declare class GUI {
+  export class GUI {
     constructor();
     static color: UnityEngine.Color;
     static backgroundColor: UnityEngine.Color;
@@ -11460,7 +11460,7 @@ export namespace UnityEngine {
     Fixed = 0,
     FitToContents = 1,
   }
-  export declare class GUI_WindowFunction {
+  export class GUI_WindowFunction {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -11476,14 +11476,14 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUI_Scope {
+  export class GUI_Scope {
     Dispose(): void;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUI_GroupScope {
+  export class GUI_GroupScope {
     constructor(position: UnityEngine.Rect);
     constructor(position: UnityEngine.Rect, text: string);
     constructor(position: UnityEngine.Rect, image: UnityEngine.Texture);
@@ -11497,7 +11497,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUI_ScrollViewScope {
+  export class GUI_ScrollViewScope {
     constructor(position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect);
     constructor(position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean);
     constructor(position: UnityEngine.Rect, scrollPosition: UnityEngine.Vector2, viewRect: UnityEngine.Rect, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle);
@@ -11510,7 +11510,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUI_ClipScope {
+  export class GUI_ClipScope {
     constructor(position: UnityEngine.Rect);
     Dispose(): void;
     Equals(obj: System.Object): boolean;
@@ -11518,7 +11518,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUIContent {
+  export class GUIContent {
     constructor();
     constructor(text: string);
     constructor(image: UnityEngine.Texture);
@@ -11536,7 +11536,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUIElement {
+  export class GUIElement {
     constructor();
     HitTest(screenPosition: UnityEngine.Vector3): boolean;
     HitTest(screenPosition: UnityEngine.Vector3, camera: UnityEngine.Camera): boolean;
@@ -11557,7 +11557,7 @@ export namespace UnityEngine {
     Keyboard = 1,
     Passive = 2,
   }
-  export declare class GUILayer {
+  export class GUILayer {
     constructor();
     HitTest(screenPosition: UnityEngine.Vector3): UnityEngine.GUIElement;
     Equals(obj: System.Object): boolean;
@@ -11565,7 +11565,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUILayout {
+  export class GUILayout {
     constructor();
     static Label(image: UnityEngine.Texture, ...options: UnityEngine.GUILayoutOption[]): void;
     static Label(text: string, ...options: UnityEngine.GUILayoutOption[]): void;
@@ -11684,7 +11684,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUILayout_HorizontalScope {
+  export class GUILayout_HorizontalScope {
     constructor(...options: UnityEngine.GUILayoutOption[]);
     constructor(style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     constructor(text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
@@ -11696,7 +11696,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUILayout_VerticalScope {
+  export class GUILayout_VerticalScope {
     constructor(...options: UnityEngine.GUILayoutOption[]);
     constructor(style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
     constructor(text: string, style: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
@@ -11708,7 +11708,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUILayout_AreaScope {
+  export class GUILayout_AreaScope {
     constructor(screenRect: UnityEngine.Rect);
     constructor(screenRect: UnityEngine.Rect, text: string);
     constructor(screenRect: UnityEngine.Rect, image: UnityEngine.Texture);
@@ -11722,7 +11722,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUILayout_ScrollViewScope {
+  export class GUILayout_ScrollViewScope {
     constructor(scrollPosition: UnityEngine.Vector2, ...options: UnityEngine.GUILayoutOption[]);
     constructor(scrollPosition: UnityEngine.Vector2, alwaysShowHorizontal: boolean, alwaysShowVertical: boolean, ...options: UnityEngine.GUILayoutOption[]);
     constructor(scrollPosition: UnityEngine.Vector2, horizontalScrollbar: UnityEngine.GUIStyle, verticalScrollbar: UnityEngine.GUIStyle, ...options: UnityEngine.GUILayoutOption[]);
@@ -11737,13 +11737,13 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUILayoutOption {
+  export class GUILayoutOption {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUILayoutUtility {
+  export class GUILayoutUtility {
     constructor();
     static BeginGroup(GroupName: string): void;
     static EndGroup(groupName: string): void;
@@ -11767,7 +11767,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUISettings {
+  export class GUISettings {
     constructor();
     doubleClickSelectsWord: boolean;
     tripleClickSelectsLine: boolean;
@@ -11779,7 +11779,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUISkin {
+  export class GUISkin {
     constructor();
     font: UnityEngine.Font;
     box: UnityEngine.GUIStyle;
@@ -11816,7 +11816,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class GUIStyleState {
+  export class GUIStyleState {
     constructor();
     background: UnityEngine.Texture2D;
     textColor: UnityEngine.Color;
@@ -11826,7 +11826,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUIStyle {
+  export class GUIStyle {
     constructor();
     constructor(other: UnityEngine.GUIStyle);
     font: UnityEngine.Font;
@@ -11888,7 +11888,7 @@ export namespace UnityEngine {
     Overflow = 0,
     Clip = 1,
   }
-  export declare class GUITexture {
+  export class GUITexture {
     constructor();
     color: UnityEngine.Color;
     texture: UnityEngine.Texture;
@@ -11899,7 +11899,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GUIUtility {
+  export class GUIUtility {
     constructor();
     static hasModalWindow: boolean;
     static systemCopyBuffer: string;
@@ -11926,7 +11926,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ExitGUIException {
+  export class ExitGUIException {
     constructor();
     Message: string;
     Data: System.Collections.IDictionary;
@@ -11944,7 +11944,7 @@ export namespace UnityEngine {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class TextEditor {
+  export class TextEditor {
     constructor();
     content: UnityEngine.GUIContent;
     text: string;
@@ -12053,7 +12053,7 @@ export namespace UnityEngine {
     RecompressionTargetIsLoaded = 12,
     RecompressionTargetExistsButNotArchive = 13,
   }
-  export declare class AssetBundle {
+  export class AssetBundle {
     mainAsset: UnityEngine.Object;
     isStreamedSceneAssetBundle: boolean;
     name: string;
@@ -12105,7 +12105,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AssetBundleCreateRequest {
+  export class AssetBundleCreateRequest {
     constructor();
     assetBundle: UnityEngine.AssetBundle;
     isDone: boolean;
@@ -12117,7 +12117,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetBundleManifest {
+  export class AssetBundleManifest {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     GetAllAssetBundles(): string[];
@@ -12131,7 +12131,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AssetBundleRecompressOperation {
+  export class AssetBundleRecompressOperation {
     constructor();
     humanReadableResult: string;
     inputPath: string;
@@ -12147,7 +12147,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssetBundleRequest {
+  export class AssetBundleRequest {
     constructor();
     asset: UnityEngine.Object;
     allAssets: UnityEngine.Object[];
@@ -12174,7 +12174,7 @@ export namespace UnityEngine {
     High = 4,
     Maximum = 5,
   }
-  export declare class BuildCompression {
+  export class BuildCompression {
     compression: UnityEngine.CompressionType;
     level: UnityEngine.CompressionLevel;
     blockSize: System.UInt32;
@@ -12188,7 +12188,7 @@ export namespace UnityEngine {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RemoteSettings {
+  export class RemoteSettings {
     static CallOnUpdate(): void;
     static ForceUpdate(): void;
     static WasLastUpdatedFromServer(): boolean;
@@ -12213,7 +12213,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class RemoteSettings_UpdatedEventHandler {
+  export class RemoteSettings_UpdatedEventHandler {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -12229,7 +12229,7 @@ export namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class RemoteConfigSettings {
+  export class RemoteConfigSettings {
     constructor(configKey: string);
     Dispose(): void;
     static QueueConfig(name: string, param: System.Object, ver?: number, prefix?: string): boolean;
@@ -12264,7 +12264,7 @@ export namespace UnityEngine {
       PathPartial = 1,
       PathInvalid = 2,
     }
-    export declare class NavMeshPath {
+    export class NavMeshPath {
       constructor();
       corners: UnityEngine.Vector3[];
       status: UnityEngine.AI.NavMeshPathStatus;
@@ -12275,7 +12275,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NavMeshBuilder {
+    export class NavMeshBuilder {
       static CollectSources(includedWorldBounds: UnityEngine.Bounds, includedLayerMask: number, geometry: UnityEngine.AI.NavMeshCollectGeometry, defaultArea: number, markups: UnityEngine.AI.NavMeshBuildMarkup[], results: UnityEngine.AI.NavMeshBuildSource[]): void;
       static CollectSources(root: UnityEngine.Transform, includedLayerMask: number, geometry: UnityEngine.AI.NavMeshCollectGeometry, defaultArea: number, markups: UnityEngine.AI.NavMeshBuildMarkup[], results: UnityEngine.AI.NavMeshBuildSource[]): void;
       static BuildNavMeshData(buildSettings: UnityEngine.AI.NavMeshBuildSettings, sources: UnityEngine.AI.NavMeshBuildSource[], localBounds: UnityEngine.Bounds, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion): UnityEngine.AI.NavMeshData;
@@ -12294,7 +12294,7 @@ export namespace UnityEngine {
       GoodQualityObstacleAvoidance = 3,
       HighQualityObstacleAvoidance = 4,
     }
-    export declare class NavMeshAgent {
+    export class NavMeshAgent {
       constructor();
       destination: UnityEngine.Vector3;
       stoppingDistance: number;
@@ -12401,7 +12401,7 @@ export namespace UnityEngine {
       Capsule = 0,
       Box = 1,
     }
-    export declare class NavMeshObstacle {
+    export class NavMeshObstacle {
       constructor();
       height: number;
       radius: number;
@@ -12468,7 +12468,7 @@ export namespace UnityEngine {
       LinkTypeDropDown = 1,
       LinkTypeJumpAcross = 2,
     }
-    export declare class OffMeshLinkData {
+    export class OffMeshLinkData {
       valid: boolean;
       activated: boolean;
       linkType: UnityEngine.AI.OffMeshLinkType;
@@ -12480,7 +12480,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class OffMeshLink {
+    export class OffMeshLink {
       constructor();
       activated: boolean;
       occupied: boolean;
@@ -12542,7 +12542,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshHit {
+    export class NavMeshHit {
       position: UnityEngine.Vector3;
       normal: UnityEngine.Vector3;
       distance: number;
@@ -12553,7 +12553,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshTriangulation {
+    export class NavMeshTriangulation {
       layers: number[];
       vertices: UnityEngine.Vector3[];
       indices: number[];
@@ -12563,7 +12563,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshData {
+    export class NavMeshData {
       constructor();
       constructor(agentTypeID: number);
       sourceBounds: UnityEngine.Bounds;
@@ -12577,7 +12577,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshDataInstance {
+    export class NavMeshDataInstance {
       valid: boolean;
       owner: UnityEngine.Object;
       Remove(): void;
@@ -12586,7 +12586,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshLinkData {
+    export class NavMeshLinkData {
       startPosition: UnityEngine.Vector3;
       endPosition: UnityEngine.Vector3;
       costModifier: number;
@@ -12599,7 +12599,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshLinkInstance {
+    export class NavMeshLinkInstance {
       valid: boolean;
       owner: UnityEngine.Object;
       Remove(): void;
@@ -12608,7 +12608,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshQueryFilter {
+    export class NavMeshQueryFilter {
       areaMask: number;
       agentTypeID: number;
       GetAreaCost(areaIndex: number): number;
@@ -12618,7 +12618,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMesh {
+    export class NavMesh {
       static avoidancePredictionTime: number;
       static pathfindingIterationsPerFrame: number;
       static AllAreas: number;
@@ -12652,7 +12652,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NavMesh_OnNavMeshPreUpdate {
+    export class NavMesh_OnNavMeshPreUpdate {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -12691,7 +12691,7 @@ export namespace UnityEngine {
       RenderMeshes = 0,
       PhysicsColliders = 1,
     }
-    export declare class NavMeshBuildSource {
+    export class NavMeshBuildSource {
       transform: UnityEngine.Matrix4x4;
       size: UnityEngine.Vector3;
       shape: UnityEngine.AI.NavMeshBuildSourceShape;
@@ -12703,7 +12703,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshBuildMarkup {
+    export class NavMeshBuildMarkup {
       overrideArea: boolean;
       area: number;
       ignoreFromBuild: boolean;
@@ -12713,7 +12713,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshBuildSettings {
+    export class NavMeshBuildSettings {
       agentTypeID: number;
       agentRadius: number;
       agentHeight: number;
@@ -12733,7 +12733,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class NavMeshBuildDebugSettings {
+    export class NavMeshBuildDebugSettings {
       flags: UnityEngine.AI.NavMeshBuildDebugFlags;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -12742,7 +12742,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Analytics {
-    export declare class ContinuousEvent {
+    export class ContinuousEvent {
       constructor();
       static ConfigureCustomEvent(customEventName: string, metricName: string, interval: number, period: number, enabled?: boolean): UnityEngine.Analytics.AnalyticsResult;
       static ConfigureEvent(eventName: string, metricName: string, interval: number, period: number, enabled?: boolean, ver?: number, prefix?: string): UnityEngine.Analytics.AnalyticsResult;
@@ -12757,7 +12757,7 @@ export namespace UnityEngine {
       kSessionPaused = 2,
       kSessionResumed = 3,
     }
-    export declare class AnalyticsSessionInfo {
+    export class AnalyticsSessionInfo {
       static sessionState: UnityEngine.Analytics.AnalyticsSessionState;
       static sessionId: System.Int64;
       static sessionCount: System.Int64;
@@ -12772,7 +12772,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnalyticsSessionInfo_SessionStateChanged {
+    export class AnalyticsSessionInfo_SessionStateChanged {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -12788,7 +12788,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnalyticsSessionInfo_IdentityTokenChanged {
+    export class AnalyticsSessionInfo_IdentityTokenChanged {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -12804,7 +12804,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Analytics {
+    export class Analytics {
       static initializeOnStartup: boolean;
       static playerOptedOut: boolean;
       static eventUrl: string;
@@ -12869,7 +12869,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Animations {
-    export declare class AnimationPlayableBinding {
+    export class AnimationPlayableBinding {
       static Create(name: string, key: UnityEngine.Object): UnityEngine.Playables.PlayableBinding;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -12888,7 +12888,7 @@ export namespace UnityEngine {
       UpdatePreviewGraph(graph: UnityEngine.Playables.PlayableGraph): void;
       BuildPreviewGraph(graph: UnityEngine.Playables.PlayableGraph, inputPlayable: UnityEngine.Playables.Playable): UnityEngine.Playables.Playable;
     }
-    export declare class AimConstraint {
+    export class AimConstraint {
       weight: number;
       constraintActive: boolean;
       locked: boolean;
@@ -12964,7 +12964,7 @@ export namespace UnityEngine {
       Vector = 3,
       None = 4,
     }
-    export declare class AnimationClipPlayable {
+    export class AnimationClipPlayable {
       static Create(graph: UnityEngine.Playables.PlayableGraph, clip: UnityEngine.AnimationClip): UnityEngine.Animations.AnimationClipPlayable;
       GetHandle(): UnityEngine.Playables.PlayableHandle;
       Equals(other: UnityEngine.Animations.AnimationClipPlayable): boolean;
@@ -12978,7 +12978,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimationHumanStream {
+    export class AnimationHumanStream {
       isValid: boolean;
       humanScale: number;
       leftFootHeight: number;
@@ -13021,7 +13021,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimationLayerMixerPlayable {
+    export class AnimationLayerMixerPlayable {
       static Null: UnityEngine.Animations.AnimationLayerMixerPlayable;
       static Create(graph: UnityEngine.Playables.PlayableGraph, inputCount?: number): UnityEngine.Animations.AnimationLayerMixerPlayable;
       GetHandle(): UnityEngine.Playables.PlayableHandle;
@@ -13034,7 +13034,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimationMixerPlayable {
+    export class AnimationMixerPlayable {
       static Null: UnityEngine.Animations.AnimationMixerPlayable;
       static Create(graph: UnityEngine.Playables.PlayableGraph, inputCount?: number, normalizeWeights?: boolean): UnityEngine.Animations.AnimationMixerPlayable;
       GetHandle(): UnityEngine.Playables.PlayableHandle;
@@ -13044,13 +13044,13 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimationPlayableExtensions {
+    export class AnimationPlayableExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnimationPlayableOutput {
+    export class AnimationPlayableOutput {
       static Null: UnityEngine.Animations.AnimationPlayableOutput;
       static Create(graph: UnityEngine.Playables.PlayableGraph, name: string, target: UnityEngine.Animator): UnityEngine.Animations.AnimationPlayableOutput;
       GetHandle(): UnityEngine.Playables.PlayableOutputHandle;
@@ -13061,7 +13061,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimationScriptPlayable {
+    export class AnimationScriptPlayable {
       static Null: UnityEngine.Animations.AnimationScriptPlayable;
       GetHandle(): UnityEngine.Playables.PlayableHandle;
       Equals(other: UnityEngine.Animations.AnimationScriptPlayable): boolean;
@@ -13072,7 +13072,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimationStream {
+    export class AnimationStream {
       isValid: boolean;
       deltaTime: number;
       velocity: UnityEngine.Vector3;
@@ -13090,7 +13090,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TransformStreamHandle {
+    export class TransformStreamHandle {
       IsValid(stream: UnityEngine.Animations.AnimationStream): boolean;
       Resolve(stream: UnityEngine.Animations.AnimationStream): void;
       IsResolved(stream: UnityEngine.Animations.AnimationStream): boolean;
@@ -13114,7 +13114,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PropertyStreamHandle {
+    export class PropertyStreamHandle {
       IsValid(stream: UnityEngine.Animations.AnimationStream): boolean;
       Resolve(stream: UnityEngine.Animations.AnimationStream): void;
       IsResolved(stream: UnityEngine.Animations.AnimationStream): boolean;
@@ -13130,7 +13130,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TransformSceneHandle {
+    export class TransformSceneHandle {
       IsValid(stream: UnityEngine.Animations.AnimationStream): boolean;
       GetPosition(stream: UnityEngine.Animations.AnimationStream): UnityEngine.Vector3;
       SetPosition(stream: UnityEngine.Animations.AnimationStream, position: UnityEngine.Vector3): void;
@@ -13147,7 +13147,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PropertySceneHandle {
+    export class PropertySceneHandle {
       IsValid(stream: UnityEngine.Animations.AnimationStream): boolean;
       Resolve(stream: UnityEngine.Animations.AnimationStream): void;
       IsResolved(stream: UnityEngine.Animations.AnimationStream): boolean;
@@ -13162,7 +13162,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimationSceneHandleUtility {
+    export class AnimationSceneHandleUtility {
       static ReadInts(stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any): void;
       static ReadFloats(stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any): void;
       Equals(obj: System.Object): boolean;
@@ -13170,7 +13170,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnimationStreamHandleUtility {
+    export class AnimationStreamHandleUtility {
       static WriteInts(stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any, useMask: boolean): void;
       static WriteFloats(stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any, useMask: boolean): void;
       static ReadInts(stream: UnityEngine.Animations.AnimationStream, handles: any, buffer: any): void;
@@ -13180,7 +13180,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AnimatorControllerPlayable {
+    export class AnimatorControllerPlayable {
       static Null: UnityEngine.Animations.AnimatorControllerPlayable;
       static Create(graph: UnityEngine.Playables.PlayableGraph, controller: UnityEngine.RuntimeAnimatorController): UnityEngine.Animations.AnimatorControllerPlayable;
       GetHandle(): UnityEngine.Playables.PlayableHandle;
@@ -13256,7 +13256,7 @@ export namespace UnityEngine {
       Bool = 6,
       Int = 10,
     }
-    export declare class AnimatorJobExtensions {
+    export class AnimatorJobExtensions {
       static AddJobDependency(animator: UnityEngine.Animator, jobHandle: Unity.Jobs.JobHandle): void;
       static BindStreamTransform(animator: UnityEngine.Animator, transform: UnityEngine.Transform): UnityEngine.Animations.TransformStreamHandle;
       static BindStreamProperty(animator: UnityEngine.Animator, transform: UnityEngine.Transform, type: System.Type, property: string): UnityEngine.Animations.PropertyStreamHandle;
@@ -13278,7 +13278,7 @@ export namespace UnityEngine {
       Y = 2,
       Z = 4,
     }
-    export declare class ConstraintSource {
+    export class ConstraintSource {
       sourceTransform: UnityEngine.Transform;
       weight: number;
       Equals(obj: System.Object): boolean;
@@ -13298,7 +13298,7 @@ export namespace UnityEngine {
       GetSources(sources: UnityEngine.Animations.ConstraintSource[]): void;
       SetSources(sources: UnityEngine.Animations.ConstraintSource[]): void;
     }
-    export declare class PositionConstraint {
+    export class PositionConstraint {
       weight: number;
       translationAtRest: UnityEngine.Vector3;
       translationOffset: UnityEngine.Vector3;
@@ -13362,7 +13362,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class RotationConstraint {
+    export class RotationConstraint {
       weight: number;
       rotationAtRest: UnityEngine.Vector3;
       rotationOffset: UnityEngine.Vector3;
@@ -13426,7 +13426,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScaleConstraint {
+    export class ScaleConstraint {
       weight: number;
       scaleAtRest: UnityEngine.Vector3;
       scaleOffset: UnityEngine.Vector3;
@@ -13490,7 +13490,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class LookAtConstraint {
+    export class LookAtConstraint {
       weight: number;
       roll: number;
       constraintActive: boolean;
@@ -13556,7 +13556,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class MuscleHandle {
+    export class MuscleHandle {
       constructor(bodyDof: UnityEngine.BodyDof);
       constructor(headDof: UnityEngine.HeadDof);
       constructor(partDof: UnityEngine.HumanPartDof, legDof: UnityEngine.LegDof);
@@ -13572,7 +13572,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ParentConstraint {
+    export class ParentConstraint {
       weight: number;
       constraintActive: boolean;
       locked: boolean;
@@ -13649,7 +13649,7 @@ export namespace UnityEngine {
       DevTools = 1,
       GPUTraceDocument = 2,
     }
-    export declare class FrameCapture {
+    export class FrameCapture {
       static IsDestinationSupported(dest: UnityEngine.Apple.FrameCaptureDestination): boolean;
       static BeginCaptureToXcode(): void;
       static BeginCaptureToFile(path: string): void;
@@ -13662,7 +13662,7 @@ export namespace UnityEngine {
       ToString(): string;
     }
     export namespace ReplayKit {
-      export declare class ReplayKit {
+      export class ReplayKit {
         static APIAvailable: boolean;
         static broadcastingAPIAvailable: boolean;
         static recordingAvailable: boolean;
@@ -13694,7 +13694,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ReplayKit_BroadcastStatusCallback {
+      export class ReplayKit_BroadcastStatusCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -13712,7 +13712,7 @@ export namespace UnityEngine {
       }
     }
     export namespace TV {
-      export declare class Remote {
+      export class Remote {
         constructor();
         static allowExitToHome: boolean;
         static allowRemoteRotation: boolean;
@@ -13726,7 +13726,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Assertions {
-    export declare class Assert {
+    export class Assert {
       static raiseExceptions: boolean;
       static Equals(obj1: System.Object, obj2: System.Object): boolean;
       static ReferenceEquals(obj1: System.Object, obj2: System.Object): boolean;
@@ -13787,7 +13787,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AssertionException {
+    export class AssertionException {
       constructor(message: string, userMessage: string);
       Message: string;
       Data: System.Collections.IDictionary;
@@ -13806,7 +13806,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
     }
     export namespace Comparers {
-      export declare class FloatComparer {
+      export class FloatComparer {
         constructor();
         constructor(relative: boolean);
         constructor(error: number);
@@ -13824,7 +13824,7 @@ export namespace UnityEngine {
       }
     }
     export namespace Must {
-      export declare class MustExtensions {
+      export class MustExtensions {
         static MustBeTrue(value: boolean): void;
         static MustBeTrue(value: boolean, message: string): void;
         static MustBeFalse(value: boolean): void;
@@ -13845,7 +13845,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Audio {
-    export declare class AudioClipPlayable {
+    export class AudioClipPlayable {
       static Create(graph: UnityEngine.Playables.PlayableGraph, clip: UnityEngine.AudioClip, looping: boolean): UnityEngine.Audio.AudioClipPlayable;
       GetHandle(): UnityEngine.Playables.PlayableHandle;
       Equals(other: UnityEngine.Audio.AudioClipPlayable): boolean;
@@ -13868,7 +13868,7 @@ export namespace UnityEngine {
       Normal = 0,
       UnscaledTime = 1,
     }
-    export declare class AudioMixer {
+    export class AudioMixer {
       outputAudioMixerGroup: UnityEngine.Audio.AudioMixerGroup;
       updateMode: UnityEngine.Audio.AudioMixerUpdateMode;
       name: string;
@@ -13884,7 +13884,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AudioMixerGroup {
+    export class AudioMixerGroup {
       audioMixer: UnityEngine.Audio.AudioMixer;
       name: string;
       hideFlags: UnityEngine.HideFlags;
@@ -13894,7 +13894,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AudioMixerPlayable {
+    export class AudioMixerPlayable {
       static Create(graph: UnityEngine.Playables.PlayableGraph, inputCount?: number, normalizeInputVolumes?: boolean): UnityEngine.Audio.AudioMixerPlayable;
       GetHandle(): UnityEngine.Playables.PlayableHandle;
       Equals(other: UnityEngine.Audio.AudioMixerPlayable): boolean;
@@ -13903,7 +13903,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AudioMixerSnapshot {
+    export class AudioMixerSnapshot {
       audioMixer: UnityEngine.Audio.AudioMixer;
       name: string;
       hideFlags: UnityEngine.HideFlags;
@@ -13914,14 +13914,14 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AudioPlayableBinding {
+    export class AudioPlayableBinding {
       static Create(name: string, key: UnityEngine.Object): UnityEngine.Playables.PlayableBinding;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AudioPlayableOutput {
+    export class AudioPlayableOutput {
       static Null: UnityEngine.Audio.AudioPlayableOutput;
       static Create(graph: UnityEngine.Playables.PlayableGraph, name: string, target: UnityEngine.AudioSource): UnityEngine.Audio.AudioPlayableOutput;
       GetHandle(): UnityEngine.Playables.PlayableOutputHandle;
@@ -13943,7 +13943,7 @@ export namespace UnityEngine {
       PureVirtualFunction = 3,
       MonoAbort = 4,
     }
-    export declare class Utils {
+    export class Utils {
       static ForceCrash(crashCategory: UnityEngine.Diagnostics.ForcedCrashCategory): void;
       static NativeAssert(message: string): void;
       static NativeError(message: string): void;
@@ -13953,7 +13953,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PlayerConnection {
+    export class PlayerConnection {
       static connected: boolean;
       static SendFile(remoteFilePath: string, data: System.Byte[]): void;
       Equals(obj: System.Object): boolean;
@@ -13977,7 +13977,7 @@ export namespace UnityEngine {
       EditorAndRuntime = 1,
       RuntimeOnly = 2,
     }
-    export declare class UnityEventBase {
+    export class UnityEventBase {
       GetPersistentEventCount(): number;
       GetPersistentTarget(index: number): UnityEngine.Object;
       GetPersistentMethodName(index: number): string;
@@ -13990,7 +13990,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class UnityAction<T0 = any, T1 = any, T2 = any, T3 = any> {
+    export class UnityAction<T0 = any, T1 = any, T2 = any, T3 = any> {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -14006,7 +14006,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UnityEvent<T0 = any, T1 = any, T2 = any, T3 = any> {
+    export class UnityEvent<T0 = any, T1 = any, T2 = any, T3 = any> {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<T0, T1, T2, T3>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<T0, T1, T2, T3>): void;
@@ -14023,7 +14023,7 @@ export namespace UnityEngine {
     }
   }
   export namespace EventSystems {
-    export declare class AxisEventData {
+    export class AxisEventData {
       constructor(eventSystem: UnityEngine.EventSystems.EventSystem);
       moveVector: UnityEngine.Vector2;
       moveDir: UnityEngine.EventSystems.MoveDirection;
@@ -14037,7 +14037,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AbstractEventData {
+    export class AbstractEventData {
       used: boolean;
       Reset(): void;
       Use(): void;
@@ -14046,7 +14046,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BaseEventData {
+    export class BaseEventData {
       constructor(eventSystem: UnityEngine.EventSystems.EventSystem);
       currentInputModule: UnityEngine.EventSystems.BaseInputModule;
       selectedObject: UnityEngine.GameObject;
@@ -14058,7 +14058,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerEventData {
+    export class PointerEventData {
       constructor(eventSystem: UnityEngine.EventSystems.EventSystem);
       pointerEnter: UnityEngine.GameObject;
       lastPress: UnityEngine.GameObject;
@@ -14153,7 +14153,7 @@ export namespace UnityEngine {
     export interface ICancelHandler {
       OnCancel(eventData: UnityEngine.EventSystems.BaseEventData): void;
     }
-    export declare class EventSystem {
+    export class EventSystem {
       static current: UnityEngine.EventSystems.EventSystem;
       sendNavigationEvents: boolean;
       pixelDragThreshold: number;
@@ -14237,7 +14237,7 @@ export namespace UnityEngine {
       Equals(other: System.Object): boolean;
       GetType(): System.Type;
     }
-    export declare class EventTrigger {
+    export class EventTrigger {
       delegates: UnityEngine.EventSystems.EventTrigger_Entry[];
       triggers: UnityEngine.EventSystems.EventTrigger_Entry[];
       useGUILayout: boolean;
@@ -14342,7 +14342,7 @@ export namespace UnityEngine {
       Submit = 15,
       Cancel = 16,
     }
-    export declare class ExecuteEvents {
+    export class ExecuteEvents {
       static pointerEnterHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerEnterHandler]
       static pointerExitHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerExitHandler]
       static pointerDownHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerDownHandler]
@@ -14365,7 +14365,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BaseInput {
+    export class BaseInput {
       constructor();
       compositionString: string;
       imeCompositionMode: UnityEngine.IMECompositionMode;
@@ -14449,7 +14449,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class BaseInputModule {
+    export class BaseInputModule {
       input: UnityEngine.EventSystems.BaseInput;
       inputOverride: UnityEngine.EventSystems.BaseInput;
       useGUILayout: boolean;
@@ -14527,7 +14527,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PointerInputModule {
+    export class PointerInputModule {
       input: UnityEngine.EventSystems.BaseInput;
       inputOverride: UnityEngine.EventSystems.BaseInput;
       useGUILayout: boolean;
@@ -14609,7 +14609,7 @@ export namespace UnityEngine {
       Equals(other: System.Object): boolean;
       GetType(): System.Type;
     }
-    export declare class StandaloneInputModule {
+    export class StandaloneInputModule {
       inputMode: UnityEngine.EventSystems.StandaloneInputModule_InputMode;
       allowActivationOnMobileDevice: boolean;
       forceModuleActive: boolean;
@@ -14696,7 +14696,7 @@ export namespace UnityEngine {
       Equals(other: System.Object): boolean;
       GetType(): System.Type;
     }
-    export declare class TouchInputModule {
+    export class TouchInputModule {
       allowActivationOnStandalone: boolean;
       forceModuleActive: boolean;
       input: UnityEngine.EventSystems.BaseInput;
@@ -14783,7 +14783,7 @@ export namespace UnityEngine {
       Down = 3,
       None = 4,
     }
-    export declare class RaycastResult {
+    export class RaycastResult {
       gameObject: UnityEngine.GameObject;
       isValid: boolean;
       module: UnityEngine.EventSystems.BaseRaycaster;
@@ -14802,7 +14802,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class BaseRaycaster {
+    export class BaseRaycaster {
       eventCamera: UnityEngine.Camera;
       priority: number;
       sortOrderPriority: number;
@@ -14877,86 +14877,7 @@ export namespace UnityEngine {
       Equals(other: System.Object): boolean;
       GetType(): System.Type;
     }
-    export declare class Physics2DRaycaster {
-      eventCamera: UnityEngine.Camera;
-      depth: number;
-      finalEventMask: number;
-      eventMask: UnityEngine.LayerMask;
-      maxRayIntersections: number;
-      priority: number;
-      sortOrderPriority: number;
-      renderOrderPriority: number;
-      rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      Raycast(eventData: UnityEngine.EventSystems.PointerEventData, resultAppendList: UnityEngine.EventSystems.RaycastResult[]): void;
-      ToString(): string;
-      IsActive(): boolean;
-      IsDestroyed(): boolean;
-      IsInvoking(): boolean;
-      CancelInvoke(): void;
-      Invoke(methodName: string, time: number): void;
-      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
-      CancelInvoke(methodName: string): void;
-      IsInvoking(methodName: string): boolean;
-      StartCoroutine(methodName: string): UnityEngine.Coroutine;
-      StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
-      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StopCoroutine(routine: System.Collections.IEnumerator): void;
-      StopCoroutine(routine: UnityEngine.Coroutine): void;
-      StopCoroutine(methodName: string): void;
-      StopAllCoroutines(): void;
-      GetComponent(type: System.Type): UnityEngine.Component;
-      GetComponent(type: string): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type): UnityEngine.Component;
-      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type): UnityEngine.Component;
-      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
-      CompareTag(tag: string): boolean;
-      SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
-      SendMessageUpwards(methodName: string, value: System.Object): void;
-      SendMessageUpwards(methodName: string): void;
-      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, value: System.Object): void;
-      SendMessage(methodName: string): void;
-      SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: System.Object): void;
-      BroadcastMessage(methodName: string): void;
-      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      GetInstanceID(): number;
-      GetHashCode(): number;
-      Equals(other: System.Object): boolean;
-      GetType(): System.Type;
-    }
-    export declare class PhysicsRaycaster {
+    export class Physics2DRaycaster {
       eventCamera: UnityEngine.Camera;
       depth: number;
       finalEventMask: number;
@@ -15035,7 +14956,86 @@ export namespace UnityEngine {
       Equals(other: System.Object): boolean;
       GetType(): System.Type;
     }
-    export declare class UIBehaviour {
+    export class PhysicsRaycaster {
+      eventCamera: UnityEngine.Camera;
+      depth: number;
+      finalEventMask: number;
+      eventMask: UnityEngine.LayerMask;
+      maxRayIntersections: number;
+      priority: number;
+      sortOrderPriority: number;
+      renderOrderPriority: number;
+      rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      Raycast(eventData: UnityEngine.EventSystems.PointerEventData, resultAppendList: UnityEngine.EventSystems.RaycastResult[]): void;
+      ToString(): string;
+      IsActive(): boolean;
+      IsDestroyed(): boolean;
+      IsInvoking(): boolean;
+      CancelInvoke(): void;
+      Invoke(methodName: string, time: number): void;
+      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+      CancelInvoke(methodName: string): void;
+      IsInvoking(methodName: string): boolean;
+      StartCoroutine(methodName: string): UnityEngine.Coroutine;
+      StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
+      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StopCoroutine(routine: System.Collections.IEnumerator): void;
+      StopCoroutine(routine: UnityEngine.Coroutine): void;
+      StopCoroutine(methodName: string): void;
+      StopAllCoroutines(): void;
+      GetComponent(type: System.Type): UnityEngine.Component;
+      GetComponent(type: string): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type): UnityEngine.Component;
+      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type): UnityEngine.Component;
+      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      CompareTag(tag: string): boolean;
+      SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+      SendMessageUpwards(methodName: string, value: System.Object): void;
+      SendMessageUpwards(methodName: string): void;
+      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, value: System.Object): void;
+      SendMessage(methodName: string): void;
+      SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: System.Object): void;
+      BroadcastMessage(methodName: string): void;
+      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: System.Object): boolean;
+      GetType(): System.Type;
+    }
+    export class UIBehaviour {
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -15115,7 +15115,7 @@ export namespace UnityEngine {
       PressedAndReleased = 2,
       NotChanged = 3,
     }
-    export declare class EventTrigger_TriggerEvent {
+    export class EventTrigger_TriggerEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.EventSystems.BaseEventData>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.EventSystems.BaseEventData>): void;
@@ -15130,7 +15130,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class EventTrigger_Entry {
+    export class EventTrigger_Entry {
       constructor();
       eventID: UnityEngine.EventSystems.EventTriggerType;
       callback: UnityEngine.EventSystems.EventTrigger_TriggerEvent;
@@ -15139,7 +15139,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventFunction<T1 = any> {
+    export class EventFunction<T1 = any> {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -15155,7 +15155,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerInputModule_MouseButtonEventData {
+    export class PointerInputModule_MouseButtonEventData {
       constructor();
       buttonState: UnityEngine.EventSystems.PointerEventData_FramePressState;
       buttonData: UnityEngine.EventSystems.PointerEventData;
@@ -15173,7 +15173,7 @@ export namespace UnityEngine {
   }
   export namespace Experimental {
     export namespace AI {
-      export declare class PolygonId {
+      export class PolygonId {
         IsNull(): boolean;
         GetHashCode(): number;
         Equals(rhs: UnityEngine.Experimental.AI.PolygonId): boolean;
@@ -15181,7 +15181,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class NavMeshLocation {
+      export class NavMeshLocation {
         polygon: UnityEngine.Experimental.AI.PolygonId;
         position: UnityEngine.Vector3;
         Equals(obj: System.Object): boolean;
@@ -15206,7 +15206,7 @@ export namespace UnityEngine {
         Ground = 0,
         OffMeshConnection = 1,
       }
-      export declare class NavMeshWorld {
+      export class NavMeshWorld {
         IsValid(): boolean;
         static GetDefaultWorld(): UnityEngine.Experimental.AI.NavMeshWorld;
         AddDependency(job: Unity.Jobs.JobHandle): void;
@@ -15215,7 +15215,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class NavMeshQuery {
+      export class NavMeshQuery {
         constructor(world: UnityEngine.Experimental.AI.NavMeshWorld, allocator: Unity.Collections.Allocator, pathNodePoolSize?: number);
         Dispose(): void;
         BeginFindPath(start: UnityEngine.Experimental.AI.NavMeshLocation, end: UnityEngine.Experimental.AI.NavMeshLocation, areaMask?: number, costs?: Unity.Collections.NativeArray<number>): UnityEngine.Experimental.AI.PathQueryStatus;
@@ -15242,7 +15242,7 @@ export namespace UnityEngine {
         DefaultValues = 0,
         PreviousInputs = 1,
       }
-      export declare class AnimationPlayableOutputExtensions {
+      export class AnimationPlayableOutputExtensions {
         static GetAnimationStreamSource(output: UnityEngine.Animations.AnimationPlayableOutput): UnityEngine.Experimental.Animations.AnimationStreamSource;
         static SetAnimationStreamSource(output: UnityEngine.Animations.AnimationPlayableOutput, streamSource: UnityEngine.Experimental.Animations.AnimationStreamSource): void;
         static GetSortingOrder(output: UnityEngine.Animations.AnimationPlayableOutput): System.UInt16;
@@ -15254,7 +15254,7 @@ export namespace UnityEngine {
       }
     }
     export namespace AssetBundlePatching {
-      export declare class AssetBundleUtility {
+      export class AssetBundleUtility {
         static PatchAssetBundles(bundles: UnityEngine.AssetBundle[], filenames: string[]): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -15263,7 +15263,7 @@ export namespace UnityEngine {
       }
     }
     export namespace Audio {
-      export declare class AudioSampleProvider {
+      export class AudioSampleProvider {
         id: System.UInt32;
         trackIndex: System.UInt16;
         owner: UnityEngine.Object;
@@ -15288,7 +15288,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AudioSampleProvider_ConsumeSampleFramesNativeFunction {
+      export class AudioSampleProvider_ConsumeSampleFramesNativeFunction {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -15304,7 +15304,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AudioSampleProvider_SampleFramesHandler {
+      export class AudioSampleProvider_SampleFramesHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -15320,7 +15320,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AudioSampleProvider_SampleFramesEventNativeFunction {
+      export class AudioSampleProvider_SampleFramesEventNativeFunction {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -15364,7 +15364,7 @@ export namespace UnityEngine {
         LUT = 0,
         AnalyticAndInnerAngle = 1,
       }
-      export declare class LinearColor {
+      export class LinearColor {
         red: number;
         green: number;
         blue: number;
@@ -15376,7 +15376,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class DirectionalLight {
+      export class DirectionalLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -15391,7 +15391,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class PointLight {
+      export class PointLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -15406,7 +15406,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class SpotLight {
+      export class SpotLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -15425,7 +15425,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class RectangleLight {
+      export class RectangleLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -15442,7 +15442,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class DiscLight {
+      export class DiscLight {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -15458,7 +15458,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class SpotLightBoxShape {
+      export class SpotLightBoxShape {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -15474,7 +15474,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class SpotLightPyramidShape {
+      export class SpotLightPyramidShape {
         instanceID: number;
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
@@ -15491,7 +15491,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class Cookie {
+      export class Cookie {
         instanceID: number;
         scale: number;
         sizes: UnityEngine.Vector2;
@@ -15501,7 +15501,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class LightDataGI {
+      export class LightDataGI {
         instanceID: number;
         cookieID: number;
         cookieScale: number;
@@ -15524,7 +15524,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class LightmapperUtils {
+      export class LightmapperUtils {
         static Extract(baketype: UnityEngine.LightmapBakeType): UnityEngine.Experimental.GlobalIllumination.LightMode;
         static ExtractIndirect(l: UnityEngine.Light): UnityEngine.Experimental.GlobalIllumination.LinearColor;
         static ExtractInnerCone(l: UnityEngine.Light): number;
@@ -15533,7 +15533,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Lightmapping {
+      export class Lightmapping {
         static SetDelegate(del: UnityEngine.Experimental.GlobalIllumination.Lightmapping_RequestLightsDelegate): void;
         static GetDelegate(): UnityEngine.Experimental.GlobalIllumination.Lightmapping_RequestLightsDelegate;
         static ResetDelegate(): void;
@@ -15542,7 +15542,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Lightmapping_RequestLightsDelegate {
+      export class Lightmapping_RequestLightsDelegate {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -15558,7 +15558,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RenderSettings {
+      export class RenderSettings {
         constructor();
         static useRadianceAmbientProbe: boolean;
         Equals(obj: System.Object): boolean;
@@ -15568,7 +15568,7 @@ export namespace UnityEngine {
       }
     }
     export namespace Playables {
-      export declare class CameraPlayable {
+      export class CameraPlayable {
         static Create(graph: UnityEngine.Playables.PlayableGraph, camera: UnityEngine.Camera): UnityEngine.Experimental.Playables.CameraPlayable;
         GetHandle(): UnityEngine.Playables.PlayableHandle;
         Equals(other: UnityEngine.Experimental.Playables.CameraPlayable): boolean;
@@ -15579,7 +15579,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class MaterialEffectPlayable {
+      export class MaterialEffectPlayable {
         static Create(graph: UnityEngine.Playables.PlayableGraph, material: UnityEngine.Material, pass?: number): UnityEngine.Experimental.Playables.MaterialEffectPlayable;
         GetHandle(): UnityEngine.Playables.PlayableHandle;
         Equals(other: UnityEngine.Experimental.Playables.MaterialEffectPlayable): boolean;
@@ -15592,7 +15592,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class TextureMixerPlayable {
+      export class TextureMixerPlayable {
         static Create(graph: UnityEngine.Playables.PlayableGraph): UnityEngine.Experimental.Playables.TextureMixerPlayable;
         GetHandle(): UnityEngine.Playables.PlayableHandle;
         Equals(other: UnityEngine.Experimental.Playables.TextureMixerPlayable): boolean;
@@ -15601,14 +15601,14 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class TexturePlayableBinding {
+      export class TexturePlayableBinding {
         static Create(name: string, key: UnityEngine.Object): UnityEngine.Playables.PlayableBinding;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TexturePlayableOutput {
+      export class TexturePlayableOutput {
         static Null: UnityEngine.Experimental.Playables.TexturePlayableOutput;
         static Create(graph: UnityEngine.Playables.PlayableGraph, name: string, target: UnityEngine.RenderTexture): UnityEngine.Experimental.Playables.TexturePlayableOutput;
         GetHandle(): UnityEngine.Playables.PlayableOutputHandle;
@@ -15624,21 +15624,21 @@ export namespace UnityEngine {
       export interface IScriptableRuntimeReflectionSystem {
         TickRealtimeProbes(): boolean;
       }
-      export declare class ScriptableRuntimeReflectionSystem {
+      export class ScriptableRuntimeReflectionSystem {
         TickRealtimeProbes(): boolean;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ScriptableRuntimeReflectionSystemSettings {
+      export class ScriptableRuntimeReflectionSystemSettings {
         static system: UnityEngine.Experimental.Rendering.IScriptableRuntimeReflectionSystem;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ExternalGPUProfiler {
+      export class ExternalGPUProfiler {
         static BeginGPUCapture(): void;
         static EndGPUCapture(): void;
         static IsAttached(): boolean;
@@ -15657,7 +15657,7 @@ export namespace UnityEngine {
         AfterScriptLateUpdate = 2,
         WaitForPresent = 3,
       }
-      export declare class GraphicsDeviceSettings {
+      export class GraphicsDeviceSettings {
         static waitForPresentSyncPoint: UnityEngine.Experimental.Rendering.WaitForPresentSyncPoint;
         static graphicsJobsSyncPoint: UnityEngine.Experimental.Rendering.GraphicsJobsSyncPoint;
         Equals(obj: System.Object): boolean;
@@ -15835,7 +15835,7 @@ export namespace UnityEngine {
         DynamicTransform = 2,
         DynamicGeometry = 3,
       }
-      export declare class GraphicsFormatUtility {
+      export class GraphicsFormatUtility {
         constructor();
         static GetGraphicsFormat(format: UnityEngine.TextureFormat, isSRGB: boolean): UnityEngine.Experimental.Rendering.GraphicsFormat;
         static GetTextureFormat(format: UnityEngine.Experimental.Rendering.GraphicsFormat): UnityEngine.TextureFormat;
@@ -15894,7 +15894,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RayTracingAccelerationStructure {
+      export class RayTracingAccelerationStructure {
         constructor(settings: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_RASSettings);
         constructor();
         Dispose(): void;
@@ -15924,7 +15924,7 @@ export namespace UnityEngine {
         Manual = 0,
         Automatic = 1,
       }
-      export declare class RayTracingAccelerationStructure_RASSettings {
+      export class RayTracingAccelerationStructure_RASSettings {
         constructor(sceneManagementMode: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_ManagementMode, rayTracingModeMask: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_RayTracingModeMask, layerMask: number);
         managementMode: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_ManagementMode;
         rayTracingModeMask: UnityEngine.Experimental.Rendering.RayTracingAccelerationStructure_RayTracingModeMask;
@@ -15934,14 +15934,14 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ShaderWarmupSetup {
+      export class ShaderWarmupSetup {
         vdecl: UnityEngine.Rendering.VertexAttributeDescriptor[];
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ShaderWarmup {
+      export class ShaderWarmup {
         static WarmupShader(shader: UnityEngine.Shader, setup: UnityEngine.Experimental.Rendering.ShaderWarmupSetup): void;
         static WarmupShaderFromCollection(collection: UnityEngine.ShaderVariantCollection, shader: UnityEngine.Shader, setup: UnityEngine.Experimental.Rendering.ShaderWarmupSetup): void;
         Equals(obj: System.Object): boolean;
@@ -15949,7 +15949,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RayTracingShader {
+      export class RayTracingShader {
         maxRecursionDepth: number;
         name: string;
         hideFlags: UnityEngine.HideFlags;
@@ -15995,7 +15995,7 @@ export namespace UnityEngine {
       }
     }
     export namespace Video {
-      export declare class VideoClipPlayable {
+      export class VideoClipPlayable {
         static Create(graph: UnityEngine.Playables.PlayableGraph, clip: UnityEngine.Video.VideoClip, looping: boolean): UnityEngine.Experimental.Video.VideoClipPlayable;
         GetHandle(): UnityEngine.Playables.PlayableHandle;
         Equals(other: UnityEngine.Experimental.Video.VideoClipPlayable): boolean;
@@ -16013,7 +16013,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class VideoPlayerExtensions {
+      export class VideoPlayerExtensions {
         static GetAudioSampleProvider(vp: UnityEngine.Video.VideoPlayer, trackIndex: System.UInt16): UnityEngine.Experimental.Audio.AudioSampleProvider;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -16023,7 +16023,7 @@ export namespace UnityEngine {
     }
   }
   export namespace iOS {
-    export declare class ADBannerView {
+    export class ADBannerView {
       constructor(type: UnityEngine.iOS.ADBannerView_Type, layout: UnityEngine.iOS.ADBannerView_Layout);
       loaded: boolean;
       visible: boolean;
@@ -16054,7 +16054,7 @@ export namespace UnityEngine {
       Banner = 0,
       MediumRect = 1,
     }
-    export declare class ADBannerView_BannerWasClickedDelegate {
+    export class ADBannerView_BannerWasClickedDelegate {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -16070,7 +16070,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ADBannerView_BannerWasLoadedDelegate {
+    export class ADBannerView_BannerWasLoadedDelegate {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -16086,7 +16086,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ADBannerView_BannerFailedToLoadDelegate {
+    export class ADBannerView_BannerFailedToLoadDelegate {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -16102,7 +16102,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ADInterstitialAd {
+    export class ADInterstitialAd {
       constructor(autoReload: boolean);
       constructor();
       static isAvailable: boolean;
@@ -16114,7 +16114,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ADInterstitialAd_InterstitialWasLoadedDelegate {
+    export class ADInterstitialAd_InterstitialWasLoadedDelegate {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -16130,7 +16130,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ADInterstitialAd_InterstitialWasViewedDelegate {
+    export class ADInterstitialAd_InterstitialWasViewedDelegate {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -16213,7 +16213,7 @@ export namespace UnityEngine {
       White = 1,
       Gray = 2,
     }
-    export declare class Device {
+    export class Device {
       constructor();
       static systemVersion: string;
       static generation: UnityEngine.iOS.DeviceGeneration;
@@ -16264,7 +16264,7 @@ export namespace UnityEngine {
       Sound = 2,
       Alert = 4,
     }
-    export declare class LocalNotification {
+    export class LocalNotification {
       constructor();
       timeZone: string;
       repeatCalendar: UnityEngine.iOS.CalendarIdentifier;
@@ -16284,7 +16284,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RemoteNotification {
+    export class RemoteNotification {
       alertBody: string;
       alertTitle: string;
       soundName: string;
@@ -16296,7 +16296,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NotificationServices {
+    export class NotificationServices {
       constructor();
       static localNotificationCount: number;
       static remoteNotificationCount: number;
@@ -16330,7 +16330,7 @@ export namespace UnityEngine {
       RightEdge = 8,
       All = 15,
     }
-    export declare class OnDemandResourcesRequest {
+    export class OnDemandResourcesRequest {
       error: string;
       loadingPriority: number;
       isDone: boolean;
@@ -16344,7 +16344,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class OnDemandResources {
+    export class OnDemandResources {
       static enabled: boolean;
       static PreloadAsync(tags: string[]): UnityEngine.iOS.OnDemandResourcesRequest;
       Equals(obj: System.Object): boolean;
@@ -16357,13 +16357,13 @@ export namespace UnityEngine {
     export interface IJobParallelForTransform {
       Execute(index: number, transform: UnityEngine.Jobs.TransformAccess): void;
     }
-    export declare class IJobParallelForTransformExtensions {
+    export class IJobParallelForTransformExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TransformAccess {
+    export class TransformAccess {
       position: UnityEngine.Vector3;
       rotation: UnityEngine.Quaternion;
       localPosition: UnityEngine.Vector3;
@@ -16377,7 +16377,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TransformAccessArray {
+    export class TransformAccessArray {
       constructor(transforms: UnityEngine.Transform[], desiredJobCount?: number);
       constructor(capacity: number, desiredJobCount?: number);
       isCreated: boolean;
@@ -16394,7 +16394,7 @@ export namespace UnityEngine {
     }
   }
   export namespace LowLevel {
-    export declare class PlayerLoopSystem {
+    export class PlayerLoopSystem {
       type: System.Type;
       subSystemList: UnityEngine.LowLevel.PlayerLoopSystem[];
       updateDelegate: UnityEngine.LowLevel.PlayerLoopSystem_UpdateFunction;
@@ -16405,7 +16405,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class PlayerLoopSystem_UpdateFunction {
+    export class PlayerLoopSystem_UpdateFunction {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -16421,7 +16421,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PlayerLoop {
+    export class PlayerLoop {
       constructor();
       static GetDefaultPlayerLoop(): UnityEngine.LowLevel.PlayerLoopSystem;
       static GetCurrentPlayerLoop(): UnityEngine.LowLevel.PlayerLoopSystem;
@@ -16443,7 +16443,7 @@ export namespace UnityEngine {
         connectedToTarget: UnityEngine.Networking.PlayerConnection.ConnectionTarget;
         connectionName: string;
       }
-      export declare class MessageEventArgs {
+      export class MessageEventArgs {
         constructor();
         playerId: number;
         data: System.Byte[];
@@ -16463,7 +16463,7 @@ export namespace UnityEngine {
         Send(messageId: System.Guid, data: System.Byte[]): void;
         TrySend(messageId: System.Guid, data: System.Byte[]): boolean;
       }
-      export declare class PlayerConnection {
+      export class PlayerConnection {
         constructor();
         static instance: UnityEngine.Networking.PlayerConnection.PlayerConnection;
         isConnected: boolean;
@@ -16490,7 +16490,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Playables {
-    export declare class FrameData {
+    export class FrameData {
       frameId: System.UInt64;
       deltaTime: number;
       weight: number;
@@ -16535,7 +16535,7 @@ export namespace UnityEngine {
     export interface IPlayableOutput {
       GetHandle(): UnityEngine.Playables.PlayableOutputHandle;
     }
-    export declare class Notification {
+    export class Notification {
       constructor(name: string);
       id: UnityEngine.PropertyName;
       Equals(obj: System.Object): boolean;
@@ -16548,7 +16548,7 @@ export namespace UnityEngine {
       Loop = 1,
       None = 2,
     }
-    export declare class Playable {
+    export class Playable {
       static Null: UnityEngine.Playables.Playable;
       static Create(graph: UnityEngine.Playables.PlayableGraph, inputCount?: number): UnityEngine.Playables.Playable;
       GetHandle(): UnityEngine.Playables.PlayableHandle;
@@ -16564,7 +16564,7 @@ export namespace UnityEngine {
       outputs: System.Collections.Generic.IEnumerable<UnityEngine.Playables.PlayableBinding>;
       CreatePlayable(graph: UnityEngine.Playables.PlayableGraph, owner: UnityEngine.GameObject): UnityEngine.Playables.Playable;
     }
-    export declare class PlayableAsset {
+    export class PlayableAsset {
       duration: number;
       outputs: System.Collections.Generic.IEnumerable<UnityEngine.Playables.PlayableBinding>;
       name: string;
@@ -16577,7 +16577,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PlayableBehaviour {
+    export class PlayableBehaviour {
       constructor();
       OnGraphStart(playable: UnityEngine.Playables.Playable): void;
       OnGraphStop(playable: UnityEngine.Playables.Playable): void;
@@ -16601,7 +16601,7 @@ export namespace UnityEngine {
       Texture = 2,
       None = 3,
     }
-    export declare class PlayableBinding {
+    export class PlayableBinding {
       streamName: string;
       sourceObject: UnityEngine.Object;
       outputTargetType: System.Type;
@@ -16618,7 +16618,7 @@ export namespace UnityEngine {
       Mix = 0,
       Passthrough = 1,
     }
-    export declare class PlayableExtensions {
+    export class PlayableExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -16630,7 +16630,7 @@ export namespace UnityEngine {
       UnscaledGameTime = 2,
       Manual = 3,
     }
-    export declare class PlayableGraph {
+    export class PlayableGraph {
       GetRootPlayable(index: number): UnityEngine.Playables.Playable;
       GetOutput(index: number): UnityEngine.Playables.PlayableOutput;
       Evaluate(): void;
@@ -16661,7 +16661,7 @@ export namespace UnityEngine {
       Playing = 1,
       Delayed = 2,
     }
-    export declare class PlayableHandle {
+    export class PlayableHandle {
       static Null: UnityEngine.Playables.PlayableHandle;
       Equals(p: System.Object): boolean;
       Equals(other: UnityEngine.Playables.PlayableHandle): boolean;
@@ -16669,7 +16669,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PlayableOutput {
+    export class PlayableOutput {
       static Null: UnityEngine.Playables.PlayableOutput;
       GetHandle(): UnityEngine.Playables.PlayableOutputHandle;
       GetPlayableOutputType(): System.Type;
@@ -16679,13 +16679,13 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PlayableOutputExtensions {
+    export class PlayableOutputExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PlayableOutputHandle {
+    export class PlayableOutputHandle {
       static Null: UnityEngine.Playables.PlayableOutputHandle;
       GetHashCode(): number;
       Equals(p: System.Object): boolean;
@@ -16693,7 +16693,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScriptPlayable<T = any> {
+    export class ScriptPlayable<T = any> {
       static Null: any; // UnityEngine.Playables.ScriptPlayable`1[T]
       static Create(graph: UnityEngine.Playables.PlayableGraph, inputCount?: number): any;
       static Create(graph: UnityEngine.Playables.PlayableGraph, template: any, inputCount?: number): any;
@@ -16705,14 +16705,14 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScriptPlayableBinding {
+    export class ScriptPlayableBinding {
       static Create(name: string, key: UnityEngine.Object, type: System.Type): UnityEngine.Playables.PlayableBinding;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ScriptPlayableOutput {
+    export class ScriptPlayableOutput {
       static Null: UnityEngine.Playables.ScriptPlayableOutput;
       static Create(graph: UnityEngine.Playables.PlayableGraph, name: string): UnityEngine.Playables.ScriptPlayableOutput;
       GetHandle(): UnityEngine.Playables.PlayableOutputHandle;
@@ -16721,7 +16721,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AnimationPlayableUtilities {
+    export class AnimationPlayableUtilities {
       static Play(animator: UnityEngine.Animator, playable: UnityEngine.Playables.Playable, graph: UnityEngine.Playables.PlayableGraph): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -16730,775 +16730,775 @@ export namespace UnityEngine {
     }
   }
   export namespace PlayerLoop {
-    export declare class TimeUpdate {
+    export class TimeUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class TimeUpdate_WaitForLastPresentationAndUpdateTime {
+    export class TimeUpdate_WaitForLastPresentationAndUpdateTime {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Initialization {
+    export class Initialization {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Initialization_PlayerUpdateTime {
+    export class Initialization_PlayerUpdateTime {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Initialization_UpdateCameraMotionVectors {
+    export class Initialization_UpdateCameraMotionVectors {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Initialization_DirectorSampleTime {
+    export class Initialization_DirectorSampleTime {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Initialization_AsyncUploadTimeSlicedUpdate {
+    export class Initialization_AsyncUploadTimeSlicedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Initialization_SynchronizeState {
+    export class Initialization_SynchronizeState {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Initialization_SynchronizeInputs {
+    export class Initialization_SynchronizeInputs {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Initialization_XREarlyUpdate {
+    export class Initialization_XREarlyUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate {
+    export class EarlyUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_PollPlayerConnection {
+    export class EarlyUpdate_PollPlayerConnection {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ProfilerStartFrame {
+    export class EarlyUpdate_ProfilerStartFrame {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_PollHtcsPlayerConnection {
+    export class EarlyUpdate_PollHtcsPlayerConnection {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_GpuTimestamp {
+    export class EarlyUpdate_GpuTimestamp {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_AnalyticsCoreStatsUpdate {
+    export class EarlyUpdate_AnalyticsCoreStatsUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UnityWebRequestUpdate {
+    export class EarlyUpdate_UnityWebRequestUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UpdateStreamingManager {
+    export class EarlyUpdate_UpdateStreamingManager {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ExecuteMainThreadJobs {
+    export class EarlyUpdate_ExecuteMainThreadJobs {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ProcessMouseInWindow {
+    export class EarlyUpdate_ProcessMouseInWindow {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ClearIntermediateRenderers {
+    export class EarlyUpdate_ClearIntermediateRenderers {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ClearLines {
+    export class EarlyUpdate_ClearLines {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_PresentBeforeUpdate {
+    export class EarlyUpdate_PresentBeforeUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ResetFrameStatsAfterPresent {
+    export class EarlyUpdate_ResetFrameStatsAfterPresent {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UpdateAsyncReadbackManager {
+    export class EarlyUpdate_UpdateAsyncReadbackManager {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UpdateTextureStreamingManager {
+    export class EarlyUpdate_UpdateTextureStreamingManager {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UpdatePreloading {
+    export class EarlyUpdate_UpdatePreloading {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_RendererNotifyInvisible {
+    export class EarlyUpdate_RendererNotifyInvisible {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_PlayerCleanupCachedData {
+    export class EarlyUpdate_PlayerCleanupCachedData {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UpdateMainGameViewRect {
+    export class EarlyUpdate_UpdateMainGameViewRect {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UpdateCanvasRectTransform {
+    export class EarlyUpdate_UpdateCanvasRectTransform {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UpdateInputManager {
+    export class EarlyUpdate_UpdateInputManager {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ProcessRemoteInput {
+    export class EarlyUpdate_ProcessRemoteInput {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_XRUpdate {
+    export class EarlyUpdate_XRUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ScriptRunDelayedStartupFrame {
+    export class EarlyUpdate_ScriptRunDelayedStartupFrame {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_UpdateKinect {
+    export class EarlyUpdate_UpdateKinect {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_DeliverIosPlatformEvents {
+    export class EarlyUpdate_DeliverIosPlatformEvents {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_DispatchEventQueueEvents {
+    export class EarlyUpdate_DispatchEventQueueEvents {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_PhysicsResetInterpolatedTransformPosition {
+    export class EarlyUpdate_PhysicsResetInterpolatedTransformPosition {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_SpriteAtlasManagerUpdate {
+    export class EarlyUpdate_SpriteAtlasManagerUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_TangoUpdate {
+    export class EarlyUpdate_TangoUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_ARCoreUpdate {
+    export class EarlyUpdate_ARCoreUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EarlyUpdate_PerformanceAnalyticsUpdate {
+    export class EarlyUpdate_PerformanceAnalyticsUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate {
+    export class FixedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_ClearLines {
+    export class FixedUpdate_ClearLines {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_DirectorFixedSampleTime {
+    export class FixedUpdate_DirectorFixedSampleTime {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_AudioFixedUpdate {
+    export class FixedUpdate_AudioFixedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_ScriptRunBehaviourFixedUpdate {
+    export class FixedUpdate_ScriptRunBehaviourFixedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_DirectorFixedUpdate {
+    export class FixedUpdate_DirectorFixedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_LegacyFixedAnimationUpdate {
+    export class FixedUpdate_LegacyFixedAnimationUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_XRFixedUpdate {
+    export class FixedUpdate_XRFixedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_PhysicsFixedUpdate {
+    export class FixedUpdate_PhysicsFixedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_Physics2DFixedUpdate {
+    export class FixedUpdate_Physics2DFixedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_DirectorFixedUpdatePostPhysics {
+    export class FixedUpdate_DirectorFixedUpdatePostPhysics {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_ScriptRunDelayedFixedFrameRate {
+    export class FixedUpdate_ScriptRunDelayedFixedFrameRate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FixedUpdate_NewInputFixedUpdate {
+    export class FixedUpdate_NewInputFixedUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate {
+    export class PreUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_PhysicsUpdate {
+    export class PreUpdate_PhysicsUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_Physics2DUpdate {
+    export class PreUpdate_Physics2DUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_CheckTexFieldInput {
+    export class PreUpdate_CheckTexFieldInput {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_IMGUISendQueuedEvents {
+    export class PreUpdate_IMGUISendQueuedEvents {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_SendMouseEvents {
+    export class PreUpdate_SendMouseEvents {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_AIUpdate {
+    export class PreUpdate_AIUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_WindUpdate {
+    export class PreUpdate_WindUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_UpdateVideo {
+    export class PreUpdate_UpdateVideo {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreUpdate_NewInputUpdate {
+    export class PreUpdate_NewInputUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Update {
+    export class Update {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Update_ScriptRunBehaviourUpdate {
+    export class Update_ScriptRunBehaviourUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Update_DirectorUpdate {
+    export class Update_DirectorUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Update_ScriptRunDelayedDynamicFrameRate {
+    export class Update_ScriptRunDelayedDynamicFrameRate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Update_ScriptRunDelayedTasks {
+    export class Update_ScriptRunDelayedTasks {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate {
+    export class PreLateUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_AIUpdatePostScript {
+    export class PreLateUpdate_AIUpdatePostScript {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_DirectorUpdateAnimationBegin {
+    export class PreLateUpdate_DirectorUpdateAnimationBegin {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_LegacyAnimationUpdate {
+    export class PreLateUpdate_LegacyAnimationUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_DirectorUpdateAnimationEnd {
+    export class PreLateUpdate_DirectorUpdateAnimationEnd {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_DirectorDeferredEvaluate {
+    export class PreLateUpdate_DirectorDeferredEvaluate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_UIElementsUpdatePanels {
+    export class PreLateUpdate_UIElementsUpdatePanels {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_UpdateNetworkManager {
+    export class PreLateUpdate_UpdateNetworkManager {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_UpdateMasterServerInterface {
+    export class PreLateUpdate_UpdateMasterServerInterface {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_UNetUpdate {
+    export class PreLateUpdate_UNetUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_EndGraphicsJobsAfterScriptUpdate {
+    export class PreLateUpdate_EndGraphicsJobsAfterScriptUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_ParticleSystemBeginUpdateAll {
+    export class PreLateUpdate_ParticleSystemBeginUpdateAll {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_ScriptRunBehaviourLateUpdate {
+    export class PreLateUpdate_ScriptRunBehaviourLateUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PreLateUpdate_ConstraintManagerUpdate {
+    export class PreLateUpdate_ConstraintManagerUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate {
+    export class PostLateUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_PlayerSendFrameStarted {
+    export class PostLateUpdate_PlayerSendFrameStarted {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateRectTransform {
+    export class PostLateUpdate_UpdateRectTransform {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateCanvasRectTransform {
+    export class PostLateUpdate_UpdateCanvasRectTransform {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_PlayerUpdateCanvases {
+    export class PostLateUpdate_PlayerUpdateCanvases {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateAudio {
+    export class PostLateUpdate_UpdateAudio {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateVideo {
+    export class PostLateUpdate_UpdateVideo {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_DirectorLateUpdate {
+    export class PostLateUpdate_DirectorLateUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ScriptRunDelayedDynamicFrameRate {
+    export class PostLateUpdate_ScriptRunDelayedDynamicFrameRate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_VFXUpdate {
+    export class PostLateUpdate_VFXUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ParticleSystemEndUpdateAll {
+    export class PostLateUpdate_ParticleSystemEndUpdateAll {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_EndGraphicsJobsAfterScriptLateUpdate {
+    export class PostLateUpdate_EndGraphicsJobsAfterScriptLateUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateSubstance {
+    export class PostLateUpdate_UpdateSubstance {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateCustomRenderTextures {
+    export class PostLateUpdate_UpdateCustomRenderTextures {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateAllRenderers {
+    export class PostLateUpdate_UpdateAllRenderers {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateLightProbeProxyVolumes {
+    export class PostLateUpdate_UpdateLightProbeProxyVolumes {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_EnlightenRuntimeUpdate {
+    export class PostLateUpdate_EnlightenRuntimeUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateAllSkinnedMeshes {
+    export class PostLateUpdate_UpdateAllSkinnedMeshes {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ProcessWebSendMessages {
+    export class PostLateUpdate_ProcessWebSendMessages {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_SortingGroupsUpdate {
+    export class PostLateUpdate_SortingGroupsUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateVideoTextures {
+    export class PostLateUpdate_UpdateVideoTextures {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_DirectorRenderImage {
+    export class PostLateUpdate_DirectorRenderImage {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_PlayerEmitCanvasGeometry {
+    export class PostLateUpdate_PlayerEmitCanvasGeometry {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_FinishFrameRendering {
+    export class PostLateUpdate_FinishFrameRendering {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_BatchModeUpdate {
+    export class PostLateUpdate_BatchModeUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_PlayerSendFrameComplete {
+    export class PostLateUpdate_PlayerSendFrameComplete {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateCaptureScreenshot {
+    export class PostLateUpdate_UpdateCaptureScreenshot {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_PresentAfterDraw {
+    export class PostLateUpdate_PresentAfterDraw {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ClearImmediateRenderers {
+    export class PostLateUpdate_ClearImmediateRenderers {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_XRPostPresent {
+    export class PostLateUpdate_XRPostPresent {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_UpdateResolution {
+    export class PostLateUpdate_UpdateResolution {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_InputEndFrame {
+    export class PostLateUpdate_InputEndFrame {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_GUIClearEvents {
+    export class PostLateUpdate_GUIClearEvents {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ShaderHandleErrors {
+    export class PostLateUpdate_ShaderHandleErrors {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ResetInputAxis {
+    export class PostLateUpdate_ResetInputAxis {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ThreadedLoadingDebug {
+    export class PostLateUpdate_ThreadedLoadingDebug {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ProfilerSynchronizeStats {
+    export class PostLateUpdate_ProfilerSynchronizeStats {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_MemoryFrameMaintenance {
+    export class PostLateUpdate_MemoryFrameMaintenance {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ExecuteGameCenterCallbacks {
+    export class PostLateUpdate_ExecuteGameCenterCallbacks {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_ProfilerEndFrame {
+    export class PostLateUpdate_ProfilerEndFrame {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_PlayerSendFramePostPresent {
+    export class PostLateUpdate_PlayerSendFramePostPresent {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_PhysicsSkinnedClothBeginUpdate {
+    export class PostLateUpdate_PhysicsSkinnedClothBeginUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_PhysicsSkinnedClothFinishUpdate {
+    export class PostLateUpdate_PhysicsSkinnedClothFinishUpdate {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PostLateUpdate_TriggerEndOfFrameCallbacks {
+    export class PostLateUpdate_TriggerEndOfFrameCallbacks {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
@@ -17522,7 +17522,7 @@ export namespace UnityEngine {
       GlobalIllumination = 12,
       VirtualTexturing = 13,
     }
-    export declare class Profiler {
+    export class Profiler {
       static supported: boolean;
       static logFile: string;
       static enableBinaryLog: boolean;
@@ -17563,7 +17563,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Recorder {
+    export class Recorder {
       isValid: boolean;
       enabled: boolean;
       elapsedNanoseconds: System.Int64;
@@ -17578,7 +17578,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Sampler {
+    export class Sampler {
       isValid: boolean;
       name: string;
       GetRecorder(): UnityEngine.Profiling.Recorder;
@@ -17589,7 +17589,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CustomSampler {
+    export class CustomSampler {
       isValid: boolean;
       name: string;
       static Create(name: string, collectGpuData?: boolean): UnityEngine.Profiling.CustomSampler;
@@ -17603,7 +17603,7 @@ export namespace UnityEngine {
       ToString(): string;
     }
     export namespace Experimental {
-      export declare class DebugScreenCapture {
+      export class DebugScreenCapture {
         rawImageDataReference: Unity.Collections.NativeArray<System.Byte>;
         imageFormat: UnityEngine.TextureFormat;
         width: number;
@@ -17623,7 +17623,7 @@ export namespace UnityEngine {
           NativeAllocationSites = 8,
           NativeStackTraces = 16,
         }
-        export declare class MetaData {
+        export class MetaData {
           constructor();
           content: string;
           platform: string;
@@ -17632,7 +17632,7 @@ export namespace UnityEngine {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class MemoryProfiler {
+        export class MemoryProfiler {
           constructor();
           static TakeSnapshot(path: string, finishCallback: any, captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags): void;
           static TakeSnapshot(path: string, finishCallback: any, screenshotCallback: any, captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags): void;
@@ -17646,7 +17646,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Rendering {
-    export declare class AsyncGPUReadbackRequest {
+    export class AsyncGPUReadbackRequest {
       done: boolean;
       hasError: boolean;
       layerCount: number;
@@ -17661,7 +17661,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AsyncGPUReadback {
+    export class AsyncGPUReadback {
       static WaitAllRequests(): void;
       static Request(src: UnityEngine.ComputeBuffer, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
       static Request(src: UnityEngine.ComputeBuffer, size: number, offset: number, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
@@ -17682,14 +17682,14 @@ export namespace UnityEngine {
       VertexProcessing = 0,
       PixelProcessing = 1,
     }
-    export declare class GPUFence {
+    export class GPUFence {
       passed: boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PIX {
+    export class PIX {
       constructor();
       static BeginGPUCapture(): void;
       static EndGPUCapture(): void;
@@ -18004,7 +18004,7 @@ export namespace UnityEngine {
       Tier2 = 1,
       Tier3 = 2,
     }
-    export declare class SubMeshDescriptor {
+    export class SubMeshDescriptor {
       constructor(indexStart: number, indexCount: number, topology?: UnityEngine.MeshTopology);
       bounds: UnityEngine.Bounds;
       topology: UnityEngine.MeshTopology;
@@ -18018,7 +18018,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class VertexAttributeDescriptor {
+    export class VertexAttributeDescriptor {
       constructor(attribute?: UnityEngine.Rendering.VertexAttribute, format?: UnityEngine.Rendering.VertexAttributeFormat, dimension?: number, stream?: number);
       attribute: UnityEngine.Rendering.VertexAttribute;
       format: UnityEngine.Rendering.VertexAttributeFormat;
@@ -18038,7 +18038,7 @@ export namespace UnityEngine {
       FormatSwizzle0 = 4,
       FormatSwizzle1 = 5,
     }
-    export declare class RenderTargetIdentifier {
+    export class RenderTargetIdentifier {
       constructor(type: UnityEngine.Rendering.BuiltinRenderTextureType);
       constructor(type: UnityEngine.Rendering.BuiltinRenderTextureType, mipLevel?: number, cubeFace?: UnityEngine.CubemapFace, depthSlice?: number);
       constructor(name: string);
@@ -18062,7 +18062,7 @@ export namespace UnityEngine {
       ReadOnlyStencil = 2,
       ReadOnlyDepthStencil = 3,
     }
-    export declare class RenderTargetBinding {
+    export class RenderTargetBinding {
       constructor(colorRenderTargets: UnityEngine.Rendering.RenderTargetIdentifier[], colorLoadActions: UnityEngine.Rendering.RenderBufferLoadAction[], colorStoreActions: UnityEngine.Rendering.RenderBufferStoreAction[], depthRenderTarget: UnityEngine.Rendering.RenderTargetIdentifier, depthLoadAction: UnityEngine.Rendering.RenderBufferLoadAction, depthStoreAction: UnityEngine.Rendering.RenderBufferStoreAction);
       constructor(colorRenderTarget: UnityEngine.Rendering.RenderTargetIdentifier, colorLoadAction: UnityEngine.Rendering.RenderBufferLoadAction, colorStoreAction: UnityEngine.Rendering.RenderBufferStoreAction, depthRenderTarget: UnityEngine.Rendering.RenderTargetIdentifier, depthLoadAction: UnityEngine.Rendering.RenderBufferLoadAction, depthStoreAction: UnityEngine.Rendering.RenderBufferStoreAction);
       constructor(setup: UnityEngine.RenderTargetSetup);
@@ -18097,7 +18097,7 @@ export namespace UnityEngine {
       Realtime = 1,
       Custom = 2,
     }
-    export declare class ReflectionProbeBlendInfo {
+    export class ReflectionProbeBlendInfo {
       probe: UnityEngine.ReflectionProbe;
       weight: number;
       Equals(obj: System.Object): boolean;
@@ -18256,14 +18256,14 @@ export namespace UnityEngine {
       AsyncQueueSynchronisation = 0,
       CPUSynchronisation = 1,
     }
-    export declare class GraphicsFence {
+    export class GraphicsFence {
       passed: boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class GraphicsSettings {
+    export class GraphicsSettings {
       static transparencySortMode: UnityEngine.TransparencySortMode;
       static transparencySortAxis: UnityEngine.Vector3;
       static realtimeDirectRectangularAreaLights: boolean;
@@ -18293,7 +18293,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class OnDemandRendering {
+    export class OnDemandRendering {
       constructor();
       static willCurrentFrameRender: boolean;
       static renderFrameInterval: number;
@@ -18303,7 +18303,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CommandBuffer {
+    export class CommandBuffer {
       constructor();
       name: string;
       sizeInBytes: number;
@@ -18574,7 +18574,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CommandBufferExtensions {
+    export class CommandBufferExtensions {
       static SwitchIntoFastMemory(cmd: UnityEngine.Rendering.CommandBuffer, rid: UnityEngine.Rendering.RenderTargetIdentifier, fastMemoryFlags: UnityEngine.Rendering.FastMemoryFlags, residency: number, copyContents: boolean): void;
       static SwitchOutOfFastMemory(cmd: UnityEngine.Rendering.CommandBuffer, rid: UnityEngine.Rendering.RenderTargetIdentifier, copyContents: boolean): void;
       Equals(obj: System.Object): boolean;
@@ -18582,7 +18582,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SplashScreen {
+    export class SplashScreen {
       constructor();
       static isFinished: boolean;
       static Begin(): void;
@@ -18597,7 +18597,7 @@ export namespace UnityEngine {
       StopImmediate = 0,
       FadeOut = 1,
     }
-    export declare class SphericalHarmonicsL2 {
+    export class SphericalHarmonicsL2 {
       Clear(): void;
       AddAmbientLight(color: UnityEngine.Color): void;
       AddDirectionalLight(direction: UnityEngine.Vector3, color: UnityEngine.Color, intensity: number): void;
@@ -18608,7 +18608,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class BatchVisibility {
+    export class BatchVisibility {
       offset: number;
       instancesCount: number;
       visibleCount: number;
@@ -18617,7 +18617,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class BatchCullingContext {
+    export class BatchCullingContext {
       constructor(inCullingPlanes: Unity.Collections.NativeArray<UnityEngine.Plane>, inOutBatchVisibility: Unity.Collections.NativeArray<UnityEngine.Rendering.BatchVisibility>, outVisibleIndices: Unity.Collections.NativeArray<number>, inLodParameters: UnityEngine.Rendering.LODParameters);
       constructor(inCullingPlanes: Unity.Collections.NativeArray<UnityEngine.Plane>, inOutBatchVisibility: Unity.Collections.NativeArray<UnityEngine.Rendering.BatchVisibility>, outVisibleIndices: Unity.Collections.NativeArray<number>, inLodParameters: UnityEngine.Rendering.LODParameters, inCullingMatrix: UnityEngine.Matrix4x4, inNearPlane: number);
       cullingPlanes: Unity.Collections.NativeArray<UnityEngine.Plane>;
@@ -18632,7 +18632,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class BatchRendererGroup {
+    export class BatchRendererGroup {
       constructor(cullingCallback: UnityEngine.Rendering.BatchRendererGroup_OnPerformCulling);
       Dispose(): void;
       AddBatch(mesh: UnityEngine.Mesh, subMeshIndex: number, material: UnityEngine.Material, layer: number, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, invertCulling: boolean, bounds: UnityEngine.Bounds, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock, associatedSceneObject: UnityEngine.GameObject): number;
@@ -18661,7 +18661,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BatchRendererGroup_OnPerformCulling {
+    export class BatchRendererGroup_OnPerformCulling {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -18677,7 +18677,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AttachmentDescriptor {
+    export class AttachmentDescriptor {
       constructor(format: UnityEngine.Experimental.Rendering.GraphicsFormat);
       constructor(format: UnityEngine.RenderTextureFormat);
       constructor(format: UnityEngine.RenderTextureFormat, target: UnityEngine.Rendering.RenderTargetIdentifier, loadExistingContents?: boolean, storeResults?: boolean, resolve?: boolean);
@@ -18699,7 +18699,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class BlendState {
+    export class BlendState {
       constructor(separateMRTBlend?: boolean, alphaToMask?: boolean);
       static defaultValue: UnityEngine.Rendering.BlendState;
       separateMRTBlendStates: boolean;
@@ -18718,7 +18718,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CameraProperties {
+    export class CameraProperties {
       GetShadowCullingPlane(index: number): UnityEngine.Plane;
       SetShadowCullingPlane(index: number, plane: UnityEngine.Plane): void;
       GetCameraCullingPlane(index: number): UnityEngine.Plane;
@@ -18739,7 +18739,7 @@ export namespace UnityEngine {
       DisablePerObjectCulling = 32,
       ShadowCasters = 64,
     }
-    export declare class ScriptableCullingParameters {
+    export class ScriptableCullingParameters {
       maximumVisibleLights: number;
       cullingPlaneCount: number;
       isOrthographic: boolean;
@@ -18770,7 +18770,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CullingResults {
+    export class CullingResults {
       visibleLights: Unity.Collections.NativeArray<UnityEngine.Rendering.VisibleLight>;
       visibleOffscreenVertexLights: Unity.Collections.NativeArray<UnityEngine.Rendering.VisibleLight>;
       visibleReflectionProbes: Unity.Collections.NativeArray<UnityEngine.Rendering.VisibleReflectionProbe>;
@@ -18789,7 +18789,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class DepthState {
+    export class DepthState {
       constructor(writeEnabled?: boolean, compareFunction?: UnityEngine.Rendering.CompareFunction);
       static defaultValue: UnityEngine.Rendering.DepthState;
       writeEnabled: boolean;
@@ -18800,7 +18800,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class DrawingSettings {
+    export class DrawingSettings {
       constructor(shaderPassName: UnityEngine.Rendering.ShaderTagId, sortingSettings: UnityEngine.Rendering.SortingSettings);
       sortingSettings: UnityEngine.Rendering.SortingSettings;
       perObjectData: UnityEngine.Rendering.PerObjectData;
@@ -18818,7 +18818,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FilteringSettings {
+    export class FilteringSettings {
       constructor(renderQueueRange?: System.Nullable<UnityEngine.Rendering.RenderQueueRange>, layerMask?: number, renderingLayerMask?: System.UInt32, excludeMotionVectorObjects?: number);
       static defaultValue: UnityEngine.Rendering.FilteringSettings;
       renderQueueRange: UnityEngine.Rendering.RenderQueueRange;
@@ -18836,7 +18836,7 @@ export namespace UnityEngine {
       PreImageEffects = 0,
       PostImageEffects = 1,
     }
-    export declare class LODParameters {
+    export class LODParameters {
       isOrthographic: boolean;
       cameraPosition: UnityEngine.Vector3;
       fieldOfView: number;
@@ -18862,7 +18862,7 @@ export namespace UnityEngine {
       OcclusionProbeProxyVolume = 512,
       ShadowMask = 1024,
     }
-    export declare class RasterState {
+    export class RasterState {
       constructor(cullingMode?: UnityEngine.Rendering.CullMode, offsetUnits?: number, offsetFactor?: number, depthClip?: boolean);
       cullingMode: UnityEngine.Rendering.CullMode;
       depthClip: boolean;
@@ -18882,14 +18882,14 @@ export namespace UnityEngine {
       Size = 2,
       ImportanceThenSize = 3,
     }
-    export declare class RenderPipeline {
+    export class RenderPipeline {
       disposed: boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RenderPipelineAsset {
+    export class RenderPipelineAsset {
       terrainBrushPassIndex: number;
       renderingLayerMaskNames: string[];
       defaultMaterial: UnityEngine.Material;
@@ -18918,14 +18918,14 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class RenderPipelineManager {
+    export class RenderPipelineManager {
       static currentPipeline: UnityEngine.Rendering.RenderPipeline;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RenderQueueRange {
+    export class RenderQueueRange {
       constructor(lowerBound: number, upperBound: number);
       static all: UnityEngine.Rendering.RenderQueueRange;
       static opaque: UnityEngine.Rendering.RenderQueueRange;
@@ -18940,7 +18940,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class RenderStateBlock {
+    export class RenderStateBlock {
       constructor(mask: UnityEngine.Rendering.RenderStateMask);
       blendState: UnityEngine.Rendering.BlendState;
       rasterState: UnityEngine.Rendering.RasterState;
@@ -18962,7 +18962,7 @@ export namespace UnityEngine {
       Stencil = 8,
       Everything = 15,
     }
-    export declare class RenderTargetBlendState {
+    export class RenderTargetBlendState {
       constructor(writeMask?: UnityEngine.Rendering.ColorWriteMask, sourceColorBlendMode?: UnityEngine.Rendering.BlendMode, destinationColorBlendMode?: UnityEngine.Rendering.BlendMode, sourceAlphaBlendMode?: UnityEngine.Rendering.BlendMode, destinationAlphaBlendMode?: UnityEngine.Rendering.BlendMode, colorBlendOperation?: UnityEngine.Rendering.BlendOp, alphaBlendOperation?: UnityEngine.Rendering.BlendOp);
       static defaultValue: UnityEngine.Rendering.RenderTargetBlendState;
       writeMask: UnityEngine.Rendering.ColorWriteMask;
@@ -18978,21 +18978,21 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScopedRenderPass {
+    export class ScopedRenderPass {
       Dispose(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScopedSubPass {
+    export class ScopedSubPass {
       Dispose(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScriptableRenderContext {
+    export class ScriptableRenderContext {
       static EmitWorldGeometryForSceneView(cullingCamera: UnityEngine.Camera): void;
       static EmitGeometryForCamera(camera: UnityEngine.Camera): void;
       BeginRenderPass(width: number, height: number, samples: number, attachments: Unity.Collections.NativeArray<UnityEngine.Rendering.AttachmentDescriptor>, depthAttachmentIndex?: number): void;
@@ -19029,7 +19029,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ShaderTagId {
+    export class ShaderTagId {
       constructor(name: string);
       name: string;
       static none: UnityEngine.Rendering.ShaderTagId;
@@ -19039,7 +19039,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ShadowDrawingSettings {
+    export class ShadowDrawingSettings {
       constructor(cullingResults: UnityEngine.Rendering.CullingResults, lightIndex: number);
       cullingResults: UnityEngine.Rendering.CullingResults;
       lightIndex: number;
@@ -19051,7 +19051,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ShadowSplitData {
+    export class ShadowSplitData {
       cullingPlaneCount: number;
       cullingSphere: UnityEngine.Vector4;
       shadowCascadeBlendCullingFactor: number;
@@ -19076,7 +19076,7 @@ export namespace UnityEngine {
       CommonOpaque = 59,
       CommonTransparent = 23,
     }
-    export declare class SortingLayerRange {
+    export class SortingLayerRange {
       constructor(lowerBound: System.Int16, upperBound: System.Int16);
       lowerBound: System.Int16;
       upperBound: System.Int16;
@@ -19092,7 +19092,7 @@ export namespace UnityEngine {
       Orthographic = 1,
       CustomAxis = 2,
     }
-    export declare class SortingSettings {
+    export class SortingSettings {
       constructor(camera: UnityEngine.Camera);
       worldToCameraMatrix: UnityEngine.Matrix4x4;
       cameraPosition: UnityEngine.Vector3;
@@ -19105,7 +19105,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StencilState {
+    export class StencilState {
       constructor(enabled?: boolean, readMask?: System.Byte, writeMask?: System.Byte, compareFunction?: UnityEngine.Rendering.CompareFunction, passOperation?: UnityEngine.Rendering.StencilOp, failOperation?: UnityEngine.Rendering.StencilOp, zFailOperation?: UnityEngine.Rendering.StencilOp);
       constructor(enabled: boolean, readMask: System.Byte, writeMask: System.Byte, compareFunctionFront: UnityEngine.Rendering.CompareFunction, passOperationFront: UnityEngine.Rendering.StencilOp, failOperationFront: UnityEngine.Rendering.StencilOp, zFailOperationFront: UnityEngine.Rendering.StencilOp, compareFunctionBack: UnityEngine.Rendering.CompareFunction, passOperationBack: UnityEngine.Rendering.StencilOp, failOperationBack: UnityEngine.Rendering.StencilOp, zFailOperationBack: UnityEngine.Rendering.StencilOp);
       static defaultValue: UnityEngine.Rendering.StencilState;
@@ -19130,7 +19130,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SupportedRenderingFeatures {
+    export class SupportedRenderingFeatures {
       constructor();
       static active: UnityEngine.Rendering.SupportedRenderingFeatures;
       reflectionProbeModes: UnityEngine.Rendering.SupportedRenderingFeatures_ReflectionProbeModes;
@@ -19173,7 +19173,7 @@ export namespace UnityEngine {
       Subtractive = 2,
       Shadowmask = 4,
     }
-    export declare class VisibleLight {
+    export class VisibleLight {
       light: UnityEngine.Light;
       lightType: UnityEngine.LightType;
       finalColor: UnityEngine.Color;
@@ -19189,7 +19189,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class VisibleReflectionProbe {
+    export class VisibleReflectionProbe {
       texture: UnityEngine.Texture;
       reflectionProbe: UnityEngine.ReflectionProbe;
       bounds: UnityEngine.Bounds;
@@ -19205,7 +19205,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PlatformKeywordSet {
+    export class PlatformKeywordSet {
       IsEnabled(define: UnityEngine.Rendering.BuiltinShaderDefine): boolean;
       Enable(define: UnityEngine.Rendering.BuiltinShaderDefine): void;
       Disable(define: UnityEngine.Rendering.BuiltinShaderDefine): void;
@@ -19221,7 +19221,7 @@ export namespace UnityEngine {
       BuiltinAutoStripped = 10,
       UserDefined = 16,
     }
-    export declare class ShaderKeyword {
+    export class ShaderKeyword {
       constructor(keywordName: string);
       constructor(shader: UnityEngine.Shader, keywordName: string);
       constructor(shader: UnityEngine.ComputeShader, keywordName: string);
@@ -19242,7 +19242,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ShaderKeywordSet {
+    export class ShaderKeywordSet {
       IsEnabled(keyword: UnityEngine.Rendering.ShaderKeyword): boolean;
       Enable(keyword: UnityEngine.Rendering.ShaderKeyword): void;
       Disable(keyword: UnityEngine.Rendering.ShaderKeyword): void;
@@ -19271,7 +19271,7 @@ export namespace UnityEngine {
       MainTexture = 128,
       MainColor = 256,
     }
-    export declare class SortingGroup {
+    export class SortingGroup {
       constructor();
       sortingLayerName: string;
       sortingLayerID: number;
@@ -19329,7 +19329,7 @@ export namespace UnityEngine {
     }
   }
   export namespace SceneManagement {
-    export declare class Scene {
+    export class Scene {
       handle: number;
       path: string;
       name: string;
@@ -19346,14 +19346,14 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SceneManagerAPI {
+    export class SceneManagerAPI {
       static overrideAPI: UnityEngine.SceneManagement.SceneManagerAPI;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SceneManager {
+    export class SceneManager {
       constructor();
       static sceneCount: number;
       static sceneCountInBuildSettings: number;
@@ -19403,7 +19403,7 @@ export namespace UnityEngine {
       Physics2D = 1,
       Physics3D = 2,
     }
-    export declare class LoadSceneParameters {
+    export class LoadSceneParameters {
       constructor(mode: UnityEngine.SceneManagement.LoadSceneMode);
       constructor(mode: UnityEngine.SceneManagement.LoadSceneMode, physicsMode: UnityEngine.SceneManagement.LocalPhysicsMode);
       loadSceneMode: UnityEngine.SceneManagement.LoadSceneMode;
@@ -19413,7 +19413,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CreateSceneParameters {
+    export class CreateSceneParameters {
       constructor(physicsMode: UnityEngine.SceneManagement.LocalPhysicsMode);
       localPhysicsMode: UnityEngine.SceneManagement.LocalPhysicsMode;
       Equals(obj: System.Object): boolean;
@@ -19425,7 +19425,7 @@ export namespace UnityEngine {
       None = 0,
       UnloadAllEmbeddedSceneObjects = 1,
     }
-    export declare class SceneUtility {
+    export class SceneUtility {
       static GetScenePathByBuildIndex(buildIndex: number): string;
       static GetBuildIndexByScenePath(scenePath: string): number;
       Equals(obj: System.Object): boolean;
@@ -19435,7 +19435,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Scripting {
-    export declare class GarbageCollector {
+    export class GarbageCollector {
       static GCMode: UnityEngine.Scripting.GarbageCollector_Mode;
       static isIncremental: boolean;
       static incrementalTimeSliceNanoseconds: System.UInt64;
@@ -19452,7 +19452,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Serialization {
-    export declare class UnitySurrogateSelector {
+    export class UnitySurrogateSelector {
       constructor();
       ChainSelector(selector: System.Runtime.Serialization.ISurrogateSelector): void;
       GetNextSelector(): System.Runtime.Serialization.ISurrogateSelector;
@@ -19463,7 +19463,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Sprites {
-    export declare class DataUtility {
+    export class DataUtility {
       constructor();
       static GetInnerUV(sprite: UnityEngine.Sprite): UnityEngine.Vector4;
       static GetOuterUV(sprite: UnityEngine.Sprite): UnityEngine.Vector4;
@@ -19476,7 +19476,7 @@ export namespace UnityEngine {
     }
   }
   export namespace TestTools {
-    export declare class CoveredSequencePoint {
+    export class CoveredSequencePoint {
       method: System.Reflection.MethodBase;
       ilOffset: System.UInt32;
       hitCount: System.UInt32;
@@ -19488,7 +19488,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CoveredMethodStats {
+    export class CoveredMethodStats {
       method: System.Reflection.MethodBase;
       totalSequencePoints: number;
       uncoveredSequencePoints: number;
@@ -19497,7 +19497,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Coverage {
+    export class Coverage {
       static enabled: boolean;
       static GetSequencePointsFor(method: System.Reflection.MethodBase): UnityEngine.TestTools.CoveredSequencePoint[];
       static GetStatsFor(method: System.Reflection.MethodBase): UnityEngine.TestTools.CoveredMethodStats;
@@ -19513,7 +19513,7 @@ export namespace UnityEngine {
     }
   }
   export namespace tvOS {
-    export declare class Remote {
+    export class Remote {
       constructor();
       static allowExitToHome: boolean;
       static allowRemoteRotation: boolean;
@@ -19529,7 +19529,7 @@ export namespace UnityEngine {
       AppleTV1Gen = 1001,
       AppleTV2Gen = 1002,
     }
-    export declare class Device {
+    export class Device {
       constructor();
       static systemVersion: string;
       static generation: UnityEngine.tvOS.DeviceGeneration;
@@ -19545,14 +19545,14 @@ export namespace UnityEngine {
     }
   }
   export namespace U2D {
-    export declare class PixelPerfectRendering {
+    export class PixelPerfectRendering {
       static pixelSnapSpacing: number;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpriteBone {
+    export class SpriteBone {
       name: string;
       position: UnityEngine.Vector3;
       rotation: UnityEngine.Quaternion;
@@ -19563,7 +19563,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SpriteDataAccessExtensions {
+    export class SpriteDataAccessExtensions {
       static GetBindPoses(sprite: UnityEngine.Sprite): any;
       static SetBindPoses(sprite: UnityEngine.Sprite, src: any): void;
       static GetIndices(sprite: UnityEngine.Sprite): any;
@@ -19578,21 +19578,21 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpriteRendererDataAccessExtensions {
+    export class SpriteRendererDataAccessExtensions {
       static DeactivateDeformableBuffer(renderer: UnityEngine.SpriteRenderer): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpriteAtlasManager {
+    export class SpriteAtlasManager {
       constructor();
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpriteAtlas {
+    export class SpriteAtlas {
       constructor();
       isVariant: boolean;
       tag: string;
@@ -19611,7 +19611,7 @@ export namespace UnityEngine {
     }
   }
   export namespace UI {
-    export declare class AnimationTriggers {
+    export class AnimationTriggers {
       constructor();
       normalTrigger: string;
       highlightedTrigger: string;
@@ -19623,7 +19623,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Button {
+    export class Button {
       onClick: UnityEngine.UI.Button_ButtonClickedEvent;
       navigation: UnityEngine.UI.Navigation;
       transition: UnityEngine.UI.Selectable_Transition;
@@ -19733,7 +19733,7 @@ export namespace UnityEngine {
       GraphicUpdateComplete(): void;
       IsDestroyed(): boolean;
     }
-    export declare class CanvasUpdateRegistry {
+    export class CanvasUpdateRegistry {
       static instance: UnityEngine.UI.CanvasUpdateRegistry;
       static RegisterCanvasElementForLayoutRebuild(element: UnityEngine.UI.ICanvasElement): void;
       static TryRegisterCanvasElementForLayoutRebuild(element: UnityEngine.UI.ICanvasElement): boolean;
@@ -19747,7 +19747,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ColorBlock {
+    export class ColorBlock {
       normalColor: UnityEngine.Color;
       highlightedColor: UnityEngine.Color;
       pressedColor: UnityEngine.Color;
@@ -19762,7 +19762,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ClipperRegistry {
+    export class ClipperRegistry {
       static instance: UnityEngine.UI.ClipperRegistry;
       Cull(): void;
       static Register(c: UnityEngine.UI.IClipper): void;
@@ -19772,7 +19772,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Clipping {
+    export class Clipping {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -19789,7 +19789,7 @@ export namespace UnityEngine {
       SetClipRect(value: UnityEngine.Rect, validRect: boolean): void;
       SetClipSoftness(clipSoftness: UnityEngine.Vector2): void;
     }
-    export declare class DefaultControls {
+    export class DefaultControls {
       static factory: UnityEngine.UI.DefaultControls_IFactoryControls;
       static CreatePanel(resources: UnityEngine.UI.DefaultControls_Resources): UnityEngine.GameObject;
       static CreateButton(resources: UnityEngine.UI.DefaultControls_Resources): UnityEngine.GameObject;
@@ -19807,7 +19807,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Dropdown {
+    export class Dropdown {
       template: UnityEngine.RectTransform;
       captionText: UnityEngine.UI.Text;
       captionImage: UnityEngine.UI.Image;
@@ -19919,7 +19919,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class FontData {
+    export class FontData {
       constructor();
       static defaultFontData: UnityEngine.UI.FontData;
       font: UnityEngine.Font;
@@ -19939,7 +19939,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FontUpdateTracker {
+    export class FontUpdateTracker {
       static TrackText(t: UnityEngine.UI.Text): void;
       static UntrackText(t: UnityEngine.UI.Text): void;
       Equals(obj: System.Object): boolean;
@@ -19947,7 +19947,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Graphic {
+    export class Graphic {
       static defaultGraphicMaterial: UnityEngine.Material;
       color: UnityEngine.Color;
       raycastTarget: boolean;
@@ -20050,7 +20050,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class GraphicRaycaster {
+    export class GraphicRaycaster {
       sortOrderPriority: number;
       renderOrderPriority: number;
       ignoreReversedGraphics: boolean;
@@ -20128,7 +20128,7 @@ export namespace UnityEngine {
       Equals(other: System.Object): boolean;
       GetType(): System.Type;
     }
-    export declare class GraphicRebuildTracker {
+    export class GraphicRebuildTracker {
       static TrackGraphic(g: UnityEngine.UI.Graphic): void;
       static UnTrackGraphic(g: UnityEngine.UI.Graphic): void;
       Equals(obj: System.Object): boolean;
@@ -20136,7 +20136,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class GraphicRegistry {
+    export class GraphicRegistry {
       static instance: UnityEngine.UI.GraphicRegistry;
       static RegisterGraphicForCanvas(c: UnityEngine.Canvas, graphic: UnityEngine.UI.Graphic): void;
       static RegisterRaycastGraphicForCanvas(c: UnityEngine.Canvas, graphic: UnityEngine.UI.Graphic): void;
@@ -20156,7 +20156,7 @@ export namespace UnityEngine {
     export interface IMaskable {
       RecalculateMasking(): void;
     }
-    export declare class Image {
+    export class Image {
       sprite: UnityEngine.Sprite;
       overrideSprite: UnityEngine.Sprite;
       type: UnityEngine.UI.Image_Type;
@@ -20297,7 +20297,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class InputField {
+    export class InputField {
       shouldHideMobileInput: boolean;
       text: string;
       isFocused: boolean;
@@ -20444,7 +20444,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AspectRatioFitter {
+    export class AspectRatioFitter {
       aspectMode: UnityEngine.UI.AspectRatioFitter_AspectMode;
       aspectRatio: number;
       useGUILayout: boolean;
@@ -20519,7 +20519,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CanvasScaler {
+    export class CanvasScaler {
       uiScaleMode: UnityEngine.UI.CanvasScaler_ScaleMode;
       referencePixelsPerUnit: number;
       scaleFactor: number;
@@ -20598,7 +20598,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ContentSizeFitter {
+    export class ContentSizeFitter {
       horizontalFit: UnityEngine.UI.ContentSizeFitter_FitMode;
       verticalFit: UnityEngine.UI.ContentSizeFitter_FitMode;
       useGUILayout: boolean;
@@ -20671,7 +20671,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class GridLayoutGroup {
+    export class GridLayoutGroup {
       startCorner: UnityEngine.UI.GridLayoutGroup_Corner;
       startAxis: UnityEngine.UI.GridLayoutGroup_Axis;
       cellSize: UnityEngine.Vector2;
@@ -20759,7 +20759,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class HorizontalLayoutGroup {
+    export class HorizontalLayoutGroup {
       spacing: number;
       childForceExpandWidth: boolean;
       childForceExpandHeight: boolean;
@@ -20849,7 +20849,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class HorizontalOrVerticalLayoutGroup {
+    export class HorizontalOrVerticalLayoutGroup {
       spacing: number;
       childForceExpandWidth: boolean;
       childForceExpandHeight: boolean;
@@ -20961,7 +20961,7 @@ export namespace UnityEngine {
     export interface ILayoutIgnorer {
       ignoreLayout: boolean;
     }
-    export declare class LayoutElement {
+    export class LayoutElement {
       ignoreLayout: boolean;
       minWidth: number;
       minHeight: number;
@@ -21040,7 +21040,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class LayoutGroup {
+    export class LayoutGroup {
       padding: UnityEngine.RectOffset;
       childAlignment: UnityEngine.TextAnchor;
       minWidth: number;
@@ -21122,7 +21122,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class LayoutRebuilder {
+    export class LayoutRebuilder {
       constructor();
       transform: UnityEngine.Transform;
       IsDestroyed(): boolean;
@@ -21136,7 +21136,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class LayoutUtility {
+    export class LayoutUtility {
       static GetMinSize(rect: UnityEngine.RectTransform, axis: number): number;
       static GetPreferredSize(rect: UnityEngine.RectTransform, axis: number): number;
       static GetFlexibleSize(rect: UnityEngine.RectTransform, axis: number): number;
@@ -21152,7 +21152,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VerticalLayoutGroup {
+    export class VerticalLayoutGroup {
       spacing: number;
       childForceExpandWidth: boolean;
       childForceExpandHeight: boolean;
@@ -21242,7 +21242,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Mask {
+    export class Mask {
       rectTransform: UnityEngine.RectTransform;
       showMaskGraphic: boolean;
       graphic: UnityEngine.UI.Graphic;
@@ -21318,7 +21318,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class MaskUtilities {
+    export class MaskUtilities {
       constructor();
       static Notify2DMaskStateChanged(mask: UnityEngine.Component): void;
       static NotifyStencilStateChanged(mask: UnityEngine.Component): void;
@@ -21332,7 +21332,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MaskableGraphic {
+    export class MaskableGraphic {
       onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
       maskable: boolean;
       isMaskingGraphic: boolean;
@@ -21447,7 +21447,7 @@ export namespace UnityEngine {
     export interface IMaterialModifier {
       GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
     }
-    export declare class Navigation {
+    export class Navigation {
       mode: UnityEngine.UI.Navigation_Mode;
       wrapAround: boolean;
       selectOnUp: UnityEngine.UI.Selectable;
@@ -21461,7 +21461,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class RawImage {
+    export class RawImage {
       mainTexture: UnityEngine.Texture;
       texture: UnityEngine.Texture;
       uvRect: UnityEngine.Rect;
@@ -21575,7 +21575,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class RectMask2D {
+    export class RectMask2D {
       padding: UnityEngine.Vector4;
       softness: UnityEngine.Vector2Int;
       canvasRect: UnityEngine.Rect;
@@ -21653,7 +21653,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ScrollRect {
+    export class ScrollRect {
       content: UnityEngine.RectTransform;
       horizontal: boolean;
       vertical: boolean;
@@ -21762,7 +21762,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Scrollbar {
+    export class Scrollbar {
       handleRect: UnityEngine.RectTransform;
       direction: UnityEngine.UI.Scrollbar_Direction;
       value: number;
@@ -21868,7 +21868,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Selectable {
+    export class Selectable {
       static allSelectablesArray: UnityEngine.UI.Selectable[];
       static allSelectableCount: number;
       static allSelectables: UnityEngine.UI.Selectable[];
@@ -21964,7 +21964,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Slider {
+    export class Slider {
       fillRect: UnityEngine.RectTransform;
       handleRect: UnityEngine.RectTransform;
       direction: UnityEngine.UI.Slider_Direction;
@@ -22072,7 +22072,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SpriteState {
+    export class SpriteState {
       highlightedSprite: UnityEngine.Sprite;
       pressedSprite: UnityEngine.Sprite;
       selectedSprite: UnityEngine.Sprite;
@@ -22083,7 +22083,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StencilMaterial {
+    export class StencilMaterial {
       static Add(baseMat: UnityEngine.Material, stencilID: number): UnityEngine.Material;
       static Add(baseMat: UnityEngine.Material, stencilID: number, operation: UnityEngine.Rendering.StencilOp, compareFunction: UnityEngine.Rendering.CompareFunction, colorWriteMask: UnityEngine.Rendering.ColorWriteMask): UnityEngine.Material;
       static Add(baseMat: UnityEngine.Material, stencilID: number, operation: UnityEngine.Rendering.StencilOp, compareFunction: UnityEngine.Rendering.CompareFunction, colorWriteMask: UnityEngine.Rendering.ColorWriteMask, readMask: number, writeMask: number): UnityEngine.Material;
@@ -22094,7 +22094,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Text {
+    export class Text {
       cachedTextGenerator: UnityEngine.TextGenerator;
       cachedTextGeneratorForLayout: UnityEngine.TextGenerator;
       mainTexture: UnityEngine.Texture;
@@ -22234,7 +22234,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Toggle {
+    export class Toggle {
       group: UnityEngine.UI.ToggleGroup;
       isOn: boolean;
       navigation: UnityEngine.UI.Navigation;
@@ -22337,7 +22337,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ToggleGroup {
+    export class ToggleGroup {
       allowSwitchOff: boolean;
       useGUILayout: boolean;
       runInEditMode: boolean;
@@ -22415,7 +22415,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class VertexHelper {
+    export class VertexHelper {
       constructor();
       constructor(m: UnityEngine.Mesh);
       currentVertCount: number;
@@ -22438,14 +22438,14 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BaseVertexEffect {
+    export class BaseVertexEffect {
       ModifyVertices(vertices: UnityEngine.UIVertex[]): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BaseMeshEffect {
+    export class BaseMeshEffect {
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -22523,7 +22523,7 @@ export namespace UnityEngine {
       ModifyMesh(mesh: UnityEngine.Mesh): void;
       ModifyMesh(verts: UnityEngine.UI.VertexHelper): void;
     }
-    export declare class Outline {
+    export class Outline {
       effectColor: UnityEngine.Color;
       effectDistance: UnityEngine.Vector2;
       useGraphicAlpha: boolean;
@@ -22597,7 +22597,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class PositionAsUV1 {
+    export class PositionAsUV1 {
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -22668,7 +22668,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Shadow {
+    export class Shadow {
       effectColor: UnityEngine.Color;
       effectDistance: UnityEngine.Vector2;
       useGraphicAlpha: boolean;
@@ -22742,7 +22742,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Button_ButtonClickedEvent {
+    export class Button_ButtonClickedEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction): void;
       RemoveListener(call: UnityEngine.Events.UnityAction): void;
@@ -22760,7 +22760,7 @@ export namespace UnityEngine {
     export interface DefaultControls_IFactoryControls {
       CreateGameObject(name: string, ...components: System.Type[]): UnityEngine.GameObject;
     }
-    export declare class DefaultControls_Resources {
+    export class DefaultControls_Resources {
       standard: UnityEngine.Sprite;
       background: UnityEngine.Sprite;
       inputField: UnityEngine.Sprite;
@@ -22773,7 +22773,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Dropdown_OptionData {
+    export class Dropdown_OptionData {
       constructor();
       constructor(text: string);
       constructor(image: UnityEngine.Sprite);
@@ -22785,7 +22785,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Dropdown_OptionDataList {
+    export class Dropdown_OptionDataList {
       constructor();
       options: UnityEngine.UI.Dropdown_OptionData[];
       Equals(obj: System.Object): boolean;
@@ -22793,7 +22793,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Dropdown_DropdownEvent {
+    export class Dropdown_DropdownEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<number>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<number>): void;
@@ -22883,7 +22883,7 @@ export namespace UnityEngine {
       MultiLineSubmit = 1,
       MultiLineNewline = 2,
     }
-    export declare class InputField_OnValidateInput {
+    export class InputField_OnValidateInput {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -22899,7 +22899,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class InputField_SubmitEvent {
+    export class InputField_SubmitEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<string>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<string>): void;
@@ -22914,7 +22914,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class InputField_OnChangeEvent {
+    export class InputField_OnChangeEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<string>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<string>): void;
@@ -22973,7 +22973,7 @@ export namespace UnityEngine {
       FixedColumnCount = 1,
       FixedRowCount = 2,
     }
-    export declare class MaskableGraphic_CullStateChangedEvent {
+    export class MaskableGraphic_CullStateChangedEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<boolean>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<boolean>): void;
@@ -23005,7 +23005,7 @@ export namespace UnityEngine {
       AutoHide = 1,
       AutoHideAndExpandViewport = 2,
     }
-    export declare class ScrollRect_ScrollRectEvent {
+    export class ScrollRect_ScrollRectEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.Vector2>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.Vector2>): void;
@@ -23026,7 +23026,7 @@ export namespace UnityEngine {
       BottomToTop = 2,
       TopToBottom = 3,
     }
-    export declare class Scrollbar_ScrollEvent {
+    export class Scrollbar_ScrollEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<number>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<number>): void;
@@ -23053,7 +23053,7 @@ export namespace UnityEngine {
       BottomToTop = 2,
       TopToBottom = 3,
     }
-    export declare class Slider_SliderEvent {
+    export class Slider_SliderEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<number>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<number>): void;
@@ -23072,7 +23072,7 @@ export namespace UnityEngine {
       None = 0,
       Fade = 1,
     }
-    export declare class Toggle_ToggleEvent {
+    export class Toggle_ToggleEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<boolean>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<boolean>): void;
@@ -23089,7 +23089,7 @@ export namespace UnityEngine {
     }
   }
   export namespace UIElements {
-    export declare class BindableElement {
+    export class BindableElement {
       constructor();
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
@@ -23165,7 +23165,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class BindableElement_UxmlFactory {
+    export class BindableElement_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -23183,7 +23183,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BindableElement_UxmlTraits {
+    export class BindableElement_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -23194,7 +23194,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Clickable {
+    export class Clickable {
       constructor(handler: System.Action, delay: System.Int64, interval: System.Int64);
       constructor(handler: (() => void));
       constructor(handler: System.Action);
@@ -23206,7 +23206,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ContextualMenuManager {
+    export class ContextualMenuManager {
       DisplayMenuIfEventMatches(evt: UnityEngine.UIElements.EventBase, eventHandler: UnityEngine.UIElements.IEventHandler): void;
       DisplayMenu(triggerEvent: UnityEngine.UIElements.EventBase, target: UnityEngine.UIElements.IEventHandler): void;
       Equals(obj: System.Object): boolean;
@@ -23214,7 +23214,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ContextualMenuManipulator {
+    export class ContextualMenuManipulator {
       constructor(menuBuilder: (() => void));
       activators: UnityEngine.UIElements.ManipulatorActivationFilter[];
       target: UnityEngine.UIElements.VisualElement;
@@ -23223,7 +23223,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Cursor {
+    export class Cursor {
       texture: UnityEngine.Texture2D;
       hotspot: UnityEngine.Vector2;
       Equals(obj: System.Object): boolean;
@@ -23232,7 +23232,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class DropdownMenuEventInfo {
+    export class DropdownMenuEventInfo {
       constructor(e: UnityEngine.UIElements.EventBase);
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -23242,13 +23242,13 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DropdownMenuItem {
+    export class DropdownMenuItem {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DropdownMenuSeparator {
+    export class DropdownMenuSeparator {
       constructor(subMenuPath: string);
       subMenuPath: string;
       Equals(obj: System.Object): boolean;
@@ -23256,7 +23256,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DropdownMenuAction {
+    export class DropdownMenuAction {
       constructor(actionName: string, actionCallback: (() => void), actionStatusCallback: ((arg0: UnityEngine.UIElements.DropdownMenuAction, arg1: UnityEngine.UIElements.DropdownMenuAction_Status) => UnityEngine.UIElements.DropdownMenuAction_Status), userData?: System.Object);
       name: string;
       status: UnityEngine.UIElements.DropdownMenuAction_Status;
@@ -23278,7 +23278,7 @@ export namespace UnityEngine {
       Checked = 4,
       Hidden = 8,
     }
-    export declare class DropdownMenu {
+    export class DropdownMenu {
       constructor();
       MenuItems(): UnityEngine.UIElements.DropdownMenuItem[];
       AppendAction(actionName: string, action: (() => void), actionStatusCallback: ((arg0: UnityEngine.UIElements.DropdownMenuAction, arg1: UnityEngine.UIElements.DropdownMenuAction_Status) => UnityEngine.UIElements.DropdownMenuAction_Status), userData?: System.Object): void;
@@ -23294,7 +23294,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventDispatcherGate {
+    export class EventDispatcherGate {
       constructor(d: UnityEngine.UIElements.EventDispatcher);
       Dispose(): void;
       Equals(other: UnityEngine.UIElements.EventDispatcherGate): boolean;
@@ -23303,13 +23303,13 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class EventDispatcher {
+    export class EventDispatcher {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Focusable {
+    export class Focusable {
       focusController: UnityEngine.UIElements.FocusController;
       focusable: boolean;
       tabIndex: number;
@@ -23326,7 +23326,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FocusChangeDirection {
+    export class FocusChangeDirection {
       static unspecified: UnityEngine.UIElements.FocusChangeDirection;
       static none: UnityEngine.UIElements.FocusChangeDirection;
       Equals(obj: System.Object): boolean;
@@ -23338,7 +23338,7 @@ export namespace UnityEngine {
       GetFocusChangeDirection(currentFocusable: UnityEngine.UIElements.Focusable, e: UnityEngine.UIElements.EventBase): UnityEngine.UIElements.FocusChangeDirection;
       GetNextFocusable(currentFocusable: UnityEngine.UIElements.Focusable, direction: UnityEngine.UIElements.FocusChangeDirection): UnityEngine.UIElements.Focusable;
     }
-    export declare class FocusController {
+    export class FocusController {
       constructor(focusRing: UnityEngine.UIElements.IFocusRing);
       focusedElement: UnityEngine.UIElements.Focusable;
       Equals(obj: System.Object): boolean;
@@ -23346,7 +23346,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class IMGUIContainer {
+    export class IMGUIContainer {
       constructor();
       constructor(onGUIHandler: System.Action);
       onGUIHandler: System.Action;
@@ -23427,7 +23427,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class IMGUIContainer_UxmlFactory {
+    export class IMGUIContainer_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -23445,7 +23445,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class IMGUIContainer_UxmlTraits {
+    export class IMGUIContainer_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -23456,7 +23456,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ImmediateModeElement {
+    export class ImmediateModeElement {
       constructor();
       cullingEnabled: boolean;
       viewDataKey: string;
@@ -23542,7 +23542,7 @@ export namespace UnityEngine {
       scale: UnityEngine.Vector3;
       matrix: UnityEngine.Matrix4x4;
     }
-    export declare class ManipulatorActivationFilter {
+    export class ManipulatorActivationFilter {
       button: UnityEngine.UIElements.MouseButton;
       modifiers: UnityEngine.EventModifiers;
       clickCount: number;
@@ -23557,7 +23557,7 @@ export namespace UnityEngine {
     export interface IManipulator {
       target: UnityEngine.UIElements.VisualElement;
     }
-    export declare class Manipulator {
+    export class Manipulator {
       target: UnityEngine.UIElements.VisualElement;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -23569,7 +23569,7 @@ export namespace UnityEngine {
       RightMouse = 1,
       MiddleMouse = 2,
     }
-    export declare class MouseCaptureController {
+    export class MouseCaptureController {
       static IsMouseCaptured(): boolean;
       static HasMouseCapture(handler: UnityEngine.UIElements.IEventHandler): boolean;
       static CaptureMouse(handler: UnityEngine.UIElements.IEventHandler): void;
@@ -23580,7 +23580,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseManipulator {
+    export class MouseManipulator {
       activators: UnityEngine.UIElements.ManipulatorActivationFilter[];
       target: UnityEngine.UIElements.VisualElement;
       Equals(obj: System.Object): boolean;
@@ -23606,7 +23606,7 @@ export namespace UnityEngine {
       Pick(point: UnityEngine.Vector2): UnityEngine.UIElements.VisualElement;
       PickAll(point: UnityEngine.Vector2, picked: UnityEngine.UIElements.VisualElement[]): UnityEngine.UIElements.VisualElement;
     }
-    export declare class PointerCaptureHelper {
+    export class PointerCaptureHelper {
       static HasPointerCapture(handler: UnityEngine.UIElements.IEventHandler, pointerId: number): boolean;
       static CapturePointer(handler: UnityEngine.UIElements.IEventHandler, pointerId: number): void;
       static ReleasePointer(handler: UnityEngine.UIElements.IEventHandler, pointerId: number): void;
@@ -23617,7 +23617,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerManipulator {
+    export class PointerManipulator {
       activators: UnityEngine.UIElements.ManipulatorActivationFilter[];
       target: UnityEngine.UIElements.VisualElement;
       Equals(obj: System.Object): boolean;
@@ -23625,7 +23625,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TimerState {
+    export class TimerState {
       start: System.Int64;
       now: System.Int64;
       deltaTime: System.Int64;
@@ -23693,7 +23693,7 @@ export namespace UnityEngine {
       Flex = 0,
       None = 1,
     }
-    export declare class TemplateContainer {
+    export class TemplateContainer {
       constructor();
       constructor(templateId: string);
       templateId: string;
@@ -23771,7 +23771,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class TemplateContainer_UxmlFactory {
+    export class TemplateContainer_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
@@ -23789,7 +23789,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TemplateContainer_UxmlTraits {
+    export class TemplateContainer_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -23800,7 +23800,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextElement {
+    export class TextElement {
       constructor();
       text: string;
       displayTooltipWhenElided: boolean;
@@ -23881,7 +23881,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class TextElement_UxmlFactory {
+    export class TextElement_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -23899,7 +23899,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextElement_UxmlTraits {
+    export class TextElement_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -23910,13 +23910,13 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UQuery {
+    export class UQuery {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UQueryState<T = any> {
+    export class UQueryState<T = any> {
       RebuildOn(element: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.UQueryState<T>;
       First(): T;
       Last(): T;
@@ -23930,7 +23930,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class UQueryBuilder<T = any> {
+    export class UQueryBuilder<T = any> {
       constructor(visualElement: UnityEngine.UIElements.VisualElement);
       Class(classname: string): UnityEngine.UIElements.UQueryBuilder<T>;
       Name(id: string): UnityEngine.UIElements.UQueryBuilder<T>;
@@ -23962,7 +23962,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class UQueryExtensions {
+    export class UQueryExtensions {
       static Q(e: UnityEngine.UIElements.VisualElement, name?: string, ...classes: string[]): UnityEngine.UIElements.VisualElement;
       static Q(e: UnityEngine.UIElements.VisualElement, name?: string, className?: string): UnityEngine.UIElements.VisualElement;
       static Query(e: UnityEngine.UIElements.VisualElement, name?: string, ...classes: string[]): any;
@@ -23977,7 +23977,7 @@ export namespace UnityEngine {
       Position = 0,
       Ignore = 1,
     }
-    export declare class VisualElement {
+    export class VisualElement {
       constructor();
       viewDataKey: string;
       userData: System.Object;
@@ -24052,7 +24052,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class VisualElement_UxmlFactory {
+    export class VisualElement_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -24070,7 +24070,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VisualElement_UxmlTraits {
+    export class VisualElement_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -24086,7 +24086,7 @@ export namespace UnityEngine {
       Exactly = 1,
       AtMost = 2,
     }
-    export declare class VisualElement_Hierarchy {
+    export class VisualElement_Hierarchy {
       parent: UnityEngine.UIElements.VisualElement;
       childCount: number;
       Add(child: UnityEngine.UIElements.VisualElement): void;
@@ -24104,7 +24104,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class VisualElementExtensions {
+    export class VisualElementExtensions {
       static WorldToLocal(ele: UnityEngine.UIElements.VisualElement, p: UnityEngine.Vector2): UnityEngine.Vector2;
       static LocalToWorld(ele: UnityEngine.UIElements.VisualElement, p: UnityEngine.Vector2): UnityEngine.Vector2;
       static WorldToLocal(ele: UnityEngine.UIElements.VisualElement, r: UnityEngine.Rect): UnityEngine.Rect;
@@ -24123,7 +24123,7 @@ export namespace UnityEngine {
     export interface IExperimentalFeatures {
       animation: UnityEngine.UIElements.Experimental.ITransitionAnimations;
     }
-    export declare class VisualElementFocusChangeDirection {
+    export class VisualElementFocusChangeDirection {
       static left: UnityEngine.UIElements.FocusChangeDirection;
       static right: UnityEngine.UIElements.FocusChangeDirection;
       Equals(obj: System.Object): boolean;
@@ -24131,7 +24131,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VisualElementFocusRing {
+    export class VisualElementFocusRing {
       constructor(root: UnityEngine.UIElements.VisualElement, dfo?: UnityEngine.UIElements.VisualElementFocusRing_DefaultFocusOrder);
       defaultFocusOrder: UnityEngine.UIElements.VisualElementFocusRing_DefaultFocusOrder;
       GetFocusChangeDirection(currentFocusable: UnityEngine.UIElements.Focusable, e: UnityEngine.UIElements.EventBase): UnityEngine.UIElements.FocusChangeDirection;
@@ -24161,7 +24161,7 @@ export namespace UnityEngine {
       Execute(timerUpdateEvent: (() => void)): UnityEngine.UIElements.IVisualElementScheduledItem;
       Execute(updateEvent: System.Action): UnityEngine.UIElements.IVisualElementScheduledItem;
     }
-    export declare class VisualElementStyleSheetSet {
+    export class VisualElementStyleSheetSet {
       count: number;
       Add(styleSheet: UnityEngine.UIElements.StyleSheet): void;
       Clear(): void;
@@ -24173,7 +24173,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class BaseField<TValueType = any> {
+    export class BaseField<TValueType = any> {
       value: TValueType;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
@@ -24257,7 +24257,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class BaseFieldTraits<TValueType = any, TValueUxmlAttributeType = any> {
+    export class BaseFieldTraits<TValueType = any, TValueUxmlAttributeType = any> {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -24272,7 +24272,7 @@ export namespace UnityEngine {
       Horizontal = 0,
       Vertical = 1,
     }
-    export declare class BaseSlider<TValueType = any> {
+    export class BaseSlider<TValueType = any> {
       lowValue: TValueType;
       highValue: TValueType;
       range: TValueType;
@@ -24377,14 +24377,14 @@ export namespace UnityEngine {
       Update(): void;
       Release(): void;
     }
-    export declare class IBindingExtensions {
+    export class IBindingExtensions {
       static IsBound(control: UnityEngine.UIElements.IBindable): boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Box {
+    export class Box {
       constructor();
       viewDataKey: string;
       userData: System.Object;
@@ -24459,7 +24459,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Box_UxmlFactory {
+    export class Box_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -24477,7 +24477,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Button {
+    export class Button {
       constructor();
       constructor(clickEvent: System.Action);
       clickable: UnityEngine.UIElements.Clickable;
@@ -24560,7 +24560,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Button_UxmlFactory {
+    export class Button_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -24578,7 +24578,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Button_UxmlTraits {
+    export class Button_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -24589,7 +24589,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Foldout {
+    export class Foldout {
       constructor();
       contentContainer: UnityEngine.UIElements.VisualElement;
       text: string;
@@ -24671,7 +24671,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Foldout_UxmlFactory {
+    export class Foldout_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -24689,7 +24689,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Foldout_UxmlTraits {
+    export class Foldout_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -24706,7 +24706,7 @@ export namespace UnityEngine {
       Warning = 2,
       Error = 3,
     }
-    export declare class HelpBox {
+    export class HelpBox {
       constructor();
       constructor(text: string, messageType: UnityEngine.UIElements.HelpBoxMessageType);
       text: string;
@@ -24789,7 +24789,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class HelpBox_UxmlFactory {
+    export class HelpBox_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -24807,7 +24807,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class HelpBox_UxmlTraits {
+    export class HelpBox_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -24818,7 +24818,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Image {
+    export class Image {
       constructor();
       image: UnityEngine.Texture;
       vectorImage: UnityEngine.UIElements.VectorImage;
@@ -24899,7 +24899,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Image_UxmlFactory {
+    export class Image_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -24917,7 +24917,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Image_UxmlTraits {
+    export class Image_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -24932,13 +24932,13 @@ export namespace UnityEngine {
       value: T;
       SetValueWithoutNotify(newValue: T): void;
     }
-    export declare class INotifyValueChangedExtensions {
+    export class INotifyValueChangedExtensions {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Label {
+    export class Label {
       constructor();
       constructor(text: string);
       text: string;
@@ -25020,7 +25020,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Label_UxmlFactory {
+    export class Label_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25038,7 +25038,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Label_UxmlTraits {
+    export class Label_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25054,7 +25054,7 @@ export namespace UnityEngine {
       ContentOnly = 1,
       All = 2,
     }
-    export declare class ListView {
+    export class ListView {
       constructor();
       constructor(itemsSource: System.Collections.IList, itemHeight: number, makeItem: ((arg0: UnityEngine.UIElements.VisualElement) => UnityEngine.UIElements.VisualElement), bindItem: ((arg0: UnityEngine.UIElements.VisualElement) => void));
       itemsSource: System.Collections.IList;
@@ -25164,7 +25164,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ListView_UxmlFactory {
+    export class ListView_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25182,7 +25182,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ListView_UxmlTraits {
+    export class ListView_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25193,7 +25193,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MinMaxSlider {
+    export class MinMaxSlider {
       constructor();
       constructor(minValue: number, maxValue: number, minLimit: number, maxLimit: number);
       constructor(label: string, minValue?: number, maxValue?: number, minLimit?: number, maxLimit?: number);
@@ -25287,7 +25287,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class MinMaxSlider_UxmlFactory {
+    export class MinMaxSlider_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25305,7 +25305,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MinMaxSlider_UxmlTraits {
+    export class MinMaxSlider_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25316,7 +25316,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PopupWindow {
+    export class PopupWindow {
       constructor();
       contentContainer: UnityEngine.UIElements.VisualElement;
       text: string;
@@ -25398,7 +25398,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class PopupWindow_UxmlFactory {
+    export class PopupWindow_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25416,7 +25416,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PopupWindow_UxmlTraits {
+    export class PopupWindow_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25427,7 +25427,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RepeatButton {
+    export class RepeatButton {
       constructor();
       constructor(clickEvent: System.Action, delay: System.Int64, interval: System.Int64);
       text: string;
@@ -25510,7 +25510,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class RepeatButton_UxmlFactory {
+    export class RepeatButton_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25528,7 +25528,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RepeatButton_UxmlTraits {
+    export class RepeatButton_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25539,7 +25539,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Scroller {
+    export class Scroller {
       constructor();
       constructor(lowValue: number, highValue: number, valueChanged: (() => void), direction?: UnityEngine.UIElements.SliderDirection);
       slider: UnityEngine.UIElements.Slider;
@@ -25632,7 +25632,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Scroller_UxmlFactory {
+    export class Scroller_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25650,7 +25650,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Scroller_UxmlTraits {
+    export class Scroller_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25666,7 +25666,7 @@ export namespace UnityEngine {
       Horizontal = 1,
       VerticalAndHorizontal = 2,
     }
-    export declare class ScrollView {
+    export class ScrollView {
       constructor();
       constructor(scrollViewMode: UnityEngine.UIElements.ScrollViewMode);
       showHorizontal: boolean;
@@ -25762,7 +25762,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ScrollView_UxmlFactory {
+    export class ScrollView_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25780,7 +25780,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ScrollView_UxmlTraits {
+    export class ScrollView_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25796,7 +25796,7 @@ export namespace UnityEngine {
       Elastic = 1,
       Clamped = 2,
     }
-    export declare class Slider {
+    export class Slider {
       constructor();
       constructor(start: number, end: number, direction?: UnityEngine.UIElements.SliderDirection, pageSize?: number);
       constructor(label: string, start?: number, end?: number, direction?: UnityEngine.UIElements.SliderDirection, pageSize?: number);
@@ -25888,7 +25888,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Slider_UxmlFactory {
+    export class Slider_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25906,7 +25906,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Slider_UxmlTraits {
+    export class Slider_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25917,7 +25917,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SliderInt {
+    export class SliderInt {
       constructor();
       constructor(start: number, end: number, direction?: UnityEngine.UIElements.SliderDirection, pageSize?: number);
       constructor(label: string, start?: number, end?: number, direction?: UnityEngine.UIElements.SliderDirection, pageSize?: number);
@@ -26009,7 +26009,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class SliderInt_UxmlFactory {
+    export class SliderInt_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -26027,7 +26027,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SliderInt_UxmlTraits {
+    export class SliderInt_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -26038,7 +26038,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextField {
+    export class TextField {
       constructor();
       constructor(maxLength: number, multiline: boolean, isPasswordField: boolean, maskChar: System.Char);
       constructor(label: string);
@@ -26139,7 +26139,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class TextField_UxmlFactory {
+    export class TextField_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -26157,7 +26157,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextField_UxmlTraits {
+    export class TextField_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -26168,7 +26168,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextInputBaseField<TValueType = any> {
+    export class TextInputBaseField<TValueType = any> {
       text: string;
       isReadOnly: boolean;
       isPasswordField: boolean;
@@ -26264,7 +26264,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Toggle {
+    export class Toggle {
       constructor();
       constructor(label: string);
       text: string;
@@ -26352,7 +26352,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Toggle_UxmlFactory {
+    export class Toggle_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -26370,7 +26370,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Toggle_UxmlTraits {
+    export class Toggle_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -26381,7 +26381,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TwoPaneSplitView {
+    export class TwoPaneSplitView {
       constructor();
       constructor(fixedPaneIndex: number, fixedPaneStartDimension: number, orientation: UnityEngine.UIElements.TwoPaneSplitViewOrientation);
       fixedPane: UnityEngine.UIElements.VisualElement;
@@ -26463,7 +26463,7 @@ export namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class TwoPaneSplitView_UxmlFactory {
+    export class TwoPaneSplitView_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -26481,7 +26481,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TwoPaneSplitView_UxmlTraits {
+    export class TwoPaneSplitView_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -26498,7 +26498,7 @@ export namespace UnityEngine {
     }
     export interface IPointerCaptureEvent {
     }
-    export declare class PointerCaptureEventBase<T = any> {
+    export class PointerCaptureEventBase<T = any> {
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
       eventTypeId: System.Int64;
@@ -26524,7 +26524,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerCaptureOutEvent {
+    export class PointerCaptureOutEvent {
       constructor();
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
@@ -26550,7 +26550,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerCaptureEvent {
+    export class PointerCaptureEvent {
       constructor();
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
@@ -26578,7 +26578,7 @@ export namespace UnityEngine {
     }
     export interface IMouseCaptureEvent {
     }
-    export declare class MouseCaptureEventBase<T = any> {
+    export class MouseCaptureEventBase<T = any> {
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
       eventTypeId: System.Int64;
@@ -26604,7 +26604,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseCaptureOutEvent {
+    export class MouseCaptureOutEvent {
       constructor();
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
@@ -26630,7 +26630,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseCaptureEvent {
+    export class MouseCaptureEvent {
       constructor();
       relatedTarget: UnityEngine.UIElements.IEventHandler;
       pointerId: number;
@@ -26658,7 +26658,7 @@ export namespace UnityEngine {
     }
     export interface IChangeEvent {
     }
-    export declare class ChangeEvent<T = any> {
+    export class ChangeEvent<T = any> {
       constructor();
       previousValue: T;
       newValue: T;
@@ -26688,7 +26688,7 @@ export namespace UnityEngine {
     export interface ICommandEvent {
       commandName: string;
     }
-    export declare class CommandEventBase<T = any> {
+    export class CommandEventBase<T = any> {
       commandName: string;
       eventTypeId: System.Int64;
       timestamp: System.Int64;
@@ -26714,7 +26714,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ValidateCommandEvent {
+    export class ValidateCommandEvent {
       constructor();
       commandName: string;
       eventTypeId: System.Int64;
@@ -26739,7 +26739,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ExecuteCommandEvent {
+    export class ExecuteCommandEvent {
       constructor();
       commandName: string;
       eventTypeId: System.Int64;
@@ -26766,7 +26766,7 @@ export namespace UnityEngine {
     }
     export interface IDragAndDropEvent {
     }
-    export declare class DragAndDropEventBase<T = any> {
+    export class DragAndDropEventBase<T = any> {
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -26801,7 +26801,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DragExitedEvent {
+    export class DragExitedEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -26838,7 +26838,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DragEnterEvent {
+    export class DragEnterEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -26874,7 +26874,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DragLeaveEvent {
+    export class DragLeaveEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -26910,7 +26910,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DragUpdatedEvent {
+    export class DragUpdatedEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -26947,7 +26947,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DragPerformEvent {
+    export class DragPerformEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -26983,7 +26983,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventBase<T = any> {
+    export class EventBase<T = any> {
       eventTypeId: System.Int64;
       timestamp: System.Int64;
       bubbles: boolean;
@@ -27008,7 +27008,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventCallback<TEventType = any, TCallbackArgs = any> {
+    export class EventCallback<TEventType = any, TCallbackArgs = any> {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -27034,7 +27034,7 @@ export namespace UnityEngine {
       HasTrickleDownHandlers(): boolean;
       HasBubbleUpHandlers(): boolean;
     }
-    export declare class CallbackEventHandler {
+    export class CallbackEventHandler {
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
       HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       HasTrickleDownHandlers(): boolean;
@@ -27048,7 +27048,7 @@ export namespace UnityEngine {
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
     }
-    export declare class FocusEventBase<T = any> {
+    export class FocusEventBase<T = any> {
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
       eventTypeId: System.Int64;
@@ -27074,7 +27074,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FocusOutEvent {
+    export class FocusOutEvent {
       constructor();
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
@@ -27100,7 +27100,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BlurEvent {
+    export class BlurEvent {
       constructor();
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
@@ -27126,7 +27126,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FocusInEvent {
+    export class FocusInEvent {
       constructor();
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
@@ -27152,7 +27152,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FocusEvent {
+    export class FocusEvent {
       constructor();
       relatedTarget: UnityEngine.UIElements.Focusable;
       direction: UnityEngine.UIElements.FocusChangeDirection;
@@ -27186,7 +27186,7 @@ export namespace UnityEngine {
       BubbleUp = 3,
       DefaultAction = 4,
     }
-    export declare class InputEvent {
+    export class InputEvent {
       constructor();
       previousData: string;
       newData: string;
@@ -27223,7 +27223,7 @@ export namespace UnityEngine {
       altKey: boolean;
       actionKey: boolean;
     }
-    export declare class KeyboardEventBase<T = any> {
+    export class KeyboardEventBase<T = any> {
       modifiers: UnityEngine.EventModifiers;
       character: System.Char;
       keyCode: UnityEngine.KeyCode;
@@ -27256,7 +27256,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class KeyDownEvent {
+    export class KeyDownEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       character: System.Char;
@@ -27288,7 +27288,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class KeyUpEvent {
+    export class KeyUpEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       character: System.Char;
@@ -27320,7 +27320,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class GeometryChangedEvent {
+    export class GeometryChangedEvent {
       constructor();
       oldRect: UnityEngine.Rect;
       newRect: UnityEngine.Rect;
@@ -27361,7 +27361,7 @@ export namespace UnityEngine {
       altKey: boolean;
       actionKey: boolean;
     }
-    export declare class MouseEventBase<T = any> {
+    export class MouseEventBase<T = any> {
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
       localMousePosition: UnityEngine.Vector2;
@@ -27399,7 +27399,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseDownEvent {
+    export class MouseDownEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27436,7 +27436,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseUpEvent {
+    export class MouseUpEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27473,7 +27473,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseMoveEvent {
+    export class MouseMoveEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27510,7 +27510,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ContextClickEvent {
+    export class ContextClickEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27546,7 +27546,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WheelEvent {
+    export class WheelEvent {
       constructor();
       delta: UnityEngine.Vector3;
       modifiers: UnityEngine.EventModifiers;
@@ -27584,7 +27584,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseEnterEvent {
+    export class MouseEnterEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27620,7 +27620,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseLeaveEvent {
+    export class MouseLeaveEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27656,7 +27656,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseEnterWindowEvent {
+    export class MouseEnterWindowEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27692,7 +27692,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseLeaveWindowEvent {
+    export class MouseLeaveWindowEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27729,7 +27729,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseOverEvent {
+    export class MouseOverEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27765,7 +27765,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MouseOutEvent {
+    export class MouseOutEvent {
       constructor();
       modifiers: UnityEngine.EventModifiers;
       mousePosition: UnityEngine.Vector2;
@@ -27801,7 +27801,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ContextualMenuPopulateEvent {
+    export class ContextualMenuPopulateEvent {
       constructor();
       menu: UnityEngine.UIElements.DropdownMenu;
       triggerEvent: UnityEngine.UIElements.EventBase;
@@ -27842,7 +27842,7 @@ export namespace UnityEngine {
     }
     export interface IPanelChangedEvent {
     }
-    export declare class PanelChangedEventBase<T = any> {
+    export class PanelChangedEventBase<T = any> {
       originPanel: UnityEngine.UIElements.IPanel;
       destinationPanel: UnityEngine.UIElements.IPanel;
       eventTypeId: System.Int64;
@@ -27868,7 +27868,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AttachToPanelEvent {
+    export class AttachToPanelEvent {
       constructor();
       originPanel: UnityEngine.UIElements.IPanel;
       destinationPanel: UnityEngine.UIElements.IPanel;
@@ -27894,7 +27894,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DetachFromPanelEvent {
+    export class DetachFromPanelEvent {
       constructor();
       originPanel: UnityEngine.UIElements.IPanel;
       destinationPanel: UnityEngine.UIElements.IPanel;
@@ -27920,7 +27920,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerType {
+    export class PointerType {
       static mouse: string;
       static touch: string;
       static pen: string;
@@ -27930,7 +27930,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerId {
+    export class PointerId {
       static maxPointers: number;
       static invalidPointerId: number;
       static mousePointerId: number;
@@ -27968,7 +27968,7 @@ export namespace UnityEngine {
       altKey: boolean;
       actionKey: boolean;
     }
-    export declare class PointerEventBase<T = any> {
+    export class PointerEventBase<T = any> {
       pointerId: number;
       pointerType: string;
       isPrimary: boolean;
@@ -28017,7 +28017,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerDownEvent {
+    export class PointerDownEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28064,7 +28064,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerMoveEvent {
+    export class PointerMoveEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28111,7 +28111,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerStationaryEvent {
+    export class PointerStationaryEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28158,7 +28158,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerUpEvent {
+    export class PointerUpEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28205,7 +28205,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerCancelEvent {
+    export class PointerCancelEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28252,7 +28252,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ClickEvent {
+    export class ClickEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28299,7 +28299,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerEnterEvent {
+    export class PointerEnterEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28346,7 +28346,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerLeaveEvent {
+    export class PointerLeaveEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28393,7 +28393,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerOverEvent {
+    export class PointerOverEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28440,7 +28440,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PointerOutEvent {
+    export class PointerOutEvent {
       constructor();
       pointerId: number;
       pointerType: string;
@@ -28487,7 +28487,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CustomStyleResolvedEvent {
+    export class CustomStyleResolvedEvent {
       constructor();
       customStyle: UnityEngine.UIElements.ICustomStyle;
       eventTypeId: System.Int64;
@@ -28512,7 +28512,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TooltipEvent {
+    export class TooltipEvent {
       constructor();
       tooltip: string;
       rect: UnityEngine.Rect;
@@ -28538,7 +28538,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class IMGUIEvent {
+    export class IMGUIEvent {
       constructor();
       eventTypeId: System.Int64;
       timestamp: System.Int64;
@@ -28563,7 +28563,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Vertex {
+    export class Vertex {
       static nearZ: number;
       position: UnityEngine.Vector3;
       tint: UnityEngine.Color32;
@@ -28573,7 +28573,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class MeshWriteData {
+    export class MeshWriteData {
       vertexCount: number;
       indexCount: number;
       uvRegion: UnityEngine.Rect;
@@ -28588,7 +28588,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MeshGenerationContext {
+    export class MeshGenerationContext {
       visualElement: UnityEngine.UIElements.VisualElement;
       Allocate(vertexCount: number, indexCount: number, texture?: UnityEngine.Texture): UnityEngine.UIElements.MeshWriteData;
       Equals(obj: System.Object): boolean;
@@ -28596,7 +28596,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Background {
+    export class Background {
       constructor(t: UnityEngine.Texture2D);
       texture: UnityEngine.Texture2D;
       vectorImage: UnityEngine.UIElements.VectorImage;
@@ -28608,7 +28608,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CustomStyleProperty<T = any> {
+    export class CustomStyleProperty<T = any> {
       constructor(propertyName: string);
       name: string;
       Equals(obj: System.Object): boolean;
@@ -28623,7 +28623,7 @@ export namespace UnityEngine {
       Pixel = 0,
       Percent = 1,
     }
-    export declare class Length {
+    export class Length {
       constructor(value: number);
       constructor(value: number, unit: UnityEngine.UIElements.LengthUnit);
       value: number;
@@ -28635,7 +28635,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StyleBackground {
+    export class StyleBackground {
       constructor(v: UnityEngine.UIElements.Background);
       constructor(v: UnityEngine.Texture2D);
       constructor(v: UnityEngine.UIElements.VectorImage);
@@ -28648,7 +28648,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StyleColor {
+    export class StyleColor {
       constructor(v: UnityEngine.Color);
       constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.Color;
@@ -28659,7 +28659,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StyleCursor {
+    export class StyleCursor {
       constructor(v: UnityEngine.UIElements.Cursor);
       constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.UIElements.Cursor;
@@ -28670,7 +28670,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StyleEnum<T = any> {
+    export class StyleEnum<T = any> {
       constructor(v: T);
       constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: T;
@@ -28681,7 +28681,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StyleFloat {
+    export class StyleFloat {
       constructor(v: number);
       constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: number;
@@ -28692,7 +28692,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StyleFont {
+    export class StyleFont {
       constructor(v: UnityEngine.Font);
       constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.Font;
@@ -28703,7 +28703,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StyleInt {
+    export class StyleInt {
       constructor(v: number);
       constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: number;
@@ -28714,7 +28714,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class StyleLength {
+    export class StyleLength {
       constructor(v: number);
       constructor(v: UnityEngine.UIElements.Length);
       constructor(keyword: UnityEngine.UIElements.StyleKeyword);
@@ -28858,7 +28858,7 @@ export namespace UnityEngine {
       whiteSpace: UnityEngine.UIElements.StyleEnum<UnityEngine.UIElements.WhiteSpace>;
       width: UnityEngine.UIElements.StyleLength;
     }
-    export declare class StyleSheet {
+    export class StyleSheet {
       constructor();
       contentHash: number;
       name: string;
@@ -28870,7 +28870,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ThemeStyleSheet {
+    export class ThemeStyleSheet {
       constructor();
       contentHash: number;
       name: string;
@@ -28884,7 +28884,7 @@ export namespace UnityEngine {
     }
     export interface IUxmlAttributes {
     }
-    export declare class UxmlRootElementFactory {
+    export class UxmlRootElementFactory {
       constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
@@ -28902,7 +28902,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlRootElementTraits {
+    export class UxmlRootElementTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -28913,7 +28913,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlStyleFactory {
+    export class UxmlStyleFactory {
       constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
@@ -28931,7 +28931,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlStyleTraits {
+    export class UxmlStyleTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -28942,7 +28942,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlTemplateFactory {
+    export class UxmlTemplateFactory {
       constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
@@ -28960,7 +28960,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlTemplateTraits {
+    export class UxmlTemplateTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -28971,7 +28971,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlAttributeOverridesFactory {
+    export class UxmlAttributeOverridesFactory {
       constructor();
       uxmlName: string;
       uxmlQualifiedName: string;
@@ -28989,7 +28989,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlAttributeOverridesTraits {
+    export class UxmlAttributeOverridesTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -29000,7 +29000,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlAttributeDescription {
+    export class UxmlAttributeDescription {
       name: string;
       obsoleteNames: System.Collections.Generic.IEnumerable<string>;
       type: string;
@@ -29019,7 +29019,7 @@ export namespace UnityEngine {
       Prohibited = 2,
       Required = 3,
     }
-    export declare class TypedUxmlAttributeDescription<T = any> {
+    export class TypedUxmlAttributeDescription<T = any> {
       defaultValue: T;
       defaultValueAsString: string;
       name: string;
@@ -29034,7 +29034,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlStringAttributeDescription {
+    export class UxmlStringAttributeDescription {
       constructor();
       defaultValueAsString: string;
       defaultValue: string;
@@ -29050,7 +29050,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlFloatAttributeDescription {
+    export class UxmlFloatAttributeDescription {
       constructor();
       defaultValueAsString: string;
       defaultValue: number;
@@ -29066,7 +29066,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlDoubleAttributeDescription {
+    export class UxmlDoubleAttributeDescription {
       constructor();
       defaultValueAsString: string;
       defaultValue: number;
@@ -29082,7 +29082,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlIntAttributeDescription {
+    export class UxmlIntAttributeDescription {
       constructor();
       defaultValueAsString: string;
       defaultValue: number;
@@ -29098,7 +29098,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlLongAttributeDescription {
+    export class UxmlLongAttributeDescription {
       constructor();
       defaultValueAsString: string;
       defaultValue: System.Int64;
@@ -29114,7 +29114,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlBoolAttributeDescription {
+    export class UxmlBoolAttributeDescription {
       constructor();
       defaultValueAsString: string;
       defaultValue: boolean;
@@ -29130,7 +29130,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlColorAttributeDescription {
+    export class UxmlColorAttributeDescription {
       constructor();
       defaultValueAsString: string;
       defaultValue: UnityEngine.Color;
@@ -29146,7 +29146,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlTypeAttributeDescription<TBase = any> {
+    export class UxmlTypeAttributeDescription<TBase = any> {
       constructor();
       defaultValueAsString: string;
       defaultValue: System.Type;
@@ -29162,7 +29162,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlEnumAttributeDescription<T = any> {
+    export class UxmlEnumAttributeDescription<T = any> {
       constructor();
       defaultValueAsString: string;
       defaultValue: T;
@@ -29178,7 +29178,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlChildElementDescription {
+    export class UxmlChildElementDescription {
       constructor(t: System.Type);
       elementName: string;
       elementNamespace: string;
@@ -29187,7 +29187,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlTraits {
+    export class UxmlTraits {
       canHaveAnyAttribute: boolean;
       uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
@@ -29210,7 +29210,7 @@ export namespace UnityEngine {
       AcceptsAttributeBag(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): boolean;
       Create(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): UnityEngine.UIElements.VisualElement;
     }
-    export declare class UxmlFactory<TCreatedType = any, TTraits = any> {
+    export class UxmlFactory<TCreatedType = any, TTraits = any> {
       uxmlName: string;
       uxmlNamespace: string;
       uxmlQualifiedName: string;
@@ -29227,14 +29227,14 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlTypeRestriction {
+    export class UxmlTypeRestriction {
       Equals(other: UnityEngine.UIElements.UxmlTypeRestriction): boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlValueMatches {
+    export class UxmlValueMatches {
       constructor();
       regex: string;
       Equals(other: UnityEngine.UIElements.UxmlTypeRestriction): boolean;
@@ -29243,7 +29243,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlValueBounds {
+    export class UxmlValueBounds {
       constructor();
       min: string;
       max: string;
@@ -29255,7 +29255,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UxmlEnumeration {
+    export class UxmlEnumeration {
       constructor();
       values: System.Collections.Generic.IEnumerable<string>;
       Equals(other: UnityEngine.UIElements.UxmlTypeRestriction): boolean;
@@ -29264,7 +29264,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VectorImage {
+    export class VectorImage {
       constructor();
       name: string;
       hideFlags: UnityEngine.HideFlags;
@@ -29275,7 +29275,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class VisualTreeAsset {
+    export class VisualTreeAsset {
       constructor();
       templateDependencies: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualTreeAsset>;
       stylesheets: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.StyleSheet>;
@@ -29294,7 +29294,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CreationContext {
+    export class CreationContext {
       target: UnityEngine.UIElements.VisualElement;
       visualTreeAsset: UnityEngine.UIElements.VisualTreeAsset;
       slotInsertionPoints: System.Collections.Generic.Dictionary<string, UnityEngine.UIElements.VisualElement>;
@@ -29306,7 +29306,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
     }
     export namespace Experimental {
-      export declare class Easing {
+      export class Easing {
         static Step(t: number): number;
         static Linear(t: number): number;
         static InSine(t: number): number;
@@ -29341,7 +29341,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StyleValues {
+      export class StyleValues {
         top: number;
         left: number;
         width: number;
@@ -29405,7 +29405,7 @@ export namespace UnityEngine {
         Stop(): void;
         Recycle(): void;
       }
-      export declare class ValueAnimation<T = any> {
+      export class ValueAnimation<T = any> {
         constructor();
         durationMs: number;
         easingCurve: ((arg0: number, arg1: number) => number);
@@ -29432,7 +29432,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Video {
-    export declare class VideoClip {
+    export class VideoClip {
       originalPath: string;
       frameCount: System.UInt64;
       frameRate: number;
@@ -29493,7 +29493,7 @@ export namespace UnityEngine {
       Direct = 2,
       APIOnly = 3,
     }
-    export declare class VideoPlayer {
+    export class VideoPlayer {
       constructor();
       source: UnityEngine.Video.VideoSource;
       url: string;
@@ -29605,7 +29605,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class VideoPlayer_EventHandler {
+    export class VideoPlayer_EventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -29621,7 +29621,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VideoPlayer_ErrorEventHandler {
+    export class VideoPlayer_ErrorEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -29637,7 +29637,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VideoPlayer_FrameReadyEventHandler {
+    export class VideoPlayer_FrameReadyEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -29653,7 +29653,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class VideoPlayer_TimeEventHandler {
+    export class VideoPlayer_TimeEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -29671,7 +29671,7 @@ export namespace UnityEngine {
     }
   }
   export namespace Windows {
-    export declare class LicenseInformation {
+    export class LicenseInformation {
       static isOnAppTrial: boolean;
       static PurchaseApp(): string;
       Equals(obj: System.Object): boolean;
@@ -29679,14 +29679,14 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CrashReporting {
+    export class CrashReporting {
       static crashReportFolder: string;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Crypto {
+    export class Crypto {
       static ComputeMD5Hash(buffer: System.Byte[]): System.Byte[];
       static ComputeSHA1Hash(buffer: System.Byte[]): System.Byte[];
       Equals(obj: System.Object): boolean;
@@ -29694,7 +29694,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Directory {
+    export class Directory {
       static temporaryFolder: string;
       static localFolder: string;
       static roamingFolder: string;
@@ -29706,7 +29706,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class File {
+    export class File {
       static ReadAllBytes(path: string): System.Byte[];
       static WriteAllBytes(path: string, bytes: System.Byte[]): void;
       static Exists(path: string): boolean;
@@ -29717,7 +29717,7 @@ export namespace UnityEngine {
       ToString(): string;
     }
     export namespace Speech {
-      export declare class PhraseRecognitionSystem {
+      export class PhraseRecognitionSystem {
         static isSupported: boolean;
         static Status: UnityEngine.Windows.Speech.SpeechSystemStatus;
         static Restart(): void;
@@ -29727,7 +29727,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhraseRecognitionSystem_ErrorDelegate {
+      export class PhraseRecognitionSystem_ErrorDelegate {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -29743,7 +29743,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhraseRecognitionSystem_StatusDelegate {
+      export class PhraseRecognitionSystem_StatusDelegate {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -29759,7 +29759,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhraseRecognizer {
+      export class PhraseRecognizer {
         IsRunning: boolean;
         Start(): void;
         Stop(): void;
@@ -29769,7 +29769,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhraseRecognizer_PhraseRecognizedDelegate {
+      export class PhraseRecognizer_PhraseRecognizedDelegate {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -29785,7 +29785,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DictationRecognizer {
+      export class DictationRecognizer {
         constructor();
         constructor(confidenceLevel: UnityEngine.Windows.Speech.ConfidenceLevel);
         constructor(topic: UnityEngine.Windows.Speech.DictationTopicConstraint);
@@ -29801,7 +29801,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DictationRecognizer_DictationHypothesisDelegate {
+      export class DictationRecognizer_DictationHypothesisDelegate {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -29817,7 +29817,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DictationRecognizer_DictationResultDelegate {
+      export class DictationRecognizer_DictationResultDelegate {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -29833,7 +29833,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DictationRecognizer_DictationCompletedDelegate {
+      export class DictationRecognizer_DictationCompletedDelegate {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -29849,7 +29849,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DictationRecognizer_DictationErrorHandler {
+      export class DictationRecognizer_DictationErrorHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -29903,7 +29903,7 @@ export namespace UnityEngine {
         MicrophoneUnavailable = 6,
         UnknownError = 7,
       }
-      export declare class SemanticMeaning {
+      export class SemanticMeaning {
         key: string;
         values: string[];
         Equals(obj: System.Object): boolean;
@@ -29911,7 +29911,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class PhraseRecognizedEventArgs {
+      export class PhraseRecognizedEventArgs {
         confidence: UnityEngine.Windows.Speech.ConfidenceLevel;
         semanticMeanings: UnityEngine.Windows.Speech.SemanticMeaning[];
         text: string;
@@ -29922,7 +29922,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class KeywordRecognizer {
+      export class KeywordRecognizer {
         constructor(keywords: string[]);
         constructor(keywords: string[], minimumConfidence: UnityEngine.Windows.Speech.ConfidenceLevel);
         Keywords: System.Collections.Generic.IEnumerable<string>;
@@ -29935,7 +29935,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class GrammarRecognizer {
+      export class GrammarRecognizer {
         constructor(grammarFilePath: string);
         constructor(grammarFilePath: string, minimumConfidence: UnityEngine.Windows.Speech.ConfidenceLevel);
         GrammarFilePath: string;
@@ -29954,7 +29954,7 @@ export namespace UnityEngine {
         PNG = 0,
         JPG = 1,
       }
-      export declare class PhotoCapture {
+      export class PhotoCapture {
         static SupportedResolutions: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.Resolution]
         static CreateAsync(showHolograms: boolean, onCreatedCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnCaptureResourceCreatedCallback): void;
         static CreateAsync(onCreatedCallback: UnityEngine.Windows.WebCam.PhotoCapture_OnCaptureResourceCreatedCallback): void;
@@ -29973,7 +29973,7 @@ export namespace UnityEngine {
         Success = 0,
         UnknownError = 1,
       }
-      export declare class PhotoCapture_PhotoCaptureResult {
+      export class PhotoCapture_PhotoCaptureResult {
         success: boolean;
         resultType: UnityEngine.Windows.WebCam.PhotoCapture_CaptureResultType;
         hResult: System.Int64;
@@ -29982,7 +29982,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class PhotoCapture_OnCaptureResourceCreatedCallback {
+      export class PhotoCapture_OnCaptureResourceCreatedCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -29998,7 +29998,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhotoCapture_OnPhotoModeStartedCallback {
+      export class PhotoCapture_OnPhotoModeStartedCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30014,7 +30014,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhotoCapture_OnPhotoModeStoppedCallback {
+      export class PhotoCapture_OnPhotoModeStoppedCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30030,7 +30030,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhotoCapture_OnCapturedToDiskCallback {
+      export class PhotoCapture_OnCapturedToDiskCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30046,7 +30046,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhotoCapture_OnCapturedToMemoryCallback {
+      export class PhotoCapture_OnCapturedToMemoryCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30062,7 +30062,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PhotoCaptureFrame {
+      export class PhotoCaptureFrame {
         dataLength: number;
         hasLocationData: boolean;
         pixelFormat: UnityEngine.Windows.WebCam.CapturePixelFormat;
@@ -30075,7 +30075,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class VideoCapture {
+      export class VideoCapture {
         static SupportedResolutions: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.Resolution]
         IsRecording: boolean;
         static GetSupportedFrameRatesForResolution(resolution: UnityEngine.Resolution): any;
@@ -30102,7 +30102,7 @@ export namespace UnityEngine {
         ApplicationAndMicAudio = 2,
         None = 3,
       }
-      export declare class VideoCapture_VideoCaptureResult {
+      export class VideoCapture_VideoCaptureResult {
         success: boolean;
         resultType: UnityEngine.Windows.WebCam.VideoCapture_CaptureResultType;
         hResult: System.Int64;
@@ -30111,7 +30111,7 @@ export namespace UnityEngine {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class VideoCapture_OnVideoCaptureResourceCreatedCallback {
+      export class VideoCapture_OnVideoCaptureResourceCreatedCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30127,7 +30127,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class VideoCapture_OnVideoModeStartedCallback {
+      export class VideoCapture_OnVideoModeStartedCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30143,7 +30143,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class VideoCapture_OnVideoModeStoppedCallback {
+      export class VideoCapture_OnVideoModeStoppedCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30159,7 +30159,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class VideoCapture_OnStartedRecordingVideoCallback {
+      export class VideoCapture_OnStartedRecordingVideoCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30175,7 +30175,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class VideoCapture_OnStoppedRecordingVideoCallback {
+      export class VideoCapture_OnStoppedRecordingVideoCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -30202,7 +30202,7 @@ export namespace UnityEngine {
         PhotoMode = 1,
         VideoMode = 2,
       }
-      export declare class WebCam {
+      export class WebCam {
         constructor();
         static Mode: UnityEngine.Windows.WebCam.WebCamMode;
         Equals(obj: System.Object): boolean;
@@ -30210,7 +30210,7 @@ export namespace UnityEngine {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CameraParameters {
+      export class CameraParameters {
         constructor(webCamMode: UnityEngine.Windows.WebCam.WebCamMode);
         hologramOpacity: number;
         frameRate: number;
@@ -30225,7 +30225,7 @@ export namespace UnityEngine {
     }
   }
   export namespace WSA {
-    export declare class AppCallbackItem {
+    export class AppCallbackItem {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -30241,7 +30241,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WindowSizeChanged {
+    export class WindowSizeChanged {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -30262,7 +30262,7 @@ export namespace UnityEngine {
       Deactivated = 1,
       PointerActivated = 2,
     }
-    export declare class WindowActivated {
+    export class WindowActivated {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -30278,7 +30278,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Application {
+    export class Application {
       constructor();
       static arguments: string;
       static advertisingIdentifier: string;
@@ -30291,7 +30291,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Cursor {
+    export class Cursor {
       static SetCustomCursor(id: System.UInt32): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -30314,7 +30314,7 @@ export namespace UnityEngine {
       SavedPictures = 12,
       VideosLibrary = 13,
     }
-    export declare class Launcher {
+    export class Launcher {
       constructor();
       static LaunchFile(folder: UnityEngine.WSA.Folder, relativeFilePath: string, showWarning: boolean): void;
       static LaunchFileWithPicker(fileExtension: string): void;
@@ -30424,7 +30424,7 @@ export namespace UnityEngine {
       Dark = 0,
       Light = 1,
     }
-    export declare class SecondaryTileData {
+    export class SecondaryTileData {
       constructor(id: string, displayName: string);
       backgroundColor: UnityEngine.Color32;
       arguments: string;
@@ -30449,7 +30449,7 @@ export namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Tile {
+    export class Tile {
       static main: UnityEngine.WSA.Tile;
       id: string;
       hasUserConsent: boolean;
@@ -30481,7 +30481,7 @@ export namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Toast {
+    export class Toast {
       arguments: string;
       activated: boolean;
       dismissed: boolean;

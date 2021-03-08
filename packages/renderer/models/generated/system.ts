@@ -1,11 +1,11 @@
 //
 // Types in assemblies: mscorlib, mscorlib, System.Core, System, mscorlib, System, mscorlib
-// Generated 7.03.2021 23:19:28
+// Generated 9.03.2021 02:10:06
 //
 
 
-export namespace System {
-  export declare class Memory<T = any> {
+export declare namespace System {
+  export class Memory<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
     static Empty: any; // System.Memory`1[T]
@@ -22,7 +22,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ReadOnlyMemory<T = any> {
+  export class ReadOnlyMemory<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
     static Empty: any; // System.ReadOnlyMemory`1[T]
@@ -39,7 +39,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ReadOnlySpan<T = any> {
+  export class ReadOnlySpan<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
     Length: number;
@@ -55,7 +55,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Span<T = any> {
+  export class Span<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
     Length: number;
@@ -73,7 +73,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class SpanExtensions {
+  export class SpanExtensions {
     static AsReadOnlySpan(text: string): any;
     static IndexOf(span: any, value: System.Byte): number;
     static IndexOf(span: any, value: any): number;
@@ -94,13 +94,13 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class TupleExtensions {
+  export class TupleExtensions {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ValueTuple<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, TRest = any> {
+  export class ValueTuple<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, TRest = any> {
     constructor(item1: T1, item2: T2, item3: T3, item4: T4, item5: T5, item6: T6, item7: T7, rest: TRest);
     Item1: T1;
     Item2: T2;
@@ -117,7 +117,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Array {
+  export class Array {
     LongLength: System.Int64;
     IsFixedSize: boolean;
     IsReadOnly: boolean;
@@ -187,7 +187,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Tuple<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, TRest = any> {
+  export class Tuple<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, TRest = any> {
     constructor(item1: T1, item2: T2, item3: T3, item4: T4, item5: T5, item6: T6, item7: T7, rest: TRest);
     Item1: T1;
     Item2: T2;
@@ -202,7 +202,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AggregateException {
+  export class AggregateException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -229,7 +229,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class AppContext {
+  export class AppContext {
     static BaseDirectory: string;
     static TargetFrameworkName: string;
     static GetData(name: string): System.Object;
@@ -239,7 +239,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class FormattableString {
+  export class FormattableString {
     Format: string;
     ArgumentCount: number;
     GetArguments(): System.Object[];
@@ -251,7 +251,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Lazy<T = any> {
+  export class Lazy<T = any> {
     constructor();
     constructor(valueFactory: ((arg0: T) => T));
     constructor(isThreadSafe: boolean);
@@ -265,13 +265,13 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class LocalDataStoreSlot {
+  export class LocalDataStoreSlot {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AccessViolationException {
+  export class AccessViolationException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -291,7 +291,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Action<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, T8 = any, T9 = any, T10 = any, T11 = any, T12 = any, T13 = any, T14 = any, T15 = any, T16 = any> {
+  export class Action<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, T8 = any, T9 = any, T10 = any, T11 = any, T12 = any, T13 = any, T14 = any, T15 = any, T16 = any> {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -307,7 +307,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Func<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, T8 = any, T9 = any, T10 = any, T11 = any, T12 = any, T13 = any, T14 = any, T15 = any, T16 = any, TResult = any> {
+  export class Func<T1 = any, T2 = any, T3 = any, T4 = any, T5 = any, T6 = any, T7 = any, T8 = any, T9 = any, T10 = any, T11 = any, T12 = any, T13 = any, T14 = any, T15 = any, T16 = any, TResult = any> {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -323,7 +323,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Comparison<T = any> {
+  export class Comparison<T = any> {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -339,7 +339,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Converter<TInput = any, TOutput = any> {
+  export class Converter<TInput = any, TOutput = any> {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -355,7 +355,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Predicate<T = any> {
+  export class Predicate<T = any> {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -371,7 +371,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Activator {
+  export class Activator {
     static CreateInstance(type: System.Type, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo): System.Object;
     static CreateInstance(type: System.Type, bindingAttr: System.Reflection.BindingFlags, binder: System.Reflection.Binder, args: System.Object[], culture: System.Globalization.CultureInfo, activationAttributes: System.Object[]): System.Object;
     static CreateInstance(type: System.Type, ...args: System.Object[]): System.Object;
@@ -411,7 +411,7 @@ export namespace System {
     DomainMask = 3,
     DisallowBindings = 4,
   }
-  export declare class AppDomainUnloadedException {
+  export class AppDomainUnloadedException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -431,7 +431,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ApplicationException {
+  export class ApplicationException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -451,7 +451,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ApplicationId {
+  export class ApplicationId {
     constructor(publicKeyToken: System.Byte[], name: string, version: System.Version, processorArchitecture: string, culture: string);
     PublicKeyToken: System.Byte[];
     Name: string;
@@ -464,7 +464,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ArgumentException {
+  export class ArgumentException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -487,7 +487,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ArgumentNullException {
+  export class ArgumentNullException {
     constructor();
     constructor(paramName: string);
     constructor(message: string, innerException: System.Exception);
@@ -509,7 +509,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ArgumentOutOfRangeException {
+  export class ArgumentOutOfRangeException {
     constructor();
     constructor(paramName: string);
     constructor(paramName: string, message: string);
@@ -533,7 +533,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ArithmeticException {
+  export class ArithmeticException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -553,7 +553,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ArraySegment<T = any> {
+  export class ArraySegment<T = any> {
     constructor(array: T[]);
     constructor(array: T[], offset: number, count: number);
     Array: T[];
@@ -565,7 +565,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class ArrayTypeMismatchException {
+  export class ArrayTypeMismatchException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -585,7 +585,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class AsyncCallback {
+  export class AsyncCallback {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -619,7 +619,7 @@ export namespace System {
     GenericParameter = 16384,
     All = 32767,
   }
-  export declare class BadImageFormatException {
+  export class BadImageFormatException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -643,7 +643,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class BitConverter {
+  export class BitConverter {
     static IsLittleEndian: boolean;
     static GetBytes(value: boolean): System.Byte[];
     static GetBytes(value: System.Char): System.Byte[];
@@ -675,7 +675,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Boolean {
+  export class Boolean {
     static TrueString: string;
     static FalseString: string;
     GetHashCode(): number;
@@ -689,7 +689,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class Buffer {
+  export class Buffer {
     static ByteLength(array: System.Array): number;
     static GetByte(array: System.Array, index: number): System.Byte;
     static SetByte(array: System.Array, index: number, value: System.Byte): void;
@@ -699,7 +699,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Byte {
+  export class Byte {
     static MaxValue: System.Byte;
     static MinValue: System.Byte;
     CompareTo(value: System.Object): number;
@@ -718,7 +718,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class CannotUnloadAppDomainException {
+  export class CannotUnloadAppDomainException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -738,7 +738,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Char {
+  export class Char {
     static MaxValue: System.Char;
     static MinValue: System.Char;
     GetHashCode(): number;
@@ -796,7 +796,7 @@ export namespace System {
     static ConvertToUtf32(s: string, index: number): number;
     GetType(): System.Type;
   }
-  export declare class CharEnumerator {
+  export class CharEnumerator {
     Current: System.Char;
     Clone(): System.Object;
     MoveNext(): boolean;
@@ -807,7 +807,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ConsoleCancelEventHandler {
+  export class ConsoleCancelEventHandler {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -823,7 +823,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ConsoleCancelEventArgs {
+  export class ConsoleCancelEventArgs {
     Cancel: boolean;
     SpecialKey: System.ConsoleSpecialKey;
     Equals(obj: System.Object): boolean;
@@ -995,7 +995,7 @@ export namespace System {
     Pa1 = 253,
     OemClear = 254,
   }
-  export declare class ConsoleKeyInfo {
+  export class ConsoleKeyInfo {
     constructor(keyChar: System.Char, key: System.ConsoleKey, shift: boolean, alt: boolean, control: boolean);
     KeyChar: System.Char;
     Key: System.ConsoleKey;
@@ -1015,7 +1015,7 @@ export namespace System {
     ControlC = 0,
     ControlBreak = 1,
   }
-  export declare class ContextBoundObject {
+  export class ContextBoundObject {
     CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
     GetLifetimeService(): System.Object;
     InitializeLifetimeService(): System.Object;
@@ -1024,7 +1024,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ContextMarshalException {
+  export class ContextMarshalException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -1048,7 +1048,7 @@ export namespace System {
     None = 0,
     InsertLineBreaks = 1,
   }
-  export declare class Convert {
+  export class Convert {
     static DBNull: System.Object;
     static GetTypeCode(value: System.Object): System.TypeCode;
     static IsDBNull(value: System.Object): boolean;
@@ -1365,7 +1365,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class DataMisalignedException {
+  export class DataMisalignedException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -1385,7 +1385,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class DateTime {
+  export class DateTime {
     constructor(ticks: System.Int64);
     constructor(ticks: System.Int64, kind: System.DateTimeKind);
     constructor(year: number, month: number, day: number);
@@ -1473,7 +1473,7 @@ export namespace System {
     Utc = 1,
     Local = 2,
   }
-  export declare class DateTimeOffset {
+  export class DateTimeOffset {
     constructor(ticks: System.Int64, offset: System.TimeSpan);
     constructor(dateTime: System.DateTime);
     constructor(dateTime: System.DateTime, offset: System.TimeSpan);
@@ -1549,7 +1549,7 @@ export namespace System {
     Friday = 5,
     Saturday = 6,
   }
-  export declare class DBNull {
+  export class DBNull {
     static Value: System.DBNull;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     ToString(): string;
@@ -1559,7 +1559,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Decimal {
+  export class Decimal {
     constructor(value: number);
     constructor(value: System.UInt32);
     constructor(value: System.Int64);
@@ -1617,7 +1617,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class DivideByZeroException {
+  export class DivideByZeroException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -1637,7 +1637,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class DllNotFoundException {
+  export class DllNotFoundException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -1658,7 +1658,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Double {
+  export class Double {
     static MinValue: number;
     static MaxValue: number;
     static Epsilon: number;
@@ -1686,7 +1686,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class DuplicateWaitObjectException {
+  export class DuplicateWaitObjectException {
     constructor();
     constructor(parameterName: string);
     constructor(parameterName: string, message: string);
@@ -1708,7 +1708,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class EntryPointNotFoundException {
+  export class EntryPointNotFoundException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -1729,7 +1729,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Enum {
+  export class Enum {
     static Parse(enumType: System.Type, value: string): System.Object;
     static Parse(enumType: System.Type, value: string, ignoreCase: boolean): System.Object;
     static GetUnderlyingType(enumType: System.Type): System.Type;
@@ -1758,7 +1758,7 @@ export namespace System {
     static ToObject(enumType: System.Type, value: System.UInt64): System.Object;
     GetType(): System.Type;
   }
-  export declare class EventArgs {
+  export class EventArgs {
     constructor();
     static Empty: System.EventArgs;
     Equals(obj: System.Object): boolean;
@@ -1766,7 +1766,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class EventHandler<TEventArgs = any> {
+  export class EventHandler<TEventArgs = any> {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -1782,7 +1782,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Exception {
+  export class Exception {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -1802,7 +1802,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ExecutionEngineException {
+  export class ExecutionEngineException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -1822,7 +1822,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class FieldAccessException {
+  export class FieldAccessException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -1842,7 +1842,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class FormatException {
+  export class FormatException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -1874,7 +1874,7 @@ export namespace System {
     Timeout = 3,
     NotApplicable = 4,
   }
-  export declare class GC {
+  export class GC {
     static MaxGeneration: number;
     static AddMemoryPressure(bytesAllocated: System.Int64): void;
     static RemoveMemoryPressure(bytesAllocated: System.Int64): void;
@@ -1907,7 +1907,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Guid {
+  export class Guid {
     constructor(b: System.Byte[]);
     constructor(a: System.UInt32, b: System.UInt16, c: System.UInt16, d: System.Byte, e: System.Byte, f: System.Byte, g: System.Byte, h: System.Byte, i: System.Byte, j: System.Byte, k: System.Byte);
     constructor(a: number, b: System.Int16, c: System.Int16, d: System.Byte[]);
@@ -2038,7 +2038,7 @@ export namespace System {
   export interface IFormattable {
     ToString(format: string, formatProvider: System.IFormatProvider): string;
   }
-  export declare class IndexOutOfRangeException {
+  export class IndexOutOfRangeException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2058,7 +2058,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class InsufficientExecutionStackException {
+  export class InsufficientExecutionStackException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2078,7 +2078,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class InsufficientMemoryException {
+  export class InsufficientMemoryException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2098,7 +2098,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Int16 {
+  export class Int16 {
     static MaxValue: System.Int16;
     static MinValue: System.Int16;
     CompareTo(value: System.Object): number;
@@ -2117,7 +2117,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class Int32 {
+  export class Int32 {
     static MaxValue: number;
     static MinValue: number;
     CompareTo(value: System.Object): number;
@@ -2136,7 +2136,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class Int64 {
+  export class Int64 {
     static MaxValue: System.Int64;
     static MinValue: System.Int64;
     CompareTo(value: System.Object): number;
@@ -2155,7 +2155,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class InvalidCastException {
+  export class InvalidCastException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2176,7 +2176,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class InvalidOperationException {
+  export class InvalidOperationException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2196,7 +2196,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class InvalidProgramException {
+  export class InvalidProgramException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2216,7 +2216,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class InvalidTimeZoneException {
+  export class InvalidTimeZoneException {
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
     constructor();
@@ -2250,7 +2250,7 @@ export namespace System {
   export interface IServiceProvider {
     GetService(serviceType: System.Type): System.Object;
   }
-  export declare class Math {
+  export class Math {
     static PI: number;
     static E: number;
     static Acos(d: number): number;
@@ -2326,7 +2326,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class MemberAccessException {
+  export class MemberAccessException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2346,7 +2346,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class MethodAccessException {
+  export class MethodAccessException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2370,7 +2370,7 @@ export namespace System {
     ToEven = 0,
     AwayFromZero = 1,
   }
-  export declare class MissingFieldException {
+  export class MissingFieldException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2391,7 +2391,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class MissingMemberException {
+  export class MissingMemberException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2412,7 +2412,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class MissingMethodException {
+  export class MissingMethodException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2433,7 +2433,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class MulticastNotSupportedException {
+  export class MulticastNotSupportedException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2453,7 +2453,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class NotFiniteNumberException {
+  export class NotFiniteNumberException {
     constructor();
     constructor(offendingNumber: number);
     constructor(message: string);
@@ -2477,7 +2477,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class NotImplementedException {
+  export class NotImplementedException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2497,7 +2497,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class NotSupportedException {
+  export class NotSupportedException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2517,7 +2517,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class NullReferenceException {
+  export class NullReferenceException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2537,7 +2537,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ObjectDisposedException {
+  export class ObjectDisposedException {
     constructor(objectName: string);
     constructor(objectName: string, message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2558,7 +2558,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class OperationCanceledException {
+  export class OperationCanceledException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2582,7 +2582,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class OutOfMemoryException {
+  export class OutOfMemoryException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2602,7 +2602,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class OverflowException {
+  export class OverflowException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2622,7 +2622,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class PlatformNotSupportedException {
+  export class PlatformNotSupportedException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -2642,7 +2642,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Progress<T = any> {
+  export class Progress<T = any> {
     constructor();
     constructor(handler: (() => void));
     Equals(obj: System.Object): boolean;
@@ -2650,7 +2650,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Random {
+  export class Random {
     constructor();
     constructor(Seed: number);
     Next(): number;
@@ -2663,7 +2663,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class RankException {
+  export class RankException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2683,7 +2683,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class SByte {
+  export class SByte {
     static MaxValue: System.SByte;
     static MinValue: System.SByte;
     CompareTo(obj: System.Object): number;
@@ -2702,7 +2702,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class Single {
+  export class Single {
     static MinValue: number;
     static Epsilon: number;
     static MaxValue: number;
@@ -2730,7 +2730,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class StackOverflowException {
+  export class StackOverflowException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2750,7 +2750,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class String {
+  export class String {
     constructor(value: System.Char[], startIndex: number, length: number);
     constructor(value: System.Char[]);
     constructor(c: System.Char, count: number);
@@ -2879,7 +2879,7 @@ export namespace System {
     None = 0,
     RemoveEmptyEntries = 1,
   }
-  export declare class StringComparer {
+  export class StringComparer {
     static InvariantCulture: System.StringComparer;
     static InvariantCultureIgnoreCase: System.StringComparer;
     static CurrentCulture: System.StringComparer;
@@ -2898,7 +2898,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class SystemException {
+  export class SystemException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2918,7 +2918,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class TimeoutException {
+  export class TimeoutException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -2938,7 +2938,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class TimeSpan {
+  export class TimeSpan {
     constructor(ticks: System.Int64);
     constructor(hours: number, minutes: number, seconds: number);
     constructor(days: number, hours: number, minutes: number, seconds: number);
@@ -2990,7 +2990,7 @@ export namespace System {
     ToString(format: string, formatProvider: System.IFormatProvider): string;
     GetType(): System.Type;
   }
-  export declare class TimeZoneInfo {
+  export class TimeZoneInfo {
     BaseUtcOffset: System.TimeSpan;
     DaylightName: string;
     DisplayName: string;
@@ -3033,7 +3033,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TimeZoneInfo_AdjustmentRule {
+  export class TimeZoneInfo_AdjustmentRule {
     DateStart: System.DateTime;
     DateEnd: System.DateTime;
     DaylightDelta: System.TimeSpan;
@@ -3046,7 +3046,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class TimeZoneInfo_TransitionTime {
+  export class TimeZoneInfo_TransitionTime {
     TimeOfDay: System.DateTime;
     Month: number;
     Week: number;
@@ -3061,7 +3061,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TimeZoneNotFoundException {
+  export class TimeZoneNotFoundException {
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
     constructor();
@@ -3081,7 +3081,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Type {
+  export class Type {
     MemberType: System.Reflection.MemberTypes;
     DeclaringType: System.Type;
     DeclaringMethod: System.Reflection.MethodBase;
@@ -3251,7 +3251,7 @@ export namespace System {
     GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
     GetType(): System.Type;
   }
-  export declare class TypeAccessException {
+  export class TypeAccessException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -3272,7 +3272,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class TypedReference {
+  export class TypedReference {
     static MakeTypedReference(target: System.Object, flds: System.Reflection.FieldInfo[]): System.TypedReference;
     GetHashCode(): number;
     Equals(o: System.Object): boolean;
@@ -3283,7 +3283,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class TypeInitializationException {
+  export class TypeInitializationException {
     constructor(fullTypeName: string, innerException: System.Exception);
     TypeName: string;
     Message: string;
@@ -3302,7 +3302,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class TypeLoadException {
+  export class TypeLoadException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -3323,7 +3323,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class TypeUnloadedException {
+  export class TypeUnloadedException {
     constructor();
     constructor(message: string);
     constructor(message: string, innerException: System.Exception);
@@ -3343,7 +3343,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class UInt16 {
+  export class UInt16 {
     static MaxValue: System.UInt16;
     static MinValue: System.UInt16;
     CompareTo(value: System.Object): number;
@@ -3362,7 +3362,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class UInt32 {
+  export class UInt32 {
     static MaxValue: System.UInt32;
     static MinValue: System.UInt32;
     CompareTo(value: System.Object): number;
@@ -3381,7 +3381,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class UInt64 {
+  export class UInt64 {
     static MaxValue: System.UInt64;
     static MinValue: System.UInt64;
     CompareTo(value: System.Object): number;
@@ -3400,7 +3400,7 @@ export namespace System {
     GetTypeCode(): System.TypeCode;
     GetType(): System.Type;
   }
-  export declare class UnauthorizedAccessException {
+  export class UnauthorizedAccessException {
     constructor();
     constructor(message: string);
     constructor(message: string, inner: System.Exception);
@@ -3420,7 +3420,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class UnhandledExceptionEventArgs {
+  export class UnhandledExceptionEventArgs {
     constructor(exception: System.Object, isTerminating: boolean);
     ExceptionObject: System.Object;
     IsTerminating: boolean;
@@ -3429,7 +3429,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UnhandledExceptionEventHandler {
+  export class UnhandledExceptionEventHandler {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -3445,7 +3445,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Version {
+  export class Version {
     constructor(major: number, minor: number, build: number, revision: number);
     constructor(major: number, minor: number, build: number);
     constructor(major: number, minor: number);
@@ -3468,7 +3468,7 @@ export namespace System {
     static Parse(input: string): System.Version;
     GetType(): System.Type;
   }
-  export declare class AppDomain {
+  export class AppDomain {
     SetupInformation: System.AppDomainSetup;
     ApplicationTrust: System.Security.Policy.ApplicationTrust;
     BaseDirectory: string;
@@ -3577,7 +3577,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class Environment {
+  export class Environment {
     static CommandLine: string;
     static CurrentDirectory: string;
     static CurrentManagedThreadId: number;
@@ -3671,7 +3671,7 @@ export namespace System {
     DoNotVerify = 16384,
     Create = 32768,
   }
-  export declare class ActivationContext {
+  export class ActivationContext {
     Form: System.ActivationContext_ContextForm;
     Identity: System.ApplicationIdentity;
     ApplicationManifestBytes: System.Byte[];
@@ -3688,7 +3688,7 @@ export namespace System {
     Loose = 0,
     StoreBounded = 1,
   }
-  export declare class AppDomainInitializer {
+  export class AppDomainInitializer {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -3704,7 +3704,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AppDomainManager {
+  export class AppDomainManager {
     constructor();
     ApplicationActivator: System.Runtime.Hosting.ApplicationActivator;
     EntryAssembly: System.Reflection.Assembly;
@@ -3722,7 +3722,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AppDomainSetup {
+  export class AppDomainSetup {
     constructor();
     constructor(activationArguments: System.Runtime.Hosting.ActivationArguments);
     constructor(activationContext: System.ActivationContext);
@@ -3759,7 +3759,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ApplicationIdentity {
+  export class ApplicationIdentity {
     constructor(applicationIdentityFullName: string);
     CodeBase: string;
     FullName: string;
@@ -3768,7 +3768,7 @@ export namespace System {
     GetHashCode(): number;
     GetType(): System.Type;
   }
-  export declare class ArgIterator {
+  export class ArgIterator {
     constructor(arglist: System.RuntimeArgumentHandle);
     End(): void;
     Equals(o: System.Object): boolean;
@@ -3780,7 +3780,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class AssemblyLoadEventArgs {
+  export class AssemblyLoadEventArgs {
     constructor(loadedAssembly: System.Reflection.Assembly);
     LoadedAssembly: System.Reflection.Assembly;
     Equals(obj: System.Object): boolean;
@@ -3788,7 +3788,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class AssemblyLoadEventHandler {
+  export class AssemblyLoadEventHandler {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -3804,7 +3804,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Console {
+  export class Console {
     static Error: System.IO.TextWriter;
     static Out: System.IO.TextWriter;
     static In: System.IO.TextReader;
@@ -3897,7 +3897,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class CrossAppDomainDelegate {
+  export class CrossAppDomainDelegate {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -3913,7 +3913,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Delegate {
+  export class Delegate {
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
     static CreateDelegate(type: System.Type, firstArgument: System.Object, method: System.Reflection.MethodInfo, throwOnBindFailure: boolean): System.Delegate;
@@ -3948,7 +3948,7 @@ export namespace System {
     User = 1,
     Machine = 2,
   }
-  export declare class IntPtr {
+  export class IntPtr {
     constructor(value: number);
     constructor(value: System.Int64);
     static Size: number;
@@ -3963,7 +3963,7 @@ export namespace System {
     static Subtract(pointer: System.IntPtr, offset: number): System.IntPtr;
     GetType(): System.Type;
   }
-  export declare class MarshalByRefObject {
+  export class MarshalByRefObject {
     CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
     GetLifetimeService(): System.Object;
     InitializeLifetimeService(): System.Object;
@@ -3972,7 +3972,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ModuleHandle {
+  export class ModuleHandle {
     MDStreamVersion: number;
     static EmptyHandle: System.ModuleHandle;
     ResolveFieldHandle(fieldToken: number): System.RuntimeFieldHandle;
@@ -3990,7 +3990,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class MulticastDelegate {
+  export class MulticastDelegate {
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
@@ -4002,7 +4002,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Nullable<T = any> {
+  export class Nullable<T = any> {
     constructor(value: T);
     HasValue: boolean;
     Value: T;
@@ -4013,7 +4013,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Object {
+  export class Object {
     constructor();
     Equals(obj: System.Object): boolean;
     static Equals(objA: System.Object, objB: System.Object): boolean;
@@ -4022,7 +4022,7 @@ export namespace System {
     ToString(): string;
     static ReferenceEquals(objA: System.Object, objB: System.Object): boolean;
   }
-  export declare class OperatingSystem {
+  export class OperatingSystem {
     constructor(platform: System.PlatformID, version: System.Version);
     Platform: System.PlatformID;
     Version: System.Version;
@@ -4044,7 +4044,7 @@ export namespace System {
     Xbox = 5,
     MacOSX = 6,
   }
-  export declare class ResolveEventArgs {
+  export class ResolveEventArgs {
     constructor(name: string);
     constructor(name: string, requestingAssembly: System.Reflection.Assembly);
     Name: string;
@@ -4054,7 +4054,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class ResolveEventHandler {
+  export class ResolveEventHandler {
     constructor(object: System.Object, method: System.IntPtr);
     Method: System.Reflection.MethodInfo;
     Target: System.Object;
@@ -4070,13 +4070,13 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class RuntimeArgumentHandle {
+  export class RuntimeArgumentHandle {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RuntimeFieldHandle {
+  export class RuntimeFieldHandle {
     Value: System.IntPtr;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: System.Object): boolean;
@@ -4085,7 +4085,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RuntimeMethodHandle {
+  export class RuntimeMethodHandle {
     Value: System.IntPtr;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     GetFunctionPointer(): System.IntPtr;
@@ -4095,7 +4095,7 @@ export namespace System {
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class RuntimeTypeHandle {
+  export class RuntimeTypeHandle {
     Value: System.IntPtr;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     Equals(obj: System.Object): boolean;
@@ -4113,7 +4113,7 @@ export namespace System {
     Ordinal = 4,
     OrdinalIgnoreCase = 5,
   }
-  export declare class TimeZone {
+  export class TimeZone {
     static CurrentTimeZone: System.TimeZone;
     DaylightName: string;
     StandardName: string;
@@ -4148,7 +4148,7 @@ export namespace System {
     DateTime = 16,
     String = 18,
   }
-  export declare class UIntPtr {
+  export class UIntPtr {
     constructor(value: System.UInt64);
     constructor(value: System.UInt32);
     static Size: number;
@@ -4162,19 +4162,19 @@ export namespace System {
     static Subtract(pointer: System.UIntPtr, offset: number): System.UIntPtr;
     GetType(): System.Type;
   }
-  export declare class ValueType {
+  export class ValueType {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class Void {
+  export class Void {
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     ToString(): string;
     GetType(): System.Type;
   }
-  export declare class WeakReference<T = any> {
+  export class WeakReference<T = any> {
     constructor(target: T);
     constructor(target: T, trackResurrection: boolean);
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
@@ -4184,7 +4184,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UriBuilder {
+  export class UriBuilder {
     constructor();
     constructor(uri: string);
     constructor(uri: System.Uri);
@@ -4220,14 +4220,14 @@ export namespace System {
     Idn = 512,
     IriParsing = 1024,
   }
-  export declare class GenericUriParser {
+  export class GenericUriParser {
     constructor(options: System.GenericUriParserOptions);
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class Uri {
+  export class Uri {
     constructor(uriString: string);
     constructor(uriString: string, dontEscape: boolean);
     constructor(baseUri: System.Uri, relativeUri: string, dontEscape: boolean);
@@ -4289,7 +4289,7 @@ export namespace System {
     IsBaseOf(uri: System.Uri): boolean;
     GetType(): System.Type;
   }
-  export declare class UriFormatException {
+  export class UriFormatException {
     constructor();
     constructor(textString: string);
     constructor(textString: string, e: System.Exception);
@@ -4356,63 +4356,63 @@ export namespace System {
     IPv4 = 3,
     IPv6 = 4,
   }
-  export declare class HttpStyleUriParser {
+  export class HttpStyleUriParser {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class FtpStyleUriParser {
+  export class FtpStyleUriParser {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class FileStyleUriParser {
+  export class FileStyleUriParser {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class NewsStyleUriParser {
+  export class NewsStyleUriParser {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class GopherStyleUriParser {
+  export class GopherStyleUriParser {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class LdapStyleUriParser {
+  export class LdapStyleUriParser {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class NetPipeStyleUriParser {
+  export class NetPipeStyleUriParser {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class NetTcpStyleUriParser {
+  export class NetTcpStyleUriParser {
     constructor();
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UriParser {
+  export class UriParser {
     static Register(uriParser: System.UriParser, schemeName: string, defaultPort: number): void;
     static IsKnownScheme(schemeName: string): boolean;
     Equals(obj: System.Object): boolean;
@@ -4420,7 +4420,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class UriTypeConverter {
+  export class UriTypeConverter {
     constructor();
     CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
     CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
@@ -4462,7 +4462,7 @@ export namespace System {
     GetType(): System.Type;
     ToString(): string;
   }
-  export declare class StringNormalizationExtensions {
+  export class StringNormalizationExtensions {
     static IsNormalized(value: string): boolean;
     static IsNormalized(value: string, normalizationForm: System.Text.NormalizationForm): boolean;
     static Normalize(value: string): string;
@@ -4477,14 +4477,14 @@ export namespace System {
       Retain(): void;
       Release(): boolean;
     }
-    export declare class MemoryHandle {
+    export class MemoryHandle {
       Dispose(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class OwnedMemory<T = any> {
+    export class OwnedMemory<T = any> {
       Length: number;
       Span: System.Span<T>;
       Memory: System.Memory<T>;
@@ -4499,7 +4499,7 @@ export namespace System {
       ToString(): string;
     }
     export namespace Binary {
-      export declare class BinaryPrimitives {
+      export class BinaryPrimitives {
         static ReverseEndianness(value: System.SByte): System.SByte;
         static ReverseEndianness(value: System.Int16): System.Int16;
         static ReverseEndianness(value: number): number;
@@ -4552,7 +4552,7 @@ export namespace System {
     }
   }
   export namespace CodeDom {
-    export declare class CodeObject {
+    export class CodeObject {
       constructor();
       UserData: System.Collections.IDictionary;
       Equals(obj: System.Object): boolean;
@@ -4564,7 +4564,7 @@ export namespace System {
       GlobalReference = 1,
       GenericTypeParameter = 2,
     }
-    export declare class CodeTypeReference {
+    export class CodeTypeReference {
       constructor();
       constructor(type: System.Type);
       constructor(type: System.Type, codeTypeReferenceOption: System.CodeDom.CodeTypeReferenceOptions);
@@ -4585,7 +4585,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeReferenceCollection {
+    export class CodeTypeReferenceCollection {
       constructor();
       constructor(value: System.CodeDom.CodeTypeReferenceCollection);
       constructor(value: System.CodeDom.CodeTypeReference[]);
@@ -4609,7 +4609,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeArgumentReferenceExpression {
+    export class CodeArgumentReferenceExpression {
       constructor();
       constructor(parameterName: string);
       ParameterName: string;
@@ -4619,7 +4619,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeArrayCreateExpression {
+    export class CodeArrayCreateExpression {
       constructor();
       constructor(createType: System.CodeDom.CodeTypeReference, ...initializers: System.CodeDom.CodeExpression[]);
       constructor(createType: string, ...initializers: System.CodeDom.CodeExpression[]);
@@ -4640,7 +4640,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeArrayIndexerExpression {
+    export class CodeArrayIndexerExpression {
       constructor();
       constructor(targetObject: System.CodeDom.CodeExpression, ...indices: System.CodeDom.CodeExpression[]);
       TargetObject: System.CodeDom.CodeExpression;
@@ -4651,7 +4651,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeAssignStatement {
+    export class CodeAssignStatement {
       constructor();
       constructor(left: System.CodeDom.CodeExpression, right: System.CodeDom.CodeExpression);
       Left: System.CodeDom.CodeExpression;
@@ -4665,7 +4665,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeAttachEventStatement {
+    export class CodeAttachEventStatement {
       constructor();
       constructor(eventRef: System.CodeDom.CodeEventReferenceExpression, listener: System.CodeDom.CodeExpression);
       constructor(targetObject: System.CodeDom.CodeExpression, eventName: string, listener: System.CodeDom.CodeExpression);
@@ -4680,7 +4680,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeAttributeArgument {
+    export class CodeAttributeArgument {
       constructor();
       constructor(value: System.CodeDom.CodeExpression);
       constructor(name: string, value: System.CodeDom.CodeExpression);
@@ -4691,7 +4691,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeAttributeArgumentCollection {
+    export class CodeAttributeArgumentCollection {
       constructor();
       constructor(value: System.CodeDom.CodeAttributeArgumentCollection);
       constructor(value: System.CodeDom.CodeAttributeArgument[]);
@@ -4713,7 +4713,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeAttributeDeclaration {
+    export class CodeAttributeDeclaration {
       constructor();
       constructor(name: string);
       constructor(name: string, ...argumentsCS: System.CodeDom.CodeAttributeArgument[]);
@@ -4727,7 +4727,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeAttributeDeclarationCollection {
+    export class CodeAttributeDeclarationCollection {
       constructor();
       constructor(value: System.CodeDom.CodeAttributeDeclarationCollection);
       constructor(value: System.CodeDom.CodeAttributeDeclaration[]);
@@ -4749,7 +4749,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeBaseReferenceExpression {
+    export class CodeBaseReferenceExpression {
       constructor();
       UserData: System.Collections.IDictionary;
       Equals(obj: System.Object): boolean;
@@ -4757,7 +4757,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeBinaryOperatorExpression {
+    export class CodeBinaryOperatorExpression {
       constructor();
       constructor(left: System.CodeDom.CodeExpression, op: System.CodeDom.CodeBinaryOperatorType, right: System.CodeDom.CodeExpression);
       Right: System.CodeDom.CodeExpression;
@@ -4788,7 +4788,7 @@ export namespace System {
       GreaterThan = 15,
       GreaterThanOrEqual = 16,
     }
-    export declare class CodeCastExpression {
+    export class CodeCastExpression {
       constructor();
       constructor(targetType: System.CodeDom.CodeTypeReference, expression: System.CodeDom.CodeExpression);
       constructor(targetType: string, expression: System.CodeDom.CodeExpression);
@@ -4801,7 +4801,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeCatchClause {
+    export class CodeCatchClause {
       constructor();
       constructor(localName: string);
       constructor(localName: string, catchExceptionType: System.CodeDom.CodeTypeReference);
@@ -4814,7 +4814,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeCatchClauseCollection {
+    export class CodeCatchClauseCollection {
       constructor();
       constructor(value: System.CodeDom.CodeCatchClauseCollection);
       constructor(value: System.CodeDom.CodeCatchClause[]);
@@ -4836,7 +4836,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeChecksumPragma {
+    export class CodeChecksumPragma {
       constructor();
       constructor(fileName: string, checksumAlgorithmId: System.Guid, checksumData: System.Byte[]);
       FileName: string;
@@ -4848,7 +4848,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeComment {
+    export class CodeComment {
       constructor();
       constructor(text: string);
       constructor(text: string, docComment: boolean);
@@ -4860,7 +4860,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeCommentStatement {
+    export class CodeCommentStatement {
       constructor();
       constructor(comment: System.CodeDom.CodeComment);
       constructor(text: string);
@@ -4875,7 +4875,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeCommentStatementCollection {
+    export class CodeCommentStatementCollection {
       constructor();
       constructor(value: System.CodeDom.CodeCommentStatementCollection);
       constructor(value: System.CodeDom.CodeCommentStatement[]);
@@ -4897,7 +4897,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeCompileUnit {
+    export class CodeCompileUnit {
       constructor();
       Namespaces: System.CodeDom.CodeNamespaceCollection;
       ReferencedAssemblies: System.Collections.Specialized.StringCollection;
@@ -4910,7 +4910,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeConditionStatement {
+    export class CodeConditionStatement {
       constructor();
       constructor(condition: System.CodeDom.CodeExpression, ...trueStatements: System.CodeDom.CodeStatement[]);
       constructor(condition: System.CodeDom.CodeExpression, trueStatements: System.CodeDom.CodeStatement[], falseStatements: System.CodeDom.CodeStatement[]);
@@ -4926,7 +4926,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeConstructor {
+    export class CodeConstructor {
       constructor();
       BaseConstructorArgs: System.CodeDom.CodeExpressionCollection;
       ChainedConstructorArgs: System.CodeDom.CodeExpressionCollection;
@@ -4950,7 +4950,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeDefaultValueExpression {
+    export class CodeDefaultValueExpression {
       constructor();
       constructor(type: System.CodeDom.CodeTypeReference);
       Type: System.CodeDom.CodeTypeReference;
@@ -4960,7 +4960,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeDelegateCreateExpression {
+    export class CodeDelegateCreateExpression {
       constructor();
       constructor(delegateType: System.CodeDom.CodeTypeReference, targetObject: System.CodeDom.CodeExpression, methodName: string);
       DelegateType: System.CodeDom.CodeTypeReference;
@@ -4972,7 +4972,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeDelegateInvokeExpression {
+    export class CodeDelegateInvokeExpression {
       constructor();
       constructor(targetObject: System.CodeDom.CodeExpression);
       constructor(targetObject: System.CodeDom.CodeExpression, ...parameters: System.CodeDom.CodeExpression[]);
@@ -4984,7 +4984,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeDirectionExpression {
+    export class CodeDirectionExpression {
       constructor();
       constructor(direction: System.CodeDom.FieldDirection, expression: System.CodeDom.CodeExpression);
       Expression: System.CodeDom.CodeExpression;
@@ -4995,7 +4995,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeDirective {
+    export class CodeDirective {
       constructor();
       UserData: System.Collections.IDictionary;
       Equals(obj: System.Object): boolean;
@@ -5003,7 +5003,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeDirectiveCollection {
+    export class CodeDirectiveCollection {
       constructor();
       constructor(value: System.CodeDom.CodeDirectiveCollection);
       constructor(value: System.CodeDom.CodeDirective[]);
@@ -5025,7 +5025,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeEntryPointMethod {
+    export class CodeEntryPointMethod {
       constructor();
       ReturnType: System.CodeDom.CodeTypeReference;
       Statements: System.CodeDom.CodeStatementCollection;
@@ -5047,7 +5047,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeEventReferenceExpression {
+    export class CodeEventReferenceExpression {
       constructor();
       constructor(targetObject: System.CodeDom.CodeExpression, eventName: string);
       TargetObject: System.CodeDom.CodeExpression;
@@ -5058,7 +5058,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeExpression {
+    export class CodeExpression {
       constructor();
       UserData: System.Collections.IDictionary;
       Equals(obj: System.Object): boolean;
@@ -5066,7 +5066,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeExpressionCollection {
+    export class CodeExpressionCollection {
       constructor();
       constructor(value: System.CodeDom.CodeExpressionCollection);
       constructor(value: System.CodeDom.CodeExpression[]);
@@ -5088,7 +5088,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeExpressionStatement {
+    export class CodeExpressionStatement {
       constructor();
       constructor(expression: System.CodeDom.CodeExpression);
       Expression: System.CodeDom.CodeExpression;
@@ -5101,7 +5101,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeFieldReferenceExpression {
+    export class CodeFieldReferenceExpression {
       constructor();
       constructor(targetObject: System.CodeDom.CodeExpression, fieldName: string);
       TargetObject: System.CodeDom.CodeExpression;
@@ -5112,7 +5112,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeGotoStatement {
+    export class CodeGotoStatement {
       constructor();
       constructor(label: string);
       Label: string;
@@ -5125,7 +5125,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeIndexerExpression {
+    export class CodeIndexerExpression {
       constructor();
       constructor(targetObject: System.CodeDom.CodeExpression, ...indices: System.CodeDom.CodeExpression[]);
       TargetObject: System.CodeDom.CodeExpression;
@@ -5136,7 +5136,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeIterationStatement {
+    export class CodeIterationStatement {
       constructor();
       constructor(initStatement: System.CodeDom.CodeStatement, testExpression: System.CodeDom.CodeExpression, incrementStatement: System.CodeDom.CodeStatement, ...statements: System.CodeDom.CodeStatement[]);
       InitStatement: System.CodeDom.CodeStatement;
@@ -5152,7 +5152,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeLabeledStatement {
+    export class CodeLabeledStatement {
       constructor();
       constructor(label: string);
       constructor(label: string, statement: System.CodeDom.CodeStatement);
@@ -5167,7 +5167,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeLinePragma {
+    export class CodeLinePragma {
       constructor();
       constructor(fileName: string, lineNumber: number);
       FileName: string;
@@ -5177,7 +5177,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeMemberEvent {
+    export class CodeMemberEvent {
       constructor();
       Type: System.CodeDom.CodeTypeReference;
       PrivateImplementationType: System.CodeDom.CodeTypeReference;
@@ -5195,7 +5195,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeMemberField {
+    export class CodeMemberField {
       constructor();
       constructor(type: System.CodeDom.CodeTypeReference, name: string);
       constructor(type: string, name: string);
@@ -5215,7 +5215,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeMemberMethod {
+    export class CodeMemberMethod {
       constructor();
       ReturnType: System.CodeDom.CodeTypeReference;
       Statements: System.CodeDom.CodeStatementCollection;
@@ -5237,7 +5237,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeMemberProperty {
+    export class CodeMemberProperty {
       constructor();
       PrivateImplementationType: System.CodeDom.CodeTypeReference;
       ImplementationTypes: System.CodeDom.CodeTypeReferenceCollection;
@@ -5260,7 +5260,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeMethodInvokeExpression {
+    export class CodeMethodInvokeExpression {
       constructor();
       constructor(method: System.CodeDom.CodeMethodReferenceExpression, ...parameters: System.CodeDom.CodeExpression[]);
       constructor(targetObject: System.CodeDom.CodeExpression, methodName: string, ...parameters: System.CodeDom.CodeExpression[]);
@@ -5272,7 +5272,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeMethodReturnStatement {
+    export class CodeMethodReturnStatement {
       constructor();
       constructor(expression: System.CodeDom.CodeExpression);
       Expression: System.CodeDom.CodeExpression;
@@ -5285,7 +5285,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeNamespace {
+    export class CodeNamespace {
       constructor();
       constructor(name: string);
       Types: System.CodeDom.CodeTypeDeclarationCollection;
@@ -5298,7 +5298,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeNamespaceCollection {
+    export class CodeNamespaceCollection {
       constructor();
       constructor(value: System.CodeDom.CodeNamespaceCollection);
       constructor(value: System.CodeDom.CodeNamespace[]);
@@ -5320,7 +5320,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeNamespaceImport {
+    export class CodeNamespaceImport {
       constructor();
       constructor(nameSpace: string);
       LinePragma: System.CodeDom.CodeLinePragma;
@@ -5331,7 +5331,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeNamespaceImportCollection {
+    export class CodeNamespaceImportCollection {
       constructor();
       Count: number;
       Add(value: System.CodeDom.CodeNamespaceImport): void;
@@ -5343,7 +5343,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeObjectCreateExpression {
+    export class CodeObjectCreateExpression {
       constructor();
       constructor(createType: System.CodeDom.CodeTypeReference, ...parameters: System.CodeDom.CodeExpression[]);
       constructor(createType: string, ...parameters: System.CodeDom.CodeExpression[]);
@@ -5356,7 +5356,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeParameterDeclarationExpression {
+    export class CodeParameterDeclarationExpression {
       constructor();
       constructor(type: System.CodeDom.CodeTypeReference, name: string);
       constructor(type: string, name: string);
@@ -5371,7 +5371,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeParameterDeclarationExpressionCollection {
+    export class CodeParameterDeclarationExpressionCollection {
       constructor();
       constructor(value: System.CodeDom.CodeParameterDeclarationExpressionCollection);
       constructor(value: System.CodeDom.CodeParameterDeclarationExpression[]);
@@ -5393,7 +5393,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodePrimitiveExpression {
+    export class CodePrimitiveExpression {
       constructor();
       constructor(value: System.Object);
       Value: System.Object;
@@ -5403,7 +5403,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodePropertyReferenceExpression {
+    export class CodePropertyReferenceExpression {
       constructor();
       constructor(targetObject: System.CodeDom.CodeExpression, propertyName: string);
       TargetObject: System.CodeDom.CodeExpression;
@@ -5414,7 +5414,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodePropertySetValueReferenceExpression {
+    export class CodePropertySetValueReferenceExpression {
       constructor();
       UserData: System.Collections.IDictionary;
       Equals(obj: System.Object): boolean;
@@ -5422,7 +5422,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeRegionDirective {
+    export class CodeRegionDirective {
       constructor();
       constructor(regionMode: System.CodeDom.CodeRegionMode, regionText: string);
       RegionText: string;
@@ -5438,7 +5438,7 @@ export namespace System {
       Start = 1,
       End = 2,
     }
-    export declare class CodeRemoveEventStatement {
+    export class CodeRemoveEventStatement {
       constructor();
       constructor(eventRef: System.CodeDom.CodeEventReferenceExpression, listener: System.CodeDom.CodeExpression);
       constructor(targetObject: System.CodeDom.CodeExpression, eventName: string, listener: System.CodeDom.CodeExpression);
@@ -5453,7 +5453,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeSnippetCompileUnit {
+    export class CodeSnippetCompileUnit {
       constructor();
       constructor(value: string);
       Value: string;
@@ -5469,7 +5469,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeSnippetExpression {
+    export class CodeSnippetExpression {
       constructor();
       constructor(value: string);
       Value: string;
@@ -5479,7 +5479,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeSnippetStatement {
+    export class CodeSnippetStatement {
       constructor();
       constructor(value: string);
       Value: string;
@@ -5492,7 +5492,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeSnippetTypeMember {
+    export class CodeSnippetTypeMember {
       constructor();
       constructor(text: string);
       Text: string;
@@ -5509,7 +5509,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeStatement {
+    export class CodeStatement {
       constructor();
       LinePragma: System.CodeDom.CodeLinePragma;
       StartDirectives: System.CodeDom.CodeDirectiveCollection;
@@ -5520,7 +5520,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeStatementCollection {
+    export class CodeStatementCollection {
       constructor();
       constructor(value: System.CodeDom.CodeStatementCollection);
       constructor(value: System.CodeDom.CodeStatement[]);
@@ -5543,7 +5543,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeThisReferenceExpression {
+    export class CodeThisReferenceExpression {
       constructor();
       UserData: System.Collections.IDictionary;
       Equals(obj: System.Object): boolean;
@@ -5551,7 +5551,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeThrowExceptionStatement {
+    export class CodeThrowExceptionStatement {
       constructor();
       constructor(toThrow: System.CodeDom.CodeExpression);
       ToThrow: System.CodeDom.CodeExpression;
@@ -5564,7 +5564,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTryCatchFinallyStatement {
+    export class CodeTryCatchFinallyStatement {
       constructor();
       constructor(tryStatements: System.CodeDom.CodeStatement[], catchClauses: System.CodeDom.CodeCatchClause[]);
       constructor(tryStatements: System.CodeDom.CodeStatement[], catchClauses: System.CodeDom.CodeCatchClause[], finallyStatements: System.CodeDom.CodeStatement[]);
@@ -5580,7 +5580,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeConstructor {
+    export class CodeTypeConstructor {
       constructor();
       ReturnType: System.CodeDom.CodeTypeReference;
       Statements: System.CodeDom.CodeStatementCollection;
@@ -5602,7 +5602,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeDeclaration {
+    export class CodeTypeDeclaration {
       constructor();
       constructor(name: string);
       TypeAttributes: System.Reflection.TypeAttributes;
@@ -5627,7 +5627,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeDeclarationCollection {
+    export class CodeTypeDeclarationCollection {
       constructor();
       constructor(value: System.CodeDom.CodeTypeDeclarationCollection);
       constructor(value: System.CodeDom.CodeTypeDeclaration[]);
@@ -5649,7 +5649,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeDelegate {
+    export class CodeTypeDelegate {
       constructor();
       constructor(name: string);
       ReturnType: System.CodeDom.CodeTypeReference;
@@ -5676,7 +5676,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeMember {
+    export class CodeTypeMember {
       constructor();
       Name: string;
       Attributes: System.CodeDom.MemberAttributes;
@@ -5691,7 +5691,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeMemberCollection {
+    export class CodeTypeMemberCollection {
       constructor();
       constructor(value: System.CodeDom.CodeTypeMemberCollection);
       constructor(value: System.CodeDom.CodeTypeMember[]);
@@ -5713,7 +5713,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeOfExpression {
+    export class CodeTypeOfExpression {
       constructor();
       constructor(type: System.CodeDom.CodeTypeReference);
       constructor(type: string);
@@ -5725,7 +5725,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeParameter {
+    export class CodeTypeParameter {
       constructor();
       constructor(name: string);
       Name: string;
@@ -5738,7 +5738,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeParameterCollection {
+    export class CodeTypeParameterCollection {
       constructor();
       constructor(value: System.CodeDom.CodeTypeParameterCollection);
       constructor(value: System.CodeDom.CodeTypeParameter[]);
@@ -5761,7 +5761,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeTypeReferenceExpression {
+    export class CodeTypeReferenceExpression {
       constructor();
       constructor(type: System.CodeDom.CodeTypeReference);
       constructor(type: string);
@@ -5773,7 +5773,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeVariableDeclarationStatement {
+    export class CodeVariableDeclarationStatement {
       constructor();
       constructor(type: System.CodeDom.CodeTypeReference, name: string);
       constructor(type: string, name: string);
@@ -5793,7 +5793,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeVariableReferenceExpression {
+    export class CodeVariableReferenceExpression {
       constructor();
       constructor(variableName: string);
       VariableName: string;
@@ -5826,7 +5826,7 @@ export namespace System {
       ScopeMask = 15,
       VTableMask = 240,
     }
-    export declare class CodeMethodReferenceExpression {
+    export class CodeMethodReferenceExpression {
       constructor();
       constructor(targetObject: System.CodeDom.CodeExpression, methodName: string);
       constructor(targetObject: System.CodeDom.CodeExpression, methodName: string, ...typeParameters: System.CodeDom.CodeTypeReference[]);
@@ -5840,7 +5840,7 @@ export namespace System {
       ToString(): string;
     }
     export namespace Compiler {
-      export declare class TempFileCollection {
+      export class TempFileCollection {
         constructor();
         constructor(tempDir: string);
         constructor(tempDir: string, keepFiles: boolean);
@@ -5859,14 +5859,14 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CodeCompiler {
+      export class CodeCompiler {
         GenerateCodeFromMember(member: System.CodeDom.CodeTypeMember, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CodeDomProvider {
+      export class CodeDomProvider {
         FileExtension: string;
         LanguageOptions: System.CodeDom.Compiler.LanguageOptions;
         Site: System.ComponentModel.ISite;
@@ -5908,7 +5908,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class CodeGenerator {
+      export class CodeGenerator {
         GenerateCodeFromMember(member: System.CodeDom.CodeTypeMember, writer: System.IO.TextWriter, options: System.CodeDom.Compiler.CodeGeneratorOptions): void;
         static IsValidLanguageIndependentIdentifier(value: string): boolean;
         static ValidateIdentifiers(e: System.CodeDom.CodeObject): void;
@@ -5917,7 +5917,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CodeGeneratorOptions {
+      export class CodeGeneratorOptions {
         constructor();
         IndentString: string;
         BracingStyle: string;
@@ -5929,14 +5929,14 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CodeParser {
+      export class CodeParser {
         Parse(codeStream: System.IO.TextReader): System.CodeDom.CodeCompileUnit;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CompilerError {
+      export class CompilerError {
         constructor();
         constructor(fileName: string, line: number, column: number, errorNumber: string, errorText: string);
         Line: number;
@@ -5950,7 +5950,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class CompilerErrorCollection {
+      export class CompilerErrorCollection {
         constructor();
         constructor(value: System.CodeDom.Compiler.CompilerErrorCollection);
         constructor(value: System.CodeDom.Compiler.CompilerError[]);
@@ -5974,7 +5974,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CompilerInfo {
+      export class CompilerInfo {
         CodeDomProviderType: System.Type;
         IsCodeDomProviderTypeValid: boolean;
         GetLanguages(): string[];
@@ -5987,7 +5987,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CompilerParameters {
+      export class CompilerParameters {
         constructor();
         constructor(assemblyNames: string[]);
         constructor(assemblyNames: string[], outputName: string);
@@ -6013,7 +6013,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CompilerResults {
+      export class CompilerResults {
         constructor(tempFiles: System.CodeDom.Compiler.TempFileCollection);
         Evidence: System.Security.Policy.Evidence;
         TempFiles: System.CodeDom.Compiler.TempFileCollection;
@@ -6083,7 +6083,7 @@ export namespace System {
         None = 0,
         CaseInsensitive = 1,
       }
-      export declare class IndentedTextWriter {
+      export class IndentedTextWriter {
         constructor(writer: System.IO.TextWriter);
         constructor(writer: System.IO.TextWriter, tabString: string);
         Encoding: System.Text.Encoding;
@@ -6149,7 +6149,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Executor {
+      export class Executor {
         static ExecWait(cmd: string, tempFiles: System.CodeDom.Compiler.TempFileCollection): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -6159,7 +6159,7 @@ export namespace System {
     }
   }
   export namespace Collections {
-    export declare class DictionaryEntry {
+    export class DictionaryEntry {
       constructor(key: System.Object, value: System.Object);
       Key: System.Object;
       Value: System.Object;
@@ -6168,7 +6168,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ArrayList {
+    export class ArrayList {
       constructor();
       constructor(capacity: number);
       constructor(c: System.Collections.ICollection);
@@ -6225,7 +6225,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BitArray {
+    export class BitArray {
       constructor(length: number);
       constructor(length: number, defaultValue: boolean);
       constructor(bytes: System.Byte[]);
@@ -6252,7 +6252,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CaseInsensitiveComparer {
+    export class CaseInsensitiveComparer {
       constructor();
       constructor(culture: System.Globalization.CultureInfo);
       static Default: System.Collections.CaseInsensitiveComparer;
@@ -6263,7 +6263,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CaseInsensitiveHashCodeProvider {
+    export class CaseInsensitiveHashCodeProvider {
       constructor();
       constructor(culture: System.Globalization.CultureInfo);
       static Default: System.Collections.CaseInsensitiveHashCodeProvider;
@@ -6274,7 +6274,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CollectionBase {
+    export class CollectionBase {
       Capacity: number;
       Count: number;
       Clear(): void;
@@ -6285,7 +6285,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Comparer {
+    export class Comparer {
       constructor(culture: System.Globalization.CultureInfo);
       static Default: System.Collections.Comparer;
       static DefaultInvariant: System.Collections.Comparer;
@@ -6296,7 +6296,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DictionaryBase {
+    export class DictionaryBase {
       Count: number;
       CopyTo(array: System.Array, index: number): void;
       Clear(): void;
@@ -6306,7 +6306,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Hashtable {
+    export class Hashtable {
       constructor();
       constructor(capacity: number);
       constructor(capacity: number, loadFactor: number);
@@ -6404,7 +6404,7 @@ export namespace System {
       Equals(other: System.Object, comparer: System.Collections.IEqualityComparer): boolean;
       GetHashCode(comparer: System.Collections.IEqualityComparer): number;
     }
-    export declare class Queue {
+    export class Queue {
       constructor();
       constructor(capacity: number);
       constructor(capacity: number, growFactor: number);
@@ -6428,7 +6428,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ReadOnlyCollectionBase {
+    export class ReadOnlyCollectionBase {
       Count: number;
       GetEnumerator(): System.Collections.IEnumerator;
       Equals(obj: System.Object): boolean;
@@ -6436,7 +6436,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SortedList {
+    export class SortedList {
       constructor();
       constructor(initialCapacity: number);
       constructor(comparer: System.Collections.IComparer);
@@ -6475,7 +6475,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Stack {
+    export class Stack {
       constructor();
       constructor(initialCapacity: number);
       constructor(col: System.Collections.ICollection);
@@ -6497,7 +6497,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StructuralComparisons {
+    export class StructuralComparisons {
       static StructuralComparer: System.Collections.IComparer;
       static StructuralEqualityComparer: System.Collections.IEqualityComparer;
       Equals(obj: System.Object): boolean;
@@ -6506,7 +6506,7 @@ export namespace System {
       ToString(): string;
     }
     export namespace Concurrent {
-      export declare class ConcurrentDictionary<TKey = any, TValue = any> {
+      export class ConcurrentDictionary<TKey = any, TValue = any> {
         constructor();
         constructor(concurrencyLevel: number, capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>);
@@ -6533,7 +6533,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ConcurrentQueue<T = any> {
+      export class ConcurrentQueue<T = any> {
         constructor();
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
         IsEmpty: boolean;
@@ -6548,7 +6548,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ConcurrentStack<T = any> {
+      export class ConcurrentStack<T = any> {
         constructor();
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
         IsEmpty: boolean;
@@ -6572,7 +6572,7 @@ export namespace System {
         TryAdd(item: T): boolean;
         ToArray(): T[];
       }
-      export declare class OrderablePartitioner<TSource = any> {
+      export class OrderablePartitioner<TSource = any> {
         KeysOrderedInEachPartition: boolean;
         KeysOrderedAcrossPartitions: boolean;
         KeysNormalized: boolean;
@@ -6586,7 +6586,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Partitioner<TSource = any> {
+      export class Partitioner<TSource = any> {
         SupportsDynamicPartitions: boolean;
         GetPartitions(partitionCount: number): System.Collections.Generic.IList<System.Collections.Generic.IEnumerator<TSource>>;
         GetDynamicPartitions(): System.Collections.Generic.IEnumerable<TSource>;
@@ -6599,7 +6599,7 @@ export namespace System {
         None = 0,
         NoBuffering = 1,
       }
-      export declare class ConcurrentBag<T = any> {
+      export class ConcurrentBag<T = any> {
         constructor();
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
         Count: number;
@@ -6614,7 +6614,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class BlockingCollection<T = any> {
+      export class BlockingCollection<T = any> {
         constructor();
         constructor(boundedCapacity: number);
         constructor(collection: System.Collections.Concurrent.IProducerConsumerCollection<T>, boundedCapacity: number);
@@ -6650,13 +6650,13 @@ export namespace System {
       }
     }
     export namespace Generic {
-      export declare class CollectionExtensions {
+      export class CollectionExtensions {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class KeyValuePair<TKey = any, TValue = any> {
+      export class KeyValuePair<TKey = any, TValue = any> {
         constructor(key: TKey, value: TValue);
         Key: TKey;
         Value: TValue;
@@ -6665,7 +6665,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class Dictionary<TKey = any, TValue = any> {
+      export class Dictionary<TKey = any, TValue = any> {
         constructor();
         constructor(capacity: number);
         constructor(comparer: System.Collections.Generic.IEqualityComparer<TKey>);
@@ -6692,7 +6692,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Comparer<T = any> {
+      export class Comparer<T = any> {
         static Default: any; // System.Collections.Generic.Comparer`1[T]
         static Create(comparison: any): any;
         Compare(x: T, y: T): number;
@@ -6701,7 +6701,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EqualityComparer<T = any> {
+      export class EqualityComparer<T = any> {
         static Default: any; // System.Collections.Generic.EqualityComparer`1[T]
         Equals(x: T, y: T): boolean;
         GetHashCode(obj: T): number;
@@ -6754,7 +6754,7 @@ export namespace System {
       }
       export interface IReadOnlyList<T = any> {
       }
-      export declare class KeyNotFoundException {
+      export class KeyNotFoundException {
         constructor();
         constructor(message: string);
         constructor(message: string, innerException: System.Exception);
@@ -6774,7 +6774,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class List<T = any> {
+      export class List<T = any> {
         constructor();
         constructor(capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
@@ -6830,7 +6830,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HashSet<T = any> {
+      export class HashSet<T = any> {
         constructor();
         constructor(comparer: System.Collections.Generic.IEqualityComparer<T>);
         constructor(capacity: number);
@@ -6867,7 +6867,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class LinkedList<T = any> {
+      export class LinkedList<T = any> {
         constructor();
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
         Count: number;
@@ -6898,7 +6898,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class LinkedListNode<T = any> {
+      export class LinkedListNode<T = any> {
         constructor(value: T);
         List: System.Collections.Generic.LinkedList<T>;
         Next: System.Collections.Generic.LinkedListNode<T>;
@@ -6909,7 +6909,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Queue<T = any> {
+      export class Queue<T = any> {
         constructor();
         constructor(capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
@@ -6928,7 +6928,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SortedDictionary<TKey = any, TValue = any> {
+      export class SortedDictionary<TKey = any, TValue = any> {
         constructor();
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IComparer<TKey>);
@@ -6949,7 +6949,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SortedList<TKey = any, TValue = any> {
+      export class SortedList<TKey = any, TValue = any> {
         constructor();
         constructor(capacity: number);
         constructor(comparer: System.Collections.Generic.IComparer<TKey>);
@@ -6976,7 +6976,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SortedSet<T = any> {
+      export class SortedSet<T = any> {
         constructor();
         constructor(comparer: System.Collections.Generic.IComparer<T>);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
@@ -7013,7 +7013,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Stack<T = any> {
+      export class Stack<T = any> {
         constructor();
         constructor(capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
@@ -7047,7 +7047,7 @@ export namespace System {
       }
     }
     export namespace ObjectModel {
-      export declare class Collection<T = any> {
+      export class Collection<T = any> {
         constructor();
         constructor(list: System.Collections.Generic.IList<T>);
         Count: number;
@@ -7065,7 +7065,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class KeyedCollection<TKey = any, TItem = any> {
+      export class KeyedCollection<TKey = any, TItem = any> {
         Comparer: System.Collections.Generic.IEqualityComparer<TKey>;
         Count: number;
         Contains(key: TKey): boolean;
@@ -7084,7 +7084,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ReadOnlyCollection<T = any> {
+      export class ReadOnlyCollection<T = any> {
         constructor(list: System.Collections.Generic.IList<T>);
         Count: number;
         Contains(value: T): boolean;
@@ -7096,7 +7096,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ReadOnlyDictionary<TKey = any, TValue = any> {
+      export class ReadOnlyDictionary<TKey = any, TValue = any> {
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
         Keys: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
         Values: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
@@ -7108,7 +7108,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ObservableCollection<T = any> {
+      export class ObservableCollection<T = any> {
         constructor();
         constructor(list: T[]);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
@@ -7128,7 +7128,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ReadOnlyObservableCollection<T = any> {
+      export class ReadOnlyObservableCollection<T = any> {
         constructor(list: T[]);
         Count: number;
         Contains(value: T): boolean;
@@ -7142,7 +7142,7 @@ export namespace System {
       }
     }
     export namespace Specialized {
-      export declare class BitVector32 {
+      export class BitVector32 {
         constructor(data: number);
         constructor(value: System.Collections.Specialized.BitVector32);
         Data: number;
@@ -7156,7 +7156,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class BitVector32_Section {
+      export class BitVector32_Section {
         Mask: System.Int16;
         Offset: System.Int16;
         Equals(o: System.Object): boolean;
@@ -7166,7 +7166,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class CollectionsUtil {
+      export class CollectionsUtil {
         constructor();
         static CreateCaseInsensitiveHashtable(): System.Collections.Hashtable;
         static CreateCaseInsensitiveHashtable(capacity: number): System.Collections.Hashtable;
@@ -7177,7 +7177,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HybridDictionary {
+      export class HybridDictionary {
         constructor();
         constructor(initialSize: number);
         constructor(caseInsensitive: boolean);
@@ -7207,7 +7207,7 @@ export namespace System {
         Insert(index: number, key: System.Object, value: System.Object): void;
         RemoveAt(index: number): void;
       }
-      export declare class ListDictionary {
+      export class ListDictionary {
         constructor();
         constructor(comparer: System.Collections.IComparer);
         Count: number;
@@ -7228,7 +7228,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class NameObjectCollectionBase {
+      export class NameObjectCollectionBase {
         Count: number;
         Keys: System.Collections.Specialized.NameObjectCollectionBase_KeysCollection;
         GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
@@ -7239,7 +7239,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class NameObjectCollectionBase_KeysCollection {
+      export class NameObjectCollectionBase_KeysCollection {
         Count: number;
         Get(index: number): string;
         GetEnumerator(): System.Collections.IEnumerator;
@@ -7248,7 +7248,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class NameValueCollection {
+      export class NameValueCollection {
         constructor();
         constructor(col: System.Collections.Specialized.NameValueCollection);
         constructor(hashProvider: System.Collections.IHashCodeProvider, comparer: System.Collections.IComparer);
@@ -7287,7 +7287,7 @@ export namespace System {
         Move = 3,
         Reset = 4,
       }
-      export declare class NotifyCollectionChangedEventArgs {
+      export class NotifyCollectionChangedEventArgs {
         constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction);
         constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, changedItem: System.Object);
         constructor(action: System.Collections.Specialized.NotifyCollectionChangedAction, changedItem: System.Object, index: number);
@@ -7309,7 +7309,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class NotifyCollectionChangedEventHandler {
+      export class NotifyCollectionChangedEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -7325,7 +7325,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class OrderedDictionary {
+      export class OrderedDictionary {
         constructor();
         constructor(capacity: number);
         constructor(comparer: System.Collections.IEqualityComparer);
@@ -7349,7 +7349,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StringCollection {
+      export class StringCollection {
         constructor();
         Count: number;
         IsReadOnly: boolean;
@@ -7370,7 +7370,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StringEnumerator {
+      export class StringEnumerator {
         Current: string;
         MoveNext(): boolean;
         Reset(): void;
@@ -7379,7 +7379,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StringDictionary {
+      export class StringDictionary {
         constructor();
         Count: number;
         IsSynchronized: boolean;
@@ -7401,7 +7401,7 @@ export namespace System {
     }
   }
   export namespace ComponentModel {
-    export declare class AddingNewEventArgs {
+    export class AddingNewEventArgs {
       constructor();
       constructor(newObject: System.Object);
       NewObject: System.Object;
@@ -7410,7 +7410,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AddingNewEventHandler {
+    export class AddingNewEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -7426,7 +7426,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ArrayConverter {
+    export class ArrayConverter {
       constructor();
       ConvertTo(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type): System.Object;
       GetProperties(context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]): System.ComponentModel.PropertyDescriptorCollection;
@@ -7468,7 +7468,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AsyncCompletedEventArgs {
+    export class AsyncCompletedEventArgs {
       constructor();
       constructor(error: System.Exception, cancelled: boolean, userState: System.Object);
       Cancelled: boolean;
@@ -7479,7 +7479,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AsyncCompletedEventHandler {
+    export class AsyncCompletedEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -7495,7 +7495,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AsyncOperation {
+    export class AsyncOperation {
       UserSuppliedState: System.Object;
       SynchronizationContext: System.Threading.SynchronizationContext;
       Post(d: System.Threading.SendOrPostCallback, arg: System.Object): void;
@@ -7506,7 +7506,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AsyncOperationManager {
+    export class AsyncOperationManager {
       static SynchronizationContext: System.Threading.SynchronizationContext;
       static CreateOperation(userSuppliedState: System.Object): System.ComponentModel.AsyncOperation;
       Equals(obj: System.Object): boolean;
@@ -7514,7 +7514,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AttributeCollection {
+    export class AttributeCollection {
       constructor(...attributes: any[]);
       Count: number;
       static Empty: System.ComponentModel.AttributeCollection;
@@ -7530,7 +7530,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BackgroundWorker {
+    export class BackgroundWorker {
       constructor();
       CancellationPending: boolean;
       IsBusy: boolean;
@@ -7552,7 +7552,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ComponentEditor {
+    export class ComponentEditor {
       EditComponent(component: System.Object): boolean;
       EditComponent(context: System.ComponentModel.ITypeDescriptorContext, component: System.Object): boolean;
       Equals(obj: System.Object): boolean;
@@ -7569,7 +7569,7 @@ export namespace System {
       OneWay = 0,
       TwoWay = 1,
     }
-    export declare class BindingList<T = any> {
+    export class BindingList<T = any> {
       constructor();
       constructor(list: System.Collections.Generic.IList<T>);
       RaiseListChangedEvents: boolean;
@@ -7596,7 +7596,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BooleanConverter {
+    export class BooleanConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -7638,7 +7638,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ByteConverter {
+    export class ByteConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -7680,7 +7680,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CancelEventArgs {
+    export class CancelEventArgs {
       constructor();
       constructor(cancel: boolean);
       Cancel: boolean;
@@ -7689,7 +7689,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CancelEventHandler {
+    export class CancelEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -7705,7 +7705,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CharConverter {
+    export class CharConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertTo(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type): System.Object;
@@ -7752,7 +7752,7 @@ export namespace System {
       Remove = 2,
       Refresh = 3,
     }
-    export declare class CollectionChangeEventArgs {
+    export class CollectionChangeEventArgs {
       constructor(action: System.ComponentModel.CollectionChangeAction, element: System.Object);
       Action: System.ComponentModel.CollectionChangeAction;
       Element: System.Object;
@@ -7761,7 +7761,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CollectionChangeEventHandler {
+    export class CollectionChangeEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -7777,7 +7777,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CollectionConverter {
+    export class CollectionConverter {
       constructor();
       ConvertTo(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type): System.Object;
       GetProperties(context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]): System.ComponentModel.PropertyDescriptorCollection;
@@ -7819,7 +7819,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Component {
+    export class Component {
       constructor();
       Site: System.ComponentModel.ISite;
       Container: System.ComponentModel.IContainer;
@@ -7832,7 +7832,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ComponentCollection {
+    export class ComponentCollection {
       constructor(components: System.ComponentModel.IComponent[]);
       Count: number;
       CopyTo(array: System.ComponentModel.IComponent[], index: number): void;
@@ -7842,7 +7842,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ComponentConverter {
+    export class ComponentConverter {
       constructor(type: System.Type);
       GetProperties(context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]): System.ComponentModel.PropertyDescriptorCollection;
       GetPropertiesSupported(context: System.ComponentModel.ITypeDescriptorContext): boolean;
@@ -7884,7 +7884,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ComponentResourceManager {
+    export class ComponentResourceManager {
       constructor();
       constructor(t: System.Type);
       BaseName: string;
@@ -7905,7 +7905,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Container {
+    export class Container {
       constructor();
       Components: System.ComponentModel.ComponentCollection;
       Add(component: System.ComponentModel.IComponent): void;
@@ -7917,14 +7917,14 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ContainerFilterService {
+    export class ContainerFilterService {
       FilterComponents(components: System.ComponentModel.ComponentCollection): System.ComponentModel.ComponentCollection;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CultureInfoConverter {
+    export class CultureInfoConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
@@ -7966,7 +7966,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CustomTypeDescriptor {
+    export class CustomTypeDescriptor {
       GetAttributes(): System.ComponentModel.AttributeCollection;
       GetClassName(): string;
       GetComponentName(): string;
@@ -7984,7 +7984,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DataErrorsChangedEventArgs {
+    export class DataErrorsChangedEventArgs {
       constructor(propertyName: string);
       PropertyName: string;
       Equals(obj: System.Object): boolean;
@@ -7999,7 +7999,7 @@ export namespace System {
       Insert = 3,
       Delete = 4,
     }
-    export declare class DateTimeConverter {
+    export class DateTimeConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
@@ -8041,7 +8041,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DateTimeOffsetConverter {
+    export class DateTimeOffsetConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
@@ -8083,7 +8083,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DecimalConverter {
+    export class DecimalConverter {
       constructor();
       CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
       ConvertTo(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type): System.Object;
@@ -8130,7 +8130,7 @@ export namespace System {
       Visible = 1,
       Content = 2,
     }
-    export declare class DoWorkEventArgs {
+    export class DoWorkEventArgs {
       constructor(argument: System.Object);
       Argument: System.Object;
       Result: System.Object;
@@ -8140,7 +8140,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DoWorkEventHandler {
+    export class DoWorkEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -8156,7 +8156,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DoubleConverter {
+    export class DoubleConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -8203,7 +8203,7 @@ export namespace System {
       Never = 1,
       Advanced = 2,
     }
-    export declare class EnumConverter {
+    export class EnumConverter {
       constructor(type: System.Type);
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
@@ -8245,7 +8245,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventDescriptor {
+    export class EventDescriptor {
       ComponentType: System.Type;
       EventType: System.Type;
       IsMulticast: boolean;
@@ -8263,7 +8263,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventDescriptorCollection {
+    export class EventDescriptorCollection {
       constructor(events: System.ComponentModel.EventDescriptor[]);
       constructor(events: System.ComponentModel.EventDescriptor[], readOnly: boolean);
       Count: number;
@@ -8286,7 +8286,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventHandlerList {
+    export class EventHandlerList {
       constructor();
       AddHandler(key: System.Object, value: System.Delegate): void;
       AddHandlers(listToAddFrom: System.ComponentModel.EventHandlerList): void;
@@ -8297,7 +8297,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ExpandableObjectConverter {
+    export class ExpandableObjectConverter {
       constructor();
       GetProperties(context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]): System.ComponentModel.PropertyDescriptorCollection;
       GetPropertiesSupported(context: System.ComponentModel.ITypeDescriptorContext): boolean;
@@ -8339,7 +8339,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class GuidConverter {
+    export class GuidConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
@@ -8381,7 +8381,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class HandledEventArgs {
+    export class HandledEventArgs {
       constructor();
       constructor(defaultHandledValue: boolean);
       Handled: boolean;
@@ -8390,7 +8390,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class HandledEventHandler {
+    export class HandledEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -8542,7 +8542,7 @@ export namespace System {
       GetListName(listAccessors: System.ComponentModel.PropertyDescriptor[]): string;
       GetItemProperties(listAccessors: System.ComponentModel.PropertyDescriptor[]): System.ComponentModel.PropertyDescriptorCollection;
     }
-    export declare class InstanceCreationEditor {
+    export class InstanceCreationEditor {
       Text: string;
       CreateInstance(context: System.ComponentModel.ITypeDescriptorContext, instanceType: System.Type): System.Object;
       Equals(obj: System.Object): boolean;
@@ -8550,7 +8550,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Int16Converter {
+    export class Int16Converter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -8592,7 +8592,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Int32Converter {
+    export class Int32Converter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -8634,7 +8634,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Int64Converter {
+    export class Int64Converter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -8676,7 +8676,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class InvalidAsynchronousStateException {
+    export class InvalidAsynchronousStateException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -8697,7 +8697,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class InvalidEnumArgumentException {
+    export class InvalidEnumArgumentException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -8719,7 +8719,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class LicFileLicenseProvider {
+    export class LicFileLicenseProvider {
       constructor();
       GetLicense(context: System.ComponentModel.LicenseContext, type: System.Type, instance: System.Object, allowExceptions: boolean): System.ComponentModel.License;
       Equals(obj: System.Object): boolean;
@@ -8727,7 +8727,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class License {
+    export class License {
       LicenseKey: string;
       Dispose(): void;
       Equals(obj: System.Object): boolean;
@@ -8735,7 +8735,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LicenseContext {
+    export class LicenseContext {
       constructor();
       UsageMode: System.ComponentModel.LicenseUsageMode;
       GetSavedLicenseKey(type: System.Type, resourceAssembly: System.Reflection.Assembly): string;
@@ -8746,7 +8746,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LicenseException {
+    export class LicenseException {
       constructor(type: System.Type);
       constructor(type: System.Type, instance: System.Object);
       constructor(type: System.Type, instance: System.Object, message: string);
@@ -8768,7 +8768,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class LicenseManager {
+    export class LicenseManager {
       static CurrentContext: System.ComponentModel.LicenseContext;
       static UsageMode: System.ComponentModel.LicenseUsageMode;
       static CreateWithContext(type: System.Type, creationContext: System.ComponentModel.LicenseContext): System.Object;
@@ -8784,7 +8784,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LicenseProvider {
+    export class LicenseProvider {
       GetLicense(context: System.ComponentModel.LicenseContext, type: System.Type, instance: System.Object, allowExceptions: boolean): System.ComponentModel.License;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -8795,7 +8795,7 @@ export namespace System {
       Runtime = 0,
       Designtime = 1,
     }
-    export declare class ListChangedEventArgs {
+    export class ListChangedEventArgs {
       constructor(listChangedType: System.ComponentModel.ListChangedType, newIndex: number);
       constructor(listChangedType: System.ComponentModel.ListChangedType, newIndex: number, propDesc: System.ComponentModel.PropertyDescriptor);
       constructor(listChangedType: System.ComponentModel.ListChangedType, propDesc: System.ComponentModel.PropertyDescriptor);
@@ -8809,7 +8809,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ListChangedEventHandler {
+    export class ListChangedEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -8835,7 +8835,7 @@ export namespace System {
       PropertyDescriptorDeleted = 6,
       PropertyDescriptorChanged = 7,
     }
-    export declare class ListSortDescription {
+    export class ListSortDescription {
       constructor(property: System.ComponentModel.PropertyDescriptor, direction: System.ComponentModel.ListSortDirection);
       PropertyDescriptor: System.ComponentModel.PropertyDescriptor;
       SortDirection: System.ComponentModel.ListSortDirection;
@@ -8844,7 +8844,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ListSortDescriptionCollection {
+    export class ListSortDescriptionCollection {
       constructor();
       constructor(sorts: System.ComponentModel.ListSortDescription[]);
       Count: number;
@@ -8860,7 +8860,7 @@ export namespace System {
       Ascending = 0,
       Descending = 1,
     }
-    export declare class MarshalByValueComponent {
+    export class MarshalByValueComponent {
       constructor();
       Site: System.ComponentModel.ISite;
       Container: System.ComponentModel.IContainer;
@@ -8872,7 +8872,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class MaskedTextProvider {
+    export class MaskedTextProvider {
       constructor(mask: string);
       constructor(mask: string, restrictToAscii: boolean);
       constructor(mask: string, culture: System.Globalization.CultureInfo);
@@ -8959,7 +8959,7 @@ export namespace System {
       NonEditPosition = -54,
       PositionOutOfRange = -55,
     }
-    export declare class MemberDescriptor {
+    export class MemberDescriptor {
       Attributes: System.ComponentModel.AttributeCollection;
       Category: string;
       Description: string;
@@ -8972,7 +8972,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MultilineStringConverter {
+    export class MultilineStringConverter {
       constructor();
       ConvertTo(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type): System.Object;
       GetProperties(context: System.ComponentModel.ITypeDescriptorContext, value: System.Object, attributes: any[]): System.ComponentModel.PropertyDescriptorCollection;
@@ -9014,7 +9014,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NestedContainer {
+    export class NestedContainer {
       constructor(owner: System.ComponentModel.IComponent);
       Owner: System.ComponentModel.IComponent;
       Components: System.ComponentModel.ComponentCollection;
@@ -9027,7 +9027,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NullableConverter {
+    export class NullableConverter {
       constructor(type: System.Type);
       NullableType: System.Type;
       UnderlyingType: System.Type;
@@ -9072,7 +9072,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ProgressChangedEventArgs {
+    export class ProgressChangedEventArgs {
       constructor(progressPercentage: number, userState: System.Object);
       ProgressPercentage: number;
       UserState: System.Object;
@@ -9081,7 +9081,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ProgressChangedEventHandler {
+    export class ProgressChangedEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -9097,7 +9097,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PropertyChangedEventArgs {
+    export class PropertyChangedEventArgs {
       constructor(propertyName: string);
       PropertyName: string;
       Equals(obj: System.Object): boolean;
@@ -9105,7 +9105,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PropertyChangedEventHandler {
+    export class PropertyChangedEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -9121,7 +9121,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PropertyChangingEventArgs {
+    export class PropertyChangingEventArgs {
       constructor(propertyName: string);
       PropertyName: string;
       Equals(obj: System.Object): boolean;
@@ -9129,7 +9129,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PropertyChangingEventHandler {
+    export class PropertyChangingEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -9145,7 +9145,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PropertyDescriptor {
+    export class PropertyDescriptor {
       ComponentType: System.Type;
       Converter: System.ComponentModel.TypeConverter;
       IsLocalizable: boolean;
@@ -9177,7 +9177,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PropertyDescriptorCollection {
+    export class PropertyDescriptorCollection {
       constructor(properties: System.ComponentModel.PropertyDescriptor[]);
       constructor(properties: System.ComponentModel.PropertyDescriptor[], readOnly: boolean);
       Count: number;
@@ -9201,7 +9201,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ReferenceConverter {
+    export class ReferenceConverter {
       constructor(type: System.Type);
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -9243,7 +9243,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RefreshEventArgs {
+    export class RefreshEventArgs {
       constructor(componentChanged: System.Object);
       constructor(typeChanged: System.Type);
       ComponentChanged: System.Object;
@@ -9253,7 +9253,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RefreshEventHandler {
+    export class RefreshEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -9269,7 +9269,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RunWorkerCompletedEventArgs {
+    export class RunWorkerCompletedEventArgs {
       constructor(result: System.Object, error: System.Exception, cancelled: boolean);
       Result: System.Object;
       UserState: System.Object;
@@ -9280,7 +9280,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RunWorkerCompletedEventHandler {
+    export class RunWorkerCompletedEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -9296,7 +9296,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SByteConverter {
+    export class SByteConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -9338,7 +9338,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SingleConverter {
+    export class SingleConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -9380,7 +9380,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StringConverter {
+    export class StringConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -9422,7 +9422,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SyntaxCheck {
+    export class SyntaxCheck {
       static CheckMachineName(value: string): boolean;
       static CheckPath(value: string): boolean;
       static CheckRootedPath(value: string): boolean;
@@ -9431,7 +9431,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TimeSpanConverter {
+    export class TimeSpanConverter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
@@ -9479,7 +9479,7 @@ export namespace System {
       Prevent = 2,
       Require = 3,
     }
-    export declare class TypeConverter {
+    export class TypeConverter {
       constructor();
       CanConvertFrom(sourceType: System.Type): boolean;
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
@@ -9521,7 +9521,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TypeConverter_StandardValuesCollection {
+    export class TypeConverter_StandardValuesCollection {
       constructor(values: System.Collections.ICollection);
       Count: number;
       CopyTo(array: System.Array, index: number): void;
@@ -9531,7 +9531,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TypeDescriptionProvider {
+    export class TypeDescriptionProvider {
       CreateInstance(provider: System.IServiceProvider, objectType: System.Type, argTypes: System.Type[], args: System.Object[]): System.Object;
       GetCache(instance: System.Object): System.Collections.IDictionary;
       GetExtendedTypeDescriptor(instance: System.Object): System.ComponentModel.ICustomTypeDescriptor;
@@ -9549,7 +9549,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TypeDescriptor {
+    export class TypeDescriptor {
       static ComNativeDescriptorHandler: System.ComponentModel.IComNativeDescriptorHandler;
       static ComObjectType: System.Type;
       static InterfaceType: System.Type;
@@ -9621,7 +9621,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TypeListConverter {
+    export class TypeListConverter {
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -9662,7 +9662,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UInt16Converter {
+    export class UInt16Converter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -9704,7 +9704,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UInt32Converter {
+    export class UInt32Converter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -9746,7 +9746,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UInt64Converter {
+    export class UInt64Converter {
       constructor();
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
@@ -9788,7 +9788,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WarningException {
+    export class WarningException {
       constructor();
       constructor(message: string);
       constructor(message: string, helpUrl: string);
@@ -9812,7 +9812,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Win32Exception {
+    export class Win32Exception {
       constructor();
       constructor(error: number);
       constructor(error: number, message: string);
@@ -9851,7 +9851,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class BaseNumberConverter {
+    export class BaseNumberConverter {
       CanConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, sourceType: System.Type): boolean;
       ConvertFrom(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object): System.Object;
       ConvertTo(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type): System.Object;
@@ -9909,7 +9909,7 @@ export namespace System {
       Repaint = 2,
     }
     export namespace Design {
-      export declare class TypeDescriptionProviderService {
+      export class TypeDescriptionProviderService {
         GetProvider(instance: System.Object): System.ComponentModel.TypeDescriptionProvider;
         GetProvider(type: System.Type): System.ComponentModel.TypeDescriptionProvider;
         Equals(obj: System.Object): boolean;
@@ -9917,7 +9917,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ActiveDesignerEventArgs {
+      export class ActiveDesignerEventArgs {
         constructor(oldDesigner: System.ComponentModel.Design.IDesignerHost, newDesigner: System.ComponentModel.Design.IDesignerHost);
         OldDesigner: System.ComponentModel.Design.IDesignerHost;
         NewDesigner: System.ComponentModel.Design.IDesignerHost;
@@ -9926,7 +9926,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ActiveDesignerEventHandler {
+      export class ActiveDesignerEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -9942,7 +9942,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CheckoutException {
+      export class CheckoutException {
         constructor();
         constructor(message: string);
         constructor(message: string, errorCode: number);
@@ -9965,7 +9965,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class CommandID {
+      export class CommandID {
         constructor(menuGroup: System.Guid, commandID: number);
         ID: number;
         Guid: System.Guid;
@@ -9974,7 +9974,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ComponentChangedEventArgs {
+      export class ComponentChangedEventArgs {
         constructor(component: System.Object, member: System.ComponentModel.MemberDescriptor, oldValue: System.Object, newValue: System.Object);
         Component: System.Object;
         Member: System.ComponentModel.MemberDescriptor;
@@ -9985,7 +9985,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ComponentChangedEventHandler {
+      export class ComponentChangedEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -10001,7 +10001,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ComponentChangingEventArgs {
+      export class ComponentChangingEventArgs {
         constructor(component: System.Object, member: System.ComponentModel.MemberDescriptor);
         Component: System.Object;
         Member: System.ComponentModel.MemberDescriptor;
@@ -10010,7 +10010,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ComponentChangingEventHandler {
+      export class ComponentChangingEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -10026,7 +10026,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ComponentEventArgs {
+      export class ComponentEventArgs {
         constructor(component: System.ComponentModel.IComponent);
         Component: System.ComponentModel.IComponent;
         Equals(obj: System.Object): boolean;
@@ -10034,7 +10034,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ComponentEventHandler {
+      export class ComponentEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -10050,7 +10050,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ComponentRenameEventArgs {
+      export class ComponentRenameEventArgs {
         constructor(component: System.Object, oldName: string, newName: string);
         Component: System.Object;
         OldName: string;
@@ -10060,7 +10060,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ComponentRenameEventHandler {
+      export class ComponentRenameEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -10076,14 +10076,14 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerOptionService {
+      export class DesignerOptionService {
         Options: System.ComponentModel.Design.DesignerOptionService_DesignerOptionCollection;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerOptionService_DesignerOptionCollection {
+      export class DesignerOptionService_DesignerOptionCollection {
         Count: number;
         Name: string;
         Parent: System.ComponentModel.Design.DesignerOptionService_DesignerOptionCollection;
@@ -10097,7 +10097,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerTransaction {
+      export class DesignerTransaction {
         Canceled: boolean;
         Committed: boolean;
         Description: string;
@@ -10108,7 +10108,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerTransactionCloseEventArgs {
+      export class DesignerTransactionCloseEventArgs {
         constructor(commit: boolean);
         constructor(commit: boolean, lastTransaction: boolean);
         TransactionCommitted: boolean;
@@ -10118,7 +10118,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerTransactionCloseEventHandler {
+      export class DesignerTransactionCloseEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -10134,7 +10134,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerVerb {
+      export class DesignerVerb {
         constructor(text: string, handler: System.EventHandler);
         constructor(text: string, handler: System.EventHandler, startCommandID: System.ComponentModel.Design.CommandID);
         Description: string;
@@ -10153,7 +10153,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class DesignerVerbCollection {
+      export class DesignerVerbCollection {
         constructor();
         constructor(value: System.ComponentModel.Design.DesignerVerb[]);
         Capacity: number;
@@ -10174,7 +10174,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesigntimeLicenseContext {
+      export class DesigntimeLicenseContext {
         constructor();
         UsageMode: System.ComponentModel.LicenseUsageMode;
         GetSavedLicenseKey(type: System.Type, resourceAssembly: System.Reflection.Assembly): string;
@@ -10185,14 +10185,14 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesigntimeLicenseContextSerializer {
+      export class DesigntimeLicenseContextSerializer {
         static Serialize(o: System.IO.Stream, cryptoKey: string, context: System.ComponentModel.Design.DesigntimeLicenseContext): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerCollection {
+      export class DesignerCollection {
         constructor(designers: System.ComponentModel.Design.IDesignerHost[]);
         constructor(designers: System.Collections.IList);
         Count: number;
@@ -10202,7 +10202,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerEventArgs {
+      export class DesignerEventArgs {
         constructor(host: System.ComponentModel.Design.IDesignerHost);
         Designer: System.ComponentModel.Design.IDesignerHost;
         Equals(obj: System.Object): boolean;
@@ -10210,7 +10210,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DesignerEventHandler {
+      export class DesignerEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -10386,7 +10386,7 @@ export namespace System {
         ReferenceAssembly(name: System.Reflection.AssemblyName): void;
         GetPathOfAssembly(name: System.Reflection.AssemblyName): string;
       }
-      export declare class MenuCommand {
+      export class MenuCommand {
         constructor(handler: System.EventHandler, command: System.ComponentModel.Design.CommandID);
         Checked: boolean;
         Enabled: boolean;
@@ -10415,7 +10415,7 @@ export namespace System {
         Remove = 128,
         Valid = 31,
       }
-      export declare class ServiceCreatorCallback {
+      export class ServiceCreatorCallback {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -10431,7 +10431,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ServiceContainer {
+      export class ServiceContainer {
         constructor();
         constructor(parentProvider: System.IServiceProvider);
         AddService(serviceType: System.Type, serviceInstance: System.Object): void;
@@ -10447,7 +10447,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StandardCommands {
+      export class StandardCommands {
         constructor();
         static AlignBottom: System.ComponentModel.Design.CommandID;
         static AlignHorizontalCenters: System.ComponentModel.Design.CommandID;
@@ -10509,7 +10509,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StandardToolWindows {
+      export class StandardToolWindows {
         constructor();
         static ObjectBrowser: System.Guid;
         static OutputWindow: System.Guid;
@@ -10530,7 +10530,7 @@ export namespace System {
         Default = 2,
       }
       export namespace Serialization {
-        export declare class ComponentSerializationService {
+        export class ComponentSerializationService {
           CreateStore(): System.ComponentModel.Design.Serialization.SerializationStore;
           LoadStore(stream: System.IO.Stream): System.ComponentModel.Design.Serialization.SerializationStore;
           Serialize(store: System.ComponentModel.Design.Serialization.SerializationStore, value: System.Object): void;
@@ -10547,7 +10547,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ContextStack {
+        export class ContextStack {
           constructor();
           Current: System.Object;
           Append(context: System.Object): void;
@@ -10558,7 +10558,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class DesignerLoader {
+        export class DesignerLoader {
           Loading: boolean;
           BeginLoad(host: System.ComponentModel.Design.Serialization.IDesignerLoaderHost): void;
           Dispose(): void;
@@ -10606,7 +10606,7 @@ export namespace System {
           IsValidName(name: string): boolean;
           ValidateName(name: string): void;
         }
-        export declare class InstanceDescriptor {
+        export class InstanceDescriptor {
           constructor(member: System.Reflection.MemberInfo, argumentsCS: System.Collections.ICollection);
           constructor(member: System.Reflection.MemberInfo, argumentsCS: System.Collections.ICollection, isComplete: boolean);
           Arguments: System.Collections.ICollection;
@@ -10618,14 +10618,14 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class MemberRelationshipService {
+        export class MemberRelationshipService {
           SupportsRelationship(source: System.ComponentModel.Design.Serialization.MemberRelationship, relationship: System.ComponentModel.Design.Serialization.MemberRelationship): boolean;
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class MemberRelationship {
+        export class MemberRelationship {
           constructor(owner: System.Object, member: System.ComponentModel.MemberDescriptor);
           IsEmpty: boolean;
           Member: System.ComponentModel.MemberDescriptor;
@@ -10636,7 +10636,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class ResolveNameEventArgs {
+        export class ResolveNameEventArgs {
           constructor(name: string);
           Name: string;
           Value: System.Object;
@@ -10645,7 +10645,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ResolveNameEventHandler {
+        export class ResolveNameEventHandler {
           constructor(object: System.Object, method: System.IntPtr);
           Method: System.Reflection.MethodInfo;
           Target: System.Object;
@@ -10661,7 +10661,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class SerializationStore {
+        export class SerializationStore {
           Errors: System.Collections.ICollection;
           Close(): void;
           Save(stream: System.IO.Stream): void;
@@ -10675,7 +10675,7 @@ export namespace System {
   }
   export namespace Deployment {
     export namespace Internal {
-      export declare class InternalActivationContextHelper {
+      export class InternalActivationContextHelper {
         static GetActivationContextData(appInfo: System.ActivationContext): System.Object;
         static GetApplicationComponentManifest(appInfo: System.ActivationContext): System.Object;
         static GetApplicationManifestBytes(appInfo: System.ActivationContext): System.Byte[];
@@ -10688,7 +10688,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class InternalApplicationIdentityHelper {
+      export class InternalApplicationIdentityHelper {
         static GetInternalAppId(id: System.ApplicationIdentity): System.Object;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -10703,7 +10703,7 @@ export namespace System {
       Collapsed = 2,
       RootHidden = 3,
     }
-    export declare class Debugger {
+    export class Debugger {
       constructor();
       static IsAttached: boolean;
       static DefaultCategory: string;
@@ -10717,7 +10717,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StackFrame {
+    export class StackFrame {
       constructor();
       constructor(fNeedFileInfo: boolean);
       constructor(skipFrames: number);
@@ -10736,7 +10736,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class StackTrace {
+    export class StackTrace {
       constructor();
       constructor(fNeedFileInfo: boolean);
       constructor(skipFrames: number);
@@ -10756,7 +10756,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class EventSchemaTraceListener {
+    export class EventSchemaTraceListener {
       constructor(fileName: string);
       constructor(fileName: string, name: string);
       constructor(fileName: string, name: string, bufferSize: number);
@@ -10809,7 +10809,7 @@ export namespace System {
       SingleFileUnboundedSize = 2,
       UnlimitedSequentialFiles = 0,
     }
-    export declare class UnescapedXmlDiagnosticData {
+    export class UnescapedXmlDiagnosticData {
       constructor(xmlPayload: string);
       UnescapedXml: string;
       Equals(obj: System.Object): boolean;
@@ -10817,7 +10817,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BooleanSwitch {
+    export class BooleanSwitch {
       constructor(displayName: string, description: string);
       constructor(displayName: string, description: string, defaultSwitchValue: string);
       Enabled: boolean;
@@ -10829,7 +10829,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ConsoleTraceListener {
+    export class ConsoleTraceListener {
       constructor();
       constructor(useErrorStream: boolean);
       Writer: System.IO.TextWriter;
@@ -10867,7 +10867,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CorrelationManager {
+    export class CorrelationManager {
       ActivityId: System.Guid;
       LogicalOperationStack: System.Collections.Stack;
       StartLogicalOperation(operationId: System.Object): void;
@@ -10878,7 +10878,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Debug {
+    export class Debug {
       static Listeners: System.Diagnostics.TraceListenerCollection;
       static AutoFlush: boolean;
       static IndentLevel: number;
@@ -10917,7 +10917,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DelimitedListTraceListener {
+    export class DelimitedListTraceListener {
       constructor(stream: System.IO.Stream);
       constructor(stream: System.IO.Stream, name: string);
       constructor(writer: System.IO.TextWriter);
@@ -10960,7 +10960,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventTypeFilter {
+    export class EventTypeFilter {
       constructor(level: System.Diagnostics.SourceLevels);
       EventType: System.Diagnostics.SourceLevels;
       ShouldTrace(cache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, formatOrMessage: string, args: System.Object[], data1: System.Object, data: System.Object[]): boolean;
@@ -10969,7 +10969,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SourceFilter {
+    export class SourceFilter {
       constructor(source: string);
       Source: string;
       ShouldTrace(cache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, formatOrMessage: string, args: System.Object[], data1: System.Object, data: System.Object[]): boolean;
@@ -10988,7 +10988,7 @@ export namespace System {
       ActivityTracing = 65280,
       All = -1,
     }
-    export declare class SourceSwitch {
+    export class SourceSwitch {
       constructor(name: string);
       constructor(displayName: string, defaultSwitchValue: string);
       Level: System.Diagnostics.SourceLevels;
@@ -11001,7 +11001,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Switch {
+    export class Switch {
       Attributes: System.Collections.Specialized.StringDictionary;
       DisplayName: string;
       Description: string;
@@ -11010,7 +11010,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextWriterTraceListener {
+    export class TextWriterTraceListener {
       constructor();
       constructor(stream: System.IO.Stream);
       constructor(stream: System.IO.Stream, name: string);
@@ -11053,7 +11053,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Trace {
+    export class Trace {
       static Listeners: System.Diagnostics.TraceListenerCollection;
       static AutoFlush: boolean;
       static UseGlobalLock: boolean;
@@ -11097,7 +11097,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TraceEventCache {
+    export class TraceEventCache {
       constructor();
       Callstack: string;
       LogicalOperationStack: System.Collections.Stack;
@@ -11122,7 +11122,7 @@ export namespace System {
       Resume = 2048,
       Transfer = 4096,
     }
-    export declare class TraceFilter {
+    export class TraceFilter {
       ShouldTrace(cache: System.Diagnostics.TraceEventCache, source: string, eventType: System.Diagnostics.TraceEventType, id: number, formatOrMessage: string, args: System.Object[], data1: System.Object, data: System.Object[]): boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -11136,7 +11136,7 @@ export namespace System {
       Info = 3,
       Verbose = 4,
     }
-    export declare class TraceListener {
+    export class TraceListener {
       Attributes: System.Collections.Specialized.StringDictionary;
       Name: string;
       IsThreadSafe: boolean;
@@ -11171,7 +11171,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TraceListenerCollection {
+    export class TraceListenerCollection {
       Count: number;
       Add(listener: System.Diagnostics.TraceListener): number;
       AddRange(value: System.Diagnostics.TraceListener[]): void;
@@ -11199,7 +11199,7 @@ export namespace System {
       ThreadId = 16,
       Callstack = 32,
     }
-    export declare class TraceSource {
+    export class TraceSource {
       constructor(name: string);
       constructor(name: string, defaultLevel: System.Diagnostics.SourceLevels);
       Attributes: System.Collections.Specialized.StringDictionary;
@@ -11221,7 +11221,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TraceSwitch {
+    export class TraceSwitch {
       constructor(displayName: string, description: string);
       constructor(displayName: string, description: string, defaultSwitchValue: string);
       Level: System.Diagnostics.TraceLevel;
@@ -11237,7 +11237,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class XmlWriterTraceListener {
+    export class XmlWriterTraceListener {
       constructor(stream: System.IO.Stream);
       constructor(stream: System.IO.Stream, name: string);
       constructor(writer: System.IO.TextWriter);
@@ -11279,7 +11279,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Process {
+    export class Process {
       constructor();
       ExitCode: number;
       HasExited: boolean;
@@ -11369,7 +11369,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ProcessModuleCollection {
+    export class ProcessModuleCollection {
       constructor(processModules: System.Diagnostics.ProcessModule[]);
       Count: number;
       IndexOf(module: System.Diagnostics.ProcessModule): number;
@@ -11381,7 +11381,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ProcessStartInfo {
+    export class ProcessStartInfo {
       constructor();
       constructor(fileName: string);
       constructor(fileName: string, argumentsCS: string);
@@ -11412,7 +11412,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ProcessThreadCollection {
+    export class ProcessThreadCollection {
       constructor(processThreads: System.Diagnostics.ProcessThread[]);
       Count: number;
       Add(thread: System.Diagnostics.ProcessThread): number;
@@ -11427,7 +11427,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CounterCreationData {
+    export class CounterCreationData {
       constructor();
       constructor(counterName: string, counterHelp: string, counterType: System.Diagnostics.PerformanceCounterType);
       CounterHelp: string;
@@ -11438,7 +11438,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CounterCreationDataCollection {
+    export class CounterCreationDataCollection {
       constructor();
       constructor(value: System.Diagnostics.CounterCreationData[]);
       constructor(value: System.Diagnostics.CounterCreationDataCollection);
@@ -11460,7 +11460,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CounterSample {
+    export class CounterSample {
       constructor(rawValue: System.Int64, baseValue: System.Int64, counterFrequency: System.Int64, systemFrequency: System.Int64, timeStamp: System.Int64, timeStamp100nSec: System.Int64, counterType: System.Diagnostics.PerformanceCounterType);
       constructor(rawValue: System.Int64, baseValue: System.Int64, counterFrequency: System.Int64, systemFrequency: System.Int64, timeStamp: System.Int64, timeStamp100nSec: System.Int64, counterType: System.Diagnostics.PerformanceCounterType, counterTimeStamp: System.Int64);
       BaseValue: System.Int64;
@@ -11480,7 +11480,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CounterSampleCalculator {
+    export class CounterSampleCalculator {
       static ComputeCounterValue(newSample: System.Diagnostics.CounterSample): number;
       static ComputeCounterValue(oldSample: System.Diagnostics.CounterSample, newSample: System.Diagnostics.CounterSample): number;
       Equals(obj: System.Object): boolean;
@@ -11488,14 +11488,14 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DataReceivedEventArgs {
+    export class DataReceivedEventArgs {
       Data: string;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DataReceivedEventHandler {
+    export class DataReceivedEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -11511,7 +11511,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DefaultTraceListener {
+    export class DefaultTraceListener {
       constructor();
       AssertUiEnabled: boolean;
       LogFileName: string;
@@ -11549,7 +11549,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DiagnosticsConfigurationHandler {
+    export class DiagnosticsConfigurationHandler {
       constructor();
       Create(parent: System.Object, configContext: System.Object, section: any): System.Object;
       Equals(obj: System.Object): boolean;
@@ -11557,7 +11557,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EntryWrittenEventArgs {
+    export class EntryWrittenEventArgs {
       constructor();
       constructor(entry: System.Diagnostics.EventLogEntry);
       Entry: System.Diagnostics.EventLogEntry;
@@ -11566,7 +11566,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EntryWrittenEventHandler {
+    export class EntryWrittenEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -11582,7 +11582,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventInstance {
+    export class EventInstance {
       constructor(instanceId: System.Int64, categoryId: number);
       constructor(instanceId: System.Int64, categoryId: number, entryType: System.Diagnostics.EventLogEntryType);
       CategoryId: number;
@@ -11593,7 +11593,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventLog {
+    export class EventLog {
       constructor();
       constructor(logName: string);
       constructor(logName: string, machineName: string);
@@ -11653,7 +11653,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class EventLogEntry {
+    export class EventLogEntry {
       Category: string;
       CategoryNumber: System.Int16;
       Data: System.Byte[];
@@ -11680,7 +11680,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class EventLogEntryCollection {
+    export class EventLogEntryCollection {
       Count: number;
       CopyTo(entries: System.Diagnostics.EventLogEntry[], index: number): void;
       GetEnumerator(): System.Collections.IEnumerator;
@@ -11696,7 +11696,7 @@ export namespace System {
       SuccessAudit = 8,
       FailureAudit = 16,
     }
-    export declare class EventLogPermission {
+    export class EventLogPermission {
       constructor();
       constructor(permissionAccessEntries: System.Diagnostics.EventLogPermissionEntry[]);
       constructor(state: System.Security.Permissions.PermissionState);
@@ -11726,7 +11726,7 @@ export namespace System {
       Write = 16,
       Administer = 48,
     }
-    export declare class EventLogPermissionEntry {
+    export class EventLogPermissionEntry {
       constructor(permissionAccess: System.Diagnostics.EventLogPermissionAccess, machineName: string);
       MachineName: string;
       PermissionAccess: System.Diagnostics.EventLogPermissionAccess;
@@ -11735,7 +11735,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventLogPermissionEntryCollection {
+    export class EventLogPermissionEntryCollection {
       Capacity: number;
       Count: number;
       Add(value: System.Diagnostics.EventLogPermissionEntry): number;
@@ -11754,7 +11754,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventLogTraceListener {
+    export class EventLogTraceListener {
       constructor();
       constructor(eventLog: System.Diagnostics.EventLog);
       constructor(source: string);
@@ -11793,7 +11793,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EventSourceCreationData {
+    export class EventSourceCreationData {
       constructor(source: string, logName: string);
       CategoryCount: number;
       CategoryResourceFile: string;
@@ -11807,7 +11807,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FileVersionInfo {
+    export class FileVersionInfo {
       Comments: string;
       CompanyName: string;
       FileBuildPart: number;
@@ -11844,7 +11844,7 @@ export namespace System {
     export interface ICollectData {
       CloseData(): void;
     }
-    export declare class InstanceData {
+    export class InstanceData {
       constructor(instanceName: string, sample: System.Diagnostics.CounterSample);
       InstanceName: string;
       RawValue: System.Int64;
@@ -11854,7 +11854,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class InstanceDataCollection {
+    export class InstanceDataCollection {
       constructor(counterName: string);
       CounterName: string;
       Keys: System.Collections.ICollection;
@@ -11870,7 +11870,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class InstanceDataCollectionCollection {
+    export class InstanceDataCollectionCollection {
       constructor();
       Keys: System.Collections.ICollection;
       Values: System.Collections.ICollection;
@@ -11890,7 +11890,7 @@ export namespace System {
       OverwriteAsNeeded = 0,
       OverwriteOlder = 1,
     }
-    export declare class PerformanceCounter {
+    export class PerformanceCounter {
       constructor();
       constructor(categoryName: string, counterName: string);
       constructor(categoryName: string, counterName: string, readOnly: boolean);
@@ -11928,7 +11928,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class PerformanceCounterCategory {
+    export class PerformanceCounterCategory {
       constructor();
       constructor(categoryName: string);
       constructor(categoryName: string, machineName: string);
@@ -11969,14 +11969,14 @@ export namespace System {
       Global = 0,
       Process = 1,
     }
-    export declare class PerformanceCounterManager {
+    export class PerformanceCounterManager {
       constructor();
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PerformanceCounterPermission {
+    export class PerformanceCounterPermission {
       constructor();
       constructor(permissionAccessEntries: System.Diagnostics.PerformanceCounterPermissionEntry[]);
       constructor(state: System.Security.Permissions.PermissionState);
@@ -12006,7 +12006,7 @@ export namespace System {
       Instrument = 3,
       Administer = 7,
     }
-    export declare class PerformanceCounterPermissionEntry {
+    export class PerformanceCounterPermissionEntry {
       constructor(permissionAccess: System.Diagnostics.PerformanceCounterPermissionAccess, machineName: string, categoryName: string);
       CategoryName: string;
       MachineName: string;
@@ -12016,7 +12016,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PerformanceCounterPermissionEntryCollection {
+    export class PerformanceCounterPermissionEntryCollection {
       Capacity: number;
       Count: number;
       Add(value: System.Diagnostics.PerformanceCounterPermissionEntry): number;
@@ -12065,7 +12065,7 @@ export namespace System {
       RawBase = 1073939459,
       CounterMultiBase = 1107494144,
     }
-    export declare class ProcessModule {
+    export class ProcessModule {
       BaseAddress: System.IntPtr;
       EntryPointAddress: System.IntPtr;
       FileName: string;
@@ -12091,7 +12091,7 @@ export namespace System {
       Normal = 32,
       RealTime = 256,
     }
-    export declare class ProcessThread {
+    export class ProcessThread {
       BasePriority: number;
       CurrentPriority: number;
       Id: number;
@@ -12124,7 +12124,7 @@ export namespace System {
       Minimized = 2,
       Normal = 0,
     }
-    export declare class Stopwatch {
+    export class Stopwatch {
       constructor();
       Elapsed: System.TimeSpan;
       ElapsedMilliseconds: System.Int64;
@@ -12178,7 +12178,7 @@ export namespace System {
       UserRequest = 6,
       VirtualMemory = 11,
     }
-    export declare class StackFrameExtensions {
+    export class StackFrameExtensions {
       static GetNativeImageBase(stackFrame: System.Diagnostics.StackFrame): System.IntPtr;
       static GetNativeIP(stackFrame: System.Diagnostics.StackFrame): System.IntPtr;
       static HasILOffset(stackFrame: System.Diagnostics.StackFrame): boolean;
@@ -12191,7 +12191,7 @@ export namespace System {
       ToString(): string;
     }
     export namespace Contracts {
-      export declare class Contract {
+      export class Contract {
         static Assume(condition: boolean): void;
         static Assume(condition: boolean, userMessage: string): void;
         static Assert(condition: boolean): void;
@@ -12218,7 +12218,7 @@ export namespace System {
         Assert = 4,
         Assume = 5,
       }
-      export declare class ContractFailedEventArgs {
+      export class ContractFailedEventArgs {
         constructor(failureKind: System.Diagnostics.Contracts.ContractFailureKind, message: string, condition: string, originalException: System.Exception);
         Message: string;
         Condition: string;
@@ -12234,7 +12234,7 @@ export namespace System {
         ToString(): string;
       }
       export namespace Internal {
-        export declare class ContractHelper {
+        export class ContractHelper {
           static RaiseContractFailedEvent(failureKind: System.Diagnostics.Contracts.ContractFailureKind, userMessage: string, conditionText: string, innerException: System.Exception): string;
           static TriggerFailure(kind: System.Diagnostics.Contracts.ContractFailureKind, displayMessage: string, userMessage: string, conditionText: string, innerException: System.Exception): void;
           Equals(obj: System.Object): boolean;
@@ -12245,7 +12245,7 @@ export namespace System {
       }
     }
     export namespace Eventing {
-      export declare class EventDescriptor {
+      export class EventDescriptor {
         constructor(id: number, version: System.Byte, channel: System.Byte, level: System.Byte, opcode: System.Byte, task: number, keywords: System.Int64);
         Channel: System.Byte;
         EventId: number;
@@ -12259,7 +12259,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class EventProvider {
+      export class EventProvider {
         constructor(providerGuid: System.Guid);
         Close(): void;
         static CreateActivityId(): System.Guid;
@@ -12279,7 +12279,7 @@ export namespace System {
         NoError = 0,
         NoFreeBuffers = 1,
       }
-      export declare class EventProviderTraceListener {
+      export class EventProviderTraceListener {
         constructor(providerId: string);
         constructor(providerId: string, name: string);
         constructor(providerId: string, name: string, delimiter: string);
@@ -12319,13 +12319,13 @@ export namespace System {
         ToString(): string;
       }
       export namespace Reader {
-        export declare class EventBookmark {
+        export class EventBookmark {
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventKeyword {
+        export class EventKeyword {
           DisplayName: string;
           Name: string;
           Value: System.Int64;
@@ -12334,7 +12334,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLevel {
+        export class EventLevel {
           DisplayName: string;
           Name: string;
           Value: number;
@@ -12343,7 +12343,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLogConfiguration {
+        export class EventLogConfiguration {
           constructor(logName: string);
           constructor(logName: string, session: System.Diagnostics.Eventing.Reader.EventLogSession);
           IsClassicLog: boolean;
@@ -12371,7 +12371,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLogSession {
+        export class EventLogSession {
           constructor();
           constructor(server: string);
           constructor(server: string, domain: string, user: string, password: System.Security.SecureString, logOnType: System.Diagnostics.Eventing.Reader.SessionAuthentication);
@@ -12402,7 +12402,7 @@ export namespace System {
           FilePath = 2,
           LogName = 1,
         }
-        export declare class EventLogInformation {
+        export class EventLogInformation {
           Attributes?: number;
           CreationTime?: System.Nullable<System.DateTime>;
           FileSize?: System.Nullable<System.Int64>;
@@ -12432,7 +12432,7 @@ export namespace System {
           Debug = 3,
           Operational = 1,
         }
-        export declare class EventLogException {
+        export class EventLogException {
           constructor();
           constructor(message: string);
           constructor(message: string, innerException: System.Exception);
@@ -12452,7 +12452,7 @@ export namespace System {
           GetHashCode(): number;
           GetType(): System.Type;
         }
-        export declare class EventLogInvalidDataException {
+        export class EventLogInvalidDataException {
           constructor();
           constructor(message: string);
           constructor(message: string, innerException: System.Exception);
@@ -12472,7 +12472,7 @@ export namespace System {
           GetHashCode(): number;
           GetType(): System.Type;
         }
-        export declare class EventLogLink {
+        export class EventLogLink {
           DisplayName: string;
           IsImported: boolean;
           LogName: string;
@@ -12481,7 +12481,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLogNotFoundException {
+        export class EventLogNotFoundException {
           constructor();
           constructor(message: string);
           constructor(message: string, innerException: System.Exception);
@@ -12501,7 +12501,7 @@ export namespace System {
           GetHashCode(): number;
           GetType(): System.Type;
         }
-        export declare class EventLogPropertySelector {
+        export class EventLogPropertySelector {
           constructor(propertyQueries: System.Collections.Generic.IEnumerable<string>);
           Dispose(): void;
           Equals(obj: System.Object): boolean;
@@ -12509,7 +12509,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLogProviderDisabledException {
+        export class EventLogProviderDisabledException {
           constructor();
           constructor(message: string);
           constructor(message: string, innerException: System.Exception);
@@ -12529,7 +12529,7 @@ export namespace System {
           GetHashCode(): number;
           GetType(): System.Type;
         }
-        export declare class EventLogQuery {
+        export class EventLogQuery {
           constructor(path: string, pathType: System.Diagnostics.Eventing.Reader.PathType);
           constructor(path: string, pathType: System.Diagnostics.Eventing.Reader.PathType, query: string);
           ReverseDirection: boolean;
@@ -12540,7 +12540,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLogReader {
+        export class EventLogReader {
           constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery);
           constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery, bookmark: System.Diagnostics.Eventing.Reader.EventBookmark);
           constructor(path: string);
@@ -12559,7 +12559,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLogStatus {
+        export class EventLogStatus {
           LogName: string;
           StatusCode: number;
           Equals(obj: System.Object): boolean;
@@ -12567,7 +12567,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventRecord {
+        export class EventRecord {
           ActivityId?: System.Nullable<System.Guid>;
           Bookmark: System.Diagnostics.Eventing.Reader.EventBookmark;
           Id: number;
@@ -12601,14 +12601,14 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventProperty {
+        export class EventProperty {
           Value: System.Object;
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLogReadingException {
+        export class EventLogReadingException {
           constructor();
           constructor(message: string);
           constructor(message: string, innerException: System.Exception);
@@ -12628,7 +12628,7 @@ export namespace System {
           GetHashCode(): number;
           GetType(): System.Type;
         }
-        export declare class EventLogRecord {
+        export class EventLogRecord {
           ActivityId?: System.Nullable<System.Guid>;
           Bookmark: System.Diagnostics.Eventing.Reader.EventBookmark;
           ContainerLog: string;
@@ -12665,7 +12665,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventLogWatcher {
+        export class EventLogWatcher {
           constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery);
           constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery, bookmark: System.Diagnostics.Eventing.Reader.EventBookmark);
           constructor(eventQuery: System.Diagnostics.Eventing.Reader.EventLogQuery, bookmark: System.Diagnostics.Eventing.Reader.EventBookmark, readExistingEvents: boolean);
@@ -12677,7 +12677,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventRecordWrittenEventArgs {
+        export class EventRecordWrittenEventArgs {
           EventException: System.Exception;
           EventRecord: System.Diagnostics.Eventing.Reader.EventRecord;
           Equals(obj: System.Object): boolean;
@@ -12685,7 +12685,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventMetadata {
+        export class EventMetadata {
           Description: string;
           Id: System.Int64;
           Keywords: System.Collections.Generic.IEnumerable<System.Diagnostics.Eventing.Reader.EventKeyword>;
@@ -12700,7 +12700,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventOpcode {
+        export class EventOpcode {
           DisplayName: string;
           Name: string;
           Value: number;
@@ -12709,7 +12709,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class EventTask {
+        export class EventTask {
           DisplayName: string;
           EventGuid: System.Guid;
           Name: string;
@@ -12719,7 +12719,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ProviderMetadata {
+        export class ProviderMetadata {
           constructor(providerName: string);
           constructor(providerName: string, session: System.Diagnostics.Eventing.Reader.EventLogSession, targetCultureInfo: System.Globalization.CultureInfo);
           DisplayName: string;
@@ -12780,7 +12780,7 @@ export namespace System {
       }
     }
     export namespace PerformanceData {
-      export declare class CounterData {
+      export class CounterData {
         RawValue: System.Int64;
         Value: System.Int64;
         Decrement(): void;
@@ -12791,7 +12791,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CounterSet {
+      export class CounterSet {
         constructor(providerGuid: System.Guid, counterSetGuid: System.Guid, instanceType: System.Diagnostics.PerformanceData.CounterSetInstanceType);
         AddCounter(counterId: number, counterType: System.Diagnostics.PerformanceData.CounterType): void;
         AddCounter(counterId: number, counterType: System.Diagnostics.PerformanceData.CounterType, counterName: string): void;
@@ -12848,7 +12848,7 @@ export namespace System {
         SampleCounter = 4260864,
         SampleFraction = 549585920,
       }
-      export declare class CounterSetInstance {
+      export class CounterSetInstance {
         Counters: System.Diagnostics.PerformanceData.CounterSetInstanceCounterDataSet;
         Dispose(): void;
         Equals(obj: System.Object): boolean;
@@ -12856,7 +12856,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CounterSetInstanceCounterDataSet {
+      export class CounterSetInstanceCounterDataSet {
         Dispose(): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -12970,7 +12970,7 @@ export namespace System {
         BitField = 9,
         NativeSectionOffset = 10,
       }
-      export declare class SymDocumentType {
+      export class SymDocumentType {
         constructor();
         static Text: System.Guid;
         Equals(obj: System.Object): boolean;
@@ -12978,7 +12978,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SymLanguageType {
+      export class SymLanguageType {
         constructor();
         static Basic: System.Guid;
         static C: System.Guid;
@@ -12996,7 +12996,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SymLanguageVendor {
+      export class SymLanguageVendor {
         constructor();
         static Microsoft: System.Guid;
         Equals(obj: System.Object): boolean;
@@ -13004,7 +13004,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SymbolToken {
+      export class SymbolToken {
         constructor(val: number);
         Equals(obj: System.Object): boolean;
         Equals(obj: System.Diagnostics.SymbolStore.SymbolToken): boolean;
@@ -13015,7 +13015,7 @@ export namespace System {
       }
     }
     export namespace Tracing {
-      export declare class EventCounter {
+      export class EventCounter {
         constructor(name: string, eventSource: System.Diagnostics.Tracing.EventSource);
         WriteMetric(value: number): void;
         Dispose(): void;
@@ -13036,7 +13036,7 @@ export namespace System {
         Json = 12,
         HResult = 15,
       }
-      export declare class EventSourceOptions {
+      export class EventSourceOptions {
         Level: System.Diagnostics.Tracing.EventLevel;
         Opcode: System.Diagnostics.Tracing.EventOpcode;
         Keywords: System.Diagnostics.Tracing.EventKeywords;
@@ -13047,7 +13047,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class EventSource {
+      export class EventSource {
         constructor(eventSourceName: string);
         constructor(eventSourceName: string, config: System.Diagnostics.Tracing.EventSourceSettings);
         constructor(eventSourceName: string, config: System.Diagnostics.Tracing.EventSourceSettings, ...traits: string[]);
@@ -13090,7 +13090,7 @@ export namespace System {
         EtwManifestEventFormat = 4,
         EtwSelfDescribingEventFormat = 8,
       }
-      export declare class EventListener {
+      export class EventListener {
         constructor();
         Dispose(): void;
         EnableEvents(eventSource: System.Diagnostics.Tracing.EventSource, level: System.Diagnostics.Tracing.EventLevel): void;
@@ -13103,7 +13103,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EventCommandEventArgs {
+      export class EventCommandEventArgs {
         Command: System.Diagnostics.Tracing.EventCommand;
         Arguments: System.Collections.Generic.IDictionary<string, string>;
         EnableEvent(eventId: number): boolean;
@@ -13113,7 +13113,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EventSourceCreatedEventArgs {
+      export class EventSourceCreatedEventArgs {
         constructor();
         EventSource: System.Diagnostics.Tracing.EventSource;
         Equals(obj: System.Object): boolean;
@@ -13121,7 +13121,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EventWrittenEventArgs {
+      export class EventWrittenEventArgs {
         EventName: string;
         EventId: number;
         ActivityId: System.Guid;
@@ -13155,7 +13155,7 @@ export namespace System {
         OnlyIfNeededForRegistration = 4,
         AllowEventSourceOverride = 8,
       }
-      export declare class EventSourceException {
+      export class EventSourceException {
         constructor();
         constructor(message: string);
         constructor(message: string, innerException: System.Exception);
@@ -13221,7 +13221,7 @@ export namespace System {
     }
   }
   export namespace Dynamic {
-    export declare class BinaryOperationBinder {
+    export class BinaryOperationBinder {
       ReturnType: System.Type;
       Operation: System.Linq.Expressions.ExpressionType;
       FallbackBinaryOperation(target: System.Dynamic.DynamicMetaObject, arg: System.Dynamic.DynamicMetaObject): System.Dynamic.DynamicMetaObject;
@@ -13236,7 +13236,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BindingRestrictions {
+    export class BindingRestrictions {
       static Empty: System.Dynamic.BindingRestrictions;
       Merge(restrictions: System.Dynamic.BindingRestrictions): System.Dynamic.BindingRestrictions;
       static GetTypeRestriction(expression: System.Linq.Expressions.Expression, type: System.Type): System.Dynamic.BindingRestrictions;
@@ -13249,7 +13249,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CallInfo {
+    export class CallInfo {
       constructor(argCount: number, ...argNames: string[]);
       constructor(argCount: number, argNames: System.Collections.Generic.IEnumerable<string>);
       ArgumentCount: number;
@@ -13259,7 +13259,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ConvertBinder {
+    export class ConvertBinder {
       Type: System.Type;
       Explicit: boolean;
       ReturnType: System.Type;
@@ -13275,7 +13275,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CreateInstanceBinder {
+    export class CreateInstanceBinder {
       ReturnType: System.Type;
       CallInfo: System.Dynamic.CallInfo;
       FallbackCreateInstance(target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]): System.Dynamic.DynamicMetaObject;
@@ -13290,7 +13290,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DeleteIndexBinder {
+    export class DeleteIndexBinder {
       ReturnType: System.Type;
       CallInfo: System.Dynamic.CallInfo;
       Bind(target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]): System.Dynamic.DynamicMetaObject;
@@ -13305,7 +13305,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DeleteMemberBinder {
+    export class DeleteMemberBinder {
       Name: string;
       IgnoreCase: boolean;
       ReturnType: System.Type;
@@ -13321,7 +13321,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DynamicMetaObject {
+    export class DynamicMetaObject {
       constructor(expression: System.Linq.Expressions.Expression, restrictions: System.Dynamic.BindingRestrictions);
       constructor(expression: System.Linq.Expressions.Expression, restrictions: System.Dynamic.BindingRestrictions, value: System.Object);
       Expression: System.Linq.Expressions.Expression;
@@ -13350,7 +13350,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DynamicMetaObjectBinder {
+    export class DynamicMetaObjectBinder {
       ReturnType: System.Type;
       Bind(args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget): System.Linq.Expressions.Expression;
       Bind(target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]): System.Dynamic.DynamicMetaObject;
@@ -13362,7 +13362,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DynamicObject {
+    export class DynamicObject {
       TrySetMember(binder: System.Dynamic.SetMemberBinder, value: System.Object): boolean;
       TryDeleteMember(binder: System.Dynamic.DeleteMemberBinder): boolean;
       TrySetIndex(binder: System.Dynamic.SetIndexBinder, indexes: System.Object[], value: System.Object): boolean;
@@ -13374,14 +13374,14 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ExpandoObject {
+    export class ExpandoObject {
       constructor();
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class GetIndexBinder {
+    export class GetIndexBinder {
       ReturnType: System.Type;
       CallInfo: System.Dynamic.CallInfo;
       Bind(target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]): System.Dynamic.DynamicMetaObject;
@@ -13396,7 +13396,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class GetMemberBinder {
+    export class GetMemberBinder {
       ReturnType: System.Type;
       Name: string;
       IgnoreCase: boolean;
@@ -13418,7 +13418,7 @@ export namespace System {
     export interface IInvokeOnGetBinder {
       InvokeOnGet: boolean;
     }
-    export declare class InvokeBinder {
+    export class InvokeBinder {
       ReturnType: System.Type;
       CallInfo: System.Dynamic.CallInfo;
       FallbackInvoke(target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]): System.Dynamic.DynamicMetaObject;
@@ -13433,7 +13433,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class InvokeMemberBinder {
+    export class InvokeMemberBinder {
       ReturnType: System.Type;
       Name: string;
       IgnoreCase: boolean;
@@ -13451,7 +13451,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SetIndexBinder {
+    export class SetIndexBinder {
       ReturnType: System.Type;
       CallInfo: System.Dynamic.CallInfo;
       Bind(target: System.Dynamic.DynamicMetaObject, args: System.Dynamic.DynamicMetaObject[]): System.Dynamic.DynamicMetaObject;
@@ -13466,7 +13466,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SetMemberBinder {
+    export class SetMemberBinder {
       ReturnType: System.Type;
       Name: string;
       IgnoreCase: boolean;
@@ -13482,7 +13482,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UnaryOperationBinder {
+    export class UnaryOperationBinder {
       ReturnType: System.Type;
       Operation: System.Linq.Expressions.ExpressionType;
       FallbackUnaryOperation(target: System.Dynamic.DynamicMetaObject): System.Dynamic.DynamicMetaObject;
@@ -13499,7 +13499,7 @@ export namespace System {
     }
   }
   export namespace Globalization {
-    export declare class CharUnicodeInfo {
+    export class CharUnicodeInfo {
       static GetNumericValue(ch: System.Char): number;
       static GetNumericValue(s: string, index: number): number;
       static GetDecimalDigitValue(ch: System.Char): number;
@@ -13513,7 +13513,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PersianCalendar {
+    export class PersianCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -13564,7 +13564,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Calendar {
+    export class Calendar {
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
       AlgorithmType: System.Globalization.CalendarAlgorithmType;
@@ -13626,7 +13626,7 @@ export namespace System {
       FirstFullWeek = 1,
       FirstFourDayWeek = 2,
     }
-    export declare class ChineseLunisolarCalendar {
+    export class ChineseLunisolarCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -13691,7 +13691,7 @@ export namespace System {
       StringSort = 536870912,
       Ordinal = 1073741824,
     }
-    export declare class CompareInfo {
+    export class CompareInfo {
       Name: string;
       LCID: number;
       Version: System.Globalization.SortVersion;
@@ -13743,7 +13743,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CultureNotFoundException {
+    export class CultureNotFoundException {
       constructor();
       constructor(message: string);
       constructor(paramName: string, message: string);
@@ -13781,7 +13781,7 @@ export namespace System {
       WindowsOnlyCultures = 32,
       FrameworkCultures = 64,
     }
-    export declare class DateTimeFormatInfo {
+    export class DateTimeFormatInfo {
       constructor();
       static InvariantInfo: System.Globalization.DateTimeFormatInfo;
       static CurrentInfo: System.Globalization.DateTimeFormatInfo;
@@ -13843,7 +13843,7 @@ export namespace System {
       AssumeUniversal = 64,
       RoundtripKind = 128,
     }
-    export declare class DaylightTime {
+    export class DaylightTime {
       constructor(start: System.DateTime, end: System.DateTime, delta: System.TimeSpan);
       Start: System.DateTime;
       End: System.DateTime;
@@ -13858,7 +13858,7 @@ export namespace System {
       None = 1,
       NativeNational = 2,
     }
-    export declare class EastAsianLunisolarCalendar {
+    export class EastAsianLunisolarCalendar {
       AlgorithmType: System.Globalization.CalendarAlgorithmType;
       TwoDigitYearMax: number;
       MinSupportedDateTime: System.DateTime;
@@ -13910,7 +13910,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class GregorianCalendar {
+    export class GregorianCalendar {
       constructor();
       constructor(type: System.Globalization.GregorianCalendarTypes);
       MinSupportedDateTime: System.DateTime;
@@ -13971,7 +13971,7 @@ export namespace System {
       TransliteratedEnglish = 11,
       TransliteratedFrench = 12,
     }
-    export declare class HebrewCalendar {
+    export class HebrewCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14022,7 +14022,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class HijriCalendar {
+    export class HijriCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14074,7 +14074,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class JapaneseCalendar {
+    export class JapaneseCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14124,7 +14124,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class JapaneseLunisolarCalendar {
+    export class JapaneseLunisolarCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14178,7 +14178,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class JulianCalendar {
+    export class JulianCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14229,7 +14229,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class KoreanCalendar {
+    export class KoreanCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14280,7 +14280,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class KoreanLunisolarCalendar {
+    export class KoreanLunisolarCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14334,7 +14334,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NumberFormatInfo {
+    export class NumberFormatInfo {
       constructor();
       static InvariantInfo: System.Globalization.NumberFormatInfo;
       CurrencyDecimalDigits: number;
@@ -14394,7 +14394,7 @@ export namespace System {
       Currency = 383,
       Any = 511,
     }
-    export declare class SortVersion {
+    export class SortVersion {
       constructor(fullVersion: number, sortId: System.Guid);
       FullVersion: number;
       SortId: System.Guid;
@@ -14404,7 +14404,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StringInfo {
+    export class StringInfo {
       constructor();
       constructor(value: string);
       String: string;
@@ -14421,7 +14421,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TaiwanCalendar {
+    export class TaiwanCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14471,7 +14471,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TaiwanLunisolarCalendar {
+    export class TaiwanLunisolarCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14524,7 +14524,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextElementEnumerator {
+    export class TextElementEnumerator {
       Current: System.Object;
       ElementIndex: number;
       MoveNext(): boolean;
@@ -14535,7 +14535,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextInfo {
+    export class TextInfo {
       ANSICodePage: number;
       OEMCodePage: number;
       MacCodePage: number;
@@ -14557,7 +14557,7 @@ export namespace System {
       ToTitleCase(str: string): string;
       GetType(): System.Type;
     }
-    export declare class ThaiBuddhistCalendar {
+    export class ThaiBuddhistCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14612,7 +14612,7 @@ export namespace System {
       None = 0,
       AssumeNegative = 1,
     }
-    export declare class UmAlQuraCalendar {
+    export class UmAlQuraCalendar {
       constructor();
       MinSupportedDateTime: System.DateTime;
       MaxSupportedDateTime: System.DateTime;
@@ -14695,7 +14695,7 @@ export namespace System {
       OtherSymbol = 28,
       OtherNotAssigned = 29,
     }
-    export declare class SortKey {
+    export class SortKey {
       OriginalString: string;
       KeyData: System.Byte[];
       static Compare(sortkey1: System.Globalization.SortKey, sortkey2: System.Globalization.SortKey): number;
@@ -14704,7 +14704,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CultureInfo {
+    export class CultureInfo {
       constructor(culture: number);
       constructor(culture: number, useUserOverride: boolean);
       constructor(name: string);
@@ -14752,7 +14752,7 @@ export namespace System {
       static CreateSpecificCulture(name: string): System.Globalization.CultureInfo;
       GetType(): System.Type;
     }
-    export declare class IdnMapping {
+    export class IdnMapping {
       constructor();
       AllowUnassigned: boolean;
       UseStd3AsciiRules: boolean;
@@ -14767,7 +14767,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RegionInfo {
+    export class RegionInfo {
       constructor(culture: number);
       constructor(name: string);
       static CurrentRegion: System.Globalization.RegionInfo;
@@ -14789,7 +14789,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class GlobalizationExtensions {
+    export class GlobalizationExtensions {
       static GetStringComparer(compareInfo: System.Globalization.CompareInfo, options: System.Globalization.CompareOptions): System.StringComparer;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -14798,7 +14798,7 @@ export namespace System {
     }
   }
   export namespace IO {
-    export declare class BinaryReader {
+    export class BinaryReader {
       constructor(input: System.IO.Stream);
       constructor(input: System.IO.Stream, encoding: System.Text.Encoding);
       constructor(input: System.IO.Stream, encoding: System.Text.Encoding, leaveOpen: boolean);
@@ -14830,7 +14830,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BinaryWriter {
+    export class BinaryWriter {
       constructor(output: System.IO.Stream);
       constructor(output: System.IO.Stream, encoding: System.Text.Encoding);
       constructor(output: System.IO.Stream, encoding: System.Text.Encoding, leaveOpen: boolean);
@@ -14863,7 +14863,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BufferedStream {
+    export class BufferedStream {
       constructor(stream: System.IO.Stream);
       constructor(stream: System.IO.Stream, bufferSize: number);
       CanRead: boolean;
@@ -14910,7 +14910,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Directory {
+    export class Directory {
       static GetFiles(path: string): string[];
       static GetFiles(path: string, searchPattern: string): string[];
       static GetFiles(path: string, searchPattern: string, searchOption: System.IO.SearchOption): string[];
@@ -14960,7 +14960,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DirectoryNotFoundException {
+    export class DirectoryNotFoundException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -14980,7 +14980,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class DriveNotFoundException {
+    export class DriveNotFoundException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -15000,7 +15000,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class EndOfStreamException {
+    export class EndOfStreamException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -15020,7 +15020,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class FileInfo {
+    export class FileInfo {
       constructor(fileName: string);
       Name: string;
       Length: System.Int64;
@@ -15067,7 +15067,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class FileLoadException {
+    export class FileLoadException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -15091,7 +15091,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class FileNotFoundException {
+    export class FileNotFoundException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -15115,7 +15115,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class FileSystemInfo {
+    export class FileSystemInfo {
       FullName: string;
       Extension: string;
       Name: string;
@@ -15138,7 +15138,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class IOException {
+    export class IOException {
       constructor();
       constructor(message: string);
       constructor(message: string, hresult: number);
@@ -15159,7 +15159,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class MemoryStream {
+    export class MemoryStream {
       constructor();
       constructor(capacity: number);
       constructor(buffer: System.Byte[]);
@@ -15215,7 +15215,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PathTooLongException {
+    export class PathTooLongException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -15235,7 +15235,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Stream {
+    export class Stream {
       CanRead: boolean;
       CanSeek: boolean;
       CanTimeout: boolean;
@@ -15282,7 +15282,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StreamReader {
+    export class StreamReader {
       constructor(stream: System.IO.Stream);
       constructor(stream: System.IO.Stream, detectEncodingFromByteOrderMarks: boolean);
       constructor(stream: System.IO.Stream, encoding: System.Text.Encoding);
@@ -15319,7 +15319,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StreamWriter {
+    export class StreamWriter {
       constructor(stream: System.IO.Stream);
       constructor(stream: System.IO.Stream, encoding: System.Text.Encoding);
       constructor(stream: System.IO.Stream, encoding: System.Text.Encoding, bufferSize: number);
@@ -15390,7 +15390,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StringReader {
+    export class StringReader {
       constructor(s: string);
       Close(): void;
       Peek(): number;
@@ -15412,7 +15412,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StringWriter {
+    export class StringWriter {
       constructor();
       constructor(formatProvider: System.IFormatProvider);
       constructor(sb: System.Text.StringBuilder);
@@ -15477,7 +15477,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class TextReader {
+    export class TextReader {
       static Null: System.IO.TextReader;
       Close(): void;
       Dispose(): void;
@@ -15500,7 +15500,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TextWriter {
+    export class TextWriter {
       FormatProvider: System.IFormatProvider;
       Encoding: System.Text.Encoding;
       NewLine: string;
@@ -15562,7 +15562,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UnmanagedMemoryAccessor {
+    export class UnmanagedMemoryAccessor {
       constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: System.Int64, capacity: System.Int64);
       constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: System.Int64, capacity: System.Int64, access: System.IO.FileAccess);
       Capacity: System.Int64;
@@ -15600,7 +15600,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UnmanagedMemoryStream {
+    export class UnmanagedMemoryStream {
       constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: System.Int64, length: System.Int64);
       constructor(buffer: System.Runtime.InteropServices.SafeBuffer, offset: System.Int64, length: System.Int64, access: System.IO.FileAccess);
       CanRead: boolean;
@@ -15648,7 +15648,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DirectoryInfo {
+    export class DirectoryInfo {
       constructor(path: string);
       Exists: boolean;
       Name: string;
@@ -15701,7 +15701,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class DriveInfo {
+    export class DriveInfo {
       constructor(driveName: string);
       AvailableFreeSpace: System.Int64;
       TotalFreeSpace: System.Int64;
@@ -15727,7 +15727,7 @@ export namespace System {
       Removable = 2,
       Unknown = 0,
     }
-    export declare class File {
+    export class File {
       static AppendAllText(path: string, contents: string): void;
       static AppendAllText(path: string, contents: string, encoding: System.Text.Encoding): void;
       static AppendText(path: string): System.IO.StreamWriter;
@@ -15837,7 +15837,7 @@ export namespace System {
       Delete = 4,
       Inheritable = 16,
     }
-    export declare class FileStream {
+    export class FileStream {
       constructor(handle: System.IntPtr, access: System.IO.FileAccess);
       constructor(handle: System.IntPtr, access: System.IO.FileAccess, ownsHandle: boolean);
       constructor(handle: System.IntPtr, access: System.IO.FileAccess, ownsHandle: boolean, bufferSize: number);
@@ -15906,7 +15906,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Path {
+    export class Path {
       static InvalidPathChars: System.Char[];
       static AltDirectorySeparatorChar: System.Char;
       static DirectorySeparatorChar: System.Char;
@@ -15948,7 +15948,7 @@ export namespace System {
       None = 0,
       Inheritable = 1,
     }
-    export declare class ErrorEventArgs {
+    export class ErrorEventArgs {
       constructor(exception: System.Exception);
       GetException(): System.Exception;
       Equals(obj: System.Object): boolean;
@@ -15956,7 +15956,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ErrorEventHandler {
+    export class ErrorEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -15972,7 +15972,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FileSystemEventArgs {
+    export class FileSystemEventArgs {
       constructor(changeType: System.IO.WatcherChangeTypes, directory: string, name: string);
       ChangeType: System.IO.WatcherChangeTypes;
       FullPath: string;
@@ -15982,7 +15982,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FileSystemEventHandler {
+    export class FileSystemEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -15998,7 +15998,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class FileSystemWatcher {
+    export class FileSystemWatcher {
       constructor();
       constructor(path: string);
       constructor(path: string, filter: string);
@@ -16024,7 +16024,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class InternalBufferOverflowException {
+    export class InternalBufferOverflowException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -16044,7 +16044,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class InvalidDataException {
+    export class InvalidDataException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -16074,7 +16074,7 @@ export namespace System {
       Security = 256,
       Size = 8,
     }
-    export declare class RenamedEventArgs {
+    export class RenamedEventArgs {
       constructor(changeType: System.IO.WatcherChangeTypes, directory: string, name: string, oldName: string);
       OldFullPath: string;
       OldName: string;
@@ -16086,7 +16086,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RenamedEventHandler {
+    export class RenamedEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -16102,7 +16102,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WaitForChangedResult {
+    export class WaitForChangedResult {
       ChangeType: System.IO.WatcherChangeTypes;
       Name: string;
       OldName: string;
@@ -16129,7 +16129,7 @@ export namespace System {
         Decompress = 0,
         Compress = 1,
       }
-      export declare class GZipStream {
+      export class GZipStream {
         constructor(stream: System.IO.Stream, mode: System.IO.Compression.CompressionMode);
         constructor(stream: System.IO.Stream, mode: System.IO.Compression.CompressionMode, leaveOpen: boolean);
         constructor(stream: System.IO.Stream, compressionLevel: System.IO.Compression.CompressionLevel);
@@ -16179,7 +16179,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DeflateStream {
+      export class DeflateStream {
         constructor(stream: System.IO.Stream, mode: System.IO.Compression.CompressionMode);
         constructor(stream: System.IO.Stream, mode: System.IO.Compression.CompressionMode, leaveOpen: boolean);
         constructor(stream: System.IO.Stream, compressionLevel: System.IO.Compression.CompressionLevel);
@@ -16234,7 +16234,7 @@ export namespace System {
       export interface INormalizeForIsolatedStorage {
         Normalize(): System.Object;
       }
-      export declare class IsolatedStorage {
+      export class IsolatedStorage {
         ApplicationIdentity: System.Object;
         AssemblyIdentity: System.Object;
         CurrentSize: System.UInt64;
@@ -16254,7 +16254,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsolatedStorageException {
+      export class IsolatedStorageException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -16274,7 +16274,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class IsolatedStorageFile {
+      export class IsolatedStorageFile {
         CurrentSize: System.UInt64;
         MaximumSize: System.UInt64;
         AvailableFreeSpace: System.Int64;
@@ -16331,7 +16331,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsolatedStorageFileStream {
+      export class IsolatedStorageFileStream {
         constructor(path: string, mode: System.IO.FileMode);
         constructor(path: string, mode: System.IO.FileMode, access: System.IO.FileAccess);
         constructor(path: string, mode: System.IO.FileMode, access: System.IO.FileAccess, share: System.IO.FileShare);
@@ -16405,7 +16405,7 @@ export namespace System {
       export enum IsolatedStorageSecurityOptions {
         IncreaseQuotaForApplication = 4,
       }
-      export declare class IsolatedStorageSecurityState {
+      export class IsolatedStorageSecurityState {
         Options: System.IO.IsolatedStorage.IsolatedStorageSecurityOptions;
         Quota: System.Int64;
         UsedSize: System.Int64;
@@ -16445,7 +16445,7 @@ export namespace System {
         FullControl = 983055,
         AccessSystemSecurity = 16777216,
       }
-      export declare class MemoryMappedFileSecurity {
+      export class MemoryMappedFileSecurity {
         constructor();
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
@@ -16488,7 +16488,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MemoryMappedViewAccessor {
+      export class MemoryMappedViewAccessor {
         SafeMemoryMappedViewHandle: any; // Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle
         PointerOffset: System.Int64;
         Capacity: System.Int64;
@@ -16527,7 +16527,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MemoryMappedViewStream {
+      export class MemoryMappedViewStream {
         SafeMemoryMappedViewHandle: any; // Microsoft.Win32.SafeHandles.SafeMemoryMappedViewHandle
         PointerOffset: System.Int64;
         CanRead: boolean;
@@ -16575,7 +16575,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MemoryMappedFile {
+      export class MemoryMappedFile {
         SafeMemoryMappedFileHandle: any; // Microsoft.Win32.SafeHandles.SafeMemoryMappedFileHandle
         static CreateFromFile(path: string): System.IO.MemoryMappedFiles.MemoryMappedFile;
         static CreateFromFile(path: string, mode: System.IO.FileMode): System.IO.MemoryMappedFiles.MemoryMappedFile;
@@ -16611,7 +16611,7 @@ export namespace System {
       }
     }
     export namespace Pipes {
-      export declare class AnonymousPipeClientStream {
+      export class AnonymousPipeClientStream {
         constructor(pipeHandleAsString: string);
         constructor(direction: System.IO.Pipes.PipeDirection, pipeHandleAsString: string);
         constructor(direction: System.IO.Pipes.PipeDirection, safePipeHandle: any);
@@ -16670,7 +16670,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AnonymousPipeServerStream {
+      export class AnonymousPipeServerStream {
         constructor();
         constructor(direction: System.IO.Pipes.PipeDirection);
         constructor(direction: System.IO.Pipes.PipeDirection, inheritability: System.IO.HandleInheritability);
@@ -16735,7 +16735,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class NamedPipeClientStream {
+      export class NamedPipeClientStream {
         constructor(pipeName: string);
         constructor(serverName: string, pipeName: string);
         constructor(serverName: string, pipeName: string, direction: System.IO.Pipes.PipeDirection);
@@ -16806,7 +16806,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class NamedPipeServerStream {
+      export class NamedPipeServerStream {
         constructor(pipeName: string);
         constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection);
         constructor(pipeName: string, direction: System.IO.Pipes.PipeDirection, maxNumberOfServerInstances: number);
@@ -16900,7 +16900,7 @@ export namespace System {
         ReadWrite = 131483,
         FullControl = 2032031,
       }
-      export declare class PipeAccessRule {
+      export class PipeAccessRule {
         constructor(identity: System.Security.Principal.IdentityReference, rights: System.IO.Pipes.PipeAccessRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: string, rights: System.IO.Pipes.PipeAccessRights, type: System.Security.AccessControl.AccessControlType);
         PipeAccessRights: System.IO.Pipes.PipeAccessRights;
@@ -16914,7 +16914,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PipeAuditRule {
+      export class PipeAuditRule {
         constructor(identity: System.Security.Principal.IdentityReference, rights: System.IO.Pipes.PipeAccessRights, flags: System.Security.AccessControl.AuditFlags);
         constructor(identity: string, rights: System.IO.Pipes.PipeAccessRights, flags: System.Security.AccessControl.AuditFlags);
         PipeAccessRights: System.IO.Pipes.PipeAccessRights;
@@ -16938,7 +16938,7 @@ export namespace System {
         WriteThrough = -2147483648,
         Asynchronous = 1073741824,
       }
-      export declare class PipeSecurity {
+      export class PipeSecurity {
         constructor();
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
@@ -16980,7 +16980,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PipeStream {
+      export class PipeStream {
         CanRead: boolean;
         CanSeek: boolean;
         CanWrite: boolean;
@@ -17036,7 +17036,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PipeStreamImpersonationWorker {
+      export class PipeStreamImpersonationWorker {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -17082,7 +17082,7 @@ export namespace System {
         Frame = 8,
         TXFull = 256,
       }
-      export declare class SerialErrorReceivedEventArgs {
+      export class SerialErrorReceivedEventArgs {
         EventType: System.IO.Ports.SerialError;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -17096,14 +17096,14 @@ export namespace System {
         Break = 64,
         Ring = 256,
       }
-      export declare class SerialPinChangedEventArgs {
+      export class SerialPinChangedEventArgs {
         EventType: System.IO.Ports.SerialPinChange;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SerialPort {
+      export class SerialPort {
         constructor();
         constructor(container: System.ComponentModel.IContainer);
         constructor(portName: string);
@@ -17164,7 +17164,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class SerialDataReceivedEventHandler {
+      export class SerialDataReceivedEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -17180,7 +17180,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SerialPinChangedEventHandler {
+      export class SerialPinChangedEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -17196,7 +17196,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SerialErrorReceivedEventHandler {
+      export class SerialErrorReceivedEventHandler {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -17212,7 +17212,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SerialDataReceivedEventArgs {
+      export class SerialDataReceivedEventArgs {
         EventType: System.IO.Ports.SerialData;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -17236,21 +17236,21 @@ export namespace System {
     }
     export interface IOrderedQueryable<T = any> {
     }
-    export declare class OrderedParallelQuery<TSource = any> {
+    export class OrderedParallelQuery<TSource = any> {
       GetEnumerator(): System.Collections.Generic.IEnumerator<TSource>;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ParallelQuery<TSource = any> {
+    export class ParallelQuery<TSource = any> {
       GetEnumerator(): System.Collections.Generic.IEnumerator<TSource>;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ParallelEnumerable {
+    export class ParallelEnumerable {
       static AsOrdered(source: System.Linq.ParallelQuery): System.Linq.ParallelQuery;
       static AsParallel(source: System.Collections.IEnumerable): System.Linq.ParallelQuery;
       static Range(start: number, count: number): any;
@@ -17309,14 +17309,14 @@ export namespace System {
       AutoBuffered = 2,
       FullyBuffered = 3,
     }
-    export declare class EnumerableExecutor<T = any> {
+    export class EnumerableExecutor<T = any> {
       constructor(expression: System.Linq.Expressions.Expression);
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EnumerableQuery<T = any> {
+    export class EnumerableQuery<T = any> {
       constructor(enumerable: System.Collections.Generic.IEnumerable<T>);
       constructor(expression: System.Linq.Expressions.Expression);
       ToString(): string;
@@ -17324,7 +17324,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Queryable {
+    export class Queryable {
       static AsQueryable(source: System.Collections.IEnumerable): System.Linq.IQueryable;
       static Sum(source: any): number;
       static Sum(source: any): number;
@@ -17351,7 +17351,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Enumerable {
+    export class Enumerable {
       static Average(source: any): number;
       static Average(source: any): number;
       static Average(source: any): number;
@@ -17405,7 +17405,7 @@ export namespace System {
       Count: number;
       Contains(key: TKey): boolean;
     }
-    export declare class Lookup<TKey = any, TElement = any> {
+    export class Lookup<TKey = any, TElement = any> {
       Count: number;
       Contains(key: TKey): boolean;
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Linq.IGrouping<TKey, TElement>>;
@@ -17417,7 +17417,7 @@ export namespace System {
     export interface IOrderedEnumerable<TElement = any> {
     }
     export namespace Expressions {
-      export declare class BinaryExpression {
+      export class BinaryExpression {
         CanReduce: boolean;
         Right: System.Linq.Expressions.Expression;
         Left: System.Linq.Expressions.Expression;
@@ -17436,7 +17436,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class Expression<TDelegate = any> {
+      export class Expression<TDelegate = any> {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Parameters: System.Linq.Expressions.ParameterExpression[];
@@ -17462,7 +17462,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class BlockExpression {
+      export class BlockExpression {
         Expressions: System.Linq.Expressions.Expression[];
         Variables: System.Linq.Expressions.ParameterExpression[];
         Result: System.Linq.Expressions.Expression;
@@ -17478,7 +17478,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class CatchBlock {
+      export class CatchBlock {
         Variable: System.Linq.Expressions.ParameterExpression;
         Test: System.Type;
         Body: System.Linq.Expressions.Expression;
@@ -17489,7 +17489,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class ConditionalExpression {
+      export class ConditionalExpression {
         NodeType: System.Linq.Expressions.ExpressionType;
         Type: System.Type;
         Test: System.Linq.Expressions.Expression;
@@ -17505,7 +17505,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class ConstantExpression {
+      export class ConstantExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Value: System.Object;
@@ -17518,7 +17518,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class DebugInfoExpression {
+      export class DebugInfoExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         StartLine: number;
@@ -17536,7 +17536,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class DefaultExpression {
+      export class DefaultExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         CanReduce: boolean;
@@ -17548,7 +17548,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class DynamicExpression {
+      export class DynamicExpression {
         CanReduce: boolean;
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
@@ -17576,7 +17576,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class DynamicExpressionVisitor {
+      export class DynamicExpressionVisitor {
         constructor();
         Visit(node: System.Linq.Expressions.Expression): System.Linq.Expressions.Expression;
         Visit(nodes: System.Linq.Expressions.Expression[]): System.Linq.Expressions.Expression[];
@@ -17585,7 +17585,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ElementInit {
+      export class ElementInit {
         AddMethod: System.Reflection.MethodInfo;
         Arguments: System.Linq.Expressions.Expression[];
         ArgumentCount: number;
@@ -17683,7 +17683,7 @@ export namespace System {
         IsTrue = 83,
         IsFalse = 84,
       }
-      export declare class ExpressionVisitor {
+      export class ExpressionVisitor {
         Visit(node: System.Linq.Expressions.Expression): System.Linq.Expressions.Expression;
         Visit(nodes: System.Linq.Expressions.Expression[]): System.Linq.Expressions.Expression[];
         Equals(obj: System.Object): boolean;
@@ -17697,7 +17697,7 @@ export namespace System {
         Break = 2,
         Continue = 3,
       }
-      export declare class GotoExpression {
+      export class GotoExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Value: System.Linq.Expressions.Expression;
@@ -17722,7 +17722,7 @@ export namespace System {
         Rewrite(args: System.Linq.Expressions.Expression[]): System.Linq.Expressions.Expression;
         CreateCallSite(): System.Object;
       }
-      export declare class IndexExpression {
+      export class IndexExpression {
         NodeType: System.Linq.Expressions.ExpressionType;
         Type: System.Type;
         Object: System.Linq.Expressions.Expression;
@@ -17740,7 +17740,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class InvocationExpression {
+      export class InvocationExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Expression: System.Linq.Expressions.Expression;
@@ -17757,7 +17757,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class LabelExpression {
+      export class LabelExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Target: System.Linq.Expressions.LabelTarget;
@@ -17772,7 +17772,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class LabelTarget {
+      export class LabelTarget {
         Name: string;
         Type: System.Type;
         ToString(): string;
@@ -17780,7 +17780,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class LambdaExpression {
+      export class LambdaExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Parameters: System.Linq.Expressions.ParameterExpression[];
@@ -17802,7 +17802,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class ListInitExpression {
+      export class ListInitExpression {
         NodeType: System.Linq.Expressions.ExpressionType;
         Type: System.Type;
         CanReduce: boolean;
@@ -17817,7 +17817,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class LoopExpression {
+      export class LoopExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Body: System.Linq.Expressions.Expression;
@@ -17833,7 +17833,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MemberAssignment {
+      export class MemberAssignment {
         Expression: System.Linq.Expressions.Expression;
         BindingType: System.Linq.Expressions.MemberBindingType;
         Member: System.Reflection.MemberInfo;
@@ -17848,7 +17848,7 @@ export namespace System {
         MemberBinding = 1,
         ListBinding = 2,
       }
-      export declare class MemberBinding {
+      export class MemberBinding {
         BindingType: System.Linq.Expressions.MemberBindingType;
         Member: System.Reflection.MemberInfo;
         ToString(): string;
@@ -17856,7 +17856,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MemberExpression {
+      export class MemberExpression {
         Member: System.Reflection.MemberInfo;
         Expression: System.Linq.Expressions.Expression;
         NodeType: System.Linq.Expressions.ExpressionType;
@@ -17871,7 +17871,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MemberInitExpression {
+      export class MemberInitExpression {
         Type: System.Type;
         CanReduce: boolean;
         NodeType: System.Linq.Expressions.ExpressionType;
@@ -17886,7 +17886,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MemberListBinding {
+      export class MemberListBinding {
         Initializers: System.Linq.Expressions.ElementInit[];
         BindingType: System.Linq.Expressions.MemberBindingType;
         Member: System.Reflection.MemberInfo;
@@ -17896,7 +17896,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MemberMemberBinding {
+      export class MemberMemberBinding {
         Bindings: System.Linq.Expressions.MemberBinding[];
         BindingType: System.Linq.Expressions.MemberBindingType;
         Member: System.Reflection.MemberInfo;
@@ -17906,7 +17906,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MethodCallExpression {
+      export class MethodCallExpression {
         NodeType: System.Linq.Expressions.ExpressionType;
         Type: System.Type;
         Method: System.Reflection.MethodInfo;
@@ -17924,7 +17924,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class NewArrayExpression {
+      export class NewArrayExpression {
         Type: System.Type;
         Expressions: System.Linq.Expressions.Expression[];
         NodeType: System.Linq.Expressions.ExpressionType;
@@ -17938,7 +17938,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class NewExpression {
+      export class NewExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Constructor: System.Reflection.ConstructorInfo;
@@ -17956,7 +17956,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class ParameterExpression {
+      export class ParameterExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Name: string;
@@ -17970,7 +17970,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class RuntimeVariablesExpression {
+      export class RuntimeVariablesExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Variables: System.Linq.Expressions.ParameterExpression[];
@@ -17984,7 +17984,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class SwitchCase {
+      export class SwitchCase {
         TestValues: System.Linq.Expressions.Expression[];
         Body: System.Linq.Expressions.Expression;
         ToString(): string;
@@ -17993,7 +17993,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class SwitchExpression {
+      export class SwitchExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         SwitchValue: System.Linq.Expressions.Expression;
@@ -18010,7 +18010,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class SymbolDocumentInfo {
+      export class SymbolDocumentInfo {
         FileName: string;
         Language: System.Guid;
         LanguageVendor: System.Guid;
@@ -18020,7 +18020,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TryExpression {
+      export class TryExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Body: System.Linq.Expressions.Expression;
@@ -18037,7 +18037,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class TypeBinaryExpression {
+      export class TypeBinaryExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Expression: System.Linq.Expressions.Expression;
@@ -18052,7 +18052,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class UnaryExpression {
+      export class UnaryExpression {
         Type: System.Type;
         NodeType: System.Linq.Expressions.ExpressionType;
         Operand: System.Linq.Expressions.Expression;
@@ -18073,7 +18073,7 @@ export namespace System {
   }
   export namespace Management {
     export namespace Instrumentation {
-      export declare class InstanceNotFoundException {
+      export class InstanceNotFoundException {
         constructor();
         constructor(message: string);
         constructor(message: string, innerException: System.Exception);
@@ -18093,7 +18093,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class InstrumentationException {
+      export class InstrumentationException {
         constructor();
         constructor(innerException: System.Exception);
         constructor(message: string);
@@ -18114,7 +18114,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class InstrumentationBaseException {
+      export class InstrumentationBaseException {
         constructor();
         constructor(message: string);
         constructor(message: string, innerException: System.Exception);
@@ -18147,7 +18147,7 @@ export namespace System {
     }
   }
   export namespace Media {
-    export declare class SoundPlayer {
+    export class SoundPlayer {
       constructor();
       constructor(stream: System.IO.Stream);
       constructor(soundLocation: string);
@@ -18173,14 +18173,14 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class SystemSound {
+    export class SystemSound {
       Play(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SystemSounds {
+    export class SystemSounds {
       static Asterisk: System.Media.SystemSound;
       static Beep: System.Media.SystemSound;
       static Exclamation: System.Media.SystemSound;
@@ -18193,7 +18193,7 @@ export namespace System {
     }
   }
   export namespace Reflection {
-    export declare class CustomAttributeExtensions {
+    export class CustomAttributeExtensions {
       static GetCustomAttribute(element: System.Reflection.Assembly, attributeType: System.Type): any;
       static GetCustomAttribute(element: System.Reflection.Module, attributeType: System.Type): any;
       static GetCustomAttribute(element: System.Reflection.MemberInfo, attributeType: System.Type): any;
@@ -18223,7 +18223,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RuntimeReflectionExtensions {
+    export class RuntimeReflectionExtensions {
       static GetRuntimeProperties(type: System.Type): any;
       static GetRuntimeEvents(type: System.Type): any;
       static GetRuntimeMethods(type: System.Type): any;
@@ -18240,7 +18240,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AmbiguousMatchException {
+    export class AmbiguousMatchException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -18279,7 +18279,7 @@ export namespace System {
       Amd64 = 4,
       Arm = 5,
     }
-    export declare class AssemblyNameProxy {
+    export class AssemblyNameProxy {
       constructor();
       GetAssemblyName(assemblyFile: string): System.Reflection.AssemblyName;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
@@ -18290,7 +18290,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Binder {
+    export class Binder {
       BindToField(bindingAttr: System.Reflection.BindingFlags, match: System.Reflection.FieldInfo[], value: System.Object, culture: System.Globalization.CultureInfo): System.Reflection.FieldInfo;
       SelectMethod(bindingAttr: System.Reflection.BindingFlags, match: System.Reflection.MethodBase[], types: System.Type[], modifiers: System.Reflection.ParameterModifier[]): System.Reflection.MethodBase;
       SelectProperty(bindingAttr: System.Reflection.BindingFlags, match: System.Reflection.PropertyInfo[], returnType: System.Type, indexes: System.Type[], modifiers: System.Reflection.ParameterModifier[]): System.Reflection.PropertyInfo;
@@ -18371,7 +18371,7 @@ export namespace System {
       GetCustomAttributes(inherit: boolean): System.Object[];
       IsDefined(attributeType: System.Type, inherit: boolean): boolean;
     }
-    export declare class InterfaceMapping {
+    export class InterfaceMapping {
       TargetType: System.Type;
       InterfaceType: System.Type;
       TargetMethods: System.Reflection.MethodInfo[];
@@ -18381,14 +18381,14 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class IntrospectionExtensions {
+    export class IntrospectionExtensions {
       static GetTypeInfo(type: System.Type): System.Reflection.TypeInfo;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class InvalidFilterCriteriaException {
+    export class InvalidFilterCriteriaException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -18425,7 +18425,7 @@ export namespace System {
     export interface IReflectableType {
       GetTypeInfo(): System.Reflection.TypeInfo;
     }
-    export declare class ManifestResourceInfo {
+    export class ManifestResourceInfo {
       constructor(containingAssembly: System.Reflection.Assembly, containingFileName: string, resourceLocation: System.Reflection.ResourceLocation);
       ReferencedAssembly: System.Reflection.Assembly;
       FileName: string;
@@ -18440,7 +18440,7 @@ export namespace System {
       ContainedInAnotherAssembly = 2,
       ContainedInManifestFile = 4,
     }
-    export declare class MemberFilter {
+    export class MemberFilter {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -18456,7 +18456,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MemberInfo {
+    export class MemberInfo {
       MemberType: System.Reflection.MemberTypes;
       Name: string;
       DeclaringType: System.Type;
@@ -18510,7 +18510,7 @@ export namespace System {
       HasSecurity = 16384,
       RequireSecObject = 32768,
     }
-    export declare class MethodBase {
+    export class MethodBase {
       MethodImplementationFlags: System.Reflection.MethodImplAttributes;
       MethodHandle: System.RuntimeMethodHandle;
       Attributes: System.Reflection.MethodAttributes;
@@ -18583,7 +18583,7 @@ export namespace System {
       NoOptimization = 64,
       MaxMethodImplVal = 65535,
     }
-    export declare class MethodInfo {
+    export class MethodInfo {
       MemberType: System.Reflection.MemberTypes;
       ReturnType: System.Type;
       ReturnParameter: System.Reflection.ParameterInfo;
@@ -18637,7 +18637,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Missing {
+    export class Missing {
       static Value: System.Reflection.Missing;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -18657,14 +18657,14 @@ export namespace System {
       Reserved3 = 16384,
       Reserved4 = 32768,
     }
-    export declare class ParameterModifier {
+    export class ParameterModifier {
       constructor(parameterCount: number);
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Pointer {
+    export class Pointer {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -18680,7 +18680,7 @@ export namespace System {
       Reserved3 = 16384,
       Reserved4 = 32768,
     }
-    export declare class ReflectionContext {
+    export class ReflectionContext {
       MapAssembly(assembly: System.Reflection.Assembly): System.Reflection.Assembly;
       MapType(type: System.Reflection.TypeInfo): System.Reflection.TypeInfo;
       GetTypeForObject(value: System.Object): System.Reflection.TypeInfo;
@@ -18689,7 +18689,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ReflectionTypeLoadException {
+    export class ReflectionTypeLoadException {
       constructor(classes: System.Type[], exceptions: System.Exception[]);
       constructor(classes: System.Type[], exceptions: System.Exception[], message: string);
       Types: System.Type[];
@@ -18714,7 +18714,7 @@ export namespace System {
       Public = 1,
       Private = 2,
     }
-    export declare class TargetException {
+    export class TargetException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -18734,7 +18734,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class TargetInvocationException {
+    export class TargetInvocationException {
       constructor(inner: System.Exception);
       constructor(message: string, inner: System.Exception);
       Message: string;
@@ -18753,7 +18753,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class TargetParameterCountException {
+    export class TargetParameterCountException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -18807,7 +18807,7 @@ export namespace System {
       RTSpecialName = 2048,
       HasSecurity = 262144,
     }
-    export declare class TypeDelegator {
+    export class TypeDelegator {
       constructor(delegatingType: System.Type);
       GUID: System.Guid;
       MetadataToken: number;
@@ -18969,7 +18969,7 @@ export namespace System {
       GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
       GetType(): System.Type;
     }
-    export declare class TypeFilter {
+    export class TypeFilter {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -18985,7 +18985,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TypeInfo {
+    export class TypeInfo {
       GenericTypeParameters: System.Type[];
       DeclaredConstructors: System.Collections.Generic.IEnumerable<System.Reflection.ConstructorInfo>;
       DeclaredEvents: System.Collections.Generic.IEnumerable<System.Reflection.EventInfo>;
@@ -19146,7 +19146,7 @@ export namespace System {
       GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
       GetType(): System.Type;
     }
-    export declare class Assembly {
+    export class Assembly {
       CodeBase: string;
       EscapedCodeBase: string;
       FullName: string;
@@ -19228,7 +19228,7 @@ export namespace System {
       GetSatelliteAssembly(culture: System.Globalization.CultureInfo, version: System.Version): System.Reflection.Assembly;
       GetType(): System.Type;
     }
-    export declare class AssemblyName {
+    export class AssemblyName {
       constructor();
       constructor(assemblyName: string);
       ProcessorArchitecture: System.Reflection.ProcessorArchitecture;
@@ -19258,7 +19258,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ConstructorInfo {
+    export class ConstructorInfo {
       MemberType: System.Reflection.MemberTypes;
       MethodImplementationFlags: System.Reflection.MethodImplAttributes;
       MethodHandle: System.RuntimeMethodHandle;
@@ -19308,7 +19308,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CustomAttributeData {
+    export class CustomAttributeData {
       Constructor: System.Reflection.ConstructorInfo;
       ConstructorArguments: System.Collections.Generic.IList<System.Reflection.CustomAttributeTypedArgument>;
       NamedArguments: System.Collections.Generic.IList<System.Reflection.CustomAttributeNamedArgument>;
@@ -19322,7 +19322,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class CustomAttributeFormatException {
+    export class CustomAttributeFormatException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -19342,7 +19342,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class CustomAttributeNamedArgument {
+    export class CustomAttributeNamedArgument {
       constructor(memberInfo: System.Reflection.MemberInfo, value: System.Object);
       constructor(memberInfo: System.Reflection.MemberInfo, typedArgument: System.Reflection.CustomAttributeTypedArgument);
       MemberInfo: System.Reflection.MemberInfo;
@@ -19354,7 +19354,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class CustomAttributeTypedArgument {
+    export class CustomAttributeTypedArgument {
       constructor(argumentType: System.Type, value: System.Object);
       constructor(value: System.Object);
       ArgumentType: System.Type;
@@ -19364,7 +19364,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class EventInfo {
+    export class EventInfo {
       Attributes: System.Reflection.EventAttributes;
       EventHandlerType: System.Type;
       IsMulticast: boolean;
@@ -19398,7 +19398,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ExceptionHandlingClause {
+    export class ExceptionHandlingClause {
       CatchType: System.Type;
       FilterOffset: number;
       Flags: System.Reflection.ExceptionHandlingClauseOptions;
@@ -19411,7 +19411,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class FieldInfo {
+    export class FieldInfo {
       Attributes: System.Reflection.FieldAttributes;
       FieldHandle: System.RuntimeFieldHandle;
       FieldType: System.Type;
@@ -19462,7 +19462,7 @@ export namespace System {
       AMD64 = 34404,
       ARM = 452,
     }
-    export declare class LocalVariableInfo {
+    export class LocalVariableInfo {
       IsPinned: boolean;
       LocalIndex: number;
       LocalType: System.Type;
@@ -19471,7 +19471,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class MethodBody {
+    export class MethodBody {
       ExceptionHandlingClauses: System.Collections.Generic.IList<System.Reflection.ExceptionHandlingClause>;
       LocalVariables: System.Collections.Generic.IList<System.Reflection.LocalVariableInfo>;
       InitLocals: boolean;
@@ -19483,7 +19483,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Module {
+    export class Module {
       ModuleHandle: System.ModuleHandle;
       Assembly: System.Reflection.Assembly;
       Name: string;
@@ -19531,7 +19531,7 @@ export namespace System {
       GetTypes(): System.Type[];
       GetType(): System.Type;
     }
-    export declare class ModuleResolveEventHandler {
+    export class ModuleResolveEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -19547,7 +19547,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ParameterInfo {
+    export class ParameterInfo {
       ParameterType: System.Type;
       Attributes: System.Reflection.ParameterAttributes;
       IsIn: boolean;
@@ -19583,7 +19583,7 @@ export namespace System {
       Unmanaged32Bit = 8,
       Preferred32Bit = 16,
     }
-    export declare class PropertyInfo {
+    export class PropertyInfo {
       Attributes: System.Reflection.PropertyAttributes;
       CanRead: boolean;
       CanWrite: boolean;
@@ -19624,7 +19624,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StrongNameKeyPair {
+    export class StrongNameKeyPair {
       constructor(keyPairArray: System.Byte[]);
       constructor(keyPairFile: System.IO.FileStream);
       constructor(keyPairContainer: string);
@@ -19638,7 +19638,7 @@ export namespace System {
       GetCustomType(): System.Type;
     }
     export namespace Emit {
-      export declare class ExceptionHandler {
+      export class ExceptionHandler {
         constructor(tryOffset: number, tryLength: number, filterOffset: number, handlerOffset: number, handlerLength: number, kind: System.Reflection.ExceptionHandlingClauseOptions, exceptionTypeToken: number);
         ExceptionTypeToken: number;
         TryOffset: number;
@@ -19653,7 +19653,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class AssemblyBuilder {
+      export class AssemblyBuilder {
         CodeBase: string;
         EntryPoint: System.Reflection.MethodInfo;
         Location: string;
@@ -19738,7 +19738,7 @@ export namespace System {
         ReflectionOnly = 6,
         RunAndCollect = 9,
       }
-      export declare class ConstructorBuilder {
+      export class ConstructorBuilder {
         CallingConvention: System.Reflection.CallingConventions;
         InitLocals: boolean;
         MethodHandle: System.RuntimeMethodHandle;
@@ -19800,7 +19800,7 @@ export namespace System {
         GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
         GetType(): System.Type;
       }
-      export declare class CustomAttributeBuilder {
+      export class CustomAttributeBuilder {
         constructor(con: System.Reflection.ConstructorInfo, constructorArgs: System.Object[]);
         constructor(con: System.Reflection.ConstructorInfo, constructorArgs: System.Object[], namedFields: System.Reflection.FieldInfo[], fieldValues: System.Object[]);
         constructor(con: System.Reflection.ConstructorInfo, constructorArgs: System.Object[], namedProperties: System.Reflection.PropertyInfo[], propertyValues: System.Object[]);
@@ -19810,7 +19810,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DynamicILInfo {
+      export class DynamicILInfo {
         DynamicMethod: System.Reflection.Emit.DynamicMethod;
         GetTokenFor(signature: System.Byte[]): number;
         GetTokenFor(method: System.Reflection.Emit.DynamicMethod): number;
@@ -19828,7 +19828,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DynamicMethod {
+      export class DynamicMethod {
         constructor(name: string, returnType: System.Type, parameterTypes: System.Type[], m: System.Reflection.Module);
         constructor(name: string, returnType: System.Type, parameterTypes: System.Type[], owner: System.Type);
         constructor(name: string, returnType: System.Type, parameterTypes: System.Type[], m: System.Reflection.Module, skipVisibility: boolean);
@@ -19895,7 +19895,7 @@ export namespace System {
         GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
         GetType(): System.Type;
       }
-      export declare class EnumBuilder {
+      export class EnumBuilder {
         Assembly: System.Reflection.Assembly;
         AssemblyQualifiedName: string;
         BaseType: System.Type;
@@ -20063,7 +20063,7 @@ export namespace System {
         GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
         GetType(): System.Type;
       }
-      export declare class EventBuilder {
+      export class EventBuilder {
         AddOtherMethod(mdBuilder: System.Reflection.Emit.MethodBuilder): void;
         GetEventToken(): System.Reflection.Emit.EventToken;
         SetAddOnMethod(mdBuilder: System.Reflection.Emit.MethodBuilder): void;
@@ -20076,7 +20076,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EventToken {
+      export class EventToken {
         Token: number;
         static Empty: System.Reflection.Emit.EventToken;
         Equals(obj: System.Object): boolean;
@@ -20085,7 +20085,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class FieldBuilder {
+      export class FieldBuilder {
         Attributes: System.Reflection.FieldAttributes;
         DeclaringType: System.Type;
         FieldHandle: System.RuntimeFieldHandle;
@@ -20134,7 +20134,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FieldToken {
+      export class FieldToken {
         Token: number;
         static Empty: System.Reflection.Emit.FieldToken;
         Equals(obj: System.Object): boolean;
@@ -20154,7 +20154,7 @@ export namespace System {
         Return = 7,
         Throw = 8,
       }
-      export declare class GenericTypeParameterBuilder {
+      export class GenericTypeParameterBuilder {
         UnderlyingSystemType: System.Type;
         Assembly: System.Reflection.Assembly;
         AssemblyQualifiedName: string;
@@ -20320,7 +20320,7 @@ export namespace System {
         GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
         GetType(): System.Type;
       }
-      export declare class ILGenerator {
+      export class ILGenerator {
         ILOffset: number;
         BeginCatchBlock(exceptionType: System.Type): void;
         BeginExceptFilterBlock(): void;
@@ -20365,14 +20365,14 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Label {
+      export class Label {
         Equals(obj: System.Object): boolean;
         Equals(obj: System.Reflection.Emit.Label): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class LocalBuilder {
+      export class LocalBuilder {
         LocalType: System.Type;
         IsPinned: boolean;
         LocalIndex: number;
@@ -20383,7 +20383,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MethodBuilder {
+      export class MethodBuilder {
         ContainsGenericParameters: boolean;
         InitLocals: boolean;
         MethodHandle: System.RuntimeMethodHandle;
@@ -20456,7 +20456,7 @@ export namespace System {
         GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
         GetType(): System.Type;
       }
-      export declare class MethodRental {
+      export class MethodRental {
         static JitImmediate: number;
         static JitOnDemand: number;
         static SwapMethodBody(cls: System.Type, methodtoken: number, rgIL: System.IntPtr, methodSize: number, flags: number): void;
@@ -20465,7 +20465,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MethodToken {
+      export class MethodToken {
         Token: number;
         static Empty: System.Reflection.Emit.MethodToken;
         Equals(obj: System.Object): boolean;
@@ -20474,7 +20474,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ModuleBuilder {
+      export class ModuleBuilder {
         FullyQualifiedName: string;
         Assembly: System.Reflection.Assembly;
         Name: string;
@@ -20560,7 +20560,7 @@ export namespace System {
         GetSignerCertificate(): System.Security.Cryptography.X509Certificates.X509Certificate;
         GetType(): System.Type;
       }
-      export declare class OpCode {
+      export class OpCode {
         Name: string;
         Size: number;
         OpCodeType: System.Reflection.Emit.OpCodeType;
@@ -20583,7 +20583,7 @@ export namespace System {
         Prefix = 4,
         Primitive = 5,
       }
-      export declare class OpCodes {
+      export class OpCodes {
         static Nop: System.Reflection.Emit.OpCode;
         static Break: System.Reflection.Emit.OpCode;
         static Ldarg_0: System.Reflection.Emit.OpCode;
@@ -20852,7 +20852,7 @@ export namespace System {
         Size64 = 64,
         Size128 = 128,
       }
-      export declare class ParameterBuilder {
+      export class ParameterBuilder {
         Attributes: number;
         IsIn: boolean;
         IsOut: boolean;
@@ -20869,7 +20869,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ParameterToken {
+      export class ParameterToken {
         Token: number;
         static Empty: System.Reflection.Emit.ParameterToken;
         Equals(obj: System.Object): boolean;
@@ -20878,7 +20878,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class PropertyBuilder {
+      export class PropertyBuilder {
         Attributes: System.Reflection.PropertyAttributes;
         CanRead: boolean;
         CanWrite: boolean;
@@ -20926,7 +20926,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PropertyToken {
+      export class PropertyToken {
         Token: number;
         static Empty: System.Reflection.Emit.PropertyToken;
         Equals(obj: System.Object): boolean;
@@ -20935,7 +20935,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class SignatureHelper {
+      export class SignatureHelper {
         static GetFieldSigHelper(mod: System.Reflection.Module): System.Reflection.Emit.SignatureHelper;
         static GetLocalVarSigHelper(mod: System.Reflection.Module): System.Reflection.Emit.SignatureHelper;
         static GetLocalVarSigHelper(): System.Reflection.Emit.SignatureHelper;
@@ -20958,7 +20958,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class SignatureToken {
+      export class SignatureToken {
         Token: number;
         static Empty: System.Reflection.Emit.SignatureToken;
         Equals(obj: System.Object): boolean;
@@ -20998,7 +20998,7 @@ export namespace System {
         Varpush = 27,
         Popref_popi_pop1 = 28,
       }
-      export declare class StringToken {
+      export class StringToken {
         Token: number;
         Equals(obj: System.Object): boolean;
         Equals(obj: System.Reflection.Emit.StringToken): boolean;
@@ -21006,7 +21006,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class TypeBuilder {
+      export class TypeBuilder {
         Assembly: System.Reflection.Assembly;
         AssemblyQualifiedName: string;
         BaseType: System.Type;
@@ -21212,7 +21212,7 @@ export namespace System {
         GetCustomAttributesData(): System.Collections.Generic.IList<System.Reflection.CustomAttributeData>;
         GetType(): System.Type;
       }
-      export declare class TypeToken {
+      export class TypeToken {
         Token: number;
         static Empty: System.Reflection.Emit.TypeToken;
         Equals(obj: System.Object): boolean;
@@ -21221,7 +21221,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class UnmanagedMarshal {
+      export class UnmanagedMarshal {
         BaseType: System.Runtime.InteropServices.UnmanagedType;
         ElementCount: number;
         GetUnmanagedType: System.Runtime.InteropServices.UnmanagedType;
@@ -21238,7 +21238,7 @@ export namespace System {
       }
     }
     export namespace Metadata {
-      export declare class AssemblyExtensions {
+      export class AssemblyExtensions {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -21258,7 +21258,7 @@ export namespace System {
       Close(): void;
       Generate(): void;
     }
-    export declare class MissingManifestResourceException {
+    export class MissingManifestResourceException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -21278,7 +21278,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class MissingSatelliteAssemblyException {
+    export class MissingSatelliteAssemblyException {
       constructor();
       constructor(message: string);
       constructor(message: string, cultureName: string);
@@ -21300,7 +21300,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ResourceManager {
+    export class ResourceManager {
       constructor(baseName: string, assembly: System.Reflection.Assembly);
       constructor(baseName: string, assembly: System.Reflection.Assembly, usingResourceSet: System.Type);
       constructor(resourceSource: System.Type);
@@ -21323,7 +21323,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ResourceReader {
+    export class ResourceReader {
       constructor(fileName: string);
       constructor(stream: System.IO.Stream);
       Close(): void;
@@ -21334,7 +21334,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ResourceSet {
+    export class ResourceSet {
       constructor(fileName: string);
       constructor(stream: System.IO.Stream);
       constructor(reader: System.Resources.IResourceReader);
@@ -21352,7 +21352,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ResourceWriter {
+    export class ResourceWriter {
       constructor(fileName: string);
       constructor(stream: System.IO.Stream);
       TypeNameConverter: ((arg0: System.Type, arg1: string) => string);
@@ -21387,7 +21387,7 @@ export namespace System {
       SustainedLowLatency = 3,
       NoGCRegion = 4,
     }
-    export declare class GCSettings {
+    export class GCSettings {
       static IsServerGC: boolean;
       static LatencyMode: System.Runtime.GCLatencyMode;
       static LargeObjectHeapCompactionMode: System.Runtime.GCLargeObjectHeapCompactionMode;
@@ -21396,7 +21396,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class MemoryFailPoint {
+    export class MemoryFailPoint {
       constructor(sizeInMegabytes: number);
       Dispose(): void;
       Equals(obj: System.Object): boolean;
@@ -21404,7 +21404,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ProfileOptimization {
+    export class ProfileOptimization {
       static SetProfileRoot(directoryPath: string): void;
       static StartProfile(profile: string): void;
       Equals(obj: System.Object): boolean;
@@ -21413,7 +21413,7 @@ export namespace System {
       ToString(): string;
     }
     export namespace CompilerServices {
-      export declare class AsyncValueTaskMethodBuilder<TResult = any> {
+      export class AsyncValueTaskMethodBuilder<TResult = any> {
         Task: System.Threading.Tasks.ValueTask<TResult>;
         static Create(): any;
         SetStateMachine(stateMachine: System.Runtime.CompilerServices.IAsyncStateMachine): void;
@@ -21424,14 +21424,14 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ConfiguredValueTaskAwaitable<TResult = any> {
+      export class ConfiguredValueTaskAwaitable<TResult = any> {
         GetAwaiter(): System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<TResult>;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ValueTaskAwaiter<TResult = any> {
+      export class ValueTaskAwaiter<TResult = any> {
         IsCompleted: boolean;
         GetResult(): TResult;
         OnCompleted(continuation: System.Action): void;
@@ -21444,7 +21444,7 @@ export namespace System {
       export interface ITuple {
         Length: number;
       }
-      export declare class RuntimeFeature {
+      export class RuntimeFeature {
         static PortablePdb: string;
         static IsSupported(feature: string): boolean;
         Equals(obj: System.Object): boolean;
@@ -21452,7 +21452,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ContractHelper {
+      export class ContractHelper {
         static RaiseContractFailedEvent(failureKind: System.Diagnostics.Contracts.ContractFailureKind, userMessage: string, conditionText: string, innerException: System.Exception): string;
         static TriggerFailure(kind: System.Diagnostics.Contracts.ContractFailureKind, displayMessage: string, userMessage: string, conditionText: string, innerException: System.Exception): void;
         Equals(obj: System.Object): boolean;
@@ -21460,7 +21460,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsyncVoidMethodBuilder {
+      export class AsyncVoidMethodBuilder {
         static Create(): System.Runtime.CompilerServices.AsyncVoidMethodBuilder;
         SetStateMachine(stateMachine: System.Runtime.CompilerServices.IAsyncStateMachine): void;
         SetResult(): void;
@@ -21470,7 +21470,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class AsyncTaskMethodBuilder<TResult = any> {
+      export class AsyncTaskMethodBuilder<TResult = any> {
         Task: System.Threading.Tasks.Task<TResult>;
         static Create(): any;
         SetStateMachine(stateMachine: System.Runtime.CompilerServices.IAsyncStateMachine): void;
@@ -21481,7 +21481,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class FormattableStringFactory {
+      export class FormattableStringFactory {
         static Create(format: string, ...argumentsCS: System.Object[]): System.FormattableString;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -21498,7 +21498,7 @@ export namespace System {
       export interface ICriticalNotifyCompletion {
         UnsafeOnCompleted(continuation: System.Action): void;
       }
-      export declare class RuntimeWrappedException {
+      export class RuntimeWrappedException {
         WrappedException: System.Object;
         Message: string;
         Data: System.Collections.IDictionary;
@@ -21516,7 +21516,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class TaskAwaiter<TResult = any> {
+      export class TaskAwaiter<TResult = any> {
         IsCompleted: boolean;
         OnCompleted(continuation: System.Action): void;
         UnsafeOnCompleted(continuation: System.Action): void;
@@ -21526,14 +21526,14 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ConfiguredTaskAwaitable<TResult = any> {
+      export class ConfiguredTaskAwaitable<TResult = any> {
         GetAwaiter(): System.Runtime.CompilerServices.ConfiguredTaskAwaitable<TResult>;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ConfiguredTaskAwaitable_ConfiguredTaskAwaiter {
+      export class ConfiguredTaskAwaitable_ConfiguredTaskAwaiter {
         IsCompleted: boolean;
         OnCompleted(continuation: System.Action): void;
         UnsafeOnCompleted(continuation: System.Action): void;
@@ -21543,14 +21543,14 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class YieldAwaitable {
+      export class YieldAwaitable {
         GetAwaiter(): System.Runtime.CompilerServices.YieldAwaitable_YieldAwaiter;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class YieldAwaitable_YieldAwaiter {
+      export class YieldAwaitable_YieldAwaiter {
         IsCompleted: boolean;
         OnCompleted(continuation: System.Action): void;
         UnsafeOnCompleted(continuation: System.Action): void;
@@ -21565,28 +21565,28 @@ export namespace System {
         Always = 1,
         Sometimes = 2,
       }
-      export declare class CallConvCdecl {
+      export class CallConvCdecl {
         constructor();
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CallConvStdcall {
+      export class CallConvStdcall {
         constructor();
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CallConvThiscall {
+      export class CallConvThiscall {
         constructor();
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CallConvFastcall {
+      export class CallConvFastcall {
         constructor();
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -21596,79 +21596,79 @@ export namespace System {
       export enum CompilationRelaxations {
         NoStringInterning = 8,
       }
-      export declare class CompilerMarshalOverride {
+      export class CompilerMarshalOverride {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsBoxed {
+      export class IsBoxed {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsByValue {
+      export class IsByValue {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsConst {
+      export class IsConst {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsCopyConstructed {
+      export class IsCopyConstructed {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsExplicitlyDereferenced {
+      export class IsExplicitlyDereferenced {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsImplicitlyDereferenced {
+      export class IsImplicitlyDereferenced {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsJitIntrinsic {
+      export class IsJitIntrinsic {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsLong {
+      export class IsLong {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsPinned {
+      export class IsPinned {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsSignUnspecifiedByte {
+      export class IsSignUnspecifiedByte {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsUdtReturn {
+      export class IsUdtReturn {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IsVolatile {
+      export class IsVolatile {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -21690,7 +21690,7 @@ export namespace System {
         OPTIL = 2,
         Runtime = 3,
       }
-      export declare class ConditionalWeakTable<TKey = any, TValue = any> {
+      export class ConditionalWeakTable<TKey = any, TValue = any> {
         constructor();
         Add(key: TKey, value: TValue): void;
         Remove(key: TKey): boolean;
@@ -21701,7 +21701,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RuntimeHelpers {
+      export class RuntimeHelpers {
         static OffsetToStringData: number;
         static InitializeArray(array: System.Array, fldHandle: System.RuntimeFieldHandle): void;
         static GetHashCode(o: System.Object): number;
@@ -21724,7 +21724,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RuntimeHelpers_TryCode {
+      export class RuntimeHelpers_TryCode {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -21740,7 +21740,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RuntimeHelpers_CleanupCode {
+      export class RuntimeHelpers_CleanupCode {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -21756,7 +21756,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RuntimeOps {
+      export class RuntimeOps {
         static ExpandoTrySetValue(expando: Record<string, any>, indexClass: System.Object, index: number, value: System.Object, name: string, ignoreCase: boolean): System.Object;
         static ExpandoTryDeleteValue(expando: Record<string, any>, indexClass: System.Object, index: number, name: string, ignoreCase: boolean): boolean;
         static ExpandoCheckVersion(expando: Record<string, any>, version: System.Object): boolean;
@@ -21770,7 +21770,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CallSite<T = any> {
+      export class CallSite<T = any> {
         Update: T;
         Binder: System.Runtime.CompilerServices.CallSiteBinder;
         Target: T;
@@ -21780,7 +21780,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CallSiteBinder {
+      export class CallSiteBinder {
         static UpdateLabel: System.Linq.Expressions.LabelTarget;
         Bind(args: System.Object[], parameters: System.Linq.Expressions.ParameterExpression[], returnLabel: System.Linq.Expressions.LabelTarget): System.Linq.Expressions.Expression;
         Equals(obj: System.Object): boolean;
@@ -21788,14 +21788,14 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CallSiteHelpers {
+      export class CallSiteHelpers {
         static IsInternalFrame(mb: System.Reflection.MethodBase): boolean;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CallSiteOps {
+      export class CallSiteOps {
         static SetNotMatched(site: System.Runtime.CompilerServices.CallSite): boolean;
         static GetMatch(site: System.Runtime.CompilerServices.CallSite): boolean;
         static ClearMatch(site: System.Runtime.CompilerServices.CallSite): void;
@@ -21804,7 +21804,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Closure {
+      export class Closure {
         constructor(constants: System.Object[], locals: System.Object[]);
         Constants: System.Object[];
         Locals: System.Object[];
@@ -21813,7 +21813,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DebugInfoGenerator {
+      export class DebugInfoGenerator {
         static CreatePdbGenerator(): System.Runtime.CompilerServices.DebugInfoGenerator;
         MarkSequencePoint(method: System.Linq.Expressions.LambdaExpression, ilOffset: number, sequencePoint: System.Linq.Expressions.DebugInfoExpression): void;
         Equals(obj: System.Object): boolean;
@@ -21824,7 +21824,7 @@ export namespace System {
       export interface IRuntimeVariables {
         Count: number;
       }
-      export declare class ReadOnlyCollectionBuilder<T = any> {
+      export class ReadOnlyCollectionBuilder<T = any> {
         constructor();
         constructor(capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
@@ -21848,13 +21848,13 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RuleCache<T = any> {
+      export class RuleCache<T = any> {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StrongBox<T = any> {
+      export class StrongBox<T = any> {
         constructor();
         constructor(value: T);
         Value: T;
@@ -21866,7 +21866,7 @@ export namespace System {
       export interface IStrongBox {
         Value: System.Object;
       }
-      export declare class ExecutionScope {
+      export class ExecutionScope {
         Parent: System.Runtime.CompilerServices.ExecutionScope;
         Globals: System.Object[];
         Locals: System.Object[];
@@ -21880,7 +21880,7 @@ export namespace System {
       }
     }
     export namespace ConstrainedExecution {
-      export declare class CriticalFinalizerObject {
+      export class CriticalFinalizerObject {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -21899,7 +21899,7 @@ export namespace System {
       }
     }
     export namespace DesignerServices {
-      export declare class WindowsRuntimeDesignerContext {
+      export class WindowsRuntimeDesignerContext {
         constructor(paths: System.Collections.Generic.IEnumerable<string>, name: string);
         Name: string;
         GetAssembly(assemblyName: string): System.Reflection.Assembly;
@@ -21913,7 +21913,7 @@ export namespace System {
       }
     }
     export namespace ExceptionServices {
-      export declare class FirstChanceExceptionEventArgs {
+      export class FirstChanceExceptionEventArgs {
         constructor(exception: System.Exception);
         Exception: System.Exception;
         Equals(obj: System.Object): boolean;
@@ -21921,7 +21921,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ExceptionDispatchInfo {
+      export class ExceptionDispatchInfo {
         SourceException: System.Exception;
         static Capture(source: System.Exception): System.Runtime.ExceptionServices.ExceptionDispatchInfo;
         Throw(): void;
@@ -21933,7 +21933,7 @@ export namespace System {
       }
     }
     export namespace Hosting {
-      export declare class ActivationArguments {
+      export class ActivationArguments {
         constructor(activationData: System.ActivationContext);
         constructor(applicationIdentity: System.ApplicationIdentity);
         constructor(activationContext: System.ActivationContext, activationData: string[]);
@@ -21947,7 +21947,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ApplicationActivator {
+      export class ApplicationActivator {
         constructor();
         CreateInstance(activationContext: System.ActivationContext): System.Runtime.Remoting.ObjectHandle;
         CreateInstance(activationContext: System.ActivationContext, activationCustomData: string[]): System.Runtime.Remoting.ObjectHandle;
@@ -21964,7 +21964,7 @@ export namespace System {
         Arm = 2,
         Arm64 = 3,
       }
-      export declare class OSPlatform {
+      export class OSPlatform {
         static Linux: System.Runtime.InteropServices.OSPlatform;
         static OSX: System.Runtime.InteropServices.OSPlatform;
         static Windows: System.Runtime.InteropServices.OSPlatform;
@@ -21975,7 +21975,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ArrayWithOffset {
+      export class ArrayWithOffset {
         constructor(array: System.Object, offset: number);
         GetArray(): System.Object;
         GetOffset(): number;
@@ -22142,7 +22142,7 @@ export namespace System {
         AssemblyDirectory = 2,
         LegacyBehavior = 0,
       }
-      export declare class BStrWrapper {
+      export class BStrWrapper {
         constructor(value: string);
         constructor(value: System.Object);
         WrappedObject: string;
@@ -22164,7 +22164,7 @@ export namespace System {
         Unicode = 3,
         Auto = 4,
       }
-      export declare class COMException {
+      export class COMException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -22191,7 +22191,7 @@ export namespace System {
         PropGet = 1,
         PropSet = 2,
       }
-      export declare class CriticalHandle {
+      export class CriticalHandle {
         IsClosed: boolean;
         IsInvalid: boolean;
         Close(): void;
@@ -22202,7 +22202,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CurrencyWrapper {
+      export class CurrencyWrapper {
         constructor(obj: System.Decimal);
         constructor(obj: System.Object);
         WrappedObject: System.Decimal;
@@ -22211,7 +22211,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DispatchWrapper {
+      export class DispatchWrapper {
         constructor(obj: System.Object);
         WrappedObject: System.Object;
         Equals(obj: System.Object): boolean;
@@ -22219,7 +22219,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ErrorWrapper {
+      export class ErrorWrapper {
         constructor(errorCode: number);
         constructor(errorCode: System.Object);
         constructor(e: System.Exception);
@@ -22229,7 +22229,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ExternalException {
+      export class ExternalException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -22251,7 +22251,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class HandleRef {
+      export class HandleRef {
         constructor(wrapper: System.Object, handle: System.IntPtr);
         Wrapper: System.Object;
         Handle: System.IntPtr;
@@ -22281,7 +22281,7 @@ export namespace System {
       }
       export interface ICustomQueryInterface {
       }
-      export declare class InvalidComObjectException {
+      export class InvalidComObjectException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -22301,7 +22301,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class InvalidOleVariantTypeException {
+      export class InvalidOleVariantTypeException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -22339,7 +22339,7 @@ export namespace System {
         Explicit = 2,
         Auto = 3,
       }
-      export declare class MarshalDirectiveException {
+      export class MarshalDirectiveException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -22359,7 +22359,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class ObjectCreationDelegate {
+      export class ObjectCreationDelegate {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -22375,7 +22375,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RuntimeEnvironment {
+      export class RuntimeEnvironment {
         constructor();
         static SystemConfigurationFile: string;
         static FromGlobalAccessCache(a: System.Reflection.Assembly): boolean;
@@ -22388,7 +22388,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SafeArrayRankMismatchException {
+      export class SafeArrayRankMismatchException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -22408,7 +22408,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class SafeArrayTypeMismatchException {
+      export class SafeArrayTypeMismatchException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -22428,7 +22428,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class SafeHandle {
+      export class SafeHandle {
         IsClosed: boolean;
         IsInvalid: boolean;
         DangerousGetHandle(): System.IntPtr;
@@ -22441,7 +22441,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SEHException {
+      export class SEHException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -22463,7 +22463,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class CONNECTDATA {
+      export class CONNECTDATA {
         pUnk: System.Object;
         dwCookie: number;
         Equals(obj: System.Object): boolean;
@@ -22509,7 +22509,7 @@ export namespace System {
         IMPLTYPEFLAG_FRESTRICTED = 4,
         IMPLTYPEFLAG_FDEFAULTVTABLE = 8,
       }
-      export declare class TYPEATTR {
+      export class TYPEATTR {
         static MEMBER_ID_NIL: number;
         guid: System.Guid;
         lcid: number;
@@ -22534,7 +22534,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class FUNCDESC {
+      export class FUNCDESC {
         memid: number;
         lprgscode: System.IntPtr;
         lprgelemdescParam: System.IntPtr;
@@ -22559,7 +22559,7 @@ export namespace System {
         IDLFLAG_FLCID = 4,
         IDLFLAG_FRETVAL = 8,
       }
-      export declare class IDLDESC {
+      export class IDLDESC {
         dwReserved: number;
         wIDLFlags: System.Runtime.InteropServices.IDLFLAG;
         Equals(obj: System.Object): boolean;
@@ -22577,7 +22577,7 @@ export namespace System {
         PARAMFLAG_FHASDEFAULT = 32,
         PARAMFLAG_FHASCUSTDATA = 64,
       }
-      export declare class PARAMDESC {
+      export class PARAMDESC {
         lpVarValue: System.IntPtr;
         wParamFlags: System.Runtime.InteropServices.PARAMFLAG;
         Equals(obj: System.Object): boolean;
@@ -22585,7 +22585,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class TYPEDESC {
+      export class TYPEDESC {
         lpValue: System.IntPtr;
         vt: System.Int16;
         Equals(obj: System.Object): boolean;
@@ -22593,7 +22593,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ELEMDESC {
+      export class ELEMDESC {
         tdesc: System.Runtime.InteropServices.TYPEDESC;
         desc: System.Runtime.InteropServices.ELEMDESC_DESCUNION;
         Equals(obj: System.Object): boolean;
@@ -22601,7 +22601,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ELEMDESC_DESCUNION {
+      export class ELEMDESC_DESCUNION {
         idldesc: System.Runtime.InteropServices.IDLDESC;
         paramdesc: System.Runtime.InteropServices.PARAMDESC;
         Equals(obj: System.Object): boolean;
@@ -22609,7 +22609,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class VARDESC {
+      export class VARDESC {
         memid: number;
         lpstrSchema: string;
         elemdescVar: System.Runtime.InteropServices.ELEMDESC;
@@ -22620,7 +22620,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class VARDESC_DESCUNION {
+      export class VARDESC_DESCUNION {
         oInst: number;
         lpvarValue: System.IntPtr;
         Equals(obj: System.Object): boolean;
@@ -22628,7 +22628,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class DISPPARAMS {
+      export class DISPPARAMS {
         rgvarg: System.IntPtr;
         rgdispidNamedArgs: System.IntPtr;
         cArgs: number;
@@ -22638,7 +22638,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class EXCEPINFO {
+      export class EXCEPINFO {
         wCode: System.Int16;
         wReserved: System.Int16;
         bstrSource: string;
@@ -22713,7 +22713,7 @@ export namespace System {
         ReleaseFuncDesc(pFuncDesc: System.IntPtr): void;
         ReleaseVarDesc(pVarDesc: System.IntPtr): void;
       }
-      export declare class UnknownWrapper {
+      export class UnknownWrapper {
         constructor(obj: System.Object);
         WrappedObject: System.Object;
         Equals(obj: System.Object): boolean;
@@ -22721,7 +22721,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class VariantWrapper {
+      export class VariantWrapper {
         constructor(obj: System.Object);
         WrappedObject: System.Object;
         Equals(obj: System.Object): boolean;
@@ -22729,7 +22729,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RuntimeInformation {
+      export class RuntimeInformation {
         static FrameworkDescription: string;
         static OSDescription: string;
         static OSArchitecture: System.Runtime.InteropServices.Architecture;
@@ -22740,7 +22740,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class BINDPTR {
+      export class BINDPTR {
         lpfuncdesc: System.IntPtr;
         lptcomp: System.IntPtr;
         lpvardesc: System.IntPtr;
@@ -22749,7 +22749,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class BIND_OPTS {
+      export class BIND_OPTS {
         cbStruct: number;
         grfFlags: number;
         grfMode: number;
@@ -22759,7 +22759,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ComEventsHelper {
+      export class ComEventsHelper {
         static Combine(rcw: System.Object, iid: System.Guid, dispid: number, d: System.Delegate): void;
         static Remove(rcw: System.Object, iid: System.Guid, dispid: number, d: System.Delegate): System.Delegate;
         Equals(obj: System.Object): boolean;
@@ -22784,14 +22784,14 @@ export namespace System {
         NOTIF_CONVERTWARNING = 1,
         ERROR_REFTOINVALIDASSEMBLY = 2,
       }
-      export declare class ExtensibleClassFactory {
+      export class ExtensibleClassFactory {
         static RegisterObjectCreationCallback(callback: System.Runtime.InteropServices.ObjectCreationDelegate): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FILETIME {
+      export class FILETIME {
         dwLowDateTime: number;
         dwHighDateTime: number;
         Equals(obj: System.Object): boolean;
@@ -22799,7 +22799,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class GCHandle {
+      export class GCHandle {
         IsAllocated: boolean;
         Target: System.Object;
         AddrOfPinnedObject(): System.IntPtr;
@@ -22846,7 +22846,7 @@ export namespace System {
         LIBFLAG_FHIDDEN = 4,
         LIBFLAG_FHASDISKIMAGE = 8,
       }
-      export declare class Marshal {
+      export class Marshal {
         static SystemMaxDBCSCharSize: number;
         static SystemDefaultCharSize: number;
         static AddRef(pUnk: System.IntPtr): number;
@@ -23038,7 +23038,7 @@ export namespace System {
         Suspended = 4,
         Surrogate = 8,
       }
-      export declare class RegistrationServices {
+      export class RegistrationServices {
         constructor();
         GetManagedCategoryGuid(): System.Guid;
         GetProgIdForType(type: System.Type): string;
@@ -23054,7 +23054,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class STATSTG {
+      export class STATSTG {
         pwcsName: string;
         type: number;
         cbSize: System.Int64;
@@ -23076,7 +23076,7 @@ export namespace System {
         SYS_WIN32 = 1,
         SYS_MAC = 2,
       }
-      export declare class SafeBuffer {
+      export class SafeBuffer {
         ByteLength: System.UInt64;
         IsInvalid: boolean;
         IsClosed: boolean;
@@ -23093,7 +23093,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TYPELIBATTR {
+      export class TYPELIBATTR {
         guid: System.Guid;
         lcid: number;
         syskind: System.Runtime.InteropServices.SYSKIND;
@@ -23105,7 +23105,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class TypeLibConverter {
+      export class TypeLibConverter {
         constructor();
         ConvertAssemblyToTypeLib(assembly: System.Reflection.Assembly, strTypeLibName: string, flags: System.Runtime.InteropServices.TypeLibExporterFlags, notifySink: System.Runtime.InteropServices.ITypeLibExporterNotifySink): System.Object;
         ConvertTypeLibToAssembly(typeLib: System.Object, asmFileName: string, flags: number, notifySink: System.Runtime.InteropServices.ITypeLibImporterNotifySink, publicKey: System.Byte[], keyPair: System.Reflection.StrongNameKeyPair, unsafeInterfaces: boolean): System.Reflection.Emit.AssemblyBuilder;
@@ -23647,7 +23647,7 @@ export namespace System {
       export interface _TypeBuilder {
         GetTypeInfo(iTInfo: System.UInt32, lcid: System.UInt32, ppTInfo: System.IntPtr): void;
       }
-      export declare class ComAwareEventInfo {
+      export class ComAwareEventInfo {
         constructor(type: System.Type, eventName: string);
         Attributes: System.Reflection.EventAttributes;
         DeclaringType: System.Type;
@@ -23682,7 +23682,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HandleCollector {
+      export class HandleCollector {
         constructor(name: string, initialThreshold: number);
         constructor(name: string, initialThreshold: number, maximumThreshold: number);
         Count: number;
@@ -23696,7 +23696,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StandardOleMarshalObject {
+      export class StandardOleMarshalObject {
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): System.Object;
         InitializeLifetimeService(): System.Object;
@@ -23706,7 +23706,7 @@ export namespace System {
         ToString(): string;
       }
       export namespace ComTypes {
-        export declare class BIND_OPTS {
+        export class BIND_OPTS {
           cbStruct: number;
           grfFlags: number;
           grfMode: number;
@@ -23733,7 +23733,7 @@ export namespace System {
           Skip(celt: number): number;
           Reset(): void;
         }
-        export declare class CONNECTDATA {
+        export class CONNECTDATA {
           pUnk: System.Object;
           dwCookie: number;
           Equals(obj: System.Object): boolean;
@@ -23762,7 +23762,7 @@ export namespace System {
           Reset(): number;
           Clone(): System.Runtime.InteropServices.ComTypes.IEnumVARIANT;
         }
-        export declare class FILETIME {
+        export class FILETIME {
           dwLowDateTime: number;
           dwHighDateTime: number;
           Equals(obj: System.Object): boolean;
@@ -23788,7 +23788,7 @@ export namespace System {
           Revoke(dwRegister: number): void;
           IsRunning(pmkObjectName: System.Runtime.InteropServices.ComTypes.IMoniker): number;
         }
-        export declare class STATSTG {
+        export class STATSTG {
           pwcsName: string;
           type: number;
           cbSize: System.Int64;
@@ -23824,7 +23824,7 @@ export namespace System {
           DESCKIND_IMPLICITAPPOBJ = 4,
           DESCKIND_MAX = 5,
         }
-        export declare class BINDPTR {
+        export class BINDPTR {
           lpfuncdesc: System.IntPtr;
           lpvardesc: System.IntPtr;
           lptcomp: System.IntPtr;
@@ -23869,7 +23869,7 @@ export namespace System {
           IMPLTYPEFLAG_FRESTRICTED = 4,
           IMPLTYPEFLAG_FDEFAULTVTABLE = 8,
         }
-        export declare class TYPEATTR {
+        export class TYPEATTR {
           static MEMBER_ID_NIL: number;
           guid: System.Guid;
           lcid: number;
@@ -23894,7 +23894,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class FUNCDESC {
+        export class FUNCDESC {
           memid: number;
           lprgscode: System.IntPtr;
           lprgelemdescParam: System.IntPtr;
@@ -23919,7 +23919,7 @@ export namespace System {
           IDLFLAG_FLCID = 4,
           IDLFLAG_FRETVAL = 8,
         }
-        export declare class IDLDESC {
+        export class IDLDESC {
           dwReserved: System.IntPtr;
           wIDLFlags: System.Runtime.InteropServices.ComTypes.IDLFLAG;
           Equals(obj: System.Object): boolean;
@@ -23937,7 +23937,7 @@ export namespace System {
           PARAMFLAG_FHASDEFAULT = 32,
           PARAMFLAG_FHASCUSTDATA = 64,
         }
-        export declare class PARAMDESC {
+        export class PARAMDESC {
           lpVarValue: System.IntPtr;
           wParamFlags: System.Runtime.InteropServices.ComTypes.PARAMFLAG;
           Equals(obj: System.Object): boolean;
@@ -23945,7 +23945,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class TYPEDESC {
+        export class TYPEDESC {
           lpValue: System.IntPtr;
           vt: System.Int16;
           Equals(obj: System.Object): boolean;
@@ -23953,7 +23953,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class ELEMDESC {
+        export class ELEMDESC {
           tdesc: System.Runtime.InteropServices.ComTypes.TYPEDESC;
           desc: System.Runtime.InteropServices.ComTypes.ELEMDESC_DESCUNION;
           Equals(obj: System.Object): boolean;
@@ -23961,7 +23961,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class ELEMDESC_DESCUNION {
+        export class ELEMDESC_DESCUNION {
           idldesc: System.Runtime.InteropServices.ComTypes.IDLDESC;
           paramdesc: System.Runtime.InteropServices.ComTypes.PARAMDESC;
           Equals(obj: System.Object): boolean;
@@ -23975,7 +23975,7 @@ export namespace System {
           VAR_CONST = 2,
           VAR_DISPATCH = 3,
         }
-        export declare class VARDESC {
+        export class VARDESC {
           memid: number;
           lpstrSchema: string;
           desc: System.Runtime.InteropServices.ComTypes.VARDESC_DESCUNION;
@@ -23987,7 +23987,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class VARDESC_DESCUNION {
+        export class VARDESC_DESCUNION {
           oInst: number;
           lpvarValue: System.IntPtr;
           Equals(obj: System.Object): boolean;
@@ -23995,7 +23995,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class DISPPARAMS {
+        export class DISPPARAMS {
           rgvarg: System.IntPtr;
           rgdispidNamedArgs: System.IntPtr;
           cArgs: number;
@@ -24005,7 +24005,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class EXCEPINFO {
+        export class EXCEPINFO {
           wCode: System.Int16;
           wReserved: System.Int16;
           bstrSource: string;
@@ -24106,7 +24106,7 @@ export namespace System {
           LIBFLAG_FHIDDEN = 4,
           LIBFLAG_FHASDISKIMAGE = 8,
         }
-        export declare class TYPELIBATTR {
+        export class TYPELIBATTR {
           guid: System.Guid;
           lcid: number;
           syskind: System.Runtime.InteropServices.ComTypes.SYSKIND;
@@ -24148,7 +24148,7 @@ export namespace System {
           DVASPECT_ICON = 4,
           DVASPECT_DOCPRINT = 8,
         }
-        export declare class FORMATETC {
+        export class FORMATETC {
           cfFormat: System.Int16;
           dwAspect: System.Runtime.InteropServices.ComTypes.DVASPECT;
           lindex: number;
@@ -24179,7 +24179,7 @@ export namespace System {
           Reset(): number;
           Skip(celt: number): number;
         }
-        export declare class STATDATA {
+        export class STATDATA {
           advf: System.Runtime.InteropServices.ComTypes.ADVF;
           advSink: System.Runtime.InteropServices.ComTypes.IAdviseSink;
           connection: number;
@@ -24189,7 +24189,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class STGMEDIUM {
+        export class STGMEDIUM {
           pUnkForRelease: System.Object;
           tymed: System.Runtime.InteropServices.ComTypes.TYMED;
           unionmember: System.IntPtr;
@@ -24218,13 +24218,13 @@ export namespace System {
         }
       }
       export namespace WindowsRuntime {
-        export declare class EventRegistrationToken {
+        export class EventRegistrationToken {
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class EventRegistrationTokenTable<T = any> {
+        export class EventRegistrationTokenTable<T = any> {
           constructor();
           InvocationList: T;
           AddEventHandler(handler: T): System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken;
@@ -24238,7 +24238,7 @@ export namespace System {
         export interface IActivationFactory {
           ActivateInstance(): System.Object;
         }
-        export declare class WindowsRuntimeMarshal {
+        export class WindowsRuntimeMarshal {
           static RemoveAllEventHandlers(removeMethod: any): void;
           static GetActivationFactory(type: System.Type): System.Runtime.InteropServices.WindowsRuntime.IActivationFactory;
           static StringToHString(s: string): System.IntPtr;
@@ -24249,7 +24249,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class DesignerNamespaceResolveEventArgs {
+        export class DesignerNamespaceResolveEventArgs {
           constructor(namespaceName: string);
           NamespaceName: string;
           ResolvedAssemblyFiles: string[];
@@ -24258,7 +24258,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class NamespaceResolveEventArgs {
+        export class NamespaceResolveEventArgs {
           constructor(namespaceName: string, requestingAssembly: System.Reflection.Assembly);
           NamespaceName: string;
           RequestingAssembly: System.Reflection.Assembly;
@@ -24268,7 +24268,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class WindowsRuntimeMetadata {
+        export class WindowsRuntimeMetadata {
           static ResolveNamespace(namespaceName: string, packageGraphFilePaths: any): any;
           static ResolveNamespace(namespaceName: string, windowsSdkFilePath: string, packageGraphFilePaths: any): any;
           Equals(obj: System.Object): boolean;
@@ -24279,7 +24279,7 @@ export namespace System {
       }
     }
     export namespace Remoting {
-      export declare class ActivatedClientTypeEntry {
+      export class ActivatedClientTypeEntry {
         constructor(type: System.Type, appUrl: string);
         constructor(typeName: string, assemblyName: string, appUrl: string);
         ApplicationUrl: string;
@@ -24292,7 +24292,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class ActivatedServiceTypeEntry {
+      export class ActivatedServiceTypeEntry {
         constructor(type: System.Type);
         constructor(typeName: string, assemblyName: string);
         ContextAttributes: System.Runtime.Remoting.Contexts.IContextAttribute[];
@@ -24322,7 +24322,7 @@ export namespace System {
         TypeName: string;
         CanCastTo(fromType: System.Type, o: System.Object): boolean;
       }
-      export declare class InternalRemotingServices {
+      export class InternalRemotingServices {
         constructor();
         static DebugOutChnl(s: string): void;
         static GetCachedSoapAttribute(reflectionObject: System.Object): any;
@@ -24334,7 +24334,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ObjRef {
+      export class ObjRef {
         constructor();
         constructor(o: System.MarshalByRefObject, requestedType: System.Type);
         ChannelInfo: System.Runtime.Remoting.IChannelInfo;
@@ -24350,7 +24350,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ObjectHandle {
+      export class ObjectHandle {
         constructor(o: System.Object);
         InitializeLifetimeService(): System.Object;
         Unwrap(): System.Object;
@@ -24361,7 +24361,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RemotingConfiguration {
+      export class RemotingConfiguration {
         static ApplicationId: string;
         static ApplicationName: string;
         static CustomErrorsMode: System.Runtime.Remoting.CustomErrorsModes;
@@ -24391,7 +24391,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RemotingException {
+      export class RemotingException {
         constructor();
         constructor(message: string);
         constructor(message: string, InnerException: System.Exception);
@@ -24411,7 +24411,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class RemotingServices {
+      export class RemotingServices {
         static IsTransparentProxy(proxy: System.Object): boolean;
         static ExecuteMessage(target: System.MarshalByRefObject, reqMsg: System.Runtime.Remoting.Messaging.IMethodCallMessage): System.Runtime.Remoting.Messaging.IMethodReturnMessage;
         static Connect(classToProxy: System.Type, url: string): System.Object;
@@ -24442,7 +24442,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RemotingTimeoutException {
+      export class RemotingTimeoutException {
         constructor();
         constructor(message: string);
         constructor(message: string, InnerException: System.Exception);
@@ -24462,7 +24462,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class ServerException {
+      export class ServerException {
         constructor();
         constructor(message: string);
         constructor(message: string, InnerException: System.Exception);
@@ -24482,7 +24482,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class SoapServices {
+      export class SoapServices {
         static XmlNsForClrType: string;
         static XmlNsForClrTypeWithAssembly: string;
         static XmlNsForClrTypeWithNs: string;
@@ -24506,7 +24506,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TypeEntry {
+      export class TypeEntry {
         AssemblyName: string;
         TypeName: string;
         Equals(obj: System.Object): boolean;
@@ -24514,7 +24514,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class WellKnownClientTypeEntry {
+      export class WellKnownClientTypeEntry {
         constructor(type: System.Type, objectUrl: string);
         constructor(typeName: string, assemblyName: string, objectUrl: string);
         ApplicationUrl: string;
@@ -24531,7 +24531,7 @@ export namespace System {
         Singleton = 1,
         SingleCall = 2,
       }
-      export declare class WellKnownServiceTypeEntry {
+      export class WellKnownServiceTypeEntry {
         constructor(type: System.Type, objectUri: string, mode: System.Runtime.Remoting.WellKnownObjectMode);
         constructor(typeName: string, assemblyName: string, objectUri: string, mode: System.Runtime.Remoting.WellKnownObjectMode);
         ContextAttributes: System.Runtime.Remoting.Contexts.IContextAttribute[];
@@ -24569,7 +24569,7 @@ export namespace System {
         }
       }
       export namespace Channels {
-        export declare class BaseChannelObjectWithProperties {
+        export class BaseChannelObjectWithProperties {
           Count: number;
           IsFixedSize: boolean;
           IsReadOnly: boolean;
@@ -24589,7 +24589,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class BaseChannelSinkWithProperties {
+        export class BaseChannelSinkWithProperties {
           Count: number;
           IsFixedSize: boolean;
           IsReadOnly: boolean;
@@ -24609,7 +24609,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class BaseChannelWithProperties {
+        export class BaseChannelWithProperties {
           Properties: System.Collections.IDictionary;
           Count: number;
           IsFixedSize: boolean;
@@ -24629,7 +24629,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ChannelDataStore {
+        export class ChannelDataStore {
           constructor(channelURIs: string[]);
           ChannelUris: string[];
           Equals(obj: System.Object): boolean;
@@ -24637,7 +24637,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ChannelServices {
+        export class ChannelServices {
           static RegisteredChannels: System.Runtime.Remoting.Channels.IChannel[];
           static CreateServerChannelSinkChain(provider: System.Runtime.Remoting.Channels.IServerChannelSinkProvider, channel: System.Runtime.Remoting.Channels.IChannelReceiver): System.Runtime.Remoting.Channels.IServerChannelSink;
           static GetChannel(name: string): System.Runtime.Remoting.Channels.IChannel;
@@ -24653,7 +24653,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ClientChannelSinkStack {
+        export class ClientChannelSinkStack {
           constructor();
           constructor(replySink: System.Runtime.Remoting.Messaging.IMessageSink);
           AsyncProcessResponse(headers: System.Runtime.Remoting.Channels.ITransportHeaders, stream: System.IO.Stream): void;
@@ -24742,7 +24742,7 @@ export namespace System {
         export interface ITransportHeaders {
           GetEnumerator(): System.Collections.IEnumerator;
         }
-        export declare class ServerChannelSinkStack {
+        export class ServerChannelSinkStack {
           constructor();
           GetResponseStream(msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders): System.IO.Stream;
           Pop(sink: System.Runtime.Remoting.Channels.IServerChannelSink): System.Object;
@@ -24761,7 +24761,7 @@ export namespace System {
           OneWay = 1,
           Async = 2,
         }
-        export declare class SinkProviderData {
+        export class SinkProviderData {
           constructor(name: string);
           Children: System.Collections.IList;
           Name: string;
@@ -24771,7 +24771,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class TransportHeaders {
+        export class TransportHeaders {
           constructor();
           GetEnumerator(): System.Collections.IEnumerator;
           Equals(obj: System.Object): boolean;
@@ -24781,7 +24781,7 @@ export namespace System {
         }
       }
       export namespace Contexts {
-        export declare class Context {
+        export class Context {
           constructor();
           static DefaultContext: System.Runtime.Remoting.Contexts.Context;
           ContextID: number;
@@ -24803,7 +24803,7 @@ export namespace System {
           GetHashCode(): number;
           GetType(): System.Type;
         }
-        export declare class ContextProperty {
+        export class ContextProperty {
           Name: string;
           Property: System.Object;
           Equals(obj: System.Object): boolean;
@@ -24811,7 +24811,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class CrossContextDelegate {
+        export class CrossContextDelegate {
           constructor(object: System.Object, method: System.IntPtr);
           Method: System.Reflection.MethodInfo;
           Target: System.Object;
@@ -24867,7 +24867,7 @@ export namespace System {
         }
       }
       export namespace Lifetime {
-        export declare class ClientSponsor {
+        export class ClientSponsor {
           constructor();
           constructor(renewalTime: System.TimeSpan);
           RenewalTime: System.TimeSpan;
@@ -24904,7 +24904,7 @@ export namespace System {
           Renewing = 3,
           Expired = 4,
         }
-        export declare class LifetimeServices {
+        export class LifetimeServices {
           constructor();
           static LeaseManagerPollTime: System.TimeSpan;
           static LeaseTime: System.TimeSpan;
@@ -24917,7 +24917,7 @@ export namespace System {
         }
       }
       export namespace Messaging {
-        export declare class CallContext {
+        export class CallContext {
           static HostContext: System.Object;
           static FreeNamedDataSlot(name: string): void;
           static LogicalGetData(name: string): System.Object;
@@ -24933,7 +24933,7 @@ export namespace System {
         }
         export interface ILogicalThreadAffinative {
         }
-        export declare class LogicalCallContext {
+        export class LogicalCallContext {
           HasInfo: boolean;
           GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
           Clone(): System.Object;
@@ -24945,7 +24945,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class AsyncResult {
+        export class AsyncResult {
           AsyncState: System.Object;
           AsyncWaitHandle: System.Threading.WaitHandle;
           CompletedSynchronously: boolean;
@@ -24962,7 +24962,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ConstructionCall {
+        export class ConstructionCall {
           constructor(m: System.Runtime.Remoting.Messaging.IMessage);
           constructor(headers: System.Runtime.Remoting.Messaging.Header[]);
           ActivationType: System.Type;
@@ -24996,7 +24996,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ConstructionResponse {
+        export class ConstructionResponse {
           constructor(h: System.Runtime.Remoting.Messaging.Header[], mcm: System.Runtime.Remoting.Messaging.IMethodCallMessage);
           Properties: System.Collections.IDictionary;
           ArgCount: number;
@@ -25024,7 +25024,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class Header {
+        export class Header {
           constructor(_Name: string, _Value: System.Object);
           constructor(_Name: string, _Value: System.Object, _MustUnderstand: boolean);
           constructor(_Name: string, _Value: System.Object, _MustUnderstand: boolean, _HeaderNamespace: string);
@@ -25037,7 +25037,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class HeaderHandler {
+        export class HeaderHandler {
           constructor(object: System.Object, method: System.IntPtr);
           Method: System.Reflection.MethodInfo;
           Target: System.Object;
@@ -25095,14 +25095,14 @@ export namespace System {
           Deserialize(serializationStream: System.IO.Stream, handler: System.Runtime.Remoting.Messaging.HeaderHandler): System.Object;
           Serialize(serializationStream: System.IO.Stream, graph: System.Object, headers: System.Runtime.Remoting.Messaging.Header[]): void;
         }
-        export declare class InternalMessageWrapper {
+        export class InternalMessageWrapper {
           constructor(msg: System.Runtime.Remoting.Messaging.IMessage);
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class MessageSurrogateFilter {
+        export class MessageSurrogateFilter {
           constructor(object: System.Object, method: System.IntPtr);
           Method: System.Reflection.MethodInfo;
           Target: System.Object;
@@ -25118,7 +25118,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class MethodCall {
+        export class MethodCall {
           constructor(h1: System.Runtime.Remoting.Messaging.Header[]);
           constructor(msg: System.Runtime.Remoting.Messaging.IMessage);
           ArgCount: number;
@@ -25147,7 +25147,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class MethodCallMessageWrapper {
+        export class MethodCallMessageWrapper {
           constructor(msg: System.Runtime.Remoting.Messaging.IMethodCallMessage);
           ArgCount: number;
           Args: System.Object[];
@@ -25170,7 +25170,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class MethodResponse {
+        export class MethodResponse {
           constructor(h1: System.Runtime.Remoting.Messaging.Header[], mcm: System.Runtime.Remoting.Messaging.IMethodCallMessage);
           ArgCount: number;
           Args: System.Object[];
@@ -25198,7 +25198,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class MethodReturnMessageWrapper {
+        export class MethodReturnMessageWrapper {
           constructor(msg: System.Runtime.Remoting.Messaging.IMethodReturnMessage);
           ArgCount: number;
           Args: System.Object[];
@@ -25223,7 +25223,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class RemotingSurrogateSelector {
+        export class RemotingSurrogateSelector {
           constructor();
           Filter: System.Runtime.Remoting.Messaging.MessageSurrogateFilter;
           ChainSelector(selector: System.Runtime.Serialization.ISurrogateSelector): void;
@@ -25236,7 +25236,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ReturnMessage {
+        export class ReturnMessage {
           constructor(ret: System.Object, outArgs: System.Object[], outArgsCount: number, callCtx: System.Runtime.Remoting.Messaging.LogicalCallContext, mcm: System.Runtime.Remoting.Messaging.IMethodCallMessage);
           constructor(e: System.Exception, mcm: System.Runtime.Remoting.Messaging.IMethodCallMessage);
           ArgCount: number;
@@ -25281,7 +25281,7 @@ export namespace System {
           export interface ISoapXsd {
             GetXsdType(): string;
           }
-          export declare class SoapAnyUri {
+          export class SoapAnyUri {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25293,7 +25293,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapBase64Binary {
+          export class SoapBase64Binary {
             constructor();
             constructor(value: System.Byte[]);
             Value: System.Byte[];
@@ -25305,7 +25305,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapDate {
+          export class SoapDate {
             constructor();
             constructor(value: System.DateTime);
             constructor(value: System.DateTime, sign: number);
@@ -25319,7 +25319,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapDateTime {
+          export class SoapDateTime {
             constructor();
             static XsdType: string;
             static Parse(value: string): System.DateTime;
@@ -25329,7 +25329,7 @@ export namespace System {
             GetType(): System.Type;
             ToString(): string;
           }
-          export declare class SoapDay {
+          export class SoapDay {
             constructor();
             constructor(value: System.DateTime);
             Value: System.DateTime;
@@ -25341,7 +25341,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapDuration {
+          export class SoapDuration {
             constructor();
             static XsdType: string;
             static Parse(value: string): System.TimeSpan;
@@ -25351,7 +25351,7 @@ export namespace System {
             GetType(): System.Type;
             ToString(): string;
           }
-          export declare class SoapEntities {
+          export class SoapEntities {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25363,7 +25363,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapEntity {
+          export class SoapEntity {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25375,7 +25375,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapHexBinary {
+          export class SoapHexBinary {
             constructor();
             constructor(value: System.Byte[]);
             Value: System.Byte[];
@@ -25387,7 +25387,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapId {
+          export class SoapId {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25399,7 +25399,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapIdref {
+          export class SoapIdref {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25411,7 +25411,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapIdrefs {
+          export class SoapIdrefs {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25423,7 +25423,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapInteger {
+          export class SoapInteger {
             constructor();
             constructor(value: System.Decimal);
             Value: System.Decimal;
@@ -25435,7 +25435,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapLanguage {
+          export class SoapLanguage {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25447,7 +25447,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapMonth {
+          export class SoapMonth {
             constructor();
             constructor(value: System.DateTime);
             Value: System.DateTime;
@@ -25459,7 +25459,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapMonthDay {
+          export class SoapMonthDay {
             constructor();
             constructor(value: System.DateTime);
             Value: System.DateTime;
@@ -25471,7 +25471,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapName {
+          export class SoapName {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25483,7 +25483,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapNcName {
+          export class SoapNcName {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25495,7 +25495,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapNegativeInteger {
+          export class SoapNegativeInteger {
             constructor();
             constructor(value: System.Decimal);
             Value: System.Decimal;
@@ -25507,7 +25507,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapNmtoken {
+          export class SoapNmtoken {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25519,7 +25519,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapNmtokens {
+          export class SoapNmtokens {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25531,7 +25531,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapNonNegativeInteger {
+          export class SoapNonNegativeInteger {
             constructor();
             constructor(value: System.Decimal);
             Value: System.Decimal;
@@ -25543,7 +25543,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapNonPositiveInteger {
+          export class SoapNonPositiveInteger {
             constructor();
             constructor(value: System.Decimal);
             Value: System.Decimal;
@@ -25555,7 +25555,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapNormalizedString {
+          export class SoapNormalizedString {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25567,7 +25567,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapNotation {
+          export class SoapNotation {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25579,7 +25579,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapPositiveInteger {
+          export class SoapPositiveInteger {
             constructor();
             constructor(value: System.Decimal);
             Value: System.Decimal;
@@ -25591,7 +25591,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapQName {
+          export class SoapQName {
             constructor();
             constructor(value: string);
             constructor(key: string, name: string);
@@ -25607,7 +25607,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapTime {
+          export class SoapTime {
             constructor();
             constructor(value: System.DateTime);
             Value: System.DateTime;
@@ -25619,7 +25619,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapToken {
+          export class SoapToken {
             constructor();
             constructor(value: string);
             Value: string;
@@ -25631,7 +25631,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapYear {
+          export class SoapYear {
             constructor();
             constructor(value: System.DateTime);
             constructor(value: System.DateTime, sign: number);
@@ -25645,7 +25645,7 @@ export namespace System {
             GetHashCode(): number;
             GetType(): System.Type;
           }
-          export declare class SoapYearMonth {
+          export class SoapYearMonth {
             constructor();
             constructor(value: System.DateTime);
             constructor(value: System.DateTime, sign: number);
@@ -25662,7 +25662,7 @@ export namespace System {
         }
       }
       export namespace Proxies {
-        export declare class RealProxy {
+        export class RealProxy {
           GetProxiedType(): System.Type;
           CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
           GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
@@ -25680,7 +25680,7 @@ export namespace System {
         }
       }
       export namespace Services {
-        export declare class EnterpriseServicesHelper {
+        export class EnterpriseServicesHelper {
           constructor();
           static CreateConstructionReturnMessage(ctorMsg: System.Runtime.Remoting.Activation.IConstructionCallMessage, retObj: System.MarshalByRefObject): System.Runtime.Remoting.Activation.IConstructionReturnMessage;
           static SwitchWrappers(oldcp: System.Runtime.Remoting.Proxies.RealProxy, newcp: System.Runtime.Remoting.Proxies.RealProxy): void;
@@ -25695,7 +25695,7 @@ export namespace System {
           MarshaledObject(obj: System.Object, or: System.Runtime.Remoting.ObjRef): void;
           UnmarshaledObject(obj: System.Object, or: System.Runtime.Remoting.ObjRef): void;
         }
-        export declare class TrackingServices {
+        export class TrackingServices {
           constructor();
           static RegisteredHandlers: System.Runtime.Remoting.Services.ITrackingHandler[];
           static RegisterTrackingHandler(handler: System.Runtime.Remoting.Services.ITrackingHandler): void;
@@ -25708,7 +25708,7 @@ export namespace System {
       }
     }
     export namespace Serialization {
-      export declare class Formatter {
+      export class Formatter {
         SurrogateSelector: System.Runtime.Serialization.ISurrogateSelector;
         Binder: System.Runtime.Serialization.SerializationBinder;
         Context: System.Runtime.Serialization.StreamingContext;
@@ -25719,7 +25719,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FormatterConverter {
+      export class FormatterConverter {
         constructor();
         Convert(value: System.Object, type: System.Type): System.Object;
         Convert(value: System.Object, typeCode: System.TypeCode): System.Object;
@@ -25743,7 +25743,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FormatterServices {
+      export class FormatterServices {
         static GetSerializableMembers(type: System.Type): System.Reflection.MemberInfo[];
         static GetSerializableMembers(type: System.Type, context: System.Runtime.Serialization.StreamingContext): System.Reflection.MemberInfo[];
         static CheckTypeSecurity(t: System.Type, securityLevel: System.Runtime.Serialization.Formatters.TypeFilterLevel): void;
@@ -25801,14 +25801,14 @@ export namespace System {
         ChainSelector(selector: System.Runtime.Serialization.ISurrogateSelector): void;
         GetNextSelector(): System.Runtime.Serialization.ISurrogateSelector;
       }
-      export declare class ObjectIDGenerator {
+      export class ObjectIDGenerator {
         constructor();
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ObjectManager {
+      export class ObjectManager {
         constructor(selector: System.Runtime.Serialization.ISurrogateSelector, context: System.Runtime.Serialization.StreamingContext);
         GetObject(objectID: System.Int64): System.Object;
         RegisterObject(obj: System.Object, objectID: System.Int64): void;
@@ -25827,7 +25827,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SafeSerializationEventArgs {
+      export class SafeSerializationEventArgs {
         StreamingContext: System.Runtime.Serialization.StreamingContext;
         AddSerializedState(serializedState: System.Runtime.Serialization.ISafeSerializationData): void;
         Equals(obj: System.Object): boolean;
@@ -25838,14 +25838,14 @@ export namespace System {
       export interface ISafeSerializationData {
         CompleteDeserialization(deserialized: System.Object): void;
       }
-      export declare class SerializationBinder {
+      export class SerializationBinder {
         BindToType(assemblyName: string, typeName: string): System.Type;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SerializationException {
+      export class SerializationException {
         constructor();
         constructor(message: string);
         constructor(message: string, innerException: System.Exception);
@@ -25865,7 +25865,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class SerializationInfo {
+      export class SerializationInfo {
         constructor(type: System.Type, converter: System.Runtime.Serialization.IFormatterConverter);
         constructor(type: System.Type, converter: System.Runtime.Serialization.IFormatterConverter, requireSameTokenInPartialTrust: boolean);
         FullTypeName: string;
@@ -25913,7 +25913,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SerializationEntry {
+      export class SerializationEntry {
         Value: System.Object;
         Name: string;
         ObjectType: System.Type;
@@ -25922,7 +25922,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class SerializationInfoEnumerator {
+      export class SerializationInfoEnumerator {
         Current: System.Runtime.Serialization.SerializationEntry;
         Name: string;
         Value: System.Object;
@@ -25934,7 +25934,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SerializationObjectManager {
+      export class SerializationObjectManager {
         constructor(context: System.Runtime.Serialization.StreamingContext);
         RegisterObject(obj: System.Object): void;
         RaiseOnSerializedEvent(): void;
@@ -25943,7 +25943,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StreamingContext {
+      export class StreamingContext {
         constructor(state: System.Runtime.Serialization.StreamingContextStates);
         constructor(state: System.Runtime.Serialization.StreamingContextStates, additional: System.Object);
         Context: System.Object;
@@ -25964,7 +25964,7 @@ export namespace System {
         CrossAppDomain = 128,
         All = 255,
       }
-      export declare class SurrogateSelector {
+      export class SurrogateSelector {
         constructor();
         AddSurrogate(type: System.Type, context: System.Runtime.Serialization.StreamingContext, surrogate: System.Runtime.Serialization.ISerializationSurrogate): void;
         ChainSelector(selector: System.Runtime.Serialization.ISurrogateSelector): void;
@@ -26001,7 +26001,7 @@ export namespace System {
           XmlNameSpace: string;
           Headers: System.Runtime.Remoting.Messaging.Header[];
         }
-        export declare class InternalRM {
+        export class InternalRM {
           constructor();
           static InfoSoap(...messages: System.Object[]): void;
           static SoapCheckEnabled(): boolean;
@@ -26010,7 +26010,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class InternalST {
+        export class InternalST {
           static InfoSoap(...messages: System.Object[]): void;
           static SoapCheckEnabled(): boolean;
           static Soap(...messages: System.Object[]): void;
@@ -26022,7 +26022,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class SoapFault {
+        export class SoapFault {
           constructor();
           constructor(faultCode: string, faultString: string, faultActor: string, serverFault: System.Runtime.Serialization.Formatters.ServerFault);
           FaultCode: string;
@@ -26035,7 +26035,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ServerFault {
+        export class ServerFault {
           constructor(exceptionType: string, message: string, stackTrace: string);
           ExceptionType: string;
           ExceptionMessage: string;
@@ -26045,7 +26045,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class SoapMessage {
+        export class SoapMessage {
           constructor();
           ParamNames: string[];
           ParamValues: System.Object[];
@@ -26059,7 +26059,7 @@ export namespace System {
           ToString(): string;
         }
         export namespace Binary {
-          export declare class BinaryFormatter {
+          export class BinaryFormatter {
             constructor();
             constructor(selector: System.Runtime.Serialization.ISurrogateSelector, context: System.Runtime.Serialization.StreamingContext);
             TypeFormat: System.Runtime.Serialization.Formatters.FormatterTypeStyle;
@@ -26099,7 +26099,7 @@ export namespace System {
         Private = 16,
         Assembly = 32,
       }
-      export declare class VersioningHelper {
+      export class VersioningHelper {
         static MakeVersionSafeName(name: string, from: System.Runtime.Versioning.ResourceScope, to: System.Runtime.Versioning.ResourceScope): string;
         static MakeVersionSafeName(name: string, from: System.Runtime.Versioning.ResourceScope, to: System.Runtime.Versioning.ResourceScope, type: System.Type): string;
         Equals(obj: System.Object): boolean;
@@ -26107,7 +26107,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CompatibilitySwitch {
+      export class CompatibilitySwitch {
         static IsEnabled(compatibilitySwitchName: string): boolean;
         static GetValue(compatibilitySwitchName: string): string;
         Equals(obj: System.Object): boolean;
@@ -26115,7 +26115,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FrameworkName {
+      export class FrameworkName {
         constructor(identifier: string, version: System.Version);
         constructor(identifier: string, version: System.Version, profile: string);
         constructor(frameworkName: string);
@@ -26149,7 +26149,7 @@ export namespace System {
       CurrentAppDomain = 0,
       CurrentAssembly = 1,
     }
-    export declare class SecurityContext {
+    export class SecurityContext {
       CreateCopy(): System.Security.SecurityContext;
       static Capture(): System.Security.SecurityContext;
       Dispose(): void;
@@ -26164,7 +26164,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CodeAccessPermission {
+    export class CodeAccessPermission {
       Assert(): void;
       Copy(): System.Security.IPermission;
       Demand(): void;
@@ -26184,7 +26184,7 @@ export namespace System {
       static RevertPermitOnly(): void;
       GetType(): System.Type;
     }
-    export declare class HostProtectionException {
+    export class HostProtectionException {
       constructor();
       constructor(message: string);
       constructor(message: string, e: System.Exception);
@@ -26207,7 +26207,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class HostSecurityManager {
+    export class HostSecurityManager {
       constructor();
       DomainPolicy: System.Security.Policy.PolicyLevel;
       Flags: System.Security.HostSecurityManagerOptions;
@@ -26257,7 +26257,7 @@ export namespace System {
       Deny(): void;
       PermitOnly(): void;
     }
-    export declare class NamedPermissionSet {
+    export class NamedPermissionSet {
       constructor(name: string, permSet: System.Security.PermissionSet);
       constructor(name: string, state: System.Security.Permissions.PermissionState);
       constructor(permSet: System.Security.NamedPermissionSet);
@@ -26293,7 +26293,7 @@ export namespace System {
       Union(other: System.Security.PermissionSet): System.Security.PermissionSet;
       GetType(): System.Type;
     }
-    export declare class PermissionSet {
+    export class PermissionSet {
       constructor(state: System.Security.Permissions.PermissionState);
       constructor(permSet: System.Security.PermissionSet);
       Count: number;
@@ -26332,7 +26332,7 @@ export namespace System {
       Enterprise = 2,
       AppDomain = 3,
     }
-    export declare class SecureString {
+    export class SecureString {
       constructor();
       Length: number;
       AppendChar(c: System.Char): void;
@@ -26349,7 +26349,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SecurityElement {
+    export class SecurityElement {
       constructor(tag: string);
       constructor(tag: string, text: string);
       Attributes: System.Collections.Hashtable;
@@ -26374,7 +26374,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class SecurityException {
+    export class SecurityException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -26411,7 +26411,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class SecurityManager {
+    export class SecurityManager {
       static CheckExecutionRights: boolean;
       static SecurityEnabled: boolean;
       static IsGranted(perm: System.Security.IPermission): boolean;
@@ -26431,7 +26431,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SecurityState {
+    export class SecurityState {
       EnsureState(): void;
       IsStateAvailable(): boolean;
       Equals(obj: System.Object): boolean;
@@ -26447,7 +26447,7 @@ export namespace System {
       Untrusted = 4,
       NoZone = -1,
     }
-    export declare class VerificationException {
+    export class VerificationException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -26467,7 +26467,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class XmlSyntaxException {
+    export class XmlSyntaxException {
       constructor();
       constructor(lineNumber: number);
       constructor(lineNumber: number, message: string);
@@ -26489,7 +26489,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ReadOnlyPermissionSet {
+    export class ReadOnlyPermissionSet {
       constructor(permissionSetXml: System.Security.SecurityElement);
       Count: number;
       IsSynchronized: boolean;
@@ -26525,7 +26525,7 @@ export namespace System {
       Deployment = 1,
       None = 0,
     }
-    export declare class SecureStringMarshal {
+    export class SecureStringMarshal {
       static SecureStringToCoTaskMemAnsi(s: System.Security.SecureString): System.IntPtr;
       static SecureStringToGlobalAllocAnsi(s: System.Security.SecureString): System.IntPtr;
       static SecureStringToCoTaskMemUnicode(s: System.Security.SecureString): System.IntPtr;
@@ -26561,7 +26561,7 @@ export namespace System {
         Allow = 0,
         Deny = 1,
       }
-      export declare class AccessRule<T = any> {
+      export class AccessRule<T = any> {
         constructor(identity: string, rights: T, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: System.Security.Principal.IdentityReference, rights: T, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: string, rights: T, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType);
@@ -26577,7 +26577,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AceEnumerator {
+      export class AceEnumerator {
         Current: System.Security.AccessControl.GenericAce;
         MoveNext(): boolean;
         Reset(): void;
@@ -26629,7 +26629,7 @@ export namespace System {
         Success = 1,
         Failure = 2,
       }
-      export declare class AuditRule<T = any> {
+      export class AuditRule<T = any> {
         constructor(identity: string, rights: T, flags: System.Security.AccessControl.AuditFlags);
         constructor(identity: System.Security.Principal.IdentityReference, rights: T, flags: System.Security.AccessControl.AuditFlags);
         constructor(identity: string, rights: T, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags);
@@ -26645,7 +26645,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AuthorizationRule {
+      export class AuthorizationRule {
         IdentityReference: System.Security.Principal.IdentityReference;
         InheritanceFlags: System.Security.AccessControl.InheritanceFlags;
         IsInherited: boolean;
@@ -26655,7 +26655,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AuthorizationRuleCollection {
+      export class AuthorizationRuleCollection {
         constructor();
         Count: number;
         AddRule(rule: System.Security.AccessControl.AuthorizationRule): void;
@@ -26666,7 +26666,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CommonAce {
+      export class CommonAce {
         constructor(flags: System.Security.AccessControl.AceFlags, qualifier: System.Security.AccessControl.AceQualifier, accessMask: number, sid: System.Security.Principal.SecurityIdentifier, isCallback: boolean, opaque: System.Byte[]);
         BinaryLength: number;
         AceQualifier: System.Security.AccessControl.AceQualifier;
@@ -26690,7 +26690,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CommonAcl {
+      export class CommonAcl {
         BinaryLength: number;
         Count: number;
         IsCanonical: boolean;
@@ -26709,7 +26709,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CommonObjectSecurity {
+      export class CommonObjectSecurity {
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
         AuditRuleType: System.Type;
@@ -26740,7 +26740,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CommonSecurityDescriptor {
+      export class CommonSecurityDescriptor {
         constructor(isContainer: boolean, isDS: boolean, rawSecurityDescriptor: System.Security.AccessControl.RawSecurityDescriptor);
         constructor(isContainer: boolean, isDS: boolean, sddlForm: string);
         constructor(isContainer: boolean, isDS: boolean, binaryForm: System.Byte[], offset: number);
@@ -26768,7 +26768,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CompoundAce {
+      export class CompoundAce {
         constructor(flags: System.Security.AccessControl.AceFlags, accessMask: number, compoundAceType: System.Security.AccessControl.CompoundAceType, sid: System.Security.Principal.SecurityIdentifier);
         BinaryLength: number;
         CompoundAceType: System.Security.AccessControl.CompoundAceType;
@@ -26809,7 +26809,7 @@ export namespace System {
         RMControlValid = 16384,
         SelfRelative = 32768,
       }
-      export declare class CryptoKeyAccessRule {
+      export class CryptoKeyAccessRule {
         constructor(identity: System.Security.Principal.IdentityReference, cryptoKeyRights: System.Security.AccessControl.CryptoKeyRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: string, cryptoKeyRights: System.Security.AccessControl.CryptoKeyRights, type: System.Security.AccessControl.AccessControlType);
         CryptoKeyRights: System.Security.AccessControl.CryptoKeyRights;
@@ -26823,7 +26823,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CryptoKeyAuditRule {
+      export class CryptoKeyAuditRule {
         constructor(identity: System.Security.Principal.IdentityReference, cryptoKeyRights: System.Security.AccessControl.CryptoKeyRights, flags: System.Security.AccessControl.AuditFlags);
         constructor(identity: string, cryptoKeyRights: System.Security.AccessControl.CryptoKeyRights, flags: System.Security.AccessControl.AuditFlags);
         CryptoKeyRights: System.Security.AccessControl.CryptoKeyRights;
@@ -26855,7 +26855,7 @@ export namespace System {
         GenericWrite = 1073741824,
         GenericRead = -2147483648,
       }
-      export declare class CryptoKeySecurity {
+      export class CryptoKeySecurity {
         constructor();
         constructor(securityDescriptor: System.Security.AccessControl.CommonSecurityDescriptor);
         AccessRightType: System.Type;
@@ -26899,7 +26899,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CustomAce {
+      export class CustomAce {
         constructor(type: System.Security.AccessControl.AceType, flags: System.Security.AccessControl.AceFlags, opaque: System.Byte[]);
         BinaryLength: number;
         OpaqueLength: number;
@@ -26919,7 +26919,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DirectoryObjectSecurity {
+      export class DirectoryObjectSecurity {
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
         AuditRuleType: System.Type;
@@ -26952,7 +26952,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DirectorySecurity {
+      export class DirectorySecurity {
         constructor();
         constructor(name: string, includeSections: System.Security.AccessControl.AccessControlSections);
         AccessRightType: System.Type;
@@ -26996,7 +26996,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DiscretionaryAcl {
+      export class DiscretionaryAcl {
         constructor(isContainer: boolean, isDS: boolean, capacity: number);
         constructor(isContainer: boolean, isDS: boolean, rawAcl: System.Security.AccessControl.RawAcl);
         constructor(isContainer: boolean, isDS: boolean, revision: System.Byte, capacity: number);
@@ -27030,7 +27030,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EventWaitHandleAccessRule {
+      export class EventWaitHandleAccessRule {
         constructor(identity: System.Security.Principal.IdentityReference, eventRights: System.Security.AccessControl.EventWaitHandleRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: string, eventRights: System.Security.AccessControl.EventWaitHandleRights, type: System.Security.AccessControl.AccessControlType);
         EventWaitHandleRights: System.Security.AccessControl.EventWaitHandleRights;
@@ -27044,7 +27044,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EventWaitHandleAuditRule {
+      export class EventWaitHandleAuditRule {
         constructor(identity: System.Security.Principal.IdentityReference, eventRights: System.Security.AccessControl.EventWaitHandleRights, flags: System.Security.AccessControl.AuditFlags);
         EventWaitHandleRights: System.Security.AccessControl.EventWaitHandleRights;
         AuditFlags: System.Security.AccessControl.AuditFlags;
@@ -27066,7 +27066,7 @@ export namespace System {
         Synchronize = 1048576,
         FullControl = 2031619,
       }
-      export declare class EventWaitHandleSecurity {
+      export class EventWaitHandleSecurity {
         constructor();
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
@@ -27109,7 +27109,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FileSecurity {
+      export class FileSecurity {
         constructor();
         constructor(fileName: string, includeSections: System.Security.AccessControl.AccessControlSections);
         AccessRightType: System.Type;
@@ -27153,7 +27153,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FileSystemAccessRule {
+      export class FileSystemAccessRule {
         constructor(identity: System.Security.Principal.IdentityReference, fileSystemRights: System.Security.AccessControl.FileSystemRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: string, fileSystemRights: System.Security.AccessControl.FileSystemRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: System.Security.Principal.IdentityReference, fileSystemRights: System.Security.AccessControl.FileSystemRights, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType);
@@ -27169,7 +27169,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FileSystemAuditRule {
+      export class FileSystemAuditRule {
         constructor(identity: System.Security.Principal.IdentityReference, fileSystemRights: System.Security.AccessControl.FileSystemRights, flags: System.Security.AccessControl.AuditFlags);
         constructor(identity: string, fileSystemRights: System.Security.AccessControl.FileSystemRights, flags: System.Security.AccessControl.AuditFlags);
         constructor(identity: System.Security.Principal.IdentityReference, fileSystemRights: System.Security.AccessControl.FileSystemRights, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags);
@@ -27210,7 +27210,7 @@ export namespace System {
         Synchronize = 1048576,
         FullControl = 2032127,
       }
-      export declare class FileSystemSecurity {
+      export class FileSystemSecurity {
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
         AuditRuleType: System.Type;
@@ -27252,7 +27252,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class GenericAce {
+      export class GenericAce {
         AceFlags: System.Security.AccessControl.AceFlags;
         AceType: System.Security.AccessControl.AceType;
         AuditFlags: System.Security.AccessControl.AuditFlags;
@@ -27268,7 +27268,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class GenericAcl {
+      export class GenericAcl {
         BinaryLength: number;
         Count: number;
         IsSynchronized: boolean;
@@ -27285,7 +27285,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class GenericSecurityDescriptor {
+      export class GenericSecurityDescriptor {
         BinaryLength: number;
         ControlFlags: System.Security.AccessControl.ControlFlags;
         Group: System.Security.Principal.SecurityIdentifier;
@@ -27304,7 +27304,7 @@ export namespace System {
         ContainerInherit = 1,
         ObjectInherit = 2,
       }
-      export declare class KnownAce {
+      export class KnownAce {
         AccessMask: number;
         SecurityIdentifier: System.Security.Principal.SecurityIdentifier;
         AceFlags: System.Security.AccessControl.AceFlags;
@@ -27321,7 +27321,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MutexAccessRule {
+      export class MutexAccessRule {
         constructor(identity: System.Security.Principal.IdentityReference, eventRights: System.Security.AccessControl.MutexRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: string, eventRights: System.Security.AccessControl.MutexRights, type: System.Security.AccessControl.AccessControlType);
         MutexRights: System.Security.AccessControl.MutexRights;
@@ -27335,7 +27335,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MutexAuditRule {
+      export class MutexAuditRule {
         constructor(identity: System.Security.Principal.IdentityReference, eventRights: System.Security.AccessControl.MutexRights, flags: System.Security.AccessControl.AuditFlags);
         MutexRights: System.Security.AccessControl.MutexRights;
         AuditFlags: System.Security.AccessControl.AuditFlags;
@@ -27357,7 +27357,7 @@ export namespace System {
         Synchronize = 1048576,
         FullControl = 2031617,
       }
-      export declare class MutexSecurity {
+      export class MutexSecurity {
         constructor();
         constructor(name: string, includeSections: System.Security.AccessControl.AccessControlSections);
         AccessRightType: System.Type;
@@ -27401,7 +27401,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class NativeObjectSecurity {
+      export class NativeObjectSecurity {
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
         AuditRuleType: System.Type;
@@ -27432,7 +27432,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ObjectAccessRule {
+      export class ObjectAccessRule {
         InheritedObjectType: System.Guid;
         ObjectFlags: System.Security.AccessControl.ObjectAceFlags;
         ObjectType: System.Guid;
@@ -27446,7 +27446,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ObjectAce {
+      export class ObjectAce {
         constructor(aceFlags: System.Security.AccessControl.AceFlags, qualifier: System.Security.AccessControl.AceQualifier, accessMask: number, sid: System.Security.Principal.SecurityIdentifier, flags: System.Security.AccessControl.ObjectAceFlags, type: System.Guid, inheritedType: System.Guid, isCallback: boolean, opaque: System.Byte[]);
         BinaryLength: number;
         InheritedObjectAceType: System.Guid;
@@ -27478,7 +27478,7 @@ export namespace System {
         ObjectAceTypePresent = 1,
         InheritedObjectAceTypePresent = 2,
       }
-      export declare class ObjectAuditRule {
+      export class ObjectAuditRule {
         InheritedObjectType: System.Guid;
         ObjectFlags: System.Security.AccessControl.ObjectAceFlags;
         ObjectType: System.Guid;
@@ -27492,7 +27492,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ObjectSecurity<T = any> {
+      export class ObjectSecurity<T = any> {
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
         AuditRuleType: System.Type;
@@ -27534,7 +27534,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PrivilegeNotHeldException {
+      export class PrivilegeNotHeldException {
         constructor();
         constructor(privilege: string);
         constructor(privilege: string, inner: System.Exception);
@@ -27560,7 +27560,7 @@ export namespace System {
         NoPropagateInherit = 1,
         InheritOnly = 2,
       }
-      export declare class QualifiedAce {
+      export class QualifiedAce {
         AceQualifier: System.Security.AccessControl.AceQualifier;
         IsCallback: boolean;
         OpaqueLength: number;
@@ -27582,7 +27582,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RawAcl {
+      export class RawAcl {
         constructor(revision: System.Byte, capacity: number);
         constructor(binaryForm: System.Byte[], offset: number);
         BinaryLength: number;
@@ -27600,7 +27600,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RawSecurityDescriptor {
+      export class RawSecurityDescriptor {
         constructor(sddlForm: string);
         constructor(binaryForm: System.Byte[], offset: number);
         constructor(flags: System.Security.AccessControl.ControlFlags, owner: System.Security.Principal.SecurityIdentifier, group: System.Security.Principal.SecurityIdentifier, systemAcl: System.Security.AccessControl.RawAcl, discretionaryAcl: System.Security.AccessControl.RawAcl);
@@ -27619,7 +27619,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RegistryAccessRule {
+      export class RegistryAccessRule {
         constructor(identity: System.Security.Principal.IdentityReference, registryRights: System.Security.AccessControl.RegistryRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: string, registryRights: System.Security.AccessControl.RegistryRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: System.Security.Principal.IdentityReference, registryRights: System.Security.AccessControl.RegistryRights, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, type: System.Security.AccessControl.AccessControlType);
@@ -27635,7 +27635,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RegistryAuditRule {
+      export class RegistryAuditRule {
         constructor(identity: System.Security.Principal.IdentityReference, registryRights: System.Security.AccessControl.RegistryRights, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags);
         constructor(identity: string, registryRights: System.Security.AccessControl.RegistryRights, inheritanceFlags: System.Security.AccessControl.InheritanceFlags, propagationFlags: System.Security.AccessControl.PropagationFlags, flags: System.Security.AccessControl.AuditFlags);
         RegistryRights: System.Security.AccessControl.RegistryRights;
@@ -27665,7 +27665,7 @@ export namespace System {
         TakeOwnership = 524288,
         FullControl = 983103,
       }
-      export declare class RegistrySecurity {
+      export class RegistrySecurity {
         constructor();
         AccessRightType: System.Type;
         AccessRuleType: System.Type;
@@ -27729,7 +27729,7 @@ export namespace System {
         DiscretionaryAcl = 4,
         SystemAcl = 8,
       }
-      export declare class SystemAcl {
+      export class SystemAcl {
         constructor(isContainer: boolean, isDS: boolean, capacity: number);
         constructor(isContainer: boolean, isDS: boolean, rawAcl: System.Security.AccessControl.RawAcl);
         constructor(isContainer: boolean, isDS: boolean, revision: System.Byte, capacity: number);
@@ -27763,7 +27763,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SemaphoreAccessRule {
+      export class SemaphoreAccessRule {
         constructor(identity: System.Security.Principal.IdentityReference, eventRights: System.Security.AccessControl.SemaphoreRights, type: System.Security.AccessControl.AccessControlType);
         constructor(identity: string, eventRights: System.Security.AccessControl.SemaphoreRights, type: System.Security.AccessControl.AccessControlType);
         SemaphoreRights: System.Security.AccessControl.SemaphoreRights;
@@ -27777,7 +27777,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SemaphoreAuditRule {
+      export class SemaphoreAuditRule {
         constructor(identity: System.Security.Principal.IdentityReference, eventRights: System.Security.AccessControl.SemaphoreRights, flags: System.Security.AccessControl.AuditFlags);
         SemaphoreRights: System.Security.AccessControl.SemaphoreRights;
         AuditFlags: System.Security.AccessControl.AuditFlags;
@@ -27799,7 +27799,7 @@ export namespace System {
         Synchronize = 1048576,
         FullControl = 2031619,
       }
-      export declare class SemaphoreSecurity {
+      export class SemaphoreSecurity {
         constructor();
         constructor(name: string, includeSections: System.Security.AccessControl.AccessControlSections);
         AccessRightType: System.Type;
@@ -27845,7 +27845,7 @@ export namespace System {
       }
     }
     export namespace Authentication {
-      export declare class AuthenticationException {
+      export class AuthenticationException {
         constructor();
         constructor(message: string);
         constructor(message: string, innerException: System.Exception);
@@ -27891,7 +27891,7 @@ export namespace System {
         Sha384 = 32781,
         Sha512 = 32782,
       }
-      export declare class InvalidCredentialException {
+      export class InvalidCredentialException {
         constructor();
         constructor(message: string);
         constructor(message: string, innerException: System.Exception);
@@ -27921,7 +27921,7 @@ export namespace System {
         Default = 240,
       }
       export namespace ExtendedProtection {
-        export declare class ServiceNameCollection {
+        export class ServiceNameCollection {
           constructor(items: System.Collections.ICollection);
           Count: number;
           Merge(serviceName: string): System.Security.Authentication.ExtendedProtection.ServiceNameCollection;
@@ -27937,7 +27937,7 @@ export namespace System {
           Provided = 0,
           Referred = 1,
         }
-        export declare class TokenBinding {
+        export class TokenBinding {
           BindingType: System.Security.Authentication.ExtendedProtection.TokenBindingType;
           GetRawTokenBindingId(): System.Byte[];
           Equals(obj: System.Object): boolean;
@@ -27945,7 +27945,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class ChannelBinding {
+        export class ChannelBinding {
           Size: number;
           IsInvalid: boolean;
           IsClosed: boolean;
@@ -27964,7 +27964,7 @@ export namespace System {
           Unique = 25,
           Endpoint = 26,
         }
-        export declare class ExtendedProtectionPolicy {
+        export class ExtendedProtectionPolicy {
           constructor(policyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement);
           constructor(policyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement, customChannelBinding: System.Security.Authentication.ExtendedProtection.ChannelBinding);
           constructor(policyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement, protectionScenario: System.Security.Authentication.ExtendedProtection.ProtectionScenario, customServiceNames: System.Collections.ICollection);
@@ -27979,7 +27979,7 @@ export namespace System {
           GetHashCode(): number;
           GetType(): System.Type;
         }
-        export declare class ExtendedProtectionPolicyTypeConverter {
+        export class ExtendedProtectionPolicyTypeConverter {
           constructor();
           CanConvertTo(context: System.ComponentModel.ITypeDescriptorContext, destinationType: System.Type): boolean;
           ConvertTo(context: System.ComponentModel.ITypeDescriptorContext, culture: System.Globalization.CultureInfo, value: System.Object, destinationType: System.Type): System.Object;
@@ -28031,7 +28031,7 @@ export namespace System {
           TrustedProxy = 1,
         }
         export namespace Configuration {
-          export declare class ExtendedProtectionPolicyElement {
+          export class ExtendedProtectionPolicyElement {
             constructor();
             CustomServiceNames: System.Security.Authentication.ExtendedProtection.Configuration.ServiceNameElementCollection;
             PolicyEnforcement: System.Security.Authentication.ExtendedProtection.PolicyEnforcement;
@@ -28050,7 +28050,7 @@ export namespace System {
             GetType(): System.Type;
             ToString(): string;
           }
-          export declare class ServiceNameElement {
+          export class ServiceNameElement {
             constructor();
             Name: string;
             ElementInformation: any; // System.Configuration.ElementInformation
@@ -28066,7 +28066,7 @@ export namespace System {
             GetType(): System.Type;
             ToString(): string;
           }
-          export declare class ServiceNameElementCollection {
+          export class ServiceNameElementCollection {
             constructor();
             CollectionType: any; // System.Configuration.ConfigurationElementCollectionType
             Count: number;
@@ -28098,7 +28098,7 @@ export namespace System {
       }
     }
     export namespace Claims {
-      export declare class Claim {
+      export class Claim {
         constructor(reader: System.IO.BinaryReader);
         constructor(reader: System.IO.BinaryReader, subject: System.Security.Claims.ClaimsIdentity);
         constructor(type: string, value: string);
@@ -28121,7 +28121,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class ClaimTypes {
+      export class ClaimTypes {
         static AuthenticationInstant: string;
         static AuthenticationMethod: string;
         static CookiePath: string;
@@ -28181,7 +28181,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ClaimValueTypes {
+      export class ClaimValueTypes {
         static Base64Binary: string;
         static Base64Octet: string;
         static Boolean: string;
@@ -28214,7 +28214,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ClaimsIdentity {
+      export class ClaimsIdentity {
         constructor();
         constructor(identity: System.Security.Principal.IIdentity);
         constructor(claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>);
@@ -28254,7 +28254,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ClaimsPrincipal {
+      export class ClaimsPrincipal {
         constructor();
         constructor(identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>);
         constructor(identity: System.Security.Principal.IIdentity);
@@ -28282,7 +28282,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DynamicRoleClaimProvider {
+      export class DynamicRoleClaimProvider {
         static AddDynamicRoleClaims(claimsIdentity: System.Security.Claims.ClaimsIdentity, claims: any): void;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -28291,7 +28291,7 @@ export namespace System {
       }
     }
     export namespace Cryptography {
-      export declare class HashAlgorithmName {
+      export class HashAlgorithmName {
         constructor(name: string);
         static MD5: System.Security.Cryptography.HashAlgorithmName;
         static SHA1: System.Security.Cryptography.HashAlgorithmName;
@@ -28305,7 +28305,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class RSAEncryptionPadding {
+      export class RSAEncryptionPadding {
         static Pkcs1: System.Security.Cryptography.RSAEncryptionPadding;
         static OaepSHA1: System.Security.Cryptography.RSAEncryptionPadding;
         static OaepSHA256: System.Security.Cryptography.RSAEncryptionPadding;
@@ -28324,7 +28324,7 @@ export namespace System {
         Pkcs1 = 0,
         Oaep = 1,
       }
-      export declare class RSASignaturePadding {
+      export class RSASignaturePadding {
         static Pkcs1: System.Security.Cryptography.RSASignaturePadding;
         static Pss: System.Security.Cryptography.RSASignaturePadding;
         Mode: System.Security.Cryptography.RSASignaturePaddingMode;
@@ -28338,7 +28338,7 @@ export namespace System {
         Pkcs1 = 0,
         Pss = 1,
       }
-      export declare class Aes {
+      export class Aes {
         BlockSize: number;
         FeedbackSize: number;
         IV: System.Byte[];
@@ -28364,7 +28364,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsymmetricAlgorithm {
+      export class AsymmetricAlgorithm {
         KeySize: number;
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         SignatureAlgorithm: string;
@@ -28380,7 +28380,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsymmetricKeyExchangeDeformatter {
+      export class AsymmetricKeyExchangeDeformatter {
         Parameters: string;
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         DecryptKeyExchange(rgb: System.Byte[]): System.Byte[];
@@ -28389,7 +28389,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsymmetricKeyExchangeFormatter {
+      export class AsymmetricKeyExchangeFormatter {
         Parameters: string;
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         CreateKeyExchange(data: System.Byte[]): System.Byte[];
@@ -28399,7 +28399,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsymmetricSignatureDeformatter {
+      export class AsymmetricSignatureDeformatter {
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         SetHashAlgorithm(strName: string): void;
         VerifySignature(hash: System.Security.Cryptography.HashAlgorithm, rgbSignature: System.Byte[]): boolean;
@@ -28409,7 +28409,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsymmetricSignatureFormatter {
+      export class AsymmetricSignatureFormatter {
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
         SetHashAlgorithm(strName: string): void;
         CreateSignature(hash: System.Security.Cryptography.HashAlgorithm): System.Byte[];
@@ -28423,7 +28423,7 @@ export namespace System {
         IgnoreWhiteSpaces = 0,
         DoNotIgnoreWhiteSpaces = 1,
       }
-      export declare class ToBase64Transform {
+      export class ToBase64Transform {
         constructor();
         InputBlockSize: number;
         OutputBlockSize: number;
@@ -28438,7 +28438,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FromBase64Transform {
+      export class FromBase64Transform {
         constructor();
         constructor(whitespaces: System.Security.Cryptography.FromBase64TransformMode);
         InputBlockSize: number;
@@ -28468,7 +28468,7 @@ export namespace System {
         ANSIX923 = 4,
         ISO10126 = 5,
       }
-      export declare class KeySizes {
+      export class KeySizes {
         constructor(minSize: number, maxSize: number, skipSize: number);
         MinSize: number;
         MaxSize: number;
@@ -28478,7 +28478,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CryptographicException {
+      export class CryptographicException {
         constructor();
         constructor(message: string);
         constructor(format: string, insert: string);
@@ -28500,7 +28500,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class CryptographicUnexpectedOperationException {
+      export class CryptographicUnexpectedOperationException {
         constructor();
         constructor(message: string);
         constructor(format: string, insert: string);
@@ -28532,7 +28532,7 @@ export namespace System {
         NoPrompt = 64,
         CreateEphemeralKey = 128,
       }
-      export declare class CspParameters {
+      export class CspParameters {
         constructor();
         constructor(dwTypeIn: number);
         constructor(dwTypeIn: number, strProviderNameIn: string);
@@ -28556,7 +28556,7 @@ export namespace System {
         Read = 0,
         Write = 1,
       }
-      export declare class CryptoStream {
+      export class CryptoStream {
         constructor(stream: System.IO.Stream, transform: System.Security.Cryptography.ICryptoTransform, mode: System.Security.Cryptography.CryptoStreamMode);
         CanRead: boolean;
         CanSeek: boolean;
@@ -28605,7 +28605,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DeriveBytes {
+      export class DeriveBytes {
         GetBytes(cb: number): System.Byte[];
         Reset(): void;
         Dispose(): void;
@@ -28614,7 +28614,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DES {
+      export class DES {
         Key: System.Byte[];
         BlockSize: number;
         FeedbackSize: number;
@@ -28642,7 +28642,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DESCryptoServiceProvider {
+      export class DESCryptoServiceProvider {
         constructor();
         Key: System.Byte[];
         BlockSize: number;
@@ -28667,7 +28667,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DSAParameters {
+      export class DSAParameters {
         P: System.Byte[];
         Q: System.Byte[];
         G: System.Byte[];
@@ -28681,7 +28681,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class DSA {
+      export class DSA {
         KeySize: number;
         LegalKeySizes: System.Security.Cryptography.KeySizes[];
         SignatureAlgorithm: string;
@@ -28707,7 +28707,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DSASignatureDeformatter {
+      export class DSASignatureDeformatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
@@ -28719,7 +28719,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DSASignatureFormatter {
+      export class DSASignatureFormatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         SetKey(key: System.Security.Cryptography.AsymmetricAlgorithm): void;
@@ -28731,7 +28731,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HashAlgorithm {
+      export class HashAlgorithm {
         HashSize: number;
         Hash: System.Byte[];
         InputBlockSize: number;
@@ -28753,7 +28753,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HMAC {
+      export class HMAC {
         Key: System.Byte[];
         HashName: string;
         HashSize: number;
@@ -28777,7 +28777,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HMACMD5 {
+      export class HMACMD5 {
         constructor();
         constructor(key: System.Byte[]);
         Key: System.Byte[];
@@ -28801,7 +28801,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HMACRIPEMD160 {
+      export class HMACRIPEMD160 {
         constructor();
         constructor(key: System.Byte[]);
         Key: System.Byte[];
@@ -28825,7 +28825,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HMACSHA1 {
+      export class HMACSHA1 {
         constructor();
         constructor(key: System.Byte[]);
         constructor(key: System.Byte[], useManagedSha1: boolean);
@@ -28850,7 +28850,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HMACSHA256 {
+      export class HMACSHA256 {
         constructor();
         constructor(key: System.Byte[]);
         Key: System.Byte[];
@@ -28874,7 +28874,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HMACSHA384 {
+      export class HMACSHA384 {
         constructor();
         constructor(key: System.Byte[]);
         ProduceLegacyHmacValues: boolean;
@@ -28899,7 +28899,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class HMACSHA512 {
+      export class HMACSHA512 {
         constructor();
         constructor(key: System.Byte[]);
         ProduceLegacyHmacValues: boolean;
@@ -28932,7 +28932,7 @@ export namespace System {
         TransformBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number, outputBuffer: System.Byte[], outputOffset: number): number;
         TransformFinalBlock(inputBuffer: System.Byte[], inputOffset: number, inputCount: number): System.Byte[];
       }
-      export declare class KeyedHashAlgorithm {
+      export class KeyedHashAlgorithm {
         Key: System.Byte[];
         HashSize: number;
         Hash: System.Byte[];
@@ -28955,7 +28955,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MACTripleDES {
+      export class MACTripleDES {
         constructor();
         constructor(rgbKey: System.Byte[]);
         constructor(strTripleDES: string, rgbKey: System.Byte[]);
@@ -28980,14 +28980,14 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MaskGenerationMethod {
+      export class MaskGenerationMethod {
         GenerateMask(rgbSeed: System.Byte[], cbReturn: number): System.Byte[];
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class MD5 {
+      export class MD5 {
         HashSize: number;
         Hash: System.Byte[];
         InputBlockSize: number;
@@ -29009,7 +29009,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PasswordDeriveBytes {
+      export class PasswordDeriveBytes {
         constructor(strPassword: string, rgbSalt: System.Byte[]);
         constructor(password: System.Byte[], salt: System.Byte[]);
         constructor(strPassword: string, rgbSalt: System.Byte[], strHashName: string, iterations: number);
@@ -29030,7 +29030,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PKCS1MaskGenerationMethod {
+      export class PKCS1MaskGenerationMethod {
         constructor();
         HashName: string;
         GenerateMask(rgbSeed: System.Byte[], cbReturn: number): System.Byte[];
@@ -29039,7 +29039,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RandomNumberGenerator {
+      export class RandomNumberGenerator {
         static Create(): System.Security.Cryptography.RandomNumberGenerator;
         static Create(rngName: string): System.Security.Cryptography.RandomNumberGenerator;
         Dispose(): void;
@@ -29051,7 +29051,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RC2 {
+      export class RC2 {
         EffectiveKeySize: number;
         KeySize: number;
         BlockSize: number;
@@ -29078,7 +29078,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RC2CryptoServiceProvider {
+      export class RC2CryptoServiceProvider {
         constructor();
         EffectiveKeySize: number;
         UseSalt: boolean;
@@ -29105,7 +29105,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Rfc2898DeriveBytes {
+      export class Rfc2898DeriveBytes {
         constructor(password: string, saltSize: number);
         constructor(password: string, saltSize: number, iterations: number);
         constructor(password: string, salt: System.Byte[]);
@@ -29122,7 +29122,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Rijndael {
+      export class Rijndael {
         BlockSize: number;
         FeedbackSize: number;
         IV: System.Byte[];
@@ -29148,7 +29148,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RijndaelManaged {
+      export class RijndaelManaged {
         constructor();
         BlockSize: number;
         FeedbackSize: number;
@@ -29173,7 +29173,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RijndaelManagedTransform {
+      export class RijndaelManagedTransform {
         BlockSizeValue: number;
         InputBlockSize: number;
         OutputBlockSize: number;
@@ -29189,7 +29189,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RIPEMD160 {
+      export class RIPEMD160 {
         HashSize: number;
         Hash: System.Byte[];
         InputBlockSize: number;
@@ -29211,7 +29211,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RIPEMD160Managed {
+      export class RIPEMD160Managed {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -29232,7 +29232,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RSAParameters {
+      export class RSAParameters {
         Exponent: System.Byte[];
         Modulus: System.Byte[];
         P: System.Byte[];
@@ -29246,7 +29246,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class RSA {
+      export class RSA {
         KeyExchangeAlgorithm: string;
         SignatureAlgorithm: string;
         KeySize: number;
@@ -29276,7 +29276,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RSACryptoServiceProvider {
+      export class RSACryptoServiceProvider {
         constructor();
         constructor(parameters: System.Security.Cryptography.CspParameters);
         constructor(dwKeySize: number);
@@ -29322,7 +29322,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RSAOAEPKeyExchangeDeformatter {
+      export class RSAOAEPKeyExchangeDeformatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         Parameters: string;
@@ -29333,7 +29333,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RSAOAEPKeyExchangeFormatter {
+      export class RSAOAEPKeyExchangeFormatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         Parameter: System.Byte[];
@@ -29347,7 +29347,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RSAPKCS1KeyExchangeDeformatter {
+      export class RSAPKCS1KeyExchangeDeformatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         RNG: System.Security.Cryptography.RandomNumberGenerator;
@@ -29359,7 +29359,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RSAPKCS1KeyExchangeFormatter {
+      export class RSAPKCS1KeyExchangeFormatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         Parameters: string;
@@ -29372,7 +29372,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA1 {
+      export class SHA1 {
         HashSize: number;
         Hash: System.Byte[];
         InputBlockSize: number;
@@ -29394,7 +29394,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA1Managed {
+      export class SHA1Managed {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -29415,7 +29415,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA256 {
+      export class SHA256 {
         HashSize: number;
         Hash: System.Byte[];
         InputBlockSize: number;
@@ -29437,7 +29437,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA256Managed {
+      export class SHA256Managed {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -29458,7 +29458,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA384 {
+      export class SHA384 {
         HashSize: number;
         Hash: System.Byte[];
         InputBlockSize: number;
@@ -29480,7 +29480,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA384Managed {
+      export class SHA384Managed {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -29501,7 +29501,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA512 {
+      export class SHA512 {
         HashSize: number;
         Hash: System.Byte[];
         InputBlockSize: number;
@@ -29523,7 +29523,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA512Managed {
+      export class SHA512Managed {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -29544,7 +29544,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SignatureDescription {
+      export class SignatureDescription {
         constructor();
         constructor(el: System.Security.SecurityElement);
         KeyAlgorithm: string;
@@ -29559,7 +29559,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SymmetricAlgorithm {
+      export class SymmetricAlgorithm {
         BlockSize: number;
         FeedbackSize: number;
         IV: System.Byte[];
@@ -29585,7 +29585,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TripleDES {
+      export class TripleDES {
         Key: System.Byte[];
         BlockSize: number;
         FeedbackSize: number;
@@ -29612,7 +29612,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TripleDESCryptoServiceProvider {
+      export class TripleDESCryptoServiceProvider {
         constructor();
         Key: System.Byte[];
         BlockSize: number;
@@ -29637,7 +29637,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CryptoAPITransform {
+      export class CryptoAPITransform {
         CanReuseTransform: boolean;
         CanTransformMultipleBlocks: boolean;
         InputBlockSize: number;
@@ -29653,7 +29653,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CryptoConfig {
+      export class CryptoConfig {
         constructor();
         static AllowOnlyFipsAlgorithms: boolean;
         static EncodeOID(str: string): System.Byte[];
@@ -29667,7 +29667,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CspKeyContainerInfo {
+      export class CspKeyContainerInfo {
         constructor(parameters: System.Security.Cryptography.CspParameters);
         Accessible: boolean;
         CryptoKeySecurity: System.Security.AccessControl.CryptoKeySecurity;
@@ -29687,7 +29687,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DSACryptoServiceProvider {
+      export class DSACryptoServiceProvider {
         constructor();
         constructor(parameters: System.Security.Cryptography.CspParameters);
         constructor(dwKeySize: number);
@@ -29736,7 +29736,7 @@ export namespace System {
         Exchange = 1,
         Signature = 2,
       }
-      export declare class MD5CryptoServiceProvider {
+      export class MD5CryptoServiceProvider {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -29757,7 +29757,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RNGCryptoServiceProvider {
+      export class RNGCryptoServiceProvider {
         constructor();
         constructor(rgb: System.Byte[]);
         constructor(cspParams: System.Security.Cryptography.CspParameters);
@@ -29771,7 +29771,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RSAPKCS1SignatureDeformatter {
+      export class RSAPKCS1SignatureDeformatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         SetHashAlgorithm(strName: string): void;
@@ -29783,7 +29783,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RSAPKCS1SignatureFormatter {
+      export class RSAPKCS1SignatureFormatter {
         constructor();
         constructor(key: System.Security.Cryptography.AsymmetricAlgorithm);
         CreateSignature(rgbHash: System.Byte[]): System.Byte[];
@@ -29795,7 +29795,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA1CryptoServiceProvider {
+      export class SHA1CryptoServiceProvider {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -29816,7 +29816,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class IncrementalHash {
+      export class IncrementalHash {
         AlgorithmName: System.Security.Cryptography.HashAlgorithmName;
         AppendData(data: System.Byte[]): void;
         AppendData(data: System.Byte[], offset: number, count: number): void;
@@ -29829,7 +29829,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AesManaged {
+      export class AesManaged {
         constructor();
         FeedbackSize: number;
         IV: System.Byte[];
@@ -29854,7 +29854,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CngAlgorithm {
+      export class CngAlgorithm {
         constructor(algorithm: string);
         Algorithm: string;
         static Rsa: System.Security.Cryptography.CngAlgorithm;
@@ -29877,7 +29877,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class CngAlgorithmGroup {
+      export class CngAlgorithmGroup {
         constructor(algorithmGroup: string);
         AlgorithmGroup: string;
         static DiffieHellman: System.Security.Cryptography.CngAlgorithmGroup;
@@ -29895,7 +29895,7 @@ export namespace System {
         None = 0,
         EphemeralKey = 1,
       }
-      export declare class CngKey {
+      export class CngKey {
         constructor();
         AlgorithmGroup: System.Security.Cryptography.CngAlgorithmGroup;
         Algorithm: System.Security.Cryptography.CngAlgorithm;
@@ -29934,7 +29934,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CngKeyBlobFormat {
+      export class CngKeyBlobFormat {
         constructor(format: string);
         Format: string;
         static EccPrivateBlob: System.Security.Cryptography.CngKeyBlobFormat;
@@ -29951,7 +29951,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class CngKeyCreationParameters {
+      export class CngKeyCreationParameters {
         constructor();
         ExportPolicy?: System.Nullable<System.Security.Cryptography.CngExportPolicies>;
         KeyCreationOptions: System.Security.Cryptography.CngKeyCreationOptions;
@@ -29965,7 +29965,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CngProperty {
+      export class CngProperty {
         constructor(name: string, value: System.Byte[], options: System.Security.Cryptography.CngPropertyOptions);
         Name: string;
         Options: System.Security.Cryptography.CngPropertyOptions;
@@ -29976,7 +29976,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class CngPropertyCollection {
+      export class CngPropertyCollection {
         constructor();
         Count: number;
         Add(item: System.Security.Cryptography.CngProperty): void;
@@ -29993,7 +29993,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CngProvider {
+      export class CngProvider {
         constructor(provider: string);
         Provider: string;
         static MicrosoftSmartCardKeyStorageProvider: System.Security.Cryptography.CngProvider;
@@ -30004,7 +30004,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class CngUIPolicy {
+      export class CngUIPolicy {
         constructor(protectionLevel: System.Security.Cryptography.CngUIProtectionLevels);
         constructor(protectionLevel: System.Security.Cryptography.CngUIProtectionLevels, friendlyName: string);
         constructor(protectionLevel: System.Security.Cryptography.CngUIProtectionLevels, friendlyName: string, description: string);
@@ -30020,7 +30020,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ECDiffieHellman {
+      export class ECDiffieHellman {
         KeyExchangeAlgorithm: string;
         SignatureAlgorithm: string;
         PublicKey: System.Security.Cryptography.ECDiffieHellmanPublicKey;
@@ -30049,7 +30049,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ECDiffieHellmanPublicKey {
+      export class ECDiffieHellmanPublicKey {
         Dispose(): void;
         ToByteArray(): System.Byte[];
         ToXmlString(): string;
@@ -30060,7 +30060,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ECDsa {
+      export class ECDsa {
         KeyExchangeAlgorithm: string;
         SignatureAlgorithm: string;
         KeySize: number;
@@ -30090,7 +30090,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ECDsaCng {
+      export class ECDsaCng {
         constructor();
         constructor(keySize: number);
         constructor(key: System.Security.Cryptography.CngKey);
@@ -30168,7 +30168,7 @@ export namespace System {
         ProtectKey = 1,
         ForceHighProtection = 2,
       }
-      export declare class RSACng {
+      export class RSACng {
         constructor();
         constructor(keySize: number);
         constructor(key: System.Security.Cryptography.CngKey);
@@ -30200,7 +30200,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AesCng {
+      export class AesCng {
         constructor();
         constructor(keyName: string);
         constructor(keyName: string, provider: System.Security.Cryptography.CngProvider);
@@ -30228,7 +30228,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AesCryptoServiceProvider {
+      export class AesCryptoServiceProvider {
         constructor();
         IV: System.Byte[];
         Key: System.Byte[];
@@ -30253,7 +30253,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ECCurve {
+      export class ECCurve {
         IsCharacteristic2: boolean;
         IsExplicit: boolean;
         IsNamed: boolean;
@@ -30286,7 +30286,7 @@ export namespace System {
         Characteristic2 = 4,
         Named = 5,
       }
-      export declare class ECCurve_NamedCurves {
+      export class ECCurve_NamedCurves {
         static brainpoolP160r1: System.Security.Cryptography.ECCurve;
         static brainpoolP160t1: System.Security.Cryptography.ECCurve;
         static brainpoolP192r1: System.Security.Cryptography.ECCurve;
@@ -30309,7 +30309,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ECParameters {
+      export class ECParameters {
         Curve: System.Security.Cryptography.ECCurve;
         D: System.Byte[];
         Q: System.Security.Cryptography.ECPoint;
@@ -30319,7 +30319,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class ECPoint {
+      export class ECPoint {
         X: System.Byte[];
         Y: System.Byte[];
         Equals(obj: System.Object): boolean;
@@ -30327,7 +30327,7 @@ export namespace System {
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class MD5Cng {
+      export class MD5Cng {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -30348,7 +30348,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA1Cng {
+      export class SHA1Cng {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -30369,7 +30369,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA256Cng {
+      export class SHA256Cng {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -30390,7 +30390,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA256CryptoServiceProvider {
+      export class SHA256CryptoServiceProvider {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -30411,7 +30411,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA384Cng {
+      export class SHA384Cng {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -30432,7 +30432,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA384CryptoServiceProvider {
+      export class SHA384CryptoServiceProvider {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -30453,7 +30453,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA512Cng {
+      export class SHA512Cng {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -30474,7 +30474,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class SHA512CryptoServiceProvider {
+      export class SHA512CryptoServiceProvider {
         constructor();
         HashSize: number;
         Hash: System.Byte[];
@@ -30495,7 +30495,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TripleDESCng {
+      export class TripleDESCng {
         constructor();
         constructor(keyName: string);
         constructor(keyName: string, provider: System.Security.Cryptography.CngProvider);
@@ -30523,7 +30523,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class DSACng {
+      export class DSACng {
         constructor();
         constructor(keySize: number);
         constructor(key: System.Security.Cryptography.CngKey);
@@ -30551,7 +30551,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ECDiffieHellmanCng {
+      export class ECDiffieHellmanCng {
         constructor();
         constructor(keySize: number);
         constructor(key: System.Security.Cryptography.CngKey);
@@ -30599,7 +30599,7 @@ export namespace System {
         Hmac = 1,
         Tls = 2,
       }
-      export declare class ECDiffieHellmanCngPublicKey {
+      export class ECDiffieHellmanCngPublicKey {
         BlobFormat: System.Security.Cryptography.CngKeyBlobFormat;
         static FromByteArray(publicKeyBlob: System.Byte[], format: System.Security.Cryptography.CngKeyBlobFormat): System.Security.Cryptography.ECDiffieHellmanPublicKey;
         static FromXmlString(xml: string): System.Security.Cryptography.ECDiffieHellmanCngPublicKey;
@@ -30614,7 +30614,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ManifestSignatureInformation {
+      export class ManifestSignatureInformation {
         AuthenticodeSignature: System.Security.Cryptography.X509Certificates.AuthenticodeSignatureInformation;
         Manifest: System.Security.ManifestKinds;
         StrongNameSignature: System.Security.Cryptography.StrongNameSignatureInformation;
@@ -30664,7 +30664,7 @@ export namespace System {
         UntrustedTestRootCertificate = -2146762483,
         Valid = 0,
       }
-      export declare class StrongNameSignatureInformation {
+      export class StrongNameSignatureInformation {
         HashAlgorithm: string;
         HResult: number;
         IsValid: boolean;
@@ -30675,7 +30675,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ManifestSignatureInformationCollection {
+      export class ManifestSignatureInformationCollection {
         Count: number;
         Contains(value: System.Security.Cryptography.ManifestSignatureInformation): boolean;
         CopyTo(array: System.Security.Cryptography.ManifestSignatureInformation[], index: number): void;
@@ -30699,7 +30699,7 @@ export namespace System {
         Template = 9,
         KeyDerivationFunction = 10,
       }
-      export declare class Oid {
+      export class Oid {
         constructor();
         constructor(oid: string);
         constructor(value: string, friendlyName: string);
@@ -30713,7 +30713,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class OidCollection {
+      export class OidCollection {
         constructor();
         Count: number;
         IsSynchronized: boolean;
@@ -30726,7 +30726,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class OidEnumerator {
+      export class OidEnumerator {
         Current: System.Security.Cryptography.Oid;
         MoveNext(): boolean;
         Reset(): void;
@@ -30735,7 +30735,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsnEncodedData {
+      export class AsnEncodedData {
         constructor(oid: string, rawData: System.Byte[]);
         constructor(oid: System.Security.Cryptography.Oid, rawData: System.Byte[]);
         constructor(asnEncodedData: System.Security.Cryptography.AsnEncodedData);
@@ -30749,7 +30749,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsnEncodedDataCollection {
+      export class AsnEncodedDataCollection {
         constructor();
         constructor(asnEncodedData: System.Security.Cryptography.AsnEncodedData);
         Count: number;
@@ -30764,7 +30764,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class AsnEncodedDataEnumerator {
+      export class AsnEncodedDataEnumerator {
         Current: System.Security.Cryptography.AsnEncodedData;
         MoveNext(): boolean;
         Reset(): void;
@@ -30793,7 +30793,7 @@ export namespace System {
           PersistKeySet = 16,
           EphemeralKeySet = 32,
         }
-        export declare class X509Certificate {
+        export class X509Certificate {
           constructor(data: System.Byte[]);
           constructor(handle: System.IntPtr);
           constructor(cert: System.Security.Cryptography.X509Certificates.X509Certificate);
@@ -30853,7 +30853,7 @@ export namespace System {
           KnownIdentity = 2,
           Trusted = 3,
         }
-        export declare class ECDsaCertificateExtensions {
+        export class ECDsaCertificateExtensions {
           static GetECDsaPrivateKey(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): System.Security.Cryptography.ECDsa;
           static GetECDsaPublicKey(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): System.Security.Cryptography.ECDsa;
           Equals(obj: System.Object): boolean;
@@ -30861,7 +30861,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class RSACertificateExtensions {
+        export class RSACertificateExtensions {
           static GetRSAPrivateKey(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): System.Security.Cryptography.RSA;
           static GetRSAPublicKey(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): System.Security.Cryptography.RSA;
           Equals(obj: System.Object): boolean;
@@ -30869,7 +30869,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class AuthenticodeSignatureInformation {
+        export class AuthenticodeSignatureInformation {
           Description: string;
           DescriptionUrl: System.Uri;
           HashAlgorithm: string;
@@ -30884,7 +30884,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class TimestampInformation {
+        export class TimestampInformation {
           HashAlgorithm: string;
           HResult: number;
           IsValid: boolean;
@@ -30897,7 +30897,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class DSACertificateExtensions {
+        export class DSACertificateExtensions {
           static GetDSAPrivateKey(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): System.Security.Cryptography.DSA;
           static GetDSAPublicKey(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): System.Security.Cryptography.DSA;
           Equals(obj: System.Object): boolean;
@@ -31040,7 +31040,7 @@ export namespace System {
           IgnoreRootRevocationUnknown = 2048,
           AllFlags = 4095,
         }
-        export declare class PublicKey {
+        export class PublicKey {
           constructor(oid: System.Security.Cryptography.Oid, parameters: System.Security.Cryptography.AsnEncodedData, keyValue: System.Security.Cryptography.AsnEncodedData);
           EncodedKeyValue: System.Security.Cryptography.AsnEncodedData;
           EncodedParameters: System.Security.Cryptography.AsnEncodedData;
@@ -31051,7 +31051,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X500DistinguishedName {
+        export class X500DistinguishedName {
           constructor(encodedDistinguishedName: System.Security.Cryptography.AsnEncodedData);
           constructor(encodedDistinguishedName: System.Byte[]);
           constructor(distinguishedName: string);
@@ -31068,7 +31068,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509BasicConstraintsExtension {
+        export class X509BasicConstraintsExtension {
           constructor();
           constructor(encodedBasicConstraints: System.Security.Cryptography.AsnEncodedData, critical: boolean);
           constructor(certificateAuthority: boolean, hasPathLengthConstraint: boolean, pathLengthConstraint: number, critical: boolean);
@@ -31085,7 +31085,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509Certificate2 {
+        export class X509Certificate2 {
           constructor();
           constructor(rawData: System.Byte[]);
           constructor(rawData: System.Byte[], password: string);
@@ -31155,7 +31155,7 @@ export namespace System {
           Dispose(): void;
           GetType(): System.Type;
         }
-        export declare class X509Certificate2Collection {
+        export class X509Certificate2Collection {
           constructor();
           constructor(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection);
           constructor(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2);
@@ -31195,7 +31195,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509Certificate2Enumerator {
+        export class X509Certificate2Enumerator {
           Current: System.Security.Cryptography.X509Certificates.X509Certificate2;
           MoveNext(): boolean;
           Reset(): void;
@@ -31204,7 +31204,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509CertificateCollection {
+        export class X509CertificateCollection {
           constructor();
           constructor(value: System.Security.Cryptography.X509Certificates.X509Certificate[]);
           constructor(value: System.Security.Cryptography.X509Certificates.X509CertificateCollection);
@@ -31227,7 +31227,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509CertificateCollection_X509CertificateEnumerator {
+        export class X509CertificateCollection_X509CertificateEnumerator {
           constructor(mappings: System.Security.Cryptography.X509Certificates.X509CertificateCollection);
           Current: System.Security.Cryptography.X509Certificates.X509Certificate;
           MoveNext(): boolean;
@@ -31237,7 +31237,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509Chain {
+        export class X509Chain {
           constructor();
           constructor(useMachineContext: boolean);
           constructor(chainContext: System.IntPtr);
@@ -31255,7 +31255,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509ChainElement {
+        export class X509ChainElement {
           Certificate: System.Security.Cryptography.X509Certificates.X509Certificate2;
           ChainElementStatus: System.Security.Cryptography.X509Certificates.X509ChainStatus[];
           Information: string;
@@ -31264,7 +31264,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509ChainElementCollection {
+        export class X509ChainElementCollection {
           Count: number;
           IsSynchronized: boolean;
           SyncRoot: System.Object;
@@ -31275,7 +31275,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509ChainElementEnumerator {
+        export class X509ChainElementEnumerator {
           Current: System.Security.Cryptography.X509Certificates.X509ChainElement;
           MoveNext(): boolean;
           Reset(): void;
@@ -31284,7 +31284,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509ChainPolicy {
+        export class X509ChainPolicy {
           constructor();
           ApplicationPolicy: System.Security.Cryptography.OidCollection;
           CertificatePolicy: System.Security.Cryptography.OidCollection;
@@ -31300,7 +31300,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509ChainStatus {
+        export class X509ChainStatus {
           Status: System.Security.Cryptography.X509Certificates.X509ChainStatusFlags;
           StatusInformation: string;
           Equals(obj: System.Object): boolean;
@@ -31308,7 +31308,7 @@ export namespace System {
           ToString(): string;
           GetType(): System.Type;
         }
-        export declare class X509EnhancedKeyUsageExtension {
+        export class X509EnhancedKeyUsageExtension {
           constructor();
           constructor(encodedEnhancedKeyUsages: System.Security.Cryptography.AsnEncodedData, critical: boolean);
           constructor(enhancedKeyUsages: System.Security.Cryptography.OidCollection, critical: boolean);
@@ -31323,7 +31323,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509Extension {
+        export class X509Extension {
           constructor(encodedExtension: System.Security.Cryptography.AsnEncodedData, critical: boolean);
           constructor(oid: System.Security.Cryptography.Oid, rawData: System.Byte[], critical: boolean);
           constructor(oid: string, rawData: System.Byte[], critical: boolean);
@@ -31337,7 +31337,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509ExtensionCollection {
+        export class X509ExtensionCollection {
           constructor();
           Count: number;
           IsSynchronized: boolean;
@@ -31350,7 +31350,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509ExtensionEnumerator {
+        export class X509ExtensionEnumerator {
           Current: System.Security.Cryptography.X509Certificates.X509Extension;
           MoveNext(): boolean;
           Reset(): void;
@@ -31359,7 +31359,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509KeyUsageExtension {
+        export class X509KeyUsageExtension {
           constructor();
           constructor(encodedKeyUsage: System.Security.Cryptography.AsnEncodedData, critical: boolean);
           constructor(keyUsages: System.Security.Cryptography.X509Certificates.X509KeyUsageFlags, critical: boolean);
@@ -31374,7 +31374,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509Store {
+        export class X509Store {
           constructor();
           constructor(storeName: string);
           constructor(storeName: System.Security.Cryptography.X509Certificates.StoreName);
@@ -31398,7 +31398,7 @@ export namespace System {
           GetType(): System.Type;
           ToString(): string;
         }
-        export declare class X509SubjectKeyIdentifierExtension {
+        export class X509SubjectKeyIdentifierExtension {
           constructor();
           constructor(encodedSubjectKeyIdentifier: System.Security.Cryptography.AsnEncodedData, critical: boolean);
           constructor(subjectKeyIdentifier: System.Byte[], critical: boolean);
@@ -31419,7 +31419,7 @@ export namespace System {
       }
     }
     export namespace Permissions {
-      export declare class EnvironmentPermission {
+      export class EnvironmentPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(flag: System.Security.Permissions.EnvironmentPermissionAccess, pathList: string);
         AddPathList(flag: System.Security.Permissions.EnvironmentPermissionAccess, pathList: string): void;
@@ -31447,7 +31447,7 @@ export namespace System {
         Write = 2,
         AllAccess = 3,
       }
-      export declare class FileDialogPermission {
+      export class FileDialogPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(access: System.Security.Permissions.FileDialogPermissionAccess);
         Access: System.Security.Permissions.FileDialogPermissionAccess;
@@ -31473,7 +31473,7 @@ export namespace System {
         Save = 2,
         OpenSave = 3,
       }
-      export declare class FileIOPermission {
+      export class FileIOPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(access: System.Security.Permissions.FileIOPermissionAccess, path: string);
         constructor(access: System.Security.Permissions.FileIOPermissionAccess, pathList: string[]);
@@ -31510,7 +31510,7 @@ export namespace System {
         PathDiscovery = 8,
         AllAccess = 15,
       }
-      export declare class GacIdentityPermission {
+      export class GacIdentityPermission {
         constructor();
         constructor(state: System.Security.Permissions.PermissionState);
         Copy(): System.Security.IPermission;
@@ -31558,7 +31558,7 @@ export namespace System {
         ApplicationIsolationByMachine = 69,
         ApplicationIsolationByRoamingUser = 101,
       }
-      export declare class IsolatedStorageFilePermission {
+      export class IsolatedStorageFilePermission {
         constructor(state: System.Security.Permissions.PermissionState);
         UserQuota: System.Int64;
         UsageAllowed: System.Security.Permissions.IsolatedStorageContainment;
@@ -31578,7 +31578,7 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class IsolatedStoragePermission {
+      export class IsolatedStoragePermission {
         UserQuota: System.Int64;
         UsageAllowed: System.Security.Permissions.IsolatedStorageContainment;
         IsUnrestricted(): boolean;
@@ -31597,7 +31597,7 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class KeyContainerPermission {
+      export class KeyContainerPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(flags: System.Security.Permissions.KeyContainerPermissionFlags);
         constructor(flags: System.Security.Permissions.KeyContainerPermissionFlags, accessList: System.Security.Permissions.KeyContainerPermissionAccessEntry[]);
@@ -31619,7 +31619,7 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class KeyContainerPermissionAccessEntry {
+      export class KeyContainerPermissionAccessEntry {
         constructor(parameters: System.Security.Cryptography.CspParameters, flags: System.Security.Permissions.KeyContainerPermissionFlags);
         constructor(keyContainerName: string, flags: System.Security.Permissions.KeyContainerPermissionFlags);
         constructor(keyStore: string, providerName: string, providerType: number, keyContainerName: string, keySpec: number, flags: System.Security.Permissions.KeyContainerPermissionFlags);
@@ -31634,7 +31634,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class KeyContainerPermissionAccessEntryCollection {
+      export class KeyContainerPermissionAccessEntryCollection {
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: System.Object;
@@ -31649,7 +31649,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class KeyContainerPermissionAccessEntryEnumerator {
+      export class KeyContainerPermissionAccessEntryEnumerator {
         Current: System.Security.Permissions.KeyContainerPermissionAccessEntry;
         MoveNext(): boolean;
         Reset(): void;
@@ -31675,7 +31675,7 @@ export namespace System {
         Unrestricted = 1,
         None = 0,
       }
-      export declare class PrincipalPermission {
+      export class PrincipalPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(name: string, role: string);
         constructor(name: string, role: string, isAuthenticated: boolean);
@@ -31692,7 +31692,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class PublisherIdentityPermission {
+      export class PublisherIdentityPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(certificate: System.Security.Cryptography.X509Certificates.X509Certificate);
         Certificate: System.Security.Cryptography.X509Certificates.X509Certificate;
@@ -31711,7 +31711,7 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class ReflectionPermission {
+      export class ReflectionPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(flag: System.Security.Permissions.ReflectionPermissionFlag);
         Flags: System.Security.Permissions.ReflectionPermissionFlag;
@@ -31739,7 +31739,7 @@ export namespace System {
         AllFlags = 7,
         RestrictedMemberAccess = 8,
       }
-      export declare class RegistryPermission {
+      export class RegistryPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(access: System.Security.Permissions.RegistryPermissionAccess, pathList: string);
         constructor(access: System.Security.Permissions.RegistryPermissionAccess, control: System.Security.AccessControl.AccessControlActions, pathList: string);
@@ -31781,7 +31781,7 @@ export namespace System {
         RequestOptional = 9,
         RequestRefuse = 10,
       }
-      export declare class SecurityPermission {
+      export class SecurityPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(flag: System.Security.Permissions.SecurityPermissionFlag);
         Flags: System.Security.Permissions.SecurityPermissionFlag;
@@ -31819,7 +31819,7 @@ export namespace System {
         BindingRedirects = 8192,
         AllFlags = 16383,
       }
-      export declare class SiteIdentityPermission {
+      export class SiteIdentityPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(site: string);
         Site: string;
@@ -31838,7 +31838,7 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class StrongNameIdentityPermission {
+      export class StrongNameIdentityPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(blob: System.Security.Permissions.StrongNamePublicKeyBlob, name: string, version: System.Version);
         Name: string;
@@ -31859,14 +31859,14 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class StrongNamePublicKeyBlob {
+      export class StrongNamePublicKeyBlob {
         constructor(publicKey: System.Byte[]);
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         ToString(): string;
         GetType(): System.Type;
       }
-      export declare class UIPermission {
+      export class UIPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(clipboardFlag: System.Security.Permissions.UIPermissionClipboard);
         constructor(windowFlag: System.Security.Permissions.UIPermissionWindow);
@@ -31900,7 +31900,7 @@ export namespace System {
         SafeTopLevelWindows = 2,
         AllWindows = 3,
       }
-      export declare class UrlIdentityPermission {
+      export class UrlIdentityPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(site: string);
         Url: string;
@@ -31919,7 +31919,7 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class ZoneIdentityPermission {
+      export class ZoneIdentityPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(zone: System.Security.SecurityZone);
         SecurityZone: System.Security.SecurityZone;
@@ -31942,7 +31942,7 @@ export namespace System {
         NoFlags = 0,
         RestrictedRegistrationAccess = 1,
       }
-      export declare class TypeDescriptorPermission {
+      export class TypeDescriptorPermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(flag: System.Security.Permissions.TypeDescriptorPermissionFlags);
         Flags: System.Security.Permissions.TypeDescriptorPermissionFlags;
@@ -31962,7 +31962,7 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class ResourcePermissionBase {
+      export class ResourcePermissionBase {
         static Any: string;
         static Local: string;
         Copy(): System.Security.IPermission;
@@ -31981,7 +31981,7 @@ export namespace System {
         PermitOnly(): void;
         GetType(): System.Type;
       }
-      export declare class ResourcePermissionBaseEntry {
+      export class ResourcePermissionBaseEntry {
         constructor();
         constructor(permissionAccess: number, permissionAccessPath: string[]);
         PermissionAccess: number;
@@ -31991,7 +31991,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class StorePermission {
+      export class StorePermission {
         constructor(state: System.Security.Permissions.PermissionState);
         constructor(flag: System.Security.Permissions.StorePermissionFlags);
         Flags: System.Security.Permissions.StorePermissionFlags;
@@ -32024,7 +32024,7 @@ export namespace System {
       }
     }
     export namespace Policy {
-      export declare class AllMembershipCondition {
+      export class AllMembershipCondition {
         constructor();
         Check(evidence: System.Security.Policy.Evidence): boolean;
         Copy(): System.Security.Policy.IMembershipCondition;
@@ -32037,7 +32037,7 @@ export namespace System {
         ToXml(level: System.Security.Policy.PolicyLevel): System.Security.SecurityElement;
         GetType(): System.Type;
       }
-      export declare class ApplicationDirectory {
+      export class ApplicationDirectory {
         constructor(name: string);
         Directory: string;
         Copy(): System.Object;
@@ -32047,7 +32047,7 @@ export namespace System {
         Clone(): System.Security.Policy.EvidenceBase;
         GetType(): System.Type;
       }
-      export declare class ApplicationDirectoryMembershipCondition {
+      export class ApplicationDirectoryMembershipCondition {
         constructor();
         Check(evidence: System.Security.Policy.Evidence): boolean;
         Copy(): System.Security.Policy.IMembershipCondition;
@@ -32060,7 +32060,7 @@ export namespace System {
         ToXml(level: System.Security.Policy.PolicyLevel): System.Security.SecurityElement;
         GetType(): System.Type;
       }
-      export declare class ApplicationSecurityInfo {
+      export class ApplicationSecurityInfo {
         constructor(activationContext: System.ActivationContext);
         ApplicationEvidence: System.Security.Policy.Evidence;
         ApplicationId: System.ApplicationId;
@@ -32071,7 +32071,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ApplicationSecurityManager {
+      export class ApplicationSecurityManager {
         static ApplicationTrustManager: System.Security.Policy.IApplicationTrustManager;
         static UserApplicationTrusts: System.Security.Policy.ApplicationTrustCollection;
         static DetermineApplicationTrust(activationContext: System.ActivationContext, context: System.Security.Policy.TrustManagerContext): boolean;
@@ -32080,7 +32080,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ApplicationTrust {
+      export class ApplicationTrust {
         constructor();
         constructor(applicationIdentity: System.ApplicationIdentity);
         constructor(defaultGrantSet: System.Security.PermissionSet, fullTrustAssemblies: System.Collections.Generic.IEnumerable<System.Security.Policy.StrongName>);
@@ -32098,7 +32098,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ApplicationTrustCollection {
+      export class ApplicationTrustCollection {
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: System.Object;
@@ -32118,7 +32118,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ApplicationTrustEnumerator {
+      export class ApplicationTrustEnumerator {
         Current: System.Security.Policy.ApplicationTrust;
         MoveNext(): boolean;
         Reset(): void;
@@ -32131,7 +32131,7 @@ export namespace System {
         MatchExactVersion = 0,
         MatchAllVersions = 1,
       }
-      export declare class CodeConnectAccess {
+      export class CodeConnectAccess {
         constructor(allowScheme: string, allowPort: number);
         Port: number;
         Scheme: string;
@@ -32146,7 +32146,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class CodeGroup {
+      export class CodeGroup {
         MergeLogic: string;
         PolicyStatement: System.Security.Policy.PolicyStatement;
         Description: string;
@@ -32170,7 +32170,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Evidence {
+      export class Evidence {
         constructor();
         constructor(evidence: System.Security.Policy.Evidence);
         constructor(hostEvidence: System.Object[], assemblyEvidence: System.Object[]);
@@ -32195,14 +32195,14 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class EvidenceBase {
+      export class EvidenceBase {
         Clone(): System.Security.Policy.EvidenceBase;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FileCodeGroup {
+      export class FileCodeGroup {
         constructor(membershipCondition: System.Security.Policy.IMembershipCondition, access: System.Security.Permissions.FileIOPermissionAccess);
         MergeLogic: string;
         AttributeString: string;
@@ -32227,7 +32227,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class FirstMatchCodeGroup {
+      export class FirstMatchCodeGroup {
         constructor(membershipCondition: System.Security.Policy.IMembershipCondition, policy: System.Security.Policy.PolicyStatement);
         MergeLogic: string;
         PolicyStatement: System.Security.Policy.PolicyStatement;
@@ -32252,7 +32252,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class GacInstalled {
+      export class GacInstalled {
         constructor();
         Copy(): System.Object;
         CreateIdentityPermission(evidence: System.Security.Policy.Evidence): System.Security.IPermission;
@@ -32262,7 +32262,7 @@ export namespace System {
         Clone(): System.Security.Policy.EvidenceBase;
         GetType(): System.Type;
       }
-      export declare class GacMembershipCondition {
+      export class GacMembershipCondition {
         constructor();
         Check(evidence: System.Security.Policy.Evidence): boolean;
         Copy(): System.Security.Policy.IMembershipCondition;
@@ -32275,7 +32275,7 @@ export namespace System {
         ToXml(level: System.Security.Policy.PolicyLevel): System.Security.SecurityElement;
         GetType(): System.Type;
       }
-      export declare class Hash {
+      export class Hash {
         constructor(assembly: System.Reflection.Assembly);
         MD5: System.Byte[];
         SHA1: System.Byte[];
@@ -32291,7 +32291,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class HashMembershipCondition {
+      export class HashMembershipCondition {
         constructor(hashAlg: System.Security.Cryptography.HashAlgorithm, value: System.Byte[]);
         HashAlgorithm: System.Security.Cryptography.HashAlgorithm;
         HashValue: System.Byte[];
@@ -32318,7 +32318,7 @@ export namespace System {
         Equals(obj: System.Object): boolean;
         ToString(): string;
       }
-      export declare class NetCodeGroup {
+      export class NetCodeGroup {
         constructor(membershipCondition: System.Security.Policy.IMembershipCondition);
         AttributeString: string;
         MergeLogic: string;
@@ -32348,7 +32348,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PermissionRequestEvidence {
+      export class PermissionRequestEvidence {
         constructor(request: System.Security.PermissionSet, optional: System.Security.PermissionSet, denied: System.Security.PermissionSet);
         DeniedPermissions: System.Security.PermissionSet;
         OptionalPermissions: System.Security.PermissionSet;
@@ -32360,7 +32360,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class PolicyException {
+      export class PolicyException {
         constructor();
         constructor(message: string);
         constructor(message: string, exception: System.Exception);
@@ -32380,7 +32380,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class PolicyLevel {
+      export class PolicyLevel {
         FullTrustAssemblies: System.Collections.IList;
         Label: string;
         NamedPermissionSets: System.Collections.IList;
@@ -32408,7 +32408,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class PolicyStatement {
+      export class PolicyStatement {
         constructor(permSet: System.Security.PermissionSet);
         constructor(permSet: System.Security.PermissionSet, attributes: System.Security.Policy.PolicyStatementAttribute);
         PermissionSet: System.Security.PermissionSet;
@@ -32430,7 +32430,7 @@ export namespace System {
         LevelFinal = 2,
         All = 3,
       }
-      export declare class Publisher {
+      export class Publisher {
         constructor(cert: System.Security.Cryptography.X509Certificates.X509Certificate);
         Certificate: System.Security.Cryptography.X509Certificates.X509Certificate;
         Copy(): System.Object;
@@ -32441,7 +32441,7 @@ export namespace System {
         Clone(): System.Security.Policy.EvidenceBase;
         GetType(): System.Type;
       }
-      export declare class PublisherMembershipCondition {
+      export class PublisherMembershipCondition {
         constructor(certificate: System.Security.Cryptography.X509Certificates.X509Certificate);
         Certificate: System.Security.Cryptography.X509Certificates.X509Certificate;
         Check(evidence: System.Security.Policy.Evidence): boolean;
@@ -32455,7 +32455,7 @@ export namespace System {
         ToXml(level: System.Security.Policy.PolicyLevel): System.Security.SecurityElement;
         GetType(): System.Type;
       }
-      export declare class Site {
+      export class Site {
         constructor(name: string);
         Name: string;
         static CreateFromUrl(url: string): System.Security.Policy.Site;
@@ -32467,7 +32467,7 @@ export namespace System {
         Clone(): System.Security.Policy.EvidenceBase;
         GetType(): System.Type;
       }
-      export declare class SiteMembershipCondition {
+      export class SiteMembershipCondition {
         constructor(site: string);
         Site: string;
         Check(evidence: System.Security.Policy.Evidence): boolean;
@@ -32481,7 +32481,7 @@ export namespace System {
         ToXml(level: System.Security.Policy.PolicyLevel): System.Security.SecurityElement;
         GetType(): System.Type;
       }
-      export declare class StrongName {
+      export class StrongName {
         constructor(blob: System.Security.Permissions.StrongNamePublicKeyBlob, name: string, version: System.Version);
         Name: string;
         PublicKey: System.Security.Permissions.StrongNamePublicKeyBlob;
@@ -32494,7 +32494,7 @@ export namespace System {
         Clone(): System.Security.Policy.EvidenceBase;
         GetType(): System.Type;
       }
-      export declare class StrongNameMembershipCondition {
+      export class StrongNameMembershipCondition {
         constructor(blob: System.Security.Permissions.StrongNamePublicKeyBlob, name: string, version: System.Version);
         Name: string;
         Version: System.Version;
@@ -32510,7 +32510,7 @@ export namespace System {
         ToXml(level: System.Security.Policy.PolicyLevel): System.Security.SecurityElement;
         GetType(): System.Type;
       }
-      export declare class TrustManagerContext {
+      export class TrustManagerContext {
         constructor();
         constructor(uiContext: System.Security.Policy.TrustManagerUIContext);
         IgnorePersistedDecision: boolean;
@@ -32529,7 +32529,7 @@ export namespace System {
         Upgrade = 1,
         Run = 2,
       }
-      export declare class UnionCodeGroup {
+      export class UnionCodeGroup {
         constructor(membershipCondition: System.Security.Policy.IMembershipCondition, policy: System.Security.Policy.PolicyStatement);
         MergeLogic: string;
         PolicyStatement: System.Security.Policy.PolicyStatement;
@@ -32554,7 +32554,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Url {
+      export class Url {
         constructor(name: string);
         Value: string;
         Copy(): System.Object;
@@ -32565,7 +32565,7 @@ export namespace System {
         Clone(): System.Security.Policy.EvidenceBase;
         GetType(): System.Type;
       }
-      export declare class UrlMembershipCondition {
+      export class UrlMembershipCondition {
         constructor(url: string);
         Url: string;
         Check(evidence: System.Security.Policy.Evidence): boolean;
@@ -32579,7 +32579,7 @@ export namespace System {
         ToXml(level: System.Security.Policy.PolicyLevel): System.Security.SecurityElement;
         GetType(): System.Type;
       }
-      export declare class Zone {
+      export class Zone {
         constructor(zone: System.Security.SecurityZone);
         SecurityZone: System.Security.SecurityZone;
         Copy(): System.Object;
@@ -32591,7 +32591,7 @@ export namespace System {
         Clone(): System.Security.Policy.EvidenceBase;
         GetType(): System.Type;
       }
-      export declare class ZoneMembershipCondition {
+      export class ZoneMembershipCondition {
         constructor(zone: System.Security.SecurityZone);
         SecurityZone: System.Security.SecurityZone;
         Check(evidence: System.Security.Policy.Evidence): boolean;
@@ -32607,7 +32607,7 @@ export namespace System {
       }
     }
     export namespace Principal {
-      export declare class GenericIdentity {
+      export class GenericIdentity {
         constructor(name: string);
         constructor(name: string, type: string);
         Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
@@ -32636,7 +32636,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class GenericPrincipal {
+      export class GenericPrincipal {
         constructor(identity: System.Security.Principal.IIdentity, roles: string[]);
         Identity: System.Security.Principal.IIdentity;
         Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
@@ -32666,7 +32666,7 @@ export namespace System {
         Identity: System.Security.Principal.IIdentity;
         IsInRole(role: string): boolean;
       }
-      export declare class IdentityNotMappedException {
+      export class IdentityNotMappedException {
         constructor();
         constructor(message: string);
         constructor(message: string, inner: System.Exception);
@@ -32687,7 +32687,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class IdentityReference {
+      export class IdentityReference {
         Value: string;
         Equals(o: System.Object): boolean;
         GetHashCode(): number;
@@ -32696,7 +32696,7 @@ export namespace System {
         Translate(targetType: System.Type): System.Security.Principal.IdentityReference;
         GetType(): System.Type;
       }
-      export declare class IdentityReferenceCollection {
+      export class IdentityReferenceCollection {
         constructor();
         constructor(capacity: number);
         Count: number;
@@ -32714,7 +32714,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class NTAccount {
+      export class NTAccount {
         constructor(name: string);
         constructor(domainName: string, accountName: string);
         Value: string;
@@ -32730,7 +32730,7 @@ export namespace System {
         NoPrincipal = 1,
         WindowsPrincipal = 2,
       }
-      export declare class SecurityIdentifier {
+      export class SecurityIdentifier {
         constructor(sddlForm: string);
         constructor(binaryForm: System.Byte[], offset: number);
         constructor(binaryForm: System.IntPtr);
@@ -32890,7 +32890,7 @@ export namespace System {
         BackupOperator = 551,
         Replicator = 552,
       }
-      export declare class WindowsIdentity {
+      export class WindowsIdentity {
         constructor(userToken: System.IntPtr);
         constructor(userToken: System.IntPtr, type: string);
         constructor(userToken: System.IntPtr, type: string, acctType: System.Security.Principal.WindowsAccountType);
@@ -32944,7 +32944,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class WindowsImpersonationContext {
+      export class WindowsImpersonationContext {
         Dispose(): void;
         Undo(): void;
         Equals(obj: System.Object): boolean;
@@ -32952,7 +32952,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class WindowsPrincipal {
+      export class WindowsPrincipal {
         constructor(ntIdentity: System.Security.Principal.WindowsIdentity);
         Identity: System.Security.Principal.IIdentity;
         DeviceClaims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
@@ -32981,7 +32981,7 @@ export namespace System {
     }
   }
   export namespace Text {
-    export declare class ASCIIEncoding {
+    export class ASCIIEncoding {
       constructor();
       IsSingleByte: boolean;
       BodyName: string;
@@ -33025,7 +33025,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Decoder {
+    export class Decoder {
       Fallback: System.Text.DecoderFallback;
       FallbackBuffer: System.Text.DecoderFallbackBuffer;
       Reset(): void;
@@ -33038,7 +33038,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DecoderExceptionFallback {
+    export class DecoderExceptionFallback {
       constructor();
       MaxCharCount: number;
       CreateFallbackBuffer(): System.Text.DecoderFallbackBuffer;
@@ -33047,7 +33047,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DecoderExceptionFallbackBuffer {
+    export class DecoderExceptionFallbackBuffer {
       constructor();
       Remaining: number;
       Fallback(bytesUnknown: System.Byte[], index: number): boolean;
@@ -33059,7 +33059,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DecoderFallbackException {
+    export class DecoderFallbackException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -33083,7 +33083,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class DecoderFallback {
+    export class DecoderFallback {
       static ReplacementFallback: System.Text.DecoderFallback;
       static ExceptionFallback: System.Text.DecoderFallback;
       MaxCharCount: number;
@@ -33093,7 +33093,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DecoderFallbackBuffer {
+    export class DecoderFallbackBuffer {
       Remaining: number;
       Fallback(bytesUnknown: System.Byte[], index: number): boolean;
       GetNextChar(): System.Char;
@@ -33104,7 +33104,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DecoderReplacementFallback {
+    export class DecoderReplacementFallback {
       constructor();
       constructor(replacement: string);
       DefaultString: string;
@@ -33115,7 +33115,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class DecoderReplacementFallbackBuffer {
+    export class DecoderReplacementFallbackBuffer {
       constructor(fallback: System.Text.DecoderReplacementFallback);
       Remaining: number;
       Fallback(bytesUnknown: System.Byte[], index: number): boolean;
@@ -33127,7 +33127,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Encoder {
+    export class Encoder {
       Fallback: System.Text.EncoderFallback;
       FallbackBuffer: System.Text.EncoderFallbackBuffer;
       Reset(): void;
@@ -33138,7 +33138,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EncoderExceptionFallback {
+    export class EncoderExceptionFallback {
       constructor();
       MaxCharCount: number;
       CreateFallbackBuffer(): System.Text.EncoderFallbackBuffer;
@@ -33147,7 +33147,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EncoderExceptionFallbackBuffer {
+    export class EncoderExceptionFallbackBuffer {
       constructor();
       Remaining: number;
       Fallback(charUnknown: System.Char, index: number): boolean;
@@ -33160,7 +33160,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EncoderFallbackException {
+    export class EncoderFallbackException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -33186,7 +33186,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class EncoderFallback {
+    export class EncoderFallback {
       static ReplacementFallback: System.Text.EncoderFallback;
       static ExceptionFallback: System.Text.EncoderFallback;
       MaxCharCount: number;
@@ -33196,7 +33196,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EncoderFallbackBuffer {
+    export class EncoderFallbackBuffer {
       Remaining: number;
       Fallback(charUnknown: System.Char, index: number): boolean;
       Fallback(charUnknownHigh: System.Char, charUnknownLow: System.Char, index: number): boolean;
@@ -33208,7 +33208,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EncoderReplacementFallback {
+    export class EncoderReplacementFallback {
       constructor();
       constructor(replacement: string);
       DefaultString: string;
@@ -33219,7 +33219,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EncoderReplacementFallbackBuffer {
+    export class EncoderReplacementFallbackBuffer {
       constructor(fallback: System.Text.EncoderReplacementFallback);
       Remaining: number;
       Fallback(charUnknown: System.Char, index: number): boolean;
@@ -33232,7 +33232,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Encoding {
+    export class Encoding {
       BodyName: string;
       EncodingName: string;
       HeaderName: string;
@@ -33290,7 +33290,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EncodingInfo {
+    export class EncodingInfo {
       CodePage: number;
       Name: string;
       DisplayName: string;
@@ -33300,7 +33300,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class EncodingProvider {
+    export class EncodingProvider {
       constructor();
       GetEncoding(name: string): System.Text.Encoding;
       GetEncoding(codepage: number): System.Text.Encoding;
@@ -33311,7 +33311,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class StringBuilder {
+    export class StringBuilder {
       constructor();
       constructor(capacity: number);
       constructor(value: string);
@@ -33383,7 +33383,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class UnicodeEncoding {
+    export class UnicodeEncoding {
       constructor();
       constructor(bigEndian: boolean, byteOrderMark: boolean);
       constructor(bigEndian: boolean, byteOrderMark: boolean, throwOnInvalidBytes: boolean);
@@ -33430,7 +33430,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UTF32Encoding {
+    export class UTF32Encoding {
       constructor();
       constructor(bigEndian: boolean, byteOrderMark: boolean);
       constructor(bigEndian: boolean, byteOrderMark: boolean, throwOnInvalidCharacters: boolean);
@@ -33476,7 +33476,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UTF7Encoding {
+    export class UTF7Encoding {
       constructor();
       constructor(allowOptionals: boolean);
       BodyName: string;
@@ -33521,7 +33521,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class UTF8Encoding {
+    export class UTF8Encoding {
       constructor();
       constructor(encoderShouldEmitUTF8Identifier: boolean);
       constructor(encoderShouldEmitUTF8Identifier: boolean, throwOnInvalidBytes: boolean);
@@ -33574,7 +33574,7 @@ export namespace System {
       FormKD = 6,
     }
     export namespace RegularExpressions {
-      export declare class Regex {
+      export class Regex {
         constructor(pattern: string);
         constructor(pattern: string, options: System.Text.RegularExpressions.RegexOptions);
         constructor(pattern: string, options: System.Text.RegularExpressions.RegexOptions, matchTimeout: System.TimeSpan);
@@ -33631,7 +33631,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MatchEvaluator {
+      export class MatchEvaluator {
         constructor(object: System.Object, method: System.IntPtr);
         Method: System.Reflection.MethodInfo;
         Target: System.Object;
@@ -33647,7 +33647,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Capture {
+      export class Capture {
         Index: number;
         Length: number;
         Value: string;
@@ -33656,7 +33656,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class CaptureCollection {
+      export class CaptureCollection {
         SyncRoot: System.Object;
         IsSynchronized: boolean;
         IsReadOnly: boolean;
@@ -33668,7 +33668,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RegexCompilationInfo {
+      export class RegexCompilationInfo {
         constructor(pattern: string, options: System.Text.RegularExpressions.RegexOptions, name: string, fullnamespace: string, ispublic: boolean);
         constructor(pattern: string, options: System.Text.RegularExpressions.RegexOptions, name: string, fullnamespace: string, ispublic: boolean, matchTimeout: System.TimeSpan);
         Pattern: string;
@@ -33682,7 +33682,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Group {
+      export class Group {
         Success: boolean;
         Name: string;
         Captures: System.Text.RegularExpressions.CaptureCollection;
@@ -33695,7 +33695,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class GroupCollection {
+      export class GroupCollection {
         SyncRoot: System.Object;
         IsSynchronized: boolean;
         IsReadOnly: boolean;
@@ -33707,7 +33707,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Match {
+      export class Match {
         static Empty: System.Text.RegularExpressions.Match;
         Groups: System.Text.RegularExpressions.GroupCollection;
         Success: boolean;
@@ -33724,7 +33724,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class MatchCollection {
+      export class MatchCollection {
         Count: number;
         SyncRoot: System.Object;
         IsSynchronized: boolean;
@@ -33736,7 +33736,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RegexMatchTimeoutException {
+      export class RegexMatchTimeoutException {
         constructor(regexInput: string, regexPattern: string, matchTimeout: System.TimeSpan);
         constructor();
         constructor(message: string);
@@ -33772,13 +33772,13 @@ export namespace System {
         ECMAScript = 256,
         CultureInvariant = 512,
       }
-      export declare class RegexRunner {
+      export class RegexRunner {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class RegexRunnerFactory {
+      export class RegexRunnerFactory {
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -33787,7 +33787,7 @@ export namespace System {
     }
   }
   export namespace Threading {
-    export declare class CancellationToken {
+    export class CancellationToken {
       constructor(canceled: boolean);
       static None: System.Threading.CancellationToken;
       IsCancellationRequested: boolean;
@@ -33804,7 +33804,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CancellationTokenRegistration {
+    export class CancellationTokenRegistration {
       Dispose(): void;
       Equals(obj: System.Object): boolean;
       Equals(other: System.Threading.CancellationTokenRegistration): boolean;
@@ -33812,7 +33812,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class CancellationTokenSource {
+    export class CancellationTokenSource {
       constructor();
       constructor(delay: System.TimeSpan);
       constructor(millisecondsDelay: number);
@@ -33830,7 +33830,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class CountdownEvent {
+    export class CountdownEvent {
       constructor(initialCount: number);
       CurrentCount: number;
       InitialCount: number;
@@ -33861,13 +33861,13 @@ export namespace System {
       PublicationOnly = 1,
       ExecutionAndPublication = 2,
     }
-    export declare class LazyInitializer {
+    export class LazyInitializer {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ManualResetEventSlim {
+    export class ManualResetEventSlim {
       constructor();
       constructor(initialState: boolean);
       constructor(initialState: boolean, spinCount: number);
@@ -33888,7 +33888,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SemaphoreSlim {
+    export class SemaphoreSlim {
       constructor(initialCount: number);
       constructor(initialCount: number, maxCount: number);
       CurrentCount: number;
@@ -33913,7 +33913,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SpinLock {
+    export class SpinLock {
       constructor(enableThreadOwnerTracking: boolean);
       IsHeld: boolean;
       IsHeldByCurrentThread: boolean;
@@ -33925,7 +33925,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class SpinWait {
+    export class SpinWait {
       Count: number;
       NextSpinWillYield: boolean;
       SpinOnce(): void;
@@ -33938,7 +33938,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ThreadLocal<T = any> {
+    export class ThreadLocal<T = any> {
       constructor();
       constructor(trackAllValues: boolean);
       constructor(valueFactory: ((arg0: T) => T));
@@ -33952,7 +33952,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class AbandonedMutexException {
+    export class AbandonedMutexException {
       constructor();
       constructor(message: string);
       constructor(message: string, inner: System.Exception);
@@ -33982,7 +33982,7 @@ export namespace System {
       MTA = 1,
       Unknown = 2,
     }
-    export declare class AsyncLocal<T = any> {
+    export class AsyncLocal<T = any> {
       constructor();
       constructor(valueChangedHandler: (() => void));
       Value: T;
@@ -33991,7 +33991,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AsyncLocalValueChangedArgs<T = any> {
+    export class AsyncLocalValueChangedArgs<T = any> {
       PreviousValue: T;
       CurrentValue: T;
       ThreadContextChanged: boolean;
@@ -34000,7 +34000,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class AutoResetEvent {
+    export class AutoResetEvent {
       constructor(initialState: boolean);
       Handle: System.IntPtr;
       SafeWaitHandle: any; // Microsoft.Win32.SafeHandles.SafeWaitHandle
@@ -34027,7 +34027,7 @@ export namespace System {
       AutoReset = 0,
       ManualReset = 1,
     }
-    export declare class EventWaitHandle {
+    export class EventWaitHandle {
       constructor(initialState: boolean, mode: System.Threading.EventResetMode);
       constructor(initialState: boolean, mode: System.Threading.EventResetMode, name: string);
       Handle: System.IntPtr;
@@ -34053,7 +34053,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ContextCallback {
+    export class ContextCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34069,7 +34069,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class AsyncFlowControl {
+    export class AsyncFlowControl {
       Dispose(): void;
       Undo(): void;
       GetHashCode(): number;
@@ -34078,7 +34078,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class ExecutionContext {
+    export class ExecutionContext {
       Dispose(): void;
       static Run(executionContext: System.Threading.ExecutionContext, callback: System.Threading.ContextCallback, state: System.Object): void;
       CreateCopy(): System.Threading.ExecutionContext;
@@ -34092,7 +34092,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LockRecursionException {
+    export class LockRecursionException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -34112,7 +34112,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ManualResetEvent {
+    export class ManualResetEvent {
       constructor(initialState: boolean);
       Handle: System.IntPtr;
       SafeWaitHandle: any; // Microsoft.Win32.SafeHandles.SafeWaitHandle
@@ -34135,7 +34135,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Monitor {
+    export class Monitor {
       static Enter(obj: System.Object): void;
       static Exit(obj: System.Object): void;
       static TryEnter(obj: System.Object): boolean;
@@ -34154,7 +34154,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ParameterizedThreadStart {
+    export class ParameterizedThreadStart {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34170,7 +34170,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SemaphoreFullException {
+    export class SemaphoreFullException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -34190,7 +34190,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class SendOrPostCallback {
+    export class SendOrPostCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34206,7 +34206,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SynchronizationContext {
+    export class SynchronizationContext {
       constructor();
       static Current: System.Threading.SynchronizationContext;
       IsWaitNotificationRequired(): boolean;
@@ -34222,7 +34222,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class SynchronizationLockException {
+    export class SynchronizationLockException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -34242,7 +34242,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Thread {
+    export class Thread {
       constructor(start: System.Threading.ThreadStart);
       constructor(start: System.Threading.ThreadStart, maxStackSize: number);
       constructor(start: System.Threading.ParameterizedThreadStart);
@@ -34300,7 +34300,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ThreadAbortException {
+    export class ThreadAbortException {
       ExceptionState: System.Object;
       Message: string;
       Data: System.Collections.IDictionary;
@@ -34318,7 +34318,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ThreadInterruptedException {
+    export class ThreadInterruptedException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -34338,7 +34338,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class WaitCallback {
+    export class WaitCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34354,7 +34354,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WaitOrTimerCallback {
+    export class WaitOrTimerCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34370,7 +34370,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class IOCompletionCallback {
+    export class IOCompletionCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34384,7 +34384,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ThreadPool {
+    export class ThreadPool {
       static SetMaxThreads(workerThreads: number, completionPortThreads: number): boolean;
       static SetMinThreads(workerThreads: number, completionPortThreads: number): boolean;
       static RegisterWaitForSingleObject(waitObject: System.Threading.WaitHandle, callBack: System.Threading.WaitOrTimerCallback, state: System.Object, millisecondsTimeOutInterval: System.UInt32, executeOnlyOnce: boolean): System.Threading.RegisteredWaitHandle;
@@ -34412,7 +34412,7 @@ export namespace System {
       AboveNormal = 3,
       Highest = 4,
     }
-    export declare class ThreadStart {
+    export class ThreadStart {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34428,7 +34428,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ThreadStartException {
+    export class ThreadStartException {
       Message: string;
       Data: System.Collections.IDictionary;
       InnerException: System.Exception;
@@ -34457,7 +34457,7 @@ export namespace System {
       AbortRequested = 128,
       Aborted = 256,
     }
-    export declare class ThreadStateException {
+    export class ThreadStateException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -34477,7 +34477,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Timeout {
+    export class Timeout {
       static InfiniteTimeSpan: System.TimeSpan;
       static Infinite: number;
       Equals(obj: System.Object): boolean;
@@ -34485,7 +34485,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WaitHandle {
+    export class WaitHandle {
       Handle: System.IntPtr;
       SafeWaitHandle: any; // Microsoft.Win32.SafeHandles.SafeWaitHandle
       static WaitTimeout: number;
@@ -34517,7 +34517,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WaitHandleExtensions {
+    export class WaitHandleExtensions {
       static GetSafeWaitHandle(waitHandle: System.Threading.WaitHandle): any;
       static SetSafeWaitHandle(waitHandle: System.Threading.WaitHandle, value: any): void;
       Equals(obj: System.Object): boolean;
@@ -34525,7 +34525,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class WaitHandleCannotBeOpenedException {
+    export class WaitHandleCannotBeOpenedException {
       constructor();
       constructor(message: string);
       constructor(message: string, innerException: System.Exception);
@@ -34545,7 +34545,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class CompressedStack {
+    export class CompressedStack {
       CreateCopy(): System.Threading.CompressedStack;
       static Capture(): System.Threading.CompressedStack;
       static GetCompressedStack(): System.Threading.CompressedStack;
@@ -34556,7 +34556,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class HostExecutionContext {
+    export class HostExecutionContext {
       constructor();
       constructor(state: System.Object);
       CreateCopy(): System.Threading.HostExecutionContext;
@@ -34567,7 +34567,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class HostExecutionContextManager {
+    export class HostExecutionContextManager {
       constructor();
       Capture(): System.Threading.HostExecutionContext;
       Revert(previousState: System.Object): void;
@@ -34577,21 +34577,21 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Interlocked {
+    export class Interlocked {
       static MemoryBarrier(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class LockCookie {
+    export class LockCookie {
       GetHashCode(): number;
       Equals(obj: System.Threading.LockCookie): boolean;
       Equals(obj: System.Object): boolean;
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Mutex {
+    export class Mutex {
       constructor();
       constructor(initiallyOwned: boolean);
       constructor(initiallyOwned: boolean, name: string);
@@ -34617,7 +34617,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class NativeOverlapped {
+    export class NativeOverlapped {
       InternalLow: System.IntPtr;
       InternalHigh: System.IntPtr;
       OffsetLow: number;
@@ -34628,7 +34628,7 @@ export namespace System {
       ToString(): string;
       GetType(): System.Type;
     }
-    export declare class Overlapped {
+    export class Overlapped {
       constructor();
       constructor(offsetLo: number, offsetHi: number, hEvent: number, ar: System.IAsyncResult);
       constructor(offsetLo: number, offsetHi: number, hEvent: System.IntPtr, ar: System.IAsyncResult);
@@ -34642,7 +34642,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ReaderWriterLock {
+    export class ReaderWriterLock {
       constructor();
       IsReaderLockHeld: boolean;
       IsWriterLockHeld: boolean;
@@ -34662,7 +34662,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class RegisteredWaitHandle {
+    export class RegisteredWaitHandle {
       Unregister(waitObject: System.Threading.WaitHandle): boolean;
       CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
       GetLifetimeService(): System.Object;
@@ -34672,7 +34672,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Timer {
+    export class Timer {
       constructor(callback: System.Threading.TimerCallback, state: System.Object, dueTime: number, period: number);
       constructor(callback: System.Threading.TimerCallback, state: System.Object, dueTime: System.Int64, period: System.Int64);
       constructor(callback: System.Threading.TimerCallback, state: System.Object, dueTime: System.TimeSpan, period: System.TimeSpan);
@@ -34692,7 +34692,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class TimerCallback {
+    export class TimerCallback {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34708,13 +34708,13 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Volatile {
+    export class Volatile {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ThreadPoolBoundHandle {
+    export class ThreadPoolBoundHandle {
       Handle: System.Runtime.InteropServices.SafeHandle;
       static BindHandle(handle: System.Runtime.InteropServices.SafeHandle): System.Threading.ThreadPoolBoundHandle;
       Dispose(): void;
@@ -34723,7 +34723,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class PreAllocatedOverlapped {
+    export class PreAllocatedOverlapped {
       constructor(callback: System.Threading.IOCompletionCallback, state: System.Object, pinData: System.Object);
       Dispose(): void;
       Equals(obj: System.Object): boolean;
@@ -34735,7 +34735,7 @@ export namespace System {
       NoRecursion = 0,
       SupportsRecursion = 1,
     }
-    export declare class ReaderWriterLockSlim {
+    export class ReaderWriterLockSlim {
       constructor();
       constructor(recursionPolicy: System.Threading.LockRecursionPolicy);
       IsReadLockHeld: boolean;
@@ -34767,7 +34767,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class BarrierPostPhaseException {
+    export class BarrierPostPhaseException {
       constructor();
       constructor(innerException: System.Exception);
       constructor(message: string);
@@ -34788,7 +34788,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class Barrier {
+    export class Barrier {
       constructor(participantCount: number);
       constructor(participantCount: number, postPhaseAction: (() => void));
       ParticipantsRemaining: number;
@@ -34810,7 +34810,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Semaphore {
+    export class Semaphore {
       constructor(initialCount: number, maximumCount: number);
       constructor(initialCount: number, maximumCount: number, name: string);
       Handle: System.IntPtr;
@@ -34836,7 +34836,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ThreadExceptionEventArgs {
+    export class ThreadExceptionEventArgs {
       constructor(t: System.Exception);
       Exception: System.Exception;
       Equals(obj: System.Object): boolean;
@@ -34844,7 +34844,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class ThreadExceptionEventHandler {
+    export class ThreadExceptionEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -34861,7 +34861,7 @@ export namespace System {
       ToString(): string;
     }
     export namespace Tasks {
-      export declare class ValueTask<TResult = any> {
+      export class ValueTask<TResult = any> {
         constructor(result: TResult);
         constructor(task: System.Threading.Tasks.Task<TResult>);
         IsCompleted: boolean;
@@ -34879,7 +34879,7 @@ export namespace System {
         static CreateAsyncMethodBuilder(): any;
         GetType(): System.Type;
       }
-      export declare class ConcurrentExclusiveSchedulerPair {
+      export class ConcurrentExclusiveSchedulerPair {
         constructor();
         constructor(taskScheduler: System.Threading.Tasks.TaskScheduler);
         constructor(taskScheduler: System.Threading.Tasks.TaskScheduler, maxConcurrencyLevel: number);
@@ -34893,7 +34893,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Task<TResult = any> {
+      export class Task<TResult = any> {
         constructor(functionCS: ((arg0: TResult) => TResult));
         constructor(functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken);
         constructor(functionCS: ((arg0: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions);
@@ -34952,7 +34952,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TaskFactory<TResult = any> {
+      export class TaskFactory<TResult = any> {
         constructor();
         constructor(cancellationToken: System.Threading.CancellationToken);
         constructor(scheduler: System.Threading.Tasks.TaskScheduler);
@@ -34988,7 +34988,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ParallelOptions {
+      export class ParallelOptions {
         constructor();
         TaskScheduler: System.Threading.Tasks.TaskScheduler;
         MaxDegreeOfParallelism: number;
@@ -34998,7 +34998,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class Parallel {
+      export class Parallel {
         static Invoke(...actions: System.Action[]): void;
         static Invoke(parallelOptions: System.Threading.Tasks.ParallelOptions, ...actions: System.Action[]): void;
         static For(fromInclusive: number, toExclusive: number, body: any): System.Threading.Tasks.ParallelLoopResult;
@@ -35014,7 +35014,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ParallelLoopState {
+      export class ParallelLoopState {
         ShouldExitCurrentIteration: boolean;
         IsStopped: boolean;
         IsExceptional: boolean;
@@ -35026,7 +35026,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class ParallelLoopResult {
+      export class ParallelLoopResult {
         IsCompleted: boolean;
         LowestBreakIteration?: System.Nullable<System.Int64>;
         Equals(obj: System.Object): boolean;
@@ -35070,7 +35070,7 @@ export namespace System {
         OnlyOnCanceled = 196608,
         ExecuteSynchronously = 524288,
       }
-      export declare class TaskCanceledException {
+      export class TaskCanceledException {
         constructor();
         constructor(message: string);
         constructor(message: string, innerException: System.Exception);
@@ -35093,7 +35093,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class TaskCompletionSource<TResult = any> {
+      export class TaskCompletionSource<TResult = any> {
         constructor();
         constructor(creationOptions: System.Threading.Tasks.TaskCreationOptions);
         constructor(state: System.Object);
@@ -35113,7 +35113,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TaskScheduler {
+      export class TaskScheduler {
         MaximumConcurrencyLevel: number;
         static Default: System.Threading.Tasks.TaskScheduler;
         static Current: System.Threading.Tasks.TaskScheduler;
@@ -35124,7 +35124,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class UnobservedTaskExceptionEventArgs {
+      export class UnobservedTaskExceptionEventArgs {
         constructor(exception: System.AggregateException);
         Observed: boolean;
         Exception: System.AggregateException;
@@ -35134,7 +35134,7 @@ export namespace System {
         GetType(): System.Type;
         ToString(): string;
       }
-      export declare class TaskSchedulerException {
+      export class TaskSchedulerException {
         constructor();
         constructor(message: string);
         constructor(innerException: System.Exception);
@@ -35155,7 +35155,7 @@ export namespace System {
         GetHashCode(): number;
         GetType(): System.Type;
       }
-      export declare class TaskExtensions {
+      export class TaskExtensions {
         static Unwrap(task: any): System.Threading.Tasks.Task;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -35165,7 +35165,7 @@ export namespace System {
     }
   }
   export namespace Timers {
-    export declare class ElapsedEventHandler {
+    export class ElapsedEventHandler {
       constructor(object: System.Object, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
       Target: System.Object;
@@ -35181,7 +35181,7 @@ export namespace System {
       GetType(): System.Type;
       ToString(): string;
     }
-    export declare class Timer {
+    export class Timer {
       constructor();
       constructor(interval: number);
       AutoReset: boolean;
@@ -35204,7 +35204,7 @@ export namespace System {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export declare class ElapsedEventArgs {
+    export class ElapsedEventArgs {
       SignalTime: System.DateTime;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -35213,7 +35213,7 @@ export namespace System {
     }
   }
   export namespace Web {
-    export declare class AspNetHostingPermission {
+    export class AspNetHostingPermission {
       constructor(level: System.Web.AspNetHostingPermissionLevel);
       constructor(state: System.Security.Permissions.PermissionState);
       Level: System.Web.AspNetHostingPermissionLevel;
