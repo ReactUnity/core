@@ -1,6 +1,5 @@
 using Jint.Native;
 using Jint.Native.Function;
-using ReactUnity.Components;
 using ReactUnity.Interop;
 using ReactUnity.StateHandlers;
 using System;
@@ -111,5 +110,21 @@ namespace ReactUnity
         }
 
         #endregion
+
+        public string getVersion()
+        {
+#if UNITY_EDITOR
+            try
+            {
+                var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(ReactUnity).Assembly);
+                if (packageInfo != null) return packageInfo.version;
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogException(ex);
+            }
+#endif
+            return null;
+        }
     }
 }

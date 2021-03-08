@@ -158,8 +158,10 @@ namespace ReactUnity.Editor.Developer
                         var curName = lastNs;
                         foreach (var split in splits)
                         {
+                            var topLevel = nsStack.Count == 0;
+                            var declareOrNot = topLevel ? "declare " : "";
                             curName = string.IsNullOrWhiteSpace(curName) ? split : $"{curName}.{split}";
-                            sb.Append($"{spaces()}export namespace {split} {{{n}");
+                            sb.Append($"{spaces()}export {declareOrNot}namespace {split} {{{n}");
                             nsStack.Push(curName);
                         }
                         lastNs = ns;
@@ -187,7 +189,7 @@ namespace ReactUnity.Editor.Developer
                 }
                 else
                 {
-                    sb.Append($"{bl}{(ExportAsClass && !type.IsInterface ? "export declare class" : "export interface")} {getTypesScriptType(type, false, true, AllowGeneric, " = any")} {{{n}");
+                    sb.Append($"{bl}{(ExportAsClass && !type.IsInterface ? "export class" : "export interface")} {getTypesScriptType(type, false, true, AllowGeneric, " = any")} {{{n}");
 
                     if (ExportAsClass)
                     {

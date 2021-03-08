@@ -90,7 +90,7 @@ namespace ReactUnity
             engine.Execute("globalThis = global = window = parent = this;");
             engine.Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;");
             engine.Execute("btoa = atob = null;");
-            engine.Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };"); ;
+            engine.Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
 
 
             engine.SetValue("Engine", engine);
