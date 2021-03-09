@@ -62,7 +62,7 @@ namespace ReactUnity
             {
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
 
-                return new AdaptiveDispatcher.CoroutineHandle(
+                return AdaptiveDispatcher.GetCoroutineHandle(
                     AdaptiveDispatcher.StartDeferred(
                         WatchWebRequest(request, callback, err =>
                         {
@@ -95,7 +95,7 @@ namespace ReactUnity
 #endif
                     var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
 
-                    return new AdaptiveDispatcher.CoroutineHandle(
+                    return AdaptiveDispatcher.GetCoroutineHandle(
                         AdaptiveDispatcher.StartDeferred(WatchWebRequest(request, callback)));
 #else
                     throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");

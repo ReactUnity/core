@@ -8,18 +8,10 @@ namespace ReactUnity.Interop
 {
     public class AdaptiveDispatcher : MonoBehaviour
     {
-        public class CoroutineHandle : IDisposable
+        public static IDisposable GetCoroutineHandle(int handle)
         {
-            public int Handle { get; }
-            public CoroutineHandle(int handle)
-            {
-                Handle = handle;
-            }
-
-            public void Dispose()
-            {
-                StopDeferred(Handle);
-            }
+            if (Playing) return new MainThreadDispatcher.CoroutineHandle(handle);
+            return new EditorDispatcher.CoroutineHandle(handle);
         }
 
         private static bool Initialized;

@@ -26,21 +26,23 @@ namespace ReactUnity.Interop
 
         public static void Initialize()
         {
-            if (UpdateCR != null) StopCoroutine(UpdateCR);
-            var handle = GetNextHandle();
-            UpdateCR = StartCoroutine(OnEveryUpdateCoroutine(Update, handle));
+            if (Initialized) return;
+            Initialized = true;
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.update += Update;
+#endif
         }
 
+        private static bool Initialized = false;
         private static List<IEnumerator> ToStart = new List<IEnumerator>();
         private static HashSet<int> ToStop = new HashSet<int>();
         private static List<Action> CallOnLateUpdate = new List<Action>();
 
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
         private static List<EditorCoroutine> Started = new List<EditorCoroutine>();
-        private static EditorCoroutine UpdateCR;
 #else
         private static List<object> Started = new List<object>();
-        private static object UpdateCR;
 #endif
 
         static public void AddCallOnLateUpdate(Action call)
@@ -154,7 +156,7 @@ namespace ReactUnity.Interop
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
         static EditorCoroutine StartCoroutine(IEnumerator cr)
         {
-            return EditorCoroutineUtility.StartCoroutineOwnerless(cr);
+            return EditorCoroutineUtility.StartCoroutine(cr, cr);
         }
 
 
