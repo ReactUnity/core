@@ -1079,10 +1079,10 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@^0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.18.tgz#419109245b42d1b171347908157b31e66f40e569"
-  integrity sha512-5HzIo59WOjiyj56BpC26pfANW+TXaHobHlJA+LV0ToXyMXazYPrzDTHCNIN6hS0hVhaBbOKEednOujP3d17K5w==
+"@reactunity/renderer@^0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.19.tgz#0a3338b3bb5f4f0c1f7c44f338fdcae6d45cfad1"
+  integrity sha512-cPpunD1CCZoQxs6hO7m4WurxpB8so39Mmngf+O1pfK1D+N+2dRGXPZZlP2CTy21ID8bR68i6fF6Ulf6TswpRqA==
   dependencies:
     react-reconciler "^0.26.1"
 
@@ -7948,7 +7948,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^4.1.5:
+typescript@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
   integrity sha512-qOcYwxaByStAWrBf4x0fibwZvMRG+r4cQoTjbPtUlrWjBHbmCAww1i448U0GJ+3cNNEtebDteo/cHOR3xJ4wEw==

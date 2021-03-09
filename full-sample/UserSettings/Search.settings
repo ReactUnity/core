@@ -1,0 +1,61 @@
+trackSelection = true
+fetchPreview = true
+wantsMore = false
+keepOpen = false
+itemIconSize = 1
+queryFolder = "Assets"
+onBoardingDoNotAskAgain = true
+showPackageIndexes = false
+showStatusBar = false
+scopes = {
+	"last_search.785D90A9" = "editorreactc"
+	"asset.785D90A9" = "True"
+	"menu.785D90A9" = "True"
+	"scene.785D90A9" = "True"
+	"settings.785D90A9" = "True"
+	"m_ShownPanels.785D90A9" = "3"
+	"m_SideBarSplitter.785D90A9" = "180"
+	"m_DetailsPanelSplitter.785D90A9" = "700"
+	"currentGroup.785D90A9" = "all"
+}
+providers = {
+	asset = {
+		active = true
+		priority = 25
+		defaultAction = null
+	}
+	store = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
+	find = {
+		active = true
+		priority = 25
+		defaultAction = null
+	}
+	log = {
+		active = false
+		priority = 210
+		defaultAction = null
+	}
+	packages = {
+		active = true
+		priority = 90
+		defaultAction = null
+	}
+	scene = {
+		active = true
+		priority = 50
+		defaultAction = null
+	}
+	query = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
+}
+recentSearches = [
+	"reactunity"
+]
+savedSearchesSortOrder = 0

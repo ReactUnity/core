@@ -1,9 +1,9 @@
 import { Dropdown, DropdownItem, ImageFitMode, ReactUnity, Renderer, Slider, Tooltip } from '@reactunity/renderer';
-import style from './index.module.scss';
-import pngImage from 'src/assets/bg.png';
-import base64Image from 'src/assets/base64Image.txt';
-import svgImage from 'src/assets/check.svg';
 import { useEffect, useState } from 'react';
+import base64Image from 'src/assets/base64Image.txt';
+import pngImage from 'src/assets/bg.png';
+import svgImage from 'src/assets/check.svg';
+import style from './index.module.scss';
 
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
 const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';

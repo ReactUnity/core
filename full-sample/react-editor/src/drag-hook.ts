@@ -2,59 +2,56 @@ import { UnityEngine as UE } from '@reactunity/renderer/editor';
 import { ReactUnity } from "@reactunity/renderer/editor";
 import { useRef, useEffect } from "react";
 
-const len = importNamespace('UnityEngine').UIElements.StyleLength;
+type BaseEl = ReactUnity.Editor.Renderer.Components.EditorReactComponent;
 
-export function useDragManipulator(target: ReactUnity.Editor.Renderer.Components.EditorReactComponent, onDrag?: () => void, onDrop?: () => void) {
-  const m_Start = useRef<UE.Vector2>();
-  const m_Active = useRef(false);
+export function useDragManipulator<T extends BaseEl = BaseEl>(
+  target: T,
+  onDragStart?: (ev: UE.UIElements.MouseDownEvent, sender: T) => void,
+  onDrag?: (ev: UE.UIElements.MouseDownEvent, startEv: UE.UIElements.MouseDownEvent, sender: T) => void,
+  onDragEnd?: (ev: UE.UIElements.MouseUpEvent, startEv: UE.UIElements.MouseDownEvent, sender: T) => void,
+  canStartManipulation?: (ev: UE.UIElements.MouseDownEvent) => boolean,
+  canStopManipulation?: (ev: UE.UIElements.MouseUpEvent) => boolean,
+) {
+  const startEv = useRef<UE.UIElements.MouseDownEvent>();
+  const isActive = useRef(false);
 
-  const CanStartManipulation = (e) => {
-    return true;
-  };
-
-  const CanStopManipulation = (e) => {
-    return true;
-  };
-
-  const OnMouseDown = (e: UE.UIElements.MouseDownEvent) => {
-    if (m_Active.current) {
-      e.StopImmediatePropagation();
+  const OnMouseDown = (ev: UE.UIElements.MouseDownEvent) => {
+    if (isActive.current) {
+      ev.StopImmediatePropagation();
       return;
     }
 
-    if (!CanStartManipulation(e)) return;
+    if (canStartManipulation && !canStartManipulation(ev)) return;
 
-    m_Start.current = e.mousePosition;
-    m_Active.current = true;
+    startEv.current = ev;
+    isActive.current = true;
     target.CaptureMouse();
 
-    e.StopPropagation();
+    ev.StopPropagation();
+
+    onDragStart?.(ev, target);
   };
 
-  const OnMouseMove = (e: UE.UIElements.MouseMoveEvent) => {
-    if (!m_Active.current || !target.HasMouseCapture()) return;
+  const OnMouseMove = (ev: UE.UIElements.MouseMoveEvent) => {
+    if (!isActive.current || !target.HasMouseCapture()) return;
 
-    const diff = new UnityEngine.Vector2(e.mousePosition.x - m_Start.current.x, e.mousePosition.y - m_Start.current.y);
-    target.Element.style.top = new len(diff.y);
-    target.Element.style.left = new len(diff.x);
-
-    e.StopPropagation();
+    ev.StopPropagation();
+    onDrag?.(ev, startEv.current, target);
   };
 
 
-  const OnMouseUp = (e: UE.UIElements.MouseUpEvent) => {
-    if (!m_Active.current
+  const OnMouseUp = (ev: UE.UIElements.MouseUpEvent) => {
+    if (!isActive.current
       || !target.HasMouseCapture()
-      || !CanStopManipulation(e))
+      || (canStopManipulation && !canStopManipulation(ev)))
       return;
 
-
-    target.Element.style.top = new len(0);
-    target.Element.style.left = new len(0);
-
-    m_Active.current = false;
+    isActive.current = false;
+    startEv.current = null;
     target.ReleaseMouse();
-    e.StopPropagation();
+    ev.StopPropagation();
+
+    onDragEnd?.(ev, startEv.current, target);
   };
 
   useEffect(() => {
@@ -69,5 +66,6 @@ export function useDragManipulator(target: ReactUnity.Editor.Renderer.Components
       target.SetEventListener("onMouseMove", null);
       target.SetEventListener("onMouseUp", null);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 }
