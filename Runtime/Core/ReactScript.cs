@@ -27,6 +27,7 @@ namespace ReactUnity
             {
                 ScriptSource = ScriptSource.Resource,
                 SourcePath = path,
+                UseDevServer = false,
             };
         }
 
