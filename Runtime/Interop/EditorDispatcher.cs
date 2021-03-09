@@ -183,16 +183,6 @@ namespace ReactUnity.Interop
             if (!ToStop.Contains(handle)) callback();
         }
 
-        private static IEnumerator OnEveryUpdateCoroutine(Action callback, int handle)
-        {
-            while (true)
-            {
-                yield return null;
-                if (!ToStop.Contains(handle)) callback();
-                else break;
-            }
-        }
-
         private static IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
         {
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
