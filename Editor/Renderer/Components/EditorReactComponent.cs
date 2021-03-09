@@ -205,6 +205,17 @@ namespace ReactUnity.Editor.Renderer.Components
                 Element.RemoveFromClassList(currentCursor);
                 currentCursor = null;
             }
+
+            // Transforms
+
+            if (Style.HasValue(StyleProperties.scale)) Element.transform.scale = new Vector3(Style.scale.x, Style.scale.y, 1);
+            else Element.transform.scale = Vector3.one;
+
+            if (Style.HasValue(StyleProperties.rotate)) Element.transform.rotation = Quaternion.Euler(0, 0, Style.rotate);
+            else Element.transform.rotation = Quaternion.identity;
+
+            if (Style.HasValue(StyleProperties.translate)) Element.transform.position = Style.translate.AsVector();
+            else Element.transform.position = Vector3.zero;
         }
 
         public void Destroy()

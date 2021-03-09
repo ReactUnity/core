@@ -20,6 +20,11 @@ namespace ReactUnity.Types
             Y = y;
         }
 
+        public UnityEngine.Vector2 AsVector()
+        {
+            return new UnityEngine.Vector2(X.Value, Y.Value);
+        }
+
         public override bool Equals(object obj)
         {
             return obj is YogaValue2 value &&

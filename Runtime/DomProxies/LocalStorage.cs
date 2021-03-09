@@ -24,5 +24,14 @@ namespace ReactUnity.DomProxies
         {
             PlayerPrefs.DeleteKey(LocalStoragePrefix + x);
         }
+
+
+#if UNITY_EDITOR && REACT_UNITY_DEVELOPER
+        [UnityEditor.MenuItem("React/Clear Local Storage", priority = 0)]
+        public static void ClearLocalStorage()
+        {
+            PlayerPrefs.DeleteAll();
+        }
+#endif
     }
 }
