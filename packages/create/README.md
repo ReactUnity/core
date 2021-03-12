@@ -19,14 +19,14 @@ Create the React project in a custom folder:
 #### Options:
 
 ```
-  -s, --skip-install       Skips 'npm install'
-  -u, --unity              Creates Unity project from scratch and adds React project into it
-  -e, --editor             Create React Unity Editor project
+  -i, --install [npm|yarn]   Run 'npm install' or 'yarn install'.
+  -u, --unity                Creates Unity project from scratch and adds React project into it
+  -e, --editor               Create React Unity Editor project
 ```
 
 ## Commands
 
-After a project is created, following commands can be run in the `react` directory.
+After a project is created, you can run following commands in the `react` directory. You can also use other package managers like `yarn` instead of `npm`.
 
 - `npm start` - Run development server with HMR support
 - `npm run build` - Build the production ready Javascript file to `/Assets/Resources/react/index.js`

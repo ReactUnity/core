@@ -1,9 +1,24 @@
 #!/usr/bin/env node
 
+import * as chalk from 'chalk';
+import * as cp from 'child_process';
+import { Command, Option } from 'commander';
 import * as fse from 'fs-extra';
 import * as path from 'path';
-import * as cp from 'child_process';
-import * as chalk from 'chalk';
+
+const program = new Command();
+
+program
+  .option('-u, --unity', 'Create Unity project from scratch', false)
+  .option('-e, --editor', 'Create editor project instead of runtime', false)
+  .addOption(new Option('-i, --install [manager]', 'Install packages with selected').choices(['npm', 'yarn']).default(false));
+
+program.parse();
+const options: {
+  editor?: boolean;
+  install?: 'npm' | 'yarn' | true | false;
+  unity?: boolean;
+} = program.opts();
 
 const chalkPath = chalk.blue.underline;
 const chalkCmd = chalk.yellow;
@@ -11,22 +26,11 @@ const chalkSuccess = chalk.green;
 const chalkError = chalk.red
 
 const cwd = process.cwd();
-const skipInstall = process.argv.includes('--skip-install') || process.argv.includes('-s');
-const createUnity = process.argv.includes('--unity') || process.argv.includes('-u');
-const createEditor = process.argv.includes('--editor') || process.argv.includes('-e');
+const install = options.install === true ? 'yarn' : options.install;
+const createUnity = options.unity;
+const createEditor = options.editor;
 
-let targetDir = 'react';
-
-console.log(process.argv.join('\n'));
-
-for (let index = 2; index < process.argv.length; index++) {
-  const el = process.argv[index];
-
-  if (!el.startsWith('-')) {
-    targetDir = el;
-    break;
-  }
-}
+let targetDir = program.args[0] || 'react';
 
 const unityFolderName = 'react-unity-project';
 const reactFolderName = targetDir;
@@ -85,35 +89,36 @@ async function create() {
     process.exit();
   };
 
-  const npmFailCallback = () => {
+  const installFailCallback = () => {
     console.error(`Installing node modules ${chalkError('failed')}.`);
     console.log(`You can install them manually:`);
     console.log(`- Go to project folder at ${chalkPath(reactDir)}`);
-    console.log(`- Run ${chalkCmd('npm install')}`);
+    console.log(`- Run ${chalkCmd('npm install')} or ${chalkCmd('yarn')}`);
     console.log();
     process.exit();
   };
 
-  if (skipInstall) {
-    console.log(`Skipped installing node modules. You can install them manually by:`);
-    console.log(`- Go to project folder at ${chalkPath(reactDir)}`);
-    console.log(`- Run ${chalkCmd('npm install')}`);
-  } else {
-    // Install npm modules
-    var npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+  if (install) {
+    // Install packages
+    var cmd = install + (process.platform === 'win32' ? '.cmd' : '');
 
     try {
-      console.log(chalk.underline('Starting NPM install'));
+      console.log(chalk.underline(`Starting ${install} install`));
       console.log();
-      const code = await run_script(npm, ['install'], { cwd: reactDir });
+      const code = await run_script(cmd, ['install'], { cwd: reactDir });
 
       if (code === 0) successCallback();
-      else npmFailCallback();
+      else installFailCallback();
     } catch (err) {
       console.error(err);
-      npmFailCallback();
+      installFailCallback();
     }
   }
+
+  console.log(`Successfully created the project. Next steps:`);
+  console.log(`- Go to project folder at ${chalkPath(reactDir)}`);
+  if (!install) console.log(`- Run ${chalkCmd('yarn')} to install packages`);
+  console.log(`- Try running ${chalkCmd('yarn start')} to start the project and test it inside Unity`);
 }
 
 create().catch(err => {
