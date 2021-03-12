@@ -16,7 +16,7 @@
   "scripts": {
     "start": "ts-node index.ts",
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "tsc"
   },
   "dependencies": {
     "chalk": "^4.1.0",
