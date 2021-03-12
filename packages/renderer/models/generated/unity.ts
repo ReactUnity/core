@@ -1,6 +1,6 @@
 //
 // Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.AIModule
-// Generated 9.03.2021 02:09:42
+// Generated 13.03.2021 02:02:53
 //
 import { System } from './system';
 
@@ -178,6 +178,18 @@ export declare namespace Unity {
           ToString(): string;
           GetType(): System.Type;
         }
+        export enum FileState {
+          Absent = 0,
+          Exists = 1,
+        }
+        export class FileInfoResult {
+          FileSize: System.Int64;
+          FileState: Unity.IO.LowLevel.Unsafe.FileState;
+          Equals(obj: System.Object): boolean;
+          GetHashCode(): number;
+          ToString(): string;
+          GetType(): System.Type;
+        }
         export enum AssetLoadingSubsystem {
           Other = 0,
           Texture = 1,
@@ -187,11 +199,13 @@ export declare namespace Unity {
           Scripts = 5,
           EntitiesScene = 6,
           EntitiesStreamBinaryReader = 7,
+          FileInfo = 8,
         }
         export enum ReadStatus {
           Complete = 0,
           InProgress = 1,
           Failed = 2,
+          Truncated = 4,
         }
         export enum Priority {
           PriorityLow = 0,
@@ -202,6 +216,7 @@ export declare namespace Unity {
           Status: Unity.IO.LowLevel.Unsafe.ReadStatus;
           IsValid(): boolean;
           Dispose(): void;
+          GetBytesRead(): System.Int64;
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           ToString(): string;
@@ -782,6 +797,10 @@ export declare namespace UnityEngine {
     Lumin = 33,
     Stadia = 34,
     CloudRendering = 35,
+    GameCoreScarlett = 36,
+    GameCoreXboxSeries = 36,
+    GameCoreXboxOne = 37,
+    PS5 = 38,
   }
   export enum SystemLanguage {
     Afrikaans = 0,
@@ -2140,6 +2159,7 @@ export declare namespace UnityEngine {
     shadowCastingMode: UnityEngine.Rendering.ShadowCastingMode;
     receiveShadows: boolean;
     forceRenderingOff: boolean;
+    staticShadowCaster: boolean;
     motionVectorGenerationMode: UnityEngine.MotionVectorGenerationMode;
     lightProbeUsage: UnityEngine.Rendering.LightProbeUsage;
     reflectionProbeUsage: UnityEngine.Rendering.ReflectionProbeUsage;
@@ -2693,6 +2713,7 @@ export declare namespace UnityEngine {
     static SetQualityLevel(index: number): void;
     static IncreaseLevel(): void;
     static DecreaseLevel(): void;
+    static SetLODSettings(lodBias: number, maximumLODLevel: number, setDirty?: boolean): void;
     static GetRenderPipelineAssetAt(index: number): UnityEngine.Rendering.RenderPipelineAsset;
     static GetQualityLevel(): number;
     static SetQualityLevel(index: number, applyExpensiveChanges: boolean): void;
@@ -2943,6 +2964,7 @@ export declare namespace UnityEngine {
     shadowCastingMode: UnityEngine.Rendering.ShadowCastingMode;
     receiveShadows: boolean;
     forceRenderingOff: boolean;
+    staticShadowCaster: boolean;
     motionVectorGenerationMode: UnityEngine.MotionVectorGenerationMode;
     lightProbeUsage: UnityEngine.Rendering.LightProbeUsage;
     reflectionProbeUsage: UnityEngine.Rendering.ReflectionProbeUsage;
@@ -3104,10 +3126,12 @@ export declare namespace UnityEngine {
     static PropertyToID(name: string): number;
     GetDependency(name: string): UnityEngine.Shader;
     FindPassTagValue(passIndex: number, tagName: UnityEngine.Rendering.ShaderTagId): UnityEngine.Rendering.ShaderTagId;
-    static SetGlobalFloat(name: string, value: number): void;
-    static SetGlobalFloat(nameID: number, value: number): void;
     static SetGlobalInt(name: string, value: number): void;
     static SetGlobalInt(nameID: number, value: number): void;
+    static SetGlobalFloat(name: string, value: number): void;
+    static SetGlobalFloat(nameID: number, value: number): void;
+    static SetGlobalInteger(name: string, value: number): void;
+    static SetGlobalInteger(nameID: number, value: number): void;
     static SetGlobalVector(name: string, value: UnityEngine.Vector4): void;
     static SetGlobalVector(nameID: number, value: UnityEngine.Vector4): void;
     static SetGlobalColor(name: string, value: UnityEngine.Color): void;
@@ -3138,10 +3162,12 @@ export declare namespace UnityEngine {
     static SetGlobalMatrixArray(nameID: number, values: UnityEngine.Matrix4x4[]): void;
     static SetGlobalMatrixArray(name: string, values: UnityEngine.Matrix4x4[]): void;
     static SetGlobalMatrixArray(nameID: number, values: UnityEngine.Matrix4x4[]): void;
-    static GetGlobalFloat(name: string): number;
-    static GetGlobalFloat(nameID: number): number;
     static GetGlobalInt(name: string): number;
     static GetGlobalInt(nameID: number): number;
+    static GetGlobalFloat(name: string): number;
+    static GetGlobalFloat(nameID: number): number;
+    static GetGlobalInteger(name: string): number;
+    static GetGlobalInteger(nameID: number): number;
     static GetGlobalVector(name: string): UnityEngine.Vector4;
     static GetGlobalVector(nameID: number): UnityEngine.Vector4;
     static GetGlobalColor(name: string): UnityEngine.Color;
@@ -3218,6 +3244,7 @@ export declare namespace UnityEngine {
     shadowCastingMode: UnityEngine.Rendering.ShadowCastingMode;
     receiveShadows: boolean;
     forceRenderingOff: boolean;
+    staticShadowCaster: boolean;
     motionVectorGenerationMode: UnityEngine.MotionVectorGenerationMode;
     lightProbeUsage: UnityEngine.Rendering.LightProbeUsage;
     reflectionProbeUsage: UnityEngine.Rendering.ReflectionProbeUsage;
@@ -3342,6 +3369,7 @@ export declare namespace UnityEngine {
     shadowCastingMode: UnityEngine.Rendering.ShadowCastingMode;
     receiveShadows: boolean;
     forceRenderingOff: boolean;
+    staticShadowCaster: boolean;
     motionVectorGenerationMode: UnityEngine.MotionVectorGenerationMode;
     lightProbeUsage: UnityEngine.Rendering.LightProbeUsage;
     reflectionProbeUsage: UnityEngine.Rendering.ReflectionProbeUsage;
@@ -3449,10 +3477,12 @@ export declare namespace UnityEngine {
     AddTexture(name: string, value: UnityEngine.Texture): void;
     AddTexture(nameID: number, value: UnityEngine.Texture): void;
     Clear(): void;
-    SetFloat(name: string, value: number): void;
-    SetFloat(nameID: number, value: number): void;
     SetInt(name: string, value: number): void;
     SetInt(nameID: number, value: number): void;
+    SetFloat(name: string, value: number): void;
+    SetFloat(nameID: number, value: number): void;
+    SetInteger(name: string, value: number): void;
+    SetInteger(nameID: number, value: number): void;
     SetVector(name: string, value: UnityEngine.Vector4): void;
     SetVector(nameID: number, value: UnityEngine.Vector4): void;
     SetColor(name: string, value: UnityEngine.Color): void;
@@ -3483,10 +3513,32 @@ export declare namespace UnityEngine {
     SetMatrixArray(nameID: number, values: UnityEngine.Matrix4x4[]): void;
     SetMatrixArray(name: string, values: UnityEngine.Matrix4x4[]): void;
     SetMatrixArray(nameID: number, values: UnityEngine.Matrix4x4[]): void;
+    HasProperty(name: string): boolean;
+    HasProperty(nameID: number): boolean;
+    HasInt(name: string): boolean;
+    HasInt(nameID: number): boolean;
+    HasFloat(name: string): boolean;
+    HasFloat(nameID: number): boolean;
+    HasInteger(name: string): boolean;
+    HasInteger(nameID: number): boolean;
+    HasTexture(name: string): boolean;
+    HasTexture(nameID: number): boolean;
+    HasMatrix(name: string): boolean;
+    HasMatrix(nameID: number): boolean;
+    HasVector(name: string): boolean;
+    HasVector(nameID: number): boolean;
+    HasColor(name: string): boolean;
+    HasColor(nameID: number): boolean;
+    HasBuffer(name: string): boolean;
+    HasBuffer(nameID: number): boolean;
+    HasConstantBuffer(name: string): boolean;
+    HasConstantBuffer(nameID: number): boolean;
     GetFloat(name: string): number;
     GetFloat(nameID: number): number;
     GetInt(name: string): number;
     GetInt(nameID: number): number;
+    GetInteger(name: string): number;
+    GetInteger(nameID: number): number;
     GetVector(name: string): UnityEngine.Vector4;
     GetVector(nameID: number): UnityEngine.Vector4;
     GetColor(name: string): UnityEngine.Color;
@@ -3574,6 +3626,24 @@ export declare namespace UnityEngine {
     static Create(scriptContents: string): UnityEngine.Material;
     HasProperty(nameID: number): boolean;
     HasProperty(name: string): boolean;
+    HasFloat(name: string): boolean;
+    HasFloat(nameID: number): boolean;
+    HasInt(name: string): boolean;
+    HasInt(nameID: number): boolean;
+    HasInteger(name: string): boolean;
+    HasInteger(nameID: number): boolean;
+    HasTexture(name: string): boolean;
+    HasTexture(nameID: number): boolean;
+    HasMatrix(name: string): boolean;
+    HasMatrix(nameID: number): boolean;
+    HasVector(name: string): boolean;
+    HasVector(nameID: number): boolean;
+    HasColor(name: string): boolean;
+    HasColor(nameID: number): boolean;
+    HasBuffer(name: string): boolean;
+    HasBuffer(nameID: number): boolean;
+    HasConstantBuffer(name: string): boolean;
+    HasConstantBuffer(nameID: number): boolean;
     EnableKeyword(keyword: string): void;
     DisableKeyword(keyword: string): void;
     IsKeywordEnabled(keyword: string): boolean;
@@ -3592,10 +3662,12 @@ export declare namespace UnityEngine {
     GetTexturePropertyNameIDs(): number[];
     GetTexturePropertyNames(outNames: string[]): void;
     GetTexturePropertyNameIDs(outNames: number[]): void;
-    SetFloat(name: string, value: number): void;
-    SetFloat(nameID: number, value: number): void;
     SetInt(name: string, value: number): void;
     SetInt(nameID: number, value: number): void;
+    SetFloat(name: string, value: number): void;
+    SetFloat(nameID: number, value: number): void;
+    SetInteger(name: string, value: number): void;
+    SetInteger(nameID: number, value: number): void;
     SetColor(name: string, value: UnityEngine.Color): void;
     SetColor(nameID: number, value: UnityEngine.Color): void;
     SetVector(name: string, value: UnityEngine.Vector4): void;
@@ -3630,10 +3702,12 @@ export declare namespace UnityEngine {
     SetMatrixArray(nameID: number, values: UnityEngine.Matrix4x4[]): void;
     SetMatrixArray(name: string, values: UnityEngine.Matrix4x4[]): void;
     SetMatrixArray(nameID: number, values: UnityEngine.Matrix4x4[]): void;
-    GetFloat(name: string): number;
-    GetFloat(nameID: number): number;
     GetInt(name: string): number;
     GetInt(nameID: number): number;
+    GetFloat(name: string): number;
+    GetFloat(nameID: number): number;
+    GetInteger(name: string): number;
+    GetInteger(nameID: number): number;
     GetColor(name: string): UnityEngine.Color;
     GetColor(nameID: number): UnityEngine.Color;
     GetVector(name: string): UnityEngine.Vector4;
@@ -4209,6 +4283,11 @@ export declare namespace UnityEngine {
     Shadowmask = 0,
     DistanceShadowmask = 1,
   }
+  export enum ShadowObjectsFilter {
+    AllObjects = 0,
+    DynamicOnly = 1,
+    StaticOnly = 2,
+  }
   export enum CameraClearFlags {
     Skybox = 1,
     Color = 2,
@@ -4607,6 +4686,7 @@ export declare namespace UnityEngine {
     shadowCastingMode: UnityEngine.Rendering.ShadowCastingMode;
     receiveShadows: boolean;
     forceRenderingOff: boolean;
+    staticShadowCaster: boolean;
     motionVectorGenerationMode: UnityEngine.MotionVectorGenerationMode;
     lightProbeUsage: UnityEngine.Rendering.LightProbeUsage;
     reflectionProbeUsage: UnityEngine.Rendering.ReflectionProbeUsage;
@@ -4709,6 +4789,7 @@ export declare namespace UnityEngine {
     shadowCastingMode: UnityEngine.Rendering.ShadowCastingMode;
     receiveShadows: boolean;
     forceRenderingOff: boolean;
+    staticShadowCaster: boolean;
     motionVectorGenerationMode: UnityEngine.MotionVectorGenerationMode;
     lightProbeUsage: UnityEngine.Rendering.LightProbeUsage;
     reflectionProbeUsage: UnityEngine.Rendering.ReflectionProbeUsage;
@@ -7838,6 +7919,7 @@ export declare namespace UnityEngine {
     EnableKeyword(keyword: string): void;
     DisableKeyword(keyword: string): void;
     IsKeywordEnabled(keyword: string): boolean;
+    IsSupported(kernelIndex: number): boolean;
     SetFloat(name: string, val: number): void;
     SetInt(name: string, val: number): void;
     SetVector(name: string, val: UnityEngine.Vector4): void;
@@ -7950,7 +8032,10 @@ export declare namespace UnityEngine {
     static hasDynamicUniformArrayIndexingInFragmentShaders: boolean;
     static supportsShadows: boolean;
     static supportsRawShadowDepthSampling: boolean;
+    static supportsRenderTextures: boolean;
     static supportsMotionVectors: boolean;
+    static supportsRenderToCubemap: boolean;
+    static supportsImageEffects: boolean;
     static supports3DTextures: boolean;
     static supportsCompressed3DTextures: boolean;
     static supports2DArrayTextures: boolean;
@@ -7958,8 +8043,6 @@ export declare namespace UnityEngine {
     static supportsCubemapArrayTextures: boolean;
     static copyTextureSupport: UnityEngine.Rendering.CopyTextureSupport;
     static supportsComputeShaders: boolean;
-    static supportsConservativeRaster: boolean;
-    static supportsMultiview: boolean;
     static supportsGeometryShaders: boolean;
     static supportsTessellationShaders: boolean;
     static supportsRenderTargetArrayIndexFromVertexShader: boolean;
@@ -7975,6 +8058,7 @@ export declare namespace UnityEngine {
     static supportsMultisampleAutoResolve: boolean;
     static supportsTextureWrapMirrorOnce: number;
     static usesReversedZBuffer: boolean;
+    static supportsStencil: number;
     static npotSupport: UnityEngine.NPOTSupport;
     static maxTextureSize: number;
     static maxCubemapSize: number;
@@ -7998,18 +8082,18 @@ export declare namespace UnityEngine {
     static minConstantBufferOffsetAlignment: boolean;
     static hasMipMaxLevel: boolean;
     static supportsMipStreaming: boolean;
+    static graphicsPixelFillrate: number;
     static usesLoadStoreActions: boolean;
     static hdrDisplaySupportFlags: UnityEngine.HDRDisplaySupportFlags;
-    static supportsRenderTextures: boolean;
-    static supportsRenderToCubemap: boolean;
-    static supportsImageEffects: boolean;
-    static supportsStencil: number;
-    static graphicsPixelFillrate: number;
+    static supportsConservativeRaster: boolean;
+    static supportsMultiview: boolean;
+    static supportsStoreAndResolveAction: boolean;
     static supportsVertexPrograms: boolean;
     static supportsGPUFence: boolean;
     static unsupportedIdentifier: string;
     static SupportsRenderTextureFormat(format: UnityEngine.RenderTextureFormat): boolean;
     static SupportsBlendingOnRenderTextureFormat(format: UnityEngine.RenderTextureFormat): boolean;
+    static SupportsRandomWriteOnRenderTextureFormat(format: UnityEngine.RenderTextureFormat): boolean;
     static SupportsTextureFormat(format: UnityEngine.TextureFormat): boolean;
     static SupportsVertexAttributeFormat(format: UnityEngine.Rendering.VertexAttributeFormat, dimension: number): boolean;
     static IsFormatSupported(format: UnityEngine.Experimental.Rendering.GraphicsFormat, usage: UnityEngine.Experimental.Rendering.FormatUsage): boolean;
@@ -8180,6 +8264,7 @@ export declare namespace UnityEngine {
     anchoredPosition3D: UnityEngine.Vector3;
     offsetMin: UnityEngine.Vector2;
     offsetMax: UnityEngine.Vector2;
+    drivenByObject: UnityEngine.Object;
     position: UnityEngine.Vector3;
     localPosition: UnityEngine.Vector3;
     eulerAngles: UnityEngine.Vector3;
@@ -8473,6 +8558,7 @@ export declare namespace UnityEngine {
     shadowCastingMode: UnityEngine.Rendering.ShadowCastingMode;
     receiveShadows: boolean;
     forceRenderingOff: boolean;
+    staticShadowCaster: boolean;
     motionVectorGenerationMode: UnityEngine.MotionVectorGenerationMode;
     lightProbeUsage: UnityEngine.Rendering.LightProbeUsage;
     reflectionProbeUsage: UnityEngine.Rendering.ReflectionProbeUsage;
@@ -9811,6 +9897,7 @@ export declare namespace UnityEngine {
     additionalShaderChannels: UnityEngine.AdditionalCanvasShaderChannels;
     sortingLayerName: string;
     rootCanvas: UnityEngine.Canvas;
+    renderingDisplaySize: UnityEngine.Vector2;
     worldCamera: UnityEngine.Camera;
     normalizedSortingGridSize: number;
     sortingGridNormalizedSize: number;
@@ -12093,6 +12180,7 @@ export declare namespace UnityEngine {
     LoadAllAssetsAsync(type: System.Type): UnityEngine.AssetBundleRequest;
     AllAssetNames(): string[];
     Unload(unloadAllLoadedObjects: boolean): void;
+    UnloadAsync(unloadAllLoadedObjects: boolean): UnityEngine.AsyncOperation;
     GetAllAssetNames(): string[];
     GetAllScenePaths(): string[];
     static RecompressAssetBundleAsync(inputPath: string, outputPath: string, method: UnityEngine.BuildCompression, expectedCRC?: System.UInt32, priority?: UnityEngine.ThreadPriority): UnityEngine.AssetBundleRecompressOperation;
@@ -13267,6 +13355,8 @@ export declare namespace UnityEngine {
       static BindSceneProperty(animator: UnityEngine.Animator, transform: UnityEngine.Transform, type: System.Type, property: string, isObjectReference: boolean): UnityEngine.Animations.PropertySceneHandle;
       static ResolveAllStreamHandles(animator: UnityEngine.Animator): void;
       static ResolveAllSceneHandles(animator: UnityEngine.Animator): void;
+      static UnbindAllStreamHandles(animator: UnityEngine.Animator): void;
+      static UnbindAllSceneHandles(animator: UnityEngine.Animator): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -13935,6 +14025,183 @@ export declare namespace UnityEngine {
       GetType(): System.Type;
     }
   }
+  export namespace Device {
+    export class Application {
+      static absoluteURL: string;
+      static backgroundLoadingPriority: UnityEngine.ThreadPriority;
+      static buildGUID: string;
+      static cloudProjectId: string;
+      static companyName: string;
+      static consoleLogPath: string;
+      static dataPath: string;
+      static genuine: boolean;
+      static genuineCheckAvailable: boolean;
+      static identifier: string;
+      static installerName: string;
+      static installMode: UnityEngine.ApplicationInstallMode;
+      static internetReachability: UnityEngine.NetworkReachability;
+      static isBatchMode: boolean;
+      static isConsolePlatform: boolean;
+      static isEditor: boolean;
+      static isFocused: boolean;
+      static isMobilePlatform: boolean;
+      static isPlaying: boolean;
+      static persistentDataPath: string;
+      static platform: UnityEngine.RuntimePlatform;
+      static productName: string;
+      static runInBackground: boolean;
+      static sandboxType: UnityEngine.ApplicationSandboxType;
+      static streamingAssetsPath: string;
+      static systemLanguage: UnityEngine.SystemLanguage;
+      static targetFrameRate: number;
+      static temporaryCachePath: string;
+      static unityVersion: string;
+      static version: string;
+      static CanStreamedLevelBeLoaded(levelIndex: number): boolean;
+      static CanStreamedLevelBeLoaded(levelName: string): boolean;
+      static GetBuildTags(): string[];
+      static GetStackTraceLogType(logType: UnityEngine.LogType): UnityEngine.StackTraceLogType;
+      static HasProLicense(): boolean;
+      static HasUserAuthorization(mode: UnityEngine.UserAuthorization): boolean;
+      static IsPlaying(obj: UnityEngine.Object): boolean;
+      static OpenURL(url: string): void;
+      static Quit(): void;
+      static Quit(exitCode: number): void;
+      static RequestAdvertisingIdentifierAsync(delegateMethod: UnityEngine.Application_AdvertisingIdentifierCallback): boolean;
+      static RequestUserAuthorization(mode: UnityEngine.UserAuthorization): UnityEngine.AsyncOperation;
+      static SetBuildTags(buildTags: string[]): void;
+      static SetStackTraceLogType(logType: UnityEngine.LogType, stackTraceType: UnityEngine.StackTraceLogType): void;
+      static Unload(): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class Screen {
+      static autorotateToLandscapeLeft: boolean;
+      static autorotateToLandscapeRight: boolean;
+      static autorotateToPortrait: boolean;
+      static autorotateToPortraitUpsideDown: boolean;
+      static currentResolution: UnityEngine.Resolution;
+      static cutouts: UnityEngine.Rect[];
+      static dpi: number;
+      static fullScreen: boolean;
+      static fullScreenMode: UnityEngine.FullScreenMode;
+      static height: number;
+      static width: number;
+      static orientation: UnityEngine.ScreenOrientation;
+      static resolutions: UnityEngine.Resolution[];
+      static safeArea: UnityEngine.Rect;
+      static sleepTimeout: number;
+      static brightness: number;
+      static SetResolution(width: number, height: number, fullscreenMode: UnityEngine.FullScreenMode, preferredRefreshRate: number): void;
+      static SetResolution(width: number, height: number, fullscreenMode: UnityEngine.FullScreenMode): void;
+      static SetResolution(width: number, height: number, fullscreen: boolean, preferredRefreshRate: number): void;
+      static SetResolution(width: number, height: number, fullscreen: boolean): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class SystemInfo {
+      static batteryLevel: number;
+      static batteryStatus: UnityEngine.BatteryStatus;
+      static operatingSystem: string;
+      static operatingSystemFamily: UnityEngine.OperatingSystemFamily;
+      static processorType: string;
+      static processorFrequency: number;
+      static processorCount: number;
+      static systemMemorySize: number;
+      static deviceUniqueIdentifier: string;
+      static deviceName: string;
+      static deviceModel: string;
+      static supportsAccelerometer: boolean;
+      static supportsGyroscope: boolean;
+      static supportsLocationService: boolean;
+      static supportsVibration: boolean;
+      static supportsAudio: boolean;
+      static deviceType: UnityEngine.DeviceType;
+      static graphicsMemorySize: number;
+      static graphicsDeviceName: string;
+      static graphicsDeviceVendor: string;
+      static graphicsDeviceID: number;
+      static graphicsDeviceVendorID: number;
+      static graphicsDeviceType: UnityEngine.Rendering.GraphicsDeviceType;
+      static graphicsUVStartsAtTop: boolean;
+      static graphicsDeviceVersion: string;
+      static graphicsShaderLevel: number;
+      static graphicsMultiThreaded: boolean;
+      static renderingThreadingMode: UnityEngine.Rendering.RenderingThreadingMode;
+      static hasHiddenSurfaceRemovalOnGPU: boolean;
+      static hasDynamicUniformArrayIndexingInFragmentShaders: boolean;
+      static supportsShadows: boolean;
+      static supportsRawShadowDepthSampling: boolean;
+      static supportsMotionVectors: boolean;
+      static supports3DTextures: boolean;
+      static supportsCompressed3DTextures: boolean;
+      static supports2DArrayTextures: boolean;
+      static supports3DRenderTextures: boolean;
+      static supportsCubemapArrayTextures: boolean;
+      static copyTextureSupport: UnityEngine.Rendering.CopyTextureSupport;
+      static supportsComputeShaders: boolean;
+      static supportsGeometryShaders: boolean;
+      static supportsTessellationShaders: boolean;
+      static supportsRenderTargetArrayIndexFromVertexShader: boolean;
+      static supportsInstancing: boolean;
+      static supportsHardwareQuadTopology: boolean;
+      static supports32bitsIndexBuffer: boolean;
+      static supportsSparseTextures: boolean;
+      static supportedRenderTargetCount: number;
+      static supportsSeparatedRenderTargetsBlend: boolean;
+      static supportedRandomWriteTargetCount: number;
+      static supportsMultisampledTextures: number;
+      static supportsMultisampled2DArrayTextures: boolean;
+      static supportsMultisampleAutoResolve: boolean;
+      static supportsTextureWrapMirrorOnce: number;
+      static usesReversedZBuffer: boolean;
+      static npotSupport: UnityEngine.NPOTSupport;
+      static maxTextureSize: number;
+      static maxCubemapSize: number;
+      static maxComputeBufferInputsVertex: number;
+      static maxComputeBufferInputsFragment: number;
+      static maxComputeBufferInputsGeometry: number;
+      static maxComputeBufferInputsDomain: number;
+      static maxComputeBufferInputsHull: number;
+      static maxComputeBufferInputsCompute: number;
+      static maxComputeWorkGroupSize: number;
+      static maxComputeWorkGroupSizeX: number;
+      static maxComputeWorkGroupSizeY: number;
+      static maxComputeWorkGroupSizeZ: number;
+      static supportsAsyncCompute: boolean;
+      static supportsGpuRecorder: boolean;
+      static supportsGraphicsFence: boolean;
+      static supportsAsyncGPUReadback: boolean;
+      static supportsRayTracing: boolean;
+      static supportsSetConstantBuffer: boolean;
+      static constantBufferOffsetAlignment: number;
+      static hasMipMaxLevel: boolean;
+      static supportsMipStreaming: boolean;
+      static usesLoadStoreActions: boolean;
+      static hdrDisplaySupportFlags: UnityEngine.HDRDisplaySupportFlags;
+      static supportsConservativeRaster: boolean;
+      static supportsMultiview: boolean;
+      static supportsStoreAndResolveAction: boolean;
+      static unsupportedIdentifier: string;
+      static SupportsRenderTextureFormat(format: UnityEngine.RenderTextureFormat): boolean;
+      static SupportsBlendingOnRenderTextureFormat(format: UnityEngine.RenderTextureFormat): boolean;
+      static SupportsTextureFormat(format: UnityEngine.TextureFormat): boolean;
+      static SupportsVertexAttributeFormat(format: UnityEngine.Rendering.VertexAttributeFormat, dimension: number): boolean;
+      static IsFormatSupported(format: UnityEngine.Experimental.Rendering.GraphicsFormat, usage: UnityEngine.Experimental.Rendering.FormatUsage): boolean;
+      static GetCompatibleFormat(format: UnityEngine.Experimental.Rendering.GraphicsFormat, usage: UnityEngine.Experimental.Rendering.FormatUsage): UnityEngine.Experimental.Rendering.GraphicsFormat;
+      static GetGraphicsFormat(format: UnityEngine.Experimental.Rendering.DefaultFormat): UnityEngine.Experimental.Rendering.GraphicsFormat;
+      static GetRenderTextureSupportedMSAASampleCount(desc: UnityEngine.RenderTextureDescriptor): number;
+      static SupportsRandomWriteOnRenderTextureFormat(format: UnityEngine.RenderTextureFormat): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+  }
   export namespace Diagnostics {
     export enum ForcedCrashCategory {
       AccessViolation = 0,
@@ -14080,6 +14347,13 @@ export declare namespace UnityEngine {
       useDragThreshold: boolean;
       dragging: boolean;
       button: UnityEngine.EventSystems.PointerEventData_InputButton;
+      pressure: number;
+      tangentialPressure: number;
+      altitudeAngle: number;
+      azimuthAngle: number;
+      twist: number;
+      radius: UnityEngine.Vector2;
+      radiusVariance: UnityEngine.Vector2;
       enterEventCamera: UnityEngine.Camera;
       pressEventCamera: UnityEngine.Camera;
       pointerPress: UnityEngine.GameObject;
@@ -14101,6 +14375,9 @@ export declare namespace UnityEngine {
       Used = 1,
     }
     export interface IEventSystemHandler {
+    }
+    export interface IPointerMoveHandler {
+      OnPointerMove(eventData: UnityEngine.EventSystems.PointerEventData): void;
     }
     export interface IPointerEnterHandler {
       OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
@@ -14191,6 +14468,7 @@ export declare namespace UnityEngine {
       RaycastAll(eventData: UnityEngine.EventSystems.PointerEventData, raycastResults: UnityEngine.EventSystems.RaycastResult[]): void;
       IsPointerOverGameObject(): boolean;
       IsPointerOverGameObject(pointerId: number): boolean;
+      static SetUITookitEventSystemOverride(activeEventSystem: UnityEngine.EventSystems.EventSystem, sendEvents?: boolean, createPanelGameObjectsOnStart?: boolean): void;
       ToString(): string;
       IsActive(): boolean;
       IsDestroyed(): boolean;
@@ -14343,6 +14621,7 @@ export declare namespace UnityEngine {
       Cancel = 16,
     }
     export class ExecuteEvents {
+      static pointerMoveHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerMoveHandler]
       static pointerEnterHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerEnterHandler]
       static pointerExitHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerExitHandler]
       static pointerDownHandler: any; // UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[UnityEngine.EventSystems.IPointerDownHandler]
@@ -14481,6 +14760,7 @@ export declare namespace UnityEngine {
       ActivateModule(): void;
       UpdateModule(): void;
       IsModuleSupported(): boolean;
+      ConvertUIToolkitPointerId(sourcePointerData: UnityEngine.EventSystems.PointerEventData): number;
       IsActive(): boolean;
       IsDestroyed(): boolean;
       IsInvoking(): boolean;
@@ -14564,6 +14844,7 @@ export declare namespace UnityEngine {
       ActivateModule(): void;
       UpdateModule(): void;
       IsModuleSupported(): boolean;
+      ConvertUIToolkitPointerId(sourcePointerData: UnityEngine.EventSystems.PointerEventData): number;
       IsActive(): boolean;
       IsDestroyed(): boolean;
       IsInvoking(): boolean;
@@ -14644,13 +14925,14 @@ export declare namespace UnityEngine {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       UpdateModule(): void;
-      IsModuleSupported(): boolean;
       ShouldActivateModule(): boolean;
       ActivateModule(): void;
       DeactivateModule(): void;
       Process(): void;
       IsPointerOverGameObject(pointerId: number): boolean;
       ToString(): string;
+      IsModuleSupported(): boolean;
+      ConvertUIToolkitPointerId(sourcePointerData: UnityEngine.EventSystems.PointerEventData): number;
       IsActive(): boolean;
       IsDestroyed(): boolean;
       IsInvoking(): boolean;
@@ -14731,6 +15013,7 @@ export declare namespace UnityEngine {
       ToString(): string;
       IsPointerOverGameObject(pointerId: number): boolean;
       ActivateModule(): void;
+      ConvertUIToolkitPointerId(sourcePointerData: UnityEngine.EventSystems.PointerEventData): number;
       IsActive(): boolean;
       IsDestroyed(): boolean;
       IsInvoking(): boolean;
@@ -14782,25 +15065,6 @@ export declare namespace UnityEngine {
       Right = 2,
       Down = 3,
       None = 4,
-    }
-    export class RaycastResult {
-      gameObject: UnityEngine.GameObject;
-      isValid: boolean;
-      module: UnityEngine.EventSystems.BaseRaycaster;
-      distance: number;
-      index: number;
-      depth: number;
-      sortingLayer: number;
-      sortingOrder: number;
-      worldPosition: UnityEngine.Vector3;
-      worldNormal: UnityEngine.Vector3;
-      screenPosition: UnityEngine.Vector2;
-      displayIndex: number;
-      Clear(): void;
-      ToString(): string;
-      Equals(obj: System.Object): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
     }
     export class BaseRaycaster {
       eventCamera: UnityEngine.Camera;
@@ -15033,6 +15297,25 @@ export declare namespace UnityEngine {
       GetInstanceID(): number;
       GetHashCode(): number;
       Equals(other: System.Object): boolean;
+      GetType(): System.Type;
+    }
+    export class RaycastResult {
+      gameObject: UnityEngine.GameObject;
+      isValid: boolean;
+      module: UnityEngine.EventSystems.BaseRaycaster;
+      distance: number;
+      index: number;
+      depth: number;
+      sortingLayer: number;
+      sortingOrder: number;
+      worldPosition: UnityEngine.Vector3;
+      worldNormal: UnityEngine.Vector3;
+      screenPosition: UnityEngine.Vector2;
+      displayIndex: number;
+      Clear(): void;
+      ToString(): string;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
       GetType(): System.Type;
     }
     export class UIBehaviour {
@@ -15396,6 +15679,7 @@ export declare namespace UnityEngine {
         shadow: boolean;
         mode: UnityEngine.Experimental.GlobalIllumination.LightMode;
         position: UnityEngine.Vector3;
+        orientation: UnityEngine.Quaternion;
         color: UnityEngine.Experimental.GlobalIllumination.LinearColor;
         indirectColor: UnityEngine.Experimental.GlobalIllumination.LinearColor;
         range: number;
@@ -15822,6 +16106,10 @@ export declare namespace UnityEngine {
         RGBA_ASTC10X10_UNorm = 138,
         RGBA_ASTC12X12_SRGB = 139,
         RGBA_ASTC12X12_UNorm = 140,
+        YUV2 = 141,
+        DepthAuto = 142,
+        ShadowAuto = 143,
+        VideoAuto = 144,
         RGBA_ASTC4X4_UFloat = 145,
         RGBA_ASTC5X5_UFloat = 146,
         RGBA_ASTC6X6_UFloat = 147,
@@ -15904,9 +16192,11 @@ export declare namespace UnityEngine {
         Build(relativeOrigin: UnityEngine.Vector3): void;
         Update(relativeOrigin: UnityEngine.Vector3): void;
         AddInstance(targetRenderer: UnityEngine.Renderer, subMeshMask?: boolean[], subMeshTransparencyFlags?: boolean[], enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: System.UInt32): void;
+        RemoveInstance(targetRenderer: UnityEngine.Renderer): void;
         AddInstance(aabbBuffer: UnityEngine.GraphicsBuffer, numElements: System.UInt32, material: UnityEngine.Material, isCutOff: boolean, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: System.UInt32, reuseBounds?: boolean): void;
         AddInstance(aabbBuffer: UnityEngine.GraphicsBuffer, numElements: System.UInt32, material: UnityEngine.Material, instanceTransform: UnityEngine.Matrix4x4, isCutOff: boolean, enableTriangleCulling?: boolean, frontTriangleCounterClockwise?: boolean, mask?: System.UInt32, reuseBounds?: boolean): void;
         UpdateInstanceTransform(renderer: UnityEngine.Renderer): void;
+        UpdateInstanceMask(renderer: UnityEngine.Renderer, mask: System.UInt32): void;
         GetSize(): System.UInt64;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
@@ -16223,6 +16513,7 @@ export declare namespace UnityEngine {
       static hideHomeButton: boolean;
       static lowPowerModeEnabled: boolean;
       static wantsSoftwareDimming: boolean;
+      static iosAppOnMac: boolean;
       static deferSystemGesturesMode: UnityEngine.iOS.SystemGestureDeferMode;
       static SetNoBackupFlag(path: string): void;
       static ResetNoBackupFlag(path: string): void;
@@ -17162,6 +17453,12 @@ export declare namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class PreLateUpdate_Physics2DLateUpdate {
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class PreLateUpdate_AIUpdatePostScript {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -17324,6 +17621,12 @@ export declare namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class PostLateUpdate_XRPostLateUpdate {
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class PostLateUpdate_UpdateAllRenderers {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -17474,6 +17777,12 @@ export declare namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class PostLateUpdate_XRPreEndFrame {
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class PostLateUpdate_ProfilerEndFrame {
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -17503,6 +17812,93 @@ export declare namespace UnityEngine {
       GetHashCode(): number;
       ToString(): string;
       GetType(): System.Type;
+    }
+  }
+  export namespace Pool {
+    export class CollectionPool<TCollection = any, TItem = any> {
+      constructor();
+      static Get(): any;
+      static Release(toRelease: any): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ListPool<T = any> {
+      constructor();
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class HashSetPool<T = any> {
+      constructor();
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class DictionaryPool<TKey = any, TValue = any> {
+      constructor();
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class GenericPool<T = any> {
+      constructor();
+      static Get(): any;
+      static Release(toRelease: any): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export interface IObjectPool<T = any> {
+      CountInactive: number;
+      Get(): T;
+      Release(element: T): void;
+      Clear(): void;
+    }
+    export class LinkedPool<T = any> {
+      constructor(createFunc: ((arg0: T) => T), actionOnGet?: (() => void), actionOnRelease?: (() => void), actionOnDestroy?: (() => void), collectionCheck?: boolean, maxSize?: number);
+      CountInactive: number;
+      Get(): T;
+      Release(item: T): void;
+      Clear(): void;
+      Dispose(): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ObjectPool<T = any> {
+      constructor(createFunc: ((arg0: T) => T), actionOnGet?: (() => void), actionOnRelease?: (() => void), actionOnDestroy?: (() => void), collectionCheck?: boolean, defaultCapacity?: number, maxSize?: number);
+      CountAll: number;
+      CountActive: number;
+      CountInactive: number;
+      Get(): T;
+      Release(element: T): void;
+      Clear(): void;
+      Dispose(): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class PooledObject<T = any> {
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class UnsafeGenericPool<T = any> {
+      static Get(): any;
+      static Release(toRelease: any): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
     }
   }
   export namespace Profiling {
@@ -17634,9 +18030,9 @@ export declare namespace UnityEngine {
         }
         export class MemoryProfiler {
           constructor();
-          static TakeSnapshot(path: string, finishCallback: any, captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags): void;
-          static TakeSnapshot(path: string, finishCallback: any, screenshotCallback: any, captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags): void;
-          static TakeTempSnapshot(finishCallback: any, captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags): void;
+          static TakeSnapshot(path: string, finishCallback: ((arg0: string) => void), captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags): void;
+          static TakeSnapshot(path: string, finishCallback: ((arg0: string) => void), screenshotCallback: ((arg0: string, arg1: boolean) => void), captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags): void;
+          static TakeTempSnapshot(finishCallback: ((arg0: string) => void), captureFlags?: UnityEngine.Profiling.Memory.Experimental.CaptureFlags): void;
           Equals(obj: System.Object): boolean;
           GetHashCode(): number;
           GetType(): System.Type;
@@ -17663,16 +18059,16 @@ export declare namespace UnityEngine {
     }
     export class AsyncGPUReadback {
       static WaitAllRequests(): void;
-      static Request(src: UnityEngine.ComputeBuffer, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.ComputeBuffer, size: number, offset: number, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.GraphicsBuffer, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.GraphicsBuffer, size: number, offset: number, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.Texture, mipIndex?: number, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.Texture, mipIndex: number, dstFormat: UnityEngine.TextureFormat, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.Texture, mipIndex: number, dstFormat: UnityEngine.Experimental.Rendering.GraphicsFormat, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, dstFormat: UnityEngine.TextureFormat, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
-      static Request(src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, dstFormat: UnityEngine.Experimental.Rendering.GraphicsFormat, callback?: any): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.ComputeBuffer, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.ComputeBuffer, size: number, offset: number, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.GraphicsBuffer, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.GraphicsBuffer, size: number, offset: number, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.Texture, mipIndex?: number, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.Texture, mipIndex: number, dstFormat: UnityEngine.TextureFormat, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.Texture, mipIndex: number, dstFormat: UnityEngine.Experimental.Rendering.GraphicsFormat, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, dstFormat: UnityEngine.TextureFormat, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
+      static Request(src: UnityEngine.Texture, mipIndex: number, x: number, width: number, y: number, height: number, z: number, depth: number, dstFormat: UnityEngine.Experimental.Rendering.GraphicsFormat, callback?: (() => void)): UnityEngine.Rendering.AsyncGPUReadbackRequest;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -17998,6 +18394,11 @@ export declare namespace UnityEngine {
       Vulkan = 21,
       Switch = 22,
       XboxOneD3D12 = 23,
+      GameCoreXboxOne = 24,
+      GameCoreScarlett = 25,
+      GameCoreXboxSeries = 25,
+      PlayStation5 = 26,
+      PlayStation5NGGC = 27,
     }
     export enum GraphicsTier {
       Tier1 = 0,
@@ -18400,9 +18801,12 @@ export declare namespace UnityEngine {
       SetRenderTarget(colors: UnityEngine.Rendering.RenderTargetIdentifier[], depth: UnityEngine.Rendering.RenderTargetIdentifier, mipLevel: number, cubemapFace: UnityEngine.CubemapFace, depthSlice: number): void;
       SetRenderTarget(binding: UnityEngine.Rendering.RenderTargetBinding, mipLevel: number, cubemapFace: UnityEngine.CubemapFace, depthSlice: number): void;
       SetRenderTarget(binding: UnityEngine.Rendering.RenderTargetBinding): void;
-      SetComputeBufferData(buffer: UnityEngine.ComputeBuffer, data: System.Array): void;
-      SetComputeBufferData(buffer: UnityEngine.ComputeBuffer, data: System.Array, managedBufferStartIndex: number, graphicsBufferStartIndex: number, count: number): void;
-      SetComputeBufferCounterValue(buffer: UnityEngine.ComputeBuffer, counterValue: System.UInt32): void;
+      SetBufferData(buffer: UnityEngine.ComputeBuffer, data: System.Array): void;
+      SetBufferData(buffer: UnityEngine.ComputeBuffer, data: System.Array, managedBufferStartIndex: number, graphicsBufferStartIndex: number, count: number): void;
+      SetBufferCounterValue(buffer: UnityEngine.ComputeBuffer, counterValue: System.UInt32): void;
+      SetBufferData(buffer: UnityEngine.GraphicsBuffer, data: System.Array): void;
+      SetBufferData(buffer: UnityEngine.GraphicsBuffer, data: System.Array, managedBufferStartIndex: number, graphicsBufferStartIndex: number, count: number): void;
+      SetBufferCounterValue(buffer: UnityEngine.GraphicsBuffer, counterValue: System.UInt32): void;
       Dispose(): void;
       Release(): void;
       CreateAsyncGraphicsFence(): UnityEngine.Rendering.GraphicsFence;
@@ -18569,6 +18973,9 @@ export declare namespace UnityEngine {
       CreateGPUFence(): UnityEngine.Rendering.GPUFence;
       WaitOnGPUFence(fence: UnityEngine.Rendering.GPUFence, stage: UnityEngine.Rendering.SynchronisationStage): void;
       WaitOnGPUFence(fence: UnityEngine.Rendering.GPUFence): void;
+      SetComputeBufferData(buffer: UnityEngine.ComputeBuffer, data: System.Array): void;
+      SetComputeBufferData(buffer: UnityEngine.ComputeBuffer, data: System.Array, managedBufferStartIndex: number, graphicsBufferStartIndex: number, count: number): void;
+      SetComputeBufferCounterValue(buffer: UnityEngine.ComputeBuffer, counterValue: System.UInt32): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -18635,9 +19042,7 @@ export declare namespace UnityEngine {
     export class BatchRendererGroup {
       constructor(cullingCallback: UnityEngine.Rendering.BatchRendererGroup_OnPerformCulling);
       Dispose(): void;
-      AddBatch(mesh: UnityEngine.Mesh, subMeshIndex: number, material: UnityEngine.Material, layer: number, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, invertCulling: boolean, bounds: UnityEngine.Bounds, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock, associatedSceneObject: UnityEngine.GameObject): number;
-      AddBatch(mesh: UnityEngine.Mesh, subMeshIndex: number, material: UnityEngine.Material, layer: number, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, invertCulling: boolean, bounds: UnityEngine.Bounds, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock, associatedSceneObject: UnityEngine.GameObject, sceneCullingMask: System.UInt64): number;
-      AddBatch(mesh: UnityEngine.Mesh, subMeshIndex: number, material: UnityEngine.Material, layer: number, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, invertCulling: boolean, bounds: UnityEngine.Bounds, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock, associatedSceneObject: UnityEngine.GameObject, sceneCullingMask: System.UInt64, renderingLayerMask: System.UInt32): number;
+      AddBatch(mesh: UnityEngine.Mesh, subMeshIndex: number, material: UnityEngine.Material, layer: number, castShadows: UnityEngine.Rendering.ShadowCastingMode, receiveShadows: boolean, invertCulling: boolean, bounds: UnityEngine.Bounds, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock, associatedSceneObject: UnityEngine.GameObject, sceneCullingMask?: System.UInt64, renderingLayerMask?: System.UInt32): number;
       SetBatchFlags(batchIndex: number, flags: System.UInt64): void;
       SetBatchPropertyMetadata(batchIndex: number, cbufferLengths: Unity.Collections.NativeArray<number>, cbufferMetadata: Unity.Collections.NativeArray<number>): void;
       SetInstancingData(batchIndex: number, instanceCount: number, customProps: UnityEngine.MaterialPropertyBlock): void;
@@ -19045,6 +19450,7 @@ export declare namespace UnityEngine {
       lightIndex: number;
       useRenderingLayerMaskTest: boolean;
       splitData: UnityEngine.Rendering.ShadowSplitData;
+      objectsFilter: UnityEngine.ShadowObjectsFilter;
       Equals(other: UnityEngine.Rendering.ShadowDrawingSettings): boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -19258,6 +19664,7 @@ export declare namespace UnityEngine {
       Float = 2,
       Range = 3,
       Texture = 4,
+      Int = 5,
     }
     export enum ShaderPropertyFlags {
       None = 0,
@@ -19554,10 +19961,12 @@ export declare namespace UnityEngine {
     }
     export class SpriteBone {
       name: string;
+      guid: string;
       position: UnityEngine.Vector3;
       rotation: UnityEngine.Quaternion;
       length: number;
       parentId: number;
+      color: UnityEngine.Color32;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
@@ -20149,13 +20558,6 @@ export declare namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export interface IMask {
-      rectTransform: UnityEngine.RectTransform;
-      Enabled(): boolean;
-    }
-    export interface IMaskable {
-      RecalculateMasking(): void;
-    }
     export class Image {
       sprite: UnityEngine.Sprite;
       overrideSprite: UnityEngine.Sprite;
@@ -20297,8 +20699,16 @@ export declare namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
+    export interface IMask {
+      rectTransform: UnityEngine.RectTransform;
+      Enabled(): boolean;
+    }
+    export interface IMaskable {
+      RecalculateMasking(): void;
+    }
     export class InputField {
       shouldHideMobileInput: boolean;
+      shouldActivateOnSelect: boolean;
       text: string;
       isFocused: boolean;
       caretBlinkRate: number;
@@ -20308,7 +20718,8 @@ export declare namespace UnityEngine {
       caretColor: UnityEngine.Color;
       customCaretColor: boolean;
       selectionColor: UnityEngine.Color;
-      onEndEdit: UnityEngine.UI.InputField_SubmitEvent;
+      onEndEdit: UnityEngine.UI.InputField_EndEditEvent;
+      onSubmit: UnityEngine.UI.InputField_SubmitEvent;
       onValueChange: UnityEngine.UI.InputField_OnChangeEvent;
       onValueChanged: UnityEngine.UI.InputField_OnChangeEvent;
       onValidateInput: UnityEngine.UI.InputField_OnValidateInput;
@@ -21146,7 +21557,7 @@ export declare namespace UnityEngine {
       static GetMinHeight(rect: UnityEngine.RectTransform): number;
       static GetPreferredHeight(rect: UnityEngine.RectTransform): number;
       static GetFlexibleHeight(rect: UnityEngine.RectTransform): number;
-      static GetLayoutProperty(rect: UnityEngine.RectTransform, property: any, defaultValue: number): number;
+      static GetLayoutProperty(rect: UnityEngine.RectTransform, property: ((arg0: UnityEngine.UI.ILayoutElement, arg1: number) => number), defaultValue: number): number;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -21318,20 +21729,6 @@ export declare namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
-    export class MaskUtilities {
-      constructor();
-      static Notify2DMaskStateChanged(mask: UnityEngine.Component): void;
-      static NotifyStencilStateChanged(mask: UnityEngine.Component): void;
-      static FindRootSortOverrideCanvas(start: UnityEngine.Transform): UnityEngine.Transform;
-      static GetStencilDepth(transform: UnityEngine.Transform, stopAfter: UnityEngine.Transform): number;
-      static IsDescendantOrSelf(father: UnityEngine.Transform, child: UnityEngine.Transform): boolean;
-      static GetRectMaskForClippable(clippable: UnityEngine.UI.IClippable): UnityEngine.UI.RectMask2D;
-      static GetRectMasksForClip(clipper: UnityEngine.UI.RectMask2D, masks: UnityEngine.UI.RectMask2D[]): void;
-      Equals(obj: System.Object): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export class MaskableGraphic {
       onCullStateChanged: UnityEngine.UI.MaskableGraphic_CullStateChangedEvent;
       maskable: boolean;
@@ -21443,6 +21840,20 @@ export declare namespace UnityEngine {
       Equals(other: System.Object): boolean;
       ToString(): string;
       GetType(): System.Type;
+    }
+    export class MaskUtilities {
+      constructor();
+      static Notify2DMaskStateChanged(mask: UnityEngine.Component): void;
+      static NotifyStencilStateChanged(mask: UnityEngine.Component): void;
+      static FindRootSortOverrideCanvas(start: UnityEngine.Transform): UnityEngine.Transform;
+      static GetStencilDepth(transform: UnityEngine.Transform, stopAfter: UnityEngine.Transform): number;
+      static IsDescendantOrSelf(father: UnityEngine.Transform, child: UnityEngine.Transform): boolean;
+      static GetRectMaskForClippable(clippable: UnityEngine.UI.IClippable): UnityEngine.UI.RectMask2D;
+      static GetRectMasksForClip(clipper: UnityEngine.UI.RectMask2D, masks: UnityEngine.UI.RectMask2D[]): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
     }
     export interface IMaterialModifier {
       GetModifiedMaterial(baseMaterial: UnityEngine.Material): UnityEngine.Material;
@@ -21653,6 +22064,112 @@ export declare namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class Scrollbar {
+      handleRect: UnityEngine.RectTransform;
+      direction: UnityEngine.UI.Scrollbar_Direction;
+      value: number;
+      size: number;
+      numberOfSteps: number;
+      onValueChanged: UnityEngine.UI.Scrollbar_ScrollEvent;
+      navigation: UnityEngine.UI.Navigation;
+      transition: UnityEngine.UI.Selectable_Transition;
+      colors: UnityEngine.UI.ColorBlock;
+      spriteState: UnityEngine.UI.SpriteState;
+      animationTriggers: UnityEngine.UI.AnimationTriggers;
+      targetGraphic: UnityEngine.UI.Graphic;
+      interactable: boolean;
+      image: UnityEngine.UI.Image;
+      animator: UnityEngine.Animator;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      SetValueWithoutNotify(input: number): void;
+      Rebuild(executing: UnityEngine.UI.CanvasUpdate): void;
+      LayoutComplete(): void;
+      GraphicUpdateComplete(): void;
+      OnBeginDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnPointerDown(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnPointerUp(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnMove(eventData: UnityEngine.EventSystems.AxisEventData): void;
+      FindSelectableOnLeft(): UnityEngine.UI.Selectable;
+      FindSelectableOnRight(): UnityEngine.UI.Selectable;
+      FindSelectableOnUp(): UnityEngine.UI.Selectable;
+      FindSelectableOnDown(): UnityEngine.UI.Selectable;
+      OnInitializePotentialDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      SetDirection(direction: UnityEngine.UI.Scrollbar_Direction, includeRectLayouts: boolean): void;
+      IsInteractable(): boolean;
+      FindSelectable(dir: UnityEngine.Vector3): UnityEngine.UI.Selectable;
+      OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnPointerExit(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnSelect(eventData: UnityEngine.EventSystems.BaseEventData): void;
+      OnDeselect(eventData: UnityEngine.EventSystems.BaseEventData): void;
+      Select(): void;
+      IsActive(): boolean;
+      IsDestroyed(): boolean;
+      IsInvoking(): boolean;
+      CancelInvoke(): void;
+      Invoke(methodName: string, time: number): void;
+      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+      CancelInvoke(methodName: string): void;
+      IsInvoking(methodName: string): boolean;
+      StartCoroutine(methodName: string): UnityEngine.Coroutine;
+      StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
+      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StopCoroutine(routine: System.Collections.IEnumerator): void;
+      StopCoroutine(routine: UnityEngine.Coroutine): void;
+      StopCoroutine(methodName: string): void;
+      StopAllCoroutines(): void;
+      GetComponent(type: System.Type): UnityEngine.Component;
+      GetComponent(type: string): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type): UnityEngine.Component;
+      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type): UnityEngine.Component;
+      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      CompareTag(tag: string): boolean;
+      SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+      SendMessageUpwards(methodName: string, value: System.Object): void;
+      SendMessageUpwards(methodName: string): void;
+      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, value: System.Object): void;
+      SendMessage(methodName: string): void;
+      SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: System.Object): void;
+      BroadcastMessage(methodName: string): void;
+      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: System.Object): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class ScrollRect {
       content: UnityEngine.RectTransform;
       horizontal: boolean;
@@ -21717,112 +22234,6 @@ export declare namespace UnityEngine {
       CalculateLayoutInputVertical(): void;
       SetLayoutHorizontal(): void;
       SetLayoutVertical(): void;
-      IsDestroyed(): boolean;
-      IsInvoking(): boolean;
-      CancelInvoke(): void;
-      Invoke(methodName: string, time: number): void;
-      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
-      CancelInvoke(methodName: string): void;
-      IsInvoking(methodName: string): boolean;
-      StartCoroutine(methodName: string): UnityEngine.Coroutine;
-      StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
-      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StopCoroutine(routine: System.Collections.IEnumerator): void;
-      StopCoroutine(routine: UnityEngine.Coroutine): void;
-      StopCoroutine(methodName: string): void;
-      StopAllCoroutines(): void;
-      GetComponent(type: System.Type): UnityEngine.Component;
-      GetComponent(type: string): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type): UnityEngine.Component;
-      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type): UnityEngine.Component;
-      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
-      CompareTag(tag: string): boolean;
-      SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
-      SendMessageUpwards(methodName: string, value: System.Object): void;
-      SendMessageUpwards(methodName: string): void;
-      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, value: System.Object): void;
-      SendMessage(methodName: string): void;
-      SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: System.Object): void;
-      BroadcastMessage(methodName: string): void;
-      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      GetInstanceID(): number;
-      GetHashCode(): number;
-      Equals(other: System.Object): boolean;
-      ToString(): string;
-      GetType(): System.Type;
-    }
-    export class Scrollbar {
-      handleRect: UnityEngine.RectTransform;
-      direction: UnityEngine.UI.Scrollbar_Direction;
-      value: number;
-      size: number;
-      numberOfSteps: number;
-      onValueChanged: UnityEngine.UI.Scrollbar_ScrollEvent;
-      navigation: UnityEngine.UI.Navigation;
-      transition: UnityEngine.UI.Selectable_Transition;
-      colors: UnityEngine.UI.ColorBlock;
-      spriteState: UnityEngine.UI.SpriteState;
-      animationTriggers: UnityEngine.UI.AnimationTriggers;
-      targetGraphic: UnityEngine.UI.Graphic;
-      interactable: boolean;
-      image: UnityEngine.UI.Image;
-      animator: UnityEngine.Animator;
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      SetValueWithoutNotify(input: number): void;
-      Rebuild(executing: UnityEngine.UI.CanvasUpdate): void;
-      LayoutComplete(): void;
-      GraphicUpdateComplete(): void;
-      OnBeginDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
-      OnDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
-      OnPointerDown(eventData: UnityEngine.EventSystems.PointerEventData): void;
-      OnPointerUp(eventData: UnityEngine.EventSystems.PointerEventData): void;
-      OnMove(eventData: UnityEngine.EventSystems.AxisEventData): void;
-      FindSelectableOnLeft(): UnityEngine.UI.Selectable;
-      FindSelectableOnRight(): UnityEngine.UI.Selectable;
-      FindSelectableOnUp(): UnityEngine.UI.Selectable;
-      FindSelectableOnDown(): UnityEngine.UI.Selectable;
-      OnInitializePotentialDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
-      SetDirection(direction: UnityEngine.UI.Scrollbar_Direction, includeRectLayouts: boolean): void;
-      IsInteractable(): boolean;
-      FindSelectable(dir: UnityEngine.Vector3): UnityEngine.UI.Selectable;
-      OnPointerEnter(eventData: UnityEngine.EventSystems.PointerEventData): void;
-      OnPointerExit(eventData: UnityEngine.EventSystems.PointerEventData): void;
-      OnSelect(eventData: UnityEngine.EventSystems.BaseEventData): void;
-      OnDeselect(eventData: UnityEngine.EventSystems.BaseEventData): void;
-      Select(): void;
-      IsActive(): boolean;
       IsDestroyed(): boolean;
       IsInvoking(): boolean;
       CancelInvoke(): void;
@@ -22914,6 +23325,21 @@ export declare namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
+    export class InputField_EndEditEvent {
+      constructor();
+      AddListener(call: UnityEngine.Events.UnityAction<string>): void;
+      RemoveListener(call: UnityEngine.Events.UnityAction<string>): void;
+      Invoke(arg0: string): void;
+      GetPersistentEventCount(): number;
+      GetPersistentTarget(index: number): UnityEngine.Object;
+      GetPersistentMethodName(index: number): string;
+      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      RemoveAllListeners(): void;
+      ToString(): string;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
     export class InputField_OnChangeEvent {
       constructor();
       AddListener(call: UnityEngine.Events.UnityAction<string>): void;
@@ -22995,6 +23421,27 @@ export declare namespace UnityEngine {
       Automatic = 3,
       Explicit = 4,
     }
+    export enum Scrollbar_Direction {
+      LeftToRight = 0,
+      RightToLeft = 1,
+      BottomToTop = 2,
+      TopToBottom = 3,
+    }
+    export class Scrollbar_ScrollEvent {
+      constructor();
+      AddListener(call: UnityEngine.Events.UnityAction<number>): void;
+      RemoveListener(call: UnityEngine.Events.UnityAction<number>): void;
+      Invoke(arg0: number): void;
+      GetPersistentEventCount(): number;
+      GetPersistentTarget(index: number): UnityEngine.Object;
+      GetPersistentMethodName(index: number): string;
+      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      RemoveAllListeners(): void;
+      ToString(): string;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
     export enum ScrollRect_MovementType {
       Unrestricted = 0,
       Elastic = 1,
@@ -23010,27 +23457,6 @@ export declare namespace UnityEngine {
       AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.Vector2>): void;
       RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.Vector2>): void;
       Invoke(arg0: UnityEngine.Vector2): void;
-      GetPersistentEventCount(): number;
-      GetPersistentTarget(index: number): UnityEngine.Object;
-      GetPersistentMethodName(index: number): string;
-      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
-      RemoveAllListeners(): void;
-      ToString(): string;
-      Equals(obj: System.Object): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-    }
-    export enum Scrollbar_Direction {
-      LeftToRight = 0,
-      RightToLeft = 1,
-      BottomToTop = 2,
-      TopToBottom = 3,
-    }
-    export class Scrollbar_ScrollEvent {
-      constructor();
-      AddListener(call: UnityEngine.Events.UnityAction<number>): void;
-      RemoveListener(call: UnityEngine.Events.UnityAction<number>): void;
-      Invoke(arg0: number): void;
       GetPersistentEventCount(): number;
       GetPersistentTarget(index: number): UnityEngine.Object;
       GetPersistentMethodName(index: number): string;
@@ -23089,6 +23515,184 @@ export declare namespace UnityEngine {
     }
   }
   export namespace UIElements {
+    export class PanelEventHandler {
+      constructor();
+      panel: UnityEngine.UIElements.IPanel;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      OnSelect(eventData: UnityEngine.EventSystems.BaseEventData): void;
+      OnDeselect(eventData: UnityEngine.EventSystems.BaseEventData): void;
+      OnPointerMove(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnPointerUp(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnPointerDown(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      OnSubmit(eventData: UnityEngine.EventSystems.BaseEventData): void;
+      OnCancel(eventData: UnityEngine.EventSystems.BaseEventData): void;
+      OnMove(eventData: UnityEngine.EventSystems.AxisEventData): void;
+      OnScroll(eventData: UnityEngine.EventSystems.PointerEventData): void;
+      IsActive(): boolean;
+      IsDestroyed(): boolean;
+      IsInvoking(): boolean;
+      CancelInvoke(): void;
+      Invoke(methodName: string, time: number): void;
+      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+      CancelInvoke(methodName: string): void;
+      IsInvoking(methodName: string): boolean;
+      StartCoroutine(methodName: string): UnityEngine.Coroutine;
+      StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
+      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StopCoroutine(routine: System.Collections.IEnumerator): void;
+      StopCoroutine(routine: UnityEngine.Coroutine): void;
+      StopCoroutine(methodName: string): void;
+      StopAllCoroutines(): void;
+      GetComponent(type: System.Type): UnityEngine.Component;
+      GetComponent(type: string): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type): UnityEngine.Component;
+      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type): UnityEngine.Component;
+      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      CompareTag(tag: string): boolean;
+      SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+      SendMessageUpwards(methodName: string, value: System.Object): void;
+      SendMessageUpwards(methodName: string): void;
+      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, value: System.Object): void;
+      SendMessage(methodName: string): void;
+      SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: System.Object): void;
+      BroadcastMessage(methodName: string): void;
+      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: System.Object): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class PanelRaycaster {
+      constructor();
+      panel: UnityEngine.UIElements.IPanel;
+      sortOrderPriority: number;
+      renderOrderPriority: number;
+      eventCamera: UnityEngine.Camera;
+      priority: number;
+      rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      Raycast(eventData: UnityEngine.EventSystems.PointerEventData, resultAppendList: UnityEngine.EventSystems.RaycastResult[]): void;
+      ToString(): string;
+      IsActive(): boolean;
+      IsDestroyed(): boolean;
+      IsInvoking(): boolean;
+      CancelInvoke(): void;
+      Invoke(methodName: string, time: number): void;
+      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+      CancelInvoke(methodName: string): void;
+      IsInvoking(methodName: string): boolean;
+      StartCoroutine(methodName: string): UnityEngine.Coroutine;
+      StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
+      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StopCoroutine(routine: System.Collections.IEnumerator): void;
+      StopCoroutine(routine: UnityEngine.Coroutine): void;
+      StopCoroutine(methodName: string): void;
+      StopAllCoroutines(): void;
+      GetComponent(type: System.Type): UnityEngine.Component;
+      GetComponent(type: string): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type): UnityEngine.Component;
+      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type): UnityEngine.Component;
+      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      CompareTag(tag: string): boolean;
+      SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+      SendMessageUpwards(methodName: string, value: System.Object): void;
+      SendMessageUpwards(methodName: string): void;
+      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, value: System.Object): void;
+      SendMessage(methodName: string): void;
+      SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: System.Object): void;
+      BroadcastMessage(methodName: string): void;
+      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: System.Object): boolean;
+      GetType(): System.Type;
+    }
+    export enum DynamicAtlasFilters {
+      None = 0,
+      Readability = 1,
+      Size = 2,
+      Format = 4,
+      ColorSpace = 8,
+      FilterMode = 16,
+    }
+    export class DynamicAtlasCustomFilter {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: System.Object[]): System.Object;
+      Clone(): System.Object;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class BindableElement {
       constructor();
       binding: UnityEngine.UIElements.IBinding;
@@ -23542,6 +24146,26 @@ export declare namespace UnityEngine {
       scale: UnityEngine.Vector3;
       matrix: UnityEngine.Matrix4x4;
     }
+    export enum KeyboardNavigationOperation {
+      None = 0,
+      SelectAll = 1,
+      Cancel = 2,
+      Submit = 3,
+      Previous = 4,
+      Next = 5,
+      PageUp = 6,
+      PageDown = 7,
+      Begin = 8,
+      End = 9,
+    }
+    export class KeyboardNavigationManipulator {
+      constructor(action: ((arg0: UnityEngine.UIElements.KeyboardNavigationOperation) => void));
+      target: UnityEngine.UIElements.VisualElement;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class ManipulatorActivationFilter {
       button: UnityEngine.UIElements.MouseButton;
       modifiers: UnityEngine.EventModifiers;
@@ -23803,6 +24427,7 @@ export declare namespace UnityEngine {
     export class TextElement {
       constructor();
       text: string;
+      enableRichText: boolean;
       displayTooltipWhenElided: boolean;
       isElided: boolean;
       binding: UnityEngine.UIElements.IBinding;
@@ -23841,6 +24466,7 @@ export declare namespace UnityEngine {
       tabIndex: number;
       delegatesFocus: boolean;
       static ussClassName: string;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       MeasureTextSize(textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode): UnityEngine.Vector2;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
@@ -23874,7 +24500,6 @@ export declare namespace UnityEngine {
       Contains(child: UnityEngine.UIElements.VisualElement): boolean;
       FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
       Blur(): void;
-      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       HasTrickleDownHandlers(): boolean;
       HasBubbleUpHandlers(): boolean;
       Equals(obj: System.Object): boolean;
@@ -23924,6 +24549,7 @@ export declare namespace UnityEngine {
       ToList(): T[];
       AtIndex(index: number): T;
       ForEach(funcCall: (() => void)): void;
+      GetEnumerator(): UnityEngine.UIElements.UQueryState<T>;
       Equals(other: UnityEngine.UIElements.UQueryState<T>): boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
@@ -24105,16 +24731,16 @@ export declare namespace UnityEngine {
       GetType(): System.Type;
     }
     export class VisualElementExtensions {
+      static StretchToParentSize(elem: UnityEngine.UIElements.VisualElement): void;
+      static StretchToParentWidth(elem: UnityEngine.UIElements.VisualElement): void;
+      static AddManipulator(ele: UnityEngine.UIElements.VisualElement, manipulator: UnityEngine.UIElements.IManipulator): void;
+      static RemoveManipulator(ele: UnityEngine.UIElements.VisualElement, manipulator: UnityEngine.UIElements.IManipulator): void;
       static WorldToLocal(ele: UnityEngine.UIElements.VisualElement, p: UnityEngine.Vector2): UnityEngine.Vector2;
       static LocalToWorld(ele: UnityEngine.UIElements.VisualElement, p: UnityEngine.Vector2): UnityEngine.Vector2;
       static WorldToLocal(ele: UnityEngine.UIElements.VisualElement, r: UnityEngine.Rect): UnityEngine.Rect;
       static LocalToWorld(ele: UnityEngine.UIElements.VisualElement, r: UnityEngine.Rect): UnityEngine.Rect;
       static ChangeCoordinatesTo(src: UnityEngine.UIElements.VisualElement, dest: UnityEngine.UIElements.VisualElement, point: UnityEngine.Vector2): UnityEngine.Vector2;
       static ChangeCoordinatesTo(src: UnityEngine.UIElements.VisualElement, dest: UnityEngine.UIElements.VisualElement, rect: UnityEngine.Rect): UnityEngine.Rect;
-      static StretchToParentSize(elem: UnityEngine.UIElements.VisualElement): void;
-      static StretchToParentWidth(elem: UnityEngine.UIElements.VisualElement): void;
-      static AddManipulator(ele: UnityEngine.UIElements.VisualElement, manipulator: UnityEngine.UIElements.IManipulator): void;
-      static RemoveManipulator(ele: UnityEngine.UIElements.VisualElement, manipulator: UnityEngine.UIElements.IManipulator): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -24173,10 +24799,93 @@ export declare namespace UnityEngine {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class BaseBoolField {
+      constructor(label: string);
+      text: string;
+      value: boolean;
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      showMixedValue: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: System.Object;
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: (() => void);
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetValueWithoutNotify(newValue: boolean): void;
+      Focus(): void;
+      SendEvent(e: UnityEngine.UIElements.EventBase): void;
+      SetEnabled(value: boolean): void;
+      MarkDirtyRepaint(): void;
+      ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+      Overlaps(rectangle: UnityEngine.Rect): boolean;
+      ToString(): string;
+      GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      ClearClassList(): void;
+      AddToClassList(className: string): void;
+      RemoveFromClassList(className: string): void;
+      ToggleInClassList(className: string): void;
+      EnableInClassList(className: string, enable: boolean): void;
+      ClassListContains(cls: string): boolean;
+      FindAncestorUserData(): System.Object;
+      Add(child: UnityEngine.UIElements.VisualElement): void;
+      Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+      Remove(element: UnityEngine.UIElements.VisualElement): void;
+      RemoveAt(index: number): void;
+      Clear(): void;
+      ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+      IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+      Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      BringToFront(): void;
+      SendToBack(): void;
+      PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+      PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+      RemoveFromHierarchy(): void;
+      Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+      FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      Blur(): void;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
+      HasTrickleDownHandlers(): boolean;
+      HasBubbleUpHandlers(): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
     export class BaseField<TValueType = any> {
       value: TValueType;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
+      showMixedValue: boolean;
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -24217,6 +24926,7 @@ export declare namespace UnityEngine {
       static inputUssClassName: string;
       static noLabelVariantUssClassName: string;
       static labelDraggerVariantUssClassName: string;
+      static mixedValueLabelUssClassName: string;
       SetValueWithoutNotify(newValue: TValueType): void;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
@@ -24280,8 +24990,10 @@ export declare namespace UnityEngine {
       showInputField: boolean;
       value: TValueType;
       direction: UnityEngine.UIElements.SliderDirection;
+      inverted: boolean;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
+      showMixedValue: boolean;
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -24482,6 +25194,7 @@ export declare namespace UnityEngine {
       constructor(clickEvent: System.Action);
       clickable: UnityEngine.UIElements.Clickable;
       text: string;
+      enableRichText: boolean;
       displayTooltipWhenElided: boolean;
       isElided: boolean;
       binding: UnityEngine.UIElements.IBinding;
@@ -24520,7 +25233,124 @@ export declare namespace UnityEngine {
       tabIndex: number;
       delegatesFocus: boolean;
       static ussClassName: string;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       MeasureTextSize(textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode): UnityEngine.Vector2;
+      Focus(): void;
+      SendEvent(e: UnityEngine.UIElements.EventBase): void;
+      SetEnabled(value: boolean): void;
+      MarkDirtyRepaint(): void;
+      ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+      Overlaps(rectangle: UnityEngine.Rect): boolean;
+      ToString(): string;
+      GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      ClearClassList(): void;
+      AddToClassList(className: string): void;
+      RemoveFromClassList(className: string): void;
+      ToggleInClassList(className: string): void;
+      EnableInClassList(className: string, enable: boolean): void;
+      ClassListContains(cls: string): boolean;
+      FindAncestorUserData(): System.Object;
+      Add(child: UnityEngine.UIElements.VisualElement): void;
+      Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+      Remove(element: UnityEngine.UIElements.VisualElement): void;
+      RemoveAt(index: number): void;
+      Clear(): void;
+      ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+      IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+      Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      BringToFront(): void;
+      SendToBack(): void;
+      PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+      PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+      RemoveFromHierarchy(): void;
+      Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+      FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      Blur(): void;
+      HasTrickleDownHandlers(): boolean;
+      HasBubbleUpHandlers(): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class Button_UxmlFactory {
+      constructor();
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): boolean;
+      Create(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): UnityEngine.UIElements.VisualElement;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class Button_UxmlTraits {
+      constructor();
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      Init(ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class DropdownField {
+      constructor();
+      constructor(label: string);
+      constructor(choices: string[], defaultValue: string, formatSelectedValueCallback?: ((arg0: string, arg1: string) => string), formatListItemCallback?: ((arg0: string, arg1: string) => string));
+      constructor(label: string, choices: string[], defaultValue: string, formatSelectedValueCallback?: ((arg0: string, arg1: string) => string), formatListItemCallback?: ((arg0: string, arg1: string) => string));
+      constructor(choices: string[], defaultIndex: number, formatSelectedValueCallback?: ((arg0: string, arg1: string) => string), formatListItemCallback?: ((arg0: string, arg1: string) => string));
+      constructor(label: string, choices: string[], defaultIndex: number, formatSelectedValueCallback?: ((arg0: string, arg1: string) => string), formatListItemCallback?: ((arg0: string, arg1: string) => string));
+      text: string;
+      index: number;
+      value: string;
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      showMixedValue: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: System.Object;
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: (() => void);
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetValueWithoutNotify(newValue: string): void;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
       SetEnabled(value: boolean): void;
@@ -24560,7 +25390,7 @@ export declare namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export class Button_UxmlFactory {
+    export class DropdownField_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -24578,7 +25408,7 @@ export declare namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class Button_UxmlTraits {
+    export class DropdownField_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -24690,6 +25520,135 @@ export declare namespace UnityEngine {
       ToString(): string;
     }
     export class Foldout_UxmlTraits {
+      constructor();
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      Init(ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class GenericDropdownMenu {
+      constructor();
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      static ussClassName: string;
+      static itemUssClassName: string;
+      static labelUssClassName: string;
+      static containerInnerUssClassName: string;
+      static containerOuterUssClassName: string;
+      static checkmarkUssClassName: string;
+      static separatorUssClassName: string;
+      AddItem(itemName: string, isChecked: boolean, action: System.Action): void;
+      AddItem(itemName: string, isChecked: boolean, action: (() => void), data: System.Object): void;
+      AddDisabledItem(itemName: string, isChecked: boolean): void;
+      AddSeparator(path: string): void;
+      DropDown(position: UnityEngine.Rect, targetElement?: UnityEngine.UIElements.VisualElement, anchored?: boolean): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class GroupBox {
+      constructor();
+      constructor(text: string);
+      text: string;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: System.Object;
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: (() => void);
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      static ussClassName: string;
+      static labelUssClassName: string;
+      Focus(): void;
+      SendEvent(e: UnityEngine.UIElements.EventBase): void;
+      SetEnabled(value: boolean): void;
+      MarkDirtyRepaint(): void;
+      ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+      Overlaps(rectangle: UnityEngine.Rect): boolean;
+      ToString(): string;
+      GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      ClearClassList(): void;
+      AddToClassList(className: string): void;
+      RemoveFromClassList(className: string): void;
+      ToggleInClassList(className: string): void;
+      EnableInClassList(className: string, enable: boolean): void;
+      ClassListContains(cls: string): boolean;
+      FindAncestorUserData(): System.Object;
+      Add(child: UnityEngine.UIElements.VisualElement): void;
+      Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+      Remove(element: UnityEngine.UIElements.VisualElement): void;
+      RemoveAt(index: number): void;
+      Clear(): void;
+      ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+      IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+      Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      BringToFront(): void;
+      SendToBack(): void;
+      PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+      PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+      RemoveFromHierarchy(): void;
+      Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+      FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      Blur(): void;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
+      HasTrickleDownHandlers(): boolean;
+      HasBubbleUpHandlers(): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class GroupBox_UxmlFactory {
+      constructor();
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): boolean;
+      Create(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): UnityEngine.UIElements.VisualElement;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class GroupBox_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -24821,6 +25780,7 @@ export declare namespace UnityEngine {
     export class Image {
       constructor();
       image: UnityEngine.Texture;
+      sprite: UnityEngine.Sprite;
       vectorImage: UnityEngine.UIElements.VectorImage;
       sourceRect: UnityEngine.Rect;
       uv: UnityEngine.Rect;
@@ -24928,6 +25888,9 @@ export declare namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
+    export interface IMixedValueSupport {
+      showMixedValue: boolean;
+    }
     export interface INotifyValueChanged<T = any> {
       value: T;
       SetValueWithoutNotify(newValue: T): void;
@@ -24942,6 +25905,7 @@ export declare namespace UnityEngine {
       constructor();
       constructor(text: string);
       text: string;
+      enableRichText: boolean;
       displayTooltipWhenElided: boolean;
       isElided: boolean;
       binding: UnityEngine.UIElements.IBinding;
@@ -24980,6 +25944,7 @@ export declare namespace UnityEngine {
       tabIndex: number;
       delegatesFocus: boolean;
       static ussClassName: string;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       MeasureTextSize(textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode): UnityEngine.Vector2;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
@@ -25013,7 +25978,6 @@ export declare namespace UnityEngine {
       Contains(child: UnityEngine.UIElements.VisualElement): boolean;
       FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
       Blur(): void;
-      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       HasTrickleDownHandlers(): boolean;
       HasBubbleUpHandlers(): boolean;
       Equals(obj: System.Object): boolean;
@@ -25205,6 +26169,7 @@ export declare namespace UnityEngine {
       highLimit: number;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
+      showMixedValue: boolean;
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -25320,6 +26285,7 @@ export declare namespace UnityEngine {
       constructor();
       contentContainer: UnityEngine.UIElements.VisualElement;
       text: string;
+      enableRichText: boolean;
       displayTooltipWhenElided: boolean;
       isElided: boolean;
       binding: UnityEngine.UIElements.IBinding;
@@ -25358,7 +26324,121 @@ export declare namespace UnityEngine {
       delegatesFocus: boolean;
       static ussClassName: string;
       static contentUssClassName: string;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       MeasureTextSize(textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode): UnityEngine.Vector2;
+      Focus(): void;
+      SendEvent(e: UnityEngine.UIElements.EventBase): void;
+      SetEnabled(value: boolean): void;
+      MarkDirtyRepaint(): void;
+      ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+      Overlaps(rectangle: UnityEngine.Rect): boolean;
+      ToString(): string;
+      GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      ClearClassList(): void;
+      AddToClassList(className: string): void;
+      RemoveFromClassList(className: string): void;
+      ToggleInClassList(className: string): void;
+      EnableInClassList(className: string, enable: boolean): void;
+      ClassListContains(cls: string): boolean;
+      FindAncestorUserData(): System.Object;
+      Add(child: UnityEngine.UIElements.VisualElement): void;
+      Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+      Remove(element: UnityEngine.UIElements.VisualElement): void;
+      RemoveAt(index: number): void;
+      Clear(): void;
+      ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+      IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+      Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      BringToFront(): void;
+      SendToBack(): void;
+      PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+      PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+      RemoveFromHierarchy(): void;
+      Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+      FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      Blur(): void;
+      HasTrickleDownHandlers(): boolean;
+      HasBubbleUpHandlers(): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class PopupWindow_UxmlFactory {
+      constructor();
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): boolean;
+      Create(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): UnityEngine.UIElements.VisualElement;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class PopupWindow_UxmlTraits {
+      constructor();
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      Init(ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class AbstractProgressBar {
+      constructor();
+      title: string;
+      value: number;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: System.Object;
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: (() => void);
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      static ussClassName: string;
+      static containerUssClassName: string;
+      static titleUssClassName: string;
+      static titleContainerUssClassName: string;
+      static progressUssClassName: string;
+      static backgroundUssClassName: string;
+      SetValueWithoutNotify(newValue: number): void;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
       SetEnabled(value: boolean): void;
@@ -25398,7 +26478,97 @@ export declare namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
     }
-    export class PopupWindow_UxmlFactory {
+    export class AbstractProgressBar_UxmlTraits {
+      constructor();
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      Init(ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ProgressBar {
+      constructor();
+      title: string;
+      value: number;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: System.Object;
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: (() => void);
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      SetValueWithoutNotify(newValue: number): void;
+      Focus(): void;
+      SendEvent(e: UnityEngine.UIElements.EventBase): void;
+      SetEnabled(value: boolean): void;
+      MarkDirtyRepaint(): void;
+      ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+      Overlaps(rectangle: UnityEngine.Rect): boolean;
+      ToString(): string;
+      GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      ClearClassList(): void;
+      AddToClassList(className: string): void;
+      RemoveFromClassList(className: string): void;
+      ToggleInClassList(className: string): void;
+      EnableInClassList(className: string, enable: boolean): void;
+      ClassListContains(cls: string): boolean;
+      FindAncestorUserData(): System.Object;
+      Add(child: UnityEngine.UIElements.VisualElement): void;
+      Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+      Remove(element: UnityEngine.UIElements.VisualElement): void;
+      RemoveAt(index: number): void;
+      Clear(): void;
+      ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+      IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+      Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      BringToFront(): void;
+      SendToBack(): void;
+      PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+      PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+      RemoveFromHierarchy(): void;
+      Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+      FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      Blur(): void;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
+      HasTrickleDownHandlers(): boolean;
+      HasBubbleUpHandlers(): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class ProgressBar_UxmlFactory {
       constructor();
       uxmlName: string;
       uxmlNamespace: string;
@@ -25416,7 +26586,228 @@ export declare namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class PopupWindow_UxmlTraits {
+    export class RadioButton {
+      constructor();
+      constructor(label: string);
+      value: boolean;
+      text: string;
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      showMixedValue: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: System.Object;
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: (() => void);
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      static ussClassName: string;
+      static labelUssClassName: string;
+      static inputUssClassName: string;
+      static checkmarkBackgroundUssClassName: string;
+      static checkmarkUssClassName: string;
+      static textUssClassName: string;
+      SetSelected(selected: boolean): void;
+      SetValueWithoutNotify(newValue: boolean): void;
+      Focus(): void;
+      SendEvent(e: UnityEngine.UIElements.EventBase): void;
+      SetEnabled(value: boolean): void;
+      MarkDirtyRepaint(): void;
+      ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+      Overlaps(rectangle: UnityEngine.Rect): boolean;
+      ToString(): string;
+      GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      ClearClassList(): void;
+      AddToClassList(className: string): void;
+      RemoveFromClassList(className: string): void;
+      ToggleInClassList(className: string): void;
+      EnableInClassList(className: string, enable: boolean): void;
+      ClassListContains(cls: string): boolean;
+      FindAncestorUserData(): System.Object;
+      Add(child: UnityEngine.UIElements.VisualElement): void;
+      Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+      Remove(element: UnityEngine.UIElements.VisualElement): void;
+      RemoveAt(index: number): void;
+      Clear(): void;
+      ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+      IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+      Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      BringToFront(): void;
+      SendToBack(): void;
+      PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+      PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+      RemoveFromHierarchy(): void;
+      Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+      FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      Blur(): void;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
+      HasTrickleDownHandlers(): boolean;
+      HasBubbleUpHandlers(): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class RadioButton_UxmlFactory {
+      constructor();
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): boolean;
+      Create(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): UnityEngine.UIElements.VisualElement;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class RadioButton_UxmlTraits {
+      constructor();
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      Init(ve: UnityEngine.UIElements.VisualElement, bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class RadioButtonGroup {
+      constructor();
+      constructor(label: string, radioButtonChoices?: string[]);
+      choices: System.Collections.Generic.IEnumerable<string>;
+      value: number;
+      labelElement: UnityEngine.UIElements.Label;
+      label: string;
+      showMixedValue: boolean;
+      binding: UnityEngine.UIElements.IBinding;
+      bindingPath: string;
+      viewDataKey: string;
+      userData: System.Object;
+      canGrabFocus: boolean;
+      focusController: UnityEngine.UIElements.FocusController;
+      usageHints: UnityEngine.UIElements.UsageHints;
+      transform: UnityEngine.UIElements.ITransform;
+      layout: UnityEngine.Rect;
+      contentRect: UnityEngine.Rect;
+      worldBound: UnityEngine.Rect;
+      localBound: UnityEngine.Rect;
+      worldTransform: UnityEngine.Matrix4x4;
+      pickingMode: UnityEngine.UIElements.PickingMode;
+      name: string;
+      enabledInHierarchy: boolean;
+      enabledSelf: boolean;
+      visible: boolean;
+      generateVisualContent: (() => void);
+      experimental: UnityEngine.UIElements.IExperimentalFeatures;
+      hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+      cacheAsBitmap: boolean;
+      parent: UnityEngine.UIElements.VisualElement;
+      panel: UnityEngine.UIElements.IPanel;
+      contentContainer: UnityEngine.UIElements.VisualElement;
+      childCount: number;
+      schedule: UnityEngine.UIElements.IVisualElementScheduler;
+      style: UnityEngine.UIElements.IStyle;
+      customStyle: UnityEngine.UIElements.ICustomStyle;
+      styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+      tooltip: string;
+      resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+      focusable: boolean;
+      tabIndex: number;
+      delegatesFocus: boolean;
+      static ussClassName: string;
+      SetValueWithoutNotify(newValue: number): void;
+      Focus(): void;
+      SendEvent(e: UnityEngine.UIElements.EventBase): void;
+      SetEnabled(value: boolean): void;
+      MarkDirtyRepaint(): void;
+      ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+      Overlaps(rectangle: UnityEngine.Rect): boolean;
+      ToString(): string;
+      GetClasses(): System.Collections.Generic.IEnumerable<string>;
+      ClearClassList(): void;
+      AddToClassList(className: string): void;
+      RemoveFromClassList(className: string): void;
+      ToggleInClassList(className: string): void;
+      EnableInClassList(className: string, enable: boolean): void;
+      ClassListContains(cls: string): boolean;
+      FindAncestorUserData(): System.Object;
+      Add(child: UnityEngine.UIElements.VisualElement): void;
+      Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+      Remove(element: UnityEngine.UIElements.VisualElement): void;
+      RemoveAt(index: number): void;
+      Clear(): void;
+      ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+      IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+      Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+      Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+      BringToFront(): void;
+      SendToBack(): void;
+      PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+      PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+      RemoveFromHierarchy(): void;
+      Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+      FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+      Blur(): void;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
+      HasTrickleDownHandlers(): boolean;
+      HasBubbleUpHandlers(): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class RadioButtonGroup_UxmlFactory {
+      constructor();
+      uxmlName: string;
+      uxmlNamespace: string;
+      uxmlQualifiedName: string;
+      canHaveAnyAttribute: boolean;
+      uxmlAttributesDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlAttributeDescription>;
+      uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
+      substituteForTypeName: string;
+      substituteForTypeNamespace: string;
+      substituteForTypeQualifiedName: string;
+      AcceptsAttributeBag(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): boolean;
+      Create(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): UnityEngine.UIElements.VisualElement;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class RadioButtonGroup_UxmlTraits {
       constructor();
       uxmlChildElementsDescription: System.Collections.Generic.IEnumerable<UnityEngine.UIElements.UxmlChildElementDescription>;
       canHaveAnyAttribute: boolean;
@@ -25431,6 +26822,7 @@ export declare namespace UnityEngine {
       constructor();
       constructor(clickEvent: System.Action, delay: System.Int64, interval: System.Int64);
       text: string;
+      enableRichText: boolean;
       displayTooltipWhenElided: boolean;
       isElided: boolean;
       binding: UnityEngine.UIElements.IBinding;
@@ -25470,6 +26862,7 @@ export declare namespace UnityEngine {
       delegatesFocus: boolean;
       static ussClassName: string;
       SetAction(clickEvent: System.Action, delay: System.Int64, interval: System.Int64): void;
+      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       MeasureTextSize(textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode): UnityEngine.Vector2;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
@@ -25503,7 +26896,6 @@ export declare namespace UnityEngine {
       Contains(child: UnityEngine.UIElements.VisualElement): boolean;
       FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
       Blur(): void;
-      HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
       HasTrickleDownHandlers(): boolean;
       HasBubbleUpHandlers(): boolean;
       Equals(obj: System.Object): boolean;
@@ -25666,9 +27058,16 @@ export declare namespace UnityEngine {
       Horizontal = 1,
       VerticalAndHorizontal = 2,
     }
+    export enum ScrollerVisibility {
+      Auto = 0,
+      AlwaysVisible = 1,
+      Hidden = 2,
+    }
     export class ScrollView {
       constructor();
       constructor(scrollViewMode: UnityEngine.UIElements.ScrollViewMode);
+      horizontalScrollerVisibility: UnityEngine.UIElements.ScrollerVisibility;
+      verticalScrollerVisibility: UnityEngine.UIElements.ScrollerVisibility;
       showHorizontal: boolean;
       showVertical: boolean;
       scrollOffset: UnityEngine.Vector2;
@@ -25807,8 +27206,10 @@ export declare namespace UnityEngine {
       showInputField: boolean;
       value: number;
       direction: UnityEngine.UIElements.SliderDirection;
+      inverted: boolean;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
+      showMixedValue: boolean;
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -25928,8 +27329,10 @@ export declare namespace UnityEngine {
       showInputField: boolean;
       value: number;
       direction: UnityEngine.UIElements.SliderDirection;
+      inverted: boolean;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
+      showMixedValue: boolean;
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -26059,6 +27462,7 @@ export declare namespace UnityEngine {
       maskChar: System.Char;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
+      showMixedValue: boolean;
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -26099,6 +27503,7 @@ export declare namespace UnityEngine {
       static inputUssClassName: string;
       SelectRange(rangeCursorIndex: number, selectionIndex: number): void;
       SetValueWithoutNotify(newValue: string): void;
+      MeasureTextSize(textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode): UnityEngine.Vector2;
       SelectAll(): void;
       Focus(): void;
       SendEvent(e: UnityEngine.UIElements.EventBase): void;
@@ -26184,6 +27589,7 @@ export declare namespace UnityEngine {
       value: TValueType;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
+      showMixedValue: boolean;
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -26222,7 +27628,10 @@ export declare namespace UnityEngine {
       static ussClassName: string;
       static labelUssClassName: string;
       static inputUssClassName: string;
+      static singleLineInputUssClassName: string;
+      static multilineInputUssClassName: string;
       static textInputUssName: string;
+      MeasureTextSize(textToMeasure: string, width: number, widthMode: UnityEngine.UIElements.VisualElement_MeasureMode, height: number, heightMode: UnityEngine.UIElements.VisualElement_MeasureMode): UnityEngine.Vector2;
       SelectAll(): void;
       SetValueWithoutNotify(newValue: TValueType): void;
       Focus(): void;
@@ -26271,6 +27680,7 @@ export declare namespace UnityEngine {
       value: boolean;
       labelElement: UnityEngine.UIElements.Label;
       label: string;
+      showMixedValue: boolean;
       binding: UnityEngine.UIElements.IBinding;
       bindingPath: string;
       viewDataKey: string;
@@ -27840,6 +29250,113 @@ export declare namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
+    export interface INavigationEvent {
+    }
+    export class NavigationEventBase<T = any> {
+      eventTypeId: System.Int64;
+      timestamp: System.Int64;
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose(): void;
+      StopPropagation(): void;
+      StopImmediatePropagation(): void;
+      PreventDefault(): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class NavigationMoveEvent {
+      constructor();
+      direction: UnityEngine.UIElements.NavigationMoveEvent_Direction;
+      move: UnityEngine.Vector2;
+      eventTypeId: System.Int64;
+      timestamp: System.Int64;
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      static GetPooled(moveVector: UnityEngine.Vector2): UnityEngine.UIElements.NavigationMoveEvent;
+      Dispose(): void;
+      StopPropagation(): void;
+      StopImmediatePropagation(): void;
+      PreventDefault(): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum NavigationMoveEvent_Direction {
+      None = 0,
+      Left = 1,
+      Up = 2,
+      Right = 3,
+      Down = 4,
+    }
+    export class NavigationCancelEvent {
+      constructor();
+      eventTypeId: System.Int64;
+      timestamp: System.Int64;
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose(): void;
+      StopPropagation(): void;
+      StopImmediatePropagation(): void;
+      PreventDefault(): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class NavigationSubmitEvent {
+      constructor();
+      eventTypeId: System.Int64;
+      timestamp: System.Int64;
+      bubbles: boolean;
+      tricklesDown: boolean;
+      target: UnityEngine.UIElements.IEventHandler;
+      isPropagationStopped: boolean;
+      isImmediatePropagationStopped: boolean;
+      isDefaultPrevented: boolean;
+      propagationPhase: UnityEngine.UIElements.PropagationPhase;
+      currentTarget: UnityEngine.UIElements.IEventHandler;
+      dispatch: boolean;
+      imguiEvent: UnityEngine.Event;
+      originalMousePosition: UnityEngine.Vector2;
+      Dispose(): void;
+      StopPropagation(): void;
+      StopImmediatePropagation(): void;
+      PreventDefault(): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export interface IPanelChangedEvent {
     }
     export class PanelChangedEventBase<T = any> {
@@ -28599,8 +30116,12 @@ export declare namespace UnityEngine {
     export class Background {
       constructor(t: UnityEngine.Texture2D);
       texture: UnityEngine.Texture2D;
+      sprite: UnityEngine.Sprite;
+      renderTexture: UnityEngine.RenderTexture;
       vectorImage: UnityEngine.UIElements.VectorImage;
       static FromTexture2D(t: UnityEngine.Texture2D): UnityEngine.UIElements.Background;
+      static FromRenderTexture(rt: UnityEngine.RenderTexture): UnityEngine.UIElements.Background;
+      static FromSprite(s: UnityEngine.Sprite): UnityEngine.UIElements.Background;
       static FromVectorImage(vi: UnityEngine.UIElements.VectorImage): UnityEngine.UIElements.Background;
       Equals(other: UnityEngine.UIElements.Background): boolean;
       Equals(obj: System.Object): boolean;
@@ -28638,6 +30159,7 @@ export declare namespace UnityEngine {
     export class StyleBackground {
       constructor(v: UnityEngine.UIElements.Background);
       constructor(v: UnityEngine.Texture2D);
+      constructor(v: UnityEngine.Sprite);
       constructor(v: UnityEngine.UIElements.VectorImage);
       constructor(keyword: UnityEngine.UIElements.StyleKeyword);
       value: UnityEngine.UIElements.Background;
@@ -29178,6 +30700,22 @@ export declare namespace UnityEngine {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class UxmlHash128AttributeDescription {
+      constructor();
+      defaultValueAsString: string;
+      defaultValue: UnityEngine.Hash128;
+      name: string;
+      obsoleteNames: System.Collections.Generic.IEnumerable<string>;
+      type: string;
+      typeNamespace: string;
+      use: UnityEngine.UIElements.UxmlAttributeDescription_Use;
+      restriction: UnityEngine.UIElements.UxmlTypeRestriction;
+      GetValueFromBag(bag: UnityEngine.UIElements.IUxmlAttributes, cc: UnityEngine.UIElements.CreationContext): UnityEngine.Hash128;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class UxmlChildElementDescription {
       constructor(t: System.Type);
       elementName: string;
@@ -29420,7 +30958,7 @@ export declare namespace UnityEngine {
         Start(): void;
         Stop(): void;
         Recycle(): void;
-        static Create(e: UnityEngine.UIElements.VisualElement, interpolator: any): any;
+        static Create(e: UnityEngine.UIElements.VisualElement, interpolator: ((arg0: any, arg1: any, arg2: number, arg3: any) => any)): any;
         Ease(easing: ((arg0: number, arg1: number) => number)): UnityEngine.UIElements.Experimental.ValueAnimation<T>;
         OnCompleted(callback: System.Action): UnityEngine.UIElements.Experimental.ValueAnimation<T>;
         KeepAlive(): UnityEngine.UIElements.Experimental.ValueAnimation<T>;

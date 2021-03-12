@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 9.03.2021 02:10:26
+// Generated 13.03.2021 02:03:00
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -207,8 +207,8 @@ export declare namespace ReactUnity {
     IsDevServer: boolean;
     Script: ReactUnity.ReactScript;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
-    static defaultCreator: any; // System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]
-    static textCreator: any; // System.Func`3[System.String,ReactUnity.UGUIContext,ReactUnity.ITextComponent]
+    static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UGUIContext, arg3: ReactUnity.Components.ReactComponent) => ReactUnity.Components.ReactComponent);
+    static textCreator: ((arg0: string, arg1: ReactUnity.UGUIContext, arg2: ReactUnity.ITextComponent) => ReactUnity.ITextComponent);
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: System.Action;
@@ -1192,6 +1192,7 @@ export declare namespace ReactUnity {
       setItem(x: string, value: string): void;
       getItem(x: string): string;
       removeItem(x: string): void;
+      static ClearLocalStorage(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -1334,6 +1335,7 @@ export declare namespace ReactUnity {
       ReloadPreviewInstances(): void;
       UseDefaultMargins(): boolean;
       Initialize(targets: UnityEngine.Object[]): void;
+      Cleanup(): void;
       MoveNextTarget(): boolean;
       ResetTarget(): void;
       SetDirty(): void;
@@ -1503,8 +1505,8 @@ export declare namespace ReactUnity {
         IsDevServer: boolean;
         Script: ReactUnity.ReactScript;
         Scheduler: ReactUnity.Schedulers.IUnityScheduler;
-        static defaultCreator: any; // System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Renderer.Components.IEditorReactComponent`1[UnityEngine.UIElements.VisualElement]]
-        static textCreator: any; // System.Func`3[System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.ITextComponent]
+        static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.Editor.Renderer.EditorContext, arg3: any) => any);
+        static textCreator: ((arg0: string, arg1: ReactUnity.Editor.Renderer.EditorContext, arg2: ReactUnity.ITextComponent) => ReactUnity.ITextComponent);
         static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Renderer.Components.IEditorReactComponent`1[UnityEngine.UIElements.VisualElement]]]
         Parser: any; // ExCSS.StylesheetParser
         StyleTree: ReactUnity.StyleEngine.StyleTree;
@@ -3363,6 +3365,7 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      static GetCoroutineHandle(handle: number): System.IDisposable;
       static Initialize(): void;
       static AddCallOnLateUpdate(call: System.Action): void;
       static OnUpdate(callback: System.Action): number;
@@ -3524,15 +3527,6 @@ export declare namespace ReactUnity {
       Equals(other: System.Object): boolean;
       ToString(): string;
       GetType(): System.Type;
-    }
-    export class AdaptiveDispatcher_CoroutineHandle {
-      constructor(handle: number);
-      Handle: number;
-      Dispose(): void;
-      Equals(obj: System.Object): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
     }
     export class EditorDispatcher_CoroutineHandle {
       constructor(handle: number);
@@ -5193,12 +5187,6 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export interface IStyleParser {
-        FromString(value: string): System.Object;
-      }
-      export interface IStyleConverter {
-        Convert(value: System.Object): System.Object;
-      }
       export class ImageReferenceConverter {
         constructor();
         Convert(value: System.Object): System.Object;
@@ -5217,6 +5205,12 @@ export declare namespace ReactUnity {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export interface IStyleParser {
+        FromString(value: string): System.Object;
+      }
+      export interface IStyleConverter {
+        Convert(value: System.Object): System.Object;
       }
       export class ShadowDefinitionConverter {
         constructor();
@@ -5430,6 +5424,7 @@ export declare namespace ReactUnity {
       static Zero: ReactUnity.Types.YogaValue2;
       static Auto: ReactUnity.Types.YogaValue2;
       static Center: ReactUnity.Types.YogaValue2;
+      AsVector(): UnityEngine.Vector2;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;

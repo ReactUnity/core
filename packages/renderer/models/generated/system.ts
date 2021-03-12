@@ -1,6 +1,6 @@
 //
 // Types in assemblies: mscorlib, mscorlib, System.Core, System, mscorlib, System, mscorlib
-// Generated 9.03.2021 02:10:06
+// Generated 13.03.2021 02:03:08
 //
 
 
@@ -3153,9 +3153,9 @@ export declare namespace System {
     static Missing: System.Object;
     static Delimiter: System.Char;
     static EmptyTypes: System.Type[];
-    static GetType(typeName: string, assemblyResolver: any, typeResolver: any): System.Type;
-    static GetType(typeName: string, assemblyResolver: any, typeResolver: any, throwOnError: boolean): System.Type;
-    static GetType(typeName: string, assemblyResolver: any, typeResolver: any, throwOnError: boolean, ignoreCase: boolean): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName, arg1: System.Reflection.Assembly) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean, arg3: System.Type) => System.Type)): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName, arg1: System.Reflection.Assembly) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean, arg3: System.Type) => System.Type), throwOnError: boolean): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName, arg1: System.Reflection.Assembly) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean, arg3: System.Type) => System.Type), throwOnError: boolean, ignoreCase: boolean): System.Type;
     MakePointerType(): System.Type;
     MakeByRefType(): System.Type;
     MakeArrayType(): System.Type;
@@ -24239,7 +24239,7 @@ export declare namespace System {
           ActivateInstance(): System.Object;
         }
         export class WindowsRuntimeMarshal {
-          static RemoveAllEventHandlers(removeMethod: any): void;
+          static RemoveAllEventHandlers(removeMethod: (() => void)): void;
           static GetActivationFactory(type: System.Type): System.Runtime.InteropServices.WindowsRuntime.IActivationFactory;
           static StringToHString(s: string): System.IntPtr;
           static PtrToStringHString(ptr: System.IntPtr): string;
@@ -28260,8 +28260,8 @@ export declare namespace System {
         constructor(identity: System.Security.Principal.IIdentity);
         constructor(principal: System.Security.Principal.IPrincipal);
         constructor(reader: System.IO.BinaryReader);
-        static PrimaryIdentitySelector: any; // System.Func`2[System.Collections.Generic.IEnumerable`1[System.Security.Claims.ClaimsIdentity],System.Security.Claims.ClaimsIdentity]
-        static ClaimsPrincipalSelector: any; // System.Func`1[System.Security.Claims.ClaimsPrincipal]
+        static PrimaryIdentitySelector: ((arg0: any, arg1: System.Security.Claims.ClaimsIdentity) => System.Security.Claims.ClaimsIdentity);
+        static ClaimsPrincipalSelector: ((arg0: System.Security.Claims.ClaimsPrincipal) => System.Security.Claims.ClaimsPrincipal);
         Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         static Current: System.Security.Claims.ClaimsPrincipal;
         Identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>;
@@ -33930,9 +33930,9 @@ export declare namespace System {
       NextSpinWillYield: boolean;
       SpinOnce(): void;
       Reset(): void;
-      static SpinUntil(condition: any): void;
-      static SpinUntil(condition: any, timeout: System.TimeSpan): boolean;
-      static SpinUntil(condition: any, millisecondsTimeout: number): boolean;
+      static SpinUntil(condition: ((arg0: boolean) => boolean)): void;
+      static SpinUntil(condition: ((arg0: boolean) => boolean), timeout: System.TimeSpan): boolean;
+      static SpinUntil(condition: ((arg0: boolean) => boolean), millisecondsTimeout: number): boolean;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       ToString(): string;
@@ -35001,14 +35001,14 @@ export declare namespace System {
       export class Parallel {
         static Invoke(...actions: System.Action[]): void;
         static Invoke(parallelOptions: System.Threading.Tasks.ParallelOptions, ...actions: System.Action[]): void;
-        static For(fromInclusive: number, toExclusive: number, body: any): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: any): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: any): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: any): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: number, toExclusive: number, body: any): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: any): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: any): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: any): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, body: (() => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: (() => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: (() => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: (() => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, body: ((arg0: number) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: ((arg0: System.Int64) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: number) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: System.Int64) => void)): System.Threading.Tasks.ParallelLoopResult;
         Equals(obj: System.Object): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
