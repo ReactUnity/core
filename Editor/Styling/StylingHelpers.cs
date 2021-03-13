@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactUnity.Editor.Renderer.Styling
+namespace ReactUnity.Editor.Styling
 {
     public static class StylingHelpers
     {

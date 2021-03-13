@@ -1,27 +1,26 @@
 using Facebook.Yoga;
-using ReactUnity.Editor.Renderer.Events;
-using ReactUnity.Editor.Renderer.Styling;
+using ReactUnity.Editor.Events;
+using ReactUnity.Editor.Renderer;
+using ReactUnity.Editor.Styling;
 using ReactUnity.Interop;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Visitors;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Label = UnityEngine.UIElements.Label;
 
-namespace ReactUnity.Editor.Renderer.Components
+namespace ReactUnity.Editor.Components
 {
-    public interface IEditorReactComponent<out T> : IReactComponent
+    public interface IEditorComponent<out T> : IReactComponent
     {
         T Element { get; }
     }
 
-    public class EditorReactComponent<T> : IEditorReactComponent<T>, IContainerComponent where T : VisualElement, new()
+    public class EditorComponent<T> : IEditorComponent<T>, IContainerComponent where T : VisualElement, new()
     {
         private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
 
@@ -54,7 +53,7 @@ namespace ReactUnity.Editor.Renderer.Components
         protected Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
         private string currentCursor = null;
 
-        public EditorReactComponent(T element, EditorContext context, string tag)
+        public EditorComponent(T element, EditorContext context, string tag)
         {
             Tag = tag;
             Context = context;
@@ -66,7 +65,7 @@ namespace ReactUnity.Editor.Renderer.Components
             Layout = new YogaNode();
         }
 
-        public EditorReactComponent(EditorContext context, string tag)
+        public EditorComponent(EditorContext context, string tag)
         {
             Tag = tag;
             Context = context;
@@ -377,7 +376,7 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public void RegisterChild(IReactComponent child, int index = -1)
         {
-            if (child is IEditorReactComponent<VisualElement> u)
+            if (child is IEditorComponent<VisualElement> u)
             {
                 if (index >= 0) Element.Insert(index, u.Element);
                 else Element.Add(u.Element);

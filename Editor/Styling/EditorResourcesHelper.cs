@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactUnity.Editor.Renderer.Styling
+namespace ReactUnity.Editor.Styling
 {
     internal static class EditorResourcesHelper
     {

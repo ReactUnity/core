@@ -1,12 +1,11 @@
-using ReactUnity.Interop;
-using System;
+using ReactUnity.Editor.Renderer;
 using UnityEngine.UIElements;
 
-namespace ReactUnity.Editor.Renderer.Components
+namespace ReactUnity.Editor.Components
 {
-    public class EditorToggleComponent : EditorBaseFieldComponent<Toggle, bool>
+    public class ToggleComponent : BaseFieldComponent<Toggle, bool>
     {
-        public EditorToggleComponent(EditorContext context) : base(context, "toggle")
+        public ToggleComponent(EditorContext context) : base(context, "toggle")
         { }
 
         public override void SetProperty(string property, object value)

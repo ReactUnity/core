@@ -1,10 +1,5 @@
-using ReactUnity.Editor.Renderer.Styling;
-using ReactUnity.Interop;
-using ReactUnity.Schedulers;
-using ReactUnity.Types;
-using System;
+using ReactUnity.Editor.Styling;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 

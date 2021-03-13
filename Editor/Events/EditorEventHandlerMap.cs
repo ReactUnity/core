@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine.UIElements;
 
-namespace ReactUnity.Editor.Renderer.Events
+namespace ReactUnity.Editor.Events
 {
     public static class EditorEventHandlerMap
     {

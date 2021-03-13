@@ -1,15 +1,13 @@
+using ReactUnity.Editor.Renderer;
 using ReactUnity.Interop;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactUnity.Editor.Renderer.Components
+namespace ReactUnity.Editor.Components
 {
-    public class EditorIMGUIComponent : EditorReactComponent<IMGUIContainer>
+    public class IMGUIComponent : EditorComponent<IMGUIContainer>
     {
-        public EditorIMGUIComponent(EditorContext context) : base(context, "imgui")
+        public IMGUIComponent(EditorContext context) : base(context, "imgui")
         {
         }
 

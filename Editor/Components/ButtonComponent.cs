@@ -1,14 +1,15 @@
+using ReactUnity.Editor.Renderer;
 using ReactUnity.Interop;
 using System;
 using UnityEngine.UIElements;
 
-namespace ReactUnity.Editor.Renderer.Components
+namespace ReactUnity.Editor.Components
 {
-    public class EditorButtonComponent : EditorReactComponent<Button>
+    public class ButtonComponent : EditorComponent<Button>
     {
         private Action previousClickEvent;
 
-        public EditorButtonComponent(EditorContext context) : base(context, "button")
+        public ButtonComponent(EditorContext context) : base(context, "button")
         {
         }
 

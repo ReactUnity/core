@@ -1,14 +1,15 @@
+using ReactUnity.Editor.Renderer;
 using ReactUnity.Interop;
 using System;
 using UnityEngine.UIElements;
 
-namespace ReactUnity.Editor.Renderer.Components
+namespace ReactUnity.Editor.Components
 {
-    public class EditorBaseFieldComponent<TElementType, TValueType> : EditorReactComponent<TElementType> where TElementType : BaseField<TValueType>, new()
+    public class BaseFieldComponent<TElementType, TValueType> : EditorComponent<TElementType> where TElementType : BaseField<TValueType>, new()
     {
         private EventCallback<ChangeEvent<TValueType>> previousChangeEvent;
 
-        public EditorBaseFieldComponent(EditorContext context, string tag) : base(context, tag)
+        public BaseFieldComponent(EditorContext context, string tag) : base(context, tag)
         {
         }
 
@@ -32,9 +33,9 @@ namespace ReactUnity.Editor.Renderer.Components
 
         public override void SetProperty(string property, object value)
         {
-            if (property == "value") Element.SetValueWithoutNotify((TValueType) Convert.ChangeType(value, typeof(TValueType)));
+            if (property == "value") Element.SetValueWithoutNotify((TValueType)Convert.ChangeType(value, typeof(TValueType)));
             else if (property == "label") Element.label = value?.ToString();
-            else if (property == "bindingPath") Element.bindingPath= value?.ToString();
+            else if (property == "bindingPath") Element.bindingPath = value?.ToString();
             else if (property == "binding") Element.binding = value as IBinding;
             else base.SetProperty(property, value);
         }
