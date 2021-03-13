@@ -1,12 +1,13 @@
 {
     "name": "",
     "type": "asset",
-    "roots": [],
-    "includes": [],
-    "excludes": [
-        "Temp/",
-        "External/"
+    "roots": [
+        "Packages"
     ],
+    "includes": [
+        "ReactUnity/"
+    ],
+    "excludes": [],
     "options": {
         "disabled": false,
         "types": true,
@@ -14,5 +15,5 @@
         "extended": false,
         "dependencies": false
     },
-    "baseScore": 100
+    "baseScore": 9999
 }
