@@ -79,5 +79,12 @@ namespace ReactUnity.Editor.Renderer
             SelectionChange += callback;
             return () => SelectionChange -= callback;
         }
+
+        public Action AddPlayModeStateChange(Action<PlayModeStateChange, ReactWindow> callback)
+        {
+            Action<PlayModeStateChange> cb = x => callback(x, this);
+            EditorApplication.playModeStateChanged += cb;
+            return () => EditorApplication.playModeStateChanged -= cb;
+        }
     }
 }

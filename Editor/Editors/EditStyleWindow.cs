@@ -8,11 +8,11 @@ namespace ReactUnity.Editor
 {
     public class EditStyleWindow : ReactWindow
     {
-        [MenuItem("React/Inspect Element")]
+        [MenuItem("React/Show Inspector")]
         public static void ShowDefaultWindow()
         {
             var wnd = GetWindow<EditStyleWindow>();
-            wnd.titleContent = new GUIContent("React Edit Style");
+            wnd.titleContent = new GUIContent("React Inspector");
         }
 
 

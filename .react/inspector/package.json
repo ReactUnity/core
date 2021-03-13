@@ -10,7 +10,7 @@
     "preinstall": "npx only-allow@1.0.0 yarn"
   },
   "dependencies": {
-    "@reactunity/renderer": "./a1.tgz",
+    "@reactunity/renderer": "./a4.tgz",
     "clsx": "^1.1.1",
     "react": "^17.0.1"
   },

@@ -6,7 +6,7 @@ namespace ReactUnity.Editor.Components
 {
     public class BaseSliderComponent<S, TValueType> : BaseFieldComponent<S, TValueType> where S : BaseSlider<TValueType>, new() where TValueType : System.IComparable<TValueType>
     {
-        public BaseSliderComponent(EditorContext context) : base(context, "slider")
+        public BaseSliderComponent(EditorContext context, string tag) : base(context, tag)
         { }
 
         public override void SetProperty(string property, object value)
@@ -26,10 +26,10 @@ namespace ReactUnity.Editor.Components
                     Element.pageSize = Convert.ToSingle(value);
                     break;
                 case "min":
-                    Element.lowValue = (TValueType)value;
+                    Element.lowValue = (TValueType)Convert.ChangeType(value, typeof(TValueType));
                     break;
                 case "max":
-                    Element.highValue = (TValueType)value;
+                    Element.highValue = (TValueType)Convert.ChangeType(value, typeof(TValueType));
                     break;
                 default:
                     base.SetProperty(property, value);

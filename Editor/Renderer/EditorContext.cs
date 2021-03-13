@@ -13,7 +13,7 @@ namespace ReactUnity.Editor.Renderer
     public class EditorContext : ReactContext
     {
         public static Func<string, string, EditorContext, IEditorComponent<VisualElement>> defaultCreator =
-            (tag, text, context) => new EditorComponent<Box>(context, tag);
+            (tag, text, context) => new EditorComponent<VisualElement>(context, tag);
 
         public static Func<string, EditorContext, ITextComponent> textCreator =
             (text, context) => new TextComponent(text, context, "_text");
@@ -23,7 +23,8 @@ namespace ReactUnity.Editor.Renderer
             {
                 { "text", (tag, text, context) => new TextComponent(text, context, tag) },
                 { "button", (tag, text, context) => new ButtonComponent(context) },
-                { "view", (tag, text, context) => new EditorComponent<Box>(context, "view") },
+                { "view", (tag, text, context) => new EditorComponent<VisualElement>(context, "view") },
+                { "box", (tag, text, context) => new EditorComponent<Box>(context, "box") },
                 { "toggle", (tag, text, context) => new ToggleComponent(context) },
                 { "image", (tag, text, context) => new EditorComponent<Image>(context, "image") },
                 { "scroll", (tag, text, context) => new EditorComponent<ScrollView>(context, "scroll") },
@@ -31,9 +32,9 @@ namespace ReactUnity.Editor.Renderer
                 { "helpbox", (tag, text, context) => new EditorComponent<HelpBox>(context, "helpbox") },
                 { "foldout", (tag, text, context) => new EditorComponent<Foldout>(context, "foldout") },
                 { "popup", (tag, text, context) => new EditorComponent<PopupWindow>(context, "popup") },
-                { "slider", (tag, text, context) => new BaseFieldComponent<Slider, float>(context, "slider") },
-                { "sliderint", (tag, text, context) => new BaseFieldComponent<SliderInt, int>(context, "sliderint") },
-                { "range", (tag, text, context) => new BaseFieldComponent<MinMaxSlider, Vector2>(context, "range") },
+                { "slider", (tag, text, context) => new BaseSliderComponent<Slider, float>(context, "slider") },
+                { "sliderint", (tag, text, context) => new BaseSliderComponent<SliderInt, int>(context, "sliderint") },
+                { "range", (tag, text, context) => new RangeComponent(context)},
                 { "repeat", (tag, text, context) => new EditorComponent<RepeatButton>(context, "repeat") },
                 { "scroller", (tag, text, context) => new EditorComponent<Scroller>(context, "scroller") },
                 { "list", (tag, text, context) => new EditorComponent<ListView>(context, "list") },

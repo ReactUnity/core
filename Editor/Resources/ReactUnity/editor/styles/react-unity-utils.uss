@@ -19,3 +19,4 @@
 .react-unity_cursor_split-resize-left-right { cursor: split-resize-left-right; }
 
 .react-unity__field__inline .unity-base-field__label { min-width: none; }
+.react-unity__field__no-grow .unity-base-field__input { flex-grow: 0; }

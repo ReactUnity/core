@@ -384,6 +384,9 @@ namespace ReactUnity.Editor.Developer
                     case "System.Void":
                         return "void";
 
+                    case "System.Action":
+                        return "(() => void)";
+
                     case "System.Dynamic.ExpandoObject":
                         return "Record<string, any>";
 

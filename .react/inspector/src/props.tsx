@@ -12,6 +12,7 @@ export interface StyleProp<T = any> {
   name: string;
   label?: string;
   type: string;
+  partlessName?: string;
   source?: 'style' | 'layout';
   arrangement?: 'row' | 'rect' | 'corner';
   partTemplate?: string | ((part: StylePropPart) => string);
@@ -21,7 +22,7 @@ export interface StyleProp<T = any> {
 }
 
 function sliderComponent(min = 0, max = 1) {
-  return (props: StylePropComponentProps<number>) => <slider {...props} />;
+  return (props: StylePropComponentProps<number>) => <slider {...props} min={min} max={max} />;
 }
 
 export type StylePropPart = 'left' | 'right' | 'top' | 'bottom' | 'start' | 'end' | '';
@@ -81,7 +82,7 @@ export const styleProps: StyleProp[] = [
 
   { name: 'borderRadius', type: 'int', component: 'integer', label: 'Border Radius', arrangement: 'corner', partTemplate: (part) => `border${CornerHack[part]}Radius` },
   { name: 'borderColor', type: 'Color', component: 'color', arrangement: 'rect', partTemplate: (part) => `border${PartCapitalize[part]}Color`, label: 'Border Color' },
-  { name: 'BorderWidth', type: 'float', component: 'float', arrangement: 'rect', partTemplate: (part) => `Border${PartCapitalize[part]}Width`, label: 'Border Width', source: 'layout' },
+  { name: 'BorderWidth', type: 'float', component: 'float', arrangement: 'rect', getter: floatDefaultGetter, partTemplate: (part) => `Border${PartCapitalize[part]}Width`, label: 'Border Width', source: 'layout' },
   { name: 'Margin', type: 'YogaValue', component: 'length', getter: convertYogaToLength, setter: convertLengthToYoga, arrangement: 'rect', partTemplate: (part) => `Margin${PartCapitalize[part]}`, label: 'Margin', source: 'layout' },
   { name: 'Padding', type: 'YogaValue', component: 'length', getter: convertYogaToLength, setter: convertLengthToYoga, arrangement: 'rect', partTemplate: (part) => `Padding${PartCapitalize[part]}`, label: 'Padding', source: 'layout' },
   { name: 'Position', type: 'YogaValue', component: 'length', getter: convertYogaToLength, setter: convertLengthToYoga, arrangement: 'rect', partTemplate: (part) => PartCapitalize[part], label: 'Position', source: 'layout' },
@@ -108,10 +109,14 @@ function convertLengthToYoga(value: UE.UIElements.StyleLength): Facebook.Yoga.Yo
 
 function convertYogaToLength(value: Facebook.Yoga.YogaValue): UE.UIElements.StyleLength {
   if (value.Unit == 3) return new StyleLength(StyleKeyword.Auto);
-  if (value.Unit == 0) return new StyleLength(StyleKeyword.Null);
+  if (value.Unit == 0) return new StyleLength(StyleKeyword.Undefined);
   if (isNaN(value.Value)) return new StyleLength(StyleKeyword.Null);
   if (value.Unit == 2) return new StyleLength(new Length(value.Value, LengthUnit.Percent));
   if (value.Unit == 1) return new StyleLength(new Length(value.Value, LengthUnit.Pixel));
   return new StyleLength(StyleKeyword.Initial);
+}
+
+function floatDefaultGetter(value: number) {
+  return value || 0;
 }
 /* eslint-enable eqeqeq */

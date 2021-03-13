@@ -1079,9 +1079,9 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@./a1.tgz":
+"@reactunity/renderer@./a4.tgz":
   version "0.0.19"
-  resolved "./a1.tgz#6329f46d490efd55f0e8b14c400023004c8373ef"
+  resolved "./a4.tgz#12b14a817b30cd41ad69369254547d36315f1553"
   dependencies:
     react-reconciler "^0.26.1"
 

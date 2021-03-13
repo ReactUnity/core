@@ -17,8 +17,12 @@ function App() {
   const [selection, setSelection] = useState<RC>(getSelection());
 
   useEffect(() => {
-    const lastSelection = (Globals.Editor as any).AddSelectionChange(() => setSelection(getSelection));
-    return () => lastSelection();
+    const removeSelectionChange = Globals.Editor.AddSelectionChange(() => setSelection(getSelection()));
+    const removeStateChange = Globals.Editor.AddPlayModeStateChange(() => setSelection(getSelection()));
+    return () => {
+      removeSelectionChange();
+      removeStateChange();
+    };
   }, []);
 
   return <view className={style.host}>
@@ -31,12 +35,12 @@ function App() {
 function Styles({ element }: { element: RC }) {
   const [showAll, setShowAll] = useState(true);
 
-  return <view className={clsx(style.styles, showAll && style.showAll)}>
+  return <scroll className={clsx(style.styles, showAll && style.showAll)}>
     <toggle label="Show All" value={showAll} onChange={ev => setShowAll(ev.newValue)} className={style.showAllButton} />
     {styleProps.map(x => x.arrangement === 'rect' || x.arrangement === 'corner' ?
       <StylePropRect element={element} prop={x} key={x.name} /> :
       <StylePropRow element={element} prop={x} key={x.name} />)}
-  </view>;
+  </scroll>;
 }
 
 function StylePropRow({ prop, element, className }: { prop: StyleProp, element: RC, className?: string }) {
@@ -85,10 +89,10 @@ function StylePropRect({ prop, element }: { prop: StyleProp, element: RC }) {
   const partName = typeof prop.partTemplate === 'string' ? prop.partTemplate.replace('{part}', '') : prop.partTemplate('');
   const isCorner = prop.arrangement === 'corner';
 
-  return <>
+  return <view className={clsx(style.propRectContainer)}>
     {partName ?
-      <StylePropRow prop={prop} element={element} /> :
-      <view style={{ flexDirection: 'row' }}>
+      <StylePropRow prop={prop} element={element} className={clsx(style.rectHead, 'react-unity__field__inline', 'react-unity__field__no-grow')} /> :
+      <view style={{ flexDirection: 'row' }} className={style.rectHead}>
         <button className={style.removeButton} style={{ visibility: 'Hidden' }}>X</button>
         {prop.label ?? prop.name}
       </view>}
@@ -119,7 +123,7 @@ function StylePropRect({ prop, element }: { prop: StyleProp, element: RC }) {
           <StylePropRectPart element={element} prop={prop} part={'right'} />
         </view>
       </view>}
-  </>;
+  </view>;
 }
 
 
@@ -129,7 +133,7 @@ function StylePropRectPart({ prop, part, element }: { prop: StyleProp, element: 
 
   const isCorner = prop.arrangement === 'corner';
   const label = part ? (isCorner ? CornerLabels[part] : part[0].toUpperCase()) : prop.label;
-  const partProp: StyleProp = { ...prop, name: partName, label };
+  const partProp: StyleProp = { ...prop, partlessName: prop.name, name: partName, label };
 
   return <>
     <StylePropRow prop={partProp} element={element}
