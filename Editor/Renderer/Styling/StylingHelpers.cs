@@ -62,6 +62,17 @@ namespace ReactUnity.Editor.Renderer.Styling
         }
 
 
+        public static YogaValue StyleLengthToYogaValue(StyleLength value)
+        {
+            if (value.keyword == StyleKeyword.Auto) return YogaValue.Auto();
+            if (value.keyword == StyleKeyword.Null || value.keyword == StyleKeyword.None || value.keyword == StyleKeyword.Initial)
+                return YogaValue.Undefined();
+            if (value.value.unit == LengthUnit.Percent) return YogaValue.Percent(value.value.value);
+            if (value.value.unit == LengthUnit.Pixel) return YogaValue.Point(value.value.value);
+            return YogaValue.Undefined();
+        }
+
+
         public static float NormalizeFloat(float value)
         {
             if (float.IsNaN(value)) return 0;

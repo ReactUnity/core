@@ -68,6 +68,7 @@ namespace ReactUnity.Editor.Renderer
                 { "vector3int", (tag, text, context) => new EditorBaseFieldComponent<Vector3IntField, Vector3Int>(context, "vector3int") },
                 { "vector4", (tag, text, context) => new EditorBaseFieldComponent<Vector4Field, Vector4>(context, "vector4") },
                 { "toolbar", (tag, text, context) => new EditorReactComponent<Toolbar>(context, "toolbar") },
+                { "length", (tag, text, context) => new EditorBaseFieldComponent<StyleLengthField, StyleLength>(context, "length") },
                 { "tb-breadcrumbs", (tag, text, context) => new EditorReactComponent<ToolbarBreadcrumbs>(context, "tb-breadcrumbs") },
                 { "tb-button", (tag, text, context) => new EditorReactComponent<ToolbarButton>(context, "tb-button") },
                 { "tb-menu", (tag, text, context) => new EditorReactComponent<ToolbarMenu>(context, "tb-menu") },

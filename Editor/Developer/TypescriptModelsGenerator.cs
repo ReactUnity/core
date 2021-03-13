@@ -66,7 +66,7 @@ namespace ReactUnity.Editor.Developer
         {
             Generate(
                 new List<Assembly> { typeof(ReactUnity).Assembly, typeof(TypescriptModelsGenerator).Assembly },
-                new List<string> { "ReactUnity" },
+                new List<string> { "ReactUnity", "Facebook.Yoga" },
                 new List<string> { "UnityEngine.InputSystem" },
                 new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" }, { "System", "system" } },
                 new List<string> { },

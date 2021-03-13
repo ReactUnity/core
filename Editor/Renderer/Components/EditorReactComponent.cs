@@ -208,6 +208,8 @@ namespace ReactUnity.Editor.Renderer.Components
 
             // Transforms
 
+            //Element.transform.position -= (Vector3)(Element.layout.size / 2);
+
             if (Style.HasValue(StyleProperties.scale)) Element.transform.scale = new Vector3(Style.scale.x, Style.scale.y, 1);
             else Element.transform.scale = Vector3.one;
 
@@ -216,6 +218,8 @@ namespace ReactUnity.Editor.Renderer.Components
 
             if (Style.HasValue(StyleProperties.translate)) Element.transform.position = Style.translate.AsVector();
             else Element.transform.position = Vector3.zero;
+
+            //Element.transform.position += (Vector3)(Element.layout.size / 2);
         }
 
         public void Destroy()
@@ -348,7 +352,11 @@ namespace ReactUnity.Editor.Renderer.Components
                     ClassList = string.IsNullOrWhiteSpace(ClassName) ? EmptyClassList :
                         new HashSet<string>(ClassName.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
 
-                    foreach (var cls in ClassList) Element.AddToClassList(cls);
+                    foreach (var cls in ClassList)
+                    {
+                        Element.AddToClassList(cls);
+                        ResolveStyle(true);
+                    }
                     return;
                 default:
                     throw new Exception($"Unknown property name specified, '{property}'");

@@ -1,0 +1,120 @@
+.host {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 10px;
+}
+
+.styles {
+  flex-direction: column;
+  align-items: stretch;
+
+  .showAllButton {
+    margin-bottom: 20px;
+  }
+
+  &:not(.showAll) {
+    .row:not(.exists) {
+      display: none;
+    }
+  }
+}
+
+.row {
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 4px;
+  overflow: hidden;
+
+  .removeButton {
+    visibility: hidden;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 0;
+  }
+
+  &.exists {
+    font-weight: bold;
+
+    .removeButton {
+      font-weight: none;
+      visibility: visible;
+    }
+  }
+
+  &.rectPart {
+    flex-grow: 0;
+    width: 100px;
+
+    .rowContent {
+      align-items: stretch;
+      justify-content: center;
+      text-align: center;
+    }
+
+    &.part-top {
+      .rowContent {
+        flex-direction: column;
+      }
+    }
+
+    &.part-bottom {
+      .rowContent {
+        flex-direction: column-reverse;
+      }
+    }
+
+    &.part-left,
+    &.part-start {
+      .rowContent {
+        flex-direction: row;
+      }
+    }
+
+    &.part-right,
+    &.part-end {
+      margin-left: 40px;
+      flex-direction: row-reverse;
+
+      .rowContent {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+}
+
+.propRect {
+  &.corner {
+    .row.rectPart {
+      &.part-top,
+      &.part-right {
+        margin-left: 12px;
+        flex-direction: row-reverse;
+        .rowContent {
+          flex-direction: row-reverse;
+        }
+      }
+
+      &.part-bottom,
+      &.part-left {
+        flex-direction: row;
+        .rowContent {
+          flex-direction: row;
+        }
+      }
+    }
+  }
+}
+
+.propRectRow {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.rowContent {
+  flex-grow: 1;
+  flex-basis: 0;
+  align-items: stretch;
+  align-self: stretch;
+}

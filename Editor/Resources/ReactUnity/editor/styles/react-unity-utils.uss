@@ -17,3 +17,5 @@
 .react-unity_cursor_fps { cursor: fps; }
 .react-unity_cursor_split-resize-up-down { cursor: split-resize-up-down; }
 .react-unity_cursor_split-resize-left-right { cursor: split-resize-left-right; }
+
+.react-unity__field__inline .unity-base-field__label { min-width: none; }
