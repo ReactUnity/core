@@ -12,7 +12,7 @@ namespace ReactUnity.Types
     {
         static public new ImageReference None = new ImageReference(AssetReferenceType.None, null);
 
-        private int webDeferred = -1;
+        private DisposableHandle webDeferred;
 
         public ImageReference(AssetReferenceType type, object value) : base(type, value) { }
 
@@ -20,7 +20,7 @@ namespace ReactUnity.Types
         {
             if (realType == AssetReferenceType.Url)
             {
-                webDeferred = AdaptiveDispatcher.StartDeferred(GetTexture(realValue as string, callback));
+                webDeferred = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(GetTexture(realValue as string, callback)));
             }
             else if (realType == AssetReferenceType.Data)
             {
@@ -79,7 +79,7 @@ namespace ReactUnity.Types
         public override void Dispose()
         {
             base.Dispose();
-            if (webDeferred >= 0) AdaptiveDispatcher.StopDeferred(webDeferred);
+            if (webDeferred != null) webDeferred.Dispose();
         }
     }
 }

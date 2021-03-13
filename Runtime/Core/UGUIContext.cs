@@ -43,8 +43,8 @@ namespace ReactUnity
 
         public YogaNode RootLayoutNode { get; }
 
-        public UGUIContext(RectTransform hostElement, StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
-            : base(globals, script, scheduler, isDevServer, onRestart)
+        public UGUIContext(RectTransform hostElement, StringObjectDictionary globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
+            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart)
         {
             Host = new HostComponent(hostElement, this);
             RootLayoutNode = Host.Layout;
@@ -63,7 +63,7 @@ namespace ReactUnity
                         ScheduledCallbacks[i]?.Invoke();
                 }
             };
-            AdaptiveDispatcher.AddCallOnLateUpdate(callback);
+            dispatcher.AddCallOnLateUpdate(callback);
         }
 
         public override IReactComponent CreateComponent(string tag, string text)

@@ -6,105 +6,93 @@ using System.Runtime.CompilerServices;
 using Unity.EditorCoroutines.Editor;
 #endif
 
-namespace ReactUnity.Interop
+namespace ReactUnity
 {
-    public static class EditorDispatcher
+    public class EditorDispatcher : IDispatcher, IDisposable
     {
-        public class CoroutineHandle : IDisposable
-        {
-            public int Handle { get; }
-            public CoroutineHandle(int handle)
-            {
-                Handle = handle;
-            }
-
-            public void Dispose()
-            {
-                StopDeferred(Handle);
-            }
-        }
-
-        public static void Initialize()
-        {
-            if (Initialized) return;
-            Initialized = true;
-
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.update += Update;
-#endif
-        }
-
-        private static bool Initialized = false;
-        private static List<IEnumerator> ToStart = new List<IEnumerator>();
-        private static HashSet<int> ToStop = new HashSet<int>();
-        private static List<Action> CallOnLateUpdate = new List<Action>();
+        private List<IEnumerator> ToStart = new List<IEnumerator>();
+        private HashSet<int> ToStop = new HashSet<int>();
+        private List<Action> CallOnLateUpdate = new List<Action>();
 
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-        private static List<EditorCoroutine> Started = new List<EditorCoroutine>();
+        private List<EditorCoroutine> Started = new List<EditorCoroutine>();
 #else
-        private static List<object> Started = new List<object>();
+        private  List<object> Started = new List<object>();
 #endif
 
-        static public void AddCallOnLateUpdate(Action call)
+        public EditorDispatcher()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.update += Update;
+
+            UnityEditor.EditorApplication.playModeStateChanged += (state) =>
+            {
+                UnityEditor.EditorApplication.update -= Update;
+                UnityEditor.EditorApplication.update += Update;
+            };
+#endif
+        }
+
+        public void AddCallOnLateUpdate(Action call)
         {
             CallOnLateUpdate.Add(call);
         }
 
-        static public int OnUpdate(Action callback)
+        public int OnUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
-        static public int Timeout(Action callback, float timeSeconds)
+        public int Timeout(Action callback, float timeSeconds)
         {
             var handle = GetNextHandle();
             return StartDeferred(TimeoutCoroutine(callback, timeSeconds, handle), handle);
         }
 
-        static public int AnimationFrame(Action callback)
+        public int AnimationFrame(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(AnimationFrameCoroutine(callback, handle), handle);
         }
 
-        static public int Interval(Action callback, float intervalSeconds)
+        public int Interval(Action callback, float intervalSeconds)
         {
             var handle = GetNextHandle();
             return StartDeferred(IntervalCoroutine(callback, intervalSeconds, handle), handle);
         }
 
-        static public int Immediate(Action callback)
+        public int Immediate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
-        static public int StartDeferred(IEnumerator cr)
+        public int StartDeferred(IEnumerator cr)
         {
             var handle = GetNextHandle();
             ToStart.Add(cr);
             return handle;
         }
 
-        static public int StartDeferred(IEnumerator cr, int handle)
+        public int StartDeferred(IEnumerator cr, int handle)
         {
             ToStart.Add(cr);
             return handle;
         }
 
-        static public void StopDeferred(int cr)
+        public void StopDeferred(int cr)
         {
             ToStop.Add(cr);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static private int GetNextHandle()
+        private int GetNextHandle()
         {
             return Started.Count + ToStart.Count;
         }
 
-        static private void StartAndStopDeferreds()
+        private void StartAndStopDeferreds()
         {
             foreach (var cr in ToStop)
             {
@@ -131,7 +119,7 @@ namespace ReactUnity.Interop
             ToStart.Clear();
         }
 
-        static public void StopAll()
+        public void StopAll()
         {
             for (int cr = 0; cr < Started.Count; cr++)
             {
@@ -144,7 +132,7 @@ namespace ReactUnity.Interop
             CallOnLateUpdate.Clear();
         }
 
-        static void Update()
+        void Update()
         {
             StartAndStopDeferreds();
 
@@ -154,36 +142,36 @@ namespace ReactUnity.Interop
         }
 
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-        static EditorCoroutine StartCoroutine(IEnumerator cr)
+        EditorCoroutine StartCoroutine(IEnumerator cr)
         {
             return EditorCoroutineUtility.StartCoroutine(cr, cr);
         }
 
 
-        static void StopCoroutine(EditorCoroutine cr)
+        void StopCoroutine(EditorCoroutine cr)
         {
             EditorCoroutineUtility.StopCoroutine(cr);
         }
 #else
-        static object StartCoroutine(IEnumerator cr)
+         object StartCoroutine(IEnumerator cr)
         {
             return null;
         }
 
 
-        static void StopCoroutine(object cr)
+         void StopCoroutine(object cr)
         {
         }
 #endif
 
 
-        private static IEnumerator OnUpdateCoroutine(Action callback, int handle)
+        private IEnumerator OnUpdateCoroutine(Action callback, int handle)
         {
             yield return null;
             if (!ToStop.Contains(handle)) callback();
         }
 
-        private static IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
+        private IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
         {
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
             yield return new EditorWaitForSeconds(time);
@@ -193,7 +181,7 @@ namespace ReactUnity.Interop
             if (!ToStop.Contains(handle)) callback();
         }
 
-        private static IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
+        private IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
         {
             while (true)
             {
@@ -207,11 +195,15 @@ namespace ReactUnity.Interop
             }
         }
 
-        private static IEnumerator AnimationFrameCoroutine(Action callback, int handle)
+        private IEnumerator AnimationFrameCoroutine(Action callback, int handle)
         {
             yield return null;
             if (!ToStop.Contains(handle)) callback();
         }
 
+        public void Dispose()
+        {
+            StopAll();
+        }
     }
 }

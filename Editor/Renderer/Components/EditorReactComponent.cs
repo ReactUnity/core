@@ -51,7 +51,7 @@ namespace ReactUnity.Editor.Renderer.Components
         public List<RuleTreeNode<StyleData>> AfterRules { get; protected set; }
 
 
-        Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
+        protected Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
         private string currentCursor = null;
 
         public EditorReactComponent(T element, EditorContext context, string tag)

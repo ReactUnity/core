@@ -416,9 +416,13 @@ namespace ReactUnity.Editor.Developer
                 if (isList && hasGenericArguments) return getTypesScriptType(genArgs[0], withNs, skipKnownTypes, allowGeneric) + "[]";
             }
 
-            if (allowGeneric && type.IsGenericParameter) return withNs ? propertyType : type.Name;
+            if (type.IsGenericParameter)
+            {
+                if (allowGeneric) return withNs ? propertyType : type.Name;
+                else return "any";
+            }
 
-            if (allowGeneric && type.IsGenericType)
+            if (type.IsGenericType)
             {
                 var gens = genArgs.Select(x => getTypesScriptType(x, withNs, skipKnownTypes, allowGeneric)).ToList();
 
@@ -437,9 +441,12 @@ namespace ReactUnity.Editor.Developer
                     }
                 }
 
-                var nameWithoutGeneric = GetNameWithoutGenericArity(withNs ? propertyType : type.Name);
-                var gn = string.Join(", ", gens.Select(x => x + suffixGeneric));
-                return $"{nameWithoutGeneric}<{gn}>";
+                if (allowGeneric)
+                {
+                    var nameWithoutGeneric = GetNameWithoutGenericArity(withNs ? propertyType : type.Name);
+                    var gn = string.Join(", ", gens.Select(x => x + suffixGeneric));
+                    return $"{nameWithoutGeneric}<{gn}>";
+                }
             }
 
             if (typeof(Attribute).IsAssignableFrom(type)) return "any";

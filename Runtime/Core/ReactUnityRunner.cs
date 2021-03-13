@@ -20,7 +20,7 @@ namespace ReactUnity
 
             context = ctx;
             if (engine == null) CreateEngine();
-            CreateLocation(engine, ctx.Script);
+            CreateLocation(engine);
 
             List<Action> callbacks = new List<Action>() { callback };
 
@@ -92,7 +92,6 @@ namespace ReactUnity
             engine.Execute("btoa = atob = null;");
             engine.Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
 
-
             engine.SetValue("Engine", engine);
             engine.SetValue("Callback", typeof(Callback));
 
@@ -112,7 +111,7 @@ namespace ReactUnity
 
         void CreateConsole(Jint.Engine engine)
         {
-            var console = new ConsoleProxy(engine);
+            var console = new ConsoleProxy(engine, context);
 
             engine.SetValue("console", console);
         }
@@ -137,9 +136,9 @@ namespace ReactUnity
             engine.SetValue("localStorage", storage);
         }
 
-        void CreateLocation(Jint.Engine engine, ReactScript script)
+        void CreateLocation(Jint.Engine engine)
         {
-            var location = new DomProxies.Location(script.SourceLocation, context.OnRestart);
+            var location = new DomProxies.Location(context);
             engine.SetValue("location", location);
 
 #if UNITY_EDITOR || REACT_DEV_SERVER_API

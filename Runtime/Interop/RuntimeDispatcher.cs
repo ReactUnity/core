@@ -4,90 +4,56 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace ReactUnity.Interop
+namespace ReactUnity
 {
-    public class MainThreadDispatcher : MonoBehaviour
+    public class RuntimeDispatcher : MonoBehaviour, IDispatcher, IDisposable
     {
-        public class CoroutineHandle : IDisposable
-        {
-            public int Handle { get; }
-            public CoroutineHandle(int handle)
-            {
-                Handle = handle;
-            }
-
-            public void Dispose()
-            {
-                StopDeferred(Handle);
-            }
-        }
-
         System.Threading.Thread mainThread;
 
-        #region Singleton stuff
-        private static MainThreadDispatcher Instance { get; set; }
-
-        void OnEnable()
+        public static RuntimeDispatcher Create()
         {
-            if (Instance && Instance != this) DestroyImmediate(Instance);
-            Instance = this;
+            var go = new GameObject("React Unity Runtime Dispatcher");
+            var dispatcher = go.AddComponent<RuntimeDispatcher>();
+            DontDestroyOnLoad(go);
+            return dispatcher;
         }
 
-        private void OnDestroy()
-        {
-            if (Instance == this) Instance = null;
-            StopAll();
-        }
 
-        public static void Initialize()
-        {
-            if (Instance) return;
-            if (Application.isPlaying)
-            {
-                var go = new GameObject("React Unity Main Thread Dispatcher");
-                var dispatcher = go.AddComponent<MainThreadDispatcher>();
-                DontDestroyOnLoad(go);
-                Instance = dispatcher;
-            }
-        }
-        #endregion
+        private List<IEnumerator> ToStart = new List<IEnumerator>();
+        private List<Coroutine> Started = new List<Coroutine>();
+        private HashSet<int> ToStop = new HashSet<int>();
+        private List<Action> CallOnLateUpdate = new List<Action>();
 
-
-        private static List<IEnumerator> ToStart = new List<IEnumerator>();
-        private static List<Coroutine> Started = new List<Coroutine>();
-        private static HashSet<int> ToStop = new HashSet<int>();
-        private static List<Action> CallOnLateUpdate = new List<Action>();
-
-        static public void AddCallOnLateUpdate(Action call)
+        public void AddCallOnLateUpdate(Action call)
         {
             CallOnLateUpdate.Add(call);
         }
 
-        static public int OnUpdate(Action callback)
+        public int OnUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
         }
 
-        static public int Timeout(Action callback, float timeSeconds)
+        public int Timeout(Action callback, float timeSeconds)
         {
             var handle = GetNextHandle();
             return StartDeferred(TimeoutCoroutine(callback, timeSeconds, handle), handle);
         }
 
-        static public int AnimationFrame(Action callback)
+        public int AnimationFrame(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(AnimationFrameCoroutine(callback, handle), handle);
         }
 
-        static public int Interval(Action callback, float intervalSeconds)
+        public int Interval(Action callback, float intervalSeconds)
         {
             var handle = GetNextHandle();
             return StartDeferred(IntervalCoroutine(callback, intervalSeconds, handle), handle);
         }
 
-        static public int Immediate(Action callback)
+        public int Immediate(Action callback)
         {
             if (IsMainThread())
             {
@@ -101,31 +67,31 @@ namespace ReactUnity.Interop
             }
         }
 
-        static public bool IsMainThread()
+        public bool IsMainThread()
         {
-            return Instance?.mainThread?.Equals(System.Threading.Thread.CurrentThread) ?? false;
+            return mainThread?.Equals(System.Threading.Thread.CurrentThread) ?? false;
         }
 
-        static public int StartDeferred(IEnumerator cr)
+        public int StartDeferred(IEnumerator cr)
         {
             var handle = GetNextHandle();
             ToStart.Add(cr);
             return handle;
         }
 
-        static public int StartDeferred(IEnumerator cr, int handle)
+        public int StartDeferred(IEnumerator cr, int handle)
         {
             ToStart.Add(cr);
             return handle;
         }
 
-        static public void StopDeferred(int cr)
+        public void StopDeferred(int cr)
         {
             ToStop.Add(cr);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static private int GetNextHandle()
+        private int GetNextHandle()
         {
             return Started.Count + ToStart.Count;
         }
@@ -190,19 +156,19 @@ namespace ReactUnity.Interop
         }
 
 
-        private static IEnumerator OnUpdateCoroutine(Action callback, int handle)
+        private IEnumerator OnUpdateCoroutine(Action callback, int handle)
         {
             yield return null;
             if (!ToStop.Contains(handle)) callback();
         }
 
-        private static IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
+        private IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
         {
             yield return new WaitForSeconds(time);
             if (!ToStop.Contains(handle)) callback();
         }
 
-        private static IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
+        private IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
         {
             while (true)
             {
@@ -212,11 +178,15 @@ namespace ReactUnity.Interop
             }
         }
 
-        private static IEnumerator AnimationFrameCoroutine(Action callback, int handle)
+        private IEnumerator AnimationFrameCoroutine(Action callback, int handle)
         {
             yield return null;
             if (!ToStop.Contains(handle)) callback();
         }
 
+        public void Dispose()
+        {
+            StopAll();
+        }
     }
 }

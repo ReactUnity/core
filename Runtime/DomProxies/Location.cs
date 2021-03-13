@@ -17,9 +17,12 @@ namespace ReactUnity.DomProxies
         public string pathname { get; }
         private Action restart { get; }
 
-        public Location(string sourceLocation, Action restart)
+        ReactContext ctx;
+
+        public Location(ReactContext ctx)
         {
-            var href = sourceLocation;
+            this.ctx = ctx;
+            var href = ctx.Script.SourceLocation;
             var hrefSplit = href.Split(new string[] { "//" }, 2, StringSplitOptions.None);
 
             var protocol = hrefSplit.Length > 1 ? hrefSplit.First() : null;
@@ -43,12 +46,12 @@ namespace ReactUnity.DomProxies
             this.port = port;
             this.search = "";
             this.pathname = pathName;
-            this.restart = restart;
+            this.restart = ctx.OnRestart;
         }
 
         public void reload()
         {
-            AdaptiveDispatcher.OnUpdate(restart);
+            ctx.Dispatcher.OnUpdate(restart);
         }
     }
 }

@@ -56,19 +56,19 @@ namespace ReactUnity
             return path;
         }
 
-        public IDisposable GetScript(Action<string, bool> callback, bool useDevServer = true, bool disableWarnings = false)
+        public IDisposable GetScript(Action<string, bool> callback, IDispatcher dispatcher = null, bool useDevServer = true, bool disableWarnings = false)
         {
 #if UNITY_EDITOR || REACT_DEV_SERVER_API
             if (useDevServer && UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
             {
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
 
-                return AdaptiveDispatcher.GetCoroutineHandle(
-                    AdaptiveDispatcher.StartDeferred(
+                return new DisposableHandle(dispatcher,
+                    dispatcher.StartDeferred(
                         WatchWebRequest(request, callback, err =>
                         {
                             Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
-                            GetScript(callback, false);
+                            GetScript(callback, dispatcher, false);
                         }, true)));
             }
 #endif
@@ -96,8 +96,8 @@ namespace ReactUnity
 #endif
                     var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
 
-                    return AdaptiveDispatcher.GetCoroutineHandle(
-                        AdaptiveDispatcher.StartDeferred(WatchWebRequest(request, callback)));
+                    return new DisposableHandle(dispatcher,
+                        dispatcher.StartDeferred(WatchWebRequest(request, callback)));
 #else
                     throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
 #endif

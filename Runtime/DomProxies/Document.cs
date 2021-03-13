@@ -104,6 +104,7 @@ namespace ReactUnity.DomProxies
         public void OnAppend()
         {
             var script = document.context.CreateStaticScript(src);
+            var dispatcher = document.context.Dispatcher;
 
             Action<string> action = (sc) =>
             {
@@ -113,10 +114,10 @@ namespace ReactUnity.DomProxies
 
             Action<string> callback = (sc) =>
             {
-                AdaptiveDispatcher.OnUpdate(() => action(sc));
+                dispatcher.OnUpdate(() => action(sc));
             };
 
-            script.GetScript((sc, isDevServer) => callback(sc), false, true);
+            script.GetScript((sc, isDevServer) => callback(sc), dispatcher, false, true);
         }
 
         public void OnRemove()

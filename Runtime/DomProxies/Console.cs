@@ -13,9 +13,12 @@ namespace ReactUnity.DomProxies
         Jint.Engine engine;
         static Regex replaceRegex = new Regex("%[dso]");
 
-        public ConsoleProxy(Jint.Engine engine)
+        ReactContext ctx;
+
+        public ConsoleProxy(Jint.Engine engine, ReactContext ctx)
         {
             this.engine = engine;
+            this.ctx = ctx;
         }
 
         private void GenericLog(object msg, Action<string> baseCaller, params object[] subs)
@@ -95,7 +98,7 @@ namespace ReactUnity.DomProxies
 
         public void clear()
         {
-            AdaptiveDispatcher.OnUpdate(() => Debug.ClearDeveloperConsole());
+            ctx.Dispatcher.OnUpdate(() => Debug.ClearDeveloperConsole());
         }
 
         public void assert(bool val)

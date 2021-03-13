@@ -22,7 +22,8 @@ namespace ReactUnity
         private UGUIContext ctx;
 #pragma warning disable IDE0052 // Remove unread private members
         private IDisposable ScriptWatchDisposable { get; set; }
-        private ReactUnityRunner Runner { get; set; }
+        private IDispatcher dispatcher { get; set; }
+        private ReactUnityRunner runner { get; set; }
 #pragma warning restore IDE0052 // Remove unread private members
         public RectTransform Root => transform as RectTransform;
 
@@ -51,20 +52,22 @@ namespace ReactUnity
             }
 
             ctx?.Dispose();
-            Runner = null;
+            dispatcher?.Dispose();
+            runner = null;
+            dispatcher = null;
             ctx = null;
             ScriptWatchDisposable = null;
         }
 
         private IDisposable LoadAndRun(ReactScript script, List<TextAsset> preload, Action callback = null, bool disableWarnings = false)
         {
-            var ru = new ReactUnityRunner();
-            AdaptiveDispatcher.Initialize();
+            dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
+            runner = new ReactUnityRunner();
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
-                ctx = new UGUIContext(Root, Globals, script, Application.isPlaying ? new UnityScheduler() : new EditorScheduler() as IUnityScheduler, isDevServer, Restart);
-                ru.RunScript(code, ctx, preload, callback);
-            }, true, disableWarnings);
+                ctx = new UGUIContext(Root, Globals, script, dispatcher, new UnityScheduler(dispatcher), isDevServer, Restart);
+                runner.RunScript(code, ctx, preload, callback);
+            }, dispatcher, true, disableWarnings);
 
             return watcherDisposable;
         }

@@ -77,16 +77,19 @@ namespace ReactUnity.Editor.Renderer
                 { "tb-toggle", (tag, text, context) => new EditorReactComponent<ToolbarToggle>(context, "tb-toggle") },
             };
 
-        public EditorContext(VisualElement hostElement, StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
-            : base(globals, script, scheduler, isDevServer, onRestart, true)
+        public ReactWindow Editor;
+
+        public EditorContext(VisualElement hostElement, StringObjectDictionary globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, ReactWindow editor, Action onRestart = null)
+            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, true)
         {
+            Editor = editor;
             Host = new EditorHostComponent(hostElement, this);
             InsertStyle(EditorResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
 
             hostElement.styleSheets.Add(EditorResourcesHelper.UtilityStylesheet);
 
-            EditorDispatcher.AddCallOnLateUpdate(() =>
+            dispatcher.AddCallOnLateUpdate(() =>
             {
                 if (Scheduled)
                 {

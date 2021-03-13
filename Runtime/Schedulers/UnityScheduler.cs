@@ -4,45 +4,52 @@ namespace ReactUnity.Schedulers
 {
     public class UnityScheduler : IUnityScheduler
     {
+        IDispatcher Dispatcher;
+
+        public UnityScheduler(IDispatcher dispatcher)
+        {
+            Dispatcher = dispatcher;
+        }
+
         public int setTimeout(Callback callback, int timeout)
         {
-            return MainThreadDispatcher.Timeout(() => callback.Call(), timeout / 1000f);
+            return Dispatcher.Timeout(() => callback.Call(), timeout / 1000f);
         }
 
         public int setInterval(Callback callback, int timeout)
         {
-            return MainThreadDispatcher.Interval(() => callback.Call(), timeout / 1000f);
+            return Dispatcher.Interval(() => callback.Call(), timeout / 1000f);
         }
 
         public void clearTimeout(int? handle)
         {
-            if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
+            if (handle.HasValue) Dispatcher.StopDeferred(handle.Value);
         }
 
         public void clearInterval(int? handle)
         {
-            if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
+            if (handle.HasValue) Dispatcher.StopDeferred(handle.Value);
         }
 
         public int setImmediate(Callback callback)
         {
-            return MainThreadDispatcher.Immediate(() => callback.Call());
+            return Dispatcher.Immediate(() => callback.Call());
         }
 
 
         public int requestAnimationFrame(Callback callback)
         {
-            return MainThreadDispatcher.AnimationFrame(() => callback.Call());
+            return Dispatcher.AnimationFrame(() => callback.Call());
         }
 
         public void cancelAnimationFrame(int? handle)
         {
-            if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
+            if (handle.HasValue) Dispatcher.StopDeferred(handle.Value);
         }
 
         public void clearImmediate(int? handle)
         {
-            if (handle.HasValue) MainThreadDispatcher.StopDeferred(handle.Value);
+            if (handle.HasValue) Dispatcher.StopDeferred(handle.Value);
         }
 
         public void clearAllTimeouts()

@@ -302,7 +302,7 @@ namespace ReactUnity.Components
             // Mask is not defined and there is no need for it
             if (Layout.Overflow == YogaOverflow.Visible && mask == null) return;
 
-            if (mask == null) mask = MaskAndImage = new MaskAndImage(RectTransform);
+            if (mask == null) mask = MaskAndImage = new MaskAndImage(RectTransform, Context);
 
             mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
             mask.SetBorderRadius(Style.borderTopLeftRadius, Style.borderTopRightRadius, Style.borderBottomLeftRadius, Style.borderBottomRightRadius);
@@ -367,7 +367,7 @@ namespace ReactUnity.Components
                     image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
                 });
                 image.SetBoxShadow(Style.boxShadow);
-                AdaptiveDispatcher.OnUpdate(() =>
+                Context.Dispatcher.OnUpdate(() =>
                 {
                     if (!GameObject) return;
                     var borderSprite = BorderGraphic.CreateBorderSprite(Style.borderTopLeftRadius, Style.borderTopRightRadius, Style.borderBottomLeftRadius, Style.borderBottomRightRadius);

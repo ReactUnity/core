@@ -8,10 +8,12 @@ namespace ReactUnity.Styling
     {
         public Mask Mask;
         public Image Image;
+        private ReactContext Context;
 
-        public MaskAndImage(RectTransform parent)
+        public MaskAndImage(RectTransform parent, ReactContext context)
         {
             var go = parent.gameObject;
+            Context = context;
 
             Image = go.GetComponent<Image>() ?? go.AddComponent<Image>();
             Image.type = Image.Type.Sliced;
@@ -29,7 +31,7 @@ namespace ReactUnity.Styling
 
         internal void SetBorderRadius(int tl, int tr, int bl, int br)
         {
-            AdaptiveDispatcher.OnUpdate(() =>
+            Context.Dispatcher.OnUpdate(() =>
             {
                 if (Image) Image.sprite = BorderGraphic.CreateBorderSprite(tl, tr, bl, br);
             });

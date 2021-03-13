@@ -22,6 +22,7 @@ namespace ReactUnity
 
         public ReactScript Script { get; }
         public IUnityScheduler Scheduler { get; }
+        public IDispatcher Dispatcher { get; }
 
         protected bool Scheduled = false;
         protected List<System.Action> ScheduledCallbacks = new List<System.Action>();
@@ -36,12 +37,14 @@ namespace ReactUnity
 
         private bool mergeLayouts;
 
-        public ReactContext(StringObjectDictionary globals, ReactScript script, IUnityScheduler scheduler, bool isDevServer, Action onRestart, bool mergeLayouts = false)
+        public ReactContext(StringObjectDictionary globals, ReactScript script, IDispatcher dispatcher,
+            IUnityScheduler scheduler, bool isDevServer, Action onRestart, bool mergeLayouts = false)
         {
             Globals = globals;
             Script = script;
             IsDevServer = isDevServer;
             Scheduler = scheduler;
+            Dispatcher = dispatcher;
             OnRestart = onRestart ?? (() => { });
             this.mergeLayouts = mergeLayouts;
 
@@ -112,6 +115,7 @@ namespace ReactUnity
         public void Dispose()
         {
             Scheduler?.clearAllTimeouts();
+            Dispatcher?.Dispose();
             foreach (var dp in Disposables)
             {
                 dp.Dispose();
