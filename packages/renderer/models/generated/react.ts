@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 13.03.2021 22:41:08
+// Generated 14.03.2021 00:44:27
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -375,7 +375,7 @@ export declare namespace ReactUnity {
     Data: System.Collections.Generic.Dictionary<string, System.Object>;
     Destroy(): void;
     ApplyLayoutStyles(): void;
-    ScheduleLayout(callback?: System.Action): void;
+    ScheduleLayout(callback?: (() => void)): void;
     ResolveStyle(recursive?: boolean): void;
     Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
     SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
@@ -400,7 +400,7 @@ export declare namespace ReactUnity {
     Context: ReactUnity.ReactContext;
   }
   export class ReactContext {
-    constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action, mergeLayouts?: boolean);
+    constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void), mergeLayouts?: boolean);
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
     IsDevServer: boolean;
@@ -409,10 +409,10 @@ export declare namespace ReactUnity {
     Dispatcher: ReactUnity.IDispatcher;
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
-    OnRestart: System.Action;
+    OnRestart: (() => void);
     Disposables: System.IDisposable[];
     FontFamilies: System.Collections.Generic.Dictionary<string, ReactUnity.Types.FontReference>;
-    scheduleLayout(callback?: System.Action): void;
+    scheduleLayout(callback?: (() => void)): void;
     InsertStyle(style: string, importanceOffset?: number): void;
     RemoveStyle(style: string): void;
     ResolvePath(path: string): string;
@@ -548,7 +548,7 @@ export declare namespace ReactUnity {
   }
   export class ReactUnityRunner {
     constructor();
-    RunScript(script: string, ctx: ReactUnity.ReactContext, preload?: UnityEngine.TextAsset[], callback?: System.Action): void;
+    RunScript(script: string, ctx: ReactUnity.ReactContext, preload?: UnityEngine.TextAsset[], callback?: (() => void)): void;
     ExecuteScript(script: string): void;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
@@ -556,7 +556,7 @@ export declare namespace ReactUnity {
     ToString(): string;
   }
   export class UGUIContext {
-    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action);
+    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void));
     static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
     RootLayoutNode: Facebook.Yoga.YogaNode;
     Host: ReactUnity.IHostComponent;
@@ -569,12 +569,12 @@ export declare namespace ReactUnity {
     static textCreator: ((arg0: string, arg1: ReactUnity.UGUIContext, arg2: ReactUnity.ITextComponent) => ReactUnity.ITextComponent);
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
-    OnRestart: System.Action;
+    OnRestart: (() => void);
     Disposables: System.IDisposable[];
     FontFamilies: System.Collections.Generic.Dictionary<string, ReactUnity.Types.FontReference>;
     CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
     CreateText(text: string): ReactUnity.ITextComponent;
-    scheduleLayout(callback?: System.Action): void;
+    scheduleLayout(callback?: (() => void)): void;
     InsertStyle(style: string, importanceOffset?: number): void;
     RemoveStyle(style: string): void;
     ResolvePath(path: string): string;
@@ -587,12 +587,12 @@ export declare namespace ReactUnity {
   }
   export class EditorDispatcher {
     constructor();
-    AddCallOnLateUpdate(call: System.Action): void;
-    OnUpdate(callback: System.Action): number;
-    Timeout(callback: System.Action, timeSeconds: number): number;
-    AnimationFrame(callback: System.Action): number;
-    Interval(callback: System.Action, intervalSeconds: number): number;
-    Immediate(callback: System.Action): number;
+    AddCallOnLateUpdate(call: (() => void)): void;
+    OnUpdate(callback: (() => void)): number;
+    Timeout(callback: (() => void), timeSeconds: number): number;
+    AnimationFrame(callback: (() => void)): number;
+    Interval(callback: (() => void), intervalSeconds: number): number;
+    Immediate(callback: (() => void)): number;
     StartDeferred(cr: System.Collections.IEnumerator): number;
     StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
     StopDeferred(cr: number): void;
@@ -604,12 +604,12 @@ export declare namespace ReactUnity {
     ToString(): string;
   }
   export interface IDispatcher {
-    AddCallOnLateUpdate(call: System.Action): void;
-    OnUpdate(callback: System.Action): number;
-    Timeout(callback: System.Action, timeSeconds: number): number;
-    AnimationFrame(callback: System.Action): number;
-    Interval(callback: System.Action, intervalSeconds: number): number;
-    Immediate(callback: System.Action): number;
+    AddCallOnLateUpdate(call: (() => void)): void;
+    OnUpdate(callback: (() => void)): number;
+    Timeout(callback: (() => void), timeSeconds: number): number;
+    AnimationFrame(callback: (() => void)): number;
+    Interval(callback: (() => void), intervalSeconds: number): number;
+    Immediate(callback: (() => void)): number;
     StartDeferred(cr: System.Collections.IEnumerator): number;
     StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
     StopDeferred(cr: number): void;
@@ -639,12 +639,12 @@ export declare namespace ReactUnity {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     static Create(): ReactUnity.RuntimeDispatcher;
-    AddCallOnLateUpdate(call: System.Action): void;
-    OnUpdate(callback: System.Action): number;
-    Timeout(callback: System.Action, timeSeconds: number): number;
-    AnimationFrame(callback: System.Action): number;
-    Interval(callback: System.Action, intervalSeconds: number): number;
-    Immediate(callback: System.Action): number;
+    AddCallOnLateUpdate(call: (() => void)): void;
+    OnUpdate(callback: (() => void)): number;
+    Timeout(callback: (() => void), timeSeconds: number): number;
+    AnimationFrame(callback: (() => void)): number;
+    Interval(callback: (() => void), intervalSeconds: number): number;
+    Immediate(callback: (() => void)): number;
     IsMainThread(): boolean;
     StartDeferred(cr: System.Collections.IEnumerator): number;
     StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
@@ -812,7 +812,7 @@ export declare namespace ReactUnity {
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -872,7 +872,7 @@ export declare namespace ReactUnity {
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetData(propertyName: string, value: System.Object): void;
       SetProperty(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -929,7 +929,7 @@ export declare namespace ReactUnity {
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
       SetProperty(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -990,7 +990,7 @@ export declare namespace ReactUnity {
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
       SetProperty(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
@@ -1052,7 +1052,7 @@ export declare namespace ReactUnity {
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -1115,7 +1115,7 @@ export declare namespace ReactUnity {
       Destroy(): void;
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetData(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
@@ -1177,7 +1177,7 @@ export declare namespace ReactUnity {
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -1222,7 +1222,7 @@ export declare namespace ReactUnity {
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
       SetProperty(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ResolveStyle(recursive?: boolean): void;
       ApplyLayoutStyles(): void;
       ApplyStyles(): void;
@@ -1287,7 +1287,7 @@ export declare namespace ReactUnity {
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -1346,7 +1346,7 @@ export declare namespace ReactUnity {
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
       SetProperty(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -1399,7 +1399,7 @@ export declare namespace ReactUnity {
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
       SetProperty(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ResolveStyle(recursive?: boolean): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -1463,7 +1463,7 @@ export declare namespace ReactUnity {
       Destroy(): void;
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetData(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -1526,7 +1526,7 @@ export declare namespace ReactUnity {
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: System.Object): void;
-      ScheduleLayout(callback?: System.Action): void;
+      ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
@@ -1863,7 +1863,8 @@ export declare namespace ReactUnity {
       static ShowDefaultWindow(): void;
       Run(host?: UnityEngine.UIElements.VisualElement): void;
       Restart(host?: UnityEngine.UIElements.VisualElement): void;
-      AddSelectionChange(callback: (() => void)): System.Action;
+      AddSelectionChange(callback: (() => void)): (() => void);
+      AddPlayModeStateChange(callback: ((arg0: any) => void)): (() => void);
       BeginWindows(): void;
       EndWindows(): void;
       ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -1950,6 +1951,49 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export namespace Components {
+      export class AnchorComponent {
+        constructor(context: ReactUnity.Editor.Renderer.EditorContext);
+        Context: ReactUnity.Editor.Renderer.EditorContext;
+        Parent: ReactUnity.IContainerComponent;
+        Element: UnityEngine.UIElements.Button;
+        Layout: Facebook.Yoga.YogaNode;
+        LayoutValues: ReactUnity.Styling.LayoutValue[];
+        Style: ReactUnity.Styling.NodeStyle;
+        Inline: Record<string, any>;
+        IsPseudoElement: boolean;
+        Name: string;
+        Tag: string;
+        ClassName: string;
+        ClassList: System.Collections.Generic.HashSet<string>;
+        StateStyles: ReactUnity.Styling.StateStyles;
+        Data: System.Collections.Generic.Dictionary<string, System.Object>;
+        Children: ReactUnity.IReactComponent[];
+        BeforePseudo: ReactUnity.IReactComponent;
+        AfterPseudo: ReactUnity.IReactComponent;
+        BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+        AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+        url: string;
+        SetProperty(propertyName: string, value: System.Object): void;
+        Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+        ApplyLayoutStyles(): void;
+        ApplyStyles(): void;
+        Destroy(): void;
+        ResolveStyle(recursive?: boolean): void;
+        ScheduleLayout(callback?: (() => void)): void;
+        SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+        SetData(property: string, value: System.Object): void;
+        SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
+        GetComponent(type: System.Type): System.Object;
+        AddComponent(type: System.Type): System.Object;
+        RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+        CaptureMouse(): void;
+        ReleaseMouse(): void;
+        HasMouseCapture(): boolean;
+        Equals(obj: System.Object): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class BaseFieldComponent<TElementType = any, TValueType = any> {
         constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
         Context: ReactUnity.Editor.Renderer.EditorContext;
@@ -1980,7 +2024,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         GetComponent(type: System.Type): System.Object;
@@ -2021,7 +2065,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         SetProperty(property: string, value: System.Object): void;
@@ -2066,7 +2110,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
@@ -2108,7 +2152,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
@@ -2154,7 +2198,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         GetComponent(type: System.Type): System.Object;
@@ -2198,7 +2242,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         GetComponent(type: System.Type): System.Object;
@@ -2242,7 +2286,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         GetComponent(type: System.Type): System.Object;
@@ -2283,7 +2327,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
@@ -2329,7 +2373,7 @@ export declare namespace ReactUnity {
         ApplyStyles(): void;
         Destroy(): void;
         ResolveStyle(recursive?: boolean): void;
-        ScheduleLayout(callback?: System.Action): void;
+        ScheduleLayout(callback?: (() => void)): void;
         SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
         SetData(property: string, value: System.Object): void;
         GetComponent(type: System.Type): System.Object;
@@ -2369,7 +2413,7 @@ export declare namespace ReactUnity {
     }
     export namespace Renderer {
       export class EditorContext {
-        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, editor: ReactUnity.Editor.Renderer.ReactWindow, onRestart?: System.Action);
+        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, editor: ReactUnity.Editor.Renderer.ReactWindow, onRestart?: (() => void));
         Host: ReactUnity.IHostComponent;
         Globals: ReactUnity.Types.StringObjectDictionary;
         IsDevServer: boolean;
@@ -2382,12 +2426,12 @@ export declare namespace ReactUnity {
         Editor: ReactUnity.Editor.Renderer.ReactWindow;
         Parser: any; // ExCSS.StylesheetParser
         StyleTree: ReactUnity.StyleEngine.StyleTree;
-        OnRestart: System.Action;
+        OnRestart: (() => void);
         Disposables: System.IDisposable[];
         FontFamilies: System.Collections.Generic.Dictionary<string, ReactUnity.Types.FontReference>;
         CreateText(text: string): ReactUnity.ITextComponent;
         CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
-        scheduleLayout(callback?: System.Action): void;
+        scheduleLayout(callback?: (() => void)): void;
         InsertStyle(style: string, importanceOffset?: number): void;
         RemoveStyle(style: string): void;
         ResolvePath(path: string): string;
@@ -2422,7 +2466,8 @@ export declare namespace ReactUnity {
         static ShowDefaultWindow(): void;
         Run(host?: UnityEngine.UIElements.VisualElement): void;
         Restart(host?: UnityEngine.UIElements.VisualElement): void;
-        AddSelectionChange(callback: (() => void)): System.Action;
+        AddSelectionChange(callback: (() => void)): (() => void);
+        AddPlayModeStateChange(callback: ((arg0: any) => void)): (() => void);
         BeginWindows(): void;
         EndWindows(): void;
         ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -2472,7 +2517,8 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         Run(host?: UnityEngine.UIElements.VisualElement): void;
         Restart(host?: UnityEngine.UIElements.VisualElement): void;
-        AddSelectionChange(callback: (() => void)): System.Action;
+        AddSelectionChange(callback: (() => void)): (() => void);
+        AddPlayModeStateChange(callback: ((arg0: any) => void)): (() => void);
         BeginWindows(): void;
         EndWindows(): void;
         ShowNotification(notification: UnityEngine.GUIContent): void;

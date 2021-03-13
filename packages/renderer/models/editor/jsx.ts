@@ -25,6 +25,7 @@ declare module 'react/jsx-runtime' {
     interface IntrinsicElements {
       [key: string]: BaseElement<any>;
       view: BaseElement & { tag?: string };
+      box: BaseElement;
       anchor: Components.Anchor & rc.RefAttributes<Cmp.EditorComponent> & Children;
       text: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
