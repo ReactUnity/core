@@ -1,15 +1,371 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 13.03.2021 15:01:25
+// Generated 13.03.2021 19:43:59
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
 
+export declare namespace Facebook {
+  export namespace Yoga {
+    export class BaselineFunction {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke(node: Facebook.Yoga.YogaNode, width: number, height: number): number;
+      BeginInvoke(node: Facebook.Yoga.YogaNode, width: number, height: number, callback: System.AsyncCallback, object: System.Object): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): number;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: System.Object[]): System.Object;
+      Clone(): System.Object;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class Logger {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke(config: Facebook.Yoga.YogaConfig, node: Facebook.Yoga.YogaNode, level: Facebook.Yoga.YogaLogLevel, message: string): void;
+      BeginInvoke(config: Facebook.Yoga.YogaConfig, node: Facebook.Yoga.YogaNode, level: Facebook.Yoga.YogaLogLevel, message: string, callback: System.AsyncCallback, object: System.Object): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): void;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: System.Object[]): System.Object;
+      Clone(): System.Object;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class MeasureFunction {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
+      BeginInvoke(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode, callback: System.AsyncCallback, object: System.Object): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): Facebook.Yoga.YogaSize;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: System.Object[]): System.Object;
+      Clone(): System.Object;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class MeasureOutput {
+      constructor();
+      static Make(width: number, height: number): Facebook.Yoga.YogaSize;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum YogaAlign {
+      Auto = 0,
+      FlexStart = 1,
+      Center = 2,
+      FlexEnd = 3,
+      Stretch = 4,
+      Baseline = 5,
+      SpaceBetween = 6,
+      SpaceAround = 7,
+    }
+    export class YogaBaselineFunc {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke(unmanagedNodePtr: System.IntPtr, width: number, height: number): number;
+      BeginInvoke(unmanagedNodePtr: System.IntPtr, width: number, height: number, callback: System.AsyncCallback, object: System.Object): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): number;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: System.Object[]): System.Object;
+      Clone(): System.Object;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class YogaConfig {
+      constructor();
+      Logger: Facebook.Yoga.Logger;
+      UseWebDefaults: boolean;
+      PointScaleFactor: number;
+      SetExperimentalFeatureEnabled(feature: Facebook.Yoga.YogaExperimentalFeature, enabled: boolean): void;
+      IsExperimentalFeatureEnabled(feature: Facebook.Yoga.YogaExperimentalFeature): boolean;
+      static GetInstanceCount(): number;
+      static SetDefaultLogger(logger: Facebook.Yoga.Logger): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class YogaConstants {
+      static Undefined: number;
+      static IsUndefined(value: number): boolean;
+      static IsUndefined(value: Facebook.Yoga.YogaValue): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum YogaDimension {
+      Width = 0,
+      Height = 1,
+    }
+    export enum YogaDirection {
+      Inherit = 0,
+      LTR = 1,
+      RTL = 2,
+    }
+    export enum YogaDisplay {
+      Flex = 0,
+      None = 1,
+    }
+    export enum YogaEdge {
+      Left = 0,
+      Top = 1,
+      Right = 2,
+      Bottom = 3,
+      Start = 4,
+      End = 5,
+      Horizontal = 6,
+      Vertical = 7,
+      All = 8,
+    }
+    export enum YogaExperimentalFeature {
+      WebFlexBasis = 0,
+    }
+    export enum YogaFlexDirection {
+      Column = 0,
+      ColumnReverse = 1,
+      Row = 2,
+      RowReverse = 3,
+    }
+    export enum YogaJustify {
+      FlexStart = 0,
+      Center = 1,
+      FlexEnd = 2,
+      SpaceBetween = 3,
+      SpaceAround = 4,
+      SpaceEvenly = 5,
+    }
+    export class YogaLogger {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke(unmanagedConfigPtr: System.IntPtr, unmanagedNotePtr: System.IntPtr, level: Facebook.Yoga.YogaLogLevel, message: string): void;
+      BeginInvoke(unmanagedConfigPtr: System.IntPtr, unmanagedNotePtr: System.IntPtr, level: Facebook.Yoga.YogaLogLevel, message: string, callback: System.AsyncCallback, object: System.Object): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): void;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: System.Object[]): System.Object;
+      Clone(): System.Object;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum YogaLogLevel {
+      Error = 0,
+      Warn = 1,
+      Info = 2,
+      Debug = 3,
+      Verbose = 4,
+      Fatal = 5,
+    }
+    export class YogaMeasureFunc {
+      constructor(object: System.Object, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: System.Object;
+      Invoke(unmanagedNodePtr: System.IntPtr, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
+      BeginInvoke(unmanagedNodePtr: System.IntPtr, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode, callback: System.AsyncCallback, object: System.Object): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): Facebook.Yoga.YogaSize;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: System.Object[]): System.Object;
+      Clone(): System.Object;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum YogaMeasureMode {
+      Undefined = 0,
+      Exactly = 1,
+      AtMost = 2,
+    }
+    export class YogaNode {
+      constructor(config?: Facebook.Yoga.YogaConfig);
+      constructor(srcNode: Facebook.Yoga.YogaNode);
+      IsDirty: boolean;
+      HasNewLayout: boolean;
+      Parent: Facebook.Yoga.YogaNode;
+      IsMeasureDefined: boolean;
+      IsBaselineDefined: boolean;
+      StyleDirection: Facebook.Yoga.YogaDirection;
+      FlexDirection: Facebook.Yoga.YogaFlexDirection;
+      JustifyContent: Facebook.Yoga.YogaJustify;
+      Display: Facebook.Yoga.YogaDisplay;
+      AlignItems: Facebook.Yoga.YogaAlign;
+      AlignSelf: Facebook.Yoga.YogaAlign;
+      AlignContent: Facebook.Yoga.YogaAlign;
+      PositionType: Facebook.Yoga.YogaPositionType;
+      Wrap: Facebook.Yoga.YogaWrap;
+      Flex: number;
+      FlexGrow: number;
+      FlexShrink: number;
+      FlexBasis: Facebook.Yoga.YogaValue;
+      Width: Facebook.Yoga.YogaValue;
+      Height: Facebook.Yoga.YogaValue;
+      MaxWidth: Facebook.Yoga.YogaValue;
+      MaxHeight: Facebook.Yoga.YogaValue;
+      MinWidth: Facebook.Yoga.YogaValue;
+      MinHeight: Facebook.Yoga.YogaValue;
+      AspectRatio: number;
+      LayoutX: number;
+      LayoutY: number;
+      LayoutWidth: number;
+      LayoutHeight: number;
+      LayoutDirection: Facebook.Yoga.YogaDirection;
+      Overflow: Facebook.Yoga.YogaOverflow;
+      Data: System.Object;
+      Count: number;
+      Left: Facebook.Yoga.YogaValue;
+      Top: Facebook.Yoga.YogaValue;
+      Right: Facebook.Yoga.YogaValue;
+      Bottom: Facebook.Yoga.YogaValue;
+      Start: Facebook.Yoga.YogaValue;
+      End: Facebook.Yoga.YogaValue;
+      MarginLeft: Facebook.Yoga.YogaValue;
+      MarginTop: Facebook.Yoga.YogaValue;
+      MarginRight: Facebook.Yoga.YogaValue;
+      MarginBottom: Facebook.Yoga.YogaValue;
+      MarginStart: Facebook.Yoga.YogaValue;
+      MarginEnd: Facebook.Yoga.YogaValue;
+      MarginHorizontal: Facebook.Yoga.YogaValue;
+      MarginVertical: Facebook.Yoga.YogaValue;
+      Margin: Facebook.Yoga.YogaValue;
+      PaddingLeft: Facebook.Yoga.YogaValue;
+      PaddingTop: Facebook.Yoga.YogaValue;
+      PaddingRight: Facebook.Yoga.YogaValue;
+      PaddingBottom: Facebook.Yoga.YogaValue;
+      PaddingStart: Facebook.Yoga.YogaValue;
+      PaddingEnd: Facebook.Yoga.YogaValue;
+      PaddingHorizontal: Facebook.Yoga.YogaValue;
+      PaddingVertical: Facebook.Yoga.YogaValue;
+      Padding: Facebook.Yoga.YogaValue;
+      BorderLeftWidth: number;
+      BorderTopWidth: number;
+      BorderRightWidth: number;
+      BorderBottomWidth: number;
+      BorderStartWidth: number;
+      BorderEndWidth: number;
+      BorderWidth: number;
+      LayoutMarginLeft: number;
+      LayoutMarginTop: number;
+      LayoutMarginRight: number;
+      LayoutMarginBottom: number;
+      LayoutMarginStart: number;
+      LayoutMarginEnd: number;
+      LayoutPaddingLeft: number;
+      LayoutPaddingTop: number;
+      LayoutPaddingRight: number;
+      LayoutPaddingBottom: number;
+      LayoutPaddingStart: number;
+      LayoutPaddingEnd: number;
+      Reset(): void;
+      MarkDirty(): void;
+      MarkHasNewLayout(): void;
+      CopyStyle(srcNode: Facebook.Yoga.YogaNode): void;
+      MarkLayoutSeen(): void;
+      ValuesEqual(f1: number, f2: number): boolean;
+      Insert(index: number, node: Facebook.Yoga.YogaNode): void;
+      RemoveAt(index: number): void;
+      AddChild(child: Facebook.Yoga.YogaNode): void;
+      RemoveChild(child: Facebook.Yoga.YogaNode): void;
+      Clear(): void;
+      IndexOf(node: Facebook.Yoga.YogaNode): number;
+      SetMeasureFunction(measureFunction: Facebook.Yoga.MeasureFunction): void;
+      SetBaselineFunction(baselineFunction: Facebook.Yoga.BaselineFunction): void;
+      CalculateLayout(width?: number, height?: number): void;
+      Print(options?: Facebook.Yoga.YogaPrintOptions): string;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<Facebook.Yoga.YogaNode>;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum YogaNodeType {
+      Default = 0,
+      Text = 1,
+    }
+    export enum YogaOverflow {
+      Visible = 0,
+      Hidden = 1,
+      Scroll = 2,
+    }
+    export enum YogaPositionType {
+      Relative = 0,
+      Absolute = 1,
+    }
+    export enum YogaPrintOptions {
+      Layout = 1,
+      Style = 2,
+      Children = 4,
+    }
+    export class YogaSize {
+      width: number;
+      height: number;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum YogaUnit {
+      Undefined = 0,
+      Point = 1,
+      Percent = 2,
+      Auto = 3,
+    }
+    export class YogaValue {
+      Unit: Facebook.Yoga.YogaUnit;
+      Value: number;
+      static Point(value: number): Facebook.Yoga.YogaValue;
+      Equals(other: Facebook.Yoga.YogaValue): boolean;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      static Undefined(): Facebook.Yoga.YogaValue;
+      static Auto(): Facebook.Yoga.YogaValue;
+      static Percent(value: number): Facebook.Yoga.YogaValue;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class YogaValueExtensions {
+      static Percent(value: number): Facebook.Yoga.YogaValue;
+      static Pt(value: number): Facebook.Yoga.YogaValue;
+      static Percent(value: number): Facebook.Yoga.YogaValue;
+      static Pt(value: number): Facebook.Yoga.YogaValue;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum YogaWrap {
+      NoWrap = 0,
+      Wrap = 1,
+      WrapReverse = 2,
+    }
+  }
+}
 export declare namespace ReactUnity {
   export interface IReactComponent {
     Parent: ReactUnity.IContainerComponent;
     IsPseudoElement: boolean;
-    Layout: any; // Facebook.Yoga.YogaNode
+    Layout: Facebook.Yoga.YogaNode;
     Style: ReactUnity.Styling.NodeStyle;
     Name: string;
     Tag: string;
@@ -202,7 +558,7 @@ export declare namespace ReactUnity {
   export class UGUIContext {
     constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action);
     static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
-    RootLayoutNode: any; // Facebook.Yoga.YogaNode
+    RootLayoutNode: Facebook.Yoga.YogaNode;
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
     IsDevServer: boolean;
@@ -341,7 +697,7 @@ export declare namespace ReactUnity {
   }
   export class CalculateSizeFromContents {
     constructor();
-    Layout: any; // Facebook.Yoga.YogaNode
+    Layout: Facebook.Yoga.YogaNode;
     useGUILayout: boolean;
     runInEditMode: boolean;
     enabled: boolean;
@@ -419,14 +775,14 @@ export declare namespace ReactUnity {
       AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -472,9 +828,9 @@ export declare namespace ReactUnity {
     export class ButtonComponent {
       constructor(context: ReactUnity.UGUIContext);
       static ButtonDefaultStyle: ReactUnity.Styling.NodeStyle;
-      static ButtonDefaultLayout: any; // Facebook.Yoga.YogaNode
+      static ButtonDefaultLayout: Facebook.Yoga.YogaNode;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Button: UnityEngine.UI.Button;
       Container: UnityEngine.RectTransform;
       Children: ReactUnity.IReactComponent[];
@@ -488,7 +844,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -538,14 +894,14 @@ export declare namespace ReactUnity {
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -598,14 +954,14 @@ export declare namespace ReactUnity {
       AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       BeforePseudo: ReactUnity.IReactComponent;
       AfterPseudo: ReactUnity.IReactComponent;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -649,9 +1005,9 @@ export declare namespace ReactUnity {
     export class ImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
       static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
-      static ImageDefaultLayout: any; // Facebook.Yoga.YogaNode
+      static ImageDefaultLayout: Facebook.Yoga.YogaNode;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
       Image: UnityEngine.UI.Image;
@@ -668,7 +1024,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -711,9 +1067,9 @@ export declare namespace ReactUnity {
     }
     export class InputComponent {
       constructor(text: string, context: ReactUnity.UGUIContext);
-      static InputDefaultLayout: any; // Facebook.Yoga.YogaNode
+      static InputDefaultLayout: Facebook.Yoga.YogaNode;
       static InputDefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       Value: string;
       Container: UnityEngine.RectTransform;
@@ -728,7 +1084,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -774,9 +1130,9 @@ export declare namespace ReactUnity {
     export class RawImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
       static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
-      static ImageDefaultLayout: any; // Facebook.Yoga.YogaNode
+      static ImageDefaultLayout: Facebook.Yoga.YogaNode;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
       Image: UnityEngine.UI.RawImage;
@@ -793,7 +1149,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -837,14 +1193,14 @@ export declare namespace ReactUnity {
     export class ReactComponent {
       constructor(context: ReactUnity.UGUIContext, tag: string);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Context: ReactUnity.UGUIContext;
       GameObject: UnityEngine.GameObject;
       RectTransform: UnityEngine.RectTransform;
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -860,7 +1216,7 @@ export declare namespace ReactUnity {
       TextContent: string;
       Name: string;
       static TagDefaultStyle: ReactUnity.Styling.NodeStyle;
-      static TagDefaultLayout: any; // Facebook.Yoga.YogaNode
+      static TagDefaultLayout: Facebook.Yoga.YogaNode;
       Destroy(): void;
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
@@ -885,7 +1241,7 @@ export declare namespace ReactUnity {
     export class RenderTextureComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
       Image: UnityEngine.UI.RawImage;
@@ -902,7 +1258,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -946,8 +1302,8 @@ export declare namespace ReactUnity {
     }
     export class ScrollComponent {
       constructor(Context: ReactUnity.UGUIContext);
-      static ScrollDefaultLayout: any; // Facebook.Yoga.YogaNode
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      static ScrollDefaultLayout: Facebook.Yoga.YogaNode;
+      DefaultLayout: Facebook.Yoga.YogaNode;
       ScrollRect: UnityEngine.UI.ScrollRect;
       Container: UnityEngine.RectTransform;
       Children: ReactUnity.IReactComponent[];
@@ -962,7 +1318,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -1006,8 +1362,8 @@ export declare namespace ReactUnity {
     export class TextComponent {
       constructor(text: string, context: ReactUnity.UGUIContext, tag: string);
       constructor(linkedTo: ReactUnity.Components.TextComponent);
-      static TextDefaultLayout: any; // Facebook.Yoga.YogaNode
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      static TextDefaultLayout: Facebook.Yoga.YogaNode;
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Text: any; // TMPro.TextMeshProUGUI
       Width: number;
       Height: number;
@@ -1020,7 +1376,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -1060,9 +1416,9 @@ export declare namespace ReactUnity {
     export class ToggleComponent {
       constructor(context: ReactUnity.UGUIContext);
       static ToggleDefaultStyle: ReactUnity.Styling.NodeStyle;
-      static ToggleDefaultLayout: any; // Facebook.Yoga.YogaNode
+      static ToggleDefaultLayout: Facebook.Yoga.YogaNode;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Value: boolean;
       Toggle: UnityEngine.UI.Toggle;
       Check: ReactUnity.Components.ImageComponent;
@@ -1078,7 +1434,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -1123,7 +1479,7 @@ export declare namespace ReactUnity {
     export class VideoComponent {
       constructor(context: ReactUnity.UGUIContext);
       DefaultStyle: ReactUnity.Styling.NodeStyle;
-      DefaultLayout: any; // Facebook.Yoga.YogaNode
+      DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
       Image: UnityEngine.UI.RawImage;
@@ -1140,7 +1496,7 @@ export declare namespace ReactUnity {
       Parent: ReactUnity.IContainerComponent;
       Data: System.Collections.Generic.Dictionary<string, System.Object>;
       Component: ReactUnity.Layout.ReactElement;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
       Inline: Record<string, any>;
@@ -1745,7 +2101,7 @@ export declare namespace ReactUnity {
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: TElementType;
-          Layout: any; // Facebook.Yoga.YogaNode
+          Layout: Facebook.Yoga.YogaNode;
           LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
           Inline: Record<string, any>;
@@ -1789,7 +2145,7 @@ export declare namespace ReactUnity {
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.Button;
-          Layout: any; // Facebook.Yoga.YogaNode
+          Layout: Facebook.Yoga.YogaNode;
           LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
           Inline: Record<string, any>;
@@ -1831,7 +2187,7 @@ export declare namespace ReactUnity {
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.VisualElement;
-          Layout: any; // Facebook.Yoga.YogaNode
+          Layout: Facebook.Yoga.YogaNode;
           LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
           Inline: Record<string, any>;
@@ -1873,7 +2229,7 @@ export declare namespace ReactUnity {
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.IMGUIContainer;
-          Layout: any; // Facebook.Yoga.YogaNode
+          Layout: Facebook.Yoga.YogaNode;
           LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
           Inline: Record<string, any>;
@@ -1921,7 +2277,7 @@ export declare namespace ReactUnity {
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: T;
-          Layout: any; // Facebook.Yoga.YogaNode
+          Layout: Facebook.Yoga.YogaNode;
           LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
           Inline: Record<string, any>;
@@ -1963,7 +2319,7 @@ export declare namespace ReactUnity {
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.Label;
-          Layout: any; // Facebook.Yoga.YogaNode
+          Layout: Facebook.Yoga.YogaNode;
           LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
           Inline: Record<string, any>;
@@ -2006,7 +2362,7 @@ export declare namespace ReactUnity {
           Context: ReactUnity.Editor.Renderer.EditorContext;
           Parent: ReactUnity.IContainerComponent;
           Element: UnityEngine.UIElements.Toggle;
-          Layout: any; // Facebook.Yoga.YogaNode
+          Layout: Facebook.Yoga.YogaNode;
           LayoutValues: ReactUnity.Styling.LayoutValue[];
           Style: ReactUnity.Styling.NodeStyle;
           Inline: Record<string, any>;
@@ -2059,7 +2415,8 @@ export declare namespace ReactUnity {
       export namespace Styling {
         export class StylingHelpers {
           static TextAlignMap: any; // System.Collections.Generic.Dictionary`2[TMPro.TextAlignmentOptions,UnityEngine.TextAnchor]
-          static YogaValueToStyleLength(value: any): UnityEngine.UIElements.StyleLength;
+          static YogaValueToStyleLength(value: Facebook.Yoga.YogaValue): UnityEngine.UIElements.StyleLength;
+          static StyleLengthToYogaValue(value: UnityEngine.UIElements.StyleLength): Facebook.Yoga.YogaValue;
           static NormalizeFloat(value: number): number;
           static ConvertFontStyle(style: any, weight: any): UnityEngine.FontStyle;
           static GetStyleColor(style: ReactUnity.Styling.NodeStyle, prop: any): UnityEngine.UIElements.StyleColor;
@@ -3494,10 +3851,10 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Context: ReactUnity.UGUIContext;
       MarkDirty(): void;
-      Measure(node: any, width: number, widthMode: any, height: number, heightMode: any): any;
+      Measure(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -3544,7 +3901,7 @@ export declare namespace ReactUnity {
     }
     export class ReactElement {
       constructor();
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Style: ReactUnity.Styling.NodeStyle;
       Component: ReactUnity.Components.ReactComponent;
       useGUILayout: boolean;
@@ -3569,7 +3926,6 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      LateUpdate(): void;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -3638,7 +3994,7 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Context: ReactUnity.UGUIContext;
       IsInvoking(): boolean;
       CancelInvoke(): void;
@@ -3708,9 +4064,9 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      Layout: any; // Facebook.Yoga.YogaNode
+      Layout: Facebook.Yoga.YogaNode;
       Context: ReactUnity.UGUIContext;
-      Measure(node: any, width: number, widthMode: any, height: number, heightMode: any): any;
+      Measure(node: Facebook.Yoga.YogaNode, width: number, widthMode: Facebook.Yoga.YogaMeasureMode, height: number, heightMode: Facebook.Yoga.YogaMeasureMode): Facebook.Yoga.YogaSize;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -4410,7 +4766,7 @@ export declare namespace ReactUnity {
       Background: UnityEngine.RectTransform;
       Shadow: UnityEngine.RectTransform;
       ShadowSprite: UnityEngine.Sprite;
-      SetBorderSize(layout: any): void;
+      SetBorderSize(layout: Facebook.Yoga.YogaNode): void;
       SetBorderImage(sprite: UnityEngine.Sprite): void;
       SetBorderColor(color: UnityEngine.Color): void;
       SetBackgroundColorAndImage(color: System.Nullable<UnityEngine.Color>, sprite: UnityEngine.Sprite): void;
@@ -4714,20 +5070,20 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
     }
     export interface ILayoutProperty {
-      Set(node: any, value: System.Object, defaultNode: any): void;
-      SetDefault(node: any): void;
-      SetDefault(node: any, defaultNode: any): void;
-      Get(node: any): System.Object;
+      Set(node: Facebook.Yoga.YogaNode, value: System.Object, defaultNode: Facebook.Yoga.YogaNode): void;
+      SetDefault(node: Facebook.Yoga.YogaNode): void;
+      SetDefault(node: Facebook.Yoga.YogaNode, defaultNode: Facebook.Yoga.YogaNode): void;
+      Get(node: Facebook.Yoga.YogaNode): System.Object;
       Serialize(value: System.Object): string;
     }
     export class LayoutValue {
       constructor(prop: ReactUnity.Styling.ILayoutProperty, value: System.Object);
       prop: ReactUnity.Styling.ILayoutProperty;
       value: System.Object;
-      Get(node: any): System.Object;
-      Set(node: any, defaultNode: any): void;
-      SetDefault(node: any): void;
-      SetDefault(node: any, defaultNode: any): void;
+      Get(node: Facebook.Yoga.YogaNode): System.Object;
+      Set(node: Facebook.Yoga.YogaNode, defaultNode: Facebook.Yoga.YogaNode): void;
+      SetDefault(node: Facebook.Yoga.YogaNode): void;
+      SetDefault(node: Facebook.Yoga.YogaNode, defaultNode: Facebook.Yoga.YogaNode): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4742,13 +5098,13 @@ export declare namespace ReactUnity {
       inherited: boolean;
       proxy: boolean;
       propInfo: System.Reflection.PropertyInfo;
-      setter: ((arg0: any) => void);
-      getter: ((arg0: any, arg1: T) => T);
+      setter: ((arg0: Facebook.Yoga.YogaNode) => void);
+      getter: ((arg0: Facebook.Yoga.YogaNode, arg1: T) => T);
       converter: ReactUnity.Styling.Parsers.IStyleConverter;
-      Set(node: any, value: System.Object, defaultNode: any): void;
-      SetDefault(node: any): void;
-      SetDefault(node: any, defaultNode: any): void;
-      Get(node: any): System.Object;
+      Set(node: Facebook.Yoga.YogaNode, value: System.Object, defaultNode: Facebook.Yoga.YogaNode): void;
+      SetDefault(node: Facebook.Yoga.YogaNode): void;
+      SetDefault(node: Facebook.Yoga.YogaNode, defaultNode: Facebook.Yoga.YogaNode): void;
+      Get(node: Facebook.Yoga.YogaNode): System.Object;
       Serialize(value: System.Object): string;
       Convert(value: System.Object): System.Object;
       Equals(obj: System.Object): boolean;
@@ -4927,7 +5283,7 @@ export declare namespace ReactUnity {
       color: UnityEngine.Color;
       fontWeight: any; // TMPro.FontWeight
       fontStyle: any; // TMPro.FontStyles
-      fontSize: any; // Facebook.Yoga.YogaValue
+      fontSize: Facebook.Yoga.YogaValue;
       textAlign: any; // TMPro.TextAlignmentOptions
       textOverflow: any; // TMPro.TextOverflowModes
       textWrap: boolean;
@@ -5321,9 +5677,9 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class YogaValue2 {
-      constructor(x: any, y: any);
-      X: any; // Facebook.Yoga.YogaValue
-      Y: any; // Facebook.Yoga.YogaValue
+      constructor(x: Facebook.Yoga.YogaValue, y: Facebook.Yoga.YogaValue);
+      X: Facebook.Yoga.YogaValue;
+      Y: Facebook.Yoga.YogaValue;
       static Zero: ReactUnity.Types.YogaValue2;
       static Auto: ReactUnity.Types.YogaValue2;
       static Center: ReactUnity.Types.YogaValue2;

@@ -70,6 +70,7 @@ declare module 'react/jsx-runtime' {
       vector3: BaseFieldElementSimple<UnityEngine.Vector4>;
       vector3int: BaseFieldElementSimple<UnityEngine.Vector3Int>;
       vector4: BaseFieldElementSimple<UnityEngine.Vector4>;
+      length: BaseFieldElementSimple<UnityEngine.UIElements.StyleLength>;
       toolbar: BaseElement;
       'tb-breadcrumbs': BaseElement;
       'tb-button': BaseElement;
