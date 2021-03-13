@@ -1,7 +1,7 @@
 
 import * as rc from 'react';
-import * as Components from './components';
 import { ReactUnity, UnityEngine } from '../generated';
+import * as Components from './components';
 
 type Children<T = any> = { children?: T };
 
@@ -17,13 +17,10 @@ type BaseFieldElementSimple<T> = BaseFieldElement<T, BaseFieldComponent<T>>;
 
 declare module 'react/jsx-runtime' {
   namespace JSX {
-    interface ElementAttributesProperty {
-      props: any;
-    }
-
-    interface ElementChildrenAttribute {
-      children: any;
-    }
+    interface ElementAttributesProperty { props: {} }
+    interface ElementChildrenAttribute { children: {} }
+    interface IntrinsicAttributes extends React.Attributes { }
+    interface IntrinsicClassAttributes<T> extends React.ClassAttributes<T> { }
 
     interface IntrinsicElements {
       [key: string]: BaseElement<any>;

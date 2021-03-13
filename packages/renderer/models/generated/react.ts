@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 13.03.2021 02:03:00
+// Generated 13.03.2021 15:01:25
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -44,12 +44,13 @@ export declare namespace ReactUnity {
     Context: ReactUnity.ReactContext;
   }
   export class ReactContext {
-    constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action, mergeLayouts?: boolean);
+    constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action, mergeLayouts?: boolean);
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
     IsDevServer: boolean;
     Script: ReactUnity.ReactScript;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
+    Dispatcher: ReactUnity.IDispatcher;
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: System.Action;
@@ -81,7 +82,7 @@ export declare namespace ReactUnity {
     DevServer: string;
     static Resource(path: string): ReactUnity.ReactScript;
     GetResolvedSourcePath(): string;
-    GetScript(callback: ((arg0: string) => void), useDevServer?: boolean, disableWarnings?: boolean): System.IDisposable;
+    GetScript(callback: ((arg0: string) => void), dispatcher?: ReactUnity.IDispatcher, useDevServer?: boolean, disableWarnings?: boolean): System.IDisposable;
     Equals(obj: System.Object): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -199,7 +200,7 @@ export declare namespace ReactUnity {
     ToString(): string;
   }
   export class UGUIContext {
-    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action);
+    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: System.Action);
     static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
     RootLayoutNode: any; // Facebook.Yoga.YogaNode
     Host: ReactUnity.IHostComponent;
@@ -207,6 +208,7 @@ export declare namespace ReactUnity {
     IsDevServer: boolean;
     Script: ReactUnity.ReactScript;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
+    Dispatcher: ReactUnity.IDispatcher;
     static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UGUIContext, arg3: ReactUnity.Components.ReactComponent) => ReactUnity.Components.ReactComponent);
     static textCreator: ((arg0: string, arg1: ReactUnity.UGUIContext, arg2: ReactUnity.ITextComponent) => ReactUnity.ITextComponent);
     Parser: any; // ExCSS.StylesheetParser
@@ -226,6 +228,116 @@ export declare namespace ReactUnity {
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
+  }
+  export class EditorDispatcher {
+    constructor();
+    AddCallOnLateUpdate(call: System.Action): void;
+    OnUpdate(callback: System.Action): number;
+    Timeout(callback: System.Action, timeSeconds: number): number;
+    AnimationFrame(callback: System.Action): number;
+    Interval(callback: System.Action, intervalSeconds: number): number;
+    Immediate(callback: System.Action): number;
+    StartDeferred(cr: System.Collections.IEnumerator): number;
+    StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
+    StopDeferred(cr: number): void;
+    StopAll(): void;
+    Dispose(): void;
+    Equals(obj: System.Object): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export interface IDispatcher {
+    AddCallOnLateUpdate(call: System.Action): void;
+    OnUpdate(callback: System.Action): number;
+    Timeout(callback: System.Action, timeSeconds: number): number;
+    AnimationFrame(callback: System.Action): number;
+    Interval(callback: System.Action, intervalSeconds: number): number;
+    Immediate(callback: System.Action): number;
+    StartDeferred(cr: System.Collections.IEnumerator): number;
+    StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
+    StopDeferred(cr: number): void;
+  }
+  export class RuntimeDispatcher {
+    constructor();
+    useGUILayout: boolean;
+    runInEditMode: boolean;
+    enabled: boolean;
+    isActiveAndEnabled: boolean;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    static Create(): ReactUnity.RuntimeDispatcher;
+    AddCallOnLateUpdate(call: System.Action): void;
+    OnUpdate(callback: System.Action): number;
+    Timeout(callback: System.Action, timeSeconds: number): number;
+    AnimationFrame(callback: System.Action): number;
+    Interval(callback: System.Action, intervalSeconds: number): number;
+    Immediate(callback: System.Action): number;
+    IsMainThread(): boolean;
+    StartDeferred(cr: System.Collections.IEnumerator): number;
+    StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
+    StopDeferred(cr: number): void;
+    Awake(): void;
+    Dispose(): void;
+    IsInvoking(): boolean;
+    CancelInvoke(): void;
+    Invoke(methodName: string, time: number): void;
+    InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+    CancelInvoke(methodName: string): void;
+    IsInvoking(methodName: string): boolean;
+    StartCoroutine(methodName: string): UnityEngine.Coroutine;
+    StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
+    StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+    StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+    StopCoroutine(routine: System.Collections.IEnumerator): void;
+    StopCoroutine(routine: UnityEngine.Coroutine): void;
+    StopCoroutine(methodName: string): void;
+    StopAllCoroutines(): void;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: System.Object): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: System.Object): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: System.Object): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: System.Object): boolean;
+    ToString(): string;
+    GetType(): System.Type;
   }
   export class CalculateSizeFromContents {
     constructor();
@@ -1084,7 +1196,7 @@ export declare namespace ReactUnity {
   }
   export namespace DomProxies {
     export class ConsoleProxy {
-      constructor(engine: any);
+      constructor(engine: any, ctx: ReactUnity.ReactContext);
       log(msg: System.Object): void;
       log(msg: System.Object, ...subs: System.Object[]): void;
       info(msg: System.Object): void;
@@ -1199,7 +1311,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class Location {
-      constructor(sourceLocation: string, restart: System.Action);
+      constructor(ctx: ReactUnity.ReactContext);
       href: string;
       protocol: string;
       hostname: string;
@@ -1373,11 +1485,6 @@ export declare namespace ReactUnity {
     }
     export class EditStyleWindow {
       constructor();
-      PreviousComponent: ReactUnity.Layout.ReactElement;
-      CurrentStyle: ReactUnity.Styling.NodeStyle;
-      CurrentLayout: any; // Facebook.Yoga.YogaNode
-      CurrentStyleDefaults: ReactUnity.Styling.NodeStyle;
-      CurrentLayoutDefaults: any; // Facebook.Yoga.YogaNode
       rootVisualElement: UnityEngine.UIElements.VisualElement;
       wantsMouseMove: boolean;
       wantsMouseEnterLeaveWindow: boolean;
@@ -1397,8 +1504,10 @@ export declare namespace ReactUnity {
       position: UnityEngine.Rect;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      AutoApply: boolean;
-      static Open(): void;
+      static ShowDefaultWindow(): void;
+      Run(host?: UnityEngine.UIElements.VisualElement): void;
+      Restart(host?: UnityEngine.UIElements.VisualElement): void;
+      AddSelectionChange(callback: (() => void)): System.Action;
       BeginWindows(): void;
       EndWindows(): void;
       ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -1499,15 +1608,17 @@ export declare namespace ReactUnity {
     }
     export namespace Renderer {
       export class EditorContext {
-        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: System.Action);
+        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, editor: ReactUnity.Editor.Renderer.ReactWindow, onRestart?: System.Action);
         Host: ReactUnity.IHostComponent;
         Globals: ReactUnity.Types.StringObjectDictionary;
         IsDevServer: boolean;
         Script: ReactUnity.ReactScript;
         Scheduler: ReactUnity.Schedulers.IUnityScheduler;
+        Dispatcher: ReactUnity.IDispatcher;
         static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.Editor.Renderer.EditorContext, arg3: any) => any);
         static textCreator: ((arg0: string, arg1: ReactUnity.Editor.Renderer.EditorContext, arg2: ReactUnity.ITextComponent) => ReactUnity.ITextComponent);
         static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Renderer.Components.IEditorReactComponent`1[UnityEngine.UIElements.VisualElement]]]
+        Editor: ReactUnity.Editor.Renderer.ReactWindow;
         Parser: any; // ExCSS.StylesheetParser
         StyleTree: ReactUnity.StyleEngine.StyleTree;
         OnRestart: System.Action;
@@ -1550,6 +1661,7 @@ export declare namespace ReactUnity {
         static ShowDefaultWindow(): void;
         Run(host?: UnityEngine.UIElements.VisualElement): void;
         Restart(host?: UnityEngine.UIElements.VisualElement): void;
+        AddSelectionChange(callback: (() => void)): System.Action;
         BeginWindows(): void;
         EndWindows(): void;
         ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -1599,6 +1711,7 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         Run(host?: UnityEngine.UIElements.VisualElement): void;
         Restart(host?: UnityEngine.UIElements.VisualElement): void;
+        AddSelectionChange(callback: (() => void)): System.Action;
         BeginWindows(): void;
         EndWindows(): void;
         ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -3341,206 +3454,12 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Interop {
-    export class AdaptiveDispatcher {
-      constructor();
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      static GetCoroutineHandle(handle: number): System.IDisposable;
-      static Initialize(): void;
-      static AddCallOnLateUpdate(call: System.Action): void;
-      static OnUpdate(callback: System.Action): number;
-      static Timeout(callback: System.Action, timeSeconds: number): number;
-      static AnimationFrame(callback: System.Action): number;
-      static Interval(callback: System.Action, intervalSeconds: number): number;
-      static Immediate(callback: System.Action): number;
-      static StartDeferred(cr: System.Collections.IEnumerator): number;
-      static StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
-      static StopDeferred(cr: number): void;
-      IsInvoking(): boolean;
-      CancelInvoke(): void;
-      Invoke(methodName: string, time: number): void;
-      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
-      CancelInvoke(methodName: string): void;
-      IsInvoking(methodName: string): boolean;
-      StartCoroutine(methodName: string): UnityEngine.Coroutine;
-      StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
-      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StopCoroutine(routine: System.Collections.IEnumerator): void;
-      StopCoroutine(routine: UnityEngine.Coroutine): void;
-      StopCoroutine(methodName: string): void;
-      StopAllCoroutines(): void;
-      GetComponent(type: System.Type): UnityEngine.Component;
-      GetComponent(type: string): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type): UnityEngine.Component;
-      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type): UnityEngine.Component;
-      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
-      CompareTag(tag: string): boolean;
-      SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
-      SendMessageUpwards(methodName: string, value: System.Object): void;
-      SendMessageUpwards(methodName: string): void;
-      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, value: System.Object): void;
-      SendMessage(methodName: string): void;
-      SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: System.Object): void;
-      BroadcastMessage(methodName: string): void;
-      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      GetInstanceID(): number;
-      GetHashCode(): number;
-      Equals(other: System.Object): boolean;
-      ToString(): string;
-      GetType(): System.Type;
-    }
     export class Callback {
       constructor(callback: any);
       constructor(callback: System.Object);
       callback: System.Object;
       Call(): System.Object;
       Call(...args: System.Object[]): System.Object;
-      Equals(obj: System.Object): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class EditorDispatcher {
-      static Initialize(): void;
-      static AddCallOnLateUpdate(call: System.Action): void;
-      static OnUpdate(callback: System.Action): number;
-      static Timeout(callback: System.Action, timeSeconds: number): number;
-      static AnimationFrame(callback: System.Action): number;
-      static Interval(callback: System.Action, intervalSeconds: number): number;
-      static Immediate(callback: System.Action): number;
-      static StartDeferred(cr: System.Collections.IEnumerator): number;
-      static StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
-      static StopDeferred(cr: number): void;
-      static StopAll(): void;
-      Equals(obj: System.Object): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class MainThreadDispatcher {
-      constructor();
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      static Initialize(): void;
-      static AddCallOnLateUpdate(call: System.Action): void;
-      static OnUpdate(callback: System.Action): number;
-      static Timeout(callback: System.Action, timeSeconds: number): number;
-      static AnimationFrame(callback: System.Action): number;
-      static Interval(callback: System.Action, intervalSeconds: number): number;
-      static Immediate(callback: System.Action): number;
-      static IsMainThread(): boolean;
-      static StartDeferred(cr: System.Collections.IEnumerator): number;
-      static StartDeferred(cr: System.Collections.IEnumerator, handle: number): number;
-      static StopDeferred(cr: number): void;
-      Awake(): void;
-      IsInvoking(): boolean;
-      CancelInvoke(): void;
-      Invoke(methodName: string, time: number): void;
-      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
-      CancelInvoke(methodName: string): void;
-      IsInvoking(methodName: string): boolean;
-      StartCoroutine(methodName: string): UnityEngine.Coroutine;
-      StartCoroutine(methodName: string, value: System.Object): UnityEngine.Coroutine;
-      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StopCoroutine(routine: System.Collections.IEnumerator): void;
-      StopCoroutine(routine: UnityEngine.Coroutine): void;
-      StopCoroutine(methodName: string): void;
-      StopAllCoroutines(): void;
-      GetComponent(type: System.Type): UnityEngine.Component;
-      GetComponent(type: string): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type): UnityEngine.Component;
-      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type): UnityEngine.Component;
-      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
-      CompareTag(tag: string): boolean;
-      SendMessageUpwards(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
-      SendMessageUpwards(methodName: string, value: System.Object): void;
-      SendMessageUpwards(methodName: string): void;
-      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, value: System.Object): void;
-      SendMessage(methodName: string): void;
-      SendMessage(methodName: string, value: System.Object, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: System.Object, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: System.Object): void;
-      BroadcastMessage(methodName: string): void;
-      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      GetInstanceID(): number;
-      GetHashCode(): number;
-      Equals(other: System.Object): boolean;
-      ToString(): string;
-      GetType(): System.Type;
-    }
-    export class EditorDispatcher_CoroutineHandle {
-      constructor(handle: number);
-      Handle: number;
-      Dispose(): void;
-      Equals(obj: System.Object): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class MainThreadDispatcher_CoroutineHandle {
-      constructor(handle: number);
-      Handle: number;
-      Dispose(): void;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -3838,22 +3757,6 @@ export declare namespace ReactUnity {
     }
   }
   export namespace Schedulers {
-    export class EditorScheduler {
-      constructor();
-      setTimeout(callback: ReactUnity.Interop.Callback, timeout: number): number;
-      setInterval(callback: ReactUnity.Interop.Callback, timeout: number): number;
-      clearTimeout(handle: number): void;
-      clearInterval(handle: number): void;
-      setImmediate(callback: ReactUnity.Interop.Callback): number;
-      requestAnimationFrame(callback: ReactUnity.Interop.Callback): number;
-      cancelAnimationFrame(handle: number): void;
-      clearImmediate(handle: number): void;
-      clearAllTimeouts(): void;
-      Equals(obj: System.Object): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export interface IUnityScheduler {
       setImmediate(callback: ReactUnity.Interop.Callback): number;
       setTimeout(callback: ReactUnity.Interop.Callback, timeout: number): number;
@@ -3882,7 +3785,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class UnityScheduler {
-      constructor();
+      constructor(dispatcher: ReactUnity.IDispatcher);
       setTimeout(callback: ReactUnity.Interop.Callback, timeout: number): number;
       setInterval(callback: ReactUnity.Interop.Callback, timeout: number): number;
       clearTimeout(handle: number): void;
@@ -4985,7 +4888,7 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
     }
     export class MaskAndImage {
-      constructor(parent: UnityEngine.RectTransform);
+      constructor(parent: UnityEngine.RectTransform, context: ReactUnity.ReactContext);
       Mask: UnityEngine.UI.Mask;
       Image: UnityEngine.UI.Image;
       Equals(obj: System.Object): boolean;

@@ -1,7 +1,7 @@
 
 import * as rc from 'react';
-import * as Components from './components';
 import { ReactUnity } from '../generated';
+import * as Components from './components';
 import { Input } from './input';
 
 type Children<T = any> = { children?: T };
@@ -10,13 +10,10 @@ type Textable = string | number | boolean | null | undefined;
 
 declare module 'react/jsx-runtime' {
   namespace JSX {
-    interface ElementAttributesProperty {
-      props: any;
-    }
-
-    interface ElementChildrenAttribute {
-      children: any;
-    }
+    interface ElementAttributesProperty { props: {} }
+    interface ElementChildrenAttribute { children: {} }
+    interface IntrinsicAttributes extends React.Attributes { }
+    interface IntrinsicClassAttributes<T> extends React.ClassAttributes<T> { }
 
     interface IntrinsicElements {
       [key: string]: Components.View & rc.RefAttributes<ReactUnity.Components.ReactComponent> & Children;
