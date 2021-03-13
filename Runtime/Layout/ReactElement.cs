@@ -3,6 +3,7 @@ using Facebook.Yoga;
 using ReactUnity.Styling;
 using ReactUnity.Components;
 using ReactUnity.Types;
+using System.Collections;
 
 namespace ReactUnity.Layout
 {
@@ -19,7 +20,20 @@ namespace ReactUnity.Layout
 
         private YogaValue2 previousTranslate = YogaValue2.Zero;
 
-        public void LateUpdate()
+        private Coroutine cr;
+
+        private void OnEnable()
+        {
+            cr = StartCoroutine(LateLateUpdate());
+        }
+
+        private void OnDisable()
+        {
+            if (cr != null) StopCoroutine(cr);
+            cr = null;
+        }
+
+        private void LateUpdate()
         {
             var translate = Style.translate;
             var sameTranslate = translate == previousTranslate;
@@ -39,8 +53,17 @@ namespace ReactUnity.Layout
             RT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Layout.LayoutWidth);
             RT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Layout.LayoutHeight);
 
-            Layout.MarkLayoutSeen();
             previousTranslate = translate;
+        }
+
+        IEnumerator LateLateUpdate()
+        {
+            var wait = new WaitForEndOfFrame();
+            while (true)
+            {
+                yield return wait;
+                if (Layout.HasNewLayout) Layout.MarkLayoutSeen();
+            }
         }
     }
 }

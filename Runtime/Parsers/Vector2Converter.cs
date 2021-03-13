@@ -42,7 +42,10 @@ namespace ReactUnity.Styling.Parsers
 
         public object Convert(object value)
         {
-            if (value is double d) return new Vector2((float) d, (float) d);
+            if (value is Vector2 v) return v;
+            if (value is Vector3 v3) return new Vector2(v3.x, v3.y);
+            if (value is Vector4 v4) return new Vector2(v4.x, v4.y);
+            if (value is double d) return new Vector2((float)d, (float)d);
             if (value is float f) return new Vector2(f, f);
             if (value is int i) return new Vector2(i, i);
             if (!(value is string) && (value is IEnumerable e)) return FromArray(e);
