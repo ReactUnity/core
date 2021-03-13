@@ -1,10 +1,10 @@
-import { Events, ActionCallback } from './events';
-import { AssetReference } from '../properties/values';
-import { Style } from '../properties';
 import { ReactUnity, UnityEngine } from '../generated';
+import { Style } from '../properties';
+import { AssetReference } from '../properties/values';
+import { ActionCallback, Events } from './events';
 
-import Cmp = ReactUnity.Editor.Renderer.Components;
-type BaseCmp = Cmp.EditorReactComponent;
+import Cmp = ReactUnity.Editor.Components;
+type BaseCmp = Cmp.EditorComponent;
 export interface View<TSender = BaseCmp> extends Events<TSender> {
   name?: string;
   className?: string;
@@ -19,7 +19,16 @@ export interface BaseField<T, TSender = BaseCmp> extends View<TSender> {
   bindingPath?: string;
 }
 
-export interface Button<TSender = Cmp.EditorButtonComponent> extends View<TSender> {
+export interface BaseSlider<T, TSender = Cmp.BaseSliderComponent<Slider, any>> extends BaseField<T, TSender> {
+  min?: T;
+  max?: T;
+  step?: T;
+  showInput?: boolean;
+  vertical?: boolean;
+  inverted?: boolean;
+}
+
+export interface Button<TSender = Cmp.ButtonComponent> extends View<TSender> {
   onButtonClick?: ActionCallback<TSender>;
 }
 
@@ -48,11 +57,19 @@ export interface Video extends Image {
 
 export type ToggleEvent = (val: boolean) => void;
 
-export interface Toggle extends BaseField<boolean, Cmp.EditorToggleComponent> {
+export interface Toggle extends BaseField<boolean, Cmp.ToggleComponent> {
   text?: string;
 }
 
-export interface IMGUI extends View<Cmp.EditorIMGUIComponent> {
-  onGUI?: ActionCallback<Cmp.EditorIMGUIComponent>;
+export interface Slider extends BaseSlider<number> { }
+export interface Range extends BaseField<number, Cmp.RangeComponent> {
+  min?: number;
+  max?: number;
+  low?: number;
+  high?: number;
+}
+
+export interface IMGUI extends View<Cmp.IMGUIComponent> {
+  onGUI?: ActionCallback<Cmp.IMGUIComponent>;
   cullingEnabled?: boolean;
 }

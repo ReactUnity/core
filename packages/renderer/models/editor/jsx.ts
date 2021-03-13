@@ -7,10 +7,10 @@ type Children<T = any> = { children?: T };
 
 type Textable = string | number | boolean | null | undefined;
 
-import Cmp = ReactUnity.Editor.Renderer.Components;
+import Cmp = ReactUnity.Editor.Components;
 
-type BaseElement<T = Cmp.EditorReactComponent> = Components.View<T> & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
-type BaseFieldComponent<T> = Cmp.EditorBaseFieldComponent<BaseElement, T>;
+type BaseElement<T = Cmp.EditorComponent> = Components.View<T> & rc.RefAttributes<Cmp.EditorComponent> & Children;
+type BaseFieldComponent<T> = Cmp.BaseFieldComponent<BaseElement, T>;
 type BaseFieldElement<T, TSender = BaseFieldComponent<T>> = Components.BaseField<T, TSender> & rc.RefAttributes<TSender> & Children;
 type BaseFieldElementSimple<T> = BaseFieldElement<T, BaseFieldComponent<T>>;
 
@@ -25,23 +25,23 @@ declare module 'react/jsx-runtime' {
     interface IntrinsicElements {
       [key: string]: BaseElement<any>;
       view: BaseElement & { tag?: string };
-      anchor: Components.Anchor & rc.RefAttributes<Cmp.EditorReactComponent> & Children;
-      text: Components.View & rc.RefAttributes<Cmp.EditorTextComponent> & Children<Textable | Textable[]>;
-      button: Components.Button & rc.RefAttributes<Cmp.EditorButtonComponent> & Children;
+      anchor: Components.Anchor & rc.RefAttributes<Cmp.EditorComponent> & Children;
+      text: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
+      button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
       scroll: BaseElement;
-      image: Components.Image & rc.RefAttributes<Cmp.EditorReactComponent> & Children<never>;
-      toggle: Components.Toggle & rc.RefAttributes<Cmp.EditorToggleComponent> & Children;
+      image: Components.Image & rc.RefAttributes<Cmp.EditorComponent> & Children<never>;
+      toggle: Components.Toggle & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
       input: BaseFieldElementSimple<string>;
       helpbox: BaseElement;
       foldout: BaseElement;
       popup: BaseElement;
-      slider: BaseFieldElementSimple<number>;
-      sliderint: BaseFieldElementSimple<number>;
-      range: BaseFieldElementSimple<UnityEngine.Vector2>;
+      slider: Components.Slider & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
+      sliderint: Components.Slider & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
+      range: Components.Range & rc.RefAttributes<Cmp.RangeComponent> & Children<never>;
       repeat: BaseElement;
       scroller: BaseElement;
       list: BaseElement;
-      imgui: Components.IMGUI & rc.RefAttributes<Cmp.EditorIMGUIComponent> & Children<never>;
+      imgui: Components.IMGUI & rc.RefAttributes<Cmp.IMGUIComponent> & Children<never>;
       template: BaseElement;
 
       color: BaseFieldElementSimple<UnityEngine.Color>;
