@@ -11,8 +11,6 @@ namespace ReactUnity.Components
         public float Width => RectTransform.rect.width;
         public float Height => RectTransform.rect.height;
 
-        ReactContext IHostComponent.Context => base.Context;
-
         public static NodeStyle HostDefaultStyle { get; } = new NodeStyle()
         {
             fontSize = YogaValue.Point(24),

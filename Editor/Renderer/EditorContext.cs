@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
+using ReactUnity.Editor.StateHandlers;
 
 namespace ReactUnity.Editor.Renderer
 {
@@ -75,6 +76,14 @@ namespace ReactUnity.Editor.Renderer
                 { "tb-search", (tag, text, context) => new EditorComponent<ToolbarSearchField>(context, "tb-search") },
                 { "tb-spacer", (tag, text, context) => new EditorComponent<ToolbarSpacer>(context, "tb-spacer") },
                 { "tb-toggle", (tag, text, context) => new EditorComponent<ToolbarToggle>(context, "tb-toggle") },
+            };
+
+        public override Dictionary<string, Type> StateHandlers { get; }
+            = new Dictionary<string, Type>()
+            {
+                { "active", typeof(ActiveStateHandler) },
+                { "focus", typeof(FocusStateHandler) },
+                { "hover", typeof(HoverStateHandler) },
             };
 
         public ReactWindow Editor;

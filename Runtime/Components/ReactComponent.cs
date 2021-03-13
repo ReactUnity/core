@@ -63,6 +63,7 @@ namespace ReactUnity.Components
 
         public string TextContent => new TextContentVisitor().Get(this);
         public string Name => GameObject.name;
+        ReactContext IReactComponent.Context => Context;
 
         protected ReactComponent(RectTransform existing, UGUIContext context)
         {

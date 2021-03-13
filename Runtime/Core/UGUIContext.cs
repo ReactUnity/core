@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using System;
+using ReactUnity.StateHandlers;
 
 namespace ReactUnity
 {
@@ -33,6 +34,17 @@ namespace ReactUnity
                 { "rawimage", (tag, text, context) => new RawImageComponent(context) },
                 { "render", (tag, text, context) => new RenderTextureComponent(context) },
                 { "video", (tag, text, context) => new VideoComponent(context) },
+            };
+
+
+        public override Dictionary<string, Type> StateHandlers { get; }
+            = new Dictionary<string, Type>()
+            {
+                { "active", typeof(ActiveStateHandler) },
+                { "focus", typeof(FocusStateHandler) },
+                { "focus-within", typeof(FocusWithinStateHandler) },
+                { "focus-visible", typeof(FocusVisibleStateHandler) },
+                { "hover", typeof(HoverStateHandler) },
             };
 
         public static Func<string, string, UGUIContext, ReactComponent> defaultCreator =

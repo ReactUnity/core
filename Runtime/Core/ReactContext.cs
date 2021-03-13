@@ -23,6 +23,7 @@ namespace ReactUnity
         public ReactScript Script { get; }
         public IUnityScheduler Scheduler { get; }
         public IDispatcher Dispatcher { get; }
+        public virtual Dictionary<string, Type> StateHandlers { get; }
 
         protected bool Scheduled = false;
         protected List<System.Action> ScheduledCallbacks = new List<System.Action>();

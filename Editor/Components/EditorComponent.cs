@@ -48,9 +48,10 @@ namespace ReactUnity.Editor.Components
 
         public List<RuleTreeNode<StyleData>> BeforeRules { get; protected set; }
         public List<RuleTreeNode<StyleData>> AfterRules { get; protected set; }
-
+        ReactContext IReactComponent.Context => Context;
 
         protected Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
+        protected Dictionary<Type, object> Manipulators = new Dictionary<Type, object>();
         private string currentCursor = null;
 
         public EditorComponent(T element, EditorContext context, string tag)
@@ -366,12 +367,20 @@ namespace ReactUnity.Editor.Components
 
         public object GetComponent(Type type)
         {
-            throw new NotImplementedException();
+            if (Manipulators.TryGetValue(type, out var val)) return val;
+            return null;
         }
 
         public object AddComponent(Type type)
         {
-            throw new NotImplementedException();
+            var instance = Activator.CreateInstance(type);
+            if (instance is IManipulator m)
+            {
+                Element.AddManipulator(m);
+                Manipulators[type] = m;
+            }
+
+            return instance;
         }
 
         public void RegisterChild(IReactComponent child, int index = -1)

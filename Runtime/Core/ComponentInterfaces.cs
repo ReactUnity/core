@@ -10,6 +10,8 @@ namespace ReactUnity
 {
     public interface IReactComponent
     {
+        ReactContext Context { get; }
+
         void Destroy();
         IContainerComponent Parent { get; }
 
@@ -59,6 +61,5 @@ namespace ReactUnity
 
     public interface IHostComponent : IContainerComponent
     {
-        ReactContext Context { get; }
     }
 }

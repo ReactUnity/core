@@ -36,7 +36,7 @@ namespace ReactUnity.Styling
 
         public void SubscribeToState(string state)
         {
-            if (ReactUnityAPI.StateHandlers.TryGetValue(state, out var handlerClass))
+            if (Component.Context.StateHandlers.TryGetValue(state, out var handlerClass))
             {
                 var existingHandler = Component.GetComponent(handlerClass);
                 if (existingHandler != null) return;

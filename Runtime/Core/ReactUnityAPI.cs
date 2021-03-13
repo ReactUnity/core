@@ -9,16 +9,6 @@ namespace ReactUnity
 {
     public class ReactUnityAPI
     {
-        public static Dictionary<string, Type> StateHandlers
-            = new Dictionary<string, Type>()
-            {
-                { "active", typeof(ActiveStateHandler) },
-                { "focus", typeof(FocusStateHandler) },
-                { "focus-within", typeof(FocusWithinStateHandler) },
-                { "focus-visible", typeof(FocusVisibleStateHandler) },
-                { "hover", typeof(HoverStateHandler) },
-            };
-
         Jint.Engine Engine;
 
         public ReactUnityAPI(Jint.Engine engine)

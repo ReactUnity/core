@@ -25,6 +25,10 @@
   margin-bottom: 4px;
   overflow: hidden;
 
+  &:hover {
+    background: 0.82;
+  }
+
   .removeButton {
     visibility: hidden;
     padding-left: 4px;
@@ -88,8 +92,12 @@
   border-top-color: #686868;
   border-top-width: 2px;
   padding-top: 6px;
-  margin-top: 6px;
+  padding-bottom: 6px;
   flex-direction: row;
+
+  &:hover {
+    background: 0.82;
+  }
 }
 
 .rectHead {
