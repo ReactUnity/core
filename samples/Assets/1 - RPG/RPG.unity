@@ -392,9 +392,8 @@ MonoBehaviour:
     SourcePath: react/rpg/index
     SourceText: 
     ResourcesPath: 
-    Watch: 0
     UseDevServer: 1
-    DevServer: http://localhost:3000
+    DevServer: http://localhost:3000/
   PreloadScripts: []
 --- !u!114 &1467669075
 MonoBehaviour:

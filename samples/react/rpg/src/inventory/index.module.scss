@@ -4,18 +4,29 @@
   top: 10px;
   width: 300px;
   height: 500px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.border {
+  border-width: 10px;
+  border-color: #c5a97b;
+  border-radius: 10px;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
 .frame {
-  height: 100%;
-  flex-direction: column;
-  border-radius: 10px;
-  background-color: #c5a97b;
   padding: 10px;
+  flex-grow: 1;
+  max-height: 100%;
+  flex-direction: column;
+  width: 310px;
 }
 
 .items {
-  height: 100%;
   flex-direction: row;
   flex-wrap: wrap;
   padding: 4px;
@@ -31,5 +42,9 @@
   background-color: #ada495;
 
   border-width: 2px;
-  border-color: #8C816E;
+  border-color: #8c816e;
+
+  &:hover {
+    background-color: #ccc5b9;
+  }
 }
