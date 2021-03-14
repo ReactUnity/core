@@ -1,4 +1,4 @@
-import { ReactUnity, UnityEngine } from '../generated';
+import { ReactUnity, System, UnityEngine } from '../generated';
 import { Style } from '../properties';
 import { AssetReference } from '../properties/values';
 import { ActionCallback, Events } from './events';
@@ -67,6 +67,10 @@ export interface Range extends BaseField<number, Cmp.RangeComponent> {
   max?: number;
   low?: number;
   high?: number;
+}
+
+export interface EnumProps extends BaseField<number> {
+  type: System.Type | string;
 }
 
 export interface IMGUI extends View<Cmp.IMGUIComponent> {

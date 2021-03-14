@@ -50,8 +50,8 @@ declare module 'react/jsx-runtime' {
       boundsint: BaseFieldElementSimple<UnityEngine.BoundsInt>;
       curve: BaseFieldElementSimple<UnityEngine.AnimationCurve>;
       double: BaseFieldElementSimple<number>;
-      enum: BaseFieldElementSimple<number>;
-      flags: BaseFieldElementSimple<number>;
+      enum: Components.EnumProps & rc.RefAttributes<Cmp.EnumComponent> & Children<never>;
+      flags: Components.EnumProps & rc.RefAttributes<Cmp.EnumComponent> & Children<never>;
       float: BaseFieldElementSimple<number>;
       gradient: BaseFieldElementSimple<UnityEngine.Gradient>;
       inspector: BaseElement;

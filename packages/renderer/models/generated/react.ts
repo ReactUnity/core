@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 14.03.2021 00:44:27
+// Generated 14.03.2021 04:15:03
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -363,6 +363,7 @@ export declare namespace Facebook {
 }
 export declare namespace ReactUnity {
   export interface IReactComponent {
+    Context: ReactUnity.ReactContext;
     Parent: ReactUnity.IContainerComponent;
     IsPseudoElement: boolean;
     Layout: Facebook.Yoga.YogaNode;
@@ -397,7 +398,6 @@ export declare namespace ReactUnity {
     SetText(text: string): void;
   }
   export interface IHostComponent {
-    Context: ReactUnity.ReactContext;
   }
   export class ReactContext {
     constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void), mergeLayouts?: boolean);
@@ -407,6 +407,7 @@ export declare namespace ReactUnity {
     Script: ReactUnity.ReactScript;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
     Dispatcher: ReactUnity.IDispatcher;
+    StateHandlers: System.Collections.Generic.Dictionary<string, System.Type>;
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: (() => void);
@@ -528,7 +529,6 @@ export declare namespace ReactUnity {
   }
   export class ReactUnityAPI {
     constructor(engine: any);
-    static StateHandlers: any; // System.Collections.Generic.Dictionary`2[System.String,System.Type]
     createText(text: string, host: ReactUnity.IHostComponent): ReactUnity.IReactComponent;
     createElement(tag: string, text: string, host: ReactUnity.IHostComponent): ReactUnity.IReactComponent;
     appendChild(parent: System.Object, child: System.Object): void;
@@ -558,6 +558,7 @@ export declare namespace ReactUnity {
   export class UGUIContext {
     constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void));
     static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
+    StateHandlers: System.Collections.Generic.Dictionary<string, System.Type>;
     RootLayoutNode: Facebook.Yoga.YogaNode;
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.StringObjectDictionary;
@@ -2126,6 +2127,50 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class EnumComponent<T = any> {
+        constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
+        Context: ReactUnity.Editor.Renderer.EditorContext;
+        Parent: ReactUnity.IContainerComponent;
+        Element: T;
+        Layout: Facebook.Yoga.YogaNode;
+        LayoutValues: ReactUnity.Styling.LayoutValue[];
+        Style: ReactUnity.Styling.NodeStyle;
+        Inline: Record<string, any>;
+        IsPseudoElement: boolean;
+        Name: string;
+        Tag: string;
+        ClassName: string;
+        ClassList: System.Collections.Generic.HashSet<string>;
+        StateStyles: ReactUnity.Styling.StateStyles;
+        Data: System.Collections.Generic.Dictionary<string, System.Object>;
+        Children: ReactUnity.IReactComponent[];
+        BeforePseudo: ReactUnity.IReactComponent;
+        AfterPseudo: ReactUnity.IReactComponent;
+        BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+        AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+        SetProperty(property: string, value: System.Object): void;
+        SetEventListener(eventName: string, callback: ReactUnity.Interop.Callback): void;
+        SetValue(value: System.Enum): void;
+        SetValueWithoutNotify(value: System.Enum): void;
+        Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+        ApplyLayoutStyles(): void;
+        ApplyStyles(): void;
+        Destroy(): void;
+        ResolveStyle(recursive?: boolean): void;
+        ScheduleLayout(callback?: (() => void)): void;
+        SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+        SetData(property: string, value: System.Object): void;
+        GetComponent(type: System.Type): System.Object;
+        AddComponent(type: System.Type): System.Object;
+        RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+        CaptureMouse(): void;
+        ReleaseMouse(): void;
+        HasMouseCapture(): boolean;
+        Equals(obj: System.Object): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class HostComponent {
         constructor(element: UnityEngine.UIElements.VisualElement, ctx: ReactUnity.Editor.Renderer.EditorContext);
         Context: ReactUnity.Editor.Renderer.EditorContext;
@@ -2414,6 +2459,7 @@ export declare namespace ReactUnity {
     export namespace Renderer {
       export class EditorContext {
         constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, editor: ReactUnity.Editor.Renderer.ReactWindow, onRestart?: (() => void));
+        StateHandlers: System.Collections.Generic.Dictionary<string, System.Type>;
         Host: ReactUnity.IHostComponent;
         Globals: ReactUnity.Types.StringObjectDictionary;
         IsDevServer: boolean;
@@ -2545,6 +2591,44 @@ export declare namespace ReactUnity {
         Equals(other: System.Object): boolean;
         ToString(): string;
         GetType(): System.Type;
+      }
+    }
+    export namespace StateHandlers {
+      export class ActiveStateHandler {
+        constructor();
+        activators: UnityEngine.UIElements.ManipulatorActivationFilter[];
+        target: UnityEngine.UIElements.VisualElement;
+        ClearListeners(): void;
+        OnPointerDown(eventData: UnityEngine.UIElements.MouseDownEvent): void;
+        OnPointerUp(eventData: UnityEngine.UIElements.MouseUpEvent): void;
+        Equals(obj: System.Object): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class FocusStateHandler {
+        constructor();
+        activators: UnityEngine.UIElements.ManipulatorActivationFilter[];
+        target: UnityEngine.UIElements.VisualElement;
+        ClearListeners(): void;
+        OnSelect(eventData: UnityEngine.UIElements.FocusEvent): void;
+        OnDeselect(eventData: UnityEngine.UIElements.BlurEvent): void;
+        Equals(obj: System.Object): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class HoverStateHandler {
+        constructor();
+        activators: UnityEngine.UIElements.ManipulatorActivationFilter[];
+        target: UnityEngine.UIElements.VisualElement;
+        ClearListeners(): void;
+        OnPointerEnter(eventData: UnityEngine.UIElements.MouseEnterEvent): void;
+        OnPointerLeave(eventData: UnityEngine.UIElements.MouseLeaveEvent): void;
+        Equals(obj: System.Object): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
       }
     }
     export namespace Styling {
