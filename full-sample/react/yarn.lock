@@ -1079,17 +1079,17 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@^0.0.19":
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.19.tgz#0a3338b3bb5f4f0c1f7c44f338fdcae6d45cfad1"
-  integrity sha512-cPpunD1CCZoQxs6hO7m4WurxpB8so39Mmngf+O1pfK1D+N+2dRGXPZZlP2CTy21ID8bR68i6fF6Ulf6TswpRqA==
+"@reactunity/renderer@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.20.tgz#570cf1c6571304ab7a77c3f0b824edfc3a90768d"
+  integrity sha512-8jsJ1Of/aLfX9nCSZXp5hnZlB3uCcyNH6W6pV4CczMuqd//hOk9Tk1eyGF+59BXZZVhD0MnPfB/CaXbyHfUByw==
   dependencies:
     react-reconciler "^0.26.1"
 
-"@reactunity/scripts@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.1.7.tgz#8d08f62ae3e758f278b4171f3beeac0ddbb36c88"
-  integrity sha512-C1GuPyLgpPkf7b7w4HMlWGRn/xHld5e0GKvy0D60gf33phFKHL/TzTvAiq5y3KsW9z5v4nnJXOFWATTndrnL1g==
+"@reactunity/scripts@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.1.9.tgz#d60a11a49ce19769dbde08d2a16efb7904c08cb0"
+  integrity sha512-CdolVN4goML49cqCM7vRpRO9vEiq4cfA2dXXYmTcI9kKDyHRPTJQATmZ3QHJWOXn+nonkJX7eez5bYovDXq1vg==
   dependencies:
     "@babel/core" "7.13.8"
     "@pmmmwh/react-refresh-webpack-plugin" "0.4.3"

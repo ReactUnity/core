@@ -14,7 +14,7 @@
     "test": "react-unity-scripts start --test"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.0.19",
+    "@reactunity/renderer": "^0.0.20",
     "@reduxjs/toolkit": "^1.5.0",
     "classnames": "^2.2.6",
     "history": "^5.0.0",
@@ -24,7 +24,7 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.1.7",
+    "@reactunity/scripts": "^0.1.9",
     "@types/react-redux": "^7.1.16",
     "node-sass": "^5.0.0",
     "svg-to-png-loader": "^3.0.0",

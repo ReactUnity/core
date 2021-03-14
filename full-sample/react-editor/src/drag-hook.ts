@@ -1,8 +1,7 @@
-import { UnityEngine as UE } from '@reactunity/renderer/editor';
-import { ReactUnity } from "@reactunity/renderer/editor";
-import { useRef, useEffect } from "react";
+import { ReactUnity, UnityEngine as UE } from '@reactunity/renderer/editor';
+import { useEffect, useRef } from "react";
 
-type BaseEl = ReactUnity.Editor.Renderer.Components.EditorReactComponent;
+type BaseEl = ReactUnity.Editor.Components.EditorComponent;
 
 export function useDragManipulator<T extends BaseEl = BaseEl>(
   target: T,

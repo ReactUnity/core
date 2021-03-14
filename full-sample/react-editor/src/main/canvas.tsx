@@ -1,4 +1,4 @@
-import { ReactUnity, UnityEngine as UE } from '@reactunity/renderer/editor';
+import { ReactUnity as RU, UnityEngine as UE } from '@reactunity/renderer/editor';
 import { forwardRef, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDragManipulator } from 'src/drag-hook';
@@ -7,7 +7,7 @@ import { store } from 'src/store';
 import { addPosition, addZoom } from 'src/store/slices/main';
 import style from './index.module.scss';
 
-type Cmp = ReactUnity.Editor.Renderer.Components.EditorIMGUIComponent;
+type Cmp = RU.Editor.Components.IMGUIComponent;
 
 export const Canvas = forwardRef<Cmp>(
   function Canvas(props, ref) {

@@ -1,8 +1,7 @@
 import { ReactUnity } from '@reactunity/renderer/editor';
 import { useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectPositionX, selectPositionY, selectZoom, setEndNode, setStartNode } from 'src/store/slices/main';
-import { useDispatch } from 'react-redux';
 import { Canvas } from './canvas';
 import style from './index.module.scss';
 
@@ -10,7 +9,7 @@ const dd = UnityEditor.DragAndDrop;
 
 export function App() {
   const boxes = [0, 1, 2, 3];
-  const im = useRef<ReactUnity.Editor.Renderer.Components.EditorIMGUIComponent>();
+  const im = useRef<ReactUnity.Editor.Components.IMGUIComponent>();
   const dispatch = useDispatch();
   const zoom = useSelector(selectZoom);
   console.log(zoom);

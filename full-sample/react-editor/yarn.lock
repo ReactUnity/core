@@ -1086,10 +1086,10 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@0.0.19":
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.19.tgz#0a3338b3bb5f4f0c1f7c44f338fdcae6d45cfad1"
-  integrity sha512-cPpunD1CCZoQxs6hO7m4WurxpB8so39Mmngf+O1pfK1D+N+2dRGXPZZlP2CTy21ID8bR68i6fF6Ulf6TswpRqA==
+"@reactunity/renderer@0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.20.tgz#570cf1c6571304ab7a77c3f0b824edfc3a90768d"
+  integrity sha512-8jsJ1Of/aLfX9nCSZXp5hnZlB3uCcyNH6W6pV4CczMuqd//hOk9Tk1eyGF+59BXZZVhD0MnPfB/CaXbyHfUByw==
   dependencies:
     react-reconciler "^0.26.1"
 
@@ -1223,10 +1223,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.32.tgz#90c5c4a8d72bbbfe53033f122341343249183448"
   integrity sha512-/Ctrftx/zp4m8JOujM5ZhwzlWLx22nbQJiVqz8/zE15gOeEW+uly3FSX4fGFpcfEvFzXcMCJwq9lGVWgyARXhg==
 
-"@types/node@^14.14.33":
-  version "14.14.33"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.33.tgz#9e4f8c64345522e4e8ce77b334a8aaa64e2b6c78"
-  integrity sha512-oJqcTrgPUF29oUP8AsUqbXGJNuPutsetaa9kTQAQce5Lx5dTYWV02ScBiT/k1BX/Z7pKeqedmvp39Wu4zR7N7g==
+"@types/node@^14.14.34":
+  version "14.14.34"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.34.tgz#07935194fc049069a1c56c0c274265abeddf88da"
+  integrity sha512-dBPaxocOK6UVyvhbnpFIj2W+S+1cBTkHQbFQfeeJhoKFbzYcVUGHvddeWPSucKATb3F0+pgDq0i6ghEaZjsugA==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"

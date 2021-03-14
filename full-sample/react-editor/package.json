@@ -10,7 +10,7 @@
     "preinstall": "npx only-allow@1.0.0 yarn"
   },
   "dependencies": {
-    "@reactunity/renderer": "0.0.19",
+    "@reactunity/renderer": "0.0.20",
     "@reduxjs/toolkit": "^1.5.0",
     "clsx": "^1.1.1",
     "react": "^17.0.1",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@reactunity/scripts": "*",
-    "@types/node": "^14.14.33",
+    "@types/node": "^14.14.34",
     "@types/react": "^17.0.3",
     "node-sass": "^5.0.0",
     "typescript": "^4.2.3"
