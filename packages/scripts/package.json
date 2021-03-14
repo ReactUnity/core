@@ -31,6 +31,10 @@
       ]
     }
   },
+  "scripts": {
+    "preinstall": "npx only-allow@1.0.0 yarn",
+    "local": "yalc publish --push"
+  },
   "dependencies": {
     "@babel/core": "7.13.8",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
