@@ -33,7 +33,7 @@ namespace ReactUnity.Editor.Components
 
         public override void SetProperty(string property, object value)
         {
-            if (property == "value") Element.SetValueWithoutNotify((TValueType)Convert.ChangeType(value, typeof(TValueType)));
+            if (property == "value") Element.SetValueWithoutNotify(value == null ? default(TValueType) : (TValueType)Convert.ChangeType(value, typeof(TValueType)));
             else if (property == "label") Element.label = value?.ToString();
             else if (property == "bindingPath") Element.bindingPath = value?.ToString();
             else if (property == "binding") Element.binding = value as IBinding;

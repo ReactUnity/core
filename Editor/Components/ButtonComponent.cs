@@ -5,11 +5,11 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Components
 {
-    public class ButtonComponent : EditorComponent<Button>
+    public class ButtonComponent<T> : EditorComponent<T> where T : Button, new()
     {
         private Action previousClickEvent;
 
-        public ButtonComponent(EditorContext context) : base(context, "button")
+        public ButtonComponent(EditorContext context, string tag) : base(context, tag)
         {
         }
 

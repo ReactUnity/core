@@ -40,6 +40,20 @@ namespace ReactUnity.Types
             return hashCode;
         }
 
+        public string ToCSS()
+        {
+            return ToCSS(X) + " " + ToCSS(Y);
+        }
+
+        private string ToCSS(YogaValue val)
+        {
+            if (val.Unit == YogaUnit.Auto) return "auto";
+            if (val.Unit == YogaUnit.Undefined) return "none";
+            if (val.Unit == YogaUnit.Percent) return val.Value + "%";
+            if (val.Unit == YogaUnit.Point) return val.Value + "px";
+            return "initial";
+        }
+
         public static bool operator ==(YogaValue2 left, YogaValue2 right)
         {
             return left.X.Unit == right.X.Unit && left.X.Value == right.X.Value

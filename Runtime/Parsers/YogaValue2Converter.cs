@@ -41,7 +41,8 @@ namespace ReactUnity.Styling.Parsers
 
         public object Convert(object value)
         {
-            if (value is double d) return new YogaValue2((float) d, (float) d);
+            if (value is YogaValue2 o) return o;
+            if (value is double d) return new YogaValue2((float)d, (float)d);
             if (value is float f) return new YogaValue2(f, f);
             if (value is int i) return new YogaValue2(i, i);
             if (value is YogaValue v) return new YogaValue2(v, v);

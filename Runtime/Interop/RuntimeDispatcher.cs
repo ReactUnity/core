@@ -108,7 +108,7 @@ namespace ReactUnity
                 {
                     // Coroutine was already started, so stop it
                     var coroutine = Started[cr];
-                    if (coroutine != null) StopCoroutine(coroutine);
+                    if (coroutine != null && this) StopCoroutine(coroutine);
                     Started[cr] = null;
                 }
             }
@@ -118,7 +118,7 @@ namespace ReactUnity
             for (int i = 0; i < ToStart.Count; i++)
             {
                 var cr = ToStart[i];
-                if (cr != null) Started.Add(StartCoroutine(cr));
+                if (cr != null && this) Started.Add(StartCoroutine(cr));
             }
             ToStart.Clear();
         }
@@ -128,7 +128,7 @@ namespace ReactUnity
             for (int cr = 0; cr < Started.Count; cr++)
             {
                 var coroutine = Started[cr];
-                if (coroutine != null) StopCoroutine(coroutine);
+                if (coroutine != null && this) StopCoroutine(coroutine);
                 Started[cr] = null;
             }
             ToStart.Clear();

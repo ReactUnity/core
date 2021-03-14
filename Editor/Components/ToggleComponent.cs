@@ -3,9 +3,9 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Components
 {
-    public class ToggleComponent : BaseFieldComponent<Toggle, bool>
+    public class ToggleComponent<T> : BaseFieldComponent<T, bool> where T : Toggle, new()
     {
-        public ToggleComponent(EditorContext context) : base(context, "toggle")
+        public ToggleComponent(EditorContext context, string tag) : base(context, tag)
         { }
 
         public override void SetProperty(string property, object value)

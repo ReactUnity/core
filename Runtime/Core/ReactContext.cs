@@ -116,7 +116,7 @@ namespace ReactUnity
         public void Dispose()
         {
             Scheduler?.clearAllTimeouts();
-            Dispatcher?.Dispose();
+            if(Dispatcher != null) Dispatcher.Dispose();
             foreach (var dp in Disposables)
             {
                 dp.Dispose();

@@ -79,7 +79,8 @@ namespace ReactUnity
                     typeof(UnityEngine.UIElements.StyleLength).Assembly,
 #endif
                     typeof(UnityEngine.Vector3).Assembly,
-                    typeof(UnityEngine.Component).Assembly
+                    typeof(UnityEngine.Component).Assembly,
+                    typeof(ReactUnityRunner).Assembly
                 );
                 x.CatchClrExceptions(ex =>
                 {
