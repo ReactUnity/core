@@ -16,9 +16,11 @@ namespace ReactUnity.Editor.Components
                 case "vertical":
                     Element.direction = Convert.ToBoolean(value) ? SliderDirection.Vertical : SliderDirection.Horizontal;
                     break;
+#if UNITY_2021
                 case "inverted":
                     Element.inverted = Convert.ToBoolean(value);
                     break;
+#endif
                 case "showInput":
                     Element.showInputField = Convert.ToBoolean(value);
                     break;
