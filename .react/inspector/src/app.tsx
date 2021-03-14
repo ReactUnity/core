@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import style from './index.module.scss';
-import { CornerLabels, StyleProp, StylePropPart, styleProps } from './props';
+import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } from './props';
 
 type RC = ReactUnity.Layout.ReactElement;
 
@@ -37,10 +37,20 @@ function Styles({ element }: { element: RC }) {
 
   return <scroll className={clsx(style.styles, showAll && style.showAll)}>
     <toggle label="Show All" value={showAll} onChange={ev => setShowAll(ev.newValue)} className={style.showAllButton} />
-    {styleProps.map(x => x.arrangement === 'rect' || x.arrangement === 'corner' ?
+
+    {styleProps.map((x, i) => <Group group={x} element={element} key={i} />)}
+  </scroll>;
+}
+
+function Group({ group, element, className }: { group: StylePropGroup, element: RC, className?: string }) {
+
+  return <view className={clsx(style.group, className)}>
+    {!!group.label && <view className={style.groupHeader}>{group.label}</view>}
+
+    {group.props.map(x => x.arrangement === 'rect' || x.arrangement === 'corner' ?
       <StylePropRect element={element} prop={x} key={x.name} /> :
       <StylePropRow element={element} prop={x} key={x.name} />)}
-  </scroll>;
+  </view>;
 }
 
 function StylePropRow({ prop, element, className }: { prop: StyleProp, element: RC, className?: string }) {

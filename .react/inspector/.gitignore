@@ -63,3 +63,6 @@ build/
 
 # Unity specific
 *.meta
+
+.yalc
+yalc.lock

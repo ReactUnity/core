@@ -89,11 +89,14 @@
 }
 
 .propRectContainer {
-  border-top-color: #686868;
-  border-top-width: 2px;
   padding-top: 6px;
   padding-bottom: 6px;
   flex-direction: row;
+
+  &:not(:first-child) {
+    border-top-color: 0.78;
+    border-top-width: 2px;
+  }
 
   &:hover {
     background: 0.82;
@@ -143,4 +146,13 @@
   flex-basis: 0;
   align-items: stretch;
   align-self: stretch;
+}
+
+.group {
+  border-radius: 8px;
+  padding: 6px;
+  margin: 6px;
+  background: 0.86;
+  border-width: 2px;
+  border-color: 0.83;
 }

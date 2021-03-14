@@ -200,18 +200,18 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.Not:
                     break;
                 case RuleSelectorPartType.FirstChild:
-                    return component.Parent.Children[0] == component;
+                    return component.Parent != null && component.Parent.Children[0] == component;
                 case RuleSelectorPartType.LastChild:
-                    return component.Parent.Children[component.Parent.Children.Count - 1] == component;
+                    return component.Parent != null && component.Parent.Children[component.Parent.Children.Count - 1] == component;
                 case RuleSelectorPartType.NthChild:
-                    return ((NthChildParameter) Parameter).Matches(component.Parent.Children.IndexOf(component) + 1);
+                    return component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.IndexOf(component) + 1);
                 case RuleSelectorPartType.NthLastChild:
-                    return ((NthChildParameter) Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
+                    return component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
                 case RuleSelectorPartType.Empty:
                     var cmp = component as IContainerComponent;
                     return cmp == null || cmp.Children.Count == 0;
                 case RuleSelectorPartType.OnlyChild:
-                    return component.Parent.Children.Count == 1;
+                    return component.Parent != null && component.Parent.Children.Count == 1;
                 case RuleSelectorPartType.Root:
                     return component is IHostComponent;
                 case RuleSelectorPartType.Scope:

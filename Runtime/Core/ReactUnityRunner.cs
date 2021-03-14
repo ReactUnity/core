@@ -1,5 +1,9 @@
 using Esprima;
+using Jint.Runtime;
+using Jint.Runtime.Descriptors;
+using Jint.Runtime.Interop;
 using ReactUnity.DomProxies;
+using ReactUnity.Helpers;
 using ReactUnity.Interop;
 using ReactUnity.Styling.Types;
 using System;
@@ -98,7 +102,17 @@ namespace ReactUnity
             CreateConsole(engine);
             CreateLocalStorage(engine);
             CreateScheduler(engine, context);
+
+            engine.SetValue("importType", new ClrFunctionInstance(
+                engine,
+                "importType",
+                func: (thisObj, arguments) => TypeReference.CreateTypeReference(engine,
+                    ReflectionHelpers.FindType(TypeConverter.ToString(arguments.At(0)),
+                    arguments.Length > 1 ? TypeConverter.ToBoolean(arguments.At(1)) : false))));
+
             engine.SetValue("UnityEngine", new Jint.Runtime.Interop.NamespaceReference(engine, "UnityEngine"));
+            engine.SetValue("ReactUnity", new Jint.Runtime.Interop.NamespaceReference(engine, "ReactUnity"));
+            engine.SetValue("Facebook", new Jint.Runtime.Interop.NamespaceReference(engine, "Facebook"));
 #if UNITY_EDITOR
             engine.SetValue("UnityEditor", new Jint.Runtime.Interop.NamespaceReference(engine, "UnityEditor"));
 #endif

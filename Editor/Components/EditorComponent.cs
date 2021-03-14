@@ -249,7 +249,6 @@ namespace ReactUnity.Editor.Components
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
             Style.CssStyles = cssStyles;
-
             ApplyStyles();
             ApplyLayoutStyles();
             Style.MarkChangesSeen();
