@@ -1,0 +1,35 @@
+.host {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 300px;
+  height: 500px;
+}
+
+.frame {
+  height: 100%;
+  flex-direction: column;
+  border-radius: 10px;
+  background-color: #c5a97b;
+  padding: 10px;
+}
+
+.items {
+  height: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 4px;
+  background-color: #e4ceab;
+}
+
+.itemSlot {
+  margin: 4px;
+  border-radius: 4px;
+  flex: 0;
+  width: 60px;
+  height: 60px;
+  background-color: #ada495;
+
+  border-width: 2px;
+  border-color: #8C816E;
+}
