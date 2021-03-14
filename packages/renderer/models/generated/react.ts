@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 14.03.2021 18:00:03
+// Generated 14.03.2021 20:37:42
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -2039,11 +2039,11 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export class ButtonComponent {
-        constructor(context: ReactUnity.Editor.Renderer.EditorContext);
+      export class ButtonComponent<T = any> {
+        constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
         Context: ReactUnity.Editor.Renderer.EditorContext;
         Parent: ReactUnity.IContainerComponent;
-        Element: UnityEngine.UIElements.Button;
+        Element: T;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         Style: ReactUnity.Styling.NodeStyle;
@@ -2257,6 +2257,50 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class ObjectComponent {
+        constructor(context: ReactUnity.Editor.Renderer.EditorContext);
+        Context: ReactUnity.Editor.Renderer.EditorContext;
+        Parent: ReactUnity.IContainerComponent;
+        Element: any; // UnityEditor.UIElements.ObjectField
+        Layout: Facebook.Yoga.YogaNode;
+        LayoutValues: ReactUnity.Styling.LayoutValue[];
+        Style: ReactUnity.Styling.NodeStyle;
+        Inline: Record<string, any>;
+        IsPseudoElement: boolean;
+        Name: string;
+        Tag: string;
+        ClassName: string;
+        ClassList: System.Collections.Generic.HashSet<string>;
+        StateStyles: ReactUnity.Styling.StateStyles;
+        Data: System.Collections.Generic.Dictionary<string, System.Object>;
+        Children: ReactUnity.IReactComponent[];
+        BeforePseudo: ReactUnity.IReactComponent;
+        AfterPseudo: ReactUnity.IReactComponent;
+        BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+        AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+        SetProperty(property: string, value: System.Object): void;
+        SetEventListener(eventName: string, callback: ReactUnity.Interop.Callback): void;
+        SetValue(value: UnityEngine.Object): void;
+        SetValueWithoutNotify(value: UnityEngine.Object): void;
+        Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+        ApplyLayoutStyles(): void;
+        ApplyStyles(): void;
+        Destroy(): void;
+        ResolveStyle(recursive?: boolean): void;
+        ScheduleLayout(callback?: (() => void)): void;
+        SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+        SetData(property: string, value: System.Object): void;
+        GetComponent(type: System.Type): System.Object;
+        AddComponent(type: System.Type): System.Object;
+        RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+        CaptureMouse(): void;
+        ReleaseMouse(): void;
+        HasMouseCapture(): boolean;
+        Equals(obj: System.Object): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class RangeComponent {
         constructor(context: ReactUnity.Editor.Renderer.EditorContext);
         Context: ReactUnity.Editor.Renderer.EditorContext;
@@ -2388,11 +2432,11 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export class ToggleComponent {
-        constructor(context: ReactUnity.Editor.Renderer.EditorContext);
+      export class ToggleComponent<T = any> {
+        constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
         Context: ReactUnity.Editor.Renderer.EditorContext;
         Parent: ReactUnity.IContainerComponent;
-        Element: UnityEngine.UIElements.Toggle;
+        Element: T;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         Style: ReactUnity.Styling.NodeStyle;
@@ -5911,6 +5955,7 @@ export declare namespace ReactUnity {
       AsVector(): UnityEngine.Vector2;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
+      ToCSS(): string;
       ToString(): string;
       GetType(): System.Type;
     }

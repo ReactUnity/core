@@ -73,6 +73,11 @@ export interface EnumProps extends BaseField<number> {
   type: System.Type | string;
 }
 
+export interface ObjectProps extends BaseField<UnityEngine.Object> {
+  type?: System.Type | string;
+  allowSceneObjects?: boolean;
+}
+
 export interface IMGUI extends View<Cmp.IMGUIComponent> {
   onGUI?: ActionCallback<Cmp.IMGUIComponent>;
   cullingEnabled?: boolean;

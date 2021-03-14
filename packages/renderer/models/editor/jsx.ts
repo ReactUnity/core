@@ -11,7 +11,7 @@ import Cmp = ReactUnity.Editor.Components;
 
 type BaseElement<T = Cmp.EditorComponent> = Components.View<T> & rc.RefAttributes<Cmp.EditorComponent> & Children;
 type BaseFieldComponent<T> = Cmp.BaseFieldComponent<BaseElement, T>;
-type BaseFieldElement<T, TSender = BaseFieldComponent<T>> = Components.BaseField<T, TSender> & rc.RefAttributes<TSender> & Children;
+type BaseFieldElement<T, TSender = BaseFieldComponent<T>> = Components.BaseField<T, TSender> & rc.RefAttributes<TSender> & Children<never>;
 type BaseFieldElementSimple<T> = BaseFieldElement<T, BaseFieldComponent<T>>;
 
 
@@ -60,7 +60,7 @@ declare module 'react/jsx-runtime' {
       layermask: BaseFieldElementSimple<number>;
       long: BaseFieldElementSimple<number>;
       mask: BaseFieldElementSimple<number>;
-      object: BaseFieldElementSimple<UnityEngine.Object>;
+      object: Components.ObjectProps & rc.RefAttributes<Cmp.ObjectComponent> & Children<never>;
       progress: BaseElement;
       property: BaseElement;
       rect: BaseFieldElementSimple<UnityEngine.Rect>;
