@@ -62,3 +62,7 @@ dist/
 
 # Unity specific
 *.meta
+
+# Yalc files
+.yalc
+yalc.lock

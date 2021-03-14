@@ -17,6 +17,7 @@
     }
   },
   "scripts": {
+    "preinstall": "npx only-allow@1.0.0 yarn",
     "build": "tsc -d",
     "build:editor": "tsc -d -p tsconfig.editor.json",
     "watch": "tsc -d --watch",
