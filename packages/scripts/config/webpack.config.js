@@ -611,6 +611,26 @@ module.exports = function (webpackEnv) {
             ...(!hasJsxRuntime && {
               'react/react-in-jsx-scope': 'error',
             }),
+
+            // Disable jsx-ally as it is irrelevant for us
+            // https://github.com/evcohen/eslint-plugin-jsx-a11y/tree/master/docs/rules
+            'jsx-a11y/alt-text': 'off',
+            'jsx-a11y/anchor-has-content': 'off',
+            'jsx-a11y/anchor-is-valid': 'off',
+            'jsx-a11y/aria-activedescendant-has-tabindex': 'off',
+            'jsx-a11y/aria-props': 'off',
+            'jsx-a11y/aria-proptypes': 'off',
+            'jsx-a11y/aria-role': 'off',
+            'jsx-a11y/aria-unsupported-elements': 'off',
+            'jsx-a11y/heading-has-content': 'off',
+            'jsx-a11y/iframe-has-title': 'off',
+            'jsx-a11y/img-redundant-alt': 'off',
+            'jsx-a11y/no-access-key': 'off',
+            'jsx-a11y/no-distracting-elements': 'off',
+            'jsx-a11y/no-redundant-roles': 'off',
+            'jsx-a11y/role-has-required-aria-props': 'off',
+            'jsx-a11y/role-supports-aria-props': 'off',
+            'jsx-a11y/scope': 'off',
           },
         },
       }),
