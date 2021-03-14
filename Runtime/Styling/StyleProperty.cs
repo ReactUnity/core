@@ -23,6 +23,7 @@ namespace ReactUnity.Styling
         bool transitionable { get; }
         bool inherited { get; }
         bool proxy { get; }
+        object noneValue { get; }
     }
 
     public class StyleProperty<T> : IStyleProperty
@@ -30,16 +31,18 @@ namespace ReactUnity.Styling
         public string name { get; private set; }
         public Type type { get; private set; }
         public object defaultValue { get; private set; }
+        public object noneValue { get; private set; }
         public bool transitionable { get; private set; }
         public bool inherited { get; private set; }
         public bool proxy { get; private set; }
         public IStyleConverter converter;
 
-        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleConverter converter = null)
+        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleConverter converter = null, object noneValue = null)
         {
             this.type = typeof(T);
             this.name = name;
             this.defaultValue = defaultValue;
+            this.noneValue = noneValue;
             this.transitionable = transitionable;
             this.inherited = inherited;
             this.proxy = proxy;
@@ -59,7 +62,7 @@ namespace ReactUnity.Styling
         public static StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
         public static StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static StyleProperty<string> cursor = new StyleProperty<string>("cursor", null, false);
-        public static StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto);
+        public static StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto, noneValue: PointerEvents.None);
         public static StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static StyleProperty<ImageReference> backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None);
         public static StyleProperty<int> borderRadius = new StyleProperty<int>("borderRadius", 0, true);

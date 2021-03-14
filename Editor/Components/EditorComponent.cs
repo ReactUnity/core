@@ -282,15 +282,17 @@ namespace ReactUnity.Editor.Components
 
         public void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false)
         {
+            if (Parent != null) Parent.UnregisterChild(this);
+
             Parent = parent;
+
+            if (Parent == null) return;
 
             relativeTo = relativeTo ?? (insertAfter ? null : parent.AfterPseudo);
 
             if (relativeTo == null)
             {
                 parent.RegisterChild(this);
-                parent.Children.Add(this);
-                parent.Layout.AddChild(Layout);
             }
             else
             {
@@ -298,8 +300,6 @@ namespace ReactUnity.Editor.Components
                 if (insertAfter) ind++;
 
                 parent.RegisterChild(this, ind);
-                parent.Children.Insert(ind, this);
-                parent.Layout.Insert(ind, Layout);
             }
 
             Style.Parent = parent.Style;
@@ -386,8 +386,28 @@ namespace ReactUnity.Editor.Components
         {
             if (child is IEditorComponent<VisualElement> u)
             {
-                if (index >= 0) Element.Insert(index, u.Element);
-                else Element.Add(u.Element);
+                if (index >= 0)
+                {
+                    Element.Insert(index, u.Element);
+                    Children.Insert(index, u);
+                    Layout.Insert(index, u.Layout);
+                }
+                else
+                {
+                    Element.Add(u.Element);
+                    Children.Add(u);
+                    Layout.AddChild(u.Layout);
+                }
+            }
+        }
+
+        public void UnregisterChild(IReactComponent child)
+        {
+            if (child is IEditorComponent<VisualElement> u)
+            {
+                Element.Remove(u.Element);
+                Children.Remove(u);
+                Layout.RemoveChild(u.Layout);
             }
         }
 

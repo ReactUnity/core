@@ -52,6 +52,7 @@ namespace ReactUnity
         public List<RuleTreeNode<StyleData>> AfterRules { get; }
 
         void RegisterChild(IReactComponent child, int index = -1);
+        void UnregisterChild(IReactComponent child);
     }
 
     public interface ITextComponent : IReactComponent

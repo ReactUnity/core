@@ -109,7 +109,27 @@ namespace ReactUnity.Components
             if (child is ReactComponent u)
             {
                 u.RectTransform.SetParent(Container, false);
-                if (index >= 0) u.RectTransform.SetSiblingIndex(index);
+                if (index >= 0)
+                {
+                    u.RectTransform.SetSiblingIndex(index);
+                    Children.Insert(index, u);
+                    Layout.Insert(index, u.Layout);
+                }
+                else
+                {
+                    Children.Add(u);
+                    Layout.AddChild(u.Layout);
+                }
+            }
+        }
+
+        public void UnregisterChild(IReactComponent child)
+        {
+            if (child is ReactComponent u)
+            {
+                u.RectTransform.SetParent(null, false);
+                Children.Remove(u);
+                Layout.RemoveChild(u.Layout);
             }
         }
     }

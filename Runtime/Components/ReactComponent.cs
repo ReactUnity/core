@@ -110,15 +110,17 @@ namespace ReactUnity.Components
 
         public virtual void SetParent(IContainerComponent parent, IReactComponent insertBefore = null, bool insertAfter = false)
         {
+            if (Parent != null) parent.UnregisterChild(this);
+
             Parent = parent;
+
+            if (Parent == null) return;
 
             insertBefore = insertBefore ?? (insertAfter ? null : parent.AfterPseudo);
 
             if (insertBefore == null)
             {
                 parent.RegisterChild(this);
-                parent.Children.Add(this);
-                parent.Layout.AddChild(Layout);
             }
             else
             {
@@ -126,14 +128,13 @@ namespace ReactUnity.Components
                 if (insertAfter) ind++;
 
                 parent.RegisterChild(this, ind);
-                parent.Children.Insert(ind, this);
-                parent.Layout.Insert(ind, Layout);
             }
 
             Style.Parent = parent.Style;
             ResolveStyle(true);
 
             Parent.ScheduleLayout();
+
         }
 
         public virtual void SetEventListener(string eventName, Callback fun)
@@ -392,7 +393,7 @@ namespace ReactUnity.Components
                 AddComponent<GraphicRaycaster>();
             }
 
-            canvas.overrideSorting = true;
+            canvas.overrideSorting = z != 0;
             canvas.sortingOrder = z;
         }
 

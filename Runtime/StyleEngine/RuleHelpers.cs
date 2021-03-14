@@ -139,7 +139,7 @@ namespace ReactUnity.StyleEngine
                     if (specialName == SpecialNames.Initial)
                         value = prop.defaultValue;
                     if (specialName == SpecialNames.None)
-                        value = null;
+                        value = prop.noneValue;
                     else if (specialName != SpecialNames.NoSpecialName && specialName != SpecialNames.CantParse)
                         value = specialName;
                     else
