@@ -66,10 +66,17 @@ async function copyScaffold(scaffoldDir: string, targetDir: string) {
   await fse.move(gitignoreSrcPath, gitignoreDestPath);
 }
 
+async function runOpenUPM() {
+  var cmd = 'npx' + (process.platform === 'win32' ? '.cmd' : '');
+  return await run_script(cmd, ['openupm-cli', 'add', 'com.reactunity.core'], { cwd: unityDir });
+}
 
 async function create() {
   try {
-    if (createUnity) await copyScaffold(unityScaffold, unityDir);
+    if (createUnity) {
+      await copyScaffold(unityScaffold, unityDir);
+      await runOpenUPM();
+    }
     await copyScaffold(reactScaffold, reactDir);
   } catch (err) {
     console.log();
