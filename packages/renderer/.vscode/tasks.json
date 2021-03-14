@@ -20,7 +20,8 @@
         "build:editor",
         "watch",
         "lint",
-        "pack"
+        "pack",
+        "local"
       ]
     }
   ]

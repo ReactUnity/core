@@ -14,7 +14,7 @@ export type Namespace = keyof NamespaceMap;
 
 declare global {
   function importNamespace<T extends Namespace>(namespace: T): NamespaceMap[T];
-  function importType(name: string): SystemNS.Type;
+  function importType(name: string, ignoreCase?: boolean): SystemNS.Type;
   const System: typeof SystemNS;
   const UnityEngine: typeof UnityEngineNS;
   const UnityEditor: typeof UnityEditorNS;

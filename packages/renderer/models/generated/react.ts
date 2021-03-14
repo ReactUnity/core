@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 14.03.2021 04:15:03
+// Generated 14.03.2021 18:00:03
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -4022,6 +4022,13 @@ export declare namespace ReactUnity {
     }
     export class EventTypes {
       static GetEventType(eventName: string): any;
+      Equals(obj: System.Object): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReflectionHelpers {
+      static FindType(fullName: string, ignoreCase?: boolean, searchAllAssemblies?: boolean): System.Type;
       Equals(obj: System.Object): boolean;
       GetHashCode(): number;
       GetType(): System.Type;

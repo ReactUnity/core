@@ -23,6 +23,7 @@
     "build:clean": "rimraf dist",
     "lint": "eslint --ext js,ts,tsx src models",
     "prepare": "npm run build:clean && npm run build && npm run build:editor",
+    "local": "yalc publish --push",
     "pack": "npm pack"
   },
   "author": "Gokhan Kurt <krtgkn@gmail.com>",
