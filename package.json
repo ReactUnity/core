@@ -19,5 +19,8 @@
       "description": "A sample demonstrating simple components built with React Unity",
       "path": "Samples~/BaseSample"
     }
-  ]
+  ],
+  "dependencies": {
+    "com.unity.editorcoroutines": ""
+  }
 }
