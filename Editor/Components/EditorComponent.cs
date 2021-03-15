@@ -8,7 +8,6 @@ using ReactUnity.Styling;
 using ReactUnity.Visitors;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -31,7 +30,7 @@ namespace ReactUnity.Editor.Components
         public YogaNode Layout { get; private set; }
         public List<LayoutValue> LayoutValues { get; private set; } = new List<LayoutValue>();
         public NodeStyle Style { get; private set; }
-        public ExpandoObject Inline { get; protected set; } = new ExpandoObject();
+        public Dictionary<string, object> Inline { get; protected set; } = new Dictionary<string, object>();
 
         public bool IsPseudoElement { get; private set; }
         public string Name => Element.name;

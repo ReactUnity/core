@@ -393,6 +393,9 @@ namespace ReactUnity.Editor.Developer
                     case "System.String":
                         return "string";
 
+                    case "System.Object":
+                        return "any";
+
                     case "System.Single":
                     case "System.Double":
                     case "System.Int32":
@@ -447,6 +450,7 @@ namespace ReactUnity.Editor.Developer
                 if (allowGeneric)
                 {
                     var nameWithoutGeneric = GetNameWithoutGenericArity(withNs ? propertyType : type.Name);
+                    if (nameWithoutGeneric == "System.Collections.Generic.Dictionary") nameWithoutGeneric = "Record";
                     var gn = string.Join(", ", gens.Select(x => x + suffixGeneric));
                     return $"{nameWithoutGeneric}<{gn}>";
                 }

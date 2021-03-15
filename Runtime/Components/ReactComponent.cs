@@ -10,7 +10,6 @@ using ReactUnity.Styling.Types;
 using ReactUnity.Visitors;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -38,7 +37,7 @@ namespace ReactUnity.Components
         public YogaNode Layout { get; private set; }
         public NodeStyle Style { get; private set; }
         public StateStyles StateStyles { get; private set; }
-        public ExpandoObject Inline { get; protected set; } = new ExpandoObject();
+        public Dictionary<string, object> Inline { get; protected set; } = new Dictionary<string, object>();
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
