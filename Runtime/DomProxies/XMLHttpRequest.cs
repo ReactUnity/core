@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+#if UNITY_EDITOR || REACT_DEV_SERVER_API
 
 using Jint;
 using Jint.Native;
