@@ -1,3 +1,3 @@
 import './main';
 
-(module as any)?.hot?.accept();
+module?.hot?.accept();
