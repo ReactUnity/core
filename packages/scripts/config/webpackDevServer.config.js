@@ -98,6 +98,9 @@ module.exports = function (proxy, allowedHost) {
     watchOptions: {
       ignored: ignoredFiles(paths.appSrc),
     },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     https: getHttpsConfig(),
     host,
     overlay: false,
