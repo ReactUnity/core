@@ -1,12 +1,13 @@
 {
   "dependencies": {
     "com.reactunity.core": {
-      "version": "file:../../nocommit/../core",
+      "version": "0.0.19",
       "depth": 0,
-      "source": "local",
+      "source": "registry",
       "dependencies": {
         "com.unity.editorcoroutines": ""
-      }
+      },
+      "url": "https://package.openupm.com"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
