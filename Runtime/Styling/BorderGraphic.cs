@@ -65,7 +65,9 @@ namespace ReactUnity.Styling
 
         static public Sprite CreateBorderSprite(int tl, int tr, int bl, int br, bool antiAliasing = false)
         {
+#if REACT_VECTOR_GRAPHICS && !UNITY_WEBGL
             if (Application.isPlaying) return CreateBorderSpriteVector(tl, tr, bl, br);
+#endif
             return CreateBorderSpriteRaster(tl, tr, bl, br, antiAliasing);
         }
 
