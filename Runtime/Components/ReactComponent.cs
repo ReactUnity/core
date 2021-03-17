@@ -206,16 +206,24 @@ namespace ReactUnity.Components
             Style.CssStyles = cssStyles;
 
 
+            var layoutUpdated = false;
             if (Style.CssLayouts != null)
+            {
                 foreach (var item in Style.CssLayouts) item.SetDefault(Layout, DefaultLayout);
+                layoutUpdated = Style.CssLayouts.Count > 0;
+            }
+
             Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
 
             for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
             inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
             for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
 
+            layoutUpdated = layoutUpdated || Style.CssLayouts.Count > 0;
+
             ApplyStyles();
             Style.MarkChangesSeen();
+            if (layoutUpdated) ApplyLayoutStyles();
         }
 
         public virtual void ApplyLayoutStyles()

@@ -17,10 +17,13 @@ namespace ReactUnity.Components
 
         void SetCamera(Camera camera)
         {
+            if (currentCamera == camera) return;
+
             if (currentCamera)
             {
                 currentCamera.targetTexture = null;
                 onUnmount?.Call(currentCamera, this);
+                currentCamera = null;
             }
 
             currentCamera = camera;
