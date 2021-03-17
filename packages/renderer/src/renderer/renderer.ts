@@ -1,10 +1,10 @@
-import * as ReactReconciler from 'react-reconciler';
 import type * as React from 'react';
-import { diffProperties, DiffResult } from './diffing';
+import * as ReactReconciler from 'react-reconciler';
 import {
-  NativeInstance, InstanceTag, NativeContainerInstance, NativeTextInstance, HydratableInstance,
-  PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout, Props
+  ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
+  NoTimeout, Props, PublicInstance, TimeoutHandle, UpdatePayload
 } from '../../models/renderer';
+import { diffProperties, DiffResult } from './diffing';
 
 const hostContext = {};
 const childContext = {};
@@ -34,11 +34,20 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
   }
 }
 
-function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfterMount: boolean, type?: string) {
+function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfterMount: boolean, type?: string, pre = true) {
   let updateAfterMount = false;
   for (let index = 0; index < updatePayload.length; index += 2) {
     const attr = updatePayload[index];
     const value = updatePayload[index + 1];
+    const isEvent = attr.substring(0, 2) === 'on';
+
+    // Register events before other properties
+    if (pre !== isEvent) continue;
+
+    if (isEvent) {
+      Unity.setEventListener(instance, attr, value);
+      continue;
+    }
 
     if (attr === 'children') {
       if (type === 'text') {
@@ -64,18 +73,14 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
       continue;
     }
 
-    if (typeof attr !== 'string') {
-      throw new Error('Component attributes must be string.');
-    }
-
     if (attr.substring(0, 5) === 'data-') {
       Unity.setData(instance, attr.substring(5), value);
-    } else if (attr.substring(0, 2) === 'on') {
-      Unity.setEventListener(instance, attr, value);
     } else {
       Unity.setProperty(instance, attr, value);
     }
   }
+
+  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
 
   return updateAfterMount;
 }
@@ -136,6 +141,7 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
     for (let index = 0; index < keys.length; index++) {
       const key = keys[index];
       const value = props[key];
+
       propsToUpdate.push(key, value);
     }
 

@@ -49,6 +49,9 @@ export interface Image<T = ReactUnity.Components.ImageComponent> extends BaseIma
 
 export interface RawImage extends Image<ReactUnity.Components.RawImageComponent> { }
 export interface Video extends Image<ReactUnity.Components.VideoComponent> { }
+export interface SvgImage extends Image<ReactUnity.Components.SvgComponent> {
+  preserveAspect?: boolean;
+}
 
 export interface Render extends BaseImage<ReactUnity.Components.RenderComponent> {
   width: number;

@@ -25,6 +25,7 @@ declare module 'react/jsx-runtime' {
       scroll: Components.Scroll & rc.RefAttributes<ReactUnity.Components.ScrollComponent> & Children;
       image: Components.Image & rc.RefAttributes<ReactUnity.Components.ImageComponent> & Children<never>;
       rawimage: Components.RawImage & rc.RefAttributes<ReactUnity.Components.RawImageComponent> & Children<never>;
+      svg: Components.SvgImage & rc.RefAttributes<ReactUnity.Components.SvgComponent> & Children<never>;
       video: Components.Video & rc.RefAttributes<ReactUnity.Components.VideoComponent> & Children<never>;
       render: Components.Render & rc.RefAttributes<ReactUnity.Components.RenderComponent> & Children<never>;
       toggle: Components.Toggle & rc.RefAttributes<ReactUnity.Components.ToggleComponent> & Children<never>;

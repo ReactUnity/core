@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 17.03.2021 03:00:18
+// Generated 18.03.2021 01:57:56
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -153,6 +153,14 @@ export declare namespace Facebook {
       SpaceAround = 4,
       SpaceEvenly = 5,
     }
+    export enum YogaLogLevel {
+      Error = 0,
+      Warn = 1,
+      Info = 2,
+      Debug = 3,
+      Verbose = 4,
+      Fatal = 5,
+    }
     export class YogaLogger {
       constructor(object: any, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
@@ -168,14 +176,6 @@ export declare namespace Facebook {
       Clone(): any;
       GetType(): System.Type;
       ToString(): string;
-    }
-    export enum YogaLogLevel {
-      Error = 0,
-      Warn = 1,
-      Info = 2,
-      Debug = 3,
-      Verbose = 4,
-      Fatal = 5,
     }
     export class YogaMeasureFunc {
       constructor(object: any, method: System.IntPtr);
@@ -201,39 +201,6 @@ export declare namespace Facebook {
     export class YogaNode {
       constructor(config?: Facebook.Yoga.YogaConfig);
       constructor(srcNode: Facebook.Yoga.YogaNode);
-      IsDirty: boolean;
-      HasNewLayout: boolean;
-      Parent: Facebook.Yoga.YogaNode;
-      IsMeasureDefined: boolean;
-      IsBaselineDefined: boolean;
-      StyleDirection: Facebook.Yoga.YogaDirection;
-      FlexDirection: Facebook.Yoga.YogaFlexDirection;
-      JustifyContent: Facebook.Yoga.YogaJustify;
-      Display: Facebook.Yoga.YogaDisplay;
-      AlignItems: Facebook.Yoga.YogaAlign;
-      AlignSelf: Facebook.Yoga.YogaAlign;
-      AlignContent: Facebook.Yoga.YogaAlign;
-      PositionType: Facebook.Yoga.YogaPositionType;
-      Wrap: Facebook.Yoga.YogaWrap;
-      Flex: number;
-      FlexGrow: number;
-      FlexShrink: number;
-      FlexBasis: Facebook.Yoga.YogaValue;
-      Width: Facebook.Yoga.YogaValue;
-      Height: Facebook.Yoga.YogaValue;
-      MaxWidth: Facebook.Yoga.YogaValue;
-      MaxHeight: Facebook.Yoga.YogaValue;
-      MinWidth: Facebook.Yoga.YogaValue;
-      MinHeight: Facebook.Yoga.YogaValue;
-      AspectRatio: number;
-      LayoutX: number;
-      LayoutY: number;
-      LayoutWidth: number;
-      LayoutHeight: number;
-      LayoutDirection: Facebook.Yoga.YogaDirection;
-      Overflow: Facebook.Yoga.YogaOverflow;
-      Data: any; // System.Object
-      Count: number;
       Left: Facebook.Yoga.YogaValue;
       Top: Facebook.Yoga.YogaValue;
       Right: Facebook.Yoga.YogaValue;
@@ -277,6 +244,39 @@ export declare namespace Facebook {
       LayoutPaddingBottom: number;
       LayoutPaddingStart: number;
       LayoutPaddingEnd: number;
+      IsDirty: boolean;
+      HasNewLayout: boolean;
+      Parent: Facebook.Yoga.YogaNode;
+      IsMeasureDefined: boolean;
+      IsBaselineDefined: boolean;
+      StyleDirection: Facebook.Yoga.YogaDirection;
+      FlexDirection: Facebook.Yoga.YogaFlexDirection;
+      JustifyContent: Facebook.Yoga.YogaJustify;
+      Display: Facebook.Yoga.YogaDisplay;
+      AlignItems: Facebook.Yoga.YogaAlign;
+      AlignSelf: Facebook.Yoga.YogaAlign;
+      AlignContent: Facebook.Yoga.YogaAlign;
+      PositionType: Facebook.Yoga.YogaPositionType;
+      Wrap: Facebook.Yoga.YogaWrap;
+      Flex: number;
+      FlexGrow: number;
+      FlexShrink: number;
+      FlexBasis: Facebook.Yoga.YogaValue;
+      Width: Facebook.Yoga.YogaValue;
+      Height: Facebook.Yoga.YogaValue;
+      MaxWidth: Facebook.Yoga.YogaValue;
+      MaxHeight: Facebook.Yoga.YogaValue;
+      MinWidth: Facebook.Yoga.YogaValue;
+      MinHeight: Facebook.Yoga.YogaValue;
+      AspectRatio: number;
+      LayoutX: number;
+      LayoutY: number;
+      LayoutWidth: number;
+      LayoutHeight: number;
+      LayoutDirection: Facebook.Yoga.YogaDirection;
+      Overflow: Facebook.Yoga.YogaOverflow;
+      Data: any; // System.Object
+      Count: number;
       Reset(): void;
       MarkDirty(): void;
       MarkHasNewLayout(): void;
@@ -828,14 +828,79 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class BaseRenderTextureComponent {
+    export class BaseImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag: string);
-      RenderTexture: UnityEngine.RenderTexture;
+      static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
+      static ImageDefaultLayout: Facebook.Yoga.YogaNode;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
+      Fit: ReactUnity.Types.ImageFitMode;
+      Graphic: UnityEngine.UI.MaskableGraphic;
+      Container: UnityEngine.RectTransform;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Parent: ReactUnity.IContainerComponent;
+      Data: Record<string, any>;
+      Component: ReactUnity.Layout.ReactElement;
+      Layout: Facebook.Yoga.YogaNode;
+      Style: ReactUnity.Styling.NodeStyle;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Inline: Record<string, any>;
+      BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
+      MaskAndImage: ReactUnity.Styling.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
+      Tag: string;
+      ClassName: string;
+      ClassList: System.Collections.Generic.HashSet<string>;
+      TextContent: string;
+      Name: string;
+      SetProperty(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      ApplyLayoutStyles(): void;
+      Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Destroy(): void;
+      SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
+      SetData(propertyName: string, value: any): void;
+      ScheduleLayout(callback?: (() => void)): void;
+      ApplyStyles(): void;
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class BaseRenderTextureComponent {
+      constructor(context: ReactUnity.UGUIContext, tag: string);
+      RenderTexture: UnityEngine.RenderTexture;
       Image: UnityEngine.UI.RawImage;
+      Graphic: UnityEngine.UI.MaskableGraphic;
+      DefaultStyle: ReactUnity.Styling.NodeStyle;
+      DefaultLayout: Facebook.Yoga.YogaNode;
+      Measurer: ReactUnity.Layout.ImageMeasurer;
+      ImageContainer: ReactUnity.Components.ContainerComponent;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
       Children: ReactUnity.IReactComponent[];
@@ -1073,13 +1138,12 @@ export declare namespace ReactUnity {
     }
     export class ImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
-      static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
-      static ImageDefaultLayout: Facebook.Yoga.YogaNode;
+      Image: UnityEngine.UI.Image;
+      Graphic: UnityEngine.UI.MaskableGraphic;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
-      Image: UnityEngine.UI.Image;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
       Children: ReactUnity.IReactComponent[];
@@ -1200,13 +1264,12 @@ export declare namespace ReactUnity {
     }
     export class RawImageComponent {
       constructor(context: ReactUnity.UGUIContext, tag?: string);
-      static ImageDefaultStyle: ReactUnity.Styling.NodeStyle;
-      static ImageDefaultLayout: Facebook.Yoga.YogaNode;
+      Image: UnityEngine.UI.RawImage;
+      Graphic: UnityEngine.UI.MaskableGraphic;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
-      Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
       Children: ReactUnity.IReactComponent[];
@@ -1313,11 +1376,12 @@ export declare namespace ReactUnity {
     export class RenderComponent {
       constructor(context: ReactUnity.UGUIContext);
       RenderTexture: UnityEngine.RenderTexture;
+      Image: UnityEngine.UI.RawImage;
+      Graphic: UnityEngine.UI.MaskableGraphic;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
-      Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
       Children: ReactUnity.IReactComponent[];
@@ -1420,6 +1484,69 @@ export declare namespace ReactUnity {
       SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
       SetData(propertyName: string, value: any): void;
       SetProperty(propertyName: string, value: any): void;
+      ScheduleLayout(callback?: (() => void)): void;
+      ApplyStyles(): void;
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class SvgComponent {
+      constructor(context: ReactUnity.UGUIContext, tag?: string);
+      Image: any; // Unity.VectorGraphics.SVGImage
+      Graphic: UnityEngine.UI.MaskableGraphic;
+      DefaultStyle: ReactUnity.Styling.NodeStyle;
+      DefaultLayout: Facebook.Yoga.YogaNode;
+      Measurer: ReactUnity.Layout.ImageMeasurer;
+      ImageContainer: ReactUnity.Components.ContainerComponent;
+      Fit: ReactUnity.Types.ImageFitMode;
+      Container: UnityEngine.RectTransform;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Parent: ReactUnity.IContainerComponent;
+      Data: Record<string, any>;
+      Component: ReactUnity.Layout.ReactElement;
+      Layout: Facebook.Yoga.YogaNode;
+      Style: ReactUnity.Styling.NodeStyle;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Inline: Record<string, any>;
+      BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
+      MaskAndImage: ReactUnity.Styling.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
+      Tag: string;
+      ClassName: string;
+      ClassList: System.Collections.Generic.HashSet<string>;
+      TextContent: string;
+      Name: string;
+      SetProperty(propertyName: string, value: any): void;
+      ResolveStyle(recursive?: boolean): void;
+      ApplyLayoutStyles(): void;
+      Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Destroy(): void;
+      SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
+      SetData(propertyName: string, value: any): void;
       ScheduleLayout(callback?: (() => void)): void;
       ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
@@ -1554,11 +1681,12 @@ export declare namespace ReactUnity {
     export class VideoComponent {
       constructor(context: ReactUnity.UGUIContext);
       RenderTexture: UnityEngine.RenderTexture;
+      Image: UnityEngine.UI.RawImage;
+      Graphic: UnityEngine.UI.MaskableGraphic;
       DefaultStyle: ReactUnity.Styling.NodeStyle;
       DefaultLayout: Facebook.Yoga.YogaNode;
       Measurer: ReactUnity.Layout.ImageMeasurer;
       ImageContainer: ReactUnity.Components.ContainerComponent;
-      Image: UnityEngine.UI.RawImage;
       Fit: ReactUnity.Types.ImageFitMode;
       Container: UnityEngine.RectTransform;
       Children: ReactUnity.IReactComponent[];
@@ -1879,7 +2007,6 @@ export declare namespace ReactUnity {
       ReloadPreviewInstances(): void;
       UseDefaultMargins(): boolean;
       Initialize(targets: UnityEngine.Object[]): void;
-      Cleanup(): void;
       MoveNextTarget(): boolean;
       ResetTarget(): void;
       SetDirty(): void;
@@ -5805,6 +5932,12 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export interface IStyleParser {
+        FromString(value: string): any;
+      }
+      export interface IStyleConverter {
+        Convert(value: any): any;
+      }
       export class ImageReferenceConverter {
         constructor();
         Convert(value: any): any;
@@ -5823,12 +5956,6 @@ export declare namespace ReactUnity {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
-      }
-      export interface IStyleParser {
-        FromString(value: string): any;
-      }
-      export interface IStyleConverter {
-        Convert(value: any): any;
       }
       export class ShadowDefinitionConverter {
         constructor();
