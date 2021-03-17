@@ -150,7 +150,7 @@ namespace ReactUnity.Components
 
             if (handler == null) handler = AddComponent(eventType) as IEventHandler;
 
-            Action<BaseEventData> callAction = (e) => fun.Call(e);
+            Action<BaseEventData> callAction = (e) => fun.Call(e, this);
             handler.OnEvent += callAction;
         }
 

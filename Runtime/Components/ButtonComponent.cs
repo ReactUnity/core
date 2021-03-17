@@ -47,7 +47,7 @@ namespace ReactUnity.Components
             {
                 case "onClick":
                     Button.onClick.RemoveAllListeners();
-                    if (callback != null) Button.onClick.AddListener(new UnityAction(() => callback.Call(null)));
+                    if (callback != null) Button.onClick.AddListener(new UnityAction(() => callback.Call(this)));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);

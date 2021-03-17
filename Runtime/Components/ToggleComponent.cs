@@ -68,7 +68,7 @@ namespace ReactUnity.Components
             {
                 case "onChange":
                     Toggle.onValueChanged.RemoveAllListeners();
-                    if (callback != null) Toggle.onValueChanged.AddListener(new UnityAction<bool>((x) => callback.Call(x)));
+                    if (callback != null) Toggle.onValueChanged.AddListener(new UnityAction<bool>((x) => callback.Call(x, this)));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);

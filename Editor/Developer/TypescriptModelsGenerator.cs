@@ -450,7 +450,7 @@ namespace ReactUnity.Editor.Developer
                 if (allowGeneric)
                 {
                     var nameWithoutGeneric = GetNameWithoutGenericArity(withNs ? propertyType : type.Name);
-                    if (nameWithoutGeneric == "System.Collections.Generic.Dictionary") nameWithoutGeneric = "Record";
+                    if (nameWithoutGeneric == "System.Collections.Generic.Dictionary" && (gens[0] == "string" || gens[0] == "number")) nameWithoutGeneric = "Record";
                     var gn = string.Join(", ", gens.Select(x => x + suffixGeneric));
                     return $"{nameWithoutGeneric}<{gn}>";
                 }

@@ -132,25 +132,25 @@ namespace ReactUnity.Components
             {
                 case "onEndEdit":
                     InputField.onEndEdit.RemoveAllListeners();
-                    if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Call(x)));
+                    if (callback != null) InputField.onEndEdit.AddListener(new UnityAction<string>(x => callback.Call(x, this)));
                     return;
                 case "onReturn":
                     InputField.onSubmit.RemoveAllListeners();
-                    if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Call(x)));
+                    if (callback != null) InputField.onSubmit.AddListener(new UnityAction<string>(x => callback.Call(x, this)));
                     return;
                 case "onChange":
                     InputField.onValueChanged.RemoveAllListeners();
-                    if (callback != null) InputField.onValueChanged.AddListener(new UnityAction<string>(x => callback.Call(x)));
+                    if (callback != null) InputField.onValueChanged.AddListener(new UnityAction<string>(x => callback.Call(x, this)));
                     return;
                 case "onTextSelection":
                     InputField.onTextSelection.RemoveAllListeners();
                     if (callback != null) InputField.onTextSelection.AddListener(
-                        new UnityAction<string, int, int>((x, i, j) => callback.Call(new { x, i, j })));
+                        new UnityAction<string, int, int>((x, i, j) => callback.Call(x, i, j, this)));
                     return;
                 case "onEndTextSelection":
                     InputField.onEndTextSelection.RemoveAllListeners();
                     if (callback != null) InputField.onEndTextSelection.AddListener(
-                        new UnityAction<string, int, int>((x, i, j) => callback.Call(new { x, i, j })));
+                        new UnityAction<string, int, int>((x, i, j) => callback.Call(x, i, j, this)));
                     return;
                 default:
                     base.SetEventListener(eventName, callback);
@@ -181,16 +181,16 @@ namespace ReactUnity.Components
                     InputField.richText = System.Convert.ToBoolean(value);
                     return;
                 case "contentType":
-                    InputField.contentType = (TMP_InputField.ContentType) System.Convert.ToInt32(value);
+                    InputField.contentType = (TMP_InputField.ContentType)System.Convert.ToInt32(value);
                     return;
                 case "keyboardType":
-                    InputField.keyboardType = (TouchScreenKeyboardType) System.Convert.ToInt32(value);
+                    InputField.keyboardType = (TouchScreenKeyboardType)System.Convert.ToInt32(value);
                     return;
                 case "lineType":
-                    InputField.lineType = (TMP_InputField.LineType) System.Convert.ToInt32(value);
+                    InputField.lineType = (TMP_InputField.LineType)System.Convert.ToInt32(value);
                     return;
                 case "validation":
-                    InputField.characterValidation = (TMP_InputField.CharacterValidation) System.Convert.ToInt32(value);
+                    InputField.characterValidation = (TMP_InputField.CharacterValidation)System.Convert.ToInt32(value);
                     return;
                 case "webSupport":
                     var enabled = System.Convert.ToBoolean(value);

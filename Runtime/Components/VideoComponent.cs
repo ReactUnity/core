@@ -5,7 +5,7 @@ using UnityEngine.Video;
 
 namespace ReactUnity.Components
 {
-    public class VideoComponent : RenderTextureComponent
+    public class VideoComponent : BaseRenderTextureComponent
     {
         public VideoPlayer VideoPlayer;
 
@@ -20,8 +20,8 @@ namespace ReactUnity.Components
 
         private void PrepareCompleted(VideoPlayer source)
         {
-            RenderTexture.width = (int) source.width;
-            RenderTexture.height = (int) source.height;
+            RenderTexture.width = (int)source.width;
+            RenderTexture.height = (int)source.height;
             Measurer.MarkDirty();
         }
 

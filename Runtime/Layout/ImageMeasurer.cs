@@ -56,7 +56,7 @@ namespace ReactUnity.Layout
 
         public void MarkDirty()
         {
-            if(Layout.Parent != null) Layout.MarkDirty();
+            if (Layout.Parent != null) Layout.MarkDirty();
             Context.scheduleLayout();
         }
 
@@ -133,6 +133,30 @@ namespace ReactUnity.Layout
                     rw *= scale;
                 }
             }
+
+
+            // TODO: Verify this logic
+            // If a dimension is NaN, that means the layout does not care when that dimension is.
+            // In that case, we can show the most suitable size,
+            // Which is the up/down scaled version of original image with same aspect ratio
+
+            var wnan = float.IsNaN(rw);
+            var hnan = float.IsNaN(rh);
+
+            if (wnan && hnan)
+            {
+                rw = ow;
+                rh = ow;
+            }
+            else if (hnan)
+            {
+                rh = rw * oh / ow;
+            }
+            else if (wnan)
+            {
+                rw = rh * ow / oh;
+            }
+
 
             return new YogaSize
             {

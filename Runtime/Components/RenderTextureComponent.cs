@@ -1,26 +1,78 @@
+using ReactUnity.Interop;
+using System;
 using UnityEngine;
 
 namespace ReactUnity.Components
 {
-    public class RenderTextureComponent : RawImageComponent
+    public class RenderComponent : BaseRenderTextureComponent
     {
-        public RenderTexture RenderTexture;
+        Camera currentCamera;
 
-        public RenderTextureComponent(UGUIContext context, string tag = "render") : base(context, tag)
+        Callback onMount;
+        Callback onUnmount;
+
+        public RenderComponent(UGUIContext context) : base(context, "render")
         {
-            RenderTexture = new RenderTexture(1, 1, 1);
-            SetTexture(RenderTexture);
+        }
+
+        void SetCamera(Camera camera)
+        {
+            if (currentCamera)
+            {
+                currentCamera.targetTexture = null;
+                onUnmount?.Call(currentCamera, this);
+            }
+
+            currentCamera = camera;
+
+            if (currentCamera)
+            {
+                currentCamera.targetTexture = RenderTexture;
+                onMount?.Call(currentCamera, this);
+            }
+        }
+
+        Camera FindCamera(object value)
+        {
+            if (value is Camera c) return c;
+            if (value is GameObject g) return g.GetComponent<Camera>();
+            return null;
         }
 
         public override void SetProperty(string propertyName, object value)
         {
             switch (propertyName)
             {
+                case "camera":
+                    SetCamera(FindCamera(value));
+                    break;
+                case "width":
+                    RenderTexture.width = Convert.ToInt32(value);
+                    break;
+                case "height":
+                    RenderTexture.height = Convert.ToInt32(value);
+                    break;
                 case "source":
                     throw new System.Exception($"Unknown property name specified, '{propertyName}'");
                 default:
                     base.SetProperty(propertyName, value);
                     break;
+            }
+        }
+
+        public override void SetEventListener(string eventName, Callback callback)
+        {
+            switch (eventName)
+            {
+                case "onMount":
+                    onMount = callback;
+                    return;
+                case "onUnmount":
+                    onUnmount = callback;
+                    return;
+                default:
+                    base.SetEventListener(eventName, callback);
+                    return;
             }
         }
     }
