@@ -1,3 +1,3 @@
 import './app';
 
-(module as any)?.hot?.accept();
+module?.hot?.accept(); // Enable HMR
