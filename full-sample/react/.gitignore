@@ -66,3 +66,7 @@ build/
 
 # Project specific
 *ignorefile*
+
+# Yalc
+yalc.lock
+.yalc

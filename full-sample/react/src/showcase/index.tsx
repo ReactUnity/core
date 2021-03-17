@@ -1,4 +1,4 @@
-import { Dropdown, DropdownItem, ImageFitMode, ReactUnity, Renderer, Slider, Tooltip } from '@reactunity/renderer';
+import { Dropdown, DropdownItem, ImageFitMode, ReactUnity, Renderer, Slider, Tooltip, UnityEngine as UE } from '@reactunity/renderer';
 import { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
@@ -22,7 +22,6 @@ export function App() {
     if (vp.isPlaying) vp.Pause();
     else vp.Play();
   };
-
 
   const tooltipContent =
     <view style={{ padding: 10, backgroundColor: 0.4, color: 'white' }}>
@@ -103,7 +102,8 @@ export function App() {
         <h2>Video</h2>
 
         <row>
-          <video fit={ImageFitMode.CenterInside} source={webVideo} ref={setVideoRef} onPointerClick={toggleVideo} />
+          <video style={{ flexGrow: 1 }} fit={ImageFitMode.Fill}
+            source={webVideo} ref={setVideoRef} onPointerClick={toggleVideo} />
         </row>
       </section>
 
@@ -133,6 +133,27 @@ export function App() {
           </column>
         </row>
       </section>
+
+
+      <section>
+        <h2>Render Texture</h2>
+
+        <row>
+          <render width={900} height={400} style={{ flexGrow: 1 }} fit={ImageFitMode.Fill}
+            onDrag={(ev) => {
+              Globals.cameraRoot.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
+            }}
+            onScroll={(ev: UE.EventSystems.PointerEventData) => {
+              Globals.renderCamera.transform.Translate(0, 0, ev.scrollDelta.y / 10, UnityEngine.Space.Self);
+            }}
+            onMount={ev => ev.gameObject.SetActive(true)}
+            onUnmount={ev => ev.gameObject.SetActive(false)}
+            camera={Globals.renderCamera}
+          />
+        </row>
+      </section>
+
+
     </view>
   </scroll>;
 };

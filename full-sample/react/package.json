@@ -11,6 +11,7 @@
     "build": "react-unity-scripts build",
     "lint": "eslint --ext js,ts,tsx src",
     "preinstall": "npx only-allow@1.0.0 yarn",
+    "postyalc": "yarn",
     "test": "react-unity-scripts start --test"
   },
   "dependencies": {
