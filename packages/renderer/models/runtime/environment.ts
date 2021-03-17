@@ -1,5 +1,9 @@
-import { ObjectDictionary } from '../context';
+export { };
 
 declare global {
-  const Globals: ObjectDictionary;
+  interface DefaultGlobals {
+    [key: string]: any;
+  }
+
+  const Globals: DefaultGlobals;
 }

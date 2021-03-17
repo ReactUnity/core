@@ -16,17 +16,17 @@ declare module 'react/jsx-runtime' {
     interface IntrinsicClassAttributes<T> extends React.ClassAttributes<T> { }
 
     interface IntrinsicElements {
-      [key: string]: Components.View & rc.RefAttributes<ReactUnity.Components.ReactComponent> & Children;
+      [key: string]: Components.View<any> & rc.RefAttributes<ReactUnity.Components.ReactComponent> & Children;
       view: Components.View & rc.RefAttributes<ReactUnity.Components.ContainerComponent> & { tag?: string } & Children;
       anchor: Components.Anchor & rc.RefAttributes<ReactUnity.Components.AnchorComponent> & Children;
-      text: Components.View & rc.RefAttributes<ReactUnity.Components.TextComponent> & Children<Textable | Textable[]>;
+      text: Components.Text & rc.RefAttributes<ReactUnity.Components.TextComponent> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<ReactUnity.Components.ButtonComponent> & Children;
       input: Input & rc.RefAttributes<ReactUnity.Components.InputComponent> & Children<never>;
-      scroll: Components.View & rc.RefAttributes<ReactUnity.Components.ScrollComponent> & Children;
+      scroll: Components.Scroll & rc.RefAttributes<ReactUnity.Components.ScrollComponent> & Children;
       image: Components.Image & rc.RefAttributes<ReactUnity.Components.ImageComponent> & Children<never>;
-      rawimage: Components.Image & rc.RefAttributes<ReactUnity.Components.RawImageComponent> & Children<never>;
+      rawimage: Components.RawImage & rc.RefAttributes<ReactUnity.Components.RawImageComponent> & Children<never>;
       video: Components.Video & rc.RefAttributes<ReactUnity.Components.VideoComponent> & Children<never>;
-      render: Components.Video & rc.RefAttributes<ReactUnity.Components.RenderTextureComponent> & Children<never>;
+      render: Components.Render & rc.RefAttributes<ReactUnity.Components.RenderComponent> & Children<never>;
       toggle: Components.Toggle & rc.RefAttributes<ReactUnity.Components.ToggleComponent> & Children<never>;
     }
   }

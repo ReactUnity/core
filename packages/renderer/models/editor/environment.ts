@@ -1,8 +1,10 @@
-import { ObjectDictionary } from '../context';
 import { ReactUnity } from '../generated';
 
 declare global {
-  const Globals: ObjectDictionary & {
+  interface DefaultGlobals {
+    [key: string]: any;
     Editor: ReactUnity.Editor.Renderer.ReactWindow;
-  };
+  }
+
+  const Globals: DefaultGlobals;
 }

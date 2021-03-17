@@ -1,3 +1,4 @@
+import { ReactUnity } from '../generated';
 import { View } from './components';
 
 export enum TouchScreenKeyboardType {
@@ -44,16 +45,10 @@ export enum LineType {
   MultiLineNewline = 2,
 }
 
-export type InputEvent = (val: string) => void;
-export type TextSelectionEvent = (val: string, start: number, end: number) => void;
+export type InputEvent = (val: string, sender: ReactUnity.Components.InputComponent) => void;
+export type TextSelectionEvent = (val: string, start: number, end: number, sender: ReactUnity.Components.InputComponent) => void;
 
-export interface Input extends View {
-  onReturn?: InputEvent;
-  onEndEdit?: InputEvent;
-  onChange?: InputEvent;
-  onTextSelection?: TextSelectionEvent;
-  onEndTextSelection?: TextSelectionEvent;
-
+export interface Input extends View<ReactUnity.Components.InputComponent> {
   placeholder?: string;
   value?: string;
   characterLimit?: number;
@@ -64,6 +59,12 @@ export interface Input extends View {
   keyboardType?: TouchScreenKeyboardType;
   lineType?: LineType;
   validation?: CharacterValidation;
-
+  /* WebGL only */
   webSupport?: boolean;
+
+  onReturn?: InputEvent;
+  onEndEdit?: InputEvent;
+  onChange?: InputEvent;
+  onTextSelection?: TextSelectionEvent;
+  onEndTextSelection?: TextSelectionEvent;
 }

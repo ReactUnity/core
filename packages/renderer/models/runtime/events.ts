@@ -1,28 +1,28 @@
 import { ReactUnity, UnityEngine } from '../generated';
 
-export type ActionCallback = () => void;
-export type BaseEventCallback = (e: UnityEngine.EventSystems.BaseEventData) => void;
-export type PointerEventCallback = (e: UnityEngine.EventSystems.PointerEventData) => void;
-export type AxisEventCallback = (e: UnityEngine.EventSystems.AxisEventData) => void;
-export type KeyEventCallback = (e: ReactUnity.EventHandlers.KeyEventData) => void;
+export type ActionCallback<T = ReactUnity.Components.ReactComponent> = (sender: T) => void;
+export type BaseEventCallback<T = ReactUnity.Components.ReactComponent> = (ev: UnityEngine.EventSystems.BaseEventData, sender: T) => void;
+export type PointerEventCallback<T = ReactUnity.Components.ReactComponent> = (ev: UnityEngine.EventSystems.PointerEventData, sender: T) => void;
+export type AxisEventCallback<T = ReactUnity.Components.ReactComponent> = (ev: UnityEngine.EventSystems.AxisEventData, sender: T) => void;
+export type KeyEventCallback<T = ReactUnity.Components.ReactComponent> = (ev: ReactUnity.EventHandlers.KeyEventData, sender: T) => void;
 
-export type Events = {
-  onPointerClick?: PointerEventCallback;
-  onPointerUp?: PointerEventCallback;
-  onPointerDown?: PointerEventCallback;
-  onPointerEnter?: PointerEventCallback;
-  onPointerExit?: PointerEventCallback;
-  onSubmit?: BaseEventCallback;
-  onCancel?: BaseEventCallback;
-  onSelect?: BaseEventCallback;
-  onDeselect?: BaseEventCallback;
-  onMove?: AxisEventCallback;
-  onUpdateSelected?: BaseEventCallback;
-  onScroll?: BaseEventCallback;
-  onDrag?: PointerEventCallback;
-  onBeginDrag?: PointerEventCallback;
-  onEndDrag?: PointerEventCallback;
-  onPotentialDrag?: PointerEventCallback;
-  onDrop?: PointerEventCallback;
-  onKeyDown?: KeyEventCallback;
+export interface Events<T = ReactUnity.Components.ReactComponent> {
+  onPointerClick?: PointerEventCallback<T>;
+  onPointerUp?: PointerEventCallback<T>;
+  onPointerDown?: PointerEventCallback<T>;
+  onPointerEnter?: PointerEventCallback<T>;
+  onPointerExit?: PointerEventCallback<T>;
+  onSubmit?: BaseEventCallback<T>;
+  onCancel?: BaseEventCallback<T>;
+  onSelect?: BaseEventCallback<T>;
+  onDeselect?: BaseEventCallback<T>;
+  onMove?: AxisEventCallback<T>;
+  onUpdateSelected?: BaseEventCallback<T>;
+  onScroll?: PointerEventCallback<T>;
+  onDrag?: PointerEventCallback<T>;
+  onBeginDrag?: PointerEventCallback<T>;
+  onEndDrag?: PointerEventCallback<T>;
+  onPotentialDrag?: PointerEventCallback<T>;
+  onDrop?: PointerEventCallback<T>;
+  onKeyDown?: KeyEventCallback<T>;
 };
