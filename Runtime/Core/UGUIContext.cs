@@ -32,6 +32,7 @@ namespace ReactUnity
                 { "scroll", (tag, text, context) => new ScrollComponent(context) },
                 { "image", (tag, text, context) => new ImageComponent(context) },
                 { "rawimage", (tag, text, context) => new RawImageComponent(context) },
+                { "svg", (tag, text, context) => new SvgComponent(context) },
                 { "render", (tag, text, context) => new RenderComponent(context) },
                 { "video", (tag, text, context) => new VideoComponent(context) },
             };

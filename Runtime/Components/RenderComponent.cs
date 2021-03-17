@@ -55,8 +55,6 @@ namespace ReactUnity.Components
                 case "height":
                     RenderTexture.height = Convert.ToInt32(value);
                     break;
-                case "source":
-                    throw new System.Exception($"Unknown property name specified, '{propertyName}'");
                 default:
                     base.SetProperty(propertyName, value);
                     break;
@@ -77,6 +75,11 @@ namespace ReactUnity.Components
                     base.SetEventListener(eventName, callback);
                     return;
             }
+        }
+
+        protected override void SetSource(object value)
+        {
+            throw new System.Exception($"source property cannot be set on a render component");
         }
     }
 }
