@@ -10,8 +10,10 @@ It also supports a subset of CSS features and Flex layout system.
 
 ## Requirements
 
-- Node.js version 14 or above is required on the development machine
-- Tested in Unity 2020.2 and 2021.1
+Following are the minimum versions required to build the project.
+
+- Node 12
+- Unity 2020.3
 
 ## Installing
 
@@ -44,7 +46,6 @@ Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki
 
 ## Known Issues
 
-- WebGL build is not stable. This issue may or may not be fixed in the future.
 - `npm start` is not stable in MacOS. Working on a fix.
 - Not well tested yet
 
