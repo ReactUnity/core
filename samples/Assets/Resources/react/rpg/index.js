@@ -3986,7 +3986,7 @@ var G,
       E(t), k(t);
     }
 
-    return t.o[n] = r, t.D[n] = !0, !0;
+    return t.o[n] === r && "number" != typeof r || (t.o[n] = r, t.D[n] = !0, !0);
   },
   deleteProperty: function deleteProperty(t, n) {
     return void 0 !== z(t.t, n) || n in t.t ? (t.D[n] = !1, E(t), k(t)) : delete t.D[n], t.o && delete t.o[n], !0;

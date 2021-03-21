@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "RPG",
+      "command": "npm run ${input:script}",
+      "type": "shell",
+      "presentation": {
+        "group": "dev",
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "script",
+      "description": "The script to run",
+      "type": "pickString",
+      "options": [
+        "start",
+        "build"
+      ]
+    }
+  ]
+}
