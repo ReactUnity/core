@@ -42,7 +42,7 @@ npx openupm-cli add com.reactunity.core
 - Run `npm start` from React project
 - Click play
 
-Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki). Also check the [sample project](https://github.com/ReactUnity/full-sample).
+Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki). Also check the [sample projects](https://github.com/search?q=topic%3Asample-project+org%3AReactUnity&type=Repositories).
 
 ## Known Issues
 
@@ -51,9 +51,11 @@ Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki
 
 ## Resources and References
 
-- [Full Unity Project Sample](https://github.com/ReactUnity/full-sample) and [Demo](https://reactunity.github.io/)
+- [Sample Project 1](https://github.com/ReactUnity/full-sample) and [Demo 1](https://reactunity.github.io/)
+- [Sample Project 2](https://github.com/ReactUnity/samples) and [Demo 2](https://reactunity.github.io/samples)
 - [React Unity Renderer (npm package)](https://github.com/ReactUnity/renderer)
 - [`npm init @reactunity`](https://github.com/ReactUnity/create)
-- [React](https://reactjs.org/)
-- [Yoga](https://yogalayout.com/)
-- [Jint](https://github.com/sebastienros/jint)
+- 3rd party dependencies
+  - [React](https://reactjs.org/)
+  - [Yoga](https://yogalayout.com/)
+  - [Jint](https://github.com/sebastienros/jint)
