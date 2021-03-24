@@ -1,20 +1,13 @@
 using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.Interop;
-using ReactUnity.StateHandlers;
 using System;
-using System.Collections.Generic;
 
 namespace ReactUnity
 {
     public class ReactUnityAPI
     {
-        Jint.Engine Engine;
-
-        public ReactUnityAPI(Jint.Engine engine)
-        {
-            Engine = engine;
-        }
+        public ReactUnityAPI() { }
 
         #region Creation
 

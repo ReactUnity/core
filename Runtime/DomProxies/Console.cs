@@ -10,14 +10,12 @@ namespace ReactUnity.DomProxies
 {
     public class ConsoleProxy
     {
-        Jint.Engine engine;
         static Regex replaceRegex = new Regex("%[dso]");
 
         ReactContext ctx;
 
-        public ConsoleProxy(Jint.Engine engine, ReactContext ctx)
+        public ConsoleProxy(ReactContext ctx)
         {
-            this.engine = engine;
             this.ctx = ctx;
         }
 

@@ -33,7 +33,7 @@ namespace ReactUnity
                 if (e == "DOMContentLoaded") callbacks.Add(f);
             }));
 
-            engine.SetValue("Unity", new ReactUnityAPI(engine));
+            engine.SetValue("Unity", new ReactUnityAPI());
             engine.SetValue("RootContainer", context.Host);
             engine.SetValue("Globals", context.Globals);
             try
@@ -126,7 +126,7 @@ namespace ReactUnity
 
         void CreateConsole(Jint.Engine engine)
         {
-            var console = new ConsoleProxy(engine, context);
+            var console = new ConsoleProxy(context);
 
             engine.SetValue("console", console);
         }
