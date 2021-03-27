@@ -11,7 +11,7 @@ namespace ReactUnity
 
         #region Creation
 
-        public IReactComponent createText(string text, IHostComponent host)
+        public ITextComponent createText(string text, IHostComponent host)
         {
             return host.Context.CreateText(text);
         }
