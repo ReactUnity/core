@@ -25,9 +25,7 @@ npx openupm-cli add com.reactunity.core
 
 **Or add using the package manager with the git URL**
 
-```
-https://github.com/ReactUnity/core.git#stable
-```
+`https://github.com/ReactUnity/core.git#stable`
 
 
 ## Usage
