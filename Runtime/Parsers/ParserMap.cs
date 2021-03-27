@@ -21,6 +21,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter YogaValue2Converter = new YogaValue2Converter();
         static public IStyleConverter FloatConverter = new FloatConverter();
         static public IStyleConverter Vector2Converter = new Vector2Converter();
+        static public IStyleConverter Vector3Converter = new Vector3Converter();
         static public IStyleConverter IntConverter = new IntConverter();
         static public IStyleConverter BoolConverter = new BoolConverter(new string[] { "true" }, new string[] { "false" });
         static public IStyleConverter ColorConverter = new ColorConverter();
@@ -28,6 +29,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter ImageReferenceConverter = new ImageReferenceConverter();
         static public IStyleConverter VideoReferenceConverter = new VideoReferenceConverter();
         static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
+        static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v));
 
 
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()

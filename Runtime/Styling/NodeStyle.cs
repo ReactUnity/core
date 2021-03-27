@@ -127,10 +127,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.transformOrigin, value);
             get => GetStyleValue<YogaValue2>(StyleProperties.transformOrigin);
         }
-        public float rotate
+        public Vector3 rotate
         {
             set => SetStyleValue(StyleProperties.rotate, value);
-            get => GetStyleValue<float>(StyleProperties.rotate);
+            get => GetStyleValue<Vector3>(StyleProperties.rotate);
         }
         public FontReference fontFamily
         {

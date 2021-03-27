@@ -272,7 +272,7 @@ namespace ReactUnity.Components
             // Restore rotation and scale
             var scale = ComputedStyle.scale;
             RectTransform.localScale = new Vector3(scale.x, scale.y, 1);
-            RectTransform.localRotation = Quaternion.Euler(0, 0, ComputedStyle.rotate);
+            RectTransform.localRotation = Quaternion.Euler(ComputedStyle.rotate);
         }
 
         protected void ResolveOpacityAndInteractable()

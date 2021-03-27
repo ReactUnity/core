@@ -79,7 +79,7 @@ namespace ReactUnity.Styling
         public static StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static StyleProperty<YogaValue2> translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
         public static StyleProperty<Vector2> scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
-        public static StyleProperty<float> rotate = new StyleProperty<float>("rotate", 0f, true);
+        public static StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: ParserMap.RotateConverter);
         public static StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static StyleProperty<Color> color = new StyleProperty<Color>("color", Color.black, true, true);
         public static StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);

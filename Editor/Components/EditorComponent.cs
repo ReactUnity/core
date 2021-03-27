@@ -212,7 +212,7 @@ namespace ReactUnity.Editor.Components
             if (ComputedStyle.HasValue(StyleProperties.scale)) Element.transform.scale = new Vector3(ComputedStyle.scale.x, ComputedStyle.scale.y, 1);
             else Element.transform.scale = Vector3.one;
 
-            if (ComputedStyle.HasValue(StyleProperties.rotate)) Element.transform.rotation = Quaternion.Euler(0, 0, ComputedStyle.rotate);
+            if (ComputedStyle.HasValue(StyleProperties.rotate)) Element.transform.rotation = Quaternion.Euler(ComputedStyle.rotate);
             else Element.transform.rotation = Quaternion.identity;
 
             if (ComputedStyle.HasValue(StyleProperties.translate)) Element.transform.position = ComputedStyle.translate.AsVector();
