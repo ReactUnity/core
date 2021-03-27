@@ -1,5 +1,5 @@
 import { UnityEngine } from './generated';
-import { NativeContainerInstance, NativeTextInstance, InstanceTag, NativeInstance, TimeoutHandle, NoTimeout, Props } from './renderer';
+import { InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance, Props } from './renderer';
 
 export type UnityObject = UnityEngine.Object;
 
@@ -27,15 +27,4 @@ export interface UnityContext {
   setProperty(instance: NativeInstance, property: string, value: any);
   setData(instance: NativeInstance, property: string, value: any);
   setEventListener(instance: NativeInstance, eventType: string, listener: any);
-}
-
-export interface UnitySchedulerContext {
-  setTimeout(callback: () => any, timeout: number): TimeoutHandle | NoTimeout;
-  clearTimeout(handle: TimeoutHandle): void;
-
-  setInterval(callback: () => any, timeout: number): TimeoutHandle | NoTimeout;
-  clearInterval(handle: TimeoutHandle): void;
-
-  requestAnimationFrame(callback: () => any): TimeoutHandle | NoTimeout;
-  cancelAnimationFrame(handle: TimeoutHandle): void;
 }

@@ -1,8 +1,8 @@
 import type * as React from 'react';
-import * as ReactReconciler from 'react-reconciler';
+import * as Reconciler from 'react-reconciler';
 import {
   ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
-  NoTimeout, Props, PublicInstance, TimeoutHandle, UpdatePayload
+  NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
 } from '../../models/renderer';
 import { diffProperties, DiffResult } from './diffing';
 
@@ -85,7 +85,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
   return updateAfterMount;
 }
 
-type Config = ReactReconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
+type Config = Reconciler.HostConfig<InstanceTag, Props, NativeContainerInstance, NativeInstance, NativeTextInstance, SuspenseInstance, HydratableInstance, PublicInstance, HostContext, UpdatePayload, ChildSet, TimeoutHandle, NoTimeout>;
 
 const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any } = {
   getRootHostContext(rootContainerInstance) { return hostContext; },
@@ -202,6 +202,8 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
   // Required for Suspense
   // TODO: implement
 
+  preparePortalMount() { },
+
   hideInstance(instance) {
   },
 
@@ -222,13 +224,13 @@ const hostConfig: Config & { clearContainer: () => void } & { [key: string]: any
   cancelDeferredCallback(callBackID) { UnityScheduler.clearTimeout(callBackID); },
 
   noTimeout: -1,
-  setTimeout(callback, timeout) { return UnityScheduler.setTimeout(callback, timeout); },
-  clearTimeout(handle) { UnityScheduler.clearTimeout(handle); },
+  scheduleTimeout(callback, timeout) { return UnityScheduler.setTimeout(callback as any, timeout); },
+  cancelTimeout(handle) { UnityScheduler.clearTimeout(handle); },
+  queueMicrotask(callback) { return UnityScheduler.setTimeout(callback as any, 0); },
 };
 
-const ReactUnityReconciler = ReactReconciler(hostConfig);
+const ReactUnityReconciler = Reconciler(hostConfig);
 
-let hostRoot: ReactReconciler.FiberRoot;
 export const Renderer = {
   render(
     element: React.ReactNode,
@@ -236,10 +238,7 @@ export const Renderer = {
     callback?: () => void,
   ): number {
     if (!hostContainer) hostContainer = RootContainer;
-
-    if (!hostRoot) {
-      hostRoot = ReactUnityReconciler.createContainer(hostContainer, false, false);
-    }
+    const hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   },
 };

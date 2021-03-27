@@ -12,7 +12,8 @@ export type Props = React.RefAttributes<NativeInstance> & {
   children?: React.ReactNode;
 };
 
-export type HydratableInstance = Unique<Record<string, unknown>, 'hydratable'>;
+export type SuspenseInstance = NativeInstance;
+export type HydratableInstance = NativeInstance;
 export type PublicInstance = any;
 
 export type HostContext = Record<string, unknown>;
