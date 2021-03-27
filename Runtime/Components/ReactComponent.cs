@@ -35,7 +35,7 @@ namespace ReactUnity.Components
         public Dictionary<string, object> Data { get; private set; } = new Dictionary<string, object>();
         public ReactElement Component { get; private set; }
         public YogaNode Layout { get; private set; }
-        public NodeStyle Style { get; private set; }
+        public NodeStyle ComputedStyle { get; private set; }
         public StateStyles StateStyles { get; private set; }
         public Dictionary<string, object> Inline { get; protected set; } = new Dictionary<string, object>();
 
@@ -71,7 +71,7 @@ namespace ReactUnity.Components
             RectTransform = existing;
 
             StateStyles = new StateStyles(this);
-            Style = new NodeStyle(DefaultStyle, StateStyles);
+            ComputedStyle = new NodeStyle(DefaultStyle, StateStyles);
             Layout = new YogaNode(DefaultLayout);
         }
 
@@ -88,12 +88,12 @@ namespace ReactUnity.Components
 
 
             StateStyles = new StateStyles(this);
-            Style = new NodeStyle(DefaultStyle, StateStyles);
+            ComputedStyle = new NodeStyle(DefaultStyle, StateStyles);
             Layout = new YogaNode(DefaultLayout);
 
             Component = AddComponent<ReactElement>();
             Component.Layout = Layout;
-            Component.Style = Style;
+            Component.Style = ComputedStyle;
             Component.Component = this;
         }
 
@@ -129,7 +129,7 @@ namespace ReactUnity.Components
                 parent.RegisterChild(this, ind);
             }
 
-            Style.Parent = parent.Style;
+            ComputedStyle.Parent = parent.ComputedStyle;
             ResolveStyle(true);
 
             Parent.ScheduleLayout();
@@ -203,26 +203,26 @@ namespace ReactUnity.Components
             cssStyles.Add(inlineStyles);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-            Style.CssStyles = cssStyles;
+            ComputedStyle.CssStyles = cssStyles;
 
 
             var layoutUpdated = false;
-            if (Style.CssLayouts != null)
+            if (ComputedStyle.CssLayouts != null)
             {
-                foreach (var item in Style.CssLayouts) item.SetDefault(Layout, DefaultLayout);
-                layoutUpdated = Style.CssLayouts.Count > 0;
+                foreach (var item in ComputedStyle.CssLayouts) item.SetDefault(Layout, DefaultLayout);
+                layoutUpdated = ComputedStyle.CssLayouts.Count > 0;
             }
 
-            Style.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
+            ComputedStyle.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
 
             for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
             inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
             for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
 
-            layoutUpdated = layoutUpdated || Style.CssLayouts.Count > 0;
+            layoutUpdated = layoutUpdated || ComputedStyle.CssLayouts.Count > 0;
 
             ApplyStyles();
-            Style.MarkChangesSeen();
+            ComputedStyle.MarkChangesSeen();
             if (layoutUpdated) ApplyLayoutStyles();
         }
 
@@ -255,7 +255,7 @@ namespace ReactUnity.Components
             RectTransform.localRotation = Quaternion.identity;
 
 
-            var origin = Style.transformOrigin;
+            var origin = ComputedStyle.transformOrigin;
             var rect = RectTransform.sizeDelta;
             var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (origin.X.Value / rect.x) : 0.5f;
             var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
@@ -270,17 +270,17 @@ namespace ReactUnity.Components
 
 
             // Restore rotation and scale
-            var scale = Style.scale;
+            var scale = ComputedStyle.scale;
             RectTransform.localScale = new Vector3(scale.x, scale.y, 1);
-            RectTransform.localRotation = Quaternion.Euler(0, 0, Style.rotate);
+            RectTransform.localRotation = Quaternion.Euler(0, 0, ComputedStyle.rotate);
         }
 
         protected void ResolveOpacityAndInteractable()
         {
-            var opacity = Style.opacity;
-            var visibility = Style.visibility;
+            var opacity = ComputedStyle.opacity;
+            var visibility = ComputedStyle.visibility;
             var none = Layout.Display == YogaDisplay.None;
-            var interaction = Style.pointerEvents;
+            var interaction = ComputedStyle.pointerEvents;
 
             if (!visibility || none) opacity = 0;
             if (none) interaction = PointerEvents.None;
@@ -314,14 +314,14 @@ namespace ReactUnity.Components
             if (mask == null) mask = MaskAndImage = new MaskAndImage(RectTransform, Context);
 
             mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
-            mask.SetBorderRadius(Style.borderTopLeftRadius, Style.borderTopRightRadius, Style.borderBottomLeftRadius, Style.borderBottomRightRadius);
+            mask.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
         }
 
         private void SetCursor()
         {
-            if (string.IsNullOrWhiteSpace(Style.cursor)) return;
+            if (string.IsNullOrWhiteSpace(ComputedStyle.cursor)) return;
             var handler = GetOrAddComponent<CursorHandler>();
-            handler.Cursor = Style.cursor;
+            handler.Cursor = ComputedStyle.cursor;
         }
 
         protected bool HasBorderOrBackground()
@@ -333,10 +333,10 @@ namespace ReactUnity.Components
                 || Layout.BorderStartWidth > 0 || Layout.BorderEndWidth > 0;
             if (borderAny) return true;
 
-            if (Style.borderRadius > 0 && Style.borderColor.a > 0) return true;
-            if (Style.backgroundColor.a > 0) return true;
-            if (Style.backgroundImage != null) return true;
-            if (Style.boxShadow != null) return true;
+            if (ComputedStyle.borderRadius > 0 && ComputedStyle.borderColor.a > 0) return true;
+            if (ComputedStyle.backgroundColor.a > 0) return true;
+            if (ComputedStyle.backgroundImage != null) return true;
+            if (ComputedStyle.boxShadow != null) return true;
 
             return false;
         }
@@ -345,9 +345,9 @@ namespace ReactUnity.Components
         {
             if (Selectable)
             {
-                Selectable.transition = Style.appearance == Appearance.None ? Selectable.Transition.None : Selectable.Transition.ColorTint;
-                if (Style.navigation != Navigation.Mode.Automatic)
-                    Selectable.navigation = new Navigation() { mode = Style.navigation };
+                Selectable.transition = ComputedStyle.appearance == Appearance.None ? Selectable.Transition.None : Selectable.Transition.ColorTint;
+                if (ComputedStyle.navigation != Navigation.Mode.Automatic)
+                    Selectable.navigation = new Navigation() { mode = ComputedStyle.navigation };
             }
 
             if (!HasBorderOrBackground()) return null;
@@ -370,20 +370,20 @@ namespace ReactUnity.Components
             }
             if (updateStyle)
             {
-                Style.backgroundImage.Get(Context, (res) =>
+                ComputedStyle.backgroundImage.Get(Context, (res) =>
                 {
                     Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
-                    image.SetBackgroundColorAndImage(Style.backgroundColor, sprite);
+                    image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, sprite);
                 });
-                image.SetBoxShadow(Style.boxShadow);
+                image.SetBoxShadow(ComputedStyle.boxShadow);
                 Context.Dispatcher.OnUpdate(() =>
                 {
                     if (!GameObject) return;
-                    var borderSprite = BorderGraphic.CreateBorderSprite(Style.borderTopLeftRadius, Style.borderTopRightRadius, Style.borderBottomLeftRadius, Style.borderBottomRightRadius);
+                    var borderSprite = BorderGraphic.CreateBorderSprite(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
                     image.SetBorderImage(borderSprite);
                 });
 
-                image.SetBorderColor(Style.borderColor);
+                image.SetBorderColor(ComputedStyle.borderColor);
             }
 
             return image;
@@ -391,7 +391,7 @@ namespace ReactUnity.Components
 
         private void SetZIndex()
         {
-            var z = Style.zIndex;
+            var z = ComputedStyle.zIndex;
             Canvas canvas = Canvas;
             if (!canvas && z == 0) return;
             if (!canvas)

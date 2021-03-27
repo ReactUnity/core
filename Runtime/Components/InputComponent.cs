@@ -109,15 +109,15 @@ namespace ReactUnity.Components
         {
             base.ResolveStyle(recursive);
 
-            var c = TextComponent.Style.color;
-            Placeholder.Style.color = new Color(c.r, c.g, c.b, c.a * 0.5f);
+            var c = TextComponent.ComputedStyle.color;
+            Placeholder.ComputedStyle.color = new Color(c.r, c.g, c.b, c.a * 0.5f);
             Placeholder.ApplyStyles();
         }
 
         public override void ApplyStyles()
         {
             base.ApplyStyles();
-            InputField.pointSize = Style.fontSizeActual;
+            InputField.pointSize = ComputedStyle.fontSizeActual;
         }
 
         public void Focus()

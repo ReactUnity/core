@@ -32,7 +32,7 @@ namespace ReactUnity.Components
 
         public override void ResolveStyle(bool recursive = false)
         {
-            var inheritedChanges = Style.HasInheritedChanges;
+            var inheritedChanges = ComputedStyle.HasInheritedChanges;
             base.ResolveStyle(recursive);
 
             if (inheritedChanges || recursive)

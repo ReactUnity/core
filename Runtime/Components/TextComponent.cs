@@ -40,7 +40,7 @@ namespace ReactUnity.Components
         public TextComponent(TextComponent linkedTo) : this(null, linkedTo.Context, "")
         {
             Layout.CopyStyle(linkedTo.Layout);
-            Style.CopyStyle(linkedTo.Style);
+            ComputedStyle.CopyStyle(linkedTo.ComputedStyle);
             Inline = linkedTo.Inline;
 
             SetParent(linkedTo.Parent, linkedTo, true);
@@ -67,20 +67,20 @@ namespace ReactUnity.Components
         public override void ApplyStyles()
         {
             base.ApplyStyles();
-            Style.fontFamily.Get(Context, font =>
+            ComputedStyle.fontFamily.Get(Context, font =>
             {
                 Text.font = font;
             });
-            Text.fontSize = Style.fontSizeActual;
-            Text.fontStyle = Style.fontStyle;
-            Text.fontWeight = Style.fontWeight;
-            Text.color = Style.color;
-            Text.enableWordWrapping = Style.textWrap;
-            Text.alignment = Style.textAlign;
-            Text.overflowMode = Style.textOverflow;
-            if (Style.content != null)
+            Text.fontSize = ComputedStyle.fontSizeActual;
+            Text.fontStyle = ComputedStyle.fontStyle;
+            Text.fontWeight = ComputedStyle.fontWeight;
+            Text.color = ComputedStyle.color;
+            Text.enableWordWrapping = ComputedStyle.textWrap;
+            Text.alignment = ComputedStyle.textAlign;
+            Text.overflowMode = ComputedStyle.textOverflow;
+            if (ComputedStyle.content != null)
             {
-                Text.text = Style.content;
+                Text.text = ComputedStyle.content;
                 TextSetByStyle = true;
             }
             else if (TextSetByStyle)
@@ -89,7 +89,7 @@ namespace ReactUnity.Components
                 TextSetByStyle = false;
             }
 
-            var isLinked = Style.textOverflow == TextOverflowModes.Linked;
+            var isLinked = ComputedStyle.textOverflow == TextOverflowModes.Linked;
             if (isLinked && !LinkedTextWatcher)
             {
                 LinkedTextWatcher = AddComponent<LinkedTextWatcher>();
