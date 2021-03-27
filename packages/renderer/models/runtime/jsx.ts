@@ -28,6 +28,7 @@ declare module 'react/jsx-runtime' {
       svg: Components.SvgImage & rc.RefAttributes<ReactUnity.Components.SvgComponent> & Children<never>;
       video: Components.Video & rc.RefAttributes<ReactUnity.Components.VideoComponent> & Children<never>;
       render: Components.Render & rc.RefAttributes<ReactUnity.Components.RenderComponent> & Children<never>;
+      object: Components.Object & rc.RefAttributes<ReactUnity.Components.ObjectComponent> & Children<never>;
       toggle: Components.Toggle & rc.RefAttributes<ReactUnity.Components.ToggleComponent> & Children<never>;
     }
   }

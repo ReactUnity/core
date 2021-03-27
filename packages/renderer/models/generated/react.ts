@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 27.03.2021 21:00:44
+// Generated 27.03.2021 22:53:31
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -1252,6 +1252,70 @@ export declare namespace ReactUnity {
       SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
       SetData(propertyName: string, value: any): void;
       ScheduleLayout(callback?: (() => void)): void;
+      UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
+      QuerySelector(query: string): ReactUnity.IReactComponent;
+      QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
+      GetRelativePosition(x: number, y: number): UnityEngine.Vector2;
+      GetComponent(type: System.Type): any;
+      AddComponent(type: System.Type): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ObjectComponent {
+      constructor(context: ReactUnity.UGUIContext);
+      RenderTexture: UnityEngine.RenderTexture;
+      Image: UnityEngine.UI.RawImage;
+      Graphic: UnityEngine.UI.MaskableGraphic;
+      DefaultStyle: ReactUnity.Styling.NodeStyle;
+      DefaultLayout: Facebook.Yoga.YogaNode;
+      Measurer: ReactUnity.Layout.ImageMeasurer;
+      ImageContainer: ReactUnity.Components.ContainerComponent;
+      Fit: ReactUnity.Types.ImageFitMode;
+      Container: UnityEngine.RectTransform;
+      Children: ReactUnity.IReactComponent[];
+      BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      BeforePseudo: ReactUnity.IReactComponent;
+      AfterPseudo: ReactUnity.IReactComponent;
+      Context: ReactUnity.UGUIContext;
+      GameObject: UnityEngine.GameObject;
+      RectTransform: UnityEngine.RectTransform;
+      Parent: ReactUnity.IContainerComponent;
+      Data: Record<string, any>;
+      Component: ReactUnity.Layout.ReactElement;
+      Layout: Facebook.Yoga.YogaNode;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
+      StateStyles: ReactUnity.Styling.StateStyles;
+      Style: Record<string, any>;
+      BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
+      MaskAndImage: ReactUnity.Styling.MaskAndImage;
+      Selectable: UnityEngine.UI.Selectable;
+      CanvasGroup: UnityEngine.CanvasGroup;
+      Canvas: UnityEngine.Canvas;
+      IsPseudoElement: boolean;
+      Tag: string;
+      ClassName: string;
+      ClassList: System.Collections.Generic.HashSet<string>;
+      TextContent: string;
+      Name: string;
+      SetProperty(propertyName: string, value: any): void;
+      SetEventListener(eventName: string, callback: ReactUnity.Interop.Callback): void;
+      ResolveStyle(recursive?: boolean): void;
+      ApplyLayoutStyles(): void;
+      Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+      AddBefore(): void;
+      RemoveBefore(): void;
+      AddAfter(): void;
+      RemoveAfter(): void;
+      RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+      UnregisterChild(child: ReactUnity.IReactComponent): void;
+      Destroy(): void;
+      SetParent(parent: ReactUnity.IContainerComponent, insertBefore?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+      SetData(propertyName: string, value: any): void;
+      ScheduleLayout(callback?: (() => void)): void;
+      ApplyStyles(): void;
       UpdateBackgroundGraphic(updateLayout: boolean, updateStyle: boolean): ReactUnity.Styling.BorderAndBackground;
       QuerySelector(query: string): ReactUnity.IReactComponent;
       QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
@@ -5763,7 +5827,7 @@ export declare namespace ReactUnity {
       translate: ReactUnity.Types.YogaValue2;
       scale: UnityEngine.Vector2;
       transformOrigin: ReactUnity.Types.YogaValue2;
-      rotate: number;
+      rotate: UnityEngine.Vector3;
       fontFamily: ReactUnity.Types.FontReference;
       color: UnityEngine.Color;
       fontWeight: any; // TMPro.FontWeight
@@ -5855,7 +5919,7 @@ export declare namespace ReactUnity {
       static transformOrigin: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static translate: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static scale: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector2]
-      static rotate: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
+      static rotate: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector3]
       static fontFamily: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.FontReference]
       static color: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static fontWeight: any; // ReactUnity.Styling.StyleProperty`1[TMPro.FontWeight]
@@ -5989,6 +6053,15 @@ export declare namespace ReactUnity {
       }
       export class Vector2Converter {
         constructor();
+        FromString(value: string): any;
+        Convert(value: any): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector3Converter {
+        constructor(singleValueMode?: ((arg0: number, arg1: UnityEngine.Vector3) => UnityEngine.Vector3));
         FromString(value: string): any;
         Convert(value: any): any;
         Equals(obj: any): boolean;

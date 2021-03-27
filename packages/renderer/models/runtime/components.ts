@@ -53,11 +53,15 @@ export interface SvgImage extends Image<ReactUnity.Components.SvgComponent> {
   preserveAspect?: boolean;
 }
 
-export interface Render extends BaseImage<ReactUnity.Components.RenderComponent> {
+export interface Render<T = ReactUnity.Components.RenderComponent> extends BaseImage<T> {
   width: number;
   height: number;
   source?: never;
   camera?: UnityEngine.Camera | UnityEngine.GameObject;
-  onMount?: (camera: UnityEngine.Camera, sender: ReactUnity.Components.RenderComponent) => void;
-  onUnmount?: (camera: UnityEngine.Camera, sender: ReactUnity.Components.RenderComponent) => void;
+  onMount?: (camera: UnityEngine.Camera, sender: T) => void;
+  onUnmount?: (camera: UnityEngine.Camera, sender: T) => void;
+}
+
+export interface Object extends Render<ReactUnity.Components.ObjectComponent> {
+  target: UnityEngine.GameObject;
 }
