@@ -1,9 +1,6 @@
-import { FontWeight, FontStyles, TextOverflowModes, CursorType, PointerEvents, Visibility, Appearance, WhiteSpace, NavigationMode } from './styles-enums';
+import { Appearance, CursorType, FontStyles, FontWeight, NavigationMode, PointerEvents, TextOverflowModes, Visibility, WhiteSpace } from './styles-enums';
+import { AssetReference, ColorAux, EnumOrLiteral, Vector2Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
-import { ColorAux } from './values';
-import { UnityObject } from '../context';
-import { Vector2Aux } from './values';
-import { EnumOrLiteral, AssetReference } from './values';
 
 export interface RenderStyle {
   opacity?: number;
@@ -27,9 +24,8 @@ export interface RenderStyle {
   rotate?: number;
 
   // Inherited styles
-  font?: UnityObject;
-  fontFamily?: AssetReference;
   color?: ColorAux;
+  fontFamily?: AssetReference;
   fontWeight?: EnumOrLiteral<typeof FontWeight>;
   fontStyle?: EnumOrLiteral<typeof FontStyles>;
   fontSize?: YogaValueAux;
