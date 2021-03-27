@@ -1,8 +1,8 @@
 import type * as React from 'react';
 import * as Reconciler from 'react-reconciler';
 import {
-  ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
-  NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
+    ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
+    NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
 } from '../../models/renderer';
 import { diffProperties, DiffResult } from './diffing';
 
@@ -64,7 +64,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
     }
 
     if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Inline, value)) {
+      if (applyDiffedUpdate(instance.Style, value)) {
         // TODO: find better way to determine if this element needs layout/style recalculation
         instance.ResolveStyle();
         instance.ScheduleLayout();

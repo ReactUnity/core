@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 27.03.2021 20:41:11
+// Generated 27.03.2021 21:00:44
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -367,8 +367,8 @@ export declare namespace ReactUnity {
     Parent: ReactUnity.IContainerComponent;
     IsPseudoElement: boolean;
     Layout: Facebook.Yoga.YogaNode;
-    Style: ReactUnity.Styling.NodeStyle;
-    Inline: Record<string, any>;
+    ComputedStyle: ReactUnity.Styling.NodeStyle;
+    Style: Record<string, any>;
     Name: string;
     Tag: string;
     ClassName: string;
@@ -786,9 +786,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -852,9 +852,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -916,9 +916,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -977,9 +977,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1035,9 +1035,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1096,9 +1096,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1159,9 +1159,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1220,9 +1220,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1285,9 +1285,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1337,9 +1337,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1397,9 +1397,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1457,9 +1457,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1520,9 +1520,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1579,9 +1579,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1637,9 +1637,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1702,9 +1702,9 @@ export declare namespace ReactUnity {
       Data: Record<string, any>;
       Component: ReactUnity.Layout.ReactElement;
       Layout: Facebook.Yoga.YogaNode;
-      Style: ReactUnity.Styling.NodeStyle;
+      ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Inline: Record<string, any>;
+      Style: Record<string, any>;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -2162,8 +2162,8 @@ export declare namespace ReactUnity {
         Element: UnityEngine.UIElements.Button;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2206,8 +2206,8 @@ export declare namespace ReactUnity {
         Element: TElementType;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2251,8 +2251,8 @@ export declare namespace ReactUnity {
         Element: T;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2298,8 +2298,8 @@ export declare namespace ReactUnity {
         Element: T;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2341,8 +2341,8 @@ export declare namespace ReactUnity {
         Element: T;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2386,8 +2386,8 @@ export declare namespace ReactUnity {
         Element: UnityEngine.UIElements.VisualElement;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2429,8 +2429,8 @@ export declare namespace ReactUnity {
         Element: UnityEngine.UIElements.IMGUIContainer;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2474,8 +2474,8 @@ export declare namespace ReactUnity {
         Element: any; // UnityEditor.UIElements.ObjectField
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2519,8 +2519,8 @@ export declare namespace ReactUnity {
         Element: UnityEngine.UIElements.MinMaxSlider;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2564,8 +2564,8 @@ export declare namespace ReactUnity {
         Element: S;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2609,8 +2609,8 @@ export declare namespace ReactUnity {
         Element: UnityEngine.UIElements.Label;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2653,8 +2653,8 @@ export declare namespace ReactUnity {
         Element: T;
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
-        Style: ReactUnity.Styling.NodeStyle;
-        Inline: Record<string, any>;
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: Record<string, any>;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
