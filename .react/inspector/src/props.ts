@@ -98,7 +98,7 @@ export const styleProps: StylePropGroup[] = [
       { name: 'transformOrigin', type: 'YogaValue2', component: YogaValue2Field, label: 'Transform Origin' },
       { name: 'translate', type: 'YogaValue2', component: YogaValue2Field, label: 'Translate' },
       { name: 'scale', type: 'Vector2', component: 'vector2', label: 'Scale' },
-      { name: 'rotate', type: 'float', component: 'float', label: 'Rotate' },
+      { name: 'rotate', type: 'Vector3', component: 'vector3', label: 'Rotate' },
     ]
   },
 

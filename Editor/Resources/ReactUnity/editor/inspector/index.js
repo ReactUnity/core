@@ -210,12 +210,24 @@ function applyDiffedUpdate(writeTo, updatePayload, depth) {
   }
 }
 
-function applyUpdate(instance, updatePayload, isAfterMount, type) {
+function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
+  if (pre === void 0) {
+    pre = true;
+  }
+
   var updateAfterMount = false;
 
   for (var index = 0; index < updatePayload.length; index += 2) {
     var attr = updatePayload[index];
     var value = updatePayload[index + 1];
+    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
+
+    if (pre !== isEvent) continue;
+
+    if (isEvent) {
+      Unity.setEventListener(instance, attr, value);
+      continue;
+    }
 
     if (attr === 'children') {
       if (type === 'text') {
@@ -245,19 +257,14 @@ function applyUpdate(instance, updatePayload, isAfterMount, type) {
       continue;
     }
 
-    if (typeof attr !== 'string') {
-      throw new Error('Component attributes must be string.');
-    }
-
     if (attr.substring(0, 5) === 'data-') {
       Unity.setData(instance, attr.substring(5), value);
-    } else if (attr.substring(0, 2) === 'on') {
-      Unity.setEventListener(instance, attr, value);
     } else {
       Unity.setProperty(instance, attr, value);
     }
   }
 
+  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
   return updateAfterMount;
 }
 
@@ -360,6 +367,7 @@ var hostConfig = {
   },
   // Required for Suspense
   // TODO: implement
+  preparePortalMount: function preparePortalMount() {},
   hideInstance: function hideInstance(instance) {},
   hideTextInstance: function hideTextInstance(textInstance) {},
   unhideInstance: function unhideInstance(instance, props) {},
@@ -374,23 +382,21 @@ var hostConfig = {
     UnityScheduler.clearTimeout(callBackID);
   },
   noTimeout: -1,
-  setTimeout: function setTimeout(callback, timeout) {
+  scheduleTimeout: function scheduleTimeout(callback, timeout) {
     return UnityScheduler.setTimeout(callback, timeout);
   },
-  clearTimeout: function clearTimeout(handle) {
+  cancelTimeout: function cancelTimeout(handle) {
     UnityScheduler.clearTimeout(handle);
+  },
+  queueMicrotask: function queueMicrotask(callback) {
+    return UnityScheduler.setTimeout(callback, 0);
   }
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);
-var hostRoot;
 var Renderer = {
   render: function render(element, hostContainer, callback) {
     if (!hostContainer) hostContainer = RootContainer;
-
-    if (!hostRoot) {
-      hostRoot = ReactUnityReconciler.createContainer(hostContainer, false, false);
-    }
-
+    var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   }
 };
@@ -735,7 +741,7 @@ var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(inject
 var index_module = __webpack_require__(637);
 ;// CONCATENATED MODULE: ./src/index.module.scss
 
-
+            
 
 var options = {};
 
@@ -752,13 +758,13 @@ var jsx_runtime = __webpack_require__(114);
 ;// CONCATENATED MODULE: ./src/components/box-shadow.tsx
 function BoxShadowField(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var blurRef=(0,react.useRef)();var offsetRef=(0,react.useRef)();var spreadRef=(0,react.useRef)();var colorRef=(0,react.useRef)();var changed=function changed(){var blur=blurRef.current.Element.value;var spread=spreadRef.current.Element.value;var color=colorRef.current.Element.value;var offset=offsetRef.current.Element.value;var val=new ReactUnity.Styling.Types.ShadowDefinition(offset,spread,color,blur,false);onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsx)("color",{label:"Color",value:value===null||value===void 0?void 0:value.color,onChange:changed,ref:colorRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("float",{label:"Blur",value:value===null||value===void 0?void 0:value.blur,onChange:changed,ref:blurRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Offset",value:value===null||value===void 0?void 0:value.offset,onChange:changed,ref:offsetRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Spread",value:value===null||value===void 0?void 0:value.spread,onChange:changed,ref:spreadRef})]});}
 ;// CONCATENATED MODULE: ./src/components/other.tsx
-function sliderComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("slider",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function sliderintComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1000;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("sliderint",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function enumComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("enum",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function flagsComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("flags",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function objectComponent(typeName){/* eslint-disable jsx-a11y/alt-text */return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("object",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}
+function sliderComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("slider",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function sliderintComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1000;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("sliderint",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function enumComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("enum",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function flagsComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("flags",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function objectComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("object",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}
 ;// CONCATENATED MODULE: ./src/helpers.ts
 var StyleLength=UnityEngine.UIElements.StyleLength;var StyleKeyword=UnityEngine.UIElements.StyleKeyword;var Length=UnityEngine.UIElements.Length;var LengthUnit=UnityEngine.UIElements.LengthUnit;/* eslint-disable eqeqeq */function convertLengthToYoga(value){if(value.keyword==2)return Facebook.Yoga.YogaValue.Auto();if(value.keyword==1||value.keyword==4||value.keyword==3)return Facebook.Yoga.YogaValue.Undefined();if(value.value.unit==1)return Facebook.Yoga.YogaValue.Percent(value.value.value);if(value.value.unit==0)return Facebook.Yoga.YogaValue.Point(value.value.value);return Facebook.Yoga.YogaValue.Undefined();}function convertYogaToLength(value){var len=new StyleLength(0);len.keyword=StyleKeyword.Initial;if(value.Unit==3)len.keyword=StyleKeyword.Auto;else if(value.Unit==0)len.keyword=StyleKeyword.None;else if(isNaN(value.Value))len.keyword=StyleKeyword.Null;else if(value.Unit==2)len.value=new Length(value.Value,LengthUnit.Percent);else if(value.Unit==1)len.value=new Length(value.Value,LengthUnit.Pixel);return len;}/* eslint-enable eqeqeq */function floatDefaultGetter(value){return value||0;}
 ;// CONCATENATED MODULE: ./src/components/yogavalue2.tsx
 var YogaValue2=ReactUnity.Types.YogaValue2;function YogaValue2Field(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var x=convertYogaToLength(value.X);var y=convertYogaToLength(value.Y);var xRef=(0,react.useRef)();var yRef=(0,react.useRef)();var changed=function changed(){var xVal=xRef.current.Element.value;var yVal=yRef.current.Element.value;var val=new YogaValue2(convertLengthToYoga(xVal),convertLengthToYoga(yVal));onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,'unity-composite-field','unity-base-field'),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m('unity-base-field__input','unity-composite-field__input'),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("length",{label:"X",value:x,onChange:changed,ref:xRef,className:clsx_m('react-unity_field_no-grow','react-unity__field__inline','unity-composite-field__field','unity-composite-field__field--first')}),/*#__PURE__*/(0,jsx_runtime.jsx)("length",{label:"Y",value:y,onChange:changed,ref:yRef,className:clsx_m('react-unity_field_no-grow','react-unity__field__inline','unity-composite-field__field')}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"unity-composite-field__field-spacer"})]})]});}
 ;// CONCATENATED MODULE: ./src/props.ts
-var CornerHack={'left':'TopLeft','top':'TopRight','right':'BottomRight','bottom':'BottomLeft','':''};var CornerLabels={'left':'TL','top':'TR','right':'BR','bottom':'BL','':''};var PartCapitalize={'left':'Left','right':'Right','top':'Top','bottom':'Bottom','start':'Start','end':'End','':''};var lengthField={component:'length',getter:convertYogaToLength,setter:convertLengthToYoga};var styleProps=[{props:[{name:'Display',type:'Enum',component:enumComponent('Facebook.Yoga.YogaDisplay'),label:'Display',source:'layout'},{name:'PositionType',type:'Enum',component:enumComponent('Facebook.Yoga.YogaPositionType'),label:'Position Type',source:'layout'},{name:'backgroundColor',type:'Color',component:'color',label:'Background Color'},{name:'backgroundImage',type:'ImageReference',component:objectComponent('UnityEngine.Texture2D'),label:'Background Image'},{name:'opacity',type:'float',component:sliderComponent(),label:'Opacity'},{name:'zIndex',type:'int',component:sliderintComponent(),label:'Z-Index'},{name:'visibility',type:'bool',component:'toggle',label:'Visibility'}]},{props:[{name:'boxShadow',type:'ShadowDefinition',component:BoxShadowField,label:'Box Shadow'}]},{label:'Text',props:[{name:'StyleDirection',type:'Enum',component:enumComponent('Facebook.Yoga.YogaDirection'),label:'Direction',source:'layout'},{name:'fontFamily',type:'FontReference',component:objectComponent('TMPro.TMP_FontAsset'),label:'Font Family'},{name:'color',type:'Color',component:'color',label:'Color'},{name:'fontWeight',type:'FontWeight',component:enumComponent('TMPro.FontWeight'),label:'Font Weight'},{name:'fontStyle',type:'FontStyles',component:flagsComponent('TMPro.FontStyles'),label:'Font Style'},_objectSpread2({name:'fontSize',type:'YogaValue',label:'Font Size'},lengthField),{name:'textAlign',type:'TextAlignmentOptions',component:enumComponent('TMPro.TextAlignmentOptions'),label:'Text Align'},{name:'textOverflow',type:'TextOverflowModes',component:enumComponent('TMPro.TextOverflowModes'),label:'Text Overflow'},{name:'textWrap',type:'bool',component:'toggle',label:'Text Wrap'},{name:'content',type:'string',component:'input',label:'Content'}]},{props:[{name:'transformOrigin',type:'YogaValue2',component:YogaValue2Field,label:'Transform Origin'},{name:'translate',type:'YogaValue2',component:YogaValue2Field,label:'Translate'},{name:'scale',type:'Vector2',component:'vector2',label:'Scale'},{name:'rotate',type:'float',component:'float',label:'Rotate'}]},{props:[{name:'cursor',type:'string',component:'input',label:'Cursor'},{name:'pointerEvents',type:'PointerEvents',component:enumComponent('ReactUnity.Styling.Types.PointerEvents'),label:'Pointer Events'},{name:'appearance',type:'Appearance',component:enumComponent('ReactUnity.Styling.Types.Appearance'),label:'Appearance'},{name:'navigation',type:'Navigation',component:flagsComponent('UnityEngine.UI.Navigation+Mode'),label:'Navigation'}]},{props:[_objectSpread2(_objectSpread2({name:'Width',type:'YogaValue'},lengthField),{},{label:'Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'Height',type:'YogaValue'},lengthField),{},{label:'Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinWidth',type:'YogaValue'},lengthField),{},{label:'Min Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinHeight',type:'YogaValue'},lengthField),{},{label:'Min Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxWidth',type:'YogaValue'},lengthField),{},{label:'Min Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxHeight',type:'YogaValue'},lengthField),{},{label:'Min Height',source:'layout'})]},{props:[{name:'FlexDirection',type:'Enum',component:enumComponent('Facebook.Yoga.YogaFlexDirection'),label:'Flex Direction',source:'layout'},{name:'Overflow',type:'Enum',component:enumComponent('Facebook.Yoga.YogaOverflow'),label:'Overflow',source:'layout'},{name:'Wrap',type:'Enum',component:enumComponent('Facebook.Yoga.YogaWrap'),label:'Wrap',source:'layout'}]},{props:[{name:'JustifyContent',type:'Enum',component:enumComponent('Facebook.Yoga.YogaJustify'),label:'Justify Content',source:'layout'},{name:'AlignItems',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Items',source:'layout'},{name:'AlignContent',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Content',source:'layout'},{name:'AlignSelf',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Self',source:'layout'}]},{props:[{name:'AspectRatio',type:'float',component:'float',label:'Aspect Ratio',source:'layout'},{name:'FlexGrow',type:'float',component:'float',label:'Flex Grow',source:'layout'},{name:'FlexShrink',type:'float',component:'float',label:'Flex Shrink',source:'layout'},_objectSpread2(_objectSpread2({name:'FlexBasis',type:'YogaValue'},lengthField),{},{label:'Flex Basis',source:'layout'})]},{props:[{name:'borderRadius',type:'int',component:'integer',label:'Border Radius',arrangement:'corner',partTemplate:function partTemplate(part){return"border".concat(CornerHack[part],"Radius");}},{name:'borderColor',type:'Color',component:'color',arrangement:'rect',partTemplate:function partTemplate(part){return"border".concat(PartCapitalize[part],"Color");},label:'Border Color'},{name:'BorderWidth',type:'float',component:'float',arrangement:'rect',getter:floatDefaultGetter,partTemplate:function partTemplate(part){return"Border".concat(PartCapitalize[part],"Width");},label:'Border Width',source:'layout'}]},{props:[_objectSpread2(_objectSpread2({name:'Margin',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Margin".concat(PartCapitalize[part]);},label:'Margin',source:'layout'}),_objectSpread2(_objectSpread2({name:'Padding',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Padding".concat(PartCapitalize[part]);},label:'Padding',source:'layout'}),_objectSpread2(_objectSpread2({name:'Position',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return PartCapitalize[part];},label:'Position',source:'layout'})]}];
+var CornerHack={'left':'TopLeft','top':'TopRight','right':'BottomRight','bottom':'BottomLeft','':''};var CornerLabels={'left':'TL','top':'TR','right':'BR','bottom':'BL','':''};var PartCapitalize={'left':'Left','right':'Right','top':'Top','bottom':'Bottom','start':'Start','end':'End','':''};var lengthField={component:'length',getter:convertYogaToLength,setter:convertLengthToYoga};var styleProps=[{props:[{name:'Display',type:'Enum',component:enumComponent('Facebook.Yoga.YogaDisplay'),label:'Display',source:'layout'},{name:'PositionType',type:'Enum',component:enumComponent('Facebook.Yoga.YogaPositionType'),label:'Position Type',source:'layout'},{name:'backgroundColor',type:'Color',component:'color',label:'Background Color'},{name:'backgroundImage',type:'ImageReference',component:objectComponent('UnityEngine.Texture2D'),label:'Background Image'},{name:'opacity',type:'float',component:sliderComponent(),label:'Opacity'},{name:'zIndex',type:'int',component:sliderintComponent(),label:'Z-Index'},{name:'visibility',type:'bool',component:'toggle',label:'Visibility'}]},{props:[{name:'boxShadow',type:'ShadowDefinition',component:BoxShadowField,label:'Box Shadow'}]},{label:'Text',props:[{name:'StyleDirection',type:'Enum',component:enumComponent('Facebook.Yoga.YogaDirection'),label:'Direction',source:'layout'},{name:'fontFamily',type:'FontReference',component:objectComponent('TMPro.TMP_FontAsset'),label:'Font Family'},{name:'color',type:'Color',component:'color',label:'Color'},{name:'fontWeight',type:'FontWeight',component:enumComponent('TMPro.FontWeight'),label:'Font Weight'},{name:'fontStyle',type:'FontStyles',component:flagsComponent('TMPro.FontStyles'),label:'Font Style'},_objectSpread2({name:'fontSize',type:'YogaValue',label:'Font Size'},lengthField),{name:'textAlign',type:'TextAlignmentOptions',component:enumComponent('TMPro.TextAlignmentOptions'),label:'Text Align'},{name:'textOverflow',type:'TextOverflowModes',component:enumComponent('TMPro.TextOverflowModes'),label:'Text Overflow'},{name:'textWrap',type:'bool',component:'toggle',label:'Text Wrap'},{name:'content',type:'string',component:'input',label:'Content'}]},{props:[{name:'transformOrigin',type:'YogaValue2',component:YogaValue2Field,label:'Transform Origin'},{name:'translate',type:'YogaValue2',component:YogaValue2Field,label:'Translate'},{name:'scale',type:'Vector2',component:'vector2',label:'Scale'},{name:'rotate',type:'Vector3',component:'vector3',label:'Rotate'}]},{props:[{name:'cursor',type:'string',component:'input',label:'Cursor'},{name:'pointerEvents',type:'PointerEvents',component:enumComponent('ReactUnity.Styling.Types.PointerEvents'),label:'Pointer Events'},{name:'appearance',type:'Appearance',component:enumComponent('ReactUnity.Styling.Types.Appearance'),label:'Appearance'},{name:'navigation',type:'Navigation',component:flagsComponent('UnityEngine.UI.Navigation+Mode'),label:'Navigation'}]},{props:[_objectSpread2(_objectSpread2({name:'Width',type:'YogaValue'},lengthField),{},{label:'Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'Height',type:'YogaValue'},lengthField),{},{label:'Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinWidth',type:'YogaValue'},lengthField),{},{label:'Min Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinHeight',type:'YogaValue'},lengthField),{},{label:'Min Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxWidth',type:'YogaValue'},lengthField),{},{label:'Min Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxHeight',type:'YogaValue'},lengthField),{},{label:'Min Height',source:'layout'})]},{props:[{name:'FlexDirection',type:'Enum',component:enumComponent('Facebook.Yoga.YogaFlexDirection'),label:'Flex Direction',source:'layout'},{name:'Overflow',type:'Enum',component:enumComponent('Facebook.Yoga.YogaOverflow'),label:'Overflow',source:'layout'},{name:'Wrap',type:'Enum',component:enumComponent('Facebook.Yoga.YogaWrap'),label:'Wrap',source:'layout'}]},{props:[{name:'JustifyContent',type:'Enum',component:enumComponent('Facebook.Yoga.YogaJustify'),label:'Justify Content',source:'layout'},{name:'AlignItems',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Items',source:'layout'},{name:'AlignContent',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Content',source:'layout'},{name:'AlignSelf',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Self',source:'layout'}]},{props:[{name:'AspectRatio',type:'float',component:'float',label:'Aspect Ratio',source:'layout'},{name:'FlexGrow',type:'float',component:'float',label:'Flex Grow',source:'layout'},{name:'FlexShrink',type:'float',component:'float',label:'Flex Shrink',source:'layout'},_objectSpread2(_objectSpread2({name:'FlexBasis',type:'YogaValue'},lengthField),{},{label:'Flex Basis',source:'layout'})]},{props:[{name:'borderRadius',type:'int',component:'integer',label:'Border Radius',arrangement:'corner',partTemplate:function partTemplate(part){return"border".concat(CornerHack[part],"Radius");}},{name:'borderColor',type:'Color',component:'color',arrangement:'rect',partTemplate:function partTemplate(part){return"border".concat(PartCapitalize[part],"Color");},label:'Border Color'},{name:'BorderWidth',type:'float',component:'float',arrangement:'rect',getter:floatDefaultGetter,partTemplate:function partTemplate(part){return"Border".concat(PartCapitalize[part],"Width");},label:'Border Width',source:'layout'}]},{props:[_objectSpread2(_objectSpread2({name:'Margin',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Margin".concat(PartCapitalize[part]);},label:'Margin',source:'layout'}),_objectSpread2(_objectSpread2({name:'Padding',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Padding".concat(PartCapitalize[part]);},label:'Padding',source:'layout'}),_objectSpread2(_objectSpread2({name:'Position',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return PartCapitalize[part];},label:'Position',source:'layout'})]}];
 ;// CONCATENATED MODULE: ./src/main.tsx
 function getSelection(){var activeObject=UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}function App(){var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];(0,react.useEffect)(function(){var removeSelectionChange=Globals.Editor.AddSelectionChange(function(){return setSelection(getSelection());});var removeStateChange=Globals.Editor.AddPlayModeStateChange(function(){return setSelection(getSelection());});return function(){removeSelectionChange();removeStateChange();};},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.host,children:selection?/*#__PURE__*/(0,jsx_runtime.jsx)(Styles,{element:selection}):'Select an element to edit its styles'});}function Styles(_ref){var element=_ref.element;var _useState3=(0,react.useState)(true),_useState4=_slicedToArray(_useState3,2),showAll=_useState4[0],setShowAll=_useState4[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:clsx_m(src_index_module.styles,showAll&&src_index_module.showAll),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:"Show All",value:showAll,onChange:function onChange(ev){return setShowAll(ev.newValue);},className:src_index_module.showAllButton}),styleProps.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsx)(Group,{group:x,element:element},i);})]});}function Group(_ref2){var group=_ref2.group,element=_ref2.element,className=_ref2.className;return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.group,className),children:[!!group.label&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.groupHeader,children:group.label}),group.props.map(function(x){return x.arrangement==='rect'||x.arrangement==='corner'?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRect,{element:element,prop:x},x.name):/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{element:element,prop:x},x.name);})]});}function StylePropRow(_ref3){var _prop$label;var prop=_ref3.prop,element=_ref3.element,className=_ref3.className;var cmp=element.Component;var changed=function changed(){cmp.ResolveStyle(true);if(prop.source==='layout'){cmp.ScheduleLayout();cmp.ApplyLayoutStyles();}setRender(function(x){return x+1;});};var changeStyle=function changeStyle(name,value){if(prop.setter){var res=prop.setter(value.newValue,element);if(res!==undefined)cmp.Style[name]=res;}else cmp.Style[name]=value.newValue;changed();};var _useState5=(0,react.useState)(0),_useState6=_slicedToArray(_useState5,2),setRender=_useState6[1];if(!prop.component)return null;var val=prop.source==='layout'?element.Layout[prop.name]:element.Style[prop.name];var gval=prop.getter?prop.getter(val,element):val;var exists=prop.source==='layout'?cmp.Style.ContainsKey(prop.name):element.Style.HasValue(prop.name);var changeExists=function changeExists(){cmp.Style.Remove(prop.name);changed();};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,src_index_module.row,exists&&src_index_module.exists),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:changeExists,className:src_index_module.removeButton,children:"X"}),/*#__PURE__*/(0,jsx_runtime.jsx)(prop.component,{className:src_index_module.rowContent,value:gval,label:(_prop$label=prop.label)!==null&&_prop$label!==void 0?_prop$label:prop.name,onChange:function onChange(val){return changeStyle(prop.name,val);}})]});}function StylePropRect(_ref4){var _prop$label2;var prop=_ref4.prop,element=_ref4.element;var partName=typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',''):prop.partTemplate('');var isCorner=prop.arrangement==='corner';return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRectContainer),children:[partName?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:prop,element:element,className:clsx_m(src_index_module.rectHead,'react-unity__field__inline','react-unity__field__no-grow')}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row'},className:src_index_module.rectHead,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.removeButton,style:{visibility:'Hidden'},children:"X"}),(_prop$label2=prop.label)!==null&&_prop$label2!==void 0?_prop$label2:prop.name]}),!isCorner?/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRect),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'top'})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'right'})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'bottom'})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRect,src_index_module.corner),children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'top'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'bottom'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'right'})]})]})]});}function StylePropRectPart(_ref5){var prop=_ref5.prop,part=_ref5.part,element=_ref5.element;var partName=!part?prop.name:typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',part):prop.partTemplate(part);var isCorner=prop.arrangement==='corner';var label=part?isCorner?CornerLabels[part]:part[0].toUpperCase():prop.label;var partProp=_objectSpread2(_objectSpread2({},prop),{},{partlessName:prop.name,name:partName,label:label});return/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:partProp,element:element,className:clsx_m(src_index_module.rectPart,src_index_module['part-'+part],'react-unity__field__inline',isCorner&&src_index_module.corner)})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}),RootContainer,null);
 ;// CONCATENATED MODULE: ./src/index.ts
@@ -946,7 +952,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-/** @license React v0.26.1
+/** @license React v0.26.2
  * react-reconciler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -6669,7 +6675,7 @@ if (true) {
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react-jsx-runtime.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -6736,7 +6742,7 @@ exports.jsxs = q;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
-/** @license React v17.0.1
+/** @license React v17.0.2
  * react.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -7149,7 +7155,7 @@ exports.useState = function (a) {
   return S().useState(a);
 };
 
-exports.version = "17.0.1";
+exports.version = "17.0.2";
 
 /***/ }),
 
@@ -7181,7 +7187,7 @@ if (true) {
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -7864,7 +7870,7 @@ module.exports = function (list, options) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -7877,17 +7883,17 @@ module.exports = function (list, options) {
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -7900,7 +7906,7 @@ module.exports = function (list, options) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -7912,7 +7918,7 @@ module.exports = function (list, options) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/harmony module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.hmd = (module) => {
@@ -7927,12 +7933,12 @@ module.exports = function (list, options) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -7941,13 +7947,13 @@ module.exports = function (list, options) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
-/******/
+/******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __webpack_require__(1);
-/******/
+/******/ 	
 /******/ })()
 ;
