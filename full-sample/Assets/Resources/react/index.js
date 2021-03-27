@@ -196,7 +196,7 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     }
 
     if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Inline, value)) {
+      if (applyDiffedUpdate(instance.Style, value)) {
         // TODO: find better way to determine if this element needs layout/style recalculation
         instance.ResolveStyle();
         instance.ScheduleLayout();
@@ -1423,7 +1423,7 @@ var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(inject
 var index_module = __webpack_require__(810);
 ;// CONCATENATED MODULE: ./src/showcase/index.module.scss
 
-            
+
 
 var options = {};
 
@@ -8528,7 +8528,7 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -8541,17 +8541,17 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -8564,7 +8564,7 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -8576,7 +8576,7 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/harmony module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.hmd = (module) => {
@@ -8591,12 +8591,12 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -8605,18 +8605,18 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
 /******/ 		__webpack_require__.p = "/";
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __webpack_require__(830);
-/******/ 	
+/******/
 /******/ })()
 ;
