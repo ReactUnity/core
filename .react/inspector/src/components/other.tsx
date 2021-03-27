@@ -18,6 +18,5 @@ export function flagsComponent(typeName: string) {
 }
 
 export function objectComponent(typeName: string) {
-  /* eslint-disable jsx-a11y/alt-text */
   return (props: StylePropComponentProps<UE.Object>) => <object {...props} type={typeName} />;
 }

@@ -34,6 +34,7 @@ namespace ReactUnity
                 { "rawimage", (tag, text, context) => new RawImageComponent(context) },
                 { "svg", (tag, text, context) => new SvgComponent(context) },
                 { "render", (tag, text, context) => new RenderComponent(context) },
+                { "object", (tag, text, context) => new ObjectComponent(context) },
                 { "video", (tag, text, context) => new VideoComponent(context) },
             };
 
