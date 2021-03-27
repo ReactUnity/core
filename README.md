@@ -10,28 +10,23 @@ It also supports a subset of CSS features and Flex layout system.
 
 ## Requirements
 
-Following are the minimum versions required to build the project.
+Node is only used while developing and not required in runtime or after the project is built. Following are the minimum recommended versions.
 
 - Node 12
 - Unity 2020.3
 
 ## Installing
 
-**Install via OpenUPM**
+**Install via OpenUPM (recommended)**
 
 ```
 npx openupm-cli add com.reactunity.core
 ```
 
-**Or add manually by editing `manifest.json`**
+**Or add using the package manager with the git URL**
 
 ```
-{
-  "dependencies": {
-    "com.reactunity.core": "https://github.com/ReactUnity/core.git",
-    ...
-  },
-}
+https://github.com/ReactUnity/core.git#stable
 ```
 
 
