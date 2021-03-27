@@ -30,7 +30,7 @@ namespace ReactUnity.Editor.Components
         public YogaNode Layout { get; private set; }
         public List<LayoutValue> LayoutValues { get; private set; } = new List<LayoutValue>();
         public NodeStyle ComputedStyle { get; private set; }
-        public Dictionary<string, object> Inline { get; protected set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Style { get; protected set; } = new Dictionary<string, object>();
 
         public bool IsPseudoElement { get; private set; }
         public string Name => Element.name;
@@ -231,8 +231,8 @@ namespace ReactUnity.Editor.Components
             var inheritedChanges = ComputedStyle.HasInheritedChanges;
 
 
-            var inlineStyles = RuleHelpers.GetRuleDic(Inline);
-            var inlineLayouts = RuleHelpers.GetLayoutDic(Inline);
+            var inlineStyles = RuleHelpers.GetRuleDic(Style);
+            var inlineLayouts = RuleHelpers.GetLayoutDic(Style);
             if (inlineLayouts != null) foreach (var l in inlineLayouts) inlineStyles[l.prop.name] = l.value;
 
             List<RuleTreeNode<StyleData>> matchingRules;

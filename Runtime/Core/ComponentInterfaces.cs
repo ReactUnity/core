@@ -18,7 +18,7 @@ namespace ReactUnity
         bool IsPseudoElement { get; }
         YogaNode Layout { get; }
         NodeStyle ComputedStyle { get; }
-        Dictionary<string, object> Inline { get; }
+        Dictionary<string, object> Style { get; }
         string Name { get; }
         string Tag { get; }
         string ClassName { get; }

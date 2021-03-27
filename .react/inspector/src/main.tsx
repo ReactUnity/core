@@ -68,9 +68,9 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
   const changeStyle = (name: string, value: { newValue: any }) => {
     if (prop.setter) {
       var res = prop.setter(value.newValue, element);
-      if (res !== undefined) cmp.Inline[name] = res;
+      if (res !== undefined) cmp.Style[name] = res;
     }
-    else cmp.Inline[name] = value.newValue;
+    else cmp.Style[name] = value.newValue;
     changed();
   };
 
@@ -80,9 +80,9 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
 
   const val = prop.source === 'layout' ? element.Layout[prop.name] : element.Style[prop.name];
   const gval = prop.getter ? prop.getter(val, element) : val;
-  const exists = prop.source === 'layout' ? cmp.Inline.ContainsKey(prop.name) : element.Style.HasValue(prop.name);
+  const exists = prop.source === 'layout' ? cmp.Style.ContainsKey(prop.name) : element.Style.HasValue(prop.name);
   const changeExists = () => {
-    cmp.Inline.Remove(prop.name);
+    cmp.Style.Remove(prop.name);
     changed();
   };
 

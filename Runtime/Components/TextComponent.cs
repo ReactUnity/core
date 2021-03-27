@@ -41,7 +41,7 @@ namespace ReactUnity.Components
         {
             Layout.CopyStyle(linkedTo.Layout);
             ComputedStyle.CopyStyle(linkedTo.ComputedStyle);
-            Inline = linkedTo.Inline;
+            Style = linkedTo.Style;
 
             SetParent(linkedTo.Parent, linkedTo, true);
 

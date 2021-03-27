@@ -37,7 +37,7 @@ namespace ReactUnity.Components
         public YogaNode Layout { get; private set; }
         public NodeStyle ComputedStyle { get; private set; }
         public StateStyles StateStyles { get; private set; }
-        public Dictionary<string, object> Inline { get; protected set; } = new Dictionary<string, object>();
+        public Dictionary<string, object> Style { get; protected set; } = new Dictionary<string, object>();
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
@@ -188,8 +188,8 @@ namespace ReactUnity.Components
 
         public virtual void ResolveStyle(bool recursive = false)
         {
-            var inlineStyles = RuleHelpers.GetRuleDic(Inline);
-            var inlineLayouts = RuleHelpers.GetLayoutDic(Inline) ?? new List<LayoutValue>();
+            var inlineStyles = RuleHelpers.GetRuleDic(Style);
+            var inlineLayouts = RuleHelpers.GetLayoutDic(Style) ?? new List<LayoutValue>();
 
             List<RuleTreeNode<StyleData>> matchingRules;
             if (Tag == "_before") matchingRules = Parent.BeforeRules;
@@ -404,7 +404,7 @@ namespace ReactUnity.Components
             canvas.sortingOrder = z;
         }
 
-        #endregion 
+        #endregion
 
 
         #region Component Tree Functions
