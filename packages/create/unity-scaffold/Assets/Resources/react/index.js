@@ -115,7 +115,7 @@ function applyUpdate(instance, updatePayload, isAfterMount) {
     }
 
     if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Inline, value)) {
+      if (applyDiffedUpdate(instance.Style, value)) {
         // TODO: find better way to determine if this element needs layout/style recalculation
         instance.ResolveStyle();
         instance.ScheduleLayout();
@@ -6323,7 +6323,7 @@ var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(inject
 var cjs_ruleSet_1_rules_1_oneOf_3_use_1_src = __webpack_require__(484);
 ;// CONCATENATED MODULE: ./src/index.css
 
-            
+
 
 var options = {};
 
@@ -13418,7 +13418,7 @@ module.exports = function (list, options) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -13431,17 +13431,17 @@ module.exports = function (list, options) {
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -13454,7 +13454,7 @@ module.exports = function (list, options) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -13466,7 +13466,7 @@ module.exports = function (list, options) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/harmony module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.hmd = (module) => {
@@ -13481,12 +13481,12 @@ module.exports = function (list, options) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -13495,7 +13495,7 @@ module.exports = function (list, options) {
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	// startup
 /******/ 	// Load entry module
