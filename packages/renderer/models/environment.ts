@@ -1,10 +1,9 @@
 
-import { UnityContext } from './context';
 import { ReactUnity } from './generated';
 import { NativeContainerInstance } from './renderer';
 
 declare global {
-  const Unity: UnityContext;
+  const Unity: ReactUnity.ReactUnityAPI;
   const RootContainer: NativeContainerInstance;
   const UnityScheduler: ReactUnity.Schedulers.IUnityScheduler;
   const Callback: <T, R>(callback: (...args: T[]) => R) => ReactUnity.Interop.Callback;

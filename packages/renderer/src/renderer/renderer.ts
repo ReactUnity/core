@@ -51,7 +51,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
 
     if (attr === 'children') {
       if (type === 'text') {
-        Unity.setText(instance as NativeTextInstance, value ? value.join('') : '');
+        Unity.setText(instance, value ? value.join('') : '');
       }
       continue;
     }

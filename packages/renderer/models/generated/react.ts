@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 18.03.2021 01:57:56
+// Generated 27.03.2021 20:41:11
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -368,6 +368,7 @@ export declare namespace ReactUnity {
     IsPseudoElement: boolean;
     Layout: Facebook.Yoga.YogaNode;
     Style: ReactUnity.Styling.NodeStyle;
+    Inline: Record<string, any>;
     Name: string;
     Tag: string;
     ClassName: string;
@@ -529,8 +530,8 @@ export declare namespace ReactUnity {
     GetType(): System.Type;
   }
   export class ReactUnityAPI {
-    constructor(engine: any);
-    createText(text: string, host: ReactUnity.IHostComponent): ReactUnity.IReactComponent;
+    constructor();
+    createText(text: string, host: ReactUnity.IHostComponent): ReactUnity.ITextComponent;
     createElement(tag: string, text: string, host: ReactUnity.IHostComponent): ReactUnity.IReactComponent;
     appendChild(parent: any, child: any): void;
     appendChildToContainer(parent: any, child: any): void;
@@ -1756,7 +1757,7 @@ export declare namespace ReactUnity {
   }
   export namespace DomProxies {
     export class ConsoleProxy {
-      constructor(engine: any, ctx: ReactUnity.ReactContext);
+      constructor(ctx: ReactUnity.ReactContext);
       log(msg: any): void;
       log(msg: any, ...subs: any[]): void;
       info(msg: any): void;
