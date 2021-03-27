@@ -46,7 +46,6 @@ Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki
 
 ## Known Issues
 
-- `npm start` is not stable in MacOS. Working on a fix.
 - Not well tested yet
 
 ## Resources and References

@@ -14,43 +14,46 @@ namespace ReactUnity.DomProxies
 
         public string binaryType = "blob";
 
+        private ReactContext context;
 
         public JsValue Onmessage { set => onmessage = value; }
         public object onmessage
         {
-            set { OnMessage += (sender, e) => new Callback(value)?.Call(e); }
+            set { OnMessage += (sender, e) => context.Dispatcher.OnUpdate(() => new Callback(value)?.Call(e)); }
             get => null;
         }
 
         public JsValue Onclose { set => onclose = value; }
         public object onclose
         {
-            set { OnClose += (sender, e) => new Callback(value)?.Call(e); }
+            set { OnClose += (sender, e) => context.Dispatcher.OnUpdate(() => new Callback(value)?.Call(e)); }
             get => null;
         }
 
         public JsValue Onopen { set => onopen = value; }
         public object onopen
         {
-            set { OnOpen += (sender, e) => new Callback(value)?.Call(e); }
+            set { OnOpen += (sender, e) => context.Dispatcher.OnUpdate(() => new Callback(value)?.Call(e)); }
             get => null;
         }
 
         public JsValue Onerror { set => onerror = value; }
         public object onerror
         {
-            set { OnError += (sender, e) => new Callback(value)?.Call(e); }
+            set { OnError += (sender, e) => context.Dispatcher.OnUpdate(() => new Callback(value)?.Call(e)); }
             get => null;
         }
 
         public WebSocketProxy(ReactContext context, string url) : base(url, "ws")
         {
+            this.context = context;
             context.Disposables.Add(this);
             ConnectAsync();
         }
 
         public WebSocketProxy(ReactContext context, string url, params string[] protocols) : base(url, protocols)
         {
+            this.context = context;
             context.Disposables.Add(this);
             ConnectAsync();
         }
