@@ -1,5 +1,5 @@
 import { Appearance, CursorType, FontStyles, FontWeight, NavigationMode, PointerEvents, TextOverflowModes, Visibility, WhiteSpace } from './styles-enums';
-import { AssetReference, ColorAux, EnumOrLiteral, Vector2Aux } from './values';
+import { AssetReference, ColorAux, EnumOrLiteral, Vector2Aux, Vector3Aux } from './values';
 import { YogaValue2Aux, YogaValueAux } from './yoga';
 
 export interface RenderStyle {
@@ -21,7 +21,7 @@ export interface RenderStyle {
   transformOrigin?: Vector2Aux;
   translate?: YogaValue2Aux;
   scale?: Vector2Aux;
-  rotate?: number;
+  rotate?: Vector3Aux;
 
   // Inherited styles
   color?: ColorAux;
