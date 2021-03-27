@@ -8,6 +8,21 @@ import style from './index.module.scss';
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
 const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
 
+export function RenderObject({ object }: { object: UE.GameObject }) {
+  return <object width={300} height={400} style={{ flexGrow: 0 }} fit={ImageFitMode.Center}
+    onDrag={(ev) => {
+      Globals.camera2root.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
+    }}
+    onScroll={(ev: UE.EventSystems.PointerEventData) => {
+      Globals.camera2.transform.Translate(0, 0, ev.scrollDelta.y / 10, UnityEngine.Space.Self);
+    }}
+    onMount={ev => ev.gameObject.SetActive(true)}
+    onUnmount={ev => ev.gameObject.SetActive(false)}
+    camera={Globals.camera2}
+    target={object}
+  />;
+}
+
 export function App() {
   const [videoRef, setVideoRef] = useState<ReactUnity.Components.VideoComponent>();
 
@@ -150,6 +165,17 @@ export function App() {
             onUnmount={ev => ev.gameObject.SetActive(false)}
             camera={Globals.renderCamera}
           />
+        </row>
+      </section>
+
+
+      <section>
+        <h2>Object</h2>
+
+        <row>
+          <RenderObject object={Globals.cylinder} />
+          <RenderObject object={Globals.cube} />
+          <RenderObject object={Globals.capsule} />
         </row>
       </section>
 

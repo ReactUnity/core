@@ -316,6 +316,7 @@ var hostConfig = {
   },
   // Required for Suspense
   // TODO: implement
+  preparePortalMount: function preparePortalMount() {},
   hideInstance: function hideInstance(instance) {},
   hideTextInstance: function hideTextInstance(textInstance) {},
   unhideInstance: function unhideInstance(instance, props) {},
@@ -330,23 +331,21 @@ var hostConfig = {
     UnityScheduler.clearTimeout(callBackID);
   },
   noTimeout: -1,
-  setTimeout: function setTimeout(callback, timeout) {
+  scheduleTimeout: function scheduleTimeout(callback, timeout) {
     return UnityScheduler.setTimeout(callback, timeout);
   },
-  clearTimeout: function clearTimeout(handle) {
+  cancelTimeout: function cancelTimeout(handle) {
     UnityScheduler.clearTimeout(handle);
+  },
+  queueMicrotask: function queueMicrotask(callback) {
+    return UnityScheduler.setTimeout(callback, 0);
   }
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);
-var hostRoot;
 var renderer_Renderer = {
   render: function render(element, hostContainer, callback) {
     if (!hostContainer) hostContainer = RootContainer;
-
-    if (!hostRoot) {
-      hostRoot = ReactUnityReconciler.createContainer(hostContainer, false, false);
-    }
-
+    var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   }
 };
@@ -1423,7 +1422,7 @@ var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(inject
 var index_module = __webpack_require__(810);
 ;// CONCATENATED MODULE: ./src/showcase/index.module.scss
 
-
+            
 
 var options = {};
 
@@ -1436,7 +1435,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
 /* harmony default export */ const showcase_index_module = (index_module/* default.locals */.Z.locals || {});
 ;// CONCATENATED MODULE: ./src/showcase/index.tsx
-var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';var webVideo='https://media.w3.org/2010/05/sintel/trailer.mp4';function App(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),videoRef=_useState2[0],setVideoRef=_useState2[1];(0,react.useEffect)(function(){if(videoRef){videoRef.VideoPlayer.Pause();}},[videoRef]);var toggleVideo=function toggleVideo(){var vp=videoRef.VideoPlayer;if(vp.isPlaying)vp.Pause();else vp.Play();};var tooltipContent=/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{padding:10,backgroundColor:0.4,color:'white'},children:"Cool tooltip"});return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:showcase_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{children:"Click"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"}),/*#__PURE__*/(0,jsx_runtime.jsx)("input",{})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Tooltip"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Tooltip,{tooltipContent:tooltipContent,position:"bottom",offset:20,children:"Hover to see cool tooltip."})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Dropdown"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Dropdown,{children:["Select an option",/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{children:"Normal Option"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'green'},children:"Green Option"}),children:"Green Option \uD83D\uDC9A"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'red'},children:"Red Option"}),children:"Red Option \uD83E\uDDE1"})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:bg}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:base64Image}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:webImage}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:(check_default())["0x0"]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Video"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("video",{style:{flexGrow:1},fit:ImageFitMode.Fill,source:webVideo,ref:setVideoRef,onPointerClick:toggleVideo})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Slider"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Horizontal",/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"horizontal-reverse"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',top:24,color:value>0.5?'red':'black'},children:value.toFixed(3)});}})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Vertical",/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical-reverse"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical",children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',left:24},children:value.toFixed(3)});}})]})]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Render Texture"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("render",{width:900,height:400,style:{flexGrow:1},fit:ImageFitMode.Fill,onDrag:function onDrag(ev){Globals.cameraRoot.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.renderCamera.transform.Translate(0,0,ev.scrollDelta.y/10,UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.renderCamera})})]})]})});};renderer_Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';var webVideo='https://media.w3.org/2010/05/sintel/trailer.mp4';function RenderObject(_ref){var object=_ref.object;return/*#__PURE__*/(0,jsx_runtime.jsx)("object",{width:300,height:400,style:{flexGrow:0},fit:ImageFitMode.Center,onDrag:function onDrag(ev){Globals.camera2root.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.camera2.transform.Translate(0,0,ev.scrollDelta.y/10,UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.camera2,target:object});}function App(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),videoRef=_useState2[0],setVideoRef=_useState2[1];(0,react.useEffect)(function(){if(videoRef){videoRef.VideoPlayer.Pause();}},[videoRef]);var toggleVideo=function toggleVideo(){var vp=videoRef.VideoPlayer;if(vp.isPlaying)vp.Pause();else vp.Play();};var tooltipContent=/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{padding:10,backgroundColor:0.4,color:'white'},children:"Cool tooltip"});return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:showcase_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{children:"Click"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"}),/*#__PURE__*/(0,jsx_runtime.jsx)("input",{})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Tooltip"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Tooltip,{tooltipContent:tooltipContent,position:"bottom",offset:20,children:"Hover to see cool tooltip."})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Dropdown"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Dropdown,{children:["Select an option",/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{children:"Normal Option"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'green'},children:"Green Option"}),children:"Green Option \uD83D\uDC9A"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'red'},children:"Red Option"}),children:"Red Option \uD83E\uDDE1"})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:bg}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:base64Image}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:webImage}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:(check_default())["0x0"]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Video"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("video",{style:{flexGrow:1},fit:ImageFitMode.Fill,source:webVideo,ref:setVideoRef,onPointerClick:toggleVideo})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Slider"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Horizontal",/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"horizontal-reverse"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',top:24,color:value>0.5?'red':'black'},children:value.toFixed(3)});}})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Vertical",/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical-reverse"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical",children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',left:24},children:value.toFixed(3)});}})]})]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Render Texture"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("render",{width:900,height:400,style:{flexGrow:1},fit:ImageFitMode.Fill,onDrag:function onDrag(ev){Globals.cameraRoot.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.renderCamera.transform.Translate(0,0,ev.scrollDelta.y/10,UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.renderCamera})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Object"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.cylinder}),/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.cube}),/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.capsule})]})]})]})});};renderer_Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.tsx
 /* module decorator */ module = __webpack_require__.hmd(module);
 var _module,_module$hot;(_module=module)===null||_module===void 0?void 0:(_module$hot=_module.hot)===null||_module$hot===void 0?void 0:_module$hot.accept();
@@ -1622,7 +1621,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
-/** @license React v0.26.1
+/** @license React v0.26.2
  * react-reconciler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -7858,7 +7857,7 @@ if (true) {
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
-/** @license React v0.20.1
+/** @license React v0.20.2
  * scheduler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -8231,7 +8230,7 @@ if (true) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".showcase_app__1sIuX{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.showcase_app__1sIuX h1{font-size:36px;font-style:smallcaps, bold;color:#582a9c;margin-bottom:12px}.showcase_app__1sIuX h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.showcase_app__1sIuX section{margin-top:10px;margin-bottom:10px}.showcase_app__1sIuX row{flex-direction:row;align-items:center}.showcase_app__1sIuX column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.showcase_app__1sIuX slider{margin:10px}.showcase_app__1sIuX image{flex-grow:1;flex-shrink:1;flex-basis:0}.showcase_app__1sIuX input{border-width:1px;border-color:black}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".showcase_app__1sIuX{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.showcase_app__1sIuX h1{font-size:36px;font-style:smallcaps, bold;color:#582a9c;margin-bottom:12px}.showcase_app__1sIuX h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.showcase_app__1sIuX section{margin-top:10px;margin-bottom:10px}.showcase_app__1sIuX row{flex-direction:row;align-items:center}.showcase_app__1sIuX column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.showcase_app__1sIuX slider{margin:10px}.showcase_app__1sIuX image{flex-grow:1;flex-shrink:1;flex-basis:0}.showcase_app__1sIuX input{border-width:1px;border-color:black}.showcase_app__1sIuX object{border-width:1px;border-radius:20px;border-color:black;margin:5px;background-color:white}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"app": "showcase_app__1sIuX"
@@ -8528,7 +8527,7 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -8541,17 +8540,17 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -8564,7 +8563,7 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -8576,7 +8575,7 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/harmony module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.hmd = (module) => {
@@ -8591,12 +8590,12 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -8605,18 +8604,18 @@ module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
 /******/ 		__webpack_require__.p = "/";
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
-/******/
+/******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	var __webpack_exports__ = __webpack_require__(830);
-/******/
+/******/ 	
 /******/ })()
 ;
