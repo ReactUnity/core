@@ -10,8 +10,8 @@ export interface View<T = ReactUnity.Components.ReactComponent> extends Events<T
   style?: Style;
 }
 
-export interface Text extends Events<ReactUnity.Components.TextComponent> { }
-export interface Scroll extends Events<ReactUnity.Components.ScrollComponent> { }
+export interface Text extends View<ReactUnity.Components.TextComponent> { }
+export interface Scroll extends View<ReactUnity.Components.ScrollComponent> { }
 
 export interface Button extends View<ReactUnity.Components.ButtonComponent> {
   onClick?: ActionCallback<ReactUnity.Components.ButtonComponent>;
