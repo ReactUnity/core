@@ -1,16 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Jint;
 using ReactUnity.Components;
 using ReactUnity.Types;
 using Facebook.Yoga;
-using ReactUnity.Interop;
-using ExCSS;
-using System.Linq;
-using ReactUnity.StyleEngine;
-using System.IO;
-using ReactUnity.Styling;
-using System.Text.RegularExpressions;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using System;
@@ -68,16 +60,13 @@ namespace ReactUnity
 
             Action callback = () =>
             {
-                if (Scheduled)
+                if (LayoutScheduled)
                 {
                     RootLayoutNode.CalculateLayout();
-                    Scheduled = false;
-
-                    for (int i = 0; i < ScheduledCallbacks.Count; i++)
-                        ScheduledCallbacks[i]?.Invoke();
+                    LayoutScheduled = false;
                 }
             };
-            dispatcher.AddCallOnLateUpdate(callback);
+            dispatcher.OnEveryLateUpdate(callback);
         }
 
         public override IReactComponent CreateComponent(string tag, string text)

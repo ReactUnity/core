@@ -32,12 +32,12 @@ namespace ReactUnity.Components
         public RectTransform RectTransform { get; private set; }
         public IContainerComponent Parent { get; private set; }
 
-        public Dictionary<string, object> Data { get; private set; } = new Dictionary<string, object>();
+        public InlineData Data { get; private set; } = new InlineData("Data");
         public ReactElement Component { get; private set; }
         public YogaNode Layout { get; private set; }
         public NodeStyle ComputedStyle { get; private set; }
         public StateStyles StateStyles { get; private set; }
-        public Dictionary<string, object> Style { get; protected set; } = new Dictionary<string, object>();
+        public InlineData Style { get; protected set; } = new InlineData("Style");
 
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
@@ -64,9 +64,26 @@ namespace ReactUnity.Components
         public string Name => GameObject.name;
         ReactContext IReactComponent.Context => Context;
 
-        protected ReactComponent(RectTransform existing, UGUIContext context)
+
+        private bool markedStyleResolve;
+        private bool markedStyleResolveRecursive;
+        protected List<int> Deferreds = new List<int>();
+
+
+        ReactComponent(UGUIContext context)
         {
             Context = context;
+            Style.changed += StyleChanged;
+            Data.changed += StyleChanged;
+
+            Deferreds.Add(Context.Dispatcher.OnEveryUpdate(() =>
+            {
+                if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
+            }));
+        }
+
+        protected ReactComponent(RectTransform existing, UGUIContext context) : this(context)
+        {
             GameObject = existing.gameObject;
             RectTransform = existing;
 
@@ -75,10 +92,9 @@ namespace ReactUnity.Components
             Layout = new YogaNode(DefaultLayout);
         }
 
-        public ReactComponent(UGUIContext context, string tag)
+        public ReactComponent(UGUIContext context, string tag) : this(context)
         {
             Tag = tag;
-            Context = context;
             GameObject = new GameObject();
             RectTransform = AddComponent<RectTransform>();
 
@@ -97,12 +113,24 @@ namespace ReactUnity.Components
             Component.Component = this;
         }
 
+        protected void StyleChanged(string key, object value, InlineData style)
+        {
+            MarkForStyleResolving(style.Identifier != "Style" || key == null || StyleProperties.IsInherited(key));
+        }
+
+        protected void MarkForStyleResolving(bool recursive)
+        {
+            markedStyleResolveRecursive = markedStyleResolveRecursive || recursive;
+            markedStyleResolve = true;
+        }
+
         public virtual void Destroy()
         {
             GameObject.DestroyImmediate(GameObject);
             Parent.Children.Remove(this);
             Parent.Layout.RemoveChild(Layout);
             Parent.ScheduleLayout();
+            foreach (var item in Deferreds) Context.Dispatcher.StopDeferred(item);
         }
 
         #region Setters
@@ -115,7 +143,7 @@ namespace ReactUnity.Components
 
             if (Parent == null) return;
 
-            insertBefore = insertBefore ?? (insertAfter ? null : parent.AfterPseudo);
+            insertBefore ??= (insertAfter ? null : parent.AfterPseudo);
 
             if (insertBefore == null)
             {
@@ -157,7 +185,6 @@ namespace ReactUnity.Components
         public virtual void SetData(string propertyName, object value)
         {
             Data[propertyName] = value;
-            ResolveStyle(true);
         }
 
         public virtual void SetProperty(string propertyName, object value)
@@ -181,13 +208,16 @@ namespace ReactUnity.Components
 
         #region Style / Layout
 
-        public void ScheduleLayout(System.Action callback = null)
+        public void ScheduleLayout()
         {
-            Context.scheduleLayout(callback);
+            Context.ScheduleLayout();
         }
 
         public virtual void ResolveStyle(bool recursive = false)
         {
+            markedStyleResolve = false;
+            markedStyleResolveRecursive = false;
+
             var inlineStyles = RuleHelpers.GetRuleDic(Style);
             var inlineLayouts = RuleHelpers.GetLayoutDic(Style) ?? new List<LayoutValue>();
 
@@ -223,7 +253,11 @@ namespace ReactUnity.Components
 
             ApplyStyles();
             ComputedStyle.MarkChangesSeen();
-            if (layoutUpdated) ApplyLayoutStyles();
+            if (layoutUpdated)
+            {
+                ApplyLayoutStyles();
+                ScheduleLayout();
+            }
         }
 
         public virtual void ApplyLayoutStyles()
@@ -376,12 +410,12 @@ namespace ReactUnity.Components
                     image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, sprite);
                 });
                 image.SetBoxShadow(ComputedStyle.boxShadow);
-                Context.Dispatcher.OnUpdate(() =>
+                Deferreds.Add(Context.Dispatcher.OnceUpdate(() =>
                 {
                     if (!GameObject) return;
                     var borderSprite = BorderGraphic.CreateBorderSprite(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
                     image.SetBorderImage(borderSprite);
-                });
+                }));
 
                 image.SetBorderColor(ComputedStyle.borderColor);
             }

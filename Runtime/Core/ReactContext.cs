@@ -25,8 +25,7 @@ namespace ReactUnity
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
 
-        protected bool Scheduled = false;
-        protected List<System.Action> ScheduledCallbacks = new List<System.Action>();
+        protected bool LayoutScheduled = false;
 
         public StylesheetParser Parser;
         public StyleTree StyleTree;
@@ -54,10 +53,9 @@ namespace ReactUnity
         }
 
 
-        public virtual void scheduleLayout(System.Action callback = null)
+        public virtual void ScheduleLayout()
         {
-            Scheduled = true;
-            ScheduledCallbacks.Add(callback);
+            LayoutScheduled = true;
         }
 
         public virtual void InsertStyle(string style, int importanceOffset = 0)
@@ -116,11 +114,8 @@ namespace ReactUnity
         public void Dispose()
         {
             Scheduler?.clearAllTimeouts();
-            if(Dispatcher != null) Dispatcher.Dispose();
-            foreach (var dp in Disposables)
-            {
-                dp.Dispose();
-            }
+            Dispatcher?.Dispose();
+            foreach (var item in Disposables) item?.Dispose();
         }
     }
 }

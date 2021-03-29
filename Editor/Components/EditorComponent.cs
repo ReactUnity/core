@@ -30,7 +30,7 @@ namespace ReactUnity.Editor.Components
         public YogaNode Layout { get; private set; }
         public List<LayoutValue> LayoutValues { get; private set; } = new List<LayoutValue>();
         public NodeStyle ComputedStyle { get; private set; }
-        public Dictionary<string, object> Style { get; protected set; } = new Dictionary<string, object>();
+        public InlineData Style { get; protected set; } = new InlineData("Style");
 
         public bool IsPseudoElement { get; private set; }
         public string Name => Element.name;
@@ -39,7 +39,7 @@ namespace ReactUnity.Editor.Components
         public HashSet<string> ClassList { get; private set; } = EmptyClassList;
 
         public StateStyles StateStyles { get; private set; }
-        public Dictionary<string, object> Data { get; private set; } = new Dictionary<string, object>();
+        public InlineData Data { get; private set; } = new InlineData("Data");
 
         public List<IReactComponent> Children { get; } = new List<IReactComponent>();
         public IReactComponent BeforePseudo { get; private set; }
@@ -53,28 +53,50 @@ namespace ReactUnity.Editor.Components
         protected Dictionary<Type, object> Manipulators = new Dictionary<Type, object>();
         private string currentCursor = null;
 
-        public EditorComponent(T element, EditorContext context, string tag)
+        private bool markedStyleResolve;
+        private bool markedStyleResolveRecursive;
+        protected List<int> Deferreds = new List<int>();
+
+        EditorComponent(EditorContext context)
         {
-            Tag = tag;
             Context = context;
-            Element = element;
-            Element.userData = Data;
 
             StateStyles = new StateStyles(this);
             ComputedStyle = new NodeStyle(StateStyles);
             Layout = new YogaNode();
+
+            Style.changed += StyleChanged;
+            Data.changed += StyleChanged;
+
+            Deferreds.Add(Context.Dispatcher.OnEveryUpdate(() =>
+            {
+                if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
+            }));
         }
 
-        public EditorComponent(EditorContext context, string tag)
+        public EditorComponent(T element, EditorContext context, string tag) : this(context)
         {
             Tag = tag;
-            Context = context;
+            Element = element;
+            Element.userData = Data;
+        }
+
+        public EditorComponent(EditorContext context, string tag) : this(context)
+        {
+            Tag = tag;
             Element = new T();
             Element.userData = Data;
+        }
 
-            StateStyles = new StateStyles(this);
-            ComputedStyle = new NodeStyle(StateStyles);
-            Layout = new YogaNode();
+        protected void StyleChanged(string key, object value, InlineData style)
+        {
+            MarkForStyleResolving(style.Identifier != "Style" || key == null || StyleProperties.IsInherited(key));
+        }
+
+        protected void MarkForStyleResolving(bool recursive)
+        {
+            if (recursive) markedStyleResolveRecursive = true;
+            markedStyleResolve = true;
         }
 
         public void Accept(ReactComponentVisitor visitor)
@@ -224,10 +246,14 @@ namespace ReactUnity.Editor.Components
         public void Destroy()
         {
             Element.RemoveFromHierarchy();
+            foreach (var item in Deferreds) Context.Dispatcher.StopDeferred(item);
         }
 
         public void ResolveStyle(bool recursive = false)
         {
+            markedStyleResolve = false;
+            markedStyleResolveRecursive = false;
+
             var inheritedChanges = ComputedStyle.HasInheritedChanges;
 
 
@@ -270,9 +296,9 @@ namespace ReactUnity.Editor.Components
             }
         }
 
-        public void ScheduleLayout(Action callback = null)
+        public void ScheduleLayout()
         {
-            Context.scheduleLayout(callback);
+            Context.ScheduleLayout();
         }
 
 

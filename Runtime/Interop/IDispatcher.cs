@@ -22,9 +22,11 @@ namespace ReactUnity
 
     public interface IDispatcher : IDisposable
     {
-        void AddCallOnLateUpdate(Action call);
+        int OnEveryLateUpdate(Action call);
+        int OnEveryUpdate(Action call);
 
-        int OnUpdate(Action callback);
+        int OnceUpdate(Action callback);
+        int OnceLateUpdate(Action callback);
 
         int Timeout(Action callback, float timeSeconds);
 

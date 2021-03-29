@@ -57,7 +57,7 @@ namespace ReactUnity.Layout
         public void MarkDirty()
         {
             if (Layout.Parent != null) Layout.MarkDirty();
-            Context.scheduleLayout();
+            Context.ScheduleLayout();
         }
 
 

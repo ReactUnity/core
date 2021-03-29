@@ -42,6 +42,7 @@ namespace ReactUnity.Components
             Layout.CopyStyle(linkedTo.Layout);
             ComputedStyle.CopyStyle(linkedTo.ComputedStyle);
             Style = linkedTo.Style;
+            Style.changed += StyleChanged;
 
             SetParent(linkedTo.Parent, linkedTo, true);
 

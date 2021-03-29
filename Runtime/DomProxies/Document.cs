@@ -114,7 +114,7 @@ namespace ReactUnity.DomProxies
 
             Action<string> callback = (sc) =>
             {
-                dispatcher.OnUpdate(() => action(sc));
+                dispatcher.OnceUpdate(() => action(sc));
             };
 
             script.GetScript((sc, isDevServer) => callback(sc), dispatcher, false, true);

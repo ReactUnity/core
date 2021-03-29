@@ -12,6 +12,7 @@ namespace ReactUnity
     {
         private List<IEnumerator> ToStart = new List<IEnumerator>();
         private HashSet<int> ToStop = new HashSet<int>();
+        private List<Action> CallOnUpdate = new List<Action>();
         private List<Action> CallOnLateUpdate = new List<Action>();
 
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
@@ -33,12 +34,25 @@ namespace ReactUnity
 #endif
         }
 
-        public void AddCallOnLateUpdate(Action call)
+        public int OnEveryUpdate(Action call)
         {
-            CallOnLateUpdate.Add(call);
+            CallOnUpdate.Add(call);
+            return -1;
         }
 
-        public int OnUpdate(Action callback)
+        public int OnEveryLateUpdate(Action call)
+        {
+            CallOnLateUpdate.Add(call);
+            return -1;
+        }
+
+        public int OnceUpdate(Action callback)
+        {
+            var handle = GetNextHandle();
+            return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
+        }
+
+        public int OnceLateUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
@@ -129,6 +143,7 @@ namespace ReactUnity
             }
             ToStart.Clear();
             ToStop.Clear();
+            CallOnUpdate.Clear();
             CallOnLateUpdate.Clear();
         }
 
@@ -136,8 +151,12 @@ namespace ReactUnity
         {
             StartAndStopDeferreds();
 
-            var count = CallOnLateUpdate.Count;
-            for (int i = 0; i < count; i++)
+            var ucount = CallOnUpdate.Count;
+            for (int i = 0; i < ucount; i++)
+                CallOnUpdate[i].Invoke();
+
+            var lcount = CallOnLateUpdate.Count;
+            for (int i = 0; i < lcount; i++)
                 CallOnLateUpdate[i].Invoke();
         }
 
@@ -183,10 +202,14 @@ namespace ReactUnity
 
         private IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
         {
+#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
+            var br = new EditorWaitForSeconds(interval);
+#endif
+
             while (true)
             {
 #if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-                yield return new EditorWaitForSeconds(interval);
+                yield return br;
 #else
                 yield return null;
 #endif

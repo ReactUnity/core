@@ -24,12 +24,25 @@ namespace ReactUnity
         private HashSet<int> ToStop = new HashSet<int>();
         private List<Action> CallOnLateUpdate = new List<Action>();
 
-        public void AddCallOnLateUpdate(Action call)
+        public int OnEveryLateUpdate(Action callback)
         {
-            CallOnLateUpdate.Add(call);
+            CallOnLateUpdate.Add(callback);
+            return -1;
         }
 
-        public int OnUpdate(Action callback)
+        public int OnEveryUpdate(Action callback)
+        {
+            var handle = GetNextHandle();
+            return StartDeferred(OnEveryUpdateCoroutine(callback, handle), handle);
+        }
+
+        public int OnceUpdate(Action callback)
+        {
+            var handle = GetNextHandle();
+            return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
+        }
+
+        public int OnceLateUpdate(Action callback)
         {
             var handle = GetNextHandle();
             return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
@@ -87,7 +100,7 @@ namespace ReactUnity
 
         public void StopDeferred(int cr)
         {
-            ToStop.Add(cr);
+            if (cr >= 0) ToStop.Add(cr);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -152,7 +165,7 @@ namespace ReactUnity
 
             var count = CallOnLateUpdate.Count;
             for (int i = 0; i < count; i++)
-                CallOnLateUpdate[i].Invoke();
+                CallOnLateUpdate[i]?.Invoke();
         }
 
 
@@ -160,6 +173,16 @@ namespace ReactUnity
         {
             yield return null;
             if (!ToStop.Contains(handle)) callback();
+        }
+
+        private IEnumerator OnEveryUpdateCoroutine(Action callback, int handle)
+        {
+            while (true)
+            {
+                yield return null;
+                if (!ToStop.Contains(handle)) callback();
+                else break;
+            }
         }
 
         private IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
@@ -170,9 +193,11 @@ namespace ReactUnity
 
         private IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
         {
+            var br = new WaitForSeconds(interval);
+
             while (true)
             {
-                yield return new WaitForSeconds(interval);
+                yield return br;
                 if (!ToStop.Contains(handle)) callback();
                 else break;
             }

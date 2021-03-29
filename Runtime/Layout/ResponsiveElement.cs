@@ -29,7 +29,7 @@ namespace ReactUnity.Layout
             {
                 Layout.Width = width;
                 Layout.Height = height;
-                Context.scheduleLayout();
+                Context.ScheduleLayout();
                 PreviousWidth = width;
                 PreviousHeight = height;
             }

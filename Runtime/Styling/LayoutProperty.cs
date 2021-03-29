@@ -73,8 +73,8 @@ namespace ReactUnity.Styling
             }
 
             defaultValueTyped = defaultValue;
-            setter = (Action<YogaNode, T>) propInfo.GetSetMethod().CreateDelegate(typeof(Action<YogaNode, T>));
-            getter = (Func<YogaNode, T>) propInfo.GetGetMethod().CreateDelegate(typeof(Func<YogaNode, T>));
+            setter = (Action<YogaNode, T>)propInfo.GetSetMethod().CreateDelegate(typeof(Action<YogaNode, T>));
+            getter = (Func<YogaNode, T>)propInfo.GetGetMethod().CreateDelegate(typeof(Func<YogaNode, T>));
         }
 
         public void Set(YogaNode node, object value, YogaNode defaultNode)
@@ -87,7 +87,7 @@ namespace ReactUnity.Styling
                 if (node.Parent != null) setter(node, getter(node.Parent));
                 else SetDefault(node, defaultNode);
             }
-            else setter(node, (T) value);
+            else setter(node, (T)value);
         }
 
         public void SetDefault(YogaNode node)
@@ -208,6 +208,13 @@ namespace ReactUnity.Styling
         {
             ILayoutProperty prop;
             PropertyMap.TryGetValue(name, out prop);
+            return prop;
+        }
+
+        public static ILayoutProperty GetCssProperty(string name)
+        {
+            ILayoutProperty prop;
+            CssPropertyMap.TryGetValue(name, out prop);
             return prop;
         }
 

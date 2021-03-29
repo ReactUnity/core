@@ -96,7 +96,7 @@ namespace ReactUnity.DomProxies
 
         public void clear()
         {
-            ctx.Dispatcher.OnUpdate(() => Debug.ClearDeveloperConsole());
+            ctx.Dispatcher.OnceUpdate(() => Debug.ClearDeveloperConsole());
         }
 
         public void assert(bool val)

@@ -42,12 +42,14 @@ namespace ReactUnity.Components
             if (currentInterval >= 0)
             {
                 Context.Dispatcher.StopDeferred(currentInterval);
+                Deferreds.Remove(currentInterval);
                 currentInterval = -1;
             }
 
             if (targetObject != null)
             {
                 currentInterval = Context.Dispatcher.Interval(() => RenderObject(), 0);
+                Deferreds.Add(currentInterval);
             }
         }
 

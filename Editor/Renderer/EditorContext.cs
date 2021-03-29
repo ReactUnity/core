@@ -97,17 +97,6 @@ namespace ReactUnity.Editor.Renderer
             Host.ResolveStyle(true);
 
             hostElement.styleSheets.Add(EditorResourcesHelper.UtilityStylesheet);
-
-            dispatcher.AddCallOnLateUpdate(() =>
-            {
-                if (Scheduled)
-                {
-                    Scheduled = false;
-
-                    for (int i = 0; i < ScheduledCallbacks.Count; i++)
-                        ScheduledCallbacks[i]?.Invoke();
-                }
-            });
         }
 
         public override ITextComponent CreateText(string text)

@@ -18,17 +18,17 @@ namespace ReactUnity
         bool IsPseudoElement { get; }
         YogaNode Layout { get; }
         NodeStyle ComputedStyle { get; }
-        Dictionary<string, object> Style { get; }
+        InlineData Style { get; }
         string Name { get; }
         string Tag { get; }
         string ClassName { get; }
 
         HashSet<string> ClassList { get; }
         StateStyles StateStyles { get; }
-        Dictionary<string, object> Data { get; }
+        InlineData Data { get; }
 
         void ApplyLayoutStyles();
-        void ScheduleLayout(Action callback = null);
+        void ScheduleLayout();
         void ResolveStyle(bool recursive = false);
 
         void Accept(ReactComponentVisitor visitor);

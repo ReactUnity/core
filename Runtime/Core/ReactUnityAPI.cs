@@ -3,6 +3,8 @@ using Jint.Native.Function;
 using ReactUnity.Interop;
 using System;
 
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ReactUnity.Editor")]
+
 namespace ReactUnity
 {
     public class ReactUnityAPI

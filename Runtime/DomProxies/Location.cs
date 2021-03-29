@@ -51,7 +51,7 @@ namespace ReactUnity.DomProxies
 
         public void reload()
         {
-            ctx.Dispatcher.OnUpdate(restart);
+            ctx.Dispatcher.OnceUpdate(restart);
         }
     }
 }

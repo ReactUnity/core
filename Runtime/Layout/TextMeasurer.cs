@@ -17,13 +17,13 @@ namespace ReactUnity.Layout
         void ILayoutController.SetLayoutHorizontal()
         {
             Layout.MarkDirty();
-            Context.scheduleLayout();
+            Context.ScheduleLayout();
         }
 
         void ILayoutController.SetLayoutVertical()
         {
             Layout.MarkDirty();
-            Context.scheduleLayout();
+            Context.ScheduleLayout();
         }
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)

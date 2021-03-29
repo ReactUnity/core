@@ -19,28 +19,28 @@ namespace ReactUnity.DomProxies
         public JsValue Onmessage { set => onmessage = value; }
         public object onmessage
         {
-            set { OnMessage += (sender, e) => context.Dispatcher.OnUpdate(() => new Callback(value)?.Call(e)); }
+            set { OnMessage += (sender, e) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(e)); }
             get => null;
         }
 
         public JsValue Onclose { set => onclose = value; }
         public object onclose
         {
-            set { OnClose += (sender, e) => context.Dispatcher.OnUpdate(() => new Callback(value)?.Call(e)); }
+            set { OnClose += (sender, e) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(e)); }
             get => null;
         }
 
         public JsValue Onopen { set => onopen = value; }
         public object onopen
         {
-            set { OnOpen += (sender, e) => context.Dispatcher.OnUpdate(() => new Callback(value)?.Call(e)); }
+            set { OnOpen += (sender, e) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(e)); }
             get => null;
         }
 
         public JsValue Onerror { set => onerror = value; }
         public object onerror
         {
-            set { OnError += (sender, e) => context.Dispatcher.OnUpdate(() => new Callback(value)?.Call(e)); }
+            set { OnError += (sender, e) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(e)); }
             get => null;
         }
 
