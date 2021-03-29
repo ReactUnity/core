@@ -1,6 +1,6 @@
 //
 // Types in assemblies: mscorlib, mscorlib, System.Core, System, mscorlib, System, mscorlib
-// Generated 17.03.2021 03:00:05
+// Generated 29.03.2021 04:19:49
 //
 
 
@@ -42,6 +42,7 @@ export declare namespace System {
   export class ReadOnlySpan<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
+    [key: string]: any;
     Length: number;
     IsEmpty: boolean;
     static Empty: any; // System.ReadOnlySpan`1[T]
@@ -58,6 +59,7 @@ export declare namespace System {
   export class Span<T = any> {
     constructor(array: T[]);
     constructor(array: T[], start: number, length: number);
+    [key: string]: any;
     Length: number;
     IsEmpty: boolean;
     static Empty: any; // System.Span`1[T]
@@ -2754,6 +2756,7 @@ export declare namespace System {
     constructor(value: System.Char[], startIndex: number, length: number);
     constructor(value: System.Char[]);
     constructor(c: System.Char, count: number);
+    [key: string]: any;
     Length: number;
     static Empty: string;
     static Join(separator: string, ...value: string[]): string;
@@ -4589,6 +4592,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeTypeReferenceCollection);
       constructor(value: System.CodeDom.CodeTypeReference[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeTypeReference): number;
@@ -4695,6 +4699,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeAttributeArgumentCollection);
       constructor(value: System.CodeDom.CodeAttributeArgument[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeAttributeArgument): number;
@@ -4731,6 +4736,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeAttributeDeclarationCollection);
       constructor(value: System.CodeDom.CodeAttributeDeclaration[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeAttributeDeclaration): number;
@@ -4818,6 +4824,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeCatchClauseCollection);
       constructor(value: System.CodeDom.CodeCatchClause[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeCatchClause): number;
@@ -4879,6 +4886,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeCommentStatementCollection);
       constructor(value: System.CodeDom.CodeCommentStatement[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeCommentStatement): number;
@@ -5007,6 +5015,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeDirectiveCollection);
       constructor(value: System.CodeDom.CodeDirective[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeDirective): number;
@@ -5070,6 +5079,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeExpressionCollection);
       constructor(value: System.CodeDom.CodeExpression[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeExpression): number;
@@ -5302,6 +5312,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeNamespaceCollection);
       constructor(value: System.CodeDom.CodeNamespace[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeNamespace): number;
@@ -5333,6 +5344,7 @@ export declare namespace System {
     }
     export class CodeNamespaceImportCollection {
       constructor();
+      [key: string]: any;
       Count: number;
       Add(value: System.CodeDom.CodeNamespaceImport): void;
       AddRange(value: System.CodeDom.CodeNamespaceImport[]): void;
@@ -5375,6 +5387,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeParameterDeclarationExpressionCollection);
       constructor(value: System.CodeDom.CodeParameterDeclarationExpression[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeParameterDeclarationExpression): number;
@@ -5524,6 +5537,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeStatementCollection);
       constructor(value: System.CodeDom.CodeStatement[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeStatement): number;
@@ -5631,6 +5645,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeTypeDeclarationCollection);
       constructor(value: System.CodeDom.CodeTypeDeclaration[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeTypeDeclaration): number;
@@ -5695,6 +5710,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeTypeMemberCollection);
       constructor(value: System.CodeDom.CodeTypeMember[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeTypeMember): number;
@@ -5742,6 +5758,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.CodeDom.CodeTypeParameterCollection);
       constructor(value: System.CodeDom.CodeTypeParameter[]);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.CodeDom.CodeTypeParameter): number;
@@ -5919,6 +5936,7 @@ export declare namespace System {
       }
       export class CodeGeneratorOptions {
         constructor();
+        [key: string]: any;
         IndentString: string;
         BracingStyle: string;
         ElseOnClosing: boolean;
@@ -5954,6 +5972,7 @@ export declare namespace System {
         constructor();
         constructor(value: System.CodeDom.Compiler.CompilerErrorCollection);
         constructor(value: System.CodeDom.Compiler.CompilerError[]);
+        [key: string]: any;
         HasErrors: boolean;
         HasWarnings: boolean;
         Capacity: number;
@@ -6172,6 +6191,7 @@ export declare namespace System {
       constructor();
       constructor(capacity: number);
       constructor(c: System.Collections.ICollection);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       IsFixedSize: boolean;
@@ -6232,6 +6252,7 @@ export declare namespace System {
       constructor(values: boolean[]);
       constructor(values: number[]);
       constructor(bits: System.Collections.BitArray);
+      [key: string]: any;
       Length: number;
       Count: number;
       SyncRoot: any; // System.Object
@@ -6322,6 +6343,7 @@ export declare namespace System {
       constructor(d: System.Collections.IDictionary, equalityComparer: System.Collections.IEqualityComparer);
       constructor(d: System.Collections.IDictionary, loadFactor: number, hcp: System.Collections.IHashCodeProvider, comparer: System.Collections.IComparer);
       constructor(d: System.Collections.IDictionary, loadFactor: number, equalityComparer: System.Collections.IEqualityComparer);
+      [key: string]: any;
       IsReadOnly: boolean;
       IsFixedSize: boolean;
       IsSynchronized: boolean;
@@ -6356,6 +6378,7 @@ export declare namespace System {
       Compare(x: any, y: any): number;
     }
     export interface IDictionary {
+      [key: string]: any;
       Keys: System.Collections.ICollection;
       Values: System.Collections.ICollection;
       IsReadOnly: boolean;
@@ -6387,6 +6410,7 @@ export declare namespace System {
       GetHashCode(obj: any): number;
     }
     export interface IList {
+      [key: string]: any;
       IsReadOnly: boolean;
       IsFixedSize: boolean;
       Add(value: any): number;
@@ -6443,6 +6467,7 @@ export declare namespace System {
       constructor(comparer: System.Collections.IComparer, capacity: number);
       constructor(d: System.Collections.IDictionary);
       constructor(d: System.Collections.IDictionary, comparer: System.Collections.IComparer);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Keys: System.Collections.ICollection;
@@ -6514,6 +6539,7 @@ export declare namespace System {
         constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
         constructor(concurrencyLevel: number, collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
         constructor(concurrencyLevel: number, capacity: number, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        [key: string]: any;
         Count: number;
         IsEmpty: boolean;
         Keys: System.Collections.Generic.ICollection<TKey>;
@@ -6674,6 +6700,7 @@ export declare namespace System {
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
         constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>);
         constructor(collection: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<TKey, TValue>>, comparer: System.Collections.Generic.IEqualityComparer<TKey>);
+        [key: string]: any;
         Comparer: System.Collections.Generic.IEqualityComparer<TKey>;
         Count: number;
         Keys: System.Collections.Generic.Dictionary<TKey, TValue>;
@@ -6723,6 +6750,7 @@ export declare namespace System {
         Compare(x: T, y: T): number;
       }
       export interface IDictionary<TKey = any, TValue = any> {
+        [key: string]: any;
         Keys: System.Collections.Generic.ICollection<TKey>;
         Values: System.Collections.Generic.ICollection<TValue>;
         ContainsKey(key: TKey): boolean;
@@ -6740,6 +6768,7 @@ export declare namespace System {
         GetHashCode(obj: T): number;
       }
       export interface IList<T = any> {
+        [key: string]: any;
         IndexOf(item: T): number;
         Insert(index: number, item: T): void;
         RemoveAt(index: number): void;
@@ -6748,11 +6777,13 @@ export declare namespace System {
         Count: number;
       }
       export interface IReadOnlyDictionary<TKey = any, TValue = any> {
+        [key: string]: any;
         Keys: System.Collections.Generic.IEnumerable<TKey>;
         Values: System.Collections.Generic.IEnumerable<TValue>;
         ContainsKey(key: TKey): boolean;
       }
       export interface IReadOnlyList<T = any> {
+        [key: string]: any;
       }
       export class KeyNotFoundException {
         constructor();
@@ -6778,6 +6809,7 @@ export declare namespace System {
         constructor();
         constructor(capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        [key: string]: any;
         Capacity: number;
         Count: number;
         Add(item: T): void;
@@ -6933,6 +6965,7 @@ export declare namespace System {
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IComparer<TKey>);
         constructor(comparer: System.Collections.Generic.IComparer<TKey>);
+        [key: string]: any;
         Count: number;
         Comparer: System.Collections.Generic.IComparer<TKey>;
         Keys: System.Collections.Generic.SortedDictionary<TKey, TValue>;
@@ -6956,6 +6989,7 @@ export declare namespace System {
         constructor(capacity: number, comparer: System.Collections.Generic.IComparer<TKey>);
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>, comparer: System.Collections.Generic.IComparer<TKey>);
+        [key: string]: any;
         Capacity: number;
         Comparer: System.Collections.Generic.IComparer<TKey>;
         Count: number;
@@ -7050,6 +7084,7 @@ export declare namespace System {
       export class Collection<T = any> {
         constructor();
         constructor(list: System.Collections.Generic.IList<T>);
+        [key: string]: any;
         Count: number;
         Add(item: T): void;
         Clear(): void;
@@ -7066,6 +7101,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class KeyedCollection<TKey = any, TItem = any> {
+        [key: string]: any;
         Comparer: System.Collections.Generic.IEqualityComparer<TKey>;
         Count: number;
         Contains(key: TKey): boolean;
@@ -7086,6 +7122,7 @@ export declare namespace System {
       }
       export class ReadOnlyCollection<T = any> {
         constructor(list: System.Collections.Generic.IList<T>);
+        [key: string]: any;
         Count: number;
         Contains(value: T): boolean;
         CopyTo(array: T[], index: number): void;
@@ -7098,6 +7135,7 @@ export declare namespace System {
       }
       export class ReadOnlyDictionary<TKey = any, TValue = any> {
         constructor(dictionary: System.Collections.Generic.IDictionary<TKey, TValue>);
+        [key: string]: any;
         Keys: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
         Values: System.Collections.ObjectModel.ReadOnlyDictionary<TKey, TValue>;
         Count: number;
@@ -7112,6 +7150,7 @@ export declare namespace System {
         constructor();
         constructor(list: T[]);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        [key: string]: any;
         Count: number;
         Move(oldIndex: number, newIndex: number): void;
         Add(item: T): void;
@@ -7130,6 +7169,7 @@ export declare namespace System {
       }
       export class ReadOnlyObservableCollection<T = any> {
         constructor(list: T[]);
+        [key: string]: any;
         Count: number;
         Contains(value: T): boolean;
         CopyTo(array: T[], index: number): void;
@@ -7145,6 +7185,7 @@ export declare namespace System {
       export class BitVector32 {
         constructor(data: number);
         constructor(value: System.Collections.Specialized.BitVector32);
+        [key: string]: any;
         Data: number;
         static CreateMask(): number;
         static CreateMask(previous: number): number;
@@ -7182,6 +7223,7 @@ export declare namespace System {
         constructor(initialSize: number);
         constructor(caseInsensitive: boolean);
         constructor(initialSize: number, caseInsensitive: boolean);
+        [key: string]: any;
         Count: number;
         Keys: System.Collections.ICollection;
         IsReadOnly: boolean;
@@ -7203,6 +7245,7 @@ export declare namespace System {
       export interface INotifyCollectionChanged {
       }
       export interface IOrderedDictionary {
+        [key: string]: any;
         GetEnumerator(): System.Collections.IDictionaryEnumerator;
         Insert(index: number, key: any, value: any): void;
         RemoveAt(index: number): void;
@@ -7210,6 +7253,7 @@ export declare namespace System {
       export class ListDictionary {
         constructor();
         constructor(comparer: System.Collections.IComparer);
+        [key: string]: any;
         Count: number;
         Keys: System.Collections.ICollection;
         IsReadOnly: boolean;
@@ -7240,6 +7284,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class NameObjectCollectionBase_KeysCollection {
+        [key: string]: any;
         Count: number;
         Get(index: number): string;
         GetEnumerator(): System.Collections.IEnumerator;
@@ -7257,6 +7302,7 @@ export declare namespace System {
         constructor(capacity: number, equalityComparer: System.Collections.IEqualityComparer);
         constructor(capacity: number, col: System.Collections.Specialized.NameValueCollection);
         constructor(capacity: number, hashProvider: System.Collections.IHashCodeProvider, comparer: System.Collections.IComparer);
+        [key: string]: any;
         AllKeys: string[];
         Count: number;
         Keys: System.Collections.Specialized.NameObjectCollectionBase_KeysCollection;
@@ -7330,6 +7376,7 @@ export declare namespace System {
         constructor(capacity: number);
         constructor(comparer: System.Collections.IEqualityComparer);
         constructor(capacity: number, comparer: System.Collections.IEqualityComparer);
+        [key: string]: any;
         Count: number;
         IsReadOnly: boolean;
         Keys: System.Collections.ICollection;
@@ -7351,6 +7398,7 @@ export declare namespace System {
       }
       export class StringCollection {
         constructor();
+        [key: string]: any;
         Count: number;
         IsReadOnly: boolean;
         IsSynchronized: boolean;
@@ -7381,6 +7429,7 @@ export declare namespace System {
       }
       export class StringDictionary {
         constructor();
+        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         Keys: System.Collections.ICollection;
@@ -7516,6 +7565,7 @@ export declare namespace System {
     }
     export class AttributeCollection {
       constructor(...attributes: any[]);
+      [key: string]: any;
       Count: number;
       static Empty: System.ComponentModel.AttributeCollection;
       static FromExisting(existing: System.ComponentModel.AttributeCollection, ...newAttributes: any[]): System.ComponentModel.AttributeCollection;
@@ -7572,6 +7622,7 @@ export declare namespace System {
     export class BindingList<T = any> {
       constructor();
       constructor(list: System.Collections.Generic.IList<T>);
+      [key: string]: any;
       RaiseListChangedEvents: boolean;
       AllowNew: boolean;
       AllowEdit: boolean;
@@ -7834,6 +7885,7 @@ export declare namespace System {
     }
     export class ComponentCollection {
       constructor(components: System.ComponentModel.IComponent[]);
+      [key: string]: any;
       Count: number;
       CopyTo(array: System.ComponentModel.IComponent[], index: number): void;
       GetEnumerator(): System.Collections.IEnumerator;
@@ -8266,6 +8318,7 @@ export declare namespace System {
     export class EventDescriptorCollection {
       constructor(events: System.ComponentModel.EventDescriptor[]);
       constructor(events: System.ComponentModel.EventDescriptor[], readOnly: boolean);
+      [key: string]: any;
       Count: number;
       static Empty: System.ComponentModel.EventDescriptorCollection;
       Add(value: System.ComponentModel.EventDescriptor): number;
@@ -8288,6 +8341,7 @@ export declare namespace System {
     }
     export class EventHandlerList {
       constructor();
+      [key: string]: any;
       AddHandler(key: any, value: System.Delegate): void;
       AddHandlers(listToAddFrom: System.ComponentModel.EventHandlerList): void;
       Dispose(): void;
@@ -8475,6 +8529,7 @@ export declare namespace System {
       GetPropertyOwner(pd: System.ComponentModel.PropertyDescriptor): any;
     }
     export interface IDataErrorInfo {
+      [key: string]: any;
       Error: string;
     }
     export interface IEditableObject {
@@ -8847,6 +8902,7 @@ export declare namespace System {
     export class ListSortDescriptionCollection {
       constructor();
       constructor(sorts: System.ComponentModel.ListSortDescription[]);
+      [key: string]: any;
       Count: number;
       Contains(value: any): boolean;
       IndexOf(value: any): number;
@@ -8880,6 +8936,7 @@ export declare namespace System {
       constructor(mask: string, passwordChar: System.Char, allowPromptAsInput: boolean);
       constructor(mask: string, culture: System.Globalization.CultureInfo, passwordChar: System.Char, allowPromptAsInput: boolean);
       constructor(mask: string, culture: System.Globalization.CultureInfo, allowPromptAsInput: boolean, promptChar: System.Char, passwordChar: System.Char, restrictToAscii: boolean);
+      [key: string]: any;
       AllowPromptAsInput: boolean;
       AssignedEditPositionCount: number;
       AvailableEditPositionCount: number;
@@ -9180,6 +9237,7 @@ export declare namespace System {
     export class PropertyDescriptorCollection {
       constructor(properties: System.ComponentModel.PropertyDescriptor[]);
       constructor(properties: System.ComponentModel.PropertyDescriptor[], readOnly: boolean);
+      [key: string]: any;
       Count: number;
       static Empty: System.ComponentModel.PropertyDescriptorCollection;
       Add(value: System.ComponentModel.PropertyDescriptor): number;
@@ -9523,6 +9581,7 @@ export declare namespace System {
     }
     export class TypeConverter_StandardValuesCollection {
       constructor(values: System.Collections.ICollection);
+      [key: string]: any;
       Count: number;
       CopyTo(array: System.Array, index: number): void;
       GetEnumerator(): System.Collections.IEnumerator;
@@ -10084,6 +10143,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class DesignerOptionService_DesignerOptionCollection {
+        [key: string]: any;
         Count: number;
         Name: string;
         Parent: System.ComponentModel.Design.DesignerOptionService_DesignerOptionCollection;
@@ -10156,6 +10216,7 @@ export declare namespace System {
       export class DesignerVerbCollection {
         constructor();
         constructor(value: System.ComponentModel.Design.DesignerVerb[]);
+        [key: string]: any;
         Capacity: number;
         Count: number;
         Add(value: System.ComponentModel.Design.DesignerVerb): number;
@@ -10195,6 +10256,7 @@ export declare namespace System {
       export class DesignerCollection {
         constructor(designers: System.ComponentModel.Design.IDesignerHost[]);
         constructor(designers: System.Collections.IList);
+        [key: string]: any;
         Count: number;
         GetEnumerator(): System.Collections.IEnumerator;
         Equals(obj: any): boolean;
@@ -10549,6 +10611,7 @@ export declare namespace System {
         }
         export class ContextStack {
           constructor();
+          [key: string]: any;
           Current: any; // System.Object
           Append(context: any): void;
           Pop(): any;
@@ -10619,6 +10682,7 @@ export declare namespace System {
           ToString(): string;
         }
         export class MemberRelationshipService {
+          [key: string]: any;
           SupportsRelationship(source: System.ComponentModel.Design.Serialization.MemberRelationship, relationship: System.ComponentModel.Design.Serialization.MemberRelationship): boolean;
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -11172,6 +11236,7 @@ export declare namespace System {
       ToString(): string;
     }
     export class TraceListenerCollection {
+      [key: string]: any;
       Count: number;
       Add(listener: System.Diagnostics.TraceListener): number;
       AddRange(value: System.Diagnostics.TraceListener[]): void;
@@ -11371,6 +11436,7 @@ export declare namespace System {
     }
     export class ProcessModuleCollection {
       constructor(processModules: System.Diagnostics.ProcessModule[]);
+      [key: string]: any;
       Count: number;
       IndexOf(module: System.Diagnostics.ProcessModule): number;
       Contains(module: System.Diagnostics.ProcessModule): boolean;
@@ -11414,6 +11480,7 @@ export declare namespace System {
     }
     export class ProcessThreadCollection {
       constructor(processThreads: System.Diagnostics.ProcessThread[]);
+      [key: string]: any;
       Count: number;
       Add(thread: System.Diagnostics.ProcessThread): number;
       Insert(index: number, thread: System.Diagnostics.ProcessThread): void;
@@ -11442,6 +11509,7 @@ export declare namespace System {
       constructor();
       constructor(value: System.Diagnostics.CounterCreationData[]);
       constructor(value: System.Diagnostics.CounterCreationDataCollection);
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.Diagnostics.CounterCreationData): number;
@@ -11681,6 +11749,7 @@ export declare namespace System {
       GetType(): System.Type;
     }
     export class EventLogEntryCollection {
+      [key: string]: any;
       Count: number;
       CopyTo(entries: System.Diagnostics.EventLogEntry[], index: number): void;
       GetEnumerator(): System.Collections.IEnumerator;
@@ -11736,6 +11805,7 @@ export declare namespace System {
       ToString(): string;
     }
     export class EventLogPermissionEntryCollection {
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.Diagnostics.EventLogPermissionEntry): number;
@@ -11856,6 +11926,7 @@ export declare namespace System {
     }
     export class InstanceDataCollection {
       constructor(counterName: string);
+      [key: string]: any;
       CounterName: string;
       Keys: System.Collections.ICollection;
       Values: System.Collections.ICollection;
@@ -11872,6 +11943,7 @@ export declare namespace System {
     }
     export class InstanceDataCollectionCollection {
       constructor();
+      [key: string]: any;
       Keys: System.Collections.ICollection;
       Values: System.Collections.ICollection;
       Count: number;
@@ -12017,6 +12089,7 @@ export declare namespace System {
       ToString(): string;
     }
     export class PerformanceCounterPermissionEntryCollection {
+      [key: string]: any;
       Capacity: number;
       Count: number;
       Add(value: System.Diagnostics.PerformanceCounterPermissionEntry): number;
@@ -12857,6 +12930,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class CounterSetInstanceCounterDataSet {
+        [key: string]: any;
         Dispose(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -17402,10 +17476,12 @@ export declare namespace System {
       Key: TKey;
     }
     export interface ILookup<TKey = any, TElement = any> {
+      [key: string]: any;
       Count: number;
       Contains(key: TKey): boolean;
     }
     export class Lookup<TKey = any, TElement = any> {
+      [key: string]: any;
       Count: number;
       Contains(key: TKey): boolean;
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Linq.IGrouping<TKey, TElement>>;
@@ -18659,6 +18735,7 @@ export declare namespace System {
     }
     export class ParameterModifier {
       constructor(parameterCount: number);
+      [key: string]: any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       ToString(): string;
@@ -21442,6 +21519,7 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export interface ITuple {
+        [key: string]: any;
         Length: number;
       }
       export class RuntimeFeature {
@@ -21822,12 +21900,14 @@ export declare namespace System {
         ToString(): string;
       }
       export interface IRuntimeVariables {
+        [key: string]: any;
         Count: number;
       }
       export class ReadOnlyCollectionBuilder<T = any> {
         constructor();
         constructor(capacity: number);
         constructor(collection: System.Collections.Generic.IEnumerable<T>);
+        [key: string]: any;
         Capacity: number;
         Count: number;
         IndexOf(item: T): number;
@@ -24570,6 +24650,7 @@ export declare namespace System {
       }
       export namespace Channels {
         export class BaseChannelObjectWithProperties {
+          [key: string]: any;
           Count: number;
           IsFixedSize: boolean;
           IsReadOnly: boolean;
@@ -24590,6 +24671,7 @@ export declare namespace System {
           ToString(): string;
         }
         export class BaseChannelSinkWithProperties {
+          [key: string]: any;
           Count: number;
           IsFixedSize: boolean;
           IsReadOnly: boolean;
@@ -24610,6 +24692,7 @@ export declare namespace System {
           ToString(): string;
         }
         export class BaseChannelWithProperties {
+          [key: string]: any;
           Properties: System.Collections.IDictionary;
           Count: number;
           IsFixedSize: boolean;
@@ -24631,6 +24714,7 @@ export declare namespace System {
         }
         export class ChannelDataStore {
           constructor(channelURIs: string[]);
+          [key: string]: any;
           ChannelUris: string[];
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -24671,6 +24755,7 @@ export declare namespace System {
           ChannelPriority: number;
         }
         export interface IChannelDataStore {
+          [key: string]: any;
           ChannelUris: string[];
         }
         export interface IChannelReceiver {
@@ -24740,6 +24825,7 @@ export declare namespace System {
           GetResponseStream(msg: System.Runtime.Remoting.Messaging.IMessage, headers: System.Runtime.Remoting.Channels.ITransportHeaders): System.IO.Stream;
         }
         export interface ITransportHeaders {
+          [key: string]: any;
           GetEnumerator(): System.Collections.IEnumerator;
         }
         export class ServerChannelSinkStack {
@@ -24773,6 +24859,7 @@ export declare namespace System {
         }
         export class TransportHeaders {
           constructor();
+          [key: string]: any;
           GetEnumerator(): System.Collections.IEnumerator;
           Equals(obj: any): boolean;
           GetHashCode(): number;
@@ -26657,6 +26744,7 @@ export declare namespace System {
       }
       export class AuthorizationRuleCollection {
         constructor();
+        [key: string]: any;
         Count: number;
         AddRule(rule: System.Security.AccessControl.AuthorizationRule): void;
         CopyTo(rules: System.Security.AccessControl.AuthorizationRule[], index: number): void;
@@ -26691,6 +26779,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class CommonAcl {
+        [key: string]: any;
         BinaryLength: number;
         Count: number;
         IsCanonical: boolean;
@@ -27000,6 +27089,7 @@ export declare namespace System {
         constructor(isContainer: boolean, isDS: boolean, capacity: number);
         constructor(isContainer: boolean, isDS: boolean, rawAcl: System.Security.AccessControl.RawAcl);
         constructor(isContainer: boolean, isDS: boolean, revision: System.Byte, capacity: number);
+        [key: string]: any;
         BinaryLength: number;
         Count: number;
         IsCanonical: boolean;
@@ -27269,6 +27359,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class GenericAcl {
+        [key: string]: any;
         BinaryLength: number;
         Count: number;
         IsSynchronized: boolean;
@@ -27585,6 +27676,7 @@ export declare namespace System {
       export class RawAcl {
         constructor(revision: System.Byte, capacity: number);
         constructor(binaryForm: System.Byte[], offset: number);
+        [key: string]: any;
         BinaryLength: number;
         Count: number;
         Revision: System.Byte;
@@ -27733,6 +27825,7 @@ export declare namespace System {
         constructor(isContainer: boolean, isDS: boolean, capacity: number);
         constructor(isContainer: boolean, isDS: boolean, rawAcl: System.Security.AccessControl.RawAcl);
         constructor(isContainer: boolean, isDS: boolean, revision: System.Byte, capacity: number);
+        [key: string]: any;
         BinaryLength: number;
         Count: number;
         IsCanonical: boolean;
@@ -28068,6 +28161,7 @@ export declare namespace System {
           }
           export class ServiceNameElementCollection {
             constructor();
+            [key: string]: any;
             CollectionType: any; // System.Configuration.ConfigurationElementCollectionType
             Count: number;
             EmitClear: boolean;
@@ -29978,6 +30072,7 @@ export declare namespace System {
       }
       export class CngPropertyCollection {
         constructor();
+        [key: string]: any;
         Count: number;
         Add(item: System.Security.Cryptography.CngProperty): void;
         Clear(): void;
@@ -30676,6 +30771,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class ManifestSignatureInformationCollection {
+        [key: string]: any;
         Count: number;
         Contains(value: System.Security.Cryptography.ManifestSignatureInformation): boolean;
         CopyTo(array: System.Security.Cryptography.ManifestSignatureInformation[], index: number): void;
@@ -30715,6 +30811,7 @@ export declare namespace System {
       }
       export class OidCollection {
         constructor();
+        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
@@ -30752,6 +30849,7 @@ export declare namespace System {
       export class AsnEncodedDataCollection {
         constructor();
         constructor(asnEncodedData: System.Security.Cryptography.AsnEncodedData);
+        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
@@ -31160,6 +31258,7 @@ export declare namespace System {
           constructor(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2Collection);
           constructor(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2);
           constructor(certificates: System.Security.Cryptography.X509Certificates.X509Certificate2[]);
+          [key: string]: any;
           Capacity: number;
           Count: number;
           Add(certificate: System.Security.Cryptography.X509Certificates.X509Certificate2): number;
@@ -31208,6 +31307,7 @@ export declare namespace System {
           constructor();
           constructor(value: System.Security.Cryptography.X509Certificates.X509Certificate[]);
           constructor(value: System.Security.Cryptography.X509Certificates.X509CertificateCollection);
+          [key: string]: any;
           Capacity: number;
           Count: number;
           Add(value: System.Security.Cryptography.X509Certificates.X509Certificate): number;
@@ -31265,6 +31365,7 @@ export declare namespace System {
           ToString(): string;
         }
         export class X509ChainElementCollection {
+          [key: string]: any;
           Count: number;
           IsSynchronized: boolean;
           SyncRoot: any; // System.Object
@@ -31339,6 +31440,7 @@ export declare namespace System {
         }
         export class X509ExtensionCollection {
           constructor();
+          [key: string]: any;
           Count: number;
           IsSynchronized: boolean;
           SyncRoot: any; // System.Object
@@ -31635,6 +31737,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class KeyContainerPermissionAccessEntryCollection {
+        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
@@ -32099,6 +32202,7 @@ export declare namespace System {
         ToString(): string;
       }
       export class ApplicationTrustCollection {
+        [key: string]: any;
         Count: number;
         IsSynchronized: boolean;
         SyncRoot: any; // System.Object
@@ -32699,6 +32803,7 @@ export declare namespace System {
       export class IdentityReferenceCollection {
         constructor();
         constructor(capacity: number);
+        [key: string]: any;
         Count: number;
         IsReadOnly: boolean;
         Add(identity: System.Security.Principal.IdentityReference): void;
@@ -33318,6 +33423,7 @@ export declare namespace System {
       constructor(value: string, capacity: number);
       constructor(value: string, startIndex: number, length: number, capacity: number);
       constructor(capacity: number, maxCapacity: number);
+      [key: string]: any;
       Capacity: number;
       MaxCapacity: number;
       Length: number;
@@ -33657,6 +33763,7 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class CaptureCollection {
+        [key: string]: any;
         SyncRoot: any; // System.Object
         IsSynchronized: boolean;
         IsReadOnly: boolean;
@@ -33696,6 +33803,7 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class GroupCollection {
+        [key: string]: any;
         SyncRoot: any; // System.Object
         IsSynchronized: boolean;
         IsReadOnly: boolean;
@@ -33725,6 +33833,7 @@ export declare namespace System {
         GetType(): System.Type;
       }
       export class MatchCollection {
+        [key: string]: any;
         Count: number;
         SyncRoot: any; // System.Object
         IsSynchronized: boolean;

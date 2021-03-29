@@ -1,15 +1,16 @@
 import type * as React from 'react';
 import * as Reconciler from 'react-reconciler';
+import { ReactUnity } from '../../models/generated';
 import {
-    ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
-    NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
+  ChildSet, HostContext, HydratableInstance, InstanceTag, NativeContainerInstance, NativeInstance, NativeTextInstance,
+  NoTimeout, Props, PublicInstance, SuspenseInstance, TimeoutHandle, UpdatePayload
 } from '../../models/renderer';
 import { diffProperties, DiffResult } from './diffing';
 
 const hostContext = {};
 const childContext = {};
 
-function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResult | Record<string, any>, depth = 0) {
+function applyDiffedUpdate(writeTo: ReactUnity.Styling.InlineData, updatePayload: DiffResult | Record<string, any>, depth = 0) {
   if (!updatePayload) return false;
 
   if (Array.isArray(updatePayload)) {
@@ -18,7 +19,7 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
       const attr = updatePayload[index];
       const value = updatePayload[index + 1];
       if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);
-      else writeTo[attr] = value;
+      else writeTo.SetWithoutNotify(attr, value);
     }
 
     return updatePayload.length > 0;
@@ -27,7 +28,7 @@ function applyDiffedUpdate(writeTo: Record<string, any>, updatePayload: DiffResu
     for (const attr in updatePayload) {
       if (updatePayload.hasOwnProperty(attr)) {
         const value = updatePayload[attr];
-        writeTo[attr] = value;
+        writeTo.SetWithoutNotify(attr, value);
       }
     }
     return true;
@@ -65,10 +66,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
 
     if (attr === 'style') {
       if (applyDiffedUpdate(instance.Style, value)) {
-        // TODO: find better way to determine if this element needs layout/style recalculation
         instance.ResolveStyle();
-        instance.ScheduleLayout();
-        instance.ApplyLayoutStyles();
       }
       continue;
     }

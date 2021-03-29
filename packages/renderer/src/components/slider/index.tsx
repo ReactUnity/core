@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect, ReactNode, ReactElement, useRef } from 'react';
+import { ReactElement, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactUnity, UnityEngine } from '../../../models/generated';
 import { AxisEventCallback, PointerEventCallback, View } from '../../../models/runtime';
 
 export type SliderDirection = 'horizontal' | 'vertical' | 'horizontal-reverse' | 'vertical-reverse';
@@ -32,7 +33,7 @@ export function Slider({
   const crossCoordProp = orientation === 'horizontal' ? 'y' : 'x';
   const range = max - min;
 
-  const ref = useRef<any>();
+  const ref = useRef<ReactUnity.Components.ContainerComponent>();
 
   const moveStep = keyStep || step || (range / 10);
   const setValWithStep = useCallback((val: number) => {
@@ -57,7 +58,7 @@ export function Slider({
       else val += mul * diff;
     } else {
       const relPos = ref.current.GetRelativePosition(ev.position.x, ev.position.y);
-      let relRatio = (relPos[coordProp] / ref.current.GameObject.transform.rect[sizeProp]);
+      let relRatio = (relPos[coordProp] / (ref.current.GameObject.transform as UnityEngine.RectTransform).rect[sizeProp]);
       if (isReverse) relRatio = -relRatio;
       val = (relRatio + 0.5) * range + min;
     }
