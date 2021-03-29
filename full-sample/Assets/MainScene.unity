@@ -179,7 +179,7 @@ MonoBehaviour:
     SourceText: 
     ResourcesPath: 
     UseDevServer: 1
-    DevServer: http://localhost:3000
+    DevServer: http://localhost:3100
   PreloadScripts: []
 --- !u!114 &314699163
 MonoBehaviour:

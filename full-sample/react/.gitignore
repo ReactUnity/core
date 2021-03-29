@@ -56,7 +56,7 @@ build/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+# .env
 
 # Typescript v1 declaration files
 # typings/

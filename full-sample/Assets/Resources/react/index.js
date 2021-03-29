@@ -143,7 +143,7 @@ function applyDiffedUpdate(writeTo, updatePayload, depth) {
     for (var index = 0; index < updatePayload.length; index += 2) {
       var attr = updatePayload[index];
       var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo[attr] = value;
+      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
     }
 
     return updatePayload.length > 0;
@@ -151,7 +151,7 @@ function applyDiffedUpdate(writeTo, updatePayload, depth) {
     for (var attr in updatePayload) {
       if (updatePayload.hasOwnProperty(attr)) {
         var value = updatePayload[attr];
-        writeTo[attr] = value;
+        writeTo.SetWithoutNotify(attr, value);
       }
     }
 
@@ -197,10 +197,7 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
 
     if (attr === 'style') {
       if (applyDiffedUpdate(instance.Style, value)) {
-        // TODO: find better way to determine if this element needs layout/style recalculation
         instance.ResolveStyle();
-        instance.ScheduleLayout();
-        instance.ApplyLayoutStyles();
       }
 
       continue;
