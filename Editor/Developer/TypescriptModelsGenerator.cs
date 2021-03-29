@@ -105,9 +105,10 @@ namespace ReactUnity.Editor.Developer
         static HashSet<string> Imports;
         static bool ExportAsClass;
         static bool AllowGeneric;
+        static bool AllowIndexer;
 
         static void Generate(List<Assembly> assemblies, List<string> include, List<string> exclude, Dictionary<string, string> import, List<string> excludeTypes,
-            bool exportAsClass = true, bool generateGenericClasses = false)
+            bool exportAsClass = true, bool generateGenericClasses = false, bool allowIndexer = true)
         {
             var filePath = UnityEditor.EditorUtility.OpenFilePanel("Typescript file", "", "ts");
             if (string.IsNullOrWhiteSpace(filePath)) return;
@@ -119,6 +120,7 @@ namespace ReactUnity.Editor.Developer
             Imports = new HashSet<string>();
             ExportAsClass = exportAsClass;
             AllowGeneric = generateGenericClasses;
+            AllowIndexer = allowIndexer;
 
             var res = GetTypescript(assemblies);
             File.WriteAllText(filePath, res);
@@ -212,7 +214,15 @@ namespace ReactUnity.Editor.Developer
                                     !x.GetParameters().Any(p => p.ParameterType.IsByRef || p.ParameterType.IsPointer) &&
                                     !x.IsGenericMethod);
 
+                    var indexer = type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
+                        .FirstOrDefault(x => x.GetIndexParameters().Length == 1);
+
                     var methodsGrouped = methods.GroupBy(x => x.Name);
+
+
+
+                    if (AllowIndexer && indexer != null)
+                        sb.Append($"{bl1}[key: string]: any;{n}");
 
                     foreach (var info in props)
                         sb.Append($"{bl1}{getTypeScriptString(info)}{n}");
