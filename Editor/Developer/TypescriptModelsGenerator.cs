@@ -38,7 +38,7 @@ namespace ReactUnity.Editor.Developer
                 },
                 new List<string> { "Unity", "UnityEngine" },
                 new List<string> { },
-                new Dictionary<string, string> { { "System", "system" } },
+                new Dictionary<string, string> { { "System", "./system" } },
                 new List<string> { },
                 true,
                 true
@@ -54,7 +54,7 @@ namespace ReactUnity.Editor.Developer
                 },
                 new List<string> { "UnityEditor" },
                 new List<string> { "UnityEngine.InputSystem", "UnityEngine.Experimental" },
-                new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" }, { "System", "system" } },
+                new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
                 new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" },
                 true,
                 true
@@ -68,7 +68,7 @@ namespace ReactUnity.Editor.Developer
                 new List<Assembly> { typeof(ReactUnity).Assembly, typeof(TypescriptModelsGenerator).Assembly },
                 new List<string> { "ReactUnity", "Facebook.Yoga" },
                 new List<string> { "UnityEngine.InputSystem", "Unity.VectorGraphics" },
-                new Dictionary<string, string> { { "UnityEngine", "unity" }, { "Unity", "unity" }, { "System", "system" } },
+                new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
                 new List<string> { },
                 true,
                 true
@@ -98,6 +98,32 @@ namespace ReactUnity.Editor.Developer
         }
 #endif
 
+
+        [UnityEditor.MenuItem("React/Generate Project Typescript Models", priority = 0)]
+        public static void GenerateCurrentProject()
+        {
+            var compiledAssemblies = UnityEditor.Compilation.CompilationPipeline.GetAssemblies(UnityEditor.Compilation.AssembliesType.Editor);
+            var compiledAssembliesInProject = compiledAssemblies.Where(x => x.sourceFiles.All(x => x.StartsWith("Assets/")));
+            var assemblySet = new HashSet<string>(compiledAssembliesInProject.Select(x => x.name))
+            {
+                "Assembly-CSharp",
+                "Assembly-CSharp-Editor",
+            };
+
+            var defaultAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => assemblySet.Contains(x.GetName().Name)).ToList();
+            Generate(
+                defaultAssemblies,
+                null,
+                new List<string> { "UnityEngine.InputSystem", "Unity.VectorGraphics" },
+                new Dictionary<string, string> {
+                    { "UnityEngine", "@reactunity/renderer" }, { "UnityEditor", "@reactunity/renderer" }, { "Unity", "@reactunity/renderer" },
+                    { "System", "@reactunity/renderer" }, { "ReactUnity", "@reactunity/renderer" }, { "Facebook", "@reactunity/renderer" } },
+                new List<string> { },
+                true,
+                true
+            );
+        }
+
         static List<string> IncludedNamespaces;
         static List<string> ExcludedNamespaces;
         static List<string> ExcludedTypes;
@@ -115,7 +141,7 @@ namespace ReactUnity.Editor.Developer
 
             ExcludedTypes = excludeTypes;
             ImportNamespaces = import ?? new Dictionary<string, string>();
-            IncludedNamespaces = include ?? new List<string>();
+            IncludedNamespaces = include;
             ExcludedNamespaces = exclude ?? new List<string>();
             Imports = new HashSet<string>();
             ExportAsClass = exportAsClass;
@@ -130,7 +156,7 @@ namespace ReactUnity.Editor.Developer
 
         static string GetTypescript(List<Assembly> assemblies)
         {
-            var types = assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, AllowGeneric)).OrderBy(x => x.Namespace)
+            var types = assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, AllowGeneric)).OrderBy(x => x.Namespace ?? "")
                 .GroupBy(x => GetNameWithoutGenericArity(x.ToString()))
                 .Select(x => x.OrderByDescending(x => x.GetGenericArguments().Length).First())
                 .Append(null);
@@ -180,10 +206,12 @@ namespace ReactUnity.Editor.Developer
 
                 var bl = spaces();
                 var bl1 = spaces(1);
+                var isTopLevel = nsStack.Count == 0;
+                var declare = isTopLevel ? "declare " : "";
 
                 if (type.IsEnum)
                 {
-                    sb.Append($"{bl}export enum {getTypesScriptType(type, false, true)} {{{n}");
+                    sb.Append($"{bl}export {declare}enum {getTypesScriptType(type, false, true)} {{{n}");
                     var fields = type.GetFields().Where(x => x.Name != "value__");
 
                     foreach (var info in fields)
@@ -191,7 +219,7 @@ namespace ReactUnity.Editor.Developer
                 }
                 else
                 {
-                    sb.Append($"{bl}{(ExportAsClass && !type.IsInterface ? "export class" : "export interface")} {getTypesScriptType(type, false, true, AllowGeneric, " = any")} {{{n}");
+                    sb.Append($"{bl}{(ExportAsClass && !type.IsInterface ? $"export {declare}class" : $"export {declare}interface")} {getTypesScriptType(type, false, true, AllowGeneric, " = any")} {{{n}");
 
                     if (ExportAsClass)
                     {
@@ -246,7 +274,7 @@ namespace ReactUnity.Editor.Developer
                 $"// Types in assemblies: {string.Join(", ", assemblies.Select(x => x.GetName().Name))}{n}" +
                 $"// Generated {DateTime.Now}{n}" +
                 $"//{n}" +
-                $"{string.Join(n, importGroups.Select(x => $"import {{ {string.Join(",", x)} }} from './{x.Key}';"))}{n}" +
+                $"{string.Join(n, importGroups.Select(x => $"import {{ {string.Join(", ", x)} }} from '{x.Key}';"))}{n}" +
                 n +
                 sb;
         }
@@ -254,9 +282,9 @@ namespace ReactUnity.Editor.Developer
         static bool filterType(Type t, bool allowGeneric = false)
         {
             return t != null &&
-              IncludedNamespaces.Any(x => t.FullName.StartsWith(x + ".")) &&
+              (IncludedNamespaces == null || IncludedNamespaces.Any(x => t.FullName.StartsWith(x + "."))) &&
               (t.DeclaringType == null || filterType(t.DeclaringType, allowGeneric)) &&
-              (!ExcludedNamespaces.Any(x => t.Namespace.StartsWith(x))) &&
+              (!ExcludedNamespaces.Any(x => (t.Namespace ?? "").StartsWith(x))) &&
               (t.IsPublic || t.IsNestedPublic) &&
               !typeof(Attribute).IsAssignableFrom(t) &&
               !t.FullName.Contains("<") &&
@@ -475,14 +503,19 @@ namespace ReactUnity.Editor.Developer
                 return parent + "_" + type.Name;
             }
             if (!skipKnownTypes && ExcludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return "any";
-            if (IncludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return (withNs ? (type.Namespace + ".") : "") + type.Name;
+
+
+            var fullName = ((withNs && type.Namespace != null) ? (type.Namespace + ".") : "") + type.Name;
+            if (IncludedNamespaces != null && IncludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return fullName;
 
             var importing = ImportNamespaces.FirstOrDefault(x => propertyType.StartsWith(x.Key + "."));
             if (!string.IsNullOrWhiteSpace(importing.Key))
             {
                 Imports.Add(importing.Key);
-                return (withNs ? (type.Namespace + ".") : "") + type.Name;
+                return fullName;
             }
+
+            if (IncludedNamespaces == null) return fullName;
 
             return "any";
         }
