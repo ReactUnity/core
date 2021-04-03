@@ -29,8 +29,8 @@ namespace ReactUnity
             engine.SetValue("RootContainer", context.Host);
             engine.SetValue("Globals", context.Globals);
 
-            var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => beforeStart.Invoke(e) };
-            var afterStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => afterStart.Invoke(e) };
+            var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => beforeStart?.Invoke(e) };
+            var afterStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => afterStart?.Invoke(e) };
 
             engine.SetValue("addEventListener", new Action<string, Action<ReactUnityRunner>>((e, f) =>
             {
