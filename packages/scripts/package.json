@@ -28,6 +28,9 @@
     "*": {
       "editor": [
         "./lib/react-unity-editor.d.ts"
+      ],
+      "tests": [
+        "./lib/react-unity-tests.d.ts"
       ]
     }
   },
