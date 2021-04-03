@@ -7,12 +7,16 @@
   "main": "dist/index.js",
   "exports": {
     ".": "./dist/index.js",
-    "./editor": "./dist/editor.js"
+    "./editor": "./dist/editor.js",
+    "./test": "./dist/test.js"
   },
   "typesVersions": {
     "*": {
       "editor": [
         "./dist/editor.d.ts"
+      ],
+      "tests": [
+        "./dist/tests.d.ts"
       ]
     }
   },

@@ -1,6 +1,6 @@
 //
-// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.AIModule
-// Generated 29.03.2021 04:19:31
+// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.AIModule, UnityEngine.TestRunner
+// Generated 3.04.2021 19:20:20
 //
 import { System } from './system';
 
@@ -19507,6 +19507,14 @@ export declare namespace UnityEngine {
       ToString(): string;
     }
   }
+  export namespace TestRunner {
+    export interface ITestRunCallback {
+      RunStarted(testsToRun: any): void;
+      RunFinished(testResults: any): void;
+      TestStarted(test: any): void;
+      TestFinished(result: any): void;
+    }
+  }
   export namespace TestTools {
     export class CoveredSequencePoint {
       method: System.Reflection.MethodBase;
@@ -19542,6 +19550,184 @@ export declare namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export class LogAssert {
+      static ignoreFailingMessages: boolean;
+      static Expect(type: UnityEngine.LogType, message: string): void;
+      static Expect(type: UnityEngine.LogType, message: System.Text.RegularExpressions.Regex): void;
+      static NoUnexpectedReceived(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export interface IEditModeTestYieldInstruction {
+      ExpectDomainReload: boolean;
+      ExpectedPlaymodeState: boolean;
+      Perform(): System.Collections.IEnumerator;
+    }
+    export enum TestPlatform {
+      All = 255,
+      EditMode = 2,
+      PlayMode = 4,
+    }
+    export interface IOuterUnityTestAction {
+      BeforeTest(test: any): System.Collections.IEnumerator;
+      AfterTest(test: any): System.Collections.IEnumerator;
+    }
+    export interface IPostBuildCleanup {
+      Cleanup(): void;
+    }
+    export interface IPrebuildSetup {
+      Setup(): void;
+    }
+    export interface IMonoBehaviourTest {
+      IsTestFinished: boolean;
+    }
+    export class MonoBehaviourTest<T = any> {
+      constructor(dontDestroyOnLoad?: boolean);
+      component: T;
+      gameObject: UnityEngine.GameObject;
+      keepWaiting: boolean;
+      Current: any; // System.Object
+      MoveNext(): boolean;
+      Reset(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export namespace Constraints {
+      export class AllocatingGCMemoryConstraint {
+        constructor();
+        Description: string;
+        DisplayName: string;
+        Arguments: any[];
+        Builder: any; // NUnit.Framework.Constraints.ConstraintBuilder
+        And: any; // NUnit.Framework.Constraints.ConstraintExpression
+        With: any; // NUnit.Framework.Constraints.ConstraintExpression
+        Or: any; // NUnit.Framework.Constraints.ConstraintExpression
+        ApplyTo(obj: any): any;
+        ToString(): string;
+        After(delayInMilliseconds: number): any;
+        After(delayInMilliseconds: number, pollingInterval: number): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ConstraintExtensions {
+        static AllocatingGCMemory(chain: any): UnityEngine.TestTools.Constraints.AllocatingGCMemoryConstraint;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Is {
+        constructor();
+        static AllocatingGCMemory(): UnityEngine.TestTools.Constraints.AllocatingGCMemoryConstraint;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+    }
+    export namespace Utils {
+      export class ColorEqualityComparer {
+        constructor(error: number);
+        static Instance: UnityEngine.TestTools.Utils.ColorEqualityComparer;
+        Equals(expected: UnityEngine.Color, actual: UnityEngine.Color): boolean;
+        GetHashCode(color: UnityEngine.Color): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class FloatEqualityComparer {
+        constructor(allowedError: number);
+        static Instance: UnityEngine.TestTools.Utils.FloatEqualityComparer;
+        Equals(expected: number, actual: number): boolean;
+        GetHashCode(value: number): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class QuaternionEqualityComparer {
+        constructor(allowedError: number);
+        static Instance: UnityEngine.TestTools.Utils.QuaternionEqualityComparer;
+        Equals(expected: UnityEngine.Quaternion, actual: UnityEngine.Quaternion): boolean;
+        GetHashCode(quaternion: UnityEngine.Quaternion): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Utils {
+        static AreFloatsEqual(expected: number, actual: number, epsilon: number): boolean;
+        static AreFloatsEqualAbsoluteError(expected: number, actual: number, allowedAbsoluteError: number): boolean;
+        static CreatePrimitive(type: UnityEngine.PrimitiveType): UnityEngine.GameObject;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector2ComparerWithEqualsOperator {
+        static Instance: UnityEngine.TestTools.Utils.Vector2ComparerWithEqualsOperator;
+        Equals(expected: UnityEngine.Vector2, actual: UnityEngine.Vector2): boolean;
+        GetHashCode(vec2: UnityEngine.Vector2): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector2EqualityComparer {
+        constructor(error: number);
+        static Instance: UnityEngine.TestTools.Utils.Vector2EqualityComparer;
+        Equals(expected: UnityEngine.Vector2, actual: UnityEngine.Vector2): boolean;
+        GetHashCode(vec2: UnityEngine.Vector2): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector3ComparerWithEqualsOperator {
+        static Instance: UnityEngine.TestTools.Utils.Vector3ComparerWithEqualsOperator;
+        Equals(expected: UnityEngine.Vector3, actual: UnityEngine.Vector3): boolean;
+        GetHashCode(vec3: UnityEngine.Vector3): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector3EqualityComparer {
+        constructor(allowedError: number);
+        static Instance: UnityEngine.TestTools.Utils.Vector3EqualityComparer;
+        Equals(expected: UnityEngine.Vector3, actual: UnityEngine.Vector3): boolean;
+        GetHashCode(vec3: UnityEngine.Vector3): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector4ComparerWithEqualsOperator {
+        static Instance: UnityEngine.TestTools.Utils.Vector4ComparerWithEqualsOperator;
+        Equals(expected: UnityEngine.Vector4, actual: UnityEngine.Vector4): boolean;
+        GetHashCode(vec4: UnityEngine.Vector4): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector4EqualityComparer {
+        constructor(allowedError: number);
+        static Instance: UnityEngine.TestTools.Utils.Vector4EqualityComparer;
+        Equals(expected: UnityEngine.Vector4, actual: UnityEngine.Vector4): boolean;
+        GetHashCode(vec4: UnityEngine.Vector4): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
     }
   }
   export namespace tvOS {

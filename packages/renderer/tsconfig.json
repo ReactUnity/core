@@ -27,6 +27,7 @@
     "src"
   ],
   "exclude": [
-    "models/editor"
+    "models/editor",
+    "models/tests"
   ]
 }
