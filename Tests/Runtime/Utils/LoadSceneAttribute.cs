@@ -16,7 +16,7 @@ namespace ReactUnity.Tests.Utils
 
         public virtual IEnumerator BeforeTest(ITest test)
         {
-            Debug.Assert(scene.EndsWith(".unity"));
+            Debug.Assert(scene.EndsWith(".unity"), "The scene file must be an absolue path ending with .unity");
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(scene, new LoadSceneParameters(LoadSceneMode.Single));
         }
 
