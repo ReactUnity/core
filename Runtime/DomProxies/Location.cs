@@ -14,6 +14,7 @@ namespace ReactUnity.DomProxies
         public string host { get; }
         public string port { get; }
         public string search { get; }
+        public string hash { get; }
         public string pathname { get; }
         private Action restart { get; }
 
@@ -23,6 +24,15 @@ namespace ReactUnity.DomProxies
         {
             this.ctx = ctx;
             var href = ctx.Script.SourceLocation;
+
+            var hashSplit = href.Split('#');
+            var hashless = hashSplit[0];
+            var hash = hashSplit.Length > 1 ? "#" + hashSplit[1] : "";
+
+            var searchSplit = hashless.Split('?');
+            var searchless = searchSplit[0];
+            var search = searchSplit.Length > 1 ? "?" + searchSplit[1] : "";
+
             var hrefSplit = href.Split(new string[] { "//" }, 2, StringSplitOptions.None);
 
             var protocol = hrefSplit.Length > 1 ? hrefSplit.First() : null;
@@ -44,7 +54,8 @@ namespace ReactUnity.DomProxies
             this.origin = origin;
             this.host = host;
             this.port = port;
-            this.search = "";
+            this.search = search;
+            this.hash = hash;
             this.pathname = pathName;
             this.restart = ctx.OnRestart;
         }

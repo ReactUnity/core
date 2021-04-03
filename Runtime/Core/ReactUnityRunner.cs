@@ -1,4 +1,6 @@
 using Esprima;
+using Jint.Native;
+using Jint.Native.Function;
 using Jint.Runtime;
 using Jint.Runtime.Interop;
 using ReactUnity.DomProxies;
@@ -22,12 +24,14 @@ namespace ReactUnity
 
             context = ctx;
             if (engine == null) CreateBaseEngine();
+            engine.SetValue("Context", context);
+            engine.SetValue("RootContainer", context.Host);
+            engine.SetValue("Globals", context.Globals);
             CreateLocation(engine);
             CreateConsole(engine);
             CreateLocalStorage(engine);
             CreateScheduler(engine, context);
-            engine.SetValue("RootContainer", context.Host);
-            engine.SetValue("Globals", context.Globals);
+            CreatePolyfills(engine);
 
             var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => beforeStart?.Invoke(e) };
             var afterStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => afterStart?.Invoke(e) };
@@ -115,11 +119,6 @@ namespace ReactUnity
             engine.SetValue("UnityEditor", new NamespaceReference(engine, "UnityEditor"));
 #endif
 
-            // Load polyfills
-            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
-            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
-            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
-
             engine.SetValue("Unity", new ReactUnityAPI());
         }
 
@@ -128,6 +127,14 @@ namespace ReactUnity
             var console = new ConsoleProxy(context);
 
             engine.SetValue("console", console);
+        }
+
+        void CreatePolyfills(Jint.Engine engine)
+        {
+            // Load polyfills
+            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
+            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
+            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
         }
 
         void CreateScheduler(Jint.Engine engine, ReactContext context)
@@ -155,13 +162,13 @@ namespace ReactUnity
             var location = new DomProxies.Location(context);
             engine.SetValue("location", location);
 
-#if UNITY_EDITOR || REACT_DEV_SERVER_API
-            engine.SetValue("ctx", context);
-            engine.SetValue("oldWebSocket", typeof(WebSocketProxy));
-            engine.Execute(@"WebSocket = function() { return new oldWebSocket(ctx, ...arguments); }");
-            engine.SetValue("oldXMLHttpRequest", typeof(XMLHttpRequest));
+            engine.Execute(@"WebSocket = function() { return new WebSocket.original(Context, ...arguments); }");
             engine.Execute(@"XMLHttpRequest = function() { return new oldXMLHttpRequest('" + location.origin + @"'); }");
-#endif
+            (engine.GetValue(@"WebSocket") as FunctionInstance)
+                .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(JsValue.FromObject(engine, typeof(WebSocketProxy)), false, false, false));
+            (engine.GetValue(@"XMLHttpRequest") as FunctionInstance)
+                .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(JsValue.FromObject(engine, typeof(XMLHttpRequest)), false, false, false));
+
             engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, location.origin));
         }
     }

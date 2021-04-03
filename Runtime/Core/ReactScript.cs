@@ -56,6 +56,11 @@ namespace ReactUnity
             return path;
         }
 
+        private string StripHashAndSearch(string url)
+        {
+            return url.Split('#')[0].Split('?')[0];
+        }
+
         public IDisposable GetScript(Action<string, bool> callback, IDispatcher dispatcher = null, bool useDevServer = true, bool disableWarnings = false)
         {
 #if UNITY_EDITOR || REACT_DEV_SERVER_API
@@ -84,7 +89,7 @@ namespace ReactUnity
 #if !REACT_FILE_API
                     if(!disableWarnings) Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
 #endif
-                    callback(System.IO.File.ReadAllText(SourcePath), false);
+                    callback(System.IO.File.ReadAllText(StripHashAndSearch(SourcePath)), false);
                     break;
 #else
                     throw new Exception("REACT_FILE_API must be defined to use File API outside the editor. Add REACT_FILE_API to build symbols to use this feature.");
@@ -102,7 +107,7 @@ namespace ReactUnity
                     throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
 #endif
                 case ScriptSource.Resource:
-                    var asset = Resources.Load(SourcePath) as TextAsset;
+                    var asset = Resources.Load(StripHashAndSearch(SourcePath)) as TextAsset;
                     if (asset) callback(asset.text, false);
                     else callback(null, false);
                     break;
