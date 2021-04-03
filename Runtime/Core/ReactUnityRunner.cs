@@ -1,58 +1,59 @@
 using Esprima;
 using Jint.Runtime;
-using Jint.Runtime.Descriptors;
 using Jint.Runtime.Interop;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Interop;
-using ReactUnity.Styling.Types;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ReactUnity
 {
     public class ReactUnityRunner
     {
-        private Jint.Engine engine;
-        private ReactContext context;
+        public Jint.Engine engine { get; private set; }
+        public ReactContext context { get; private set; }
 
-        public void RunScript(string script, ReactContext ctx, List<TextAsset> preload = null, Action callback = null)
+        public void RunScript(string script, ReactContext ctx, UnityEvent<ReactUnityRunner> beforeStart = null, UnityEvent<ReactUnityRunner> afterStart = null)
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
             context = ctx;
-            if (engine == null) CreateEngine();
+            if (engine == null) CreateBaseEngine();
             CreateLocation(engine);
-
-            List<Action> callbacks = new List<Action>() { callback };
-
-            engine.SetValue("addEventListener", new Action<string, Action>((e, f) =>
-            {
-                if (e == "DOMContentLoaded") callbacks.Add(f);
-            }));
-
-            engine.SetValue("Unity", new ReactUnityAPI());
+            CreateConsole(engine);
+            CreateLocalStorage(engine);
+            CreateScheduler(engine, context);
             engine.SetValue("RootContainer", context.Host);
             engine.SetValue("Globals", context.Globals);
+
+            var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => beforeStart.Invoke(e) };
+            var afterStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => afterStart.Invoke(e) };
+
+            engine.SetValue("addEventListener", new Action<string, Action<ReactUnityRunner>>((e, f) =>
+            {
+                if (e == "DOMContentLoaded") afterStartCallbacks.Add(f);
+            }));
+
             try
             {
-                if (preload != null) preload.ForEach(x => engine.Execute(x.text));
+                beforeStartCallbacks.ForEach(x => x?.Invoke(this));
                 engine.Execute(script);
-                callbacks.ForEach(x => x?.Invoke());
+                afterStartCallbacks.ForEach(x => x?.Invoke(this));
             }
             catch (ParserException ex)
             {
                 Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
                 Debug.LogException(ex);
             }
-            catch (Jint.Runtime.JavaScriptException ex)
+            catch (JavaScriptException ex)
             {
                 Debug.LogError($"JS exception in line {ex.LineNumber} column {ex.Column}");
                 Debug.LogException(ex);
             }
-            catch (Jint.Runtime.JintException ex)
+            catch (JintException ex)
             {
                 Debug.LogException(ex);
             }
@@ -67,19 +68,19 @@ namespace ReactUnity
             engine.Execute(script);
         }
 
-        void CreateEngine()
+        void CreateBaseEngine()
         {
             engine = new Jint.Engine(x =>
             {
                 x.AllowClr(
-                    typeof(System.Convert).Assembly,
+                    typeof(Convert).Assembly,
 #if UNITY_EDITOR
                     typeof(UnityEditor.EditorWindow).Assembly,
-                    typeof(UnityEngine.GUILayout).Assembly,
+                    typeof(GUILayout).Assembly,
                     typeof(UnityEngine.UIElements.StyleLength).Assembly,
 #endif
-                    typeof(UnityEngine.Vector3).Assembly,
-                    typeof(UnityEngine.Component).Assembly,
+                    typeof(Vector3).Assembly,
+                    typeof(Component).Assembly,
                     typeof(ReactUnityRunner).Assembly
                 );
                 x.CatchClrExceptions(ex =>
@@ -100,10 +101,6 @@ namespace ReactUnity
             engine.SetValue("Engine", engine);
             engine.SetValue("Callback", typeof(Callback));
 
-            CreateConsole(engine);
-            CreateLocalStorage(engine);
-            CreateScheduler(engine, context);
-
             engine.SetValue("importType", new ClrFunctionInstance(
                 engine,
                 "importType",
@@ -111,17 +108,19 @@ namespace ReactUnity
                     ReflectionHelpers.FindType(TypeConverter.ToString(arguments.At(0)),
                     arguments.Length > 1 ? TypeConverter.ToBoolean(arguments.At(1)) : false))));
 
-            engine.SetValue("UnityEngine", new Jint.Runtime.Interop.NamespaceReference(engine, "UnityEngine"));
-            engine.SetValue("ReactUnity", new Jint.Runtime.Interop.NamespaceReference(engine, "ReactUnity"));
-            engine.SetValue("Facebook", new Jint.Runtime.Interop.NamespaceReference(engine, "Facebook"));
+            engine.SetValue("UnityEngine", new NamespaceReference(engine, "UnityEngine"));
+            engine.SetValue("ReactUnity", new NamespaceReference(engine, "ReactUnity"));
+            engine.SetValue("Facebook", new NamespaceReference(engine, "Facebook"));
 #if UNITY_EDITOR
-            engine.SetValue("UnityEditor", new Jint.Runtime.Interop.NamespaceReference(engine, "UnityEditor"));
+            engine.SetValue("UnityEditor", new NamespaceReference(engine, "UnityEditor"));
 #endif
 
             // Load polyfills
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
+
+            engine.SetValue("Unity", new ReactUnityAPI());
         }
 
         void CreateConsole(Jint.Engine engine)

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using ReactUnity.Styling.Types;
+using UnityEngine.Events;
 
 namespace ReactUnity
 {
@@ -17,19 +18,24 @@ namespace ReactUnity
         public StringObjectDictionary Globals = new StringObjectDictionary();
         public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index" };
         private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
-        public List<TextAsset> PreloadScripts = new List<TextAsset>();
 
         private UGUIContext ctx;
-#pragma warning disable IDE0052 // Remove unread private members
         private IDisposable ScriptWatchDisposable { get; set; }
         private IDispatcher dispatcher { get; set; }
         private ReactUnityRunner runner { get; set; }
-#pragma warning restore IDE0052 // Remove unread private members
         public RectTransform Root => transform as RectTransform;
+
+        #region Advanced Options
+
+        [HideInInspector] public bool AutoRender = true;
+        [HideInInspector] public UnityEvent<ReactUnityRunner> BeforeStart;
+        [HideInInspector] public UnityEvent<ReactUnityRunner> AfterStart;
+
+        #endregion
 
         void OnEnable()
         {
-            Restart();
+            if (AutoRender) Render();
         }
 
         void OnDisable()
@@ -59,40 +65,30 @@ namespace ReactUnity
             ScriptWatchDisposable = null;
         }
 
-        private IDisposable LoadAndRun(ReactScript script, List<TextAsset> preload, Action callback = null, bool disableWarnings = false)
+        private IDisposable LoadAndRun(ReactScript script, bool disableWarnings = false)
         {
             dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
             runner = new ReactUnityRunner();
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
-                ctx = new UGUIContext(Root, Globals, script, dispatcher, new UnityScheduler(dispatcher), isDevServer, Restart);
-                runner.RunScript(code, ctx, preload, callback);
+                ctx = new UGUIContext(Root, Globals, script, dispatcher, new UnityScheduler(dispatcher), isDevServer, Render);
+                runner.RunScript(code, ctx, BeforeStart, AfterStart);
             }, dispatcher, true, disableWarnings);
 
             return watcherDisposable;
         }
 
         [ContextMenu("Restart")]
-        public void Restart()
+        public void Render()
         {
             Clean();
-            ScriptWatchDisposable = LoadAndRun(Script, PreloadScripts, null, false);
+            ScriptWatchDisposable = LoadAndRun(Script, false);
         }
 
         private void Test(bool debug = false)
         {
-            var preload = new List<TextAsset>(PreloadScripts);
-            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/socket"));
-            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/karma"));
-            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/context"));
-            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/mocha"));
-            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/mocha-adapter"));
-            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/chai"));
-            preload.Add(Resources.Load<TextAsset>("ReactUnity/test/chai-adapter"));
-            if (debug) preload.Add(Resources.Load<TextAsset>("ReactUnity/test/debug"));
-
             Clean();
-            ScriptWatchDisposable = LoadAndRun(TestScript, preload, null, true);
+            ScriptWatchDisposable = LoadAndRun(TestScript, true);
         }
 
         [ContextMenu("Test")]

@@ -28,6 +28,7 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.Analytics.Analytics).Assembly,
                     typeof(UnityEngine.UIElements.VisualElement).Assembly,
                     typeof(UnityEngine.AI.NavMesh).Assembly,
+                    typeof(UnityEngine.TestTools.LogAssert).Assembly,
                     //#if REACT_INPUT_SYSTEM
                     //                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
                     //                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
@@ -133,7 +134,7 @@ namespace ReactUnity.Editor.Developer
         static bool AllowGeneric;
         static bool AllowIndexer;
 
-        static void Generate(List<Assembly> assemblies, List<string> include, List<string> exclude, Dictionary<string, string> import, List<string> excludeTypes,
+        public static void Generate(List<Assembly> assemblies, List<string> include, List<string> exclude, Dictionary<string, string> import, List<string> excludeTypes,
             bool exportAsClass = true, bool generateGenericClasses = false, bool allowIndexer = true)
         {
             var filePath = UnityEditor.EditorUtility.OpenFilePanel("Typescript file", "", "ts");
