@@ -77,6 +77,5 @@ jobs:
         if: always() && matrix.suite.coverage
         uses: codecov/codecov-action@v1
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./tests/CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,./tests/CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
           flags: unittests
