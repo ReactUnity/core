@@ -29,15 +29,14 @@ jobs:
           - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true }
           - { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false }
     steps:
-      - name: Checkout core repo
+      - name: Checkout core library
         uses: actions/checkout@v2
         with:
-          lfs: true
           path: core
-      - name: Checkout tests repo
+      - name: Checkout test project
         uses: actions/checkout@v2
         with:
-          repository: ReactUnity/tests
+          ref: tests
           path: tests
       - name: Cache Unity Library
         uses: actions/cache@v2
@@ -48,7 +47,7 @@ jobs:
             Library-
       - name: Clear React Unity package lock
         run: echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.core"])') > tests/Packages/packages-lock.json
-      - name: Install the revision which triggered this event
+      - name: Install local React Unity package
         run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.core"]="file:../../core"') > tests/Packages/manifest.json
       - name: Run Unity Tests
         uses: game-ci/unity-test-runner@v2
