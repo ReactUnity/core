@@ -1,0 +1,24 @@
+name: Trigger tests
+on:
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.PUBLIC_REPO_PAT }}
+          repository: ReactUnity/tests
+          event-type: run-tests
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
