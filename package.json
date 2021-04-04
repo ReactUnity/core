@@ -13,13 +13,7 @@
   ],
   "category": "UI",
   "type": "library",
-  "samples": [
-    {
-      "displayName": "Base Sample",
-      "description": "A sample demonstrating simple components built with React Unity",
-      "path": "Samples~/BaseSample"
-    }
-  ],
+  "samples": [],
   "dependencies": {
     "com.unity.editorcoroutines": ""
   }

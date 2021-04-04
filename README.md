@@ -2,11 +2,10 @@
 
 [![openupm](https://img.shields.io/npm/v/com.reactunity.core?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/com.reactunity.core/)
 [![GitHub Wiki](https://img.shields.io/badge/wiki-available-brightgreen.svg)](https://github.com/ReactUnity/core/wiki)
+[![Tests](https://github.com/ReactUnity/tests/actions/workflows/test.yml/badge.svg)](https://github.com/ReactUnity/tests/actions/workflows/test.yml)
 
 React Unity is a way to build interactive UI in Unity3D using React. It can be used together with packages like Typescript, redux, i18next, react-router and more.
-It also supports a subset of CSS features and Flex layout system. 
-
-> Please feel free to share all your questions, proposals and feedbacks by opening issues. This package is in its early stages and looking for constructive feedback.
+It also supports a subset of CSS features and Flex layout system.
 
 ## Requirements
 
@@ -33,18 +32,19 @@ npx openupm-cli add com.reactunity.core
 - Create a canvas and add `ReactUnity` component to it
 - Run `npm init @reactunity` in your Unity project root to create a React project
 - Run `npm start` from React project
-- Click play
+- Click play in Unity
 
-Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki). Also check the [sample projects](https://github.com/search?q=topic%3Asample-project+org%3AReactUnity&type=Repositories).
+Read the detailed instructions in [wiki](https://github.com/ReactUnity/core/wiki). Also check the [sample project](https://github.com/ReactUnity/samples).
 
 ## Known Issues
 
 - Not well tested yet
 
+> Feel free to share all your questions, proposals and feedbacks by opening issues. This package is in its early stages and looking for constructive feedback.
+
 ## Resources and References
 
-- [Sample Project 1](https://github.com/ReactUnity/full-sample) and [Demo 1](https://reactunity.github.io/)
-- [Sample Project 2](https://github.com/ReactUnity/samples) and [Demo 2](https://reactunity.github.io/samples)
+- [Sample Project](https://github.com/ReactUnity/samples) and [Demo](https://reactunity.github.io/samples)
 - [React Unity Renderer (npm package)](https://github.com/ReactUnity/renderer)
 - [`npm init @reactunity`](https://github.com/ReactUnity/create)
 - 3rd party dependencies
