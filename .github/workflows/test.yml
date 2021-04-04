@@ -57,7 +57,7 @@ jobs:
         with:
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          customParameters: ${{ matrix.suite.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity.*,+ReactUnity.Tests,+ReactUnity.Editor.Tests' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
+          customParameters: ${{ matrix.suite.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity,+ReactUnity.*' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
           checkName: ${{ matrix.suite.name }} results
           projectPath: tests
       - name: Upload Test Result Artifacts
