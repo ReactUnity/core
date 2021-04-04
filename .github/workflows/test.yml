@@ -1,0 +1,82 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - '**'
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.vscode/**'
+  pull_request:
+    branches: [ main ]
+  repository_dispatch:
+    types: [run-tests]
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: ${{ matrix.suite.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2020.3.0f1
+        targetPlatform:
+          - StandaloneWindows64
+        suite:
+          - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true }
+          - { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false }
+    steps:
+      - name: Checkout core repo
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          path: core
+      - name: Checkout tests repo
+        uses: actions/checkout@v2
+        with:
+          repository: ReactUnity/tests
+          path: tests
+      - name: Cache Unity Library
+        uses: actions/cache@v2
+        with:
+          path: tests/Library
+          key: Library-${{ matrix.targetPlatform }}-${{ matrix.unityVersion }}
+          restore-keys: |
+            Library-
+      - name: Clear React Unity package lock
+        run: echo $(cat tests/Packages/packages-lock.json | jq 'del(.dependencies["com.reactunity.core"])') > tests/Packages/packages-lock.json
+      - name: Install the revision which triggered this event
+        run: echo $(cat tests/Packages/manifest.json | jq '.dependencies["com.reactunity.core"]="file:../../core"') > tests/Packages/manifest.json
+      - name: Run Unity Tests
+        uses: game-ci/unity-test-runner@v2
+        id: testRunner
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          customParameters: ${{ matrix.suite.coverage && '-enableCodeCoverage -debugCodeOptimization -coverageOptions assemblyFilters:+ReactUnity.*,+ReactUnity.Tests,+ReactUnity.Editor.Tests' || '' }} -assemblyNames ${{ matrix.suite.assemblies }}
+          checkName: ${{ matrix.suite.name }} results
+          projectPath: tests
+      - name: Upload Test Result Artifacts
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: ${{ matrix.suite.name }} results
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+      - name: Upload Code Coverage Artifacts
+        uses: actions/upload-artifact@v2
+        if: always() && matrix.suite.coverage
+        with:
+          name: ${{ matrix.suite.name }} coverage
+          path: tests/CodeCoverage
+      - name: Upload Coverage to codecov
+        if: always() && matrix.suite.coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: .tests/CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,.tests/CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
+          flags: unittests
