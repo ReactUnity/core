@@ -11,7 +11,7 @@ namespace ReactUnity.Tests.Utils
     {
         protected string Script;
 
-        public ReactTestAttribute(string script = "Packages/com.reactunity.core/Tests/Runtime/.scripts/tests/index.js", string customScene = null) :
+        public ReactTestAttribute(string script, string customScene = null) :
             base(customScene ?? "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity")
         {
             Script = script;

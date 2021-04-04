@@ -10,7 +10,9 @@ namespace ReactUnity.Tests
     [TestFixture]
     public class BaseTest
     {
-        [UnityTest, ReactTest]
+        public const string TestPath = "Packages/com.reactunity.core/Tests/Runtime/.scripts/tests/index.js";
+
+        [UnityTest, ReactTest(TestPath)]
         public IEnumerator HelloWorldTestPasses()
         {
             yield return null;
