@@ -1,12 +1,15 @@
 using NUnit.Framework;
 using ReactUnity.Editor.Developer;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace ReactUnity.Editor.Tests.Developer
 {
+    [ExcludeFromCodeCoverage]
     public static class TestTypescriptModels
     {
+#if REACT_UNITY_DEVELOPER
         [UnityEditor.MenuItem("React/Developer/Generate NUnit Typescript Models", priority = 0)]
         public static void GenerateEditor()
         {
@@ -22,6 +25,6 @@ namespace ReactUnity.Editor.Tests.Developer
                 true
             );
         }
-
+#endif
     }
 }

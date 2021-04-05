@@ -4,9 +4,11 @@ using System.Reflection;
 using System;
 using System.Text;
 using System.IO;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ReactUnity.Editor.Developer
 {
+    [ExcludeFromCodeCoverage]
     public static class TypescriptModelsGenerator
     {
 #if REACT_UNITY_DEVELOPER
@@ -374,7 +376,14 @@ namespace ReactUnity.Editor.Developer
             var typeString = getTypesScriptType(info.ParameterType, true, false, allowGeneric);
             var isParams = info.GetCustomAttribute(typeof(ParamArrayAttribute), false) != null;
 
-            var keywords = new HashSet<string> { "arguments", "function", "finally" };
+            var keywords = new HashSet<string> {
+                "arguments", "function", "finally", "import", "export", "debugger",
+                "const", "super", "extends", "implements", "instanceof", "typeof", "with",
+                "new", "class", "throw", "catch", "if", "else", "do", "while", "for", "switch",
+                "return", "this", "var", "true", "false", "void", "default", "case", "break",
+                "continue", "enum", "null", "delete", "as", "public", "let", "package",
+                "interface", "static", "private", "protected", "yield", "declare",
+            };
 
             return string.Format("{3}{0}{2}: {1}",
                 keywords.Contains(info.Name) ? info.Name + "CS" : info.Name,
