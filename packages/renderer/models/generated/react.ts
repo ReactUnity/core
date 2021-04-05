@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 29.03.2021 04:19:43
+// Generated 5.04.2021 16:43:19
 //
 import { System } from './system';
 import { UnityEngine } from './unity';
@@ -482,8 +482,10 @@ export declare namespace ReactUnity {
     hideFlags: UnityEngine.HideFlags;
     Globals: ReactUnity.Types.StringObjectDictionary;
     Script: ReactUnity.ReactScript;
-    PreloadScripts: UnityEngine.TextAsset[];
-    Restart(): void;
+    AutoRender: boolean;
+    BeforeStart: UnityEngine.Events.UnityEvent<ReactUnity.ReactUnityRunner>;
+    AfterStart: UnityEngine.Events.UnityEvent<ReactUnity.ReactUnityRunner>;
+    Render(): void;
     Test(): void;
     TestDebug(): void;
     IsInvoking(): boolean;
@@ -551,7 +553,9 @@ export declare namespace ReactUnity {
   }
   export class ReactUnityRunner {
     constructor();
-    RunScript(script: string, ctx: ReactUnity.ReactContext, preload?: UnityEngine.TextAsset[], callback?: (() => void)): void;
+    engine: any; // Jint.Engine
+    context: ReactUnity.ReactContext;
+    RunScript(script: string, ctx: ReactUnity.ReactContext, beforeStart?: UnityEngine.Events.UnityEvent<ReactUnity.ReactUnityRunner>, afterStart?: UnityEngine.Events.UnityEvent<ReactUnity.ReactUnityRunner>): void;
     ExecuteScript(script: string): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -1951,6 +1955,7 @@ export declare namespace ReactUnity {
       host: string;
       port: string;
       search: string;
+      hash: string;
       pathname: string;
       reload(): void;
       Equals(obj: any): boolean;
@@ -2770,6 +2775,7 @@ export declare namespace ReactUnity {
         static GenerateReactUnity(): void;
         static GenerateSystem(): void;
         static GenerateCurrentProject(): void;
+        static Generate(assemblies: System.Reflection.Assembly[], include: string[], exclude: string[], importCS: any, excludeTypes: string[], exportAsClass?: boolean, generateGenericClasses?: boolean, allowIndexer?: boolean): void;
         static GetNameWithoutGenericArity(name: string): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
