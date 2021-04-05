@@ -65,3 +65,6 @@ debug.log
 
 QuickSearch.settings
 Search.settings
+
+/[Cc]ode[Cc]overage/
+TestResults-*.xml
