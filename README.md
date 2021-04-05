@@ -20,7 +20,7 @@ Node is only used while developing and not required in runtime or after the proj
 **Install via OpenUPM (recommended)**
 
 ```
-npx -p openupm-cli openupm add com.reactunity.core
+npx -p openupm-cli openupm add com.reactunity.core com.unity.editorcoroutines
 ```
 
 **Or add using the package manager with the git URL**
