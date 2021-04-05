@@ -1,6 +1,5 @@
 ﻿using System;
 using AOT;
-using System.Runtime.InteropServices; // for DllImport
 using UnityEngine;
 
 namespace ReactUnity.WebSupport

@@ -1,9 +1,6 @@
-using Jint;
-using Jint.Native;
 using ReactUnity.Styling.Types;
 using System.Collections;
 using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Parsers

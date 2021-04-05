@@ -1,4 +1,3 @@
-using ReactUnity.Interop;
 using UnityEngine;
 using UnityEngine.UI;
 

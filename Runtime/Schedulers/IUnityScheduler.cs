@@ -1,6 +1,5 @@
 
 using ReactUnity.Interop;
-using System;
 
 namespace ReactUnity.Schedulers
 {

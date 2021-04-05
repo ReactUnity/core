@@ -1,7 +1,5 @@
-using ReactUnity.Interop;
 using System;
 using System.Linq;
-using UnityEngine;
 
 namespace ReactUnity.DomProxies
 {

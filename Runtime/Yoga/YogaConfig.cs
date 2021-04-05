@@ -6,7 +6,6 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 
 #if __IOS__
 using ObjCRuntime;

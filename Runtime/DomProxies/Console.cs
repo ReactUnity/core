@@ -1,6 +1,3 @@
-
-using Jint;
-using ReactUnity.Interop;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;

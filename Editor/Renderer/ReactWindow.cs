@@ -1,9 +1,7 @@
-using ReactUnity.Interop;
 using ReactUnity.Schedulers;
 using ReactUnity.Types;
 using System;
 using UnityEditor;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Renderer

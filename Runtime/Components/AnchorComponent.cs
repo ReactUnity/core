@@ -1,12 +1,8 @@
-using Facebook.Yoga;
-using Jint.Native.Function;
 using ReactUnity.EventHandlers;
 using ReactUnity.Styling;
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {

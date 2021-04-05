@@ -1,10 +1,7 @@
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Helpers;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor.UIElements;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Components

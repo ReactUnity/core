@@ -1,4 +1,3 @@
-using ReactUnity.Interop;
 using ReactUnity.Styling;
 using System;
 using System.Collections;

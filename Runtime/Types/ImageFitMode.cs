@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-
 namespace ReactUnity.Types
 {
     public enum ImageFitMode

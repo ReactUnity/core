@@ -1,10 +1,8 @@
 using Facebook.Yoga;
-using Jint.Native.Function;
 using ReactUnity.Helpers;
 using ReactUnity.Interop;
 using ReactUnity.Styling;
 using ReactUnity.Types;
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

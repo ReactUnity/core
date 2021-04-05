@@ -1,9 +1,6 @@
 using Facebook.Yoga;
-using Jint.Native;
-using Jint.Native.Function;
 using ReactUnity.Interop;
 using ReactUnity.Styling;
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
