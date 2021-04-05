@@ -18,12 +18,6 @@ namespace Facebook.Yoga
         private const string DllName = "yoga";
 #endif
 
-#if (!UNITY_WEBGL && !UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGInteropSetLogger(
-            [MarshalAs(UnmanagedType.FunctionPtr)] YogaLogger logger);
-#endif
-
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern YGNodeHandle YGNodeNew();
 
