@@ -10,18 +10,21 @@ If you want to add ReactUnity to an existing Unity project:
 
 If you want to create full Unity app from scratch:
 
-`npm init @reactunity -u`
+`npm init @reactunity -- -u`
 
 Create the React project in a custom folder:
 
 `npm init @reactunity custom/folder/path`
 
-#### Options:
+### Options
+
+Options can be used like: `npm init @reactunity -- <options>`
 
 ```
-  -i, --install [npm|yarn]   Run 'npm install' or 'yarn install'.
   -u, --unity                Creates Unity project from scratch and adds React project into it
   -e, --editor               Create React Unity Editor project
+  -i, --install [npm|yarn]   Run 'npm install' or 'yarn install'.
+  -h, --help                 Print help
 ```
 
 ## Commands
