@@ -15,6 +15,6 @@
   "type": "library",
   "samples": [],
   "dependencies": {
-    "com.unity.editorcoroutines": ""
+    "com.unity.editorcoroutines": "1.0.0"
   }
 }
