@@ -37,7 +37,7 @@ var connection = new WebSocket(
 // Unlike WebpackDevServer client, we won't try to reconnect
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
-connection.onclose = function () {
+connection.onclose = function (e) {
   if (e.reason !== 'hardReload') {
     if (typeof console !== 'undefined' && typeof console.info === 'function') {
       console.info(
@@ -144,7 +144,20 @@ function handleAvailableHash(hash) {
 
 // Handle messages from the server.
 connection.onmessage = function (e) {
-  var message = JSON.parse(e.Data);
+  var message;
+  try {
+    message = JSON.parse(e.data);
+  } catch (err) {
+    // Jint fails at parsing data in WebGL builds, hence the hack...
+    if (e.data.includes('{"type":"ok"}')) {
+      if (!isFirstCompilation) {
+        hardReload();
+      } else {
+        isFirstCompilation = false;
+      }
+    }
+    return;
+  }
   switch (message.type) {
     case 'hash':
       handleAvailableHash(message.data);
