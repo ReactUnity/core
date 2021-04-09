@@ -126,6 +126,30 @@ module.exports = function (proxy, allowedHost) {
         // This registers user provided middleware for proxy reasons
         require(paths.proxySetup)(app);
       }
+
+      // Allow serving Unity builds
+      function contentEncodingShorthand(path, encoding) {
+        app.get(path, function (req, res, next) {
+          res.set('Content-Encoding', encoding);
+          next();
+        });
+      }
+
+      function contentTypeShorthand(path, type) {
+        app.get(path, function (req, res, next) {
+          res.set('Content-Type', type);
+          next();
+        });
+      }
+
+      contentEncodingShorthand('*.unityweb', 'gzip');
+      contentEncodingShorthand('*.gz', 'gzip');
+      contentEncodingShorthand('*.br', 'br');
+      contentTypeShorthand('*.js.gz', 'application/javascript');
+      contentTypeShorthand('*.js.br', 'application/javascript');
+      contentTypeShorthand('*.wasm', 'application/wasm');
+      contentTypeShorthand('*.wasm.gz', 'application/wasm');
+      contentTypeShorthand('*.wasm.br', 'application/wasm');
     },
     after(app) {
       // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
