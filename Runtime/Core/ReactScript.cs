@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using UnityEngine;
+#if UNITY_WEBGL && !UNITY_EDITOR
+using System.Text.RegularExpressions;
+#endif
 
 namespace ReactUnity
 {
@@ -37,7 +40,23 @@ namespace ReactUnity
 #if UNITY_EDITOR || REACT_DEV_SERVER_API
                 if (UseDevServer && !string.IsNullOrWhiteSpace(DevServer)) return DevServerFile;
 #endif
-                return GetResolvedSourcePath();
+
+                var href = GetResolvedSourcePath();
+#if UNITY_WEBGL && !UNITY_EDITOR
+                var abs = UnityEngine.Application.absoluteURL;
+                if (!href.StartsWith("http") && abs != null)
+                {
+                    var parsed = new Regex(@"^(.*:)//([A-Za-z0-9\-\.]+)(:[0-9]+)?(.*)$").Match(abs);
+
+                    var parsedProto = parsed.Groups[1].Value;
+                    var parsedHost = parsed.Groups[2].Value;
+                    var parsedPort = parsed.Groups[3].Value;
+
+                    href = parsedProto + "//" + parsedHost + parsedPort + "/" + new Regex("^/").Replace(href, "");
+                }
+#endif
+
+                return href;
             }
         }
 

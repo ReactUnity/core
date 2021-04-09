@@ -1,4 +1,5 @@
 using ExCSS;
+using ReactUnity.DomProxies;
 using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
@@ -24,6 +25,7 @@ namespace ReactUnity
         public IUnityScheduler Scheduler { get; }
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
+        public Location Location { get; }
 
         protected bool LayoutScheduled = false;
 
@@ -47,6 +49,7 @@ namespace ReactUnity
             Dispatcher = dispatcher;
             OnRestart = onRestart ?? (() => { });
             this.mergeLayouts = mergeLayouts;
+            Location = new Location(this);
 
             Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
@@ -85,7 +88,12 @@ namespace ReactUnity
         public virtual string ResolvePath(string path)
         {
             if (IsDevServer) return Script.DevServerFile + path;
-            var res = Path.GetDirectoryName(Script.GetResolvedSourcePath()) + path;
+
+            var source = Script.SourceLocation;
+            var lastSlash = source.LastIndexOfAny(new[] { '/', '\\' });
+            var parent = source.Substring(0, lastSlash);
+
+            var res = parent + path;
             if (Script.ScriptSource == ScriptSource.Resource) return GetResourceUrl(res);
             return res;
         }

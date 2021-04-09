@@ -13,6 +13,7 @@ namespace ReactUnity.Styling.Parsers
         private static Regex ResourceRegex = new Regex("^res(ources?)?://");
         private static Regex FileRegex = new Regex("^file://");
         private static Regex HttpRegex = new Regex("^https?://");
+        private static Regex PathRegex = new Regex("^/");
         private static IStyleConverter ColorConverter = ParserMap.ColorConverter;
 
         public object Convert(object value)
@@ -32,6 +33,7 @@ namespace ReactUnity.Styling.Parsers
             if (GlobalRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Global, GlobalRegex.Replace(value, ""));
             if (ProceduralRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Procedural, ProceduralRegex.Replace(value, ""));
             if (ResourceRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Resource, ResourceRegex.Replace(value, ""));
+            if (PathRegex.IsMatch(value)) return new ImageReference(AssetReferenceType.Path, value);
 
             var dataMatch = DataRegex.Match(value);
             if (dataMatch.Success)

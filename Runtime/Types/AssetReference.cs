@@ -15,12 +15,14 @@ namespace ReactUnity.Types
         Global = 6,
         Procedural = 7,
         Data = 8,
+        Path = 9,
     }
 
     public class AssetReference<AssetType> : IDisposable where AssetType : class
     {
         public static AssetReference<AssetType> None = new AssetReference<AssetType>(AssetReferenceType.None, null);
         private static Regex HttpRegex = new Regex("^https?://");
+        private static Regex FileRegex = new Regex("^file?://");
 
         public AssetReferenceType type { get; private set; } = AssetReferenceType.None;
         public object value { get; private set; }
@@ -45,12 +47,17 @@ namespace ReactUnity.Types
 
             var realType = type;
             var realValue = value;
-            if (realType == AssetReferenceType.Auto)
+            if (realType == AssetReferenceType.Auto || realType == AssetReferenceType.Path)
             {
                 var path = context.ResolvePath(realValue as string);
                 if (HttpRegex.IsMatch(path))
                 {
                     realType = AssetReferenceType.Url;
+                    realValue = path;
+                }
+                else if (FileRegex.IsMatch(path))
+                {
+                    realType = AssetReferenceType.File;
                     realValue = path;
                 }
                 else

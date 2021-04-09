@@ -159,8 +159,7 @@ namespace ReactUnity
 
         void CreateLocation(Jint.Engine engine)
         {
-            var location = new DomProxies.Location(context);
-            engine.SetValue("location", location);
+            engine.SetValue("location", context.Location);
 
             engine.Execute(@"WebSocket = function(url) { return new WebSocket.original(Context, url); }");
             engine.Execute(@"XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
@@ -169,7 +168,7 @@ namespace ReactUnity
             (engine.GetValue(@"XMLHttpRequest") as FunctionInstance)
                 .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(JsValue.FromObject(engine, typeof(XMLHttpRequest)), false, false, false));
 
-            engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, location.origin));
+            engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, context.Location.origin));
         }
     }
 }

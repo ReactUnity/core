@@ -58,7 +58,6 @@ namespace ReactUnity.Types
                 {
                     callback(null);
                 }
-
             }
             else
             {
