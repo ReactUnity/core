@@ -21,12 +21,10 @@ export function Item({ item }: { item: ItemObject }) {
   const onDrag: PointerEventCallback = (ev) => {
     if (!dragRef.current.startPoint) return;
 
-    const inline = ref.current.Inline;
+    const inline = ref.current.Style;
     inline.zIndex = 5;
     inline.pointerEvents = 'none';
     inline.translate = `${ev.position.x - ev.pressPosition.x}px ${ev.pressPosition.y - ev.position.y}`;
-    ref.current.ResolveStyle();
-    ref.current.ApplyStyles();
   };
 
   const endDrag: PointerEventCallback = (ev) => {
@@ -34,12 +32,10 @@ export function Item({ item }: { item: ItemObject }) {
     dragRef.current.startPoint = null;
     draggingItem = null;
 
-    const inline = ref.current.Inline;
+    const inline = ref.current.Style;
     inline.pointerEvents = null;
     inline.zIndex = null;
     inline.translate = null;
-    ref.current.ResolveStyle();
-    ref.current.ApplyStyles();
   };
 
   return <view className={style.item} onBeginDrag={beginDrag} onDrag={onDrag} onEndDrag={endDrag} ref={ref}>
