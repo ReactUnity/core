@@ -2,7 +2,7 @@
   position: absolute;
   left: 10px;
   top: 10px;
-  width: 300px;
+  width: 380px;
   height: 500px;
   overflow: hidden;
   border-radius: 10px;
@@ -10,7 +10,7 @@
 
 .border {
   border-width: 10px;
-  border-color: #c5a97b;
+  border-color: #adadad;
   border-radius: 10px;
   pointer-events: none;
   width: 100%;
@@ -23,28 +23,30 @@
   flex-grow: 1;
   max-height: 100%;
   flex-direction: column;
-  width: 310px;
+  width: 390px;
 }
 
 .items {
   flex-direction: row;
   flex-wrap: wrap;
   padding: 4px;
-  background-color: #e4ceab;
+  background-color: #adadad;
 }
 
 .itemSlot {
   margin: 4px;
   border-radius: 4px;
   flex: 0;
-  width: 60px;
-  height: 60px;
-  background-color: #ada495;
+  width: 80px;
+  padding: 5px;
+  height: 80px;
+  background-color: #cacaca;
 
   border-width: 2px;
-  border-color: #8c816e;
+  border-color: #9c9c9c;
+  box-shadow: 1px 1px 5px 5px 5px black;
 
   &:hover {
-    background-color: #ccc5b9;
+    background-color: #dddddd;
   }
 }
