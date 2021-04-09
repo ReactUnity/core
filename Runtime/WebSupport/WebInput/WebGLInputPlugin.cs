@@ -1,4 +1,7 @@
 using System;
+#if UNITY_WEBGL && !UNITY_EDITOR
+using System.Runtime.InteropServices;
+#endif
 
 namespace ReactUnity.WebSupport
 {
@@ -55,10 +58,10 @@ namespace ReactUnity.WebSupport
 
         [DllImport("__Internal")]
         public static extern void WebGLInputDelete(int id);
-        
+
         [DllImport("__Internal")]
         public static extern void WebGLInputEnableTabText(int id, bool enable);
-        
+
         [DllImport("__Internal")]
         public static extern void WebGLInputSetReadOnly(int id, bool readOnly);
 
