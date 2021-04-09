@@ -20,7 +20,7 @@ namespace ReactUnity.DomProxies
         public JsValue Onmessage { set => onmessage = value; }
         public object onmessage
         {
-            set { socket.OnMessage += (rawData) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { data = System.Text.Encoding.Default.GetString(rawData), rawData })); }
+            set { socket.OnMessage += (rawData) => context.Dispatcher.OnceUpdate(() => new Callback(value)?.Call(new { data = System.Text.Encoding.UTF8.GetString(rawData) })); }
             get => null;
         }
 
