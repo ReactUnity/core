@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ReactUnity.DomProxies
 {
@@ -22,6 +23,20 @@ namespace ReactUnity.DomProxies
         {
             this.ctx = ctx;
             var href = ctx.Script.SourceLocation;
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            var abs = UnityEngine.Application.absoluteURL;
+            if (!href.StartsWith("http") && abs != null)
+            {
+                var parsed = new Regex(@"^(.*:)//([A-Za-z0-9\-\.]+)(:[0-9]+)?(.*)$").Match(abs);
+
+                var parsedProto = parsed.Groups[1].Value;
+                var parsedHost = parsed.Groups[2].Value;
+                var parsedPort = parsed.Groups[3].Value;
+
+                href = parsedProto + "//" + parsedHost + parsedPort + "/" + new Regex("^/").Replace(href, "");
+            }
+#endif
 
             var hashSplit = href.Split('#');
             var hashless = hashSplit[0];

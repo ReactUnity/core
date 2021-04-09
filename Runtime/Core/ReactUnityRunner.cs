@@ -162,8 +162,8 @@ namespace ReactUnity
             var location = new DomProxies.Location(context);
             engine.SetValue("location", location);
 
-            engine.Execute(@"WebSocket = function() { return new WebSocket.original(Context, ...arguments); }");
-            engine.Execute(@"XMLHttpRequest = function() { return new oldXMLHttpRequest('" + location.origin + @"'); }");
+            engine.Execute(@"WebSocket = function(url) { return new WebSocket.original(Context, url); }");
+            engine.Execute(@"XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
             (engine.GetValue(@"WebSocket") as FunctionInstance)
                 .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(JsValue.FromObject(engine, typeof(WebSocketProxy)), false, false, false));
             (engine.GetValue(@"XMLHttpRequest") as FunctionInstance)

@@ -86,7 +86,7 @@ namespace ReactUnity
                 case ScriptSource.File:
 #if UNITY_EDITOR || REACT_FILE_API
 #if !REACT_FILE_API
-                    if(!disableWarnings) Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
+                    if (!disableWarnings) Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
 #endif
                     callback(System.IO.File.ReadAllText(StripHashAndSearch(SourcePath)), false);
                     break;
@@ -122,7 +122,7 @@ namespace ReactUnity
         }
 
 #if UNITY_EDITOR || REACT_URL_API || REACT_DEV_SERVER_API
-        private IEnumerator WatchWebRequest(
+        static internal IEnumerator WatchWebRequest(
             UnityEngine.Networking.UnityWebRequest request,
             Action<string, bool> callback,
             Action<string> errorCallback = null,

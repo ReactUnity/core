@@ -4,7 +4,7 @@ using ReactUnity.Interop;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
+using UnityEngine.Networking;
 
 namespace ReactUnity.DomProxies
 {
@@ -34,8 +34,6 @@ namespace ReactUnity.DomProxies
             "Error"
         };
 
-        public static ManualResetEvent allDone = new ManualResetEvent(false);
-
         private Uri url;
         private Dictionary<string, string> options;
         private Dictionary<string, string> headers;
@@ -44,20 +42,22 @@ namespace ReactUnity.DomProxies
 
         public string statusText { get; private set; }
         public string responseHeaders { get; private set; } = "";
-        private System.Net.HttpWebRequest req;
-        private static System.Net.CookieContainer cookieContainer = new System.Net.CookieContainer();
+        private UnityWebRequest req;
+        private DisposableHandle requestHandle;
 
         public int readyState => 4;
         public string DONE => "complete";
         public string responseText { get; set; }
 
+        ReactContext context;
 
-        public XMLHttpRequest()
+        public XMLHttpRequest(ReactContext context)
         {
+            this.context = context;
             Reset();
         }
 
-        public XMLHttpRequest(string origin) : this()
+        public XMLHttpRequest(ReactContext context, string origin) : this(context)
         {
             this.origin = origin;
         }
@@ -82,20 +82,20 @@ namespace ReactUnity.DomProxies
 
         public void setRequestHeader(object name, object value)
         {
-            headers.Add((string) name, (string) value);
+            headers.Add((string)name, (string)value);
         }
 
         public void append(object name, object value)
         {
             List<string> postList;
-            if (!postData.TryGetValue((string) name, out postList))
+            if (!postData.TryGetValue((string)name, out postList))
             {
                 postList = new List<string>();
             }
-            postList.Add((string) value);
+            postList.Add((string)value);
 
-            postData.Remove((string) name);
-            postData.Add((string) name, postList);
+            postData.Remove((string)name);
+            postData.Add((string)name, postList);
         }
 
         public void abort()
@@ -111,109 +111,69 @@ namespace ReactUnity.DomProxies
             url = new Uri(origin + options["url"]);
 
 
-            if (options["transport"] == "browser")
-            {
-                req = (System.Net.HttpWebRequest) System.Net.WebRequest.Create(url);
-            }
-            else
-            {
-                req = (System.Net.HttpWebRequest) System.Net.WebRequest.Create(url);
-                req.CookieContainer = cookieContainer;
-                // disable buffering (this only works for ClientHttp version)
-                //_req.AllowWriteStreamBuffering = false; // causes silent crash on Mac OS X 10.8.x
-            }
+            req = UnityWebRequest.Get(url);
+            requestHandle = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(ReactScript.WatchWebRequest(req, responseCallback)));
 
-            req.Method = options["method"];
+            // TODO: implement methods, headers and other options
+
+            //req.Method = options["method"];
 
             // add custom headers
-            if (headers.Count != 0)
-            {
-                foreach (string key in headers.Keys)
-                {
-                    if (headers[key] == null)
-                        continue;
+            //if (headers.Count != 0)
+            //{
+            //    foreach (string key in headers.Keys)
+            //    {
+            //        if (headers[key] == null)
+            //            continue;
 
-                    switch (key.ToLower())
-                    {
-                        // in silverlight 3, these are set by the web browser that hosts the Silverlight application.
-                        // http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest%28v=vs.95%29.aspx
-                        case "connection":
-                        case "content-length":
-                        case "expect":
-                        case "if-modified-since":
-                        case "referer":
-                        case "transfer-encoding":
-                        case "user-agent":
-                            break;
+            //        switch (key.ToLower())
+            //        {
+            //            // in silverlight 3, these are set by the web browser that hosts the Silverlight application.
+            //            // http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest%28v=vs.95%29.aspx
+            //            case "connection":
+            //            case "content-length":
+            //            case "expect":
+            //            case "if-modified-since":
+            //            case "referer":
+            //            case "transfer-encoding":
+            //            case "user-agent":
+            //                break;
 
-                        // in silverlight this isn't supported, can not find reference to why not
-                        case "range":
-                            break;
+            //            // in silverlight this isn't supported, can not find reference to why not
+            //            case "range":
+            //                break;
 
-                        // in .NET Framework 3.5 and below, these are set by the system.
-                        // http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest%28v=VS.90%29.aspx
-                        case "date":
-                        case "host":
-                            break;
+            //            // in .NET Framework 3.5 and below, these are set by the system.
+            //            // http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest%28v=VS.90%29.aspx
+            //            case "date":
+            //            case "host":
+            //                break;
 
-                        case "accept":
-                            req.Accept = (string) headers[key];
-                            break;
+            //            case "accept":
+            //                req.Accept = (string)headers[key];
+            //                break;
 
-                        case "content-type":
-                            req.ContentType = headers[key];
-                            break;
-                        default:
-                            req.Headers[key] = (string) headers[key];
-                            break;
-                    }
-                }
-            }
+            //            case "content-type":
+            //                req.ContentType = headers[key];
+            //                break;
+            //            default:
+            //                req.Headers[key] = (string)headers[key];
+            //                break;
+            //        }
+            //    }
+            //}
 
-            req.ContentLength = 0;
-
-
-            {
-                req.ContentType = options["mimeType"];
-            }
-
-
-
-            if (req.ContentLength == 0)
-            {
-                req.BeginGetResponse(new AsyncCallback(responseCallback), req);
-            }
-            else
-            {
-                req.BeginGetRequestStream(new AsyncCallback(responseCallback), req);
-            }
+            //req.ContentLength = 0;
+            //req.ContentType = options["mimeType"];
         }
 
-        private void responseCallback(IAsyncResult asynchronousResult)
+        private void responseCallback(string result, bool devServer)
         {
+            this.responseText = result;
+            status = 400;
+            statusText = "ok";
+            //responseHeaders += header + ": " + response.Headers[header] + "\r\n";
 
-            var req = (System.Net.HttpWebRequest) asynchronousResult.AsyncState;
-
-
-            using (var response = (System.Net.HttpWebResponse) req.EndGetResponse(asynchronousResult))
-            {
-                status = (int) response.StatusCode; // 4xx-5xx can throw WebException, we handle it below
-                statusText = response.StatusDescription;
-
-                if (response.SupportsHeaders && response.Headers is System.Net.WebHeaderCollection)
-                {
-                    foreach (string header in response.Headers.AllKeys)
-                    {
-                        responseHeaders += header + ": " + response.Headers[header] + "\r\n";
-                    }
-                }
-
-                using (var responseStream = response.GetResponseStream())
-                using (var sr = new System.IO.StreamReader(responseStream))
-                {
-                    this.responseText = sr.ReadToEnd();
-                }
-            }
 
             if (onload != null) new Callback(onload).Call();
             if (onreadystatechange != null) new Callback(onreadystatechange).Call();
