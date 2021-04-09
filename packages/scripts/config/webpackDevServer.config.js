@@ -16,11 +16,14 @@ const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const redirectServedPath = require('react-dev-utils/redirectServedPathMiddleware');
 const paths = require('./paths');
 const getHttpsConfig = require('./getHttpsConfig');
+const express = require('express');
+const path = require('path');
 
 const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
 const sockPort = process.env.WDS_SOCKET_PORT;
+const disableWebglTester = process.env.WDS_DISABLE_WEBGL_TESTER;
 
 module.exports = function (proxy, allowedHost) {
   return {
@@ -128,15 +131,15 @@ module.exports = function (proxy, allowedHost) {
       }
 
       // Allow serving Unity builds
-      function contentEncodingShorthand(path, encoding) {
-        app.get(path, function (req, res, next) {
+      function contentEncodingShorthand(pattern, encoding) {
+        app.get(pattern, function (req, res, next) {
           res.set('Content-Encoding', encoding);
           next();
         });
       }
 
-      function contentTypeShorthand(path, type) {
-        app.get(path, function (req, res, next) {
+      function contentTypeShorthand(pattern, type) {
+        app.get(pattern, function (req, res, next) {
           res.set('Content-Type', type);
           next();
         });
@@ -150,6 +153,10 @@ module.exports = function (proxy, allowedHost) {
       contentTypeShorthand('*.wasm', 'application/wasm');
       contentTypeShorthand('*.wasm.gz', 'application/wasm');
       contentTypeShorthand('*.wasm.br', 'application/wasm');
+
+      if (!disableWebglTester) {
+        app.use('/run', express.static(path.join(__dirname, 'webgl-tester')));
+      }
     },
     after(app) {
       // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
