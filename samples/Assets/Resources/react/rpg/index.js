@@ -82,7 +82,7 @@ function applyDiffedUpdate(writeTo, updatePayload, depth) {
     for (var index = 0; index < updatePayload.length; index += 2) {
       var attr = updatePayload[index];
       var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo[attr] = value;
+      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
     }
 
     return updatePayload.length > 0;
@@ -90,7 +90,7 @@ function applyDiffedUpdate(writeTo, updatePayload, depth) {
     for (var attr in updatePayload) {
       if (updatePayload.hasOwnProperty(attr)) {
         var value = updatePayload[attr];
-        writeTo[attr] = value;
+        writeTo.SetWithoutNotify(attr, value);
       }
     }
 
@@ -136,10 +136,7 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
 
     if (attr === 'style') {
       if (applyDiffedUpdate(instance.Style, value)) {
-        // TODO: find better way to determine if this element needs layout/style recalculation
         instance.ResolveStyle();
-        instance.ScheduleLayout();
-        instance.ApplyLayoutStyles();
       }
 
       continue;
@@ -6748,7 +6745,7 @@ var index_module_update = injectStylesIntoStyleTag_default()(index_module/* defa
 
 /* harmony default export */ const inventory_index_module = (index_module/* default.locals */.Z.locals || {});
 ;// CONCATENATED MODULE: ./src/inventory/index.tsx
-var draggingItem;function Item(_ref){var item=_ref.item;var ref=(0,react.useRef)();var dragRef=(0,react.useRef)({startPoint:null});if(!item)return null;var beginDrag=function beginDrag(ev){dragRef.current.startPoint=ev.position;draggingItem=item;};var onDrag=function onDrag(ev){if(!dragRef.current.startPoint)return;var inline=ref.current.Style;inline.zIndex=5;inline.pointerEvents='none';inline.translate="".concat(ev.position.x-ev.pressPosition.x,"px ").concat(ev.pressPosition.y-ev.position.y);ref.current.ResolveStyle();ref.current.ApplyStyles();};var endDrag=function endDrag(ev){if(!dragRef.current.startPoint)return;dragRef.current.startPoint=null;draggingItem=null;var inline=ref.current.Style;inline.pointerEvents=null;inline.zIndex=null;inline.translate=null;ref.current.ResolveStyle();ref.current.ApplyStyles();};return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.item,onBeginDrag:beginDrag,onDrag:onDrag,onEndDrag:endDrag,ref:ref,children:/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:item.image,fit:ImageFitMode.Fill})});}function Inventory(){var slotCount=useSelector(function(x){return x.inventory.size;});var items=useSelector(function(x){return x.inventory.items;});var slots=(0,react.useMemo)(function(){return new Array(slotCount).fill(null);},[slotCount]);var dispatch=useDispatch();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:inventory_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:inventory_index_module.frame,children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.items,children:slots.map(function(x,i){var _itemInSlot$image;var itemInSlot=items.find(function(x){return x.slot===i;});return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.itemSlot,"data-index":i,onDrop:function onDrop(ev){if(draggingItem){dispatch(swapItems({slot1:draggingItem.slot,slot2:i}));draggingItem=null;}},children:/*#__PURE__*/(0,jsx_runtime.jsx)(Item,{item:itemInSlot},(_itemInSlot$image=itemInSlot===null||itemInSlot===void 0?void 0:itemInSlot.image)!==null&&_itemInSlot$image!==void 0?_itemInSlot$image:i)},i);})})}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.border})]});}
+var draggingItem;function Item(_ref){var item=_ref.item;var ref=(0,react.useRef)();var dragRef=(0,react.useRef)({startPoint:null});if(!item)return null;var beginDrag=function beginDrag(ev){dragRef.current.startPoint=ev.position;draggingItem=item;};var onDrag=function onDrag(ev){if(!dragRef.current.startPoint)return;var inline=ref.current.Style;inline.zIndex=5;inline.pointerEvents='none';inline.translate="".concat(ev.position.x-ev.pressPosition.x,"px ").concat(ev.pressPosition.y-ev.position.y);};var endDrag=function endDrag(ev){if(!dragRef.current.startPoint)return;dragRef.current.startPoint=null;draggingItem=null;var inline=ref.current.Style;inline.pointerEvents=null;inline.zIndex=null;inline.translate=null;};return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.item,onBeginDrag:beginDrag,onDrag:onDrag,onEndDrag:endDrag,ref:ref,children:/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:item.image,fit:ImageFitMode.Fill})});}function Inventory(){var slotCount=useSelector(function(x){return x.inventory.size;});var items=useSelector(function(x){return x.inventory.items;});var slots=(0,react.useMemo)(function(){return new Array(slotCount).fill(null);},[slotCount]);var dispatch=useDispatch();return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:inventory_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{className:inventory_index_module.frame,children:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.items,children:slots.map(function(x,i){var _itemInSlot$image;var itemInSlot=items.find(function(x){return x.slot===i;});return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.itemSlot,"data-index":i,onDrop:function onDrop(ev){if(draggingItem){dispatch(swapItems({slot1:draggingItem.slot,slot2:i}));draggingItem=null;}},children:/*#__PURE__*/(0,jsx_runtime.jsx)(Item,{item:itemInSlot},(_itemInSlot$image=itemInSlot===null||itemInSlot===void 0?void 0:itemInSlot.image)!==null&&_itemInSlot$image!==void 0?_itemInSlot$image:i)},i);})})}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:inventory_index_module.border})]});}
 ;// CONCATENATED MODULE: ./node_modules/redux-persist/es/persistStore.js
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
@@ -14350,7 +14347,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "", ""]);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".inventory_host__3pi5R{position:absolute;left:10px;top:10px;width:300px;height:500px;overflow:hidden;border-radius:10px}.inventory_border__ANvxE{border-width:10px;border-color:#c5a97b;border-radius:10px;pointer-events:none;width:100%;height:100%;position:absolute}.inventory_frame__2LXmK{padding:10px;flex-grow:1;max-height:100%;flex-direction:column;width:310px}.inventory_items__22nR1{flex-direction:row;flex-wrap:wrap;padding:4px;background-color:#e4ceab}.inventory_itemSlot__1goAi{margin:4px;border-radius:4px;flex:0;width:60px;height:60px;background-color:#ada495;border-width:2px;border-color:#8c816e}.inventory_itemSlot__1goAi:hover{background-color:#ccc5b9}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".inventory_host__3pi5R{position:absolute;left:10px;top:10px;width:380px;height:500px;overflow:hidden;border-radius:10px}.inventory_border__ANvxE{border-width:10px;border-color:#adadad;border-radius:10px;pointer-events:none;width:100%;height:100%;position:absolute}.inventory_frame__2LXmK{padding:10px;flex-grow:1;max-height:100%;flex-direction:column;width:390px}.inventory_items__22nR1{flex-direction:row;flex-wrap:wrap;padding:4px;background-color:#adadad}.inventory_itemSlot__1goAi{margin:4px;border-radius:4px;flex:0;width:80px;padding:5px;height:80px;background-color:#cacaca;border-width:2px;border-color:#9c9c9c;box-shadow:1px 1px 5px 5px 5px black}.inventory_itemSlot__1goAi:hover{background-color:#dddddd}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "inventory_host__3pi5R",
@@ -14648,8 +14645,9 @@ module.exports = function (list, options) {
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {

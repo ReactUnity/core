@@ -387,14 +387,20 @@ MonoBehaviour:
   Globals:
     Entries: []
   Script:
-    ScriptSource: 3
-    SourceAsset: {fileID: 0}
+    ScriptSource: 2
+    SourceAsset: {fileID: 4900000, guid: e8c28412937a90541aaceaa853b1e5fa, type: 3}
     SourcePath: react/rpg/index
     SourceText: 
     ResourcesPath: 
     UseDevServer: 1
-    DevServer: http://localhost:3000/
-  PreloadScripts: []
+    DevServer: http://localhost:3000/index.js
+  AutoRender: 1
+  BeforeStart:
+    m_PersistentCalls:
+      m_Calls: []
+  AfterStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1467669075
 MonoBehaviour:
   m_ObjectHideFlags: 0
