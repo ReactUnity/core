@@ -4,9 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <title>webdemo</title>
+  <title>Live Web Inspector</title>
 
+  <base href="/" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" href="favicon.ico" />
 
   <style>
     html,
@@ -62,8 +64,7 @@
 </head>
 
 <body style="text-align: center">
-  <canvas id="unity-canvas"
-    style="background: #231F20"></canvas>
+  <canvas id="unity-canvas" style="background: #231F20"></canvas>
 
   <div class="loader-center" id="loader-root">
     <div class="loader">
@@ -71,15 +72,15 @@
     </div>
   </div>
 
-  <script src="Build/webgl-tester.loader.js"></script>
+  <script src="Build/web-inspector.loader.js"></script>
   <script>
     createUnityInstance(document.querySelector("#unity-canvas"), {
-      dataUrl: "Build/webgl-tester.data.br",
-      frameworkUrl: "Build/webgl-tester.framework.js.br",
-      codeUrl: "Build/webgl-tester.wasm.br",
+      dataUrl: "Build/web-inspector.data.br",
+      frameworkUrl: "Build/web-inspector.framework.js.br",
+      codeUrl: "Build/web-inspector.wasm.br",
       streamingAssetsUrl: "StreamingAssets",
-      companyName: "reactunity",
-      productName: "webdemo",
+      companyName: "ReactUnity",
+      productName: "Live Web Inspector",
       productVersion: "1.0",
     }, function onProgress(progress) {
       var bar = document.querySelector("#loader-bar");

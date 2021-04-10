@@ -22,7 +22,6 @@ const host = process.env.HOST || '0.0.0.0';
 const sockHost = process.env.WDS_SOCKET_HOST;
 const sockPath = process.env.WDS_SOCKET_PATH; // default: '/sockjs-node'
 const sockPort = process.env.WDS_SOCKET_PORT;
-const disableWebglTester = process.env.WDS_DISABLE_WEBGL_TESTER;
 
 module.exports = function (proxy, allowedHost) {
   return {
@@ -65,7 +64,7 @@ module.exports = function (proxy, allowedHost) {
     // use an image, put it in `src` and `import` it from JavaScript instead.
     contentBase: [
       paths.appPublic,
-      ...(!disableWebglTester && [path.join(__dirname, 'webgl-tester')]),
+      path.join(__dirname, 'web-inspector'),
     ],
     contentBasePublicPath: paths.publicUrlOrPath,
     // By default files from `contentBase` will not trigger a page reload.
@@ -109,7 +108,7 @@ module.exports = function (proxy, allowedHost) {
     https: getHttpsConfig(),
     host,
     overlay: false,
-    index: disableWebglTester ? 'index.js' : 'index.html',
+    index: 'index.html',
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
       // See https://github.com/facebook/create-react-app/issues/387.
