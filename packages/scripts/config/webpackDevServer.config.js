@@ -107,7 +107,7 @@ module.exports = function (proxy, allowedHost) {
     https: getHttpsConfig(),
     host,
     overlay: false,
-    index: 'index.js',
+    index: disableWebglTester ? 'index.js' : 'index.html',
     historyApiFallback: {
       // Paths with dots should still use the history fallback.
       // See https://github.com/facebook/create-react-app/issues/387.
@@ -155,7 +155,7 @@ module.exports = function (proxy, allowedHost) {
       contentTypeShorthand('*.wasm.br', 'application/wasm');
 
       if (!disableWebglTester) {
-        app.use('/run', express.static(path.join(__dirname, 'webgl-tester')));
+        app.use('/', express.static(path.join(__dirname, 'webgl-tester')));
       }
     },
     after(app) {
