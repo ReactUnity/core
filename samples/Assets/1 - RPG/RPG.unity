@@ -387,7 +387,7 @@ MonoBehaviour:
   Globals:
     Entries: []
   Script:
-    ScriptSource: 2
+    ScriptSource: 3
     SourceAsset: {fileID: 4900000, guid: e8c28412937a90541aaceaa853b1e5fa, type: 3}
     SourcePath: react/rpg/index
     SourceText: 

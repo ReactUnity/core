@@ -1173,10 +1173,10 @@
   dependencies:
     react-reconciler "^0.26.2"
 
-"@reactunity/scripts@^0.1.12":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.1.12.tgz#56347ce5bbcaf5277899ba4cadee64c4581fc831"
-  integrity sha512-Jqz5SzcR7UcMPATuDeLIz+dJofluEPEF6PXg0XYOl5YQRKABe78bvZKkEYlnTbsqNsKMYFkWX/gtskxLyDLTEQ==
+"@reactunity/scripts@^0.1.13":
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.1.13.tgz#b7f8fad3e05ca91aa44dad75551f929004c28c5c"
+  integrity sha512-tt6xRaM9N2cKGhNaBJkNPWaY9KkhdRcs1o+G63XRJzJKoCsbgfJGC3UblXmIlQFrSYgk2L85Mwy5Vm51ls60RA==
   dependencies:
     "@babel/core" "7.13.14"
     "@pmmmwh/react-refresh-webpack-plugin" "0.4.3"

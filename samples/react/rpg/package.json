@@ -18,7 +18,7 @@
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "^0.1.12",
+    "@reactunity/scripts": "^0.1.13",
     "@types/react": "^17.0.3",
     "@types/react-redux": "^7.1.16",
     "@types/webpack-env": "^1.16.0",
