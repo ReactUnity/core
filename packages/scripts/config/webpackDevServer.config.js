@@ -16,7 +16,6 @@ const ignoredFiles = require('react-dev-utils/ignoredFiles');
 const redirectServedPath = require('react-dev-utils/redirectServedPathMiddleware');
 const paths = require('./paths');
 const getHttpsConfig = require('./getHttpsConfig');
-const express = require('express');
 const path = require('path');
 
 const host = process.env.HOST || '0.0.0.0';
@@ -64,7 +63,10 @@ module.exports = function (proxy, allowedHost) {
     // for files like `favicon.ico`, `manifest.json`, and libraries that are
     // for some reason broken when imported through webpack. If you just want to
     // use an image, put it in `src` and `import` it from JavaScript instead.
-    contentBase: paths.appPublic,
+    contentBase: [
+      paths.appPublic,
+      ...(!disableWebglTester && [path.join(__dirname, 'webgl-tester')]),
+    ],
     contentBasePublicPath: paths.publicUrlOrPath,
     // By default files from `contentBase` will not trigger a page reload.
     watchContentBase: true,
@@ -153,10 +155,6 @@ module.exports = function (proxy, allowedHost) {
       contentTypeShorthand('*.wasm', 'application/wasm');
       contentTypeShorthand('*.wasm.gz', 'application/wasm');
       contentTypeShorthand('*.wasm.br', 'application/wasm');
-
-      if (!disableWebglTester) {
-        app.use('/', express.static(path.join(__dirname, 'webgl-tester')));
-      }
     },
     after(app) {
       // Redirect to `PUBLIC_URL` or `homepage` from `package.json` if url not match
