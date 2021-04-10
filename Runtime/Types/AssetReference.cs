@@ -50,7 +50,8 @@ namespace ReactUnity.Types
             if (realType == AssetReferenceType.Auto || realType == AssetReferenceType.Path)
             {
                 var path = context.ResolvePath(realValue as string);
-                if (HttpRegex.IsMatch(path))
+                if (path == null) realType = AssetReferenceType.None;
+                else if (HttpRegex.IsMatch(path))
                 {
                     realType = AssetReferenceType.Url;
                     realValue = path;
@@ -62,7 +63,7 @@ namespace ReactUnity.Types
                 }
                 else
                 {
-                    realType = AssetReferenceType.Resource;
+                    realType = context.Script.ScriptSource == ScriptSource.File ? AssetReferenceType.File : AssetReferenceType.Resource;
                     realValue = path;
                 }
             }

@@ -87,15 +87,29 @@ namespace ReactUnity
 
         public virtual string ResolvePath(string path)
         {
-            if (IsDevServer) return Script.DevServerFile + path;
+            var source = Script.GetResolvedSourceUrl();
+            var type = Script.EffectiveScriptSource;
 
-            var source = Script.SourceLocation;
-            var lastSlash = source.LastIndexOfAny(new[] { '/', '\\' });
-            var parent = source.Substring(0, lastSlash);
+            if (type == ScriptSource.Url)
+            {
+                var baseUrl = new Uri(source);
+                if (Uri.TryCreate(baseUrl, path, out var res)) return res.AbsoluteUri;
+            }
+            else if (type == ScriptSource.File || type == ScriptSource.Resource)
+            {
+                var lastSlash = source.LastIndexOfAny(new[] { '/', '\\' });
+                var parent = source.Substring(0, lastSlash);
 
-            var res = parent + path;
-            if (Script.ScriptSource == ScriptSource.Resource) return GetResourceUrl(res);
-            return res;
+                var res = parent + (path.StartsWith("/") ? path : "/" + path);
+                if (type == ScriptSource.Resource) return GetResourceUrl(res);
+                return res;
+            }
+            else
+            {
+                // TODO: write path rewriting logic
+            }
+
+            return null;
         }
 
         public virtual ReactScript CreateStaticScript(string path)

@@ -19,9 +19,23 @@ namespace ReactUnity
 
         public bool UseDevServer = true;
         public string DevServer = "http://localhost:3000";
-        static string DevServerFilename = "";
-        public string DevServerFile => DevServer + DevServerFilename;
+        const string DevServerFilename = "/index.js";
+        public string DevServerFile
+        {
+            get
+            {
+                var serverUrl = new Uri(DevServer);
+                var path = serverUrl.PathAndQuery;
+                if (string.IsNullOrWhiteSpace(path) || path == "/")
+                {
+                    if (Uri.TryCreate(serverUrl, DevServerFilename, out var res)) return res.AbsoluteUri;
+                }
+                return serverUrl.AbsoluteUri;
+            }
+        }
 
+        public bool IsDevServer => UseDevServer && !string.IsNullOrWhiteSpace(DevServer);
+        public ScriptSource EffectiveScriptSource => IsDevServer ? ScriptSource.Url : ScriptSource;
 
         public static ReactScript Resource(string path)
         {
@@ -33,15 +47,20 @@ namespace ReactUnity
             };
         }
 
-        public string SourceLocation
+        public string GetResolvedSourceUrl(bool useDevServer = true)
         {
-            get
-            {
 #if UNITY_EDITOR || REACT_DEV_SERVER_API
-                if (UseDevServer && !string.IsNullOrWhiteSpace(DevServer)) return DevServerFile;
+            if (useDevServer && IsDevServer) return DevServer;
 #endif
 
-                var href = GetResolvedSourcePath();
+            if (ScriptSource == ScriptSource.File || ScriptSource == ScriptSource.Resource)
+                return SourcePath;
+            else if (ScriptSource == ScriptSource.TextAsset)
+                return ResourcesPath ?? "Assets/Resources/react/index.js";
+            else if (ScriptSource == ScriptSource.Url)
+            {
+                var href = SourcePath;
+
 #if UNITY_WEBGL && !UNITY_EDITOR
                 var abs = UnityEngine.Application.absoluteURL;
                 if (!href.StartsWith("http") && abs != null)
@@ -55,23 +74,9 @@ namespace ReactUnity
                     href = parsedProto + "//" + parsedHost + parsedPort + "/" + new Regex("^/").Replace(href, "");
                 }
 #endif
-
                 return href;
             }
-        }
-
-
-        public string GetResolvedSourcePath()
-        {
-            string path = "";
-
-            if (ScriptSource == ScriptSource.File || ScriptSource == ScriptSource.Url)
-                path = SourcePath;
-            else if (ScriptSource == ScriptSource.TextAsset)
-                path = ResourcesPath ?? "Assets/Resources/react/index.js";
-            else if (ScriptSource == ScriptSource.Resource)
-                path = SourcePath;
-            return path;
+            return "";
         }
 
         private string StripHashAndSearch(string url)
@@ -82,7 +87,7 @@ namespace ReactUnity
         public IDisposable GetScript(Action<string, bool> callback, IDispatcher dispatcher = null, bool useDevServer = true, bool disableWarnings = false)
         {
 #if UNITY_EDITOR || REACT_DEV_SERVER_API
-            if (useDevServer && UseDevServer && !string.IsNullOrWhiteSpace(DevServer))
+            if (useDevServer && IsDevServer)
             {
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
 
@@ -117,7 +122,7 @@ namespace ReactUnity
 #if !REACT_URL_API
                     if (!disableWarnings) Debug.LogWarning("REACT_URL_API is not defined. Add REACT_URL_API to build symbols to if you want to use this feature outside editor.");
 #endif
-                    var request = UnityEngine.Networking.UnityWebRequest.Get(SourcePath);
+                    var request = UnityEngine.Networking.UnityWebRequest.Get(GetResolvedSourceUrl(false));
 
                     return new DisposableHandle(dispatcher,
                         dispatcher.StartDeferred(WatchWebRequest(request, callback)));
