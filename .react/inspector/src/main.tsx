@@ -10,7 +10,7 @@ type RC = ReactUnity.Layout.ReactElement;
 function getSelection() {
   const activeObject = UnityEditor.Selection.activeGameObject;
   if (!activeObject) return null;
-  return activeObject.GetComponent('ReactElement') as unknown as RC;
+  return activeObject.GetComponent('ReactElement') as RC;
 }
 
 function App() {

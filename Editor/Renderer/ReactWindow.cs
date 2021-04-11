@@ -1,13 +1,17 @@
+using ReactUnity.Editor.Components;
 using ReactUnity.Schedulers;
 using ReactUnity.Types;
 using System;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Renderer
 {
-    public abstract class ReactWindow : EditorWindow
+    public abstract class ReactWindow : EditorWindow, IHasCustomMenu
     {
+        private readonly GUIContent resetGUIContent = EditorGUIUtility.TrTextContent("Reload");
+
         protected IDisposable ScriptWatchDisposable;
         protected ReactUnityRunner runner;
         protected EditorContext context;
@@ -25,7 +29,12 @@ namespace ReactUnity.Editor.Renderer
 
         public virtual void Run(VisualElement host = null)
         {
-            if (host == null) host = rootVisualElement;
+            if (host == null)
+            {
+                host = new VisualElement();
+                rootVisualElement.Add(host);
+                host.AddToClassList("react-unity__host");
+            }
 
             host.Clear();
             var src = GetScript();
@@ -83,6 +92,11 @@ namespace ReactUnity.Editor.Renderer
             Action<PlayModeStateChange> cb = x => callback(x, this);
             EditorApplication.playModeStateChanged += cb;
             return () => EditorApplication.playModeStateChanged -= cb;
+        }
+
+        public void AddItemsToMenu(GenericMenu menu)
+        {
+            menu.AddItem(resetGUIContent, false, () => Restart((context?.Host as HostComponent)?.Element));
         }
     }
 }
