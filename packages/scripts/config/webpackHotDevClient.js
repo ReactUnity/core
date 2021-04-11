@@ -19,8 +19,28 @@
 var stripAnsi = require('strip-ansi');
 var url = require('url');
 var formatWebpackMessages = require('./formatWebpackMessages');
+var ErrorOverlay = require('./react-error-overlay');
 
-var alwaysHardReload = process.env.HARD_RELOAD === 'true';
+// We need to keep track of if there has been a runtime error.
+// Essentially, we cannot guarantee application state was not corrupted by the
+// runtime error. To prevent confusing behavior, we forcibly reload the entire
+// application. This is handled below when we are notified of a compile (code
+// change).
+// See https://github.com/facebook/create-react-app/issues/3096
+var hadRuntimeError = false;
+ErrorOverlay.startReportingRuntimeErrors({
+  onError: function () {
+    hadRuntimeError = true;
+  },
+  filename: '/static/js/bundle.js',
+});
+
+if (module.hot && typeof module.hot.dispose === 'function') {
+  module.hot.dispose(function () {
+    // TODO: why do we need this?
+    ErrorOverlay.stopReportingRuntimeErrors();
+  });
+}
 
 // Connect to WebpackDevServer via a socket.
 var connection = new WebSocket(
@@ -38,7 +58,7 @@ var connection = new WebSocket(
 // to avoid spamming the console. Disconnect usually happens
 // when developer stops the server.
 connection.onclose = function (e) {
-  if (e.reason !== 'hardReload') {
+  if (e.reason !== 'dispose') {
     if (typeof console !== 'undefined' && typeof console.info === 'function') {
       console.info(
         'The development server has disconnected.\nRestart the app if necessary.'
@@ -71,7 +91,11 @@ function handleSuccess() {
 
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
-    tryApplyUpdates();
+    tryApplyUpdates(function onHotUpdateSuccess() {
+      // Only dismiss it when we're sure it's a hot update.
+      // Otherwise it would flicker right before the reload.
+      tryDismissErrorOverlay();
+    });
   }
 }
 
@@ -108,7 +132,11 @@ function handleWarnings(warnings) {
 
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
-    tryApplyUpdates();
+    tryApplyUpdates(function onSuccessfulHotUpdate() {
+      // Only dismiss it when we're sure it's a hot update.
+      // Otherwise it would flicker right before the reload.
+      tryDismissErrorOverlay();
+    });
   }
 }
 
@@ -125,6 +153,9 @@ function handleErrors(errors) {
     warnings: [],
   });
 
+  // Only show the first error.
+  ErrorOverlay.reportBuildError(formatted.errors[0]);
+
   // Also log them to the console.
   if (typeof console !== 'undefined' && typeof console.error === 'function') {
     for (var i = 0; i < formatted.errors.length; i++) {
@@ -136,6 +167,12 @@ function handleErrors(errors) {
   // We will reload on next success instead.
 }
 
+function tryDismissErrorOverlay() {
+  if (!hasCompileErrors) {
+    ErrorOverlay.dismissBuildError();
+  }
+}
+
 // There is a newer version of the code available.
 function handleAvailableHash(hash) {
   // Update last known compilation hash.
@@ -144,20 +181,7 @@ function handleAvailableHash(hash) {
 
 // Handle messages from the server.
 connection.onmessage = function (e) {
-  var message;
-  try {
-    message = JSON.parse(e.data);
-  } catch (err) {
-    // Jint fails at parsing data in WebGL builds, hence the hack...
-    if (e.data.includes('{"type":"ok"}')) {
-      if (!isFirstCompilation) {
-        hardReload();
-      } else {
-        isFirstCompilation = false;
-      }
-    }
-    return;
-  }
+  var message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':
       handleAvailableHash(message.data);
@@ -168,7 +192,7 @@ connection.onmessage = function (e) {
       break;
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
-      hardReload();
+      window.location.reload();
       break;
     case 'warnings':
       handleWarnings(message.data);
@@ -196,9 +220,9 @@ function canApplyUpdates() {
 
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates(onHotUpdateSuccess) {
-  if (!module.hot || alwaysHardReload) {
+  if (!module.hot) {
     // HotModuleReplacementPlugin is not in webpack configuration.
-    hardReload();
+    window.location.reload();
     return;
   }
 
@@ -212,7 +236,7 @@ function tryApplyUpdates(onHotUpdateSuccess) {
     const wantsForcedReload = err || !updatedModules || hadRuntimeError;
     // React refresh can handle hot-reloading over errors.
     if (!hasReactRefresh && wantsForcedReload) {
-      hardReload();
+      window.location.reload();
       return;
     }
 
@@ -241,9 +265,4 @@ function tryApplyUpdates(onHotUpdateSuccess) {
       }
     );
   }
-}
-
-function hardReload() {
-  connection.close(1000, "hardReload");
-  window.location.reload();
 }

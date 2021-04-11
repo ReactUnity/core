@@ -20,10 +20,12 @@ npm i @reactunity/scripts
 
 ## Extra Environment Variables
 
+Environment variables of CRA can be used with React Unity. However, there are some differences:
+
 - `FILENAME` - Name of the generated javascript file. `index.js` by default.
-- `BUILD_DIR` - Path to the generated output. Relative to the project. `../Assets/Resources/react` by default.
+- `BUILD_PATH` - Path to the generated output. Relative to the project. `../Assets/Resources/react` by default.
 - `GENERATE_SOURCEMAP` - `false` by default.
-- `HARD_RELOAD` - Reload the entire UI instead of doing HMR. `false` by default.
+- `FASH_REFRESH` - This experimental feature can be turned on. `false` by default. 
 - `IMAGE_INLINE_SIZE_LIMIT` - `0` by default. Because non-inlined images will be faster in Unity. However, if users still want to inline images, they should increase this limit.
 
 Environment variables can also be defined by having `.env`, `.env.local`, `.env.<development|production>` in project folder.

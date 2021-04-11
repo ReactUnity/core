@@ -293,7 +293,7 @@ function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTypeDeclarations)) {
     fs.writeFileSync(
       paths.appTypeDeclarations,
-      `/// <reference types="react-unity-scripts" />${os.EOL}`
+      `/// <reference types="@reactunity/scripts" />${os.EOL}`
     );
   }
 }
