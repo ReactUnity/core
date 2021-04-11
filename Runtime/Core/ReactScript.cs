@@ -35,10 +35,11 @@ namespace ReactUnity
         }
 
 #if UNITY_EDITOR || REACT_DEV_SERVER_API
-        public bool IsDevServer => UseDevServer && !string.IsNullOrWhiteSpace(DevServer);
+        public bool IsDevServer => !DevServerFailed && UseDevServer && !string.IsNullOrWhiteSpace(DevServer);
 #else
         public bool IsDevServer => false;
 #endif
+        private bool DevServerFailed = false;
 
         public ScriptSource EffectiveScriptSource => IsDevServer ? ScriptSource.Url : ScriptSource;
 
@@ -100,6 +101,7 @@ namespace ReactUnity
                     dispatcher.StartDeferred(
                         WatchWebRequest(request, callback, err =>
                         {
+                            DevServerFailed = true;
                             Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
                             GetScript(callback, dispatcher, false);
                         }, true)));
