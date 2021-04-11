@@ -5538,10 +5538,9 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-dev-utils@^11.0.4:
-  version "11.0.4"
-  resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-11.0.4.tgz#a7ccb60257a1ca2e0efe7a83e38e6700d17aa37a"
-  integrity sha512-dx0LvIGHcOPtKbeiSUM4jqpBl3TcY7CDjZdfOIcKeznE7BWr9dg0iPG90G5yfVQ+p/rGNMXdbfStvzQZEVEi4A==
+"react-dev-utils@https://github.com/ReactUnity/scripts/raw/main/temp/react-dev-utils-11.0.3-hotfix.tgz":
+  version "11.0.3"
+  resolved "https://github.com/ReactUnity/scripts/raw/main/temp/react-dev-utils-11.0.3-hotfix.tgz#581b3436c5e9c2386652b9f69b25f87cb118d59d"
   dependencies:
     "@babel/code-frame" "7.10.4"
     address "1.1.2"

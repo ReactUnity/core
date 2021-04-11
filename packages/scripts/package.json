@@ -74,7 +74,7 @@
     "prompts": "2.4.1",
     "raw-loader": "^4.0.2",
     "react-app-polyfill": "^2.0.0",
-    "react-dev-utils": "^11.0.4",
+    "react-dev-utils": "https://github.com/ReactUnity/scripts/raw/main/temp/react-dev-utils-11.0.3-hotfix.tgz",
     "react-refresh": "^0.10.0",
     "resolve": "1.20.0",
     "resolve-url-loader": "^3.1.2",
