@@ -1,7 +1,7 @@
 using ReactUnity.Helpers;
 using System.Collections.Generic;
 using UnityEngine;
-#if !(!REACT_VECTOR_GRAPHICS || UNITY_WEBGL)
+#if !(!REACT_VECTOR_GRAPHICS || UNITY_WEBGL || UNITY_IOS)
 using Unity.VectorGraphics;
 #endif
 
@@ -25,7 +25,7 @@ namespace ReactUnity.Styling
 
             if (!FeatureGuards.VectorGraphics && Application.isPlaying) return null;
 
-#if !REACT_VECTOR_GRAPHICS || UNITY_WEBGL
+#if !REACT_VECTOR_GRAPHICS || UNITY_WEBGL || UNITY_IOS
             return null;
 #else
 
@@ -65,7 +65,7 @@ namespace ReactUnity.Styling
 
         static public Sprite CreateBorderSprite(int tl, int tr, int bl, int br, bool antiAliasing = false)
         {
-#if REACT_VECTOR_GRAPHICS && !UNITY_WEBGL
+#if REACT_VECTOR_GRAPHICS && !UNITY_WEBGL && !UNITY_IOS
             if (Application.isPlaying) return CreateBorderSpriteVector(tl, tr, bl, br);
 #endif
             return CreateBorderSpriteRaster(tl, tr, bl, br, antiAliasing);

@@ -14,8 +14,8 @@ namespace ReactUnity.Helpers
 #if !REACT_VECTOR_GRAPHICS
                 Debug.LogError("To use the 'borderRadius' feature, 'Unity.VectorGraphics' package must be installed.");
                 vectorGraphics = false;
-#elif UNITY_WEBGL
-                Debug.LogError("'borderRadius' feature cannot be used in WebGL builds.");
+#elif UNITY_WEBGL || UNITY_IOS
+                Debug.LogError("'borderRadius' feature cannot be used in WebGL and IOS builds.");
                 vectorGraphics = false;
 #else
                 if (!Application.isPlaying)

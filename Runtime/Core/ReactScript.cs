@@ -145,7 +145,6 @@ namespace ReactUnity
             return null;
         }
 
-#if UNITY_EDITOR || REACT_URL_API || REACT_DEV_SERVER_API
         static internal IEnumerator WatchWebRequest(
             UnityEngine.Networking.UnityWebRequest request,
             Action<string, bool> callback,
@@ -159,7 +158,6 @@ namespace ReactUnity
             else
                 callback(request.downloadHandler.text, isDevServer);
         }
-#endif
     }
 
     public enum ScriptSource
