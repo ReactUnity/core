@@ -1,6 +1,7 @@
 using Esprima;
 using Jint.Native;
 using Jint.Native.Function;
+using Jint.Native.Object;
 using Jint.Runtime;
 using Jint.Runtime.Interop;
 using ReactUnity.DomProxies;
@@ -164,9 +165,9 @@ namespace ReactUnity
             engine.Execute(@"WebSocket = function(url) { return new WebSocket.original(Context, url); }");
             engine.Execute(@"XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
             (engine.GetValue(@"WebSocket") as FunctionInstance)
-                .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(JsValue.FromObject(engine, typeof(WebSocketProxy)), false, false, false));
+                .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(TypeReference.CreateTypeReference(engine, typeof(WebSocketProxy)), false, false, false));
             (engine.GetValue(@"XMLHttpRequest") as FunctionInstance)
-                .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(JsValue.FromObject(engine, typeof(XMLHttpRequest)), false, false, false));
+                .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(TypeReference.CreateTypeReference(engine, typeof(XMLHttpRequest)), false, false, false));
 
             engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, context.Location.origin));
         }

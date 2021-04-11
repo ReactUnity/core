@@ -12,13 +12,9 @@ namespace ReactUnity.DomProxies
     {
         public string origin { get; private set; }
 
-        public JsValue Onload { set => onload = value; }
-        public object onload;
-
-        public JsValue Onreadystatechange { set => onreadystatechange = value; }
-        public object onreadystatechange;
-
+        public object onload { get; set; }
         public object onerror { get; set; }
+        public object onreadystatechange { get; set; }
         public object ontimeout { get; set; }
         public object onabort { get; set; }
         public bool withCredentials { get; set; }
@@ -47,7 +43,9 @@ namespace ReactUnity.DomProxies
 
         public int readyState => 4;
         public string DONE => "complete";
-        public string responseText { get; set; }
+        public string responseText { get; private set; }
+        public string response => responseText;
+        public string responseURL => null;
 
         ReactContext context;
 
@@ -102,6 +100,8 @@ namespace ReactUnity.DomProxies
         {
             req?.Abort();
             req = null;
+            requestHandle?.Dispose();
+            requestHandle = null;
         }
 
         public void send(object o)
@@ -110,9 +110,9 @@ namespace ReactUnity.DomProxies
             options = extractOptions(args);
             url = new Uri(origin + options["url"]);
 
-
             req = UnityWebRequest.Get(url);
-            requestHandle = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(ReactScript.WatchWebRequest(req, responseCallback)));
+            requestHandle = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(
+                ReactScript.WatchWebRequest(req, responseCallback, errorCallback)));
 
             // TODO: implement methods, headers and other options
 
@@ -169,13 +169,23 @@ namespace ReactUnity.DomProxies
 
         private void responseCallback(string result, bool devServer)
         {
-            this.responseText = result;
-            status = 400;
+            responseText = result;
+            status = 200;
             statusText = "ok";
             //responseHeaders += header + ": " + response.Headers[header] + "\r\n";
 
 
             if (onload != null) new Callback(onload).Call();
+            if (onreadystatechange != null) new Callback(onreadystatechange).Call();
+        }
+
+        private void errorCallback(string result)
+        {
+            responseText = result;
+            status = 400;
+            statusText = "error";
+
+            if (onerror != null) new Callback(onerror).Call();
             if (onreadystatechange != null) new Callback(onreadystatechange).Call();
         }
 
