@@ -179,7 +179,6 @@ module.exports = function (webpackEnv) {
       globalObject: 'this',
     },
     optimization: {
-      // TODO: [React Unity] determine if need to minimize
       minimize: false,
       minimizer: [
         // This is only used in production mode
@@ -284,8 +283,7 @@ module.exports = function (webpackEnv) {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        // TODO: React-Unity - Enable this after solving the build problem
-        // new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
       ],
     },
     resolveLoader: {
