@@ -34,7 +34,12 @@ namespace ReactUnity
             }
         }
 
+#if UNITY_EDITOR || REACT_DEV_SERVER_API
         public bool IsDevServer => UseDevServer && !string.IsNullOrWhiteSpace(DevServer);
+#else
+        public bool IsDevServer => false;
+#endif
+
         public ScriptSource EffectiveScriptSource => IsDevServer ? ScriptSource.Url : ScriptSource;
 
         public static ReactScript Resource(string path)
