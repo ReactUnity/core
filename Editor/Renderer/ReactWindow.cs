@@ -21,6 +21,20 @@ namespace ReactUnity.Editor.Renderer
 
         public event Action<ReactWindow> SelectionChange;
 
+#if REACT_UNITY_DEVELOPER
+        private readonly GUIContent enableDevServerContent = EditorGUIUtility.TrTextContent("Enable DevSever");
+        protected bool DevServerEnabled
+        {
+            get
+            {
+                return !EditorPrefs.GetBool($"ReactUnity.Editor.ReactWindow.{GetType().Name}.DevServerDisabled");
+            }
+            set
+            {
+                EditorPrefs.SetBool($"ReactUnity.Editor.ReactWindow.{GetType().Name}.DevServerDisabled", !value);
+            }
+        }
+#endif
 
         protected virtual void OnEnable()
         {
@@ -97,6 +111,10 @@ namespace ReactUnity.Editor.Renderer
         public void AddItemsToMenu(GenericMenu menu)
         {
             menu.AddItem(resetGUIContent, false, () => Restart((context?.Host as HostComponent)?.Element));
+
+#if REACT_UNITY_DEVELOPER
+            menu.AddItem(enableDevServerContent, DevServerEnabled, () => DevServerEnabled = !DevServerEnabled);
+#endif
         }
     }
 }

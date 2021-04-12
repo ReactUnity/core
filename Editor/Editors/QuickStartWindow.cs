@@ -31,7 +31,7 @@ namespace ReactUnity.Editor
             var res = ReactScript.Resource("ReactUnity/editor/quick-start/index");
 #if REACT_UNITY_DEVELOPER
             res.DevServer = "http://localhost:4200";
-            res.UseDevServer = true;
+            res.UseDevServer = DevServerEnabled;
 #endif
             return res;
         }
