@@ -1,0 +1,66 @@
+* {
+  white-space: normal;
+}
+
+.host {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 10px;
+  font-size: 15px;
+}
+
+head {
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  text-align: center;
+}
+
+.logo {
+  max-height: 200px;
+  max-width: 200px;
+  align-self: center;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: medium;
+}
+
+row {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+b {
+  font-weight: bold;
+}
+
+section {
+  padding: 12px;
+  border-radius: 10px;
+  margin: 6px;
+  background-color: rgba($color: #000000, $alpha: 0.08);
+  border-width: 1px;
+  border-color: rgba($color: #000000, $alpha: 0.16);
+
+  actions {
+    margin-top: 12px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+.projectPath {
+  background-color: transparent;
+  border-width: 0;
+}

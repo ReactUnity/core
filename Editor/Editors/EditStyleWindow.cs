@@ -9,10 +9,9 @@ namespace ReactUnity.Editor
         [MenuItem("React/Show Inspector")]
         public static void ShowDefaultWindow()
         {
-            var wnd = GetWindow<EditStyleWindow>();
-            wnd.titleContent = new GUIContent("React Inspector");
+            var window = GetWindow<EditStyleWindow>();
+            window.titleContent = new GUIContent("React Inspector");
         }
-
 
         protected override ReactScript GetScript()
         {

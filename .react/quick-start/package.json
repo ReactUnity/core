@@ -1,0 +1,22 @@
+{
+  "name": "@reactunity/quick-start",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "private": true,
+  "scripts": {
+    "start": "react-unity-scripts start",
+    "build": "react-unity-scripts build",
+    "postyalc": "yarn",
+    "preinstall": "npx only-allow@1.0.0 yarn"
+  },
+  "dependencies": {
+    "@reactunity/renderer": "^0.0.23",
+    "react": "^17.0.2"
+  },
+  "devDependencies": {
+    "@reactunity/scripts": "^0.1.17",
+    "@types/react": "^17.0.3",
+    "typescript": "^4.2.4"
+  }
+}

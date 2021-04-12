@@ -3,12 +3,15 @@ using UnityEngine;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace ReactUnity.Styling.Parsers
 {
     public class ColorConverter : IStyleParser, IStyleConverter
     {
         IStyleConverter floatDs = ParserMap.FloatConverter;
+        static char[] splitChars = new char[] { ',', ' ' };
+        static Regex rgbRegex = new Regex("rgba?\\((?<values>.*)\\)");
 
         static Dictionary<string, string> KnownColors = new Dictionary<string, string> {
             { "aliceblue", "#f0f8ff" },
@@ -166,9 +169,18 @@ namespace ReactUnity.Styling.Parsers
         {
             if (value == null) return SpecialNames.CantParse;
             if (KnownColors.TryGetValue(value, out var known)) value = known;
-            if (ColorUtility.TryParseHtmlString(value, out var color)) return color;
-            if (value.Contains(",")) return FromArray(value.Split(','));
             if (value == "clear" || value == "transparent") return Color.clear;
+            if (ColorUtility.TryParseHtmlString(value, out var color)) return color;
+
+
+            var rgbMatch = rgbRegex.Match(value);
+            if (rgbMatch.Success)
+            {
+                var values = rgbMatch.Groups["values"].Value;
+                return FromArray(values.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries), 1f / 255);
+            }
+
+            if (value.Contains(',') || value.Contains(' ')) return FromArray(value.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries));
             return SpecialNames.CantParse;
         }
 
@@ -188,7 +200,7 @@ namespace ReactUnity.Styling.Parsers
             return FromString(value?.ToString());
         }
 
-        private object FromArray(IEnumerable obj)
+        private object FromArray(IEnumerable obj, float rgbScale = 1, float alphaScale = 1)
         {
             var arr = obj.OfType<object>().ToArray();
             var len = arr.Length;
@@ -235,7 +247,7 @@ namespace ReactUnity.Styling.Parsers
             var b = v2f as float? ?? 0;
             var a = v3f as float? ?? 1;
 
-            return new Color(r, g, b, a);
+            return new Color(r * rgbScale, g * rgbScale, b * rgbScale, a * alphaScale);
         }
     }
 }

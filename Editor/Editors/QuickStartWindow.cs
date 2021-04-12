@@ -4,126 +4,65 @@ using UnityEngine;
 using System.Diagnostics;
 using System.Linq;
 using System;
+using ReactUnity.Editor.Renderer;
+using UnityEngine.SceneManagement;
 
 namespace ReactUnity.Editor
 {
-    public class QuickStartWindow : EditorWindow
+    public class QuickStartWindow : ReactWindow
     {
-        static string ProjectDirName = "react";
-        static int RequiredNodeVersion = 10;
-        static string NodeUrl = "https://nodejs.org/";
+        public readonly int RequiredNodeVersion = 12;
+        public readonly string NodeUrl = "https://nodejs.org/";
+        public readonly string ProjectDirName = "react";
 
-        int NodeVersion = -1;
+        public int NodeVersion { get; private set; } = -1;
 
-        Process creatingProcess;
-
-        GUIStyle headerStyle { get; set; }
 
         [MenuItem("React/Quick Start", priority = 0)]
-        public static void Open()
+        public static void ShowDefaultWindow()
         {
             var window = GetWindow<QuickStartWindow>();
-            window.titleContent = new GUIContent("React - Quick Start");
-            window.Show();
+            window.titleContent = new GUIContent("React Quick Start");
             window.minSize = new Vector2(300, 200);
         }
 
-
-        void OnGUI()
+        protected override ReactScript GetScript()
         {
-            DrawHeader();
-
-            var hasNode = DrawNodeVersion();
-
-            GUI.enabled = hasNode;
-            DrawProjectExists();
-
-
-            GUI.enabled = true;
+            var res = ReactScript.Resource("ReactUnity/editor/quick-start/index");
+#if REACT_UNITY_DEVELOPER
+            res.DevServer = "http://localhost:4200";
+            res.UseDevServer = true;
+#endif
+            return res;
         }
 
-        void DrawHeader()
-        {
-            if (headerStyle == null)
-            {
-                headerStyle = new GUIStyle(EditorStyles.boldLabel);
-                headerStyle.fontSize = 24;
-                headerStyle.fontStyle = FontStyle.Bold;
-                headerStyle.margin = new RectOffset(10, 10, 10, 10);
-            }
-
-            GUILayout.Label("React Unity Quick Start", headerStyle);
-        }
-
-        bool DrawNodeVersion()
-        {
-            if (NodeVersion < 0) CheckNodeVersion();
-
-            var hasNode = NodeVersion >= RequiredNodeVersion;
-
-            EditorGUILayout.BeginHorizontal();
-
-            if (!hasNode)
-            {
-                EditorGUILayout.LabelField("Node.js version 10 or above is required.");
-                if (GUILayout.Button("Install Node.js", GUILayout.Width(120)))
-                {
-                    Application.OpenURL(NodeUrl);
-                }
-            }
-
-            EditorGUILayout.EndHorizontal();
-
-            return hasNode;
-        }
-
-        void DrawProjectExists()
-        {
-            EditorGUILayout.BeginHorizontal();
-
-            var projectDir = Path.GetFullPath(ProjectDirName);
-            var exists = Directory.Exists(projectDir);
-
-            if (exists)
-            {
-                EditorGUILayout.LabelField("Project exists on " + projectDir);
-
-                if (GUILayout.Button("Open in VsCode", GUILayout.Width(120))) OpenInVsCode(projectDir);
-            }
-            else
-            {
-                EditorGUILayout.LabelField("Project does not exist on " + projectDir);
-
-
-                var exited = creatingProcess?.HasExited ?? true;
-
-                GUI.enabled = exited;
-                if (GUILayout.Button("Create project", GUILayout.Width(120))) CreateProject();
-                GUI.enabled = true;
-
-                if (!exited)
-                {
-                    EditorGUILayout.LabelField("Creating react project...");
-                }
-            }
-
-            EditorGUILayout.EndHorizontal();
-        }
-
-
-
-        void OpenInVsCode(string path)
+        public void OpenInVsCode(string path)
         {
             RunCommand("code", path);
         }
 
-        void CreateProject()
+        public string GetProjectPath()
         {
-            creatingProcess = RunCommand("npm", "init @reactunity");
+            try
+            {
+                var projectDir = Path.GetFullPath(ProjectDirName);
+                var exists = Directory.Exists(projectDir);
 
+                if (exists) return projectDir;
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
-        void CheckNodeVersion()
+        public void CreateProject()
+        {
+            RunCommand("npm", "init @reactunity");
+        }
+
+        public void GetNodeVersion(Action<int> callback = null)
         {
             try
             {
@@ -137,14 +76,16 @@ namespace ReactUnity.Editor
                 if (!int.TryParse(major, out var version)) version = 0;
 
                 NodeVersion = version;
+                callback?.Invoke(version);
             }
-            catch (Exception)
+            catch
             {
                 NodeVersion = 0;
+                callback?.Invoke(0);
             }
         }
 
-        Process RunCommand(string target, string args, bool hasOutput = false)
+        public Process RunCommand(string target, string args, bool hasOutput = false)
         {
             Process process = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -161,6 +102,28 @@ namespace ReactUnity.Editor
             process.Start();
 
             return process;
+        }
+
+        public bool CanvasExistsInScene()
+        {
+            var objects = SceneManager.GetActiveScene().GetRootGameObjects();
+
+            foreach (var obj in objects)
+            {
+                if (obj.GetComponentInChildren<ReactUnity>()) return true;
+            }
+
+            return false;
+        }
+
+        public void CreateCanvas()
+        {
+            var type = typeof(UnityEditor.UI.SliderEditor).Assembly.GetType("UnityEditor.UI.MenuOptions");
+            var method = type.GetMethod("AddCanvas");
+            method.Invoke(null, new[] { new MenuCommand(null) });
+            var go = Selection.activeGameObject;
+            go.AddComponent<ReactUnity>();
+            go.name = "React Canvas";
         }
     }
 }
