@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { DropdownItem } from './dropdown-item';
-import { fullScreen, dropdownBottom, bottomEdge, transparentColor } from '../../helpers/common-layouts';
 import { CursorType, RenderStyle } from '../../../models/properties';
 import { View } from '../../../models/runtime';
+import { bottomEdge, dropdownBottom, fullScreen, transparentColor } from '../../helpers/common-layouts';
+import { DropdownItem } from './dropdown-item';
 
 const dropdownMenuStyle: RenderStyle = { boxShadow: '0 3 7 6 black 5' };
 const dropdownButtonStyle: RenderStyle = { backgroundColor: 'white', borderRadius: 0 };

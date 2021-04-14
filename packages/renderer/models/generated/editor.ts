@@ -2,8 +2,8 @@
 // Types in assemblies: UnityEditor.CoreModule
 // Generated 29.03.2021 04:19:37
 //
-import { UnityEngine, Unity } from './unity';
 import { System } from './system';
+import { Unity, UnityEngine } from './unity';
 
 export declare namespace UnityEditor {
   export class ActiveEditorTracker {
