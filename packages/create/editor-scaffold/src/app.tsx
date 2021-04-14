@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Renderer } from '@reactunity/renderer/editor';
+import * as React from 'react';
 import './index.css';
 
 function App() {
