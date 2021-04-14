@@ -56,7 +56,7 @@ function tryGitAdd(appPath) {
 console.log(
   chalk.cyan.bold(
     'NOTE: Create React App 2+ supports TypeScript, Sass, CSS Modules and more without ejecting: ' +
-      'https://reactjs.org/blog/2018/10/01/create-react-app-v2.html'
+    'https://reactjs.org/blog/2018/10/01/create-react-app-v2.html'
   )
 );
 console.log();
@@ -80,15 +80,15 @@ inquirer
         chalk.red(
           'This git repository has untracked files or uncommitted changes:'
         ) +
-          '\n\n' +
-          gitStatus
-            .split('\n')
-            .map(line => line.match(/ .*/g)[0].trim())
-            .join('\n') +
-          '\n\n' +
-          chalk.red(
-            'Remove untracked files, stash or commit any changes, and try again.'
-          )
+        '\n\n' +
+        gitStatus
+          .split('\n')
+          .map(line => line.match(/ .*/g)[0].trim())
+          .join('\n') +
+        '\n\n' +
+        chalk.red(
+          'Remove untracked files, stash or commit any changes, and try again.'
+        )
       );
       process.exit(1);
     }
@@ -102,9 +102,9 @@ inquirer
       if (fs.existsSync(path.join(appPath, file))) {
         console.error(
           `\`${file}\` already exists in your app folder. We cannot ` +
-            'continue as you would lose all the changes in that file or directory. ' +
-            'Please move or delete it (maybe make a copy for backup) and run this ' +
-            'command again.'
+          'continue as you would lose all the changes in that file or directory. ' +
+          'Please move or delete it (maybe make a copy for backup) and run this ' +
+          'command again.'
         );
         process.exit(1);
       }
