@@ -16,8 +16,7 @@ namespace ReactUnity.Editor.Renderer
         protected ReactUnityRunner runner;
         protected EditorContext context;
         protected IDispatcher dispatcher;
-
-        protected abstract ReactScript GetScript();
+        protected ReactUnityElement hostElement;
 
         public event Action<ReactWindow> SelectionChange;
 
@@ -41,53 +40,34 @@ namespace ReactUnity.Editor.Renderer
             Run();
         }
 
-        public virtual void Run(VisualElement host = null)
+        public virtual void Run(VisualElement root = null)
         {
-            if (host == null)
-            {
-                host = new VisualElement();
-                rootVisualElement.Add(host);
-                host.AddToClassList("react-unity__host");
-            }
-
-            host.Clear();
-            var src = GetScript();
-
-            runner = new ReactUnityRunner();
-
-            dispatcher = new EditorDispatcher();
-
-            ScriptWatchDisposable = src.GetScript((sc, isDevServer) =>
-            {
-                var globals = GetGlobals();
-                context = new EditorContext(host, globals, src, dispatcher, new UnityScheduler(dispatcher), isDevServer, this, () => Restart(host));
-                runner.RunScript(sc, context);
-            }, dispatcher, true, true);
+            if (hostElement != null) OnDestroy();
+            hostElement = new ReactUnityElement(GetScript(), GetGlobals());
+            (root ?? rootVisualElement).Add(hostElement);
         }
+
+        protected abstract ReactScript GetScript();
 
         protected virtual StringObjectDictionary GetGlobals()
         {
             return new StringObjectDictionary()
             {
-                { "Editor", this }
+                { "Window", this }
             };
         }
 
         protected virtual void OnDestroy()
         {
-            if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
-            context?.Dispose();
-            dispatcher?.Dispose();
-            runner = null;
-            context = null;
-            dispatcher = null;
-            ScriptWatchDisposable = null;
+            hostElement?.RemoveFromHierarchy();
+            hostElement?.Destroy();
+            hostElement = null;
         }
 
-        public virtual void Restart(VisualElement host = null)
+        public virtual void Restart(VisualElement root = null)
         {
             OnDestroy();
-            Run(host);
+            Run(root);
         }
 
         private void OnSelectionChange()

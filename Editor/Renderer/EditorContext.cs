@@ -87,12 +87,9 @@ namespace ReactUnity.Editor.Renderer
                 { "hover", typeof(HoverStateHandler) },
             };
 
-        public ReactWindow Editor;
-
-        public EditorContext(VisualElement hostElement, StringObjectDictionary globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, ReactWindow editor, Action onRestart = null)
+        public EditorContext(VisualElement hostElement, StringObjectDictionary globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
             : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, true)
         {
-            Editor = editor;
             Host = new HostComponent(hostElement, this);
             InsertStyle(EditorResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);

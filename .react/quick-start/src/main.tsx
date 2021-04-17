@@ -5,7 +5,7 @@ import checkImage from './assets/check.png';
 import errorImage from './assets/close.png';
 import style from './index.module.scss';
 
-const Window = Globals.Editor as ReactUnity.Editor.QuickStartWindow;
+const Window = Globals.Window as ReactUnity.Editor.QuickStartWindow;
 
 const vsCodePath = 'vscode://file/{path}/';
 const filePath = 'file:{path}';

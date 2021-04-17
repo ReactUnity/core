@@ -7,6 +7,9 @@ import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } fr
 
 type RC = ReactUnity.Layout.ReactElement;
 
+const Window = Globals.Window;
+const Inspector = Globals.Inspector;
+
 function getSelection() {
   const activeObject = UnityEditor.Selection.activeGameObject;
   if (!activeObject) return null;
@@ -17,12 +20,14 @@ function App() {
   const [selection, setSelection] = useState<RC>(getSelection());
 
   useEffect(() => {
-    const removeSelectionChange = Globals.Editor.AddSelectionChange(() => setSelection(getSelection()));
-    const removeStateChange = Globals.Editor.AddPlayModeStateChange(() => setSelection(getSelection()));
-    return () => {
-      removeSelectionChange();
-      removeStateChange();
-    };
+    if (Window) {
+      const removeSelectionChange = Window.AddSelectionChange(() => setSelection(getSelection()));
+      const removeStateChange = Window.AddPlayModeStateChange(() => setSelection(getSelection()));
+      return () => {
+        removeSelectionChange();
+        removeStateChange();
+      };
+    }
   }, []);
 
   return <view className={style.host}>
