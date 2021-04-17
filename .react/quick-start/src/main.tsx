@@ -1,40 +1,65 @@
-import { Renderer } from '@reactunity/renderer/editor';
+import { ReactUnity, Renderer } from '@reactunity/renderer/editor';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import checkImage from './assets/check.png';
+import errorImage from './assets/close.png';
 import style from './index.module.scss';
 
-const Editor = Globals.Editor as any;
+const Window = Globals.Editor as ReactUnity.Editor.QuickStartWindow;
 
 const vsCodePath = 'vscode://file/{path}/';
+const filePath = 'file:{path}';
 
 
 function App() {
-  const [nodeVersion, setNodeVersion] = useState(Editor.NodeVersion);
+  const [nodeVersion, setNodeVersion] = useState(Window.NodeVersion);
   const [projectPath, setProjectPath] = useState('');
   const [canvasExists, setCanvasExists] = useState(null);
 
+  const [packageVersion, setPackageVersion] = useState(Window.PackageVersion);
+  const [latestVersion, setLatestVersion] = useState(Window.LatestVersion);
+  const [hasUpdate, setHasUpdate] = useState(Window.HasUpdate);
+
   useEffect(() => {
     if (nodeVersion < 0) {
-      Editor.GetNodeVersion(ver => setNodeVersion(ver));
+      Window.GetNodeVersion(ver => setNodeVersion(ver));
     }
   }, [nodeVersion, setNodeVersion]);
 
   useEffect(() => {
-    setProjectPath(Editor.GetProjectPath());
+    if (!packageVersion) {
+      Window.CheckVersion(() => {
+        setPackageVersion(Window.PackageVersion);
+        setLatestVersion(Window.LatestVersion);
+        setHasUpdate(Window.HasUpdate);
+      });
+    }
+  }, [packageVersion]);
+
+  useEffect(() => {
+    setProjectPath(Window.GetProjectPath());
   }, [setProjectPath]);
 
   useEffect(() => {
-    setCanvasExists(Editor.CanvasExistsInScene());
+    setCanvasExists(Window.CanvasExistsInScene());
   }, [setCanvasExists]);
 
-  const nodeOk = nodeVersion > Editor.RequiredNodeVersion;
+  const nodeOk = nodeVersion > Window.RequiredNodeVersion;
   const projectOk = !!projectPath;
   const canvasOk = !!canvasExists;
+  const packageOk = !hasUpdate;
 
   const createCanvas = () => {
-    Editor.CreateCanvas();
+    Window.CreateCanvas();
     setCanvasExists(true);
   };
+
+  const selectCanvas = () => {
+    Window.SelectCanvas();
+  };
+
+  const check = <image source={checkImage} className={style.checkIcon} />
+  const warn = <image source={errorImage} className={style.warnIcon} />
 
   return <scroll className={style.host}>
     <head>
@@ -48,29 +73,48 @@ function App() {
       {nodeVersion === 0 ?
         <>
           <row>
-            Node.js does not seem to be installed on this computer.
-            Install it or add it to PATH if it is already installed.
-        </row>
-
-          <row>
-            It can be installed at <anchor url={Editor.NodeUrl}>{Editor.NodeUrl}</anchor>
+            {warn}
+            <text>Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed.</text>
           </row>
+
+          <actions>
+            <anchor url={Window.NodeUrl}>Install</anchor>
+          </actions>
         </> :
         <row>
-          Node.js version
-        <b>{nodeVersion}</b>
+          {check}
+          <text>Node.js version {nodeVersion} is installed</text>
         </row>}
+    </section>
+
+    <section className={canvasOk ? style.success : style.error}>
+      {packageOk ?
+        <>
+          <row>
+            {check}
+            <text>ReactUnity version is up to date at {packageVersion}</text>
+          </row>
+        </> :
+        <>
+          <row>
+            {warn}
+            <text>ReactUnity is out of date. Current version: {packageVersion}, Latest version: {latestVersion}</text>
+          </row>
+          <actions>
+            <button onClick={() => Window.UpdatePackage(latestVersion)}>Update</button>
+          </actions>
+        </>}
     </section>
 
     <section className={projectOk ? style.success : style.error}>
       {projectPath && <>
         <row>
-          Project exists at path:
-          <b>{projectPath}</b>
+          {check}
+          <text>Project exists at path {projectPath}</text>
         </row>
         <actions>
           <anchor url={vsCodePath.replace('{path}', projectPath)}>Open in VSCode</anchor>
-          <button onClick={() => UnityEditor.EditorUtility.RevealInFinder(projectPath)}>Show in file explorer</button>
+          <anchor url={filePath.replace('{path}', projectPath)}>Show in file explorer</anchor>
         </actions>
       </>}
     </section>
@@ -79,11 +123,16 @@ function App() {
       {canvasOk ?
         <>
           <row>
+            {check}
             ReactUnity Canvas exists in scene
           </row>
+          <actions>
+            <button onClick={selectCanvas}>Select</button>
+          </actions>
         </> :
         <>
           <row>
+            {warn}
             ReactUnity Canvas does not exist in scene
           </row>
           <actions>

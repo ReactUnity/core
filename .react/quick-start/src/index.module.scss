@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: stretch;
   padding: 10px;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 head {
@@ -32,13 +32,6 @@ h2 {
   font-weight: medium;
 }
 
-row {
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 b {
   font-weight: bold;
 }
@@ -51,11 +44,26 @@ section {
   border-width: 1px;
   border-color: rgba($color: #000000, $alpha: 0.16);
 
-  actions {
-    margin-top: 12px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  row {
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+
+    text {
+      flex-shrink: 1;
+    }
+  }
+
+  actions {
+    flex-shrink: 0;
+    margin-left: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
     flex-wrap: wrap;
   }
 }
@@ -63,4 +71,17 @@ section {
 .projectPath {
   background-color: transparent;
   border-width: 0;
+}
+
+.checkIcon, .warnIcon, .cancelIcon {
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.checkIcon {
+  color: rgb(115, 255, 0);
+}
+
+.warnIcon {
+  color: crimson;
 }

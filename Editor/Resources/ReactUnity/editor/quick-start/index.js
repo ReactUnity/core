@@ -6788,12 +6788,15 @@ if (true) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "*{white-space:normal}.src_host__3RarM{flex-direction:column;align-items:stretch;padding:10px;font-size:15px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__3SrXQ{max-height:200px;max-width:200px;align-self:center}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}row{flex-direction:row;justify-content:flex-start;align-items:center;flex-wrap:wrap}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,0.08);border-width:1px;border-color:rgba(0,0,0,0.16)}section actions{margin-top:12px;flex-direction:row;justify-content:center;align-items:center;flex-wrap:wrap}.src_projectPath__1Pgfo{background-color:transparent;border-width:0}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "*{white-space:normal}.src_host__3RarM{flex-direction:column;align-items:stretch;padding:10px;font-size:12px}head{flex-direction:column;align-items:center;padding:10px;text-align:center}.src_logo__3SrXQ{max-height:200px;max-width:200px;align-self:center}h1{font-size:24px;font-weight:bold}h2{font-size:18px;font-weight:medium}b{font-weight:bold}section{padding:12px;border-radius:10px;margin:6px;background-color:rgba(0,0,0,0.08);border-width:1px;border-color:rgba(0,0,0,0.16);flex-direction:row;justify-content:space-between;align-items:center}section row{flex-direction:row;justify-content:flex-start;align-items:center}section row text{flex-shrink:1}section actions{flex-shrink:0;margin-left:8px;flex-direction:column;justify-content:center;align-items:stretch;flex-wrap:wrap}.src_projectPath__1Pgfo{background-color:transparent;border-width:0}.src_checkIcon__1pgzA,.src_warnIcon__3yr6f,.src_cancelIcon__L3vnX{flex-shrink:0;margin-right:6px}.src_checkIcon__1pgzA{color:#73ff00}.src_warnIcon__3yr6f{color:crimson}\n", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"host": "src_host__3RarM",
 	"logo": "src_logo__3SrXQ",
-	"projectPath": "src_projectPath__1Pgfo"
+	"projectPath": "src_projectPath__1Pgfo",
+	"checkIcon": "src_checkIcon__1pgzA",
+	"warnIcon": "src_warnIcon__3yr6f",
+	"cancelIcon": "src_cancelIcon__L3vnX"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7144,6 +7147,11 @@ module.exports = function (list, options) {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		__webpack_require__.p = "/";
+/******/ 	})();
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
@@ -7213,6 +7221,281 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/components.js
+var ImageFitMode;
+
+(function (ImageFitMode) {
+  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
+  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
+  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
+  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
+  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
+  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
+  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
+})(ImageFitMode || (ImageFitMode = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/index.js
+
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/styles-enums.js
+var FontWeight;
+
+(function (FontWeight) {
+  FontWeight[FontWeight["Thin"] = 100] = "Thin";
+  FontWeight[FontWeight["ExtraLight"] = 200] = "ExtraLight";
+  FontWeight[FontWeight["Light"] = 300] = "Light";
+  FontWeight[FontWeight["Regular"] = 400] = "Regular";
+  FontWeight[FontWeight["Medium"] = 500] = "Medium";
+  FontWeight[FontWeight["SemiBold"] = 600] = "SemiBold";
+  FontWeight[FontWeight["Bold"] = 700] = "Bold";
+  FontWeight[FontWeight["Heavy"] = 800] = "Heavy";
+  FontWeight[FontWeight["Black"] = 900] = "Black";
+})(FontWeight || (FontWeight = {}));
+
+var FontStyles;
+
+(function (FontStyles) {
+  FontStyles[FontStyles["Normal"] = 0] = "Normal";
+  FontStyles[FontStyles["Bold"] = 1] = "Bold";
+  FontStyles[FontStyles["Italic"] = 2] = "Italic";
+  FontStyles[FontStyles["Underline"] = 4] = "Underline";
+  FontStyles[FontStyles["LowerCase"] = 8] = "LowerCase";
+  FontStyles[FontStyles["UpperCase"] = 16] = "UpperCase";
+  FontStyles[FontStyles["SmallCaps"] = 32] = "SmallCaps";
+  FontStyles[FontStyles["Strikethrough"] = 64] = "Strikethrough";
+  FontStyles[FontStyles["Superscript"] = 128] = "Superscript";
+  FontStyles[FontStyles["Subscript"] = 256] = "Subscript";
+  FontStyles[FontStyles["Highlight"] = 512] = "Highlight";
+})(FontStyles || (FontStyles = {}));
+
+var TextOverflowModes;
+
+(function (TextOverflowModes) {
+  TextOverflowModes["Overflow"] = "overflow";
+  TextOverflowModes["Ellipsis"] = "ellipsis";
+  TextOverflowModes["Masking"] = "masking";
+  TextOverflowModes["Truncate"] = "truncate";
+  TextOverflowModes["ScrollRect"] = "scroll-rect";
+  TextOverflowModes["Page"] = "page";
+  TextOverflowModes["Linked"] = "linked";
+})(TextOverflowModes || (TextOverflowModes = {}));
+
+var PointerEvents;
+
+(function (PointerEvents) {
+  PointerEvents["Auto"] = "auto";
+  PointerEvents["Visible"] = "visible";
+  PointerEvents["All"] = "all";
+  PointerEvents["None"] = "none";
+})(PointerEvents || (PointerEvents = {}));
+
+var Visibility;
+
+(function (Visibility) {
+  Visibility["Visible"] = "visible";
+  Visibility["Hidden"] = "hidden";
+})(Visibility || (Visibility = {}));
+
+var Appearance;
+
+(function (Appearance) {
+  Appearance["None"] = "none";
+  Appearance["Button"] = "button";
+  Appearance["Input"] = "input";
+  Appearance["Toggle"] = "toggle";
+})(Appearance || (Appearance = {}));
+
+var NavigationMode;
+
+(function (NavigationMode) {
+  NavigationMode["None"] = "none";
+  NavigationMode["Horizontal"] = "horizontal";
+  NavigationMode["Vertical"] = "vertical";
+  NavigationMode["Automatic"] = "automatic";
+  NavigationMode["Explicit"] = "explicit";
+})(NavigationMode || (NavigationMode = {}));
+
+var WhiteSpace;
+
+(function (WhiteSpace) {
+  WhiteSpace["Normal"] = "normal";
+  WhiteSpace["NoWrap"] = "nowrap";
+})(WhiteSpace || (WhiteSpace = {}));
+
+var CursorType;
+
+(function (CursorType) {
+  CursorType["Auto"] = "auto";
+  CursorType["Default"] = "default";
+  CursorType["None"] = "none";
+  CursorType["ContextMenu"] = "context-menu";
+  CursorType["Help"] = "help";
+  CursorType["Pointer"] = "pointer";
+  CursorType["Progress"] = "progress";
+  CursorType["Wait"] = "wait";
+  CursorType["Cell"] = "cell";
+  CursorType["Crosshair"] = "crosshair";
+  CursorType["Text"] = "text";
+  CursorType["VerticalText"] = "vertical-text";
+  CursorType["Alias"] = "alias";
+  CursorType["Copy"] = "copy";
+  CursorType["Move"] = "move";
+  CursorType["NoDrop"] = "no-drop";
+  CursorType["NotAllowed"] = "not-allowed";
+  CursorType["EResize"] = "e-resize";
+  CursorType["NResize"] = "n-resize";
+  CursorType["NeResize"] = "ne-resize";
+  CursorType["NwResize"] = "nw-resize";
+  CursorType["SResize"] = "s-resize";
+  CursorType["SeResize"] = "se-resize";
+  CursorType["SwResize"] = "sw-resize";
+  CursorType["WResize"] = "w-resize";
+  CursorType["EwResize"] = "ew-resize";
+  CursorType["NsResize"] = "ns-resize";
+  CursorType["NeswResize"] = "nesw-resize";
+  CursorType["NwseResize"] = "nwse-resize";
+  CursorType["ColResize"] = "col-resize";
+  CursorType["RowResize"] = "row-resize";
+  CursorType["AllScroll"] = "all-scroll";
+  CursorType["ZoomIn"] = "zoom-in";
+  CursorType["ZoomOut"] = "zoom-out";
+  CursorType["Grab"] = "grab";
+  CursorType["Grabbing"] = "grabbing";
+})(CursorType || (CursorType = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/yoga-enums.js
+var FlexDirection;
+
+(function (FlexDirection) {
+  FlexDirection[FlexDirection["Column"] = 0] = "Column";
+  FlexDirection[FlexDirection["ColumnReverse"] = 1] = "ColumnReverse";
+  FlexDirection[FlexDirection["Row"] = 2] = "Row";
+  FlexDirection[FlexDirection["RowReverse"] = 3] = "RowReverse";
+})(FlexDirection || (FlexDirection = {}));
+
+var YogaAlign;
+
+(function (YogaAlign) {
+  YogaAlign[YogaAlign["Auto"] = 0] = "Auto";
+  YogaAlign[YogaAlign["FlexStart"] = 1] = "FlexStart";
+  YogaAlign[YogaAlign["Center"] = 2] = "Center";
+  YogaAlign[YogaAlign["FlexEnd"] = 3] = "FlexEnd";
+  YogaAlign[YogaAlign["Stretch"] = 4] = "Stretch";
+  YogaAlign[YogaAlign["Baseline"] = 5] = "Baseline";
+  YogaAlign[YogaAlign["SpaceBetween"] = 6] = "SpaceBetween";
+  YogaAlign[YogaAlign["SpaceAround"] = 7] = "SpaceAround";
+})(YogaAlign || (YogaAlign = {}));
+
+var YogaJustify;
+
+(function (YogaJustify) {
+  YogaJustify["FlexStart"] = "flex-start";
+  YogaJustify["Center"] = "center";
+  YogaJustify["FlexEnd"] = "flex-end";
+  YogaJustify["SpaceBetween"] = "space-between";
+  YogaJustify["SpaceAround"] = "space-around";
+})(YogaJustify || (YogaJustify = {}));
+
+var Display;
+
+(function (Display) {
+  Display["Flex"] = "flex";
+  Display["None"] = "none";
+})(Display || (Display = {}));
+
+var Wrap;
+
+(function (Wrap) {
+  Wrap["NoWrap"] = "no-wrap";
+  Wrap["Wrap"] = "wrap";
+  Wrap["WrapReverse"] = "wrap-reverse";
+})(Wrap || (Wrap = {}));
+
+var Position;
+
+(function (Position) {
+  Position["Relative"] = "relative";
+  Position["Absolute"] = "absolute";
+})(Position || (Position = {}));
+
+var Overflow;
+
+(function (Overflow) {
+  Overflow["Visible"] = "visible";
+  Overflow["Hidden"] = "hidden";
+  Overflow["Scroll"] = "scroll";
+})(Overflow || (Overflow = {}));
+
+var Direction;
+
+(function (Direction) {
+  Direction["Inherit"] = "inherit";
+  Direction["LTR"] = "ltr";
+  Direction["RTL"] = "rtl";
+})(Direction || (Direction = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/index.js
+
+
+
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
+// https://gist.github.com/gre/1650294
+var easing = {
+  // no easing, no acceleration
+  linear: function linear(t) {
+    return t;
+  },
+  // accelerating from zero velocity
+  easeInQuad: function easeInQuad(t) {
+    return t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuad: function easeOutQuad(t) {
+    return t * (2 - t);
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuad: function easeInOutQuad(t) {
+    return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  },
+  // accelerating from zero velocity
+  easeInCubic: function easeInCubic(t) {
+    return t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutCubic: function easeOutCubic(t) {
+    return --t * t * t + 1;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutCubic: function easeInOutCubic(t) {
+    return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  },
+  // accelerating from zero velocity
+  easeInQuart: function easeInQuart(t) {
+    return t * t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuart: function easeOutQuart(t) {
+    return 1 - --t * t * t * t;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuart: function easeInOutQuart(t) {
+    return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+  },
+  // accelerating from zero velocity
+  easeInQuint: function easeInQuint(t) {
+    return t * t * t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuint: function easeOutQuint(t) {
+    return 1 + --t * t * t * t * t;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuint: function easeInOutQuint(t) {
+    return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
+  }
+};
 // EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(84);
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
@@ -7490,280 +7773,6 @@ var Renderer = {
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   }
 };
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
-// https://gist.github.com/gre/1650294
-var easing = {
-  // no easing, no acceleration
-  linear: function linear(t) {
-    return t;
-  },
-  // accelerating from zero velocity
-  easeInQuad: function easeInQuad(t) {
-    return t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuad: function easeOutQuad(t) {
-    return t * (2 - t);
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuad: function easeInOutQuad(t) {
-    return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-  },
-  // accelerating from zero velocity
-  easeInCubic: function easeInCubic(t) {
-    return t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutCubic: function easeOutCubic(t) {
-    return --t * t * t + 1;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutCubic: function easeInOutCubic(t) {
-    return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-  },
-  // accelerating from zero velocity
-  easeInQuart: function easeInQuart(t) {
-    return t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuart: function easeOutQuart(t) {
-    return 1 - --t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuart: function easeInOutQuart(t) {
-    return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-  },
-  // accelerating from zero velocity
-  easeInQuint: function easeInQuint(t) {
-    return t * t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuint: function easeOutQuint(t) {
-    return 1 + --t * t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuint: function easeInOutQuint(t) {
-    return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
-  }
-};
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/styles-enums.js
-var FontWeight;
-
-(function (FontWeight) {
-  FontWeight[FontWeight["Thin"] = 100] = "Thin";
-  FontWeight[FontWeight["ExtraLight"] = 200] = "ExtraLight";
-  FontWeight[FontWeight["Light"] = 300] = "Light";
-  FontWeight[FontWeight["Regular"] = 400] = "Regular";
-  FontWeight[FontWeight["Medium"] = 500] = "Medium";
-  FontWeight[FontWeight["SemiBold"] = 600] = "SemiBold";
-  FontWeight[FontWeight["Bold"] = 700] = "Bold";
-  FontWeight[FontWeight["Heavy"] = 800] = "Heavy";
-  FontWeight[FontWeight["Black"] = 900] = "Black";
-})(FontWeight || (FontWeight = {}));
-
-var FontStyles;
-
-(function (FontStyles) {
-  FontStyles[FontStyles["Normal"] = 0] = "Normal";
-  FontStyles[FontStyles["Bold"] = 1] = "Bold";
-  FontStyles[FontStyles["Italic"] = 2] = "Italic";
-  FontStyles[FontStyles["Underline"] = 4] = "Underline";
-  FontStyles[FontStyles["LowerCase"] = 8] = "LowerCase";
-  FontStyles[FontStyles["UpperCase"] = 16] = "UpperCase";
-  FontStyles[FontStyles["SmallCaps"] = 32] = "SmallCaps";
-  FontStyles[FontStyles["Strikethrough"] = 64] = "Strikethrough";
-  FontStyles[FontStyles["Superscript"] = 128] = "Superscript";
-  FontStyles[FontStyles["Subscript"] = 256] = "Subscript";
-  FontStyles[FontStyles["Highlight"] = 512] = "Highlight";
-})(FontStyles || (FontStyles = {}));
-
-var TextOverflowModes;
-
-(function (TextOverflowModes) {
-  TextOverflowModes["Overflow"] = "overflow";
-  TextOverflowModes["Ellipsis"] = "ellipsis";
-  TextOverflowModes["Masking"] = "masking";
-  TextOverflowModes["Truncate"] = "truncate";
-  TextOverflowModes["ScrollRect"] = "scroll-rect";
-  TextOverflowModes["Page"] = "page";
-  TextOverflowModes["Linked"] = "linked";
-})(TextOverflowModes || (TextOverflowModes = {}));
-
-var PointerEvents;
-
-(function (PointerEvents) {
-  PointerEvents["Auto"] = "auto";
-  PointerEvents["Visible"] = "visible";
-  PointerEvents["All"] = "all";
-  PointerEvents["None"] = "none";
-})(PointerEvents || (PointerEvents = {}));
-
-var Visibility;
-
-(function (Visibility) {
-  Visibility["Visible"] = "visible";
-  Visibility["Hidden"] = "hidden";
-})(Visibility || (Visibility = {}));
-
-var Appearance;
-
-(function (Appearance) {
-  Appearance["None"] = "none";
-  Appearance["Button"] = "button";
-  Appearance["Input"] = "input";
-  Appearance["Toggle"] = "toggle";
-})(Appearance || (Appearance = {}));
-
-var NavigationMode;
-
-(function (NavigationMode) {
-  NavigationMode["None"] = "none";
-  NavigationMode["Horizontal"] = "horizontal";
-  NavigationMode["Vertical"] = "vertical";
-  NavigationMode["Automatic"] = "automatic";
-  NavigationMode["Explicit"] = "explicit";
-})(NavigationMode || (NavigationMode = {}));
-
-var WhiteSpace;
-
-(function (WhiteSpace) {
-  WhiteSpace["Normal"] = "normal";
-  WhiteSpace["NoWrap"] = "nowrap";
-})(WhiteSpace || (WhiteSpace = {}));
-
-var CursorType;
-
-(function (CursorType) {
-  CursorType["Auto"] = "auto";
-  CursorType["Default"] = "default";
-  CursorType["None"] = "none";
-  CursorType["ContextMenu"] = "context-menu";
-  CursorType["Help"] = "help";
-  CursorType["Pointer"] = "pointer";
-  CursorType["Progress"] = "progress";
-  CursorType["Wait"] = "wait";
-  CursorType["Cell"] = "cell";
-  CursorType["Crosshair"] = "crosshair";
-  CursorType["Text"] = "text";
-  CursorType["VerticalText"] = "vertical-text";
-  CursorType["Alias"] = "alias";
-  CursorType["Copy"] = "copy";
-  CursorType["Move"] = "move";
-  CursorType["NoDrop"] = "no-drop";
-  CursorType["NotAllowed"] = "not-allowed";
-  CursorType["EResize"] = "e-resize";
-  CursorType["NResize"] = "n-resize";
-  CursorType["NeResize"] = "ne-resize";
-  CursorType["NwResize"] = "nw-resize";
-  CursorType["SResize"] = "s-resize";
-  CursorType["SeResize"] = "se-resize";
-  CursorType["SwResize"] = "sw-resize";
-  CursorType["WResize"] = "w-resize";
-  CursorType["EwResize"] = "ew-resize";
-  CursorType["NsResize"] = "ns-resize";
-  CursorType["NeswResize"] = "nesw-resize";
-  CursorType["NwseResize"] = "nwse-resize";
-  CursorType["ColResize"] = "col-resize";
-  CursorType["RowResize"] = "row-resize";
-  CursorType["AllScroll"] = "all-scroll";
-  CursorType["ZoomIn"] = "zoom-in";
-  CursorType["ZoomOut"] = "zoom-out";
-  CursorType["Grab"] = "grab";
-  CursorType["Grabbing"] = "grabbing";
-})(CursorType || (CursorType = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/yoga-enums.js
-var FlexDirection;
-
-(function (FlexDirection) {
-  FlexDirection[FlexDirection["Column"] = 0] = "Column";
-  FlexDirection[FlexDirection["ColumnReverse"] = 1] = "ColumnReverse";
-  FlexDirection[FlexDirection["Row"] = 2] = "Row";
-  FlexDirection[FlexDirection["RowReverse"] = 3] = "RowReverse";
-})(FlexDirection || (FlexDirection = {}));
-
-var YogaAlign;
-
-(function (YogaAlign) {
-  YogaAlign[YogaAlign["Auto"] = 0] = "Auto";
-  YogaAlign[YogaAlign["FlexStart"] = 1] = "FlexStart";
-  YogaAlign[YogaAlign["Center"] = 2] = "Center";
-  YogaAlign[YogaAlign["FlexEnd"] = 3] = "FlexEnd";
-  YogaAlign[YogaAlign["Stretch"] = 4] = "Stretch";
-  YogaAlign[YogaAlign["Baseline"] = 5] = "Baseline";
-  YogaAlign[YogaAlign["SpaceBetween"] = 6] = "SpaceBetween";
-  YogaAlign[YogaAlign["SpaceAround"] = 7] = "SpaceAround";
-})(YogaAlign || (YogaAlign = {}));
-
-var YogaJustify;
-
-(function (YogaJustify) {
-  YogaJustify["FlexStart"] = "flex-start";
-  YogaJustify["Center"] = "center";
-  YogaJustify["FlexEnd"] = "flex-end";
-  YogaJustify["SpaceBetween"] = "space-between";
-  YogaJustify["SpaceAround"] = "space-around";
-})(YogaJustify || (YogaJustify = {}));
-
-var Display;
-
-(function (Display) {
-  Display["Flex"] = "flex";
-  Display["None"] = "none";
-})(Display || (Display = {}));
-
-var Wrap;
-
-(function (Wrap) {
-  Wrap["NoWrap"] = "no-wrap";
-  Wrap["Wrap"] = "wrap";
-  Wrap["WrapReverse"] = "wrap-reverse";
-})(Wrap || (Wrap = {}));
-
-var Position;
-
-(function (Position) {
-  Position["Relative"] = "relative";
-  Position["Absolute"] = "absolute";
-})(Position || (Position = {}));
-
-var Overflow;
-
-(function (Overflow) {
-  Overflow["Visible"] = "visible";
-  Overflow["Hidden"] = "hidden";
-  Overflow["Scroll"] = "scroll";
-})(Overflow || (Overflow = {}));
-
-var Direction;
-
-(function (Direction) {
-  Direction["Inherit"] = "inherit";
-  Direction["LTR"] = "ltr";
-  Direction["RTL"] = "rtl";
-})(Direction || (Direction = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/index.js
-
-
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/components.js
-var ImageFitMode;
-
-(function (ImageFitMode) {
-  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
-  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
-  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
-  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
-  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
-  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
-  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
-})(ImageFitMode || (ImageFitMode = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/index.js
-
-
-
-
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/editor.js
 
 
@@ -7776,6 +7785,10 @@ var ImageFitMode;
 
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(359);
+;// CONCATENATED MODULE: ./src/assets/check.png
+/* harmony default export */ const assets_check = (__webpack_require__.p + "static/media/check.png");
+;// CONCATENATED MODULE: ./src/assets/close.png
+/* harmony default export */ const assets_close = (__webpack_require__.p + "static/media/close.png");
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(379);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -7798,7 +7811,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(114);
 ;// CONCATENATED MODULE: ./src/main.tsx
-var Editor=Globals.Editor;var vsCodePath='vscode://file/{path}/';function App(){var _useState=(0,react.useState)(Editor.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];(0,react.useEffect)(function(){if(nodeVersion<0){Editor.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){setProjectPath(Editor.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Editor.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Editor.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var createCanvas=function createCanvas(){Editor.CreateCanvas();setCanvasExists(true);};return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"res://ReactUnity/editor/logo",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:"Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed."}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:["It can be installed at ",/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Editor.NodeUrl,children:Editor.NodeUrl})]})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:["Node.js version",/*#__PURE__*/(0,jsx_runtime.jsx)("b",{children:nodeVersion})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:["Project exists at path:",/*#__PURE__*/(0,jsx_runtime.jsx)("b",{children:projectPath})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return UnityEditor.EditorUtility.RevealInFinder(projectPath);},children:"Show in file explorer"})]})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:"ReactUnity Canvas exists in scene"})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:"ReactUnity Canvas does not exist in scene"}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})})]});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}),RootContainer,null);
+var Window=Globals.Editor;var vsCodePath='vscode://file/{path}/';var filePath='file:{path}';function App(){var _useState=(0,react.useState)(Window.NodeVersion),_useState2=_slicedToArray(_useState,2),nodeVersion=_useState2[0],setNodeVersion=_useState2[1];var _useState3=(0,react.useState)(''),_useState4=_slicedToArray(_useState3,2),projectPath=_useState4[0],setProjectPath=_useState4[1];var _useState5=(0,react.useState)(null),_useState6=_slicedToArray(_useState5,2),canvasExists=_useState6[0],setCanvasExists=_useState6[1];var _useState7=(0,react.useState)(Window.PackageVersion),_useState8=_slicedToArray(_useState7,2),packageVersion=_useState8[0],setPackageVersion=_useState8[1];var _useState9=(0,react.useState)(Window.LatestVersion),_useState10=_slicedToArray(_useState9,2),latestVersion=_useState10[0],setLatestVersion=_useState10[1];var _useState11=(0,react.useState)(Window.HasUpdate),_useState12=_slicedToArray(_useState11,2),hasUpdate=_useState12[0],setHasUpdate=_useState12[1];(0,react.useEffect)(function(){if(nodeVersion<0){Window.GetNodeVersion(function(ver){return setNodeVersion(ver);});}},[nodeVersion,setNodeVersion]);(0,react.useEffect)(function(){if(!packageVersion){Window.CheckVersion(function(){setPackageVersion(Window.PackageVersion);setLatestVersion(Window.LatestVersion);setHasUpdate(Window.HasUpdate);});}},[packageVersion]);(0,react.useEffect)(function(){setProjectPath(Window.GetProjectPath());},[setProjectPath]);(0,react.useEffect)(function(){setCanvasExists(Window.CanvasExistsInScene());},[setCanvasExists]);var nodeOk=nodeVersion>Window.RequiredNodeVersion;var projectOk=!!projectPath;var canvasOk=!!canvasExists;var packageOk=!hasUpdate;var createCanvas=function createCanvas(){Window.CreateCanvas();setCanvasExists(true);};var selectCanvas=function selectCanvas(){Window.SelectCanvas();};var check=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:assets_check,className:src_index_module.checkIcon});var warn=/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:assets_close,className:src_index_module.warnIcon});return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:src_index_module.host,children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("head",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{source:"res://ReactUnity/editor/logo",className:src_index_module.logo}),/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity"}),/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Quick Start"})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:nodeOk?src_index_module.success:src_index_module.error,children:nodeVersion===0?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed."})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:Window.NodeUrl,children:"Install"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Node.js version ",nodeVersion," is installed"]})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:packageOk?/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity version is up to date at ",packageVersion]})]})}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["ReactUnity is out of date. Current version: ",packageVersion,", Latest version: ",latestVersion]})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:function onClick(){return Window.UpdatePackage(latestVersion);},children:"Update"})})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:projectOk?src_index_module.success:src_index_module.error,children:projectPath&&/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,/*#__PURE__*/(0,jsx_runtime.jsxs)("text",{children:["Project exists at path ",projectPath]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("actions",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:vsCodePath.replace('{path}',projectPath),children:"Open in VSCode"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:filePath.replace('{path}',projectPath),children:"Show in file explorer"})]})]})}),/*#__PURE__*/(0,jsx_runtime.jsx)("section",{className:canvasOk?src_index_module.success:src_index_module.error,children:canvasOk?/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[check,"ReactUnity Canvas exists in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:selectCanvas,children:"Select"})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)(jsx_runtime.Fragment,{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[warn,"ReactUnity Canvas does not exist in scene"]}),/*#__PURE__*/(0,jsx_runtime.jsx)("actions",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onClick:createCanvas,children:"Create"})})]})})]});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}),RootContainer,null);
 ;// CONCATENATED MODULE: ./src/index.ts
 
 })();
