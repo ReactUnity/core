@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 18.04.2021 01:42:26
+// Generated 18.04.2021 02:44:50
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -2304,8 +2304,8 @@ export declare namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       static ShowDefaultWindow(): void;
-      Run(host?: UnityEngine.UIElements.VisualElement): void;
-      Restart(host?: UnityEngine.UIElements.VisualElement): void;
+      Run(root?: UnityEngine.UIElements.VisualElement): void;
+      Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
       AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
       AddItemsToMenu(menu: any): void;
@@ -2375,8 +2375,8 @@ export declare namespace ReactUnity {
       SelectCanvas(): void;
       CheckVersion(callback: (() => void)): void;
       UpdatePackage(version: string): void;
-      Run(host?: UnityEngine.UIElements.VisualElement): void;
-      Restart(host?: UnityEngine.UIElements.VisualElement): void;
+      Run(root?: UnityEngine.UIElements.VisualElement): void;
+      Restart(root?: UnityEngine.UIElements.VisualElement): void;
       AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
       AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
       AddItemsToMenu(menu: any): void;
@@ -3024,7 +3024,7 @@ export declare namespace ReactUnity {
     }
     export namespace Renderer {
       export class EditorContext {
-        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, editor: ReactUnity.Editor.Renderer.ReactWindow, onRestart?: (() => void));
+        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: (() => void));
         StateHandlers: Record<string, System.Type>;
         Host: ReactUnity.IHostComponent;
         Globals: ReactUnity.Types.StringObjectDictionary;
@@ -3036,7 +3036,6 @@ export declare namespace ReactUnity {
         static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.Editor.Renderer.EditorContext) => any);
         static textCreator: ((arg0: string, arg1: ReactUnity.Editor.Renderer.EditorContext) => ReactUnity.ITextComponent);
         static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Components.IEditorComponent`1[UnityEngine.UIElements.VisualElement]]]
-        Editor: ReactUnity.Editor.Renderer.ReactWindow;
         Parser: any; // ExCSS.StylesheetParser
         StyleTree: ReactUnity.StyleEngine.StyleTree;
         OnRestart: (() => void);
@@ -3077,8 +3076,8 @@ export declare namespace ReactUnity {
         name: string;
         hideFlags: UnityEngine.HideFlags;
         static ShowDefaultWindow(): void;
-        Run(host?: UnityEngine.UIElements.VisualElement): void;
-        Restart(host?: UnityEngine.UIElements.VisualElement): void;
+        Run(root?: UnityEngine.UIElements.VisualElement): void;
+        Restart(root?: UnityEngine.UIElements.VisualElement): void;
         AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
         AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
         AddItemsToMenu(menu: any): void;
@@ -3109,6 +3108,119 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class ReactInspector {
+        target: UnityEngine.Object;
+        targets: UnityEngine.Object[];
+        serializedObject: any; // UnityEditor.SerializedObject
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        CreateInspectorGUI(): UnityEngine.UIElements.VisualElement;
+        DrawDefaultInspector(): boolean;
+        Repaint(): void;
+        OnInspectorGUI(): void;
+        RequiresConstantRepaint(): boolean;
+        DrawHeader(): void;
+        HasPreviewGUI(): boolean;
+        GetPreviewTitle(): UnityEngine.GUIContent;
+        RenderStaticPreview(assetPath: string, subAssets: UnityEngine.Object[], width: number, height: number): UnityEngine.Texture2D;
+        OnPreviewGUI(r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
+        OnInteractivePreviewGUI(r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
+        OnPreviewSettings(): void;
+        GetInfoString(): string;
+        DrawPreview(previewArea: UnityEngine.Rect): void;
+        ReloadPreviewInstances(): void;
+        UseDefaultMargins(): boolean;
+        Initialize(targets: UnityEngine.Object[]): void;
+        Cleanup(): void;
+        MoveNextTarget(): boolean;
+        ResetTarget(): void;
+        SetDirty(): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ReactUnityElement {
+        constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Types.StringObjectDictionary, autorun?: boolean);
+        [key: string]: any;
+        Script: ReactUnity.ReactScript;
+        Globals: ReactUnity.Types.StringObjectDictionary;
+        viewDataKey: string;
+        userData: any; // System.Object
+        canGrabFocus: boolean;
+        focusController: UnityEngine.UIElements.FocusController;
+        usageHints: UnityEngine.UIElements.UsageHints;
+        transform: UnityEngine.UIElements.ITransform;
+        layout: UnityEngine.Rect;
+        contentRect: UnityEngine.Rect;
+        worldBound: UnityEngine.Rect;
+        localBound: UnityEngine.Rect;
+        worldTransform: UnityEngine.Matrix4x4;
+        pickingMode: UnityEngine.UIElements.PickingMode;
+        name: string;
+        enabledInHierarchy: boolean;
+        enabledSelf: boolean;
+        visible: boolean;
+        generateVisualContent: ((arg0: UnityEngine.UIElements.MeshGenerationContext) => void);
+        experimental: UnityEngine.UIElements.IExperimentalFeatures;
+        hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+        cacheAsBitmap: boolean;
+        parent: UnityEngine.UIElements.VisualElement;
+        panel: UnityEngine.UIElements.IPanel;
+        contentContainer: UnityEngine.UIElements.VisualElement;
+        childCount: number;
+        schedule: UnityEngine.UIElements.IVisualElementScheduler;
+        style: UnityEngine.UIElements.IStyle;
+        customStyle: UnityEngine.UIElements.ICustomStyle;
+        styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+        tooltip: string;
+        resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+        focusable: boolean;
+        tabIndex: number;
+        delegatesFocus: boolean;
+        Run(): void;
+        Destroy(): void;
+        Restart(): void;
+        Focus(): void;
+        SendEvent(e: UnityEngine.UIElements.EventBase): void;
+        SetEnabled(value: boolean): void;
+        MarkDirtyRepaint(): void;
+        ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+        Overlaps(rectangle: UnityEngine.Rect): boolean;
+        ToString(): string;
+        GetClasses(): System.Collections.Generic.IEnumerable<string>;
+        ClearClassList(): void;
+        AddToClassList(className: string): void;
+        RemoveFromClassList(className: string): void;
+        ToggleInClassList(className: string): void;
+        EnableInClassList(className: string, enable: boolean): void;
+        ClassListContains(cls: string): boolean;
+        FindAncestorUserData(): any;
+        Add(child: UnityEngine.UIElements.VisualElement): void;
+        Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+        Remove(element: UnityEngine.UIElements.VisualElement): void;
+        RemoveAt(index: number): void;
+        Clear(): void;
+        ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+        IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+        Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+        Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+        BringToFront(): void;
+        SendToBack(): void;
+        PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+        PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+        RemoveFromHierarchy(): void;
+        Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+        FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+        Blur(): void;
+        HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
+        HasTrickleDownHandlers(): boolean;
+        HasBubbleUpHandlers(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
       export class ReactWindow {
         rootVisualElement: UnityEngine.UIElements.VisualElement;
         wantsMouseMove: boolean;
@@ -3129,8 +3241,8 @@ export declare namespace ReactUnity {
         position: UnityEngine.Rect;
         name: string;
         hideFlags: UnityEngine.HideFlags;
-        Run(host?: UnityEngine.UIElements.VisualElement): void;
-        Restart(host?: UnityEngine.UIElements.VisualElement): void;
+        Run(root?: UnityEngine.UIElements.VisualElement): void;
+        Restart(root?: UnityEngine.UIElements.VisualElement): void;
         AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
         AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
         AddItemsToMenu(menu: any): void;

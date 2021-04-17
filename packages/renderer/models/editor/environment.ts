@@ -3,7 +3,8 @@ import { ReactUnity } from '../generated';
 declare global {
   interface DefaultGlobals {
     [key: string]: any;
-    Editor: ReactUnity.Editor.Renderer.ReactWindow;
+    Window?: ReactUnity.Editor.Renderer.ReactWindow;
+    Inspector?: ReactUnity.Editor.Renderer.ReactInspector;
   }
 
   const Globals: DefaultGlobals;
