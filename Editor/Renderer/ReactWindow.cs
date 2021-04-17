@@ -69,7 +69,7 @@ namespace ReactUnity.Editor.Renderer
         {
             return new StringObjectDictionary()
             {
-                {  "Editor", this }
+                { "Editor", this }
             };
         }
 

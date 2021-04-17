@@ -1,10 +1,12 @@
 using ReactUnity.Editor.Renderer;
+using ReactUnity.Helpers.TypescriptUtils;
 using UnityEditor;
 using UnityEngine;
 
 namespace ReactUnity.Editor
 {
-    public class EditStyleWindow : ReactWindow
+    [TypescriptInclude]
+    internal class EditStyleWindow : ReactWindow
     {
         [MenuItem("React/Show Inspector")]
         public static void ShowDefaultWindow()

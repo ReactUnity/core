@@ -1,6 +1,7 @@
 using ExCSS;
 using Facebook.Yoga;
 using ReactUnity.EventHandlers;
+using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.StateHandlers;
@@ -37,6 +38,8 @@ namespace ReactUnity.Components
         public YogaNode Layout { get; private set; }
         public NodeStyle ComputedStyle { get; private set; }
         public StateStyles StateStyles { get; private set; }
+
+        [TypescriptRemap("../properties/style", "InlineStyleRemap")]
         public InlineData Style { get; protected set; } = new InlineData("Style");
 
         public BorderAndBackground BorderAndBackground { get; protected set; }

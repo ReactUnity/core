@@ -2,6 +2,7 @@ using Facebook.Yoga;
 using ReactUnity.Editor.Events;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.Styling;
+using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Interop;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
@@ -30,6 +31,8 @@ namespace ReactUnity.Editor.Components
         public YogaNode Layout { get; private set; }
         public List<LayoutValue> LayoutValues { get; private set; } = new List<LayoutValue>();
         public NodeStyle ComputedStyle { get; private set; }
+
+        [TypescriptRemap("../properties/style", "InlineStyleRemap")]
         public InlineData Style { get; protected set; } = new InlineData("Style");
 
         public bool IsPseudoElement { get; private set; }

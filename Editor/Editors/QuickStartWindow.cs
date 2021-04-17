@@ -6,16 +6,25 @@ using System.Linq;
 using System;
 using ReactUnity.Editor.Renderer;
 using UnityEngine.SceneManagement;
+using UnityEditor.PackageManager;
+using System.Collections;
+using ReactUnity.Helpers.TypescriptUtils;
 
 namespace ReactUnity.Editor
 {
-    public class QuickStartWindow : ReactWindow
+    [TypescriptInclude]
+    internal class QuickStartWindow : ReactWindow
     {
+        public const string PackageName = "com.reactunity.core";
         public readonly int RequiredNodeVersion = 12;
         public readonly string NodeUrl = "https://nodejs.org/";
         public readonly string ProjectDirName = "react";
 
         public int NodeVersion { get; private set; } = -1;
+
+        public string PackageVersion;
+        public string LatestVersion;
+        public bool HasUpdate;
 
 
         [MenuItem("React/Quick Start", priority = 0)]
@@ -34,11 +43,6 @@ namespace ReactUnity.Editor
             res.UseDevServer = DevServerEnabled;
 #endif
             return res;
-        }
-
-        public void OpenInVsCode(string path)
-        {
-            RunCommand("code", path);
         }
 
         public string GetProjectPath()
@@ -124,6 +128,39 @@ namespace ReactUnity.Editor
             var go = Selection.activeGameObject;
             go.AddComponent<ReactUnity>();
             go.name = "React Canvas";
+        }
+
+        public void SelectCanvas()
+        {
+            var objects = SceneManager.GetActiveScene().GetRootGameObjects();
+
+            var canvas = objects.Select(x => x.GetComponentInChildren<ReactUnity>()).FirstOrDefault(x => x != null);
+
+            if (canvas) Selection.activeObject = canvas.gameObject;
+        }
+
+        public void CheckVersion(Action callback)
+        {
+            dispatcher.StartDeferred(CheckVersionDelegate(callback));
+        }
+
+        private IEnumerator CheckVersionDelegate(Action callback)
+        {
+            var packagesRequest = Client.List(false, false);
+
+            while (!packagesRequest.IsCompleted) yield return null;
+
+            var ruPackage = packagesRequest.Result.FirstOrDefault(x => x.name == PackageName);
+
+            PackageVersion = ruPackage.version;
+            LatestVersion = ruPackage.versions.latestCompatible;
+            HasUpdate = PackageVersion != LatestVersion;
+            callback();
+        }
+
+        public void UpdatePackage(string version)
+        {
+            Client.Add(PackageName + "@" + version);
         }
     }
 }

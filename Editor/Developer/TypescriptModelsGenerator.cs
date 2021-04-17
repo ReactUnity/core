@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.IO;
 using System.Diagnostics.CodeAnalysis;
+using ReactUnity.Helpers.TypescriptUtils;
 
 namespace ReactUnity.Editor.Developer
 {
@@ -132,6 +133,7 @@ namespace ReactUnity.Editor.Developer
         static List<string> ExcludedTypes;
         static Dictionary<string, string> ImportNamespaces;
         static HashSet<string> Imports;
+        static Dictionary<string, string> Remaps;
         static bool ExportAsClass;
         static bool AllowGeneric;
         static bool AllowIndexer;
@@ -144,6 +146,7 @@ namespace ReactUnity.Editor.Developer
 
             ExcludedTypes = excludeTypes;
             ImportNamespaces = import ?? new Dictionary<string, string>();
+            Remaps = new Dictionary<string, string>();
             IncludedNamespaces = include;
             ExcludedNamespaces = exclude ?? new List<string>();
             Imports = new HashSet<string>();
@@ -272,12 +275,15 @@ namespace ReactUnity.Editor.Developer
             }
 
             var importGroups = Imports.GroupBy(x => ImportNamespaces[x]);
+            var remapGroups = Remaps.GroupBy(x => x.Value, x => x.Key);
+
+            var imports = importGroups.Concat(remapGroups).OrderBy(x => x.Key);
 
             return $"//{n}" +
                 $"// Types in assemblies: {string.Join(", ", assemblies.Select(x => x.GetName().Name))}{n}" +
                 $"// Generated {DateTime.Now}{n}" +
                 $"//{n}" +
-                $"{string.Join(n, importGroups.Select(x => $"import {{ {string.Join(", ", x)} }} from '{x.Key}';"))}{n}" +
+                $"{string.Join(n, imports.Select(x => $"import {{ {string.Join(", ", x.OrderBy(x => x))} }} from '{x.Key}';"))}{n}" +
                 n +
                 sb;
         }
@@ -285,19 +291,23 @@ namespace ReactUnity.Editor.Developer
         static bool filterType(Type t, bool allowGeneric = false)
         {
             return t != null &&
-              (IncludedNamespaces == null || IncludedNamespaces.Any(x => t.FullName.StartsWith(x + "."))) &&
               (t.DeclaringType == null || filterType(t.DeclaringType, allowGeneric)) &&
-              (!ExcludedNamespaces.Any(x => (t.Namespace ?? "").StartsWith(x))) &&
-              (t.IsPublic || t.IsNestedPublic) &&
-              !typeof(Attribute).IsAssignableFrom(t) &&
               !t.FullName.Contains("<") &&
-              (allowGeneric || !t.IsGenericType || t.IsEnum);
+              (allowGeneric || !t.IsGenericType || t.IsEnum) &&
+              (t.GetCustomAttribute<TypescriptExclude>() == null) &&
+              ((t.GetCustomAttribute<TypescriptInclude>() != null) ||
+                  (IncludedNamespaces == null || IncludedNamespaces.Any(x => t.FullName.StartsWith(x + "."))) &&
+                  (!ExcludedNamespaces.Any(x => (t.Namespace ?? "").StartsWith(x))) &&
+                  (t.IsPublic || t.IsNestedPublic) &&
+                  !typeof(Attribute).IsAssignableFrom(t)
+              );
         }
 
         static string getTypeScriptString(PropertyInfo info)
         {
             var isStatic = info.GetAccessors(true)[0].IsStatic;
-            var typeString = getTypesScriptType(info.PropertyType, true, false, AllowGeneric && !isStatic);
+            var remap = info.GetCustomAttribute<TypescriptRemap>();
+            var typeString = RegisterRemap(remap) ?? getTypesScriptType(info.PropertyType, true, false, AllowGeneric && !isStatic);
             var isNullable = info.PropertyType.ToString().Contains("Nullable");
 
             return string.Format("{3}{0}{4}: {1};{2}",
@@ -312,7 +322,8 @@ namespace ReactUnity.Editor.Developer
         static string getTypeScriptString(FieldInfo info)
         {
             var isStatic = info.IsStatic;
-            var typeString = getTypesScriptType(info.FieldType, true, false, AllowGeneric && !isStatic);
+            var remap = info.GetCustomAttribute<TypescriptRemap>();
+            var typeString = RegisterRemap(remap) ?? getTypesScriptType(info.FieldType, true, false, AllowGeneric && !isStatic);
             var isNullable = info.FieldType.ToString().Contains("Nullable");
 
             return string.Format("{3}{0}{4}: {1};{2}",
@@ -373,7 +384,8 @@ namespace ReactUnity.Editor.Developer
 
         static string getTypeScriptString(ParameterInfo info, bool allowGeneric)
         {
-            var typeString = getTypesScriptType(info.ParameterType, true, false, allowGeneric);
+            var remap = info.GetCustomAttribute<TypescriptRemap>();
+            var typeString = RegisterRemap(remap) ?? getTypesScriptType(info.ParameterType, true, false, allowGeneric);
             var isParams = info.GetCustomAttribute(typeof(ParamArrayAttribute), false) != null;
 
             var keywords = new HashSet<string> {
@@ -422,6 +434,10 @@ namespace ReactUnity.Editor.Developer
         {
             var propertyType = type.ToString();
             var genArgs = type.GetGenericArguments();
+
+            var remap = type.GetCustomAttribute<TypescriptRemap>();
+
+            if (!skipKnownTypes && remap != null) return RegisterRemap(remap);
 
             if (ExcludedTypes.Contains(propertyType)) return "any";
 
@@ -485,7 +501,7 @@ namespace ReactUnity.Editor.Developer
                     if (propertyType.StartsWith("System.Action") || propertyType.StartsWith("System.Func"))
                     {
                         var retType = propertyType.StartsWith("System.Action") || gens.Count == 0 ? "void" : gens.Last();
-                        if (propertyType.StartsWith("System.Action")) gens = gens.Take(gens.Count - 1).ToList();
+                        if (propertyType.StartsWith("System.Func")) gens = gens.Take(gens.Count - 1).ToList();
                         var args = string.Join(", ", gens.Select((x, i) => $"arg{i}: {x}"));
 
                         return string.Format("(({0}) => {1})",
@@ -528,6 +544,13 @@ namespace ReactUnity.Editor.Developer
             if (IncludedNamespaces == null) return fullName;
 
             return "any";
+        }
+
+        static string RegisterRemap(TypescriptRemap remap)
+        {
+            if (remap == null) return null;
+            Remaps[remap.PropName] = remap.FileName;
+            return remap.PropName;
         }
 
         public static string GetNameWithoutGenericArity(string name)
