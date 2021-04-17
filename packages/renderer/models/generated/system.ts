@@ -1,6 +1,6 @@
 //
 // Types in assemblies: mscorlib, mscorlib, System.Core, System, mscorlib, System, mscorlib
-// Generated 29.03.2021 04:19:49
+// Generated 18.04.2021 01:43:16
 //
 
 
@@ -223,7 +223,7 @@ export declare namespace System {
     HResult: number;
     GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
     GetBaseException(): System.Exception;
-    Handle(predicate: ((arg0: System.Exception, arg1: boolean) => boolean)): void;
+    Handle(predicate: ((arg0: System.Exception) => boolean)): void;
     Flatten(): System.AggregateException;
     ToString(): string;
     GetType(): System.Type;
@@ -255,11 +255,11 @@ export declare namespace System {
   }
   export class Lazy<T = any> {
     constructor();
-    constructor(valueFactory: ((arg0: T) => T));
+    constructor(valueFactory: (() => T));
     constructor(isThreadSafe: boolean);
     constructor(mode: System.Threading.LazyThreadSafetyMode);
-    constructor(valueFactory: ((arg0: T) => T), isThreadSafe: boolean);
-    constructor(valueFactory: ((arg0: T) => T), mode: System.Threading.LazyThreadSafetyMode);
+    constructor(valueFactory: (() => T), isThreadSafe: boolean);
+    constructor(valueFactory: (() => T), mode: System.Threading.LazyThreadSafetyMode);
     IsValueCreated: boolean;
     Value: T;
     ToString(): string;
@@ -2646,7 +2646,7 @@ export declare namespace System {
   }
   export class Progress<T = any> {
     constructor();
-    constructor(handler: (() => void));
+    constructor(handler: ((arg0: T) => void));
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -3156,9 +3156,9 @@ export declare namespace System {
     static Missing: any; // System.Object
     static Delimiter: System.Char;
     static EmptyTypes: System.Type[];
-    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName, arg1: System.Reflection.Assembly) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean, arg3: System.Type) => System.Type)): System.Type;
-    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName, arg1: System.Reflection.Assembly) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean, arg3: System.Type) => System.Type), throwOnError: boolean): System.Type;
-    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName, arg1: System.Reflection.Assembly) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean, arg3: System.Type) => System.Type), throwOnError: boolean, ignoreCase: boolean): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean) => System.Type)): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean) => System.Type), throwOnError: boolean): System.Type;
+    static GetType(typeName: string, assemblyResolver: ((arg0: System.Reflection.AssemblyName) => System.Reflection.Assembly), typeResolver: ((arg0: System.Reflection.Assembly, arg1: string, arg2: boolean) => System.Type), throwOnError: boolean, ignoreCase: boolean): System.Type;
     MakePointerType(): System.Type;
     MakeByRefType(): System.Type;
     MakeArrayType(): System.Type;
@@ -6550,10 +6550,10 @@ export declare namespace System {
         Clear(): void;
         ToArray(): System.Collections.Generic.KeyValuePair<TKey, TValue>[];
         GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<TKey, TValue>>;
-        GetOrAdd(key: TKey, valueFactory: ((arg0: TKey, arg1: TValue) => TValue)): TValue;
+        GetOrAdd(key: TKey, valueFactory: ((arg0: TKey) => TValue)): TValue;
         GetOrAdd(key: TKey, value: TValue): TValue;
-        AddOrUpdate(key: TKey, addValueFactory: ((arg0: TKey, arg1: TValue) => TValue), updateValueFactory: ((arg0: TKey, arg1: TValue, arg2: TValue) => TValue)): TValue;
-        AddOrUpdate(key: TKey, addValue: TValue, updateValueFactory: ((arg0: TKey, arg1: TValue, arg2: TValue) => TValue)): TValue;
+        AddOrUpdate(key: TKey, addValueFactory: ((arg0: TKey) => TValue), updateValueFactory: ((arg0: TKey, arg1: TValue) => TValue)): TValue;
+        AddOrUpdate(key: TKey, addValue: TValue, updateValueFactory: ((arg0: TKey, arg1: TValue) => TValue)): TValue;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -6833,7 +6833,7 @@ export declare namespace System {
         FindLastIndex(match: System.Predicate<T>): number;
         FindLastIndex(startIndex: number, match: System.Predicate<T>): number;
         FindLastIndex(startIndex: number, count: number, match: System.Predicate<T>): number;
-        ForEach(action: (() => void)): void;
+        ForEach(action: ((arg0: T) => void)): void;
         GetEnumerator(): System.Collections.Generic.List<T>;
         GetRange(index: number, count: number): T[];
         IndexOf(item: T): number;
@@ -21432,7 +21432,7 @@ export declare namespace System {
     export class ResourceWriter {
       constructor(fileName: string);
       constructor(stream: System.IO.Stream);
-      TypeNameConverter: ((arg0: System.Type, arg1: string) => string);
+      TypeNameConverter: ((arg0: System.Type) => string);
       AddResource(name: string, value: string): void;
       AddResource(name: string, value: any): void;
       AddResource(name: string, value: System.IO.Stream): void;
@@ -24319,7 +24319,7 @@ export declare namespace System {
           ActivateInstance(): any;
         }
         export class WindowsRuntimeMarshal {
-          static RemoveAllEventHandlers(removeMethod: (() => void)): void;
+          static RemoveAllEventHandlers(removeMethod: ((arg0: System.Runtime.InteropServices.WindowsRuntime.EventRegistrationToken) => void)): void;
           static GetActivationFactory(type: System.Type): System.Runtime.InteropServices.WindowsRuntime.IActivationFactory;
           static StringToHString(s: string): System.IntPtr;
           static PtrToStringHString(ptr: System.IntPtr): string;
@@ -28354,8 +28354,8 @@ export declare namespace System {
         constructor(identity: System.Security.Principal.IIdentity);
         constructor(principal: System.Security.Principal.IPrincipal);
         constructor(reader: System.IO.BinaryReader);
-        static PrimaryIdentitySelector: ((arg0: any, arg1: System.Security.Claims.ClaimsIdentity) => System.Security.Claims.ClaimsIdentity);
-        static ClaimsPrincipalSelector: ((arg0: System.Security.Claims.ClaimsPrincipal) => System.Security.Claims.ClaimsPrincipal);
+        static PrimaryIdentitySelector: ((arg0: any) => System.Security.Claims.ClaimsIdentity);
+        static ClaimsPrincipalSelector: (() => System.Security.Claims.ClaimsPrincipal);
         Claims: System.Collections.Generic.IEnumerable<System.Security.Claims.Claim>;
         static Current: System.Security.Claims.ClaimsPrincipal;
         Identities: System.Collections.Generic.IEnumerable<System.Security.Claims.ClaimsIdentity>;
@@ -33904,8 +33904,8 @@ export declare namespace System {
       WaitHandle: System.Threading.WaitHandle;
       Register(callback: (() => void)): System.Threading.CancellationTokenRegistration;
       Register(callback: (() => void), useSynchronizationContext: boolean): System.Threading.CancellationTokenRegistration;
-      Register(callback: (() => void), state: any): System.Threading.CancellationTokenRegistration;
-      Register(callback: (() => void), state: any, useSynchronizationContext: boolean): System.Threading.CancellationTokenRegistration;
+      Register(callback: ((arg0: any) => void), state: any): System.Threading.CancellationTokenRegistration;
+      Register(callback: ((arg0: any) => void), state: any, useSynchronizationContext: boolean): System.Threading.CancellationTokenRegistration;
       Equals(other: System.Threading.CancellationToken): boolean;
       Equals(other: any): boolean;
       GetHashCode(): number;
@@ -34039,9 +34039,9 @@ export declare namespace System {
       NextSpinWillYield: boolean;
       SpinOnce(): void;
       Reset(): void;
-      static SpinUntil(condition: ((arg0: boolean) => boolean)): void;
-      static SpinUntil(condition: ((arg0: boolean) => boolean), timeout: System.TimeSpan): boolean;
-      static SpinUntil(condition: ((arg0: boolean) => boolean), millisecondsTimeout: number): boolean;
+      static SpinUntil(condition: (() => boolean)): void;
+      static SpinUntil(condition: (() => boolean), timeout: System.TimeSpan): boolean;
+      static SpinUntil(condition: (() => boolean), millisecondsTimeout: number): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       ToString(): string;
@@ -34050,8 +34050,8 @@ export declare namespace System {
     export class ThreadLocal<T = any> {
       constructor();
       constructor(trackAllValues: boolean);
-      constructor(valueFactory: ((arg0: T) => T));
-      constructor(valueFactory: ((arg0: T) => T), trackAllValues: boolean);
+      constructor(valueFactory: (() => T));
+      constructor(valueFactory: (() => T), trackAllValues: boolean);
       Value: T;
       Values: System.Collections.Generic.IList<T>;
       IsValueCreated: boolean;
@@ -34093,7 +34093,7 @@ export declare namespace System {
     }
     export class AsyncLocal<T = any> {
       constructor();
-      constructor(valueChangedHandler: (() => void));
+      constructor(valueChangedHandler: ((arg0: System.Threading.AsyncLocalValueChangedArgs<T>) => void));
       Value: T;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -34899,7 +34899,7 @@ export declare namespace System {
     }
     export class Barrier {
       constructor(participantCount: number);
-      constructor(participantCount: number, postPhaseAction: (() => void));
+      constructor(participantCount: number, postPhaseAction: ((arg0: System.Threading.Barrier) => void));
       ParticipantsRemaining: number;
       ParticipantCount: number;
       CurrentPhaseNumber: System.Int64;
@@ -35003,14 +35003,14 @@ export declare namespace System {
         ToString(): string;
       }
       export class Task<TResult = any> {
-        constructor(functionCS: ((arg0: TResult) => TResult));
-        constructor(functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken);
-        constructor(functionCS: ((arg0: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        constructor(functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        constructor(functionCS: ((arg0: any, arg1: TResult) => TResult), state: any);
-        constructor(functionCS: ((arg0: any, arg1: TResult) => TResult), state: any, cancellationToken: System.Threading.CancellationToken);
-        constructor(functionCS: ((arg0: any, arg1: TResult) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions);
-        constructor(functionCS: ((arg0: any, arg1: TResult) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: (() => TResult));
+        constructor(functionCS: (() => TResult), cancellationToken: System.Threading.CancellationToken);
+        constructor(functionCS: (() => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: (() => TResult), cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: ((arg0: any) => TResult), state: any);
+        constructor(functionCS: ((arg0: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken);
+        constructor(functionCS: ((arg0: any) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions);
+        constructor(functionCS: ((arg0: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions);
         Result: TResult;
         static Factory: any; // System.Threading.Tasks.TaskFactory`1[TResult]
         Id: number;
@@ -35024,16 +35024,16 @@ export declare namespace System {
         IsFaulted: boolean;
         GetAwaiter(): System.Runtime.CompilerServices.TaskAwaiter<TResult>;
         ConfigureAwait(continueOnCapturedContext: boolean): System.Runtime.CompilerServices.ConfiguredTaskAwaitable<TResult>;
-        ContinueWith(continuationAction: (() => void)): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: (() => void), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: (() => void), scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: (() => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: (() => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: any): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: any, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), state: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void)): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>) => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task<TResult>, arg1: any) => void), state: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
         Start(): void;
         Start(scheduler: System.Threading.Tasks.TaskScheduler): void;
         RunSynchronously(): void;
@@ -35046,16 +35046,16 @@ export declare namespace System {
         Wait(cancellationToken: System.Threading.CancellationToken): void;
         Wait(millisecondsTimeout: number): boolean;
         Wait(millisecondsTimeout: number, cancellationToken: System.Threading.CancellationToken): boolean;
-        ContinueWith(continuationAction: (() => void)): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: (() => void), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: (() => void), scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: (() => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: (() => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: any): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: any, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
-        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), state: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void)): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task) => void), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any, continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task;
+        ContinueWith(continuationAction: ((arg0: System.Threading.Tasks.Task, arg1: any) => void), state: any, cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -35071,27 +35071,27 @@ export declare namespace System {
         Scheduler: System.Threading.Tasks.TaskScheduler;
         CreationOptions: System.Threading.Tasks.TaskCreationOptions;
         ContinuationOptions: System.Threading.Tasks.TaskContinuationOptions;
-        StartNew(functionCS: ((arg0: TResult) => TResult)): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: TResult) => TResult), cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: any, arg1: TResult) => TResult), state: any): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: any, arg1: TResult) => TResult), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: any, arg1: TResult) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
-        StartNew(functionCS: ((arg0: any, arg1: TResult) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
-        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult)): System.Threading.Tasks.Task<TResult>;
-        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
-        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
-        FromAsync(beginMethod: ((arg0: System.AsyncCallback, arg1: any, arg2: System.IAsyncResult) => System.IAsyncResult), endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult), state: any): System.Threading.Tasks.Task<TResult>;
-        FromAsync(beginMethod: ((arg0: System.AsyncCallback, arg1: any, arg2: System.IAsyncResult) => System.IAsyncResult), endMethod: ((arg0: System.IAsyncResult, arg1: TResult) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[], arg1: TResult) => TResult)): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[], arg1: TResult) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[], arg1: TResult) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[], arg1: TResult) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task, arg1: TResult) => TResult)): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task, arg1: TResult) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task, arg1: TResult) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task<TResult>;
-        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task, arg1: TResult) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: (() => TResult)): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: (() => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: (() => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: (() => TResult), cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: ((arg0: any) => TResult), state: any): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: ((arg0: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: ((arg0: any) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
+        StartNew(functionCS: ((arg0: any) => TResult), state: any, cancellationToken: System.Threading.CancellationToken, creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult) => TResult)): System.Threading.Tasks.Task<TResult>;
+        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
+        FromAsync(asyncResult: System.IAsyncResult, endMethod: ((arg0: System.IAsyncResult) => TResult), creationOptions: System.Threading.Tasks.TaskCreationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        FromAsync(beginMethod: ((arg0: System.AsyncCallback, arg1: any) => System.IAsyncResult), endMethod: ((arg0: System.IAsyncResult) => TResult), state: any): System.Threading.Tasks.Task<TResult>;
+        FromAsync(beginMethod: ((arg0: System.AsyncCallback, arg1: any) => System.IAsyncResult), endMethod: ((arg0: System.IAsyncResult) => TResult), state: any, creationOptions: System.Threading.Tasks.TaskCreationOptions): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[]) => TResult)): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[]) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[]) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAll(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task[]) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task) => TResult)): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task) => TResult), cancellationToken: System.Threading.CancellationToken): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task) => TResult), continuationOptions: System.Threading.Tasks.TaskContinuationOptions): System.Threading.Tasks.Task<TResult>;
+        ContinueWhenAny(tasks: System.Threading.Tasks.Task[], continuationFunction: ((arg0: System.Threading.Tasks.Task) => TResult), cancellationToken: System.Threading.CancellationToken, continuationOptions: System.Threading.Tasks.TaskContinuationOptions, scheduler: System.Threading.Tasks.TaskScheduler): System.Threading.Tasks.Task<TResult>;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -35110,14 +35110,14 @@ export declare namespace System {
       export class Parallel {
         static Invoke(...actions: (() => void)[]): void;
         static Invoke(parallelOptions: System.Threading.Tasks.ParallelOptions, ...actions: (() => void)[]): void;
-        static For(fromInclusive: number, toExclusive: number, body: (() => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: (() => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: (() => void)): System.Threading.Tasks.ParallelLoopResult;
-        static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: (() => void)): System.Threading.Tasks.ParallelLoopResult;
         static For(fromInclusive: number, toExclusive: number, body: ((arg0: number) => void)): System.Threading.Tasks.ParallelLoopResult;
         static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: ((arg0: System.Int64) => void)): System.Threading.Tasks.ParallelLoopResult;
         static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: number) => void)): System.Threading.Tasks.ParallelLoopResult;
         static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: System.Int64) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, body: ((arg0: number, arg1: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: System.Int64, toExclusive: System.Int64, body: ((arg0: System.Int64, arg1: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: number, toExclusive: number, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: number, arg1: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
+        static For(fromInclusive: System.Int64, toExclusive: System.Int64, parallelOptions: System.Threading.Tasks.ParallelOptions, body: ((arg0: System.Int64, arg1: System.Threading.Tasks.ParallelLoopState) => void)): System.Threading.Tasks.ParallelLoopResult;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;

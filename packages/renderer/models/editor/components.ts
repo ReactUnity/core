@@ -46,14 +46,10 @@ export enum ImageFitMode {
   Fill = 6,
 }
 
-export interface Image extends View {
+export interface Image extends View<Cmp.ImageComponent> {
   source?: AssetReference;
   fit?: ImageFitMode;
 }
-
-export interface Video extends Image {
-}
-
 
 export type ToggleEvent = (val: boolean) => void;
 

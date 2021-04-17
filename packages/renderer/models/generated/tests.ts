@@ -1,6 +1,6 @@
 //
 // Types in assemblies: nunit.framework
-// Generated 3.04.2021 18:15:57
+// Generated 18.04.2021 01:43:22
 //
 import { System } from './system';
 
@@ -50,13 +50,13 @@ export declare namespace NUnit {
       static IsNotInstanceOf(expected: System.Type, actual: any): void;
       static That(condition: boolean, message: string, ...args: any[]): void;
       static That(condition: boolean): void;
-      static That(condition: boolean, getExceptionMessage: ((arg0: string) => string)): void;
-      static That(condition: ((arg0: boolean) => boolean), message: string, ...args: any[]): void;
-      static That(condition: ((arg0: boolean) => boolean)): void;
-      static That(condition: ((arg0: boolean) => boolean), getExceptionMessage: ((arg0: string) => string)): void;
+      static That(condition: boolean, getExceptionMessage: (() => string)): void;
+      static That(condition: (() => boolean), message: string, ...args: any[]): void;
+      static That(condition: (() => boolean)): void;
+      static That(condition: (() => boolean), getExceptionMessage: (() => string)): void;
       static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint): void;
       static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint, message: string, ...args: any[]): void;
-      static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint, getExceptionMessage: ((arg0: string) => string)): void;
+      static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint, getExceptionMessage: (() => string)): void;
       static ByVal(actual: any, expression: NUnit.Framework.Constraints.IResolveConstraint): void;
       static ByVal(actual: any, expression: NUnit.Framework.Constraints.IResolveConstraint, message: string, ...args: any[]): void;
       static Greater(arg1: number, arg2: number, message: string, ...args: any[]): void;
@@ -407,10 +407,10 @@ export declare namespace NUnit {
       static ReferenceEquals(a: any, b: any): void;
       static That(condition: boolean, message: string, ...args: any[]): void;
       static That(condition: boolean): void;
-      static That(condition: boolean, getExceptionMessage: ((arg0: string) => string)): void;
-      static That(condition: ((arg0: boolean) => boolean), message: string, ...args: any[]): void;
-      static That(condition: ((arg0: boolean) => boolean)): void;
-      static That(condition: ((arg0: boolean) => boolean), getExceptionMessage: ((arg0: string) => string)): void;
+      static That(condition: boolean, getExceptionMessage: (() => string)): void;
+      static That(condition: (() => boolean), message: string, ...args: any[]): void;
+      static That(condition: (() => boolean)): void;
+      static That(condition: (() => boolean), getExceptionMessage: (() => string)): void;
       static That(code: NUnit.Framework.TestDelegate, constraint: NUnit.Framework.Constraints.IResolveConstraint): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -858,7 +858,7 @@ export declare namespace NUnit {
         LoadTests(): string;
         ExploreTests(filter: string): string;
         RunTests(filter: string): string;
-        RunTests(callback: (() => void), filter: string): string;
+        RunTests(callback: ((arg0: string) => void), filter: string): string;
         StopRun(force: boolean): void;
         CountTests(filter: string): number;
         static InsertEnvironmentElement(targetNode: NUnit.Framework.Interfaces.TNode): NUnit.Framework.Interfaces.TNode;
@@ -3131,7 +3131,7 @@ export declare namespace NUnit {
         FindLastIndex(match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
         FindLastIndex(startIndex: number, match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
         FindLastIndex(startIndex: number, count: number, match: System.Predicate<NUnit.Framework.Interfaces.TNode>): number;
-        ForEach(action: (() => void)): void;
+        ForEach(action: ((arg0: NUnit.Framework.Interfaces.TNode) => void)): void;
         GetEnumerator(): System.Collections.Generic.List<NUnit.Framework.Interfaces.TNode>;
         GetRange(index: number, count: number): NUnit.Framework.Interfaces.TNode[];
         IndexOf(item: NUnit.Framework.Interfaces.TNode): number;
@@ -3812,8 +3812,8 @@ export declare namespace NUnit {
         ToString(): string;
       }
       export class Reflect {
-        static MethodCallWrapper: ((arg0: ((arg0: any) => any), arg1: any) => any);
-        static ConstructorCallWrapper: ((arg0: System.Type, arg1: any[], arg2: any) => any);
+        static MethodCallWrapper: ((arg0: (() => any)) => any);
+        static ConstructorCallWrapper: ((arg0: System.Type, arg1: any[]) => any);
         static GetMethodsWithAttribute(fixtureType: System.Type, attributeType: System.Type, inherit: boolean): System.Reflection.MethodInfo[];
         static HasMethodWithAttribute(fixtureType: System.Type, attributeType: System.Type): boolean;
         static Construct(type: System.Type): any;

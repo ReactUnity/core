@@ -1,7 +1,8 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 5.04.2021 16:43:19
+// Generated 18.04.2021 01:42:26
 //
+import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
 import { UnityEngine } from './unity';
 
@@ -153,14 +154,6 @@ export declare namespace Facebook {
       SpaceAround = 4,
       SpaceEvenly = 5,
     }
-    export enum YogaLogLevel {
-      Error = 0,
-      Warn = 1,
-      Info = 2,
-      Debug = 3,
-      Verbose = 4,
-      Fatal = 5,
-    }
     export class YogaLogger {
       constructor(object: any, method: System.IntPtr);
       Method: System.Reflection.MethodInfo;
@@ -176,6 +169,14 @@ export declare namespace Facebook {
       Clone(): any;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export enum YogaLogLevel {
+      Error = 0,
+      Warn = 1,
+      Info = 2,
+      Debug = 3,
+      Verbose = 4,
+      Fatal = 5,
     }
     export class YogaMeasureFunc {
       constructor(object: any, method: System.IntPtr);
@@ -202,6 +203,39 @@ export declare namespace Facebook {
       constructor(config?: Facebook.Yoga.YogaConfig);
       constructor(srcNode: Facebook.Yoga.YogaNode);
       [key: string]: any;
+      IsDirty: boolean;
+      HasNewLayout: boolean;
+      Parent: Facebook.Yoga.YogaNode;
+      IsMeasureDefined: boolean;
+      IsBaselineDefined: boolean;
+      StyleDirection: Facebook.Yoga.YogaDirection;
+      FlexDirection: Facebook.Yoga.YogaFlexDirection;
+      JustifyContent: Facebook.Yoga.YogaJustify;
+      Display: Facebook.Yoga.YogaDisplay;
+      AlignItems: Facebook.Yoga.YogaAlign;
+      AlignSelf: Facebook.Yoga.YogaAlign;
+      AlignContent: Facebook.Yoga.YogaAlign;
+      PositionType: Facebook.Yoga.YogaPositionType;
+      Wrap: Facebook.Yoga.YogaWrap;
+      Flex: number;
+      FlexGrow: number;
+      FlexShrink: number;
+      FlexBasis: Facebook.Yoga.YogaValue;
+      Width: Facebook.Yoga.YogaValue;
+      Height: Facebook.Yoga.YogaValue;
+      MaxWidth: Facebook.Yoga.YogaValue;
+      MaxHeight: Facebook.Yoga.YogaValue;
+      MinWidth: Facebook.Yoga.YogaValue;
+      MinHeight: Facebook.Yoga.YogaValue;
+      AspectRatio: number;
+      LayoutX: number;
+      LayoutY: number;
+      LayoutWidth: number;
+      LayoutHeight: number;
+      LayoutDirection: Facebook.Yoga.YogaDirection;
+      Overflow: Facebook.Yoga.YogaOverflow;
+      Data: any; // System.Object
+      Count: number;
       Left: Facebook.Yoga.YogaValue;
       Top: Facebook.Yoga.YogaValue;
       Right: Facebook.Yoga.YogaValue;
@@ -245,39 +279,6 @@ export declare namespace Facebook {
       LayoutPaddingBottom: number;
       LayoutPaddingStart: number;
       LayoutPaddingEnd: number;
-      IsDirty: boolean;
-      HasNewLayout: boolean;
-      Parent: Facebook.Yoga.YogaNode;
-      IsMeasureDefined: boolean;
-      IsBaselineDefined: boolean;
-      StyleDirection: Facebook.Yoga.YogaDirection;
-      FlexDirection: Facebook.Yoga.YogaFlexDirection;
-      JustifyContent: Facebook.Yoga.YogaJustify;
-      Display: Facebook.Yoga.YogaDisplay;
-      AlignItems: Facebook.Yoga.YogaAlign;
-      AlignSelf: Facebook.Yoga.YogaAlign;
-      AlignContent: Facebook.Yoga.YogaAlign;
-      PositionType: Facebook.Yoga.YogaPositionType;
-      Wrap: Facebook.Yoga.YogaWrap;
-      Flex: number;
-      FlexGrow: number;
-      FlexShrink: number;
-      FlexBasis: Facebook.Yoga.YogaValue;
-      Width: Facebook.Yoga.YogaValue;
-      Height: Facebook.Yoga.YogaValue;
-      MaxWidth: Facebook.Yoga.YogaValue;
-      MaxHeight: Facebook.Yoga.YogaValue;
-      MinWidth: Facebook.Yoga.YogaValue;
-      MinHeight: Facebook.Yoga.YogaValue;
-      AspectRatio: number;
-      LayoutX: number;
-      LayoutY: number;
-      LayoutWidth: number;
-      LayoutHeight: number;
-      LayoutDirection: Facebook.Yoga.YogaDirection;
-      Overflow: Facebook.Yoga.YogaOverflow;
-      Data: any; // System.Object
-      Count: number;
       Reset(): void;
       MarkDirty(): void;
       MarkHasNewLayout(): void;
@@ -411,6 +412,7 @@ export declare namespace ReactUnity {
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
     Dispatcher: ReactUnity.IDispatcher;
     StateHandlers: Record<string, System.Type>;
+    Location: ReactUnity.DomProxies.Location;
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: (() => void);
@@ -432,7 +434,8 @@ export declare namespace ReactUnity {
   export class ReactScript {
     constructor();
     DevServerFile: string;
-    SourceLocation: string;
+    IsDevServer: boolean;
+    EffectiveScriptSource: ReactUnity.ScriptSource;
     ScriptSource: ReactUnity.ScriptSource;
     SourceAsset: UnityEngine.TextAsset;
     SourcePath: string;
@@ -441,8 +444,8 @@ export declare namespace ReactUnity {
     UseDevServer: boolean;
     DevServer: string;
     static Resource(path: string): ReactUnity.ReactScript;
-    GetResolvedSourcePath(): string;
-    GetScript(callback: ((arg0: string) => void), dispatcher?: ReactUnity.IDispatcher, useDevServer?: boolean, disableWarnings?: boolean): System.IDisposable;
+    GetResolvedSourceUrl(useDevServer?: boolean): string;
+    GetScript(callback: ((arg0: string, arg1: boolean) => void), dispatcher?: ReactUnity.IDispatcher, useDevServer?: boolean, disableWarnings?: boolean): System.IDisposable;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -573,8 +576,9 @@ export declare namespace ReactUnity {
     Script: ReactUnity.ReactScript;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
     Dispatcher: ReactUnity.IDispatcher;
-    static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UGUIContext, arg3: ReactUnity.Components.ReactComponent) => ReactUnity.Components.ReactComponent);
-    static textCreator: ((arg0: string, arg1: ReactUnity.UGUIContext, arg2: ReactUnity.ITextComponent) => ReactUnity.ITextComponent);
+    Location: ReactUnity.DomProxies.Location;
+    static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UGUIContext) => ReactUnity.Components.ReactComponent);
+    static textCreator: ((arg0: string, arg1: ReactUnity.UGUIContext) => ReactUnity.ITextComponent);
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: (() => void);
@@ -799,7 +803,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -865,7 +869,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -929,7 +933,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -990,7 +994,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1048,7 +1052,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1109,7 +1113,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1172,7 +1176,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1233,7 +1237,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1299,7 +1303,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1362,7 +1366,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1414,7 +1418,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1474,7 +1478,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1534,7 +1538,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1597,7 +1601,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1656,7 +1660,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1714,7 +1718,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1779,7 +1783,7 @@ export declare namespace ReactUnity {
       Layout: Facebook.Yoga.YogaNode;
       ComputedStyle: ReactUnity.Styling.NodeStyle;
       StateStyles: ReactUnity.Styling.StateStyles;
-      Style: ReactUnity.Styling.InlineData;
+      Style: InlineStyleRemap;
       BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
       MaskAndImage: ReactUnity.Styling.MaskAndImage;
       Selectable: UnityEngine.UI.Selectable;
@@ -1853,10 +1857,10 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class DocumentProxy {
-      constructor(context: ReactUnity.ReactContext, execute: (() => void), origin: string);
+      constructor(context: ReactUnity.ReactContext, execute: ((arg0: string) => void), origin: string);
       head: ReactUnity.DomProxies.HeadProxy;
       origin: string;
-      execute: (() => void);
+      execute: ((arg0: string) => void);
       context: ReactUnity.ReactContext;
       createElement(type: string): ReactUnity.DomProxies.IDomElementProxy;
       createTextNode(text: string): string;
@@ -1901,8 +1905,8 @@ export declare namespace ReactUnity {
       charset: string;
       crossOrigin: string;
       timeout: number;
-      onload: (() => void);
-      onerror: (() => void);
+      onload: ((arg0: ReactUnity.DomProxies.ScriptProxy) => void);
+      onerror: ((arg0: ReactUnity.DomProxies.ScriptProxy) => void);
       document: ReactUnity.DomProxies.DocumentProxy;
       parentNode: ReactUnity.DomProxies.HeadProxy;
       OnAppend(): void;
@@ -1963,6 +1967,204 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class WebSocketOpenEventHandler {
+      constructor(object: any, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: any; // System.Object
+      Invoke(): void;
+      BeginInvoke(callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): void;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: any[]): any;
+      Clone(): any;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class WebSocketMessageEventHandler {
+      constructor(object: any, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: any; // System.Object
+      Invoke(data: System.Byte[]): void;
+      BeginInvoke(data: System.Byte[], callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): void;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: any[]): any;
+      Clone(): any;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class WebSocketErrorEventHandler {
+      constructor(object: any, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: any; // System.Object
+      Invoke(errorMsg: string): void;
+      BeginInvoke(errorMsg: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): void;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: any[]): any;
+      Clone(): any;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class WebSocketCloseEventHandler {
+      constructor(object: any, method: System.IntPtr);
+      Method: System.Reflection.MethodInfo;
+      Target: any; // System.Object
+      Invoke(closeCode: ReactUnity.DomProxies.WebSocketCloseCode, reason: string): void;
+      BeginInvoke(closeCode: ReactUnity.DomProxies.WebSocketCloseCode, reason: string, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+      EndInvoke(result: System.IAsyncResult): void;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetInvocationList(): System.Delegate[];
+      DynamicInvoke(...args: any[]): any;
+      Clone(): any;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum WebSocketState {
+      Connecting = 0,
+      Open = 1,
+      Closing = 2,
+      Closed = 3,
+    }
+    export enum WebSocketCloseCode {
+      NotSet = 0,
+      Normal = 1000,
+      Away = 1001,
+      ProtocolError = 1002,
+      UnsupportedData = 1003,
+      Undefined = 1004,
+      NoStatus = 1005,
+      Abnormal = 1006,
+      InvalidData = 1007,
+      PolicyViolation = 1008,
+      TooBig = 1009,
+      MandatoryExtension = 1010,
+      ServerError = 1011,
+      TlsHandshakeFailure = 1015,
+    }
+    export interface IWebSocket {
+      Connect(): void;
+      Close(code?: ReactUnity.DomProxies.WebSocketCloseCode, reason?: string): void;
+      Send(data: System.Byte[]): void;
+      GetState(): ReactUnity.DomProxies.WebSocketState;
+    }
+    export class WebSocketHelpers {
+      static ParseCloseCodeEnum(closeCode: number): ReactUnity.DomProxies.WebSocketCloseCode;
+      static GetErrorMessageFromCode(errorCode: number, inner: System.Exception): ReactUnity.DomProxies.WebSocketException;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class WebSocketException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, inner: System.Exception);
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetBaseException(): System.Exception;
+      ToString(): string;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      GetType(): System.Type;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class WebSocketUnexpectedException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, inner: System.Exception);
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetBaseException(): System.Exception;
+      ToString(): string;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      GetType(): System.Type;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class WebSocketInvalidArgumentException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, inner: System.Exception);
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetBaseException(): System.Exception;
+      ToString(): string;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      GetType(): System.Type;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class WebSocketInvalidStateException {
+      constructor();
+      constructor(message: string);
+      constructor(message: string, inner: System.Exception);
+      Message: string;
+      Data: System.Collections.IDictionary;
+      InnerException: System.Exception;
+      TargetSite: System.Reflection.MethodBase;
+      StackTrace: string;
+      HelpLink: string;
+      Source: string;
+      HResult: number;
+      GetBaseException(): System.Exception;
+      ToString(): string;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      GetType(): System.Type;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class WebSocket {
+      constructor(url: string);
+      Connect(): void;
+      Close(code?: ReactUnity.DomProxies.WebSocketCloseCode, reason?: string): void;
+      Send(data: System.Byte[]): void;
+      GetState(): ReactUnity.DomProxies.WebSocketState;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class WebSocketFactory {
+      static CreateInstance(url: string): ReactUnity.DomProxies.WebSocket;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class WebSocketProxy {
       constructor(context: ReactUnity.ReactContext, url: string);
       constructor(context: ReactUnity.ReactContext, url: string, ...protocols: string[]);
@@ -1974,65 +2176,26 @@ export declare namespace ReactUnity {
       onopen: any; // System.Object
       Onerror: any; // Jint.Native.JsValue
       onerror: any; // System.Object
-      Compression: any; // WebSocketSharp.CompressionMethod
-      Cookies: System.Collections.Generic.IEnumerable<any>;
-      Credentials: any; // WebSocketSharp.Net.NetworkCredential
-      EmitOnPing: boolean;
-      EnableRedirection: boolean;
-      Extensions: string;
-      IsAlive: boolean;
-      IsSecure: boolean;
-      Log: any; // WebSocketSharp.Logger
-      Origin: string;
-      Protocol: string;
-      ReadyState: any; // WebSocketSharp.WebSocketState
-      SslConfiguration: any; // WebSocketSharp.Net.ClientSslConfiguration
-      Url: System.Uri;
-      WaitTime: System.TimeSpan;
+      socket: ReactUnity.DomProxies.WebSocket;
       static CONNECTING: number;
       static OPEN: number;
       static CLOSING: number;
       static CLOSED: number;
       binaryType: string;
       close(code?: number, reason?: string): void;
-      Accept(): void;
-      AcceptAsync(): void;
-      Close(): void;
-      Close(code: System.UInt16): void;
-      Close(code: any): void;
-      Close(code: System.UInt16, reason: string): void;
-      Close(code: any, reason: string): void;
-      CloseAsync(): void;
-      CloseAsync(code: System.UInt16): void;
-      CloseAsync(code: any): void;
-      CloseAsync(code: System.UInt16, reason: string): void;
-      CloseAsync(code: any, reason: string): void;
-      Connect(): void;
-      ConnectAsync(): void;
-      Ping(): boolean;
-      Ping(message: string): boolean;
-      Send(data: System.Byte[]): void;
-      Send(file: System.IO.FileInfo): void;
-      Send(data: string): void;
-      SendAsync(data: System.Byte[], completed: (() => void)): void;
-      SendAsync(file: System.IO.FileInfo, completed: (() => void)): void;
-      SendAsync(data: string, completed: (() => void)): void;
-      SendAsync(stream: System.IO.Stream, length: number, completed: (() => void)): void;
-      SetCookie(cookie: any): void;
-      SetCredentials(username: string, password: string, preAuth: boolean): void;
-      SetProxy(url: string, username: string, password: string): void;
+      Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
     }
     export class XMLHttpRequest {
-      constructor();
-      constructor(origin: string);
+      constructor(context: ReactUnity.ReactContext);
+      constructor(context: ReactUnity.ReactContext, origin: string);
       origin: string;
-      Onload: any; // Jint.Native.JsValue
-      Onreadystatechange: any; // Jint.Native.JsValue
+      onload: any; // System.Object
       onerror: any; // System.Object
+      onreadystatechange: any; // System.Object
       ontimeout: any; // System.Object
       onabort: any; // System.Object
       withCredentials: boolean;
@@ -2043,10 +2206,9 @@ export declare namespace ReactUnity {
       readyState: number;
       DONE: string;
       responseText: string;
-      onload: any; // System.Object
-      onreadystatechange: any; // System.Object
+      response: string;
+      responseURL: string;
       static dispatches: string[];
-      static allDone: System.Threading.ManualResetEvent;
       open(method: string, url: string, async: boolean): void;
       setRequestHeader(name: any, value: any): void;
       append(name: any, value: any): void;
@@ -2084,6 +2246,7 @@ export declare namespace ReactUnity {
       ReloadPreviewInstances(): void;
       UseDefaultMargins(): boolean;
       Initialize(targets: UnityEngine.Object[]): void;
+      Cleanup(): void;
       MoveNextTarget(): boolean;
       ResetTarget(): void;
       SetDirty(): void;
@@ -2143,8 +2306,9 @@ export declare namespace ReactUnity {
       static ShowDefaultWindow(): void;
       Run(host?: UnityEngine.UIElements.VisualElement): void;
       Restart(host?: UnityEngine.UIElements.VisualElement): void;
-      AddSelectionChange(callback: (() => void)): (() => void);
-      AddPlayModeStateChange(callback: ((arg0: any) => void)): (() => void);
+      AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+      AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+      AddItemsToMenu(menu: any): void;
       BeginWindows(): void;
       EndWindows(): void;
       ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -2174,6 +2338,7 @@ export declare namespace ReactUnity {
     }
     export class QuickStartWindow {
       constructor();
+      NodeVersion: number;
       rootVisualElement: UnityEngine.UIElements.VisualElement;
       wantsMouseMove: boolean;
       wantsMouseEnterLeaveWindow: boolean;
@@ -2193,7 +2358,28 @@ export declare namespace ReactUnity {
       position: UnityEngine.Rect;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      static Open(): void;
+      static PackageName: string;
+      RequiredNodeVersion: number;
+      NodeUrl: string;
+      ProjectDirName: string;
+      PackageVersion: string;
+      LatestVersion: string;
+      HasUpdate: boolean;
+      static ShowDefaultWindow(): void;
+      GetProjectPath(): string;
+      CreateProject(): void;
+      GetNodeVersion(callback?: ((arg0: number) => void)): void;
+      RunCommand(target: string, args: string, hasOutput?: boolean): System.Diagnostics.Process;
+      CanvasExistsInScene(): boolean;
+      CreateCanvas(): void;
+      SelectCanvas(): void;
+      CheckVersion(callback: (() => void)): void;
+      UpdatePackage(version: string): void;
+      Run(host?: UnityEngine.UIElements.VisualElement): void;
+      Restart(host?: UnityEngine.UIElements.VisualElement): void;
+      AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+      AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+      AddItemsToMenu(menu: any): void;
       BeginWindows(): void;
       EndWindows(): void;
       ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -2239,7 +2425,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2283,7 +2469,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2328,7 +2514,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2375,7 +2561,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2418,7 +2604,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2463,7 +2649,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2498,6 +2684,49 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class ImageComponent {
+        constructor(context: ReactUnity.Editor.Renderer.EditorContext, tag: string);
+        Context: ReactUnity.Editor.Renderer.EditorContext;
+        Parent: ReactUnity.IContainerComponent;
+        Element: UnityEngine.UIElements.Image;
+        Layout: Facebook.Yoga.YogaNode;
+        LayoutValues: ReactUnity.Styling.LayoutValue[];
+        ComputedStyle: ReactUnity.Styling.NodeStyle;
+        Style: InlineStyleRemap;
+        IsPseudoElement: boolean;
+        Name: string;
+        Tag: string;
+        ClassName: string;
+        ClassList: System.Collections.Generic.HashSet<string>;
+        StateStyles: ReactUnity.Styling.StateStyles;
+        Data: ReactUnity.Styling.InlineData;
+        Children: ReactUnity.IReactComponent[];
+        BeforePseudo: ReactUnity.IReactComponent;
+        AfterPseudo: ReactUnity.IReactComponent;
+        BeforeRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+        AfterRules: ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+        SetProperty(property: string, value: any): void;
+        ApplyStyles(): void;
+        Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;
+        ApplyLayoutStyles(): void;
+        Destroy(): void;
+        ResolveStyle(recursive?: boolean): void;
+        ScheduleLayout(): void;
+        SetParent(parent: ReactUnity.IContainerComponent, relativeTo?: ReactUnity.IReactComponent, insertAfter?: boolean): void;
+        SetData(property: string, value: any): void;
+        SetEventListener(eventName: string, fun: ReactUnity.Interop.Callback): void;
+        GetComponent(type: System.Type): any;
+        AddComponent(type: System.Type): any;
+        RegisterChild(child: ReactUnity.IReactComponent, index?: number): void;
+        UnregisterChild(child: ReactUnity.IReactComponent): void;
+        CaptureMouse(): void;
+        ReleaseMouse(): void;
+        HasMouseCapture(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class IMGUIComponent {
         constructor(context: ReactUnity.Editor.Renderer.EditorContext);
         Context: ReactUnity.Editor.Renderer.EditorContext;
@@ -2506,7 +2735,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2551,7 +2780,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2596,7 +2825,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2641,7 +2870,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2686,7 +2915,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2730,7 +2959,7 @@ export declare namespace ReactUnity {
         Layout: Facebook.Yoga.YogaNode;
         LayoutValues: ReactUnity.Styling.LayoutValue[];
         ComputedStyle: ReactUnity.Styling.NodeStyle;
-        Style: ReactUnity.Styling.InlineData;
+        Style: InlineStyleRemap;
         IsPseudoElement: boolean;
         Name: string;
         Tag: string;
@@ -2803,8 +3032,9 @@ export declare namespace ReactUnity {
         Script: ReactUnity.ReactScript;
         Scheduler: ReactUnity.Schedulers.IUnityScheduler;
         Dispatcher: ReactUnity.IDispatcher;
-        static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.Editor.Renderer.EditorContext, arg3: any) => any);
-        static textCreator: ((arg0: string, arg1: ReactUnity.Editor.Renderer.EditorContext, arg2: ReactUnity.ITextComponent) => ReactUnity.ITextComponent);
+        Location: ReactUnity.DomProxies.Location;
+        static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.Editor.Renderer.EditorContext) => any);
+        static textCreator: ((arg0: string, arg1: ReactUnity.Editor.Renderer.EditorContext) => ReactUnity.ITextComponent);
         static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Components.IEditorComponent`1[UnityEngine.UIElements.VisualElement]]]
         Editor: ReactUnity.Editor.Renderer.ReactWindow;
         Parser: any; // ExCSS.StylesheetParser
@@ -2849,8 +3079,9 @@ export declare namespace ReactUnity {
         static ShowDefaultWindow(): void;
         Run(host?: UnityEngine.UIElements.VisualElement): void;
         Restart(host?: UnityEngine.UIElements.VisualElement): void;
-        AddSelectionChange(callback: (() => void)): (() => void);
-        AddPlayModeStateChange(callback: ((arg0: any) => void)): (() => void);
+        AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+        AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+        AddItemsToMenu(menu: any): void;
         BeginWindows(): void;
         EndWindows(): void;
         ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -2900,8 +3131,9 @@ export declare namespace ReactUnity {
         hideFlags: UnityEngine.HideFlags;
         Run(host?: UnityEngine.UIElements.VisualElement): void;
         Restart(host?: UnityEngine.UIElements.VisualElement): void;
-        AddSelectionChange(callback: (() => void)): (() => void);
-        AddPlayModeStateChange(callback: ((arg0: any) => void)): (() => void);
+        AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+        AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+        AddItemsToMenu(menu: any): void;
         BeginWindows(): void;
         EndWindows(): void;
         ShowNotification(notification: UnityEngine.GUIContent): void;
@@ -5680,8 +5912,8 @@ export declare namespace ReactUnity {
       inherited: boolean;
       proxy: boolean;
       propInfo: System.Reflection.PropertyInfo;
-      setter: ((arg0: Facebook.Yoga.YogaNode) => void);
-      getter: ((arg0: Facebook.Yoga.YogaNode, arg1: T) => T);
+      setter: ((arg0: Facebook.Yoga.YogaNode, arg1: T) => void);
+      getter: ((arg0: Facebook.Yoga.YogaNode) => T);
       converter: ReactUnity.Styling.Parsers.IStyleConverter;
       Set(node: Facebook.Yoga.YogaNode, value: any, defaultNode: Facebook.Yoga.YogaNode): void;
       SetDefault(node: Facebook.Yoga.YogaNode): void;
@@ -6034,12 +6266,6 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
-      export interface IStyleParser {
-        FromString(value: string): any;
-      }
-      export interface IStyleConverter {
-        Convert(value: any): any;
-      }
       export class ImageReferenceConverter {
         constructor();
         Convert(value: any): any;
@@ -6058,6 +6284,12 @@ export declare namespace ReactUnity {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+      export interface IStyleParser {
+        FromString(value: string): any;
+      }
+      export interface IStyleConverter {
+        Convert(value: any): any;
       }
       export class ShadowDefinitionConverter {
         constructor();
@@ -6098,7 +6330,7 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class Vector3Converter {
-        constructor(singleValueMode?: ((arg0: number, arg1: UnityEngine.Vector3) => UnityEngine.Vector3));
+        constructor(singleValueMode?: ((arg0: number) => UnityEngine.Vector3));
         FromString(value: string): any;
         Convert(value: any): any;
         Equals(obj: any): boolean;
@@ -6183,13 +6415,14 @@ export declare namespace ReactUnity {
       Global = 6,
       Procedural = 7,
       Data = 8,
+      Path = 9,
     }
     export class AssetReference<AssetType = any> {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
       static None: any; // ReactUnity.Types.AssetReference`1[AssetType]
-      Get(context: ReactUnity.ReactContext, callback: (() => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((arg0: AssetType) => void)): void;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -6201,7 +6434,7 @@ export declare namespace ReactUnity {
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
       static None: ReactUnity.Types.FontReference;
-      Get(context: ReactUnity.ReactContext, callback: (() => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((arg0: any) => void)): void;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -6223,7 +6456,7 @@ export declare namespace ReactUnity {
       value: any; // System.Object
       static None: ReactUnity.Types.ImageReference;
       Dispose(): void;
-      Get(context: ReactUnity.ReactContext, callback: (() => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((arg0: UnityEngine.Texture2D) => void)): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6267,7 +6500,7 @@ export declare namespace ReactUnity {
       type: ReactUnity.Types.AssetReferenceType;
       value: any; // System.Object
       static None: ReactUnity.Types.VideoReference;
-      Get(context: ReactUnity.ReactContext, callback: (() => void)): void;
+      Get(context: ReactUnity.ReactContext, callback: ((arg0: ReactUnity.Components.VideoComponentSource) => void)): void;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;

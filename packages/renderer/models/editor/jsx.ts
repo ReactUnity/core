@@ -30,7 +30,7 @@ declare module 'react/jsx-runtime' {
       text: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
       scroll: BaseElement;
-      image: Components.Image & rc.RefAttributes<Cmp.EditorComponent> & Children<never>;
+      image: Components.Image & rc.RefAttributes<Cmp.ImageComponent> & Children<never>;
       toggle: Components.Toggle & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
       input: BaseFieldElementSimple<string>;
       helpbox: BaseElement;
