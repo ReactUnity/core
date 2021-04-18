@@ -1,0 +1,7 @@
+<linker>
+  <assembly fullname="UnityEngine.VideoModule">
+    <type fullname="UnityEngine.Video.VideoPlayer" preserve="all"/>
+  </assembly>
+
+  <assembly fullname="Assembly-CSharp"/>
+</linker>
