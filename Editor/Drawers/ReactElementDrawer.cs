@@ -13,9 +13,9 @@ namespace ReactUnity.Editor
 
             if (GUILayout.Button("Edit Style"))
             {
-                if (EditorWindow.HasOpenInstances<EditStyleWindow>())
-                    EditorWindow.FocusWindowIfItsOpen<EditStyleWindow>();
-                else EditStyleWindow.ShowDefaultWindow();
+                if (EditorWindow.HasOpenInstances<StyleEditorWindow>())
+                    EditorWindow.FocusWindowIfItsOpen<StyleEditorWindow>();
+                else StyleEditorWindow.ShowDefaultWindow();
             }
         }
     }
