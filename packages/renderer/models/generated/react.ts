@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 18.04.2021 04:00:08
+// Generated 18.04.2021 04:12:55
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -2282,60 +2282,6 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class EditStyleWindow {
-      constructor();
-      rootVisualElement: UnityEngine.UIElements.VisualElement;
-      wantsMouseMove: boolean;
-      wantsMouseEnterLeaveWindow: boolean;
-      wantsLessLayoutEvents: boolean;
-      autoRepaintOnSceneChange: boolean;
-      maximized: boolean;
-      hasFocus: boolean;
-      docked: boolean;
-      hasUnsavedChanges: boolean;
-      saveChangesMessage: string;
-      minSize: UnityEngine.Vector2;
-      maxSize: UnityEngine.Vector2;
-      title: string;
-      titleContent: UnityEngine.GUIContent;
-      depthBufferBits: number;
-      antiAlias: number;
-      position: UnityEngine.Rect;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      static ShowDefaultWindow(): void;
-      Run(root?: UnityEngine.UIElements.VisualElement): void;
-      Restart(root?: UnityEngine.UIElements.VisualElement): void;
-      AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
-      AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
-      AddItemsToMenu(menu: any): void;
-      BeginWindows(): void;
-      EndWindows(): void;
-      ShowNotification(notification: UnityEngine.GUIContent): void;
-      ShowNotification(notification: UnityEngine.GUIContent, fadeoutWait: number): void;
-      RemoveNotification(): void;
-      ShowTab(): void;
-      Focus(): void;
-      ShowUtility(): void;
-      ShowPopup(): void;
-      ShowModalUtility(): void;
-      ShowAsDropDown(buttonRect: UnityEngine.Rect, windowSize: UnityEngine.Vector2): void;
-      Show(): void;
-      Show(immediateDisplay: boolean): void;
-      ShowAuxWindow(): void;
-      ShowModal(): void;
-      SaveChanges(): void;
-      Close(): void;
-      Repaint(): void;
-      SendEvent(e: UnityEngine.Event): boolean;
-      GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
-      SetDirty(): void;
-      GetInstanceID(): number;
-      GetHashCode(): number;
-      Equals(other: any): boolean;
-      ToString(): string;
-      GetType(): System.Type;
-    }
     export class QuickStartWindow {
       constructor();
       NodeVersion: number;
@@ -2434,6 +2380,60 @@ export declare namespace ReactUnity {
       Cleanup(): void;
       MoveNextTarget(): boolean;
       ResetTarget(): void;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class StyleEditorWindow {
+      constructor();
+      rootVisualElement: UnityEngine.UIElements.VisualElement;
+      wantsMouseMove: boolean;
+      wantsMouseEnterLeaveWindow: boolean;
+      wantsLessLayoutEvents: boolean;
+      autoRepaintOnSceneChange: boolean;
+      maximized: boolean;
+      hasFocus: boolean;
+      docked: boolean;
+      hasUnsavedChanges: boolean;
+      saveChangesMessage: string;
+      minSize: UnityEngine.Vector2;
+      maxSize: UnityEngine.Vector2;
+      title: string;
+      titleContent: UnityEngine.GUIContent;
+      depthBufferBits: number;
+      antiAlias: number;
+      position: UnityEngine.Rect;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      static ShowDefaultWindow(): void;
+      Run(root?: UnityEngine.UIElements.VisualElement): void;
+      Restart(root?: UnityEngine.UIElements.VisualElement): void;
+      AddSelectionChange(callback: ((arg0: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+      AddPlayModeStateChange(callback: ((arg0: any, arg1: ReactUnity.Editor.Renderer.ReactWindow) => void)): (() => void);
+      AddItemsToMenu(menu: any): void;
+      BeginWindows(): void;
+      EndWindows(): void;
+      ShowNotification(notification: UnityEngine.GUIContent): void;
+      ShowNotification(notification: UnityEngine.GUIContent, fadeoutWait: number): void;
+      RemoveNotification(): void;
+      ShowTab(): void;
+      Focus(): void;
+      ShowUtility(): void;
+      ShowPopup(): void;
+      ShowModalUtility(): void;
+      ShowAsDropDown(buttonRect: UnityEngine.Rect, windowSize: UnityEngine.Vector2): void;
+      Show(): void;
+      Show(immediateDisplay: boolean): void;
+      ShowAuxWindow(): void;
+      ShowModal(): void;
+      SaveChanges(): void;
+      Close(): void;
+      Repaint(): void;
+      SendEvent(e: UnityEngine.Event): boolean;
+      GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
       SetDirty(): void;
       GetInstanceID(): number;
       GetHashCode(): number;
