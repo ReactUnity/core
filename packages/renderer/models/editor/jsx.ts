@@ -28,6 +28,7 @@ declare module 'react/jsx-runtime' {
       box: BaseElement;
       anchor: Components.Anchor & rc.RefAttributes<Cmp.EditorComponent> & Children;
       text: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
+      label: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
       button: Components.Button & rc.RefAttributes<Cmp.ButtonComponent> & Children;
       scroll: BaseElement;
       image: Components.Image & rc.RefAttributes<Cmp.ImageComponent> & Children<never>;
@@ -35,15 +36,15 @@ declare module 'react/jsx-runtime' {
       input: BaseFieldElementSimple<string>;
       helpbox: BaseElement;
       foldout: BaseElement;
-      popup: BaseElement;
+      popup: Components.View & rc.RefAttributes<Cmp.TextComponent> & Children<Textable | Textable[]>;
       slider: Components.Slider & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
       sliderint: Components.Slider & rc.RefAttributes<Cmp.ToggleComponent> & Children<never>;
       range: Components.Range & rc.RefAttributes<Cmp.RangeComponent> & Children<never>;
       repeat: BaseElement;
       scroller: BaseElement;
-      list: BaseElement;
+      list: Components.Bindable;
       imgui: Components.IMGUI & rc.RefAttributes<Cmp.IMGUIComponent> & Children<never>;
-      template: BaseElement;
+      template: Components.Bindable;
 
       color: BaseFieldElementSimple<UnityEngine.Color>;
       bounds: BaseFieldElementSimple<UnityEngine.Bounds>;
@@ -54,15 +55,15 @@ declare module 'react/jsx-runtime' {
       flags: Components.EnumProps & rc.RefAttributes<Cmp.EnumComponent> & Children<never>;
       float: BaseFieldElementSimple<number>;
       gradient: BaseFieldElementSimple<UnityEngine.Gradient>;
-      inspector: BaseElement;
+      inspector: Components.Bindable;
       integer: BaseFieldElementSimple<number>;
       layer: BaseFieldElementSimple<number>;
       layermask: BaseFieldElementSimple<number>;
       long: BaseFieldElementSimple<number>;
       mask: BaseFieldElementSimple<number>;
       object: Components.ObjectProps & rc.RefAttributes<Cmp.ObjectComponent> & Children<never>;
-      progress: BaseElement;
-      property: BaseElement;
+      progress: Components.ValueComponent<number>;
+      property: Components.Bindable;
       rect: BaseFieldElementSimple<UnityEngine.Rect>;
       rectint: BaseFieldElementSimple<UnityEngine.RectInt>;
       tag: BaseFieldElementSimple<string>;

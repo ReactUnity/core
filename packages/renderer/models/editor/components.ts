@@ -1,4 +1,4 @@
-import { ReactUnity, System, UnityEngine } from '../generated';
+import { ReactUnity, System, UnityEditor, UnityEngine } from '../generated';
 import { Style } from '../properties';
 import { AssetReference } from '../properties/values';
 import { ActionCallback, Events } from './events';
@@ -10,13 +10,26 @@ export interface View<TSender = BaseCmp> extends Events<TSender> {
   className?: string;
   style?: Style;
   focusable?: boolean;
+  bind?: UnityEditor.SerializedObject | UnityEditor.SerializedProperty;
 }
 
-export interface BaseField<T, TSender = BaseCmp> extends View<TSender> {
+export interface Text<TSender = Cmp.TextComponent> extends View<TSender> {
+  richText?: boolean;
+  displayTooltipWhenElided?: boolean;
+}
+
+export interface Bindable<TSender = BaseCmp> extends View<TSender> {
+  bindingPath?: string;
+  binding?: UnityEngine.UIElements.IBinding;
+}
+
+export interface ValueComponent<T, TSender = BaseCmp> extends Bindable<TSender> {
   value?: T;
   onChange?: (ev: UnityEngine.UIElements.ChangeEvent<T>, sender: TSender) => void;
+}
+
+export interface BaseField<T, TSender = BaseCmp> extends ValueComponent<T, TSender> {
   label?: string;
-  bindingPath?: string;
 }
 
 export interface BaseSlider<T, TSender = Cmp.BaseSliderComponent<Slider, any>> extends BaseField<T, TSender> {
