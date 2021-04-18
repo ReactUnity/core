@@ -117,8 +117,8 @@ export const styleProps: StylePropGroup[] = [
       { name: 'Height', type: 'YogaValue', ...lengthField, label: 'Height', source: 'layout' },
       { name: 'MinWidth', type: 'YogaValue', ...lengthField, label: 'Min Width', source: 'layout' },
       { name: 'MinHeight', type: 'YogaValue', ...lengthField, label: 'Min Height', source: 'layout' },
-      { name: 'MaxWidth', type: 'YogaValue', ...lengthField, label: 'Min Width', source: 'layout' },
-      { name: 'MaxHeight', type: 'YogaValue', ...lengthField, label: 'Min Height', source: 'layout' },
+      { name: 'MaxWidth', type: 'YogaValue', ...lengthField, label: 'Max Width', source: 'layout' },
+      { name: 'MaxHeight', type: 'YogaValue', ...lengthField, label: 'Max Height', source: 'layout' },
     ],
   },
 
