@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 18.04.2021 02:44:50
+// Generated 18.04.2021 04:00:08
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -404,9 +404,9 @@ export declare namespace ReactUnity {
   export interface IHostComponent {
   }
   export class ReactContext {
-    constructor(globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void), mergeLayouts?: boolean);
+    constructor(globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void), mergeLayouts?: boolean);
     Host: ReactUnity.IHostComponent;
-    Globals: ReactUnity.Types.StringObjectDictionary;
+    Globals: ReactUnity.Types.GlobalRecord;
     IsDevServer: boolean;
     Script: ReactUnity.ReactScript;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
@@ -566,12 +566,12 @@ export declare namespace ReactUnity {
     ToString(): string;
   }
   export class UGUIContext {
-    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void));
+    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void));
     static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
     StateHandlers: Record<string, System.Type>;
     RootLayoutNode: Facebook.Yoga.YogaNode;
     Host: ReactUnity.IHostComponent;
-    Globals: ReactUnity.Types.StringObjectDictionary;
+    Globals: ReactUnity.Types.GlobalRecord;
     IsDevServer: boolean;
     Script: ReactUnity.ReactScript;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
@@ -2407,6 +2407,40 @@ export declare namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class ReactElementInspector {
+      constructor();
+      target: UnityEngine.Object;
+      targets: UnityEngine.Object[];
+      serializedObject: any; // UnityEditor.SerializedObject
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      CreateInspectorGUI(): UnityEngine.UIElements.VisualElement;
+      DrawDefaultInspector(): boolean;
+      Repaint(): void;
+      OnInspectorGUI(): void;
+      RequiresConstantRepaint(): boolean;
+      DrawHeader(): void;
+      HasPreviewGUI(): boolean;
+      GetPreviewTitle(): UnityEngine.GUIContent;
+      RenderStaticPreview(assetPath: string, subAssets: UnityEngine.Object[], width: number, height: number): UnityEngine.Texture2D;
+      OnPreviewGUI(r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
+      OnInteractivePreviewGUI(r: UnityEngine.Rect, background: UnityEngine.GUIStyle): void;
+      OnPreviewSettings(): void;
+      GetInfoString(): string;
+      DrawPreview(previewArea: UnityEngine.Rect): void;
+      ReloadPreviewInstances(): void;
+      UseDefaultMargins(): boolean;
+      Initialize(targets: UnityEngine.Object[]): void;
+      Cleanup(): void;
+      MoveNextTarget(): boolean;
+      ResetTarget(): void;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class EmscriptenBuildFlags {
       constructor();
       callbackOrder: number;
@@ -3024,10 +3058,10 @@ export declare namespace ReactUnity {
     }
     export namespace Renderer {
       export class EditorContext {
-        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.StringObjectDictionary, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: (() => void));
+        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: (() => void));
         StateHandlers: Record<string, System.Type>;
         Host: ReactUnity.IHostComponent;
-        Globals: ReactUnity.Types.StringObjectDictionary;
+        Globals: ReactUnity.Types.GlobalRecord;
         IsDevServer: boolean;
         Script: ReactUnity.ReactScript;
         Scheduler: ReactUnity.Schedulers.IUnityScheduler;
@@ -3141,11 +3175,23 @@ export declare namespace ReactUnity {
         ToString(): string;
         GetType(): System.Type;
       }
+      export class ReactProperty {
+        attribute: any; // UnityEngine.PropertyAttribute
+        fieldInfo: System.Reflection.FieldInfo;
+        CreatePropertyGUI(property: any): UnityEngine.UIElements.VisualElement;
+        OnGUI(position: UnityEngine.Rect, property: any, label: UnityEngine.GUIContent): void;
+        GetPropertyHeight(property: any, label: UnityEngine.GUIContent): number;
+        CanCacheInspectorGUI(property: any): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class ReactUnityElement {
-        constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Types.StringObjectDictionary, autorun?: boolean);
+        constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Types.GlobalRecord, autorun?: boolean);
         [key: string]: any;
         Script: ReactUnity.ReactScript;
-        Globals: ReactUnity.Types.StringObjectDictionary;
+        Globals: ReactUnity.Types.GlobalRecord;
         viewDataKey: string;
         userData: any; // System.Object
         canGrabFocus: boolean;
@@ -6569,6 +6615,28 @@ export declare namespace ReactUnity {
       static None: ReactUnity.Types.ImageReference;
       Dispose(): void;
       Get(context: ReactUnity.ReactContext, callback: ((arg0: UnityEngine.Texture2D) => void)): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class GlobalRecord {
+      constructor();
+      constructor(dict: System.Collections.Generic.IDictionary<string, any>);
+      [key: string]: any;
+      Comparer: System.Collections.Generic.IEqualityComparer<string>;
+      Count: number;
+      Keys: Record<string, any>;
+      Values: Record<string, any>;
+      Add(key: string, value: any): void;
+      Clear(): void;
+      ContainsKey(key: string): boolean;
+      ContainsValue(value: any): boolean;
+      GetEnumerator(): Record<string, any>;
+      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+      OnDeserialization(sender: any): void;
+      Remove(key: string): boolean;
+      TryAdd(key: string, value: any): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
