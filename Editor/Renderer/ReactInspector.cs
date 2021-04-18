@@ -11,11 +11,11 @@ namespace ReactUnity.Editor.Renderer
         {
             get
             {
-                return !EditorPrefs.GetBool($"ReactUnity.Editor.ReactInspector.{GetType().Name}.DevServerDisabled");
+                return EditorPrefs.GetBool($"ReactUnity.Editor.ReactInspector.{GetType().Name}.DevServerEnabled");
             }
             set
             {
-                EditorPrefs.SetBool($"ReactUnity.Editor.ReactInspector.{GetType().Name}.DevServerDisabled", !value);
+                EditorPrefs.SetBool($"ReactUnity.Editor.ReactInspector.{GetType().Name}.DevServerEnabled", value);
             }
         }
 #endif
