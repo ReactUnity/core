@@ -8,9 +8,9 @@ namespace ReactUnity.Editor.Renderer
     public class ReactUnityElement : VisualElement
     {
         protected IDisposable ScriptWatchDisposable;
-        protected ReactUnityRunner runner;
-        protected EditorContext context;
-        protected IDispatcher dispatcher;
+        public ReactUnityRunner runner { get; private set; }
+        public EditorContext context { get; private set; }
+        public IDispatcher dispatcher { get; private set; }
 
         public ReactScript Script { get; }
         public GlobalRecord Globals { get; }

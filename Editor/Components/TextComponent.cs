@@ -18,8 +18,10 @@ namespace ReactUnity.Editor.Components
 
         public override void SetProperty(string property, object value)
         {
-            if (property == "richText") Element.enableRichText = Convert.ToBoolean(value);
-            else if (property == "displayTooltipWhenElided") Element.displayTooltipWhenElided = Convert.ToBoolean(value);
+            if (property == "displayTooltipWhenElided") Element.displayTooltipWhenElided = Convert.ToBoolean(value);
+#if UNITY_2021_1_OR_NEWER
+            else if (property == "richText") Element.enableRichText = Convert.ToBoolean(value);
+#endif
             else base.SetProperty(property, value);
         }
     }

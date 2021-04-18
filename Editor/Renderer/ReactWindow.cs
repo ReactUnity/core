@@ -12,11 +12,10 @@ namespace ReactUnity.Editor.Renderer
     {
         private readonly GUIContent resetGUIContent = EditorGUIUtility.TrTextContent("Reload");
 
-        protected IDisposable ScriptWatchDisposable;
-        protected ReactUnityRunner runner;
-        protected EditorContext context;
-        protected IDispatcher dispatcher;
-        protected ReactUnityElement hostElement;
+        protected ReactUnityRunner runner => hostElement?.runner;
+        protected EditorContext context => hostElement?.context;
+        protected IDispatcher dispatcher => hostElement?.dispatcher;
+        protected ReactUnityElement hostElement { get; private set; }
 
         public event Action<ReactWindow> SelectionChange;
 
@@ -90,7 +89,7 @@ namespace ReactUnity.Editor.Renderer
 
         public void AddItemsToMenu(GenericMenu menu)
         {
-            menu.AddItem(resetGUIContent, false, () => Restart((context?.Host as HostComponent)?.Element));
+            menu.AddItem(resetGUIContent, false, () => Restart());
 
 #if REACT_UNITY_DEVELOPER
             menu.AddItem(enableDevServerContent, DevServerEnabled, () => DevServerEnabled = !DevServerEnabled);
