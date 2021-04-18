@@ -11,9 +11,15 @@ const Window = Globals.Window;
 const Inspector = Globals.Inspector;
 
 function getSelection() {
-  const activeObject = UnityEditor.Selection.activeGameObject;
-  if (!activeObject) return null;
-  return activeObject.GetComponent('ReactElement') as RC;
+  if (Window) {
+    const activeObject = UnityEditor.Selection.activeGameObject;
+    if (!activeObject) return null;
+    return activeObject.GetComponent('ReactElement') as RC;
+  } else if (Inspector) {
+    return Inspector.target as RC;
+  }
+
+  return null;
 }
 
 function App() {

@@ -85,7 +85,8 @@ namespace ReactUnity.Types
                     callback(Resources.Load(realValue as string, typeof(AssetType)) as AssetType);
                     break;
                 case AssetReferenceType.Global:
-                    callback(context.Globals.GetValueOrDefault(realValue as string) as AssetType);
+                    if (context.Globals.TryGetValue(realValue as string, out var res)) callback(res as AssetType);
+                    else callback(null);
                     break;
                 case AssetReferenceType.Object:
                     callback(realValue as AssetType);

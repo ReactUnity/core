@@ -1,13 +1,25 @@
 using ReactUnity.Types;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Renderer
 {
     public abstract class ReactInspector : UnityEditor.Editor
     {
+#if REACT_UNITY_DEVELOPER
+        protected bool DevServerEnabled
+        {
+            get
+            {
+                return !EditorPrefs.GetBool($"ReactUnity.Editor.ReactInspector.{GetType().Name}.DevServerDisabled");
+            }
+            set
+            {
+                EditorPrefs.SetBool($"ReactUnity.Editor.ReactInspector.{GetType().Name}.DevServerDisabled", !value);
+            }
+        }
+#endif
+
         public override VisualElement CreateInspectorGUI()
         {
             return new ReactUnityElement(GetScript(), GetGlobals());
@@ -15,11 +27,11 @@ namespace ReactUnity.Editor.Renderer
 
         protected abstract ReactScript GetScript();
 
-        protected virtual StringObjectDictionary GetGlobals()
+        protected virtual GlobalRecord GetGlobals()
         {
-            return new StringObjectDictionary()
+            return new GlobalRecord()
             {
-                { "Inspector", this }
+                { "Inspector", this },
             };
         }
     }

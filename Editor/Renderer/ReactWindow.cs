@@ -49,11 +49,11 @@ namespace ReactUnity.Editor.Renderer
 
         protected abstract ReactScript GetScript();
 
-        protected virtual StringObjectDictionary GetGlobals()
+        protected virtual GlobalRecord GetGlobals()
         {
-            return new StringObjectDictionary()
+            return new GlobalRecord()
             {
-                { "Window", this }
+                { "Window", this },
             };
         }
 

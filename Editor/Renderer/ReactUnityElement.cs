@@ -13,8 +13,8 @@ namespace ReactUnity.Editor.Renderer
         protected IDispatcher dispatcher;
 
         public ReactScript Script { get; }
-        public StringObjectDictionary Globals { get; }
-        public ReactUnityElement(ReactScript script, StringObjectDictionary globals, bool autorun = true)
+        public GlobalRecord Globals { get; }
+        public ReactUnityElement(ReactScript script, GlobalRecord globals, bool autorun = true)
         {
             Script = script;
             Globals = globals;

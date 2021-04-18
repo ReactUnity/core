@@ -4,6 +4,20 @@ using UnityEngine;
 
 namespace ReactUnity.Types
 {
+    public class GlobalRecord : Dictionary<string, object>
+    {
+        public GlobalRecord() { }
+
+        public GlobalRecord(IDictionary<string, object> dict) : base(dict)
+        {
+        }
+
+        public static implicit operator GlobalRecord(StringObjectDictionary dict)
+        {
+            return new GlobalRecord(dict.ToDictionary(x => x.Key, x => x.Value as object));
+        }
+    };
+
     [System.Serializable]
     public class StringObjectPair
     {

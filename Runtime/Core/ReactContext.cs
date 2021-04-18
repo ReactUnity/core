@@ -18,7 +18,7 @@ namespace ReactUnity
         protected static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
 
         public IHostComponent Host { get; protected set; }
-        public StringObjectDictionary Globals { get; private set; }
+        public GlobalRecord Globals { get; private set; }
         public bool IsDevServer { get; }
 
         public ReactScript Script { get; }
@@ -39,7 +39,7 @@ namespace ReactUnity
 
         private bool mergeLayouts;
 
-        public ReactContext(StringObjectDictionary globals, ReactScript script, IDispatcher dispatcher,
+        public ReactContext(GlobalRecord globals, ReactScript script, IDispatcher dispatcher,
             IUnityScheduler scheduler, bool isDevServer, Action onRestart, bool mergeLayouts = false)
         {
             Globals = globals;

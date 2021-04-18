@@ -87,7 +87,7 @@ namespace ReactUnity.Editor.Renderer
                 { "hover", typeof(HoverStateHandler) },
             };
 
-        public EditorContext(VisualElement hostElement, StringObjectDictionary globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
+        public EditorContext(VisualElement hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
             : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, true)
         {
             Host = new HostComponent(hostElement, this);

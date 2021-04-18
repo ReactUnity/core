@@ -49,7 +49,7 @@ namespace ReactUnity
 
         public YogaNode RootLayoutNode { get; }
 
-        public UGUIContext(RectTransform hostElement, StringObjectDictionary globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
+        public UGUIContext(RectTransform hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
             : base(globals, script, dispatcher, scheduler, isDevServer, onRestart)
         {
             Host = new HostComponent(hostElement, this);

@@ -1,5 +1,5 @@
 {
-  "name": "@reactunity/inspector",
+  "name": "@reactunity/style-editor",
   "version": "0.0.1",
   "description": "",
   "main": "index.ts",
@@ -11,7 +11,7 @@
     "preinstall": "npx only-allow@1.0.0 yarn"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.0.24",
+    "@reactunity/renderer": "^0.0.25",
     "clsx": "^1.1.1",
     "react": "^17.0.2"
   },
