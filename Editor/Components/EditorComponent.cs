@@ -13,6 +13,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+#if UNITY_EDITOR
+using UnityEditor.UIElements;
+#endif
+
 namespace ReactUnity.Editor.Components
 {
     public interface IEditorComponent<out T> : IReactComponent
@@ -385,6 +389,12 @@ namespace ReactUnity.Editor.Components
                         ResolveStyle(true);
                     }
                     return;
+#if UNITY_EDITOR
+                case "bind":
+                    if (value is UnityEditor.SerializedObject so) Element.Bind(so);
+                    else Element.Unbind();
+                    return;
+#endif
                 default:
                     throw new Exception($"Unknown property name specified, '{property}'");
             }
