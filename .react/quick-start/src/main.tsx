@@ -69,23 +69,26 @@ function App() {
       <h2>Quick Start</h2>
     </head>
 
-    <section className={nodeOk ? style.success : style.error}>
-      {nodeVersion === 0 ?
-        <>
+    {nodeVersion >= 0 &&
+      <section className={nodeOk ? style.success : style.error}>
+        {nodeVersion >= Window.RequiredNodeVersion ?
           <row>
-            {warn}
-            <text>Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed.</text>
-          </row>
+            {check}
+            <text>Node.js version {nodeVersion} is installed</text>
+          </row> :
+          <>
+            <row>
+              {warn}
+              {nodeVersion === 0 ?
+                <text>Node.js does not seem to be installed on this computer. Install it or add it to PATH if it is already installed.</text> :
+                <text>Node.js {nodeVersion} is installed but minimum recommended version is {Window.RequiredNodeVersion}.</text>}
+            </row>
 
-          <actions>
-            <anchor url={Window.NodeUrl}>Install</anchor>
-          </actions>
-        </> :
-        <row>
-          {check}
-          <text>Node.js version {nodeVersion} is installed</text>
-        </row>}
-    </section>
+            <actions>
+              <anchor url={Window.NodeUrl}>Install</anchor>
+            </actions>
+          </>}
+      </section>}
 
     <section className={canvasOk ? style.success : style.error}>
       {packageOk ?
