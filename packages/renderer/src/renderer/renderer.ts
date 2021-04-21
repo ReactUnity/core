@@ -52,7 +52,7 @@ function applyUpdate(instance: NativeInstance, updatePayload: DiffResult, isAfte
 
     if (attr === 'children') {
       if (type === 'text') {
-        Unity.setText(instance, value ? value.join('') : '');
+        Unity.setText(instance, value ? ((Array.isArray(value) && value.join) ? value.join('') : value + '') : '');
       }
       continue;
     }
