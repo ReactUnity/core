@@ -93,7 +93,7 @@
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2",
-    "node-sass": "^5.0.0"
+    "sass": "^1.32.12"
   },
   "peerDependencies": {
     "@reactunity/renderer": "*",
