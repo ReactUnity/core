@@ -6,339 +6,23 @@
 
 "use strict";
 
-// EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(84);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
-var deepDiffProps = {
-  style: 1,
-  layout: 1
-};
-function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
-  if (deepDiffing === void 0) {
-    deepDiffing = 0;
-  }
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/components.js
+var ImageFitMode;
 
-  if (lastRawProps === nextRawProps) return null;
-  var updatePayload = null;
-  var lastProps = lastRawProps;
-  var nextProps = nextRawProps;
-  var propKey;
-
-  for (propKey in lastProps) {
-    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
-      continue;
-    }
-
-    var prop = null;
-    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
-
-    if (depth > 0) {
-      prop = diffProperties(lastProps[propKey], null, depth - 1);
-      if (!prop) continue;
-    } // For all other deleted properties we add it to the queue. We use
-    // the whitelist in the commit phase instead.
+(function (ImageFitMode) {
+  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
+  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
+  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
+  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
+  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
+  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
+  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
+})(ImageFitMode || (ImageFitMode = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/index.js
 
 
-    (updatePayload = updatePayload || []).push(propKey, prop);
-  }
-
-  for (propKey in nextProps) {
-    var nextProp = nextProps[propKey];
-    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
-
-    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
-      continue;
-    }
-
-    var prop = nextProp;
-    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
-
-    if (depth > 0) {
-      prop = diffProperties(lastProp, nextProp, depth - 1);
-      if (!prop) continue;
-    }
-
-    (updatePayload = updatePayload || []).push(propKey, prop);
-  }
-
-  return updatePayload;
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
 
 
-var hostContext = {};
-var childContext = {};
-
-function applyDiffedUpdate(writeTo, updatePayload, depth) {
-  if (depth === void 0) {
-    depth = 0;
-  }
-
-  if (!updatePayload) return false;
-
-  if (Array.isArray(updatePayload)) {
-    for (var index = 0; index < updatePayload.length; index += 2) {
-      var attr = updatePayload[index];
-      var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
-    }
-
-    return updatePayload.length > 0;
-  } else {
-    for (var attr in updatePayload) {
-      if (updatePayload.hasOwnProperty(attr)) {
-        var value = updatePayload[attr];
-        writeTo.SetWithoutNotify(attr, value);
-      }
-    }
-
-    return true;
-  }
-}
-
-function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
-  if (pre === void 0) {
-    pre = true;
-  }
-
-  var updateAfterMount = false;
-
-  for (var index = 0; index < updatePayload.length; index += 2) {
-    var attr = updatePayload[index];
-    var value = updatePayload[index + 1];
-    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
-
-    if (pre !== isEvent) continue;
-
-    if (isEvent) {
-      Unity.setEventListener(instance, attr, value);
-      continue;
-    }
-
-    if (attr === 'children') {
-      if (type === 'text') {
-        Unity.setText(instance, value ? value.join('') : '');
-      }
-
-      continue;
-    }
-
-    if (attr === 'key') continue;
-    if (attr === 'ref') continue;
-    if (attr === 'tag') continue;
-
-    if (!isAfterMount && attr === 'style') {
-      updateAfterMount = true;
-      continue;
-    }
-
-    if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Style, value)) {
-        instance.ResolveStyle();
-      }
-
-      continue;
-    }
-
-    if (attr.substring(0, 5) === 'data-') {
-      Unity.setData(instance, attr.substring(5), value);
-    } else {
-      Unity.setProperty(instance, attr, value);
-    }
-  }
-
-  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
-  return updateAfterMount;
-}
-
-var hostConfig = {
-  getRootHostContext: function getRootHostContext(rootContainerInstance) {
-    return hostContext;
-  },
-  getChildHostContext: function getChildHostContext(parentHostContext, type, rootContainerInstance) {
-    return childContext;
-  },
-  getPublicInstance: function getPublicInstance(instance) {
-    return instance;
-  },
-  prepareForCommit: function prepareForCommit(containerInfo) {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit(containerInfo) {
-    return null;
-  },
-  clearContainer: function clearContainer() {
-    return null;
-  },
-  now: Date.now,
-  supportsHydration: false,
-  supportsPersistence: false,
-  isPrimaryRenderer: true,
-  createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    var _a;
-
-    if (type === 'text') {
-      var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return Unity.createElement(type, text, rootContainerInstance);
-    }
-
-    return Unity.createElement(props.tag || type, null, rootContainerInstance);
-  },
-  createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
-    return Unity.createText(text, rootContainerInstance);
-  },
-  appendInitialChild: function appendInitialChild(parent, child) {
-    Unity.appendChild(parent, child);
-  },
-  finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
-    var propsToUpdate = [];
-    var keys = Object.keys(props);
-
-    for (var index = 0; index < keys.length; index++) {
-      var key = keys[index];
-      var value = props[key];
-      propsToUpdate.push(key, value);
-    }
-
-    return applyUpdate(instance, propsToUpdate, false);
-  },
-  // Some attributes like style need to be changed only after mount
-  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
-    var props = [];
-    if ('style' in newProps) props.push('style', newProps.style);
-    applyUpdate(instance, props, true);
-  },
-  shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text';
-  },
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
-    return false;
-  },
-  // -------------------
-  //     Mutation
-  // -------------------
-  supportsMutation: true,
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps, rootContainerInstance, hostContext) {
-    return diffProperties(oldProps, newProps);
-  },
-  commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    applyUpdate(instance, updatePayload, true, type);
-  },
-  resetTextContent: function resetTextContent(instance) {
-    console.log('resetTextContent');
-  },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    Unity.setText(textInstance, newText);
-  },
-  appendChild: function appendChild(parent, child) {
-    return Unity.appendChild(parent, child);
-  },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
-    return Unity.appendChildToContainer(parent, child);
-  },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
-  },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
-  },
-  removeChild: function removeChild(parent, child) {
-    return Unity.removeChild(parent, child);
-  },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    return Unity.removeChild(parent, child);
-  },
-  // Required for Suspense
-  // TODO: implement
-  preparePortalMount: function preparePortalMount() {},
-  hideInstance: function hideInstance(instance) {},
-  hideTextInstance: function hideTextInstance(textInstance) {},
-  unhideInstance: function unhideInstance(instance, props) {},
-  unhideTextInstance: function unhideTextInstance(textInstance, text) {},
-  // -------------------
-  //     Scheduling
-  // -------------------
-  scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
-    return UnityScheduler.setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
-  },
-  cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
-    UnityScheduler.clearTimeout(callBackID);
-  },
-  noTimeout: -1,
-  scheduleTimeout: function scheduleTimeout(callback, timeout) {
-    return UnityScheduler.setTimeout(callback, timeout);
-  },
-  cancelTimeout: function cancelTimeout(handle) {
-    UnityScheduler.clearTimeout(handle);
-  },
-  queueMicrotask: function queueMicrotask(callback) {
-    return UnityScheduler.setTimeout(callback, 0);
-  }
-};
-var ReactUnityReconciler = react_reconciler(hostConfig);
-var Renderer = {
-  render: function render(element, hostContainer, callback) {
-    if (!hostContainer) hostContainer = RootContainer;
-    var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
-    return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
-  }
-};
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
-// https://gist.github.com/gre/1650294
-var easing = {
-  // no easing, no acceleration
-  linear: function linear(t) {
-    return t;
-  },
-  // accelerating from zero velocity
-  easeInQuad: function easeInQuad(t) {
-    return t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuad: function easeOutQuad(t) {
-    return t * (2 - t);
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuad: function easeInOutQuad(t) {
-    return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-  },
-  // accelerating from zero velocity
-  easeInCubic: function easeInCubic(t) {
-    return t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutCubic: function easeOutCubic(t) {
-    return --t * t * t + 1;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutCubic: function easeInOutCubic(t) {
-    return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-  },
-  // accelerating from zero velocity
-  easeInQuart: function easeInQuart(t) {
-    return t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuart: function easeOutQuart(t) {
-    return 1 - --t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuart: function easeInOutQuart(t) {
-    return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-  },
-  // accelerating from zero velocity
-  easeInQuint: function easeInQuint(t) {
-    return t * t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuint: function easeOutQuint(t) {
-    return 1 + --t * t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuint: function easeInOutQuint(t) {
-    return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
-  }
-};
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/styles-enums.js
 var FontWeight;
 
@@ -540,23 +224,340 @@ var Direction;
 
 
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/components.js
-var ImageFitMode;
 
-(function (ImageFitMode) {
-  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
-  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
-  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
-  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
-  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
-  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
-  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
-})(ImageFitMode || (ImageFitMode = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/index.js
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
+// https://gist.github.com/gre/1650294
+var easing = {
+  // no easing, no acceleration
+  linear: function linear(t) {
+    return t;
+  },
+  // accelerating from zero velocity
+  easeInQuad: function easeInQuad(t) {
+    return t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuad: function easeOutQuad(t) {
+    return t * (2 - t);
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuad: function easeInOutQuad(t) {
+    return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  },
+  // accelerating from zero velocity
+  easeInCubic: function easeInCubic(t) {
+    return t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutCubic: function easeOutCubic(t) {
+    return --t * t * t + 1;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutCubic: function easeInOutCubic(t) {
+    return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  },
+  // accelerating from zero velocity
+  easeInQuart: function easeInQuart(t) {
+    return t * t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuart: function easeOutQuart(t) {
+    return 1 - --t * t * t * t;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuart: function easeInOutQuart(t) {
+    return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+  },
+  // accelerating from zero velocity
+  easeInQuint: function easeInQuint(t) {
+    return t * t * t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuint: function easeOutQuint(t) {
+    return 1 + --t * t * t * t * t;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuint: function easeInOutQuint(t) {
+    return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
+  }
+};
+// EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
+var react_reconciler = __webpack_require__(84);
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
+var deepDiffProps = {
+  style: 1,
+  layout: 1
+};
+function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
+  if (deepDiffing === void 0) {
+    deepDiffing = 0;
+  }
+
+  if (lastRawProps === nextRawProps) return null;
+  var updatePayload = null;
+  var lastProps = lastRawProps;
+  var nextProps = nextRawProps;
+  var propKey;
+
+  for (propKey in lastProps) {
+    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
+      continue;
+    }
+
+    var prop = null;
+    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+
+    if (depth > 0) {
+      prop = diffProperties(lastProps[propKey], null, depth - 1);
+      if (!prop) continue;
+    } // For all other deleted properties we add it to the queue. We use
+    // the whitelist in the commit phase instead.
 
 
+    (updatePayload = updatePayload || []).push(propKey, prop);
+  }
+
+  for (propKey in nextProps) {
+    var nextProp = nextProps[propKey];
+    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
+
+    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
+      continue;
+    }
+
+    var prop = nextProp;
+    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+
+    if (depth > 0) {
+      prop = diffProperties(lastProp, nextProp, depth - 1);
+      if (!prop) continue;
+    }
+
+    (updatePayload = updatePayload || []).push(propKey, prop);
+  }
+
+  return updatePayload;
+}
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
 
 
+var hostContext = {};
+var childContext = {};
+
+function applyDiffedUpdate(writeTo, updatePayload, depth) {
+  if (depth === void 0) {
+    depth = 0;
+  }
+
+  if (!updatePayload) return false;
+
+  if (Array.isArray(updatePayload)) {
+    for (var index = 0; index < updatePayload.length; index += 2) {
+      var attr = updatePayload[index];
+      var value = updatePayload[index + 1];
+      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
+    }
+
+    return updatePayload.length > 0;
+  } else {
+    for (var attr in updatePayload) {
+      if (updatePayload.hasOwnProperty(attr)) {
+        var value = updatePayload[attr];
+        writeTo.SetWithoutNotify(attr, value);
+      }
+    }
+
+    return true;
+  }
+}
+
+function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
+  if (pre === void 0) {
+    pre = true;
+  }
+
+  var updateAfterMount = false;
+
+  for (var index = 0; index < updatePayload.length; index += 2) {
+    var attr = updatePayload[index];
+    var value = updatePayload[index + 1];
+    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
+
+    if (pre !== isEvent) continue;
+
+    if (isEvent) {
+      Unity.setEventListener(instance, attr, value);
+      continue;
+    }
+
+    if (attr === 'children') {
+      if (type === 'text') {
+        Unity.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
+      }
+
+      continue;
+    }
+
+    if (attr === 'key') continue;
+    if (attr === 'ref') continue;
+    if (attr === 'tag') continue;
+
+    if (!isAfterMount && attr === 'style') {
+      updateAfterMount = true;
+      continue;
+    }
+
+    if (attr === 'style') {
+      if (applyDiffedUpdate(instance.Style, value)) {
+        instance.ResolveStyle();
+      }
+
+      continue;
+    }
+
+    if (attr.substring(0, 5) === 'data-') {
+      Unity.setData(instance, attr.substring(5), value);
+    } else {
+      Unity.setProperty(instance, attr, value);
+    }
+  }
+
+  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
+  return updateAfterMount;
+}
+
+var hostConfig = {
+  getRootHostContext: function getRootHostContext(rootContainerInstance) {
+    return hostContext;
+  },
+  getChildHostContext: function getChildHostContext(parentHostContext, type, rootContainerInstance) {
+    return childContext;
+  },
+  getPublicInstance: function getPublicInstance(instance) {
+    return instance;
+  },
+  prepareForCommit: function prepareForCommit(containerInfo) {
+    return null;
+  },
+  resetAfterCommit: function resetAfterCommit(containerInfo) {
+    return null;
+  },
+  clearContainer: function clearContainer() {
+    return null;
+  },
+  now: Date.now,
+  supportsHydration: false,
+  supportsPersistence: false,
+  isPrimaryRenderer: true,
+  createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
+    var _a;
+
+    if (type === 'text') {
+      var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
+      return Unity.createElement(type, text, rootContainerInstance);
+    }
+
+    return Unity.createElement(props.tag || type, null, rootContainerInstance);
+  },
+  createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
+    return Unity.createText(text, rootContainerInstance);
+  },
+  appendInitialChild: function appendInitialChild(parent, child) {
+    Unity.appendChild(parent, child);
+  },
+  finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
+    var propsToUpdate = [];
+    var keys = Object.keys(props);
+
+    for (var index = 0; index < keys.length; index++) {
+      var key = keys[index];
+      var value = props[key];
+      propsToUpdate.push(key, value);
+    }
+
+    return applyUpdate(instance, propsToUpdate, false);
+  },
+  // Some attributes like style need to be changed only after mount
+  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
+    var props = [];
+    if ('style' in newProps) props.push('style', newProps.style);
+    applyUpdate(instance, props, true);
+  },
+  shouldSetTextContent: function shouldSetTextContent(type, props) {
+    return type === 'text';
+  },
+  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
+    return false;
+  },
+  // -------------------
+  //     Mutation
+  // -------------------
+  supportsMutation: true,
+  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps, rootContainerInstance, hostContext) {
+    return diffProperties(oldProps, newProps);
+  },
+  commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
+    applyUpdate(instance, updatePayload, true, type);
+  },
+  resetTextContent: function resetTextContent(instance) {
+    console.log('resetTextContent');
+  },
+  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
+    Unity.setText(textInstance, newText);
+  },
+  appendChild: function appendChild(parent, child) {
+    return Unity.appendChild(parent, child);
+  },
+  appendChildToContainer: function appendChildToContainer(parent, child) {
+    return Unity.appendChildToContainer(parent, child);
+  },
+  insertBefore: function insertBefore(parent, child, beforeChild) {
+    return Unity.insertBefore(parent, child, beforeChild);
+  },
+  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
+    return Unity.insertBefore(parent, child, beforeChild);
+  },
+  removeChild: function removeChild(parent, child) {
+    return Unity.removeChild(parent, child);
+  },
+  removeChildFromContainer: function removeChildFromContainer(parent, child) {
+    return Unity.removeChild(parent, child);
+  },
+  // Required for Suspense
+  // TODO: implement
+  preparePortalMount: function preparePortalMount() {},
+  hideInstance: function hideInstance(instance) {},
+  hideTextInstance: function hideTextInstance(textInstance) {},
+  unhideInstance: function unhideInstance(instance, props) {},
+  unhideTextInstance: function unhideTextInstance(textInstance, text) {},
+  // -------------------
+  //     Scheduling
+  // -------------------
+  scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
+    return UnityScheduler.setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
+  },
+  cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
+    UnityScheduler.clearTimeout(callBackID);
+  },
+  noTimeout: -1,
+  scheduleTimeout: function scheduleTimeout(callback, timeout) {
+    return UnityScheduler.setTimeout(callback, timeout);
+  },
+  cancelTimeout: function cancelTimeout(handle) {
+    UnityScheduler.clearTimeout(handle);
+  },
+  queueMicrotask: function queueMicrotask(callback) {
+    return UnityScheduler.setTimeout(callback, 0);
+  }
+};
+var ReactUnityReconciler = react_reconciler(hostConfig);
+var Renderer = {
+  render: function render(element, hostContainer, callback) {
+    if (!hostContainer) hostContainer = RootContainer;
+    var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
+    return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
+  }
+};
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/editor.js
 
 
@@ -7289,8 +7290,9 @@ if (true) {
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
