@@ -4,5 +4,5 @@ declare global {
   interface DefaultGlobals {
     renderCamera: UnityEngine.GameObject;
     cameraRoot: UnityEngine.GameObject;
-  };
+  }
 }

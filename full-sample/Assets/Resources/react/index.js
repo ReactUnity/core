@@ -6789,7 +6789,7 @@ if (true) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".showcase_app__1sIuX{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.showcase_app__1sIuX h1{font-size:36px;font-style:smallcaps, bold;color:#582a9c;margin-bottom:12px}.showcase_app__1sIuX h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.showcase_app__1sIuX section{margin-top:10px;margin-bottom:10px}.showcase_app__1sIuX row{flex-direction:row;align-items:center}.showcase_app__1sIuX column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.showcase_app__1sIuX slider{margin:10px}.showcase_app__1sIuX image{flex-grow:1;flex-shrink:1;flex-basis:0}.showcase_app__1sIuX input{border-width:1px;border-color:black}.showcase_app__1sIuX object{border-width:1px;border-radius:20px;border-color:black;margin:5px;background-color:white}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".showcase_app__1sIuX{padding:20px;max-width:960px;width:100%;align-self:center;align-items:stretch}.showcase_app__1sIuX h1{font-size:36px;font-style:smallcaps,bold;color:#582a9c;margin-bottom:12px}.showcase_app__1sIuX h2{font-size:30px;font-style:smallcaps;color:#fb2f8e;margin-bottom:8px}.showcase_app__1sIuX section{margin-top:10px;margin-bottom:10px}.showcase_app__1sIuX row{flex-direction:row;align-items:center}.showcase_app__1sIuX column{flex-direction:column;align-items:center;flex-grow:1;flex-shrink:0}.showcase_app__1sIuX slider{margin:10px}.showcase_app__1sIuX image{flex-grow:1;flex-shrink:1;flex-basis:0}.showcase_app__1sIuX input{border-width:1px;border-color:#000}.showcase_app__1sIuX object{border-width:1px;border-radius:20px;border-color:#000;margin:5px;background-color:#fff}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"app": "showcase_app__1sIuX"
@@ -7073,13 +7073,6 @@ module.exports = function (list, options) {
   };
 };
 
-/***/ }),
-
-/***/ 719:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = {"0x0": __webpack_require__.p + "static/svg/check-0x0.png"};
-
 /***/ })
 
 /******/ 	});
@@ -7224,394 +7217,6 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-// EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(84);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
-var deepDiffProps = {
-  style: 1,
-  layout: 1
-};
-function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
-  if (deepDiffing === void 0) {
-    deepDiffing = 0;
-  }
-
-  if (lastRawProps === nextRawProps) return null;
-  var updatePayload = null;
-  var lastProps = lastRawProps;
-  var nextProps = nextRawProps;
-  var propKey;
-
-  for (propKey in lastProps) {
-    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
-      continue;
-    }
-
-    var prop = null;
-    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
-
-    if (depth > 0) {
-      prop = diffProperties(lastProps[propKey], null, depth - 1);
-      if (!prop) continue;
-    } // For all other deleted properties we add it to the queue. We use
-    // the whitelist in the commit phase instead.
-
-
-    (updatePayload = updatePayload || []).push(propKey, prop);
-  }
-
-  for (propKey in nextProps) {
-    var nextProp = nextProps[propKey];
-    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
-
-    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
-      continue;
-    }
-
-    var prop = nextProp;
-    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
-
-    if (depth > 0) {
-      prop = diffProperties(lastProp, nextProp, depth - 1);
-      if (!prop) continue;
-    }
-
-    (updatePayload = updatePayload || []).push(propKey, prop);
-  }
-
-  return updatePayload;
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
-
-
-var hostContext = {};
-var childContext = {};
-
-function applyDiffedUpdate(writeTo, updatePayload, depth) {
-  if (depth === void 0) {
-    depth = 0;
-  }
-
-  if (!updatePayload) return false;
-
-  if (Array.isArray(updatePayload)) {
-    for (var index = 0; index < updatePayload.length; index += 2) {
-      var attr = updatePayload[index];
-      var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
-    }
-
-    return updatePayload.length > 0;
-  } else {
-    for (var attr in updatePayload) {
-      if (updatePayload.hasOwnProperty(attr)) {
-        var value = updatePayload[attr];
-        writeTo.SetWithoutNotify(attr, value);
-      }
-    }
-
-    return true;
-  }
-}
-
-function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
-  if (pre === void 0) {
-    pre = true;
-  }
-
-  var updateAfterMount = false;
-
-  for (var index = 0; index < updatePayload.length; index += 2) {
-    var attr = updatePayload[index];
-    var value = updatePayload[index + 1];
-    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
-
-    if (pre !== isEvent) continue;
-
-    if (isEvent) {
-      Unity.setEventListener(instance, attr, value);
-      continue;
-    }
-
-    if (attr === 'children') {
-      if (type === 'text') {
-        Unity.setText(instance, value ? value.join('') : '');
-      }
-
-      continue;
-    }
-
-    if (attr === 'key') continue;
-    if (attr === 'ref') continue;
-    if (attr === 'tag') continue;
-
-    if (!isAfterMount && attr === 'style') {
-      updateAfterMount = true;
-      continue;
-    }
-
-    if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Style, value)) {
-        instance.ResolveStyle();
-      }
-
-      continue;
-    }
-
-    if (attr.substring(0, 5) === 'data-') {
-      Unity.setData(instance, attr.substring(5), value);
-    } else {
-      Unity.setProperty(instance, attr, value);
-    }
-  }
-
-  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
-  return updateAfterMount;
-}
-
-var hostConfig = {
-  getRootHostContext: function getRootHostContext(rootContainerInstance) {
-    return hostContext;
-  },
-  getChildHostContext: function getChildHostContext(parentHostContext, type, rootContainerInstance) {
-    return childContext;
-  },
-  getPublicInstance: function getPublicInstance(instance) {
-    return instance;
-  },
-  prepareForCommit: function prepareForCommit(containerInfo) {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit(containerInfo) {
-    return null;
-  },
-  clearContainer: function clearContainer() {
-    return null;
-  },
-  now: Date.now,
-  supportsHydration: false,
-  supportsPersistence: false,
-  isPrimaryRenderer: true,
-  createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    var _a;
-
-    if (type === 'text') {
-      var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return Unity.createElement(type, text, rootContainerInstance);
-    }
-
-    return Unity.createElement(props.tag || type, null, rootContainerInstance);
-  },
-  createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
-    return Unity.createText(text, rootContainerInstance);
-  },
-  appendInitialChild: function appendInitialChild(parent, child) {
-    Unity.appendChild(parent, child);
-  },
-  finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
-    var propsToUpdate = [];
-    var keys = Object.keys(props);
-
-    for (var index = 0; index < keys.length; index++) {
-      var key = keys[index];
-      var value = props[key];
-      propsToUpdate.push(key, value);
-    }
-
-    return applyUpdate(instance, propsToUpdate, false);
-  },
-  // Some attributes like style need to be changed only after mount
-  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
-    var props = [];
-    if ('style' in newProps) props.push('style', newProps.style);
-    applyUpdate(instance, props, true);
-  },
-  shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text';
-  },
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
-    return false;
-  },
-  // -------------------
-  //     Mutation
-  // -------------------
-  supportsMutation: true,
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps, rootContainerInstance, hostContext) {
-    return diffProperties(oldProps, newProps);
-  },
-  commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    applyUpdate(instance, updatePayload, true, type);
-  },
-  resetTextContent: function resetTextContent(instance) {
-    console.log('resetTextContent');
-  },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    Unity.setText(textInstance, newText);
-  },
-  appendChild: function appendChild(parent, child) {
-    return Unity.appendChild(parent, child);
-  },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
-    return Unity.appendChildToContainer(parent, child);
-  },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
-  },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
-  },
-  removeChild: function removeChild(parent, child) {
-    return Unity.removeChild(parent, child);
-  },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    return Unity.removeChild(parent, child);
-  },
-  // Required for Suspense
-  // TODO: implement
-  preparePortalMount: function preparePortalMount() {},
-  hideInstance: function hideInstance(instance) {},
-  hideTextInstance: function hideTextInstance(textInstance) {},
-  unhideInstance: function unhideInstance(instance, props) {},
-  unhideTextInstance: function unhideTextInstance(textInstance, text) {},
-  // -------------------
-  //     Scheduling
-  // -------------------
-  scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
-    return UnityScheduler.setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
-  },
-  cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
-    UnityScheduler.clearTimeout(callBackID);
-  },
-  noTimeout: -1,
-  scheduleTimeout: function scheduleTimeout(callback, timeout) {
-    return UnityScheduler.setTimeout(callback, timeout);
-  },
-  cancelTimeout: function cancelTimeout(handle) {
-    UnityScheduler.clearTimeout(handle);
-  },
-  queueMicrotask: function queueMicrotask(callback) {
-    return UnityScheduler.setTimeout(callback, 0);
-  }
-};
-var ReactUnityReconciler = react_reconciler(hostConfig);
-var renderer_Renderer = {
-  render: function render(element, hostContainer, callback) {
-    if (!hostContainer) hostContainer = RootContainer;
-    var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
-    return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
-  }
-};
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
-// https://gist.github.com/gre/1650294
-var easing = {
-  // no easing, no acceleration
-  linear: function linear(t) {
-    return t;
-  },
-  // accelerating from zero velocity
-  easeInQuad: function easeInQuad(t) {
-    return t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuad: function easeOutQuad(t) {
-    return t * (2 - t);
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuad: function easeInOutQuad(t) {
-    return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-  },
-  // accelerating from zero velocity
-  easeInCubic: function easeInCubic(t) {
-    return t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutCubic: function easeOutCubic(t) {
-    return --t * t * t + 1;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutCubic: function easeInOutCubic(t) {
-    return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-  },
-  // accelerating from zero velocity
-  easeInQuart: function easeInQuart(t) {
-    return t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuart: function easeOutQuart(t) {
-    return 1 - --t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuart: function easeInOutQuart(t) {
-    return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-  },
-  // accelerating from zero velocity
-  easeInQuint: function easeInQuint(t) {
-    return t * t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuint: function easeOutQuint(t) {
-    return 1 + --t * t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuint: function easeInOutQuint(t) {
-    return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
-  }
-};
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(114);
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(359);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/dropdown-item.js
-var __extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-
-
-var DropdownItem =
-/** @class */
-function (_super) {
-  __extends(DropdownItem, _super);
-
-  function DropdownItem(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.state = {};
-    return _this;
-  }
-
-  DropdownItem.prototype.render = function () {
-    return this.props.children;
-  };
-
-  return DropdownItem;
-}(react.Component);
-
-
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/styles-enums.js
 var FontWeight;
 
@@ -7813,6 +7418,139 @@ var Direction;
 
 
 
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/components.js
+var ImageFitMode;
+
+(function (ImageFitMode) {
+  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
+  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
+  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
+  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
+  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
+  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
+  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
+})(ImageFitMode || (ImageFitMode = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/input.js
+var TouchScreenKeyboardType;
+
+(function (TouchScreenKeyboardType) {
+  TouchScreenKeyboardType[TouchScreenKeyboardType["Default"] = 0] = "Default";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["ASCIICapable"] = 1] = "ASCIICapable";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["NumbersAndPunctuation"] = 2] = "NumbersAndPunctuation";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["URL"] = 3] = "URL";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["NumberPad"] = 4] = "NumberPad";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["PhonePad"] = 5] = "PhonePad";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["NamePhonePad"] = 6] = "NamePhonePad";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["EmailAddress"] = 7] = "EmailAddress";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["NintendoNetworkAccount"] = 8] = "NintendoNetworkAccount";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["Social"] = 9] = "Social";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["Search"] = 10] = "Search";
+  TouchScreenKeyboardType[TouchScreenKeyboardType["DecimalPad"] = 11] = "DecimalPad";
+})(TouchScreenKeyboardType || (TouchScreenKeyboardType = {}));
+
+var ContentType;
+
+(function (ContentType) {
+  ContentType[ContentType["Standard"] = 0] = "Standard";
+  ContentType[ContentType["Autocorrected"] = 1] = "Autocorrected";
+  ContentType[ContentType["IntegerNumber"] = 2] = "IntegerNumber";
+  ContentType[ContentType["DecimalNumber"] = 3] = "DecimalNumber";
+  ContentType[ContentType["Alphanumeric"] = 4] = "Alphanumeric";
+  ContentType[ContentType["Name"] = 5] = "Name";
+  ContentType[ContentType["EmailAddress"] = 6] = "EmailAddress";
+  ContentType[ContentType["Password"] = 7] = "Password";
+  ContentType[ContentType["Pin"] = 8] = "Pin";
+  ContentType[ContentType["Custom"] = 9] = "Custom";
+})(ContentType || (ContentType = {}));
+
+var CharacterValidation;
+
+(function (CharacterValidation) {
+  CharacterValidation[CharacterValidation["None"] = 0] = "None";
+  CharacterValidation[CharacterValidation["Digit"] = 1] = "Digit";
+  CharacterValidation[CharacterValidation["Integer"] = 2] = "Integer";
+  CharacterValidation[CharacterValidation["Decimal"] = 3] = "Decimal";
+  CharacterValidation[CharacterValidation["Alphanumeric"] = 4] = "Alphanumeric";
+  CharacterValidation[CharacterValidation["Name"] = 5] = "Name";
+  CharacterValidation[CharacterValidation["Regex"] = 6] = "Regex";
+  CharacterValidation[CharacterValidation["EmailAddress"] = 7] = "EmailAddress";
+  CharacterValidation[CharacterValidation["CustomValidator"] = 8] = "CustomValidator";
+})(CharacterValidation || (CharacterValidation = {}));
+
+var LineType;
+
+(function (LineType) {
+  LineType[LineType["SingleLine"] = 0] = "SingleLine";
+  LineType[LineType["MultiLineSubmit"] = 1] = "MultiLineSubmit";
+  LineType[LineType["MultiLineNewline"] = 2] = "MultiLineNewline";
+})(LineType || (LineType = {}));
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/index.js
+
+
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
+// https://gist.github.com/gre/1650294
+var easing = {
+  // no easing, no acceleration
+  linear: function linear(t) {
+    return t;
+  },
+  // accelerating from zero velocity
+  easeInQuad: function easeInQuad(t) {
+    return t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuad: function easeOutQuad(t) {
+    return t * (2 - t);
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuad: function easeInOutQuad(t) {
+    return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+  },
+  // accelerating from zero velocity
+  easeInCubic: function easeInCubic(t) {
+    return t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutCubic: function easeOutCubic(t) {
+    return --t * t * t + 1;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutCubic: function easeInOutCubic(t) {
+    return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+  },
+  // accelerating from zero velocity
+  easeInQuart: function easeInQuart(t) {
+    return t * t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuart: function easeOutQuart(t) {
+    return 1 - --t * t * t * t;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuart: function easeInOutQuart(t) {
+    return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+  },
+  // accelerating from zero velocity
+  easeInQuint: function easeInQuint(t) {
+    return t * t * t * t * t;
+  },
+  // decelerating to zero velocity
+  easeOutQuint: function easeOutQuint(t) {
+    return 1 + --t * t * t * t * t;
+  },
+  // acceleration until halfway, then deceleration
+  easeInOutQuint: function easeInOutQuint(t) {
+    return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
+  }
+};
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(114);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(359);
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/common-layouts.js
 
 var transparentColor = 'clear';
@@ -7849,6 +7587,57 @@ var bottomEdge = {
   bottom: 0,
   height: 0
 };
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/dropdown-item.js
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+
+
+var DropdownItem =
+/** @class */
+function (_super) {
+  __extends(DropdownItem, _super);
+
+  function DropdownItem(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.state = {};
+    return _this;
+  }
+
+  DropdownItem.prototype.render = function () {
+    return this.props.children;
+  };
+
+  return DropdownItem;
+}(react.Component);
+
+
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/dropdown.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
@@ -7980,6 +7769,146 @@ function Dropdown(_a) {
   }), void 0);
 }
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/index.js
+
+
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/radio/radio.js
+var radio_extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var radio_assign = undefined && undefined.__assign || function () {
+  radio_assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return radio_assign.apply(this, arguments);
+};
+
+var radio_rest = undefined && undefined.__rest || function (s, e) {
+  var t = {};
+
+  for (var p in s) {
+    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+  }
+
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  }
+  return t;
+};
+
+
+
+
+var Radio =
+/** @class */
+function (_super) {
+  radio_extends(Radio, _super);
+
+  function Radio() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  } // static contextType: React.ContextType<RadioContext>;
+
+
+  Radio.prototype.render = function () {
+    var _this = this;
+
+    var _a = this.context.radioGroup,
+        selectedValue = _a.selectedValue,
+        onChange = _a.onChange;
+    var optional = {};
+
+    if (selectedValue !== undefined) {
+      optional.checked = this.props.value === selectedValue;
+    }
+
+    if (typeof onChange === 'function') {
+      optional.onChange = onChange.bind(null, this.props.value);
+    }
+
+    return (0,jsx_runtime.jsx)("button", {
+      name: "[Radio]",
+      onClick: function onClick() {
+        return optional.onChange(_this.props.value);
+      }
+    }, void 0);
+  };
+
+  return Radio;
+}(react.Component);
+
+
+
+var RadioGroup =
+/** @class */
+function (_super) {
+  radio_extends(RadioGroup, _super);
+
+  function RadioGroup() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+
+  RadioGroup.prototype.getChildContext = function () {
+    var _a = this.props,
+        selectedValue = _a.selectedValue,
+        onChange = _a.onChange;
+    return {
+      radioGroup: {
+        selectedValue: selectedValue,
+        onChange: onChange
+      }
+    };
+  };
+
+  RadioGroup.prototype.render = function () {
+    var _a = this.props,
+        name = _a.name,
+        selectedValue = _a.selectedValue,
+        onChange = _a.onChange,
+        children = _a.children,
+        rest = radio_rest(_a, ["name", "selectedValue", "onChange", "children"]);
+
+    return (0,jsx_runtime.jsx)("view", radio_assign({
+      name: name || '<RadioGroup>'
+    }, rest, {
+      children: children
+    }), void 0);
+  };
+
+  return RadioGroup;
+}(react.Component);
 
 
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/slider/index.js
@@ -8124,146 +8053,6 @@ function Slider(_a) {
     }), void 0)
   }), void 0);
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/radio/radio.js
-var radio_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var radio_assign = undefined && undefined.__assign || function () {
-  radio_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return radio_assign.apply(this, arguments);
-};
-
-var radio_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-var Radio =
-/** @class */
-function (_super) {
-  radio_extends(Radio, _super);
-
-  function Radio() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  } // static contextType: React.ContextType<RadioContext>;
-
-
-  Radio.prototype.render = function () {
-    var _this = this;
-
-    var _a = this.context.radioGroup,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange;
-    var optional = {};
-
-    if (selectedValue !== undefined) {
-      optional.checked = this.props.value === selectedValue;
-    }
-
-    if (typeof onChange === 'function') {
-      optional.onChange = onChange.bind(null, this.props.value);
-    }
-
-    return (0,jsx_runtime.jsx)("button", {
-      name: "[Radio]",
-      onClick: function onClick() {
-        return optional.onChange(_this.props.value);
-      }
-    }, void 0);
-  };
-
-  return Radio;
-}(react.Component);
-
-
-
-var RadioGroup =
-/** @class */
-function (_super) {
-  radio_extends(RadioGroup, _super);
-
-  function RadioGroup() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  RadioGroup.prototype.getChildContext = function () {
-    var _a = this.props,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange;
-    return {
-      radioGroup: {
-        selectedValue: selectedValue,
-        onChange: onChange
-      }
-    };
-  };
-
-  RadioGroup.prototype.render = function () {
-    var _a = this.props,
-        name = _a.name,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange,
-        children = _a.children,
-        rest = radio_rest(_a, ["name", "selectedValue", "onChange", "children"]);
-
-    return (0,jsx_runtime.jsx)("view", radio_assign({
-      name: name || '<RadioGroup>'
-    }, rest, {
-      children: children
-    }), void 0);
-  };
-
-  return RadioGroup;
-}(react.Component);
-
-
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/tooltip/tooltip.js
 var tooltip_extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
@@ -8414,6 +8203,283 @@ function (_super) {
 }(react.Component);
 
 
+// EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
+var react_reconciler = __webpack_require__(84);
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
+var deepDiffProps = {
+  style: 1,
+  layout: 1
+};
+function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
+  if (deepDiffing === void 0) {
+    deepDiffing = 0;
+  }
+
+  if (lastRawProps === nextRawProps) return null;
+  var updatePayload = null;
+  var lastProps = lastRawProps;
+  var nextProps = nextRawProps;
+  var propKey;
+
+  for (propKey in lastProps) {
+    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
+      continue;
+    }
+
+    var prop = null;
+    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+
+    if (depth > 0) {
+      prop = diffProperties(lastProps[propKey], null, depth - 1);
+      if (!prop) continue;
+    } // For all other deleted properties we add it to the queue. We use
+    // the whitelist in the commit phase instead.
+
+
+    (updatePayload = updatePayload || []).push(propKey, prop);
+  }
+
+  for (propKey in nextProps) {
+    var nextProp = nextProps[propKey];
+    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
+
+    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
+      continue;
+    }
+
+    var prop = nextProp;
+    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+
+    if (depth > 0) {
+      prop = diffProperties(lastProp, nextProp, depth - 1);
+      if (!prop) continue;
+    }
+
+    (updatePayload = updatePayload || []).push(propKey, prop);
+  }
+
+  return updatePayload;
+}
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
+
+
+var hostContext = {};
+var childContext = {};
+
+function applyDiffedUpdate(writeTo, updatePayload, depth) {
+  if (depth === void 0) {
+    depth = 0;
+  }
+
+  if (!updatePayload) return false;
+
+  if (Array.isArray(updatePayload)) {
+    for (var index = 0; index < updatePayload.length; index += 2) {
+      var attr = updatePayload[index];
+      var value = updatePayload[index + 1];
+      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
+    }
+
+    return updatePayload.length > 0;
+  } else {
+    for (var attr in updatePayload) {
+      if (updatePayload.hasOwnProperty(attr)) {
+        var value = updatePayload[attr];
+        writeTo.SetWithoutNotify(attr, value);
+      }
+    }
+
+    return true;
+  }
+}
+
+function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
+  if (pre === void 0) {
+    pre = true;
+  }
+
+  var updateAfterMount = false;
+
+  for (var index = 0; index < updatePayload.length; index += 2) {
+    var attr = updatePayload[index];
+    var value = updatePayload[index + 1];
+    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
+
+    if (pre !== isEvent) continue;
+
+    if (isEvent) {
+      Unity.setEventListener(instance, attr, value);
+      continue;
+    }
+
+    if (attr === 'children') {
+      if (type === 'text') {
+        Unity.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
+      }
+
+      continue;
+    }
+
+    if (attr === 'key') continue;
+    if (attr === 'ref') continue;
+    if (attr === 'tag') continue;
+
+    if (!isAfterMount && attr === 'style') {
+      updateAfterMount = true;
+      continue;
+    }
+
+    if (attr === 'style') {
+      if (applyDiffedUpdate(instance.Style, value)) {
+        instance.ResolveStyle();
+      }
+
+      continue;
+    }
+
+    if (attr.substring(0, 5) === 'data-') {
+      Unity.setData(instance, attr.substring(5), value);
+    } else {
+      Unity.setProperty(instance, attr, value);
+    }
+  }
+
+  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
+  return updateAfterMount;
+}
+
+var hostConfig = {
+  getRootHostContext: function getRootHostContext(rootContainerInstance) {
+    return hostContext;
+  },
+  getChildHostContext: function getChildHostContext(parentHostContext, type, rootContainerInstance) {
+    return childContext;
+  },
+  getPublicInstance: function getPublicInstance(instance) {
+    return instance;
+  },
+  prepareForCommit: function prepareForCommit(containerInfo) {
+    return null;
+  },
+  resetAfterCommit: function resetAfterCommit(containerInfo) {
+    return null;
+  },
+  clearContainer: function clearContainer() {
+    return null;
+  },
+  now: Date.now,
+  supportsHydration: false,
+  supportsPersistence: false,
+  isPrimaryRenderer: true,
+  createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
+    var _a;
+
+    if (type === 'text') {
+      var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
+      return Unity.createElement(type, text, rootContainerInstance);
+    }
+
+    return Unity.createElement(props.tag || type, null, rootContainerInstance);
+  },
+  createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
+    return Unity.createText(text, rootContainerInstance);
+  },
+  appendInitialChild: function appendInitialChild(parent, child) {
+    Unity.appendChild(parent, child);
+  },
+  finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
+    var propsToUpdate = [];
+    var keys = Object.keys(props);
+
+    for (var index = 0; index < keys.length; index++) {
+      var key = keys[index];
+      var value = props[key];
+      propsToUpdate.push(key, value);
+    }
+
+    return applyUpdate(instance, propsToUpdate, false);
+  },
+  // Some attributes like style need to be changed only after mount
+  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
+    var props = [];
+    if ('style' in newProps) props.push('style', newProps.style);
+    applyUpdate(instance, props, true);
+  },
+  shouldSetTextContent: function shouldSetTextContent(type, props) {
+    return type === 'text';
+  },
+  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
+    return false;
+  },
+  // -------------------
+  //     Mutation
+  // -------------------
+  supportsMutation: true,
+  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps, rootContainerInstance, hostContext) {
+    return diffProperties(oldProps, newProps);
+  },
+  commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
+    applyUpdate(instance, updatePayload, true, type);
+  },
+  resetTextContent: function resetTextContent(instance) {
+    console.log('resetTextContent');
+  },
+  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
+    Unity.setText(textInstance, newText);
+  },
+  appendChild: function appendChild(parent, child) {
+    return Unity.appendChild(parent, child);
+  },
+  appendChildToContainer: function appendChildToContainer(parent, child) {
+    return Unity.appendChildToContainer(parent, child);
+  },
+  insertBefore: function insertBefore(parent, child, beforeChild) {
+    return Unity.insertBefore(parent, child, beforeChild);
+  },
+  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
+    return Unity.insertBefore(parent, child, beforeChild);
+  },
+  removeChild: function removeChild(parent, child) {
+    return Unity.removeChild(parent, child);
+  },
+  removeChildFromContainer: function removeChildFromContainer(parent, child) {
+    return Unity.removeChild(parent, child);
+  },
+  // Required for Suspense
+  // TODO: implement
+  preparePortalMount: function preparePortalMount() {},
+  hideInstance: function hideInstance(instance) {},
+  hideTextInstance: function hideTextInstance(textInstance) {},
+  unhideInstance: function unhideInstance(instance, props) {},
+  unhideTextInstance: function unhideTextInstance(textInstance, text) {},
+  // -------------------
+  //     Scheduling
+  // -------------------
+  scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
+    return UnityScheduler.setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
+  },
+  cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
+    UnityScheduler.clearTimeout(callBackID);
+  },
+  noTimeout: -1,
+  scheduleTimeout: function scheduleTimeout(callback, timeout) {
+    return UnityScheduler.setTimeout(callback, timeout);
+  },
+  cancelTimeout: function cancelTimeout(handle) {
+    UnityScheduler.clearTimeout(handle);
+  },
+  queueMicrotask: function queueMicrotask(callback) {
+    return UnityScheduler.setTimeout(callback, 0);
+  }
+};
+var ReactUnityReconciler = react_reconciler(hostConfig);
+var renderer_Renderer = {
+  render: function render(element, hostContainer, callback) {
+    if (!hostContainer) hostContainer = RootContainer;
+    var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
+    return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
+  }
+};
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/tester/test-view.js
 var test_view_assign = undefined && undefined.__assign || function () {
   test_view_assign = Object.assign || function (t) {
@@ -8473,78 +8539,6 @@ function testRender(element) {
     });
   });
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/components.js
-var ImageFitMode;
-
-(function (ImageFitMode) {
-  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
-  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
-  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
-  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
-  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
-  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
-  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
-})(ImageFitMode || (ImageFitMode = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/input.js
-var TouchScreenKeyboardType;
-
-(function (TouchScreenKeyboardType) {
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Default"] = 0] = "Default";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["ASCIICapable"] = 1] = "ASCIICapable";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NumbersAndPunctuation"] = 2] = "NumbersAndPunctuation";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["URL"] = 3] = "URL";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NumberPad"] = 4] = "NumberPad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["PhonePad"] = 5] = "PhonePad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NamePhonePad"] = 6] = "NamePhonePad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["EmailAddress"] = 7] = "EmailAddress";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NintendoNetworkAccount"] = 8] = "NintendoNetworkAccount";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Social"] = 9] = "Social";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Search"] = 10] = "Search";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["DecimalPad"] = 11] = "DecimalPad";
-})(TouchScreenKeyboardType || (TouchScreenKeyboardType = {}));
-
-var ContentType;
-
-(function (ContentType) {
-  ContentType[ContentType["Standard"] = 0] = "Standard";
-  ContentType[ContentType["Autocorrected"] = 1] = "Autocorrected";
-  ContentType[ContentType["IntegerNumber"] = 2] = "IntegerNumber";
-  ContentType[ContentType["DecimalNumber"] = 3] = "DecimalNumber";
-  ContentType[ContentType["Alphanumeric"] = 4] = "Alphanumeric";
-  ContentType[ContentType["Name"] = 5] = "Name";
-  ContentType[ContentType["EmailAddress"] = 6] = "EmailAddress";
-  ContentType[ContentType["Password"] = 7] = "Password";
-  ContentType[ContentType["Pin"] = 8] = "Pin";
-  ContentType[ContentType["Custom"] = 9] = "Custom";
-})(ContentType || (ContentType = {}));
-
-var CharacterValidation;
-
-(function (CharacterValidation) {
-  CharacterValidation[CharacterValidation["None"] = 0] = "None";
-  CharacterValidation[CharacterValidation["Digit"] = 1] = "Digit";
-  CharacterValidation[CharacterValidation["Integer"] = 2] = "Integer";
-  CharacterValidation[CharacterValidation["Decimal"] = 3] = "Decimal";
-  CharacterValidation[CharacterValidation["Alphanumeric"] = 4] = "Alphanumeric";
-  CharacterValidation[CharacterValidation["Name"] = 5] = "Name";
-  CharacterValidation[CharacterValidation["Regex"] = 6] = "Regex";
-  CharacterValidation[CharacterValidation["EmailAddress"] = 7] = "EmailAddress";
-  CharacterValidation[CharacterValidation["CustomValidator"] = 8] = "CustomValidator";
-})(CharacterValidation || (CharacterValidation = {}));
-
-var LineType;
-
-(function (LineType) {
-  LineType[LineType["SingleLine"] = 0] = "SingleLine";
-  LineType[LineType["MultiLineSubmit"] = 1] = "MultiLineSubmit";
-  LineType[LineType["MultiLineNewline"] = 2] = "MultiLineNewline";
-})(LineType || (LineType = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/index.js
-
-
-
-
-
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/index.js
 
 
@@ -8564,9 +8558,6 @@ var LineType;
 /* harmony default export */ const base64Image = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAcElEQVR4AezOsREAIAjFUAs3dgAGYkj8C3g2oBTJXfo3iD419dJ2eOn5EuM6LnsFynQkb4AKQP2zlBOLpAEBAgQIECBAgAA1Au29p6aDrlPBQd3UdJA7yIcUho4KA5UBBxDHk9GwzwdiGQY6gVEwCgC3bcAZ+oXojwAAAABJRU5ErkJggg==\n");
 ;// CONCATENATED MODULE: ./src/assets/bg.png
 /* harmony default export */ const bg = (__webpack_require__.p + "static/media/bg.png");
-// EXTERNAL MODULE: ./src/assets/check.svg
-var check = __webpack_require__(719);
-var check_default = /*#__PURE__*/__webpack_require__.n(check);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__(379);
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -8587,7 +8578,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 
 /* harmony default export */ const showcase_index_module = (index_module/* default.locals */.Z.locals || {});
 ;// CONCATENATED MODULE: ./src/showcase/index.tsx
-var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';var webVideo='https://media.w3.org/2010/05/sintel/trailer.mp4';function RenderObject(_ref){var object=_ref.object;return/*#__PURE__*/(0,jsx_runtime.jsx)("object",{width:300,height:400,style:{flexGrow:0},fit:ImageFitMode.Center,onDrag:function onDrag(ev){Globals.camera2root.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.camera2.transform.Translate(0,0,ev.scrollDelta.y/10,UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.camera2,target:object});}function App(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),videoRef=_useState2[0],setVideoRef=_useState2[1];(0,react.useEffect)(function(){if(videoRef){videoRef.VideoPlayer.Pause();}},[videoRef]);var toggleVideo=function toggleVideo(){var vp=videoRef.VideoPlayer;if(vp.isPlaying)vp.Pause();else vp.Play();};var tooltipContent=/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{padding:10,backgroundColor:0.4,color:'white'},children:"Cool tooltip"});return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:showcase_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{children:"Click"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"}),/*#__PURE__*/(0,jsx_runtime.jsx)("input",{})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Tooltip"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Tooltip,{tooltipContent:tooltipContent,position:"bottom",offset:20,children:"Hover to see cool tooltip."})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Dropdown"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Dropdown,{children:["Select an option",/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{children:"Normal Option"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'green'},children:"Green Option"}),children:"Green Option \uD83D\uDC9A"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'red'},children:"Red Option"}),children:"Red Option \uD83E\uDDE1"})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:bg}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:base64Image}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:webImage}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:(check_default())["0x0"]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Video"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("video",{style:{flexGrow:1},fit:ImageFitMode.Fill,source:webVideo,ref:setVideoRef,onPointerClick:toggleVideo})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Slider"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Horizontal",/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"horizontal-reverse"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',top:24,color:value>0.5?'red':'black'},children:value.toFixed(3)});}})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Vertical",/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical-reverse"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical",children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',left:24},children:value.toFixed(3)});}})]})]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Render Texture"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("render",{width:900,height:400,style:{flexGrow:1},fit:ImageFitMode.Fill,onDrag:function onDrag(ev){Globals.cameraRoot.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.renderCamera.transform.Translate(0,0,ev.scrollDelta.y/10,UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.renderCamera})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Object"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.cylinder}),/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.cube}),/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.capsule})]})]})]})});};renderer_Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
+var webImage='https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';var webVideo='https://media.w3.org/2010/05/sintel/trailer.mp4';function RenderObject(_ref){var object=_ref.object;return/*#__PURE__*/(0,jsx_runtime.jsx)("object",{width:300,height:400,style:{flexGrow:0},fit:ImageFitMode.Center,onDrag:function onDrag(ev){Globals.camera2root.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.camera2.transform.Translate(0,0,ev.scrollDelta.y/10,UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.camera2,target:object});}function App(){var _useState=(0,react.useState)(),_useState2=_slicedToArray(_useState,2),videoRef=_useState2[0],setVideoRef=_useState2[1];(0,react.useEffect)(function(){if(videoRef){videoRef.VideoPlayer.Pause();}},[videoRef]);var toggleVideo=function toggleVideo(){var vp=videoRef.VideoPlayer;if(vp.isPlaying)vp.Pause();else vp.Play();};var tooltipContent=/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{padding:10,backgroundColor:0.4,color:'white'},children:"Cool tooltip"});return/*#__PURE__*/(0,jsx_runtime.jsx)("scroll",{children:/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:showcase_index_module.app,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h1",{children:"React Unity Showcase"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Button"}),/*#__PURE__*/(0,jsx_runtime.jsx)("button",{children:"Click"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Anchor"}),/*#__PURE__*/(0,jsx_runtime.jsx)("anchor",{url:"https://www.google.com",children:"Open Google"})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Input"}),/*#__PURE__*/(0,jsx_runtime.jsx)("input",{})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Toggle"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{}),"Toggle"]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Tooltip"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Tooltip,{tooltipContent:tooltipContent,position:"bottom",offset:20,children:"Hover to see cool tooltip."})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Dropdown"}),/*#__PURE__*/(0,jsx_runtime.jsxs)(Dropdown,{children:["Select an option",/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{children:"Normal Option"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'green'},children:"Green Option"}),children:"Green Option \uD83D\uDC9A"}),/*#__PURE__*/(0,jsx_runtime.jsx)(DropdownItem,{triggerTemplate:/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{color:'red'},children:"Red Option"}),children:"Red Option \uD83E\uDDE1"})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Image"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:bg}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:base64Image}),/*#__PURE__*/(0,jsx_runtime.jsx)("image",{fit:ImageFitMode.CenterInside,source:webImage})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Video"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("video",{style:{flexGrow:1},fit:ImageFitMode.Fill,source:webVideo,ref:setVideoRef,onPointerClick:toggleVideo})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Slider"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Horizontal",/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"horizontal-reverse"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',top:24,color:value>0.5?'red':'black'},children:value.toFixed(3)});}})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("column",{children:["Vertical",/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical-reverse"}),/*#__PURE__*/(0,jsx_runtime.jsx)(Slider,{direction:"vertical",children:function children(value){return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{style:{position:'absolute',left:24},children:value.toFixed(3)});}})]})]})]})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Render Texture"}),/*#__PURE__*/(0,jsx_runtime.jsx)("row",{children:/*#__PURE__*/(0,jsx_runtime.jsx)("render",{width:900,height:400,style:{flexGrow:1},fit:ImageFitMode.Fill,onDrag:function onDrag(ev){Globals.cameraRoot.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y,ev.delta.x,0));},onScroll:function onScroll(ev){Globals.renderCamera.transform.Translate(0,0,ev.scrollDelta.y/10,UnityEngine.Space.Self);},onMount:function onMount(ev){return ev.gameObject.SetActive(true);},onUnmount:function onUnmount(ev){return ev.gameObject.SetActive(false);},camera:Globals.renderCamera})})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("section",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)("h2",{children:"Object"}),/*#__PURE__*/(0,jsx_runtime.jsxs)("row",{children:[/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.cylinder}),/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.cube}),/*#__PURE__*/(0,jsx_runtime.jsx)(RenderObject,{object:Globals.capsule})]})]})]})});};renderer_Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.tsx
 
 })();

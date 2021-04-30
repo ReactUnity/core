@@ -1,8 +1,7 @@
 import { Dropdown, DropdownItem, ImageFitMode, ReactUnity, Renderer, Slider, Tooltip, UnityEngine as UE } from '@reactunity/renderer';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
-import svgImage from 'src/assets/check.svg';
 import style from './index.module.scss';
 
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
@@ -108,7 +107,6 @@ export function App() {
           <image fit={ImageFitMode.CenterInside} source={pngImage} />
           <image fit={ImageFitMode.CenterInside} source={base64Image} />
           <image fit={ImageFitMode.CenterInside} source={webImage} />
-          <image fit={ImageFitMode.CenterInside} source={svgImage['0x0']} />
         </row>
       </section>
 

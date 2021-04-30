@@ -10,19 +10,18 @@
     "preinstall": "npx only-allow@1.0.0 yarn"
   },
   "dependencies": {
-    "@reactunity/renderer": "0.0.22",
+    "@reactunity/renderer": "0.0.26",
     "@reduxjs/toolkit": "^1.5.1",
     "clsx": "^1.1.1",
     "react": "^17.0.2",
-    "react-redux": "^7.2.3",
+    "react-redux": "^7.2.4",
     "react-router": "^5.2.0",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {
-    "@reactunity/scripts": "*",
-    "@types/node": "^14.14.37",
-    "@types/react": "^17.0.3",
-    "node-sass": "^5.0.0",
-    "typescript": "^4.2.3"
+    "@reactunity/scripts": "^0.1.18",
+    "@types/node": "^15.0.1",
+    "@types/react": "^17.0.4",
+    "typescript": "^4.2.4"
   }
 }
