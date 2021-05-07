@@ -187,6 +187,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.navigation, value);
             get => GetStyleValue<Navigation.Mode>(StyleProperties.navigation);
         }
+        public TransitionList transition
+        {
+            set => SetStyleValue(StyleProperties.transition, value);
+            get => GetStyleValue<TransitionList>(StyleProperties.transition);
+        }
         #endregion
 
         #region Resolved values
@@ -266,7 +271,7 @@ namespace ReactUnity.Styling
         public T GetStyleValue<T>(IStyleProperty prop)
         {
             var value = GetStyleValue(prop);
-            return value == null ? default : (T) value;
+            return value == null ? default : (T)value;
         }
 
 

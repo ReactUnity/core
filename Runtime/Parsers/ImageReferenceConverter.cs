@@ -14,7 +14,7 @@ namespace ReactUnity.Styling.Parsers
         private static Regex FileRegex = new Regex("^file://");
         private static Regex HttpRegex = new Regex("^https?://");
         private static Regex PathRegex = new Regex("^/");
-        private static IStyleConverter ColorConverter = ParserMap.ColorConverter;
+        private static IStyleConverter ColorConverter = ConverterMap.ColorConverter;
 
         public object Convert(object value)
         {
@@ -22,7 +22,7 @@ namespace ReactUnity.Styling.Parsers
             if (value is Texture2D t) return new ImageReference(AssetReferenceType.Object, t);
             if (value is Sprite s) return new ImageReference(AssetReferenceType.Object, s.texture);
             if (value is Object o) return new ImageReference(AssetReferenceType.Object, o);
-            return FromString(ParserMap.UrlConverter.Convert(value) as string);
+            return FromString(ConverterMap.UrlConverter.Convert(value) as string);
         }
 
         public object FromString(string value)

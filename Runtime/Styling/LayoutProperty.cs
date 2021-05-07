@@ -61,7 +61,7 @@ namespace ReactUnity.Styling
             var ygType = typeof(YogaNode);
             propInfo = ygType.GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
 
-            if (converter == null) converter = ParserMap.GetConverter(type);
+            if (converter == null) converter = ConverterMap.GetConverter(type);
             if (converter == null) UnityEngine.Debug.LogError("There is no converter for the type: " + type.Name);
 
             defaultValueTyped = defaultValue;
@@ -160,13 +160,13 @@ namespace ReactUnity.Styling
         public static LayoutProperty<YogaValue> PaddingHorizontal = new LayoutProperty<YogaValue>("PaddingHorizontal", true);
         public static LayoutProperty<YogaValue> PaddingVertical = new LayoutProperty<YogaValue>("PaddingVertical", true);
 
-        public static LayoutProperty<float> BorderWidth = new LayoutProperty<float>("BorderWidth", true, converter: ParserMap.LengthConverter);
-        public static LayoutProperty<float> BorderLeftWidth = new LayoutProperty<float>("BorderLeftWidth", true, converter: ParserMap.LengthConverter);
-        public static LayoutProperty<float> BorderRightWidth = new LayoutProperty<float>("BorderRightWidth", true, converter: ParserMap.LengthConverter);
-        public static LayoutProperty<float> BorderTopWidth = new LayoutProperty<float>("BorderTopWidth", true, converter: ParserMap.LengthConverter);
-        public static LayoutProperty<float> BorderBottomWidth = new LayoutProperty<float>("BorderBottomWidth", true, converter: ParserMap.LengthConverter);
-        public static LayoutProperty<float> BorderStartWidth = new LayoutProperty<float>("BorderStartWidth", true, converter: ParserMap.LengthConverter);
-        public static LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, converter: ParserMap.LengthConverter);
+        public static LayoutProperty<float> BorderWidth = new LayoutProperty<float>("BorderWidth", true, converter: ConverterMap.LengthConverter);
+        public static LayoutProperty<float> BorderLeftWidth = new LayoutProperty<float>("BorderLeftWidth", true, converter: ConverterMap.LengthConverter);
+        public static LayoutProperty<float> BorderRightWidth = new LayoutProperty<float>("BorderRightWidth", true, converter: ConverterMap.LengthConverter);
+        public static LayoutProperty<float> BorderTopWidth = new LayoutProperty<float>("BorderTopWidth", true, converter: ConverterMap.LengthConverter);
+        public static LayoutProperty<float> BorderBottomWidth = new LayoutProperty<float>("BorderBottomWidth", true, converter: ConverterMap.LengthConverter);
+        public static LayoutProperty<float> BorderStartWidth = new LayoutProperty<float>("BorderStartWidth", true, converter: ConverterMap.LengthConverter);
+        public static LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, converter: ConverterMap.LengthConverter);
 
         public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.OrdinalIgnoreCase);
         public static Dictionary<string, ILayoutProperty> CssPropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.OrdinalIgnoreCase)

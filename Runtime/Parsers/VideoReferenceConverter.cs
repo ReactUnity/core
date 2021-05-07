@@ -20,7 +20,7 @@ namespace ReactUnity.Styling.Parsers
             if (value is Texture2D t) return new VideoReference(AssetReferenceType.Object, t);
             if (value is Sprite s) return new VideoReference(AssetReferenceType.Object, s.texture);
             if (value is Object o) return new VideoReference(AssetReferenceType.Object, o);
-            return FromString(ParserMap.UrlConverter.Convert(value) as string);
+            return FromString(ConverterMap.UrlConverter.Convert(value) as string);
         }
 
         public object FromString(string value)

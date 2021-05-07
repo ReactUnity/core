@@ -8,7 +8,7 @@ namespace ReactUnity.Styling.Parsers
 {
     public class Vector3Converter : IStyleParser, IStyleConverter
     {
-        IStyleConverter FloatParser = ParserMap.FloatConverter;
+        IStyleConverter FloatParser = ConverterMap.FloatConverter;
         char[] splitters = new char[] { ' ', ',' };
 
         private Func<float, Vector3> SingleValueMode;

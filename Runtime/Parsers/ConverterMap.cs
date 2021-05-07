@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
-    internal class ParserMap
+    internal class ConverterMap
     {
         static public IStyleConverter DefaultConverter = new StringConverter();
         static public IStyleConverter StringConverter = new StringConverter();
@@ -36,7 +36,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter VideoReferenceConverter = new VideoReferenceConverter();
         static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v));
-
+        static public IStyleConverter TransitionListConverter = new TransitionListConverter();
 
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()
         {

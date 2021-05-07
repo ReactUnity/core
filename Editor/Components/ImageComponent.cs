@@ -20,7 +20,7 @@ namespace ReactUnity.Editor.Components
 
         protected void SetSource(object value)
         {
-            var source = ParserMap.ImageReferenceConverter.Convert(value) as ImageReference;
+            var source = ConverterMap.ImageReferenceConverter.Convert(value) as ImageReference;
             source.Get(Context, SetTexture);
         }
 
