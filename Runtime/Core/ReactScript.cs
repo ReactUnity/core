@@ -10,6 +10,26 @@ namespace ReactUnity
     [Serializable]
     public class ReactScript
     {
+        public static ReactScript Resource(string path)
+        {
+            return new ReactScript()
+            {
+                ScriptSource = ScriptSource.Resource,
+                SourcePath = path,
+                UseDevServer = false,
+            };
+        }
+
+        public static ReactScript Text(string path)
+        {
+            return new ReactScript()
+            {
+                ScriptSource = ScriptSource.Text,
+                SourceText = path,
+                UseDevServer = false,
+            };
+        }
+
         public ScriptSource ScriptSource = ScriptSource.TextAsset;
 
         public TextAsset SourceAsset;
@@ -42,16 +62,6 @@ namespace ReactUnity
         private bool DevServerFailed = false;
 
         public ScriptSource EffectiveScriptSource => IsDevServer ? ScriptSource.Url : ScriptSource;
-
-        public static ReactScript Resource(string path)
-        {
-            return new ReactScript()
-            {
-                ScriptSource = ScriptSource.Resource,
-                SourcePath = path,
-                UseDevServer = false,
-            };
-        }
 
         public string GetResolvedSourceUrl(bool useDevServer = true)
         {

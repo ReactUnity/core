@@ -12,7 +12,7 @@ namespace ReactUnity
         public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index" };
         private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
 
-        private UGUIContext ctx;
+        public UGUIContext Context { get; private set; }
         private IDisposable ScriptWatchDisposable { get; set; }
         private IDispatcher dispatcher { get; set; }
         private ReactUnityRunner runner { get; set; }
@@ -50,11 +50,11 @@ namespace ReactUnity
                 DestroyImmediate(children.gameObject);
             }
 
-            ctx?.Dispose();
+            Context?.Dispose();
             dispatcher?.Dispose();
             runner = null;
             dispatcher = null;
-            ctx = null;
+            Context = null;
             ScriptWatchDisposable = null;
         }
 
@@ -64,8 +64,8 @@ namespace ReactUnity
             runner = new ReactUnityRunner();
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
-                ctx = new UGUIContext(Root, Globals, script, dispatcher, new UnityScheduler(dispatcher), isDevServer, Render);
-                runner.RunScript(code, ctx, BeforeStart, AfterStart);
+                Context = new UGUIContext(Root, Globals, script, dispatcher, new UnityScheduler(dispatcher), isDevServer, Render);
+                runner.RunScript(code, Context, BeforeStart, AfterStart);
             }, dispatcher, true, disableWarnings);
 
             return watcherDisposable;
