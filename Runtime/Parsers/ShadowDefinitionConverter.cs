@@ -7,7 +7,7 @@ namespace ReactUnity.Styling.Parsers
     public class ShadowDefinitionConverter : IStyleParser, IStyleConverter
     {
         public ColorConverter ColorParser = new ColorConverter();
-        public FloatConverter FloatParser = new FloatConverter();
+        public FloatConverter FloatParser = new LengthConverter();
 
         public object Convert(object value)
         {

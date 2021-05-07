@@ -57,7 +57,7 @@ namespace ReactUnity.Styling
 
     public static class StyleProperties
     {
-        public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true);
+        public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: ParserMap.PercentageConverter);
         public static readonly StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static readonly StyleProperty<string> cursor = new StyleProperty<string>("cursor", null, false);

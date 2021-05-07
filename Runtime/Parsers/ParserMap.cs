@@ -15,11 +15,17 @@ namespace ReactUnity.Styling
     {
         static public IStyleConverter DefaultConverter = new StringConverter();
         static public IStyleConverter StringConverter = new StringConverter();
+
+        static public IStyleConverter FloatConverter = new FloatConverter();
+        static public IStyleConverter AngleConverter = new AngleConverter();
+        static public IStyleConverter LengthConverter = new LengthConverter();
+        static public IStyleConverter DurationConverter = new DurationConverter();
+        static public IStyleConverter PercentageConverter = new PercentageConverter();
+
         static public IStyleConverter UrlConverter = new UrlConverter();
         static public IStyleConverter GeneralConverter = new GeneralConverter();
         static public IStyleConverter YogaValueConverter = new YogaValueConverter();
         static public IStyleConverter YogaValue2Converter = new YogaValue2Converter();
-        static public IStyleConverter FloatConverter = new FloatConverter();
         static public IStyleConverter Vector2Converter = new Vector2Converter();
         static public IStyleConverter Vector3Converter = new Vector3Converter();
         static public IStyleConverter IntConverter = new IntConverter();
