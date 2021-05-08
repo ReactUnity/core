@@ -60,14 +60,18 @@ namespace ReactUnity.Styling.Parsers
 
             if (numberPart.Length > 0 && float.TryParse(numberPart.ToString(), NumberStyles.Float, culture, out var res))
             {
+                if (res == 0) return 0f;
+
                 var suffix = suffixPart.ToString();
 
                 var multiplier = 1f;
-                if (!AllowSuffixless && suffix == "") return SpecialNames.CantParse;
-                else if (suffix != "")
+                if (suffix != "")
                 {
                     if (!SuffixMap.TryGetValue(suffix, out multiplier)) return SpecialNames.CantParse;
                 }
+                else if (!AllowSuffixless)
+                    return SpecialNames.CantParse;
+
 
                 return res * multiplier;
             }
@@ -113,7 +117,7 @@ namespace ReactUnity.Styling.Parsers
         {
             { "ms", 1 },
             { "s", 1000 },
-        })
+        }, false)
         { }
     }
 }

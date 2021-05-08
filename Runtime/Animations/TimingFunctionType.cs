@@ -4,9 +4,9 @@ namespace ReactUnity.Animations
     {
         EaseIn = 0,
         EaseInQuad = 0,
-        EaseOut = 0,
+        EaseOut = 1,
         EaseOutQuad = 1,
-        EaseInOut = 0,
+        EaseInOut = 2,
         EaseInOutQuad = 2,
         EaseInCubic = 3,
         EaseOutCubic = 4,

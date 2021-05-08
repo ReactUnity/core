@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using ReactUnity.Animations;
 using ReactUnity.Styling.Types;
 using ReactUnity.Types;
 using System.Collections.Generic;
@@ -191,6 +192,11 @@ namespace ReactUnity.Styling
         {
             set => SetStyleValue(StyleProperties.transition, value);
             get => GetStyleValue<TransitionList>(StyleProperties.transition);
+        }
+        public AnimationList animation
+        {
+            set => SetStyleValue(StyleProperties.animation, value);
+            get => GetStyleValue<AnimationList>(StyleProperties.animation);
         }
         #endregion
 

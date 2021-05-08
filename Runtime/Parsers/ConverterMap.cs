@@ -8,6 +8,7 @@ using ReactUnity.Styling.Types;
 using TMPro;
 using ReactUnity.Types;
 using UnityEngine.UI;
+using ReactUnity.Animations;
 
 namespace ReactUnity.Styling
 {
@@ -37,6 +38,12 @@ namespace ReactUnity.Styling
         static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v));
         static public IStyleConverter TransitionListConverter = new TransitionListConverter();
+        static public IStyleConverter AnimationListConverter = new AnimationListConverter();
+
+
+        static public IStyleConverter AnimationFillModeConverter = new EnumConverter<AnimationFillMode>();
+        static public IStyleConverter AnimationDirectionConverter = new EnumConverter<AnimationDirection>();
+
 
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()
         {
@@ -54,6 +61,7 @@ namespace ReactUnity.Styling
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
             { typeof(TransitionList), TransitionListConverter},
+            { typeof(AnimationList), AnimationListConverter},
             { typeof(Appearance), new EnumConverter<Appearance>() },
             { typeof(Navigation.Mode), new EnumConverter<Navigation.Mode>() },
             { typeof(PointerEvents), new EnumConverter<PointerEvents>() },
@@ -69,6 +77,8 @@ namespace ReactUnity.Styling
             { typeof(YogaJustify), new EnumConverter<YogaJustify>() },
             { typeof(YogaAlign), new EnumConverter<YogaAlign>() },
             { typeof(YogaWrap), new EnumConverter<YogaWrap>() },
+            { typeof(AnimationFillMode), AnimationFillModeConverter },
+            { typeof(AnimationDirection), AnimationDirectionConverter },
         };
 
         public static IStyleConverter GetConverter(Type type)

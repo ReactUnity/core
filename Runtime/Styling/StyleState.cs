@@ -83,6 +83,9 @@ namespace ReactUnity.Styling
         {
             var finished = true;
 
+            var currentTime = Time.realtimeSinceStartup;
+            var passedTime = (currentTime - startTime) * 1000;
+
             foreach (var item in activeTransitions.Transitions)
             {
                 var tran = item.Value;
@@ -93,9 +96,6 @@ namespace ReactUnity.Styling
                 if (item.Value.All) properties = StyleProperties.AllProperties.Where(x => x.transitionable);
                 else properties = new List<IStyleProperty>() { StyleProperties.GetStyleProperty(tran.Property) };
 
-                var currentTime = Time.realtimeSinceStartup;
-
-                var passedTime = (currentTime - startTime) * 1000;
 
                 var delayPassed = passedTime >= tran.Delay;
 

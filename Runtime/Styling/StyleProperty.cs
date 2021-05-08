@@ -1,4 +1,5 @@
 using Facebook.Yoga;
+using ReactUnity.Animations;
 using ReactUnity.Styling.Parsers;
 using ReactUnity.Styling.Types;
 using ReactUnity.Types;
@@ -91,6 +92,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Appearance> appearance = new StyleProperty<Appearance>("appearance", Appearance.None);
         public static readonly StyleProperty<Navigation.Mode> navigation = new StyleProperty<Navigation.Mode>("navigation", Navigation.Mode.Automatic);
         public static readonly StyleProperty<TransitionList> transition = new StyleProperty<TransitionList>("transition");
+        public static readonly StyleProperty<AnimationList> animation = new StyleProperty<AnimationList>("animation");
 
         public static readonly Dictionary<string, IStyleProperty> PropertyMap = new Dictionary<string, IStyleProperty>();
         public static readonly Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>()

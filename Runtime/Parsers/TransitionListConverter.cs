@@ -1,9 +1,6 @@
-using ReactUnity.Styling.Parsers;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using ReactUnity.Animations;
 
-namespace ReactUnity
+namespace ReactUnity.Styling.Parsers
 {
     public class TransitionListConverter : IStyleParser, IStyleConverter
     {

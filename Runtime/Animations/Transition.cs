@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactUnity
+namespace ReactUnity.Animations
 {
     public class TransitionList
     {
@@ -46,7 +46,7 @@ namespace ReactUnity
         public float Delay { get; } = 0;
         public float Duration { get; } = 0;
         public string Property { get; } = "all";
-        public TimingFunctions.TimingFunction TimingFunction { get; } = TimingFunctions.Get(TimingFunctionType.Linear);
+        public TimingFunctions.TimingFunction TimingFunction { get; } = TimingFunctions.SmoothStep;
         public bool Valid { get; } = true;
         public bool All { get; } = true;
 

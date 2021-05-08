@@ -36,6 +36,7 @@ namespace ReactUnity
         public List<IDisposable> Disposables = new List<IDisposable>();
 
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
+        public Dictionary<string, IKeyframesRule> Keyframes = new Dictionary<string, IKeyframesRule>();
 
         private bool mergeLayouts;
 
@@ -76,6 +77,11 @@ namespace ReactUnity
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
             {
                 StyleTree.AddStyle(rule, importanceOffset, mergeLayouts);
+            }
+
+            foreach (var rule in stylesheet.StyleRules.OfType<IKeyframesRule>())
+            {
+                Keyframes[rule.Name] = rule;
             }
 
             Host.ResolveStyle(true);
