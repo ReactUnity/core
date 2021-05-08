@@ -150,7 +150,7 @@ namespace ReactUnity.Styling
         public static IStyleProperty GetStyleProperty(string name)
         {
             IStyleProperty style;
-            PropertyMap.TryGetValue(name, out style);
+            CssPropertyMap.TryGetValue(name, out style);
             return style;
         }
 

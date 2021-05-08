@@ -15,7 +15,6 @@ namespace ReactUnity.Layout
         private RectTransform RT => rt ??= GetComponent<RectTransform>();
 
         public YogaNode Layout { get; internal set; }
-        public NodeStyle Style { get; internal set; }
         public ReactComponent Component { get; internal set; }
 
         private YogaValue2 previousTranslate = YogaValue2.Zero;
@@ -35,7 +34,9 @@ namespace ReactUnity.Layout
 
         private void LateUpdate()
         {
-            var translate = Style.translate;
+            var style = Component.ComputedStyle;
+
+            var translate = style.translate;
             var sameTranslate = translate == previousTranslate;
             if (!Layout.HasNewLayout && sameTranslate) return;
             if (float.IsNaN(Layout.LayoutWidth)) return;

@@ -53,6 +53,7 @@ namespace ReactUnity.Styling
             { typeof(ShadowDefinition), ShadowDefinitionConverter },
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
+            { typeof(TransitionList), TransitionListConverter},
             { typeof(Appearance), new EnumConverter<Appearance>() },
             { typeof(Navigation.Mode), new EnumConverter<Navigation.Mode>() },
             { typeof(PointerEvents), new EnumConverter<PointerEvents>() },

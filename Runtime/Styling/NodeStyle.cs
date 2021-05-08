@@ -15,10 +15,10 @@ namespace ReactUnity.Styling
         public List<Dictionary<string, object>> CssStyles;
         public List<LayoutValue> CssLayouts;
         Dictionary<string, object> DefaultStyle;
+        NodeStyle Fallback;
         public bool HasInheritedChanges { get; private set; } = false;
 
         public NodeStyle Parent;
-        public StateStyles StateStyles;
 
         #region Set/Get
 
@@ -221,15 +221,10 @@ namespace ReactUnity.Styling
             StyleMap = new Dictionary<string, object>();
         }
 
-        public NodeStyle(StateStyles stateStyles) : this()
+        public NodeStyle(NodeStyle defaultStyle, NodeStyle fallback = null) : this()
         {
-            StateStyles = stateStyles;
-        }
-
-        public NodeStyle(NodeStyle defaultStyle, StateStyles stateStyles) : this()
-        {
-            DefaultStyle = defaultStyle.StyleMap;
-            StateStyles = stateStyles;
+            DefaultStyle = defaultStyle?.StyleMap;
+            Fallback = fallback;
         }
 
         public void CopyStyle(NodeStyle copyFrom)
@@ -249,6 +244,11 @@ namespace ReactUnity.Styling
                 (CssStyles == null || !CssStyles.Any(x => x.TryGetValue(name, out value))) &&
                 (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
             {
+                if (Fallback != null)
+                {
+                    return Fallback.GetStyleValue(prop, fromChild);
+                }
+
                 if (prop.inherited)
                 {
                     return Parent?.GetStyleValue(prop, true) ?? prop?.defaultValue;

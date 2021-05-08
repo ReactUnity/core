@@ -34,6 +34,7 @@ namespace ReactUnity.Editor.Components
 
         public YogaNode Layout { get; private set; }
         public List<LayoutValue> LayoutValues { get; private set; } = new List<LayoutValue>();
+        public StyleState StyleState { get; private set; }
         public NodeStyle ComputedStyle { get; private set; }
 
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
@@ -69,7 +70,7 @@ namespace ReactUnity.Editor.Components
             Context = context;
 
             StateStyles = new StateStyles(this);
-            ComputedStyle = new NodeStyle(StateStyles);
+            ComputedStyle = new NodeStyle();
             Layout = new YogaNode();
 
             Style.changed += StyleChanged;

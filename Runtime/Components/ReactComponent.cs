@@ -1,5 +1,6 @@
 using ExCSS;
 using Facebook.Yoga;
+using ReactUnity.Animations;
 using ReactUnity.EventHandlers;
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Interop;
@@ -36,7 +37,8 @@ namespace ReactUnity.Components
         public InlineData Data { get; private set; } = new InlineData("Data");
         public ReactElement Component { get; private set; }
         public YogaNode Layout { get; private set; }
-        public NodeStyle ComputedStyle { get; private set; }
+        public NodeStyle ComputedStyle => StyleState.Active;
+        public StyleState StyleState { get; private set; }
         public StateStyles StateStyles { get; private set; }
 
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
@@ -69,7 +71,9 @@ namespace ReactUnity.Components
 
 
         private bool markedStyleResolve;
+        private bool markedForStyleApply;
         private bool markedStyleResolveRecursive;
+        private bool markedUpdateBackgroundImage;
         protected List<int> Deferreds = new List<int>();
 
 
@@ -82,17 +86,21 @@ namespace ReactUnity.Components
             Deferreds.Add(Context.Dispatcher.OnEveryUpdate(() =>
             {
                 if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
+                if (markedForStyleApply) ApplyStyles();
+                if (markedUpdateBackgroundImage) UpdateBackgroundImage();
             }));
+
+            StateStyles = new StateStyles(this);
+            Layout = new YogaNode(DefaultLayout);
+            StyleState = new StyleState(context);
+            StyleState.OnUpdate += OnStylesUpdated;
+            StyleState.SetCurrent(new NodeStyle(DefaultStyle));
         }
 
         protected ReactComponent(RectTransform existing, UGUIContext context) : this(context)
         {
             GameObject = existing.gameObject;
             RectTransform = existing;
-
-            StateStyles = new StateStyles(this);
-            ComputedStyle = new NodeStyle(DefaultStyle, StateStyles);
-            Layout = new YogaNode(DefaultLayout);
         }
 
         public ReactComponent(UGUIContext context, string tag) : this(context)
@@ -105,14 +113,8 @@ namespace ReactUnity.Components
             RectTransform.anchorMax = Vector2.up;
             RectTransform.pivot = Vector2.up;
 
-
-            StateStyles = new StateStyles(this);
-            ComputedStyle = new NodeStyle(DefaultStyle, StateStyles);
-            Layout = new YogaNode(DefaultLayout);
-
             Component = AddComponent<ReactElement>();
             Component.Layout = Layout;
-            Component.Style = ComputedStyle;
             Component.Component = this;
         }
 
@@ -125,6 +127,11 @@ namespace ReactUnity.Components
         {
             markedStyleResolveRecursive = markedStyleResolveRecursive || recursive;
             markedStyleResolve = true;
+        }
+
+        protected void MarkForStyleApply()
+        {
+            markedForStyleApply = true;
         }
 
         public virtual void Destroy()
@@ -160,7 +167,7 @@ namespace ReactUnity.Components
                 parent.RegisterChild(this, ind);
             }
 
-            ComputedStyle.Parent = parent.ComputedStyle;
+            StyleState.SetParent(parent.StyleState);
             ResolveStyle(true);
 
             Parent.ScheduleLayout();
@@ -201,6 +208,7 @@ namespace ReactUnity.Components
                     ClassName = value?.ToString();
                     ClassList = string.IsNullOrWhiteSpace(ClassName) ? EmptyClassList :
                         new HashSet<string>(ClassName.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries));
+                    ResolveStyle(true);
                     return;
                 default:
                     throw new System.Exception($"Unknown property name specified, '{propertyName}'");
@@ -236,26 +244,30 @@ namespace ReactUnity.Components
             cssStyles.Add(inlineStyles);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-            ComputedStyle.CssStyles = cssStyles;
+
+            var resolvedStyle = new NodeStyle(DefaultStyle);
+            resolvedStyle.CssStyles = cssStyles;
 
 
             var layoutUpdated = false;
-            if (ComputedStyle.CssLayouts != null)
+            if (resolvedStyle.CssLayouts != null)
             {
-                foreach (var item in ComputedStyle.CssLayouts) item.SetDefault(Layout, DefaultLayout);
-                layoutUpdated = ComputedStyle.CssLayouts.Count > 0;
+                foreach (var item in resolvedStyle.CssLayouts) item.SetDefault(Layout, DefaultLayout);
+                layoutUpdated = resolvedStyle.CssLayouts.Count > 0;
             }
 
-            ComputedStyle.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
+            resolvedStyle.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
 
             for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
             inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
             for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
 
-            layoutUpdated = layoutUpdated || ComputedStyle.CssLayouts.Count > 0;
+            layoutUpdated = layoutUpdated || resolvedStyle.CssLayouts.Count > 0;
 
+            StyleState.SetCurrent(resolvedStyle);
             ApplyStyles();
-            ComputedStyle.MarkChangesSeen();
+
+            resolvedStyle.MarkChangesSeen();
             if (layoutUpdated)
             {
                 ApplyLayoutStyles();
@@ -272,12 +284,18 @@ namespace ReactUnity.Components
 
         public virtual void ApplyStyles()
         {
+            markedForStyleApply = false;
             ResolveTransform();
             ResolveOpacityAndInteractable();
             SetZIndex();
             SetOverflow();
             SetCursor();
             UpdateBackgroundGraphic(false, true);
+        }
+
+        private void OnStylesUpdated(NodeStyle obj)
+        {
+            MarkForStyleApply();
         }
 
         #endregion
@@ -413,12 +431,7 @@ namespace ReactUnity.Components
                     image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, sprite);
                 });
                 image.SetBoxShadow(ComputedStyle.boxShadow);
-                Deferreds.Add(Context.Dispatcher.OnceUpdate(() =>
-                {
-                    if (!GameObject) return;
-                    var borderSprite = BorderGraphic.CreateBorderSprite(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
-                    image.SetBorderImage(borderSprite);
-                }));
+                markedUpdateBackgroundImage = true;
 
                 image.SetBorderColor(ComputedStyle.borderColor);
             }
@@ -439,6 +452,15 @@ namespace ReactUnity.Components
 
             canvas.overrideSorting = z != 0;
             canvas.sortingOrder = z;
+        }
+
+        private void UpdateBackgroundImage()
+        {
+            markedUpdateBackgroundImage = false;
+
+            if (!GameObject) return;
+            var borderSprite = BorderGraphic.CreateBorderSprite(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
+            BorderAndBackground.SetBorderImage(borderSprite);
         }
 
         #endregion

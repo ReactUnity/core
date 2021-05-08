@@ -1,5 +1,6 @@
 using ReactUnity.Animations;
 using ReactUnity.Styling;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace ReactUnity
     {
         public Dictionary<string, Transition> Transitions { get; } = new Dictionary<string, Transition>();
         public Transition All { get; private set; }
+        public bool Any { get; private set; } = false;
 
         public TransitionList()
         {
@@ -35,6 +37,7 @@ namespace ReactUnity
         {
             if (tr.Property == null || tr.Property == "all") Transitions["all"] = All = tr;
             else Transitions[tr.Property] = tr;
+            Any = Any || tr.Valid;
         }
     }
 
@@ -43,8 +46,9 @@ namespace ReactUnity
         public float Delay { get; } = 0;
         public float Duration { get; } = 0;
         public string Property { get; } = "all";
-        public TimingFunctions.TimingFunction TimingFunction { get; } = TimingFunctions.GetTimingFunction(TimingFunctionType.Linear);
+        public TimingFunctions.TimingFunction TimingFunction { get; } = TimingFunctions.Get(TimingFunctionType.Linear);
         public bool Valid { get; } = true;
+        public bool All { get; } = true;
 
         public Transition() { }
 
@@ -74,6 +78,7 @@ namespace ReactUnity
                     Valid = false;
                     return;
                 }
+                All = Property == "all";
             }
 
 
@@ -97,22 +102,9 @@ namespace ReactUnity
                 if (dur is float delay) Delay = delay;
                 else Valid = false;
 
-                var easingFunction = TimingFunctions.GetTimingFunction(easing);
+                var easingFunction = TimingFunctions.Get(easing);
                 if (easingFunction != null) TimingFunction = easingFunction;
             }
-        }
-    }
-
-    public static class StandardTransitions
-    {
-        public static int Interpolate(int start, int end, float t)
-        {
-            return Mathf.RoundToInt((end - start) * t + start);
-        }
-
-        public static float Interpolate(float start, float end, float t)
-        {
-            return (end - start) * t + start;
         }
     }
 }

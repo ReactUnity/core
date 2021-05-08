@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReactUnity.Animations
 {
-    static public class TimingFunctions
+    public static class TimingFunctions
     {
         public delegate float TimingFunction(float value, float start = 0, float end = 1);
         private static readonly TimingFunction[] timingFunctions = null;
@@ -54,11 +55,11 @@ namespace ReactUnity.Animations
         }
 
         #region Timing Functions
-        static private float Linear(float value, float start = 0, float end = 1)
+        public static float Linear(float value, float start = 0, float end = 1)
         {
             return Mathf.Lerp(start, end, value);
         }
-        static private float Clerp(float value, float start = 0, float end = 1)
+        public static float Clerp(float value, float start = 0, float end = 1)
         {
             float min = 0.0f;
             float max = 360.0f;
@@ -78,23 +79,23 @@ namespace ReactUnity.Animations
             else retval = start + (end - start) * value;
             return retval;
         }
-        static private float Spring(float value, float start = 0, float end = 1)
+        public static float Spring(float value, float start = 0, float end = 1)
         {
             value = Mathf.Clamp01(value);
             value = (Mathf.Sin(value * Mathf.PI * (0.2f + 2.5f * value * value * value)) * Mathf.Pow(1f - value, 2.2f) + value) * (1f + (1.2f * (1f - value)));
             return start + (end - start) * value;
         }
-        static private float EaseInQuad(float value, float start = 0, float end = 1)
+        public static float EaseInQuad(float value, float start = 0, float end = 1)
         {
             end -= start;
             return end * value * value + start;
         }
-        static private float EaseOutQuad(float value, float start = 0, float end = 1)
+        public static float EaseOutQuad(float value, float start = 0, float end = 1)
         {
             end -= start;
             return -end * value * (value - 2) + start;
         }
-        static private float EaseInOutQuad(float value, float start = 0, float end = 1)
+        public static float EaseInOutQuad(float value, float start = 0, float end = 1)
         {
             value /= .5f;
             end -= start;
@@ -102,18 +103,18 @@ namespace ReactUnity.Animations
             value--;
             return -end / 2 * (value * (value - 2) - 1) + start;
         }
-        static private float EaseInCubic(float value, float start = 0, float end = 1)
+        public static float EaseInCubic(float value, float start = 0, float end = 1)
         {
             end -= start;
             return end * value * value * value + start;
         }
-        static private float EaseOutCubic(float value, float start = 0, float end = 1)
+        public static float EaseOutCubic(float value, float start = 0, float end = 1)
         {
             value--;
             end -= start;
             return end * (value * value * value + 1) + start;
         }
-        static private float EaseInOutCubic(float value, float start = 0, float end = 1)
+        public static float EaseInOutCubic(float value, float start = 0, float end = 1)
         {
             value /= .5f;
             end -= start;
@@ -121,18 +122,18 @@ namespace ReactUnity.Animations
             value -= 2;
             return end / 2 * (value * value * value + 2) + start;
         }
-        static private float EaseInQuart(float value, float start = 0, float end = 1)
+        public static float EaseInQuart(float value, float start = 0, float end = 1)
         {
             end -= start;
             return end * value * value * value * value + start;
         }
-        static private float EaseOutQuart(float value, float start = 0, float end = 1)
+        public static float EaseOutQuart(float value, float start = 0, float end = 1)
         {
             value--;
             end -= start;
             return -end * (value * value * value * value - 1) + start;
         }
-        static private float EaseInOutQuart(float value, float start = 0, float end = 1)
+        public static float EaseInOutQuart(float value, float start = 0, float end = 1)
         {
             value /= .5f;
             end -= start;
@@ -140,18 +141,18 @@ namespace ReactUnity.Animations
             value -= 2;
             return -end / 2 * (value * value * value * value - 2) + start;
         }
-        static private float EaseInQuint(float value, float start = 0, float end = 1)
+        public static float EaseInQuint(float value, float start = 0, float end = 1)
         {
             end -= start;
             return end * value * value * value * value * value + start;
         }
-        static private float EaseOutQuint(float value, float start = 0, float end = 1)
+        public static float EaseOutQuint(float value, float start = 0, float end = 1)
         {
             value--;
             end -= start;
             return end * (value * value * value * value * value + 1) + start;
         }
-        static private float EaseInOutQuint(float value, float start = 0, float end = 1)
+        public static float EaseInOutQuint(float value, float start = 0, float end = 1)
         {
             value /= .5f;
             end -= start;
@@ -159,32 +160,32 @@ namespace ReactUnity.Animations
             value -= 2;
             return end / 2 * (value * value * value * value * value + 2) + start;
         }
-        static private float EaseInSine(float value, float start = 0, float end = 1)
+        public static float EaseInSine(float value, float start = 0, float end = 1)
         {
             end -= start;
             return -end * Mathf.Cos(value / 1 * (Mathf.PI / 2)) + end + start;
         }
-        static private float EaseOutSine(float value, float start = 0, float end = 1)
+        public static float EaseOutSine(float value, float start = 0, float end = 1)
         {
             end -= start;
             return end * Mathf.Sin(value / 1 * (Mathf.PI / 2)) + start;
         }
-        static private float EaseInOutSine(float value, float start = 0, float end = 1)
+        public static float EaseInOutSine(float value, float start = 0, float end = 1)
         {
             end -= start;
             return -end / 2 * (Mathf.Cos(Mathf.PI * value / 1) - 1) + start;
         }
-        static private float EaseInExpo(float value, float start = 0, float end = 1)
+        public static float EaseInExpo(float value, float start = 0, float end = 1)
         {
             end -= start;
             return end * Mathf.Pow(2, 10 * (value / 1 - 1)) + start;
         }
-        static private float EaseOutExpo(float value, float start = 0, float end = 1)
+        public static float EaseOutExpo(float value, float start = 0, float end = 1)
         {
             end -= start;
             return end * (-Mathf.Pow(2, -10 * value / 1) + 1) + start;
         }
-        static private float EaseInOutExpo(float value, float start = 0, float end = 1)
+        public static float EaseInOutExpo(float value, float start = 0, float end = 1)
         {
             value /= .5f;
             end -= start;
@@ -192,18 +193,18 @@ namespace ReactUnity.Animations
             value--;
             return end / 2 * (-Mathf.Pow(2, -10 * value) + 2) + start;
         }
-        static private float EaseInCirc(float value, float start = 0, float end = 1)
+        public static float EaseInCirc(float value, float start = 0, float end = 1)
         {
             end -= start;
             return -end * (Mathf.Sqrt(1 - value * value) - 1) + start;
         }
-        static private float EaseOutCirc(float value, float start = 0, float end = 1)
+        public static float EaseOutCirc(float value, float start = 0, float end = 1)
         {
             value--;
             end -= start;
             return end * Mathf.Sqrt(1 - value * value) + start;
         }
-        static private float EaseInOutCirc(float value, float start = 0, float end = 1)
+        public static float EaseInOutCirc(float value, float start = 0, float end = 1)
         {
             value /= .5f;
             end -= start;
@@ -211,13 +212,13 @@ namespace ReactUnity.Animations
             value -= 2;
             return end / 2 * (Mathf.Sqrt(1 - value * value) + 1) + start;
         }
-        static private float EaseInBounce(float value, float start = 0, float end = 1)
+        public static float EaseInBounce(float value, float start = 0, float end = 1)
         {
             end -= start;
             float d = 1f;
             return end - EaseOutBounce(0, end, d - value) + start;
         }
-        static private float EaseOutBounce(float value, float start = 0, float end = 1)
+        public static float EaseOutBounce(float value, float start = 0, float end = 1)
         {
             value /= 1f;
             end -= start;
@@ -241,28 +242,28 @@ namespace ReactUnity.Animations
                 return end * (7.5625f * (value) * value + .984375f) + start;
             }
         }
-        static private float EaseInOutBounce(float value, float start = 0, float end = 1)
+        public static float EaseInOutBounce(float value, float start = 0, float end = 1)
         {
             end -= start;
             float d = 1f;
             if (value < d / 2) return EaseInBounce(0, end, value * 2) * 0.5f + start;
             else return EaseOutBounce(0, end, value * 2 - d) * 0.5f + end * 0.5f + start;
         }
-        static private float EaseInBack(float value, float start = 0, float end = 1)
+        public static float EaseInBack(float value, float start = 0, float end = 1)
         {
             end -= start;
             value /= 1;
             float s = 1.70158f;
             return end * (value) * value * ((s + 1) * value - s) + start;
         }
-        static private float EaseOutBack(float value, float start = 0, float end = 1)
+        public static float EaseOutBack(float value, float start = 0, float end = 1)
         {
             float s = 1.70158f;
             end -= start;
             value = (value / 1) - 1;
             return end * ((value) * value * ((s + 1) * value + s) + 1) + start;
         }
-        static private float EaseInOutBack(float value, float start = 0, float end = 1)
+        public static float EaseInOutBack(float value, float start = 0, float end = 1)
         {
             float s = 1.70158f;
             end -= start;
@@ -276,7 +277,7 @@ namespace ReactUnity.Animations
             s *= (1.525f);
             return end / 2 * ((value) * value * (((s) + 1) * value + s) + 2) + start;
         }
-        static private float Punch(float amplitude, float value)
+        public static float Punch(float amplitude, float value)
         {
             float s = 9;
             if (value == 0)
@@ -291,7 +292,7 @@ namespace ReactUnity.Animations
             s = period / (2 * Mathf.PI) * Mathf.Asin(0);
             return (amplitude * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * 1 - s) * (2 * Mathf.PI) / period));
         }
-        static private float EaseInElastic(float value, float start = 0, float end = 1)
+        public static float EaseInElastic(float value, float start = 0, float end = 1)
         {
             end -= start;
 
@@ -316,7 +317,7 @@ namespace ReactUnity.Animations
 
             return -(a * Mathf.Pow(2, 10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p)) + start;
         }
-        static private float EaseOutElastic(float value, float start = 0, float end = 1)
+        public static float EaseOutElastic(float value, float start = 0, float end = 1)
         {
             /* GFX47 MOD END */
             //Thank you to rafael.marteleto for fixing this as a port over from Pedro's UnityTween
@@ -343,7 +344,7 @@ namespace ReactUnity.Animations
 
             return (a * Mathf.Pow(2, -10 * value) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) + end + start);
         }
-        static private float EaseInOutElastic(float value, float start = 0, float end = 1)
+        public static float EaseInOutElastic(float value, float start = 0, float end = 1)
         {
             end -= start;
 
@@ -370,79 +371,198 @@ namespace ReactUnity.Animations
             return a * Mathf.Pow(2, -10 * (value -= 1)) * Mathf.Sin((value * d - s) * (2 * Mathf.PI) / p) * 0.5f + end + start;
         }
 
-        static private float SmoothStep(float value, float start = 0, float end = 1)
+        public static float SmoothStep(float value, float start = 0, float end = 1)
         {
             value = (value - start) / (end - start);
             return value * value * (3 - 2 * value);
         }
 
-        static private float SmootherStep(float value, float start = 0, float end = 1)
+        public static float SmootherStep(float value, float start = 0, float end = 1)
         {
             value = (value - start) / (end - start);
             return value * value * value * (value * (value * 6 - 15) + 10);
         }
 
-        static private float SmoothestStep(float value, float start = 0, float end = 1)
+        public static float SmoothestStep(float value, float start = 0, float end = 1)
         {
             value = (value - start) / (end - start);
             return value * value * value * value * (value * (value * (value * -20 + 70) - 84) + 35);
         }
 
-        static private float DownEdge(float value, float start = 0, float end = 1)
+        public static float DownEdge(float value, float start = 0, float end = 1)
         {
             return value <= 0 ? start : end;
         }
 
-        static private float MidEdge(float value, float start = 0, float end = 1)
+        public static float MidEdge(float value, float start = 0, float end = 1)
         {
             return value < 0.5f ? start : end;
         }
 
-        static private float UpEdge(float value, float start = 0, float end = 1)
+        public static float UpEdge(float value, float start = 0, float end = 1)
         {
             return value < 1 ? start : end;
         }
         #endregion
 
-        static public TimingFunction GetTimingFunction(TimingFunctionType easeType)
+        public static TimingFunction Get(TimingFunctionType easeType)
         {
             return timingFunctions[(int)easeType];
         }
 
-        static public TimingFunction GetTimingFunction(string easeType)
+        public static TimingFunction Get(string easeType)
         {
-            if (System.Enum.TryParse<TimingFunctionType>(easeType.Replace("-", ""), true, out var res)) return GetTimingFunction(res);
+            if (System.Enum.TryParse<TimingFunctionType>(easeType.Replace("-", ""), true, out var res)) return Get(res);
             return null;
         }
+    }
+    public static class Interpolater
+    {
+        #region Linear interpolations
+        public static float Interpolate(float t, bool mirror = false)
+        {
+            if (mirror && t < 0) return Mathf.Abs(t);
+            else return t;
+        }
+        public static float Interpolate(float from, float to, float t)
+        {
+            return TimingFunctions.Linear(from, to, t);
+        }
+        public static Color Interpolate(Color from, Color to, float t)
+        {
+            return Color.LerpUnclamped(from, to, t);
+        }
+        public static Vector2 Interpolate(Vector2 from, Vector2 to, float t)
+        {
+            return Vector2.LerpUnclamped(from, to, t);
+        }
+        public static Vector3 Interpolate(Vector3 from, Vector3 to, float t)
+        {
+            return Vector3.LerpUnclamped(from, to, t);
+        }
+        public static Vector4 Interpolate(Vector4 from, Vector4 to, float t)
+        {
+            return Vector4.LerpUnclamped(from, to, t);
+        }
+        public static Quaternion Interpolate(Quaternion from, Quaternion to, float t)
+        {
+            return Quaternion.SlerpUnclamped(from, to, t);
+        }
+        #endregion
 
-        static public float Ease(float t, TimingFunctionType easeType = TimingFunctionType.Linear, bool mirror = false)
+
+        #region Enum interpolations
+        public static float Interpolate(float t, TimingFunctionType easeType, bool mirror = false)
         {
-            if (mirror && t < 0) return GetTimingFunction(easeType)(Mathf.Abs(t));
-            else return GetTimingFunction(easeType)(t);
+            if (mirror && t < 0) return TimingFunctions.Get(easeType)(Mathf.Abs(t));
+            else return TimingFunctions.Get(easeType)(t);
         }
-        static public float Ease(float from, float to, float t, TimingFunctionType easeType = TimingFunctionType.Linear)
+        public static float Interpolate(float from, float to, float t, TimingFunctionType easeType)
         {
-            return GetTimingFunction(easeType)(from, to, t);
+            return TimingFunctions.Get(easeType)(from, to, t);
         }
-        static public Color Ease(Color from, Color to, float t, TimingFunctionType easeType = TimingFunctionType.Linear)
+        public static Color Interpolate(Color from, Color to, float t, TimingFunctionType easeType)
         {
-            return Color.LerpUnclamped(from, to, Ease(t, easeType));
+            return Color.LerpUnclamped(from, to, Interpolate(t, easeType));
         }
-        static public Vector2 Ease(Vector2 from, Vector2 to, float t, TimingFunctionType easeType = TimingFunctionType.Linear)
+        public static Vector2 Interpolate(Vector2 from, Vector2 to, float t, TimingFunctionType easeType)
         {
-            return Vector2.LerpUnclamped(from, to, Ease(t, easeType));
+            return Vector2.LerpUnclamped(from, to, Interpolate(t, easeType));
         }
-        static public Vector3 Ease(Vector3 from, Vector3 to, float t, TimingFunctionType easeType = TimingFunctionType.Linear)
+        public static Vector3 Interpolate(Vector3 from, Vector3 to, float t, TimingFunctionType easeType)
         {
-            return Vector3.LerpUnclamped(from, to, Ease(t, easeType));
+            return Vector3.LerpUnclamped(from, to, Interpolate(t, easeType));
         }
-        static public Vector4 Ease(Vector4 from, Vector4 to, float t, TimingFunctionType easeType = TimingFunctionType.Linear)
+        public static Vector4 Interpolate(Vector4 from, Vector4 to, float t, TimingFunctionType easeType)
         {
-            return Vector4.LerpUnclamped(from, to, Ease(t, easeType));
+            return Vector4.LerpUnclamped(from, to, Interpolate(t, easeType));
         }
-        static public Quaternion Ease(Quaternion from, Quaternion to, float t, TimingFunctionType easeType = TimingFunctionType.Linear)
+        public static Quaternion Interpolate(Quaternion from, Quaternion to, float t, TimingFunctionType easeType)
         {
-            return Quaternion.SlerpUnclamped(from, to, Ease(t, easeType));
+            return Quaternion.SlerpUnclamped(from, to, Interpolate(t, easeType));
         }
+        #endregion
+
+
+        #region Function interpolations
+        public static float Interpolate(float t, TimingFunctions.TimingFunction timingFunction, bool mirror = false)
+        {
+            if (mirror && t < 0) return timingFunction(Mathf.Abs(t));
+            else return timingFunction(t);
+        }
+        public static float Interpolate(float from, float to, float t, TimingFunctions.TimingFunction timingFunction)
+        {
+            return timingFunction(from, to, t);
+        }
+        public static Color Interpolate(Color from, Color to, float t, TimingFunctions.TimingFunction timingFunction)
+        {
+            return Color.LerpUnclamped(from, to, Interpolate(t, timingFunction));
+        }
+        public static Vector2 Interpolate(Vector2 from, Vector2 to, float t, TimingFunctions.TimingFunction timingFunction)
+        {
+            return Vector2.LerpUnclamped(from, to, Interpolate(t, timingFunction));
+        }
+        public static Vector3 Interpolate(Vector3 from, Vector3 to, float t, TimingFunctions.TimingFunction timingFunction)
+        {
+            return Vector3.LerpUnclamped(from, to, Interpolate(t, timingFunction));
+        }
+        public static Vector4 Interpolate(Vector4 from, Vector4 to, float t, TimingFunctions.TimingFunction timingFunction)
+        {
+            return Vector4.LerpUnclamped(from, to, Interpolate(t, timingFunction));
+        }
+        public static Quaternion Interpolate(Quaternion from, Quaternion to, float t, TimingFunctions.TimingFunction timingFunction)
+        {
+            return Quaternion.SlerpUnclamped(from, to, Interpolate(t, timingFunction));
+        }
+        #endregion
+
+
+        #region Object interpolations
+        public static object Interpolate(object from, object to, float t)
+        {
+            if (from is float f1 && to is float f2) return Interpolate(f1, f2, t);
+            if (from is Color c1 && to is Color c2) return Interpolate(c1, c2, t);
+            if (from is Vector2 x1 && to is Vector2 x2) return Interpolate(x1, x2, t);
+            if (from is Vector3 y1 && to is Vector3 y2) return Interpolate(y1, y2, t);
+            if (from is Vector4 z1 && to is Vector4 z2) return Interpolate(z1, z2, t);
+            if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t);
+
+            return t > 0.5 ? to : from;
+        }
+
+        public static object Interpolate(object from, object to, float t, Type type)
+        {
+            if (type == null) return Interpolate(from, to, t);
+            else if (type == typeof(float)) { if (from is float f1 && to is float f2) return Interpolate(f1, f2, t); }
+            else if (type == typeof(Color)) { if (from is Color c1 && to is Color c2) return Interpolate(c1, c2, t); }
+            else if (type == typeof(Vector2)) { if (from is Vector2 x1 && to is Vector2 x2) return Interpolate(x1, x2, t); }
+            else if (type == typeof(Vector3)) { if (from is Vector3 y1 && to is Vector3 y2) return Interpolate(y1, y2, t); }
+            else if (type == typeof(Vector4)) { if (from is Vector4 z1 && to is Vector4 z2) return Interpolate(z1, z2, t); }
+            else if (type == typeof(Quaternion)) { if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t); }
+
+            return t > 0.5 ? to : from;
+        }
+
+        public static object Interpolate(object from, object to, float t, TimingFunctions.TimingFunction timingFunction)
+        {
+            return Interpolate(from, to, timingFunction(t));
+        }
+
+        public static object Interpolate(object from, object to, float t, TimingFunctions.TimingFunction timingFunction, Type type)
+        {
+            return Interpolate(from, to, timingFunction(t), type);
+        }
+
+        public static object Interpolate(object from, object to, float t, TimingFunctionType timingFunctionType)
+        {
+            return Interpolate(from, to, TimingFunctions.Get(timingFunctionType)(t));
+        }
+
+        public static object Interpolate(object from, object to, float t, TimingFunctionType timingFunctionType, Type type)
+        {
+            return Interpolate(from, to, TimingFunctions.Get(timingFunctionType)(t), type);
+        }
+        #endregion
+
     }
 }
