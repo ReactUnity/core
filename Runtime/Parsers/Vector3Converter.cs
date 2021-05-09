@@ -13,9 +13,11 @@ namespace ReactUnity.Styling.Parsers
 
         private Func<float, Vector3> SingleValueMode;
 
-        public Vector3Converter(Func<float, Vector3> singleValueMode = null)
+        public Vector3Converter(Func<float, Vector3> singleValueMode = null, IStyleConverter floatParser = null)
         {
             SingleValueMode = singleValueMode ?? ((float v) => new Vector3(v, v, v));
+
+            if (floatParser != null) FloatParser = floatParser;
         }
 
         public object FromString(string value)

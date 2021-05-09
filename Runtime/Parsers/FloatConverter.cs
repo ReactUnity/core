@@ -2,7 +2,6 @@ using ReactUnity.Styling.Types;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace ReactUnity.Styling.Parsers
@@ -53,15 +52,17 @@ namespace ReactUnity.Styling.Parsers
             {
                 var c = value[i];
                 if (!numberEnded && (char.IsDigit(c) || c == '.' || c == '+' || c == '-')) numberPart.Append(c);
-                else suffixPart.Append(c);
+                else
+                {
+                    numberEnded = true;
+                    suffixPart.Append(c);
+                }
 
                 i++;
             }
 
             if (numberPart.Length > 0 && float.TryParse(numberPart.ToString(), NumberStyles.Float, culture, out var res))
             {
-                if (res == 0) return 0f;
-
                 var suffix = suffixPart.ToString();
 
                 var multiplier = 1f;
@@ -69,7 +70,7 @@ namespace ReactUnity.Styling.Parsers
                 {
                     if (!SuffixMap.TryGetValue(suffix, out multiplier)) return SpecialNames.CantParse;
                 }
-                else if (!AllowSuffixless)
+                else if (!AllowSuffixless && res != 0)
                     return SpecialNames.CantParse;
 
 

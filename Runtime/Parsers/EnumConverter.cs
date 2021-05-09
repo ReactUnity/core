@@ -5,6 +5,12 @@ namespace ReactUnity.Styling.Parsers
 {
     public class EnumConverter<T> : IStyleParser, IStyleConverter where T : struct, Enum
     {
+        public bool AllowFlags { get; }
+        public EnumConverter(bool allowFlags = true)
+        {
+            AllowFlags = allowFlags;
+        }
+
         public object Convert(object value)
         {
             if (value == null) return SpecialNames.CantParse;
@@ -15,7 +21,7 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
-            if (value.Contains(","))
+            if (AllowFlags && value.Contains(","))
             {
                 var splits = value.Split(',');
 
@@ -25,12 +31,13 @@ namespace ReactUnity.Styling.Parsers
                 {
                     var split = splits[i];
 
-                    var splitRes = Enum.Parse(typeof(T), split.Replace("-", "").ToLowerInvariant(), true);
+                    var parsed = Enum.TryParse<T>(split.Replace("-", "").ToLowerInvariant(), true, out var splitRes);
 
-                    result = result | ((int) splitRes);
+                    if (parsed) result = result | (System.Convert.ToInt32(splitRes));
+                    else return SpecialNames.CantParse;
                 }
 
-                return (T) Enum.ToObject(typeof(T), result);
+                return (T)Enum.ToObject(typeof(T), result);
             }
 
             if (value != null && Enum.TryParse<T>(value.Replace("-", "").ToLowerInvariant(), true, out var res)) return res;

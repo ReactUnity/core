@@ -36,13 +36,14 @@ namespace ReactUnity.Styling
         static public IStyleConverter ImageReferenceConverter = new ImageReferenceConverter();
         static public IStyleConverter VideoReferenceConverter = new VideoReferenceConverter();
         static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
-        static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v));
+        static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
         static public IStyleConverter TransitionListConverter = new TransitionListConverter();
         static public IStyleConverter AnimationListConverter = new AnimationListConverter();
 
 
         static public IStyleConverter AnimationFillModeConverter = new EnumConverter<AnimationFillMode>();
         static public IStyleConverter AnimationDirectionConverter = new EnumConverter<AnimationDirection>();
+        static public IStyleConverter TimingFunctionConverter = new TimingFunctionConverter();
 
 
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()

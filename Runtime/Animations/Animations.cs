@@ -1,4 +1,5 @@
 using ReactUnity.Styling;
+using ReactUnity.Styling.Parsers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace ReactUnity.Animations
 
         public AnimationList(string value)
         {
-            var splits = value.Split(',');
+            var splits = ParserHelpers.Split(value, ',');
 
             foreach (var split in splits)
             {
@@ -45,7 +46,7 @@ namespace ReactUnity.Animations
         public float Duration { get; } = 0;
         public int IterationCount { get; } = 1;
         public string Name { get; }
-        public TimingFunctions.TimingFunction TimingFunction { get; } = TimingFunctions.SmoothStep;
+        public TimingFunction TimingFunction { get; } = TimingFunctions.SmoothStep;
         public bool Valid { get; } = true;
         public AnimationFillMode FillMode;
         public AnimationDirection Direction;
@@ -54,7 +55,7 @@ namespace ReactUnity.Animations
 
         public Animation(string value)
         {
-            var splits = value.Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries).ToList();
+            var splits = ParserHelpers.Split(value, ' ');
 
             if (splits.Count == 0)
             {
@@ -128,11 +129,11 @@ namespace ReactUnity.Animations
                 }
 
 
-                var tm = !timingSet ? TimingFunctions.Get(split) : null;
+                var tm = !timingSet ? ConverterMap.TimingFunctionConverter.Convert(split) : null;
 
-                if (tm != null)
+                if (tm is TimingFunction tmf)
                 {
-                    TimingFunction = tm;
+                    TimingFunction = tmf;
                     timingSet = true;
                     continue;
                 }
@@ -152,8 +153,8 @@ namespace ReactUnity.Animations
     public enum AnimationFillMode
     {
         None = 0,
-        Forward = 1,
-        Backward = 2,
+        Forwards = 1,
+        Backwards = 2,
         Both = 3,
     }
 

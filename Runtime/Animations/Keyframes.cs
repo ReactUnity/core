@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace ReactUnity
 {
-    public class Keyframes
+    public class KeyframeList
     {
-        public static Keyframes Create(IKeyframesRule rule)
+        public static KeyframeList Create(IKeyframesRule rule)
         {
-            var val = new Keyframes();
+            var val = new KeyframeList();
 
             var hasFrom = false;
             var hasTo = false;
@@ -20,22 +20,43 @@ namespace ReactUnity
             {
                 var kf = Keyframe.Create(kfr);
 
-                if (kf.Offset >= 0 && kf.Offset <= 1)
+                if (kf.Valid)
                 {
                     val.Steps.Add(kf);
-                    hasFrom = hasFrom || kf.Offset == 0;
-                    hasTo = hasTo || kf.Offset == 1;
+
+                    if (kf.Offset == 0)
+                    {
+                        hasFrom = true;
+                        val.From = kf;
+                    }
+                    else if (kf.Offset == 1)
+                    {
+                        hasTo = true;
+                        val.To = kf;
+                    }
                 }
             }
 
-            if (!hasFrom) val.Steps.Add(new Keyframe() { Offset = 0 });
-            if (!hasTo) val.Steps.Add(new Keyframe() { Offset = 1 });
+            val.Valid = val.Valid && val.Steps.Count > 0;
+
+            if (!hasFrom) val.Steps.Add(val.From = new Keyframe() { Offset = 0 });
+            if (!hasTo) val.Steps.Add(val.To = new Keyframe() { Offset = 1 });
 
             val.Steps.Sort((a, b) => System.Math.Sign(a.Offset - b.Offset));
+
+            foreach (var prop in val.Steps.SelectMany(x => x.Rules.Keys).Select(x => StyleProperties.GetStyleProperty(x)))
+            {
+                if (prop != null) val.Properties.Add(prop);
+            }
+
             return val;
         }
 
+        public bool Valid { get; private set; } = true;
+        public Keyframe From { get; private set; }
+        public Keyframe To { get; private set; }
         public List<Keyframe> Steps { get; private set; } = new List<Keyframe>();
+        public HashSet<IStyleProperty> Properties { get; private set; } = new HashSet<IStyleProperty>();
     }
 
     public class Keyframe
@@ -57,11 +78,14 @@ namespace ReactUnity
             var layouts = RuleHelpers.GetLayoutDic(rule.Style, false);
 
             foreach (var rl in styles) val.Rules[rl.Key] = rl.Value;
-            foreach (var rl in layouts) val.Rules[rl.prop.name] = rl.value;
+            if (layouts != null) foreach (var rl in layouts) val.Rules[rl.prop.name] = rl.value;
+
+            val.Valid = val.Valid && val.Rules.Count > 0 && val.Offset >= 0 && val.Offset <= 1;
 
             return val;
         }
 
+        public bool Valid = true;
         public Dictionary<string, object> Rules { get; } = new Dictionary<string, object>();
 
         public float Offset { get; set; } = 0;

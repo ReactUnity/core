@@ -46,7 +46,7 @@ namespace ReactUnity.Animations
         public float Delay { get; } = 0;
         public float Duration { get; } = 0;
         public string Property { get; } = "all";
-        public TimingFunctions.TimingFunction TimingFunction { get; } = TimingFunctions.SmoothStep;
+        public TimingFunction TimingFunction { get; } = TimingFunctions.SmoothStep;
         public bool Valid { get; } = true;
         public bool All { get; } = true;
 
@@ -102,8 +102,8 @@ namespace ReactUnity.Animations
                 if (dur is float delay) Delay = delay;
                 else Valid = false;
 
-                var easingFunction = TimingFunctions.Get(easing);
-                if (easingFunction != null) TimingFunction = easingFunction;
+                var tm = ConverterMap.TimingFunctionConverter.Convert(easing);
+                if (tm is TimingFunction tmf) TimingFunction = tmf;
             }
         }
     }

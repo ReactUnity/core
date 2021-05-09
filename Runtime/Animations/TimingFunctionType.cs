@@ -42,8 +42,22 @@ namespace ReactUnity.Animations
         SmoothStep = 33,
         SmootherStep = 34,
         SmoothestStep = 35,
+        StepStart = 36,
         DownEdge = 36,
         MidEdge = 37,
-        UpEdge = 38
+        StepEnd = 38,
+        UpEdge = 38,
+    }
+
+    public enum StepsJumpMode
+    {
+        None = 0,
+        JumpNone = 0,
+        Start = 1,
+        JumpStart = 1,
+        End = 2,
+        JumpEnd = 2,
+        Both = 3,
+        JumpBoth = 3,
     }
 }

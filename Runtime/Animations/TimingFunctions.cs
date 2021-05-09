@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace ReactUnity.Animations
 {
+    public delegate float TimingFunction(float value, float start = 0, float end = 1);
+
     public static class TimingFunctions
     {
-        public delegate float TimingFunction(float value, float start = 0, float end = 1);
         private static readonly TimingFunction[] timingFunctions = null;
         static TimingFunctions()
         {
@@ -405,6 +406,129 @@ namespace ReactUnity.Animations
         }
         #endregion
 
+        public static TimingFunction Steps(int count, StepsJumpMode mode = StepsJumpMode.None)
+        {
+            if (mode == StepsJumpMode.Both || mode == StepsJumpMode.None) count++;
+            var step = 1f / count;
+
+            return delegate (float value, float start, float end)
+            {
+                var diff = end - start;
+
+                var st = value * count;
+
+                if (mode == StepsJumpMode.Start || mode == StepsJumpMode.Both) st = Mathf.Ceil(st);
+                else st = Mathf.Floor(st);
+
+                return (diff * step * st) + start;
+            };
+        }
+
+        static float NEWTON_ITERATIONS = 4f;
+        static float NEWTON_MIN_SLOPE = 0.001f;
+        static float SUBDIVISION_PRECISION = 0.0000001f;
+        static float SUBDIVISION_MAX_ITERATIONS = 10f;
+        static int kSplineTableSize = 11;
+        static float kSampleStepSize = 1f / (kSplineTableSize - 1f);
+
+        // Ported from https://github.com/gre/bezier-easing
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        public static TimingFunction CubicBezier(float mX1, float mY1, float mX2, float mY2)
+        {
+            static float A(float aA1, float aA2) { return 1f - 3 * aA2 + 3 * aA1; }
+            static float B(float aA1, float aA2) { return 3 * aA2 - 6 * aA1; }
+            static float C(float aA1) { return 3 * aA1; }
+            static float calcBezier(float aT, float aA1, float aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT; }
+            static float getSlope(float aT, float aA1, float aA2) { return 3 * A(aA1, aA2) * aT * aT + 2 * B(aA1, aA2) * aT + C(aA1); }
+
+
+            static float binarySubdivide(float aX, float aA, float aB, float mX1, float mX2)
+            {
+                var currentX = 0f;
+                var currentT = 0f;
+                var i = 0;
+                do
+                {
+                    currentT = aA + (aB - aA) / 2f;
+                    currentX = calcBezier(currentT, mX1, mX2) - aX;
+                    if (currentX > 0.0)
+                    {
+                        aB = currentT;
+                    }
+                    else
+                    {
+                        aA = currentT;
+                    }
+                } while (Math.Abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
+                return currentT;
+            }
+
+            static float newtonRaphsonIterate(float aX, float aGuessT, float mX1, float mX2)
+            {
+                for (var i = 0; i < NEWTON_ITERATIONS; ++i)
+                {
+                    var currentSlope = getSlope(aGuessT, mX1, mX2);
+                    if (currentSlope == 0f)
+                    {
+                        return aGuessT;
+                    }
+                    var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
+                    aGuessT -= currentX / currentSlope;
+                }
+                return aGuessT;
+            }
+
+            if (mX1 == mY1 && mX2 == mY2) return Linear;
+
+            // Precompute samples table
+            var sampleValues = new float[kSplineTableSize];
+            for (var i = 0; i < kSplineTableSize; ++i)
+            {
+                sampleValues[i] = calcBezier(i * kSampleStepSize, mX1, mX2);
+            }
+
+            float getTForX(float aX)
+            {
+                var intervalStart = 0f;
+                var currentSample = 1;
+                var lastSample = kSplineTableSize - 1;
+
+                for (; currentSample != lastSample && sampleValues[currentSample] <= aX; ++currentSample)
+                {
+                    intervalStart += kSampleStepSize;
+                }
+                --currentSample;
+
+                // Interpolate to provide an initial guess for t
+                var dist = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
+                var guessForT = intervalStart + dist * kSampleStepSize;
+
+                var initialSlope = getSlope(guessForT, mX1, mX2);
+                if (initialSlope >= NEWTON_MIN_SLOPE)
+                {
+                    return newtonRaphsonIterate(aX, guessForT, mX1, mX2);
+                }
+                else if (initialSlope == 0.0)
+                {
+                    return guessForT;
+                }
+                else
+                {
+                    return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize, mX1, mX2);
+                }
+            }
+
+            return delegate (float value, float start, float end)
+            {
+                // Because JavaScript number are imprecise, we should guarantee the extremes are right.
+                if (value == 0 || value == 1)
+                {
+                    return Linear(value, start, end);
+                }
+                return Linear(calcBezier(getTForX(value), mY1, mY2), start, end);
+            };
+        }
+
         public static TimingFunction Get(TimingFunctionType easeType)
         {
             return timingFunctions[(int)easeType];
@@ -415,154 +539,5 @@ namespace ReactUnity.Animations
             if (System.Enum.TryParse<TimingFunctionType>(easeType.Replace("-", ""), true, out var res)) return Get(res);
             return null;
         }
-    }
-    public static class Interpolater
-    {
-        #region Linear interpolations
-        public static float Interpolate(float t, bool mirror = false)
-        {
-            if (mirror && t < 0) return Mathf.Abs(t);
-            else return t;
-        }
-        public static float Interpolate(float from, float to, float t)
-        {
-            return TimingFunctions.Linear(from, to, t);
-        }
-        public static Color Interpolate(Color from, Color to, float t)
-        {
-            return Color.LerpUnclamped(from, to, t);
-        }
-        public static Vector2 Interpolate(Vector2 from, Vector2 to, float t)
-        {
-            return Vector2.LerpUnclamped(from, to, t);
-        }
-        public static Vector3 Interpolate(Vector3 from, Vector3 to, float t)
-        {
-            return Vector3.LerpUnclamped(from, to, t);
-        }
-        public static Vector4 Interpolate(Vector4 from, Vector4 to, float t)
-        {
-            return Vector4.LerpUnclamped(from, to, t);
-        }
-        public static Quaternion Interpolate(Quaternion from, Quaternion to, float t)
-        {
-            return Quaternion.SlerpUnclamped(from, to, t);
-        }
-        #endregion
-
-
-        #region Enum interpolations
-        public static float Interpolate(float t, TimingFunctionType easeType, bool mirror = false)
-        {
-            if (mirror && t < 0) return TimingFunctions.Get(easeType)(Mathf.Abs(t));
-            else return TimingFunctions.Get(easeType)(t);
-        }
-        public static float Interpolate(float from, float to, float t, TimingFunctionType easeType)
-        {
-            return TimingFunctions.Get(easeType)(from, to, t);
-        }
-        public static Color Interpolate(Color from, Color to, float t, TimingFunctionType easeType)
-        {
-            return Color.LerpUnclamped(from, to, Interpolate(t, easeType));
-        }
-        public static Vector2 Interpolate(Vector2 from, Vector2 to, float t, TimingFunctionType easeType)
-        {
-            return Vector2.LerpUnclamped(from, to, Interpolate(t, easeType));
-        }
-        public static Vector3 Interpolate(Vector3 from, Vector3 to, float t, TimingFunctionType easeType)
-        {
-            return Vector3.LerpUnclamped(from, to, Interpolate(t, easeType));
-        }
-        public static Vector4 Interpolate(Vector4 from, Vector4 to, float t, TimingFunctionType easeType)
-        {
-            return Vector4.LerpUnclamped(from, to, Interpolate(t, easeType));
-        }
-        public static Quaternion Interpolate(Quaternion from, Quaternion to, float t, TimingFunctionType easeType)
-        {
-            return Quaternion.SlerpUnclamped(from, to, Interpolate(t, easeType));
-        }
-        #endregion
-
-
-        #region Function interpolations
-        public static float Interpolate(float t, TimingFunctions.TimingFunction timingFunction, bool mirror = false)
-        {
-            if (mirror && t < 0) return timingFunction(Mathf.Abs(t));
-            else return timingFunction(t);
-        }
-        public static float Interpolate(float from, float to, float t, TimingFunctions.TimingFunction timingFunction)
-        {
-            return timingFunction(from, to, t);
-        }
-        public static Color Interpolate(Color from, Color to, float t, TimingFunctions.TimingFunction timingFunction)
-        {
-            return Color.LerpUnclamped(from, to, Interpolate(t, timingFunction));
-        }
-        public static Vector2 Interpolate(Vector2 from, Vector2 to, float t, TimingFunctions.TimingFunction timingFunction)
-        {
-            return Vector2.LerpUnclamped(from, to, Interpolate(t, timingFunction));
-        }
-        public static Vector3 Interpolate(Vector3 from, Vector3 to, float t, TimingFunctions.TimingFunction timingFunction)
-        {
-            return Vector3.LerpUnclamped(from, to, Interpolate(t, timingFunction));
-        }
-        public static Vector4 Interpolate(Vector4 from, Vector4 to, float t, TimingFunctions.TimingFunction timingFunction)
-        {
-            return Vector4.LerpUnclamped(from, to, Interpolate(t, timingFunction));
-        }
-        public static Quaternion Interpolate(Quaternion from, Quaternion to, float t, TimingFunctions.TimingFunction timingFunction)
-        {
-            return Quaternion.SlerpUnclamped(from, to, Interpolate(t, timingFunction));
-        }
-        #endregion
-
-
-        #region Object interpolations
-        public static object Interpolate(object from, object to, float t)
-        {
-            if (from is float f1 && to is float f2) return Interpolate(f1, f2, t);
-            if (from is Color c1 && to is Color c2) return Interpolate(c1, c2, t);
-            if (from is Vector2 x1 && to is Vector2 x2) return Interpolate(x1, x2, t);
-            if (from is Vector3 y1 && to is Vector3 y2) return Interpolate(y1, y2, t);
-            if (from is Vector4 z1 && to is Vector4 z2) return Interpolate(z1, z2, t);
-            if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t);
-
-            return t > 0.5 ? to : from;
-        }
-
-        public static object Interpolate(object from, object to, float t, Type type)
-        {
-            if (type == null) return Interpolate(from, to, t);
-            else if (type == typeof(float)) { if (from is float f1 && to is float f2) return Interpolate(f1, f2, t); }
-            else if (type == typeof(Color)) { if (from is Color c1 && to is Color c2) return Interpolate(c1, c2, t); }
-            else if (type == typeof(Vector2)) { if (from is Vector2 x1 && to is Vector2 x2) return Interpolate(x1, x2, t); }
-            else if (type == typeof(Vector3)) { if (from is Vector3 y1 && to is Vector3 y2) return Interpolate(y1, y2, t); }
-            else if (type == typeof(Vector4)) { if (from is Vector4 z1 && to is Vector4 z2) return Interpolate(z1, z2, t); }
-            else if (type == typeof(Quaternion)) { if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t); }
-
-            return t > 0.5 ? to : from;
-        }
-
-        public static object Interpolate(object from, object to, float t, TimingFunctions.TimingFunction timingFunction)
-        {
-            return Interpolate(from, to, timingFunction(t));
-        }
-
-        public static object Interpolate(object from, object to, float t, TimingFunctions.TimingFunction timingFunction, Type type)
-        {
-            return Interpolate(from, to, timingFunction(t), type);
-        }
-
-        public static object Interpolate(object from, object to, float t, TimingFunctionType timingFunctionType)
-        {
-            return Interpolate(from, to, TimingFunctions.Get(timingFunctionType)(t));
-        }
-
-        public static object Interpolate(object from, object to, float t, TimingFunctionType timingFunctionType, Type type)
-        {
-            return Interpolate(from, to, TimingFunctions.Get(timingFunctionType)(t), type);
-        }
-        #endregion
-
     }
 }

@@ -1,13 +1,15 @@
 using NUnit.Framework;
 using ReactUnity.Animations;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Types;
+using UnityEngine;
 
-namespace ReactUnity.Tests
+namespace ReactUnity.Editor.Tests
 {
     [TestFixture]
     public class ConverterTests
     {
-        private void AssertTimingFunction(TimingFunctions.TimingFunction expected, TimingFunctions.TimingFunction actual)
+        private void AssertTimingFunction(TimingFunction expected, TimingFunction actual)
         {
             var values = new float[] { 0, 0.1f, 0.25f, 0.4f, 0.5f, 0.6f, 0.75f, 0.9f, 1f };
 
@@ -18,7 +20,7 @@ namespace ReactUnity.Tests
         }
 
         [Test]
-        public void TransitionIsParsedCorrectly()
+        public void TransitionConverter()
         {
             var converted = ConverterMap.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms smooth-step, bbb") as TransitionList;
 
@@ -51,7 +53,7 @@ namespace ReactUnity.Tests
         }
 
         [Test]
-        public void AnimationIsParsedCorrectly()
+        public void AnimationConverter()
         {
             var converted = ConverterMap.AnimationListConverter.Convert("roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing") as AnimationList;
 
@@ -81,6 +83,64 @@ namespace ReactUnity.Tests
 
             var something = converted.Animations["something"];
             Assert.IsFalse(something.Valid);
+        }
+
+
+        [TestCase("0", 0f)]
+        [TestCase("0s", 0f)]
+        [TestCase("0ms", 0f)]
+        [TestCase("400ms", 400f)]
+        [TestCase("1s", 1000f)]
+        [TestCase("2s", 2000f)]
+        [TestCase("50ms1", SpecialNames.CantParse)]
+        [TestCase("0a", SpecialNames.CantParse)]
+        [TestCase("5as", SpecialNames.CantParse)]
+        [TestCase("100", SpecialNames.CantParse)]
+        public void DurationConverter(object input, object expected)
+        {
+            Assert.AreEqual(expected, ConverterMap.DurationConverter.Convert(input));
+        }
+
+        [TestCase("0", 0f)]
+        [TestCase("172", 172)]
+        [TestCase("172deg", 172)]
+        [TestCase("0rad", 0f)]
+        [TestCase("1rad", 180f / Mathf.PI)]
+        [TestCase("1grad", 200f / 180f)]
+        [TestCase("1turn", 360f)]
+        [TestCase("4turn", 360f * 4)]
+        [TestCase("0.1turn", 36f)]
+        [TestCase("50ms1", SpecialNames.CantParse)]
+        [TestCase("0a", SpecialNames.CantParse)]
+        [TestCase("5as", SpecialNames.CantParse)]
+        public void AngleConverter(object input, object expected)
+        {
+            Assert.AreEqual(expected, ConverterMap.AngleConverter.Convert(input));
+        }
+
+        [TestCase("0", 0f)]
+        [TestCase("172", 172)]
+        [TestCase("172pt", 172)]
+        [TestCase("172px", 172)]
+        [TestCase("172%", 172f * (1f / 100))]
+        [TestCase("50ms1", SpecialNames.CantParse)]
+        [TestCase("0a", SpecialNames.CantParse)]
+        [TestCase("5as", SpecialNames.CantParse)]
+        public void LengthConverter(object input, object expected)
+        {
+            Assert.AreEqual(expected, ConverterMap.LengthConverter.Convert(input));
+        }
+
+        [TestCase("0", 0f)]
+        [TestCase("2", 2f)]
+        [TestCase("172%", 172f * (1f / 100))]
+        [TestCase("50px", SpecialNames.CantParse)]
+        [TestCase("50ms1", SpecialNames.CantParse)]
+        [TestCase("0a", SpecialNames.CantParse)]
+        [TestCase("5as", SpecialNames.CantParse)]
+        public void PercentageConverter(object input, object expected)
+        {
+            Assert.AreEqual(expected, ConverterMap.PercentageConverter.Convert(input));
         }
     }
 }
