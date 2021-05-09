@@ -237,7 +237,6 @@ namespace ReactUnity.Styling
                     }
                     else
                     {
-
                         Keyframe lowKf = null;
                         Keyframe highKf = null;
                         for (int i = 0; i < stepCount;)

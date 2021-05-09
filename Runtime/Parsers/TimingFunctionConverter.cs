@@ -52,7 +52,7 @@ namespace ReactUnity.Styling.Parsers
                     a2 is float f2 &&
                     a3 is float f3 &&
                     a4 is float f4)
-                    return TimingFunctions.CubicBezier(f1, f2, f3, f4);
+                    return CubicBezierFunction.Create(f1, f2, f3, f4);
             }
             throw new System.NotImplementedException();
         }

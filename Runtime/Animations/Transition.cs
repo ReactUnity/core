@@ -46,7 +46,7 @@ namespace ReactUnity.Animations
         public float Delay { get; } = 0;
         public float Duration { get; } = 0;
         public string Property { get; } = "all";
-        public TimingFunction TimingFunction { get; } = TimingFunctions.SmoothStep;
+        public TimingFunction TimingFunction { get; } = TimingFunctions.Ease;
         public bool Valid { get; } = true;
         public bool All { get; } = true;
 

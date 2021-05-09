@@ -22,14 +22,14 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void TransitionConverter()
         {
-            var converted = ConverterMap.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms smooth-step, bbb") as TransitionList;
+            var converted = ConverterMap.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb") as TransitionList;
 
             var widthTr = converted.Transitions["width"];
             Assert.IsTrue(widthTr.Valid);
             Assert.AreEqual(2000, widthTr.Duration);
             Assert.AreEqual(0, widthTr.Delay);
             Assert.AreEqual("width", widthTr.Property);
-            AssertTimingFunction(TimingFunctions.SmoothStep, widthTr.TimingFunction);
+            AssertTimingFunction(TimingFunctions.Ease, widthTr.TimingFunction);
 
 
             var heightTr = converted.Transitions["height"];
@@ -37,7 +37,7 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(400, heightTr.Duration);
             Assert.AreEqual(0, heightTr.Delay);
             Assert.AreEqual("height", heightTr.Property);
-            AssertTimingFunction(TimingFunctions.EaseInOutQuad, heightTr.TimingFunction);
+            AssertTimingFunction(TimingFunctions.EaseInOut, heightTr.TimingFunction);
 
 
             var allTr = converted.Transitions["all"];
@@ -46,7 +46,7 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(500, allTr.Duration);
             Assert.AreEqual(300, allTr.Delay);
             Assert.AreEqual("all", allTr.Property);
-            AssertTimingFunction(TimingFunctions.SmoothStep, allTr.TimingFunction);
+            AssertTimingFunction(TimingFunctions.StepStart, allTr.TimingFunction);
 
             var invalidTr = converted.Transitions["bbb"];
             Assert.IsFalse(invalidTr.Valid);
@@ -64,7 +64,7 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(2, roll.IterationCount);
             Assert.AreEqual(AnimationFillMode.Both, roll.FillMode);
             Assert.AreEqual(AnimationDirection.Reverse, roll.Direction);
-            AssertTimingFunction(TimingFunctions.EaseInQuad, roll.TimingFunction);
+            AssertTimingFunction(TimingFunctions.EaseIn, roll.TimingFunction);
 
             var slidein = converted.Animations["slidein"];
             Assert.IsTrue(slidein.Valid);
@@ -79,7 +79,7 @@ namespace ReactUnity.Editor.Tests
             Assert.IsTrue(slideout.Valid);
             Assert.AreEqual(4000, slideout.Duration);
             Assert.AreEqual(-1, slideout.IterationCount);
-            AssertTimingFunction(TimingFunctions.SmoothStep, slideout.TimingFunction);
+            AssertTimingFunction(TimingFunctions.Ease, slideout.TimingFunction);
 
             var something = converted.Animations["something"];
             Assert.IsFalse(something.Valid);
