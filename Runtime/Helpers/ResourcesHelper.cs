@@ -15,5 +15,13 @@ namespace ReactUnity.Helpers
 
         private static TextAsset useragentStylesheet;
         public static TextAsset UseragentStylesheet => useragentStylesheet ??= Resources.Load<TextAsset>("ReactUnity/styles/useragent");
+
+        public static string InjectCode(string code)
+        {
+            var injectableText = Resources.Load<TextAsset>("ReactUnity/editor/injectable/index");
+            var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", code);
+
+            return injectedText;
+        }
     }
 }
