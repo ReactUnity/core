@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace ReactUnity.Components
 {
 
-    public class ButtonComponent : ContainerComponent
+    public class ButtonComponent : ReactComponent
     {
         public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle()
         {

@@ -49,6 +49,8 @@ namespace ReactUnity
 
         public YogaNode RootLayoutNode { get; }
 
+        public override bool CalculatesLayout => true;
+
         public UGUIContext(RectTransform hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
             : base(globals, script, dispatcher, scheduler, isDevServer, onRestart)
         {
@@ -82,6 +84,14 @@ namespace ReactUnity
         public override ITextComponent CreateText(string text)
         {
             return textCreator(text, this);
+        }
+
+        public override IReactComponent CreatePseudoComponent(string tag)
+        {
+            var tc = new TextComponent("", this, tag);
+            tc.IsPseudoElement = true;
+            tc.GameObject.name = tag;
+            return tc;
         }
     }
 }

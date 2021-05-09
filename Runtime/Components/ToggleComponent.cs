@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace ReactUnity.Components
 {
 
-    public class ToggleComponent : ContainerComponent
+    public class ToggleComponent : ReactComponent
     {
         public static NodeStyle ToggleDefaultStyle { get; } = new NodeStyle()
         {

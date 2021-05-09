@@ -17,12 +17,12 @@ namespace ReactUnity.Editor.Renderer
             (tag, text, context) => new EditorComponent<VisualElement>(context, tag);
 
         public static Func<string, EditorContext, ITextComponent> textCreator =
-            (text, context) => new TextComponent<TextElement>(text, context, "_text");
+            (text, context) => new TextComponent<TextElement>(text, context, "_text", false);
 
         public static Dictionary<string, Func<string, string, EditorContext, IEditorComponent<VisualElement>>> ComponentCreators
             = new Dictionary<string, Func<string, string, EditorContext, IEditorComponent<VisualElement>>>()
             {
-                { "text", (tag, text, context) => new TextComponent<TextElement>(text, context, tag) },
+                { "text", (tag, text, context) => new TextComponent<TextElement>(text, context, tag, false) },
                 { "label", (tag, text, context) => new TextComponent<Label>(text, context, tag) },
                 { "button", (tag, text, context) => new ButtonComponent<Button>(context, tag) },
                 { "view", (tag, text, context) => new EditorComponent<VisualElement>(context, tag) },
@@ -88,6 +88,8 @@ namespace ReactUnity.Editor.Renderer
                 { "hover", typeof(HoverStateHandler) },
             };
 
+        public override bool CalculatesLayout => false;
+
         public EditorContext(VisualElement hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
             : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, true)
         {
@@ -111,6 +113,14 @@ namespace ReactUnity.Editor.Renderer
             else res = defaultCreator(tag, text, this);
             if (res.Element != null) res.Element.name = $"<{tag}>";
             return res;
+        }
+
+        public override IReactComponent CreatePseudoComponent(string tag)
+        {
+            var tc = new TextComponent<TextElement>("", this, tag, false);
+            tc.IsPseudoElement = true;
+            tc.Element.name = tag;
+            return tc;
         }
     }
 }

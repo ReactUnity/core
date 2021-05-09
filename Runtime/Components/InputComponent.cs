@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {
-    public class InputComponent : ContainerComponent
+    public class InputComponent : ReactComponent
     {
         public static YogaNode InputDefaultLayout { get; } = new YogaNode()
         {
@@ -96,9 +96,9 @@ namespace ReactUnity.Components
             InputField.text = text;
         }
 
-        public override void ApplyLayoutStyles()
+        protected override void ApplyLayoutStylesSelf()
         {
-            base.ApplyLayoutStyles();
+            base.ApplyLayoutStylesSelf();
             TextComponent.Measurer.enabled = Layout.Width.Unit == YogaUnit.Auto;
         }
 

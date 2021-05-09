@@ -24,7 +24,7 @@ namespace ReactUnity.Components
         private bool TextSetByStyle = false;
 
 
-        public TextComponent(string text, UGUIContext context, string tag) : base(context, tag)
+        public TextComponent(string text, UGUIContext context, string tag) : base(context, tag, false)
         {
             GameObject.name = "TEXT";
             Text = AddComponent<TextMeshProUGUI>();
@@ -46,7 +46,7 @@ namespace ReactUnity.Components
 
             SetParent(linkedTo.Parent, linkedTo, true);
 
-            ApplyLayoutStyles();
+            ApplyLayoutStylesSelf();
             ApplyStyles();
 
             ScheduleLayout();
@@ -59,9 +59,9 @@ namespace ReactUnity.Components
             ScheduleLayout();
         }
 
-        public override void ApplyLayoutStyles()
+        protected override void ApplyLayoutStylesSelf()
         {
-            base.ApplyLayoutStyles();
+            base.ApplyLayoutStylesSelf();
             Text.isRightToLeftText = Layout.LayoutDirection == YogaDirection.RTL;
         }
 

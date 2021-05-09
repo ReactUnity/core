@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {
-    public class ScrollComponent : ContainerComponent
+    public class ScrollComponent : ReactComponent
     {
         public static YogaNode ScrollDefaultLayout { get; } = new YogaNode() { Overflow = YogaOverflow.Scroll, FlexShrink = 1 };
         public override YogaNode DefaultLayout => ScrollDefaultLayout;

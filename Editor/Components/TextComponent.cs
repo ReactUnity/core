@@ -6,7 +6,7 @@ namespace ReactUnity.Editor.Components
 {
     public class TextComponent<TElementType> : EditorComponent<TElementType>, ITextComponent where TElementType : TextElement, new()
     {
-        public TextComponent(string text, EditorContext context, string tag) : base(context, tag)
+        public TextComponent(string text, EditorContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
         {
             Element.text = text;
         }

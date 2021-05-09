@@ -1,17 +1,12 @@
-using ExCSS;
 using Facebook.Yoga;
-using ReactUnity.Animations;
 using ReactUnity.EventHandlers;
-using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Interop;
 using ReactUnity.Layout;
 using ReactUnity.StateHandlers;
-using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Types;
 using ReactUnity.Visitors;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,31 +14,12 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {
-    public class ReactComponent : IReactComponent
+    public class ReactComponent : BaseReactComponent
     {
-        #region Statics / Defaults
-        private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
-        public static readonly NodeStyle TagDefaultStyle = new NodeStyle();
-        public static readonly YogaNode TagDefaultLayout = new YogaNode();
-        public virtual NodeStyle DefaultStyle => TagDefaultStyle;
-        public virtual YogaNode DefaultLayout => TagDefaultLayout;
-        #endregion
-
-        public UGUIContext Context { get; }
+        public new UGUIContext Context { get; }
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
-        public IContainerComponent Parent { get; private set; }
-
-        public InlineData Data { get; private set; } = new InlineData("Data");
         public ReactElement Component { get; private set; }
-        public YogaNode Layout { get; private set; }
-        public NodeStyle ComputedStyle => StyleState.Active;
-        public StyleState StyleState { get; private set; }
-        public StateStyles StateStyles { get; private set; }
-
-        [TypescriptRemap("../properties/style", "InlineStyleRemap")]
-        public InlineData Style { get; protected set; } = new InlineData("Style");
-
         public BorderAndBackground BorderAndBackground { get; protected set; }
         public MaskAndImage MaskAndImage { get; protected set; }
 
@@ -60,52 +36,16 @@ namespace ReactUnity.Components
         public CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
         public Canvas Canvas => GetComponent<Canvas>();
 
-        public bool IsPseudoElement { get; set; } = false;
-        public string Tag { get; set; } = "";
-        public string ClassName { get; set; } = "";
-        public HashSet<string> ClassList { get; private set; } = EmptyClassList;
+        public RectTransform Container { get; protected set; }
 
         public string TextContent => new TextContentVisitor().Get(this);
-        public string Name => GameObject.name;
-        ReactContext IReactComponent.Context => Context;
+        public override string Name => GameObject.name;
 
-
-        private bool markedStyleResolve;
-        private bool markedForStyleApply;
-        private bool markedStyleResolveRecursive;
         private bool markedUpdateBackgroundImage;
-        protected List<int> Deferreds = new List<int>();
 
-
-        ReactComponent(UGUIContext context)
+        protected ReactComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
             Context = context;
-            Style.changed += StyleChanged;
-            Data.changed += StyleChanged;
-
-            Deferreds.Add(Context.Dispatcher.OnEveryUpdate(() =>
-            {
-                if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
-                if (markedForStyleApply) ApplyStyles();
-                if (markedUpdateBackgroundImage) UpdateBackgroundImage();
-            }));
-
-            StateStyles = new StateStyles(this);
-            Layout = new YogaNode(DefaultLayout);
-            StyleState = new StyleState(context);
-            StyleState.OnUpdate += OnStylesUpdated;
-            StyleState.SetCurrent(new NodeStyle(DefaultStyle));
-        }
-
-        protected ReactComponent(RectTransform existing, UGUIContext context) : this(context)
-        {
-            GameObject = existing.gameObject;
-            RectTransform = existing;
-        }
-
-        public ReactComponent(UGUIContext context, string tag) : this(context)
-        {
-            Tag = tag;
             GameObject = new GameObject();
             RectTransform = AddComponent<RectTransform>();
 
@@ -116,65 +56,32 @@ namespace ReactUnity.Components
             Component = AddComponent<ReactElement>();
             Component.Layout = Layout;
             Component.Component = this;
+
+            Container = RectTransform;
         }
 
-        protected void StyleChanged(string key, object value, InlineData style)
+        protected ReactComponent(RectTransform existing, UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
-            MarkForStyleResolving(style.Identifier != "Style" || key == null || StyleProperties.IsInherited(key));
+            Context = context;
+            GameObject = existing.gameObject;
+            RectTransform = existing;
+            Container = existing;
         }
 
-        protected void MarkForStyleResolving(bool recursive)
+        protected override void OnUpdate()
         {
-            markedStyleResolveRecursive = markedStyleResolveRecursive || recursive;
-            markedStyleResolve = true;
+            if (markedUpdateBackgroundImage) UpdateBackgroundImage();
         }
 
-        protected void MarkForStyleApply()
+        public override void Destroy()
         {
-            markedForStyleApply = true;
-        }
-
-        public virtual void Destroy()
-        {
+            base.Destroy();
             GameObject.DestroyImmediate(GameObject);
-            Parent.Children.Remove(this);
-            Parent.Layout.RemoveChild(Layout);
-            Parent.ScheduleLayout();
-            foreach (var item in Deferreds) Context.Dispatcher.StopDeferred(item);
         }
 
         #region Setters
 
-        public virtual void SetParent(IContainerComponent parent, IReactComponent insertBefore = null, bool insertAfter = false)
-        {
-            if (Parent != null) parent.UnregisterChild(this);
-
-            Parent = parent;
-
-            if (Parent == null) return;
-
-            insertBefore ??= (insertAfter ? null : parent.AfterPseudo);
-
-            if (insertBefore == null)
-            {
-                parent.RegisterChild(this);
-            }
-            else
-            {
-                var ind = parent.Children.IndexOf(insertBefore);
-                if (insertAfter) ind++;
-
-                parent.RegisterChild(this, ind);
-            }
-
-            StyleState.SetParent(parent.StyleState);
-            ResolveStyle(true);
-
-            Parent.ScheduleLayout();
-
-        }
-
-        public virtual void SetEventListener(string eventName, Callback fun)
+        public override void SetEventListener(string eventName, Callback fun)
         {
             var eventType = EventHandlerMap.GetEventType(eventName);
             if (eventType == null) throw new System.Exception($"Unknown event name specified, '{eventName}'");
@@ -192,26 +99,16 @@ namespace ReactUnity.Components
             handler.OnEvent += callAction;
         }
 
-        public virtual void SetData(string propertyName, object value)
-        {
-            Data[propertyName] = value;
-        }
-
-        public virtual void SetProperty(string propertyName, object value)
+        public override void SetProperty(string propertyName, object value)
         {
             switch (propertyName)
             {
                 case "name":
                     GameObject.name = value?.ToString();
                     return;
-                case "className":
-                    ClassName = value?.ToString();
-                    ClassList = string.IsNullOrWhiteSpace(ClassName) ? EmptyClassList :
-                        new HashSet<string>(ClassName.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries));
-                    ResolveStyle(true);
-                    return;
                 default:
-                    throw new System.Exception($"Unknown property name specified, '{propertyName}'");
+                    base.SetProperty(propertyName, value);
+                    return;
             }
         }
 
@@ -219,83 +116,22 @@ namespace ReactUnity.Components
 
         #region Style / Layout
 
-        public void ScheduleLayout()
-        {
-            Context.ScheduleLayout();
-        }
-
-        public virtual void ResolveStyle(bool recursive = false)
-        {
-            markedStyleResolve = false;
-            markedStyleResolveRecursive = false;
-
-            var inlineStyles = RuleHelpers.GetRuleDic(Style);
-            var inlineLayouts = RuleHelpers.GetLayoutDic(Style) ?? new List<LayoutValue>();
-
-            List<RuleTreeNode<StyleData>> matchingRules;
-            if (Tag == "_before") matchingRules = Parent.BeforeRules;
-            else if (Tag == "_after") matchingRules = Parent.AfterRules;
-            else matchingRules = Context.StyleTree.GetMatchingRules(this).ToList();
-
-            var importantIndex = Math.Max(0, matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity));
-            var cssStyles = new List<Dictionary<string, object>> { };
-
-            for (int i = 0; i < importantIndex; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
-            cssStyles.Add(inlineStyles);
-            for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
-
-
-            var resolvedStyle = new NodeStyle(DefaultStyle);
-            resolvedStyle.CssStyles = cssStyles;
-
-
-            var layoutUpdated = false;
-            if (resolvedStyle.CssLayouts != null)
-            {
-                foreach (var item in resolvedStyle.CssLayouts) item.SetDefault(Layout, DefaultLayout);
-                layoutUpdated = resolvedStyle.CssLayouts.Count > 0;
-            }
-
-            resolvedStyle.CssLayouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
-
-            for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
-            inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
-            for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
-
-            layoutUpdated = layoutUpdated || resolvedStyle.CssLayouts.Count > 0;
-
-            StyleState.SetCurrent(resolvedStyle);
-            ApplyStyles();
-
-            resolvedStyle.MarkChangesSeen();
-            if (layoutUpdated)
-            {
-                ApplyLayoutStyles();
-                ScheduleLayout();
-            }
-        }
-
-        public virtual void ApplyLayoutStyles()
+        protected override void ApplyLayoutStylesSelf()
         {
             ResolveOpacityAndInteractable();
             SetOverflow();
             UpdateBackgroundGraphic(true, false);
         }
 
-        public virtual void ApplyStyles()
+        public override void ApplyStyles()
         {
-            markedForStyleApply = false;
+            base.ApplyStyles();
             ResolveTransform();
             ResolveOpacityAndInteractable();
             SetZIndex();
             SetOverflow();
             SetCursor();
             UpdateBackgroundGraphic(false, true);
-        }
-
-        private void OnStylesUpdated(NodeStyle obj)
-        {
-            MarkForStyleApply();
         }
 
         #endregion
@@ -466,30 +302,6 @@ namespace ReactUnity.Components
         #endregion
 
 
-        #region Component Tree Functions
-
-        public IReactComponent QuerySelector(string query)
-        {
-            var tree = new RuleTree<string>(Context.Parser);
-            tree.AddSelector(query);
-            return tree.GetMatchingChild(this);
-        }
-
-        public List<IReactComponent> QuerySelectorAll(string query)
-        {
-            var tree = new RuleTree<string>(Context.Parser);
-            tree.AddSelector(query);
-            return tree.GetMatchingChildren(this);
-        }
-
-        public virtual void Accept(ReactComponentVisitor visitor)
-        {
-            visitor.Visit(this);
-        }
-
-        #endregion
-
-
         #region UI/Event Utilities
 
         public Vector2 GetRelativePosition(float x, float y)
@@ -504,27 +316,12 @@ namespace ReactUnity.Components
 
         #region Add/Get Component Utilities
 
-        public CType GetComponent<CType>() where CType : Component
-        {
-            return GameObject.GetComponent<CType>();
-        }
-
-        public object GetComponent(Type type)
+        public override object GetComponent(Type type)
         {
             return GameObject.GetComponent(type);
         }
 
-        public CType GetOrAddComponent<CType>() where CType : Component
-        {
-            return GameObject.GetComponent<CType>() ?? GameObject.AddComponent<CType>();
-        }
-
-        public CType AddComponent<CType>() where CType : Component
-        {
-            return AddComponent(typeof(CType)) as CType;
-        }
-
-        public object AddComponent(Type type)
+        public override object AddComponent(Type type)
         {
             if (type == null) return null;
 
@@ -544,6 +341,30 @@ namespace ReactUnity.Components
             return res;
         }
 
+        #endregion
+
+        #region Container Functions
+
+        protected override bool InsertChild(IReactComponent child, int index)
+        {
+            if (child is ReactComponent u)
+            {
+                u.RectTransform.SetParent(Container, false);
+                if (index >= 0) u.RectTransform.SetSiblingIndex(index);
+                return true;
+            }
+            return false;
+        }
+
+        protected override bool DeleteChild(IReactComponent child)
+        {
+            if (child is ReactComponent u)
+            {
+                u.RectTransform.SetParent(null, false);
+                return true;
+            }
+            return false;
+        }
         #endregion
     }
 }

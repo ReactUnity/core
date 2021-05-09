@@ -17,6 +17,8 @@ namespace ReactUnity
         protected static Regex ExtensionRegex = new Regex(@"\.\w+$");
         protected static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
 
+        public abstract bool CalculatesLayout { get; }
+
         public IHostComponent Host { get; protected set; }
         public GlobalRecord Globals { get; private set; }
         public bool IsDevServer { get; }
@@ -138,6 +140,7 @@ namespace ReactUnity
 
         public abstract ITextComponent CreateText(string text);
         public abstract IReactComponent CreateComponent(string tag, string text);
+        public abstract IReactComponent CreatePseudoComponent(string tag);
 
         public void Dispose()
         {

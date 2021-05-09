@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ReactUnity.Components
 {
 
-    public class HostComponent : ContainerComponent, IHostComponent
+    public class HostComponent : ReactComponent, IHostComponent
     {
         public float Width => RectTransform.rect.width;
         public float Height => RectTransform.rect.height;
@@ -17,9 +17,8 @@ namespace ReactUnity.Components
         };
         public override NodeStyle DefaultStyle => HostDefaultStyle;
 
-        public HostComponent(RectTransform host, UGUIContext context) : base(host, context)
+        public HostComponent(RectTransform host, UGUIContext context) : base(host, context, "_root", true)
         {
-            Tag = "_root";
             Layout.Width = Width;
             Layout.Height = Height;
 
