@@ -173,6 +173,8 @@ namespace ReactUnity.Styling
 
         private bool UpdateAnimations(bool initial)
         {
+            if (activeAnimations?.Animations == null) return true;
+
             var finished = true;
 
             var currentTime = Time.realtimeSinceStartup;
@@ -239,33 +241,32 @@ namespace ReactUnity.Styling
                     {
                         Keyframe lowKf = null;
                         Keyframe highKf = null;
-                        for (int i = 0; i < stepCount;)
+
+                        for (int i = 0; i < stepCount; i++)
                         {
                             var cur = steps[i];
-                            Keyframe next = null;
-
-                            for (int j = i + 1; j <= stepCount; j++)
-                            {
-                                var cand = steps[j];
-
-                                if (cand.Rules.ContainsKey(sp.name) || cand.Offset == 1)
-                                {
-                                    next = cand;
-                                    i = j;
-                                }
-                            }
-
-                            if (next == null) break;
-
-                            if (step >= cur.Offset && step <= next.Offset)
+                            if (step >= cur.Offset && cur.Rules.ContainsKey(sp.name))
                             {
                                 lowKf = cur;
-                                highKf = next;
+                            }
+                        }
+
+                        for (int i = 1; i <= stepCount; i++)
+                        {
+                            var cur = steps[i];
+                            if (step <= cur.Offset && cur.Rules.ContainsKey(sp.name))
+                            {
+                                highKf = cur;
                                 break;
                             }
                         }
 
-                        if (highKf == null || lowKf == null) continue;
+                        if (highKf == null && lowKf == null) continue;
+
+                        finished = false;
+
+                        lowKf = lowKf ?? steps[0];
+                        highKf = highKf ?? steps[stepCount];
 
                         var stepLength = highKf.Offset - lowKf.Offset;
 
@@ -277,10 +278,8 @@ namespace ReactUnity.Styling
                         if (!lowKf.Rules.TryGetValue(sp.name, out lowValue)) lowValue = Current.GetStyleValue(sp);
                         if (!highKf.Rules.TryGetValue(sp.name, out highValue)) highValue = Current.GetStyleValue(sp);
 
-
                         if (lowValue != highValue)
                         {
-                            finished = false;
                             activeValue = Interpolater.Interpolate(lowValue, highValue, t, anim.TimingFunction, sp.type);
                         }
                         else activeValue = highValue;

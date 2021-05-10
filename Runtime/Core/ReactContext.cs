@@ -17,7 +17,8 @@ namespace ReactUnity
         protected static Regex ExtensionRegex = new Regex(@"\.\w+$");
         protected static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
 
-        public abstract bool CalculatesLayout { get; }
+        public bool CalculatesLayout { get; }
+        private bool MergeLayouts { get; }
 
         public IHostComponent Host { get; protected set; }
         public GlobalRecord Globals { get; private set; }
@@ -40,10 +41,9 @@ namespace ReactUnity
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
         public Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
 
-        private bool mergeLayouts;
 
         public ReactContext(GlobalRecord globals, ReactScript script, IDispatcher dispatcher,
-            IUnityScheduler scheduler, bool isDevServer, Action onRestart, bool mergeLayouts = false)
+            IUnityScheduler scheduler, bool isDevServer, Action onRestart, bool mergeLayouts, bool calculatesLayout)
         {
             Globals = globals;
             Script = script;
@@ -51,11 +51,25 @@ namespace ReactUnity
             Scheduler = scheduler;
             Dispatcher = dispatcher;
             OnRestart = onRestart ?? (() => { });
-            this.mergeLayouts = mergeLayouts;
+            MergeLayouts = mergeLayouts;
+            CalculatesLayout = calculatesLayout;
             Location = new Location(this);
 
             Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
+
+            if (CalculatesLayout)
+            {
+                Action callback = () =>
+                {
+                    if (LayoutScheduled)
+                    {
+                        Host?.Layout?.CalculateLayout();
+                        LayoutScheduled = false;
+                    }
+                };
+                dispatcher.OnEveryLateUpdate(callback);
+            }
         }
 
 
@@ -78,7 +92,7 @@ namespace ReactUnity
 
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
             {
-                StyleTree.AddStyle(rule, importanceOffset, mergeLayouts);
+                StyleTree.AddStyle(rule, importanceOffset, MergeLayouts);
             }
 
             foreach (var rule in stylesheet.Children.OfType<IKeyframesRule>())

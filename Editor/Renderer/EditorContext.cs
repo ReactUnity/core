@@ -88,10 +88,8 @@ namespace ReactUnity.Editor.Renderer
                 { "hover", typeof(HoverStateHandler) },
             };
 
-        public override bool CalculatesLayout => false;
-
         public EditorContext(VisualElement hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
-            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, true)
+            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, true, false)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(EditorResourcesHelper.UseragentStylesheet?.text, -1);

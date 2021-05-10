@@ -202,9 +202,9 @@ namespace ReactUnity
 
 
             var layoutUpdated = false;
-            var yogaLayout = Context.CalculatesLayout;
+            var calculatesLayout = Context.CalculatesLayout;
 
-            if (yogaLayout)
+            if (calculatesLayout)
             {
                 var oldStyle = ComputedStyle;
 
@@ -223,7 +223,7 @@ namespace ReactUnity
             var layouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList(); ;
             resolvedStyle.CssLayouts = layouts;
 
-            if (yogaLayout)
+            if (calculatesLayout)
             {
                 for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
                 inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
@@ -238,7 +238,7 @@ namespace ReactUnity
             ApplyStyles();
             resolvedStyle.MarkChangesSeen();
 
-            if (yogaLayout)
+            if (calculatesLayout)
             {
                 layoutUpdated = layoutUpdated || resolvedStyle.CssLayouts.Count > 0;
 

@@ -222,15 +222,12 @@ namespace ReactUnity.Styling
 
         #endregion
 
-        public NodeStyle()
+        public NodeStyle(NodeStyle defaultStyle = null, NodeStyle fallback = null)
         {
             StyleMap = new Dictionary<string, object>();
-        }
-
-        public NodeStyle(NodeStyle defaultStyle, NodeStyle fallback = null) : this()
-        {
             DefaultStyle = defaultStyle?.StyleMap;
             Fallback = fallback;
+            CssLayouts = fallback?.CssLayouts;
         }
 
         public void CopyStyle(NodeStyle copyFrom)
@@ -321,7 +318,8 @@ namespace ReactUnity.Styling
         {
             return StyleMap.ContainsKey(name) ||
                 (CssStyles != null && CssStyles.Any(x => x.ContainsKey(name))) ||
-                (DefaultStyle != null && DefaultStyle.ContainsKey(name));
+                (DefaultStyle != null && DefaultStyle.ContainsKey(name)) ||
+                (Fallback != null && Fallback.HasValue(name));
         }
     }
 }

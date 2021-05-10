@@ -1,10 +1,8 @@
 using ExCSS;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace ReactUnity
 {
@@ -18,21 +16,24 @@ namespace ReactUnity
             var hasTo = false;
             foreach (var kfr in rule.Children.OfType<IKeyframeRule>())
             {
-                var kf = Keyframe.Create(kfr);
+                var kfs = Keyframe.Create(kfr);
 
-                if (kf.Valid)
+                foreach (var kf in kfs)
                 {
-                    val.Steps.Add(kf);
+                    if (kf.Valid)
+                    {
+                        val.Steps.Add(kf);
 
-                    if (kf.Offset == 0)
-                    {
-                        hasFrom = true;
-                        val.From = kf;
-                    }
-                    else if (kf.Offset == 1)
-                    {
-                        hasTo = true;
-                        val.To = kf;
+                        if (kf.Offset == 0)
+                        {
+                            hasFrom = true;
+                            val.From = kf;
+                        }
+                        else if (kf.Offset == 1)
+                        {
+                            hasTo = true;
+                            val.To = kf;
+                        }
                     }
                 }
             }
@@ -61,28 +62,40 @@ namespace ReactUnity
 
     public class Keyframe
     {
-        public static Keyframe Create(IKeyframeRule rule)
+        public static List<Keyframe> Create(IKeyframeRule rule)
         {
-            var val = new Keyframe();
+            var offsets = new HashSet<float>();
+            var splits = rule.KeyText.Split(',');
 
-            if (rule.KeyText == "from") val.Offset = 0;
-            else if (rule.KeyText == "to") val.Offset = 1;
-            else
+            for (int i = 0; i < splits.Length; i++)
             {
-                var offset = ConverterMap.PercentageConverter.Convert(rule.KeyText);
-                if (offset is float f) val.Offset = f;
-                else val.Offset = -1;
+                var split = splits[i].Trim();
+
+                if (split == "from") offsets.Add(0);
+                else if (split == "to") offsets.Add(1);
+                else
+                {
+                    var offset = ConverterMap.PercentageConverter.Convert(split);
+                    if (offset is float f) offsets.Add(f);
+                    else offsets.Add(-1);
+                }
             }
 
-            var styles = RuleHelpers.GetRuleDic(rule.Style, false);
-            var layouts = RuleHelpers.GetLayoutDic(rule.Style, false);
+            return offsets.Select(o =>
+            {
+                var val = new Keyframe();
+                val.Offset = o;
 
-            foreach (var rl in styles) val.Rules[rl.Key] = rl.Value;
-            if (layouts != null) foreach (var rl in layouts) val.Rules[rl.prop.name] = rl.value;
+                var styles = RuleHelpers.GetRuleDic(rule.Style, false);
+                var layouts = RuleHelpers.GetLayoutDic(rule.Style, false);
 
-            val.Valid = val.Valid && val.Rules.Count > 0 && val.Offset >= 0 && val.Offset <= 1;
+                foreach (var rl in styles) val.Rules[rl.Key] = rl.Value;
+                if (layouts != null) foreach (var rl in layouts) val.Rules[rl.prop.name] = rl.value;
 
-            return val;
+                val.Valid = val.Valid && val.Rules.Count > 0 && val.Offset >= 0 && val.Offset <= 1;
+
+                return val;
+            }).ToList();
         }
 
         public bool Valid = true;

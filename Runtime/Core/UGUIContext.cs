@@ -47,28 +47,12 @@ namespace ReactUnity
         public static Func<string, UGUIContext, ITextComponent> textCreator =
             (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
 
-        public YogaNode RootLayoutNode { get; }
-
-        public override bool CalculatesLayout => true;
-
         public UGUIContext(RectTransform hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
-            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart)
+            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, false, true)
         {
             Host = new HostComponent(hostElement, this);
-            RootLayoutNode = Host.Layout;
-
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
-
-            Action callback = () =>
-            {
-                if (LayoutScheduled)
-                {
-                    RootLayoutNode.CalculateLayout();
-                    LayoutScheduled = false;
-                }
-            };
-            dispatcher.OnEveryLateUpdate(callback);
         }
 
         public override IReactComponent CreateComponent(string tag, string text)

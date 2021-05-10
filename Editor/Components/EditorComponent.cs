@@ -175,18 +175,55 @@ namespace ReactUnity.Editor.Components
 
             // Transforms
 
-            //Element.transform.position -= (Vector3)(Element.layout.size / 2);
-
             if (computed.HasValue(StyleProperties.scale)) Element.transform.scale = new Vector3(computed.scale.x, computed.scale.y, 1);
             else Element.transform.scale = Vector3.one;
 
             if (computed.HasValue(StyleProperties.rotate)) Element.transform.rotation = Quaternion.Euler(computed.rotate);
             else Element.transform.rotation = Quaternion.identity;
 
-            if (computed.HasValue(StyleProperties.translate)) Element.transform.position = computed.translate.AsVector();
-            else Element.transform.position = Vector3.zero;
 
-            //Element.transform.position += (Vector3)(Element.layout.size / 2);
+
+            Vector3 translate;
+
+            var size = Element.layout.size;
+            var rect = new Vector2(float.IsNaN(size.x) ? 0 : size.x, float.IsNaN(size.y) ? 0 : size.y);
+
+            if (computed.HasValue(StyleProperties.translate))
+            {
+                var tran = computed.translate;
+
+                var scale = new Vector2(tran.X.Unit == YogaUnit.Percent ? rect.x / 100 : 1, tran.Y.Unit == YogaUnit.Percent ? rect.y / 100 : 1);
+                translate = new Vector2(tran.X.Value * scale.x, -tran.Y.Value * scale.y);
+            }
+            else translate = Vector3.zero;
+
+
+            var hasPivot = computed.HasValue(StyleProperties.transformOrigin);
+
+            if (hasPivot)
+            {
+                var origin = computed.transformOrigin;
+
+                var pivotX = origin.X.Unit == YogaUnit.Percent ? (origin.X.Value / 100) : origin.X.Unit == YogaUnit.Point ? (origin.X.Value / rect.x) : 0.5f;
+                var pivotY = origin.Y.Unit == YogaUnit.Percent ? (origin.Y.Value / 100) : origin.Y.Unit == YogaUnit.Point ? (origin.Y.Value / rect.y) : 0.5f;
+                var pivot = new Vector3(pivotX, 1 - pivotY, 0);
+
+                if (pivot == Vector3.zero) Element.transform.position = translate;
+                else
+                {
+                    Vector3 deltaPosition = -pivot;    // get change in pivot
+                    deltaPosition.Scale(rect);           // apply sizing
+                    deltaPosition.Scale(Element.transform.scale);          // apply scaling
+                    deltaPosition = Element.transform.rotation * deltaPosition; // apply rotation
+
+                    var counter = new Vector3(pivot.x, pivot.y, 0);
+                    counter.Scale(rect);
+
+                    var pos = deltaPosition + translate + counter;
+                    Element.transform.position = new Vector3(pos.x, pos.y, 0);
+                }
+            }
+            else Element.transform.position = translate;
         }
 
         public override void Destroy()
