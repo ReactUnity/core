@@ -101,43 +101,49 @@ namespace ReactUnity
             markedForStyleApply = true;
         }
 
+        public virtual void DestroySelf()
+        {
+            foreach (var item in Deferreds) Context.Dispatcher.StopDeferred(item);
+
+            if (IsContainer)
+            {
+                foreach (var child in Children)
+                    child.DestroySelf();
+            }
+        }
+
         public virtual void Destroy()
         {
-            Parent.Children.Remove(this);
-            Parent.Layout?.RemoveChild(Layout);
-            Parent.ScheduleLayout();
-            foreach (var item in Deferreds) Context.Dispatcher.StopDeferred(item);
+            SetParent(null);
+            DestroySelf();
         }
 
         #region Setters
 
-        public virtual void SetParent(IContainerComponent parent, IReactComponent insertBefore = null, bool insertAfter = false)
+        public virtual void SetParent(IContainerComponent newParent, IReactComponent relativeTo = null, bool insertAfter = false)
         {
-            if (Parent != null) parent.UnregisterChild(this);
+            if (Parent != null) Parent.UnregisterChild(this);
 
-            Parent = parent;
+            Parent = newParent;
 
             if (Parent == null) return;
 
-            insertBefore ??= (insertAfter ? null : parent.AfterPseudo);
+            relativeTo ??= (insertAfter ? null : newParent.AfterPseudo);
 
-            if (insertBefore == null)
+            if (relativeTo == null)
             {
-                parent.RegisterChild(this);
+                newParent.RegisterChild(this);
             }
             else
             {
-                var ind = parent.Children.IndexOf(insertBefore);
+                var ind = newParent.Children.IndexOf(relativeTo);
                 if (insertAfter) ind++;
 
-                parent.RegisterChild(this, ind);
+                newParent.RegisterChild(this, ind);
             }
 
-            StyleState.SetParent(parent.StyleState);
+            StyleState.SetParent(newParent.StyleState);
             ResolveStyle(true);
-
-            Parent.ScheduleLayout();
-
         }
 
         public abstract void SetEventListener(string eventName, Callback fun);
@@ -381,6 +387,7 @@ namespace ReactUnity
                     Children.Add(child);
                     Layout?.AddChild(child.Layout);
                 }
+                ScheduleLayout();
             }
         }
 
@@ -391,6 +398,7 @@ namespace ReactUnity
             {
                 Children.Remove(child);
                 Layout?.RemoveChild(child.Layout);
+                ScheduleLayout();
             }
         }
 

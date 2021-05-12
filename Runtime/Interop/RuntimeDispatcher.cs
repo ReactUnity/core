@@ -132,6 +132,7 @@ namespace ReactUnity
             {
                 var cr = ToStart[i];
                 if (cr != null && this) Started.Add(StartCoroutine(cr));
+                else Started.Add(null);
             }
             ToStart.Clear();
         }

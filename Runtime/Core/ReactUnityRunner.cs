@@ -120,7 +120,7 @@ namespace ReactUnity
             engine.SetValue("UnityEditor", new NamespaceReference(engine, "UnityEditor"));
 #endif
 
-            engine.SetValue("Unity", new ReactUnityAPI());
+            engine.SetValue("Unity", ReactUnityAPI.Instance);
         }
 
         void CreateConsole(Jint.Engine engine)

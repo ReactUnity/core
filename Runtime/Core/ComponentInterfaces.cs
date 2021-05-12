@@ -12,6 +12,7 @@ namespace ReactUnity
     {
         ReactContext Context { get; }
 
+        void DestroySelf();
         void Destroy();
         IContainerComponent Parent { get; }
 

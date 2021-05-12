@@ -3,15 +3,14 @@ using Jint.Native.Function;
 using ReactUnity.Interop;
 using System;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ReactUnity.Editor")]
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ReactUnity.Editor.Tests")]
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ReactUnity.Tests")]
-
 namespace ReactUnity
 {
-    public class ReactUnityAPI
+    internal class ReactUnityAPI
     {
-        public ReactUnityAPI() { }
+        private static ReactUnityAPI instance;
+        public static ReactUnityAPI Instance => instance ??= new ReactUnityAPI();
+
+        private ReactUnityAPI() { }
 
         #region Creation
 
