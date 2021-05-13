@@ -7,8 +7,7 @@ using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
-    [TestFixture]
-    public class DispatcherTests
+    public class DispatcherTests : TestBase
     {
 
         [UnityTest, ReactInjectableTest]
@@ -16,15 +15,11 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            var canvas = GameObject.Find("REACT_CANVAS").GetComponent<ReactUnity>();
+            var view = Host.Children[0];
 
-            var ctx = canvas.Context;
+            API.removeChild(Host, view);
 
-            var view = ctx.Host.Children[0];
-
-            ReactUnityAPI.Instance.removeChild(ctx.Host, view);
-
-            var tmp = canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+            var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.Null(tmp);
         }
 
