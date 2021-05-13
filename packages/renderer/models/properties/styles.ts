@@ -23,6 +23,9 @@ export interface RenderStyle {
   scale?: Vector2Aux;
   rotate?: Vector3Aux;
 
+  animation?: string;
+  transition?: string;
+
   // Inherited styles
   color?: ColorAux;
   fontFamily?: AssetReference;
