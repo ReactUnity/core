@@ -1,9 +1,9 @@
 import { Renderer } from '@reactunity/renderer/editor';
 import { Suspense } from 'react';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { App } from './main';
-import { store, persistor } from './store';
-import { Provider } from 'react-redux';
+import { persistor, store } from './store';
 
 Renderer.render(
   <Suspense fallback={<view>Loading</view>}>
@@ -14,6 +14,3 @@ Renderer.render(
     </Provider>
   </Suspense>
 );
-
-
-(module as any)?.hot?.accept();

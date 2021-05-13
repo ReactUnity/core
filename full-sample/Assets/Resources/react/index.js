@@ -8308,13 +8308,13 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     if (pre !== isEvent) continue;
 
     if (isEvent) {
-      Unity.setEventListener(instance, attr, value);
+      UnityBridge.setEventListener(instance, attr, value);
       continue;
     }
 
     if (attr === 'children') {
       if (type === 'text') {
-        Unity.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
+        UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
       }
 
       continue;
@@ -8338,9 +8338,9 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     }
 
     if (attr.substring(0, 5) === 'data-') {
-      Unity.setData(instance, attr.substring(5), value);
+      UnityBridge.setData(instance, attr.substring(5), value);
     } else {
-      Unity.setProperty(instance, attr, value);
+      UnityBridge.setProperty(instance, attr, value);
     }
   }
 
@@ -8376,16 +8376,16 @@ var hostConfig = {
 
     if (type === 'text') {
       var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return Unity.createElement(type, text, rootContainerInstance);
+      return UnityBridge.createElement(type, text, rootContainerInstance);
     }
 
-    return Unity.createElement(props.tag || type, null, rootContainerInstance);
+    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance);
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
-    return Unity.createText(text, rootContainerInstance);
+    return UnityBridge.createText(text, rootContainerInstance);
   },
   appendInitialChild: function appendInitialChild(parent, child) {
-    Unity.appendChild(parent, child);
+    UnityBridge.appendChild(parent, child);
   },
   finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
     var propsToUpdate = [];
@@ -8425,25 +8425,25 @@ var hostConfig = {
     console.log('resetTextContent');
   },
   commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    Unity.setText(textInstance, newText);
+    UnityBridge.setText(textInstance, newText);
   },
   appendChild: function appendChild(parent, child) {
-    return Unity.appendChild(parent, child);
+    return UnityBridge.appendChild(parent, child);
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    return Unity.appendChildToContainer(parent, child);
+    return UnityBridge.appendChildToContainer(parent, child);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
+    return UnityBridge.insertBefore(parent, child, beforeChild);
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
+    return UnityBridge.insertBefore(parent, child, beforeChild);
   },
   removeChild: function removeChild(parent, child) {
-    return Unity.removeChild(parent, child);
+    return UnityBridge.removeChild(parent, child);
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    return Unity.removeChild(parent, child);
+    return UnityBridge.removeChild(parent, child);
   },
   // Required for Suspense
   // TODO: implement

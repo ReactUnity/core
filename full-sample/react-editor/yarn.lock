@@ -1195,10 +1195,10 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@0.0.26":
-  version "0.0.26"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.26.tgz#f479d05f0b5d7fd2f5e254ae83613bc7b68a3d34"
-  integrity sha512-hXWlyTm8/l/rbRghucByaWR8PtFRg2VpUCkt2Zp/w3bgGpF93J7h2ir4Oa7ZGb5jVksLgtEekBGFntq6qA3pKQ==
+"@reactunity/renderer@0.0.27":
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.27.tgz#f36359b16157937acb9084e513ed86bdb66174e5"
+  integrity sha512-pbXhchZaTymQem03nFl/NwD35MYnd9gOr/vc3zx8tboWbTfFo/5vpDplN9OFIJS3tYOGDZg73nWy+ctcS2ZuZA==
   dependencies:
     react-reconciler "^0.26.2"
 
@@ -1329,11 +1329,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.37.tgz#a3dd8da4eb84a996c36e331df98d82abd76b516e"
   integrity sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==
 
-"@types/node@^15.0.1":
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.0.1.tgz#ef34dea0881028d11398be5bf4e856743e3dc35a"
-  integrity sha512-TMkXt0Ck1y0KKsGr9gJtWGjttxlZnnvDtphxUOSd0bfaR6Q1jle+sPvrzNR1urqYTWMinoKvjKfXUGsumaO1PA==
-
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -1363,10 +1358,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^17.0.4":
-  version "17.0.4"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.4.tgz#a67c6f7a460d2660e950d9ccc1c2f18525c28220"
-  integrity sha512-onz2BqScSFMoTRdJUZUDD/7xrusM8hBA2Fktk2qgaTYPCgPvWnDEgkrOs8hhPUf2jfcIXkJ5yK6VfYormJS3Jw==
+"@types/react@^17.0.5":
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.5.tgz#3d887570c4489011f75a3fc8f965bf87d09a1bea"
+  integrity sha512-bj4biDB9ZJmGAYTWSKJly6bMr4BLUiBrx9ujiJEoP9XIDY9CTaPGxE5QWN/1WjpPLzYF7/jRNnV2nNxNe970sw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
