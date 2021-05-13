@@ -79,6 +79,7 @@ namespace ReactUnity.Components
             Text.enableWordWrapping = ComputedStyle.textWrap;
             Text.alignment = ComputedStyle.textAlign;
             Text.overflowMode = ComputedStyle.textOverflow;
+
             if (ComputedStyle.content != null)
             {
                 Text.text = ComputedStyle.content;

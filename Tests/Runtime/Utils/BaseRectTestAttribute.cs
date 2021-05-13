@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace ReactUnity.Tests.Utils
+namespace ReactUnity.Tests
 {
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {

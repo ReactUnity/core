@@ -1,9 +1,7 @@
 using ReactUnity.Helpers;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactUnity.Tests.Utils
+namespace ReactUnity.Tests
 {
     public class ReactInjectableTestAttribute : BaseReactTestAttribute
     {

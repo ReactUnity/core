@@ -1,12 +1,11 @@
 using System.Collections;
 using NUnit.Framework;
-using ReactUnity.Tests.Utils;
 using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
-    [TestFixture]
+    [TestFixture(Description = "General hello world tests")]
     public class IntroTests : TestBase
     {
         [UnityTest, ReactTest(TestPath)]

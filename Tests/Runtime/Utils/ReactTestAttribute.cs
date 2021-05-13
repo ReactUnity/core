@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace ReactUnity.Tests.Utils
+namespace ReactUnity.Tests
 {
     public class ReactTestAttribute : BaseReactTestAttribute
     {

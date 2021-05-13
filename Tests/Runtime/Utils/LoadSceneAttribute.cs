@@ -9,7 +9,7 @@ using UnityEngine.TestTools;
 using UnityEditor.SceneManagement;
 #endif
 
-namespace ReactUnity.Tests.Utils
+namespace ReactUnity.Tests
 {
     public class LoadSceneAttribute : NUnitAttribute, IOuterUnityTestAction
     {

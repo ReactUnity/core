@@ -2,15 +2,16 @@ using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.Interop;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ReactUnity
 {
-    internal class ReactUnityAPI
+    internal class ReactUnityBridge
     {
-        private static ReactUnityAPI instance;
-        public static ReactUnityAPI Instance => instance ??= new ReactUnityAPI();
+        private static ReactUnityBridge instance;
+        public static ReactUnityBridge Instance => instance ??= new ReactUnityBridge();
 
-        private ReactUnityAPI() { }
+        private ReactUnityBridge() { }
 
         #region Creation
 
@@ -97,6 +98,7 @@ namespace ReactUnity
 
         #endregion
 
+        [ExcludeFromCodeCoverage]
         public string getVersion()
         {
 #if UNITY_EDITOR

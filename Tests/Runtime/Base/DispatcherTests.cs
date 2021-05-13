@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using ReactUnity.Tests.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,23 +6,9 @@ using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
+    [TestFixture(TestOf = typeof(RuntimeDispatcher))]
     public class DispatcherTests : TestBase
     {
-
-        [UnityTest, ReactInjectableTest]
-        public IEnumerator ReactComponent_AfterDestroyed_DeferredsShouldStopRunning()
-        {
-            yield return null;
-
-            var view = Host.Children[0];
-
-            API.removeChild(Host, view);
-
-            var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
-            Assert.Null(tmp);
-        }
-
-
         [UnityTest]
         public IEnumerator RuntimeDispatcher_OnEveryUpdate_RunsOnEachUpdate()
         {
