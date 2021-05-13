@@ -14,9 +14,8 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Components
 {
-    public class ReactComponent : BaseReactComponent
+    public class ReactComponent : BaseReactComponent<UGUIContext>
     {
-        public new UGUIContext Context { get; }
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
         public ReactElement Component { get; private set; }
@@ -45,7 +44,6 @@ namespace ReactUnity.Components
 
         protected ReactComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
-            Context = context;
             GameObject = new GameObject();
             RectTransform = AddComponent<RectTransform>();
 
@@ -62,7 +60,6 @@ namespace ReactUnity.Components
 
         protected ReactComponent(RectTransform existing, UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
-            Context = context;
             GameObject = existing.gameObject;
             RectTransform = existing;
             Container = existing;

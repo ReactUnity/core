@@ -1,11 +1,13 @@
 using Jint.Native;
 using Jint.Native.Function;
+using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Interop;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace ReactUnity
 {
+    [TypescriptInclude]
     internal class ReactUnityBridge
     {
         private static ReactUnityBridge instance;

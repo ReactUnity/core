@@ -5,14 +5,13 @@ using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Visitors;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace ReactUnity
 {
-    public abstract class BaseReactComponent : IReactComponent, IContainerComponent
+    public abstract class BaseReactComponent<ContextType> : IReactComponent, IContainerComponent where ContextType : ReactContext
     {
         #region Statics / Defaults
         private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
@@ -22,7 +21,8 @@ namespace ReactUnity
         public virtual YogaNode DefaultLayout => TagDefaultLayout;
         #endregion
 
-        public ReactContext Context { get; }
+        public ContextType Context { get; }
+        ReactContext IReactComponent.Context => Context;
         public IContainerComponent Parent { get; private set; }
 
         public InlineData Data { get; private set; } = new InlineData("Data");
@@ -49,6 +49,7 @@ namespace ReactUnity
         public IReactComponent BeforePseudo { get; protected set; }
         public IReactComponent AfterPseudo { get; protected set; }
 
+
         #endregion
 
 
@@ -57,7 +58,7 @@ namespace ReactUnity
         private bool markedStyleResolveRecursive;
         protected List<int> Deferreds = new List<int>();
 
-        protected BaseReactComponent(ReactContext context, string tag = "", bool isContainer = true)
+        protected BaseReactComponent(ContextType context, string tag = "", bool isContainer = true)
         {
             IsContainer = isContainer;
             Children = IsContainer ? new List<IReactComponent>() : null;

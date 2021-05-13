@@ -24,10 +24,9 @@ namespace ReactUnity.Editor.Components
         T Element { get; }
     }
 
-    public class EditorComponent<T> : BaseReactComponent, IEditorComponent<T> where T : VisualElement, new()
+    public class EditorComponent<T> : BaseReactComponent<EditorContext>, IEditorComponent<T> where T : VisualElement, new()
     {
         public T Element { get; protected set; }
-        public new EditorContext Context { get; }
         public override string Name => Element.name;
 
         protected Dictionary<string, object> EventHandlers = new Dictionary<string, object>();
@@ -36,14 +35,12 @@ namespace ReactUnity.Editor.Components
 
         protected EditorComponent(T element, EditorContext context, string tag) : base(context, tag, true)
         {
-            Context = context;
             Element = element;
             Element.userData = Data;
         }
 
         public EditorComponent(EditorContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
         {
-            Context = context;
             Element = new T();
             Element.userData = Data;
         }
