@@ -39,7 +39,7 @@ namespace ReactUnity.Styling
         public void SetCurrent(NodeStyle newStyle)
         {
             if (Current == DefaultStyle) Previous = newStyle;
-            else Previous = Current ?? newStyle;
+            else Previous = Active ?? Current ?? newStyle;
 
             Current = newStyle;
             RecalculateActive();
@@ -62,12 +62,20 @@ namespace ReactUnity.Styling
             {
                 Active = new NodeStyle(null, Current);
                 Active.Parent = Parent?.Active;
-                if (hasTransition && activeTransitions != transition) StartTransitions(transition);
-                if (hasAnimation && activeAnimations != animation) StartAnimations(animation);
+
+                var switchTransitions = hasTransition && activeTransitions != transition;
+                var switchAnimations = hasAnimation && activeAnimations != animation;
+
+                if (switchTransitions) StartTransitions(transition);
+                else UpdateTransitions();
+
+                if (switchAnimations) StartAnimations(animation);
+                else UpdateAnimations();
             }
             else
             {
                 Active = Current;
+                Previous = null;
                 ParentUpdated(Parent?.Active);
             }
         }
@@ -78,8 +86,8 @@ namespace ReactUnity.Styling
             StopTransitions();
             activeTransitions = transition;
             transitionStartTime = Time.realtimeSinceStartup;
-            var finished = UpdateTransitions(true);
-            if (!finished) transitionDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateTransitions(false)));
+            var finished = UpdateTransitions();
+            if (!finished) transitionDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateTransitions()));
         }
 
         private void StopTransitions()
@@ -92,8 +100,10 @@ namespace ReactUnity.Styling
             activeTransitions = null;
         }
 
-        private bool UpdateTransitions(bool initial)
+        private bool UpdateTransitions()
         {
+            if (activeTransitions == null) return true;
+
             var finished = true;
 
             var currentTime = Time.realtimeSinceStartup;
@@ -156,8 +166,8 @@ namespace ReactUnity.Styling
             StopAnimations();
             activeAnimations = animation;
             animationStartTime = Time.realtimeSinceStartup;
-            var finished = UpdateAnimations(true);
-            if (!finished) animationDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateAnimations(false)));
+            var finished = UpdateAnimations();
+            if (!finished) animationDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateAnimations()));
         }
 
         private void StopAnimations()
@@ -171,7 +181,7 @@ namespace ReactUnity.Styling
         }
 
 
-        private bool UpdateAnimations(bool initial)
+        private bool UpdateAnimations()
         {
             if (activeAnimations?.Animations == null) return true;
 
