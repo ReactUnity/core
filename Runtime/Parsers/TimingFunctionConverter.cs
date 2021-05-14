@@ -34,9 +34,9 @@ namespace ReactUnity.Styling.Parsers
             if (name == "steps" && (fn.Length == 2 || fn.Length == 3))
             {
                 var a1 = ConverterMap.IntConverter.Convert(fn[1]);
-                var a2 = StepConverter.Convert(fn[2]);
+                var a2 = fn.Length > 2 ? StepConverter.Convert(fn[2]) : StepsJumpMode.End;
 
-                var stepMode = a2 is StepsJumpMode s2 ? s2 : StepsJumpMode.None;
+                var stepMode = a2 is StepsJumpMode s2 ? s2 : StepsJumpMode.End;
 
                 if (a1 is int f1)
                     return TimingFunctions.Steps(f1, stepMode);

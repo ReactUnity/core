@@ -1,5 +1,6 @@
 using ReactUnity.Animations;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Parsers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,23 +9,21 @@ namespace ReactUnity.Animations
 {
     public class TransitionList
     {
+        public string Definition { get; }
         public Dictionary<string, Transition> Transitions { get; } = new Dictionary<string, Transition>();
         public Transition All { get; private set; }
         public bool Any { get; private set; } = false;
 
-        public TransitionList()
-        {
-
-        }
-
         public TransitionList(Transition tr)
         {
+            Definition = tr.Definition;
             AddTransition(tr);
         }
 
-        public TransitionList(string value)
+        public TransitionList(string definition)
         {
-            var splits = value.Split(',');
+            Definition = definition;
+            var splits = ParserHelpers.Split(definition, ',');
 
             foreach (var split in splits)
             {
@@ -39,10 +38,16 @@ namespace ReactUnity.Animations
             else Transitions[tr.Property] = tr;
             Any = Any || tr.Valid;
         }
+
+        public static bool operator ==(TransitionList left, TransitionList right) => left?.Definition == right?.Definition;
+        public static bool operator !=(TransitionList left, TransitionList right) => left?.Definition != right?.Definition;
+        public override bool Equals(object obj) => base.Equals(obj);
+        public override int GetHashCode() => Definition.GetHashCode();
     }
 
     public class Transition
     {
+        public string Definition { get; }
         public float Delay { get; } = 0;
         public float Duration { get; } = 0;
         public string Property { get; } = "all";
@@ -50,14 +55,13 @@ namespace ReactUnity.Animations
         public bool Valid { get; } = true;
         public bool All { get; } = true;
 
-        public Transition() { }
-
-        public Transition(string value)
+        public Transition(string definition)
         {
-            var splits = value.Split(new[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries);
+            Definition = definition;
+            var splits = ParserHelpers.Split(definition, ' ');
 
 
-            if (splits.Length == 0)
+            if (splits.Count == 0)
             {
                 Valid = false;
                 return;
@@ -73,7 +77,7 @@ namespace ReactUnity.Animations
             else
             {
                 Property = splits[0];
-                if (splits.Length < 2)
+                if (splits.Count < 2)
                 {
                     Valid = false;
                     return;
@@ -86,10 +90,10 @@ namespace ReactUnity.Animations
             if (dur is float f) Duration = f;
             else Valid = false;
 
-            if (splits.Length > offset + 1)
+            if (splits.Count > offset + 1)
             {
                 var next = splits[offset + 1];
-                var last = splits.Length > offset + 2 ? splits[offset + 2] : null;
+                var last = splits.Count > offset + 2 ? splits[offset + 2] : null;
                 var nextIsDelay = false;
 
                 firstChar = next[0];

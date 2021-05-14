@@ -27,9 +27,13 @@ namespace ReactUnity.Animations
             StepEnd,
         };
 
-        public static TimingFunction Steps(int count, StepsJumpMode mode = StepsJumpMode.None)
+        public static TimingFunction Steps(int count, StepsJumpMode mode = StepsJumpMode.End)
         {
-            if (mode == StepsJumpMode.Both || mode == StepsJumpMode.None) count++;
+            if (mode == StepsJumpMode.Both) count++;
+            else if (mode == StepsJumpMode.None) count--;
+
+            if (count <= 0) return null;
+
             var step = 1f / count;
 
             return delegate (float value, float start, float end)
@@ -39,6 +43,7 @@ namespace ReactUnity.Animations
                 var st = value * count;
 
                 if (mode == StepsJumpMode.Start || mode == StepsJumpMode.Both) st = Mathf.Ceil(st);
+                else if (mode == StepsJumpMode.None) st = Mathf.Round(st);
                 else st = Mathf.Floor(st);
 
                 return (diff * step * st) + start;
@@ -47,7 +52,7 @@ namespace ReactUnity.Animations
 
         public static TimingFunction Get(TimingFunctionType easeType)
         {
-            return timingFunctions[(int)easeType];
+            return timingFunctions[(int) easeType];
         }
 
         public static TimingFunction Get(string easeType)

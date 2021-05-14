@@ -8,23 +8,21 @@ namespace ReactUnity.Animations
 {
     public class AnimationList
     {
+        public string Definition { get; }
         public Dictionary<string, Animation> Animations { get; } = new Dictionary<string, Animation>();
         public bool Any { get; private set; } = false;
 
 
-        public AnimationList()
-        {
-
-        }
-
         public AnimationList(Animation tr)
         {
             AddAnimation(tr);
+            Definition = tr.Definition;
         }
 
-        public AnimationList(string value)
+        public AnimationList(string definition)
         {
-            var splits = ParserHelpers.Split(value, ',');
+            Definition = definition;
+            var splits = ParserHelpers.Split(definition, ',');
 
             foreach (var split in splits)
             {
@@ -38,10 +36,16 @@ namespace ReactUnity.Animations
             Animations[tr.Name] = tr;
             Any = Any || tr.Valid;
         }
+
+        public static bool operator ==(AnimationList left, AnimationList right) => left?.Definition == right?.Definition;
+        public static bool operator !=(AnimationList left, AnimationList right) => left?.Definition != right?.Definition;
+        public override bool Equals(object obj) => base.Equals(obj);
+        public override int GetHashCode() => Definition.GetHashCode();
     }
 
     public class Animation
     {
+        public string Definition { get; }
         public float Delay { get; } = 0;
         public float Duration { get; } = 0;
         public int IterationCount { get; } = 1;
@@ -51,11 +55,10 @@ namespace ReactUnity.Animations
         public AnimationFillMode FillMode;
         public AnimationDirection Direction;
 
-        public Animation() { }
-
-        public Animation(string value)
+        public Animation(string definition)
         {
-            var splits = ParserHelpers.Split(value, ' ');
+            Definition = definition;
+            var splits = ParserHelpers.Split(definition, ' ');
 
             if (splits.Count == 0)
             {

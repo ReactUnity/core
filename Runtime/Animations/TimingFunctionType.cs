@@ -13,12 +13,12 @@ namespace ReactUnity.Animations
 
     public enum StepsJumpMode
     {
-        None = 0,
-        JumpNone = 0,
+        End = 0,
+        JumpEnd = 0,
         Start = 1,
         JumpStart = 1,
-        End = 2,
-        JumpEnd = 2,
+        None = 2,
+        JumpNone = 2,
         Both = 3,
         JumpBoth = 3,
     }

@@ -3,12 +3,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace ReactUnity.Styling
 {
     public class StyleState
     {
+        private class TransitionState
+        {
+            public object FromValue;
+            public object ToValue;
+            public float Ratio = 0;
+            public float LastUpdatedAt = 0;
+            public float StartedAt = 0;
+            public float Duration = 0;
+        }
+
         private static NodeStyle DefaultStyle = new NodeStyle();
         public NodeStyle Previous { get; private set; }
         public NodeStyle Current { get; private set; }
@@ -22,6 +33,9 @@ namespace ReactUnity.Styling
         private DisposableHandle transitionDisposable;
         private float transitionStartTime;
 
+        private Dictionary<string, TransitionState> propertyTransitionStates;
+
+
         private AnimationList activeAnimations;
         private DisposableHandle animationDisposable;
         private float animationStartTime;
@@ -29,6 +43,8 @@ namespace ReactUnity.Styling
 
         public StyleState Parent { get; private set; }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static float getTime() => Time.realtimeSinceStartup * 1000;
 
         public StyleState(ReactContext context)
         {
@@ -84,8 +100,9 @@ namespace ReactUnity.Styling
         private void StartTransitions(TransitionList transition)
         {
             StopTransitions();
+            propertyTransitionStates = new Dictionary<string, TransitionState>();
             activeTransitions = transition;
-            transitionStartTime = Time.realtimeSinceStartup;
+            transitionStartTime = getTime();
             var finished = UpdateTransitions();
             if (!finished) transitionDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateTransitions()));
         }
@@ -98,6 +115,7 @@ namespace ReactUnity.Styling
                 transitionDisposable = null;
             }
             activeTransitions = null;
+            propertyTransitionStates = null;
         }
 
         private bool UpdateTransitions()
@@ -106,8 +124,7 @@ namespace ReactUnity.Styling
 
             var finished = true;
 
-            var currentTime = Time.realtimeSinceStartup;
-            var passedTime = (currentTime - transitionStartTime) * 1000;
+            var currentTime = getTime();
 
             foreach (var item in activeTransitions.Transitions)
             {
@@ -119,29 +136,69 @@ namespace ReactUnity.Styling
                 if (item.Value.All) properties = StyleProperties.AllProperties.Where(x => x.transitionable);
                 else properties = new List<IStyleProperty>() { StyleProperties.GetStyleProperty(tran.Property) };
 
-
-                var delayPassed = passedTime >= tran.Delay;
-
-                var offsetTime = passedTime - tran.Delay;
-
-                var t = !delayPassed ? 0 : (tran.Duration == 0 ? 1 : Mathf.Min(Mathf.Max(0, offsetTime / tran.Duration), 1));
-
                 foreach (var sp in properties)
                 {
                     if (sp == null) continue;
+                    finished = false;
 
                     var prevValue = Previous.GetStyleValue(sp);
                     var curValue = Current.GetStyleValue(sp);
+
+                    propertyTransitionStates.TryGetValue(sp.name, out var state);
+
+
+                    float t = 0;
+                    float lastUpdated = currentTime;
+
+                    if (state != null)
+                    {
+                        lastUpdated = state.LastUpdatedAt;
+                        if (state.FromValue == prevValue && state.ToValue == curValue)
+                        {
+                            t = state.Ratio;
+
+                            if (t >= 1)
+                            {
+                                state.LastUpdatedAt = currentTime;
+                                continue;
+                            }
+                        }
+                        else if (state.FromValue == curValue)
+                        {
+                            state.Duration = Math.Min(tran.Duration, state.Ratio * state.Duration);
+                            state.StartedAt = currentTime;
+                        }
+                        else
+                        {
+                            state.StartedAt = currentTime;
+                            state.Duration = tran.Duration;
+                        }
+                    }
+                    else
+                    {
+                        propertyTransitionStates[sp.name] = state = new TransitionState();
+                        state.StartedAt = currentTime;
+                        state.Duration = tran.Duration;
+                    }
+
+
+                    float delta = currentTime - lastUpdated;
+                    var delayPassed = (currentTime - state.StartedAt) >= tran.Delay;
+                    var tDelta = !delayPassed ? 0 : (state.Duration == 0 ? 1 : delta / state.Duration);
+                    t = Mathf.Min(Mathf.Max(0, t + tDelta), 1);
+
+                    state.FromValue = prevValue;
+                    state.ToValue = curValue;
+                    state.Ratio = t;
+                    state.LastUpdatedAt = currentTime;
 
                     object activeValue = curValue;
 
                     if (prevValue != curValue && t < 1)
                     {
-                        finished = false;
-
                         activeValue = prevValue;
 
-                        if (delayPassed)
+                        if (delayPassed && t > 0)
                         {
                             activeValue = Interpolater.Interpolate(prevValue, curValue, t, tran.TimingFunction, sp.type);
                         }
@@ -165,7 +222,7 @@ namespace ReactUnity.Styling
         {
             StopAnimations();
             activeAnimations = animation;
-            animationStartTime = Time.realtimeSinceStartup;
+            animationStartTime = getTime();
             var finished = UpdateAnimations();
             if (!finished) animationDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateAnimations()));
         }
@@ -187,8 +244,8 @@ namespace ReactUnity.Styling
 
             var finished = true;
 
-            var currentTime = Time.realtimeSinceStartup;
-            var passedTime = (currentTime - animationStartTime) * 1000;
+            var currentTime = getTime();
+            var passedTime = currentTime - animationStartTime;
 
             foreach (var item in activeAnimations.Animations)
             {
