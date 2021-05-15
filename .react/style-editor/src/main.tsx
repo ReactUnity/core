@@ -89,9 +89,9 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
 
   if (!prop.component) return null;
 
-  const val = prop.source === 'layout' ? element.Layout[prop.name] : element.Style[prop.name];
+  const val = prop.source === 'layout' ? element.Layout[prop.name] : cmp.ComputedStyle[prop.name];
   const gval = prop.getter ? prop.getter(val, element) : val;
-  const exists = prop.source === 'layout' ? cmp.Style.ContainsKey(prop.name) : element.Style.HasValue(prop.name);
+  const exists = prop.source === 'layout' ? cmp.Style.ContainsKey(prop.name) : cmp.ComputedStyle.HasValue(prop.name);
   const changeExists = () => {
     cmp.Style.Remove(prop.name);
     changed();
