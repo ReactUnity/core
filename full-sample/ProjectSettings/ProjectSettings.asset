@@ -650,6 +650,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     1: REACT_WATCH_OUTSIDE_EDITOR;REACT_FILE_API;REACT_UNITY_DEVELOPER
     7: 
+    13: REACT_UNITY_DEVELOPER
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
