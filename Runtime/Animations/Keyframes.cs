@@ -45,7 +45,7 @@ namespace ReactUnity
 
             val.Steps.Sort((a, b) => System.Math.Sign(a.Offset - b.Offset));
 
-            foreach (var prop in val.Steps.SelectMany(x => x.Rules.Keys).Select(x => StyleProperties.GetStyleProperty(x)))
+            foreach (var prop in val.Steps.SelectMany(x => x.Rules.Keys).Select(x => CssProperties.GetProperty(x)))
             {
                 if (prop != null) val.Properties.Add(prop);
             }

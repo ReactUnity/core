@@ -74,12 +74,12 @@ namespace ReactUnity
                 OnUpdate();
             }));
 
+            if (context.CalculatesLayout) Layout = new YogaNode(DefaultLayout);
+
             StateStyles = new StateStyles(this);
-            StyleState = new StyleState(context);
+            StyleState = new StyleState(context, Layout, DefaultLayout);
             StyleState.OnUpdate += OnStylesUpdated;
             StyleState.SetCurrent(new NodeStyle(DefaultStyle));
-
-            if (context.CalculatesLayout) Layout = new YogaNode(DefaultLayout);
         }
 
         protected virtual void OnUpdate()

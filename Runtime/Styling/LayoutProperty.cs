@@ -65,8 +65,8 @@ namespace ReactUnity.Styling
             if (converter == null) UnityEngine.Debug.LogError("There is no converter for the type: " + type.Name);
 
             defaultValueTyped = defaultValue;
-            setter = (Action<YogaNode, T>)propInfo.GetSetMethod().CreateDelegate(typeof(Action<YogaNode, T>));
-            getter = (Func<YogaNode, T>)propInfo.GetGetMethod().CreateDelegate(typeof(Func<YogaNode, T>));
+            setter = (Action<YogaNode, T>) propInfo.GetSetMethod().CreateDelegate(typeof(Action<YogaNode, T>));
+            getter = (Func<YogaNode, T>) propInfo.GetGetMethod().CreateDelegate(typeof(Func<YogaNode, T>));
         }
 
         public void Set(YogaNode node, object value, YogaNode defaultNode)
@@ -79,7 +79,7 @@ namespace ReactUnity.Styling
                 if (node.Parent != null) setter(node, getter(node.Parent));
                 else SetDefault(node, defaultNode);
             }
-            else setter(node, (T)value);
+            else setter(node, (T) value);
         }
 
         public void SetDefault(YogaNode node)
@@ -210,19 +210,18 @@ namespace ReactUnity.Styling
             return prop;
         }
 
-        private static string PascalToKebabCase(this string str)
+        private static string PascalToKebabCase(string str)
         {
             if (string.IsNullOrEmpty(str))
                 return string.Empty;
 
             var builder = new StringBuilder();
-            builder.Append(char.ToLowerInvariant(str.First()));
 
-            foreach (var c in str.Skip(1))
+            foreach (var c in str)
             {
                 if (char.IsUpper(c))
                 {
-                    builder.Append('-');
+                    if (builder.Length > 0) builder.Append('-');
                     builder.Append(char.ToLowerInvariant(c));
                 }
                 else

@@ -1,3 +1,4 @@
+using Facebook.Yoga;
 using ReactUnity.Animations;
 using System;
 using System.Collections;
@@ -28,6 +29,8 @@ namespace ReactUnity.Styling
         public event Action<NodeStyle> OnUpdate;
 
         private ReactContext Context;
+        private YogaNode Layout;
+        private YogaNode DefaultLayout;
 
         private TransitionList activeTransitions;
         private DisposableHandle transitionDisposable;
@@ -46,9 +49,11 @@ namespace ReactUnity.Styling
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static float getTime() => Time.realtimeSinceStartup * 1000;
 
-        public StyleState(ReactContext context)
+        public StyleState(ReactContext context, YogaNode layout, YogaNode defaultLayout)
         {
             Context = context;
+            Layout = layout;
+            DefaultLayout = defaultLayout;
             SetCurrent(DefaultStyle);
         }
 
@@ -133,8 +138,8 @@ namespace ReactUnity.Styling
 
                 IEnumerable<IStyleProperty> properties;
 
-                if (item.Value.All) properties = StyleProperties.AllProperties.Where(x => x.transitionable);
-                else properties = new List<IStyleProperty>() { StyleProperties.GetStyleProperty(tran.Property) };
+                if (item.Value.All) properties = CssProperties.TransitionableProperties;
+                else properties = new List<IStyleProperty>() { CssProperties.GetProperty(tran.Property) };
 
                 foreach (var sp in properties)
                 {
@@ -205,6 +210,11 @@ namespace ReactUnity.Styling
                     }
 
                     Active.SetStyleValue(sp, activeValue);
+
+                    if(Layout != null && sp is ILayoutProperty lp)
+                    {
+                        lp.Set(Layout, activeValue, DefaultLayout);
+                    }
                 }
             }
 

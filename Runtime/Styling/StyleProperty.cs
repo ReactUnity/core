@@ -54,6 +54,11 @@ namespace ReactUnity.Styling
         {
             return converter.Convert(value);
         }
+
+        public static bool operator ==(StyleProperty<T> left, StyleProperty<T> right) => left.name == right.name;
+        public static bool operator !=(StyleProperty<T> left, StyleProperty<T> right) => left.name != right.name;
+        public override int GetHashCode() => name.GetHashCode();
+        public override bool Equals(object obj) => base.Equals(obj);
     }
 
     public static class StyleProperties
@@ -124,8 +129,8 @@ namespace ReactUnity.Styling
             { "text-wrap", textWrap },
             { "white-space", textWrap },
         };
-        public static readonly IStyleProperty[] AllProperties;
-        public static readonly HashSet<string> InheritedProperties = new HashSet<string>();
+        public static IStyleProperty[] AllProperties { get; }
+        public static HashSet<string> InheritedProperties { get; } = new HashSet<string>();
 
         static StyleProperties()
         {
@@ -159,6 +164,29 @@ namespace ReactUnity.Styling
         public static bool IsInherited(string name)
         {
             return InheritedProperties.Contains(name);
+        }
+    }
+
+    public static class CssProperties
+    {
+        public static readonly Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.OrdinalIgnoreCase);
+        public static readonly HashSet<IStyleProperty> TransitionableProperties = new HashSet<IStyleProperty>();
+
+        static CssProperties()
+        {
+            foreach (var kv in StyleProperties.CssPropertyMap) CssPropertyMap[kv.Key] = kv.Value;
+            foreach (var kv in LayoutProperties.CssPropertyMap) CssPropertyMap[kv.Key] = kv.Value;
+
+            foreach (var kv in CssPropertyMap)
+            {
+                if (kv.Value.transitionable) TransitionableProperties.Add(kv.Value);
+            }
+        }
+
+        public static IStyleProperty GetProperty(string name)
+        {
+            CssPropertyMap.TryGetValue(name, out var style);
+            return style;
         }
     }
 }
