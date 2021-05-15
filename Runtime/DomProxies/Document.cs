@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ReactUnity.DomProxies
 {
@@ -137,7 +136,7 @@ namespace ReactUnity.DomProxies
         private List<string> pendingNodes = new List<string>();
         private List<string> pendingRemoval = new List<string>();
         public List<string> childNodes = new List<string>();
-        public string firstChild => childNodes.FirstOrDefault();
+        public string firstChild => childNodes.Count > 0 ? childNodes[0] : default;
 
         public bool enabled;
 

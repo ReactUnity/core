@@ -1,8 +1,8 @@
 using ReactUnity.Styling.Types;
 using UnityEngine;
 using System.Collections;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ReactUnity.Styling.Parsers
@@ -180,7 +180,7 @@ namespace ReactUnity.Styling.Parsers
                 return FromArray(values.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries), 1f / 255);
             }
 
-            if (value.Contains(',') || value.Contains(' ')) return FromArray(value.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries));
+            if (value.IndexOf(',') >= 0 || value.IndexOf(' ') >= 0) return FromArray(value.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries));
             return SpecialNames.CantParse;
         }
 

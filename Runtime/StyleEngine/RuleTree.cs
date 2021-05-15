@@ -19,8 +19,7 @@ namespace ReactUnity.StyleEngine
         public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0, ReactContext.LayoutMergeMode mergeMode = ReactContext.LayoutMergeMode.Both)
         {
             var added = AddSelector(rule.SelectorText, importanceOffset);
-            var addedList = added.ToList();
-            foreach (var leaf in addedList)
+            foreach (var leaf in added)
             {
                 var style = rule.Style;
                 if (leaf.Data == null) leaf.Data = new StyleData();
@@ -94,7 +93,7 @@ namespace ReactUnity.StyleEngine
         {
             var list = new List<IReactComponent>();
             GetMatchingChildrenInner(component, pseudoElement, list, component, true, LeafNodes);
-            return list.FirstOrDefault();
+            return list.Count > 0 ? list[0] : default;
         }
 
         public List<IReactComponent> GetMatchingChildren(IReactComponent component, bool pseudoElement = false)
@@ -107,7 +106,17 @@ namespace ReactUnity.StyleEngine
         private bool GetMatchingChildrenInner(
             IReactComponent component, bool pseudoElement, List<IReactComponent> list, IReactComponent scope, bool singleItem, List<RuleTreeNode<T>> leafList)
         {
-            var matches = leafList.Any(x => x.Matches(component, scope));
+            var matches = false;
+            for (int i = 0; i < leafList.Count; i++)
+            {
+                var leaf = leafList[i];
+                if (leaf.Matches(component, scope))
+                {
+                    matches = true;
+                    break;
+                }
+            }
+
             if (matches) list.Add(component);
             if (matches && singleItem) return true;
 

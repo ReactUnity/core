@@ -7,7 +7,6 @@ using ReactUnity.Styling;
 using ReactUnity.Styling.Types;
 using ReactUnity.Visitors;
 using System;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -322,13 +321,18 @@ namespace ReactUnity.Components
         {
             if (type == null) return null;
 
-            var requiredComponents = type.GetCustomAttributes(typeof(RequireComponent), true).OfType<RequireComponent>();
+            var requiredComponents = type.GetCustomAttributes(typeof(RequireComponent), true);
 
-            foreach (var req in requiredComponents)
+            for (int i = 0; i < requiredComponents.Length; i++)
             {
-                if (req.m_Type0 != null && !GameObject.GetComponent(req.m_Type0)) AddComponent(req.m_Type0);
-                if (req.m_Type1 != null && !GameObject.GetComponent(req.m_Type1)) AddComponent(req.m_Type1);
-                if (req.m_Type2 != null && !GameObject.GetComponent(req.m_Type2)) AddComponent(req.m_Type2);
+                var cmp = requiredComponents[i];
+
+                if (cmp is RequireComponent req)
+                {
+                    if (req.m_Type0 != null && !GameObject.GetComponent(req.m_Type0)) AddComponent(req.m_Type0);
+                    if (req.m_Type1 != null && !GameObject.GetComponent(req.m_Type1)) AddComponent(req.m_Type1);
+                    if (req.m_Type2 != null && !GameObject.GetComponent(req.m_Type2)) AddComponent(req.m_Type2);
+                }
             }
 
             var res = GameObject.AddComponent(type);

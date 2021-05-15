@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ReactUnity.StyleEngine
 {
@@ -100,7 +99,12 @@ namespace ReactUnity.StyleEngine
             // This means the matching is incomplete
             if (component == null) return false;
 
-            return ParsedSelector.All(x => x.Negated ^ x.Matches(component, scope));
+            for (int i = 0; i < ParsedSelector.Count; i++)
+            {
+                var selected = ParsedSelector[i];
+                if (selected.Matches(component, scope) == selected.Negated) return false;
+            }
+            return true;
         }
 
         public int CompareTo(RuleTreeNode<T> other)
