@@ -58,6 +58,7 @@ namespace ReactUnity
         private bool markedForLayoutApply;
         private bool markedStyleResolveRecursive;
         protected List<int> Deferreds = new List<int>();
+        private List<LayoutValue> ModifiedLayoutProperties;
 
         protected BaseReactComponent(ContextType context, string tag = "", bool isContainer = true)
         {
@@ -214,15 +215,10 @@ namespace ReactUnity
             var layoutUpdated = false;
             var calculatesLayout = Context.CalculatesLayout;
 
-            if (calculatesLayout)
+            if (Layout != null && ModifiedLayoutProperties != null)
             {
-                var oldStyle = ComputedStyle;
-
-                if (oldStyle.CssLayouts != null)
-                {
-                    foreach (var item in oldStyle.CssLayouts) item.SetDefault(Layout, DefaultLayout);
-                    layoutUpdated = oldStyle.CssLayouts.Count > 0;
-                }
+                foreach (var item in ModifiedLayoutProperties) item.SetDefault(Layout, DefaultLayout);
+                layoutUpdated = ModifiedLayoutProperties.Count > 0;
             }
 
 
@@ -230,18 +226,19 @@ namespace ReactUnity
             resolvedStyle.CssStyles = cssStyles;
 
 
-            var layouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList(); ;
-            resolvedStyle.CssLayouts = layouts;
-
             if (calculatesLayout)
             {
-                for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
-                inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
-                for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
-            }
-            else
-            {
-                resolvedStyle.CssStyles.Add(layouts.ToDictionary(x => x.prop.name, x => x.value));
+                var layouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
+                ModifiedLayoutProperties = layouts;
+
+                if (layouts.Count > 0)
+                {
+                    layoutUpdated = true;
+
+                    for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
+                    inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
+                    for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
+                }
             }
 
             StyleState.SetCurrent(resolvedStyle);
@@ -250,8 +247,6 @@ namespace ReactUnity
 
             if (calculatesLayout)
             {
-                layoutUpdated = layoutUpdated || resolvedStyle.CssLayouts.Count > 0;
-
                 if (layoutUpdated)
                 {
                     ApplyLayoutStyles();

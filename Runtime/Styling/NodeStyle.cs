@@ -13,7 +13,6 @@ namespace ReactUnity.Styling
     {
         Dictionary<string, object> StyleMap;
         public List<Dictionary<string, object>> CssStyles;
-        public List<LayoutValue> CssLayouts;
         Dictionary<string, object> DefaultStyle;
         NodeStyle Fallback;
         public bool HasInheritedChanges { get; private set; } = false;
@@ -226,7 +225,6 @@ namespace ReactUnity.Styling
             StyleMap = new Dictionary<string, object>();
             DefaultStyle = defaultStyle?.StyleMap;
             Fallback = fallback;
-            CssLayouts = fallback?.CssLayouts;
         }
 
         public void CopyStyle(NodeStyle copyFrom)
