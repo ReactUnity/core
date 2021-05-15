@@ -2,14 +2,10 @@ using Facebook.Yoga;
 using ReactUnity.Editor.Events;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.Styling;
-using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Interop;
-using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using ReactUnity.Visitors;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 

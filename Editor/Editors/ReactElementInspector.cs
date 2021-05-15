@@ -1,6 +1,4 @@
 using ReactUnity.Editor.Renderer;
-using ReactUnity.Layout;
-using UnityEditor;
 
 namespace ReactUnity.Editor
 {

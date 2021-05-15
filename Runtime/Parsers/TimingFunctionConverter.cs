@@ -1,8 +1,5 @@
 using ReactUnity.Animations;
 using ReactUnity.Styling.Types;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace ReactUnity.Styling.Parsers
 {

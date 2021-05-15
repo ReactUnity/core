@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using ReactUnity.Visitors;
-using ReactUnity.StyleEngine;
 
 namespace ReactUnity.Components
 {

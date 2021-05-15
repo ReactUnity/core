@@ -1,8 +1,5 @@
 using NUnit.Framework;
 using ReactUnity.Animations;
-using ReactUnity.Styling.Parsers;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace ReactUnity.Editor.Tests
 {
