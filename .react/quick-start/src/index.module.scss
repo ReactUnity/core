@@ -20,6 +20,8 @@ head {
   max-height: 200px;
   max-width: 200px;
   align-self: center;
+  animation: appear 800ms 400ms both;
+  transform-origin: center;
 }
 
 h1 {
@@ -73,7 +75,9 @@ section {
   border-width: 0;
 }
 
-.checkIcon, .warnIcon, .cancelIcon {
+.checkIcon,
+.warnIcon,
+.cancelIcon {
   flex-shrink: 0;
   margin-right: 6px;
 }
@@ -84,4 +88,15 @@ section {
 
 .warnIcon {
   color: crimson;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0%;
+    scale: 0.8 0.8;
+  }
+  to {
+    opacity: 100%;
+    scale: 1 1;
+  }
 }
