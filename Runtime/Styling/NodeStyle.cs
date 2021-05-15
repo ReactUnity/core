@@ -3,7 +3,6 @@ using ReactUnity.Animations;
 using ReactUnity.Styling.Types;
 using ReactUnity.Types;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -244,7 +243,7 @@ namespace ReactUnity.Styling
 
             if (
                 !StyleMap.TryGetValue(name, out value) &&
-                (CssStyles == null || !CssStyles.Any(x => x.TryGetValue(name, out value))) &&
+                !OwnTryGetValue(name, out value) &&
                 (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
             {
                 if (Fallback != null)
@@ -274,7 +273,7 @@ namespace ReactUnity.Styling
         public T GetStyleValue<T>(IStyleProperty prop)
         {
             var value = GetStyleValue(prop);
-            return value == null ? default : (T)value;
+            return value == null ? default : (T) value;
         }
 
 
@@ -317,9 +316,36 @@ namespace ReactUnity.Styling
         public bool HasValue(string name)
         {
             return StyleMap.ContainsKey(name) ||
-                (CssStyles != null && CssStyles.Any(x => x.ContainsKey(name))) ||
+                OwnHasValue(name) ||
                 (DefaultStyle != null && DefaultStyle.ContainsKey(name)) ||
                 (Fallback != null && Fallback.HasValue(name));
+        }
+
+        private bool OwnTryGetValue(string name, out object res)
+        {
+            if (CssStyles == null)
+            {
+                res = null;
+                return false;
+            }
+            for (int i = 0; i < CssStyles.Count; i++)
+            {
+                var dic = CssStyles[i];
+                if (dic.TryGetValue(name, out res)) return true;
+            }
+            res = null;
+            return false;
+        }
+
+        private bool OwnHasValue(string name)
+        {
+            if (CssStyles == null) return false;
+            for (int i = 0; i < CssStyles.Count; i++)
+            {
+                var dic = CssStyles[i];
+                if (dic.ContainsKey(name)) return true;
+            }
+            return false;
         }
     }
 }
