@@ -26,7 +26,7 @@ namespace ReactUnity.Styling
         public NodeStyle Current { get; private set; }
         public NodeStyle Active { get; private set; }
 
-        public event Action<NodeStyle> OnUpdate;
+        public event Action<NodeStyle, bool> OnUpdate;
 
         private ReactContext Context;
         private YogaNode Layout;
@@ -97,7 +97,7 @@ namespace ReactUnity.Styling
             {
                 Active = Current;
                 Previous = null;
-                ParentUpdated(Parent?.Active);
+                ParentUpdated(Parent?.Active, false);
             }
         }
 
@@ -128,6 +128,7 @@ namespace ReactUnity.Styling
             if (activeTransitions == null) return true;
 
             var finished = true;
+            var hasLayout = false;
 
             var currentTime = getTime();
 
@@ -211,16 +212,17 @@ namespace ReactUnity.Styling
 
                     Active.SetStyleValue(sp, activeValue);
 
-                    if(Layout != null && sp is ILayoutProperty lp)
+                    if (Layout != null && sp is ILayoutProperty lp)
                     {
                         lp.Set(Layout, activeValue, DefaultLayout);
+                        hasLayout = true;
                     }
                 }
             }
 
             if (finished) StopTransitions();
 
-            OnUpdate?.Invoke(Active);
+            OnUpdate?.Invoke(Active, hasLayout);
 
             return finished;
         }
@@ -253,6 +255,7 @@ namespace ReactUnity.Styling
             if (activeAnimations?.Animations == null) return true;
 
             var finished = true;
+            var hasLayout = false;
 
             var currentTime = getTime();
             var passedTime = currentTime - animationStartTime;
@@ -363,12 +366,18 @@ namespace ReactUnity.Styling
                     }
 
                     Active.SetStyleValue(sp, activeValue);
+
+                    if (sp is ILayoutProperty lp)
+                    {
+                        if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout);
+                        hasLayout = true;
+                    }
                 }
             }
 
             if (finished) StopAnimations();
 
-            OnUpdate?.Invoke(Active);
+            OnUpdate?.Invoke(Active, hasLayout);
 
             return finished;
         }
@@ -381,14 +390,14 @@ namespace ReactUnity.Styling
             Parent = styleState;
             if (Parent != null) Parent.OnUpdate += ParentUpdated;
 
-            ParentUpdated(Parent?.Active);
+            ParentUpdated(Parent?.Active, false);
         }
 
 
-        void ParentUpdated(NodeStyle active)
+        void ParentUpdated(NodeStyle active, bool hasLayout)
         {
             Active.Parent = active;
-            OnUpdate?.Invoke(Active);
+            OnUpdate?.Invoke(Active, false);
         }
     }
 }

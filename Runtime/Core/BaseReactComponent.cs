@@ -55,6 +55,7 @@ namespace ReactUnity
 
         private bool markedStyleResolve;
         private bool markedForStyleApply;
+        private bool markedForLayoutApply;
         private bool markedStyleResolveRecursive;
         protected List<int> Deferreds = new List<int>();
 
@@ -71,6 +72,7 @@ namespace ReactUnity
             {
                 if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
                 if (markedForStyleApply) ApplyStyles();
+                if (markedForLayoutApply) ApplyLayoutStylesSelf();
                 OnUpdate();
             }));
 
@@ -97,9 +99,10 @@ namespace ReactUnity
             markedStyleResolve = true;
         }
 
-        protected void MarkForStyleApply()
+        protected void MarkForStyleApply(bool hasLayout)
         {
             markedForStyleApply = true;
+            markedForLayoutApply = hasLayout;
         }
 
         public virtual void DestroySelf()
@@ -300,9 +303,9 @@ namespace ReactUnity
             markedForStyleApply = false;
         }
 
-        private void OnStylesUpdated(NodeStyle obj)
+        private void OnStylesUpdated(NodeStyle obj, bool hasLayout)
         {
-            MarkForStyleApply();
+            MarkForStyleApply(hasLayout);
         }
 
         #endregion

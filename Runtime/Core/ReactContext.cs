@@ -14,11 +14,18 @@ namespace ReactUnity
 {
     public abstract class ReactContext : IDisposable
     {
+        public enum LayoutMergeMode
+        {
+            Both = 0,
+            LayoutOnly = 1,
+            CssOnly = 2,
+        }
+
         protected static Regex ExtensionRegex = new Regex(@"\.\w+$");
         protected static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
 
         public bool CalculatesLayout { get; }
-        private bool MergeLayouts { get; }
+        private LayoutMergeMode MergeLayout { get; }
 
         public IHostComponent Host { get; protected set; }
         public GlobalRecord Globals { get; private set; }
@@ -43,7 +50,7 @@ namespace ReactUnity
 
 
         public ReactContext(GlobalRecord globals, ReactScript script, IDispatcher dispatcher,
-            IUnityScheduler scheduler, bool isDevServer, Action onRestart, bool mergeLayouts, bool calculatesLayout)
+            IUnityScheduler scheduler, bool isDevServer, Action onRestart, LayoutMergeMode mergeLayout, bool calculatesLayout)
         {
             Globals = globals;
             Script = script;
@@ -51,7 +58,7 @@ namespace ReactUnity
             Scheduler = scheduler;
             Dispatcher = dispatcher;
             OnRestart = onRestart ?? (() => { });
-            MergeLayouts = mergeLayouts;
+            MergeLayout = mergeLayout;
             CalculatesLayout = calculatesLayout;
             Location = new Location(this);
 
@@ -92,7 +99,7 @@ namespace ReactUnity
 
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
             {
-                StyleTree.AddStyle(rule, importanceOffset, MergeLayouts);
+                StyleTree.AddStyle(rule, importanceOffset, MergeLayout);
             }
 
             foreach (var rule in stylesheet.Children.OfType<IKeyframesRule>())

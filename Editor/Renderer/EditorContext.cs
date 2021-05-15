@@ -89,7 +89,7 @@ namespace ReactUnity.Editor.Renderer
             };
 
         public EditorContext(VisualElement hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
-            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, true, false)
+            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, LayoutMergeMode.Both, false)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(EditorResourcesHelper.UseragentStylesheet?.text, -1);

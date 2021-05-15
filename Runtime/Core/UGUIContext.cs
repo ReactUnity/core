@@ -48,7 +48,7 @@ namespace ReactUnity
             (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
 
         public UGUIContext(RectTransform hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
-            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, false, true)
+            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, LayoutMergeMode.Both, true)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
