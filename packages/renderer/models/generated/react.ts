@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 13.05.2021 13:23:18
+// Generated 17.05.2021 01:02:59
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -481,7 +481,7 @@ export declare namespace ReactUnity {
   export interface IHostComponent {
   }
   export class ReactContext {
-    constructor(globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void), mergeLayouts: boolean, calculatesLayout: boolean);
+    constructor(globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void), mergeLayout: ReactUnity.ReactContext_LayoutMergeMode, calculatesLayout: boolean);
     CalculatesLayout: boolean;
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Types.GlobalRecord;
@@ -491,6 +491,7 @@ export declare namespace ReactUnity {
     Dispatcher: ReactUnity.IDispatcher;
     StateHandlers: Record<string, System.Type>;
     Location: ReactUnity.DomProxies.Location;
+    MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
     Parser: any; // ExCSS.StylesheetParser
     StyleTree: ReactUnity.StyleEngine.StyleTree;
     OnRestart: (() => void);
@@ -541,6 +542,7 @@ export declare namespace ReactUnity {
   }
   export class ReactUnity {
     constructor();
+    MediaProvider: ReactUnity.StyleEngine.DefaultMediaProvider;
     Context: ReactUnity.UGUIContext;
     Root: UnityEngine.RectTransform;
     useGUILayout: boolean;
@@ -648,7 +650,7 @@ export declare namespace ReactUnity {
     ToString(): string;
   }
   export class UGUIContext {
-    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart: (() => void));
+    constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void));
     static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUIContext,ReactUnity.Components.ReactComponent]]
     StateHandlers: Record<string, System.Type>;
     CalculatesLayout: boolean;
@@ -659,6 +661,7 @@ export declare namespace ReactUnity {
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
     Dispatcher: ReactUnity.IDispatcher;
     Location: ReactUnity.DomProxies.Location;
+    MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
     static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.UGUIContext) => ReactUnity.Components.ReactComponent);
     static textCreator: ((arg0: string, arg1: ReactUnity.UGUIContext) => ReactUnity.ITextComponent);
     Parser: any; // ExCSS.StylesheetParser
@@ -866,11 +869,16 @@ export declare namespace ReactUnity {
     ToString(): string;
     GetType(): System.Type;
   }
+  export enum ReactContext_LayoutMergeMode {
+    Both = 0,
+    LayoutOnly = 1,
+    CssOnly = 2,
+  }
   export namespace Animations {
     export class AnimationList {
-      constructor();
       constructor(tr: ReactUnity.Animations.Animation);
-      constructor(value: string);
+      constructor(definition: string);
+      Definition: string;
       Animations: Record<string, ReactUnity.Animations.Animation>;
       Any: boolean;
       Equals(obj: any): boolean;
@@ -879,8 +887,8 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class Animation {
-      constructor();
-      constructor(value: string);
+      constructor(definition: string);
+      Definition: string;
       Delay: number;
       Duration: number;
       IterationCount: number;
@@ -992,19 +1000,19 @@ export declare namespace ReactUnity {
       StepEnd = 6,
     }
     export enum StepsJumpMode {
-      None = 0,
-      JumpNone = 0,
+      End = 0,
+      JumpEnd = 0,
       Start = 1,
       JumpStart = 1,
-      End = 2,
-      JumpEnd = 2,
+      None = 2,
+      JumpNone = 2,
       Both = 3,
       JumpBoth = 3,
     }
     export class TransitionList {
-      constructor();
       constructor(tr: ReactUnity.Animations.Transition);
-      constructor(value: string);
+      constructor(definition: string);
+      Definition: string;
       Transitions: Record<string, ReactUnity.Animations.Transition>;
       All: ReactUnity.Animations.Transition;
       Any: boolean;
@@ -1014,8 +1022,8 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class Transition {
-      constructor();
-      constructor(value: string);
+      constructor(definition: string);
+      Definition: string;
       Delay: number;
       Duration: number;
       Property: string;
@@ -3645,7 +3653,7 @@ export declare namespace ReactUnity {
     }
     export namespace Renderer {
       export class EditorContext {
-        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, isDevServer: boolean, onRestart?: (() => void));
+        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Types.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart?: (() => void));
         StateHandlers: Record<string, System.Type>;
         CalculatesLayout: boolean;
         Host: ReactUnity.IHostComponent;
@@ -3655,6 +3663,7 @@ export declare namespace ReactUnity {
         Scheduler: ReactUnity.Schedulers.IUnityScheduler;
         Dispatcher: ReactUnity.IDispatcher;
         Location: ReactUnity.DomProxies.Location;
+        MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
         static defaultCreator: ((arg0: string, arg1: string, arg2: ReactUnity.Editor.Renderer.EditorContext) => any);
         static textCreator: ((arg0: string, arg1: ReactUnity.Editor.Renderer.EditorContext) => ReactUnity.ITextComponent);
         static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.Editor.Renderer.EditorContext,ReactUnity.Editor.Components.IEditorComponent`1[UnityEngine.UIElements.VisualElement]]]
@@ -3778,11 +3787,12 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class ReactUnityElement {
-        constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Types.GlobalRecord, autorun?: boolean);
+        constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Types.GlobalRecord, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, autorun?: boolean);
         [key: string]: any;
         runner: ReactUnity.ReactUnityRunner;
         context: ReactUnity.Editor.Renderer.EditorContext;
         dispatcher: ReactUnity.IDispatcher;
+        MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
         Script: ReactUnity.ReactScript;
         Globals: ReactUnity.Types.GlobalRecord;
         viewDataKey: string;
@@ -6131,6 +6141,40 @@ export declare namespace ReactUnity {
     }
   }
   export namespace StyleEngine {
+    export interface IMediaProvider {
+      MediaType: string;
+      GetValue(property: string): string;
+      GetNumericalValue(property: string): number;
+      SetValue(property: string, value: string): void;
+      SetNumber(property: string, value: number): void;
+      SetDimensions(width: number, height: number): void;
+      RecalculateDefaults(): void;
+    }
+    export class DefaultMediaProvider {
+      constructor(mediaType: string, numbers?: Record<string, number>, values?: Record<string, string>);
+      MediaType: string;
+      RecalculateDefaults(): void;
+      GetNumericalValue(property: string): number;
+      GetValue(property: string): string;
+      SetValue(property: string, value: string): void;
+      SetNumber(property: string, value: number): void;
+      SetDimensions(width: number, height: number): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class MediaQueryList {
+      media: string;
+      matches: boolean;
+      static Create(provider: ReactUnity.StyleEngine.IMediaProvider, media: string): ReactUnity.StyleEngine.MediaQueryList;
+      addEventListener(type: string, listener: any): void;
+      removeEventListener(type: string, listener: any): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class RuleHelpers {
       static ImportantSpecifity: number;
       static SplitSelectorRegex: System.Text.RegularExpressions.Regex;
@@ -6171,7 +6215,8 @@ export declare namespace ReactUnity {
       Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: ReactUnity.StyleEngine.StyleData;
-      AddStyle(rule: any, importanceOffset?: number, mergeLayouts?: boolean): ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
+      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
+      AddStyle(rule: any, importanceOffset?: number, mergeMode?: ReactUnity.ReactContext_LayoutMergeMode, mql?: ReactUnity.StyleEngine.MediaQueryList): ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>[];
       GetMatchingRules(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       GetMatchingBefore(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
       GetMatchingAfter(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<ReactUnity.StyleEngine.StyleData>>;
@@ -6200,6 +6245,7 @@ export declare namespace ReactUnity {
       Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: T;
+      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
       GetMatchingRules(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       GetMatchingBefore(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       GetMatchingAfter(component: ReactUnity.IReactComponent): System.Collections.Generic.IEnumerable<ReactUnity.StyleEngine.RuleTreeNode<T>>;
@@ -6224,6 +6270,7 @@ export declare namespace ReactUnity {
       Children: System.Collections.Generic.LinkedList<ReactUnity.StyleEngine.RuleTreeNode<T>>;
       RelationType: ReactUnity.StyleEngine.RuleRelationType;
       Data: T;
+      MediaQuery: ReactUnity.StyleEngine.MediaQueryList;
       AddChildCascading(selector: string): ReactUnity.StyleEngine.RuleTreeNode<T>;
       Matches(component: ReactUnity.IReactComponent, scope: ReactUnity.IReactComponent): boolean;
       CompareTo(other: ReactUnity.StyleEngine.RuleTreeNode<T>): number;
@@ -6671,8 +6718,8 @@ export declare namespace ReactUnity {
       Get(node: Facebook.Yoga.YogaNode): any;
       Serialize(value: any): string;
       Convert(value: any): any;
-      Equals(obj: any): boolean;
       GetHashCode(): number;
+      Equals(obj: any): boolean;
       GetType(): System.Type;
       ToString(): string;
     }
@@ -6857,7 +6904,6 @@ export declare namespace ReactUnity {
       animation: ReactUnity.Animations.AnimationList;
       fontSizeActual: number;
       CssStyles: Record<string, any>[];
-      CssLayouts: ReactUnity.Styling.LayoutValue[];
       Parent: ReactUnity.Styling.NodeStyle;
       CopyStyle(copyFrom: ReactUnity.Styling.NodeStyle): void;
       GetStyleValue(prop: ReactUnity.Styling.IStyleProperty, fromChild?: boolean): any;
@@ -6908,12 +6954,14 @@ export declare namespace ReactUnity {
       proxy: boolean;
       converter: ReactUnity.Styling.Parsers.IStyleConverter;
       Convert(value: any): any;
-      Equals(obj: any): boolean;
       GetHashCode(): number;
+      Equals(obj: any): boolean;
       GetType(): System.Type;
       ToString(): string;
     }
     export class StyleProperties {
+      static AllProperties: ReactUnity.Styling.IStyleProperty[];
+      static InheritedProperties: any; // System.Collections.Generic.HashSet`1[System.String]
       static opacity: any; // ReactUnity.Styling.StyleProperty`1[System.Single]
       static zIndex: any; // ReactUnity.Styling.StyleProperty`1[System.Int32]
       static visibility: any; // ReactUnity.Styling.StyleProperty`1[System.Boolean]
@@ -6951,8 +6999,6 @@ export declare namespace ReactUnity {
       static animation: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Animations.AnimationList]
       static PropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
       static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
-      static AllProperties: ReactUnity.Styling.IStyleProperty[];
-      static InheritedProperties: any; // System.Collections.Generic.HashSet`1[System.String]
       static GetStyleProperty(name: string): ReactUnity.Styling.IStyleProperty;
       static IsInherited(name: string): boolean;
       Equals(obj: any): boolean;
@@ -6960,8 +7006,17 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class CssProperties {
+      static CssPropertyMap: any; // System.Collections.Generic.Dictionary`2[System.String,ReactUnity.Styling.IStyleProperty]
+      static TransitionableProperties: any; // System.Collections.Generic.HashSet`1[ReactUnity.Styling.IStyleProperty]
+      static GetProperty(name: string): ReactUnity.Styling.IStyleProperty;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
     export class StyleState {
-      constructor(context: ReactUnity.ReactContext);
+      constructor(context: ReactUnity.ReactContext, layout: Facebook.Yoga.YogaNode, defaultLayout: Facebook.Yoga.YogaNode);
       Previous: ReactUnity.Styling.NodeStyle;
       Current: ReactUnity.Styling.NodeStyle;
       Active: ReactUnity.Styling.NodeStyle;

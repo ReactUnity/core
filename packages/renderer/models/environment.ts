@@ -13,4 +13,6 @@ declare global {
     setItem(key: string, value: string): void;
     removeItem(key: string): void;
   };
+
+  function matchMedia(query: string): ReactUnity.StyleEngine.MediaQueryList;
 }
