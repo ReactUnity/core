@@ -342,5 +342,68 @@ namespace ReactUnity.Editor.Tests
             Assert.False(mq.matches);
 
         }
+
+        [Test]
+        public void DetectsFeatureOrMediaType()
+        {
+            var provider = new DefaultMediaProvider("runtime");
+
+            var query = "(runtime and a)";
+            var mq = MediaQueryList.Create(provider, query);
+
+
+            Assert.False(mq.matches);
+
+            provider.SetValue("a", null);
+            Assert.False(mq.matches);
+
+
+            provider.SetValue("a", "hello");
+            Assert.True(mq.matches);
+
+
+            query = "(runtime and (a: bye))";
+            mq = MediaQueryList.Create(provider, query);
+
+            Assert.False(mq.matches);
+
+            provider.SetValue("a", "hello");
+            Assert.False(mq.matches);
+
+            provider.SetValue("a", "bye");
+            Assert.True(mq.matches);
+        }
+
+        [Test]
+        public void AndOrComposedQuery()
+        {
+            var provider = new DefaultMediaProvider("runtime");
+
+            var query = "(a and b and c or d and e)";
+            var mq = MediaQueryList.Create(provider, query);
+
+            provider.SetValue("a", "true");
+            provider.SetValue("b", "true");
+            provider.SetValue("c", "true");
+            provider.SetValue("d", "true");
+            provider.SetValue("e", null);
+            Assert.False(mq.matches);
+
+
+            provider.SetValue("a", null);
+            provider.SetValue("b", "true");
+            provider.SetValue("c", "true");
+            provider.SetValue("d", "true");
+            provider.SetValue("e", "true");
+            Assert.True(mq.matches);
+
+
+            provider.SetValue("a", null);
+            provider.SetValue("b", "true");
+            provider.SetValue("c", "true");
+            provider.SetValue("d", null);
+            provider.SetValue("e", "true");
+            Assert.False(mq.matches);
+        }
     }
 }

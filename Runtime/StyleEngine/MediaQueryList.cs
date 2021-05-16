@@ -250,8 +250,6 @@ namespace ReactUnity.StyleEngine
             {
                 string conjunction = null;
 
-                MediaNode extra = null;
-
                 var childList = new List<MediaNode>();
 
                 for (int i = 1; i < splits.Count; i += 2)
@@ -263,16 +261,14 @@ namespace ReactUnity.StyleEngine
 
                     if (conjunction != null && current != conjunction)
                     {
-                        extra = ParseInner(string.Join(" ", splits, i + 1), depth);
-                        break;
+                        childList = new List<MediaNode> { new CombinedMediaNode(childList, conjunction == "and") };
                     }
 
                     conjunction = current;
                 }
 
                 if (conjunction != "and" && conjunction != "or") return ConstantMediaNode.Never;
-                if (extra != null) childList.Add(extra);
-                else childList.Add(ParseInner(splits[splits.Count - 1], depth));
+                childList.Add(ParseInner(splits[splits.Count - 1], depth));
 
                 return new CombinedMediaNode(childList, conjunction == "and");
             }

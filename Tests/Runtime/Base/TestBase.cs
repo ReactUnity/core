@@ -1,4 +1,5 @@
 using ReactUnity.Components;
+using ReactUnity.StyleEngine;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -9,6 +10,7 @@ namespace ReactUnity.Tests
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
         protected ReactUnity Component => Canvas.GetComponent<ReactUnity>();
         protected UGUIContext Context => Component.Context;
+        protected IMediaProvider MediaProvider => Context.MediaProvider;
         protected HostComponent Host => Context.Host as HostComponent;
         internal ReactUnityBridge Bridge => ReactUnityBridge.Instance;
     }
