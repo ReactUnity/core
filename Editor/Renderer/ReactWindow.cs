@@ -1,3 +1,4 @@
+using ReactUnity.StyleEngine;
 using ReactUnity.Types;
 using System;
 using UnityEditor;
@@ -13,6 +14,7 @@ namespace ReactUnity.Editor.Renderer
         protected ReactUnityRunner runner => hostElement?.runner;
         protected EditorContext context => hostElement?.context;
         protected IDispatcher dispatcher => hostElement?.dispatcher;
+        protected IMediaProvider mediaProvider => hostElement?.MediaProvider;
         protected ReactUnityElement hostElement { get; private set; }
 
         public event Action<ReactWindow> SelectionChange;
@@ -40,7 +42,7 @@ namespace ReactUnity.Editor.Renderer
         public virtual void Run(VisualElement root = null)
         {
             if (hostElement != null) OnDestroy();
-            hostElement = new ReactUnityElement(GetScript(), GetGlobals());
+            hostElement = new ReactUnityElement(GetScript(), GetGlobals(), new DefaultMediaProvider("window"));
             (root ?? rootVisualElement).Add(hostElement);
         }
 

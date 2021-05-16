@@ -5,6 +5,7 @@ using Jint.Runtime.Interop;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Interop;
+using ReactUnity.StyleEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -100,6 +101,7 @@ namespace ReactUnity
             engine.Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;");
             engine.Execute("btoa = atob = null;");
             engine.Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
+            engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(context.MediaProvider, media)));
 
             engine.SetValue("Engine", engine);
             engine.SetValue("Callback", typeof(Callback));

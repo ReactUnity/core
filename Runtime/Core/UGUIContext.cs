@@ -6,6 +6,7 @@ using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using System;
 using ReactUnity.StateHandlers;
+using ReactUnity.StyleEngine;
 
 namespace ReactUnity
 {
@@ -46,8 +47,8 @@ namespace ReactUnity
         public static Func<string, UGUIContext, ITextComponent> textCreator =
             (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
 
-        public UGUIContext(RectTransform hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart)
-            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, LayoutMergeMode.Both, true)
+        public UGUIContext(RectTransform hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart)
+            : base(globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);

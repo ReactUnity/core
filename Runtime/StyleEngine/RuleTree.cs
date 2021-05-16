@@ -16,7 +16,7 @@ namespace ReactUnity.StyleEngine
     {
         public StyleTree(StylesheetParser parser) : base(parser) { }
 
-        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0, ReactContext.LayoutMergeMode mergeMode = ReactContext.LayoutMergeMode.Both)
+        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0, ReactContext.LayoutMergeMode mergeMode = ReactContext.LayoutMergeMode.Both, MediaQueryList mql = null)
         {
             var added = AddSelector(rule.SelectorText, importanceOffset);
             foreach (var leaf in added)
@@ -25,6 +25,7 @@ namespace ReactUnity.StyleEngine
                 if (leaf.Data == null) leaf.Data = new StyleData();
                 var dic = RuleHelpers.GetRuleDic(style, false);
                 leaf.Data.Rules.Add(dic);
+                leaf.MediaQuery = mql;
 
                 var lay = RuleHelpers.GetLayoutDic(style, false);
                 if (lay != null)
@@ -43,6 +44,7 @@ namespace ReactUnity.StyleEngine
                     importantLeaf.Specifity = leaf.Specifity + RuleHelpers.ImportantSpecifity;
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
                     importantLeaf.Data.Rules.Add(importantDic);
+                    importantLeaf.MediaQuery = mql;
 
                     if (importantLay != null)
                     {

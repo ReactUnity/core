@@ -1,3 +1,4 @@
+using ReactUnity.StyleEngine;
 using ReactUnity.Types;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -22,7 +23,7 @@ namespace ReactUnity.Editor.Renderer
 
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
-            return new ReactUnityElement(GetScript(), GetGlobals(property));
+            return new ReactUnityElement(GetScript(), GetGlobals(property), new DefaultMediaProvider("property"));
         }
 
         protected abstract ReactScript GetScript();

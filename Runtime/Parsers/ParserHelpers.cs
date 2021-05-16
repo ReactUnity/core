@@ -35,6 +35,9 @@ namespace ReactUnity.Styling.Parsers
             }
         }
 
+        public static List<string> SplitComma(string val) => Split(val, ',');
+        public static List<string> SplitWhitespace(string val) => Split(val, ' ');
+
         public static List<string> Split(string val, char separator)
         {
             var acc = new StringBuilder();

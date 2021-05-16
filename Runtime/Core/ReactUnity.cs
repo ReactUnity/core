@@ -1,4 +1,5 @@
 using ReactUnity.Schedulers;
+using ReactUnity.StyleEngine;
 using ReactUnity.Types;
 using System;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace ReactUnity
         public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index" };
         private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
 
+        public DefaultMediaProvider MediaProvider { get; private set; }
         public UGUIContext Context { get; private set; }
         private IDisposable ScriptWatchDisposable { get; set; }
         private IDispatcher dispatcher { get; set; }
@@ -62,9 +64,10 @@ namespace ReactUnity
         {
             dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
             runner = new ReactUnityRunner();
+            MediaProvider = new DefaultMediaProvider("runtime");
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
-                Context = new UGUIContext(Root, Globals, script, dispatcher, new UnityScheduler(dispatcher), isDevServer, Render);
+                Context = new UGUIContext(Root, Globals, script, dispatcher, new UnityScheduler(dispatcher), MediaProvider, isDevServer, Render);
                 runner.RunScript(code, Context, BeforeStart, AfterStart);
             }, dispatcher, true, disableWarnings);
 

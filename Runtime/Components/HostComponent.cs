@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace ReactUnity.Components
 {
-
     public class HostComponent : ReactComponent, IHostComponent
     {
         public float Width => RectTransform.rect.width;

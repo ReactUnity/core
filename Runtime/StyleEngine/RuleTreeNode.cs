@@ -14,6 +14,8 @@ namespace ReactUnity.StyleEngine
         public RuleRelationType RelationType = RuleRelationType.Parent;
         public T Data;
 
+        public MediaQueryList MediaQuery;
+
         public int Specifity { get; set; }
 
         public RuleTreeNode<T> AddChildCascading(string selector)
@@ -66,6 +68,8 @@ namespace ReactUnity.StyleEngine
 
             // We are at root, all rules matched
             if (Parent == null) return true;
+
+            if (MediaQuery != null && !MediaQuery.matches) return false;
 
             var relative = component;
             var runOnce = RelationType == RuleRelationType.DirectSibling || RelationType == RuleRelationType.DirectParent || RelationType == RuleRelationType.Self;

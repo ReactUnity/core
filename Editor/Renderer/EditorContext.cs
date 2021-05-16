@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using ReactUnity.Editor.StateHandlers;
+using ReactUnity.StyleEngine;
 
 namespace ReactUnity.Editor.Renderer
 {
@@ -88,8 +89,9 @@ namespace ReactUnity.Editor.Renderer
                 { "hover", typeof(HoverStateHandler) },
             };
 
-        public EditorContext(VisualElement hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, bool isDevServer, Action onRestart = null)
-            : base(globals, script, dispatcher, scheduler, isDevServer, onRestart, LayoutMergeMode.Both, false)
+        public EditorContext(VisualElement hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher,
+            IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart = null)
+            : base(globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, false)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(EditorResourcesHelper.UseragentStylesheet?.text, -1);

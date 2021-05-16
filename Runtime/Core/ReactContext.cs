@@ -35,6 +35,7 @@ namespace ReactUnity
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
         public Location Location { get; }
+        public IMediaProvider MediaProvider { get; }
 
         protected bool LayoutScheduled = false;
 
@@ -49,7 +50,7 @@ namespace ReactUnity
 
 
         public ReactContext(GlobalRecord globals, ReactScript script, IDispatcher dispatcher,
-            IUnityScheduler scheduler, bool isDevServer, Action onRestart, LayoutMergeMode mergeLayout, bool calculatesLayout)
+            IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart, LayoutMergeMode mergeLayout, bool calculatesLayout)
         {
             Globals = globals;
             Script = script;
@@ -60,6 +61,7 @@ namespace ReactUnity
             MergeLayout = mergeLayout;
             CalculatesLayout = calculatesLayout;
             Location = new Location(this);
+            MediaProvider = mediaProvider;
 
             Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
@@ -106,6 +108,29 @@ namespace ReactUnity
                 Keyframes[rule.Name] = KeyframeList.Create(rule);
             }
 
+
+            foreach (var media in stylesheet.MediaRules.OfType<IMediaRule>())
+            {
+                var mediaRegex = new Regex(@"@media ([^\{]*){.*");
+                var match = mediaRegex.Match(media.StylesheetText.Text);
+
+                if (match.Groups.Count < 2) continue;
+
+                var condition = match.Groups[1];
+                var mql = MediaQueryList.Create(MediaProvider, condition.Value);
+                mql.OnUpdate += MediaQueryUpdated;
+
+                foreach (var rule in media.Children.OfType<StyleRule>())
+                {
+                    StyleTree.AddStyle(rule, importanceOffset, MergeLayout, mql);
+                }
+            }
+
+            Host.ResolveStyle(true);
+        }
+
+        private void MediaQueryUpdated()
+        {
             Host.ResolveStyle(true);
         }
 
