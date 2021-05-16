@@ -74,8 +74,8 @@ namespace ReactUnity.Styling
             var hasTransition = Current != Previous && (transition != null && transition.Any);
             var hasAnimation = Current != Previous && (animation != null && animation.Any);
 
-            if (!hasTransition) StopTransitions();
-            if (!hasAnimation) StopAnimations();
+            if (!hasTransition) StopTransitions(true);
+            if (!hasAnimation) StopAnimations(true);
 
             if (hasTransition || hasAnimation)
             {
@@ -102,7 +102,7 @@ namespace ReactUnity.Styling
         #region Transitions
         private void StartTransitions(TransitionList transition)
         {
-            StopTransitions();
+            StopTransitions(true);
             propertyTransitionStates = new Dictionary<string, TransitionState>();
             activeTransitions = transition;
             transitionStartTime = getTime();
@@ -110,15 +110,19 @@ namespace ReactUnity.Styling
             if (!finished) transitionDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateTransitions()));
         }
 
-        private void StopTransitions()
+        private void StopTransitions(bool reset)
         {
             if (transitionDisposable != null)
             {
                 transitionDisposable.Dispose();
                 transitionDisposable = null;
             }
-            activeTransitions = null;
-            propertyTransitionStates = null;
+
+            if (reset)
+            {
+                activeTransitions = null;
+                propertyTransitionStates = null;
+            }
         }
 
         private bool UpdateTransitions()
@@ -218,7 +222,7 @@ namespace ReactUnity.Styling
                 }
             }
 
-            if (finished) StopTransitions();
+            if (finished) StopTransitions(false);
 
             OnUpdate?.Invoke(Active, hasLayout);
 
@@ -230,21 +234,24 @@ namespace ReactUnity.Styling
         #region Animations
         private void StartAnimations(AnimationList animation)
         {
-            StopAnimations();
+            StopAnimations(true);
             activeAnimations = animation;
             animationStartTime = getTime();
             var finished = UpdateAnimations();
             if (!finished) animationDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateAnimations()));
         }
 
-        private void StopAnimations()
+        private void StopAnimations(bool reset)
         {
             if (animationDisposable != null)
             {
                 animationDisposable.Dispose();
                 animationDisposable = null;
             }
-            activeAnimations = null;
+            if (reset)
+            {
+                activeAnimations = null;
+            }
         }
 
 
@@ -373,7 +380,7 @@ namespace ReactUnity.Styling
                 }
             }
 
-            if (finished) StopAnimations();
+            if (finished) StopAnimations(false);
 
             OnUpdate?.Invoke(Active, hasLayout);
 
