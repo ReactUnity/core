@@ -196,6 +196,11 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.animation, value);
             get => GetStyleValue<AnimationList>(StyleProperties.animation);
         }
+        public AudioList audio
+        {
+            set => SetStyleValue(StyleProperties.audio, value);
+            get => GetStyleValue<AudioList>(StyleProperties.audio);
+        }
         #endregion
 
         #region Resolved values

@@ -19,22 +19,26 @@ namespace ReactUnity.Styling
             public float Duration = 0;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static float getTime() => Time.realtimeSinceStartup * 1000;
+
         private static NodeStyle DefaultStyle = new NodeStyle();
         public NodeStyle Previous { get; private set; }
         public NodeStyle Current { get; private set; }
         public NodeStyle Active { get; private set; }
 
         public event Action<NodeStyle, bool> OnUpdate;
+        public StyleState Parent { get; private set; }
 
         private ReactContext Context;
         private YogaNode Layout;
         private YogaNode DefaultLayout;
 
+
+        private Dictionary<string, TransitionState> propertyTransitionStates;
         private TransitionList activeTransitions;
         private DisposableHandle transitionDisposable;
         private float transitionStartTime;
-
-        private Dictionary<string, TransitionState> propertyTransitionStates;
 
 
         private AnimationList activeAnimations;
@@ -42,10 +46,10 @@ namespace ReactUnity.Styling
         private float animationStartTime;
 
 
-        public StyleState Parent { get; private set; }
+        private AudioList activeAudioList;
+        private DisposableHandle audioDisposable;
+        private float audioStartTime;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static float getTime() => Time.realtimeSinceStartup * 1000;
 
         public StyleState(ReactContext context, YogaNode layout, YogaNode defaultLayout)
         {
@@ -97,9 +101,12 @@ namespace ReactUnity.Styling
                 Previous = null;
                 ParentUpdated(Parent?.Active, false);
             }
+
+            RecalculateAudio();
         }
 
         #region Transitions
+
         private void StartTransitions(TransitionList transition)
         {
             StopTransitions(true);
@@ -230,10 +237,12 @@ namespace ReactUnity.Styling
 
             return finished;
         }
+
         #endregion
 
 
         #region Animations
+
         private void StartAnimations(AnimationList animation)
         {
             StopAnimations(true);
@@ -381,6 +390,11 @@ namespace ReactUnity.Styling
                         if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout);
                         hasLayout = true;
                     }
+
+                    if (sp.name == StyleProperties.audio.name)
+                    {
+                        RecalculateAudio();
+                    }
                 }
             }
 
@@ -390,6 +404,64 @@ namespace ReactUnity.Styling
 
             return finished;
         }
+
+        #endregion
+
+        #region Audio
+
+        private void RecalculateAudio()
+        {
+            var audio = Active.audio;
+
+            if (audio == null) StopAudio(true);
+            else if (activeAudioList != audio) StartAudio(audio);
+        }
+
+        private void StartAudio(AudioList audio)
+        {
+            StopAudio(true);
+            activeAudioList = audio;
+            audioStartTime = getTime();
+            var finished = UpdateAudio();
+            if (!finished) audioDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateAudio()));
+        }
+
+        private void StopAudio(bool reset)
+        {
+            if (audioDisposable != null)
+            {
+                audioDisposable.Dispose();
+                audioDisposable = null;
+            }
+            if (reset)
+            {
+                activeAudioList = null;
+            }
+        }
+
+
+        private bool UpdateAudio()
+        {
+            if (activeAudioList?.Parts == null) return true;
+
+            var finished = true;
+
+            var currentTime = getTime();
+            var passedTime = currentTime - audioStartTime;
+
+            foreach (var item in activeAudioList.Parts)
+            {
+                var part = item;
+                if (!part.Valid) continue;
+
+                // TODO: Actually implement playing audio logic
+            }
+
+            if (finished) StopAudio(false);
+
+            return finished;
+        }
+
         #endregion
 
 
