@@ -129,6 +129,7 @@ namespace ReactUnity.Styling
         {
             if (activeTransitions == null) return true;
 
+            var updated = false;
             var finished = true;
             var hasLayout = false;
 
@@ -212,11 +213,12 @@ namespace ReactUnity.Styling
                         }
                     }
 
+                    updated = updated || (Active.GetStyleValue(sp) != activeValue);
                     Active.SetStyleValue(sp, activeValue);
 
-                    if (Layout != null && sp is ILayoutProperty lp)
+                    if (sp is ILayoutProperty lp)
                     {
-                        lp.Set(Layout, activeValue, DefaultLayout);
+                        if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout);
                         hasLayout = true;
                     }
                 }
@@ -224,7 +226,7 @@ namespace ReactUnity.Styling
 
             if (finished) StopTransitions(false);
 
-            OnUpdate?.Invoke(Active, hasLayout);
+            if (updated) OnUpdate?.Invoke(Active, hasLayout);
 
             return finished;
         }
@@ -259,6 +261,7 @@ namespace ReactUnity.Styling
         {
             if (activeAnimations?.Animations == null) return true;
 
+            var updated = false;
             var finished = true;
             var hasLayout = false;
 
@@ -370,6 +373,7 @@ namespace ReactUnity.Styling
                         else activeValue = highValue;
                     }
 
+                    updated = updated || (Active.GetStyleValue(sp) != activeValue);
                     Active.SetStyleValue(sp, activeValue);
 
                     if (sp is ILayoutProperty lp)
@@ -382,7 +386,7 @@ namespace ReactUnity.Styling
 
             if (finished) StopAnimations(false);
 
-            OnUpdate?.Invoke(Active, hasLayout);
+            if (updated) OnUpdate?.Invoke(Active, hasLayout);
 
             return finished;
         }
