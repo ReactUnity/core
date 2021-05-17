@@ -19,7 +19,7 @@ namespace ReactUnity.Styling.Parsers
             if (value is Texture2D t) return new FontReference(AssetReferenceType.Object, t);
             if (value is Sprite s) return new FontReference(AssetReferenceType.Object, s.texture);
             if (value is Object o) return new FontReference(AssetReferenceType.Object, o);
-            return FromString(ConverterMap.UrlConverter.Convert(value) as string);
+            return FromString(Converters.UrlConverter.Convert(value) as string);
         }
 
         public object FromString(string value)

@@ -9,7 +9,7 @@ namespace ReactUnity.Styling.Parsers
 {
     public class YogaValue2Converter : IStyleParser, IStyleConverter
     {
-        IStyleConverter YogaValueParser = ConverterMap.YogaValueConverter;
+        IStyleConverter YogaValueParser = Converters.YogaValueConverter;
         char[] splitters = new char[] { ' ', ',' };
 
         public object FromString(string value)

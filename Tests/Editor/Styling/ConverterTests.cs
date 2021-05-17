@@ -22,7 +22,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void TransitionConverter()
         {
-            var converted = ConverterMap.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb") as TransitionList;
+            var converted = Converters.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb") as TransitionList;
 
             var widthTr = converted.Transitions["width"];
             Assert.IsTrue(widthTr.Valid);
@@ -55,7 +55,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AnimationConverter()
         {
-            var converted = ConverterMap.AnimationListConverter.Convert("roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing") as AnimationList;
+            var converted = Converters.AnimationListConverter.Convert("roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing") as AnimationList;
 
             var roll = converted.Animations["roll"];
             Assert.IsTrue(roll.Valid);
@@ -88,7 +88,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AudioConverter()
         {
-            var converted = ConverterMap.AudioListConverter.Convert("sound1 3s 1s 2s 5 local, sound2 infinite 2s, sound3 5 5 5 5 5") as AudioList;
+            var converted = Converters.AudioListConverter.Convert("sound1 3s 1s 2s 5 local, sound2 infinite 2s, sound3 5 5 5 5 5") as AudioList;
 
             var part0 = converted.Parts[0];
             Assert.IsTrue(part0.Valid);
@@ -125,7 +125,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("100", SpecialNames.CantParse)]
         public void DurationConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, ConverterMap.DurationConverter.Convert(input));
+            Assert.AreEqual(expected, Converters.DurationConverter.Convert(input));
         }
 
         [TestCase("0", 0f)]
@@ -142,7 +142,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("5as", SpecialNames.CantParse)]
         public void AngleConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, ConverterMap.AngleConverter.Convert(input));
+            Assert.AreEqual(expected, Converters.AngleConverter.Convert(input));
         }
 
         [TestCase("0", 0f)]
@@ -155,7 +155,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("5as", SpecialNames.CantParse)]
         public void LengthConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, ConverterMap.LengthConverter.Convert(input));
+            Assert.AreEqual(expected, Converters.LengthConverter.Convert(input));
         }
 
         [TestCase("0", 0f)]
@@ -167,7 +167,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("5as", SpecialNames.CantParse)]
         public void PercentageConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, ConverterMap.PercentageConverter.Convert(input));
+            Assert.AreEqual(expected, Converters.PercentageConverter.Convert(input));
         }
     }
 }

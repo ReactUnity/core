@@ -92,7 +92,7 @@ namespace ReactUnity.Animations
             {
                 var split = splits[i];
 
-                var dur = ConverterMap.DurationConverter.Convert(split);
+                var dur = Converters.DurationConverter.Convert(split);
 
                 if (dur is float f)
                 {
@@ -113,7 +113,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var count = split == "infinite" ? -1 : ConverterMap.IntConverter.Convert(split);
+                var count = split == "infinite" ? -1 : Converters.IntConverter.Convert(split);
 
                 if (count is int fcount)
                 {
@@ -127,7 +127,7 @@ namespace ReactUnity.Animations
                 }
 
 
-                var dir = !directionSet ? ConverterMap.AnimationDirectionConverter.Convert(split) : null;
+                var dir = !directionSet ? Converters.AnimationDirectionConverter.Convert(split) : null;
 
                 if (dir is AnimationDirection d)
                 {
@@ -136,7 +136,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var fm = !fillModeSet ? ConverterMap.AnimationFillModeConverter.Convert(split) : null;
+                var fm = !fillModeSet ? Converters.AnimationFillModeConverter.Convert(split) : null;
 
                 if (fm is AnimationFillMode fmd)
                 {
@@ -146,7 +146,7 @@ namespace ReactUnity.Animations
                 }
 
 
-                var tm = !timingSet ? ConverterMap.TimingFunctionConverter.Convert(split) : null;
+                var tm = !timingSet ? Converters.TimingFunctionConverter.Convert(split) : null;
 
                 if (tm is TimingFunction tmf)
                 {

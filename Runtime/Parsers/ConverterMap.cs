@@ -12,7 +12,7 @@ using ReactUnity.Animations;
 
 namespace ReactUnity.Styling
 {
-    internal class ConverterMap
+    internal class Converters
     {
         static public IStyleConverter DefaultConverter = new StringConverter();
         static public IStyleConverter StringConverter = new StringConverter();

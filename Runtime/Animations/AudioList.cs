@@ -104,7 +104,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var count = split == "infinite" ? -1 : ConverterMap.IntConverter.Convert(split);
+                var count = split == "infinite" ? -1 : Converters.IntConverter.Convert(split);
 
                 if (count is int fcount)
                 {
@@ -117,7 +117,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var dur = ConverterMap.DurationConverter.Convert(split);
+                var dur = Converters.DurationConverter.Convert(split);
 
                 if (dur is float f)
                 {

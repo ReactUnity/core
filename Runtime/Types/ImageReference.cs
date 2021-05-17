@@ -45,7 +45,7 @@ namespace ReactUnity.Types
             }
             else if (realType == AssetReferenceType.Procedural)
             {
-                var color = ConverterMap.ColorConverter.Convert(realValue);
+                var color = Converters.ColorConverter.Convert(realValue);
 
                 if (color is Color c)
                 {

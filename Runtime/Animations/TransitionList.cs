@@ -100,7 +100,7 @@ namespace ReactUnity.Animations
             }
 
 
-            var dur = ConverterMap.DurationConverter.Convert(splits[offset]);
+            var dur = Converters.DurationConverter.Convert(splits[offset]);
             if (dur is float f) Duration = f;
             else Valid = false;
 
@@ -116,11 +116,11 @@ namespace ReactUnity.Animations
                 var delayString = nextIsDelay ? next : last ?? "0";
                 var easing = nextIsDelay ? last ?? "linear" : next;
 
-                dur = ConverterMap.DurationConverter.Convert(delayString);
+                dur = Converters.DurationConverter.Convert(delayString);
                 if (dur is float delay) Delay = delay;
                 else Valid = false;
 
-                var tm = ConverterMap.TimingFunctionConverter.Convert(easing);
+                var tm = Converters.TimingFunctionConverter.Convert(easing);
                 if (tm is TimingFunction tmf) TimingFunction = tmf;
             }
         }

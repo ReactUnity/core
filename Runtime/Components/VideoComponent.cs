@@ -30,7 +30,7 @@ namespace ReactUnity.Components
             switch (propertyName)
             {
                 case "source":
-                    SetSource(ConverterMap.VideoReferenceConverter.Convert(value) as VideoReference);
+                    SetSource(Converters.VideoReferenceConverter.Convert(value) as VideoReference);
                     return;
                 default:
                     base.SetProperty(propertyName, value);

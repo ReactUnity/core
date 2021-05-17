@@ -75,7 +75,7 @@ namespace ReactUnity
                 else if (split == "to") offsets.Add(1);
                 else
                 {
-                    var offset = ConverterMap.PercentageConverter.Convert(split);
+                    var offset = Converters.PercentageConverter.Convert(split);
                     if (offset is float f) offsets.Add(f);
                     else offsets.Add(-1);
                 }

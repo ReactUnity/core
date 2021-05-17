@@ -9,7 +9,7 @@ namespace ReactUnity.Styling.Parsers
 {
     public class ColorConverter : IStyleParser, IStyleConverter
     {
-        IStyleConverter floatDs = ConverterMap.FloatConverter;
+        IStyleConverter floatDs = Converters.FloatConverter;
         static char[] splitChars = new char[] { ',', ' ' };
         static Regex rgbRegex = new Regex("rgba?\\((?<values>.*)\\)");
 

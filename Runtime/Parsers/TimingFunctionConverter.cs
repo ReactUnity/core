@@ -30,7 +30,7 @@ namespace ReactUnity.Styling.Parsers
 
             if (name == "steps" && (fn.Length == 2 || fn.Length == 3))
             {
-                var a1 = ConverterMap.IntConverter.Convert(fn[1]);
+                var a1 = Converters.IntConverter.Convert(fn[1]);
                 var a2 = fn.Length > 2 ? StepConverter.Convert(fn[2]) : StepsJumpMode.End;
 
                 var stepMode = a2 is StepsJumpMode s2 ? s2 : StepsJumpMode.End;
@@ -40,10 +40,10 @@ namespace ReactUnity.Styling.Parsers
             }
             else if (name == "cubic-bezier" && fn.Length == 5)
             {
-                var a1 = ConverterMap.FloatConverter.Convert(fn[1]);
-                var a2 = ConverterMap.FloatConverter.Convert(fn[2]);
-                var a3 = ConverterMap.FloatConverter.Convert(fn[3]);
-                var a4 = ConverterMap.FloatConverter.Convert(fn[4]);
+                var a1 = Converters.FloatConverter.Convert(fn[1]);
+                var a2 = Converters.FloatConverter.Convert(fn[2]);
+                var a3 = Converters.FloatConverter.Convert(fn[3]);
+                var a4 = Converters.FloatConverter.Convert(fn[4]);
 
                 if (a1 is float f1 &&
                     a2 is float f2 &&

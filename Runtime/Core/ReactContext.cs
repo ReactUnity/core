@@ -94,8 +94,8 @@ namespace ReactUnity
 
             foreach (var rule in stylesheet.FontfaceSetRules)
             {
-                FontFamilies[(ConverterMap.StringConverter.Convert(rule.Family) as string).ToLowerInvariant()] =
-                    ConverterMap.FontReferenceConverter.Convert(rule.Source) as FontReference;
+                FontFamilies[(Converters.StringConverter.Convert(rule.Family) as string).ToLowerInvariant()] =
+                    Converters.FontReferenceConverter.Convert(rule.Source) as FontReference;
             }
 
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())

@@ -9,7 +9,7 @@ namespace ReactUnity.StyleEngine
 {
     public class MediaQueryList
     {
-        private static IStyleConverter NumberConverter = ConverterMap.LengthConverter;
+        private static IStyleConverter NumberConverter = Converters.LengthConverter;
 
         public static MediaQueryList Create(IMediaProvider provider, string media)
         {

@@ -47,7 +47,7 @@ namespace ReactUnity.Styling
             this.inherited = inherited;
             this.proxy = proxy;
 
-            this.converter = converter ?? ConverterMap.GetConverter(type);
+            this.converter = converter ?? Converters.GetConverter(type);
         }
 
         public object Convert(object value)
@@ -63,7 +63,7 @@ namespace ReactUnity.Styling
 
     public static class StyleProperties
     {
-        public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: ConverterMap.PercentageConverter);
+        public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: Converters.PercentageConverter);
         public static readonly StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static readonly StyleProperty<string> cursor = new StyleProperty<string>("cursor", null, false);
@@ -84,7 +84,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static readonly StyleProperty<YogaValue2> translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
         public static readonly StyleProperty<Vector2> scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
-        public static readonly StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: ConverterMap.RotateConverter);
+        public static readonly StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: Converters.RotateConverter);
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", Color.black, true, true);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
