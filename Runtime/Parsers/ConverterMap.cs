@@ -37,8 +37,9 @@ namespace ReactUnity.Styling
         static public IStyleConverter VideoReferenceConverter = new VideoReferenceConverter();
         static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
-        static public IStyleConverter TransitionListConverter = new TransitionListConverter();
-        static public IStyleConverter AnimationListConverter = new AnimationListConverter();
+        static public IStyleConverter TransitionListConverter = new TransitionList.Converter();
+        static public IStyleConverter AnimationListConverter = new AnimationList.Converter();
+        static public IStyleConverter AudioListConverter = new AudioList.Converter();
 
 
         static public IStyleConverter AnimationFillModeConverter = new EnumConverter<AnimationFillMode>();
@@ -63,6 +64,7 @@ namespace ReactUnity.Styling
             { typeof(FontReference), FontReferenceConverter},
             { typeof(TransitionList), TransitionListConverter},
             { typeof(AnimationList), AnimationListConverter},
+            { typeof(AudioList), AudioListConverter},
             { typeof(Appearance), new EnumConverter<Appearance>() },
             { typeof(Navigation.Mode), new EnumConverter<Navigation.Mode>() },
             { typeof(PointerEvents), new EnumConverter<PointerEvents>() },

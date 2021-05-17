@@ -85,6 +85,33 @@ namespace ReactUnity.Editor.Tests
             Assert.IsFalse(something.Valid);
         }
 
+        [Test]
+        public void AudioConverter()
+        {
+            var converted = ConverterMap.AudioListConverter.Convert("sound1 3s 1s 2s 5 local, sound2 infinite 2s, sound3 5 5 5 5 5") as AudioList;
+
+            var part0 = converted.Parts[0];
+            Assert.IsTrue(part0.Valid);
+            Assert.AreEqual("sound1", part0.Url);
+            Assert.AreEqual(3000, part0.Delay);
+            Assert.AreEqual(1000, part0.Start);
+            Assert.AreEqual(2000, part0.End);
+            Assert.AreEqual(5, part0.IterationCount);
+            Assert.True(part0.Local);
+
+            var part1 = converted.Parts[1];
+            Assert.IsTrue(part1.Valid);
+            Assert.AreEqual("sound2", part1.Url);
+            Assert.AreEqual(2000, part1.Delay);
+            Assert.AreEqual(0, part1.Start);
+            Assert.AreEqual(0, part1.End);
+            Assert.AreEqual(-1, part1.IterationCount);
+            Assert.False(part1.Local);
+
+            var part2 = converted.Parts[2];
+            Assert.IsFalse(part2.Valid);
+        }
+
 
         [TestCase("0", 0f)]
         [TestCase("0s", 0f)]

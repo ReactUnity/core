@@ -40,6 +40,23 @@ namespace ReactUnity.Animations
         public static bool operator !=(TransitionList left, TransitionList right) => left?.Definition != right?.Definition;
         public override bool Equals(object obj) => base.Equals(obj);
         public override int GetHashCode() => Definition.GetHashCode();
+
+
+        public class Converter : IStyleParser, IStyleConverter
+        {
+            public object Convert(object value)
+            {
+                if (value is TransitionList f) return f;
+                if (value is Transition t) return new TransitionList(t);
+                return FromString(value?.ToString());
+            }
+
+            public object FromString(string value)
+            {
+                if (string.IsNullOrWhiteSpace(value)) return null;
+                return new TransitionList(value);
+            }
+        }
     }
 
     public class Transition
