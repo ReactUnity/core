@@ -67,8 +67,6 @@ namespace ReactUnity.Animations
         public AudioReference AudioClip { get; }
         public int IterationCount { get; } = 1;
         public float Delay { get; } = 0;
-        public float Start { get; } = 0;
-        public float End { get; } = 0;
         public bool Local { get; } = false;
         public bool Valid { get; } = true;
 
@@ -85,8 +83,6 @@ namespace ReactUnity.Animations
 
             var countSet = false;
             var delaySet = false;
-            var startSet = false;
-            var endSet = false;
             var clipSet = false;
             var localSet = false;
 
@@ -126,16 +122,6 @@ namespace ReactUnity.Animations
                     {
                         Delay = f;
                         delaySet = true;
-                    }
-                    else if (!startSet)
-                    {
-                        Start = f;
-                        startSet = true;
-                    }
-                    else if (!endSet)
-                    {
-                        End = f;
-                        endSet = true;
                     }
                     else
                     {

@@ -89,15 +89,13 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AudioConverter()
         {
-            var converted = Converters.AudioListConverter.Convert("url(res:click) 3s 1s 2s 5 local, url(https://example.com) infinite 2s, sound3 5 5 5 5 5") as AudioList;
+            var converted = Converters.AudioListConverter.Convert("url(res:click) 3s 5 local, url(https://example.com) infinite 2s, url(res:something), sound3 5 5 5 5 5") as AudioList;
 
             var part0 = converted.Parts[0];
             Assert.IsTrue(part0.Valid);
             Assert.AreEqual(AssetReferenceType.Resource, part0.AudioClip.type);
             Assert.AreEqual("click", part0.AudioClip.value);
             Assert.AreEqual(3000, part0.Delay);
-            Assert.AreEqual(1000, part0.Start);
-            Assert.AreEqual(2000, part0.End);
             Assert.AreEqual(5, part0.IterationCount);
             Assert.True(part0.Local);
 
@@ -106,13 +104,19 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(AssetReferenceType.Url, part1.AudioClip.type);
             Assert.AreEqual("https://example.com", part1.AudioClip.value);
             Assert.AreEqual(2000, part1.Delay);
-            Assert.AreEqual(0, part1.Start);
-            Assert.AreEqual(0, part1.End);
             Assert.AreEqual(-1, part1.IterationCount);
             Assert.False(part1.Local);
 
             var part2 = converted.Parts[2];
-            Assert.IsFalse(part2.Valid);
+            Assert.IsTrue(part2.Valid);
+            Assert.AreEqual(AssetReferenceType.Resource, part2.AudioClip.type);
+            Assert.AreEqual("something", part2.AudioClip.value);
+            Assert.AreEqual(0, part2.Delay);
+            Assert.AreEqual(1, part2.IterationCount);
+            Assert.False(part2.Local);
+
+            var part3 = converted.Parts[3];
+            Assert.IsFalse(part3.Valid);
         }
 
 

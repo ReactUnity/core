@@ -19,6 +19,15 @@ namespace ReactUnity.Styling
             public float Duration = 0;
         }
 
+        private class AudioState
+        {
+            public bool Loaded;
+            public bool Loading;
+            public AudioClip Clip;
+            public bool ShouldStart;
+            public int CurrentLoop = 0;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static float getTime() => Time.realtimeSinceStartup * 1000;
 
@@ -38,7 +47,6 @@ namespace ReactUnity.Styling
         private Dictionary<string, TransitionState> propertyTransitionStates;
         private TransitionList activeTransitions;
         private DisposableHandle transitionDisposable;
-        private float transitionStartTime;
 
 
         private AnimationList activeAnimations;
@@ -46,6 +54,7 @@ namespace ReactUnity.Styling
         private float animationStartTime;
 
 
+        private AudioState[] audioStates;
         private AudioList activeAudioList;
         private DisposableHandle audioDisposable;
         private float audioStartTime;
@@ -110,7 +119,6 @@ namespace ReactUnity.Styling
             StopTransitions(true);
             propertyTransitionStates = new Dictionary<string, TransitionState>();
             activeTransitions = transition;
-            transitionStartTime = getTime();
             var finished = UpdateTransitions();
             if (!finished) transitionDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateTransitions()));
         }
@@ -418,6 +426,7 @@ namespace ReactUnity.Styling
         private void StartAudio(AudioList audio)
         {
             StopAudio(true);
+            audioStates = new AudioState[audio.Parts.Count];
             activeAudioList = audio;
             audioStartTime = getTime();
             var finished = UpdateAudio();
@@ -433,6 +442,7 @@ namespace ReactUnity.Styling
             }
             if (reset)
             {
+                audioStates = null;
                 activeAudioList = null;
             }
         }
@@ -447,22 +457,83 @@ namespace ReactUnity.Styling
             var currentTime = getTime();
             var passedTime = currentTime - audioStartTime;
 
-            foreach (var item in activeAudioList.Parts)
+            var parts = activeAudioList.Parts;
+
+            for (int i = 0; i < parts.Count; i++)
             {
-                var part = item;
-                if (!part.Valid) continue;
+                var part = parts[i];
 
-                part.AudioClip.Get(Context, (clip) =>
+                if (!part.Valid || part.IterationCount == 0) continue;
+
+                var state = audioStates[i] ??= new AudioState();
+
+
+                Action tryPlayClip = () =>
                 {
-                    if (!part.Local)
+                    if (state.Loaded && state.ShouldStart)
                     {
-                        Context.PlayAudio(clip);
+                        state.ShouldStart = false;
+                        Context.PlayAudio(state.Clip);
                     }
-                });
+                };
 
-                finished = true;
 
-                // TODO: Actually implement playing audio logic
+                var offsetTime = passedTime - part.Delay;
+                var delayPassed = offsetTime >= 0;
+
+                if (!state.Loaded && !state.Loading)
+                {
+                    state.Loading = true;
+
+                    part.AudioClip.Get(Context, (clip) =>
+                    {
+                        state.Clip = clip;
+                        state.Loaded = true;
+                        state.Loading = false;
+
+                        tryPlayClip();
+                    });
+                }
+
+                if (state.Loaded)
+                {
+                    if (state.Clip == null) continue;
+
+                    if (!delayPassed)
+                    {
+                        finished = false;
+                        continue;
+                    }
+
+                    var clipLength = state.Clip.length * 1000;
+                    var currentLoop = Mathf.FloorToInt(offsetTime / clipLength);
+                    var canLoop = part.IterationCount < 0 || part.IterationCount > currentLoop;
+
+                    if (!canLoop) continue;
+
+                    var shouldLoop = state.CurrentLoop <= currentLoop;
+
+                    if (shouldLoop)
+                    {
+                        state.ShouldStart = true;
+                        state.CurrentLoop = currentLoop + 1;
+                    }
+                }
+                else
+                {
+                    if (delayPassed && state.CurrentLoop == 0)
+                    {
+                        state.ShouldStart = true;
+                        state.CurrentLoop = 1;
+                    }
+                }
+
+                if (part.IterationCount < 0 || state.CurrentLoop < part.IterationCount)
+                {
+                    finished = false;
+                }
+
+                tryPlayClip();
             }
 
             if (finished) StopAudio(false);
