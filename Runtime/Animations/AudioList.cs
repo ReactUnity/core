@@ -1,5 +1,6 @@
 using ReactUnity.Styling;
 using ReactUnity.Styling.Parsers;
+using ReactUnity.Types;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,7 +64,7 @@ namespace ReactUnity.Animations
     public class AudioListPart
     {
         public string Definition { get; }
-        public string Url { get; }
+        public AudioReference AudioClip { get; }
         public int IterationCount { get; } = 1;
         public float Delay { get; } = 0;
         public float Start { get; } = 0;
@@ -86,7 +87,7 @@ namespace ReactUnity.Animations
             var delaySet = false;
             var startSet = false;
             var endSet = false;
-            var urlSet = false;
+            var clipSet = false;
             var localSet = false;
 
             for (int i = 0; i < splits.Count; i++)
@@ -143,14 +144,16 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                if (!urlSet)
+                if (!clipSet)
                 {
-                    Url = split;
-                    urlSet = true;
+                    AudioClip = Converters.AudioReferenceConverter.Convert(split) as AudioReference;
+                    clipSet = true;
                     continue;
                 }
                 else Valid = false;
             }
+
+            if (AudioClip == null) Valid = false;
         }
     }
 }

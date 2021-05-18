@@ -36,6 +36,37 @@ namespace ReactUnity.Types
             this.value = value;
         }
 
+        public AssetReference(Url url)
+        {
+            value = url.NormalizedUrl;
+            switch (url.Protocol)
+            {
+                case UrlProtocol.Contextual:
+                    type = AssetReferenceType.Auto;
+                    break;
+                case UrlProtocol.Web:
+                    type = AssetReferenceType.Url;
+                    break;
+                case UrlProtocol.Resource:
+                    type = AssetReferenceType.Resource;
+                    break;
+                case UrlProtocol.File:
+                    type = AssetReferenceType.File;
+                    break;
+                case UrlProtocol.Data:
+                    type = AssetReferenceType.Data;
+                    break;
+                case UrlProtocol.Global:
+                    type = AssetReferenceType.Global;
+                    break;
+                case UrlProtocol.None:
+                default:
+                    type = AssetReferenceType.None;
+                    value = null;
+                    break;
+            }
+        }
+
         public void Get(ReactContext context, System.Action<AssetType> callback)
         {
             if (IsCached)

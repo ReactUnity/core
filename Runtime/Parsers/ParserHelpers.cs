@@ -6,7 +6,7 @@ namespace ReactUnity.Styling.Parsers
 {
     internal static class ParserHelpers
     {
-        public static Regex FunctionRegex = new Regex(@"^([\w\d-]+)\(([\s\w\d\.,/%#_:;+-]*)\)$", RegexOptions.IgnoreCase);
+        public static Regex FunctionRegex = new Regex(@"^([\w\d-]+)\(([\s\w\d\.,/%#_:;+""\'\`-]*)\)$", RegexOptions.IgnoreCase);
 
         public static string[] ParseFunction(string fn)
         {

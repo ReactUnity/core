@@ -9,6 +9,8 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using ReactUnity.Editor.StateHandlers;
 using ReactUnity.StyleEngine;
+using System.Reflection;
+using ReactUnity.Editor.Native;
 
 namespace ReactUnity.Editor.Renderer
 {
@@ -121,6 +123,11 @@ namespace ReactUnity.Editor.Renderer
             tc.IsPseudoElement = true;
             tc.Element.name = tag;
             return tc;
+        }
+
+        public override void PlayAudio(AudioClip clip)
+        {
+            EditorSFX.PlayClip(clip);
         }
     }
 }

@@ -77,5 +77,11 @@ namespace ReactUnity
             tc.GameObject.name = tag;
             return tc;
         }
+
+        public override void PlayAudio(AudioClip clip)
+        {
+            var source = (Host as HostComponent).GetOrAddComponent<AudioSource>();
+            source.PlayOneShot(clip);
+        }
     }
 }

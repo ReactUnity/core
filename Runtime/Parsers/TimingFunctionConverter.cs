@@ -1,12 +1,12 @@
 using ReactUnity.Animations;
-using ReactUnity.Styling.Types;
+using System.Collections.Generic;
 
 namespace ReactUnity.Styling.Parsers
 {
     public class TimingFunctionConverter : IStyleParser, IStyleConverter
     {
+        static private HashSet<string> AllowedFunctions = new HashSet<string> { "steps", "cubic-bezier" };
         static private IStyleConverter TypeConverter = new EnumConverter<TimingFunctionType>(false);
-        static private IStyleConverter StepConverter = new EnumConverter<StepsJumpMode>(false);
 
         public object Convert(object value)
         {
@@ -22,36 +22,8 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
-            var fn = ParserHelpers.ParseFunction(value);
-
-            if (fn == null) return SpecialNames.CantParse;
-
-            var name = fn[0];
-
-            if (name == "steps" && (fn.Length == 2 || fn.Length == 3))
-            {
-                var a1 = Converters.IntConverter.Convert(fn[1]);
-                var a2 = fn.Length > 2 ? StepConverter.Convert(fn[2]) : StepsJumpMode.End;
-
-                var stepMode = a2 is StepsJumpMode s2 ? s2 : StepsJumpMode.End;
-
-                if (a1 is int f1)
-                    return TimingFunctions.Steps(f1, stepMode);
-            }
-            else if (name == "cubic-bezier" && fn.Length == 5)
-            {
-                var a1 = Converters.FloatConverter.Convert(fn[1]);
-                var a2 = Converters.FloatConverter.Convert(fn[2]);
-                var a3 = Converters.FloatConverter.Convert(fn[3]);
-                var a4 = Converters.FloatConverter.Convert(fn[4]);
-
-                if (a1 is float f1 &&
-                    a2 is float f2 &&
-                    a3 is float f3 &&
-                    a4 is float f4)
-                    return CubicBezierFunction.Create(f1, f2, f3, f4);
-            }
-            throw new System.NotImplementedException();
+            if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
+            return null;
         }
     }
 }

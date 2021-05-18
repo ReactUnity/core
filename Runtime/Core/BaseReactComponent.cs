@@ -423,7 +423,9 @@ namespace ReactUnity
 
         public CType GetOrAddComponent<CType>() where CType : Component
         {
-            return GetComponent<CType>() ?? AddComponent<CType>();
+            var existing = GetComponent<CType>();
+            if (existing) return existing;
+            return AddComponent<CType>();
         }
 
         #endregion

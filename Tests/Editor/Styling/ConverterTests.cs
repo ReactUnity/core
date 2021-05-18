@@ -2,6 +2,7 @@ using NUnit.Framework;
 using ReactUnity.Animations;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Types;
+using ReactUnity.Types;
 using UnityEngine;
 
 namespace ReactUnity.Editor.Tests
@@ -88,11 +89,12 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AudioConverter()
         {
-            var converted = Converters.AudioListConverter.Convert("sound1 3s 1s 2s 5 local, sound2 infinite 2s, sound3 5 5 5 5 5") as AudioList;
+            var converted = Converters.AudioListConverter.Convert("url(res:click) 3s 1s 2s 5 local, url(https://example.com) infinite 2s, sound3 5 5 5 5 5") as AudioList;
 
             var part0 = converted.Parts[0];
             Assert.IsTrue(part0.Valid);
-            Assert.AreEqual("sound1", part0.Url);
+            Assert.AreEqual(AssetReferenceType.Resource, part0.AudioClip.type);
+            Assert.AreEqual("click", part0.AudioClip.value);
             Assert.AreEqual(3000, part0.Delay);
             Assert.AreEqual(1000, part0.Start);
             Assert.AreEqual(2000, part0.End);
@@ -101,7 +103,8 @@ namespace ReactUnity.Editor.Tests
 
             var part1 = converted.Parts[1];
             Assert.IsTrue(part1.Valid);
-            Assert.AreEqual("sound2", part1.Url);
+            Assert.AreEqual(AssetReferenceType.Url, part1.AudioClip.type);
+            Assert.AreEqual("https://example.com", part1.AudioClip.value);
             Assert.AreEqual(2000, part1.Delay);
             Assert.AreEqual(0, part1.Start);
             Assert.AreEqual(0, part1.End);

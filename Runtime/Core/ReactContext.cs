@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace ReactUnity
 {
@@ -186,6 +187,7 @@ namespace ReactUnity
         public abstract ITextComponent CreateText(string text);
         public abstract IReactComponent CreateComponent(string tag, string text);
         public abstract IReactComponent CreatePseudoComponent(string tag);
+        public abstract void PlayAudio(AudioClip clip);
 
         public void Dispose()
         {

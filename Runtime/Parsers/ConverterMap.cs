@@ -34,6 +34,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter ColorConverter = new ColorConverter();
         static public IStyleConverter ShadowDefinitionConverter = new ShadowDefinitionConverter();
         static public IStyleConverter ImageReferenceConverter = new ImageReferenceConverter();
+        static public IStyleConverter AudioReferenceConverter = new AudioReference.Converter();
         static public IStyleConverter VideoReferenceConverter = new VideoReferenceConverter();
         static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);

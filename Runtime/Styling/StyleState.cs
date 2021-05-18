@@ -68,8 +68,6 @@ namespace ReactUnity.Styling
             RecalculateActive();
         }
 
-
-
         private void RecalculateActive()
         {
             var transition = Current.transition;
@@ -454,6 +452,16 @@ namespace ReactUnity.Styling
                 var part = item;
                 if (!part.Valid) continue;
 
+                part.AudioClip.Get(Context, (clip) =>
+                {
+                    if (!part.Local)
+                    {
+                        Context.PlayAudio(clip);
+                    }
+                });
+
+                finished = true;
+
                 // TODO: Actually implement playing audio logic
             }
 
@@ -473,7 +481,6 @@ namespace ReactUnity.Styling
 
             ParentUpdated(Parent?.Active, false);
         }
-
 
         void ParentUpdated(NodeStyle active, bool hasLayout)
         {
