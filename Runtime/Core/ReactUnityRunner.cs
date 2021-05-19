@@ -33,6 +33,10 @@ namespace ReactUnity
             CreateScheduler(engine, context);
             CreatePolyfills(engine);
 
+            var deferred = engine.RegisterPromise();
+            var resolve = deferred.GetType().GetMethod("get_Resolve").Invoke(deferred, new object[] { }) as Action<Jint.Native.JsValue>;
+            context.Dispatcher.OnEveryUpdate(() => resolve(""));
+
             var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => beforeStart?.Invoke(e) };
             var afterStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => afterStart?.Invoke(e) };
 
@@ -134,7 +138,6 @@ namespace ReactUnity
         void CreatePolyfills(Jint.Engine engine)
         {
             // Load polyfills
-            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/promise").text);
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
         }
