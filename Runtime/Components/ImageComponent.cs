@@ -1,5 +1,6 @@
 using ReactUnity.Styling;
 using ReactUnity.Types;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ namespace ReactUnity.Components
         public ImageComponent(UGUIContext context, string tag = "image") : base(context, tag)
         {
             Image = ImageContainer.AddComponent<Image>();
+            Image.preserveAspect = true;
             Measurer.Sprite = Image.sprite;
         }
 
@@ -29,6 +31,18 @@ namespace ReactUnity.Components
 
             Image.sprite = sprite;
             Measurer.Sprite = sprite;
+        }
+
+        public override void SetProperty(string propertyName, object value)
+        {
+            if (propertyName == "preserveAspect")
+            {
+                Image.preserveAspect = Convert.ToBoolean(value);
+            }
+            else
+            {
+                base.SetProperty(propertyName, value);
+            }
         }
     }
 }

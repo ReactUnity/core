@@ -2,6 +2,7 @@ using Facebook.Yoga;
 using ReactUnity.Layout;
 using ReactUnity.Styling;
 using ReactUnity.Types;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace ReactUnity.Components
@@ -14,23 +15,35 @@ namespace ReactUnity.Components
         public override YogaNode DefaultLayout => ImageDefaultLayout;
 
         public ImageMeasurer Measurer { get; private set; }
-        public ContainerComponent ImageContainer { get; private set; }
+        public GameObject ImageContainer { get; private set; }
 
         public ImageFitMode Fit { get; private set; }
 
         public abstract MaskableGraphic Graphic { get; }
 
+        public ReactReplacedElement ReplacedElement { get; private set; }
+
         public BaseImageComponent(UGUIContext context, string tag) : base(context, tag)
         {
-            ImageContainer = new ContainerComponent(context, "");
-            ImageContainer.GameObject.name = "[ImageContent]";
+            ImageContainer = new GameObject();
+            ImageContainer.name = "[ImageContent]";
+
+            var replacedElementLayout = new YogaNode();
+            Layout.AddChild(replacedElementLayout);
+
+            var rt = ImageContainer.AddComponent<RectTransform>();
+            var re = ReplacedElement = ImageContainer.AddComponent<ReactReplacedElement>();
+            re.Layout = replacedElementLayout;
+
+            rt.SetParent(GameObject.transform);
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.sizeDelta = Vector2.zero;
 
             Measurer = ImageContainer.AddComponent<ImageMeasurer>();
             Measurer.Context = context;
-            Measurer.Layout = ImageContainer.Layout;
-            ImageContainer.Layout.SetMeasureFunction(Measurer.Measure);
-
-            ImageContainer.SetParent(this);
+            Measurer.Layout = replacedElementLayout;
+            replacedElementLayout.SetMeasureFunction(Measurer.Measure);
         }
 
         public override void SetProperty(string propertyName, object value)
@@ -39,9 +52,6 @@ namespace ReactUnity.Components
             {
                 case "source":
                     SetSource(value);
-                    return;
-                case "fit":
-                    SetFit((ImageFitMode)System.Convert.ToInt32(value));
                     return;
                 default:
                     base.SetProperty(propertyName, value);
@@ -54,22 +64,15 @@ namespace ReactUnity.Components
         protected abstract void SetSource(object value);
 
 
-        private void SetFit(ImageFitMode fit)
-        {
-            Fit = fit;
-            if (fit == ImageFitMode.FitStart)
-            {
-                Layout.AlignItems = YogaAlign.FlexStart;
-                Layout.JustifyContent = YogaJustify.FlexStart;
-            }
-            else if (fit == ImageFitMode.FitEnd)
-            {
-                Layout.AlignItems = YogaAlign.FlexEnd;
-                Layout.JustifyContent = YogaJustify.FlexEnd;
-            }
-            ImageContainer.Layout.MarkDirty();
 
-            Measurer.FitMode = Fit;
+        public override void ApplyStyles()
+        {
+            base.ApplyStyles();
+
+            var fitMode = ComputedStyle.objectFit;
+            if (Measurer.FitMode != fitMode) Measurer.FitMode = fitMode;
+
+            ReplacedElement.Position = ComputedStyle.objectPosition;
         }
     }
 }

@@ -10,8 +10,8 @@ namespace ReactUnity.Layout
         public YogaNode Layout;
         public UGUIContext Context;
 
-        private ImageFitMode fitMode;
-        public ImageFitMode FitMode
+        private ObjectFit fitMode;
+        public ObjectFit FitMode
         {
             get => fitMode;
             set
@@ -75,11 +75,11 @@ namespace ReactUnity.Layout
                 oh = texture.height;
             }
 
-
+            // ObjectFit.None
             var rw = ow;
             var rh = oh;
 
-            if (fitMode == ImageFitMode.CenterCrop)
+            if (fitMode == ObjectFit.Cover)
             {
                 if (rw < width)
                 {
@@ -95,7 +95,7 @@ namespace ReactUnity.Layout
                     rw *= scale;
                 }
             }
-            else if (fitMode == ImageFitMode.CenterInside)
+            else if (fitMode == ObjectFit.ScaleDown)
             {
                 if (rw > width)
                 {
@@ -111,12 +111,12 @@ namespace ReactUnity.Layout
                     rw *= scale;
                 }
             }
-            else if (fitMode == ImageFitMode.Fill)
+            else if (fitMode == ObjectFit.Fill)
             {
                 rw = width;
                 rh = height;
             }
-            else if (fitMode == ImageFitMode.FitCenter || fitMode == ImageFitMode.FitEnd || fitMode == ImageFitMode.FitStart)
+            else if (fitMode == ObjectFit.Contain)
             {
                 if (rw != width)
                 {

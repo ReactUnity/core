@@ -45,9 +45,8 @@ namespace ReactUnity.Components
         {
             Toggle = AddComponent<Toggle>();
 
-            Check = new ImageComponent(context);
+            Check = new ImageComponent(context, "_toggle-image");
             Check.SetProperty("source", ResourcesHelper.CheckSprite);
-            Check.SetProperty("fit", ImageFitMode.FitCenter);
             Check.SetParent(this);
 
             Toggle.graphic = Check.Image;
