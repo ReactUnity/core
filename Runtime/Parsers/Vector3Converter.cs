@@ -1,4 +1,3 @@
-using ReactUnity.Styling.Types;
 using System;
 using System.Collections;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
-            if (string.IsNullOrWhiteSpace(value)) return SpecialNames.CantParse;
+            if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
 
             var values = value.Split(splitters);
 
@@ -52,7 +51,7 @@ namespace ReactUnity.Styling.Parsers
                             return new Vector3(fl1, fl2, fl3);
             }
 
-            return SpecialNames.CantParse;
+            return CssKeyword.Invalid;
         }
 
         public object Convert(object value)

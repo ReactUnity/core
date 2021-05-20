@@ -1,6 +1,5 @@
 using Facebook.Yoga;
 using ReactUnity.Helpers;
-using ReactUnity.Interop;
 using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace ReactUnity.Components
             backgroundColor = new Color(0.82f, 0.82f, 0.82f, 1),
             borderRadius = 6,
             cursor = "pointer",
-            appearance = Styling.Types.Appearance.Toggle,
+            appearance = Appearance.Toggle,
         };
         public static YogaNode ToggleDefaultLayout { get; } = new YogaNode()
         {

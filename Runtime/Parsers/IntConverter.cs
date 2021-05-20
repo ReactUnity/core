@@ -1,4 +1,3 @@
-using ReactUnity.Styling.Types;
 using System;
 using UnityEngine;
 
@@ -16,7 +15,7 @@ namespace ReactUnity.Styling.Parsers
         {
             var pr = FloatParser.FromString(value);
             if (pr is float f) return Mathf.RoundToInt(f);
-            return SpecialNames.CantParse;
+            return CssKeyword.Invalid;
         }
 
         public object Convert(object value)

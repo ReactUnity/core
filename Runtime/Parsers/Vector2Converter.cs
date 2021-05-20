@@ -1,4 +1,3 @@
-using ReactUnity.Styling.Types;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
-            if (string.IsNullOrWhiteSpace(value)) return SpecialNames.CantParse;
+            if (string.IsNullOrWhiteSpace(value)) return CssKeyword.Invalid;
 
             var sp = ParseFromPositioningLiteral(value);
             if (sp is Vector2 s) return s;
@@ -34,7 +33,7 @@ namespace ReactUnity.Styling.Parsers
                         return new Vector2(fl1, fl2);
             }
 
-            return SpecialNames.CantParse;
+            return CssKeyword.Invalid;
         }
 
         public object Convert(object value)
@@ -107,7 +106,7 @@ namespace ReactUnity.Styling.Parsers
             }
             else
             {
-                return SpecialNames.CantParse;
+                return CssKeyword.Invalid;
             }
 
             return new Vector2(x, y);

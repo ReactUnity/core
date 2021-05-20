@@ -2,7 +2,7 @@ using Facebook.Yoga;
 using ReactUnity.Editor.Events;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.Styling;
-using ReactUnity.Interop;
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using System;
 using System.Collections.Generic;

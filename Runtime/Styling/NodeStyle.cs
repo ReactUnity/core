@@ -1,6 +1,5 @@
 using Facebook.Yoga;
 using ReactUnity.Animations;
-using ReactUnity.Styling.Types;
 using ReactUnity.Types;
 using System.Collections.Generic;
 using TMPro;
@@ -106,10 +105,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.borderBottomColor, value);
             get => HasValue(StyleProperties.borderBottomColor.name) ? GetStyleValue<Color>(StyleProperties.borderBottomColor) : GetStyleValue<Color>(StyleProperties.borderColor);
         }
-        public ShadowDefinition boxShadow
+        public BoxShadow boxShadow
         {
             set => SetStyleValue(StyleProperties.boxShadow, value);
-            get => GetStyleValue<ShadowDefinition>(StyleProperties.boxShadow);
+            get => GetStyleValue<BoxShadow>(StyleProperties.boxShadow);
         }
         public YogaValue2 translate
         {
@@ -267,9 +266,9 @@ namespace ReactUnity.Styling
 
         private object GetStyleValueSpecial(object value, IStyleProperty prop)
         {
-            if (Equals(value, SpecialNames.CantParse)) return null;
-            else if (Equals(value, SpecialNames.Initial) || Equals(value, SpecialNames.Unset)) return prop?.defaultValue;
-            else if (Equals(value, SpecialNames.Inherit)) return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
+            if (Equals(value, CssKeyword.Invalid)) return null;
+            else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Unset)) return prop?.defaultValue;
+            else if (Equals(value, CssKeyword.Inherit)) return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
             return value;
         }
 

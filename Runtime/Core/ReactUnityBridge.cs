@@ -1,7 +1,7 @@
 using Jint.Native;
 using Jint.Native.Function;
 using ReactUnity.Helpers.TypescriptUtils;
-using ReactUnity.Interop;
+using ReactUnity.Helpers;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

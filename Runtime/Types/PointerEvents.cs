@@ -1,4 +1,4 @@
-namespace ReactUnity.Styling.Types
+namespace ReactUnity.Types
 {
     public enum PointerEvents
     {

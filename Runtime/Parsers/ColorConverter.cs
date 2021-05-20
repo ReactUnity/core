@@ -1,4 +1,3 @@
-using ReactUnity.Styling.Types;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -167,7 +166,7 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
-            if (value == null) return SpecialNames.CantParse;
+            if (value == null) return CssKeyword.Invalid;
             if (KnownColors.TryGetValue(value, out var known)) value = known;
             if (value == "clear" || value == "transparent") return Color.clear;
             if (ColorUtility.TryParseHtmlString(value, out var color)) return color;
@@ -181,7 +180,7 @@ namespace ReactUnity.Styling.Parsers
             }
 
             if (value.IndexOf(',') >= 0 || value.IndexOf(' ') >= 0) return FromArray(value.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries));
-            return SpecialNames.CantParse;
+            return CssKeyword.Invalid;
         }
 
         public object Convert(object value)
@@ -194,7 +193,7 @@ namespace ReactUnity.Styling.Parsers
             }
             else if (value is IEnumerable en) return FromArray(en);
 
-            if (value == null) return SpecialNames.CantParse;
+            if (value == null) return CssKeyword.Invalid;
             var fl = floatDs.Convert(value);
             if (fl is float f) return new Color(f, f, f);
             return FromString(value?.ToString());

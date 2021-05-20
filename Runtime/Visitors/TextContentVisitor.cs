@@ -2,7 +2,7 @@ using ReactUnity.Components;
 
 namespace ReactUnity.Visitors
 {
-    public class TextContentVisitor : ReactComponentVisitor
+    internal class TextContentVisitor : ReactComponentVisitor
     {
         string Text = "";
 

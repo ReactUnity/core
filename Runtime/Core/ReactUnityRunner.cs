@@ -4,7 +4,6 @@ using Jint.Runtime;
 using Jint.Runtime.Interop;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
-using ReactUnity.Interop;
 using ReactUnity.StyleEngine;
 using System;
 using System.Collections.Generic;

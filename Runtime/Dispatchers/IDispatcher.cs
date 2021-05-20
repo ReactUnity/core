@@ -1,25 +1,8 @@
 using System;
 using System.Collections;
 
-namespace ReactUnity
+namespace ReactUnity.Dispatchers
 {
-    internal class DisposableHandle : IDisposable
-    {
-        IDispatcher Dispatcher;
-        int Handle;
-
-        public DisposableHandle(IDispatcher dispatcher, int handle)
-        {
-            Dispatcher = dispatcher;
-            Handle = handle;
-        }
-
-        public void Dispose()
-        {
-            Dispatcher.StopDeferred(Handle);
-        }
-    }
-
     public interface IDispatcher : IDisposable
     {
         int OnEveryLateUpdate(Action call);

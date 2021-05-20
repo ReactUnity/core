@@ -1,10 +1,9 @@
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Parsers;
-using ReactUnity.Styling.Types;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -76,7 +75,7 @@ namespace ReactUnity.Types
                 {
                     if (result is Url u) return new AudioReference(u);
                 }
-                return SpecialNames.CantParse;
+                return CssKeyword.Invalid;
             }
         }
     }

@@ -1,4 +1,3 @@
-using ReactUnity.Styling.Types;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -28,7 +27,7 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
-            if (value == null) return SpecialNames.CantParse;
+            if (value == null) return CssKeyword.Invalid;
             return Parse(value);
         }
 
@@ -68,15 +67,15 @@ namespace ReactUnity.Styling.Parsers
                 var multiplier = 1f;
                 if (suffix != "")
                 {
-                    if (!SuffixMap.TryGetValue(suffix, out multiplier)) return SpecialNames.CantParse;
+                    if (!SuffixMap.TryGetValue(suffix, out multiplier)) return CssKeyword.Invalid;
                 }
                 else if (!AllowSuffixless && res != 0)
-                    return SpecialNames.CantParse;
+                    return CssKeyword.Invalid;
 
 
                 return res * multiplier;
             }
-            else return SpecialNames.CantParse;
+            else return CssKeyword.Invalid;
         }
     }
 

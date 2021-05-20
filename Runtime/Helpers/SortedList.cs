@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ReactUnity.StyleEngine
+namespace ReactUnity.Helpers
 {
 
     /// <summary>
@@ -11,7 +11,7 @@ namespace ReactUnity.StyleEngine
     /// </summary>
     /// <author>Jackson Dunstan, http://JacksonDunstan.com/articles/3189</author>
     /// <license>MIT</license>
-    public static class IListInsertIntoSortedListExtensions
+    internal static class IListInsertIntoSortedListExtensions
     {
         /// <summary>
         /// Insert a value into an IList{T} that is presumed to be already sorted such that sort
@@ -95,7 +95,7 @@ namespace ReactUnity.StyleEngine
             {
                 var windowSize = endIndex - startIndex;
                 var middleIndex = startIndex + (windowSize / 2);
-                var middleValue = (IComparable)list[middleIndex];
+                var middleValue = (IComparable) list[middleIndex];
                 var compareToResult = comparison(middleValue, value);
                 if (compareToResult == 0)
                 {

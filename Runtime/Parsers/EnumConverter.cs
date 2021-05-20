@@ -1,5 +1,4 @@
 using System;
-using ReactUnity.Styling.Types;
 
 namespace ReactUnity.Styling.Parsers
 {
@@ -13,7 +12,7 @@ namespace ReactUnity.Styling.Parsers
 
         public object Convert(object value)
         {
-            if (value == null) return SpecialNames.CantParse;
+            if (value == null) return CssKeyword.Invalid;
             if (value is T t) return t;
             if (value is int i) return Enum.ToObject(typeof(T), i);
             return FromString(value?.ToString());
@@ -34,14 +33,14 @@ namespace ReactUnity.Styling.Parsers
                     var parsed = Enum.TryParse<T>(split.Replace("-", "").ToLowerInvariant(), true, out var splitRes);
 
                     if (parsed) result = result | (System.Convert.ToInt32(splitRes));
-                    else return SpecialNames.CantParse;
+                    else return CssKeyword.Invalid;
                 }
 
                 return (T)Enum.ToObject(typeof(T), result);
             }
 
             if (value != null && Enum.TryParse<T>(value.Replace("-", "").ToLowerInvariant(), true, out var res)) return res;
-            return SpecialNames.CantParse;
+            return CssKeyword.Invalid;
         }
     }
 }

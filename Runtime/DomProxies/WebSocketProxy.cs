@@ -1,5 +1,5 @@
 using Jint.Native;
-using ReactUnity.Interop;
+using ReactUnity.Helpers;
 using System;
 
 namespace ReactUnity.DomProxies

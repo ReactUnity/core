@@ -1,5 +1,5 @@
 
-using ReactUnity.Interop;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Schedulers
 {

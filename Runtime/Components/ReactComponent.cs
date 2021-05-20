@@ -1,10 +1,10 @@
 using Facebook.Yoga;
 using ReactUnity.EventHandlers;
-using ReactUnity.Interop;
+using ReactUnity.Helpers;
 using ReactUnity.Layout;
 using ReactUnity.StateHandlers;
 using ReactUnity.Styling;
-using ReactUnity.Styling.Types;
+using ReactUnity.Types;
 using ReactUnity.Visitors;
 using System;
 using UnityEngine;

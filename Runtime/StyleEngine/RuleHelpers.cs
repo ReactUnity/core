@@ -1,6 +1,5 @@
 using ExCSS;
 using ReactUnity.Styling;
-using ReactUnity.Styling.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -134,18 +133,18 @@ namespace ReactUnity.StyleEngine
                 var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
                 if (hasCssStyle)
                 {
-                    var specialName = GetSpecialName(item.Value);
+                    var specialName = GetCssKeyword(item.Value);
                     object value;
-                    if (specialName == SpecialNames.Initial)
+                    if (specialName == CssKeyword.Initial)
                         value = prop.defaultValue;
-                    if (specialName == SpecialNames.None)
+                    if (specialName == CssKeyword.None)
                         value = prop.noneValue;
-                    else if (specialName != SpecialNames.NoSpecialName && specialName != SpecialNames.CantParse)
+                    else if (specialName != CssKeyword.NoKeyword && specialName != CssKeyword.Invalid)
                         value = specialName;
                     else
                         value = prop.Convert(item.Value);
 
-                    if (!Equals(value, SpecialNames.CantParse))
+                    if (!Equals(value, CssKeyword.Invalid))
                         dic[prop.name] = value;
                 }
             }
@@ -207,12 +206,12 @@ namespace ReactUnity.StyleEngine
         }
 
 
-        public static SpecialNames GetSpecialName(string value)
+        public static CssKeyword GetCssKeyword(string value)
         {
-            if (value == null) return SpecialNames.CantParse;
-            var parsed = Enum.TryParse<SpecialNames>(value, true, out var res);
+            if (value == null) return CssKeyword.Invalid;
+            var parsed = Enum.TryParse<CssKeyword>(value, true, out var res);
             if (parsed) return res;
-            return SpecialNames.NoSpecialName;
+            return CssKeyword.NoKeyword;
         }
     }
 }

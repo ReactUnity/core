@@ -1,6 +1,5 @@
 using Facebook.Yoga;
 using ReactUnity.Styling.Parsers;
-using ReactUnity.Styling.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,10 +67,10 @@ namespace ReactUnity.Styling
 
         public void Set(YogaNode node, object value, YogaNode defaultNode)
         {
-            if (Equals(value, SpecialNames.CantParse) || Equals(value, SpecialNames.None) || Equals(value, SpecialNames.NoSpecialName)) return;
-            else if (Equals(value, SpecialNames.Initial) || Equals(value, SpecialNames.Auto)) SetDefault(node, defaultNode);
-            else if (Equals(value, SpecialNames.Unset)) SetDefault(node);
-            else if (Equals(value, SpecialNames.Inherit))
+            if (Equals(value, CssKeyword.Invalid) || Equals(value, CssKeyword.None) || Equals(value, CssKeyword.NoKeyword)) return;
+            else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Auto)) SetDefault(node, defaultNode);
+            else if (Equals(value, CssKeyword.Unset)) SetDefault(node);
+            else if (Equals(value, CssKeyword.Inherit))
             {
                 if (node.Parent != null) setter(node, getter(node.Parent));
                 else SetDefault(node, defaultNode);

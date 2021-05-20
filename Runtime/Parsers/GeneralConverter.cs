@@ -1,5 +1,4 @@
 using ReactUnity.StyleEngine;
-using ReactUnity.Styling.Types;
 
 namespace ReactUnity.Styling.Parsers
 {
@@ -15,16 +14,16 @@ namespace ReactUnity.Styling.Parsers
         public object Convert(object value)
         {
             var res = baseConverter?.Convert(value);
-            if (res != null && !Equals(res, SpecialNames.CantParse)) return res;
+            if (res != null && !Equals(res, CssKeyword.Invalid)) return res;
             if (value is string s) return FromString(s);
-            return SpecialNames.CantParse;
+            return CssKeyword.Invalid;
         }
 
         public object FromString(string value)
         {
-            var special = RuleHelpers.GetSpecialName(value);
-            if (special != SpecialNames.NoSpecialName) return special;
-            return SpecialNames.CantParse;
+            var keyword = RuleHelpers.GetCssKeyword(value);
+            if (keyword != CssKeyword.NoKeyword) return keyword;
+            return CssKeyword.Invalid;
         }
     }
 }

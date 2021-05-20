@@ -1,4 +1,7 @@
+using ReactUnity.Styling;
+using ReactUnity.Styling.Parsers;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReactUnity.Animations
@@ -170,6 +173,31 @@ namespace ReactUnity.Animations
                     }
                     return Linear(calcBezier(getTForX(value), mY1, mY2), start, end);
                 };
+            }
+        }
+
+
+        public class Converter : IStyleParser, IStyleConverter
+        {
+            static private HashSet<string> AllowedFunctions = new HashSet<string> { "steps", "cubic-bezier" };
+            static private IStyleConverter TypeConverter = new EnumConverter<TimingFunctionType>(false);
+
+            public object Convert(object value)
+            {
+                if (value is TimingFunction f) return f;
+
+                var type = TypeConverter.Convert(value);
+
+                if (type is TimingFunctionType tt)
+                    return Get(tt);
+
+                return FromString(value?.ToString());
+            }
+
+            public object FromString(string value)
+            {
+                if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
+                return null;
             }
         }
     }

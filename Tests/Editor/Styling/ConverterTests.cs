@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using ReactUnity.Animations;
 using ReactUnity.Styling;
-using ReactUnity.Styling.Types;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -126,10 +125,10 @@ namespace ReactUnity.Editor.Tests
         [TestCase("400ms", 400f)]
         [TestCase("1s", 1000f)]
         [TestCase("2s", 2000f)]
-        [TestCase("50ms1", SpecialNames.CantParse)]
-        [TestCase("0a", SpecialNames.CantParse)]
-        [TestCase("5as", SpecialNames.CantParse)]
-        [TestCase("100", SpecialNames.CantParse)]
+        [TestCase("50ms1", CssKeyword.Invalid)]
+        [TestCase("0a", CssKeyword.Invalid)]
+        [TestCase("5as", CssKeyword.Invalid)]
+        [TestCase("100", CssKeyword.Invalid)]
         public void DurationConverter(object input, object expected)
         {
             Assert.AreEqual(expected, Converters.DurationConverter.Convert(input));
@@ -144,9 +143,9 @@ namespace ReactUnity.Editor.Tests
         [TestCase("1turn", 360f)]
         [TestCase("4turn", 360f * 4)]
         [TestCase("0.1turn", 36f)]
-        [TestCase("50ms1", SpecialNames.CantParse)]
-        [TestCase("0a", SpecialNames.CantParse)]
-        [TestCase("5as", SpecialNames.CantParse)]
+        [TestCase("50ms1", CssKeyword.Invalid)]
+        [TestCase("0a", CssKeyword.Invalid)]
+        [TestCase("5as", CssKeyword.Invalid)]
         public void AngleConverter(object input, object expected)
         {
             Assert.AreEqual(expected, Converters.AngleConverter.Convert(input));
@@ -157,9 +156,9 @@ namespace ReactUnity.Editor.Tests
         [TestCase("172pt", 172)]
         [TestCase("172px", 172)]
         [TestCase("172%", 172f * (1f / 100))]
-        [TestCase("50ms1", SpecialNames.CantParse)]
-        [TestCase("0a", SpecialNames.CantParse)]
-        [TestCase("5as", SpecialNames.CantParse)]
+        [TestCase("50ms1", CssKeyword.Invalid)]
+        [TestCase("0a", CssKeyword.Invalid)]
+        [TestCase("5as", CssKeyword.Invalid)]
         public void LengthConverter(object input, object expected)
         {
             Assert.AreEqual(expected, Converters.LengthConverter.Convert(input));
@@ -168,10 +167,10 @@ namespace ReactUnity.Editor.Tests
         [TestCase("0", 0f)]
         [TestCase("2", 2f)]
         [TestCase("172%", 172f * (1f / 100))]
-        [TestCase("50px", SpecialNames.CantParse)]
-        [TestCase("50ms1", SpecialNames.CantParse)]
-        [TestCase("0a", SpecialNames.CantParse)]
-        [TestCase("5as", SpecialNames.CantParse)]
+        [TestCase("50px", CssKeyword.Invalid)]
+        [TestCase("50ms1", CssKeyword.Invalid)]
+        [TestCase("0a", CssKeyword.Invalid)]
+        [TestCase("5as", CssKeyword.Invalid)]
         public void PercentageConverter(object input, object expected)
         {
             Assert.AreEqual(expected, Converters.PercentageConverter.Convert(input));

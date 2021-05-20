@@ -1,6 +1,7 @@
 using Facebook.Yoga;
-using ReactUnity.Interop;
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,7 +17,7 @@ namespace ReactUnity.Components
             borderRadius = 8,
             cursor = "pointer",
             textAlign = TMPro.TextAlignmentOptions.Midline,
-            appearance = Styling.Types.Appearance.Button,
+            appearance = Appearance.Button,
         };
         public static YogaNode ButtonDefaultLayout { get; } = new YogaNode()
         {

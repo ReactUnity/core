@@ -1,4 +1,3 @@
-using ReactUnity.Styling.Types;
 using System;
 using System.Collections.Generic;
 
@@ -25,7 +24,7 @@ namespace ReactUnity.Styling.Parsers
         {
             if (truthyValues.Contains(value)) return true;
             if (falsyValues.Contains(value)) return false;
-            return SpecialNames.CantParse;
+            return CssKeyword.Invalid;
         }
     }
 }

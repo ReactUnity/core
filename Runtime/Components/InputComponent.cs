@@ -1,6 +1,7 @@
 using Facebook.Yoga;
-using ReactUnity.Interop;
+using ReactUnity.Helpers;
 using ReactUnity.Styling;
+using ReactUnity.Types;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,7 +26,7 @@ namespace ReactUnity.Components
             borderRadius = 8,
             fontSize = 24,
             cursor = "text",
-            appearance = Styling.Types.Appearance.Input,
+            appearance = Appearance.Input,
         };
 
         public override YogaNode DefaultLayout => InputDefaultLayout;
@@ -178,16 +179,16 @@ namespace ReactUnity.Components
                     InputField.richText = System.Convert.ToBoolean(value);
                     return;
                 case "contentType":
-                    InputField.contentType = (TMP_InputField.ContentType)System.Convert.ToInt32(value);
+                    InputField.contentType = (TMP_InputField.ContentType) System.Convert.ToInt32(value);
                     return;
                 case "keyboardType":
-                    InputField.keyboardType = (TouchScreenKeyboardType)System.Convert.ToInt32(value);
+                    InputField.keyboardType = (TouchScreenKeyboardType) System.Convert.ToInt32(value);
                     return;
                 case "lineType":
-                    InputField.lineType = (TMP_InputField.LineType)System.Convert.ToInt32(value);
+                    InputField.lineType = (TMP_InputField.LineType) System.Convert.ToInt32(value);
                     return;
                 case "validation":
-                    InputField.characterValidation = (TMP_InputField.CharacterValidation)System.Convert.ToInt32(value);
+                    InputField.characterValidation = (TMP_InputField.CharacterValidation) System.Convert.ToInt32(value);
                     return;
                 case "webSupport":
                     var enabled = System.Convert.ToBoolean(value);

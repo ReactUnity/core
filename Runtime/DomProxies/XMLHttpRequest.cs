@@ -1,5 +1,5 @@
 using Jint;
-using ReactUnity.Interop;
+using ReactUnity.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;

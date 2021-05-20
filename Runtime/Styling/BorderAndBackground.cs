@@ -1,6 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Helpers;
-using ReactUnity.Styling.Types;
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -92,7 +92,7 @@ namespace ReactUnity.Styling
             bg.sprite = sprite;
         }
 
-        public void SetBoxShadow(ShadowDefinition shadow)
+        public void SetBoxShadow(BoxShadow shadow)
         {
             Shadow.gameObject.SetActive(shadow != null);
 

@@ -1,5 +1,7 @@
 using ExCSS;
+using ReactUnity.Dispatchers;
 using ReactUnity.DomProxies;
+using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;

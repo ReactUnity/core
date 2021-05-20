@@ -3,7 +3,7 @@ using Jint.Native.Function;
 using System;
 using System.Linq;
 
-namespace ReactUnity.Interop
+namespace ReactUnity.Helpers
 {
     public class Callback
     {

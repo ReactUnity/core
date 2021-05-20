@@ -4,7 +4,6 @@ using ReactUnity.Styling.Parsers;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using ReactUnity.Styling.Types;
 using TMPro;
 using ReactUnity.Types;
 using UnityEngine.UI;
@@ -26,26 +25,27 @@ namespace ReactUnity.Styling
         static public IStyleConverter UrlConverter = new UrlConverter();
         static public IStyleConverter GeneralConverter = new GeneralConverter();
         static public IStyleConverter YogaValueConverter = new YogaValueConverter();
-        static public IStyleConverter YogaValue2Converter = new YogaValue2Converter();
+        static public IStyleConverter YogaValue2Converter = new YogaValue2.Converter();
         static public IStyleConverter Vector2Converter = new Vector2Converter();
         static public IStyleConverter Vector3Converter = new Vector3Converter();
         static public IStyleConverter IntConverter = new IntConverter();
         static public IStyleConverter BoolConverter = new BoolConverter(new string[] { "true" }, new string[] { "false" });
         static public IStyleConverter ColorConverter = new ColorConverter();
-        static public IStyleConverter ShadowDefinitionConverter = new ShadowDefinitionConverter();
-        static public IStyleConverter ImageReferenceConverter = new ImageReferenceConverter();
+        static public IStyleConverter BoxShadowConverter = new BoxShadow.Converter();
+        static public IStyleConverter ImageReferenceConverter = new ImageReference.Converter();
         static public IStyleConverter AudioReferenceConverter = new AudioReference.Converter();
-        static public IStyleConverter VideoReferenceConverter = new VideoReferenceConverter();
-        static public IStyleConverter FontReferenceConverter = new FontReferenceConverter();
+        static public IStyleConverter VideoReferenceConverter = new VideoReference.Converter();
+        static public IStyleConverter FontReferenceConverter = new FontReference.Converter();
         static public IStyleConverter RotateConverter = new Vector3Converter((v) => new Vector3(0, 0, v), AngleConverter);
         static public IStyleConverter TransitionListConverter = new TransitionList.Converter();
         static public IStyleConverter AnimationListConverter = new AnimationList.Converter();
         static public IStyleConverter AudioListConverter = new AudioList.Converter();
 
 
+        static public IStyleConverter ImageFitModeConverter = new EnumConverter<ImageFitMode>();
         static public IStyleConverter AnimationFillModeConverter = new EnumConverter<AnimationFillMode>();
         static public IStyleConverter AnimationDirectionConverter = new EnumConverter<AnimationDirection>();
-        static public IStyleConverter TimingFunctionConverter = new TimingFunctionConverter();
+        static public IStyleConverter TimingFunctionConverter = new TimingFunctions.Converter();
 
 
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()
@@ -60,7 +60,7 @@ namespace ReactUnity.Styling
             { typeof(object), DefaultConverter },
             { typeof(Color), ColorConverter },
             { typeof(bool), BoolConverter },
-            { typeof(ShadowDefinition), ShadowDefinitionConverter },
+            { typeof(BoxShadow), BoxShadowConverter },
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
             { typeof(TransitionList), TransitionListConverter},
@@ -81,8 +81,10 @@ namespace ReactUnity.Styling
             { typeof(YogaJustify), new EnumConverter<YogaJustify>() },
             { typeof(YogaAlign), new EnumConverter<YogaAlign>() },
             { typeof(YogaWrap), new EnumConverter<YogaWrap>() },
+            { typeof(ImageFitMode), ImageFitModeConverter },
             { typeof(AnimationFillMode), AnimationFillModeConverter },
             { typeof(AnimationDirection), AnimationDirectionConverter },
+            { typeof(TimingFunction), TimingFunctionConverter },
         };
 
         public static IStyleConverter GetConverter(Type type)

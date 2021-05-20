@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ReactUnity.Components;
-using ReactUnity.Types;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using System;
 using ReactUnity.StateHandlers;
 using ReactUnity.StyleEngine;
+using ReactUnity.Dispatchers;
 
 namespace ReactUnity
 {
