@@ -180,7 +180,7 @@ namespace ReactUnity.Animations
         public class Converter : IStyleParser, IStyleConverter
         {
             static private HashSet<string> AllowedFunctions = new HashSet<string> { "steps", "cubic-bezier" };
-            static private IStyleConverter TypeConverter = new EnumConverter<TimingFunctionType>(false);
+            static private IStyleConverter TypeConverter = new EnumConverter<TimingFunctionType>();
 
             public object Convert(object value)
             {

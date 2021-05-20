@@ -127,7 +127,7 @@ namespace ReactUnity.Animations
                 }
 
 
-                var dir = !directionSet ? Converters.AnimationDirectionConverter.Convert(split) : null;
+                var dir = !directionSet ? Converters.Get<AnimationDirection>().Convert(split) : null;
 
                 if (dir is AnimationDirection d)
                 {
@@ -136,7 +136,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var fm = !fillModeSet ? Converters.AnimationFillModeConverter.Convert(split) : null;
+                var fm = !fillModeSet ? Converters.Get<AnimationFillMode>().Convert(split) : null;
 
                 if (fm is AnimationFillMode fmd)
                 {

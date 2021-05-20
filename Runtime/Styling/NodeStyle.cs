@@ -200,6 +200,16 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.audio, value);
             get => GetStyleValue<AudioList>(StyleProperties.audio);
         }
+        public ObjectFit objectFit
+        {
+            set => SetStyleValue(StyleProperties.objectFit, value);
+            get => GetStyleValue<ObjectFit>(StyleProperties.objectFit);
+        }
+        public YogaValue2 objectPosition
+        {
+            set => SetStyleValue(StyleProperties.objectPosition, value);
+            get => GetStyleValue<YogaValue2>(StyleProperties.objectPosition);
+        }
         #endregion
 
         #region Resolved values

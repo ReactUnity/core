@@ -40,11 +40,6 @@ namespace ReactUnity.Styling
         static public IStyleConverter TransitionListConverter = new TransitionList.Converter();
         static public IStyleConverter AnimationListConverter = new AnimationList.Converter();
         static public IStyleConverter AudioListConverter = new AudioList.Converter();
-
-
-        static public IStyleConverter ImageFitModeConverter = new EnumConverter<ImageFitMode>();
-        static public IStyleConverter AnimationFillModeConverter = new EnumConverter<AnimationFillMode>();
-        static public IStyleConverter AnimationDirectionConverter = new EnumConverter<AnimationDirection>();
         static public IStyleConverter TimingFunctionConverter = new TimingFunctions.Converter();
 
 
@@ -66,30 +61,18 @@ namespace ReactUnity.Styling
             { typeof(TransitionList), TransitionListConverter},
             { typeof(AnimationList), AnimationListConverter},
             { typeof(AudioList), AudioListConverter},
-            { typeof(Appearance), new EnumConverter<Appearance>() },
-            { typeof(Navigation.Mode), new EnumConverter<Navigation.Mode>() },
-            { typeof(PointerEvents), new EnumConverter<PointerEvents>() },
-            { typeof(TextOverflowModes), new EnumConverter<TextOverflowModes>() },
-            { typeof(TextAlignmentOptions), new EnumConverter<TextAlignmentOptions>() },
-            { typeof(FontWeight), new EnumConverter<FontWeight>() },
-            { typeof(FontStyles), new EnumConverter<FontStyles>() },
-            { typeof(YogaOverflow), new EnumConverter<YogaOverflow>() },
-            { typeof(YogaPositionType), new EnumConverter<YogaPositionType>() },
-            { typeof(YogaDirection), new EnumConverter<YogaDirection>() },
-            { typeof(YogaFlexDirection), new EnumConverter<YogaFlexDirection>() },
-            { typeof(YogaDisplay), new EnumConverter<YogaDisplay>() },
-            { typeof(YogaJustify), new EnumConverter<YogaJustify>() },
-            { typeof(YogaAlign), new EnumConverter<YogaAlign>() },
-            { typeof(YogaWrap), new EnumConverter<YogaWrap>() },
-            { typeof(ImageFitMode), ImageFitModeConverter },
-            { typeof(AnimationFillMode), AnimationFillModeConverter },
-            { typeof(AnimationDirection), AnimationDirectionConverter },
             { typeof(TimingFunction), TimingFunctionConverter },
         };
 
-        public static IStyleConverter GetConverter(Type type)
+        public static IStyleConverter Get<T>() => Get(typeof(T));
+
+        public static IStyleConverter Get(Type type)
         {
-            Map.TryGetValue(type, out var converter);
+            var hasValue = Map.TryGetValue(type, out var converter);
+
+            if (!hasValue && type.IsEnum)
+                converter = Map[type] = new EnumConverter(type);
+
             return new GeneralConverter(converter);
         }
     }

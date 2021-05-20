@@ -61,7 +61,7 @@ namespace ReactUnity.Styling
 
         private class StepsFunction : ICssFunction
         {
-            static private IStyleConverter StepConverter = new EnumConverter<StepsJumpMode>(false);
+            static private IStyleConverter StepConverter = new EnumConverter<StepsJumpMode>();
 
             public string Name { get; } = "steps";
 
