@@ -17,8 +17,6 @@ namespace ReactUnity.Components
         public ImageMeasurer Measurer { get; private set; }
         public GameObject ImageContainer { get; private set; }
 
-        public ImageFitMode Fit { get; private set; }
-
         public abstract MaskableGraphic Graphic { get; }
 
         public ReactReplacedElement ReplacedElement { get; private set; }
@@ -52,6 +50,9 @@ namespace ReactUnity.Components
             {
                 case "source":
                     SetSource(value);
+                    return;
+                case "fit":
+                    Debug.LogWarning("fit property is deprecated. Use CSS object-fit property.");
                     return;
                 default:
                     base.SetProperty(propertyName, value);
