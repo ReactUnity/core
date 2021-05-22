@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { CursorType, RenderStyle } from '../../../models/properties';
+import { RenderStyle } from '../../../models/properties';
 import { View } from '../../../models/runtime';
 import { bottomEdge, dropdownBottom, fullScreen, transparentColor } from '../../helpers/common-layouts';
 import { DropdownItem } from './dropdown-item';
 
 const dropdownMenuStyle: RenderStyle = { boxShadow: '0 3 7 6 black 5' };
 const dropdownButtonStyle: RenderStyle = { backgroundColor: 'white', borderRadius: 0 };
-const dropdownBackdropStyle: RenderStyle = { backgroundColor: transparentColor, cursor: CursorType.Default };
+const dropdownBackdropStyle: RenderStyle = { backgroundColor: transparentColor, cursor: 'default' };
 
 export interface DropdownProps<T = any> {
   onChange?: (value: T, ind: number) => void;
@@ -36,7 +36,7 @@ export function Dropdown<T = any>({ autoClose = true, onChange, name, style, chi
   };
 
   return <view name={name || '<Dropdown>'}>
-    <button name="<Dropdown Trigger>" onClick={toggle} style={{ flexDirection: 'Column', alignItems: 'Stretch', ...style }} {...otherProps}>
+    <button name="<Dropdown Trigger>" onClick={toggle} style={{ flexDirection: 'column', alignItems: 'stretch', ...style }} {...otherProps}>
       {selectedIndex < 0
         ? nonItems
         : (selectedItem.props?.triggerTemplate || selectedItem)

@@ -28,19 +28,7 @@ export interface Anchor extends View<ReactUnity.Components.AnchorComponent> {
   openInThisTab?: boolean;
 }
 
-
-export enum ImageFitMode {
-  Center = 0,
-  CenterCrop = 1,
-  CenterInside = 2,
-  FitCenter = 3,
-  FitStart = 4,
-  FitEnd = 5,
-  Fill = 6,
-}
-
 export interface BaseImage<T = ReactUnity.Components.ImageComponent> extends View<T> {
-  fit?: ImageFitMode;
 }
 
 export interface Image<T = ReactUnity.Components.ImageComponent> extends BaseImage<T> {

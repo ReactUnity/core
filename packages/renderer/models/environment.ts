@@ -6,7 +6,7 @@ declare global {
   const UnityBridge: ReactUnity.ReactUnityBridge;
   const RootContainer: NativeContainerInstance;
   const UnityScheduler: ReactUnity.Schedulers.IUnityScheduler;
-  const Callback: <T, R>(callback: (...args: T[]) => R) => ReactUnity.Interop.Callback;
+  const Callback: <T, R>(callback: (...args: T[]) => R) => ReactUnity.Helpers.Callback;
 
   const localStorage: {
     getItem(key: string): string;

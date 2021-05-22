@@ -28,5 +28,4 @@ export type ColorAux = KnownColor | HexColor | number | Array4Aux<number> | [Col
 
 // Other
 
-export type EnumOrLiteral<T extends { [key: number]: string | number }> = T[keyof T] | keyof T | Lowercase<keyof T extends string ? keyof T : never>;
 export type AssetReference = string | UnityEngine.Object;

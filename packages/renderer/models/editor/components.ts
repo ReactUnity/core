@@ -49,19 +49,8 @@ export interface Anchor extends View {
   url?: string;
 }
 
-export enum ImageFitMode {
-  Center = 0,
-  CenterCrop = 1,
-  CenterInside = 2,
-  FitCenter = 3,
-  FitStart = 4,
-  FitEnd = 5,
-  Fill = 6,
-}
-
 export interface Image extends View<Cmp.ImageComponent> {
   source?: AssetReference;
-  fit?: ImageFitMode;
 }
 
 export type ToggleEvent = (val: boolean) => void;

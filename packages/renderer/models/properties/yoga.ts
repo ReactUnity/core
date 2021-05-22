@@ -1,5 +1,5 @@
 
-import { Array2Aux, Array4Aux, EnumOrLiteral, PositioningLiteral } from './values';
+import { Array2Aux, Array4Aux, PositioningLiteral } from './values';
 import { Direction, Display, FlexDirection, Overflow, Position, Wrap, YogaAlign, YogaJustify } from './yoga-enums';
 
 
@@ -13,15 +13,15 @@ export type YogaValue4Aux = Array4Aux<YogaValueAux>;
 
 export interface Layout {
   data?: Record<string, unknown>;
-  overflow?: EnumOrLiteral<typeof Overflow>;
-  styleDirection?: EnumOrLiteral<typeof Direction>;
-  display?: EnumOrLiteral<typeof Display>;
-  wrap?: EnumOrLiteral<typeof Wrap>;
-  positionType?: EnumOrLiteral<typeof Position>;
-  justifyContent?: EnumOrLiteral<typeof YogaJustify>;
-  alignContent?: EnumOrLiteral<typeof YogaAlign>;
-  alignSelf?: EnumOrLiteral<typeof YogaAlign>;
-  alignItems?: EnumOrLiteral<typeof YogaAlign>;
+  overflow?: Overflow;
+  styleDirection?: Direction;
+  display?: Display;
+  wrap?: Wrap;
+  positionType?: Position;
+  justifyContent?: YogaJustify;
+  alignContent?: YogaAlign;
+  alignSelf?: YogaAlign;
+  alignItems?: YogaAlign;
   borderWidth?: number;
   borderStartWidth?: number;
   borderEndWidth?: number;
@@ -30,7 +30,7 @@ export interface Layout {
   borderBottomWidth?: number;
   borderLeftWidth?: number;
   aspectRatio?: number;
-  flexDirection?: EnumOrLiteral<typeof FlexDirection>;
+  flexDirection?: FlexDirection;
   flexShrink?: number;
   flexGrow?: number;
   flexBasis?: YogaValueAux;
@@ -67,9 +67,9 @@ export interface Layout {
 }
 
 export interface LayoutExtended {
-  position?: EnumOrLiteral<typeof Position>;
-  direction?: EnumOrLiteral<typeof Direction>;
-  flexWrap?: EnumOrLiteral<typeof Wrap>;
+  position?: Position;
+  direction?: Direction;
+  flexWrap?: Wrap;
 }
 
 export type LayoutCssCompatible = Omit<Layout, 'styleDirection' | 'position' | 'wrap'> & LayoutExtended;

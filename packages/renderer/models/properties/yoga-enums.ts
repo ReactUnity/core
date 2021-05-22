@@ -1,53 +1,9 @@
 
-export enum FlexDirection {
-  Column = 0,
-  ColumnReverse = 1,
-  Row = 2,
-  RowReverse = 3,
-}
-
-export enum YogaAlign {
-  Auto = 0,
-  FlexStart = 1,
-  Center = 2,
-  FlexEnd = 3,
-  Stretch = 4,
-  Baseline = 5,
-  SpaceBetween = 6,
-  SpaceAround = 7,
-}
-
-export enum YogaJustify {
-  FlexStart = 'flex-start',
-  Center = 'center',
-  FlexEnd = 'flex-end',
-  SpaceBetween = 'space-between',
-  SpaceAround = 'space-around',
-}
-export enum Display {
-  Flex = 'flex',
-  None = 'none',
-}
-
-export enum Wrap {
-  NoWrap = 'no-wrap',
-  Wrap = 'wrap',
-  WrapReverse = 'wrap-reverse',
-}
-
-export enum Position {
-  Relative = 'relative',
-  Absolute = 'absolute',
-}
-
-export enum Overflow {
-  Visible = 'visible',
-  Hidden = 'hidden',
-  Scroll = 'scroll',
-}
-
-export enum Direction {
-  Inherit = 'inherit',
-  LTR = 'ltr',
-  RTL = 'rtl',
-}
+export type FlexDirection = 'column' | 'column-reverse' | 'row' | 'row-reverse';
+export type YogaAlign = 'auto' | 'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline' | 'space-between' | 'space-around';
+export type YogaJustify = 'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around';
+export type Display = 'flex' | 'none';
+export type Wrap = 'no-wrap' | 'wrap' | 'wrap-reverse';
+export type Position = 'relative' | 'absolute';
+export type Overflow = 'visible' | 'hidden' | 'scroll';
+export type Direction = 'inherit' | 'ltr' | 'rtl';
