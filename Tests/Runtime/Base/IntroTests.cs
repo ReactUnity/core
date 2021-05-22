@@ -27,5 +27,16 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello world", tmp.text);
             Assert.AreEqual(Color.red, tmp.color);
         }
+
+
+        [UnityTest, ReactInjectableTest(@"
+Renderer.render( /*#__PURE__*/React.createElement('view', null, 'Hello world', /*#__PURE__*/React.createElement('view', null, 'Hello again'), /*#__PURE__*/React.createElement('view', null, 'Somehow ', /*#__PURE__*/React.createElement('view', null, 'just hello'))));
+")]
+        public IEnumerator TextContent_IsCorrect()
+        {
+            yield return null;
+
+            Assert.AreEqual("Hello worldHello againSomehow just hello", Host.TextContent);
+        }
     }
 }
