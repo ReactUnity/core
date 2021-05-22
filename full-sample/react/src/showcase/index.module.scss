@@ -44,6 +44,10 @@
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
+    object-fit: scale-down;
+    object-position: 50%;
+    transition: object-position 2s;
+    align-self: stretch;
   }
 
   input {
@@ -57,5 +61,18 @@
     border-color: black;
     margin: 5px;
     background-color: white;
+    object-fit: none;
+  }
+
+  render,
+  video {
+    object-fit: scale-down;
+    object-position: left;
+  }
+
+  button {
+    &:hover {
+      audio: url(res:click);
+    }
   }
 }

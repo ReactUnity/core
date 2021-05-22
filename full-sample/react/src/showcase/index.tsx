@@ -1,4 +1,4 @@
-import { Dropdown, DropdownItem, ImageFitMode, ReactUnity, Renderer, Slider, Tooltip, UnityEngine as UE } from '@reactunity/renderer';
+import { Dropdown, DropdownItem, ReactUnity, Renderer, Slider, Tooltip, UnityEngine as UE } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
@@ -8,7 +8,7 @@ const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/google
 const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
 
 export function RenderObject({ object }: { object: UE.GameObject }) {
-  return <object width={300} height={400} style={{ flexGrow: 0 }} fit={ImageFitMode.Center}
+  return <object width={300} height={400} style={{ flexGrow: 0 }}
     onDrag={(ev) => {
       Globals.camera2root.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
     }}
@@ -104,9 +104,9 @@ export function App() {
         <h2>Image</h2>
 
         <row>
-          <image fit={ImageFitMode.CenterInside} source={pngImage} />
-          <image fit={ImageFitMode.CenterInside} source={base64Image} />
-          <image fit={ImageFitMode.CenterInside} source={webImage} />
+          <image source={pngImage} />
+          <image source={base64Image} />
+          <image source={webImage} />
         </row>
       </section>
 
@@ -115,8 +115,7 @@ export function App() {
         <h2>Video</h2>
 
         <row>
-          <video style={{ flexGrow: 1 }} fit={ImageFitMode.Fill}
-            source={webVideo} ref={setVideoRef} onPointerClick={toggleVideo} />
+          <video style={{ flexGrow: 1 }} source={webVideo} ref={setVideoRef} onPointerClick={toggleVideo} />
         </row>
       </section>
 
@@ -152,7 +151,7 @@ export function App() {
         <h2>Render Texture</h2>
 
         <row>
-          <render width={900} height={400} style={{ flexGrow: 1 }} fit={ImageFitMode.Fill}
+          <render width={900} height={400} style={{ flexGrow: 1 }}
             onDrag={(ev) => {
               Globals.cameraRoot.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
             }}
