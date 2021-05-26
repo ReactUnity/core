@@ -131,7 +131,17 @@ namespace ReactUnity
         {
             var console = new ConsoleProxy(context);
 
-            engine.SetValue("console", console);
+            engine.SetValue("_console", console);
+            engine.Execute(@"console = {
+    log: (...args) => _console.log(...args),
+    info: (...args) => _console.info(...args),
+    debug: (...args) => _console.debug(...args),
+    warn: (...args) => _console.warn(...args),
+    error: (...args) => _console.error(...args),
+    dir: (...args) => _console.dir(...args),
+    clear: (...args) => _console.clear(...args),
+    assert: (...args) => _console.assert(...args),
+}");
         }
 
         void CreatePolyfills(Jint.Engine engine)
