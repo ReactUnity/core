@@ -1,22 +1,20 @@
+using ReactUnity.Helpers;
+using ReactUnity.Styling.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
-    public class MaskAndImage
+    public class MaskAndImage : MonoBehaviour
     {
         public Mask Mask;
-        public Image Image;
-        private ReactContext Context;
+        public RoundedBorderMaskImage Image;
 
-        public MaskAndImage(RectTransform parent, ReactContext context)
+        void OnEnable()
         {
-            var go = parent.gameObject;
-            Context = context;
+            var go = gameObject;
 
-            Image = go.GetComponent<Image>() ?? go.AddComponent<Image>();
-            Image.type = Image.Type.Sliced;
-            Image.pixelsPerUnitMultiplier = 100;
+            Image = go.GetComponent<RoundedBorderMaskImage>() ?? go.AddComponent<RoundedBorderMaskImage>();
 
             Mask = go.GetComponent<Mask>() ?? go.AddComponent<Mask>();
             Mask.showMaskGraphic = false;
@@ -28,12 +26,11 @@ namespace ReactUnity.Styling
             Mask.enabled = enabled;
         }
 
-        internal void SetBorderRadius(int tl, int tr, int bl, int br)
+        internal void SetBorderRadius(float tl, float tr, float bl, float br)
         {
-            Context.Dispatcher.OnceUpdate(() =>
-            {
-                if (Image) Image.sprite = BorderGraphic.CreateBorderSprite(tl, tr, bl, br);
-            });
+            Image.BorderRadius = new Vector4(tl, tr, br, bl);
+            Image.SetMaterialDirty();
+            MaskUtilities.NotifyStencilStateChanged(Mask);
         }
     }
 }

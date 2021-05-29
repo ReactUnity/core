@@ -69,11 +69,11 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto, noneValue: PointerEvents.None);
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static readonly StyleProperty<ImageReference> backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None);
-        public static readonly StyleProperty<int> borderRadius = new StyleProperty<int>("borderRadius", 0, true);
-        public static readonly StyleProperty<int> borderTopLeftRadius = new StyleProperty<int>("borderTopLeftRadius", 0, true);
-        public static readonly StyleProperty<int> borderTopRightRadius = new StyleProperty<int>("borderTopRightRadius", 0, true);
-        public static readonly StyleProperty<int> borderBottomLeftRadius = new StyleProperty<int>("borderBottomLeftRadius", 0, true);
-        public static readonly StyleProperty<int> borderBottomRightRadius = new StyleProperty<int>("borderBottomRightRadius", 0, true);
+        public static readonly StyleProperty<float> borderRadius = new StyleProperty<float>("borderRadius", 0f, true, converter: Converters.LengthConverter);
+        public static readonly StyleProperty<float> borderTopLeftRadius = new StyleProperty<float>("borderTopLeftRadius", 0f, true, converter: Converters.LengthConverter);
+        public static readonly StyleProperty<float> borderTopRightRadius = new StyleProperty<float>("borderTopRightRadius", 0f, true, converter: Converters.LengthConverter);
+        public static readonly StyleProperty<float> borderBottomLeftRadius = new StyleProperty<float>("borderBottomLeftRadius", 0f, true, converter: Converters.LengthConverter);
+        public static readonly StyleProperty<float> borderBottomRightRadius = new StyleProperty<float>("borderBottomRightRadius", 0f, true, converter: Converters.LengthConverter);
         public static readonly StyleProperty<Color> borderColor = new StyleProperty<Color>("borderColor", Color.black, true);
         public static readonly StyleProperty<Color> borderLeftColor = new StyleProperty<Color>("borderLeftColor", Color.black, true);
         public static readonly StyleProperty<Color> borderRightColor = new StyleProperty<Color>("borderRightColor", Color.black, true);

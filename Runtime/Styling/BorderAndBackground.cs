@@ -1,40 +1,42 @@
 using Facebook.Yoga;
 using ReactUnity.Helpers;
+using ReactUnity.Styling.Internal;
 using ReactUnity.Types;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
-    public class BorderAndBackground
+    public class BorderAndBackground : MonoBehaviour
     {
-        public RectTransform Root;
-        public RectTransform Border;
-        public RectTransform Background;
-        public RectTransform Shadow;
+        public RectTransform Root { get; private set; }
+        public RectTransform Border { get; private set; }
+        public RectTransform Background { get; private set; }
+        public RectTransform Shadow { get; private set; }
 
-        public Sprite ShadowSprite;
+        public RoundedBorderMaskImage RootGraphic;
+        public Mask RootMask;
 
-        public BorderAndBackground(RectTransform parent)
+        public BasicBorderImage BorderGraphic;
+
+        void OnEnable()
         {
-            var root = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(Image), typeof(Mask));
-            var border = new GameObject("[BorderImage]", typeof(RectTransform), typeof(InvertedMaskImage));
+            var root = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
+            var border = new GameObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
             var bg = new GameObject("[BackgroundImage]", typeof(RectTransform), typeof(Image));
 
-            root.GetComponent<Mask>().showMaskGraphic = false;
 
-            var maskImage = root.GetComponent<Image>();
-            maskImage.type = Image.Type.Sliced;
-            maskImage.pixelsPerUnitMultiplier = 100;
+            RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
 
-            var borderImage = border.GetComponent<Image>();
-            borderImage.type = Image.Type.Sliced;
-            borderImage.pixelsPerUnitMultiplier = 100;
+            RootMask = root.AddComponent<Mask>();
+            RootMask.showMaskGraphic = false;
+
+            BorderGraphic = border.GetComponent<BasicBorderImage>();
 
             var bgImage = bg.GetComponent<Image>();
             bgImage.type = Image.Type.Sliced;
             bgImage.pixelsPerUnitMultiplier = 1;
-
 
             var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(IgnoreMaskImage));
             var sdImage = sd.GetComponent<Image>();
@@ -47,9 +49,9 @@ namespace ReactUnity.Styling
             Background = bg.transform as RectTransform;
 
             FullStretch(Shadow, Root);
-            FullStretch(Border, Root);
             FullStretch(Background, Root);
-            FullStretch(Root, parent);
+            FullStretch(Border, Root);
+            FullStretch(Root, transform as RectTransform);
             Root.SetAsFirstSibling();
         }
 
@@ -63,12 +65,21 @@ namespace ReactUnity.Styling
             var borderTop = GetFirstDefinedSize(layout.BorderTopWidth, layout.BorderWidth);
             var borderBottom = GetFirstDefinedSize(layout.BorderBottomWidth, layout.BorderWidth);
 
-            Root.offsetMin = new Vector2(borderLeft, borderBottom);
-            Root.offsetMax = new Vector2(-borderRight, -borderTop);
 
-            Border.offsetMin = new Vector2(-borderLeft, -borderBottom);
-            Border.offsetMax = new Vector2(borderRight, borderTop);
+            var min = new Vector2(-borderLeft, -borderBottom);
+            var max = new Vector2(borderRight, borderTop);
 
+            Root.offsetMin = -min;
+            Root.offsetMax = -max;
+
+            Border.offsetMin = min;
+            Border.offsetMax = max;
+
+            Background.offsetMin = min;
+            Background.offsetMax = max;
+
+            Shadow.offsetMin = min;
+            Shadow.offsetMax = max;
 
             var borderImage = Border.GetComponent<Image>();
             borderImage.enabled = borderLeft > 0 || borderRight > 0 || borderBottom > 0 || borderTop > 0;
@@ -80,9 +91,21 @@ namespace ReactUnity.Styling
             Border.GetComponent<Image>().sprite = sprite;
         }
 
-        public void SetBorderColor(Color color)
+        public void SetBorderRadius(float tl, float tr, float br, float bl)
         {
-            Border.GetComponent<Image>().color = color;
+            var v = new Vector4(tl, tr, br, bl);
+
+            RootGraphic.BorderRadius = v;
+            RootGraphic.SetMaterialDirty();
+            MaskUtilities.NotifyStencilStateChanged(RootMask);
+
+            BorderGraphic.BorderRadius = v;
+            BorderGraphic.SetMaterialDirty();
+        }
+
+        public void SetBorderColor(Color top, Color right, Color bottom, Color left)
+        {
+            Border.GetComponent<Image>().color = top;
         }
 
         public void SetBackgroundColorAndImage(Color? color, Sprite sprite)

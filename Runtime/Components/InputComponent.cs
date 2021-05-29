@@ -23,7 +23,7 @@ namespace ReactUnity.Components
         public static NodeStyle InputDefaultStyle { get; } = new NodeStyle()
         {
             backgroundColor = Color.white,
-            borderRadius = 8,
+            borderRadius = 8f,
             fontSize = 24,
             cursor = "text",
             appearance = Appearance.Input,

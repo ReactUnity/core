@@ -14,7 +14,7 @@ namespace ReactUnity.Components
         public static NodeStyle ToggleDefaultStyle { get; } = new NodeStyle()
         {
             backgroundColor = new Color(0.82f, 0.82f, 0.82f, 1),
-            borderRadius = 6,
+            borderRadius = 6f,
             cursor = "pointer",
             appearance = Appearance.Toggle,
         };

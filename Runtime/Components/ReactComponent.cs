@@ -198,7 +198,7 @@ namespace ReactUnity.Components
             // Mask is not defined and there is no need for it
             if (Layout.Overflow == YogaOverflow.Visible && mask == null) return;
 
-            if (mask == null) mask = MaskAndImage = new MaskAndImage(RectTransform, Context);
+            if (mask == null) mask = MaskAndImage = AddComponent<MaskAndImage>();
 
             mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
             mask.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
@@ -245,7 +245,7 @@ namespace ReactUnity.Components
             {
                 updateStyle = true;
                 updateLayout = true;
-                image = new BorderAndBackground(RectTransform);
+                image = AddComponent<BorderAndBackground>();
 
                 if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
                 BorderAndBackground = image;
@@ -265,7 +265,8 @@ namespace ReactUnity.Components
                 image.SetBoxShadow(ComputedStyle.boxShadow);
                 markedUpdateBackgroundImage = true;
 
-                image.SetBorderColor(ComputedStyle.borderColor);
+                image.SetBorderColor(ComputedStyle.borderTopColor, ComputedStyle.borderRightColor, ComputedStyle.borderBottomColor, ComputedStyle.borderLeftColor);
+                image.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
             }
 
             return image;
@@ -291,8 +292,8 @@ namespace ReactUnity.Components
             markedUpdateBackgroundImage = false;
 
             if (!GameObject) return;
-            var borderSprite = BorderGraphic.CreateBorderSprite(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
-            BorderAndBackground.SetBorderImage(borderSprite);
+
+            BorderAndBackground.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
         }
 
         #endregion

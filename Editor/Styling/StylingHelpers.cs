@@ -143,9 +143,9 @@ namespace ReactUnity.Editor.Styling
             else return StyleKeyword.Null;
         }
 
-        public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<int> prop)
+        public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<float> prop)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<int>(prop);
+            if (style.HasValue(prop.name)) return style.GetStyleValue<float>(prop);
             if (style.HasValue(StyleProperties.borderRadius)) return style.borderRadius;
             else return StyleKeyword.Null;
         }

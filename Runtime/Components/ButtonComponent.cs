@@ -14,7 +14,7 @@ namespace ReactUnity.Components
         public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle()
         {
             backgroundColor = new Color(0.9f, 0.9f, 0.9f),
-            borderRadius = 8,
+            borderRadius = 8f,
             cursor = "pointer",
             textAlign = TMPro.TextAlignmentOptions.Midline,
             appearance = Appearance.Button,
