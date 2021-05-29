@@ -18,7 +18,7 @@
 
 var stripAnsi = require('strip-ansi');
 var url = require('url');
-var formatWebpackMessages = require('./formatWebpackMessages');
+var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 var ErrorOverlay = require('./react-error-overlay');
 
 // We need to keep track of if there has been a runtime error.

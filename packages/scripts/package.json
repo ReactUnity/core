@@ -103,5 +103,8 @@
     "typescript": {
       "optional": true
     }
+  },
+  "resolutions": {
+    "react-dev-utils": "https://github.com/ReactUnity/scripts/raw/main/temp/react-dev-utils-11.0.3-hotfix.tgz"
   }
 }
