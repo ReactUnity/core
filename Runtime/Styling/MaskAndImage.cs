@@ -1,4 +1,3 @@
-using ReactUnity.Helpers;
 using ReactUnity.Styling.Internal;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,14 +9,13 @@ namespace ReactUnity.Styling
         public Mask Mask;
         public RoundedBorderMaskImage Image;
 
-        void OnEnable()
+        public static MaskAndImage Create(GameObject go)
         {
-            var go = gameObject;
-
-            Image = go.GetComponent<RoundedBorderMaskImage>() ?? go.AddComponent<RoundedBorderMaskImage>();
-
-            Mask = go.GetComponent<Mask>() ?? go.AddComponent<Mask>();
-            Mask.showMaskGraphic = false;
+            var cmp = go.AddComponent<MaskAndImage>();
+            cmp.Image = go.GetComponent<RoundedBorderMaskImage>() ?? go.AddComponent<RoundedBorderMaskImage>();
+            cmp.Mask = go.GetComponent<Mask>() ?? go.AddComponent<Mask>();
+            cmp.Mask.showMaskGraphic = false;
+            return cmp;
         }
 
         internal void SetEnabled(bool enabled)

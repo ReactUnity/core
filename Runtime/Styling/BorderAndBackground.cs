@@ -20,19 +20,21 @@ namespace ReactUnity.Styling
 
         public BasicBorderImage BorderGraphic;
 
-        void OnEnable()
+        public static BorderAndBackground Create(GameObject go)
         {
+            var cmp = go.AddComponent<BorderAndBackground>();
+
             var root = new GameObject("[MaskRoot]", typeof(RectTransform), typeof(RoundedBorderMaskImage));
             var border = new GameObject("[BorderImage]", typeof(RectTransform), typeof(BasicBorderImage));
             var bg = new GameObject("[BackgroundImage]", typeof(RectTransform), typeof(Image));
 
 
-            RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
+            cmp.RootGraphic = root.GetComponent<RoundedBorderMaskImage>();
 
-            RootMask = root.AddComponent<Mask>();
-            RootMask.showMaskGraphic = false;
+            cmp.RootMask = root.AddComponent<Mask>();
+            cmp.RootMask.showMaskGraphic = false;
 
-            BorderGraphic = border.GetComponent<BasicBorderImage>();
+            cmp.BorderGraphic = border.GetComponent<BasicBorderImage>();
 
             var bgImage = bg.GetComponent<Image>();
             bgImage.type = Image.Type.Sliced;
@@ -43,16 +45,18 @@ namespace ReactUnity.Styling
             sdImage.type = Image.Type.Sliced;
             sdImage.sprite = ResourcesHelper.BoxShadowSprite;
 
-            Root = root.transform as RectTransform;
-            Shadow = sd.transform as RectTransform;
-            Border = border.transform as RectTransform;
-            Background = bg.transform as RectTransform;
+            cmp.Root = root.transform as RectTransform;
+            cmp.Shadow = sd.transform as RectTransform;
+            cmp.Border = border.transform as RectTransform;
+            cmp.Background = bg.transform as RectTransform;
 
-            FullStretch(Shadow, Root);
-            FullStretch(Background, Root);
-            FullStretch(Border, Root);
-            FullStretch(Root, transform as RectTransform);
-            Root.SetAsFirstSibling();
+            FullStretch(cmp.Shadow, cmp.Root);
+            FullStretch(cmp.Background, cmp.Root);
+            FullStretch(cmp.Border, cmp.Root);
+            FullStretch(cmp.Root, cmp.transform as RectTransform);
+            cmp.Root.SetAsFirstSibling();
+
+            return cmp;
         }
 
         public void SetBorderSize(YogaNode layout)
@@ -81,8 +85,9 @@ namespace ReactUnity.Styling
             Shadow.offsetMin = min;
             Shadow.offsetMax = max;
 
-            var borderImage = Border.GetComponent<Image>();
-            borderImage.enabled = borderLeft > 0 || borderRight > 0 || borderBottom > 0 || borderTop > 0;
+            BorderGraphic.enabled = borderLeft > 0 || borderRight > 0 || borderBottom > 0 || borderTop > 0;
+            BorderGraphic.BorderSize = new Vector4(borderTop, borderRight, borderBottom, borderLeft);
+            BorderGraphic.SetMaterialDirty();
         }
 
         public void SetBorderImage(Sprite sprite)
@@ -105,7 +110,10 @@ namespace ReactUnity.Styling
 
         public void SetBorderColor(Color top, Color right, Color bottom, Color left)
         {
-            Border.GetComponent<Image>().color = top;
+            BorderGraphic.TopColor = top;
+            BorderGraphic.RightColor = right;
+            BorderGraphic.BottomColor = bottom;
+            BorderGraphic.LeftColor = left;
         }
 
         public void SetBackgroundColorAndImage(Color? color, Sprite sprite)
@@ -131,7 +139,7 @@ namespace ReactUnity.Styling
             sd.SetVerticesDirty();
         }
 
-        void FullStretch(RectTransform child, RectTransform parent)
+        static void FullStretch(RectTransform child, RectTransform parent)
         {
             child.transform.SetParent(parent, false);
             child.anchorMin = new Vector2(0, 0);

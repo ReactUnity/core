@@ -19,6 +19,9 @@ namespace ReactUnity.Helpers
         private static Material borderRadiusMaterial;
         public static Material BorderRadiusMaterial => borderRadiusMaterial ??= Resources.Load<Material>("ReactUnity/materials/RoundedBorder");
 
+        private static Material coloredBorderMaterial;
+        public static Material ColoredBorderMaterial => coloredBorderMaterial ??= Resources.Load<Material>("ReactUnity/materials/RoundedColoredBorder");
+
         public static string InjectCode(string code)
         {
             var injectableText = Resources.Load<TextAsset>("ReactUnity/editor/injectable/index");

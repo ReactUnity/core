@@ -198,7 +198,7 @@ namespace ReactUnity.Components
             // Mask is not defined and there is no need for it
             if (Layout.Overflow == YogaOverflow.Visible && mask == null) return;
 
-            if (mask == null) mask = MaskAndImage = AddComponent<MaskAndImage>();
+            if (mask == null) mask = MaskAndImage = MaskAndImage.Create(GameObject);
 
             mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
             mask.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
@@ -245,7 +245,7 @@ namespace ReactUnity.Components
             {
                 updateStyle = true;
                 updateLayout = true;
-                image = AddComponent<BorderAndBackground>();
+                image = BorderAndBackground.Create(GameObject);
 
                 if (Selectable) Selectable.targetGraphic = image.Background.GetComponent<Image>();
                 BorderAndBackground = image;

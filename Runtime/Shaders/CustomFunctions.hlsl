@@ -26,31 +26,31 @@ void CalculateBorderRadius_float(float4 br, float2 uv, float2 size, out bool vis
   visible = (drx * drx / (rx * rx) + dry * dry / (ry * ry)) <= 1;
 }
 
-  
+
 void CalculateBorder_float(float4 br, float2 uv, float2 size, float4 border, out bool isBorder)
 {
   isBorder = false;
-  
+
   float r = uv.x > 0.5 ? (uv.y > 0.5 ? br.y : br.z) : (uv.y > 0.5 ? br.x : br.w);
-  
+
   float rx = r < 1 ? r : r / size.x;
   float ry = r < 1 ? r : r / size.y;
 
   rx = rx > 0.5 ? 0.5 : rx;
   ry = ry > 0.5 ? 0.5 : ry;
-  
+
   float dx = uv.x > 0.5 ? 1 - uv.x : uv.x;
   float dy = uv.y > 0.5 ? 1 - uv.y : uv.y;
 
   float borderSize = 0;
   float borderScale = 1;
-  
+
   float lx = 0.5 - uv.x;
   float ly = 0.5 - uv.y;
 
   float main = 0;
-  
-  
+
+
   float drx = abs(rx - dx);
   float dry = abs(ry - dy);
 
@@ -67,7 +67,7 @@ void CalculateBorder_float(float4 br, float2 uv, float2 size, float4 border, out
     main = dy;
     dry += borderSize / borderScale;
   }
-  
+
   if(lx >= ly && lx < -ly) {
     borderSize = border.x;
     borderScale = size.y;
@@ -97,7 +97,7 @@ void CalculateBorder_float(float4 br, float2 uv, float2 size, float4 border, out
   isBorder = (drx * drx / (rx * rx) + dry * dry / (ry * ry)) > 1;
 }
 
-void PickBorderColor_float(float2 uv, float4 top, float4 right, float4 bottom, float4 left, out float4 color)
+void PickBorderColorDiagonal_float(float2 uv, float4 top, float4 right, float4 bottom, float4 left, out float4 color)
 {
   color = 0;
 
@@ -111,13 +111,79 @@ void PickBorderColor_float(float2 uv, float4 top, float4 right, float4 bottom, f
   if(dx < dy && dx >= -dy) {
     color = bottom;
   }
-  
+
   if(dx >= dy && dx < -dy) {
     color = top;
   }
 
   if(dx >= dy && dx >= -dy) {
     color = left;
+  }
+}
+
+bool ptInTriangle(float2 p, float2 p0, float2 p1, float2 p2) {
+  float dX = p.x-p2.x;
+  float dY = p.y-p2.y;
+  float dX21 = p2.x-p1.x;
+  float dY12 = p1.y-p2.y;
+  float D = dY12*(p0.x-p2.x) + dX21*(p0.y-p2.y);
+  float s = dY12*dX + dX21*dY;
+  float t = (p2.y-p0.y)*dX + (p0.x-p2.x)*dY;
+  if (D<0) return s<=0 && t<=0 && s+t>=D;
+  return s>=0 && t>=0 && s+t<=D;
+}
+
+void PickBorderColorTrapezoidal_float(float2 uv, float4 sizes, float4 top, float4 right, float4 bottom, float4 left, out float4 color)
+{
+  color = 0;
+
+  float2 pos = float2(uv.x, 1 - uv.y);
+
+  float x = pos.x;
+  float y = pos.y;
+
+  float t = sizes.x;
+  float r = sizes.y;
+  float b = sizes.z;
+  float l = sizes.w;
+
+  // Does not work well with rounded borders
+  // if((x > l) && (x < (1 - r)) && (y > t) && (y < (1 - b))) return;
+
+  float bx = l + r;
+  float by = t + b;
+
+  float h = 1;
+  float w = 1;
+
+  float hi = h - by;
+  float wi = w - bx;
+
+  float ld = l + (l * hi / by);
+  float rd = r + (r * hi / by);
+  float td = t + (t * wi / bx);
+  float bd = b + (b * wi / bx);
+
+  if(by <= 0 || ld + rd > 1) {
+    if(bx <= 0 || td + bd > 1.05) return;
+    // Vertical trapezoid
+
+    float m = (ld / (ld + rd));
+
+    if(td > 0 && ptInTriangle(pos, float2(0,0), float2(1,0), float2(m,td))) color = top;
+    else if(bd > 0 && ptInTriangle(pos, float2(0,1), float2(1,1), float2(m,1 - bd))) color = bottom;
+    else if(pos.x > m) color = right;
+    else color = left;
+  } else {
+    if(by <= 0 || ld + rd > 1.05) return;
+    // Horizontal trapezoid
+
+    float m = (td / (td + bd));
+
+    if(ld > 0 && ptInTriangle(pos, float2(0,0), float2(0,1), float2(ld,m))) color = left;
+    else if(rd > 0 && ptInTriangle(pos, float2(1,1), float2(1,0), float2(1 - rd, m))) color = right;
+    else if(pos.y > m) color = bottom;
+    else color = top;
   }
 }
 
