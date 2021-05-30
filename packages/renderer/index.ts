@@ -4,8 +4,6 @@ export * from './models/jint';
 export * from './models/properties';
 export * from './models/renderer';
 export * from './models/runtime';
-export * from './src/animation/animation';
-export * from './src/animation/easing';
 export * from './src/components/dropdown';
 export * from './src/components/radio/radio';
 export * from './src/components/slider';

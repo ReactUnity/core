@@ -1,12 +1,34 @@
 import * as React from 'react';
-import { RenderStyle } from '../../../models/properties';
+import { RenderStyle, Style } from '../../../models/properties';
 import { View } from '../../../models/runtime';
-import { bottomEdge, dropdownBottom, fullScreen, transparentColor } from '../../helpers/common-layouts';
 import { DropdownItem } from './dropdown-item';
+
+export const fullScreen: Style = {
+  position: 'absolute',
+  top: -5000,
+  right: -5000,
+  bottom: -5000,
+  left: -5000,
+};
+
+export const dropdownBottom: Style = {
+  position: 'absolute',
+  top: '100%',
+  left: 0,
+  minWidth: '100%',
+};
+
+export const bottomEdge: Style = {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  bottom: 0,
+  height: 0,
+};
 
 const dropdownMenuStyle: RenderStyle = { boxShadow: '0 3 7 6 black 5' };
 const dropdownButtonStyle: RenderStyle = { backgroundColor: 'white', borderRadius: 0 };
-const dropdownBackdropStyle: RenderStyle = { backgroundColor: transparentColor, cursor: 'default' };
+const dropdownBackdropStyle: RenderStyle = { backgroundColor: 'transparent', cursor: 'default' };
 
 export interface DropdownProps<T = any> {
   onChange?: (value: T, ind: number) => void;
