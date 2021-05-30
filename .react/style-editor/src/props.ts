@@ -3,7 +3,7 @@ import React from 'react';
 import { BoxShadowField } from './components/box-shadow';
 import { enumComponent, flagsComponent, objectComponent, sliderComponent, sliderintComponent } from './components/other';
 import { YogaValue2Field } from './components/yogavalue2';
-import { convertLengthToYoga, convertYogaToLength, floatDefaultGetter } from './helpers';
+import { convertFloatToLength, convertLengthToFloat, convertLengthToYoga, convertYogaToLength, floatDefaultGetter } from './helpers';
 
 export interface StylePropComponentProps<T = any> {
   className?: string;
@@ -59,6 +59,7 @@ export const PartCapitalize = {
 };
 
 const lengthField = { component: 'length', getter: convertYogaToLength, setter: convertLengthToYoga };
+const borderRadiusField = { component: 'length', getter: convertFloatToLength, setter: convertLengthToFloat };
 
 export const styleProps: StylePropGroup[] = [
   {
@@ -74,7 +75,7 @@ export const styleProps: StylePropGroup[] = [
   },
   {
     props: [
-      { name: 'boxShadow', type: 'ShadowDefinition', component: BoxShadowField, label: 'Box Shadow' },
+      { name: 'boxShadow', type: 'BoxShadow', component: BoxShadowField, label: 'Box Shadow' },
     ],
   },
   {
@@ -150,7 +151,7 @@ export const styleProps: StylePropGroup[] = [
 
   {
     props: [
-      { name: 'borderRadius', type: 'int', component: 'integer', label: 'Border Radius', arrangement: 'corner', partTemplate: (part) => `border${CornerHack[part]}Radius` },
+      { name: 'borderRadius', type: 'float', ...borderRadiusField, label: 'Border Radius', arrangement: 'corner', partTemplate: (part) => `border${CornerHack[part]}Radius` },
       { name: 'borderColor', type: 'Color', component: 'color', arrangement: 'rect', partTemplate: (part) => `border${PartCapitalize[part]}Color`, label: 'Border Color' },
       { name: 'BorderWidth', type: 'float', component: 'float', arrangement: 'rect', getter: floatDefaultGetter, partTemplate: (part) => `Border${PartCapitalize[part]}Width`, label: 'Border Width', source: 'layout' },
     ],

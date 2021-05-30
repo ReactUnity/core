@@ -27,6 +27,28 @@ export function convertYogaToLength(value: FB.Yoga.YogaValue): UE.UIElements.Sty
 }
 /* eslint-enable eqeqeq */
 
+/* eslint-disable eqeqeq */
+export function convertLengthToFloat(value: UE.UIElements.StyleLength): number {
+  if (value.keyword == 2) return 0;
+  if (value.keyword == 1 || value.keyword == 4 || value.keyword == 3) return 0;
+  if (value.value.unit == 1) return value.value.value / 100;
+  if (value.value.unit == 0) return value.value.value;
+  return 0;
+}
+
+export function convertFloatToLength(value: number): UE.UIElements.StyleLength {
+  var len = new StyleLength(0);
+  len.keyword = StyleKeyword.Initial;
+
+  if (value < 1) {
+    len.value = new Length(value * 100, LengthUnit.Percent);
+  } else {
+    len.value = new Length(value, LengthUnit.Pixel);
+  }
+  return len;
+}
+/* eslint-enable eqeqeq */
+
 export function floatDefaultGetter(value: number) {
   return value || 0;
 }

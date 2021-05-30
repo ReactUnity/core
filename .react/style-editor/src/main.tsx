@@ -114,7 +114,7 @@ function StylePropRect({ prop, element }: { prop: StyleProp, element: RC }) {
     {partName ?
       <StylePropRow prop={prop} element={element} className={clsx(style.rectHead, 'react-unity__field__inline', 'react-unity__field__no-grow')} /> :
       <view style={{ flexDirection: 'row' }} className={style.rectHead}>
-        <button className={style.removeButton} style={{ visibility: 'Hidden' }}>X</button>
+        <button className={style.removeButton} style={{ visibility: 'hidden' }}>X</button>
         {prop.label ?? prop.name}
       </view>}
 

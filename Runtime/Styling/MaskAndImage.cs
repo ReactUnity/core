@@ -24,7 +24,7 @@ namespace ReactUnity.Styling
             Mask.enabled = enabled;
         }
 
-        internal void SetBorderRadius(float tl, float tr, float bl, float br)
+        internal void SetBorderRadius(float tl, float tr, float br, float bl)
         {
             Image.BorderRadius = new Vector4(tl, tr, br, bl);
             Image.SetMaterialDirty();

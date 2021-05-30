@@ -201,7 +201,7 @@ namespace ReactUnity.Components
             if (mask == null) mask = MaskAndImage = MaskAndImage.Create(GameObject);
 
             mask.SetEnabled(Layout.Overflow != YogaOverflow.Visible);
-            mask.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
+            mask.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomRightRadius, ComputedStyle.borderBottomLeftRadius);
         }
 
         private void SetCursor()
@@ -266,7 +266,7 @@ namespace ReactUnity.Components
                 markedUpdateBackgroundImage = true;
 
                 image.SetBorderColor(ComputedStyle.borderTopColor, ComputedStyle.borderRightColor, ComputedStyle.borderBottomColor, ComputedStyle.borderLeftColor);
-                image.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
+                image.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomRightRadius, ComputedStyle.borderBottomLeftRadius);
             }
 
             return image;
@@ -293,7 +293,7 @@ namespace ReactUnity.Components
 
             if (!GameObject) return;
 
-            BorderAndBackground.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomLeftRadius, ComputedStyle.borderBottomRightRadius);
+            BorderAndBackground.SetBorderRadius(ComputedStyle.borderTopLeftRadius, ComputedStyle.borderTopRightRadius, ComputedStyle.borderBottomRightRadius, ComputedStyle.borderBottomLeftRadius);
         }
 
         #endregion
