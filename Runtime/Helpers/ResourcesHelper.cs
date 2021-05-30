@@ -4,9 +4,6 @@ namespace ReactUnity.Helpers
 {
     internal static class ResourcesHelper
     {
-        private static Sprite boxShadowSprite;
-        public static Sprite BoxShadowSprite => boxShadowSprite ??= Resources.Load<Sprite>("ReactUnity/sprites/box-shadow");
-
         private static Sprite checkBoxSprite;
         public static Sprite CheckBoxSprite => checkBoxSprite ??= Resources.Load<Sprite>("ReactUnity/sprites/checkbox");
 
@@ -21,6 +18,9 @@ namespace ReactUnity.Helpers
 
         private static Material coloredBorderMaterial;
         public static Material ColoredBorderMaterial => coloredBorderMaterial ??= Resources.Load<Material>("ReactUnity/materials/RoundedColoredBorder");
+
+        private static Material boxShadowMaterial;
+        public static Material BoxShadowMaterial => boxShadowMaterial ??= Resources.Load<Material>("ReactUnity/materials/RoundedBoxShadow");
 
         public static string InjectCode(string code)
         {

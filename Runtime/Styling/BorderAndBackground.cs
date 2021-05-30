@@ -20,6 +20,8 @@ namespace ReactUnity.Styling
 
         public BasicBorderImage BorderGraphic;
 
+        public BoxShadowImage ShadowGraphic;
+
         public static BorderAndBackground Create(GameObject go)
         {
             var cmp = go.AddComponent<BorderAndBackground>();
@@ -40,10 +42,8 @@ namespace ReactUnity.Styling
             bgImage.type = Image.Type.Sliced;
             bgImage.pixelsPerUnitMultiplier = 1;
 
-            var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(IgnoreMaskImage));
-            var sdImage = sd.GetComponent<Image>();
-            sdImage.type = Image.Type.Sliced;
-            sdImage.sprite = ResourcesHelper.BoxShadowSprite;
+            var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
+            cmp.ShadowGraphic = sd.GetComponent<BoxShadowImage>();
 
             cmp.Root = root.transform as RectTransform;
             cmp.Shadow = sd.transform as RectTransform;
@@ -90,12 +90,6 @@ namespace ReactUnity.Styling
             BorderGraphic.SetMaterialDirty();
         }
 
-        public void SetBorderImage(Sprite sprite)
-        {
-            Root.GetComponent<Image>().sprite = sprite;
-            Border.GetComponent<Image>().sprite = sprite;
-        }
-
         public void SetBorderRadius(float tl, float tr, float br, float bl)
         {
             var v = new Vector4(tl, tr, br, bl);
@@ -106,6 +100,9 @@ namespace ReactUnity.Styling
 
             BorderGraphic.BorderRadius = v;
             BorderGraphic.SetMaterialDirty();
+
+            ShadowGraphic.BorderRadius = v;
+            ShadowGraphic.SetMaterialDirty();
         }
 
         public void SetBorderColor(Color top, Color right, Color bottom, Color left)
@@ -114,6 +111,7 @@ namespace ReactUnity.Styling
             BorderGraphic.RightColor = right;
             BorderGraphic.BottomColor = bottom;
             BorderGraphic.LeftColor = left;
+            BorderGraphic.SetMaterialDirty();
         }
 
         public void SetBackgroundColorAndImage(Color? color, Sprite sprite)
@@ -129,14 +127,13 @@ namespace ReactUnity.Styling
 
             if (shadow == null) return;
 
-            Shadow.sizeDelta = shadow.spread * 2;
+            ShadowGraphic.Shadow = shadow;
+
+            Shadow.sizeDelta = (shadow.spread + new Vector2(shadow.blur, shadow.blur)) * 2;
             Shadow.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
 
-            var sd = Shadow.GetComponent<Image>();
-            var ppu = shadow.blur <= 0 ? 4000 : (4000 / shadow.blur);
-            sd.pixelsPerUnitMultiplier = ppu;
-            sd.color = shadow.color;
-            sd.SetVerticesDirty();
+            ShadowGraphic.color = shadow.color;
+            ShadowGraphic.SetMaterialDirty();
         }
 
         static void FullStretch(RectTransform child, RectTransform parent)

@@ -26,28 +26,13 @@ void CalculateBorderRadius_float(float4 br, float2 uv, float2 size, out bool vis
   visible = (drx * drx / (rx * rx) + dry * dry / (ry * ry)) <= 1;
 }
 
-void PickBorderColorDiagonal_float(float2 uv, float4 top, float4 right, float4 bottom, float4 left, out float4 color)
+float CalculateBorderRadius(float4 br, float2 uv, float2 size)
 {
-  color = 0;
+  if(uv.x < 0 || uv.x > 1 || uv.y < 0 || uv.y > 1) return 0;
 
-  float dx = 0.5 - uv.x;
-  float dy = 0.5 - uv.y;
-
-  if(dx < dy && dx < -dy) {
-    color = right;
-  }
-
-  if(dx < dy && dx >= -dy) {
-    color = bottom;
-  }
-
-  if(dx >= dy && dx < -dy) {
-    color = top;
-  }
-
-  if(dx >= dy && dx >= -dy) {
-    color = left;
-  }
+  bool visible;
+  CalculateBorderRadius_float(br, uv, size, visible);
+  return visible ? 1 : 0;
 }
 
 bool ptInTriangle(float2 p, float2 p0, float2 p1, float2 p2) {

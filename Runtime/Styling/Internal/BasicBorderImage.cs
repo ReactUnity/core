@@ -31,7 +31,7 @@ namespace ReactUnity.Styling.Internal
                 result.SetColor("_rightColor", RightColor);
                 result.SetColor("_bottomColor", BottomColor);
                 result.SetColor("_leftColor", LeftColor);
-                result.SetColor(ShaderHelpers.BorderSizeProp, BorderSize);
+                result.SetVector(ShaderHelpers.BorderSizeProp, BorderSize);
 
                 return result;
             }
