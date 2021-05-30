@@ -19,6 +19,7 @@ namespace ReactUnity.Editor.Renderer
         protected ReactUnityElement hostElement { get; private set; }
 
         public event Action<ReactWindow> SelectionChange;
+        public event Action<bool, ReactWindow> VisibilityChange;
 
 #if REACT_UNITY_DEVELOPER
         private readonly GUIContent enableDevServerContent = EditorGUIUtility.TrTextContent("Enable DevSever");
@@ -75,6 +76,16 @@ namespace ReactUnity.Editor.Renderer
             SelectionChange?.Invoke(this);
         }
 
+        protected void OnBecameVisible()
+        {
+            VisibilityChange?.Invoke(true, this);
+        }
+
+        protected void OnBecameInvisible()
+        {
+            VisibilityChange?.Invoke(true, this);
+        }
+
         public Action AddSelectionChange(Action<ReactWindow> callback)
         {
             SelectionChange += callback;
@@ -86,6 +97,12 @@ namespace ReactUnity.Editor.Renderer
             Action<PlayModeStateChange> cb = x => callback(x, this);
             EditorApplication.playModeStateChanged += cb;
             return () => EditorApplication.playModeStateChanged -= cb;
+        }
+
+        public Action AddVisibilityChange(Action<bool, ReactWindow> callback)
+        {
+            VisibilityChange += callback;
+            return () => VisibilityChange -= callback;
         }
 
         public void AddItemsToMenu(GenericMenu menu)

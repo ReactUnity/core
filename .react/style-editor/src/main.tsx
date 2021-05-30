@@ -29,9 +29,11 @@ function App() {
     if (Window) {
       const removeSelectionChange = Window.AddSelectionChange(() => setSelection(getSelection()));
       const removeStateChange = Window.AddPlayModeStateChange(() => setSelection(getSelection()));
+      const removeVisibilityChange = Window.AddVisibilityChange(() => setSelection(getSelection()));
       return () => {
         removeSelectionChange();
         removeStateChange();
+        removeVisibilityChange();
       };
     }
   }, []);

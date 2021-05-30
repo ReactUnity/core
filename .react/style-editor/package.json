@@ -11,7 +11,7 @@
     "preinstall": "npx only-allow@1.0.0 yarn"
   },
   "dependencies": {
-    "@reactunity/renderer": "^0.0.29",
+    "@reactunity/renderer": "^0.0.30",
     "clsx": "^1.1.1",
     "react": "^17.0.2"
   },

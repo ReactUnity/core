@@ -7282,225 +7282,6 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/components.js
-var ImageFitMode;
-
-(function (ImageFitMode) {
-  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
-  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
-  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
-  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
-  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
-  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
-  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
-})(ImageFitMode || (ImageFitMode = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/index.js
-
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/styles-enums.js
-var FontWeight;
-
-(function (FontWeight) {
-  FontWeight[FontWeight["Thin"] = 100] = "Thin";
-  FontWeight[FontWeight["ExtraLight"] = 200] = "ExtraLight";
-  FontWeight[FontWeight["Light"] = 300] = "Light";
-  FontWeight[FontWeight["Regular"] = 400] = "Regular";
-  FontWeight[FontWeight["Medium"] = 500] = "Medium";
-  FontWeight[FontWeight["SemiBold"] = 600] = "SemiBold";
-  FontWeight[FontWeight["Bold"] = 700] = "Bold";
-  FontWeight[FontWeight["Heavy"] = 800] = "Heavy";
-  FontWeight[FontWeight["Black"] = 900] = "Black";
-})(FontWeight || (FontWeight = {}));
-
-var FontStyles;
-
-(function (FontStyles) {
-  FontStyles[FontStyles["Normal"] = 0] = "Normal";
-  FontStyles[FontStyles["Bold"] = 1] = "Bold";
-  FontStyles[FontStyles["Italic"] = 2] = "Italic";
-  FontStyles[FontStyles["Underline"] = 4] = "Underline";
-  FontStyles[FontStyles["LowerCase"] = 8] = "LowerCase";
-  FontStyles[FontStyles["UpperCase"] = 16] = "UpperCase";
-  FontStyles[FontStyles["SmallCaps"] = 32] = "SmallCaps";
-  FontStyles[FontStyles["Strikethrough"] = 64] = "Strikethrough";
-  FontStyles[FontStyles["Superscript"] = 128] = "Superscript";
-  FontStyles[FontStyles["Subscript"] = 256] = "Subscript";
-  FontStyles[FontStyles["Highlight"] = 512] = "Highlight";
-})(FontStyles || (FontStyles = {}));
-
-var TextOverflowModes;
-
-(function (TextOverflowModes) {
-  TextOverflowModes["Overflow"] = "overflow";
-  TextOverflowModes["Ellipsis"] = "ellipsis";
-  TextOverflowModes["Masking"] = "masking";
-  TextOverflowModes["Truncate"] = "truncate";
-  TextOverflowModes["ScrollRect"] = "scroll-rect";
-  TextOverflowModes["Page"] = "page";
-  TextOverflowModes["Linked"] = "linked";
-})(TextOverflowModes || (TextOverflowModes = {}));
-
-var PointerEvents;
-
-(function (PointerEvents) {
-  PointerEvents["Auto"] = "auto";
-  PointerEvents["Visible"] = "visible";
-  PointerEvents["All"] = "all";
-  PointerEvents["None"] = "none";
-})(PointerEvents || (PointerEvents = {}));
-
-var Visibility;
-
-(function (Visibility) {
-  Visibility["Visible"] = "visible";
-  Visibility["Hidden"] = "hidden";
-})(Visibility || (Visibility = {}));
-
-var Appearance;
-
-(function (Appearance) {
-  Appearance["None"] = "none";
-  Appearance["Button"] = "button";
-  Appearance["Input"] = "input";
-  Appearance["Toggle"] = "toggle";
-})(Appearance || (Appearance = {}));
-
-var NavigationMode;
-
-(function (NavigationMode) {
-  NavigationMode["None"] = "none";
-  NavigationMode["Horizontal"] = "horizontal";
-  NavigationMode["Vertical"] = "vertical";
-  NavigationMode["Automatic"] = "automatic";
-  NavigationMode["Explicit"] = "explicit";
-})(NavigationMode || (NavigationMode = {}));
-
-var WhiteSpace;
-
-(function (WhiteSpace) {
-  WhiteSpace["Normal"] = "normal";
-  WhiteSpace["NoWrap"] = "nowrap";
-})(WhiteSpace || (WhiteSpace = {}));
-
-var CursorType;
-
-(function (CursorType) {
-  CursorType["Auto"] = "auto";
-  CursorType["Default"] = "default";
-  CursorType["None"] = "none";
-  CursorType["ContextMenu"] = "context-menu";
-  CursorType["Help"] = "help";
-  CursorType["Pointer"] = "pointer";
-  CursorType["Progress"] = "progress";
-  CursorType["Wait"] = "wait";
-  CursorType["Cell"] = "cell";
-  CursorType["Crosshair"] = "crosshair";
-  CursorType["Text"] = "text";
-  CursorType["VerticalText"] = "vertical-text";
-  CursorType["Alias"] = "alias";
-  CursorType["Copy"] = "copy";
-  CursorType["Move"] = "move";
-  CursorType["NoDrop"] = "no-drop";
-  CursorType["NotAllowed"] = "not-allowed";
-  CursorType["EResize"] = "e-resize";
-  CursorType["NResize"] = "n-resize";
-  CursorType["NeResize"] = "ne-resize";
-  CursorType["NwResize"] = "nw-resize";
-  CursorType["SResize"] = "s-resize";
-  CursorType["SeResize"] = "se-resize";
-  CursorType["SwResize"] = "sw-resize";
-  CursorType["WResize"] = "w-resize";
-  CursorType["EwResize"] = "ew-resize";
-  CursorType["NsResize"] = "ns-resize";
-  CursorType["NeswResize"] = "nesw-resize";
-  CursorType["NwseResize"] = "nwse-resize";
-  CursorType["ColResize"] = "col-resize";
-  CursorType["RowResize"] = "row-resize";
-  CursorType["AllScroll"] = "all-scroll";
-  CursorType["ZoomIn"] = "zoom-in";
-  CursorType["ZoomOut"] = "zoom-out";
-  CursorType["Grab"] = "grab";
-  CursorType["Grabbing"] = "grabbing";
-})(CursorType || (CursorType = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/yoga-enums.js
-var FlexDirection;
-
-(function (FlexDirection) {
-  FlexDirection[FlexDirection["Column"] = 0] = "Column";
-  FlexDirection[FlexDirection["ColumnReverse"] = 1] = "ColumnReverse";
-  FlexDirection[FlexDirection["Row"] = 2] = "Row";
-  FlexDirection[FlexDirection["RowReverse"] = 3] = "RowReverse";
-})(FlexDirection || (FlexDirection = {}));
-
-var YogaAlign;
-
-(function (YogaAlign) {
-  YogaAlign[YogaAlign["Auto"] = 0] = "Auto";
-  YogaAlign[YogaAlign["FlexStart"] = 1] = "FlexStart";
-  YogaAlign[YogaAlign["Center"] = 2] = "Center";
-  YogaAlign[YogaAlign["FlexEnd"] = 3] = "FlexEnd";
-  YogaAlign[YogaAlign["Stretch"] = 4] = "Stretch";
-  YogaAlign[YogaAlign["Baseline"] = 5] = "Baseline";
-  YogaAlign[YogaAlign["SpaceBetween"] = 6] = "SpaceBetween";
-  YogaAlign[YogaAlign["SpaceAround"] = 7] = "SpaceAround";
-})(YogaAlign || (YogaAlign = {}));
-
-var YogaJustify;
-
-(function (YogaJustify) {
-  YogaJustify["FlexStart"] = "flex-start";
-  YogaJustify["Center"] = "center";
-  YogaJustify["FlexEnd"] = "flex-end";
-  YogaJustify["SpaceBetween"] = "space-between";
-  YogaJustify["SpaceAround"] = "space-around";
-})(YogaJustify || (YogaJustify = {}));
-
-var Display;
-
-(function (Display) {
-  Display["Flex"] = "flex";
-  Display["None"] = "none";
-})(Display || (Display = {}));
-
-var Wrap;
-
-(function (Wrap) {
-  Wrap["NoWrap"] = "no-wrap";
-  Wrap["Wrap"] = "wrap";
-  Wrap["WrapReverse"] = "wrap-reverse";
-})(Wrap || (Wrap = {}));
-
-var Position;
-
-(function (Position) {
-  Position["Relative"] = "relative";
-  Position["Absolute"] = "absolute";
-})(Position || (Position = {}));
-
-var Overflow;
-
-(function (Overflow) {
-  Overflow["Visible"] = "visible";
-  Overflow["Hidden"] = "hidden";
-  Overflow["Scroll"] = "scroll";
-})(Overflow || (Overflow = {}));
-
-var Direction;
-
-(function (Direction) {
-  Direction["Inherit"] = "inherit";
-  Direction["LTR"] = "ltr";
-  Direction["RTL"] = "rtl";
-})(Direction || (Direction = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/index.js
-
-
-
-
-
-
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
 // https://gist.github.com/gre/1650294
 var easing = {
@@ -7916,17 +7697,17 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(114);
 ;// CONCATENATED MODULE: ./src/components/box-shadow.tsx
-function BoxShadowField(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var blurRef=(0,react.useRef)();var offsetRef=(0,react.useRef)();var spreadRef=(0,react.useRef)();var colorRef=(0,react.useRef)();var changed=function changed(){var blur=blurRef.current.Element.value;var spread=spreadRef.current.Element.value;var color=colorRef.current.Element.value;var offset=offsetRef.current.Element.value;var val=new ReactUnity.Styling.Types.ShadowDefinition(offset,spread,color,blur,false);onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsx)("color",{label:"Color",value:value===null||value===void 0?void 0:value.color,onChange:changed,ref:colorRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("float",{label:"Blur",value:value===null||value===void 0?void 0:value.blur,onChange:changed,ref:blurRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Offset",value:value===null||value===void 0?void 0:value.offset,onChange:changed,ref:offsetRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Spread",value:value===null||value===void 0?void 0:value.spread,onChange:changed,ref:spreadRef})]});}
+function BoxShadowField(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var blurRef=(0,react.useRef)();var offsetRef=(0,react.useRef)();var spreadRef=(0,react.useRef)();var colorRef=(0,react.useRef)();var changed=function changed(){var blur=blurRef.current.Element.value;var spread=spreadRef.current.Element.value;var color=colorRef.current.Element.value;var offset=offsetRef.current.Element.value;var val=new ReactUnity.Types.BoxShadow(offset,spread,color,blur,false);onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsx)("color",{label:"Color",value:value===null||value===void 0?void 0:value.color,onChange:changed,ref:colorRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("float",{label:"Blur",value:value===null||value===void 0?void 0:value.blur,onChange:changed,ref:blurRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Offset",value:value===null||value===void 0?void 0:value.offset,onChange:changed,ref:offsetRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Spread",value:value===null||value===void 0?void 0:value.spread,onChange:changed,ref:spreadRef})]});}
 ;// CONCATENATED MODULE: ./src/components/other.tsx
 function sliderComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("slider",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function sliderintComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1000;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("sliderint",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function enumComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("enum",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function flagsComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("flags",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function objectComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("object",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}
 ;// CONCATENATED MODULE: ./src/helpers.ts
-var StyleLength=UnityEngine.UIElements.StyleLength;var StyleKeyword=UnityEngine.UIElements.StyleKeyword;var Length=UnityEngine.UIElements.Length;var LengthUnit=UnityEngine.UIElements.LengthUnit;/* eslint-disable eqeqeq */function convertLengthToYoga(value){if(value.keyword==2)return Facebook.Yoga.YogaValue.Auto();if(value.keyword==1||value.keyword==4||value.keyword==3)return Facebook.Yoga.YogaValue.Undefined();if(value.value.unit==1)return Facebook.Yoga.YogaValue.Percent(value.value.value);if(value.value.unit==0)return Facebook.Yoga.YogaValue.Point(value.value.value);return Facebook.Yoga.YogaValue.Undefined();}function convertYogaToLength(value){var len=new StyleLength(0);len.keyword=StyleKeyword.Initial;if(value.Unit==3)len.keyword=StyleKeyword.Auto;else if(value.Unit==0)len.keyword=StyleKeyword.None;else if(isNaN(value.Value))len.keyword=StyleKeyword.Null;else if(value.Unit==2)len.value=new Length(value.Value,LengthUnit.Percent);else if(value.Unit==1)len.value=new Length(value.Value,LengthUnit.Pixel);return len;}/* eslint-enable eqeqeq */function floatDefaultGetter(value){return value||0;}
+var StyleLength=UnityEngine.UIElements.StyleLength;var StyleKeyword=UnityEngine.UIElements.StyleKeyword;var Length=UnityEngine.UIElements.Length;var LengthUnit=UnityEngine.UIElements.LengthUnit;/* eslint-disable eqeqeq */function convertLengthToYoga(value){if(value.keyword==2)return Facebook.Yoga.YogaValue.Auto();if(value.keyword==1||value.keyword==4||value.keyword==3)return Facebook.Yoga.YogaValue.Undefined();if(value.value.unit==1)return Facebook.Yoga.YogaValue.Percent(value.value.value);if(value.value.unit==0)return Facebook.Yoga.YogaValue.Point(value.value.value);return Facebook.Yoga.YogaValue.Undefined();}function convertYogaToLength(value){var len=new StyleLength(0);len.keyword=StyleKeyword.Initial;if(value.Unit==3)len.keyword=StyleKeyword.Auto;else if(value.Unit==0)len.keyword=StyleKeyword.None;else if(isNaN(value.Value))len.keyword=StyleKeyword.Null;else if(value.Unit==2)len.value=new Length(value.Value,LengthUnit.Percent);else if(value.Unit==1)len.value=new Length(value.Value,LengthUnit.Pixel);return len;}/* eslint-enable eqeqeq */ /* eslint-disable eqeqeq */function convertLengthToFloat(value){if(value.keyword==2)return 0;if(value.keyword==1||value.keyword==4||value.keyword==3)return 0;if(value.value.unit==1)return value.value.value/100;if(value.value.unit==0)return value.value.value;return 0;}function convertFloatToLength(value){var len=new StyleLength(0);len.keyword=StyleKeyword.Initial;if(value<1){len.value=new Length(value*100,LengthUnit.Percent);}else{len.value=new Length(value,LengthUnit.Pixel);}return len;}/* eslint-enable eqeqeq */function floatDefaultGetter(value){return value||0;}
 ;// CONCATENATED MODULE: ./src/components/yogavalue2.tsx
 var YogaValue2=ReactUnity.Types.YogaValue2;function YogaValue2Field(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var x=convertYogaToLength(value.X);var y=convertYogaToLength(value.Y);var xRef=(0,react.useRef)();var yRef=(0,react.useRef)();var changed=function changed(){var xVal=xRef.current.Element.value;var yVal=yRef.current.Element.value;var val=new YogaValue2(convertLengthToYoga(xVal),convertLengthToYoga(yVal));onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,'unity-composite-field','unity-base-field'),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m('unity-base-field__input','unity-composite-field__input'),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("length",{label:"X",value:x,onChange:changed,ref:xRef,className:clsx_m('react-unity_field_no-grow','react-unity__field__inline','unity-composite-field__field','unity-composite-field__field--first')}),/*#__PURE__*/(0,jsx_runtime.jsx)("length",{label:"Y",value:y,onChange:changed,ref:yRef,className:clsx_m('react-unity_field_no-grow','react-unity__field__inline','unity-composite-field__field')}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:"unity-composite-field__field-spacer"})]})]});}
 ;// CONCATENATED MODULE: ./src/props.ts
-var CornerHack={'left':'TopLeft','top':'TopRight','right':'BottomRight','bottom':'BottomLeft','':''};var CornerLabels={'left':'TL','top':'TR','right':'BR','bottom':'BL','':''};var PartCapitalize={'left':'Left','right':'Right','top':'Top','bottom':'Bottom','start':'Start','end':'End','':''};var lengthField={component:'length',getter:convertYogaToLength,setter:convertLengthToYoga};var styleProps=[{props:[{name:'Display',type:'Enum',component:enumComponent('Facebook.Yoga.YogaDisplay'),label:'Display',source:'layout'},{name:'PositionType',type:'Enum',component:enumComponent('Facebook.Yoga.YogaPositionType'),label:'Position Type',source:'layout'},{name:'backgroundColor',type:'Color',component:'color',label:'Background Color'},{name:'backgroundImage',type:'ImageReference',component:objectComponent('UnityEngine.Texture2D'),label:'Background Image'},{name:'opacity',type:'float',component:sliderComponent(),label:'Opacity'},{name:'zIndex',type:'int',component:sliderintComponent(),label:'Z-Index'},{name:'visibility',type:'bool',component:'toggle',label:'Visibility'}]},{props:[{name:'boxShadow',type:'ShadowDefinition',component:BoxShadowField,label:'Box Shadow'}]},{label:'Text',props:[{name:'StyleDirection',type:'Enum',component:enumComponent('Facebook.Yoga.YogaDirection'),label:'Direction',source:'layout'},{name:'fontFamily',type:'FontReference',component:objectComponent('TMPro.TMP_FontAsset'),label:'Font Family'},{name:'color',type:'Color',component:'color',label:'Color'},{name:'fontWeight',type:'FontWeight',component:enumComponent('TMPro.FontWeight'),label:'Font Weight'},{name:'fontStyle',type:'FontStyles',component:flagsComponent('TMPro.FontStyles'),label:'Font Style'},_objectSpread2({name:'fontSize',type:'YogaValue',label:'Font Size'},lengthField),{name:'textAlign',type:'TextAlignmentOptions',component:enumComponent('TMPro.TextAlignmentOptions'),label:'Text Align'},{name:'textOverflow',type:'TextOverflowModes',component:enumComponent('TMPro.TextOverflowModes'),label:'Text Overflow'},{name:'textWrap',type:'bool',component:'toggle',label:'Text Wrap'},{name:'content',type:'string',component:'input',label:'Content'}]},{props:[{name:'transformOrigin',type:'YogaValue2',component:YogaValue2Field,label:'Transform Origin'},{name:'translate',type:'YogaValue2',component:YogaValue2Field,label:'Translate'},{name:'scale',type:'Vector2',component:'vector2',label:'Scale'},{name:'rotate',type:'Vector3',component:'vector3',label:'Rotate'}]},{props:[{name:'cursor',type:'string',component:'input',label:'Cursor'},{name:'pointerEvents',type:'PointerEvents',component:enumComponent('ReactUnity.Styling.Types.PointerEvents'),label:'Pointer Events'},{name:'appearance',type:'Appearance',component:enumComponent('ReactUnity.Styling.Types.Appearance'),label:'Appearance'},{name:'navigation',type:'Navigation',component:flagsComponent('UnityEngine.UI.Navigation+Mode'),label:'Navigation'}]},{props:[_objectSpread2(_objectSpread2({name:'Width',type:'YogaValue'},lengthField),{},{label:'Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'Height',type:'YogaValue'},lengthField),{},{label:'Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinWidth',type:'YogaValue'},lengthField),{},{label:'Min Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinHeight',type:'YogaValue'},lengthField),{},{label:'Min Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxWidth',type:'YogaValue'},lengthField),{},{label:'Max Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxHeight',type:'YogaValue'},lengthField),{},{label:'Max Height',source:'layout'})]},{props:[{name:'FlexDirection',type:'Enum',component:enumComponent('Facebook.Yoga.YogaFlexDirection'),label:'Flex Direction',source:'layout'},{name:'Overflow',type:'Enum',component:enumComponent('Facebook.Yoga.YogaOverflow'),label:'Overflow',source:'layout'},{name:'Wrap',type:'Enum',component:enumComponent('Facebook.Yoga.YogaWrap'),label:'Wrap',source:'layout'}]},{props:[{name:'JustifyContent',type:'Enum',component:enumComponent('Facebook.Yoga.YogaJustify'),label:'Justify Content',source:'layout'},{name:'AlignItems',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Items',source:'layout'},{name:'AlignContent',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Content',source:'layout'},{name:'AlignSelf',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Self',source:'layout'}]},{props:[{name:'AspectRatio',type:'float',component:'float',label:'Aspect Ratio',source:'layout'},{name:'FlexGrow',type:'float',component:'float',label:'Flex Grow',source:'layout'},{name:'FlexShrink',type:'float',component:'float',label:'Flex Shrink',source:'layout'},_objectSpread2(_objectSpread2({name:'FlexBasis',type:'YogaValue'},lengthField),{},{label:'Flex Basis',source:'layout'})]},{props:[{name:'borderRadius',type:'int',component:'integer',label:'Border Radius',arrangement:'corner',partTemplate:function partTemplate(part){return"border".concat(CornerHack[part],"Radius");}},{name:'borderColor',type:'Color',component:'color',arrangement:'rect',partTemplate:function partTemplate(part){return"border".concat(PartCapitalize[part],"Color");},label:'Border Color'},{name:'BorderWidth',type:'float',component:'float',arrangement:'rect',getter:floatDefaultGetter,partTemplate:function partTemplate(part){return"Border".concat(PartCapitalize[part],"Width");},label:'Border Width',source:'layout'}]},{props:[_objectSpread2(_objectSpread2({name:'Margin',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Margin".concat(PartCapitalize[part]);},label:'Margin',source:'layout'}),_objectSpread2(_objectSpread2({name:'Padding',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Padding".concat(PartCapitalize[part]);},label:'Padding',source:'layout'}),_objectSpread2(_objectSpread2({name:'Position',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return PartCapitalize[part];},label:'Position',source:'layout'})]}];
+var CornerHack={'left':'TopLeft','top':'TopRight','right':'BottomRight','bottom':'BottomLeft','':''};var CornerLabels={'left':'TL','top':'TR','right':'BR','bottom':'BL','':''};var PartCapitalize={'left':'Left','right':'Right','top':'Top','bottom':'Bottom','start':'Start','end':'End','':''};var lengthField={component:'length',getter:convertYogaToLength,setter:convertLengthToYoga};var borderRadiusField={component:'length',getter:convertFloatToLength,setter:convertLengthToFloat};var styleProps=[{props:[{name:'Display',type:'Enum',component:enumComponent('Facebook.Yoga.YogaDisplay'),label:'Display',source:'layout'},{name:'PositionType',type:'Enum',component:enumComponent('Facebook.Yoga.YogaPositionType'),label:'Position Type',source:'layout'},{name:'backgroundColor',type:'Color',component:'color',label:'Background Color'},{name:'backgroundImage',type:'ImageReference',component:objectComponent('UnityEngine.Texture2D'),label:'Background Image'},{name:'opacity',type:'float',component:sliderComponent(),label:'Opacity'},{name:'zIndex',type:'int',component:sliderintComponent(),label:'Z-Index'},{name:'visibility',type:'bool',component:'toggle',label:'Visibility'}]},{props:[{name:'boxShadow',type:'BoxShadow',component:BoxShadowField,label:'Box Shadow'}]},{label:'Text',props:[{name:'StyleDirection',type:'Enum',component:enumComponent('Facebook.Yoga.YogaDirection'),label:'Direction',source:'layout'},{name:'fontFamily',type:'FontReference',component:objectComponent('TMPro.TMP_FontAsset'),label:'Font Family'},{name:'color',type:'Color',component:'color',label:'Color'},{name:'fontWeight',type:'FontWeight',component:enumComponent('TMPro.FontWeight'),label:'Font Weight'},{name:'fontStyle',type:'FontStyles',component:flagsComponent('TMPro.FontStyles'),label:'Font Style'},_objectSpread2({name:'fontSize',type:'YogaValue',label:'Font Size'},lengthField),{name:'textAlign',type:'TextAlignmentOptions',component:enumComponent('TMPro.TextAlignmentOptions'),label:'Text Align'},{name:'textOverflow',type:'TextOverflowModes',component:enumComponent('TMPro.TextOverflowModes'),label:'Text Overflow'},{name:'textWrap',type:'bool',component:'toggle',label:'Text Wrap'},{name:'content',type:'string',component:'input',label:'Content'}]},{props:[{name:'transformOrigin',type:'YogaValue2',component:YogaValue2Field,label:'Transform Origin'},{name:'translate',type:'YogaValue2',component:YogaValue2Field,label:'Translate'},{name:'scale',type:'Vector2',component:'vector2',label:'Scale'},{name:'rotate',type:'Vector3',component:'vector3',label:'Rotate'}]},{props:[{name:'cursor',type:'string',component:'input',label:'Cursor'},{name:'pointerEvents',type:'PointerEvents',component:enumComponent('ReactUnity.Styling.Types.PointerEvents'),label:'Pointer Events'},{name:'appearance',type:'Appearance',component:enumComponent('ReactUnity.Styling.Types.Appearance'),label:'Appearance'},{name:'navigation',type:'Navigation',component:flagsComponent('UnityEngine.UI.Navigation+Mode'),label:'Navigation'}]},{props:[_objectSpread2(_objectSpread2({name:'Width',type:'YogaValue'},lengthField),{},{label:'Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'Height',type:'YogaValue'},lengthField),{},{label:'Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinWidth',type:'YogaValue'},lengthField),{},{label:'Min Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MinHeight',type:'YogaValue'},lengthField),{},{label:'Min Height',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxWidth',type:'YogaValue'},lengthField),{},{label:'Max Width',source:'layout'}),_objectSpread2(_objectSpread2({name:'MaxHeight',type:'YogaValue'},lengthField),{},{label:'Max Height',source:'layout'})]},{props:[{name:'FlexDirection',type:'Enum',component:enumComponent('Facebook.Yoga.YogaFlexDirection'),label:'Flex Direction',source:'layout'},{name:'Overflow',type:'Enum',component:enumComponent('Facebook.Yoga.YogaOverflow'),label:'Overflow',source:'layout'},{name:'Wrap',type:'Enum',component:enumComponent('Facebook.Yoga.YogaWrap'),label:'Wrap',source:'layout'}]},{props:[{name:'JustifyContent',type:'Enum',component:enumComponent('Facebook.Yoga.YogaJustify'),label:'Justify Content',source:'layout'},{name:'AlignItems',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Items',source:'layout'},{name:'AlignContent',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Content',source:'layout'},{name:'AlignSelf',type:'Enum',component:enumComponent('Facebook.Yoga.YogaAlign'),label:'Align Self',source:'layout'}]},{props:[{name:'AspectRatio',type:'float',component:'float',label:'Aspect Ratio',source:'layout'},{name:'FlexGrow',type:'float',component:'float',label:'Flex Grow',source:'layout'},{name:'FlexShrink',type:'float',component:'float',label:'Flex Shrink',source:'layout'},_objectSpread2(_objectSpread2({name:'FlexBasis',type:'YogaValue'},lengthField),{},{label:'Flex Basis',source:'layout'})]},{props:[_objectSpread2(_objectSpread2({name:'borderRadius',type:'float'},borderRadiusField),{},{label:'Border Radius',arrangement:'corner',partTemplate:function partTemplate(part){return"border".concat(CornerHack[part],"Radius");}}),{name:'borderColor',type:'Color',component:'color',arrangement:'rect',partTemplate:function partTemplate(part){return"border".concat(PartCapitalize[part],"Color");},label:'Border Color'},{name:'BorderWidth',type:'float',component:'float',arrangement:'rect',getter:floatDefaultGetter,partTemplate:function partTemplate(part){return"Border".concat(PartCapitalize[part],"Width");},label:'Border Width',source:'layout'}]},{props:[_objectSpread2(_objectSpread2({name:'Margin',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Margin".concat(PartCapitalize[part]);},label:'Margin',source:'layout'}),_objectSpread2(_objectSpread2({name:'Padding',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return"Padding".concat(PartCapitalize[part]);},label:'Padding',source:'layout'}),_objectSpread2(_objectSpread2({name:'Position',type:'YogaValue'},lengthField),{},{arrangement:'rect',partTemplate:function partTemplate(part){return PartCapitalize[part];},label:'Position',source:'layout'})]}];
 ;// CONCATENATED MODULE: ./src/main.tsx
-var Window=Globals.Window;var Inspector=Globals.Inspector;function getSelection(){if(Window){var activeObject=UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}else if(Inspector){return Inspector.target;}return null;}function App(){var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];(0,react.useEffect)(function(){if(Window){var removeSelectionChange=Window.AddSelectionChange(function(){return setSelection(getSelection());});var removeStateChange=Window.AddPlayModeStateChange(function(){return setSelection(getSelection());});return function(){removeSelectionChange();removeStateChange();};}},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.host,children:selection?/*#__PURE__*/(0,jsx_runtime.jsx)(Styles,{element:selection}):'Select an element to edit its styles'});}function Styles(_ref){var element=_ref.element;var _useState3=(0,react.useState)(true),_useState4=_slicedToArray(_useState3,2),showAll=_useState4[0],setShowAll=_useState4[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:clsx_m(src_index_module.styles,showAll&&src_index_module.showAll),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:"Show All",value:showAll,onChange:function onChange(ev){return setShowAll(ev.newValue);},className:src_index_module.showAllButton}),styleProps.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsx)(Group,{group:x,element:element},i);})]});}function Group(_ref2){var group=_ref2.group,element=_ref2.element,className=_ref2.className;return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.group,className),children:[!!group.label&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.groupHeader,children:group.label}),group.props.map(function(x){return x.arrangement==='rect'||x.arrangement==='corner'?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRect,{element:element,prop:x},x.name):/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{element:element,prop:x},x.name);})]});}function StylePropRow(_ref3){var _prop$label;var prop=_ref3.prop,element=_ref3.element,className=_ref3.className;var cmp=element.Component;var changed=function changed(){cmp.ResolveStyle(true);if(prop.source==='layout'){cmp.ScheduleLayout();cmp.ApplyLayoutStyles();}setRender(function(x){return x+1;});};var changeStyle=function changeStyle(name,value){if(prop.setter){var res=prop.setter(value.newValue,element);if(res!==undefined)cmp.Style[name]=res;}else cmp.Style[name]=value.newValue;changed();};var _useState5=(0,react.useState)(0),_useState6=_slicedToArray(_useState5,2),setRender=_useState6[1];if(!prop.component)return null;var val=prop.source==='layout'?element.Layout[prop.name]:cmp.ComputedStyle[prop.name];var gval=prop.getter?prop.getter(val,element):val;var exists=prop.source==='layout'?cmp.Style.ContainsKey(prop.name):cmp.ComputedStyle.HasValue(prop.name);var changeExists=function changeExists(){cmp.Style.Remove(prop.name);changed();};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,src_index_module.row,exists&&src_index_module.exists),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:changeExists,className:src_index_module.removeButton,children:"X"}),/*#__PURE__*/(0,jsx_runtime.jsx)(prop.component,{className:src_index_module.rowContent,value:gval,label:(_prop$label=prop.label)!==null&&_prop$label!==void 0?_prop$label:prop.name,onChange:function onChange(val){return changeStyle(prop.name,val);}})]});}function StylePropRect(_ref4){var _prop$label2;var prop=_ref4.prop,element=_ref4.element;var partName=typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',''):prop.partTemplate('');var isCorner=prop.arrangement==='corner';return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRectContainer),children:[partName?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:prop,element:element,className:clsx_m(src_index_module.rectHead,'react-unity__field__inline','react-unity__field__no-grow')}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row'},className:src_index_module.rectHead,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.removeButton,style:{visibility:'Hidden'},children:"X"}),(_prop$label2=prop.label)!==null&&_prop$label2!==void 0?_prop$label2:prop.name]}),!isCorner?/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRect),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'top'})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'right'})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'bottom'})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRect,src_index_module.corner),children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'top'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'bottom'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'right'})]})]})]});}function StylePropRectPart(_ref5){var prop=_ref5.prop,part=_ref5.part,element=_ref5.element;var partName=!part?prop.name:typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',part):prop.partTemplate(part);var isCorner=prop.arrangement==='corner';var label=part?isCorner?CornerLabels[part]:part[0].toUpperCase():prop.label;var partProp=_objectSpread2(_objectSpread2({},prop),{},{partlessName:prop.name,name:partName,label:label});return/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:partProp,element:element,className:clsx_m(src_index_module.rectPart,src_index_module['part-'+part],'react-unity__field__inline',isCorner&&src_index_module.corner)})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}),RootContainer,null);
+var Window=Globals.Window;var Inspector=Globals.Inspector;function getSelection(){if(Window){var activeObject=UnityEditor.Selection.activeGameObject;if(!activeObject)return null;return activeObject.GetComponent('ReactElement');}else if(Inspector){return Inspector.target;}return null;}function App(){var _useState=(0,react.useState)(getSelection()),_useState2=_slicedToArray(_useState,2),selection=_useState2[0],setSelection=_useState2[1];(0,react.useEffect)(function(){if(Window){var removeSelectionChange=Window.AddSelectionChange(function(){return setSelection(getSelection());});var removeStateChange=Window.AddPlayModeStateChange(function(){return setSelection(getSelection());});var removeVisibilityChange=Window.AddVisibilityChange(function(){return setSelection(getSelection());});return function(){removeSelectionChange();removeStateChange();removeVisibilityChange();};}},[]);return/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.host,children:selection?/*#__PURE__*/(0,jsx_runtime.jsx)(Styles,{element:selection}):'Select an element to edit its styles'});}function Styles(_ref){var element=_ref.element;var _useState3=(0,react.useState)(true),_useState4=_slicedToArray(_useState3,2),showAll=_useState4[0],setShowAll=_useState4[1];return/*#__PURE__*/(0,jsx_runtime.jsxs)("scroll",{className:clsx_m(src_index_module.styles,showAll&&src_index_module.showAll),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("toggle",{label:"Show All",value:showAll,onChange:function onChange(ev){return setShowAll(ev.newValue);},className:src_index_module.showAllButton}),styleProps.map(function(x,i){return/*#__PURE__*/(0,jsx_runtime.jsx)(Group,{group:x,element:element},i);})]});}function Group(_ref2){var group=_ref2.group,element=_ref2.element,className=_ref2.className;return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.group,className),children:[!!group.label&&/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.groupHeader,children:group.label}),group.props.map(function(x){return x.arrangement==='rect'||x.arrangement==='corner'?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRect,{element:element,prop:x},x.name):/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{element:element,prop:x},x.name);})]});}function StylePropRow(_ref3){var _prop$label;var prop=_ref3.prop,element=_ref3.element,className=_ref3.className;var cmp=element.Component;var changed=function changed(){cmp.ResolveStyle(true);if(prop.source==='layout'){cmp.ScheduleLayout();cmp.ApplyLayoutStyles();}setRender(function(x){return x+1;});};var changeStyle=function changeStyle(name,value){if(prop.setter){var res=prop.setter(value.newValue,element);if(res!==undefined)cmp.Style[name]=res;}else cmp.Style[name]=value.newValue;changed();};var _useState5=(0,react.useState)(0),_useState6=_slicedToArray(_useState5,2),setRender=_useState6[1];if(!prop.component)return null;var val=prop.source==='layout'?element.Layout[prop.name]:cmp.ComputedStyle[prop.name];var gval=prop.getter?prop.getter(val,element):val;var exists=prop.source==='layout'?cmp.Style.ContainsKey(prop.name):cmp.ComputedStyle.HasValue(prop.name);var changeExists=function changeExists(){cmp.Style.Remove(prop.name);changed();};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className,src_index_module.row,exists&&src_index_module.exists),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{onButtonClick:changeExists,className:src_index_module.removeButton,children:"X"}),/*#__PURE__*/(0,jsx_runtime.jsx)(prop.component,{className:src_index_module.rowContent,value:gval,label:(_prop$label=prop.label)!==null&&_prop$label!==void 0?_prop$label:prop.name,onChange:function onChange(val){return changeStyle(prop.name,val);}})]});}function StylePropRect(_ref4){var _prop$label2;var prop=_ref4.prop,element=_ref4.element;var partName=typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',''):prop.partTemplate('');var isCorner=prop.arrangement==='corner';return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRectContainer),children:[partName?/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:prop,element:element,className:clsx_m(src_index_module.rectHead,'react-unity__field__inline','react-unity__field__no-grow')}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{style:{flexDirection:'row'},className:src_index_module.rectHead,children:[/*#__PURE__*/(0,jsx_runtime.jsx)("button",{className:src_index_module.removeButton,style:{visibility:'hidden'},children:"X"}),(_prop$label2=prop.label)!==null&&_prop$label2!==void 0?_prop$label2:prop.name]}),!isCorner?/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRect),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'top'})}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'right'})]}),/*#__PURE__*/(0,jsx_runtime.jsx)("view",{className:src_index_module.propRectRow,children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'bottom'})})]}):/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(src_index_module.propRect,src_index_module.corner),children:[/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'left'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'top'})]}),/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:src_index_module.propRectRow,children:[/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'bottom'}),/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRectPart,{element:element,prop:prop,part:'right'})]})]})]});}function StylePropRectPart(_ref5){var prop=_ref5.prop,part=_ref5.part,element=_ref5.element;var partName=!part?prop.name:typeof prop.partTemplate==='string'?prop.partTemplate.replace('{part}',part):prop.partTemplate(part);var isCorner=prop.arrangement==='corner';var label=part?isCorner?CornerLabels[part]:part[0].toUpperCase():prop.label;var partProp=_objectSpread2(_objectSpread2({},prop),{},{partlessName:prop.name,name:partName,label:label});return/*#__PURE__*/(0,jsx_runtime.jsx)(jsx_runtime.Fragment,{children:/*#__PURE__*/(0,jsx_runtime.jsx)(StylePropRow,{prop:partProp,element:element,className:clsx_m(src_index_module.rectPart,src_index_module['part-'+part],'react-unity__field__inline',isCorner&&src_index_module.corner)})});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}),RootContainer,null);
 ;// CONCATENATED MODULE: ./src/index.ts
 
 })();
