@@ -13,6 +13,7 @@ namespace ReactUnity.Styling
         public RectTransform Root { get; private set; }
         public RectTransform Border { get; private set; }
         public RectTransform Background { get; private set; }
+        public RectTransform ShadowRoot { get; private set; }
         public RectTransform Shadow { get; private set; }
 
         public RoundedBorderMaskImage RootGraphic;
@@ -42,15 +43,19 @@ namespace ReactUnity.Styling
             bgImage.type = Image.Type.Sliced;
             bgImage.pixelsPerUnitMultiplier = 1;
 
+            var sr = new GameObject("[Shadows]", typeof(RectTransform));
+
             var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
             cmp.ShadowGraphic = sd.GetComponent<BoxShadowImage>();
 
             cmp.Root = root.transform as RectTransform;
+            cmp.ShadowRoot = sr.transform as RectTransform;
             cmp.Shadow = sd.transform as RectTransform;
             cmp.Border = border.transform as RectTransform;
             cmp.Background = bg.transform as RectTransform;
 
-            FullStretch(cmp.Shadow, cmp.Root);
+            FullStretch(cmp.ShadowRoot, cmp.Root);
+            FullStretch(cmp.Shadow, cmp.ShadowRoot);
             FullStretch(cmp.Background, cmp.Root);
             FullStretch(cmp.Border, cmp.Root);
             FullStretch(cmp.Root, cmp.transform as RectTransform);
@@ -82,8 +87,8 @@ namespace ReactUnity.Styling
             Background.offsetMin = min;
             Background.offsetMax = max;
 
-            Shadow.offsetMin = min;
-            Shadow.offsetMax = max;
+            ShadowRoot.offsetMin = min;
+            ShadowRoot.offsetMax = max;
 
             BorderGraphic.enabled = borderLeft > 0 || borderRight > 0 || borderBottom > 0 || borderTop > 0;
             BorderGraphic.BorderSize = new Vector4(borderTop, borderRight, borderBottom, borderLeft);
