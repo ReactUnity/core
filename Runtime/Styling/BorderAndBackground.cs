@@ -129,7 +129,7 @@ namespace ReactUnity.Styling
 
             ShadowGraphic.Shadow = shadow;
 
-            Shadow.sizeDelta = (shadow.spread + new Vector2(shadow.blur, shadow.blur)) * 2;
+            Shadow.sizeDelta = (shadow.spread + shadow.blur) * 2;
             Shadow.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
 
             ShadowGraphic.color = shadow.color;

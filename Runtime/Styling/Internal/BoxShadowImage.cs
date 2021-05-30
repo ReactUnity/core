@@ -22,7 +22,7 @@ namespace ReactUnity.Styling.Internal
             {
                 Material result = base.materialForRendering;
                 result.SetInt("_StencilComp", (int) CompareFunction.Always);
-                result.SetVector("_blurRadius", new Vector4(Shadow.blur, Shadow.blur, 0, 0));
+                result.SetVector("_blurRadius", new Vector4(Shadow.blur.x, Shadow.blur.y, 0, 0));
 
                 return result;
             }

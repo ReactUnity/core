@@ -7282,62 +7282,6 @@ function _nonIterableRest() {
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
-// https://gist.github.com/gre/1650294
-var easing = {
-  // no easing, no acceleration
-  linear: function linear(t) {
-    return t;
-  },
-  // accelerating from zero velocity
-  easeInQuad: function easeInQuad(t) {
-    return t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuad: function easeOutQuad(t) {
-    return t * (2 - t);
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuad: function easeInOutQuad(t) {
-    return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-  },
-  // accelerating from zero velocity
-  easeInCubic: function easeInCubic(t) {
-    return t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutCubic: function easeOutCubic(t) {
-    return --t * t * t + 1;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutCubic: function easeInOutCubic(t) {
-    return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-  },
-  // accelerating from zero velocity
-  easeInQuart: function easeInQuart(t) {
-    return t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuart: function easeOutQuart(t) {
-    return 1 - --t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuart: function easeInOutQuart(t) {
-    return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-  },
-  // accelerating from zero velocity
-  easeInQuint: function easeInQuint(t) {
-    return t * t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuint: function easeOutQuint(t) {
-    return 1 + --t * t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuint: function easeInOutQuint(t) {
-    return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
-  }
-};
 // EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(84);
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
@@ -7623,8 +7567,6 @@ var Renderer = {
 
 
 
-
-
 ;// CONCATENATED MODULE: ./node_modules/clsx/dist/clsx.m.js
 function toVal(mix) {
   var k,
@@ -7697,7 +7639,7 @@ var update = injectStylesIntoStyleTag_default()(index_module/* default */.Z, opt
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(114);
 ;// CONCATENATED MODULE: ./src/components/box-shadow.tsx
-function BoxShadowField(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var blurRef=(0,react.useRef)();var offsetRef=(0,react.useRef)();var spreadRef=(0,react.useRef)();var colorRef=(0,react.useRef)();var changed=function changed(){var blur=blurRef.current.Element.value;var spread=spreadRef.current.Element.value;var color=colorRef.current.Element.value;var offset=offsetRef.current.Element.value;var val=new ReactUnity.Types.BoxShadow(offset,spread,color,blur,false);onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsx)("color",{label:"Color",value:value===null||value===void 0?void 0:value.color,onChange:changed,ref:colorRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("float",{label:"Blur",value:value===null||value===void 0?void 0:value.blur,onChange:changed,ref:blurRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Offset",value:value===null||value===void 0?void 0:value.offset,onChange:changed,ref:offsetRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Spread",value:value===null||value===void 0?void 0:value.spread,onChange:changed,ref:spreadRef})]});}
+function BoxShadowField(_ref){var className=_ref.className,label=_ref.label,onChange=_ref.onChange,value=_ref.value;var blurRef=(0,react.useRef)();var offsetRef=(0,react.useRef)();var spreadRef=(0,react.useRef)();var colorRef=(0,react.useRef)();var changed=function changed(){var blur=blurRef.current.Element.value;var spread=spreadRef.current.Element.value;var color=colorRef.current.Element.value;var offset=offsetRef.current.Element.value;var val=new ReactUnity.Types.BoxShadow(offset,spread,color,blur,false);onChange===null||onChange===void 0?void 0:onChange({newValue:val});};return/*#__PURE__*/(0,jsx_runtime.jsxs)("view",{className:clsx_m(className),children:[/*#__PURE__*/(0,jsx_runtime.jsx)("text",{className:clsx_m('unity-base-field__label','unity-composite-field__label'),children:label}),/*#__PURE__*/(0,jsx_runtime.jsx)("color",{label:"Color",value:value===null||value===void 0?void 0:value.color,onChange:changed,ref:colorRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Blur",value:value===null||value===void 0?void 0:value.blur,onChange:changed,ref:blurRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Offset",value:value===null||value===void 0?void 0:value.offset,onChange:changed,ref:offsetRef}),/*#__PURE__*/(0,jsx_runtime.jsx)("vector2",{label:"Spread",value:value===null||value===void 0?void 0:value.spread,onChange:changed,ref:spreadRef})]});}
 ;// CONCATENATED MODULE: ./src/components/other.tsx
 function sliderComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("slider",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function sliderintComponent(){var min=arguments.length>0&&arguments[0]!==undefined?arguments[0]:0;var max=arguments.length>1&&arguments[1]!==undefined?arguments[1]:1000;return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("sliderint",_objectSpread2(_objectSpread2({},props),{},{min:min,max:max,showInput:true}));};}function enumComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("enum",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function flagsComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("flags",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}function objectComponent(typeName){return function(props){return/*#__PURE__*/(0,jsx_runtime.jsx)("object",_objectSpread2(_objectSpread2({},props),{},{type:typeName}));};}
 ;// CONCATENATED MODULE: ./src/helpers.ts
