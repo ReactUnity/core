@@ -6,28 +6,31 @@ namespace ReactUnity.Styling.Parsers
     {
         public Type EnumType { get; }
         public bool AllowFlags { get; }
+        public bool KeywordOnly { get; }
 
-        public EnumConverter(Type enumType)
+        public EnumConverter(Type enumType, bool keywordOnly)
         {
             EnumType = enumType;
             AllowFlags = enumType.GetCustomAttributes(typeof(FlagsAttribute), false).Length > 0;
+            KeywordOnly = keywordOnly;
         }
 
-        public EnumConverter(Type enumType, bool allowFlags)
+        public EnumConverter(Type enumType, bool allowFlags, bool keywordOnly)
         {
             EnumType = enumType;
             AllowFlags = allowFlags;
+            KeywordOnly = keywordOnly;
         }
 
-        public static object Convert<TEnum>(object value, bool allowFlags = true) where TEnum : struct, Enum
+        public static object Convert<TEnum>(object value, bool allowFlags, bool keywordOnly) where TEnum : struct, Enum
         {
             if (value == null) return CssKeyword.Invalid;
             if (value is TEnum t) return t;
-            if (value is int i) return Enum.ToObject(typeof(TEnum), i);
-            return FromString<TEnum>(value?.ToString(), allowFlags);
+            if (!keywordOnly && value is int i) return Enum.ToObject(typeof(TEnum), i);
+            return FromString<TEnum>(value?.ToString(), allowFlags, keywordOnly);
         }
 
-        public static object FromString<TEnum>(string value, bool allowFlags = true) where TEnum : struct, Enum
+        public static object FromString<TEnum>(string value, bool allowFlags, bool keywordOnly) where TEnum : struct, Enum
         {
             if (allowFlags && value.Contains(","))
             {
@@ -41,14 +44,21 @@ namespace ReactUnity.Styling.Parsers
 
                     var parsed = Enum.TryParse<TEnum>(split.Replace("-", "").ToLowerInvariant(), true, out var splitRes);
 
-                    if (parsed) result = result | (System.Convert.ToInt32(splitRes));
+                    if (parsed &&
+                        (!keywordOnly || !int.TryParse(value, out _)) &&
+                        Enum.IsDefined(typeof(TEnum), splitRes) &&
+                        Enum.IsDefined(typeof(TEnum), splitRes)) result = result | System.Convert.ToInt32(splitRes);
                     else return CssKeyword.Invalid;
                 }
 
                 return (TEnum) Enum.ToObject(typeof(TEnum), result);
             }
 
-            if (value != null && Enum.TryParse<TEnum>(value.Replace("-", "").ToLowerInvariant(), true, out var res)) return res;
+            if (value != null &&
+                (!keywordOnly || !int.TryParse(value, out _)) &&
+                Enum.TryParse<TEnum>(value.Replace("-", "").ToLowerInvariant(), true, out var res) &&
+                Enum.IsDefined(typeof(TEnum), res))
+                return res;
             return CssKeyword.Invalid;
         }
 
@@ -113,17 +123,20 @@ namespace ReactUnity.Styling.Parsers
     public class EnumConverter<T> : IStyleParser, IStyleConverter where T : struct, Enum
     {
         public bool AllowFlags { get; }
-        public EnumConverter()
+        public bool KeywordOnly { get; }
+        public EnumConverter(bool keywordOnly)
         {
             AllowFlags = typeof(T).GetCustomAttributes(typeof(FlagsAttribute), false).Length > 0;
+            KeywordOnly = keywordOnly;
         }
 
-        public EnumConverter(bool allowFlags)
+        public EnumConverter(bool allowFlags, bool keywordOnly)
         {
             AllowFlags = allowFlags;
+            KeywordOnly = keywordOnly;
         }
 
-        public object Convert(object value) => EnumConverter.Convert<T>(value, AllowFlags);
-        public object FromString(string value) => EnumConverter.FromString<T>(value, AllowFlags);
+        public object Convert(object value) => EnumConverter.Convert<T>(value, AllowFlags, KeywordOnly);
+        public object FromString(string value) => EnumConverter.FromString<T>(value, AllowFlags, KeywordOnly);
     }
 }

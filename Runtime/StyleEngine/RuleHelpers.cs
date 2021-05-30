@@ -209,8 +209,10 @@ namespace ReactUnity.StyleEngine
         public static CssKeyword GetCssKeyword(string value)
         {
             if (value == null) return CssKeyword.Invalid;
+            if (int.TryParse(value, out _)) return CssKeyword.NoKeyword;
+
             var parsed = Enum.TryParse<CssKeyword>(value, true, out var res);
-            if (parsed) return res;
+            if (parsed && Enum.IsDefined(typeof(CssKeyword), res)) return res;
             return CssKeyword.NoKeyword;
         }
     }

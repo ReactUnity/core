@@ -71,7 +71,7 @@ namespace ReactUnity.Styling
             var hasValue = Map.TryGetValue(type, out var converter);
 
             if (!hasValue && type.IsEnum)
-                converter = Map[type] = new EnumConverter(type);
+                converter = Map[type] = new EnumConverter(type, true);
 
             return new GeneralConverter(converter);
         }

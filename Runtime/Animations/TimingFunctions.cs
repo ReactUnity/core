@@ -58,7 +58,10 @@ namespace ReactUnity.Animations
 
         public static TimingFunction Get(string easeType)
         {
-            if (easeType != null && Enum.TryParse<TimingFunctionType>(easeType.Replace("-", "").ToLowerInvariant(), true, out var res)) return Get(res);
+            if (easeType != null &&
+                Enum.TryParse<TimingFunctionType>(easeType.Replace("-", "").ToLowerInvariant(), true, out var res) &&
+                Enum.IsDefined(typeof(TimingFunctionType), res))
+                return Get(res);
             return null;
         }
 
@@ -180,7 +183,7 @@ namespace ReactUnity.Animations
         public class Converter : IStyleParser, IStyleConverter
         {
             static private HashSet<string> AllowedFunctions = new HashSet<string> { "steps", "cubic-bezier" };
-            static private IStyleConverter TypeConverter = new EnumConverter<TimingFunctionType>();
+            static private IStyleConverter TypeConverter = new EnumConverter<TimingFunctionType>(true);
 
             public object Convert(object value)
             {
