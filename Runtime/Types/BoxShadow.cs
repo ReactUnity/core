@@ -40,6 +40,7 @@ namespace ReactUnity.Types
 
         public static BoxShadow Invalid = new BoxShadow("");
         public static BoxShadow Default = new BoxShadow(Vector2.zero, Vector2.zero, Vector2.zero, Color.clear, false);
+        public static BoxShadow DefaultInset = new BoxShadow(Vector2.zero, Vector2.zero, Vector2.zero, Color.clear, true);
 
         public Vector2 offset { get; }
         public Vector2 spread { get; }

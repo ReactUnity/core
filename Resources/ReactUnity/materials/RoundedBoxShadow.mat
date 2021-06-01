@@ -81,6 +81,7 @@ Material:
     - _UseUIAlphaClip: 0
     - _ZWrite: 1
     - _blurRadius: 8.4
+    - _inset: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -88,5 +89,7 @@ Material:
     - _borderRadius: {r: 0, g: 0, b: 0, a: 0}
     - _color: {r: 1, g: 0, b: 0.9872489, a: 1}
     - _dir: {r: 0, g: 0, b: 0, a: 0}
+    - _offset: {r: 0, g: 0, b: 0, a: 0}
     - _size: {r: 1, g: 1, b: 1, a: 1}
+    - _spread: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

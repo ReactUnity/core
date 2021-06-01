@@ -178,10 +178,24 @@ namespace ReactUnity.Styling
                 BoxShadowImage g = ShadowGraphics[gIndex];
                 gIndex++;
 
+                var rt = g.rectTransform;
+
                 g.Shadow = shadow;
 
-                g.rectTransform.sizeDelta = (shadow.spread + shadow.blur) * 2;
-                g.rectTransform.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
+                if (shadow.inset)
+                {
+                    if (rt.parent != Background) FullStretch(rt, Background);
+                    rt.sizeDelta = Vector2.zero;
+                    rt.anchoredPosition = Vector2.zero;
+                }
+                else
+                {
+                    if (rt.parent != ShadowRoot) FullStretch(rt, ShadowRoot);
+
+                    rt.sizeDelta = ((shadow.inset ? -1 : 1) * shadow.spread + shadow.blur) * 2;
+                    rt.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
+                }
+
 
                 g.color = shadow.color;
                 g.SetMaterialDirty();

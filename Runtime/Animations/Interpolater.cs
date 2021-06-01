@@ -59,14 +59,20 @@ namespace ReactUnity.Animations
 
         public static BoxShadow Interpolate(BoxShadow from, BoxShadow to, float t)
         {
-            if (from == null || to == null || !from.Valid || !to.Valid || from.inset != to.inset) return t > 0.5 ? to : from;
+            if (from == null || to == null || !from.Valid || !to.Valid) return t > 0.5 ? to : from;
+
+            if (from.inset != to.inset && from != BoxShadow.Default && to != BoxShadow.Default)
+            {
+                if (t < 0.5) return Interpolate(from, from.inset ? BoxShadow.DefaultInset : BoxShadow.Default, t * 2);
+                else return Interpolate(to.inset ? BoxShadow.DefaultInset : BoxShadow.Default, to, (t - 0.5f) * 2);
+            }
 
             return new BoxShadow(
                 Interpolate(from.offset, to.offset, t),
                 Interpolate(from.blur, to.blur, t),
                 Interpolate(from.spread, to.spread, t),
                 Interpolate(from.color, to.color, t),
-                from.inset
+                from != BoxShadow.Default ? from.inset : to.inset
             );
         }
         public static BoxShadowList Interpolate(BoxShadowList from, BoxShadowList to, float t)

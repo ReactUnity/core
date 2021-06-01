@@ -5,6 +5,9 @@ Shader "ReactUnity/RoundedBoxShadow"
     _borderRadius ("borderRadius", Vector) = (0,0,0,0)
     _size ("size", Vector) = (1,1,1,1)
     _blurRadius ("blurRadius", Vector) = (0,0,0,0)
+    _spread ("spread", Vector) = (0,0,0,0)
+    _offset ("offset", Vector) = (0,0,0,0)
+    [Toggle] _inset ("inset", Float) = 0
 
     [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp ("Stencil Comparison", Float) = 8
     _Stencil ("Stencil ID", Float) = 0
@@ -57,15 +60,20 @@ Shader "ReactUnity/RoundedBoxShadow"
 
       float4 _borderRadius;
       float2 _size;
-      float4 _blurRadius;
+      float2 _blurRadius;
+      float2 _spread;
+      float2 _offset;
+      bool _inset;
       sampler2D _MainTex;
       float4 _MainTex_ST;
 
       fixed4 frag (v2f i) : SV_Target
       {
         float2 blur = float2(_blurRadius.x/_size.x, _blurRadius.y/_size.y);
-        float2 innerSize = float2((1 - blur.x * 2), (1 - blur.y * 2));
-        float2 uv = float2((i.uv.x - blur.x) / innerSize.x, (i.uv.y - blur.y) / innerSize.y);
+        float2 spread = float2(_spread.x/_size.x, _spread.y/_size.y);
+        float2 offset = float2(_offset.x/_size.x, _offset.y/_size.y);
+        float2 innerSize = float2((1 - blur.x * 2 - spread.x * 2), (1 - blur.y * 2 - spread.y * 2));
+        float2 uv = float2((i.uv.x - blur.x - spread.x - offset.x) / innerSize.x, (i.uv.y - blur.y - spread.y + offset.y) / innerSize.y);
         // float2 uv = i.uv;
 
 	      const int KERNEL_SIZE = 13;
@@ -86,6 +94,7 @@ Shader "ReactUnity/RoundedBoxShadow"
             float weight = KERNEL_[x] * KERNEL_[y];
             sum += weight;
             float alpha = CalculateBorderRadius(_borderRadius, uv + shift, _size);
+            if(_inset) alpha = 1 - alpha;
             fixed4 col = tex2D(_MainTex, uv) * weight;
             col.a = col.a * alpha;
             o += col;

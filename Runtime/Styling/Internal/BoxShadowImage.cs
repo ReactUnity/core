@@ -21,8 +21,11 @@ namespace ReactUnity.Styling.Internal
             get
             {
                 Material result = base.materialForRendering;
-                result.SetInt("_StencilComp", (int) CompareFunction.Always);
-                result.SetVector("_blurRadius", new Vector4(Shadow.blur.x, Shadow.blur.y, 0, 0));
+                result.SetInt("_StencilComp", (int) (Shadow.inset ? CompareFunction.Equal : CompareFunction.Always));
+                result.SetVector("_blurRadius", Shadow.blur);
+                result.SetFloat("_inset", Shadow.inset ? 1 : 0);
+                result.SetVector("_spread", Shadow.inset ? Shadow.spread - Shadow.blur : Vector2.zero);
+                result.SetVector("_offset", Shadow.inset ? Shadow.offset : Vector2.zero);
 
                 return result;
             }
