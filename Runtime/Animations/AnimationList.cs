@@ -1,44 +1,20 @@
 using ReactUnity.Styling;
 using ReactUnity.Styling.Parsers;
+using ReactUnity.Types;
 using System.Collections.Generic;
 
 namespace ReactUnity.Animations
 {
-    public class AnimationList
+    public class AnimationList : CommaSeparatedList<Animation>
     {
-        public string Definition { get; }
-        public Dictionary<string, Animation> Animations { get; } = new Dictionary<string, Animation>();
-        public bool Any { get; private set; } = false;
+        public AnimationList(string definition) : base(definition) { }
+        public AnimationList(Animation item) : base(item) { }
+        public AnimationList(Animation[] items) : base(items) { }
 
-
-        public AnimationList(Animation tr)
+        protected override Animation CreateItem(string definition)
         {
-            AddAnimation(tr);
-            Definition = tr.Definition;
+            return new Animation(definition);
         }
-
-        public AnimationList(string definition)
-        {
-            Definition = definition;
-            var splits = ParserHelpers.Split(definition, ',');
-
-            foreach (var split in splits)
-            {
-                var tr = new Animation(split);
-                AddAnimation(tr);
-            }
-        }
-
-        private void AddAnimation(Animation tr)
-        {
-            Animations[tr.Name] = tr;
-            Any = Any || tr.Valid;
-        }
-
-        public static bool operator ==(AnimationList left, AnimationList right) => left?.Definition == right?.Definition;
-        public static bool operator !=(AnimationList left, AnimationList right) => left?.Definition != right?.Definition;
-        public override bool Equals(object obj) => base.Equals(obj);
-        public override int GetHashCode() => Definition.GetHashCode();
 
         public class Converter : IStyleParser, IStyleConverter
         {
@@ -57,7 +33,7 @@ namespace ReactUnity.Animations
         }
     }
 
-    public class Animation
+    public class Animation : ICommaSeparatedListItem
     {
         public string Definition { get; }
         public float Delay { get; } = 0;

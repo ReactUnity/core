@@ -149,14 +149,14 @@ namespace ReactUnity.Styling
 
             var currentTime = getTime();
 
-            foreach (var item in activeTransitions.Transitions)
+            for (int i = 0; i < activeTransitions.Items.Length; i++)
             {
-                var tran = item.Value;
+                var tran = activeTransitions.Items[i];
                 if (!tran.Valid) continue;
 
                 IEnumerable<IStyleProperty> properties;
 
-                if (item.Value.All) properties = CssProperties.TransitionableProperties;
+                if (tran.All) properties = CssProperties.TransitionableProperties;
                 else properties = new List<IStyleProperty>() { CssProperties.GetProperty(tran.Property) };
 
                 foreach (var sp in properties)
@@ -275,7 +275,7 @@ namespace ReactUnity.Styling
 
         private bool UpdateAnimations()
         {
-            if (activeAnimations?.Animations == null) return true;
+            if (activeAnimations?.Items == null) return true;
 
             var updated = false;
             var finished = true;
@@ -284,9 +284,9 @@ namespace ReactUnity.Styling
             var currentTime = getTime();
             var passedTime = currentTime - animationStartTime;
 
-            foreach (var item in activeAnimations.Animations)
+            for (int animIndex = 0; animIndex < activeAnimations.Items.Length; animIndex++)
             {
-                var anim = item.Value;
+                var anim = activeAnimations.Items[animIndex];
                 if (!anim.Valid) continue;
 
                 if (!Context.Keyframes.TryGetValue(anim.Name, out var keyframes)) continue;
@@ -427,7 +427,7 @@ namespace ReactUnity.Styling
         private void StartAudio(AudioList audio)
         {
             StopAudio(true);
-            audioStates = new AudioState[audio.Parts.Count];
+            audioStates = new AudioState[audio.Items.Length];
             activeAudioList = audio;
             audioStartTime = getTime();
             var finished = UpdateAudio();
@@ -451,16 +451,16 @@ namespace ReactUnity.Styling
 
         private bool UpdateAudio()
         {
-            if (activeAudioList?.Parts == null) return true;
+            if (activeAudioList?.Items == null) return true;
 
             var finished = true;
 
             var currentTime = getTime();
             var passedTime = currentTime - audioStartTime;
 
-            var parts = activeAudioList.Parts;
+            var parts = activeAudioList.Items;
 
-            for (int i = 0; i < parts.Count; i++)
+            for (int i = 0; i < parts.Length; i++)
             {
                 var part = parts[i];
 

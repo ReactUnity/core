@@ -24,32 +24,35 @@ namespace ReactUnity.Editor.Tests
         {
             var converted = Converters.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb") as TransitionList;
 
-            var widthTr = converted.Transitions["width"];
+            var widthTr = converted.Items[0];
             Assert.IsTrue(widthTr.Valid);
+            Assert.AreEqual("width", widthTr.Property);
             Assert.AreEqual(2000, widthTr.Duration);
             Assert.AreEqual(0, widthTr.Delay);
             Assert.AreEqual("width", widthTr.Property);
             AssertTimingFunction(TimingFunctions.Ease, widthTr.TimingFunction);
 
 
-            var heightTr = converted.Transitions["height"];
+            var heightTr = converted.Items[1];
             Assert.IsTrue(heightTr.Valid);
+            Assert.AreEqual("height", heightTr.Property);
             Assert.AreEqual(400, heightTr.Duration);
             Assert.AreEqual(0, heightTr.Delay);
             Assert.AreEqual("height", heightTr.Property);
             AssertTimingFunction(TimingFunctions.EaseInOut, heightTr.TimingFunction);
 
 
-            var allTr = converted.Transitions["all"];
+            var allTr = converted.Items[2];
             Assert.IsTrue(allTr.Valid);
-            Assert.AreEqual(converted.All, allTr);
+            Assert.AreEqual("all", allTr.Property);
             Assert.AreEqual(500, allTr.Duration);
             Assert.AreEqual(300, allTr.Delay);
             Assert.AreEqual("all", allTr.Property);
             AssertTimingFunction(TimingFunctions.StepStart, allTr.TimingFunction);
 
-            var invalidTr = converted.Transitions["bbb"];
+            var invalidTr = converted.Items[3];
             Assert.IsFalse(invalidTr.Valid);
+            Assert.AreEqual("bbb", invalidTr.Property);
         }
 
         [Test]
@@ -57,8 +60,9 @@ namespace ReactUnity.Editor.Tests
         {
             var converted = Converters.AnimationListConverter.Convert("roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing") as AnimationList;
 
-            var roll = converted.Animations["roll"];
+            var roll = converted.Items[0];
             Assert.IsTrue(roll.Valid);
+            Assert.AreEqual("roll", roll.Name);
             Assert.AreEqual(3000, roll.Duration);
             Assert.AreEqual(1000, roll.Delay);
             Assert.AreEqual(2, roll.IterationCount);
@@ -66,8 +70,9 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(AnimationDirection.Reverse, roll.Direction);
             AssertTimingFunction(TimingFunctions.EaseIn, roll.TimingFunction);
 
-            var slidein = converted.Animations["slidein"];
+            var slidein = converted.Items[1];
             Assert.IsTrue(slidein.Valid);
+            Assert.AreEqual("slidein", slidein.Name);
             Assert.AreEqual(500, slidein.Duration);
             Assert.AreEqual(0, slidein.Delay);
             Assert.AreEqual(1, slidein.IterationCount);
@@ -75,14 +80,16 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(AnimationDirection.AlternateReverse, slidein.Direction);
             AssertTimingFunction(TimingFunctions.Linear, slidein.TimingFunction);
 
-            var slideout = converted.Animations["slideout"];
+            var slideout = converted.Items[2];
             Assert.IsTrue(slideout.Valid);
+            Assert.AreEqual("slideout", slideout.Name);
             Assert.AreEqual(4000, slideout.Duration);
             Assert.AreEqual(-1, slideout.IterationCount);
             AssertTimingFunction(TimingFunctions.Ease, slideout.TimingFunction);
 
-            var something = converted.Animations["something"];
+            var something = converted.Items[3];
             Assert.IsFalse(something.Valid);
+            Assert.AreEqual("something", something.Name);
         }
 
         [Test]
@@ -90,7 +97,7 @@ namespace ReactUnity.Editor.Tests
         {
             var converted = Converters.AudioListConverter.Convert("url(res:click) 3s 5 local, url(https://example.com) infinite 2s, url(res:something), sound3 5 5 5 5 5") as AudioList;
 
-            var part0 = converted.Parts[0];
+            var part0 = converted.Items[0];
             Assert.IsTrue(part0.Valid);
             Assert.AreEqual(AssetReferenceType.Resource, part0.AudioClip.type);
             Assert.AreEqual("click", part0.AudioClip.value);
@@ -98,7 +105,7 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(5, part0.IterationCount);
             Assert.True(part0.Local);
 
-            var part1 = converted.Parts[1];
+            var part1 = converted.Items[1];
             Assert.IsTrue(part1.Valid);
             Assert.AreEqual(AssetReferenceType.Url, part1.AudioClip.type);
             Assert.AreEqual("https://example.com", part1.AudioClip.value);
@@ -106,7 +113,7 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(-1, part1.IterationCount);
             Assert.False(part1.Local);
 
-            var part2 = converted.Parts[2];
+            var part2 = converted.Items[2];
             Assert.IsTrue(part2.Valid);
             Assert.AreEqual(AssetReferenceType.Resource, part2.AudioClip.type);
             Assert.AreEqual("something", part2.AudioClip.value);
@@ -114,7 +121,7 @@ namespace ReactUnity.Editor.Tests
             Assert.AreEqual(1, part2.IterationCount);
             Assert.False(part2.Local);
 
-            var part3 = converted.Parts[3];
+            var part3 = converted.Items[3];
             Assert.IsFalse(part3.Valid);
         }
 

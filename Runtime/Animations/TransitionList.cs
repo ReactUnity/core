@@ -1,46 +1,19 @@
 using ReactUnity.Styling;
 using ReactUnity.Styling.Parsers;
-using System.Collections.Generic;
+using ReactUnity.Types;
 
 namespace ReactUnity.Animations
 {
-    public class TransitionList
+    public class TransitionList : CommaSeparatedList<Transition>
     {
-        public string Definition { get; }
-        public Dictionary<string, Transition> Transitions { get; } = new Dictionary<string, Transition>();
-        public Transition All { get; private set; }
-        public bool Any { get; private set; } = false;
+        public TransitionList(string definition) : base(definition) { }
+        public TransitionList(Transition item) : base(item) { }
+        public TransitionList(Transition[] items) : base(items) { }
 
-        public TransitionList(Transition tr)
+        protected override Transition CreateItem(string definition)
         {
-            Definition = tr.Definition;
-            AddTransition(tr);
+            return new Transition(definition);
         }
-
-        public TransitionList(string definition)
-        {
-            Definition = definition;
-            var splits = ParserHelpers.Split(definition, ',');
-
-            foreach (var split in splits)
-            {
-                var tr = new Transition(split);
-                AddTransition(tr);
-            }
-        }
-
-        private void AddTransition(Transition tr)
-        {
-            if (tr.Property == null || tr.Property == "all") Transitions["all"] = All = tr;
-            else Transitions[tr.Property] = tr;
-            Any = Any || tr.Valid;
-        }
-
-        public static bool operator ==(TransitionList left, TransitionList right) => left?.Definition == right?.Definition;
-        public static bool operator !=(TransitionList left, TransitionList right) => left?.Definition != right?.Definition;
-        public override bool Equals(object obj) => base.Equals(obj);
-        public override int GetHashCode() => Definition.GetHashCode();
-
 
         public class Converter : IStyleParser, IStyleConverter
         {
@@ -59,7 +32,7 @@ namespace ReactUnity.Animations
         }
     }
 
-    public class Transition
+    public class Transition : ICommaSeparatedListItem
     {
         public string Definition { get; }
         public float Delay { get; } = 0;

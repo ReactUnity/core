@@ -5,42 +5,16 @@ using System.Collections.Generic;
 
 namespace ReactUnity.Animations
 {
-    public class AudioList
+    public class AudioList : CommaSeparatedList<AudioListPart>
     {
-        public string Definition { get; }
-        public List<AudioListPart> Parts { get; } = new List<AudioListPart>();
-        public bool Any { get; private set; } = false;
+        public AudioList(string definition) : base(definition) { }
+        public AudioList(AudioListPart item) : base(item) { }
+        public AudioList(AudioListPart[] items) : base(items) { }
 
-
-        public AudioList(AudioListPart tr)
+        protected override AudioListPart CreateItem(string definition)
         {
-            AddPart(tr);
-            Definition = tr.Definition;
+            return new AudioListPart(definition);
         }
-
-        public AudioList(string definition)
-        {
-            Definition = definition;
-            var splits = ParserHelpers.Split(definition, ',');
-
-            foreach (var split in splits)
-            {
-                var tr = new AudioListPart(split);
-                AddPart(tr);
-            }
-        }
-
-        private void AddPart(AudioListPart tr)
-        {
-            Parts.Add(tr);
-            Any = Any || tr.Valid;
-        }
-
-        public static bool operator ==(AudioList left, AudioList right) => left?.Definition == right?.Definition;
-        public static bool operator !=(AudioList left, AudioList right) => left?.Definition != right?.Definition;
-        public override bool Equals(object obj) => base.Equals(obj);
-        public override int GetHashCode() => Definition.GetHashCode();
-
 
         public class Converter : IStyleParser, IStyleConverter
         {
@@ -59,7 +33,7 @@ namespace ReactUnity.Animations
         }
     }
 
-    public class AudioListPart
+    public class AudioListPart : ICommaSeparatedListItem
     {
         public string Definition { get; }
         public AudioReference AudioClip { get; }

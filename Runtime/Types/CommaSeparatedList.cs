@@ -61,5 +61,6 @@ namespace ReactUnity.Types
         public static bool operator !=(CommaSeparatedList<T> left, CommaSeparatedList<T> right) => left?.Definition != right?.Definition;
         public override bool Equals(object obj) => base.Equals(obj);
         public override int GetHashCode() => Definition.GetHashCode();
+        public override string ToString() => Definition;
     }
 }
