@@ -5,6 +5,7 @@
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
+  "sideEffects": false,
   "exports": {
     ".": "./dist/index.js",
     "./editor": "./dist/editor.js",
