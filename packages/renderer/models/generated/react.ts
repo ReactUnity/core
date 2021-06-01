@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 31.05.2021 00:54:26
+// Generated 2.06.2021 00:12:50
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -762,15 +762,16 @@ export declare namespace ReactUnity {
   }
   export namespace Animations {
     export class AnimationList {
-      constructor(tr: ReactUnity.Animations.Animation);
       constructor(definition: string);
+      constructor(item: ReactUnity.Animations.Animation);
+      constructor(items: ReactUnity.Animations.Animation[]);
       Definition: string;
-      Animations: Record<string, ReactUnity.Animations.Animation>;
+      Items: ReactUnity.Animations.Animation[];
       Any: boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
-      GetType(): System.Type;
       ToString(): string;
+      GetType(): System.Type;
     }
     export class Animation {
       constructor(definition: string);
@@ -801,15 +802,16 @@ export declare namespace ReactUnity {
       AlternateReverse = 3,
     }
     export class AudioList {
-      constructor(tr: ReactUnity.Animations.AudioListPart);
       constructor(definition: string);
+      constructor(item: ReactUnity.Animations.AudioListPart);
+      constructor(items: ReactUnity.Animations.AudioListPart[]);
       Definition: string;
-      Parts: ReactUnity.Animations.AudioListPart[];
+      Items: ReactUnity.Animations.AudioListPart[];
       Any: boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
-      GetType(): System.Type;
       ToString(): string;
+      GetType(): System.Type;
     }
     export class AudioListPart {
       constructor(definition: string);
@@ -835,6 +837,8 @@ export declare namespace ReactUnity {
       static Interpolate(from: UnityEngine.Quaternion, to: UnityEngine.Quaternion, t: number): UnityEngine.Quaternion;
       static Interpolate(from: Facebook.Yoga.YogaValue, to: Facebook.Yoga.YogaValue, t: number): Facebook.Yoga.YogaValue;
       static Interpolate(from: ReactUnity.Types.YogaValue2, to: ReactUnity.Types.YogaValue2, t: number): ReactUnity.Types.YogaValue2;
+      static Interpolate(from: ReactUnity.Types.BoxShadow, to: ReactUnity.Types.BoxShadow, t: number): ReactUnity.Types.BoxShadow;
+      static Interpolate(from: ReactUnity.Types.BoxShadowList, to: ReactUnity.Types.BoxShadowList, t: number): ReactUnity.Types.BoxShadowList;
       static Interpolate(t: number, easeType: ReactUnity.Animations.TimingFunctionType, mirror?: boolean): number;
       static Interpolate(from: number, to: number, t: number, easeType: ReactUnity.Animations.TimingFunctionType): number;
       static Interpolate(from: UnityEngine.Color, to: UnityEngine.Color, t: number, easeType: ReactUnity.Animations.TimingFunctionType): UnityEngine.Color;
@@ -912,16 +916,16 @@ export declare namespace ReactUnity {
       JumpBoth = 3,
     }
     export class TransitionList {
-      constructor(tr: ReactUnity.Animations.Transition);
       constructor(definition: string);
+      constructor(item: ReactUnity.Animations.Transition);
+      constructor(items: ReactUnity.Animations.Transition[]);
       Definition: string;
-      Transitions: Record<string, ReactUnity.Animations.Transition>;
-      All: ReactUnity.Animations.Transition;
+      Items: ReactUnity.Animations.Transition[];
       Any: boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
-      GetType(): System.Type;
       ToString(): string;
+      GetType(): System.Type;
     }
     export class Transition {
       constructor(definition: string);
@@ -6549,7 +6553,7 @@ export declare namespace ReactUnity {
       Root: UnityEngine.RectTransform;
       Border: UnityEngine.RectTransform;
       Background: UnityEngine.RectTransform;
-      Shadow: UnityEngine.RectTransform;
+      ShadowRoot: UnityEngine.RectTransform;
       useGUILayout: boolean;
       runInEditMode: boolean;
       enabled: boolean;
@@ -6575,13 +6579,13 @@ export declare namespace ReactUnity {
       RootGraphic: ReactUnity.Styling.Internal.RoundedBorderMaskImage;
       RootMask: UnityEngine.UI.Mask;
       BorderGraphic: ReactUnity.Styling.Internal.BasicBorderImage;
-      ShadowGraphic: ReactUnity.Styling.Internal.BoxShadowImage;
+      ShadowGraphics: ReactUnity.Styling.Internal.BoxShadowImage[];
       static Create(go: UnityEngine.GameObject): ReactUnity.Styling.BorderAndBackground;
       SetBorderSize(layout: Facebook.Yoga.YogaNode): void;
       SetBorderRadius(tl: number, tr: number, br: number, bl: number): void;
       SetBorderColor(top: UnityEngine.Color, right: UnityEngine.Color, bottom: UnityEngine.Color, left: UnityEngine.Color): void;
       SetBackgroundColorAndImage(color: System.Nullable<UnityEngine.Color>, sprite: UnityEngine.Sprite): void;
-      SetBoxShadow(shadow: ReactUnity.Types.BoxShadow): void;
+      SetBoxShadow(shadows: ReactUnity.Types.BoxShadowList): void;
       IsInvoking(): boolean;
       CancelInvoke(): void;
       Invoke(methodName: string, time: number): void;
@@ -6936,7 +6940,7 @@ export declare namespace ReactUnity {
       borderRightColor: UnityEngine.Color;
       borderTopColor: UnityEngine.Color;
       borderBottomColor: UnityEngine.Color;
-      boxShadow: ReactUnity.Types.BoxShadow;
+      boxShadow: ReactUnity.Types.BoxShadowList;
       translate: ReactUnity.Types.YogaValue2;
       scale: UnityEngine.Vector2;
       transformOrigin: ReactUnity.Types.YogaValue2;
@@ -7034,7 +7038,7 @@ export declare namespace ReactUnity {
       static borderRightColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static borderTopColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
       static borderBottomColor: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Color]
-      static boxShadow: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BoxShadow]
+      static boxShadow: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.BoxShadowList]
       static transformOrigin: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static translate: any; // ReactUnity.Styling.StyleProperty`1[ReactUnity.Types.YogaValue2]
       static scale: any; // ReactUnity.Styling.StyleProperty`1[UnityEngine.Vector2]
@@ -7720,18 +7724,53 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class BoxShadowList {
+      constructor(definition: string);
+      constructor(item: ReactUnity.Types.BoxShadow);
+      constructor(items: ReactUnity.Types.BoxShadow[]);
+      Definition: string;
+      Items: ReactUnity.Types.BoxShadow[];
+      Any: boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class BoxShadow {
-      constructor();
-      constructor(offset: UnityEngine.Vector2, spread: UnityEngine.Vector2, color: UnityEngine.Color, blur: UnityEngine.Vector2, inset?: boolean);
+      constructor(definition: string);
+      constructor(offset: UnityEngine.Vector2, blur: UnityEngine.Vector2, spread: UnityEngine.Vector2, color: UnityEngine.Color, inset?: boolean);
       offset: UnityEngine.Vector2;
       spread: UnityEngine.Vector2;
       color: UnityEngine.Color;
       blur: UnityEngine.Vector2;
       inset: boolean;
+      Valid: boolean;
+      Definition: string;
+      static ColorParser: ReactUnity.Styling.Parsers.ColorConverter;
+      static FloatParser: ReactUnity.Styling.Parsers.FloatConverter;
+      static Invalid: ReactUnity.Types.BoxShadow;
+      static Default: ReactUnity.Types.BoxShadow;
+      static DefaultInset: ReactUnity.Types.BoxShadow;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export interface ICommaSeparatedListItem {
+      Definition: string;
+      Valid: boolean;
+    }
+    export class CommaSeparatedList<T = any> {
+      constructor(item: T);
+      constructor(items: T[]);
+      constructor(definition: string);
+      Definition: string;
+      Items: T[];
+      Any: boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
     }
     export class FontReference {
       constructor(type: ReactUnity.Types.AssetReferenceType, value: any);
@@ -7824,10 +7863,8 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class BoxShadow_Converter {
+    export class BoxShadowList_Converter {
       constructor();
-      ColorParser: ReactUnity.Styling.Parsers.ColorConverter;
-      FloatParser: ReactUnity.Styling.Parsers.FloatConverter;
       Convert(value: any): any;
       FromString(value: string): any;
       Equals(obj: any): boolean;
