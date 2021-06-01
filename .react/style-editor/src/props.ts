@@ -75,7 +75,7 @@ export const styleProps: StylePropGroup[] = [
   },
   {
     props: [
-      { name: 'boxShadow', type: 'BoxShadow', component: BoxShadowField, label: 'Box Shadow' },
+      { name: 'boxShadow', type: 'BoxShadowList', component: BoxShadowField, label: 'Box Shadow' },
     ],
   },
   {

@@ -1166,10 +1166,10 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@^0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.31.tgz#a1645751ab44cf0b3a5f44ed2d33a10fd7436e60"
-  integrity sha512-9Q0QSugAK7uB5sPUkryfsgjjr+QP5jR5Lewdsdn25VDY1vEGNwC6DgxCfjNDJBgL+XNV0J5WfvyMsOzr/rIlEA==
+"@reactunity/renderer@^0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.0.32.tgz#369274fe7ca61572edace15a88e81ca5a4d7dcf9"
+  integrity sha512-ZVZcmXoabts9QictAflObCtc7z6p4Ib8w9xzekTUSA0lwrCv3yLcYFsDofQFkTJflRTY8n9nTZnaCYMT3NNxPg==
   dependencies:
     react-reconciler "^0.26.2"
 
