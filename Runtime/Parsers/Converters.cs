@@ -31,7 +31,6 @@ namespace ReactUnity.Styling
         static public IStyleConverter IntConverter = new IntConverter();
         static public IStyleConverter BoolConverter = new BoolConverter(new string[] { "true" }, new string[] { "false" });
         static public IStyleConverter ColorConverter = new ColorConverter();
-        static public IStyleConverter BoxShadowConverter = new BoxShadow.Converter();
         static public IStyleConverter ImageReferenceConverter = new ImageReference.Converter();
         static public IStyleConverter AudioReferenceConverter = new AudioReference.Converter();
         static public IStyleConverter VideoReferenceConverter = new VideoReference.Converter();
@@ -40,6 +39,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter TransitionListConverter = new TransitionList.Converter();
         static public IStyleConverter AnimationListConverter = new AnimationList.Converter();
         static public IStyleConverter AudioListConverter = new AudioList.Converter();
+        static public IStyleConverter BoxShadowListConverter = new BoxShadowList.Converter();
         static public IStyleConverter TimingFunctionConverter = new TimingFunctions.Converter();
 
 
@@ -55,7 +55,7 @@ namespace ReactUnity.Styling
             { typeof(object), DefaultConverter },
             { typeof(Color), ColorConverter },
             { typeof(bool), BoolConverter },
-            { typeof(BoxShadow), BoxShadowConverter },
+            { typeof(BoxShadowList), BoxShadowListConverter },
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
             { typeof(TransitionList), TransitionListConverter},

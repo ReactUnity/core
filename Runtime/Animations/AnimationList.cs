@@ -66,8 +66,8 @@ namespace ReactUnity.Animations
         public string Name { get; }
         public TimingFunction TimingFunction { get; } = TimingFunctions.Ease;
         public bool Valid { get; } = true;
-        public AnimationFillMode FillMode;
-        public AnimationDirection Direction;
+        public AnimationFillMode FillMode { get; }
+        public AnimationDirection Direction { get; }
 
         public Animation(string definition)
         {

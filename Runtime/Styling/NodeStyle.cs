@@ -105,10 +105,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.borderBottomColor, value);
             get => HasValue(StyleProperties.borderBottomColor.name) ? GetStyleValue<Color>(StyleProperties.borderBottomColor) : GetStyleValue<Color>(StyleProperties.borderColor);
         }
-        public BoxShadow boxShadow
+        public BoxShadowList boxShadow
         {
             set => SetStyleValue(StyleProperties.boxShadow, value);
-            get => GetStyleValue<BoxShadow>(StyleProperties.boxShadow);
+            get => GetStyleValue<BoxShadowList>(StyleProperties.boxShadow);
         }
         public YogaValue2 translate
         {

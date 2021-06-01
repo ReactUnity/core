@@ -79,7 +79,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<Color> borderRightColor = new StyleProperty<Color>("borderRightColor", Color.black, true);
         public static readonly StyleProperty<Color> borderTopColor = new StyleProperty<Color>("borderTopColor", Color.black, true);
         public static readonly StyleProperty<Color> borderBottomColor = new StyleProperty<Color>("borderBottomColor", Color.black, true);
-        public static readonly StyleProperty<BoxShadow> boxShadow = new StyleProperty<BoxShadow>("boxShadow", null, true);
+        public static readonly StyleProperty<BoxShadowList> boxShadow = new StyleProperty<BoxShadowList>("boxShadow", null, true);
         public static readonly StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static readonly StyleProperty<YogaValue2> translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
         public static readonly StyleProperty<Vector2> scale = new StyleProperty<Vector2>("scale", Vector2.one, true);

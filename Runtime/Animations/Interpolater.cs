@@ -56,6 +56,32 @@ namespace ReactUnity.Animations
         {
             return new YogaValue2(Interpolate(from.X, to.X, t), Interpolate(from.Y, to.Y, t));
         }
+
+        public static BoxShadow Interpolate(BoxShadow from, BoxShadow to, float t)
+        {
+            if (from == null || to == null || !from.Valid || !to.Valid || from.inset != to.inset) return t > 0.5 ? to : from;
+
+            return new BoxShadow(
+                Interpolate(from.offset, to.offset, t),
+                Interpolate(from.blur, to.blur, t),
+                Interpolate(from.spread, to.spread, t),
+                Interpolate(from.color, to.color, t),
+                from.inset
+            );
+        }
+        public static BoxShadowList Interpolate(BoxShadowList from, BoxShadowList to, float t)
+        {
+            var len = Mathf.Max(from.Items.Length, to.Items.Length);
+
+            var items = new BoxShadow[len];
+
+            for (int i = 0; i < len; i++)
+            {
+                items[i] = Interpolate(i < from.Items.Length ? from.Items[i] : BoxShadow.Default, i < to.Items.Length ? to.Items[i] : BoxShadow.Default, t);
+            }
+
+            return new BoxShadowList(items);
+        }
         #endregion
 
 
@@ -137,6 +163,7 @@ namespace ReactUnity.Animations
             if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t);
             if (from is YogaValue b1 && to is YogaValue b2) return Interpolate(b1, b2, t);
             if (from is YogaValue2 g1 && to is YogaValue2 g2) return Interpolate(g1, g2, t);
+            if (from is BoxShadowList s1 && to is BoxShadowList s2) return Interpolate(s1, s2, t);
 
             return t > 0.5 ? to : from;
         }
@@ -153,6 +180,7 @@ namespace ReactUnity.Animations
             else if (type == typeof(Quaternion)) { if (from is Quaternion q1 && to is Quaternion q2) return Interpolate(q1, q2, t); }
             else if (type == typeof(YogaValue)) { if (from is YogaValue y1 && to is YogaValue y2) return Interpolate(y1, y2, t); }
             else if (type == typeof(YogaValue2)) { if (from is YogaValue2 g1 && to is YogaValue2 g2) return Interpolate(g1, g2, t); }
+            else if (type == typeof(BoxShadowList)) { if (from is BoxShadowList s1 && to is BoxShadowList s2) return Interpolate(s1, s2, t); }
 
             return t > 0.5 ? to : from;
         }

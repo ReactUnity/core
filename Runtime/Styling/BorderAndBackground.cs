@@ -1,9 +1,8 @@
 using Facebook.Yoga;
-using ReactUnity.Helpers;
 using ReactUnity.Styling.Internal;
 using ReactUnity.Types;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 namespace ReactUnity.Styling
@@ -14,14 +13,13 @@ namespace ReactUnity.Styling
         public RectTransform Border { get; private set; }
         public RectTransform Background { get; private set; }
         public RectTransform ShadowRoot { get; private set; }
-        public RectTransform Shadow { get; private set; }
 
         public RoundedBorderMaskImage RootGraphic;
         public Mask RootMask;
 
         public BasicBorderImage BorderGraphic;
 
-        public BoxShadowImage ShadowGraphic;
+        public List<BoxShadowImage> ShadowGraphics;
 
         public static BorderAndBackground Create(GameObject go)
         {
@@ -45,17 +43,12 @@ namespace ReactUnity.Styling
 
             var sr = new GameObject("[Shadows]", typeof(RectTransform));
 
-            var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
-            cmp.ShadowGraphic = sd.GetComponent<BoxShadowImage>();
-
             cmp.Root = root.transform as RectTransform;
             cmp.ShadowRoot = sr.transform as RectTransform;
-            cmp.Shadow = sd.transform as RectTransform;
             cmp.Border = border.transform as RectTransform;
             cmp.Background = bg.transform as RectTransform;
 
             FullStretch(cmp.ShadowRoot, cmp.Root);
-            FullStretch(cmp.Shadow, cmp.ShadowRoot);
             FullStretch(cmp.Background, cmp.Root);
             FullStretch(cmp.Border, cmp.Root);
             FullStretch(cmp.Root, cmp.transform as RectTransform);
@@ -106,8 +99,16 @@ namespace ReactUnity.Styling
             BorderGraphic.BorderRadius = v;
             BorderGraphic.SetMaterialDirty();
 
-            ShadowGraphic.BorderRadius = v;
-            ShadowGraphic.SetMaterialDirty();
+            if (ShadowGraphics != null)
+            {
+                for (int i = 0; i < ShadowGraphics.Count; i++)
+                {
+                    var g = ShadowGraphics[i];
+
+                    g.BorderRadius = v;
+                    g.SetMaterialDirty();
+                }
+            }
         }
 
         public void SetBorderColor(Color top, Color right, Color bottom, Color left)
@@ -126,19 +127,72 @@ namespace ReactUnity.Styling
             bg.sprite = sprite;
         }
 
-        public void SetBoxShadow(BoxShadow shadow)
+        public void SetBoxShadow(BoxShadowList shadows)
         {
-            Shadow.gameObject.SetActive(shadow != null);
+            var validCount = 0;
 
-            if (shadow == null) return;
+            if (shadows != null)
+            {
+                for (int i = 0; i < shadows.Items.Length; i++)
+                {
+                    var shadow = shadows.Items[i];
+                    if (shadow.Valid) validCount++;
+                }
+            }
 
-            ShadowGraphic.Shadow = shadow;
+            if (ShadowGraphics == null)
+            {
+                if (validCount > 0) ShadowGraphics = new List<BoxShadowImage>();
+                else return;
+            }
 
-            Shadow.sizeDelta = (shadow.spread + shadow.blur) * 2;
-            Shadow.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
 
-            ShadowGraphic.color = shadow.color;
-            ShadowGraphic.SetMaterialDirty();
+            var diff = ShadowGraphics.Count - validCount;
+
+            if (diff > 0)
+            {
+                for (int i = diff - 1; i >= 0; i--)
+                {
+                    var sd = ShadowGraphics[validCount + i];
+
+                    ShadowGraphics.RemoveAt(validCount + i);
+                    DestroyImmediate(sd.gameObject);
+                }
+            }
+            else if (diff < 0)
+            {
+                for (int i = -diff - 1; i >= 0; i--)
+                {
+                    CreateShadow();
+                }
+            }
+
+            if (validCount == 0) return;
+
+            var gIndex = 0;
+            for (int i = 0; i < shadows.Items.Length; i++)
+            {
+                var shadow = shadows.Items[i];
+                if (!shadow.Valid) continue;
+
+                BoxShadowImage g = ShadowGraphics[gIndex];
+                gIndex++;
+
+                g.Shadow = shadow;
+
+                g.rectTransform.sizeDelta = (shadow.spread + shadow.blur) * 2;
+                g.rectTransform.anchoredPosition = new Vector2(shadow.offset.x, -shadow.offset.y);
+
+                g.color = shadow.color;
+                g.SetMaterialDirty();
+            }
+        }
+
+        private void CreateShadow()
+        {
+            var sd = new GameObject("[Shadow]", typeof(RectTransform), typeof(BoxShadowImage));
+            ShadowGraphics.Add(sd.GetComponent<BoxShadowImage>());
+            FullStretch(sd.transform as RectTransform, ShadowRoot);
         }
 
         static void FullStretch(RectTransform child, RectTransform parent)
