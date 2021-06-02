@@ -39,11 +39,13 @@ namespace ReactUnity.Styling.Internal
             RefreshSize();
         }
 
+#if UNITY_EDITOR
         protected override void OnValidate()
         {
             base.OnValidate();
             RefreshSize();
         }
+#endif
 
         private void RefreshSize()
         {
