@@ -47,6 +47,7 @@ namespace ReactUnity.Styling
         private static Dictionary<Type, IStyleConverter> Map = new Dictionary<Type, IStyleConverter>()
         {
             { typeof(Vector2), Vector2Converter },
+            { typeof(Vector3), Vector3Converter },
             { typeof(YogaValue), YogaValueConverter },
             { typeof(YogaValue2), YogaValue2Converter },
             { typeof(float), FloatConverter },

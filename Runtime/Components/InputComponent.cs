@@ -190,22 +190,10 @@ namespace ReactUnity.Components
                 case "validation":
                     InputField.characterValidation = (TMP_InputField.CharacterValidation) System.Convert.ToInt32(value);
                     return;
-                case "webSupport":
-                    var enabled = System.Convert.ToBoolean(value);
-                    var cmp = SetWebGLSupport(enabled);
-                    if (!enabled && cmp) UnityEngine.Object.Destroy(cmp);
-                    return;
                 default:
                     base.SetProperty(propertyName, value);
                     break;
             }
-        }
-
-        private WebSupport.WebGLInput SetWebGLSupport(bool createIfDoesNotExist)
-        {
-            var cmp = GetComponent<WebSupport.WebGLInput>();
-            if (createIfDoesNotExist && !cmp) AddComponent<WebSupport.WebGLInput>();
-            return cmp;
         }
     }
 }
