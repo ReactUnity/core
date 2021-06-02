@@ -99,7 +99,6 @@ namespace ReactUnity
 
             engine.SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }));
             engine.Execute("__dirname = '';");
-            engine.Execute("WeakMap = Map;");
             engine.Execute("globalThis = global = window = parent = this;");
             engine.Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;");
             engine.Execute("btoa = atob = null;");
