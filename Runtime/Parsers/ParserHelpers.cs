@@ -8,30 +8,28 @@ namespace ReactUnity.Styling.Parsers
     {
         public static Regex FunctionRegex = new Regex(@"^([\w\d-]+)\(([\s\w\d\.,/%#_:;+""\'\`-]*)\)$", RegexOptions.IgnoreCase);
 
-        public static string[] ParseFunction(string fn)
+        public static (string, string[]) ParseFunction(string fn)
         {
-            if (fn == null) return null;
+            if (fn == null) return (null, null);
             fn = fn.Trim();
             var match = FunctionRegex.Match(fn);
 
-            if (!match.Success) return null;
+            if (!match.Success) return (null, null);
 
             var name = match.Groups[1].Value;
             var args = match.Groups[2].Value;
 
             var splits = Split(args, ',');
 
-            if (splits.Count == 1 && splits[0] == "") return new string[] { name };
+            if (splits.Count == 1 && splits[0] == "") return (name, new string[] { });
             else
             {
-                var res = new string[splits.Count + 1];
-
-                res[0] = name;
+                var res = new string[splits.Count];
 
                 for (int i = 0; i < splits.Count; i++)
-                    res[i + 1] = splits[i];
+                    res[i] = splits[i];
 
-                return res;
+                return (name, res);
             }
         }
 
@@ -87,6 +85,42 @@ namespace ReactUnity.Styling.Parsers
                 list.Add(acc.ToString());
 
             return list;
+        }
+
+        public static float[] ParseCommaSeparatedColor(string[] vals)
+        {
+            if (vals.Length != 3 && vals.Length != 4) return null;
+
+            var list = new float[vals.Length];
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (Converters.ColorValueConverter.Convert(vals[i]) is float v) list[i] = v;
+                else return null;
+            }
+
+            if (vals.Length == 4)
+            {
+                if (Converters.PercentageConverter.Convert(vals[3]) is float alpha) list[3] = alpha;
+                else return null;
+            }
+
+            return list;
+        }
+
+        public static float[] ParseSpaceSeparatedColor(string val)
+        {
+            var vals = ParseSpaceSeparatedColorArguments(val);
+            return ParseCommaSeparatedColor(vals.ToArray());
+        }
+
+
+        public static List<string> ParseSpaceSeparatedColorArguments(string val)
+        {
+            var alphaSplit = val.Split(new[] { '/' }, 2);
+            var vals = SplitWhitespace(alphaSplit[0]);
+            if (alphaSplit.Length > 1) vals.Add(alphaSplit[1].Trim());
+            return vals;
         }
     }
 }

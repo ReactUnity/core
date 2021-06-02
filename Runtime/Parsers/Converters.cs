@@ -21,6 +21,7 @@ namespace ReactUnity.Styling
         static public IStyleConverter LengthConverter = new LengthConverter();
         static public IStyleConverter DurationConverter = new DurationConverter();
         static public IStyleConverter PercentageConverter = new PercentageConverter();
+        static public IStyleConverter ColorValueConverter = new ColorValueConverter();
 
         static public IStyleConverter UrlConverter = new UrlConverter();
         static public IStyleConverter GeneralConverter = new GeneralConverter();

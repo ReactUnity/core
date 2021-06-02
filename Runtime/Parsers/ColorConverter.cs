@@ -8,9 +8,9 @@ namespace ReactUnity.Styling.Parsers
 {
     public class ColorConverter : IStyleParser, IStyleConverter
     {
+        static private HashSet<string> AllowedFunctions = new HashSet<string> { "rgb", "rgba", "hsl", "hsla", "hsv", "hsva" };
         IStyleConverter floatDs = Converters.FloatConverter;
         static char[] splitChars = new char[] { ',', ' ' };
-        static Regex rgbRegex = new Regex("rgba?\\((?<values>.*)\\)");
 
         static Dictionary<string, string> KnownColors = new Dictionary<string, string> {
             { "aliceblue", "#f0f8ff" },
@@ -166,19 +166,11 @@ namespace ReactUnity.Styling.Parsers
 
         public object FromString(string value)
         {
+            if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
             if (value == null) return CssKeyword.Invalid;
             if (KnownColors.TryGetValue(value, out var known)) value = known;
             if (value == "clear" || value == "transparent") return Color.clear;
             if (ColorUtility.TryParseHtmlString(value, out var color)) return color;
-
-
-            var rgbMatch = rgbRegex.Match(value);
-            if (rgbMatch.Success)
-            {
-                var values = rgbMatch.Groups["values"].Value;
-                return FromArray(values.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries), 1f / 255);
-            }
-
             if (value.IndexOf(',') >= 0 || value.IndexOf(' ') >= 0) return FromArray(value.Split(splitChars, System.StringSplitOptions.RemoveEmptyEntries));
             return CssKeyword.Invalid;
         }

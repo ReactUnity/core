@@ -182,5 +182,31 @@ namespace ReactUnity.Editor.Tests
         {
             Assert.AreEqual(expected, Converters.PercentageConverter.Convert(input));
         }
+
+
+        [TestCase("0", "000000ff")]
+        [TestCase("1", "ffffffff")]
+        [TestCase("0.5", "808080ff")]
+        [TestCase("#70bd99", "70bd99ff")]
+        [TestCase("#70bd99be", "70bd99be")]
+        [TestCase("hsl(152, 37%, 59%)", "70bd99ff")]
+        [TestCase("hsl(152, 37%, 59%, 0.746)", "70bd99be")]
+        [TestCase("hsla(152, 37%, 59%, 0.746)", "70bd99be")]
+        [TestCase("hsla(152 37% 59% / 0.746)", "70bd99be")]
+        [TestCase("hsla(152 37% 59% / 74.6%)", "70bd99be")]
+        [TestCase("rgb(112, 189, 153)", "70bd99ff")]
+        [TestCase("rgb(112, 189, 153, 0.745)", "70bd99be")]
+        [TestCase("rgba(112, 189, 153, 0.745)", "70bd99be")]
+        [TestCase("rgba(112 189 153 / 0.745)", "70bd99be")]
+        [TestCase("rgba(112 189 153 / 74.5%)", "70bd99be")]
+        [TestCase("hsv(240, 51%, 72%, 74.5%)", "5a5ab8be")]
+        [TestCase("hsva(240 51% 72% / 74.5%)", "5a5ab8be")]
+        public void ColorConverter(object input, object expected)
+        {
+            var converted = Converters.ColorConverter.Convert(input);
+
+            if (converted is Color c) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
+            else Assert.AreEqual(expected, converted);
+        }
     }
 }

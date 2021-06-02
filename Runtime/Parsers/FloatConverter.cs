@@ -34,8 +34,8 @@ namespace ReactUnity.Styling.Parsers
         public object Convert(object value)
         {
             if (value is float f) return f;
-            if (value is int i) return (float)i;
-            if (value is double d) return (float)d;
+            if (value is int i) return (float) i;
+            if (value is double d) return (float) d;
             return FromString(value?.ToString());
         }
 
@@ -84,6 +84,15 @@ namespace ReactUnity.Styling.Parsers
         public PercentageConverter() : base(new Dictionary<string, float>
         {
             { "%", 0.01f },
+        })
+        { }
+    }
+
+    public class ColorValueConverter : FloatConverter
+    {
+        public ColorValueConverter() : base(new Dictionary<string, float>
+        {
+            { "%", 255 },
         })
         { }
     }
