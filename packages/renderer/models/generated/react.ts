@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor
-// Generated 2.06.2021 00:12:50
+// Generated 3.06.2021 02:17:29
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -6634,6 +6634,8 @@ export declare namespace ReactUnity {
       static Steps: ReactUnity.Styling.ICssFunction;
       static CubicBezier: ReactUnity.Styling.ICssFunction;
       static Url: ReactUnity.Styling.ICssFunction;
+      static Rgba: ReactUnity.Styling.ICssFunction;
+      static Hsla: ReactUnity.Styling.ICssFunction;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -6641,8 +6643,8 @@ export declare namespace ReactUnity {
     }
     export interface ICssFunction {
       Name: string;
-      CanHandleArguments(count: number, args: string[]): boolean;
-      Call(args: string[]): any;
+      CanHandleArguments(count: number, name: string, args: string[]): boolean;
+      Call(name: string, args: string[]): any;
     }
     export enum CssKeyword {
       NoKeyword = 0,
@@ -7580,6 +7582,15 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class ColorValueConverter {
+        constructor();
+        FromString(value: string): any;
+        Convert(value: any): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class LengthConverter {
         constructor();
         FromString(value: string): any;
@@ -7912,124 +7923,6 @@ export declare namespace ReactUnity {
   export namespace Visitors {
     export class ReactComponentVisitor {
       Visit(component: ReactUnity.IReactComponent): void;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-  }
-  export namespace WebSupport {
-    export class WebGLInput {
-      constructor();
-      useGUILayout: boolean;
-      runInEditMode: boolean;
-      enabled: boolean;
-      isActiveAndEnabled: boolean;
-      transform: UnityEngine.Transform;
-      gameObject: UnityEngine.GameObject;
-      tag: string;
-      rigidbody: UnityEngine.Component;
-      rigidbody2D: UnityEngine.Component;
-      camera: UnityEngine.Component;
-      light: UnityEngine.Component;
-      animation: UnityEngine.Component;
-      constantForce: UnityEngine.Component;
-      renderer: UnityEngine.Component;
-      audio: UnityEngine.Component;
-      networkView: UnityEngine.Component;
-      collider: UnityEngine.Component;
-      collider2D: UnityEngine.Component;
-      hingeJoint: UnityEngine.Component;
-      particleSystem: UnityEngine.Component;
-      name: string;
-      hideFlags: UnityEngine.HideFlags;
-      enableTabText: boolean;
-      showHtmlElement: boolean;
-      OnSelect(): void;
-      CompareTo(other: ReactUnity.WebSupport.WebGLInput): number;
-      CompareTo(obj: any): number;
-      IsInvoking(): boolean;
-      CancelInvoke(): void;
-      Invoke(methodName: string, time: number): void;
-      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
-      CancelInvoke(methodName: string): void;
-      IsInvoking(methodName: string): boolean;
-      StartCoroutine(methodName: string): UnityEngine.Coroutine;
-      StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
-      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
-      StopCoroutine(routine: System.Collections.IEnumerator): void;
-      StopCoroutine(routine: UnityEngine.Coroutine): void;
-      StopCoroutine(methodName: string): void;
-      StopAllCoroutines(): void;
-      GetComponent(type: System.Type): UnityEngine.Component;
-      GetComponent(type: string): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
-      GetComponentInChildren(t: System.Type): UnityEngine.Component;
-      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
-      GetComponentInParent(t: System.Type): UnityEngine.Component;
-      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
-      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type): UnityEngine.Component[];
-      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
-      CompareTag(tag: string): boolean;
-      SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
-      SendMessageUpwards(methodName: string, value: any): void;
-      SendMessageUpwards(methodName: string): void;
-      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, value: any): void;
-      SendMessage(methodName: string): void;
-      SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
-      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
-      BroadcastMessage(methodName: string, parameter: any): void;
-      BroadcastMessage(methodName: string): void;
-      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
-      GetInstanceID(): number;
-      GetHashCode(): number;
-      Equals(other: any): boolean;
-      ToString(): string;
-      GetType(): System.Type;
-    }
-    export enum ContentType {
-      Standard = 0,
-      Autocorrected = 1,
-      IntegerNumber = 2,
-      DecimalNumber = 3,
-      Alphanumeric = 4,
-      Name = 5,
-      EmailAddress = 6,
-      Password = 7,
-      Pin = 8,
-      Custom = 9,
-    }
-    export enum LineType {
-      SingleLine = 0,
-      MultiLineSubmit = 1,
-      MultiLineNewline = 2,
-    }
-    export interface IInputField {
-      contentType: ReactUnity.WebSupport.ContentType;
-      lineType: ReactUnity.WebSupport.LineType;
-      fontSize: number;
-      text: string;
-      placeholder: string;
-      characterLimit: number;
-      lineHeight: number;
-      caretPosition: number;
-      isFocused: boolean;
-      selectionFocusPosition: number;
-      selectionAnchorPosition: number;
-      ReadOnly: boolean;
-      OnFocusSelectAll: boolean;
-      RectTransform(): UnityEngine.RectTransform;
-      ActivateInputField(): void;
-      DeactivateInputField(): void;
-      Rebuild(): void;
-    }
-    export class WebGLWindow {
-      static Focus: boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;

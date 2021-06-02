@@ -26,8 +26,6 @@ export interface Input extends View<ReactUnity.Components.InputComponent> {
   keyboardType?: TouchScreenKeyboardType;
   lineType?: LineType;
   validation?: CharacterValidation;
-  /* WebGL only */
-  webSupport?: boolean;
 
   onReturn?: InputEvent;
   onEndEdit?: InputEvent;
