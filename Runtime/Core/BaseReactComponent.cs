@@ -109,18 +109,21 @@ namespace ReactUnity
         public virtual void DestroySelf()
         {
             foreach (var item in Deferreds) Context.Dispatcher.StopDeferred(item);
-
-            if (IsContainer)
-            {
-                foreach (var child in Children)
-                    child.DestroySelf();
-            }
         }
 
-        public virtual void Destroy()
+        public void Destroy()
         {
             SetParent(null);
             DestroySelf();
+
+            if (IsContainer)
+            {
+                for (int i = Children.Count - 1; i >= 0; i--)
+                {
+                    Children[i].Destroy();
+                }
+                Children.Clear();
+            }
         }
 
         #region Setters

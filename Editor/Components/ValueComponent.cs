@@ -1,6 +1,9 @@
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Helpers;
+using ReactUnity.Styling;
 using System;
+using System.Runtime.InteropServices;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Components
@@ -33,8 +36,16 @@ namespace ReactUnity.Editor.Components
 
         public override void SetProperty(string property, object value)
         {
-            if (property == "value") Element.SetValueWithoutNotify(value == null ? default(TValueType) : (TValueType)Convert.ChangeType(value, typeof(TValueType)));
+            if (property == "value") Element.SetValueWithoutNotify(ConvertValue(value));
             else base.SetProperty(property, value);
+        }
+
+        public TValueType ConvertValue(object value)
+        {
+            if (value == null) return default;
+            if (value == Microsoft.ClearScript.Undefined.Value) return default;
+            if (value is TValueType val) return val;
+            return (TValueType) Convert.ChangeType(value, typeof(TValueType));
         }
 
         public void SetValue(TValueType value)

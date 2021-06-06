@@ -219,9 +219,9 @@ namespace ReactUnity.Editor.Components
             else Element.transform.position = translate;
         }
 
-        public override void Destroy()
+        public override void DestroySelf()
         {
-            base.Destroy();
+            base.DestroySelf();
             Element.RemoveFromHierarchy();
         }
 

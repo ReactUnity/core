@@ -1,9 +1,9 @@
 using Esprima;
-using Jint.Native.Function;
+using Facebook.Yoga;
 using Jint.Runtime;
-using Jint.Runtime.Interop;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
+using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using System;
 using System.Collections.Generic;
@@ -14,15 +14,18 @@ namespace ReactUnity
 {
     public class ReactUnityRunner
     {
-        public Jint.Engine engine { get; private set; }
+        public IJavaScriptEngineFactory engineFactory { get; private set; }
+        public IJavaScriptEngine engine { get; private set; }
         public ReactContext context { get; private set; }
 
-        public void RunScript(string script, ReactContext ctx, UnityEvent<ReactUnityRunner> beforeStart = null, UnityEvent<ReactUnityRunner> afterStart = null)
+        public void RunScript(string script, ReactContext ctx, JavascriptEngineType engineType, bool debug, bool awaitDebugger, UnityEvent<ReactUnityRunner> beforeStart = null, UnityEvent<ReactUnityRunner> afterStart = null)
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
+            engineFactory = ResolveEngineFactory(engineType);
+
             context = ctx;
-            if (engine == null) CreateBaseEngine();
+            if (engine == null) CreateBaseEngine(debug, awaitDebugger);
             engine.SetValue("Context", context);
             engine.SetValue("RootContainer", context.Host);
             engine.SetValue("Globals", context.Globals);
@@ -31,10 +34,6 @@ namespace ReactUnity
             CreateLocalStorage(engine);
             CreateScheduler(engine, context);
             CreatePolyfills(engine);
-
-            var deferred = engine.RegisterPromise();
-            var resolve = deferred.GetType().GetMethod("get_Resolve").Invoke(deferred, new object[] { }) as Action<Jint.Native.JsValue>;
-            context.Dispatcher.OnEveryUpdate(() => resolve(""));
 
             var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => beforeStart?.Invoke(e) };
             var afterStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => afterStart?.Invoke(e) };
@@ -47,7 +46,7 @@ namespace ReactUnity
             try
             {
                 beforeStartCallbacks.ForEach(x => x?.Invoke(this));
-                engine.Execute(script);
+                engine.Execute(script, "ReactUnity");
                 afterStartCallbacks.ForEach(x => x?.Invoke(this));
             }
             catch (ParserException ex)
@@ -75,58 +74,29 @@ namespace ReactUnity
             engine.Execute(script);
         }
 
-        void CreateBaseEngine()
+        void CreateBaseEngine(bool debug, bool awaitDebugger)
         {
-            engine = new Jint.Engine(x =>
-            {
-                x.AllowClr(
-                    typeof(Convert).Assembly,
-#if UNITY_EDITOR
-                    typeof(UnityEditor.EditorWindow).Assembly,
-                    typeof(GUILayout).Assembly,
-                    typeof(UnityEngine.UIElements.StyleLength).Assembly,
-#endif
-                    typeof(Vector3).Assembly,
-                    typeof(Component).Assembly,
-                    typeof(ReactUnityRunner).Assembly
-                );
-                x.CatchClrExceptions(ex =>
-                {
-                    Debug.LogException(ex);
-                    return true;
-                });
-            });
+            engine = engineFactory.Create(context, debug, awaitDebugger);
 
-            engine.SetValue("log", new Func<object, object>((x) => { Debug.Log(x); return x; }));
-            engine.Execute("__dirname = '';");
             engine.Execute("globalThis = global = window = parent = this;");
-            engine.Execute("setTimeout = setInterval = clearTimeout = clearInterval = null;");
-            engine.Execute("btoa = atob = null;");
-            engine.Execute("process = { env: { NODE_ENV: 'production' }, argv: [], on: () => {} };");
             engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(context.MediaProvider, media)));
 
             engine.SetValue("Engine", engine);
             engine.SetValue("Callback", typeof(Callback));
+            engine.SetValue("importType", new Func<string, object>((string typeName) => engine.CreateTypeReference(ReflectionHelpers.FindType(typeName))));
 
-            engine.SetValue("importType", new ClrFunctionInstance(
-                engine,
-                "importType",
-                func: (thisObj, arguments) => TypeReference.CreateTypeReference(engine,
-                    ReflectionHelpers.FindType(TypeConverter.ToString(arguments.At(0)),
-                    arguments.Length > 1 ? TypeConverter.ToBoolean(arguments.At(1)) : false))));
-
-            engine.SetValue("UnityEngine", new NamespaceReference(engine, "UnityEngine"));
-            engine.SetValue("ReactUnity", new NamespaceReference(engine, "ReactUnity"));
-            engine.SetValue("Facebook", new NamespaceReference(engine, "Facebook"));
+            engine.SetValue("UnityEngine", engine.CreateNamespaceReference("UnityEngine", typeof(Vector2).Assembly, typeof(UnityEngine.UIElements.Button).Assembly));
+            engine.SetValue("ReactUnity", engine.CreateNamespaceReference("ReactUnity", typeof(ReactUnity).Assembly));
+            engine.SetValue("Facebook", engine.CreateNamespaceReference("Facebook", typeof(YogaValue).Assembly));
 #if UNITY_EDITOR
-            engine.SetValue("UnityEditor", new NamespaceReference(engine, "UnityEditor"));
+            engine.SetValue("UnityEditor", engine.CreateNamespaceReference("UnityEditor", typeof(UnityEditor.EditorWindow).Assembly, typeof(UnityEditor.UIElements.ColorField).Assembly));
 #endif
 
             engine.SetValue("Unity", ReactUnityBridge.Instance);
             engine.SetValue("UnityBridge", ReactUnityBridge.Instance);
         }
 
-        void CreateConsole(Jint.Engine engine)
+        void CreateConsole(IJavaScriptEngine engine)
         {
             var console = new ConsoleProxy(context);
 
@@ -143,14 +113,14 @@ namespace ReactUnity
 }");
         }
 
-        void CreatePolyfills(Jint.Engine engine)
+        void CreatePolyfills(IJavaScriptEngine engine)
         {
             // Load polyfills
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
         }
 
-        void CreateScheduler(Jint.Engine engine, ReactContext context)
+        void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
         {
             var scheduler = context.Scheduler;
             engine.SetValue("UnityScheduler", scheduler);
@@ -164,24 +134,36 @@ namespace ReactUnity
             engine.SetValue("cancelAnimationFrame", new Action<int?>(scheduler.cancelAnimationFrame));
         }
 
-        void CreateLocalStorage(Jint.Engine engine)
+        void CreateLocalStorage(IJavaScriptEngine engine)
         {
             var storage = new LocalStorage();
             engine.SetValue("localStorage", storage);
         }
 
-        void CreateLocation(Jint.Engine engine)
+        void CreateLocation(IJavaScriptEngine engine)
         {
             engine.SetValue("location", context.Location);
 
             engine.Execute(@"WebSocket = function(url) { return new WebSocket.original(Context, url); }");
             engine.Execute(@"XMLHttpRequest = function() { return new XMLHttpRequest.original(Context, location.origin); }");
-            (engine.GetValue(@"WebSocket") as FunctionInstance)
-                .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(TypeReference.CreateTypeReference(engine, typeof(WebSocketProxy)), false, false, false));
-            (engine.GetValue(@"XMLHttpRequest") as FunctionInstance)
-                .FastSetProperty("original", new Jint.Runtime.Descriptors.PropertyDescriptor(TypeReference.CreateTypeReference(engine, typeof(XMLHttpRequest)), false, false, false));
+            engine.SetProperty(engine.GetValue("WebSocket"), "original", typeof(WebSocketProxy));
+            engine.SetProperty(engine.GetValue("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
 
             engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, context.Location.origin));
+        }
+
+        IJavaScriptEngineFactory ResolveEngineFactory(JavascriptEngineType type)
+        {
+            switch (type)
+            {
+                case JavascriptEngineType.Jint:
+                    return new JintEngineFactory();
+                case JavascriptEngineType.ClearScript:
+                    return new ClearScriptEngineFactory();
+                case JavascriptEngineType.Auto:
+                default:
+                    return new ClearScriptEngineFactory();
+            }
         }
     }
 }

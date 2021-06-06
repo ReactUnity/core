@@ -1,0 +1,1649 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ClearScript.V8</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.ClearScript.V8.V8CacheKind">
+            <summary>
+            Defines caching options for V8 script compilation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8CacheKind.None">
+            <summary>
+            Specifies that no cache data is to be generated or consumed during V8 script
+            compilation. This option results in the most efficient script compilation when no cache
+            data is available.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8CacheKind.Parser">
+            <summary>
+            Selects parser caching. Parser cache data is smaller and less expensive to generate
+            than code cache data, but it is less effective at accelerating recompilation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8CacheKind.Code">
+            <summary>
+            Selects code caching. Code cache data is larger and more expensive to generate than
+            parser cache data, but it is more effective at accelerating recompilation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8CpuProfile">
+            <summary>
+            Represents a V8 CPU profile.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Name">
+            <summary>
+            Gets the profile's name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.StartTimestamp">
+            <summary>
+            Gets the profile's starting timestamp in microseconds.
+            </summary>
+            <remarks>
+            The timestamp specifies an offset relative to an unspecified moment in the past. All
+            timestamps within the profile are relative to the same moment.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.EndTimestamp">
+            <summary>
+            Gets the profile's ending timestamp in microseconds.
+            </summary>
+            <remarks>
+            The timestamp specifies an offset relative to an unspecified moment in the past. All
+            timestamps within the profile are relative to the same moment.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.RootNode">
+            <summary>
+            Gets the root node of the profile's call tree.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Samples">
+            <summary>
+            Gets the profile's sample collection.
+            </summary>
+            <remarks>
+            This property returns <c>null</c> if the profile contains no samples.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8CpuProfile.ToJson">
+            <summary>
+            Returns a JSON representation of the profile.
+            </summary>
+            <remarks>
+            See the
+            <see href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/inspector/js_protocol-1.3.json">V8 Inspector JSON Protocol</see>
+            for schema details.
+            </remarks>
+            <returns>A JSON representation of the profile in V8 Inspector format.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8CpuProfile.WriteJson(System.IO.TextWriter)">
+            <summary>
+            Writes a JSON representation of the profile to the given text writer.
+            </summary>
+            <param name="writer">The text writer to which to write the profile.</param>
+            <remarks>
+            See the
+            <see href="https://github.com/v8/v8/blob/4b9b23521e6fd42373ebbcb20ebe03bf445494f9/src/inspector/js_protocol-1.3.json">V8 Inspector JSON Protocol</see>
+            for schema details.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8CpuProfile.Node">
+            <summary>
+            Represents a node in a V8 CPU profile's call tree.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.NodeId">
+            <summary>
+            Gets the node's numeric identifier.
+            </summary>
+            <remarks>
+            This value is unique within the profile.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.ScriptId">
+            <summary>
+            Gets the numeric identifier of the document containing the node's script function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.ScriptName">
+            <summary>
+            Gets the name or URL of the document containing the node's script function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.FunctionName">
+            <summary>
+            Gets the name of the node's script function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.LineNumber">
+            <summary>
+            Gets the 1-based line number of the start of the node's script function.
+            </summary>
+            <remarks>
+            A value of zero indicates that no line number is available.
+            </remarks>
+            <seealso cref="T:Microsoft.ClearScript.V8.V8CpuProfileFlags"/>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.ColumnNumber">
+            <summary>
+            Gets the 1-based column number of the start of the node's script function.
+            </summary>
+            <remarks>
+            A value of zero indicates that no column number is available.
+            </remarks>
+            <seealso cref="T:Microsoft.ClearScript.V8.V8CpuProfileFlags"/>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.HitCount">
+            <summary>
+            Gets the node's hit count.
+            </summary>
+            <remarks>
+            This value represents the number of times the CPU profiler observed the node's
+            script function at the top of the call stack.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.BailoutReason">
+            <summary>
+            Gets an optional string describing the reason why the node's script function was not optimized.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.HitLines">
+            <summary>
+            Gets the node's hit line collection.
+            </summary>
+            <remarks>
+            This property returns <c>null</c> if the node contains no hit lines.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Node.ChildNodes">
+            <summary>
+            Gets the node's child node collection.
+            </summary>
+            <remarks>
+            This property returns <c>null</c> if the node has no child nodes.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8CpuProfile.Node.HitLine">
+            <summary>
+            Represents a script line observed by the V8 CPU profiler.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8CpuProfile.Node.HitLine.LineNumber">
+            <summary>
+            Gets the 1-based line number.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8CpuProfile.Node.HitLine.HitCount">
+            <summary>
+            Gets the hit count for the script line.
+            </summary>
+            <remarks>
+            This value represents the number of times the CPU profiler observed the current
+            script line at the top of the call stack.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8CpuProfile.Sample">
+            <summary>
+            Represents a V8 CPU profile sample.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Sample.Node">
+            <summary>
+            Gets the sample's node within the profile's call tree.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8CpuProfile.Sample.Timestamp">
+            <summary>
+            Gets the sample's timestamp in microseconds.
+            </summary>
+            <remarks>
+            The timestamp specifies an offset relative to an unspecified moment in the past. All
+            timestamps within the profile are relative to the same moment.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8CpuProfileFlags">
+            <summary>
+            Defines options for creating a V8 CPU profile.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8CpuProfileFlags.None">
+            <summary>
+            Specifies that no options are selected.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8CpuProfileFlags.EnableSampleCollection">
+            <summary>
+            Specifies that automatic sample collection is to be enabled.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8Runtime">
+            <summary>
+            Represents an instance of the V8 runtime.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor">
+            <summary>
+            Initializes a new V8 runtime instance.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(System.String)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified name.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(Microsoft.ClearScript.V8.V8RuntimeConstraints)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified resource constraints.
+            </summary>
+            <param name="constraints">Resource constraints for the instance.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeConstraints)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified name and resource constraints.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="constraints">Resource constraints for the instance.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(Microsoft.ClearScript.V8.V8RuntimeFlags)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified options.
+            </summary>
+            <param name="flags">A value that selects options for the operation.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(Microsoft.ClearScript.V8.V8RuntimeFlags,System.Int32)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified options and debug port.
+            </summary>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeFlags)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified name and options.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeFlags,System.Int32)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified name, options, and debug port.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(Microsoft.ClearScript.V8.V8RuntimeConstraints,Microsoft.ClearScript.V8.V8RuntimeFlags)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified resource constraints and options.
+            </summary>
+            <param name="constraints">Resource constraints for the instance.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(Microsoft.ClearScript.V8.V8RuntimeConstraints,Microsoft.ClearScript.V8.V8RuntimeFlags,System.Int32)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified resource constraints, options, and debug port.
+            </summary>
+            <param name="constraints">Resource constraints for the instance.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeConstraints,Microsoft.ClearScript.V8.V8RuntimeFlags)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified name, resource constraints, and options.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="constraints">Resource constraints for the instance.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeConstraints,Microsoft.ClearScript.V8.V8RuntimeFlags,System.Int32)">
+            <summary>
+            Initializes a new V8 runtime instance with the specified name, resource constraints, options, and debug port.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="constraints">Resource constraints for the instance.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Runtime.Name">
+            <summary>
+            Gets the name associated with the V8 runtime instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Runtime.FormatCode">
+            <summary>
+            Enables or disables script code formatting.
+            </summary>
+            <remarks>
+            When this property is set to <c>true</c>, the V8 runtime may format script code before
+            executing or compiling it. This is intended to facilitate interactive debugging. The
+            formatting operation currently includes stripping leading and trailing blank lines and
+            removing global indentation.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Runtime.MaxHeapSize">
+            <summary>
+            Gets or sets a soft limit for the size of the V8 runtime's heap.
+            </summary>
+            <remarks>
+            <para>
+            This property is specified in bytes. When it is set to the default value, heap size
+            monitoring is disabled, and scripts with memory leaks or excessive memory usage
+            can cause unrecoverable errors and process termination.
+            </para>
+            <para>
+            A V8 runtime unconditionally terminates the process when it exceeds its resource
+            constraints (see <see cref="T:Microsoft.ClearScript.V8.V8RuntimeConstraints"/>). This property enables external
+            heap size monitoring that can prevent termination in some scenarios. To be effective,
+            it should be set to a value that is significantly lower than
+            <see cref="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxOldSpaceSize"/>. Note that enabling heap size
+            monitoring results in slower script execution.
+            </para>
+            <para>
+            Exceeding this limit causes the V8 runtime to interrupt script execution and throw an
+            exception. To re-enable script execution, set this property to a new value.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Runtime.HeapSizeSampleInterval">
+            <summary>
+            Gets or sets the minimum time interval between consecutive heap size samples.
+            </summary>
+            <remarks>
+            This property is effective only when heap size monitoring is enabled (see
+            <see cref="P:Microsoft.ClearScript.V8.V8Runtime.MaxHeapSize"/>).
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Runtime.MaxStackUsage">
+            <summary>
+            Gets or sets the maximum amount by which the stack is permitted to grow during script execution.
+            </summary>
+            <remarks>
+            <para>
+            This property is specified in bytes. When it is set to the default value, no stack
+            usage limit is enforced, and scripts with unchecked recursion or other excessive stack
+            usage can cause unrecoverable errors and process termination.
+            </para>
+            <para>
+            Note that the V8 runtime does not monitor stack usage while a host call is in progress.
+            Monitoring is resumed when control returns to the runtime.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Runtime.DocumentSettings">
+            <summary>
+            Gets or sets the V8 runtime's document settings.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CreateScriptEngine">
+            <summary>
+            Creates a new V8 script engine instance.
+            </summary>
+            <returns>A new V8 script engine instance.</returns>
+            <remarks>
+            The new script engine instance shares the V8 runtime with other instances created by
+            this method and any of its overloads.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CreateScriptEngine(System.String)">
+            <summary>
+            Creates a new V8 script engine instance with the specified name.
+            </summary>
+            <param name="engineName">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <returns>A new V8 script engine instance.</returns>
+            <remarks>
+            The new script engine instance shares the V8 runtime with other instances created by
+            this method and any of its overloads.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CreateScriptEngine(Microsoft.ClearScript.V8.V8ScriptEngineFlags)">
+            <summary>
+            Creates a new V8 script engine instance with the specified options.
+            </summary>
+            <param name="flags">A value that selects options for the operation.</param>
+            <returns>A new V8 script engine instance.</returns>
+            <remarks>
+            <para>
+            The new script engine instance shares the V8 runtime with other instances created by
+            this method and any of its overloads.
+            </para>
+            <para>
+            V8 supports one script debugger per runtime. If script debugging has been enabled in
+            the current runtime, additional script engine instances cannot disable it or change its
+            TCP port, nor can they enable script debugging on a different port.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CreateScriptEngine(Microsoft.ClearScript.V8.V8ScriptEngineFlags,System.Int32)">
+            <summary>
+            Creates a new V8 script engine instance with the specified options and debug port.
+            </summary>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+            <returns>A new V8 script engine instance.</returns>
+            <remarks>
+            <para>
+            The new script engine instance shares the V8 runtime with other instances created by
+            this method and any of its overloads.
+            </para>
+            <para>
+            V8 supports one script debugger per runtime. If script debugging has been enabled in
+            the current runtime, additional script engine instances cannot disable it or change its
+            TCP port, nor can they enable script debugging on a different port.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CreateScriptEngine(System.String,Microsoft.ClearScript.V8.V8ScriptEngineFlags)">
+            <summary>
+            Creates a new V8 script engine instance with the specified name and options.
+            </summary>
+            <param name="engineName">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <returns>A new V8 script engine instance.</returns>
+            <remarks>
+            <para>
+            The new script engine instance shares the V8 runtime with other instances created by
+            this method and any of its overloads.
+            </para>
+            <para>
+            V8 supports one script debugger per runtime. If script debugging has been enabled in
+            the current runtime, additional script engine instances cannot disable it or change its
+            TCP port, nor can they enable script debugging on a different port.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CreateScriptEngine(System.String,Microsoft.ClearScript.V8.V8ScriptEngineFlags,System.Int32)">
+            <summary>
+            Creates a new V8 script engine instance with the specified name, options, and debug port.
+            </summary>
+            <param name="engineName">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+            <returns>A new V8 script engine instance.</returns>
+            <remarks>
+            <para>
+            The new script engine instance shares the V8 runtime with other instances created by
+            this method and any of its overloads.
+            </para>
+            <para>
+            V8 supports one script debugger per runtime. If script debugging has been enabled in
+            the current runtime, additional script engine instances cannot disable it or change its
+            TCP port, nor can they enable script debugging on a different port.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String)">
+            <summary>
+            Creates a compiled script.
+            </summary>
+            <param name="code">The script code to compile.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,System.String)">
+            <summary>
+            Creates a compiled script with an associated document name.
+            </summary>
+            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="code">The script code to compile.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(Microsoft.ClearScript.DocumentInfo,System.String)">
+            <summary>
+            Creates a compiled script with the specified document meta-information.
+            </summary>
+            <param name="documentInfo">A structure containing meta-information for the script document.</param>
+            <param name="code">The script code to compile.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Creates a compiled script, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Creates a compiled script with an associated document name, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(Microsoft.ClearScript.DocumentInfo,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Creates a compiled script with the specified document meta-information, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="documentInfo">A structure containing meta-information for the script document.</param>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8Runtime.Compile(Microsoft.ClearScript.DocumentInfo,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Creates a compiled script, consuming previously generated cache data.
+            </summary>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Creates a compiled script with an associated document name, consuming previously generated cache data.
+            </summary>
+            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8Runtime.Compile(System.String,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Compile(Microsoft.ClearScript.DocumentInfo,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Creates a compiled script with the specified document meta-information, consuming previously generated cache data.
+            </summary>
+            <param name="documentInfo">A structure containing meta-information for the script document.</param>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8Runtime.Compile(Microsoft.ClearScript.DocumentInfo,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String)">
+            <summary>
+            Loads and compiles a script document.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory)">
+            <summary>
+            Loads and compiles a document with the specified category.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.DocumentContextCallback)">
+            <summary>
+            Loads and compiles a document with the specified category and context callback.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="contextCallback">An optional context callback for the requested document.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Loads and compiles a script document, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Loads and compiles a document with the specified category, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.DocumentContextCallback,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Loads and compiles a document with the specified category and context callback, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="contextCallback">An optional context callback for the requested document.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Loads and compiles a script document, consuming previously generated cache data.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Loads and compiles a document with the specified category, consuming previously generated cache data.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.DocumentContextCallback,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Loads and compiles a document with the specified category and context callback, consuming previously generated cache data.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="contextCallback">An optional context callback for the requested document.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.GetHeapInfo">
+            <summary>
+            Returns memory usage information.
+            </summary>
+            <returns>A <see cref="T:Microsoft.ClearScript.V8.V8RuntimeHeapInfo"/> object containing memory usage information.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CollectGarbage(System.Boolean)">
+            <summary>
+            Performs garbage collection.
+            </summary>
+            <param name="exhaustive"><c>True</c> to perform exhaustive garbage collection, <c>false</c> to favor speed over completeness.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.BeginCpuProfile(System.String)">
+            <summary>
+            Begins collecting a new CPU profile.
+            </summary>
+            <param name="name">A name for the profile.</param>
+            <returns><c>True</c> if the profile was created successfully, <c>false</c> otherwise.</returns>
+            <remarks>
+            A V8 runtime can collect multiple CPU profiles simultaneously.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.BeginCpuProfile(System.String,Microsoft.ClearScript.V8.V8CpuProfileFlags)">
+            <summary>
+            Begins collecting a new CPU profile with the specified options.
+            </summary>
+            <param name="name">A name for the profile.</param>
+            <param name="flags">Options for creating the profile.</param>
+            <returns><c>True</c> if the profile was created successfully, <c>false</c> otherwise.</returns>
+            <remarks>
+            A V8 runtime can collect multiple CPU profiles simultaneously.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.EndCpuProfile(System.String)">
+            <summary>
+            Completes and returns a CPU profile.
+            </summary>
+            <param name="name">The name of the profile.</param>
+            <returns>The profile if it was found and completed successfully, <c>null</c> otherwise.</returns>
+            <remarks>
+            An empty <paramref name="name"/> argument selects the most recently created CPU profile.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.CollectCpuProfileSample">
+            <summary>
+            Collects a sample in all CPU profiles active in the V8 runtime.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Runtime.CpuProfileSampleInterval">
+            <summary>
+            Gets or sets the time interval between automatic CPU profile samples, in microseconds.
+            </summary>
+            <remarks>
+            Assigning this property has no effect on CPU profiles already active in the V8 runtime.
+            The default value is 1000.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.WriteHeapSnapshot(System.IO.Stream)">
+            <summary>
+            Writes a heap snapshot to the given stream.
+            </summary>
+            <param name="stream">The stream to which to write the heap snapshot.</param>
+            <remarks>
+            This method generates a heap snapshot in JSON format with ASCII encoding.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Runtime.Dispose">
+            <summary>
+            Releases all resources used by the V8 runtime.
+            </summary>
+            <remarks>
+            Call <c>Dispose()</c> when you are finished using the V8 runtime. <c>Dispose()</c>
+            leaves the V8 runtime in an unusable state. After calling <c>Dispose()</c>, you must
+            release all references to the V8 runtime so the garbage collector can reclaim the
+            memory that the V8 runtime was occupying.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8RuntimeConstraints">
+            <summary>
+            Specifies resource constraints for a V8 runtime.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8RuntimeConstraints.#ctor">
+            <summary>
+            Initializes a new <see cref="T:Microsoft.ClearScript.V8.V8RuntimeConstraints"/> instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxNewSpaceSize">
+            <summary>
+            Gets or sets the maximum size of the new object heap in
+            <see href="http://en.wikipedia.org/wiki/Mebibyte">MiB</see>.
+            </summary>
+            <remarks>
+            For maximum compatibility with hosts that predate an inadvertent breaking change in
+            ClearScript 5.4.1, values greater than 1048576
+            (1 <see href="http://en.wikipedia.org/wiki/Tebibyte">TiB</see>) are assumed to be in
+            bytes rather than MiB. For example, the values 16 and 16777216 both specify a limit
+            of 16 MiB.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxOldSpaceSize">
+            <summary>
+            Gets or sets the maximum size of the old object heap in
+            <see href="http://en.wikipedia.org/wiki/Mebibyte">MiB</see>.
+            </summary>
+            <remarks>
+            For maximum compatibility with hosts that predate an inadvertent breaking change in
+            ClearScript 5.4.1, values greater than 1048576
+            (1 <see href="http://en.wikipedia.org/wiki/Tebibyte">TiB</see>) are assumed to be in
+            bytes rather than MiB. For example, the values 16 and 16777216 both specify a limit
+            of 16 MiB.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxExecutableSize">
+            <summary>
+            Gets or sets the maximum size of the executable code heap in
+            <see href="http://en.wikipedia.org/wiki/Mebibyte">MiB</see>.
+            </summary>
+            <remarks>
+            For maximum compatibility with hosts that predate an inadvertent breaking change in
+            ClearScript 5.4.1, values greater than 1048576
+            (1 <see href="http://en.wikipedia.org/wiki/Tebibyte">TiB</see>) are assumed to be in
+            bytes rather than MiB. For example, the values 16 and 16777216 both specify a limit
+            of 16 MiB.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxYoungSpaceSize">
+            <summary>
+            Gets or sets the maximum size of the young object heap in
+            <see href="http://en.wikipedia.org/wiki/Mebibyte">MiB</see>.
+            </summary>
+            <remarks>
+            For maximum compatibility with hosts that predate an inadvertent breaking change in
+            ClearScript 5.4.1, values greater than 1048576
+            (1 <see href="http://en.wikipedia.org/wiki/Tebibyte">TiB</see>) are assumed to be in
+            bytes rather than MiB. For example, the values 16 and 16777216 both specify a limit
+            of 16 MiB.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.HeapExpansionMultiplier">
+            <summary>
+            Gets or sets the heap expansion multiplier.
+            </summary>
+            <remarks>
+            When set to a value greater than 1, this property enables on-demand heap expansion,
+            which automatically increases the maximum heap size by the specified multiplier
+            whenever the script engine is close to exceeding the current limit. Note that a buggy
+            or malicious script can still cause an application to fail by exhausting its address
+            space or total available memory. On-demand heap expansion is recommended for use in
+            conjunction with heap size monitoring (see <see cref="P:Microsoft.ClearScript.V8.V8Runtime.MaxHeapSize"/>,
+            <see cref="P:Microsoft.ClearScript.V8.V8ScriptEngine.MaxRuntimeHeapSize"/>) to help contain runaway scripts.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8RuntimeFlags">
+            <summary>
+            Defines options for initializing a new V8 runtime instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8RuntimeFlags.None">
+            <summary>
+            Specifies that no options are selected.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8RuntimeFlags.EnableDebugging">
+            <summary>
+            Specifies that script debugging features are to be enabled.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8RuntimeFlags.EnableRemoteDebugging">
+            <summary>
+            Specifies that remote script debugging is to be enabled. This option is ignored if
+            <see cref="F:Microsoft.ClearScript.V8.V8RuntimeFlags.EnableDebugging"/> is not specified.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8RuntimeFlags.EnableDynamicModuleImports">
+            <summary>
+            Specifies that
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#Dynamic_Imports">dynamic module imports</see>
+            are to be enabled. This is an experimental feature and may be removed in a future release.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8RuntimeHeapInfo">
+            <summary>
+            Contains memory usage information for a V8 runtime.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.TotalHeapSize">
+            <summary>
+            Gets the total heap size in bytes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.TotalHeapSizeExecutable">
+            <summary>
+            Gets the total executable heap size in bytes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.TotalPhysicalSize">
+            <summary>
+            Gets the total physical memory size in bytes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.UsedHeapSize">
+            <summary>
+            Gets the used heap size in bytes.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeHeapInfo.HeapSizeLimit">
+            <summary>
+            Gets the heap size limit in bytes.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8Script">
+            <summary>
+            Represents a compiled script that can be executed multiple times without recompilation.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Script.Name">
+            <summary>
+            Gets the document name associated with the compiled script.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Script.DocumentInfo">
+            <summary>
+            Gets the document meta-information for the compiled script.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8Script.Dispose">
+            <summary>
+            Releases all resources used by the compiled script.
+            </summary>
+            <remarks>
+            Call <c>Dispose()</c> when you are finished using the compiled script. <c>Dispose()</c>
+            leaves the compiled script in an unusable state. After calling <c>Dispose()</c>, you
+            must release all references to the compiled script so the garbage collector can reclaim
+            the memory that the compiled script was occupying.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8ScriptEngine">
+            <summary>
+            Represents an instance of the V8 JavaScript engine.
+            </summary>
+            <remarks>
+            Unlike <c>WindowsScriptEngine</c> instances, V8ScriptEngine instances do not have
+            thread affinity. The underlying script engine is not thread-safe, however, so this class
+            uses internal locks to automatically serialize all script code execution for a given
+            instance. Script delegates and event handlers are invoked on the calling thread without
+            marshaling.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor">
+            <summary>
+            Initializes a new V8 script engine instance.
+            </summary>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(System.String)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified name.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(Microsoft.ClearScript.V8.V8RuntimeConstraints)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified resource constraints.
+            </summary>
+            <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeConstraints)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified name and resource constraints.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(Microsoft.ClearScript.V8.V8ScriptEngineFlags)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified options.
+            </summary>
+            <param name="flags">A value that selects options for the operation.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(Microsoft.ClearScript.V8.V8ScriptEngineFlags,System.Int32)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified options and debug port.
+            </summary>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(System.String,Microsoft.ClearScript.V8.V8ScriptEngineFlags)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified name and options.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(System.String,Microsoft.ClearScript.V8.V8ScriptEngineFlags,System.Int32)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified name, options, and debug port.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(Microsoft.ClearScript.V8.V8RuntimeConstraints,Microsoft.ClearScript.V8.V8ScriptEngineFlags)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified resource constraints and options.
+            </summary>
+            <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(Microsoft.ClearScript.V8.V8RuntimeConstraints,Microsoft.ClearScript.V8.V8ScriptEngineFlags,System.Int32)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified resource constraints, options, and debug port.
+            </summary>
+            <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeConstraints,Microsoft.ClearScript.V8.V8ScriptEngineFlags)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified name, resource constraints, and options.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.#ctor(System.String,Microsoft.ClearScript.V8.V8RuntimeConstraints,Microsoft.ClearScript.V8.V8ScriptEngineFlags,System.Int32)">
+            <summary>
+            Initializes a new V8 script engine instance with the specified name, resource constraints, options, and debug port.
+            </summary>
+            <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="constraints">Resource constraints for the V8 runtime (see remarks).</param>
+            <param name="flags">A value that selects options for the operation.</param>
+            <param name="debugPort">A TCP port on which to listen for a debugger connection.</param>
+            <remarks>
+            A separate V8 runtime is created for the new script engine instance.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.MaxRuntimeHeapSize">
+            <summary>
+            Gets or sets a soft limit for the size of the V8 runtime's heap.
+            </summary>
+            <remarks>
+            <para>
+            This property is specified in bytes. When it is set to the default value, heap size
+            monitoring is disabled, and scripts with memory leaks or excessive memory usage
+            can cause unrecoverable errors and process termination.
+            </para>
+            <para>
+            A V8 runtime unconditionally terminates the process when it exceeds its resource
+            constraints (see <see cref="T:Microsoft.ClearScript.V8.V8RuntimeConstraints"/>). This property enables external
+            heap size monitoring that can prevent termination in some scenarios. To be effective,
+            it should be set to a value that is significantly lower than
+            <see cref="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxOldSpaceSize"/>. Note that enabling heap size
+            monitoring results in slower script execution.
+            </para>
+            <para>
+            Exceeding this limit causes the V8 runtime to interrupt script execution and throw an
+            exception. To re-enable script execution, set this property to a new value.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.RuntimeHeapSizeSampleInterval">
+            <summary>
+            Gets or sets the minimum time interval between consecutive heap size samples.
+            </summary>
+            <remarks>
+            This property is effective only when heap size monitoring is enabled (see
+            <see cref="P:Microsoft.ClearScript.V8.V8ScriptEngine.MaxRuntimeHeapSize"/>).
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.MaxRuntimeStackUsage">
+            <summary>
+            Gets or sets the maximum amount by which the V8 runtime is permitted to grow the stack during script execution.
+            </summary>
+            <remarks>
+            <para>
+            This property is specified in bytes. When it is set to the default value, no stack
+            usage limit is enforced, and scripts with unchecked recursion or other excessive stack
+            usage can cause unrecoverable errors and process termination.
+            </para>
+            <para>
+            Note that the V8 runtime does not monitor stack usage while a host call is in progress.
+            Monitoring is resumed when control returns to the runtime.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.SuppressInstanceMethodEnumeration">
+            <summary>
+            Enables or disables instance method enumeration.
+            </summary>
+            <remarks>
+            By default, a host object's instance methods are exposed as enumerable properties.
+            Setting this property to <c>true</c> causes instance methods to be excluded from
+            property enumeration. This affects all host objects exposed in the current script
+            engine. Note that instance methods remain both retrievable and invocable regardless of
+            this property's value.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.SuppressExtensionMethodEnumeration">
+            <summary>
+            Enables or disables extension method enumeration.
+            </summary>
+            <remarks>
+            <para>
+            By default, all exposed extension methods appear as enumerable properties of all host
+            objects, regardless of type. Setting this property to <c>true</c> causes extension
+            methods to be excluded from property enumeration. This affects all host objects exposed
+            in the current script engine. Note that extension methods remain both retrievable and
+            invocable regardless of this property's value.
+            </para>
+            <para>
+            This property has no effect if <see cref="P:Microsoft.ClearScript.V8.V8ScriptEngine.SuppressInstanceMethodEnumeration"/> is set
+            to <c>true</c>.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String)">
+            <summary>
+            Creates a compiled script.
+            </summary>
+            <param name="code">The script code to compile.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,System.String)">
+            <summary>
+            Creates a compiled script with an associated document name.
+            </summary>
+            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="code">The script code to compile.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(Microsoft.ClearScript.DocumentInfo,System.String)">
+            <summary>
+            Creates a compiled script with the specified document meta-information.
+            </summary>
+            <param name="documentInfo">A structure containing meta-information for the script document.</param>
+            <param name="code">The script code to compile.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Creates a compiled script, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 script
+            engines and application processes.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Creates a compiled script with an associated document name, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 script
+            engines and application processes.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(Microsoft.ClearScript.DocumentInfo,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Creates a compiled script with the specified document meta-information, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="documentInfo">A structure containing meta-information for the script document.</param>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 script
+            engines and application processes.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(Microsoft.ClearScript.DocumentInfo,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Creates a compiled script, consuming previously generated cache data.
+            </summary>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Creates a compiled script with an associated document name, consuming previously generated cache data.
+            </summary>
+            <param name="documentName">A document name for the compiled script. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(System.String,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(Microsoft.ClearScript.DocumentInfo,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Creates a compiled script with an associated document name, consuming previously generated cache data.
+            </summary>
+            <param name="documentInfo">A structure containing meta-information for the script document.</param>
+            <param name="code">The script code to compile.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed multiple times without recompilation.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+            <seealso cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Compile(Microsoft.ClearScript.DocumentInfo,System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)"/>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String)">
+            <summary>
+            Loads and compiles a script document.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory)">
+            <summary>
+            Loads and compiles a document with the specified category.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.DocumentContextCallback)">
+            <summary>
+            Loads and compiles a document with the specified category and context callback.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="contextCallback">An optional context callback for the requested document.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Loads and compiles a script document, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Loads and compiles a document with the specified category, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.DocumentContextCallback,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[]@)">
+            <summary>
+            Loads and compiles a document with the specified category and context callback, generating cache data for accelerated recompilation.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="contextCallback">An optional context callback for the requested document.</param>
+            <param name="cacheKind">The kind of cache data to be generated.</param>
+            <param name="cacheBytes">Cache data for accelerated recompilation.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            The generated cache data can be stored externally and is usable in other V8 runtimes
+            and application processes.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Loads and compiles a script document, consuming previously generated cache data.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Loads and compiles a document with the specified category, consuming previously generated cache data.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CompileDocument(System.String,Microsoft.ClearScript.DocumentCategory,Microsoft.ClearScript.DocumentContextCallback,Microsoft.ClearScript.V8.V8CacheKind,System.Byte[],System.Boolean@)">
+            <summary>
+            Loads and compiles a document with the specified category and context callback, consuming previously generated cache data.
+            </summary>
+            <param name="specifier">A string specifying the document to be loaded and compiled.</param>
+            <param name="category">An optional category for the requested document.</param>
+            <param name="contextCallback">An optional context callback for the requested document.</param>
+            <param name="cacheKind">The kind of cache data to be consumed.</param>
+            <param name="cacheBytes">Cache data for accelerated compilation.</param>
+            <param name="cacheAccepted"><c>True</c> if <paramref name="cacheBytes"/> was accepted, <c>false</c> otherwise.</param>
+            <returns>A compiled script that can be executed by multiple V8 script engine instances.</returns>
+            <remarks>
+            To be accepted, the cache data must have been generated for identical script code by
+            the same V8 build.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Evaluate(Microsoft.ClearScript.V8.V8Script)">
+            <summary>
+            Evaluates a compiled script.
+            </summary>
+            <param name="script">The compiled script to evaluate.</param>
+            <returns>The result value.</returns>
+            <remarks>
+            For information about the types of result values that script code can return, see
+            <see cref="M:Microsoft.ClearScript.ScriptEngine.Evaluate(System.String,System.Boolean,System.String)"/>.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Execute(Microsoft.ClearScript.V8.V8Script)">
+            <summary>
+            Executes a compiled script.
+            </summary>
+            <param name="script">The compiled script to execute.</param>
+            <remarks>
+            This method is similar to <see cref="M:Microsoft.ClearScript.V8.V8ScriptEngine.Evaluate(Microsoft.ClearScript.V8.V8Script)"/> with the exception that it
+            does not marshal a result value to the host. It can provide a performance advantage
+            when the result value is not needed.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.GetRuntimeHeapInfo">
+            <summary>
+            Returns memory usage information for the V8 runtime.
+            </summary>
+            <returns>A <see cref="T:Microsoft.ClearScript.V8.V8RuntimeHeapInfo"/> object containing memory usage information for the V8 runtime.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.BeginCpuProfile(System.String)">
+            <summary>
+            Begins collecting a new CPU profile.
+            </summary>
+            <param name="name">A name for the profile.</param>
+            <returns><c>True</c> if the profile was created successfully, <c>false</c> otherwise.</returns>
+            <remarks>
+            A V8 script engine can collect multiple CPU profiles simultaneously.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.BeginCpuProfile(System.String,Microsoft.ClearScript.V8.V8CpuProfileFlags)">
+            <summary>
+            Begins collecting a new CPU profile with the specified options.
+            </summary>
+            <param name="name">A name for the profile.</param>
+            <param name="flags">Options for creating the profile.</param>
+            <returns><c>True</c> if the profile was created successfully, <c>false</c> otherwise.</returns>
+            <remarks>
+            A V8 script engine can collect multiple CPU profiles simultaneously.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.EndCpuProfile(System.String)">
+            <summary>
+            Completes and returns a CPU profile.
+            </summary>
+            <param name="name">The name of the profile.</param>
+            <returns>The profile if it was found and completed successfully, <c>null</c> otherwise.</returns>
+            <remarks>
+            An empty <paramref name="name"/> argument selects the most recently created CPU profile.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CollectCpuProfileSample">
+            <summary>
+            Collects a sample in all CPU profiles active in the V8 runtime.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.CpuProfileSampleInterval">
+            <summary>
+            Gets or sets the time interval between automatic CPU profile samples, in microseconds.
+            </summary>
+            <remarks>
+            Assigning this property has no effect on CPU profiles already active in the V8 runtime.
+            The default value is 1000.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.WriteRuntimeHeapSnapshot(System.IO.Stream)">
+            <summary>
+            Writes a snapshot of the V8 runtime's heap to the given stream.
+            </summary>
+            <param name="stream">The stream to which to write the heap snapshot.</param>
+            <remarks>
+            This method generates a heap snapshot in JSON format with ASCII encoding.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.FileNameExtension">
+            <summary>
+            Gets the script engine's recommended file name extension for script files.
+            </summary>
+            <remarks>
+            <see cref="T:Microsoft.ClearScript.V8.V8ScriptEngine"/> instances return "js" for this property.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8ScriptEngine.Script">
+            <summary>
+            Allows the host to access script resources directly.
+            </summary>
+            <remarks>
+            The value of this property is an object that is bound to the script engine's root
+            namespace. It dynamically supports properties and methods that correspond to global
+            script objects and functions.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.ExecuteCommand(System.String)">
+            <summary>
+            Executes script code as a command.
+            </summary>
+            <param name="command">The script command to execute.</param>
+            <returns>The command output.</returns>
+            <remarks>
+            <para>
+            This method is similar to <see cref="M:Microsoft.ClearScript.ScriptEngine.Evaluate(System.String)"/> but optimized for
+            command consoles. The specified command must be limited to a single expression or
+            statement. Script engines can override this method to customize command execution as
+            well as the process of converting the result to a string for console output.
+            </para>
+            <para>
+            The <see cref="T:Microsoft.ClearScript.V8.V8ScriptEngine"/> version of this method attempts to use
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/tostring">toString</see>
+            to convert the return value.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.GetStackTrace">
+            <summary>
+            Gets a string representation of the script call stack.
+            </summary>
+            <returns>The script call stack formatted as a string.</returns>
+            <remarks>
+            This method returns an empty string if the script engine is not executing script code.
+            The stack trace text format is defined by the script engine.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Interrupt">
+            <summary>
+            Interrupts script execution and causes the script engine to throw an exception.
+            </summary>
+            <remarks>
+            This method can be called safely from any thread.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.CollectGarbage(System.Boolean)">
+            <summary>
+            Performs garbage collection.
+            </summary>
+            <param name="exhaustive"><c>True</c> to perform exhaustive garbage collection, <c>false</c> to favor speed over completeness.</param>
+        </member>
+        <member name="M:Microsoft.ClearScript.V8.V8ScriptEngine.Dispose(System.Boolean)">
+            <summary>
+            Releases the unmanaged resources used by the script engine and optionally releases the managed resources.
+            </summary>
+            <param name="disposing"><c>True</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+            <remarks>
+            This method is called by the public <see cref="M:Microsoft.ClearScript.ScriptEngine.Dispose"/> method and the
+            <see cref="M:Microsoft.ClearScript.ScriptEngine.Finalize">Finalize</see> method.
+            <see cref="M:Microsoft.ClearScript.ScriptEngine.Dispose"/> invokes the protected <c>Dispose(Boolean)</c>
+            method with the <paramref name="disposing"/> parameter set to <c>true</c>.
+            <see cref="M:Microsoft.ClearScript.ScriptEngine.Finalize">Finalize</see> invokes <c>Dispose(Boolean)</c> with
+            <paramref name="disposing"/> set to <c>false</c>.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8ScriptEngineFlags">
+            <summary>
+            Defines options for initializing a new V8 JavaScript engine instance.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.None">
+            <summary>
+            Specifies that no options are selected.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableDebugging">
+            <summary>
+            Specifies that script debugging features are to be enabled.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.DisableGlobalMembers">
+            <summary>
+            Specifies that support for <see cref="F:Microsoft.ClearScript.HostItemFlags.GlobalMembers"/> behavior is to be
+            disabled. This option yields a significant performance benefit for global item access.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableRemoteDebugging">
+            <summary>
+            Specifies that remote script debugging is to be enabled. This option is ignored if
+            <see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableDebugging"/> is not specified.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.AwaitDebuggerAndPauseOnStart">
+            <summary>
+            Specifies that the script engine is to wait for a debugger connection and schedule a
+            pause before executing the first line of application script code. This option is
+            ignored if <see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableDebugging"/> is not specified.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableDateTimeConversion">
+            <summary>
+            Specifies that the script engine is to perform automatic conversion between
+            .NET <see cref="T:System.DateTime"/> objects and JavaScript
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</see>
+            objects. This conversion is bidirectional and lossy. A <c>DateTime</c> object
+            constructed from a JavaScript <c>Date</c> object always represents a Coordinated
+            Universal Timestamp (UTC) and has its <see cref="P:System.DateTime.Kind"/> property set to
+            <see cref="F:System.DateTimeKind.Utc"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableDynamicModuleImports">
+            <summary>
+            Specifies that
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#Dynamic_Imports">dynamic module imports</see>
+            are to be enabled. This is an experimental feature and may be removed in a future release.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalUnsafeLongAsBigInt">
+            <summary>
+            Specifies that long integers with values greater than
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER">Number.MAX_SAFE_INTEGER</see>
+            or less than
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_SAFE_INTEGER">Number.MIN_SAFE_INTEGER</see>
+            are to be marshaled as
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</see>.
+            This option is ignored if <see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalAllLongAsBigInt"/> is specified.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.MarshalAllLongAsBigInt">
+            <summary>
+            Specifies that all long integers are to be marshaled as
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt">BigInt</see>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableTaskPromiseConversion">
+            <summary>
+            Specifies that the script engine is to perform automatic conversion between
+            .NET <see cref="T:System.Threading.Tasks.Task"/> objects and JavaScript
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promises</see>.
+            This conversion is bidirectional and lossy. A <c>Task</c> object constructed from a
+            JavaScript promise always has a result type of <see cref="T:System.Object"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableValueTaskPromiseConversion">
+            <summary>
+            Specifies that the script engine is to perform automatic conversion from
+            .NET <c>ValueTask</c> and <c>ValueTask&lt;TResult&gt;</c> structures to JavaScript
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">promises</see>.
+            This conversion is unidirectional and lossy. This option is ignored if
+            <see cref="F:Microsoft.ClearScript.V8.V8ScriptEngineFlags.EnableTaskPromiseConversion"/> is not specified.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ClearScript.V8.V8Settings">
+            <summary>
+            Defines properties that comprise ClearScript's V8 configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ClearScript.V8.V8Settings.EnableTopLevelAwait">
+            <summary>
+            Enables or disables Top-Level Await.
+            </summary>
+            <remarks>
+            <para>
+            <see href="https://github.com/tc39/proposal-top-level-await">Top-Level Await</see>
+            enables code at the outermost scope of an
+            <see href="https://www.ecma-international.org/ecma-262/6.0/#sec-modules">ECMAScript 6</see>
+            module to be executed as an
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async function</see>.
+            When this feature is enabled, modules can <c>await</c> resources, causing importers to
+            delay evaluation as necessary.
+            </para>
+            <para>
+            To enable Top-Level Await, set this property to <c>true</c> before instantiating
+            <see cref="T:Microsoft.ClearScript.V8.V8ScriptEngine"/> or <see cref="T:Microsoft.ClearScript.V8.V8Runtime"/> for the first time. Subsequent
+            reassignment will have no effect.
+            </para>
+            </remarks>
+        </member>
+    </members>
+</doc>

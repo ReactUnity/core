@@ -69,9 +69,9 @@ namespace ReactUnity.Components
             if (markedUpdateBackgroundImage) UpdateBackgroundImage();
         }
 
-        public override void Destroy()
+        public override void DestroySelf()
         {
-            base.Destroy();
+            base.DestroySelf();
             GameObject.DestroyImmediate(GameObject);
         }
 
@@ -362,7 +362,7 @@ namespace ReactUnity.Components
         {
             if (child is ReactComponent u)
             {
-                u.RectTransform.SetParent(null, false);
+                if(u.RectTransform) u.RectTransform.SetParent(null, false);
                 return true;
             }
             return false;

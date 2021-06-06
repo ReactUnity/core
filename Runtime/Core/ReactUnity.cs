@@ -1,6 +1,7 @@
 using ReactUnity.Dispatchers;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
+using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using System;
 using UnityEngine;
@@ -13,6 +14,11 @@ namespace ReactUnity
         public StringObjectDictionary Globals = new StringObjectDictionary();
         public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index" };
         private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
+
+        public bool Debug = false;
+        public bool AwaitDebugger = false;
+
+        public JavascriptEngineType EngineType = JavascriptEngineType.Auto;
 
         public DefaultMediaProvider MediaProvider { get; private set; }
         public UGUIContext Context { get; private set; }
@@ -69,7 +75,7 @@ namespace ReactUnity
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
                 Context = new UGUIContext(Root, Globals, script, dispatcher, new UnityScheduler(dispatcher), MediaProvider, isDevServer, Render);
-                runner.RunScript(code, Context, BeforeStart, AfterStart);
+                runner.RunScript(code, Context, EngineType, Debug, AwaitDebugger, BeforeStart, AfterStart);
             }, dispatcher, true, disableWarnings);
 
             return watcherDisposable;

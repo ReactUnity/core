@@ -42,7 +42,8 @@ namespace ReactUnity.Editor.Components
 
         void SetValue(object val, bool initialize = false)
         {
-            var en = (Enum)Enum.ToObject(type, Convert.ChangeType(val, type.GetEnumUnderlyingType()));
+            if (val == null || val == Microsoft.ClearScript.Undefined.Value) val = 0;
+            Enum en = (Enum) Enum.ToObject(type, Convert.ChangeType(val, type.GetEnumUnderlyingType()));
 
             if (initialize)
             {

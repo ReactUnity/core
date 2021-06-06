@@ -1,6 +1,7 @@
 using ReactUnity.Dispatchers;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
+using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using System;
 using UnityEngine.UIElements;
@@ -17,13 +18,20 @@ namespace ReactUnity.Editor.Renderer
 
         public ReactScript Script { get; }
         public GlobalRecord Globals { get; }
+        public JavascriptEngineType EngineType { get; }
+
+        public bool Debug = false;
+        public bool AwaitDebugger = false;
 
 
-        public ReactUnityElement(ReactScript script, GlobalRecord globals, IMediaProvider mediaProvider, bool autorun = true)
+        public ReactUnityElement(ReactScript script, GlobalRecord globals, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
         {
             Script = script;
             Globals = globals;
             MediaProvider = mediaProvider;
+            EngineType = engineType;
+            Debug = debug;
+            AwaitDebugger = awaitDebugger;
             AddToClassList("react-unity__host");
             if (autorun) Run();
         }
@@ -38,7 +46,7 @@ namespace ReactUnity.Editor.Renderer
             ScriptWatchDisposable = src.GetScript((sc, isDevServer) =>
             {
                 context = new EditorContext(this, Globals, src, dispatcher, new UnityScheduler(dispatcher), MediaProvider, isDevServer, () => Restart());
-                runner.RunScript(sc, context);
+                runner.RunScript(sc, context, EngineType, Debug, AwaitDebugger);
             }, dispatcher, true, true);
         }
 

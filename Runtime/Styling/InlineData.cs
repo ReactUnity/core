@@ -31,6 +31,11 @@ namespace ReactUnity.Styling
             Identifier = identifier;
         }
 
+        public void Set(string key, object value)
+        {
+            this[key] = value;
+        }
+
         public void SetWithoutNotify(string key, object value)
         {
             collection[key] = value;

@@ -106,9 +106,9 @@ namespace ReactUnity.Components
             }
         }
 
-        public override void Destroy()
+        public override void DestroySelf()
         {
-            base.Destroy();
+            base.DestroySelf();
             if (LinkedTextWatcher?.LinkedText != null)
                 LinkedTextWatcher.LinkedText.Destroy();
         }

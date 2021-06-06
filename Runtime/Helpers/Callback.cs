@@ -1,5 +1,6 @@
 using Jint.Native;
 using Jint.Native.Function;
+using Microsoft.ClearScript;
 using System;
 using System.Linq;
 
@@ -47,7 +48,14 @@ namespace ReactUnity.Helpers
             {
                 return c.Call(args);
             }
-            else return null;
+            else if (callback is ScriptObject so)
+            {
+                return so.Invoke(false, args);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
