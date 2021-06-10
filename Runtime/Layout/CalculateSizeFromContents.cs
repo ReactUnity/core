@@ -13,6 +13,11 @@ namespace ReactUnity
             rt = GetComponent<RectTransform>();
         }
 
+        private void Start()
+        {
+            if (Layout == null) DestroyImmediate(this);
+        }
+
         void LateUpdate()
         {
             if (!Layout.HasNewLayout) return;

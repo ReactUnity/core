@@ -43,6 +43,11 @@ namespace ReactUnity.Layout
             }
         }
 
+        private void Start()
+        {
+            if (Layout == null) DestroyImmediate(this);
+        }
+
         void ILayoutController.SetLayoutHorizontal()
         {
             MarkDirty();
@@ -55,8 +60,8 @@ namespace ReactUnity.Layout
 
         public void MarkDirty()
         {
-            if (Layout.Parent != null) Layout.MarkDirty();
-            Context.ScheduleLayout();
+            if (Layout?.Parent != null) Layout.MarkDirty();
+            Context?.ScheduleLayout();
         }
 
 

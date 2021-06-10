@@ -14,6 +14,11 @@ namespace ReactUnity.Layout
         public YogaNode Layout;
         public UGUIContext Context;
 
+        private void Start()
+        {
+            if (Layout == null) DestroyImmediate(this);
+        }
+
         void ILayoutController.SetLayoutHorizontal()
         {
             Layout.MarkDirty();

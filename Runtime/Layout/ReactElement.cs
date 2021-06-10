@@ -31,6 +31,11 @@ namespace ReactUnity.Layout
             cr = null;
         }
 
+        private void Start()
+        {
+            if (Layout == null) DestroyImmediate(this);
+        }
+
         private void LateUpdate()
         {
             var style = Component.ComputedStyle;
