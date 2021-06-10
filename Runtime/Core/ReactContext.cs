@@ -6,6 +6,7 @@ using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Types;
+using ReactUnity.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,6 +82,9 @@ namespace ReactUnity
                 };
                 dispatcher.OnEveryLateUpdate(callback);
             }
+
+            var updateVisitor = new UpdateVisitor();
+            Dispatcher.OnEveryUpdate(() => updateVisitor.Visit(Host));
         }
 
 

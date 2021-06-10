@@ -64,8 +64,9 @@ namespace ReactUnity.Components
             Container = existing;
         }
 
-        protected override void OnUpdate()
+        public override void Update()
         {
+            base.Update();
             if (markedUpdateBackgroundImage) UpdateBackgroundImage();
         }
 
@@ -362,7 +363,7 @@ namespace ReactUnity.Components
         {
             if (child is ReactComponent u)
             {
-                if(u.RectTransform) u.RectTransform.SetParent(null, false);
+                if (u.RectTransform) u.RectTransform.SetParent(null, false);
                 return true;
             }
             return false;

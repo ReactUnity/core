@@ -33,6 +33,7 @@ namespace ReactUnity
         void ScheduleLayout();
         void ResolveStyle(bool recursive = false);
 
+        void Update();
         void Accept(ReactComponentVisitor visitor);
         void SetParent(IContainerComponent parent, IReactComponent relativeTo = null, bool insertAfter = false);
         void SetProperty(string property, object value);

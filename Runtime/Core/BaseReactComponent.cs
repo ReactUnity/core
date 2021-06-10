@@ -69,14 +69,6 @@ namespace ReactUnity
             Style.changed += StyleChanged;
             Data.changed += StyleChanged;
 
-            Deferreds.Add(Context.Dispatcher.OnEveryUpdate(() =>
-            {
-                if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
-                if (markedForStyleApply) ApplyStyles();
-                if (markedForLayoutApply) ApplyLayoutStylesSelf();
-                OnUpdate();
-            }));
-
             if (context.CalculatesLayout) Layout = new YogaNode(DefaultLayout);
 
             StateStyles = new StateStyles(this);
@@ -85,8 +77,12 @@ namespace ReactUnity
             StyleState.SetCurrent(new NodeStyle(DefaultStyle));
         }
 
-        protected virtual void OnUpdate()
+        public virtual void Update()
         {
+            if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
+            StyleState.Update();
+            if (markedForStyleApply) ApplyStyles();
+            if (markedForLayoutApply) ApplyLayoutStylesSelf();
         }
 
         protected void StyleChanged(string key, object value, InlineData style)

@@ -47,18 +47,21 @@ namespace ReactUnity.Styling
 
         private Dictionary<string, TransitionState> propertyTransitionStates;
         private TransitionList activeTransitions;
-        private DisposableHandle transitionDisposable;
+        private bool transitionRunning;
 
 
         private AnimationList activeAnimations;
-        private DisposableHandle animationDisposable;
+        private bool animationRunning;
         private float animationStartTime;
 
 
         private AudioState[] audioStates;
         private AudioList activeAudioList;
-        private DisposableHandle audioDisposable;
+        private bool audioRunning;
         private float audioStartTime;
+
+        private bool shouldUpdate;
+        private bool shouldUpdateWithLayout;
 
 
         public StyleState(ReactContext context, YogaNode layout, YogaNode defaultLayout)
@@ -113,6 +116,16 @@ namespace ReactUnity.Styling
             RecalculateAudio();
         }
 
+        public void Update()
+        {
+            if (transitionRunning) UpdateTransitions();
+            if (animationRunning) UpdateAnimations();
+            if (audioRunning) UpdateAudio();
+            if (shouldUpdate) OnUpdate?.Invoke(Active, shouldUpdateWithLayout);
+            shouldUpdate = false;
+            shouldUpdateWithLayout = false;
+        }
+
         #region Transitions
 
         private void StartTransitions(TransitionList transition)
@@ -121,16 +134,12 @@ namespace ReactUnity.Styling
             propertyTransitionStates = new Dictionary<string, TransitionState>();
             activeTransitions = transition;
             var finished = UpdateTransitions();
-            if (!finished) transitionDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateTransitions()));
+            if (!finished) transitionRunning = true;
         }
 
         private void StopTransitions(bool reset)
         {
-            if (transitionDisposable != null)
-            {
-                transitionDisposable.Dispose();
-                transitionDisposable = null;
-            }
+            transitionRunning = false;
 
             if (reset)
             {
@@ -240,7 +249,11 @@ namespace ReactUnity.Styling
 
             if (finished) StopTransitions(false);
 
-            if (updated) OnUpdate?.Invoke(Active, hasLayout);
+            if (updated)
+            {
+                shouldUpdate = true;
+                shouldUpdateWithLayout = hasLayout;
+            }
 
             return finished;
         }
@@ -256,16 +269,12 @@ namespace ReactUnity.Styling
             activeAnimations = animation;
             animationStartTime = getTime();
             var finished = UpdateAnimations();
-            if (!finished) animationDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateAnimations()));
+            if (!finished) animationRunning = true;
         }
 
         private void StopAnimations(bool reset)
         {
-            if (animationDisposable != null)
-            {
-                animationDisposable.Dispose();
-                animationDisposable = null;
-            }
+            animationRunning = false;
             if (reset)
             {
                 activeAnimations = null;
@@ -407,7 +416,11 @@ namespace ReactUnity.Styling
 
             if (finished) StopAnimations(false);
 
-            if (updated) OnUpdate?.Invoke(Active, hasLayout);
+            if (updated)
+            {
+                shouldUpdate = true;
+                shouldUpdateWithLayout = hasLayout;
+            }
 
             return finished;
         }
@@ -431,16 +444,12 @@ namespace ReactUnity.Styling
             activeAudioList = audio;
             audioStartTime = getTime();
             var finished = UpdateAudio();
-            if (!finished) audioDisposable = new DisposableHandle(Context.Dispatcher, Context.Dispatcher.OnEveryUpdate(() => UpdateAudio()));
+            if (!finished) audioRunning = true;
         }
 
         private void StopAudio(bool reset)
         {
-            if (audioDisposable != null)
-            {
-                audioDisposable.Dispose();
-                audioDisposable = null;
-            }
+            audioRunning = false;
             if (reset)
             {
                 audioStates = null;
