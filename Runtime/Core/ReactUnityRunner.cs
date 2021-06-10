@@ -162,7 +162,7 @@ namespace ReactUnity
                     return new ClearScriptEngineFactory();
                 case JavascriptEngineType.Auto:
                 default:
-                    return new ClearScriptEngineFactory();
+                    return new JintEngineFactory();
             }
         }
     }
