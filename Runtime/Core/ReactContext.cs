@@ -70,6 +70,9 @@ namespace ReactUnity
             Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
 
+            var updateVisitor = new UpdateVisitor();
+            Dispatcher.OnEveryUpdate(() => Host.Accept(updateVisitor));
+
             if (CalculatesLayout)
             {
                 Action callback = () =>
@@ -82,9 +85,6 @@ namespace ReactUnity
                 };
                 dispatcher.OnEveryLateUpdate(callback);
             }
-
-            var updateVisitor = new UpdateVisitor();
-            Dispatcher.OnEveryUpdate(() => updateVisitor.Visit(Host));
         }
 
 
