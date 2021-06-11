@@ -3,6 +3,7 @@ using Jint.Native;
 using Jint.Native.Object;
 using Jint.Runtime.Interop;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
@@ -81,6 +82,18 @@ namespace ReactUnity.ScriptEngine
         public object CreateNamespaceReference(string ns, params Assembly[] assemblies)
         {
             return new NamespaceReference(Engine, ns);
+        }
+
+        public object CreateNativeObject(Dictionary<string, object> props)
+        {
+            var obj = new ObjectInstance(Engine);
+
+            foreach (var item in props)
+            {
+                obj.Set(item.Key, JsValue.FromObject(Engine, item.Value));
+            }
+
+            return obj;
         }
     }
 

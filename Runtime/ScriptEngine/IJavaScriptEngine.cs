@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace ReactUnity.ScriptEngine
@@ -16,6 +17,7 @@ namespace ReactUnity.ScriptEngine
         object Evaluate(string code, string fileName = null);
         void SetValue<T>(string key, T value);
         object GetValue(string key);
+        object CreateNativeObject(Dictionary<string, object> props);
         void SetProperty<T>(object obj, string key, T value);
 
         object CreateTypeReference(Type type);

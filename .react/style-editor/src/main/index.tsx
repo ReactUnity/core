@@ -2,8 +2,8 @@ import { ReactUnity, Renderer } from '@reactunity/renderer/editor';
 import clsx from 'clsx';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } from '../common/props';
 import style from './index.module.scss';
-import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } from './props';
 
 type RC = ReactUnity.Layout.ReactElement;
 
@@ -25,11 +25,13 @@ function getSelection() {
 function App() {
   const [selection, setSelection] = useState<RC>(getSelection());
 
+  const updateSelection = () => setSelection(getSelection());
+
   useEffect(() => {
     if (Window) {
-      const removeSelectionChange = Window.AddSelectionChange(() => setSelection(getSelection()));
-      const removeStateChange = Window.AddPlayModeStateChange(() => setSelection(getSelection()));
-      const removeVisibilityChange = Window.AddVisibilityChange(() => setSelection(getSelection()));
+      const removeSelectionChange = Window.AddSelectionChange(updateSelection);
+      const removeStateChange = Window.AddPlayModeStateChange(updateSelection);
+      const removeVisibilityChange = Window.AddVisibilityChange(updateSelection);
       return () => {
         removeSelectionChange();
         removeStateChange();
@@ -93,14 +95,14 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
 
   const val = prop.source === 'layout' ? element.Layout[prop.name] : cmp.ComputedStyle[prop.name];
   const gval = (prop.getter ? prop.getter(val, element) : val) || null;
-  const exists = prop.source === 'layout' ? cmp.Style.ContainsKey(prop.name) : cmp.ComputedStyle.HasValue(prop.name);
-  const changeExists = () => {
+  const exists = cmp.ComputedStyle.HasValue(prop.name);
+  const removeStyle = () => {
     cmp.Style.Remove(prop.name);
     changed();
   };
 
   return <view className={clsx(className, style.row, exists && style.exists)}>
-    <button onButtonClick={changeExists} className={style.removeButton}>
+    <button onButtonClick={removeStyle} className={style.removeButton}>
       X
     </button>
 
@@ -165,5 +167,3 @@ function StylePropRectPart({ prop, part, element }: { prop: StyleProp, element: 
 }
 
 Renderer.render(<App />, RootContainer, null);
-
-

@@ -23,6 +23,7 @@ namespace ReactUnity.Styling
         bool inherited { get; }
         bool proxy { get; }
         object noneValue { get; }
+        object GetStyle(NodeStyle style);
     }
 
     public class StyleProperty<T> : IStyleProperty
@@ -36,6 +37,8 @@ namespace ReactUnity.Styling
         public bool proxy { get; private set; }
         public IStyleConverter converter;
 
+        private Func<NodeStyle, T> getter;
+
         public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleConverter converter = null, object noneValue = null)
         {
             this.type = typeof(T);
@@ -47,6 +50,11 @@ namespace ReactUnity.Styling
             this.proxy = proxy;
 
             this.converter = converter ?? Converters.Get(type);
+
+            var propInfo = typeof(NodeStyle).GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
+
+            if (propInfo != null)
+                getter = (Func<NodeStyle, T>) propInfo.GetGetMethod().CreateDelegate(typeof(Func<NodeStyle, T>));
         }
 
         public object Convert(object value)
@@ -58,6 +66,11 @@ namespace ReactUnity.Styling
         public static bool operator !=(StyleProperty<T> left, StyleProperty<T> right) => left.name != right.name;
         public override int GetHashCode() => name.GetHashCode();
         public override bool Equals(object obj) => base.Equals(obj);
+
+        public object GetStyle(NodeStyle style)
+        {
+            return getter != null ? getter(style) : default;
+        }
     }
 
     public static class StyleProperties

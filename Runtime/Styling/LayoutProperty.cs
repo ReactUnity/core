@@ -52,8 +52,8 @@ namespace ReactUnity.Styling
 
         public PropertyInfo propInfo;
 
-        public Action<YogaNode, T> setter;
-        public Func<YogaNode, T> getter;
+        private Action<YogaNode, T> setter;
+        private Func<YogaNode, T> getter;
 
         public LayoutProperty(string name, bool transitionable = false, T defaultValue = default, IStyleConverter converter = null) : base(name, defaultValue, transitionable, false, false, converter)
         {

@@ -1,5 +1,5 @@
 import { UnityEngine as UE } from '@reactunity/renderer/editor';
-import type { StylePropComponentProps } from '../props';
+import type { StylePropComponentProps } from '../common/props';
 
 export function sliderComponent(min = 0, max = 1) {
   return (props: StylePropComponentProps<number>) => <slider {...props} min={min} max={max} showInput />;

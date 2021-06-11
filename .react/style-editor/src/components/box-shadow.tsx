@@ -1,7 +1,7 @@
 import { ReactUnity as RU, UnityEngine as UE } from '@reactunity/renderer/editor';
 import clsx from 'clsx';
 import { useRef } from 'react';
-import type { StylePropComponentProps } from '../props';
+import type { StylePropComponentProps } from '../common/props';
 
 export function BoxShadowField({ className, label, onChange, value }: StylePropComponentProps<RU.Types.BoxShadowList>) {
   const blurRef = useRef<RU.Editor.Components.BaseFieldComponent<any, UE.Vector2>>();

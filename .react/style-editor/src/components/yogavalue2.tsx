@@ -1,8 +1,8 @@
 import { ReactUnity as RU, UnityEngine as UE } from '@reactunity/renderer/editor';
 import clsx from 'clsx';
 import { useRef } from 'react';
-import { convertLengthToYoga, convertYogaToLength } from '../helpers';
-import type { StylePropComponentProps } from '../props';
+import { convertLengthToYoga, convertYogaToLength } from '../common/helpers';
+import type { StylePropComponentProps } from '../common/props';
 
 const YogaValue2 = ReactUnity.Types.YogaValue2;
 

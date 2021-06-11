@@ -98,6 +98,18 @@ namespace ReactUnity.ScriptEngine
         {
             return new HostTypeCollection(assemblies).GetNamespaceNode(ns);
         }
+
+        public object CreateNativeObject(Dictionary<string, object> props)
+        {
+            var obj = new PropertyBag();
+
+            foreach (var item in props)
+            {
+                obj.SetPropertyNoCheck(item.Key, item.Value);
+            }
+
+            return obj;
+        }
     }
 
     public class ClearScriptEngineFactory : IJavaScriptEngineFactory
