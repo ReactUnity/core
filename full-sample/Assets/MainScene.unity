@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 314699164}
   - component: {fileID: 314699163}
   - component: {fileID: 314699162}
-  - component: {fileID: 314699167}
   m_Layer: 5
   m_Name: REACT_CANVAS
   m_TagString: Untagged
@@ -180,6 +179,9 @@ MonoBehaviour:
     ResourcesPath: 
     UseDevServer: 1
     DevServer: http://localhost:3100
+  Debug: 0
+  AwaitDebugger: 0
+  EngineType: 0
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -244,7 +246,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 2147483647
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -267,18 +269,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &314699167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314699161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbe1ec66e6fd2d45b20d3ae706d1ff0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &315642566
 GameObject:
   m_ObjectHideFlags: 0

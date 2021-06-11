@@ -1,3 +1,9 @@
+@import "./elevation.scss";
+
+:root > * {
+  background-color: #fafafa;
+}
+
 .app {
   padding: 20px;
   max-width: 960px;
@@ -60,7 +66,7 @@
     border-radius: 20px;
     border-color: black;
     margin: 5px;
-    background-color: white;
+    background-color: hsla(152, 37%, 59%, 0.745);
     object-fit: none;
   }
 
@@ -74,5 +80,21 @@
     &:hover {
       audio: url(res:click);
     }
+  }
+}
+
+.clickButton {
+  appearance: none;
+  background-color: white;
+  @include elevation(2);
+  border-radius: 4px;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    @include elevation(6);
+  }
+
+  &:active {
+    @include elevation(1);
   }
 }

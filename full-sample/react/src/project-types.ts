@@ -2,7 +2,7 @@
 // Types in assemblies: Assembly-CSharp, Assembly-CSharp-Editor, NewAssembly
 // Generated 29.03.2021 04:16:18
 //
-import { UnityEngine, ReactUnity, System, UnityEditor, Facebook } from '@reactunity/renderer';
+import { Facebook, ReactUnity, System, UnityEditor, UnityEngine } from '@reactunity/renderer';
 
 export declare class CustomComponentInitializer {
   constructor();
@@ -159,7 +159,7 @@ export declare class CustomButtonComponent {
   ClassList: System.Collections.Generic.HashSet<string>;
   TextContent: string;
   Name: string;
-  SetEventListener(eventName: string, callback: ReactUnity.Interop.Callback): void;
+  SetEventListener(eventName: string, callback: ReactUnity.Helpers.Callback): void;
   ResolveStyle(recursive?: boolean): void;
   ApplyLayoutStyles(): void;
   Accept(visitor: ReactUnity.Visitors.ReactComponentVisitor): void;

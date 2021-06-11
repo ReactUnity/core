@@ -50,7 +50,7 @@ export function App() {
       <section>
         <h2>Button</h2>
 
-        <button>Click</button>
+        <button className={style.clickButton}>Click</button>
       </section>
 
 
