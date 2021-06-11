@@ -1,6 +1,7 @@
 Shader "ReactUnity/RoundedColoredBorder"
 {
   Properties {
+    _MainTex ("Texture", 2D) = "white" {}
     _borderRadius ("borderRadius", Vector) = (0,0,0,0)
     _size ("size", Vector) = (1,1,1,1)
     _borderSize ("borderSize", Vector) = (0,0,0,0)
