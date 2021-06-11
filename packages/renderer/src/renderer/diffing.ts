@@ -1,9 +1,5 @@
 export type DiffResult = null | Array<string | any>;
 
-const deepDiffProps = {
-  style: 1,
-  layout: 1,
-};
 
 export function diffProperties(
   lastRawProps: Record<string, any>,
@@ -27,7 +23,7 @@ export function diffProperties(
     }
 
     let prop = null;
-    const depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+    const depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
     if (depth > 0) {
       prop = diffProperties(lastProps[propKey], null, depth - 1);
       if (!prop) continue;
@@ -49,7 +45,7 @@ export function diffProperties(
     }
 
     let prop = nextProp;
-    const depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+    const depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
     if (depth > 0) {
       prop = diffProperties(lastProp, nextProp, depth - 1);
       if (!prop) continue;
