@@ -8,7 +8,7 @@ namespace ReactUnity.Components
     {
         Camera currentCamera;
         GameObject targetObject;
-        int currentInterval;
+        bool shouldRender;
 
         Callback onMount;
         Callback onUnmount;
@@ -38,38 +38,38 @@ namespace ReactUnity.Components
         void SetTarget(GameObject obj)
         {
             targetObject = obj;
+            shouldRender = targetObject != null;
+        }
 
-            if (currentInterval >= 0)
-            {
-                Context.Dispatcher.StopDeferred(currentInterval);
-                Deferreds.Remove(currentInterval);
-                currentInterval = -1;
-            }
-
-            if (targetObject != null)
-            {
-                currentInterval = Context.Dispatcher.Interval(() => RenderObject(), 0);
-                Deferreds.Add(currentInterval);
-            }
+        public override void Update()
+        {
+            base.Update();
+            if (shouldRender) RenderObject();
         }
 
         void RenderObject()
         {
-            if (currentCamera == null) return;
-            if (targetObject == null) return;
+            if (!currentCamera || !targetObject) return;
 
             var pt = currentCamera.targetTexture;
             var en = currentCamera.enabled;
 
-
             var renderers = targetObject.GetComponentsInChildren<Renderer>();
-            foreach (var renderer in renderers) renderer.enabled = true;
+            var len = renderers.Length;
+            var states = new bool[len];
+            for (int i = 0; i < len; i++)
+            {
+                var renderer = renderers[i];
+                states[i] = renderer.enabled;
+                renderer.enabled = true;
+            }
 
             currentCamera.targetTexture = RenderTexture;
             currentCamera.enabled = true;
             currentCamera.Render();
 
-            foreach (var renderer in renderers) renderer.enabled = false;
+            for (int i = 0; i < len; i++)
+                renderers[i].enabled = states[i];
 
             currentCamera.targetTexture = pt;
             currentCamera.enabled = en;
@@ -122,7 +122,7 @@ namespace ReactUnity.Components
 
         protected override void SetSource(object value)
         {
-            throw new System.Exception($"source property cannot be set on an object component");
+            throw new Exception($"source property cannot be set on an object component");
         }
     }
 }

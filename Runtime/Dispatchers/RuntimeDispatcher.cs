@@ -19,7 +19,7 @@ namespace ReactUnity.Dispatchers
         }
 
 
-        private List<IEnumerator> ToStart = new List<IEnumerator>();
+        private List<IEnumerator> ToStart = new List<IEnumerator>() { null };
         private List<Coroutine> Started = new List<Coroutine>();
         private HashSet<int> ToStop = new HashSet<int>();
         private List<Action> CallOnLateUpdate = new List<Action>();

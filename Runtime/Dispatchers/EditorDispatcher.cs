@@ -10,7 +10,7 @@ namespace ReactUnity.Dispatchers
 {
     public class EditorDispatcher : IDispatcher, IDisposable
     {
-        private List<IEnumerator> ToStart = new List<IEnumerator>();
+        private List<IEnumerator> ToStart = new List<IEnumerator>() { null };
         private HashSet<int> ToStop = new HashSet<int>();
         private List<Action> CallOnUpdate = new List<Action>();
         private List<Action> CallOnLateUpdate = new List<Action>();

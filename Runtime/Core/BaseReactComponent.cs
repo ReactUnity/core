@@ -57,7 +57,6 @@ namespace ReactUnity
         private bool markedForStyleApply;
         private bool markedForLayoutApply;
         private bool markedStyleResolveRecursive;
-        protected List<int> Deferreds = new List<int>();
         private List<LayoutValue> ModifiedLayoutProperties;
 
         protected BaseReactComponent(ContextType context, string tag = "", bool isContainer = true)
@@ -104,7 +103,6 @@ namespace ReactUnity
 
         public virtual void DestroySelf()
         {
-            foreach (var item in Deferreds) Context.Dispatcher.StopDeferred(item);
         }
 
         public void Destroy()
@@ -318,7 +316,7 @@ namespace ReactUnity
             return tree.GetMatchingChildren(this);
         }
 
-        public virtual void Accept(ReactComponentVisitor visitor)
+        public void Accept(ReactComponentVisitor visitor)
         {
             visitor.Visit(this);
 
