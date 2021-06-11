@@ -5,7 +5,8 @@ PluginImporter:
   serializedVersion: 2
   iconMap: {}
   executionOrder: {}
-  defineConstraints: []
+  defineConstraints:
+  - '!REACT_DISABLE_CLEARSCRIPT'
   isPreloaded: 0
   isOverridable: 1
   isExplicitlyReferenced: 0

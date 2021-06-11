@@ -1,3 +1,7 @@
+#if (UNITY_EDITOR || UNITY_STANDALONE) && !REACT_DISABLE_CLEARSCRIPT
+#define REACT_CLEARSCRIPT
+#endif
+
 using Esprima;
 using Facebook.Yoga;
 using Jint.Runtime;
@@ -158,8 +162,10 @@ namespace ReactUnity
             {
                 case JavascriptEngineType.Jint:
                     return new JintEngineFactory();
+#if REACT_CLEARSCRIPT
                 case JavascriptEngineType.ClearScript:
                     return new ClearScriptEngineFactory();
+#endif
                 case JavascriptEngineType.Auto:
                 default:
                     return new JintEngineFactory();

@@ -1,6 +1,9 @@
+#if (UNITY_EDITOR || UNITY_STANDALONE) && !REACT_DISABLE_CLEARSCRIPT
+#define REACT_CLEARSCRIPT
+#endif
+
 using Jint.Native;
 using Jint.Native.Function;
-using Microsoft.ClearScript;
 using System;
 using System.Linq;
 
@@ -48,10 +51,12 @@ namespace ReactUnity.Helpers
             {
                 return c.Call(args);
             }
-            else if (callback is ScriptObject so)
+#if REACT_CLEARSCRIPT
+            else if (callback is Microsoft.ClearScript.ScriptObject so)
             {
                 return so.Invoke(false, args);
             }
+#endif
             else
             {
                 return null;

@@ -1,3 +1,8 @@
+#if (UNITY_EDITOR || UNITY_STANDALONE) && !REACT_DISABLE_CLEARSCRIPT
+#define REACT_CLEARSCRIPT
+#endif
+
+#if REACT_CLEARSCRIPT
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
 using System;
@@ -120,3 +125,4 @@ namespace ReactUnity.ScriptEngine
         }
     }
 }
+#endif

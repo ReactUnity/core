@@ -1,9 +1,10 @@
+#if (UNITY_EDITOR || UNITY_STANDALONE) && !REACT_DISABLE_CLEARSCRIPT
+#define REACT_CLEARSCRIPT
+#endif
+
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
 using System;
-using System.Runtime.InteropServices;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Components
@@ -43,7 +44,9 @@ namespace ReactUnity.Editor.Components
         public TValueType ConvertValue(object value)
         {
             if (value == null) return default;
+#if REACT_CLEARSCRIPT
             if (value == Microsoft.ClearScript.Undefined.Value) return default;
+#endif
             if (value is TValueType val) return val;
             return (TValueType) Convert.ChangeType(value, typeof(TValueType));
         }
