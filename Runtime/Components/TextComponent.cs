@@ -65,9 +65,9 @@ namespace ReactUnity.Components
             Text.isRightToLeftText = Layout.LayoutDirection == YogaDirection.RTL;
         }
 
-        public override void ApplyStyles()
+        protected override void ApplyStylesSelf()
         {
-            base.ApplyStyles();
+            base.ApplyStylesSelf();
             ComputedStyle.fontFamily.Get(Context, font =>
             {
                 Text.font = font;

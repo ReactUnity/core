@@ -28,9 +28,9 @@ namespace ReactUnity.Editor.Components
             Element.image = texture;
         }
 
-        public override void ApplyStyles()
+        protected override void ApplyStylesSelf()
         {
-            base.ApplyStyles();
+            base.ApplyStylesSelf();
 
             if (ComputedStyle.HasValue(StyleProperties.color)) Element.tintColor = ComputedStyle.color;
             else Element.tintColor = Color.white;

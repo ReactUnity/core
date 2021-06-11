@@ -82,7 +82,7 @@ namespace ReactUnity
             if (markedStyleResolve) ResolveStyle(markedStyleResolveRecursive);
             StyleState.Update();
             if (markedForStyleApply) ApplyStyles();
-            if (markedForLayoutApply) ApplyLayoutStylesSelf();
+            if (markedForLayoutApply) ApplyLayoutStyles();
         }
 
         protected void StyleChanged(string key, object value, InlineData style)
@@ -114,10 +114,12 @@ namespace ReactUnity
 
             if (IsContainer)
             {
+                RemoveAfter();
                 for (int i = Children.Count - 1; i >= 0; i--)
                 {
                     Children[i].Destroy();
                 }
+                RemoveBefore();
                 Children.Clear();
             }
         }
@@ -276,26 +278,21 @@ namespace ReactUnity
             }
         }
 
-        public void ApplyLayoutStyles()
-        {
-            ApplyLayoutStylesSelf();
-
-            if (IsContainer)
-            {
-                BeforePseudo?.ApplyLayoutStyles();
-                foreach (var child in Children)
-                    child.ApplyLayoutStyles();
-                AfterPseudo?.ApplyLayoutStyles();
-            }
-        }
-
-
+        protected abstract void ApplyStylesSelf();
         protected abstract void ApplyLayoutStylesSelf();
 
-        public virtual void ApplyStyles()
+        public void ApplyStyles()
         {
             markedForStyleApply = false;
+            ApplyStylesSelf();
         }
+
+        public void ApplyLayoutStyles()
+        {
+            markedForLayoutApply = false;
+            ApplyLayoutStylesSelf();
+        }
+
 
         private void OnStylesUpdated(NodeStyle obj, bool hasLayout)
         {

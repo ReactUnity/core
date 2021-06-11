@@ -112,9 +112,9 @@ namespace ReactUnity.Components
             Placeholder.ApplyStyles();
         }
 
-        public override void ApplyStyles()
+        protected override void ApplyStylesSelf()
         {
-            base.ApplyStyles();
+            base.ApplyStylesSelf();
             InputField.pointSize = ComputedStyle.fontSizeActual;
         }
 

@@ -120,9 +120,8 @@ namespace ReactUnity.Components
             UpdateBackgroundGraphic(true, false);
         }
 
-        public override void ApplyStyles()
+        protected override void ApplyStylesSelf()
         {
-            base.ApplyStyles();
             ResolveTransform();
             ResolveOpacityAndInteractable();
             SetZIndex();

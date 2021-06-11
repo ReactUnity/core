@@ -88,7 +88,7 @@ namespace ReactUnity.Editor.Components
             Element.style.justifyContent = StylingHelpers.GetStyleEnumCustom<Justify>(computed, LayoutProperties.JustifyContent);
         }
 
-        public override void ApplyStyles()
+        protected override void ApplyStylesSelf()
         {
             var computed = ComputedStyle;
             Element.style.backgroundColor = StylingHelpers.GetStyleColor(computed, StyleProperties.backgroundColor);

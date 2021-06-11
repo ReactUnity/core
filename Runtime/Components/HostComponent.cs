@@ -26,7 +26,7 @@ namespace ReactUnity.Components
             responsive.Context = context;
         }
 
-        public override void ApplyStyles()
+        protected override void ApplyStylesSelf()
         {
         }
     }

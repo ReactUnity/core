@@ -66,13 +66,12 @@ namespace ReactUnity.Components
 
 
 
-        public override void ApplyStyles()
+        protected override void ApplyStylesSelf()
         {
-            base.ApplyStyles();
-
+            base.ApplyStylesSelf();
             var fitMode = ComputedStyle.objectFit;
-            if (Measurer.FitMode != fitMode) Measurer.FitMode = fitMode;
-
+            if (Measurer.FitMode != fitMode)
+                Measurer.FitMode = fitMode;
             ReplacedElement.Position = ComputedStyle.objectPosition;
         }
     }
