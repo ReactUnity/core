@@ -37,10 +37,8 @@ namespace ReactUnity.ScriptEngine
             });
 
             var deferred = Engine.RegisterPromise();
-            var resolve = deferred.GetType().GetMethod("get_Resolve").Invoke(deferred, new object[] { }) as Action<Jint.Native.JsValue>;
+            var resolve = deferred.GetType().GetMethod("get_Resolve").Invoke(deferred, new object[] { }) as Action<JsValue>;
             context.Dispatcher.OnEveryUpdate(() => resolve(""));
-
-            Engine.SetValue("ReactUnityPerfBridge", new ReactUnityPerfBridge(Engine));
         }
 
         public object Evaluate(string code, string fileName = null)
