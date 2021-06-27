@@ -78,7 +78,7 @@ namespace ReactUnity.Editor.Renderer
         protected bool DevServerEnabled => false;
         protected bool DebugEnabled => false;
         protected bool AwaitDebugger => false;
-        protected JavascriptEngineType JavascriptEngineType => JavascriptEngineType.Auto;
+        protected JavascriptEngineType EngineType => JavascriptEngineType.Auto;
 #endif
 
         protected virtual void OnEnable()
