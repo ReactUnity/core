@@ -12,6 +12,10 @@ namespace ReactUnity.Helpers.TypescriptUtils
     sealed class TypescriptExclude : Attribute { }
 
     [ExcludeFromCodeCoverage]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, Inherited = false, AllowMultiple = false)]
+    sealed class TypescriptListInterfaces: Attribute { }
+
+    [ExcludeFromCodeCoverage]
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     sealed class TypescriptRemap : Attribute
     {

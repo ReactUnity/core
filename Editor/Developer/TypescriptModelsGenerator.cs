@@ -225,7 +225,11 @@ namespace ReactUnity.Editor.Developer
                 }
                 else
                 {
-                    sb.Append($"{bl}{(ExportAsClass && !type.IsInterface ? $"export {declare}class" : $"export {declare}interface")} {getTypesScriptType(type, false, true, AllowGeneric, " = any")} {{{n}");
+                    var extends = type.GetCustomAttribute<TypescriptListInterfaces>() != null ? type.GetInterfaces() : new Type[0];
+                    var extendsString = extends.Length == 0 ? "" : $" {(type.IsInterface ? "extends" : "implements")} " +
+                        string.Join(", ", extends.Select(x => getTypesScriptType(x, true, true, AllowGeneric)));
+
+                    sb.Append($"{bl}{(ExportAsClass && !type.IsInterface ? $"export {declare}class" : $"export {declare}interface")} {getTypesScriptType(type, false, true, AllowGeneric, " = any")}{extendsString} {{{n}");
 
                     if (ExportAsClass)
                     {

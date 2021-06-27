@@ -1,5 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Helpers;
+using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Visitors;
@@ -45,6 +46,7 @@ namespace ReactUnity
 
     }
 
+    [TypescriptListInterfaces]
     public interface IContainerComponent : IReactComponent
     {
         List<IReactComponent> Children { get; }
@@ -59,11 +61,13 @@ namespace ReactUnity
         void UnregisterChild(IReactComponent child);
     }
 
+    [TypescriptListInterfaces]
     public interface ITextComponent : IReactComponent
     {
         void SetText(string text);
     }
 
+    [TypescriptListInterfaces]
     public interface IHostComponent : IContainerComponent
     {
     }

@@ -61,8 +61,15 @@ namespace ReactUnity.DomProxies
 
     public abstract class DomElementProxyBase
     {
-        public void setAttribute(object key, object value) { }
-        public void removeAttribute(object key) { }
+        public int nodeType => 1;
+        public object nextSibling => null;
+
+        Dictionary<string, object> attributes = new Dictionary<string, object>();
+
+        public void setAttribute(object key, object value) => attributes[key?.ToString() ?? ""] = value;
+        public void removeAttribute(object key) => attributes.Remove(key?.ToString() ?? "");
+        public bool hasAttribute(object key) => attributes.ContainsKey(key?.ToString() ?? "");
+        public object getAttribute(object key) => attributes.TryGetValue(key?.ToString() ?? "", out var val) ? val : default;
     }
 
     public class HeadProxy : DomElementProxyBase
@@ -75,6 +82,11 @@ namespace ReactUnity.DomProxies
         public void removeChild(IDomElementProxy child)
         {
             child.OnRemove();
+        }
+
+        public void insertBefore(IDomElementProxy child, object before)
+        {
+            child.OnAppend();
         }
     }
 
@@ -152,6 +164,7 @@ namespace ReactUnity.DomProxies
         public void OnAppend()
         {
             enabled = true;
+            ProcessNodes();
         }
 
         public void OnRemove()
