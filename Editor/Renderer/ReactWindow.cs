@@ -3,6 +3,7 @@ using ReactUnity.Dispatchers;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
+using ReactUnity.UIToolkit;
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace ReactUnity.Editor.Renderer
         private readonly GUIContent resetGUIContent = EditorGUIUtility.TrTextContent("Reload");
 
         protected ReactUnityRunner runner => hostElement?.runner;
-        protected EditorContext context => hostElement?.context;
+        protected UIToolkitContext context => hostElement?.context;
         protected IDispatcher dispatcher => hostElement?.dispatcher;
         protected IMediaProvider mediaProvider => hostElement?.MediaProvider;
         protected ReactUnityElement hostElement { get; private set; }

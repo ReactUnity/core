@@ -9,7 +9,8 @@ namespace ReactUnity.Tests
         public const string TestPath = "Packages/com.reactunity.core/Tests/Runtime/.scripts/tests/index.js";
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
         protected ReactUnity Component => Canvas.GetComponent<ReactUnity>();
-        protected UGUIContext Context => Component.Context;
+        protected ReactContext Context => Component.Context;
+        protected UGUIContext UGUIContext => Context as UGUIContext;
         protected IMediaProvider MediaProvider => Context.MediaProvider;
         protected HostComponent Host => Context.Host as HostComponent;
         internal ReactUnityBridge Bridge => ReactUnityBridge.Instance;

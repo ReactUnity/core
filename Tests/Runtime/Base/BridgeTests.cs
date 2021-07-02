@@ -32,7 +32,7 @@ namespace ReactUnity.Tests
 
             var str = "appendChild Test Text";
             var view = Host.Children[0];
-            var text = new TextComponent(str, Context, "text");
+            var text = new TextComponent(str, UGUIContext, "text");
 
             Bridge.appendChild(view, text);
 
@@ -46,7 +46,7 @@ namespace ReactUnity.Tests
             yield return null;
 
             var view = Host.Children[0];
-            var text = new TextComponent("bogus", Context, "text");
+            var text = new TextComponent("bogus", UGUIContext, "text");
 
             Bridge.appendChildToContainer(view, text);
 
@@ -60,7 +60,7 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            var text = new TextComponent("bogus", Context, "text");
+            var text = new TextComponent("bogus", UGUIContext, "text");
 
             Bridge.appendChildToContainer(Host, text);
 
@@ -77,7 +77,7 @@ namespace ReactUnity.Tests
 
             var view = Host.Children[0] as ReactComponent;
 
-            var text = new TextComponent("bogus", Context, "text");
+            var text = new TextComponent("bogus", UGUIContext, "text");
 
             Bridge.insertBefore(Host, text, view);
 
