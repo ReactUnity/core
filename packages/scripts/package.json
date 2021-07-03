@@ -23,14 +23,20 @@
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
-  "types": "./lib/react-unity.d.ts",
+  "types": "./lib/main.d.ts",
   "typesVersions": {
     "*": {
       "editor": [
-        "./lib/react-unity-editor.d.ts"
+        "./lib/types/editor.d.ts"
       ],
       "tests": [
-        "./lib/react-unity-tests.d.ts"
+        "./lib/types/tests.d.ts"
+      ],
+      "ugui": [
+        "./lib/types/ugui.d.ts"
+      ],
+      "uitoolkit": [
+        "./lib/types/uitoolkit.d.ts"
       ]
     }
   },
@@ -40,13 +46,13 @@
     "local": "yalc publish --push"
   },
   "dependencies": {
-    "@babel/core": "7.14.5",
+    "@babel/core": "7.14.6",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
-    "@types/node": "^15.12.2",
-    "@types/react": "^17.0.11",
-    "@types/webpack-env": "1.16.0",
-    "@typescript-eslint/eslint-plugin": "^4.26.1",
-    "@typescript-eslint/parser": "^4.26.1",
+    "@types/node": "^16.0.0",
+    "@types/react": "^17.0.13",
+    "@types/webpack-env": "1.16.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "babel-eslint": "^10.1.0",
     "babel-loader": "8.2.2",
     "babel-plugin-named-asset-import": "^0.3.7",
@@ -57,9 +63,9 @@
     "css-loader": "5.2.6",
     "dotenv": "10.0.0",
     "dotenv-expand": "5.1.0",
-    "eslint": "^7.28.0",
+    "eslint": "^7.30.0",
     "eslint-config-react-app": "^6.0.0",
-    "eslint-plugin-flowtype": "^5.7.2",
+    "eslint-plugin-flowtype": "^5.8.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "^7.24.0",
@@ -80,24 +86,24 @@
     "resolve-url-loader": "^4.0.0",
     "sass-loader": "^12.1.0",
     "semver": "7.3.5",
-    "style-loader": "2.0.0",
-    "terser-webpack-plugin": "5.1.3",
+    "style-loader": "3.0.0",
+    "terser-webpack-plugin": "5.1.4",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
-    "webpack": "5.38.1",
+    "webpack": "5.42.0",
     "webpack-dev-server": "3.11.2"
   },
   "devDependencies": {
     "react": "^17.0.2",
-    "typescript": "^4.3.2"
+    "typescript": "^4.3.5"
   },
   "optionalDependencies": {
     "fsevents": "^2.3.2",
-    "sass": "^1.34.1"
+    "sass": "^1.35.1"
   },
   "peerDependencies": {
-    "@reactunity/renderer": "*",
-    "typescript": "^4.3.2"
+    "@reactunity/renderer": "0.1.0",
+    "typescript": "^4.3.5"
   },
   "peerDependenciesMeta": {
     "typescript": {
