@@ -23,7 +23,7 @@
   "bin": {
     "react-unity-scripts": "./bin/react-unity-scripts.js"
   },
-  "types": "./lib/main.d.ts",
+  "types": "./lib/types/main.d.ts",
   "typesVersions": {
     "*": {
       "editor": [
