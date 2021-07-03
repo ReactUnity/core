@@ -54,7 +54,7 @@ namespace ReactUnity.Editor
                 var projectDir = Path.GetFullPath(ProjectDirName);
                 var exists = Directory.Exists(projectDir);
 
-                if (exists) return projectDir;
+                if (exists) return projectDir.Replace('\\', '/');
                 return null;
             }
             catch
