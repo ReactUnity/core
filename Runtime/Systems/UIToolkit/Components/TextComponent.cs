@@ -5,6 +5,8 @@ namespace ReactUnity.UIToolkit
 {
     public class TextComponent<TElementType> : EditorComponent<TElementType>, ITextComponent where TElementType : TextElement, new()
     {
+        public string Content => Element.text;
+
         public TextComponent(string text, UIToolkitContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
         {
             Element.text = text;

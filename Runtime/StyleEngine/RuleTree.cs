@@ -1,5 +1,4 @@
 using ExCSS;
-using ReactUnity.Components;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using System.Collections.Generic;
@@ -123,7 +122,7 @@ namespace ReactUnity.StyleEngine
             if (matches) list.Add(component);
             if (matches && singleItem) return true;
 
-            if (component is ContainerComponent cmp)
+            if (component is IContainerComponent cmp)
                 foreach (var child in cmp.Children)
                 {
                     var childMatches = GetMatchingChildrenInner(child, pseudoElement, list, scope, singleItem, leafList);

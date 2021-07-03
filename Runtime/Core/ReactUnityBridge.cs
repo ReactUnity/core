@@ -106,7 +106,7 @@ namespace ReactUnity
 #if UNITY_EDITOR
             try
             {
-                var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(ReactUnity).Assembly);
+                var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(ReactUnityBridge).Assembly);
                 if (packageInfo != null) return packageInfo.version;
             }
             catch (Exception ex)

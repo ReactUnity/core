@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using ReactUnity.Components;
+using ReactUnity.UGUI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

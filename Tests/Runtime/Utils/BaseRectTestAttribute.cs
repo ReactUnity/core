@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using ReactUnity.UGUI;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -19,7 +20,7 @@ namespace ReactUnity.Tests
 
             var canvas = GameObject.Find("REACT_CANVAS");
             Debug.Assert(canvas != null, "The scene must include a canvas object named as REACT_CANVAS");
-            var ru = canvas.GetComponent<ReactUnity>();
+            var ru = canvas.GetComponent<ReactUnityUGUI>();
 
             ru.Script = GetScript();
 

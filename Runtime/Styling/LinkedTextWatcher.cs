@@ -1,4 +1,4 @@
-using ReactUnity.Components;
+using ReactUnity.UGUI;
 using UnityEngine;
 
 namespace ReactUnity.Styling

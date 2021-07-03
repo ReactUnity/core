@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using ReactUnity.Components;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using System;
-using ReactUnity.StateHandlers;
+using ReactUnity.UGUI.StateHandlers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Dispatchers;
 
-namespace ReactUnity
+namespace ReactUnity.UGUI
 {
     public class UGUIContext : ReactContext
     {

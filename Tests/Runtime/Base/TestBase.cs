@@ -1,5 +1,5 @@
-using ReactUnity.Components;
 using ReactUnity.StyleEngine;
+using ReactUnity.UGUI;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -8,7 +8,7 @@ namespace ReactUnity.Tests
     {
         public const string TestPath = "Packages/com.reactunity.core/Tests/Runtime/.scripts/tests/index.js";
         protected GameObject Canvas => GameObject.Find("REACT_CANVAS");
-        protected ReactUnity Component => Canvas.GetComponent<ReactUnity>();
+        protected ReactUnityUGUI Component => Canvas.GetComponent<ReactUnityUGUI>();
         protected ReactContext Context => Component.Context;
         protected UGUIContext UGUIContext => Context as UGUIContext;
         protected IMediaProvider MediaProvider => Context.MediaProvider;

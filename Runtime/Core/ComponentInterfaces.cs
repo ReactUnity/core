@@ -64,6 +64,7 @@ namespace ReactUnity
     [TypescriptListInterfaces]
     public interface ITextComponent : IReactComponent
     {
+        public string Content { get; }
         void SetText(string text);
     }
 

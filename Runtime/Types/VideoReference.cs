@@ -1,12 +1,19 @@
-using ReactUnity.Components;
 using ReactUnity.Styling;
 using ReactUnity.Styling.Parsers;
 using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.Video;
 
 namespace ReactUnity.Types
 {
+    public class VideoComponentSource
+    {
+        public string Url;
+        public VideoClip Clip;
+        public VideoSource Type;
+    }
+
     public class VideoReference : AssetReference<VideoComponentSource>
     {
         static public new VideoReference None = new VideoReference(AssetReferenceType.None, null);

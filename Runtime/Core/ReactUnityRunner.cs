@@ -90,7 +90,7 @@ namespace ReactUnity
             engine.SetValue("importType", new Func<string, object>((string typeName) => engine.CreateTypeReference(ReflectionHelpers.FindType(typeName))));
 
             engine.SetValue("UnityEngine", engine.CreateNamespaceReference("UnityEngine", typeof(Vector2).Assembly, typeof(UnityEngine.UIElements.Button).Assembly));
-            engine.SetValue("ReactUnity", engine.CreateNamespaceReference("ReactUnity", typeof(ReactUnity).Assembly));
+            engine.SetValue("ReactUnity", engine.CreateNamespaceReference("ReactUnity", typeof(ReactUnityBridge).Assembly));
             engine.SetValue("Facebook", engine.CreateNamespaceReference("Facebook", typeof(YogaValue).Assembly));
 #if UNITY_EDITOR
             engine.SetValue("UnityEditor", engine.CreateNamespaceReference("UnityEditor", typeof(UnityEditor.EditorWindow).Assembly, typeof(UnityEditor.UIElements.ColorField).Assembly));

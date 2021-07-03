@@ -1,5 +1,3 @@
-using ReactUnity.Components;
-
 namespace ReactUnity.Visitors
 {
     internal class TextContentVisitor : ReactComponentVisitor
@@ -10,8 +8,8 @@ namespace ReactUnity.Visitors
         {
             switch (component)
             {
-                case TextComponent t:
-                    Text += t.Text.text;
+                case ITextComponent t:
+                    Text += t.Content;
                     break;
                 default:
                     break;
