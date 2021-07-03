@@ -466,6 +466,17 @@ namespace ReactUnity.Editor.Developer
                     case "System.Object":
                         return "any";
 
+                    case "Jint.Native.JsValue":
+                        return "any";
+                    case "Jint.Native.JsString":
+                        return "string";
+                    case "Jint.Native.JsNumber":
+                        return "number";
+                    case "Jint.Native.JsBoolean":
+                        return "boolean";
+                    case "Jint.Native.JsSymbol":
+                        return "symbol";
+
                     case "System.Single":
                     case "System.Double":
                     case "System.Int32":
