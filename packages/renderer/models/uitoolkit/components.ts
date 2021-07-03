@@ -8,6 +8,9 @@ type BaseCmp = Cmp.UIToolkitComponent;
 export interface View<TSender = BaseCmp> extends Events<TSender> {
   name?: string;
   className?: string;
+  tooltip?: string;
+  viewDataKey?: string;
+  tabIndex?: number;
   style?: Style;
   focusable?: boolean;
   bind?: UnityEditor.SerializedObject | UnityEditor.SerializedProperty;
