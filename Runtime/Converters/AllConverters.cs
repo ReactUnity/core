@@ -8,7 +8,7 @@ using ReactUnity.Animations;
 
 namespace ReactUnity.Converters
 {
-    internal class AllConverters
+    public class AllConverters
     {
         static public IStyleConverter DefaultConverter = new StringConverter();
         static public IStyleConverter StringConverter = new StringConverter();

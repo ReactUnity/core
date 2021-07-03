@@ -1,7 +1,6 @@
-using ReactUnity.UGUI;
 using UnityEngine;
 
-namespace ReactUnity.Styling
+namespace ReactUnity.UGUI.Layout
 {
     public class LinkedTextWatcher : MonoBehaviour
     {

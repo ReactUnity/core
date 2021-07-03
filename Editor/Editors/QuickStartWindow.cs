@@ -117,7 +117,9 @@ namespace ReactUnity.Editor
             foreach (var obj in objects)
             {
                 if (obj.GetComponentInChildren<ReactUnityUGUI>()) return true;
+#if UNITY_2021_2_OR_NEWER
                 if (obj.GetComponentInChildren<ReactUnityUIDocument>()) return true;
+#endif
             }
 
             return false;

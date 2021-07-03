@@ -42,7 +42,9 @@ namespace ReactUnity.UIToolkit
                 { "list", (tag, text, context) => new BindableComponent<ListView>(context, tag) }, // TODO:
                 { "imgui", (tag, text, context) => new IMGUIComponent(context) },
                 { "template", (tag, text, context) => new BindableComponent<TemplateContainer>(context, tag) },
+#if UNITY_2021_2_OR_NEWER
                 { "progress", (tag, text, context) => new ValueComponent<ProgressBar, float>(context, tag) },
+#endif
             };
 
         public override Dictionary<string, Type> StateHandlers { get; }

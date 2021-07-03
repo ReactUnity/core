@@ -5,7 +5,9 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "ReactUnity",
-        "ReactUnity.Editor"
+        "ReactUnity.Editor",
+        "ReactUnity.UGUI",
+        "ReactUnity.UIToolkit"
     ],
     "includePlatforms": [
         "Editor"
