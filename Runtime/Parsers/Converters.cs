@@ -4,9 +4,7 @@ using ReactUnity.Styling.Parsers;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using TMPro;
 using ReactUnity.Types;
-using UnityEngine.UI;
 using ReactUnity.Animations;
 
 namespace ReactUnity.Styling

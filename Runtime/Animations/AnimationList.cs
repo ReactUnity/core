@@ -1,7 +1,6 @@
 using ReactUnity.Styling;
 using ReactUnity.Styling.Parsers;
 using ReactUnity.Types;
-using System.Collections.Generic;
 
 namespace ReactUnity.Animations
 {

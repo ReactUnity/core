@@ -1,6 +1,5 @@
 using Facebook.Yoga;
 using ReactUnity.Animations;
-using ReactUnity.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
