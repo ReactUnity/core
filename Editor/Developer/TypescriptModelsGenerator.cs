@@ -32,6 +32,8 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.UIElements.VisualElement).Assembly,
                     typeof(UnityEngine.AI.NavMesh).Assembly,
                     typeof(UnityEngine.TestTools.LogAssert).Assembly,
+                    typeof(UnityEngine.TextCore.Glyph).Assembly,
+                    typeof(UnityEngine.TextCore.Text.FontAsset).Assembly,
                     //#if REACT_INPUT_SYSTEM
                     //                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
                     //                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
@@ -57,7 +59,7 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEditor.EditorWindow).Assembly,
                 },
                 new List<string> { "UnityEditor" },
-                new List<string> { "UnityEngine.InputSystem", "UnityEngine.Experimental" },
+                new List<string> { "UnityEngine.InputSystem", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEngine.TextCore" },
                 new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
                 new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" },
                 true,
