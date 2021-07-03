@@ -15,4 +15,10 @@ declare global {
   };
 
   function matchMedia(query: string): ReactUnity.StyleEngine.MediaQueryList;
+
+  interface DefaultGlobals {
+    [key: string]: any;
+  }
+
+  const Globals: DefaultGlobals;
 }

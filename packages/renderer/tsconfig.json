@@ -20,14 +20,7 @@
     "lib": []
   },
   "files": [
-    "index.ts"
-  ],
-  "include": [
-    "models",
-    "src"
-  ],
-  "exclude": [
-    "models/editor",
-    "models/tests"
+    "index.ts",
+    "tests.ts"
   ]
 }

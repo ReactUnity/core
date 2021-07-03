@@ -8,6 +8,4 @@ declare global {
     Drawer?: ReactUnity.Editor.Renderer.ReactProperty;
     Property?: UnityEditor.SerializedProperty;
   }
-
-  const Globals: DefaultGlobals;
 }

@@ -12,10 +12,10 @@ export type CharacterValidation = 'none' | 'digit' | 'integer' | 'decimal' | 'al
 
 export type LineType = 'single-line' | 'multiline-submit' | 'multiline-newline';
 
-export type InputEvent = (val: string, sender: ReactUnity.Components.InputComponent) => void;
-export type TextSelectionEvent = (val: string, start: number, end: number, sender: ReactUnity.Components.InputComponent) => void;
+export type InputEvent = (val: string, sender: ReactUnity.UGUI.InputComponent) => void;
+export type TextSelectionEvent = (val: string, start: number, end: number, sender: ReactUnity.UGUI.InputComponent) => void;
 
-export interface Input extends View<ReactUnity.Components.InputComponent> {
+export interface Input extends View<ReactUnity.UGUI.InputComponent> {
   placeholder?: string;
   value?: string;
   characterLimit?: number;

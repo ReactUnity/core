@@ -1,6 +1,6 @@
 //
 // Types in assemblies: UnityEditor.CoreModule
-// Generated 18.04.2021 01:45:41
+// Generated 3.07.2021 04:18:15
 //
 import { System } from './system';
 import { Unity, UnityEngine } from './unity';
@@ -98,14 +98,16 @@ export declare namespace UnityEditor {
     BuildAdditionalStreamedScenes = 16,
     AcceptExternalModificationsToPlayer = 32,
     InstallInBuildFolder = 64,
-    WebPlayerOfflineDeployment = 128,
+    CleanBuildCache = 128,
     ConnectWithProfiler = 256,
     AllowDebugging = 512,
     SymlinkLibraries = 1024,
+    SymlinkSources = 1024,
     UncompressedAssetBundle = 2048,
     StripDebugSymbols = 0,
     CompressTextures = 0,
     ConnectToHost = 4096,
+    CustomConnectionID = 8192,
     EnableHeadlessMode = 16384,
     BuildScriptsOnly = 32768,
     PatchPackage = 65536,
@@ -162,6 +164,7 @@ export declare namespace UnityEditor {
     assetBundleManifestPath: string;
     targetGroup: UnityEditor.BuildTargetGroup;
     target: UnityEditor.BuildTarget;
+    subtarget: number;
     options: UnityEditor.BuildOptions;
     extraScriptingDefines: string[];
     Equals(obj: any): boolean;
@@ -242,6 +245,7 @@ export declare namespace UnityEditor {
     ShowAuxWindow(): void;
     ShowModal(): void;
     SaveChanges(): void;
+    DiscardChanges(): void;
     Close(): void;
     Repaint(): void;
     SendEvent(e: UnityEngine.Event): boolean;
@@ -317,6 +321,7 @@ export declare namespace UnityEditor {
     GameCoreXboxSeries = 42,
     GameCoreXboxOne = 43,
     PS5 = 44,
+    EmbeddedLinux = 45,
     iPhone = -1,
     BB10 = -1,
     MetroPlayer = -1,
@@ -354,6 +359,7 @@ export declare namespace UnityEditor {
     GameCoreXboxSeries = 31,
     GameCoreXboxOne = 32,
     PS5 = 33,
+    EmbeddedLinux = 34,
   }
   export class DefaultAsset {
     name: string;
@@ -372,6 +378,24 @@ export declare namespace UnityEditor {
     Generic = 4,
     Rejected = 32,
   }
+  export enum HierarchyDropFlags {
+    None = 0,
+    DropUpon = 1,
+    DropBetween = 2,
+    DropAfterParent = 4,
+    SearchActive = 8,
+    DropAbove = 16,
+  }
+  export class DragAndDropWindowTarget {
+    static projectBrowser: number;
+    static sceneView: number;
+    static hierarchy: number;
+    static inspector: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
   export class DragAndDrop {
     constructor();
     static objectReferences: UnityEngine.Object[];
@@ -383,8 +407,81 @@ export declare namespace UnityEditor {
     static GetGenericData(type: string): any;
     static SetGenericData(type: string, data: any): void;
     static AcceptDrag(): void;
+    static HasHandler(dropDstId: number, handler: System.Delegate): boolean;
+    static AddDropHandler(handler: UnityEditor.DragAndDrop_ProjectBrowserDropHandler): void;
+    static AddDropHandler(handler: UnityEditor.DragAndDrop_SceneDropHandler): void;
+    static AddDropHandler(handler: UnityEditor.DragAndDrop_HierarchyDropHandler): void;
+    static AddDropHandler(handler: UnityEditor.DragAndDrop_InspectorDropHandler): void;
+    static RemoveDropHandler(handler: UnityEditor.DragAndDrop_ProjectBrowserDropHandler): void;
+    static RemoveDropHandler(handler: UnityEditor.DragAndDrop_SceneDropHandler): void;
+    static RemoveDropHandler(handler: UnityEditor.DragAndDrop_HierarchyDropHandler): void;
+    static RemoveDropHandler(handler: UnityEditor.DragAndDrop_InspectorDropHandler): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class DragAndDrop_ProjectBrowserDropHandler {
+    constructor(object: any, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: any; // System.Object
+    Invoke(dragInstanceId: number, dropUponPath: string, perform: boolean): UnityEditor.DragAndDropVisualMode;
+    BeginInvoke(dragInstanceId: number, dropUponPath: string, perform: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    EndInvoke(result: System.IAsyncResult): UnityEditor.DragAndDropVisualMode;
+    GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetInvocationList(): System.Delegate[];
+    DynamicInvoke(...args: any[]): any;
+    Clone(): any;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class DragAndDrop_SceneDropHandler {
+    constructor(object: any, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: any; // System.Object
+    Invoke(dropUpon: UnityEngine.Object, worldPosition: UnityEngine.Vector3, viewportPosition: UnityEngine.Vector2, parentForDraggedObjects: UnityEngine.Transform, perform: boolean): UnityEditor.DragAndDropVisualMode;
+    BeginInvoke(dropUpon: UnityEngine.Object, worldPosition: UnityEngine.Vector3, viewportPosition: UnityEngine.Vector2, parentForDraggedObjects: UnityEngine.Transform, perform: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    EndInvoke(result: System.IAsyncResult): UnityEditor.DragAndDropVisualMode;
+    GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetInvocationList(): System.Delegate[];
+    DynamicInvoke(...args: any[]): any;
+    Clone(): any;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class DragAndDrop_InspectorDropHandler {
+    constructor(object: any, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: any; // System.Object
+    Invoke(targets: UnityEngine.Object[], perform: boolean): UnityEditor.DragAndDropVisualMode;
+    BeginInvoke(targets: UnityEngine.Object[], perform: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    EndInvoke(result: System.IAsyncResult): UnityEditor.DragAndDropVisualMode;
+    GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetInvocationList(): System.Delegate[];
+    DynamicInvoke(...args: any[]): any;
+    Clone(): any;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class DragAndDrop_HierarchyDropHandler {
+    constructor(object: any, method: System.IntPtr);
+    Method: System.Reflection.MethodInfo;
+    Target: any; // System.Object
+    Invoke(dropTargetInstanceID: number, dropMode: UnityEditor.HierarchyDropFlags, parentForDraggedObjects: UnityEngine.Transform, perform: boolean): UnityEditor.DragAndDropVisualMode;
+    BeginInvoke(dropTargetInstanceID: number, dropMode: UnityEditor.HierarchyDropFlags, parentForDraggedObjects: UnityEngine.Transform, perform: boolean, callback: System.AsyncCallback, object: any): System.IAsyncResult;
+    EndInvoke(result: System.IAsyncResult): UnityEditor.DragAndDropVisualMode;
+    GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetInvocationList(): System.Delegate[];
+    DynamicInvoke(...args: any[]): any;
+    Clone(): any;
     GetType(): System.Type;
     ToString(): string;
   }
@@ -1183,6 +1280,7 @@ export declare namespace UnityEditor {
     static Knob(knobSize: UnityEngine.Vector2, value: number, minValue: number, maxValue: number, unit: string, backgroundColor: UnityEngine.Color, activeColor: UnityEngine.Color, showValue: boolean, ...options: UnityEngine.GUILayoutOption[]): number;
     static EditorToolbarForTarget(target: UnityEngine.Object): void;
     static EditorToolbarForTarget(content: UnityEngine.GUIContent, target: UnityEngine.Object): void;
+    static ToolContextToolbarForTarget(content: UnityEngine.GUIContent, target: UnityEngine.Object): void;
     static EditorToolbar(...tools: UnityEditor.EditorTools.EditorTool[]): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -1298,6 +1396,8 @@ export declare namespace UnityEditor {
     static IsDisplayReferencedByCameras(displayIndex: number): boolean;
     static QueueGameViewInputEvent(evt: UnityEngine.Event): void;
     static RenderGameViewCameras(target: UnityEngine.RenderTexture, targetDisplay: number, screenRect: UnityEngine.Rect, mousePosition: UnityEngine.Vector2, gizmos: boolean): void;
+    static SetIconForObject(obj: UnityEngine.Object, icon: UnityEngine.Texture2D): void;
+    static GetIconForObject(obj: UnityEngine.Object): UnityEngine.Texture2D;
     static GetMainWindowPosition(): UnityEngine.Rect;
     static SetMainWindowPosition(position: UnityEngine.Rect): void;
     static PointsToPixels(rect: UnityEngine.Rect): UnityEngine.Rect;
@@ -1356,6 +1456,14 @@ export declare namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
+  export class EditorGUIUtility_PropertyCallbackScope {
+    constructor(callback: ((arg0: UnityEngine.Rect, arg1: UnityEditor.SerializedProperty) => void));
+    Dispose(): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
   export class EditorGUIUtility_IconSizeScope {
     constructor(iconSizeWithinScope: UnityEngine.Vector2);
     Dispose(): void;
@@ -1406,6 +1514,36 @@ export declare namespace UnityEditor {
     static HasKey(key: string): boolean;
     static DeleteKey(key: string): void;
     static DeleteAll(): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class ManagedReferenceMissingType {
+    assemblyName: string;
+    className: string;
+    namespaceName: string;
+    referenceId: System.Int64;
+    serializedData: string;
+    Equals(other: UnityEditor.ManagedReferenceMissingType): boolean;
+    CompareTo(other: UnityEditor.ManagedReferenceMissingType): number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class SerializationUtility {
+    constructor();
+    static RefIdUnknown: System.Int64;
+    static RefIdNull: System.Int64;
+    static SetManagedReferenceIdForObject(obj: UnityEngine.Object, scriptObj: any, refId: System.Int64): boolean;
+    static GetManagedReferenceIdForObject(obj: UnityEngine.Object, scriptObj: any): System.Int64;
+    static GetManagedReference(obj: UnityEngine.Object, id: System.Int64): any;
+    static GetManagedReferenceIds(obj: UnityEngine.Object): System.Int64[];
+    static HasManagedReferencesWithMissingTypes(obj: UnityEngine.Object): boolean;
+    static GetManagedReferencesWithMissingTypes(obj: UnityEngine.Object): UnityEditor.ManagedReferenceMissingType[];
+    static ClearAllManagedReferencesWithMissingTypes(obj: UnityEngine.Object): boolean;
+    static ClearManagedReferenceWithMissingType(obj: UnityEngine.Object, id: System.Int64): boolean;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -1482,6 +1620,7 @@ export declare namespace UnityEditor {
     static serializeInlineMappingsOnOneLine: boolean;
     static assetPipelineMode: UnityEditor.AssetPipelineMode;
     static cacheServerMode: UnityEditor.CacheServerMode;
+    static refreshImportMode: UnityEditor.AssetDatabase_RefreshImportMode;
     static cacheServerEndpoint: string;
     static cacheServerNamespacePrefix: string;
     static cacheServerEnableDownload: boolean;
@@ -1503,6 +1642,10 @@ export declare namespace UnityEditor {
     SpaceParenthesis = 0,
     Dot = 1,
     Underscore = 2,
+  }
+  export enum StandaloneBuildSubtarget {
+    Player = 0,
+    Server = 1,
   }
   export enum PS4BuildSubtarget {
     PCHosted = 0,
@@ -1565,6 +1708,13 @@ export declare namespace UnityEditor {
     Quality16Bit = 1,
     Quality32BitDownscaled = 2,
   }
+  export enum WebGLTextureSubtarget {
+    Generic = 0,
+    DXT = 1,
+    ETC = 2,
+    ETC2 = 3,
+    ASTC = 4,
+  }
   export enum WSASubtarget {
     AnyDevice = 0,
     PC = 1,
@@ -1593,6 +1743,10 @@ export declare namespace UnityEditor {
     Release = 1,
     Master = 2,
   }
+  export enum XcodeBuildConfig {
+    Debug = 0,
+    Release = 1,
+  }
   export enum iOSBuildType {
     Debug = 0,
     Release = 1,
@@ -1613,9 +1767,17 @@ export declare namespace UnityEditor {
     Proguard = 1,
     Gradle = 2,
   }
+  export enum EmbeddedLinuxArchitecture {
+    Arm64 = 0,
+    Arm32 = 1,
+    X64 = 2,
+    X86 = 3,
+  }
   export class EditorUserBuildSettings {
     static selectedBuildTargetGroup: UnityEditor.BuildTargetGroup;
+    static selectedEmbeddedLinuxArchitecture: UnityEditor.EmbeddedLinuxArchitecture;
     static selectedStandaloneTarget: UnityEditor.BuildTarget;
+    static standaloneBuildSubtarget: UnityEditor.StandaloneBuildSubtarget;
     static ps4BuildSubtarget: UnityEditor.PS4BuildSubtarget;
     static ps4HardwareTarget: UnityEditor.PS4HardwareTarget;
     static explicitNullChecks: boolean;
@@ -1637,6 +1799,7 @@ export declare namespace UnityEditor {
     static xboxOneAdditionalDebugPorts: string;
     static xboxOneRebootIfDeployFailsAndRetry: boolean;
     static androidBuildSubtarget: UnityEditor.MobileTextureSubtarget;
+    static webGLBuildSubtarget: UnityEditor.WebGLTextureSubtarget;
     static androidETC2Fallback: UnityEditor.AndroidETC2Fallback;
     static androidBuildSystem: UnityEditor.AndroidBuildSystem;
     static androidBuildType: UnityEditor.AndroidBuildType;
@@ -1654,9 +1817,12 @@ export declare namespace UnityEditor {
     static windowsDevicePortalUsername: string;
     static windowsDevicePortalPassword: string;
     static wsaBuildAndRunDeployTarget: UnityEditor.WSABuildAndRunDeployTarget;
+    static overrideMaxTextureSize: number;
+    static overrideTextureCompression: UnityEditor.Build.OverrideTextureCompression;
     static activeBuildTarget: UnityEditor.BuildTarget;
     static activeScriptCompilationDefines: string[];
     static development: boolean;
+    static il2CppCodeGeneration: UnityEditor.Build.Il2CppCodeGeneration;
     static webGLUsePreBuiltUnityEngine: boolean;
     static connectProfiler: boolean;
     static buildWithDeepProfilingSupport: boolean;
@@ -1665,9 +1831,13 @@ export declare namespace UnityEditor {
     static exportAsGoogleAndroidProject: boolean;
     static buildAppBundle: boolean;
     static symlinkLibraries: boolean;
+    static symlinkSources: boolean;
+    static iOSXcodeBuildConfig: UnityEditor.XcodeBuildConfig;
+    static macOSXcodeBuildConfig: UnityEditor.XcodeBuildConfig;
     static iOSBuildConfigType: UnityEditor.iOSBuildType;
     static switchCreateRomFile: boolean;
     static switchNVNGraphicsDebugger: boolean;
+    static generateNintendoSwitchShaderInfo: boolean;
     static switchNVNShaderDebugging: boolean;
     static switchNVNDrawValidation: boolean;
     static switchNVNDrawValidation_Light: boolean;
@@ -1687,6 +1857,7 @@ export declare namespace UnityEditor {
     static activeBuildTargetChanged: (() => void);
     static SwitchActiveBuildTarget(targetGroup: UnityEditor.BuildTargetGroup, target: UnityEditor.BuildTarget): boolean;
     static SwitchActiveBuildTargetAsync(targetGroup: UnityEditor.BuildTargetGroup, target: UnityEditor.BuildTarget): boolean;
+    static SwitchActiveBuildTarget(namedBuildTarget: UnityEditor.Build.NamedBuildTarget, target: UnityEditor.BuildTarget): boolean;
     static GetBuildLocation(target: UnityEditor.BuildTarget): string;
     static SetBuildLocation(target: UnityEditor.BuildTarget, location: string): void;
     static SetPlatformSettings(platformName: string, name: string, value: string): void;
@@ -1711,8 +1882,12 @@ export declare namespace UnityEditor {
     static showFailedCheckout: boolean;
     static overwriteFailedCheckoutAssets: boolean;
     static overlayIcons: boolean;
+    static hierarchyOverlayIcons: boolean;
+    static otherOverlayIcons: boolean;
     static allowAsyncStatusUpdate: boolean;
+    static artifactGarbageCollection: boolean;
     static semanticMergeMode: UnityEditor.SemanticMergeMode;
+    static desiredImportWorkerCount: number;
     name: string;
     hideFlags: UnityEngine.HideFlags;
     static GetConfigValue(name: string): string;
@@ -1903,6 +2078,7 @@ export declare namespace UnityEditor {
     static GetWindowWithRect(t: System.Type, rect: UnityEngine.Rect): UnityEditor.EditorWindow;
     static FocusWindowIfItsOpen(t: System.Type): void;
     SaveChanges(): void;
+    DiscardChanges(): void;
     Close(): void;
     Repaint(): void;
     SendEvent(e: UnityEngine.Event): boolean;
@@ -1929,6 +2105,8 @@ export declare namespace UnityEditor {
     static MoveFileOrDirectory(source: string, dest: string): void;
     static GetUniqueTempPathInProject(): string;
     static GetProjectRelativePath(path: string): string;
+    static GetLogicalPath(path: string): string;
+    static GetPhysicalPath(path: string): string;
     static ReplaceFile(src: string, dst: string): void;
     static ReplaceDirectory(src: string, dst: string): void;
     Equals(obj: any): boolean;
@@ -2006,6 +2184,7 @@ export declare namespace UnityEditor {
     static selectedColor: UnityEngine.Color;
     static preselectionColor: UnityEngine.Color;
     static secondaryColor: UnityEngine.Color;
+    static UIColliderHandleColor: UnityEngine.Color;
     static lineThickness: number;
     currentCamera: UnityEngine.Camera;
     static DrawPolyLine(...points: UnityEngine.Vector3[]): void;
@@ -2041,6 +2220,7 @@ export declare namespace UnityEditor {
     static DrawSelectionFrame(controlID: number, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number, eventType: UnityEngine.EventType): void;
     static PositionHandle(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion): UnityEngine.Vector3;
     static RotationHandle(rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3): UnityEngine.Quaternion;
+    static ScaleHandle(scale: UnityEngine.Vector3, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion): UnityEngine.Vector3;
     static ScaleHandle(scale: UnityEngine.Vector3, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number): UnityEngine.Vector3;
     static RadiusHandle(rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3, radius: number, handlesOnly: boolean): number;
     static RadiusHandle(rotation: UnityEngine.Quaternion, position: UnityEngine.Vector3, radius: number): number;
@@ -2160,6 +2340,7 @@ export declare namespace UnityEditor {
     static DistancePointLine(point: UnityEngine.Vector3, lineStart: UnityEngine.Vector3, lineEnd: UnityEngine.Vector3): number;
     static DistanceToLine(p1: UnityEngine.Vector3, p2: UnityEngine.Vector3): number;
     static DistanceToCircle(position: UnityEngine.Vector3, radius: number): number;
+    static DistanceToCircle(projection: UnityEditor.CameraProjectionCache, position: UnityEngine.Vector3, radius: number): number;
     static DistanceToCone(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number): number;
     static DistanceToCube(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number): number;
     static DistanceToRectangle(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, size: number): number;
@@ -2176,6 +2357,7 @@ export declare namespace UnityEditor {
     static GetHandleSize(position: UnityEngine.Vector3): number;
     static WorldToGUIPoint(world: UnityEngine.Vector3): UnityEngine.Vector2;
     static WorldToGUIPointWithDepth(world: UnityEngine.Vector3): UnityEngine.Vector3;
+    static WorldToGUIPointWithDepth(camera: UnityEngine.Camera, world: UnityEngine.Vector3): UnityEngine.Vector3;
     static GUIPointToScreenPixelCoordinate(guiPoint: UnityEngine.Vector2): UnityEngine.Vector2;
     static GUIPointToWorldRay(position: UnityEngine.Vector2): UnityEngine.Ray;
     static WorldPointToSizedRect(position: UnityEngine.Vector3, content: UnityEngine.GUIContent, style: UnityEngine.GUIStyle): UnityEngine.Rect;
@@ -2286,6 +2468,13 @@ export declare namespace UnityEditor {
     FindAllAncestors(instanceIDs: number[]): number[];
     static ClearSceneObjectsFilter(): void;
     static FilterSingleSceneObject(instanceID: number, otherVisibilityState: boolean): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class HyperLinkClickedEventArgs {
+    hyperLinkData: Record<string, string>;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -2657,6 +2846,7 @@ export declare namespace UnityEditor {
     static stereoscopic3D: boolean;
     static muteOtherAudioSources: boolean;
     static legacyClampBlendShapeWeights: boolean;
+    static uploadClearedTextureDataAfterCreationFromScript: boolean;
     static enableMetalAPIValidation: boolean;
     static alwaysDisplayWatermark: boolean;
     static firstStreamedLevelWithResources: number;
@@ -2706,40 +2896,70 @@ export declare namespace UnityEditor {
     static GetArchitecture(targetGroup: UnityEditor.BuildTargetGroup): number;
     static SetArchitecture(targetGroup: UnityEditor.BuildTargetGroup, architecture: number): void;
     static GetScriptingBackend(targetGroup: UnityEditor.BuildTargetGroup): UnityEditor.ScriptingImplementation;
-    static SetApplicationIdentifier(targetGroup: UnityEditor.BuildTargetGroup, identifier: string): void;
-    static GetApplicationIdentifier(targetGroup: UnityEditor.BuildTargetGroup): string;
     static SetScriptingBackend(targetGroup: UnityEditor.BuildTargetGroup, backend: UnityEditor.ScriptingImplementation): void;
     static GetDefaultScriptingBackend(targetGroup: UnityEditor.BuildTargetGroup): UnityEditor.ScriptingImplementation;
-    static SetIl2CppCompilerConfiguration(targetGroup: UnityEditor.BuildTargetGroup, configuration: UnityEditor.Il2CppCompilerConfiguration): void;
+    static GetApplicationIdentifier(targetGroup: UnityEditor.BuildTargetGroup): string;
+    static SetApplicationIdentifier(targetGroup: UnityEditor.BuildTargetGroup, identifier: string): void;
     static GetIl2CppCompilerConfiguration(targetGroup: UnityEditor.BuildTargetGroup): UnityEditor.Il2CppCompilerConfiguration;
+    static SetIl2CppCompilerConfiguration(targetGroup: UnityEditor.BuildTargetGroup, configuration: UnityEditor.Il2CppCompilerConfiguration): void;
     static GetIncrementalIl2CppBuild(targetGroup: UnityEditor.BuildTargetGroup): boolean;
     static SetIncrementalIl2CppBuild(targetGroup: UnityEditor.BuildTargetGroup, enabled: boolean): void;
-    static GetAdditionalIl2CppArgs(): string;
-    static SetAdditionalIl2CppArgs(additionalArgs: string): void;
-    static GetWsaHolographicRemotingEnabled(): boolean;
-    static SetWsaHolographicRemotingEnabled(enabled: boolean): void;
     static SetManagedStrippingLevel(targetGroup: UnityEditor.BuildTargetGroup, level: UnityEditor.ManagedStrippingLevel): void;
     static GetManagedStrippingLevel(targetGroup: UnityEditor.BuildTargetGroup): UnityEditor.ManagedStrippingLevel;
     static GetApiCompatibilityLevel(buildTargetGroup: UnityEditor.BuildTargetGroup): UnityEditor.ApiCompatibilityLevel;
     static SetApiCompatibilityLevel(buildTargetGroup: UnityEditor.BuildTargetGroup, value: UnityEditor.ApiCompatibilityLevel): void;
-    static SetMobileMTRendering(targetGroup: UnityEditor.BuildTargetGroup, enable: boolean): void;
     static GetMobileMTRendering(targetGroup: UnityEditor.BuildTargetGroup): boolean;
+    static SetMobileMTRendering(targetGroup: UnityEditor.BuildTargetGroup, enable: boolean): void;
+    static GetNormalMapEncoding(platform: UnityEditor.BuildTargetGroup): UnityEditor.NormalMapEncoding;
+    static SetNormalMapEncoding(platform: UnityEditor.BuildTargetGroup, encoding: UnityEditor.NormalMapEncoding): void;
+    static GetScriptingDefineSymbols(buildTarget: UnityEditor.Build.NamedBuildTarget): string;
+    static SetScriptingDefineSymbols(buildTarget: UnityEditor.Build.NamedBuildTarget, defines: string): void;
+    static SetScriptingDefineSymbols(buildTarget: UnityEditor.Build.NamedBuildTarget, defines: string[]): void;
+    static GetAdditionalCompilerArguments(buildTarget: UnityEditor.Build.NamedBuildTarget): string[];
+    static SetAdditionalCompilerArguments(buildTarget: UnityEditor.Build.NamedBuildTarget, additionalCompilerArguments: string[]): void;
+    static GetArchitecture(buildTarget: UnityEditor.Build.NamedBuildTarget): number;
+    static SetArchitecture(buildTarget: UnityEditor.Build.NamedBuildTarget, architecture: number): void;
+    static GetScriptingBackend(buildTarget: UnityEditor.Build.NamedBuildTarget): UnityEditor.ScriptingImplementation;
+    static SetScriptingBackend(buildTarget: UnityEditor.Build.NamedBuildTarget, backend: UnityEditor.ScriptingImplementation): void;
+    static GetDefaultScriptingBackend(buildTarget: UnityEditor.Build.NamedBuildTarget): UnityEditor.ScriptingImplementation;
+    static SetApplicationIdentifier(buildTarget: UnityEditor.Build.NamedBuildTarget, identifier: string): void;
+    static GetApplicationIdentifier(buildTarget: UnityEditor.Build.NamedBuildTarget): string;
+    static GetIl2CppCompilerConfiguration(buildTarget: UnityEditor.Build.NamedBuildTarget): UnityEditor.Il2CppCompilerConfiguration;
+    static SetIl2CppCompilerConfiguration(buildTarget: UnityEditor.Build.NamedBuildTarget, configuration: UnityEditor.Il2CppCompilerConfiguration): void;
+    static GetIncrementalIl2CppBuild(buildTarget: UnityEditor.Build.NamedBuildTarget): boolean;
+    static SetIncrementalIl2CppBuild(buildTarget: UnityEditor.Build.NamedBuildTarget, enabled: boolean): void;
+    static SetManagedStrippingLevel(buildTarget: UnityEditor.Build.NamedBuildTarget, level: UnityEditor.ManagedStrippingLevel): void;
+    static GetManagedStrippingLevel(buildTarget: UnityEditor.Build.NamedBuildTarget): UnityEditor.ManagedStrippingLevel;
+    static GetApiCompatibilityLevel(buildTarget: UnityEditor.Build.NamedBuildTarget): UnityEditor.ApiCompatibilityLevel;
+    static SetApiCompatibilityLevel(buildTarget: UnityEditor.Build.NamedBuildTarget, value: UnityEditor.ApiCompatibilityLevel): void;
+    static SetMobileMTRendering(buildTarget: UnityEditor.Build.NamedBuildTarget, enable: boolean): void;
+    static GetMobileMTRendering(buildTarget: UnityEditor.Build.NamedBuildTarget): boolean;
+    static GetNormalMapEncoding(buildTarget: UnityEditor.Build.NamedBuildTarget): UnityEditor.NormalMapEncoding;
+    static SetNormalMapEncoding(buildTarget: UnityEditor.Build.NamedBuildTarget, encoding: UnityEditor.NormalMapEncoding): void;
+    static GetAdditionalIl2CppArgs(): string;
+    static SetAdditionalIl2CppArgs(additionalArgs: string): void;
+    static GetWsaHolographicRemotingEnabled(): boolean;
+    static SetWsaHolographicRemotingEnabled(enabled: boolean): void;
     static GetStackTraceLogType(logType: UnityEngine.LogType): UnityEngine.StackTraceLogType;
     static SetStackTraceLogType(logType: UnityEngine.LogType, stackTraceType: UnityEngine.StackTraceLogType): void;
     static GetVirtualTexturingSupportEnabled(): boolean;
     static SetVirtualTexturingSupportEnabled(enabled: boolean): void;
     static GetShaderPrecisionModel(): UnityEditor.ShaderPrecisionModel;
     static SetShaderPrecisionModel(model: UnityEditor.ShaderPrecisionModel): void;
-    static GetNormalMapEncoding(platform: UnityEditor.BuildTargetGroup): UnityEditor.NormalMapEncoding;
-    static SetNormalMapEncoding(platform: UnityEditor.BuildTargetGroup, encoding: UnityEditor.NormalMapEncoding): void;
     static GetPlatformIcons(platform: UnityEditor.BuildTargetGroup, kind: UnityEditor.PlatformIconKind): UnityEditor.PlatformIcon[];
+    static GetPlatformIcons(buildTarget: UnityEditor.Build.NamedBuildTarget, kind: UnityEditor.PlatformIconKind): UnityEditor.PlatformIcon[];
     static SetPlatformIcons(platform: UnityEditor.BuildTargetGroup, kind: UnityEditor.PlatformIconKind, icons: UnityEditor.PlatformIcon[]): void;
+    static SetPlatformIcons(buildTarget: UnityEditor.Build.NamedBuildTarget, kind: UnityEditor.PlatformIconKind, icons: UnityEditor.PlatformIcon[]): void;
     static GetSupportedIconKindsForPlatform(platform: UnityEditor.BuildTargetGroup): UnityEditor.PlatformIconKind[];
+    static GetSupportedIconKinds(buildTarget: UnityEditor.Build.NamedBuildTarget): UnityEditor.PlatformIconKind[];
     static SetIconsForTargetGroup(platform: UnityEditor.BuildTargetGroup, icons: UnityEngine.Texture2D[], kind: UnityEditor.IconKind): void;
+    static SetIcons(buildTarget: UnityEditor.Build.NamedBuildTarget, icons: UnityEngine.Texture2D[], kind: UnityEditor.IconKind): void;
     static SetIconsForTargetGroup(platform: UnityEditor.BuildTargetGroup, icons: UnityEngine.Texture2D[]): void;
     static GetIconsForTargetGroup(platform: UnityEditor.BuildTargetGroup, kind: UnityEditor.IconKind): UnityEngine.Texture2D[];
+    static GetIcons(buildTarget: UnityEditor.Build.NamedBuildTarget, kind: UnityEditor.IconKind): UnityEngine.Texture2D[];
     static GetIconsForTargetGroup(platform: UnityEditor.BuildTargetGroup): UnityEngine.Texture2D[];
     static GetIconSizesForTargetGroup(platform: UnityEditor.BuildTargetGroup, kind: UnityEditor.IconKind): number[];
+    static GetIconSizes(buildTarget: UnityEditor.Build.NamedBuildTarget, kind: UnityEditor.IconKind): number[];
     static GetIconSizesForTargetGroup(platform: UnityEditor.BuildTargetGroup): number[];
     static GetVirtualRealitySupported(targetGroup: UnityEditor.BuildTargetGroup): boolean;
     static SetVirtualRealitySupported(targetGroup: UnityEditor.BuildTargetGroup, value: boolean): void;
@@ -2754,6 +2974,12 @@ export declare namespace UnityEditor {
     static targetDevice: UnityEditor.AndroidTargetDevice;
     static disableDepthAndStencilBuffers: boolean;
     static use24BitDepthBuffer: boolean;
+    static defaultWindowWidth: number;
+    static defaultWindowHeight: number;
+    static minimumWindowWidth: number;
+    static minimumWindowHeight: number;
+    static resizableWindow: boolean;
+    static fullscreenMode: UnityEngine.FullScreenMode;
     static bundleVersionCode: number;
     static minSdkVersion: UnityEditor.AndroidSdkVersions;
     static targetSdkVersion: UnityEditor.AndroidSdkVersions;
@@ -2763,8 +2989,10 @@ export declare namespace UnityEditor {
     static androidTVCompatibility: boolean;
     static androidIsGame: boolean;
     static ARCoreEnabled: boolean;
+    static chromeosInputEmulation: boolean;
     static targetArchitectures: UnityEditor.AndroidArchitecture;
     static buildApkPerCpuArchitecture: boolean;
+    static androidTargetDevices: UnityEditor.AndroidTargetDevices;
     static splashScreenScale: UnityEditor.AndroidSplashScreenScale;
     static useCustomKeystore: boolean;
     static keystoreName: string;
@@ -2781,6 +3009,7 @@ export declare namespace UnityEditor {
     static minifyWithR8: boolean;
     static minifyRelease: boolean;
     static minifyDebug: boolean;
+    static optimizedFramePacing: boolean;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -2829,6 +3058,15 @@ export declare namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
+  export class PlayerSettings_EmbeddedLinux {
+    constructor();
+    static playerDataPath: string;
+    static forceSRGBBlit: boolean;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
   export class PlayerSettings_Facebook {
     constructor();
     static sdkVersion: string;
@@ -2858,6 +3096,11 @@ export declare namespace UnityEditor {
   export class PlayerSettings_macOS {
     constructor();
     static buildNumber: string;
+    static applicationCategoryType: string;
+    static cameraUsageDescription: string;
+    static microphoneUsageDescription: string;
+    static bluetoothUsageDescription: string;
+    static urlSchemes: string[];
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -3095,6 +3338,8 @@ export declare namespace UnityEditor {
     static networkInterfaceManagerInitializeEnabled: boolean;
     static playerConnectionEnabled: boolean;
     static useNewStyleFilepaths: boolean;
+    static switchUseMicroSleepForYield: boolean;
+    static switchMicroSleepForYieldTime: number;
     static GetRatingAge(category: UnityEditor.PlayerSettings_Switch_RatingCategories): number;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -3197,6 +3442,7 @@ export declare namespace UnityEditor {
     static linkerTarget: UnityEditor.WebGLLinkerTarget;
     static compressionFormat: UnityEditor.WebGLCompressionFormat;
     static nameFilesAsHashes: boolean;
+    static debugSymbolMode: UnityEditor.WebGLDebugSymbolMode;
     static debugSymbols: boolean;
     static wasmStreaming: boolean;
     static decompressionFallback: boolean;
@@ -3514,7 +3760,14 @@ export declare namespace UnityEditor {
     None = 0,
     ARMv7 = 1,
     ARM64 = 2,
+    X86 = 4,
+    X86_64 = 8,
     All = 4294967295,
+  }
+  export enum AndroidTargetDevices {
+    AllDevices = 0,
+    PhonesTabletsAndTVDevicesOnly = 1,
+    ChromeOSDevicesOnly = 2,
   }
   export enum AndroidSdkVersions {
     AndroidApiLevelAuto = 0,
@@ -3658,6 +3911,11 @@ export declare namespace UnityEditor {
     Throw = 0,
     Ignore = 1,
   }
+  export enum WebGLDebugSymbolMode {
+    Off = 0,
+    External = 1,
+    Embedded = 2,
+  }
   export enum XboxOneEncryptionLevel {
     None = 0,
     DevkitCompatible = 1,
@@ -3784,6 +4042,7 @@ export declare namespace UnityEditor {
     ShowAuxWindow(): void;
     ShowModal(): void;
     SaveChanges(): void;
+    DiscardChanges(): void;
     Close(): void;
     Repaint(): void;
     SendEvent(e: UnityEngine.Event): boolean;
@@ -3916,6 +4175,7 @@ export declare namespace UnityEditor {
     animationCurveValue: UnityEngine.AnimationCurve;
     objectReferenceValue: UnityEngine.Object;
     managedReferenceValue: any; // System.Object
+    managedReferenceId: System.Int64;
     managedReferenceFullTypename: string;
     managedReferenceFieldTypename: string;
     objectReferenceInstanceIDValue: number;
@@ -4030,6 +4290,8 @@ export declare namespace UnityEditor {
     static GetCustomEditorForRenderPipeline(shader: UnityEngine.Shader, renderPipelineType: string): string;
     static GetCustomEditorForRenderPipeline(shader: UnityEngine.Shader, renderPipelineType: System.Type): string;
     static GetCurrentCustomEditor(shader: UnityEngine.Shader): string;
+    static GetShaderPlatformKeywordsForBuildTarget(shaderCompilerPlatform: UnityEditor.Rendering.ShaderCompilerPlatform, buildTarget: UnityEditor.BuildTarget, tier: UnityEngine.Rendering.GraphicsTier): UnityEngine.Rendering.BuiltinShaderDefine[];
+    static GetShaderPlatformKeywordsForBuildTarget(shaderCompilerPlatform: UnityEditor.Rendering.ShaderCompilerPlatform, buildTarget: UnityEditor.BuildTarget): UnityEngine.Rendering.BuiltinShaderDefine[];
     static ClearShaderErrors(s: UnityEngine.Shader): void;
     static GetPropertyCount(s: UnityEngine.Shader): number;
     static GetPropertyName(s: UnityEngine.Shader, propertyIdx: number): string;
@@ -4083,10 +4345,62 @@ export declare namespace UnityEditor {
   export class ShaderData_Pass {
     SourceCode: string;
     Name: string;
+    CompileVariant(shaderType: UnityEditor.Rendering.ShaderType, keywords: string[], shaderCompilerPlatform: UnityEditor.Rendering.ShaderCompilerPlatform, buildTarget: UnityEditor.BuildTarget): UnityEditor.ShaderData_VariantCompileInfo;
+    CompileVariant(shaderType: UnityEditor.Rendering.ShaderType, keywords: string[], shaderCompilerPlatform: UnityEditor.Rendering.ShaderCompilerPlatform, buildTarget: UnityEditor.BuildTarget, tier: UnityEngine.Rendering.GraphicsTier): UnityEditor.ShaderData_VariantCompileInfo;
+    CompileVariant(shaderType: UnityEditor.Rendering.ShaderType, keywords: string[], shaderCompilerPlatform: UnityEditor.Rendering.ShaderCompilerPlatform, buildTarget: UnityEditor.BuildTarget, platformKeywords: UnityEngine.Rendering.BuiltinShaderDefine[]): UnityEditor.ShaderData_VariantCompileInfo;
+    CompileVariant(shaderType: UnityEditor.Rendering.ShaderType, keywords: string[], shaderCompilerPlatform: UnityEditor.Rendering.ShaderCompilerPlatform, buildTarget: UnityEditor.BuildTarget, platformKeywords: UnityEngine.Rendering.BuiltinShaderDefine[], tier: UnityEngine.Rendering.GraphicsTier): UnityEditor.ShaderData_VariantCompileInfo;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
+  }
+  export class ShaderData_VariantCompileInfo {
+    Success: boolean;
+    Messages: UnityEditor.ShaderMessage[];
+    ShaderData: System.Byte[];
+    Attributes: UnityEngine.Rendering.VertexAttribute[];
+    ConstantBuffers: UnityEditor.ShaderData_ConstantBufferInfo[];
+    TextureBindings: UnityEditor.ShaderData_TextureBindingInfo[];
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ShaderData_ConstantBufferInfo {
+    Name: string;
+    Size: number;
+    Fields: UnityEditor.ShaderData_ConstantInfo[];
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ShaderData_ConstantInfo {
+    Name: string;
+    Index: number;
+    ConstantType: UnityEngine.Rendering.ShaderConstantType;
+    DataType: UnityEngine.Rendering.ShaderParamType;
+    Rows: number;
+    Columns: number;
+    ArraySize: number;
+    StructSize: number;
+    StructFields: UnityEditor.ShaderData_ConstantInfo[];
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ShaderData_TextureBindingInfo {
+    Name: string;
+    Index: number;
+    SamplerIndex: number;
+    Multisampled: boolean;
+    ArraySize: number;
+    Dim: UnityEngine.Rendering.TextureDimension;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
   }
   export enum StaticEditorFlags {
     ContributeGI = 1,
@@ -4237,6 +4551,7 @@ export declare namespace UnityEditor {
     static DestroyObjectImmediate(objectToUndo: UnityEngine.Object): void;
     static AddComponent(gameObject: UnityEngine.GameObject, type: System.Type): UnityEngine.Component;
     static RegisterImporterUndo(path: string, name: string): void;
+    static RegisterChildrenOrderUndo(objectToUndo: UnityEngine.Object, name: string): void;
     static RegisterFullObjectHierarchyUndo(objectToUndo: UnityEngine.Object, name: string): void;
     static RegisterFullObjectHierarchyUndo(objectToUndo: UnityEngine.Object): void;
     static RecordObject(objectToUndo: UnityEngine.Object, name: string): void;
@@ -4358,6 +4673,7 @@ export declare namespace UnityEditor {
   }
   export class Unsupported {
     static useScriptableRenderPipeline: boolean;
+    static IsRegistryValidationDisabled: boolean;
     static CaptureScreenshotImmediate(filePath: string, x: number, y: number, width: number, height: number): void;
     static GetSubmenusCommands(menuPath: string): string[];
     static GetTypeFromFullName(fullName: string): System.Type;
@@ -4686,6 +5002,7 @@ export declare namespace UnityEditor {
     ShowAuxWindow(): void;
     ShowModal(): void;
     SaveChanges(): void;
+    DiscardChanges(): void;
     Close(): void;
     Repaint(): void;
     SendEvent(e: UnityEngine.Event): boolean;
@@ -4759,6 +5076,8 @@ export declare namespace UnityEditor {
     constructor();
     static GlobalArtifactDependencyVersion: System.UInt32;
     static GlobalArtifactProcessedVersion: System.UInt32;
+    static ActiveRefreshImportMode: UnityEditor.AssetDatabase_RefreshImportMode;
+    static DesiredWorkerCount: number;
     static onImportPackageItemsCompleted: ((arg0: string[]) => void);
     static CanOpenForEdit(assetOrMetaFilePaths: string[], outNotEditablePaths: string[], statusQueryOptions?: UnityEditor.StatusQueryOptions): void;
     static IsOpenForEdit(assetOrMetaFilePaths: string[], outNotEditablePaths: string[], statusQueryOptions?: UnityEditor.StatusQueryOptions): void;
@@ -4834,6 +5153,8 @@ export declare namespace UnityEditor {
     static GetAssetDependencyHash(guid: UnityEditor.GUID): UnityEngine.Hash128;
     static GetAssetDependencyHash(path: string): UnityEngine.Hash128;
     static SaveAssets(): void;
+    static SaveAssetIfDirty(guid: UnityEditor.GUID): void;
+    static SaveAssetIfDirty(obj: UnityEngine.Object): void;
     static GetCachedIcon(path: string): UnityEngine.Texture;
     static SetLabels(obj: UnityEngine.Object, labels: string[]): void;
     static GetLabels(guid: UnityEditor.GUID): string[];
@@ -4892,6 +5213,7 @@ export declare namespace UnityEditor {
     static RegisterCustomDependency(dependency: string, hashOfValue: UnityEngine.Hash128): void;
     static UnregisterCustomDependencyPrefixFilter(prefixFilter: string): System.UInt32;
     static IsAssetImportWorkerProcess(): boolean;
+    static ForceToDesiredWorkerCount(): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -4928,6 +5250,10 @@ export declare namespace UnityEditor {
     Clone(): any;
     GetType(): System.Type;
     ToString(): string;
+  }
+  export enum AssetDatabase_RefreshImportMode {
+    InProcess = 0,
+    OutOfProcessPerQueue = 1,
   }
   export enum AssetStatus {
     Calculating = -1,
@@ -5114,6 +5440,18 @@ export declare namespace UnityEditor {
     GetHashCode(): number;
     Equals(other: any): boolean;
     ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ShaderInclude {
+    constructor();
+    bytes: System.Byte[];
+    text: string;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    ToString(): string;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
     GetType(): System.Type;
   }
   export class SpeedTreeImporter {
@@ -6034,6 +6372,7 @@ export declare namespace UnityEditor {
     static inspectorFullWidthMargins: UnityEngine.GUIStyle;
     static helpBox: UnityEngine.GUIStyle;
     static toolbarSearchField: UnityEngine.GUIStyle;
+    static selectionRect: UnityEngine.GUIStyle;
     static FromUSS(ussStyleRuleName: string, ussInPlaceStyleOverride?: string): UnityEngine.GUIStyle;
     static FromUSS(baseStyle: UnityEngine.GUIStyle, ussStyleRuleName: string, ussInPlaceStyleOverride?: string): UnityEngine.GUIStyle;
     static ApplyUSS(style: UnityEngine.GUIStyle, ussStyleRuleName: string, ussInPlaceStyleOverride?: string): UnityEngine.GUIStyle;
@@ -6090,6 +6429,10 @@ export declare namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
+  export interface IApplyRevertPropertyContextMenuItemProvider {
+    GetSourceTerm(): string;
+    GetSourceName(comp: UnityEngine.Component): string;
+  }
   export class PopupWindowContent {
     editorWindow: UnityEditor.EditorWindow;
     OnGUI(rect: UnityEngine.Rect): void;
@@ -6138,6 +6481,7 @@ export declare namespace UnityEditor {
     ShowAuxWindow(): void;
     ShowModal(): void;
     SaveChanges(): void;
+    DiscardChanges(): void;
     Close(): void;
     Repaint(): void;
     SendEvent(e: UnityEngine.Event): boolean;
@@ -6217,8 +6561,8 @@ export declare namespace UnityEditor {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     OnEnable(): void;
-    OnDisable(): void;
     OnDestroy(): void;
+    OnDisable(): void;
     OnInspectorGUI(): void;
     OnOverlayGUI(target: UnityEngine.Object, sceneView: UnityEditor.SceneView): void;
     OnSceneGUI(): void;
@@ -6553,6 +6897,7 @@ export declare namespace UnityEditor {
     TextureProperty(propertyName: string, label: string, texDim: UnityEditor.ShaderUtil_ShaderPropertyTexDim, scaleOffset: boolean): UnityEngine.Texture;
     ShaderProperty(shader: UnityEngine.Shader, propertyIndex: number): void;
     static GetMaterialProperties(mats: UnityEngine.Object[]): UnityEditor.MaterialProperty[];
+    static GetMaterialPropertyNames(mats: UnityEngine.Object[]): string[];
     static GetMaterialProperty(mats: UnityEngine.Object[], name: string): UnityEditor.MaterialProperty;
     static GetMaterialProperty(mats: UnityEngine.Object[], propertyIndex: number): UnityEditor.MaterialProperty;
     static PrepareMaterialPropertiesForAnimationMode(properties: UnityEditor.MaterialProperty[], isMaterialEditable: boolean): UnityEngine.Renderer;
@@ -6677,6 +7022,7 @@ export declare namespace UnityEditor {
     OnMaterialPreviewSettingsGUI(materialEditor: UnityEditor.MaterialEditor): void;
     OnClosed(material: UnityEngine.Material): void;
     AssignNewShaderToMaterial(material: UnityEngine.Material, oldShader: UnityEngine.Shader, newShader: UnityEngine.Shader): void;
+    ValidateMaterial(material: UnityEngine.Material): void;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -6738,6 +7084,7 @@ export declare namespace UnityEditor {
     static prefabInstanceUpdated: UnityEditor.PrefabUtility_PrefabInstanceUpdated;
     static GetPrefabObject(targetObject: UnityEngine.Object): UnityEngine.Object;
     static GetPrefabInstanceHandle(instanceComponentOrGameObject: UnityEngine.Object): UnityEngine.Object;
+    static HasManagedReferencesWithMissingTypes(assetComponentOrGameObject: UnityEngine.Object): boolean;
     static GetPropertyModifications(targetPrefab: UnityEngine.Object): UnityEditor.PropertyModification[];
     static SetPropertyModifications(targetPrefab: UnityEngine.Object, modifications: UnityEditor.PropertyModification[]): void;
     static HasPrefabInstanceAnyOverrides(instanceRoot: UnityEngine.GameObject, includeDefaultOverrides: boolean): boolean;
@@ -6768,6 +7115,9 @@ export declare namespace UnityEditor {
     static GetOutermostPrefabInstanceRoot(componentOrGameObject: UnityEngine.Object): UnityEngine.GameObject;
     static GetNearestPrefabInstanceRoot(componentOrGameObject: UnityEngine.Object): UnityEngine.GameObject;
     static IsDefaultOverride(modification: UnityEditor.PropertyModification): boolean;
+    static FindAllInstancesOfPrefab(prefabRoot: UnityEngine.GameObject): UnityEngine.GameObject[];
+    static FindAllInstancesOfPrefab(prefabRoot: UnityEngine.GameObject, scene: UnityEngine.SceneManagement.Scene): UnityEngine.GameObject[];
+    static MergePrefabInstance(instanceRoot: UnityEngine.GameObject): void;
     static RevertPrefabInstance(instanceRoot: UnityEngine.GameObject, action: UnityEditor.InteractionMode): void;
     static ApplyPrefabInstance(instanceRoot: UnityEngine.GameObject, action: UnityEditor.InteractionMode): void;
     static ApplyPropertyOverride(instanceProperty: UnityEditor.SerializedProperty, assetPath: string, action: UnityEditor.InteractionMode): void;
@@ -6779,6 +7129,7 @@ export declare namespace UnityEditor {
     static ApplyRemovedComponent(instanceGameObject: UnityEngine.GameObject, assetComponent: UnityEngine.Component, action: UnityEditor.InteractionMode): void;
     static RevertRemovedComponent(instanceGameObject: UnityEngine.GameObject, assetComponent: UnityEngine.Component, action: UnityEditor.InteractionMode): void;
     static ApplyAddedGameObject(gameObject: UnityEngine.GameObject, assetPath: string, action: UnityEditor.InteractionMode): void;
+    static ApplyAddedGameObjects(gameObjects: UnityEngine.GameObject[], assetPath: string, action: UnityEditor.InteractionMode): void;
     static RevertAddedGameObject(gameObject: UnityEngine.GameObject, action: UnityEditor.InteractionMode): void;
     static GetObjectOverrides(prefabInstance: UnityEngine.GameObject, includeDefaultOverrides?: boolean): UnityEditor.SceneManagement.ObjectOverride[];
     static GetAddedComponents(prefabInstance: UnityEngine.GameObject): UnityEditor.SceneManagement.AddedComponent[];
@@ -6803,6 +7154,7 @@ export declare namespace UnityEditor {
     static GetPrefabType(target: UnityEngine.Object): UnityEditor.PrefabType;
     static IsAddedGameObjectOverride(gameObject: UnityEngine.GameObject): boolean;
     static UnpackPrefabInstance(instanceRoot: UnityEngine.GameObject, unpackMode: UnityEditor.PrefabUnpackMode, action: UnityEditor.InteractionMode): void;
+    static UnpackAllInstancesOfPrefab(prefabRoot: UnityEngine.GameObject, unpackMode: UnityEditor.PrefabUnpackMode, action: UnityEditor.InteractionMode): void;
     static IsPartOfPrefabThatCanBeAppliedTo(gameObjectOrComponent: UnityEngine.Object): boolean;
     static GetPrefabInstanceStatus(componentOrGameObject: UnityEngine.Object): UnityEditor.PrefabInstanceStatus;
     static GetPrefabAssetType(componentOrGameObject: UnityEngine.Object): UnityEditor.PrefabAssetType;
@@ -7076,6 +7428,7 @@ export declare namespace UnityEditor {
     ShowAuxWindow(): void;
     ShowModal(): void;
     SaveChanges(): void;
+    DiscardChanges(): void;
     Close(): void;
     Repaint(): void;
     SendEvent(e: UnityEngine.Event): boolean;
@@ -7110,7 +7463,7 @@ export declare namespace UnityEditor {
     ToString(): string;
   }
   export class LightingExplorerTab {
-    constructor(title: string, objects: (() => UnityEngine.Object[]), columns: (() => UnityEditor.LightingExplorerTableColumn[]));
+    constructor(title: string, objects: (() => UnityEngine.Object[]), columns: (() => UnityEditor.LightingExplorerTableColumn[]), showFilterGUI?: boolean);
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -7194,57 +7547,6 @@ export declare namespace UnityEditor {
     GetType(): System.Type;
     ToString(): string;
   }
-  export class PhysicsDebugWindow {
-    constructor();
-    rootVisualElement: UnityEngine.UIElements.VisualElement;
-    wantsMouseMove: boolean;
-    wantsMouseEnterLeaveWindow: boolean;
-    wantsLessLayoutEvents: boolean;
-    autoRepaintOnSceneChange: boolean;
-    maximized: boolean;
-    hasFocus: boolean;
-    docked: boolean;
-    hasUnsavedChanges: boolean;
-    saveChangesMessage: string;
-    minSize: UnityEngine.Vector2;
-    maxSize: UnityEngine.Vector2;
-    title: string;
-    titleContent: UnityEngine.GUIContent;
-    depthBufferBits: number;
-    antiAlias: number;
-    position: UnityEngine.Rect;
-    name: string;
-    hideFlags: UnityEngine.HideFlags;
-    static ShowWindow(): UnityEditor.PhysicsDebugWindow;
-    OnEnable(): void;
-    OnDisable(): void;
-    BeginWindows(): void;
-    EndWindows(): void;
-    ShowNotification(notification: UnityEngine.GUIContent): void;
-    ShowNotification(notification: UnityEngine.GUIContent, fadeoutWait: number): void;
-    RemoveNotification(): void;
-    ShowTab(): void;
-    Focus(): void;
-    ShowUtility(): void;
-    ShowPopup(): void;
-    ShowModalUtility(): void;
-    ShowAsDropDown(buttonRect: UnityEngine.Rect, windowSize: UnityEngine.Vector2): void;
-    Show(): void;
-    Show(immediateDisplay: boolean): void;
-    ShowAuxWindow(): void;
-    ShowModal(): void;
-    SaveChanges(): void;
-    Close(): void;
-    Repaint(): void;
-    SendEvent(e: UnityEngine.Event): boolean;
-    GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
-    SetDirty(): void;
-    GetInstanceID(): number;
-    GetHashCode(): number;
-    Equals(other: any): boolean;
-    ToString(): string;
-    GetType(): System.Type;
-  }
   export class SceneModeUtility {
     static SearchForType(type: System.Type): void;
     static SearchBar(...types: System.Type[]): System.Type;
@@ -7261,6 +7563,7 @@ export declare namespace UnityEditor {
     static lastActiveSceneView: UnityEditor.SceneView;
     static currentDrawingSceneView: UnityEditor.SceneView;
     static selectedOutlineColor: UnityEngine.Color;
+    isUsingSceneFiltering: boolean;
     drawGizmos: boolean;
     sceneLighting: boolean;
     in2DMode: boolean;
@@ -7299,6 +7602,7 @@ export declare namespace UnityEditor {
     position: UnityEngine.Rect;
     name: string;
     hideFlags: UnityEngine.HideFlags;
+    static lastActiveSceneViewChanged: ((arg0: UnityEditor.SceneView, arg1: UnityEditor.SceneView) => void);
     m_SceneLighting: boolean;
     m_AudioPlay: boolean;
     static onSceneGUIDelegate: UnityEditor.SceneView_OnSceneFunc;
@@ -7351,6 +7655,7 @@ export declare namespace UnityEditor {
     ShowAuxWindow(): void;
     ShowModal(): void;
     SaveChanges(): void;
+    DiscardChanges(): void;
     Close(): void;
     Repaint(): void;
     SendEvent(e: UnityEngine.Event): boolean;
@@ -7649,7 +7954,9 @@ export declare namespace UnityEditor {
   }
   export class DestroyGameObjectHierarchyEventArgs {
     constructor(instanceId: number, scene: UnityEngine.SceneManagement.Scene);
+    constructor(instanceId: number, parentInstanceId: number, scene: UnityEngine.SceneManagement.Scene);
     instanceId: number;
+    parentInstanceId: number;
     scene: UnityEngine.SceneManagement.Scene;
     Equals(obj: any): boolean;
     GetHashCode(): number;
@@ -7889,6 +8196,8 @@ export declare namespace UnityEditor {
     static GetExecutionOrder(script: UnityEditor.MonoScript): number;
     GetScript(): UnityEditor.MonoScript;
     GetDefaultReference(name: string): UnityEngine.Object;
+    SetIcon(icon: UnityEngine.Texture2D): void;
+    GetIcon(): UnityEngine.Texture2D;
     SetAssetBundleNameAndVariant(assetBundleName: string, assetBundleVariant: string): void;
     SaveAndReimport(): void;
     AddRemap(identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object): void;
@@ -7954,6 +8263,8 @@ export declare namespace UnityEditor {
     SetEditorData(key: string, value: string): void;
     GetEditorData(key: string): string;
     static GetAllImporters(): UnityEditor.PluginImporter[];
+    SetIcon(className: string, icon: UnityEngine.Texture2D): void;
+    GetIcon(className: string): UnityEngine.Texture2D;
     SetAssetBundleNameAndVariant(assetBundleName: string, assetBundleVariant: string): void;
     SaveAndReimport(): void;
     AddRemap(identifier: UnityEditor.AssetImporter_SourceAssetIdentifier, externalObject: UnityEngine.Object): void;
@@ -7992,6 +8303,11 @@ export declare namespace UnityEditor {
     Low = 0,
     Medium = 1,
     High = 2,
+  }
+  export enum VideoEncodingProfile {
+    H264Baseline = 0,
+    H264Main = 1,
+    H264High = 2,
   }
   export enum VideoDeinterlaceMode {
     Off = 0,
@@ -8293,6 +8609,7 @@ export declare namespace UnityEditor {
     swapUVChannels: boolean;
     weldVertices: boolean;
     bakeAxisConversion: boolean;
+    optimizeBones: boolean;
     keepQuads: boolean;
     indexFormat: UnityEditor.ModelImporterIndexFormat;
     preserveHierarchy: boolean;
@@ -8328,6 +8645,7 @@ export declare namespace UnityEditor {
     resampleRotations: boolean;
     resampleCurves: boolean;
     isTangentImportSupported: boolean;
+    removeConstantScaleCurves: boolean;
     meshCompression: UnityEditor.ModelImporterMeshCompression;
     importAnimation: boolean;
     optimizeGameObjects: boolean;
@@ -8420,6 +8738,58 @@ export declare namespace UnityEditor {
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
+  }
+  export class PhysicsDebugWindow {
+    constructor();
+    rootVisualElement: UnityEngine.UIElements.VisualElement;
+    wantsMouseMove: boolean;
+    wantsMouseEnterLeaveWindow: boolean;
+    wantsLessLayoutEvents: boolean;
+    autoRepaintOnSceneChange: boolean;
+    maximized: boolean;
+    hasFocus: boolean;
+    docked: boolean;
+    hasUnsavedChanges: boolean;
+    saveChangesMessage: string;
+    minSize: UnityEngine.Vector2;
+    maxSize: UnityEngine.Vector2;
+    title: string;
+    titleContent: UnityEngine.GUIContent;
+    depthBufferBits: number;
+    antiAlias: number;
+    position: UnityEngine.Rect;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    static ShowWindow(): UnityEditor.PhysicsDebugWindow;
+    OnEnable(): void;
+    OnDisable(): void;
+    BeginWindows(): void;
+    EndWindows(): void;
+    ShowNotification(notification: UnityEngine.GUIContent): void;
+    ShowNotification(notification: UnityEngine.GUIContent, fadeoutWait: number): void;
+    RemoveNotification(): void;
+    ShowTab(): void;
+    Focus(): void;
+    ShowUtility(): void;
+    ShowPopup(): void;
+    ShowModalUtility(): void;
+    ShowAsDropDown(buttonRect: UnityEngine.Rect, windowSize: UnityEngine.Vector2): void;
+    Show(): void;
+    Show(immediateDisplay: boolean): void;
+    ShowAuxWindow(): void;
+    ShowModal(): void;
+    SaveChanges(): void;
+    DiscardChanges(): void;
+    Close(): void;
+    Repaint(): void;
+    SendEvent(e: UnityEngine.Event): boolean;
+    GetExtraPaneTypes(): System.Collections.Generic.IEnumerable<System.Type>;
+    SetDirty(): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
   }
   export class PhysicsVisualizationSettings {
     static devOptions: boolean;
@@ -8515,6 +8885,7 @@ export declare namespace UnityEditor {
   }
   export class ProfilerWindow {
     selectedModuleName: string;
+    selectedModuleIdentifier: string;
     selectedFrameIndex: System.Int64;
     firstAvailableFrameIndex: System.Int64;
     lastAvailableFrameIndex: System.Int64;
@@ -8539,7 +8910,9 @@ export declare namespace UnityEditor {
     hideFlags: UnityEngine.HideFlags;
     static cpuModuleName: string;
     static gpuModuleName: string;
-    GetFrameTimeViewSampleSelectionController(moduleName: string): UnityEditor.Profiling.IProfilerFrameTimeViewSampleSelectionController;
+    static cpuModuleIdentifier: string;
+    static gpuModuleIdentifier: string;
+    GetFrameTimeViewSampleSelectionController(moduleIdentifier: string): UnityEditor.Profiling.IProfilerFrameTimeViewSampleSelectionController;
     SelectAndStayOnLatestFrame(): void;
     BeginWindows(): void;
     EndWindows(): void;
@@ -8557,6 +8930,7 @@ export declare namespace UnityEditor {
     ShowAuxWindow(): void;
     ShowModal(): void;
     SaveChanges(): void;
+    DiscardChanges(): void;
     Close(): void;
     Repaint(): void;
     SendEvent(e: UnityEngine.Event): boolean;
@@ -8632,6 +9006,7 @@ export declare namespace UnityEditor {
     swapUVChannels: boolean;
     weldVertices: boolean;
     bakeAxisConversion: boolean;
+    optimizeBones: boolean;
     keepQuads: boolean;
     indexFormat: UnityEditor.ModelImporterIndexFormat;
     preserveHierarchy: boolean;
@@ -8667,6 +9042,7 @@ export declare namespace UnityEditor {
     resampleRotations: boolean;
     resampleCurves: boolean;
     isTangentImportSupported: boolean;
+    removeConstantScaleCurves: boolean;
     meshCompression: UnityEditor.ModelImporterMeshCompression;
     importAnimation: boolean;
     optimizeGameObjects: boolean;
@@ -9405,12 +9781,44 @@ export declare namespace UnityEditor {
       AddObjectToAsset(identifier: string, obj: UnityEngine.Object, thumbnail: UnityEngine.Texture2D): void;
       DependsOnSourceAsset(path: string): void;
       DependsOnSourceAsset(guid: UnityEditor.GUID): void;
+      GetArtifactFilePath(path: string, fileName: string): string;
+      GetArtifactFilePath(guid: UnityEditor.GUID, fileName: string): string;
+      GetArtifactFilePath(key: UnityEditor.Experimental.ArtifactKey, fileName: string): string;
+      GetOutputArtifactFilePath(fileName: string): string;
       DependsOnArtifact(key: UnityEditor.Experimental.ArtifactKey): void;
       DependsOnArtifact(guid: UnityEditor.GUID): void;
       DependsOnArtifact(path: string): void;
       DependsOnCustomDependency(dependency: string): void;
       LogImportError(msg: string, obj?: UnityEngine.Object): void;
       LogImportWarning(msg: string, obj?: UnityEngine.Object): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class CameraDescription {
+      constructor();
+      Dispose(): void;
+      GetVector4PropertyNames(names: string[]): void;
+      GetFloatPropertyNames(names: string[]): void;
+      GetStringPropertyNames(names: string[]): void;
+      GetIntPropertyNames(names: string[]): void;
+      HasAnimationCurveInClip(clipName: string, propertyName: string): boolean;
+      HasAnimationCurve(propertyName: string): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class LightDescription {
+      constructor();
+      Dispose(): void;
+      GetVector4PropertyNames(names: string[]): void;
+      GetFloatPropertyNames(names: string[]): void;
+      GetStringPropertyNames(names: string[]): void;
+      GetIntPropertyNames(names: string[]): void;
+      HasAnimationCurveInClip(clipName: string, propertyName: string): boolean;
+      HasAnimationCurve(propertyName: string): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -9458,6 +9866,7 @@ export declare namespace UnityEditor {
     }
     export class TextureGenerationOutput {
       texture: UnityEngine.Texture2D;
+      output: UnityEngine.Texture;
       importInspectorWarnings: string;
       importWarnings: string[];
       thumbNail: UnityEngine.Texture2D;
@@ -9667,6 +10076,15 @@ export declare namespace UnityEditor {
     }
   }
   export namespace Build {
+    export enum OverrideTextureCompression {
+      NoOverride = 0,
+      ForceUncompressed = 1,
+      ForceFastCompressor = 2,
+    }
+    export enum Il2CppCodeGeneration {
+      OptimizeSpeed = 0,
+      OptimizeSize = 1,
+    }
     export class BuildFailedException {
       constructor(message: string);
       constructor(innerException: System.Exception);
@@ -9691,6 +10109,14 @@ export declare namespace UnityEditor {
     }
     export interface IPreprocessBuild {
       OnPreprocessBuild(target: UnityEditor.BuildTarget, path: string): void;
+    }
+    export class BuildPlayerProcessor {
+      callbackOrder: number;
+      PrepareForBuild(buildPlayerContext: UnityEditor.Build.BuildPlayerContext): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
     }
     export interface IPreprocessBuildWithReport {
       OnPreprocessBuild(report: UnityEditor.Build.Reporting.BuildReport): void;
@@ -9724,11 +10150,41 @@ export declare namespace UnityEditor {
     }
     export interface IUnityLinkerProcessor {
       GenerateAdditionalLinkXmlFile(report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.UnityLinker.UnityLinkerBuildPipelineData): string;
-      OnBeforeRun(report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.UnityLinker.UnityLinkerBuildPipelineData): void;
-      OnAfterRun(report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.UnityLinker.UnityLinkerBuildPipelineData): void;
     }
     export interface IIl2CppProcessor {
-      OnBeforeConvertRun(report: UnityEditor.Build.Reporting.BuildReport, data: UnityEditor.Il2Cpp.Il2CppBuildPipelineData): void;
+    }
+    export class BuildPlayerContext {
+      BuildPlayerOptions: UnityEditor.BuildPlayerOptions;
+      AddAdditionalPathToStreamingAssets(directoryOrFile: string, pathInStreamingAssets?: string): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class NamedBuildTarget {
+      TargetName: string;
+      static Unknown: UnityEditor.Build.NamedBuildTarget;
+      static Standalone: UnityEditor.Build.NamedBuildTarget;
+      static Server: UnityEditor.Build.NamedBuildTarget;
+      static iOS: UnityEditor.Build.NamedBuildTarget;
+      static Android: UnityEditor.Build.NamedBuildTarget;
+      static WebGL: UnityEditor.Build.NamedBuildTarget;
+      static WindowsStoreApps: UnityEditor.Build.NamedBuildTarget;
+      static PS4: UnityEditor.Build.NamedBuildTarget;
+      static XboxOne: UnityEditor.Build.NamedBuildTarget;
+      static tvOS: UnityEditor.Build.NamedBuildTarget;
+      static NintendoSwitch: UnityEditor.Build.NamedBuildTarget;
+      static Stadia: UnityEditor.Build.NamedBuildTarget;
+      static CloudRendering: UnityEditor.Build.NamedBuildTarget;
+      static EmbeddedLinux: UnityEditor.Build.NamedBuildTarget;
+      ToBuildTargetGroup(): UnityEditor.BuildTargetGroup;
+      static FromBuildTargetGroup(buildTargetGroup: UnityEditor.BuildTargetGroup): UnityEditor.Build.NamedBuildTarget;
+      GetHashCode(): number;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEditor.Build.NamedBuildTarget): boolean;
+      CompareTo(other: UnityEditor.Build.NamedBuildTarget): number;
+      ToString(): string;
+      GetType(): System.Type;
     }
     export namespace Content {
       export class SerializedLocation {
@@ -9824,6 +10280,7 @@ export declare namespace UnityEditor {
       export class ContentBuildInterface {
         static GenerateAssetBundleBuilds(): UnityEditor.AssetBundleBuild[];
         static GetGlobalUsageFromGraphicsSettings(): UnityEditor.Build.Content.BuildUsageTagGlobal;
+        static GetGlobalUsageFromActiveScene(target: UnityEditor.BuildTarget): UnityEditor.Build.Content.BuildUsageTagGlobal;
         static ObjectIsSupportedInBuild(targetObject: UnityEngine.Object): boolean;
         static CalculatePlayerDependenciesForScene(scenePath: string, settings: UnityEditor.Build.Content.BuildSettings, usageSet: UnityEditor.Build.Content.BuildUsageTagSet): UnityEditor.Build.Content.SceneDependencyInfo;
         static CalculatePlayerDependenciesForScene(scenePath: string, settings: UnityEditor.Build.Content.BuildSettings, usageSet: UnityEditor.Build.Content.BuildUsageTagSet, usageCache: UnityEditor.Build.Content.BuildUsageCache): UnityEditor.Build.Content.SceneDependencyInfo;
@@ -10067,6 +10524,7 @@ export declare namespace UnityEditor {
         Assertions = 2,
       }
       export class ScriptCompilationSettings {
+        subtarget: number;
         target: UnityEditor.BuildTarget;
         group: UnityEditor.BuildTargetGroup;
         options: UnityEditor.Build.Player.ScriptCompilationOptions;
@@ -10526,8 +10984,12 @@ export declare namespace UnityEditor {
       GetType(): System.Type;
     }
     export class EditorToolContext {
+      targets: System.Collections.Generic.IEnumerable<UnityEngine.Object>;
+      target: UnityEngine.Object;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      OnActivated(): void;
+      OnWillBeDeactivated(): void;
       OnToolGUI(window: UnityEditor.EditorWindow): void;
       ResolveTool(tool: UnityEditor.Tool): System.Type;
       SetDirty(): void;
@@ -10550,8 +11012,12 @@ export declare namespace UnityEditor {
       ToString(): string;
     }
     export class GameObjectToolContext {
+      targets: System.Collections.Generic.IEnumerable<UnityEngine.Object>;
+      target: UnityEngine.Object;
       name: string;
       hideFlags: UnityEngine.HideFlags;
+      OnActivated(): void;
+      OnWillBeDeactivated(): void;
       OnToolGUI(window: UnityEditor.EditorWindow): void;
       ResolveTool(tool: UnityEditor.Tool): System.Type;
       SetDirty(): void;
@@ -10570,6 +11036,7 @@ export declare namespace UnityEditor {
       static RestorePreviousTool(): void;
       static RestorePreviousPersistentTool(): void;
       static IsActiveTool(tool: UnityEditor.EditorTools.EditorTool): boolean;
+      static IsActiveContext(context: UnityEditor.EditorTools.EditorToolContext): boolean;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10763,6 +11230,7 @@ export declare namespace UnityEditor {
       static GetAdditionalBakedProbes(id: number, outBakedProbeSH: any, outBakedProbeValidity: any): boolean;
       static GetAdditionalBakedProbes(id: number, outBakedProbeSH: any, outBakedProbeValidity: any, outBakedProbeOctahedralDepth: any): boolean;
       static SetAdditionalBakedProbes(id: number, positions: UnityEngine.Vector3[]): void;
+      static SetLightDirty(light: UnityEngine.Light): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -10909,119 +11377,6 @@ export declare namespace UnityEditor {
         ToString(): string;
       }
     }
-    export namespace SceneManagement {
-      export class PrefabStage {
-        prefabContentsRoot: UnityEngine.GameObject;
-        openedFromInstanceRoot: UnityEngine.GameObject;
-        openedFromInstanceObject: UnityEngine.GameObject;
-        mode: UnityEditor.Experimental.SceneManagement.PrefabStage_Mode;
-        assetPath: string;
-        prefabAssetPath: string;
-        scene: UnityEngine.SceneManagement.Scene;
-        stageHandle: UnityEditor.SceneManagement.StageHandle;
-        name: string;
-        hideFlags: UnityEngine.HideFlags;
-        GetCombinedSceneCullingMaskForCamera(): System.UInt64;
-        IsPartOfPrefabContents(gameObject: UnityEngine.GameObject): boolean;
-        ClearDirtiness(): void;
-        SetDirty(): void;
-        GetInstanceID(): number;
-        GetHashCode(): number;
-        Equals(other: any): boolean;
-        ToString(): string;
-        GetType(): System.Type;
-      }
-      export enum PrefabStage_Mode {
-        InIsolation = 0,
-        InContext = 1,
-      }
-      export class PrefabStageUtility {
-        constructor();
-        static GetCurrentPrefabStage(): UnityEditor.Experimental.SceneManagement.PrefabStage;
-        static GetPrefabStage(gameObject: UnityEngine.GameObject): UnityEditor.Experimental.SceneManagement.PrefabStage;
-        Equals(obj: any): boolean;
-        GetHashCode(): number;
-        GetType(): System.Type;
-        ToString(): string;
-      }
-    }
-    export namespace TerrainAPI {
-      export class TerrainToolShortcutContext {
-        Equals(obj: any): boolean;
-        GetHashCode(): number;
-        GetType(): System.Type;
-        ToString(): string;
-      }
-      export enum BrushGUIEditFlags {
-        Select = 1,
-        Inspect = 2,
-        Size = 4,
-        Opacity = 8,
-        SelectAndInspect = 3,
-        All = 15,
-      }
-      export enum RepaintFlags {
-        UI = 1,
-        Scene = 2,
-      }
-      export interface IOnPaint {
-        brushTexture: UnityEngine.Texture;
-        uv: UnityEngine.Vector2;
-        brushStrength: number;
-        brushSize: number;
-        hitValidTerrain: boolean;
-        raycastHit: any; // UnityEngine.RaycastHit
-        RepaintAllInspectors(): void;
-        Repaint(flags?: UnityEditor.Experimental.TerrainAPI.RepaintFlags): void;
-      }
-      export interface IOnSceneGUI {
-        sceneView: UnityEditor.SceneView;
-        brushTexture: UnityEngine.Texture;
-        brushStrength: number;
-        brushSize: number;
-        hitValidTerrain: boolean;
-        raycastHit: any; // UnityEngine.RaycastHit
-        Repaint(flags?: UnityEditor.Experimental.TerrainAPI.RepaintFlags): void;
-      }
-      export interface IOnInspectorGUI {
-        ShowBrushesGUI(spacing: number): void;
-        ShowBrushesGUI(spacing: number, flags: UnityEditor.Experimental.TerrainAPI.BrushGUIEditFlags): void;
-        ShowBrushesGUI(spacing: number, flags: UnityEditor.Experimental.TerrainAPI.BrushGUIEditFlags, textureResolutionPerTile: number): void;
-        Repaint(flags?: UnityEditor.Experimental.TerrainAPI.RepaintFlags): void;
-      }
-      export class TerrainPaintTool<T = any> {
-        name: string;
-        hideFlags: UnityEngine.HideFlags;
-        GetName(): string;
-        GetDesc(): string;
-        OnEnable(): void;
-        OnDisable(): void;
-        OnEnterToolMode(): void;
-        OnExitToolMode(): void;
-        OnSceneGUI(terrain: any, editContext: UnityEditor.Experimental.TerrainAPI.IOnSceneGUI): void;
-        OnInspectorGUI(terrain: any, editContext: UnityEditor.Experimental.TerrainAPI.IOnInspectorGUI): void;
-        OnPaint(terrain: any, editContext: UnityEditor.Experimental.TerrainAPI.IOnPaint): boolean;
-        SetDirty(): void;
-        GetInstanceID(): number;
-        GetHashCode(): number;
-        Equals(other: any): boolean;
-        ToString(): string;
-        GetType(): System.Type;
-      }
-      export class TerrainPaintUtilityEditor {
-        static ShowDefaultPreviewBrush(terrain: any, brushTexture: UnityEngine.Texture, brushSize: number): void;
-        static GetDefaultBrushPreviewMaterial(): UnityEngine.Material;
-        static DrawBrushPreview(heightmapPC: any, previewTexture: UnityEditor.Experimental.TerrainAPI.TerrainPaintUtilityEditor_BrushPreview, brushTexture: UnityEngine.Texture, brushXform: any, proceduralMaterial: UnityEngine.Material, materialPassIndex: number): void;
-        Equals(obj: any): boolean;
-        GetHashCode(): number;
-        GetType(): System.Type;
-        ToString(): string;
-      }
-      export enum TerrainPaintUtilityEditor_BrushPreview {
-        SourceRenderTexture = 0,
-        DestinationRenderTexture = 1,
-      }
-    }
   }
   export namespace Hardware {
     export class UsbDevice {
@@ -11145,34 +11500,6 @@ export declare namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
-      export class JointAngularLimitHandle {
-        constructor();
-        xMin: number;
-        xMax: number;
-        yMin: number;
-        yMax: number;
-        zMin: number;
-        zMax: number;
-        xRange: UnityEngine.Vector2;
-        yRange: UnityEngine.Vector2;
-        zRange: UnityEngine.Vector2;
-        xMotion: any; // UnityEngine.ConfigurableJointMotion
-        yMotion: any; // UnityEngine.ConfigurableJointMotion
-        zMotion: any; // UnityEngine.ConfigurableJointMotion
-        xHandleColor: UnityEngine.Color;
-        yHandleColor: UnityEngine.Color;
-        zHandleColor: UnityEngine.Color;
-        radius: number;
-        fillAlpha: number;
-        wireframeAlpha: number;
-        angleHandleDrawFunction: UnityEditor.Handles_CapFunction;
-        angleHandleSizeFunction: UnityEditor.Handles_SizeFunction;
-        DrawHandle(): void;
-        Equals(obj: any): boolean;
-        GetHashCode(): number;
-        GetType(): System.Type;
-        ToString(): string;
-      }
       export class BoxBoundsHandle {
         constructor(controlIDHint: number);
         constructor();
@@ -11289,10 +11616,10 @@ export declare namespace UnityEditor {
       }
       export class MultiColumnHeader {
         constructor(state: UnityEditor.IMGUI.Controls.MultiColumnHeaderState);
-        sortedColumnIndex: number;
-        state: UnityEditor.IMGUI.Controls.MultiColumnHeaderState;
         height: number;
         canSort: boolean;
+        sortedColumnIndex: number;
+        state: UnityEditor.IMGUI.Controls.MultiColumnHeaderState;
         SetSortingColumns(columnIndices: number[], sortAscending: boolean[]): void;
         SetSorting(columnIndex: number, sortAscending: boolean): void;
         SetSortDirection(columnIndex: number, sortAscending: boolean): void;
@@ -11373,6 +11700,7 @@ export declare namespace UnityEditor {
         autoResize: boolean;
         allowToggleVisibility: boolean;
         canSort: boolean;
+        userData: number;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -11538,6 +11866,35 @@ export declare namespace UnityEditor {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class JointAngularLimitHandle {
+        constructor();
+        xMin: number;
+        xMax: number;
+        yMin: number;
+        yMax: number;
+        zMin: number;
+        zMax: number;
+        xRange: UnityEngine.Vector2;
+        yRange: UnityEngine.Vector2;
+        zRange: UnityEngine.Vector2;
+        xMotion: any; // UnityEngine.ConfigurableJointMotion
+        yMotion: any; // UnityEngine.ConfigurableJointMotion
+        zMotion: any; // UnityEngine.ConfigurableJointMotion
+        xHandleColor: UnityEngine.Color;
+        yHandleColor: UnityEngine.Color;
+        zHandleColor: UnityEngine.Color;
+        radius: number;
+        fillAlpha: number;
+        wireframeAlpha: number;
+        angleHandleDrawFunction: UnityEditor.Handles_CapFunction;
+        angleHandleSizeFunction: UnityEditor.Handles_SizeFunction;
+        DrawHandle(): void;
+        DrawHandle(usingArticulations: boolean): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
     }
   }
   export namespace Localization {
@@ -11608,6 +11965,36 @@ export declare namespace UnityEditor {
       ToString(): string;
       GetType(): System.Type;
     }
+    export class H264EncoderAttributes {
+      gopSize: System.UInt32;
+      numConsecutiveBFrames: System.UInt32;
+      profile: UnityEditor.VideoEncodingProfile;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class VP8EncoderAttributes {
+      keyframeDistance: System.UInt32;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class VideoTrackEncoderAttributes {
+      constructor(h264Attrs: UnityEditor.Media.H264EncoderAttributes);
+      constructor(vp8Attrs: UnityEditor.Media.VP8EncoderAttributes);
+      frameRate: UnityEditor.Media.MediaRational;
+      width: System.UInt32;
+      height: System.UInt32;
+      targetBitRate: System.UInt32;
+      bitRateMode: UnityEditor.VideoBitrateMode;
+      includeAlpha: boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
     export class VideoTrackAttributes {
       frameRate: UnityEditor.Media.MediaRational;
       width: System.UInt32;
@@ -11630,6 +12017,9 @@ export declare namespace UnityEditor {
     }
     export class MediaEncoder {
       constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackAttributes, audioAttrs: UnityEditor.Media.AudioTrackAttributes[]);
+      constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackEncoderAttributes, audioAttrs: UnityEditor.Media.AudioTrackAttributes[]);
+      constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackEncoderAttributes, audioAttrs: UnityEditor.Media.AudioTrackAttributes);
+      constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackEncoderAttributes);
       constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackAttributes, audioAttrs: UnityEditor.Media.AudioTrackAttributes);
       constructor(filePath: string, videoAttrs: UnityEditor.Media.VideoTrackAttributes);
       constructor(filePath: string, audioAttrs: UnityEditor.Media.AudioTrackAttributes[]);
@@ -12012,6 +12402,80 @@ export declare namespace UnityEditor {
       }
     }
   }
+  export namespace Overlays {
+    export interface ITransientOverlay {
+      visible: boolean;
+    }
+    export class IMGUIOverlay {
+      containerWindow: UnityEditor.EditorWindow;
+      id: string;
+      layout: UnityEditor.Overlays.Layout;
+      collapsed: boolean;
+      displayName: string;
+      displayed: boolean;
+      isInToolbar: boolean;
+      floatingPosition: UnityEngine.Vector2;
+      floating: boolean;
+      CreatePanelContent(): UnityEngine.UIElements.VisualElement;
+      OnGUI(): void;
+      OnCreated(): void;
+      OnWillBeDestroyed(): void;
+      Undock(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum Layout {
+      HorizontalToolbar = 1,
+      VerticalToolbar = 2,
+      Panel = 4,
+      All = 7,
+    }
+    export class Overlay {
+      containerWindow: UnityEditor.EditorWindow;
+      id: string;
+      layout: UnityEditor.Overlays.Layout;
+      collapsed: boolean;
+      displayName: string;
+      displayed: boolean;
+      isInToolbar: boolean;
+      floatingPosition: UnityEngine.Vector2;
+      floating: boolean;
+      static ussClassName: string;
+      CreatePanelContent(): UnityEngine.UIElements.VisualElement;
+      OnCreated(): void;
+      OnWillBeDestroyed(): void;
+      Undock(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export interface ISupportsOverlays {
+    }
+    export class ToolbarOverlay {
+      containerWindow: UnityEditor.EditorWindow;
+      id: string;
+      layout: UnityEditor.Overlays.Layout;
+      collapsed: boolean;
+      displayName: string;
+      displayed: boolean;
+      isInToolbar: boolean;
+      floatingPosition: UnityEngine.Vector2;
+      floating: boolean;
+      CreateHorizontalToolbarContent(): UnityEngine.UIElements.VisualElement;
+      CreateVerticalToolbarContent(): UnityEngine.UIElements.VisualElement;
+      CreatePanelContent(): UnityEngine.UIElements.VisualElement;
+      OnCreated(): void;
+      OnWillBeDestroyed(): void;
+      Undock(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+  }
   export namespace PackageManager {
     export class AuthorInfo {
       name: string;
@@ -12035,6 +12499,7 @@ export declare namespace UnityEditor {
       static List(offlineMode: boolean): UnityEditor.PackageManager.Requests.ListRequest;
       static List(): UnityEditor.PackageManager.Requests.ListRequest;
       static Add(identifier: string): UnityEditor.PackageManager.Requests.AddRequest;
+      static AddAndRemove(packagesToAdd?: string[], packagesToRemove?: string[]): UnityEditor.PackageManager.Requests.AddAndRemoveRequest;
       static Embed(packageName: string): UnityEditor.PackageManager.Requests.EmbedRequest;
       static Remove(packageName: string): UnityEditor.PackageManager.Requests.RemoveRequest;
       static Search(packageIdOrName: string, offlineMode: boolean): UnityEditor.PackageManager.Requests.SearchRequest;
@@ -12071,6 +12536,7 @@ export declare namespace UnityEditor {
       Forbidden = 2,
       InvalidParameter = 3,
       Conflict = 4,
+      AggregateError = 5,
     }
     export class Events {
       Equals(obj: any): boolean;
@@ -12209,6 +12675,16 @@ export declare namespace UnityEditor {
       ToString(): string;
     }
     export namespace Requests {
+      export class AddAndRemoveRequest {
+        Result: UnityEditor.PackageManager.PackageCollection;
+        Status: UnityEditor.PackageManager.StatusCode;
+        IsCompleted: boolean;
+        Error: UnityEditor.PackageManager.Error;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
       export class AddRequest {
         Result: UnityEditor.PackageManager.PackageInfo;
         Status: UnityEditor.PackageManager.StatusCode;
@@ -12373,6 +12849,7 @@ export declare namespace UnityEditor {
       ShowAuxWindow(): void;
       ShowModal(): void;
       SaveChanges(): void;
+      DiscardChanges(): void;
       Close(): void;
       Repaint(): void;
       SendEvent(e: UnityEngine.Event): boolean;
@@ -12515,6 +12992,7 @@ export declare namespace UnityEditor {
       GetCategoryInfo(id: System.UInt16): UnityEditor.Profiling.ProfilerCategoryInfo;
       GetAllCategories(categoryInfoList: UnityEditor.Profiling.ProfilerCategoryInfo[]): void;
       GetFrameMetaDataCount(id: System.Guid, tag: number): number;
+      GetSessionMetaDataCount(id: System.Guid, tag: number): number;
       ResolveMethodInfo(addr: System.UInt64): UnityEditor.Profiling.FrameDataView_MethodInfo;
       HasCounterValue(markerId: number): boolean;
       GetCounterValueAsInt(markerId: number): number;
@@ -12635,6 +13113,7 @@ export declare namespace UnityEditor {
       GetCategoryInfo(id: System.UInt16): UnityEditor.Profiling.ProfilerCategoryInfo;
       GetAllCategories(categoryInfoList: UnityEditor.Profiling.ProfilerCategoryInfo[]): void;
       GetFrameMetaDataCount(id: System.Guid, tag: number): number;
+      GetSessionMetaDataCount(id: System.Guid, tag: number): number;
       ResolveMethodInfo(addr: System.UInt64): UnityEditor.Profiling.FrameDataView_MethodInfo;
       HasCounterValue(markerId: number): boolean;
       GetCounterValueAsInt(markerId: number): number;
@@ -12697,6 +13176,7 @@ export declare namespace UnityEditor {
       GetCategoryInfo(id: System.UInt16): UnityEditor.Profiling.ProfilerCategoryInfo;
       GetAllCategories(categoryInfoList: UnityEditor.Profiling.ProfilerCategoryInfo[]): void;
       GetFrameMetaDataCount(id: System.Guid, tag: number): number;
+      GetSessionMetaDataCount(id: System.Guid, tag: number): number;
       ResolveMethodInfo(addr: System.UInt64): UnityEditor.Profiling.FrameDataView_MethodInfo;
       HasCounterValue(markerId: number): boolean;
       GetCounterValueAsInt(markerId: number): number;
@@ -12971,7 +13451,9 @@ export declare namespace UnityEditor {
       constructor();
       static albedoSwatches: UnityEditor.Rendering.AlbedoSwatchInfo[];
       static GetTierSettings(target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.GraphicsTier): UnityEditor.Rendering.TierSettings;
+      static GetTierSettings(target: UnityEditor.Build.NamedBuildTarget, tier: UnityEngine.Rendering.GraphicsTier): UnityEditor.Rendering.TierSettings;
       static SetTierSettings(target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.GraphicsTier, settings: UnityEditor.Rendering.TierSettings): void;
+      static SetTierSettings(target: UnityEditor.Build.NamedBuildTarget, tier: UnityEngine.Rendering.GraphicsTier, settings: UnityEditor.Rendering.TierSettings): void;
       static GetShaderSettingsForPlatform(target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.ShaderHardwareTier): UnityEditor.Rendering.PlatformShaderSettings;
       static SetShaderSettingsForPlatform(target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.ShaderHardwareTier, settings: UnityEditor.Rendering.PlatformShaderSettings): void;
       static GetTierSettings(target: UnityEditor.BuildTargetGroup, tier: UnityEngine.Rendering.ShaderHardwareTier): UnityEditor.Rendering.TierSettings;
@@ -13081,6 +13563,7 @@ export declare namespace UnityEditor {
       Derivatives = 32,
       SampleLOD = 64,
       FragCoord = 128,
+      FragClipDepth = 256,
       Interpolators15Integers = 512,
       Texture2DArray = 1024,
       Instancing = 2048,
@@ -13093,6 +13576,7 @@ export declare namespace UnityEditor {
       SparseTexelResident = 262144,
       FramebufferFetch = 524288,
       MSAATextureSamples = 1048576,
+      SetRTArrayIndexFromAnyShader = 2097152,
     }
     export enum ShaderType {
       Vertex = 1,
@@ -13132,7 +13616,6 @@ export declare namespace UnityEditor {
       static MoveSceneAfter(src: UnityEngine.SceneManagement.Scene, dst: UnityEngine.SceneManagement.Scene): void;
       static SaveOpenScenes(): boolean;
       static SaveScenes(scenes: UnityEngine.SceneManagement.Scene[]): boolean;
-      static SaveCurrentModifiedScenesIfUserWantsTo(): boolean;
       static SaveModifiedScenesIfUserWantsTo(scenes: UnityEngine.SceneManagement.Scene[]): boolean;
       static EnsureUntitledSceneHasBeenSaved(dialogContent: string): boolean;
       static MarkSceneDirty(scene: UnityEngine.SceneManagement.Scene): boolean;
@@ -13143,6 +13626,7 @@ export declare namespace UnityEditor {
       static GetSceneCullingMask(scene: UnityEngine.SceneManagement.Scene): System.UInt64;
       static SetSceneCullingMask(scene: UnityEngine.SceneManagement.Scene, sceneCullingMask: System.UInt64): void;
       static CalculateAvailableSceneCullingMask(): System.UInt64;
+      static SaveCurrentModifiedScenesIfUserWantsTo(): boolean;
       static OpenScene(scenePath: string): UnityEngine.SceneManagement.Scene;
       static NewScene(setup: UnityEditor.SceneManagement.NewSceneSetup): UnityEngine.SceneManagement.Scene;
       static SaveScene(scene: UnityEngine.SceneManagement.Scene, dstScenePath: string): boolean;
@@ -13485,6 +13969,42 @@ export declare namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class PrefabStage {
+      prefabContentsRoot: UnityEngine.GameObject;
+      openedFromInstanceRoot: UnityEngine.GameObject;
+      openedFromInstanceObject: UnityEngine.GameObject;
+      mode: UnityEditor.SceneManagement.PrefabStage_Mode;
+      assetPath: string;
+      prefabAssetPath: string;
+      scene: UnityEngine.SceneManagement.Scene;
+      stageHandle: UnityEditor.SceneManagement.StageHandle;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      GetCombinedSceneCullingMaskForCamera(): System.UInt64;
+      IsPartOfPrefabContents(gameObject: UnityEngine.GameObject): boolean;
+      ClearDirtiness(): void;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum PrefabStage_Mode {
+      InIsolation = 0,
+      InContext = 1,
+    }
+    export class PrefabStageUtility {
+      static OpenPrefab(prefabAssetPath: string): UnityEditor.SceneManagement.PrefabStage;
+      static OpenPrefab(prefabAssetPath: string, openedFromInstance: UnityEngine.GameObject): UnityEditor.SceneManagement.PrefabStage;
+      static OpenPrefab(prefabAssetPath: string, openedFromInstance: UnityEngine.GameObject, prefabStageMode: UnityEditor.SceneManagement.PrefabStage_Mode): UnityEditor.SceneManagement.PrefabStage;
+      static GetCurrentPrefabStage(): UnityEditor.SceneManagement.PrefabStage;
+      static GetPrefabStage(gameObject: UnityEngine.GameObject): UnityEditor.SceneManagement.PrefabStage;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
   }
   export namespace Scripting {
     export class ManagedDebugger {
@@ -13508,12 +14028,6 @@ export declare namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
-    export enum VisibleObjects {
-      None = 0,
-      Assets = 1,
-      Scene = 2,
-      All = 3,
-    }
     export class ObjectSelectorTargetInfo {
       constructor(globalObjectId: UnityEditor.GlobalObjectId, targetObject?: UnityEngine.Object, type?: System.Type);
       globalObjectId: UnityEditor.GlobalObjectId;
@@ -13527,6 +14041,7 @@ export declare namespace UnityEditor {
     }
     export class ObjectSelectorSearchContext {
       constructor();
+      selectorConstraint: ((arg0: UnityEditor.SearchService.ObjectSelectorTargetInfo, arg1: UnityEngine.Object[], arg2: UnityEditor.SearchService.ObjectSelectorSearchContext) => boolean);
       guid: System.Guid;
       engineScope: UnityEditor.SearchService.SearchEngineScope;
       currentObject: UnityEngine.Object;
@@ -13535,11 +14050,16 @@ export declare namespace UnityEditor {
       requiredTypeNames: System.Collections.Generic.IEnumerable<string>;
       visibleObjects: UnityEditor.SearchService.VisibleObjects;
       allowedInstanceIds: System.Collections.Generic.IEnumerable<number>;
-      selectorConstraint: ((arg0: UnityEditor.SearchService.ObjectSelectorTargetInfo, arg1: UnityEngine.Object[], arg2: UnityEditor.SearchService.ObjectSelectorSearchContext) => boolean);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+    export enum VisibleObjects {
+      None = 0,
+      Assets = 1,
+      Scene = 2,
+      All = 3,
     }
     export interface IObjectSelectorEngine {
     }
@@ -13652,6 +14172,7 @@ export declare namespace UnityEditor {
       alt: boolean;
       action: boolean;
       shift: boolean;
+      control: boolean;
       ToString(): string;
       Equals(other: UnityEditor.ShortcutManagement.KeyCombination): boolean;
       Equals(obj: any): boolean;
@@ -13685,6 +14206,7 @@ export declare namespace UnityEditor {
       Alt = 1,
       Action = 2,
       Shift = 4,
+      Control = 8,
     }
     export interface IShortcutManager {
       activeProfileId: string;
@@ -13798,6 +14320,103 @@ export declare namespace UnityEditor {
       GetVersion(): number;
     }
   }
+  export namespace TerrainTools {
+    export class TerrainToolShortcutContext {
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class TerrainInspectorUtility {
+      static TerrainShaderValidationGUI(material: UnityEngine.Material): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum BrushGUIEditFlags {
+      None = 0,
+      Select = 1,
+      Inspect = 2,
+      Size = 4,
+      Opacity = 8,
+      SelectAndInspect = 3,
+      All = 15,
+    }
+    export enum RepaintFlags {
+      UI = 1,
+      Scene = 2,
+    }
+    export interface IOnPaint {
+      brushTexture: UnityEngine.Texture;
+      uv: UnityEngine.Vector2;
+      brushStrength: number;
+      brushSize: number;
+      hitValidTerrain: boolean;
+      raycastHit: any; // UnityEngine.RaycastHit
+      RepaintAllInspectors(): void;
+      Repaint(flags?: UnityEditor.TerrainTools.RepaintFlags): void;
+    }
+    export interface IOnSceneGUI {
+      sceneView: UnityEditor.SceneView;
+      brushTexture: UnityEngine.Texture;
+      brushStrength: number;
+      brushSize: number;
+      hitValidTerrain: boolean;
+      raycastHit: any; // UnityEngine.RaycastHit
+      controlId: number;
+      Repaint(flags?: UnityEditor.TerrainTools.RepaintFlags): void;
+    }
+    export interface IOnInspectorGUI {
+      ShowBrushesGUI(spacing?: number, flags?: UnityEditor.TerrainTools.BrushGUIEditFlags, textureResolutionPerTile?: number): void;
+      Repaint(flags?: UnityEditor.TerrainTools.RepaintFlags): void;
+    }
+    export class TerrainPaintTool<T = any> {
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      GetName(): string;
+      GetDescription(): string;
+      OnEnable(): void;
+      OnDisable(): void;
+      OnEnterToolMode(): void;
+      OnExitToolMode(): void;
+      OnSceneGUI(terrain: any, editContext: UnityEditor.TerrainTools.IOnSceneGUI): void;
+      OnRenderBrushPreview(terrain: any, editContext: UnityEditor.TerrainTools.IOnSceneGUI): void;
+      OnInspectorGUI(terrain: any, editContext: UnityEditor.TerrainTools.IOnInspectorGUI): void;
+      OnPaint(terrain: any, editContext: UnityEditor.TerrainTools.IOnPaint): boolean;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum TerrainBrushPreviewMode {
+      SourceRenderTexture = 0,
+      DestinationRenderTexture = 1,
+    }
+    export class TerrainPaintUtilityEditor {
+      static ShowDefaultPreviewBrush(terrain: any, brushTexture: UnityEngine.Texture, brushSize: number): void;
+      static GetDefaultBrushPreviewMaterial(): UnityEngine.Material;
+      static DrawBrushPreview(heightmapPC: any, previewTexture: UnityEditor.TerrainTools.TerrainBrushPreviewMode, brushTexture: UnityEngine.Texture, brushXform: any, proceduralMaterial: UnityEngine.Material, materialPassIndex: number): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+  }
+  export namespace Toolbars {
+    export interface IAccessContainerWindow {
+      containerWindow: UnityEditor.EditorWindow;
+    }
+    export class EditorToolbarUtility {
+      static SetupChildrenAsButtonStrip(root: UnityEngine.UIElements.VisualElement): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+  }
   export namespace U2D {
     export class SpriteEditorExtension {
       static GetSpriteID(sprite: UnityEngine.Sprite): UnityEditor.GUID;
@@ -13852,6 +14471,8 @@ export declare namespace UnityEditor {
       static SetIsVariant(spriteAtlas: UnityEngine.U2D.SpriteAtlas, value: boolean): void;
       static SetMasterAtlas(spriteAtlas: UnityEngine.U2D.SpriteAtlas, value: UnityEngine.U2D.SpriteAtlas): void;
       static SetVariantScale(spriteAtlas: UnityEngine.U2D.SpriteAtlas, value: number): void;
+      static IsIncludeInBuild(spriteAtlas: UnityEngine.U2D.SpriteAtlas): boolean;
+      static GetMasterAtlas(spriteAtlas: UnityEngine.U2D.SpriteAtlas): UnityEngine.U2D.SpriteAtlas;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -13865,6 +14486,8 @@ export declare namespace UnityEditor {
       SetIsVariant(value: boolean): void;
       SetMasterAtlas(atlas: UnityEngine.U2D.SpriteAtlas): void;
       SetIncludeInBuild(value: boolean): void;
+      IsIncludeInBuild(): boolean;
+      GetMasterAtlas(): UnityEngine.U2D.SpriteAtlas;
       SetVariantScale(value: number): void;
       SetPlatformSettings(src: UnityEditor.TextureImporterPlatformSettings): void;
       GetPlatformSettings(buildTarget: string): UnityEditor.TextureImporterPlatformSettings;
@@ -13909,32 +14532,6 @@ export declare namespace UnityEditor {
     export class UIElementsEntryPoint {
       static SetAntiAliasing(window: UnityEditor.EditorWindow, aa: number): void;
       static GetAntiAliasing(window: UnityEditor.EditorWindow): number;
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export class SerializedPropertyChangeEvent {
-      constructor();
-      changedProperty: UnityEditor.SerializedProperty;
-      eventTypeId: System.Int64;
-      timestamp: System.Int64;
-      bubbles: boolean;
-      tricklesDown: boolean;
-      target: UnityEngine.UIElements.IEventHandler;
-      isPropagationStopped: boolean;
-      isImmediatePropagationStopped: boolean;
-      isDefaultPrevented: boolean;
-      propagationPhase: UnityEngine.UIElements.PropagationPhase;
-      currentTarget: UnityEngine.UIElements.IEventHandler;
-      dispatch: boolean;
-      imguiEvent: UnityEngine.Event;
-      originalMousePosition: UnityEngine.Vector2;
-      static GetPooled(value: UnityEditor.SerializedProperty): UnityEditor.UIElements.SerializedPropertyChangeEvent;
-      Dispose(): void;
-      StopPropagation(): void;
-      StopImmediatePropagation(): void;
-      PreventDefault(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -14211,6 +14808,33 @@ export declare namespace UnityEditor {
       GetType(): System.Type;
       ToString(): string;
     }
+    export class VersionControlManager {
+      static versionControlDescriptors: UnityEditor.VersionControl.VersionControlDescriptor[];
+      static activeVersionControlObject: UnityEditor.VersionControl.VersionControlObject;
+      static SetVersionControl(name: string): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum IconOverlayType {
+      Project = 0,
+      Hierarchy = 1,
+      Other = 2,
+    }
+    export interface IIconOverlayExtension {
+      DrawOverlay(assetPath: string, type: UnityEditor.VersionControl.IconOverlayType, rect: UnityEngine.Rect): void;
+    }
+    export interface IInspectorWindowExtension {
+      OnVersionControlBar(editor: UnityEditor.Editor): void;
+      InvalidateVersionControlBarState(): void;
+    }
+    export interface IPopupMenuExtension {
+      DisplayPopupMenu(position: UnityEngine.Rect): void;
+    }
+    export interface ISettingsInspectorExtension {
+      OnInspectorGUI(): void;
+    }
     export class AssetList {
       constructor();
       constructor(src: UnityEditor.VersionControl.AssetList);
@@ -14355,6 +14979,35 @@ export declare namespace UnityEditor {
       None = 0,
       Binary = 1,
       Text = 2,
+    }
+    export class VersionControlUtils {
+      static IsPathVersioned(path: string): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class VersionControlDescriptor {
+      name: string;
+      displayName: string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class VersionControlObject {
+      isConnected: boolean;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      OnActivate(): void;
+      OnDeactivate(): void;
+      Refresh(): void;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
     }
   }
   export namespace VisualStudioIntegration {

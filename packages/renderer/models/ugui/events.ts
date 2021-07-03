@@ -1,12 +1,13 @@
 import { ReactUnity, UnityEngine } from '../generated';
 
-export type ActionCallback<T = ReactUnity.Components.ReactComponent> = (sender: T) => void;
-export type BaseEventCallback<T = ReactUnity.Components.ReactComponent> = (ev: UnityEngine.EventSystems.BaseEventData, sender: T) => void;
-export type PointerEventCallback<T = ReactUnity.Components.ReactComponent> = (ev: UnityEngine.EventSystems.PointerEventData, sender: T) => void;
-export type AxisEventCallback<T = ReactUnity.Components.ReactComponent> = (ev: UnityEngine.EventSystems.AxisEventData, sender: T) => void;
-export type KeyEventCallback<T = ReactUnity.Components.ReactComponent> = (ev: ReactUnity.EventHandlers.KeyEventData, sender: T) => void;
+type BaseCmp = ReactUnity.UGUI.UGUIComponent;
+export type ActionCallback<T = BaseCmp> = (sender: T) => void;
+export type BaseEventCallback<T = BaseCmp> = (ev: UnityEngine.EventSystems.BaseEventData, sender: T) => void;
+export type PointerEventCallback<T = BaseCmp> = (ev: UnityEngine.EventSystems.PointerEventData, sender: T) => void;
+export type AxisEventCallback<T = BaseCmp> = (ev: UnityEngine.EventSystems.AxisEventData, sender: T) => void;
+export type KeyEventCallback<T = BaseCmp> = (ev: ReactUnity.UGUI.EventHandlers.KeyEventData, sender: T) => void;
 
-export interface Events<T = ReactUnity.Components.ReactComponent> {
+export interface Events<T = BaseCmp> {
   onPointerClick?: PointerEventCallback<T>;
   onPointerUp?: PointerEventCallback<T>;
   onPointerDown?: PointerEventCallback<T>;

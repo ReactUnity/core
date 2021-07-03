@@ -9,7 +9,9 @@
   "exports": {
     ".": "./dist/index.js",
     "./editor": "./dist/editor.js",
-    "./test": "./dist/test.js"
+    "./test": "./dist/test.js",
+    "./ugui": "./dist/ugui.js",
+    "./uitoolkit": "./dist/uitoolkit.js"
   },
   "typesVersions": {
     "*": {
@@ -18,6 +20,12 @@
       ],
       "tests": [
         "./dist/tests.d.ts"
+      ],
+      "ugui": [
+        "./dist/ugui.d.ts"
+      ],
+      "uitoolkit": [
+        "./dist/uitoolkit.d.ts"
       ]
     }
   },
@@ -25,10 +33,12 @@
     "preinstall": "npx only-allow@1.0.0 yarn",
     "build": "tsc -d",
     "build:editor": "tsc -d -p tsconfig.editor.json",
+    "build:ugui": "tsc -d -p tsconfig.ugui.json",
+    "build:uitoolkit": "tsc -d -p tsconfig.uitoolkit.json",
     "watch": "tsc -d --watch",
     "build:clean": "rimraf dist",
     "lint": "eslint --ext js,ts,tsx src models",
-    "prepare": "npm run build:clean && npm run build && npm run build:editor",
+    "prepare": "npm run build:clean && npm run build && npm run build:editor && npm run build:ugui && npm run build:uitoolkit",
     "local": "yalc publish --push",
     "pack": "npm pack"
   },
@@ -51,11 +61,11 @@
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@types/node": "^15.6.1",
-    "@types/react": "^17.0.7",
+    "@types/node": "^16.0.0",
+    "@types/react": "^17.0.13",
     "@types/react-reconciler": "^0.26.1",
-    "@reactunity/scripts": "^0.1.18",
+    "@reactunity/scripts": "^0.1.19",
     "rimraf": "^3.0.2",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.5"
   }
 }

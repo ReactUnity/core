@@ -1,15 +1,13 @@
 
 import * as rc from 'react';
-import { ReactUnity, UnityEngine } from '../generated';
-import * as Components from '../uitoolkit/components';
-import * as EComponents from './components';
+import { ReactUnity } from '../generated';
+import * as Components from './components';
 
 type Children<T = any> = { children?: T };
 
 type Textable = string | number | boolean | null | undefined;
 
 import Cmp = ReactUnity.UIToolkit;
-import ECmp = ReactUnity.Editor.UIToolkit;
 
 type BaseElement<T = Cmp.UIToolkitComponent> = Components.View<T> & rc.RefAttributes<Cmp.UIToolkitComponent> & Children;
 type BaseFieldComponent<T> = Cmp.BaseFieldComponent<BaseElement, T>;
@@ -47,42 +45,7 @@ declare module 'react/jsx-runtime' {
       list: Components.Bindable;
       imgui: Components.IMGUI & rc.RefAttributes<Cmp.IMGUIComponent> & Children<never>;
       template: Components.Bindable;
-
-      color: BaseFieldElementSimple<UnityEngine.Color>;
-      bounds: BaseFieldElementSimple<UnityEngine.Bounds>;
-      boundsint: BaseFieldElementSimple<UnityEngine.BoundsInt>;
-      curve: BaseFieldElementSimple<UnityEngine.AnimationCurve>;
-      double: BaseFieldElementSimple<number>;
-      enum: EComponents.EnumProps & rc.RefAttributes<ECmp.EnumComponent> & Children<never>;
-      flags: EComponents.EnumProps & rc.RefAttributes<ECmp.EnumComponent> & Children<never>;
-      float: BaseFieldElementSimple<number>;
-      gradient: BaseFieldElementSimple<UnityEngine.Gradient>;
-      inspector: Components.Bindable;
-      integer: BaseFieldElementSimple<number>;
-      layer: BaseFieldElementSimple<number>;
-      layermask: BaseFieldElementSimple<number>;
-      long: BaseFieldElementSimple<number>;
-      mask: BaseFieldElementSimple<number>;
-      object: EComponents.ObjectProps & rc.RefAttributes<ECmp.ObjectComponent> & Children<never>;
       progress: Components.ValueComponent<number>;
-      property: Components.Bindable;
-      rect: BaseFieldElementSimple<UnityEngine.Rect>;
-      rectint: BaseFieldElementSimple<UnityEngine.RectInt>;
-      tag: BaseFieldElementSimple<string>;
-      vector2: BaseFieldElementSimple<UnityEngine.Vector2>;
-      vector2int: BaseFieldElementSimple<UnityEngine.Vector2Int>;
-      vector3: BaseFieldElementSimple<UnityEngine.Vector4>;
-      vector3int: BaseFieldElementSimple<UnityEngine.Vector3Int>;
-      vector4: BaseFieldElementSimple<UnityEngine.Vector4>;
-      length: BaseFieldElementSimple<UnityEngine.UIElements.StyleLength>;
-      toolbar: BaseElement;
-      'tb-breadcrumbs': BaseElement;
-      'tb-button': BaseElement;
-      'tb-menu': BaseElement;
-      'tb-popupsearch': BaseElement;
-      'tb-search': BaseElement;
-      'tb-spacer': BaseElement;
-      'tb-toggle': BaseElement;
     }
   }
 }
