@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 3.07.2021 17:39:58
+// Generated 3.07.2021 22:06:39
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -1338,6 +1338,7 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class Location {
+      constructor(href: string, ctx?: ReactUnity.ReactContext);
       constructor(ctx: ReactUnity.ReactContext);
       href: string;
       protocol: string;

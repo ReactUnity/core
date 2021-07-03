@@ -7,13 +7,8 @@ declare global {
   const RootContainer: NativeContainerInstance;
   const UnityScheduler: ReactUnity.Schedulers.IUnityScheduler;
   const Callback: <T, R>(callback: (...args: T[]) => R) => ReactUnity.Helpers.Callback;
-
-  const localStorage: {
-    getItem(key: string): string;
-    setItem(key: string, value: string): void;
-    removeItem(key: string): void;
-  };
-
+  const location: ReactUnity.DomProxies.Location;
+  const localStorage: ReactUnity.DomProxies.LocalStorage;
   function matchMedia(query: string): ReactUnity.StyleEngine.MediaQueryList;
 
   interface DefaultGlobals {
