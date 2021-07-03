@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace ReactUnity.UGUI
 {
-    public class AnchorComponent : ReactComponent
+    public class AnchorComponent : UGUIComponent
     {
         public static NodeStyle AnchorDefaultStyle { get; } = new NodeStyle() { fontStyle = TMPro.FontStyles.Underline, cursor = "pointer" };
         public override NodeStyle DefaultStyle => AnchorDefaultStyle;

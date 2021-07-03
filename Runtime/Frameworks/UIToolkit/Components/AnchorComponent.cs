@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class AnchorComponent : EditorComponent<Button>
+    public class AnchorComponent : UIToolkitComponent<Button>
     {
         public string url = "";
 

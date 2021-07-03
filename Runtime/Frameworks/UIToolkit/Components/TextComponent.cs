@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class TextComponent<TElementType> : EditorComponent<TElementType>, ITextComponent where TElementType : TextElement, new()
+    public class TextComponent<TElementType> : UIToolkitComponent<TElementType>, ITextComponent where TElementType : TextElement, new()
     {
         public string Content => Element.text;
 

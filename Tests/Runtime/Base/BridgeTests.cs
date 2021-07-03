@@ -64,7 +64,7 @@ namespace ReactUnity.Tests
 
             Bridge.appendChildToContainer(Host, text);
 
-            var view = Host.Children[1] as ReactComponent;
+            var view = Host.Children[1] as UGUIComponent;
 
             var tmp = view.GameObject.GetComponent<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("bogus", tmp.text);
@@ -75,13 +75,13 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            var view = Host.Children[0] as ReactComponent;
+            var view = Host.Children[0] as UGUIComponent;
 
             var text = new TextComponent("bogus", UGUIContext, "text");
 
             Bridge.insertBefore(Host, text, view);
 
-            var textCmp = Host.Children[0] as ReactComponent;
+            var textCmp = Host.Children[0] as UGUIComponent;
 
             var tmp = textCmp.GameObject.GetComponent<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("bogus", tmp.text);
@@ -96,7 +96,7 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            var view = Host.Children[0] as ReactComponent;
+            var view = Host.Children[0] as UGUIComponent;
             var text = view.Children[0] as TextComponent;
 
             Bridge.setText(text, "bogus");
@@ -110,7 +110,7 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            var view = Host.Children[0] as ReactComponent;
+            var view = Host.Children[0] as UGUIComponent;
 
             var className = "welcome to-this-place   WhErE destiny_is_made  a  ";
             Bridge.setProperty(view, "className", className);
@@ -124,7 +124,7 @@ namespace ReactUnity.Tests
         {
             yield return null;
 
-            var view = Host.Children[0] as ReactComponent;
+            var view = Host.Children[0] as UGUIComponent;
 
             var birthday = new System.DateTime(2000, 1, 1);
             Bridge.setData(view, "birthday", birthday);

@@ -14,8 +14,8 @@ namespace ReactUnity.Editor.Renderer
 {
     public class EditorContext : UIToolkitContext
     {
-        public static new Dictionary<string, Func<string, string, EditorContext, IEditorComponent<VisualElement>>> ComponentCreators
-            = new Dictionary<string, Func<string, string, EditorContext, IEditorComponent<VisualElement>>>()
+        public static new Dictionary<string, Func<string, string, EditorContext, IUIToolkitComponent<VisualElement>>> ComponentCreators
+            = new Dictionary<string, Func<string, string, EditorContext, IUIToolkitComponent<VisualElement>>>()
             {
                 { "color", (tag, text, context) => new BaseFieldComponent<ColorField, Color>(context, tag) },
                 { "bounds", (tag, text, context) => new BaseFieldComponent<BoundsField, Bounds>(context, tag)},
@@ -43,13 +43,13 @@ namespace ReactUnity.Editor.Renderer
                 { "vector3int", (tag, text, context) => new BaseFieldComponent<Vector3IntField, Vector3Int>(context, tag) },
                 { "vector4", (tag, text, context) => new BaseFieldComponent<Vector4Field, Vector4>(context, tag) },
                 { "length", (tag, text, context) => new BaseFieldComponent<StyleLengthField, StyleLength>(context, tag) },
-                { "toolbar", (tag, text, context) => new EditorComponent<Toolbar>(context, tag) },
-                { "tb-breadcrumbs", (tag, text, context) => new EditorComponent<ToolbarBreadcrumbs>(context, tag) },
+                { "toolbar", (tag, text, context) => new UIToolkitComponent<Toolbar>(context, tag) },
+                { "tb-breadcrumbs", (tag, text, context) => new UIToolkitComponent<ToolbarBreadcrumbs>(context, tag) },
                 { "tb-button", (tag, text, context) => new ButtonComponent<ToolbarButton>(context, tag) },
-                { "tb-menu", (tag, text, context) => new EditorComponent<ToolbarMenu>(context, tag) }, // TODO
-                { "tb-popupsearch", (tag, text, context) => new EditorComponent<ToolbarPopupSearchField>(context, tag) }, // TODO
-                { "tb-search", (tag, text, context) => new EditorComponent<ToolbarSearchField>(context, tag) }, // TODO
-                { "tb-spacer", (tag, text, context) => new EditorComponent<ToolbarSpacer>(context, tag) },
+                { "tb-menu", (tag, text, context) => new UIToolkitComponent<ToolbarMenu>(context, tag) }, // TODO
+                { "tb-popupsearch", (tag, text, context) => new UIToolkitComponent<ToolbarPopupSearchField>(context, tag) }, // TODO
+                { "tb-search", (tag, text, context) => new UIToolkitComponent<ToolbarSearchField>(context, tag) }, // TODO
+                { "tb-spacer", (tag, text, context) => new UIToolkitComponent<ToolbarSpacer>(context, tag) },
                 { "tb-toggle", (tag, text, context) => new ToggleComponent<ToolbarToggle>(context, tag) },
             };
 
@@ -61,7 +61,7 @@ namespace ReactUnity.Editor.Renderer
 
         public override IReactComponent CreateComponent(string tag, string text)
         {
-            IEditorComponent<VisualElement> res = null;
+            IUIToolkitComponent<VisualElement> res = null;
             if (ComponentCreators.TryGetValue(tag, out var creator))
                 res = creator(tag, text, this);
             else return base.CreateComponent(tag, text);

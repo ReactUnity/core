@@ -12,7 +12,7 @@ using ReactUnity.UGUI.StateHandlers;
 
 namespace ReactUnity.UGUI
 {
-    public class ReactComponent : BaseReactComponent<UGUIContext>
+    public class UGUIComponent : BaseReactComponent<UGUIContext>
     {
         public GameObject GameObject { get; private set; }
         public RectTransform RectTransform { get; private set; }
@@ -40,7 +40,7 @@ namespace ReactUnity.UGUI
 
         private bool markedUpdateBackgroundImage;
 
-        protected ReactComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
+        protected UGUIComponent(UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
             GameObject = new GameObject();
             RectTransform = AddComponent<RectTransform>();
@@ -56,7 +56,7 @@ namespace ReactUnity.UGUI
             Container = RectTransform;
         }
 
-        protected ReactComponent(RectTransform existing, UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
+        protected UGUIComponent(RectTransform existing, UGUIContext context, string tag = "", bool isContainer = true) : base(context, tag, isContainer)
         {
             GameObject = existing.gameObject;
             RectTransform = existing;
@@ -348,7 +348,7 @@ namespace ReactUnity.UGUI
 
         protected override bool InsertChild(IReactComponent child, int index)
         {
-            if (child is ReactComponent u)
+            if (child is UGUIComponent u)
             {
                 u.RectTransform.SetParent(Container, false);
                 if (index >= 0) u.RectTransform.SetSiblingIndex(index);
@@ -359,7 +359,7 @@ namespace ReactUnity.UGUI
 
         protected override bool DeleteChild(IReactComponent child)
         {
-            if (child is ReactComponent u)
+            if (child is UGUIComponent u)
             {
                 if (u.RectTransform) u.RectTransform.SetParent(null, false);
                 return true;

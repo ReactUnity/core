@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public class ScrollComponent : ReactComponent
+    public class ScrollComponent : UGUIComponent
     {
         public static YogaNode ScrollDefaultLayout { get; } = new YogaNode() { Overflow = YogaOverflow.Scroll, FlexShrink = 1 };
         public override YogaNode DefaultLayout => ScrollDefaultLayout;

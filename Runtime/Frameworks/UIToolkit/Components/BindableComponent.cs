@@ -6,7 +6,7 @@ using UnityEditor.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class BindableComponent<TElementType> : EditorComponent<TElementType> where TElementType : VisualElement, IBindable, new()
+    public class BindableComponent<TElementType> : UIToolkitComponent<TElementType> where TElementType : VisualElement, IBindable, new()
     {
         public BindableComponent(UIToolkitContext context, string tag) : base(context, tag)
         {

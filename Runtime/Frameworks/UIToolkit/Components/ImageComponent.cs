@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class ImageComponent : EditorComponent<Image>
+    public class ImageComponent : UIToolkitComponent<Image>
     {
         public ImageComponent(UIToolkitContext context, string tag) : base(context, tag)
         { }

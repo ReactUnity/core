@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class ButtonComponent<T> : EditorComponent<T> where T : Button, new()
+    public class ButtonComponent<T> : UIToolkitComponent<T> where T : Button, new()
     {
         private Action previousClickEvent;
 

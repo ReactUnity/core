@@ -12,12 +12,12 @@ using UnityEditor.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public interface IEditorComponent<out T> : IReactComponent
+    public interface IUIToolkitComponent<out T> : IReactComponent
     {
         T Element { get; }
     }
 
-    public class EditorComponent<T> : BaseReactComponent<UIToolkitContext>, IEditorComponent<T> where T : VisualElement, new()
+    public class UIToolkitComponent<T> : BaseReactComponent<UIToolkitContext>, IUIToolkitComponent<T> where T : VisualElement, new()
     {
         public T Element { get; protected set; }
         public override string Name => Element.name;
@@ -26,13 +26,13 @@ namespace ReactUnity.UIToolkit
         protected Dictionary<Type, object> Manipulators = new Dictionary<Type, object>();
         private string currentCursor = null;
 
-        protected EditorComponent(T element, UIToolkitContext context, string tag) : base(context, tag, true)
+        protected UIToolkitComponent(T element, UIToolkitContext context, string tag) : base(context, tag, true)
         {
             Element = element;
             Element.userData = Data;
         }
 
-        public EditorComponent(UIToolkitContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
+        public UIToolkitComponent(UIToolkitContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
         {
             Element = new T();
             Element.userData = Data;
@@ -294,7 +294,7 @@ namespace ReactUnity.UIToolkit
 
         protected override bool InsertChild(IReactComponent child, int index = -1)
         {
-            if (child is IEditorComponent<VisualElement> u)
+            if (child is IUIToolkitComponent<VisualElement> u)
             {
                 if (index >= 0) Element.Insert(index, u.Element);
                 else Element.Add(u.Element);
@@ -305,7 +305,7 @@ namespace ReactUnity.UIToolkit
 
         protected override bool DeleteChild(IReactComponent child)
         {
-            if (child is IEditorComponent<VisualElement> u)
+            if (child is IUIToolkitComponent<VisualElement> u)
             {
                 Element.Remove(u.Element);
                 return true;

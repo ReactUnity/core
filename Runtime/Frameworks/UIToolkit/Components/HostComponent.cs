@@ -2,7 +2,7 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class HostComponent : EditorComponent<VisualElement>, IHostComponent
+    public class HostComponent : UIToolkitComponent<VisualElement>, IHostComponent
     {
         private float CurrentWidth = -1;
         private float CurrentHeight = -1;

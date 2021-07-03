@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public class InputComponent : ReactComponent
+    public class InputComponent : UGUIComponent
     {
         public static YogaNode InputDefaultLayout { get; } = new YogaNode()
         {

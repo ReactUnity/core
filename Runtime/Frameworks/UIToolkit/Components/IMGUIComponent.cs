@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public class IMGUIComponent : EditorComponent<IMGUIContainer>
+    public class IMGUIComponent : UIToolkitComponent<IMGUIContainer>
     {
         public IMGUIComponent(UIToolkitContext context) : base(context, "imgui")
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ReactUnity.UGUI
 {
-    public class HostComponent : ReactComponent, IHostComponent
+    public class HostComponent : UGUIComponent, IHostComponent
     {
         public float Width => RectTransform.rect.width;
         public float Height => RectTransform.rect.height;

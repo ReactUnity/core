@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace ReactUnity.UGUI
 {
 
-    public class ToggleComponent : ReactComponent
+    public class ToggleComponent : UGUIComponent
     {
         public static NodeStyle ToggleDefaultStyle { get; } = new NodeStyle()
         {

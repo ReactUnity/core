@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace ReactUnity.UGUI
 {
-    public abstract class BaseImageComponent : ReactComponent
+    public abstract class BaseImageComponent : UGUIComponent
     {
         public static NodeStyle ImageDefaultStyle { get; } = new NodeStyle() { };
         public static YogaNode ImageDefaultLayout { get; } = new YogaNode() { Overflow = YogaOverflow.Hidden, AlignItems = YogaAlign.Center, JustifyContent = YogaJustify.Center };

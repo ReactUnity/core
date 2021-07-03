@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace ReactUnity.UGUI
 {
 
-    public class ButtonComponent : ReactComponent
+    public class ButtonComponent : UGUIComponent
     {
         public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle()
         {
