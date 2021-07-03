@@ -1,7 +1,8 @@
+using ReactUnity.Styling;
 using System;
 using System.Collections.Generic;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public class BoolConverter : IStyleParser, IStyleConverter
     {

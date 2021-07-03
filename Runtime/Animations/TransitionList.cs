@@ -1,5 +1,4 @@
-using ReactUnity.Styling;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Animations
@@ -73,7 +72,7 @@ namespace ReactUnity.Animations
             }
 
 
-            var dur = Converters.DurationConverter.Convert(splits[offset]);
+            var dur = AllConverters.DurationConverter.Convert(splits[offset]);
             if (dur is float f) Duration = f;
             else Valid = false;
 
@@ -89,11 +88,11 @@ namespace ReactUnity.Animations
                 var delayString = nextIsDelay ? next : last ?? "0";
                 var easing = nextIsDelay ? last ?? "linear" : next;
 
-                dur = Converters.DurationConverter.Convert(delayString);
+                dur = AllConverters.DurationConverter.Convert(delayString);
                 if (dur is float delay) Delay = delay;
                 else Valid = false;
 
-                var tm = Converters.TimingFunctionConverter.Convert(easing);
+                var tm = AllConverters.TimingFunctionConverter.Convert(easing);
                 if (tm is TimingFunction tmf) TimingFunction = tmf;
             }
         }

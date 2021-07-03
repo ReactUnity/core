@@ -1,5 +1,4 @@
-using ReactUnity.Styling;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using System;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -51,7 +50,7 @@ namespace ReactUnity.Types
                 if (value is Texture2D t) return new VideoReference(AssetReferenceType.Object, t);
                 if (value is Sprite s) return new VideoReference(AssetReferenceType.Object, s.texture);
                 if (value is UnityEngine.Object o) return new VideoReference(AssetReferenceType.Object, o);
-                return FromString(Converters.UrlConverter.Convert(value) as string);
+                return FromString(AllConverters.UrlConverter.Convert(value) as string);
             }
 
             public object FromString(string value)

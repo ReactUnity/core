@@ -1,15 +1,14 @@
 
 using Facebook.Yoga;
-using ReactUnity.Styling.Parsers;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
 using ReactUnity.Types;
 using ReactUnity.Animations;
 
-namespace ReactUnity.Styling
+namespace ReactUnity.Converters
 {
-    internal class Converters
+    internal class AllConverters
     {
         static public IStyleConverter DefaultConverter = new StringConverter();
         static public IStyleConverter StringConverter = new StringConverter();

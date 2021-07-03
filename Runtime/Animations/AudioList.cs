@@ -1,5 +1,4 @@
-using ReactUnity.Styling;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Animations
@@ -72,7 +71,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var count = split == "infinite" ? -1 : Converters.IntConverter.Convert(split);
+                var count = split == "infinite" ? -1 : AllConverters.IntConverter.Convert(split);
 
                 if (count is int fcount)
                 {
@@ -85,7 +84,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var dur = Converters.DurationConverter.Convert(split);
+                var dur = AllConverters.DurationConverter.Convert(split);
 
                 if (dur is float f)
                 {
@@ -103,7 +102,7 @@ namespace ReactUnity.Animations
 
                 if (!clipSet)
                 {
-                    AudioClip = Converters.AudioReferenceConverter.Convert(split) as AudioReference;
+                    AudioClip = AllConverters.AudioReferenceConverter.Convert(split) as AudioReference;
                     clipSet = true;
                     continue;
                 }

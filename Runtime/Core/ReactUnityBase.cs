@@ -54,7 +54,7 @@ namespace ReactUnity
         {
             if (ScriptWatchDisposable != null) ScriptWatchDisposable.Dispose();
 
-            CleanRoot();
+            ClearRoot();
 
             Context?.Dispose();
             dispatcher?.Dispose();
@@ -64,7 +64,7 @@ namespace ReactUnity
             ScriptWatchDisposable = null;
         }
 
-        protected abstract void CleanRoot();
+        protected abstract void ClearRoot();
 
         private IDisposable LoadAndRun(ReactScript script, bool disableWarnings = false)
         {

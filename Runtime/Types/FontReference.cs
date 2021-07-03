@@ -1,5 +1,4 @@
-using ReactUnity.Styling;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using System;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -49,7 +48,7 @@ namespace ReactUnity.Types
                 if (value is Texture2D t) return new FontReference(AssetReferenceType.Object, t);
                 if (value is Sprite s) return new FontReference(AssetReferenceType.Object, s.texture);
                 if (value is UnityEngine.Object o) return new FontReference(AssetReferenceType.Object, o);
-                return FromString(Converters.UrlConverter.Convert(value) as string);
+                return FromString(AllConverters.UrlConverter.Convert(value) as string);
             }
 
             public object FromString(string value)

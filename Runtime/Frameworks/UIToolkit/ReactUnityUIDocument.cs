@@ -10,7 +10,7 @@ namespace ReactUnity.UIToolkit
     {
         public VisualElement Root => GetComponent<UIDocument>()?.rootVisualElement;
 
-        protected override void CleanRoot()
+        protected override void ClearRoot()
         {
             Root?.Clear();
         }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     internal static class ParserHelpers
     {
@@ -95,13 +95,13 @@ namespace ReactUnity.Styling.Parsers
 
             for (int i = 0; i < 3; i++)
             {
-                if (Converters.ColorValueConverter.Convert(vals[i]) is float v) list[i] = v;
+                if (AllConverters.ColorValueConverter.Convert(vals[i]) is float v) list[i] = v;
                 else return null;
             }
 
             if (vals.Length == 4)
             {
-                if (Converters.PercentageConverter.Convert(vals[3]) is float alpha) list[3] = alpha;
+                if (AllConverters.PercentageConverter.Convert(vals[3]) is float alpha) list[3] = alpha;
                 else return null;
             }
 

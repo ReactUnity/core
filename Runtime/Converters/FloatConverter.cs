@@ -1,9 +1,10 @@
+using ReactUnity.Styling;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using UnityEngine;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public class FloatConverter : IStyleParser, IStyleConverter
     {

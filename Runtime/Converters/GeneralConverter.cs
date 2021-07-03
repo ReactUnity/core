@@ -1,6 +1,7 @@
 using ReactUnity.StyleEngine;
+using ReactUnity.Styling;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public class GeneralConverter : IStyleParser, IStyleConverter
     {

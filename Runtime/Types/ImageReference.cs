@@ -1,6 +1,5 @@
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using System;
 using System.Collections;
 using System.IO;
@@ -48,7 +47,7 @@ namespace ReactUnity.Types
             }
             else if (realType == AssetReferenceType.Procedural)
             {
-                var color = Converters.ColorConverter.Convert(realValue);
+                var color = AllConverters.ColorConverter.Convert(realValue);
 
                 if (color is Color c)
                 {
@@ -92,7 +91,7 @@ namespace ReactUnity.Types
             private static Regex FileRegex = new Regex("^file://");
             private static Regex HttpRegex = new Regex("^https?://");
             private static Regex PathRegex = new Regex("^/");
-            private static IStyleConverter ColorConverter = Converters.ColorConverter;
+            private static IStyleConverter ColorConverter = AllConverters.ColorConverter;
 
             public object Convert(object value)
             {
@@ -100,7 +99,7 @@ namespace ReactUnity.Types
                 if (value is Texture2D t) return new ImageReference(AssetReferenceType.Object, t);
                 if (value is Sprite s) return new ImageReference(AssetReferenceType.Object, s.texture);
                 if (value is UnityEngine.Object o) return new ImageReference(AssetReferenceType.Object, o);
-                return FromString(Converters.UrlConverter.Convert(value) as string);
+                return FromString(AllConverters.UrlConverter.Convert(value) as string);
             }
 
             public object FromString(string value)

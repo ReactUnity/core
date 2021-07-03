@@ -1,4 +1,4 @@
-using ReactUnity.Styling;
+using ReactUnity.Converters;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +19,7 @@ namespace ReactUnity.UGUI
 
         protected override void SetSource(object value)
         {
-            var source = Converters.ImageReferenceConverter.Convert(value) as ImageReference;
+            var source = AllConverters.ImageReferenceConverter.Convert(value) as ImageReference;
             source.Get(Context, SetTexture);
         }
 

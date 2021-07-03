@@ -1,6 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Styling;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,7 +72,7 @@ namespace ReactUnity.Types
 
         public class Converter : IStyleParser, IStyleConverter
         {
-            IStyleConverter YogaValueParser = Converters.YogaValueConverter;
+            IStyleConverter YogaValueParser = AllConverters.YogaValueConverter;
             char[] splitters = new char[] { ' ', ',' };
 
             public object FromString(string value)

@@ -1,6 +1,5 @@
 using ReactUnity.Helpers;
-using ReactUnity.Styling;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -9,7 +8,7 @@ namespace ReactUnity.StyleEngine
 {
     public class MediaQueryList
     {
-        private static IStyleConverter NumberConverter = Converters.LengthConverter;
+        private static IStyleConverter NumberConverter = AllConverters.LengthConverter;
 
         public static MediaQueryList Create(IMediaProvider provider, string media)
         {

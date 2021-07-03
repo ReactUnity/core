@@ -2,13 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using ReactUnity.Styling;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public class ColorConverter : IStyleParser, IStyleConverter
     {
         static private HashSet<string> AllowedFunctions = new HashSet<string> { "rgb", "rgba", "hsl", "hsla", "hsv", "hsva" };
-        IStyleConverter floatDs = Converters.FloatConverter;
+        IStyleConverter floatDs = AllConverters.FloatConverter;
         static char[] splitChars = new char[] { ',', ' ' };
 
         static Dictionary<string, string> KnownColors = new Dictionary<string, string> {

@@ -1,4 +1,4 @@
-using ReactUnity.Styling;
+using ReactUnity.Converters;
 
 namespace ReactUnity.Types
 {
@@ -10,7 +10,7 @@ namespace ReactUnity.Types
 
         public Url(string fullUrl)
         {
-            fullUrl = Converters.StringConverter.Convert(fullUrl) as string;
+            fullUrl = AllConverters.StringConverter.Convert(fullUrl) as string;
 
             FullUrl = fullUrl;
 

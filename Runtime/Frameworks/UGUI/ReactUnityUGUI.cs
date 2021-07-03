@@ -7,7 +7,7 @@ namespace ReactUnity.UGUI
     {
         public RectTransform Root => transform as RectTransform;
 
-        protected override void CleanRoot()
+        protected override void ClearRoot()
         {
             foreach (Transform children in Root)
             {

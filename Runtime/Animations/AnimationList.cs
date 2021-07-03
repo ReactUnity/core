@@ -1,5 +1,4 @@
-using ReactUnity.Styling;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using ReactUnity.Types;
 
 namespace ReactUnity.Animations
@@ -67,7 +66,7 @@ namespace ReactUnity.Animations
             {
                 var split = splits[i];
 
-                var dur = Converters.DurationConverter.Convert(split);
+                var dur = AllConverters.DurationConverter.Convert(split);
 
                 if (dur is float f)
                 {
@@ -88,7 +87,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var count = split == "infinite" ? -1 : Converters.IntConverter.Convert(split);
+                var count = split == "infinite" ? -1 : AllConverters.IntConverter.Convert(split);
 
                 if (count is int fcount)
                 {
@@ -102,7 +101,7 @@ namespace ReactUnity.Animations
                 }
 
 
-                var dir = !directionSet ? Converters.Get<AnimationDirection>().Convert(split) : null;
+                var dir = !directionSet ? AllConverters.Get<AnimationDirection>().Convert(split) : null;
 
                 if (dir is AnimationDirection d)
                 {
@@ -111,7 +110,7 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
-                var fm = !fillModeSet ? Converters.Get<AnimationFillMode>().Convert(split) : null;
+                var fm = !fillModeSet ? AllConverters.Get<AnimationFillMode>().Convert(split) : null;
 
                 if (fm is AnimationFillMode fmd)
                 {
@@ -121,7 +120,7 @@ namespace ReactUnity.Animations
                 }
 
 
-                var tm = !timingSet ? Converters.TimingFunctionConverter.Convert(split) : null;
+                var tm = !timingSet ? AllConverters.TimingFunctionConverter.Convert(split) : null;
 
                 if (tm is TimingFunction tmf)
                 {

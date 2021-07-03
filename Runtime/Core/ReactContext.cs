@@ -1,10 +1,10 @@
 using ExCSS;
+using ReactUnity.Converters;
 using ReactUnity.Dispatchers;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
-using ReactUnity.Styling;
 using ReactUnity.Types;
 using ReactUnity.Visitors;
 using System;
@@ -101,8 +101,8 @@ namespace ReactUnity
 
             foreach (var rule in stylesheet.FontfaceSetRules)
             {
-                FontFamilies[(Converters.StringConverter.Convert(rule.Family) as string).ToLowerInvariant()] =
-                    Converters.FontReferenceConverter.Convert(rule.Source) as FontReference;
+                FontFamilies[(AllConverters.StringConverter.Convert(rule.Family) as string).ToLowerInvariant()] =
+                    AllConverters.FontReferenceConverter.Convert(rule.Source) as FontReference;
             }
 
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())

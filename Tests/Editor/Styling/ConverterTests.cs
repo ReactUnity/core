@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using ReactUnity.Animations;
+using ReactUnity.Converters;
 using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void TransitionConverter()
         {
-            var converted = Converters.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb") as TransitionList;
+            var converted = AllConverters.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb") as TransitionList;
 
             var widthTr = converted.Items[0];
             Assert.IsTrue(widthTr.Valid);
@@ -58,7 +59,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AnimationConverter()
         {
-            var converted = Converters.AnimationListConverter.Convert("roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing") as AnimationList;
+            var converted = AllConverters.AnimationListConverter.Convert("roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing") as AnimationList;
 
             var roll = converted.Items[0];
             Assert.IsTrue(roll.Valid);
@@ -95,7 +96,7 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void AudioConverter()
         {
-            var converted = Converters.AudioListConverter.Convert("url(res:click) 3s 5 local, url(https://example.com) infinite 2s, url(res:something), sound3 5 5 5 5 5") as AudioList;
+            var converted = AllConverters.AudioListConverter.Convert("url(res:click) 3s 5 local, url(https://example.com) infinite 2s, url(res:something), sound3 5 5 5 5 5") as AudioList;
 
             var part0 = converted.Items[0];
             Assert.IsTrue(part0.Valid);
@@ -138,7 +139,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("100", CssKeyword.Invalid)]
         public void DurationConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, Converters.DurationConverter.Convert(input));
+            Assert.AreEqual(expected, AllConverters.DurationConverter.Convert(input));
         }
 
         [TestCase("0", 0f)]
@@ -155,7 +156,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("5as", CssKeyword.Invalid)]
         public void AngleConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, Converters.AngleConverter.Convert(input));
+            Assert.AreEqual(expected, AllConverters.AngleConverter.Convert(input));
         }
 
         [TestCase("0", 0f)]
@@ -168,7 +169,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("5as", CssKeyword.Invalid)]
         public void LengthConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, Converters.LengthConverter.Convert(input));
+            Assert.AreEqual(expected, AllConverters.LengthConverter.Convert(input));
         }
 
         [TestCase("0", 0f)]
@@ -180,7 +181,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("5as", CssKeyword.Invalid)]
         public void PercentageConverter(object input, object expected)
         {
-            Assert.AreEqual(expected, Converters.PercentageConverter.Convert(input));
+            Assert.AreEqual(expected, AllConverters.PercentageConverter.Convert(input));
         }
 
 
@@ -203,7 +204,7 @@ namespace ReactUnity.Editor.Tests
         [TestCase("hsva(240 51% 72% / 74.5%)", "5a5ab8be")]
         public void ColorConverter(object input, object expected)
         {
-            var converted = Converters.ColorConverter.Convert(input);
+            var converted = AllConverters.ColorConverter.Convert(input);
 
             if (converted is Color c) Assert.AreEqual(expected, ColorUtility.ToHtmlStringRGBA(c).ToLowerInvariant());
             else Assert.AreEqual(expected, converted);

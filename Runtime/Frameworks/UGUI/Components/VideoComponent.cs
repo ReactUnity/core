@@ -1,4 +1,4 @@
-using ReactUnity.Styling;
+using ReactUnity.Converters;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.Video;
@@ -20,8 +20,8 @@ namespace ReactUnity.UGUI
 
         private void PrepareCompleted(VideoPlayer source)
         {
-            RenderTexture.width = (int)source.width;
-            RenderTexture.height = (int)source.height;
+            RenderTexture.width = (int) source.width;
+            RenderTexture.height = (int) source.height;
             Measurer.MarkDirty();
         }
 
@@ -30,7 +30,7 @@ namespace ReactUnity.UGUI
             switch (propertyName)
             {
                 case "source":
-                    SetSource(Converters.VideoReferenceConverter.Convert(value) as VideoReference);
+                    SetSource(AllConverters.VideoReferenceConverter.Convert(value) as VideoReference);
                     return;
                 default:
                     base.SetProperty(propertyName, value);

@@ -1,8 +1,9 @@
 using Facebook.Yoga;
+using ReactUnity.Styling;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public class YogaValueConverter : IStyleParser, IStyleConverter
     {

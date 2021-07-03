@@ -1,4 +1,4 @@
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public interface IStyleParser
     {

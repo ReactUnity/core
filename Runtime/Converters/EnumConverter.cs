@@ -1,6 +1,7 @@
+using ReactUnity.Styling;
 using System;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public class EnumConverter : IStyleParser, IStyleConverter
     {

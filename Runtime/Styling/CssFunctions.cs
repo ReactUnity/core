@@ -1,5 +1,5 @@
 using ReactUnity.Animations;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using ReactUnity.Types;
 using System;
 using System.Collections.Generic;
@@ -73,7 +73,7 @@ namespace ReactUnity.Styling
 
             public object Call(string name, string[] args)
             {
-                var a1 = Converters.IntConverter.Convert(args[0]);
+                var a1 = AllConverters.IntConverter.Convert(args[0]);
                 var a2 = args.Length > 1 ? StepConverter.Convert(args[1]) : StepsJumpMode.End;
 
                 var stepMode = a2 is StepsJumpMode s2 ? s2 : StepsJumpMode.End;
@@ -93,10 +93,10 @@ namespace ReactUnity.Styling
 
             public object Call(string name, string[] args)
             {
-                var a1 = Converters.FloatConverter.Convert(args[0]);
-                var a2 = Converters.FloatConverter.Convert(args[1]);
-                var a3 = Converters.FloatConverter.Convert(args[2]);
-                var a4 = Converters.FloatConverter.Convert(args[3]);
+                var a1 = AllConverters.FloatConverter.Convert(args[0]);
+                var a2 = AllConverters.FloatConverter.Convert(args[1]);
+                var a3 = AllConverters.FloatConverter.Convert(args[2]);
+                var a4 = AllConverters.FloatConverter.Convert(args[3]);
 
                 if (a1 is float f1 &&
                     a2 is float f2 &&
@@ -156,18 +156,18 @@ namespace ReactUnity.Styling
 
                 var vals = new float[parsedArgs.Length];
 
-                if (Converters.AngleConverter.Convert(parsedArgs[0]) is float h) vals[0] = h;
+                if (AllConverters.AngleConverter.Convert(parsedArgs[0]) is float h) vals[0] = h;
                 else return null;
 
-                if (Converters.PercentageConverter.Convert(parsedArgs[1]) is float s) vals[1] = s;
+                if (AllConverters.PercentageConverter.Convert(parsedArgs[1]) is float s) vals[1] = s;
                 else return null;
 
-                if (Converters.PercentageConverter.Convert(parsedArgs[2]) is float l) vals[2] = l;
+                if (AllConverters.PercentageConverter.Convert(parsedArgs[2]) is float l) vals[2] = l;
                 else return null;
 
                 if (parsedArgs.Length == 4)
                 {
-                    if (Converters.PercentageConverter.Convert(parsedArgs[3]) is float alpha) vals[3] = alpha;
+                    if (AllConverters.PercentageConverter.Convert(parsedArgs[3]) is float alpha) vals[3] = alpha;
                     else return null;
                 }
 

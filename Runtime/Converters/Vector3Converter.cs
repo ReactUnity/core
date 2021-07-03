@@ -1,13 +1,14 @@
+using ReactUnity.Styling;
 using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public class Vector3Converter : IStyleParser, IStyleConverter
     {
-        IStyleConverter FloatParser = Converters.FloatConverter;
+        IStyleConverter FloatParser = AllConverters.FloatConverter;
         char[] splitters = new char[] { ' ', ',' };
 
         private Func<float, Vector3> SingleValueMode;
@@ -59,7 +60,7 @@ namespace ReactUnity.Styling.Parsers
             if (value is Vector2 v) return new Vector3(v.x, v.y);
             if (value is Vector3 v3) return v3;
             if (value is Vector4 v4) return new Vector3(v4.x, v4.y, v4.z);
-            if (value is double d) return SingleValueMode((float)d);
+            if (value is double d) return SingleValueMode((float) d);
             if (value is float f) return SingleValueMode(f);
             if (value is int i) return SingleValueMode(i);
             if (!(value is string) && (value is IEnumerable e)) return FromArray(e);

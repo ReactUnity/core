@@ -1,7 +1,8 @@
+using ReactUnity.Styling;
 using System;
 using UnityEngine;
 
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
     public class IntConverter : IStyleParser, IStyleConverter
     {
@@ -21,7 +22,7 @@ namespace ReactUnity.Styling.Parsers
         public object Convert(object value)
         {
             if (value is float f) return Mathf.RoundToInt(f);
-            if (value is double d) return (int)Math.Round(d);
+            if (value is double d) return (int) Math.Round(d);
             return FromString(value?.ToString());
         }
     }

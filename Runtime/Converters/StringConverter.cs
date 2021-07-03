@@ -1,6 +1,6 @@
-namespace ReactUnity.Styling.Parsers
+namespace ReactUnity.Converters
 {
-    public class UrlConverter : IStyleParser, IStyleConverter
+    public class StringConverter : IStyleParser, IStyleConverter
     {
         public object Convert(object value)
         {
@@ -13,7 +13,6 @@ namespace ReactUnity.Styling.Parsers
             if (value.StartsWith("\"") && value.EndsWith("\"")) return value.Substring(1, value.Length - 2);
             if (value.StartsWith("'") && value.EndsWith("'")) return value.Substring(1, value.Length - 2);
             if (value.StartsWith("`") && value.EndsWith("`")) return value.Substring(1, value.Length - 2);
-            if (value.StartsWith("url(") && value.EndsWith(")")) return value.Substring(4, value.Length - 5);
             return value;
         }
     }

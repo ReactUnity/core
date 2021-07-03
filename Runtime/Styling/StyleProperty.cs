@@ -1,6 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Animations;
-using ReactUnity.Styling.Parsers;
+using ReactUnity.Converters;
 using ReactUnity.Types;
 using System;
 using System.Collections.Generic;
@@ -49,7 +49,7 @@ namespace ReactUnity.Styling
             this.inherited = inherited;
             this.proxy = proxy;
 
-            this.converter = converter ?? Converters.Get(type);
+            this.converter = converter ?? AllConverters.Get(type);
 
             var propInfo = typeof(NodeStyle).GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
 
@@ -75,18 +75,18 @@ namespace ReactUnity.Styling
 
     public static class StyleProperties
     {
-        public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: Converters.PercentageConverter);
+        public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: AllConverters.PercentageConverter);
         public static readonly StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
         public static readonly StyleProperty<string> cursor = new StyleProperty<string>("cursor", null, false);
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto, noneValue: PointerEvents.None);
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static readonly StyleProperty<ImageReference> backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None);
-        public static readonly StyleProperty<float> borderRadius = new StyleProperty<float>("borderRadius", 0f, true, converter: Converters.LengthConverter);
-        public static readonly StyleProperty<float> borderTopLeftRadius = new StyleProperty<float>("borderTopLeftRadius", 0f, true, converter: Converters.LengthConverter);
-        public static readonly StyleProperty<float> borderTopRightRadius = new StyleProperty<float>("borderTopRightRadius", 0f, true, converter: Converters.LengthConverter);
-        public static readonly StyleProperty<float> borderBottomLeftRadius = new StyleProperty<float>("borderBottomLeftRadius", 0f, true, converter: Converters.LengthConverter);
-        public static readonly StyleProperty<float> borderBottomRightRadius = new StyleProperty<float>("borderBottomRightRadius", 0f, true, converter: Converters.LengthConverter);
+        public static readonly StyleProperty<float> borderRadius = new StyleProperty<float>("borderRadius", 0f, true, converter: AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> borderTopLeftRadius = new StyleProperty<float>("borderTopLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> borderTopRightRadius = new StyleProperty<float>("borderTopRightRadius", 0f, true, converter: AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> borderBottomLeftRadius = new StyleProperty<float>("borderBottomLeftRadius", 0f, true, converter: AllConverters.LengthConverter);
+        public static readonly StyleProperty<float> borderBottomRightRadius = new StyleProperty<float>("borderBottomRightRadius", 0f, true, converter: AllConverters.LengthConverter);
         public static readonly StyleProperty<Color> borderColor = new StyleProperty<Color>("borderColor", Color.black, true);
         public static readonly StyleProperty<Color> borderLeftColor = new StyleProperty<Color>("borderLeftColor", Color.black, true);
         public static readonly StyleProperty<Color> borderRightColor = new StyleProperty<Color>("borderRightColor", Color.black, true);
@@ -96,7 +96,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<YogaValue2> transformOrigin = new StyleProperty<YogaValue2>("transformOrigin", YogaValue2.Center, true);
         public static readonly StyleProperty<YogaValue2> translate = new StyleProperty<YogaValue2>("translate", YogaValue2.Zero, true);
         public static readonly StyleProperty<Vector2> scale = new StyleProperty<Vector2>("scale", Vector2.one, true);
-        public static readonly StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: Converters.RotateConverter);
+        public static readonly StyleProperty<Vector3> rotate = new StyleProperty<Vector3>("rotate", Vector3.zero, true, converter: AllConverters.RotateConverter);
         public static readonly StyleProperty<FontReference> fontFamily = new StyleProperty<FontReference>("fontFamily", FontReference.None, false, true);
         public static readonly StyleProperty<Color> color = new StyleProperty<Color>("color", Color.black, true, true);
         public static readonly StyleProperty<FontWeight> fontWeight = new StyleProperty<FontWeight>("fontWeight", FontWeight.Regular, false, true);
