@@ -23,14 +23,16 @@ jobs:
       matrix:
         unityVersion:
           - 2020.3.9f1
-          - 2021.1.9f1
         targetPlatform:
           - StandaloneWindows64
         suite:
-          - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true }
+          - { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: false }
         include:
           - unityVersion: 2021.1.9f1
             suite: { name: "Performance Tests", assemblies: "Unity.PerformanceTesting.Tests.Runtime;Unity.PerformanceTesting.Tests.Editor", coverage: false }
+            targetPlatform: StandaloneWindows64
+          - unityVersion: 2021.1.9f1
+            suite: { name: "Unit Tests", assemblies: "ReactUnity.Tests;ReactUnity.Editor.Tests", coverage: true, main: true }
             targetPlatform: StandaloneWindows64
     steps:
       - name: Checkout core library
@@ -66,18 +68,18 @@ jobs:
           projectPath: tests
       - name: Upload Test Result Artifacts
         uses: actions/upload-artifact@v2
-        if: always()
+        if: always() && matrix.suite.main
         with:
           name: ${{ matrix.suite.name }} results
           path: ${{ steps.testRunner.outputs.artifactsPath }}
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
-        if: always() && matrix.suite.coverage
+        if: always() && matrix.suite.coverage && matrix.suite.main
         with:
           name: ${{ matrix.suite.name }} coverage
           path: tests/CodeCoverage
       - name: Upload Coverage to codecov
-        if: always() && matrix.suite.coverage
+        if: always() && matrix.suite.coverage && matrix.suite.main
         uses: codecov/codecov-action@v1
         with:
           files: ./tests/CodeCoverage/tests-opencov/PlayMode/TestCoverageResults_0000.xml,./tests/CodeCoverage/tests-opencov/EditMode/TestCoverageResults_0000.xml
