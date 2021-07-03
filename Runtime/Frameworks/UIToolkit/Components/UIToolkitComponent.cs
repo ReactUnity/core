@@ -267,6 +267,18 @@ namespace ReactUnity.UIToolkit
                     else Element.Unbind();
                     return;
 #endif
+#if UNITY_2021_2_OR_NEWER
+                // TODO: check if these are available in earlier versions
+                case "tooltip":
+                    Element.tooltip = value?.ToString();
+                    return;
+                case "tabIndex":
+                    Element.tabIndex = Convert.ToInt32(value);
+                    return;
+                case "viewDataKey":
+                    Element.viewDataKey = value?.ToString();
+                    return;
+#endif
                 default:
                     base.SetProperty(property, value);
                     return;
