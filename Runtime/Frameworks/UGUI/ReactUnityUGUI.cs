@@ -1,3 +1,4 @@
+using ReactUnity.StyleEngine;
 using UnityEngine;
 
 namespace ReactUnity.UGUI
@@ -17,6 +18,11 @@ namespace ReactUnity.UGUI
         protected override ReactContext CreateContext(ReactScript script, bool isDevServer)
         {
             return new UGUIContext(Root, Globals, script, dispatcher, scheduler, MediaProvider, isDevServer, Render);
+        }
+
+        protected override IMediaProvider CreateMediaProvider()
+        {
+            return new DefaultMediaProvider("runtime", null, new System.Collections.Generic.Dictionary<string, string> { { "framework", "ugui" } });
         }
     }
 }

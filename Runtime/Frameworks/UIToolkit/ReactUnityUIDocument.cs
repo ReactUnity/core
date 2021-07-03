@@ -1,3 +1,4 @@
+using ReactUnity.StyleEngine;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,6 +24,11 @@ namespace ReactUnity.UIToolkit
         {
             var source = GetComponent<AudioSource>();
             source.PlayOneShot(clip);
+        }
+
+        protected override IMediaProvider CreateMediaProvider()
+        {
+            return new DefaultMediaProvider("runtime", null, new System.Collections.Generic.Dictionary<string, string> { { "framework", "uitoolkit" } });
         }
     }
 }

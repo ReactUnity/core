@@ -20,7 +20,7 @@ namespace ReactUnity
 
         public JavascriptEngineType EngineType = JavascriptEngineType.Auto;
 
-        public DefaultMediaProvider MediaProvider { get; private set; }
+        public IMediaProvider MediaProvider { get; private set; }
         public ReactContext Context { get; private set; }
         private IDisposable ScriptWatchDisposable { get; set; }
         public IDispatcher dispatcher { get; private set; }
@@ -71,7 +71,7 @@ namespace ReactUnity
             dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
             scheduler = new UnityScheduler(dispatcher);
             runner = new ReactUnityRunner();
-            MediaProvider = new DefaultMediaProvider("runtime");
+            MediaProvider = CreateMediaProvider();
             var watcherDisposable = script.GetScript((code, isDevServer) =>
             {
                 Context = CreateContext(script, isDevServer);
@@ -107,5 +107,6 @@ namespace ReactUnity
         }
 
         protected abstract ReactContext CreateContext(ReactScript script, bool isDevServer);
+        protected abstract IMediaProvider CreateMediaProvider();
     }
 }
