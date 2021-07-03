@@ -12,8 +12,9 @@ namespace ReactUnity.UIToolkit
     {
         protected IDisposable ScriptWatchDisposable;
         public ReactUnityRunner runner { get; private set; }
-        public UIToolkitContext context { get; private set; }
+        public ReactContext context { get; private set; }
         public IDispatcher dispatcher { get; private set; }
+        public IUnityScheduler scheduler { get; private set; }
         public IMediaProvider MediaProvider { get; private set; }
 
         public ReactScript Script { get; }
@@ -42,10 +43,11 @@ namespace ReactUnity.UIToolkit
 
             runner = new ReactUnityRunner();
             dispatcher = new EditorDispatcher();
+            scheduler = new UnityScheduler(dispatcher);
 
             ScriptWatchDisposable = src.GetScript((sc, isDevServer) =>
             {
-                context = new UIToolkitContext(this, Globals, src, dispatcher, new UnityScheduler(dispatcher), MediaProvider, isDevServer, () => Restart());
+                context = CreateContext(src, isDevServer);
                 runner.RunScript(sc, context, EngineType, Debug, AwaitDebugger);
             }, dispatcher, true, true);
         }
@@ -66,6 +68,11 @@ namespace ReactUnity.UIToolkit
         {
             Destroy();
             Run();
+        }
+
+        protected virtual ReactContext CreateContext(ReactScript script, bool isDevServer)
+        {
+            return new UIToolkitContext(this, Globals, script, dispatcher, scheduler, MediaProvider, isDevServer, Restart);
         }
     }
 }

@@ -1,14 +1,14 @@
-import { ReactUnity as RU, UnityEngine as UE } from '@reactunity/renderer/editor';
+import { ReactUnity as RU, UnityEngine as UE } from '@reactunity/renderer';
 import clsx from 'clsx';
 import { useRef } from 'react';
 import type { StylePropComponentProps } from '../common/props';
 
 export function BoxShadowField({ className, label, onChange, value }: StylePropComponentProps<RU.Types.BoxShadowList>) {
-  const blurRef = useRef<RU.Editor.Components.BaseFieldComponent<any, UE.Vector2>>();
-  const offsetRef = useRef<RU.Editor.Components.BaseFieldComponent<any, UE.Vector2>>();
-  const spreadRef = useRef<RU.Editor.Components.BaseFieldComponent<any, UE.Vector2>>();
-  const colorRef = useRef<RU.Editor.Components.BaseFieldComponent<any, UE.Color>>();
-  const insetRef = useRef<RU.Editor.Components.BaseFieldComponent<any, boolean>>();
+  const blurRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Vector2>>();
+  const offsetRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Vector2>>();
+  const spreadRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Vector2>>();
+  const colorRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.Color>>();
+  const insetRef = useRef<RU.UIToolkit.BaseFieldComponent<any, boolean>>();
 
   const changed = () => {
     const blur = blurRef.current.Element.value;

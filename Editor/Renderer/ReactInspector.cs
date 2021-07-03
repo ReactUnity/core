@@ -1,6 +1,6 @@
+using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
 using ReactUnity.StyleEngine;
-using ReactUnity.UIToolkit;
 using UnityEditor;
 using UnityEngine.UIElements;
 
@@ -24,7 +24,7 @@ namespace ReactUnity.Editor.Renderer
 
         public override VisualElement CreateInspectorGUI()
         {
-            return new ReactUnityElement(GetScript(), GetGlobals(), new DefaultMediaProvider("inspector"));
+            return new ReactUnityEditorElement(GetScript(), GetGlobals(), DefaultMediaProvider.CreateMediaProvider("inspector", "uitoolkit", true));
         }
 
         protected abstract ReactScript GetScript();

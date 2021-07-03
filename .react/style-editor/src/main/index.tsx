@@ -1,11 +1,11 @@
-import { ReactUnity, Renderer } from '@reactunity/renderer/editor';
+import { ReactUnity, Renderer } from '@reactunity/renderer';
 import clsx from 'clsx';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } from '../common/props';
 import style from './index.module.scss';
 
-type RC = ReactUnity.Layout.ReactElement;
+type RC = ReactUnity.UGUI.Layout.ReactElement;
 
 const Window = Globals.Window;
 const Inspector = Globals.Inspector;

@@ -29,7 +29,7 @@ namespace ReactUnity.UIToolkit
 
         protected override IMediaProvider CreateMediaProvider()
         {
-            return new DefaultMediaProvider("runtime", null, new System.Collections.Generic.Dictionary<string, string> { { "framework", "uitoolkit" } });
+            return DefaultMediaProvider.CreateMediaProvider("runtime", "uitoolkit", false);
         }
     }
 }

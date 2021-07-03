@@ -1,4 +1,4 @@
-import { ReactUnity, Renderer } from '@reactunity/renderer/editor';
+import { ReactUnity, Renderer } from '@reactunity/renderer';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import checkImage from './assets/check.png';

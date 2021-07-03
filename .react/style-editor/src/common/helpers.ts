@@ -1,4 +1,4 @@
-import { Facebook as FB, UnityEngine as UE } from '@reactunity/renderer/editor';
+import { Facebook as FB, UnityEngine as UE } from '@reactunity/renderer';
 
 const StyleLength = UnityEngine.UIElements.StyleLength;
 const StyleKeyword = UnityEngine.UIElements.StyleKeyword;

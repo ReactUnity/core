@@ -1,9 +1,9 @@
 using Jint.Native;
 using ReactUnity.Dispatchers;
+using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using ReactUnity.UIToolkit;
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -16,10 +16,10 @@ namespace ReactUnity.Editor.Renderer
         private readonly GUIContent resetGUIContent = EditorGUIUtility.TrTextContent("Reload");
 
         protected ReactUnityRunner runner => hostElement?.runner;
-        protected UIToolkitContext context => hostElement?.context;
+        protected ReactContext context => hostElement?.context;
         protected IDispatcher dispatcher => hostElement?.dispatcher;
         protected IMediaProvider mediaProvider => hostElement?.MediaProvider;
-        protected ReactUnityElement hostElement { get; private set; }
+        protected ReactUnityEditorElement hostElement { get; private set; }
 
         public event Action<ReactWindow> SelectionChange;
         public event Action<bool, ReactWindow> VisibilityChange;
@@ -90,7 +90,7 @@ namespace ReactUnity.Editor.Renderer
         public virtual void Run(VisualElement root = null)
         {
             if (hostElement != null) OnDestroy();
-            hostElement = new ReactUnityElement(GetScript(), GetGlobals(), new DefaultMediaProvider("window"), EngineType, DebugEnabled, AwaitDebugger);
+            hostElement = new ReactUnityEditorElement(GetScript(), GetGlobals(), DefaultMediaProvider.CreateMediaProvider("window", "uitoolkit", true), EngineType, DebugEnabled, AwaitDebugger);
             (root ?? rootVisualElement).Add(hostElement);
         }
 

@@ -1,4 +1,4 @@
-import { UnityEngine as UE } from '@reactunity/renderer/editor';
+import { UnityEngine as UE } from '@reactunity/renderer';
 import type { StylePropComponentProps } from '../common/props';
 
 export function sliderComponent(min = 0, max = 1) {

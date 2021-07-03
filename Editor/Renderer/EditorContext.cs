@@ -61,10 +61,9 @@ namespace ReactUnity.Editor.Renderer
 
         public override IReactComponent CreateComponent(string tag, string text)
         {
-            IUIToolkitComponent<VisualElement> res = null;
-            if (ComponentCreators.TryGetValue(tag, out var creator))
-                res = creator(tag, text, this);
-            else return base.CreateComponent(tag, text);
+            if (!ComponentCreators.TryGetValue(tag, out var creator)) return base.CreateComponent(tag, text);
+
+            IUIToolkitComponent<VisualElement> res = creator(tag, text, this);
             if (res.Element != null) res.Element.name = $"<{tag}>";
             return res;
         }

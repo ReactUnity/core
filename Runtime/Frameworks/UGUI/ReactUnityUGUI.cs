@@ -22,7 +22,7 @@ namespace ReactUnity.UGUI
 
         protected override IMediaProvider CreateMediaProvider()
         {
-            return new DefaultMediaProvider("runtime", null, new System.Collections.Generic.Dictionary<string, string> { { "framework", "ugui" } });
+            return DefaultMediaProvider.CreateMediaProvider("runtime", "ugui", false);
         }
     }
 }

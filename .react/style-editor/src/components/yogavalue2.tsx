@@ -1,4 +1,4 @@
-import { ReactUnity as RU, UnityEngine as UE } from '@reactunity/renderer/editor';
+import { ReactUnity as RU, UnityEngine as UE } from '@reactunity/renderer';
 import clsx from 'clsx';
 import { useRef } from 'react';
 import { convertLengthToYoga, convertYogaToLength } from '../common/helpers';
@@ -10,8 +10,8 @@ export function YogaValue2Field({ className, label, onChange, value }: StyleProp
   const x = convertYogaToLength(value.X);
   const y = convertYogaToLength(value.Y);
 
-  const xRef = useRef<RU.Editor.Components.BaseFieldComponent<any, UE.UIElements.StyleLength>>();
-  const yRef = useRef<RU.Editor.Components.BaseFieldComponent<any, UE.UIElements.StyleLength>>();
+  const xRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.UIElements.StyleLength>>();
+  const yRef = useRef<RU.UIToolkit.BaseFieldComponent<any, UE.UIElements.StyleLength>>();
 
   const changed = () => {
     const xVal = xRef.current.Element.value;

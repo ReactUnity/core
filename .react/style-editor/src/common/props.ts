@@ -1,4 +1,4 @@
-import { ReactUnity as RU } from '@reactunity/renderer/editor';
+import { ReactUnity as RU } from '@reactunity/renderer';
 import React from 'react';
 import { BoxShadowField } from '../components/box-shadow';
 import { enumComponent, flagsComponent, objectComponent, sliderComponent, sliderintComponent } from '../components/other';
@@ -25,8 +25,8 @@ export interface StyleProp<T = any> {
   arrangement?: 'row' | 'rect' | 'corner';
   partTemplate?: string | ((part: StylePropPart) => string);
   component: React.FunctionComponent<StylePropComponentProps<T>> | React.ComponentClass<StylePropComponentProps<T>> | string;
-  getter?: (val: any, el: RU.Layout.ReactElement) => T;
-  setter?: (val: T, el: RU.Layout.ReactElement) => any;
+  getter?: (val: any, el: RU.UGUI.Layout.ReactElement) => T;
+  setter?: (val: T, el: RU.UGUI.Layout.ReactElement) => any;
 }
 
 export type StylePropPart = 'left' | 'right' | 'top' | 'bottom' | 'start' | 'end' | '';

@@ -35,6 +35,17 @@ namespace ReactUnity.StyleEngine
 
         public event Action<IMediaProvider> OnUpdate;
 
+        public static DefaultMediaProvider CreateMediaProvider(string type, string framework, bool isEditor)
+        {
+            return new DefaultMediaProvider(type, null,
+                new Dictionary<string, string> {
+                    { "framework", framework },
+                    { "editor", isEditor ? "true" : null },
+                    { "runtime", isEditor ? null : "runtime" },
+                });
+        }
+
+
         public DefaultMediaProvider(string mediaType, Dictionary<string, float> numbers = null, Dictionary<string, string> values = null)
         {
             MediaType = mediaType;
