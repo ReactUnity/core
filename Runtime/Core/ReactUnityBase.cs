@@ -16,6 +16,10 @@ namespace ReactUnity
         private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
 
         public bool Debug = false;
+
+#if !REACT_UNITY_DEVELOPER
+        [HideInInspector]
+#endif
         public bool AwaitDebugger = false;
 
         public JavascriptEngineType EngineType = JavascriptEngineType.Auto;
@@ -27,13 +31,13 @@ namespace ReactUnity
         public IUnityScheduler scheduler { get; private set; }
         public ReactUnityRunner runner { get; private set; }
 
-        #region Advanced Options
+#region Advanced Options
 
         [HideInInspector] public bool AutoRender = true;
         [HideInInspector] public UnityEvent<ReactUnityRunner> BeforeStart;
         [HideInInspector] public UnityEvent<ReactUnityRunner> AfterStart;
 
-        #endregion
+#endregion
 
         void OnEnable()
         {

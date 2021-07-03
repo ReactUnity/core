@@ -26,7 +26,10 @@ namespace ReactUnity.ScriptEngine
 
                 (debug ? (
                     V8ScriptEngineFlags.EnableDebugging |
-                    (awaitDebugger ? V8ScriptEngineFlags.None : V8ScriptEngineFlags.None))
+#if REACT_UNITY_DEVELOPER
+                    (awaitDebugger ? V8ScriptEngineFlags.AwaitDebuggerAndPauseOnStart : V8ScriptEngineFlags.None) |
+#endif
+                    V8ScriptEngineFlags.None)
                     : V8ScriptEngineFlags.None),
                 9222
             );

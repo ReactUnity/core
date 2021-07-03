@@ -1,3 +1,5 @@
+using Jint.Native;
+using ReactUnity.Helpers;
 using System;
 using System.Collections.Generic;
 
@@ -97,8 +99,34 @@ namespace ReactUnity.DomProxies
         public string crossOrigin { get; set; }
         public float timeout { get; set; }
 
-        public Action<ScriptProxy> onload { get; set; }
-        public Action<ScriptProxy> onerror { get; set; }
+        private Callback onloadCallback { get; set; }
+        private Callback onerrorCallback { get; set; }
+
+        public JsValue Onload
+        {
+            set { onload = value; }
+            get => null;
+        }
+
+        public object onload
+        {
+            set { onloadCallback = new Callback(value); }
+            get => new Action(() => onloadCallback.Call());
+        }
+
+
+        public JsValue Onerror
+        {
+            set { onerror = value; }
+            get => null;
+        }
+
+        public object onerror
+        {
+            set { onerrorCallback = new Callback(value); }
+            get => new Action(() => onerrorCallback.Call());
+        }
+
 
         public DocumentProxy document;
         public HeadProxy parentNode;
@@ -117,7 +145,7 @@ namespace ReactUnity.DomProxies
             Action<string> action = (sc) =>
             {
                 document.execute(sc);
-                onload?.Invoke(this);
+                (onload as Action)?.Invoke();
             };
 
             Action<string> callback = (sc) =>
