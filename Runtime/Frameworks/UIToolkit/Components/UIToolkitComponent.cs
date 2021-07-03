@@ -212,6 +212,13 @@ namespace ReactUnity.UIToolkit
                     var pos = deltaPosition + translate + counter;
                     Element.transform.position = new Vector3(pos.x, pos.y, 0);
                 }
+
+#if UNITY_2021_2_OR_NEWER
+                // TODO: Versions before 2021.2 does not have this property, so we need the above hack
+                // But using the official way should be faster to use for >2021.2
+                // So we should write a separate logic for before 2021.2 and after
+                Element.style.transformOrigin = new TransformOrigin(0, 0, 0);
+#endif
             }
             else Element.transform.position = translate;
         }
