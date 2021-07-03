@@ -1,0 +1,63 @@
+:root > * {
+  background-color: #fafafa;
+}
+
+.app {
+  padding: 20px;
+  max-width: 960px;
+  width: 100%;
+  align-self: center;
+  align-items: stretch;
+
+  h1 {
+    font-size: 36px;
+    font-style: smallcaps, bold;
+    color: #582a9c;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-style: smallcaps;
+    color: #fb2f8e;
+    margin-bottom: 8px;
+  }
+
+  section {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  row {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  column {
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+
+  image {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    object-fit: scale-down;
+    object-position: 50%;
+    transition: object-position 2s;
+    align-self: stretch;
+  }
+
+  input {
+    border-width: 1px;
+    border-color: black;
+  }
+
+  button {
+    &:hover {
+      audio: url(res:click);
+    }
+  }
+}

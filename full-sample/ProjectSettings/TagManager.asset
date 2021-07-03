@@ -35,7 +35,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - UIToolkit
   - ReactUnity
   m_SortingLayers:
   - name: Default

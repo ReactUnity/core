@@ -1,5 +1,4 @@
-using ReactUnity;
-using ReactUnity.Components;
+using ReactUnity.UGUI;
 using UnityEngine;
 
 public class CustomButtonComponent : ButtonComponent

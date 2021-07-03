@@ -1,9 +1,9 @@
-using ReactUnity;
+using ReactUnity.UGUI;
 using UnityEngine;
 
 public class CustomComponentInitializer : MonoBehaviour
 {
-    public ReactUnity.ReactUnity reactUnity;
+    public ReactUnityUGUI reactUnity;
     public Color customButtonColor;
 
     void Start()

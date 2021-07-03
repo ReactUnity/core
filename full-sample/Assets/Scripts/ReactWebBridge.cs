@@ -1,9 +1,10 @@
+using ReactUnity.UGUI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ReactWebBridge : MonoBehaviour
 {
-    public ReactUnity.ReactUnity ReactCanvas;
+    public ReactUnityUGUI ReactCanvas;
     private string CssContent;
 
     [Multiline]

@@ -1,4 +1,4 @@
-import { Dropdown, DropdownItem, ReactUnity, Renderer, Slider, Tooltip, UnityEngine as UE } from '@reactunity/renderer';
+import { ReactUnity, Renderer, UnityEngine as UE } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
@@ -22,8 +22,8 @@ export function RenderObject({ object }: { object: UE.GameObject }) {
   />;
 }
 
-export function App() {
-  const [videoRef, setVideoRef] = useState<ReactUnity.Components.VideoComponent>();
+export function App({ className }: { className?: string }) {
+  const [videoRef, setVideoRef] = useState<ReactUnity.UGUI.VideoComponent>();
 
   useEffect(() => {
     if (videoRef) {
@@ -36,11 +36,6 @@ export function App() {
     if (vp.isPlaying) vp.Pause();
     else vp.Play();
   };
-
-  const tooltipContent =
-    <view style={{ padding: 10, backgroundColor: 0.4, color: 'white' }}>
-      Cool tooltip
-    </view>;
 
   return <scroll>
     <view className={style.app}>
@@ -73,32 +68,9 @@ export function App() {
 
         <row>
           <toggle />
-        Toggle
-      </row>
+          Toggle
+        </row>
       </section>
-
-
-      <section>
-        <h2>Tooltip</h2>
-
-        <Tooltip tooltipContent={tooltipContent} position='bottom' offset={20}>
-          Hover to see cool tooltip.
-      </Tooltip>
-      </section>
-
-
-      <section>
-        <h2>Dropdown</h2>
-
-        <Dropdown>
-          Select an option
-
-        <DropdownItem>Normal Option</DropdownItem>
-          <DropdownItem triggerTemplate={<view style={{ color: 'green' }}>Green Option</view>}>Green Option 💚</DropdownItem>
-          <DropdownItem triggerTemplate={<view style={{ color: 'red' }}>Red Option</view>}>Red Option 🧡</DropdownItem>
-        </Dropdown>
-      </section>
-
 
       <section>
         <h2>Image</h2>
@@ -118,34 +90,6 @@ export function App() {
           <video style={{ flexGrow: 1 }} source={webVideo} ref={setVideoRef} onPointerClick={toggleVideo} />
         </row>
       </section>
-
-
-      <section>
-        <h2>Slider</h2>
-
-        <row>
-          <column>
-            Horizontal
-            <Slider direction="horizontal-reverse" />
-
-            <Slider>
-              {(value) => <view style={{ position: 'absolute', top: 24, color: value > 0.5 ? 'red' : 'black' }}>{value.toFixed(3)}</view>}
-            </Slider>
-          </column>
-
-          <column>
-            Vertical
-          <row>
-              <Slider direction="vertical-reverse" />
-
-              <Slider direction="vertical">
-                {(value) => <view style={{ position: 'absolute', left: 24 }}>{value.toFixed(3)}</view>}
-              </Slider>
-            </row>
-          </column>
-        </row>
-      </section>
-
 
       <section>
         <h2>Render Texture</h2>
