@@ -11,9 +11,9 @@ namespace ReactUnity.UIToolkit
         public static Font DefaultFont => defaultFont ??= Resources.Load<Font>("ReactUnity/fonts/sans-serif");
 
         private static StyleSheet utilityStylesheet;
-        public static StyleSheet UtilityStylesheet => utilityStylesheet ??= Resources.Load<StyleSheet>("ReactUnity/editor/styles/react-unity-utils");
+        public static StyleSheet UtilityStylesheet => utilityStylesheet ??= Resources.Load<StyleSheet>("ReactUnity/styles/uitoolkit/react-unity-utils");
 
         private static TextAsset useragentStylesheet;
-        public static TextAsset UseragentStylesheet => useragentStylesheet ??= Resources.Load<TextAsset>("ReactUnity/editor/styles/useragent");
+        public static TextAsset UseragentStylesheet => useragentStylesheet ??= Resources.Load<TextAsset>("ReactUnity/styles/uitoolkit/useragent");
     }
 }

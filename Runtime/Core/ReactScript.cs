@@ -57,11 +57,11 @@ namespace ReactUnity
         }
 
 #if UNITY_EDITOR || REACT_DEV_SERVER_API
+        private bool DevServerFailed = false;
         public bool IsDevServer => !DevServerFailed && UseDevServer && !string.IsNullOrWhiteSpace(DevServer);
 #else
         public bool IsDevServer => false;
 #endif
-        private bool DevServerFailed = false;
 
         public ScriptSource EffectiveScriptSource => IsDevServer ? ScriptSource.Url : ScriptSource;
 

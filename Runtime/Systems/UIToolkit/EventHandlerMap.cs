@@ -46,11 +46,13 @@ namespace ReactUnity.UIToolkit
             { "onKeyUp", typeof(KeyUpEvent) },
             { "onInput", typeof(InputEvent) },
 
+#if UNITY_EDITOR
             { "onDragEnter", typeof(DragEnterEvent) },
             { "onDragLeave", typeof(DragLeaveEvent) },
             { "onDragExited", typeof(DragExitedEvent) },
             { "onDragPerform", typeof(DragPerformEvent) },
             { "onDragUpdated", typeof(DragUpdatedEvent) },
+#endif
 
             { "onDetachFromPanel", typeof(DetachFromPanelEvent) },
             { "onCustomStyleResolved", typeof(CustomStyleResolvedEvent) },
