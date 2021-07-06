@@ -84,9 +84,9 @@ namespace ReactUnity
             if (markedForLayoutApply) ApplyLayoutStyles();
         }
 
-        protected void StyleChanged(string key, object value, InlineData style)
+        protected void StyleChanged(string key, object value, EventDictionary<object> style)
         {
-            MarkForStyleResolving(style.Identifier != "Style" || key == null || StyleProperties.IsInherited(key));
+            MarkForStyleResolving((style as InlineData)?.Identifier != "Style" || key == null || StyleProperties.IsInherited(key));
         }
 
         protected void MarkForStyleResolving(bool recursive)

@@ -11,7 +11,7 @@ namespace ReactUnity
 {
     public abstract class ReactUnityBase : MonoBehaviour
     {
-        public StringObjectDictionary Globals = new StringObjectDictionary();
+        public SerializableDictionary Globals = new SerializableDictionary();
         public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index" };
         private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
 
@@ -31,13 +31,13 @@ namespace ReactUnity
         public IUnityScheduler scheduler { get; private set; }
         public ReactUnityRunner runner { get; private set; }
 
-#region Advanced Options
+        #region Advanced Options
 
         [HideInInspector] public bool AutoRender = true;
         [HideInInspector] public UnityEvent<ReactUnityRunner> BeforeStart;
         [HideInInspector] public UnityEvent<ReactUnityRunner> AfterStart;
 
-#endregion
+        #endregion
 
         void OnEnable()
         {
@@ -52,6 +52,14 @@ namespace ReactUnity
         private void OnDestroy()
         {
             Clean();
+        }
+
+        private void OnValidate()
+        {
+            if (runner != null)
+            {
+                runner.context.Globals.UpdateStringObjectDictionary(Globals, true);
+            }
         }
 
         void Clean()

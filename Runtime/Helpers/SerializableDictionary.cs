@@ -4,20 +4,6 @@ using UnityEngine;
 
 namespace ReactUnity.Helpers
 {
-    public class GlobalRecord : Dictionary<string, object>
-    {
-        public GlobalRecord() { }
-
-        public GlobalRecord(IDictionary<string, object> dict) : base(dict)
-        {
-        }
-
-        public static implicit operator GlobalRecord(StringObjectDictionary dict)
-        {
-            return new GlobalRecord(dict.ToDictionary(x => x.Key, x => x.Value as object));
-        }
-    };
-
     [System.Serializable]
     public class StringObjectPair
     {
@@ -26,9 +12,11 @@ namespace ReactUnity.Helpers
     }
 
     [System.Serializable]
-    public class StringObjectDictionary : Dictionary<string, Object>, ISerializationCallbackReceiver
+    public class SerializableDictionary : EventDictionary<Object>, ISerializationCallbackReceiver
     {
         [SerializeField] List<StringObjectPair> Entries = new List<StringObjectPair>();
+
+        internal event System.Action<SerializableDictionary> reserialized;
 
         public Object GetValueOrDefault(string key)
         {
@@ -38,18 +26,30 @@ namespace ReactUnity.Helpers
 
         public void OnAfterDeserialize()
         {
-            Clear();
+            ClearWithoutNotify();
             foreach (var entry in Entries)
             {
                 var key = entry.Key;
                 while (ContainsKey(key)) key += "_Copy";
-                this[key] = entry.Value;
+                SetWithoutNotify(key, entry.Value);
             }
+            Reserialize();
         }
 
         public void OnBeforeSerialize()
         {
             Entries = this.Select(x => new StringObjectPair() { Key = x.Key, Value = x.Value }).ToList();
+        }
+
+        public System.Action AddReserializeListener(System.Action<SerializableDictionary> callback)
+        {
+            reserialized += callback;
+            return () => reserialized -= callback;
+        }
+
+        protected void Reserialize()
+        {
+            reserialized?.Invoke(this);
         }
     }
 }
