@@ -1,20 +1,14 @@
 using ReactUnity.Dispatchers;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace ReactUnity.Helpers
 {
-    public class GlobalRecord : EventDictionary<object>
+    public class GlobalRecord : EventObjectDictionary
     {
         private System.Action removeStringDictionaryListener;
         private IDispatcher dispatcher;
 
         public GlobalRecord() { }
-
-        public GlobalRecord(IDictionary<string, object> dict) : base(dict)
-        {
-        }
 
         public static GlobalRecord BindSerializableDictionary(SerializableDictionary dict, IDispatcher dispatcher, bool isSerializing)
         {

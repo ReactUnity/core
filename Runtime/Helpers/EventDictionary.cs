@@ -1,7 +1,10 @@
+#if (UNITY_EDITOR || UNITY_STANDALONE) && !REACT_DISABLE_CLEARSCRIPT
+#define REACT_CLEARSCRIPT
+#endif
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace ReactUnity.Helpers
 {
@@ -10,9 +13,7 @@ namespace ReactUnity.Helpers
     {
         private Dictionary<string, T> collection;
 
-        public delegate void ChangeCallback(string key, T value, EventDictionary<T> dic);
-
-        internal event ChangeCallback changed;
+        internal event Action<string, T, EventDictionary<T>> changed;
 
         public T this[string key]
         {
@@ -127,8 +128,16 @@ namespace ReactUnity.Helpers
             return (collection as ICollection<KeyValuePair<string, T>>).Contains(item);
         }
 
-        public Action AddListener(ChangeCallback listener)
+        public Action AddListener(Action<string, T, EventDictionary<T>> listener)
         {
+            changed += listener;
+            return () => changed -= listener;
+        }
+
+        public Action AddListener(object cb)
+        {
+            var callback = new Callback(cb);
+            var listener = new Action<string, T, EventDictionary<T>>((key, value, dc) => callback.Call(key, value, dc));
             changed += listener;
             return () => changed -= listener;
         }
@@ -139,7 +148,51 @@ namespace ReactUnity.Helpers
         }
     }
 
-    public class InlineData : EventDictionary<object>
+    public interface IPropertyBagProvider
+    {
+#if REACT_CLEARSCRIPT
+        Microsoft.ClearScript.IPropertyBag GetPropertyBag();
+#endif
+    }
+
+    public class EventObjectDictionary : EventDictionary<object>, IPropertyBagProvider
+    {
+#if REACT_CLEARSCRIPT
+        protected Microsoft.ClearScript.IPropertyBag propertyBag;
+
+        public Microsoft.ClearScript.IPropertyBag GetPropertyBag()
+        {
+            if (propertyBag != null) return propertyBag;
+
+            var pb = propertyBag = new Microsoft.ClearScript.PropertyBag();
+
+            Action regenerate = () =>
+            {
+                pb.Clear();
+                foreach (var d in this)
+                {
+                    pb.Add(d.Key, d.Value);
+                }
+                pb.Add("$$self", this);
+            };
+
+            regenerate();
+
+            changed += (string key, object value, EventDictionary<object> dc) =>
+            {
+                if (propertyBag != null)
+                {
+                    if (key != null) propertyBag[key] = value;
+                    else regenerate();
+                }
+            };
+
+            return pb;
+        }
+#endif
+    }
+
+    public class InlineData : EventObjectDictionary
     {
         internal readonly string Identifier;
 

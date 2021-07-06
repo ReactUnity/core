@@ -5,6 +5,7 @@
 #if REACT_CLEARSCRIPT
 using Microsoft.ClearScript;
 using Microsoft.ClearScript.V8;
+using ReactUnity.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -82,13 +83,15 @@ namespace ReactUnity.ScriptEngine
         public void SetValue<T>(string key, T value)
         {
             if (value is Type t) Engine.AddHostType(key, t);
-            else if (value is IDictionary<string, object> dd)
+            else if (value is IPropertyBagProvider pbp) Engine.AddHostObject(key, pbp.GetPropertyBag());
+            else if (!(value is IPropertyBag) && value is IDictionary<string, object> dd)
             {
                 var pb = new PropertyBag();
                 foreach (var d in dd)
                 {
                     pb.Add(d.Key, d.Value);
                 }
+                pb.Add("$$self", value);
                 Engine.AddHostObject(key, pb);
             }
             else Engine.AddHostObject(key, value);
