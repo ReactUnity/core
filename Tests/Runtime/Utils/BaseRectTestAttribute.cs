@@ -28,6 +28,8 @@ namespace ReactUnity.Tests
             ru.AfterStart.AddListener(AfterStart);
             ru.AutoRender = false;
             ru.enabled = true;
+            var testBase = test.Fixture as TestBase;
+            ru.EngineType = testBase != null ? testBase.EngineType : ScriptEngine.JavascriptEngineType.Auto;
             ru.Render();
         }
 

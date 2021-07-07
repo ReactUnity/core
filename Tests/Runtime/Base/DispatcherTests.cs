@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using ReactUnity.Dispatchers;
+using ReactUnity.ScriptEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +8,8 @@ using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
-    [TestFixture(TestOf = typeof(RuntimeDispatcher))]
-    public class DispatcherTests : TestBase
+    [TestFixture]
+    public class DispatcherTests
     {
         [UnityTest]
         public IEnumerator RuntimeDispatcher_OnEveryUpdate_RunsOnEachUpdate()
@@ -33,31 +34,6 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(2, value, "Deferred failed to stop");
         }
-
-        [Ignore("LateUpdate Coroutine is not ready yet")]
-        [UnityTest]
-        public IEnumerator RuntimeDispatcher_OnEveryLateUpdate_RunsOnEachLateUpdate()
-        {
-            var dispatcher = RuntimeDispatcher.Create();
-
-            var value = 0;
-
-            var handle = dispatcher.OnEveryLateUpdate(() => value++);
-
-            yield return null;
-            Assert.AreEqual(1, value);
-
-            yield return null;
-            Assert.AreEqual(2, value);
-
-            dispatcher.StopDeferred(handle);
-
-            yield return null;
-            yield return null;
-            yield return null;
-            Assert.AreEqual(2, value, "Deferred failed to stop");
-        }
-
 
 
         [UnityTest]

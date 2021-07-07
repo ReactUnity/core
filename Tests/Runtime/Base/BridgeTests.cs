@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using ReactUnity.ScriptEngine;
 using ReactUnity.UGUI;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,9 +8,10 @@ using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
-    [TestFixture(TestOf = typeof(ReactUnityBridge))]
     public class BridgeTests : TestBase
     {
+        public BridgeTests(JavascriptEngineType engineType) : base(engineType) { }
+
         #region Tree modification
 
         [UnityTest, ReactInjectableTest]

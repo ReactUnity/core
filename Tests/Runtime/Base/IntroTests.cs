@@ -1,14 +1,16 @@
 using System.Collections;
 using NUnit.Framework;
+using ReactUnity.ScriptEngine;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
 
 namespace ReactUnity.Tests
 {
-    [TestFixture(Description = "General hello world tests")]
     public class IntroTests : TestBase
     {
+        public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
+
         [UnityTest, ReactTest(TestPath)]
         public IEnumerator Base_HelloWorld()
         {
