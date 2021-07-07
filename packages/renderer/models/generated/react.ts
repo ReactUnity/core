@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 3.07.2021 22:06:39
+// Generated 7.07.2021 19:31:50
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -575,7 +575,7 @@ export declare namespace ReactUnity {
     particleSystem: UnityEngine.Component;
     name: string;
     hideFlags: UnityEngine.HideFlags;
-    Globals: ReactUnity.Helpers.StringObjectDictionary;
+    Globals: ReactUnity.Helpers.SerializableDictionary;
     Script: ReactUnity.ReactScript;
     Debug: boolean;
     AwaitDebugger: boolean;
@@ -1284,8 +1284,10 @@ export declare namespace ReactUnity {
       charset: string;
       crossOrigin: string;
       timeout: number;
-      onload: ((arg0: ReactUnity.DomProxies.ScriptProxy) => void);
-      onerror: ((arg0: ReactUnity.DomProxies.ScriptProxy) => void);
+      Onload: any; // Jint.Native.JsValue
+      onload: any; // System.Object
+      Onerror: any; // Jint.Native.JsValue
+      onerror: any; // System.Object
       nodeType: number;
       nextSibling: any; // System.Object
       document: ReactUnity.DomProxies.DocumentProxy;
@@ -2186,6 +2188,95 @@ export declare namespace ReactUnity {
         GetType(): System.Type;
         ToString(): string;
       }
+      export class ReactUnityEditorElement {
+        constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Helpers.GlobalRecord, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, engineType?: ReactUnity.ScriptEngine.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
+        [key: string]: any;
+        runner: ReactUnity.ReactUnityRunner;
+        context: ReactUnity.ReactContext;
+        dispatcher: ReactUnity.Dispatchers.IDispatcher;
+        scheduler: ReactUnity.Schedulers.IUnityScheduler;
+        MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
+        Script: ReactUnity.ReactScript;
+        Globals: ReactUnity.Helpers.GlobalRecord;
+        EngineType: ReactUnity.ScriptEngine.JavascriptEngineType;
+        viewDataKey: string;
+        userData: any; // System.Object
+        canGrabFocus: boolean;
+        focusController: UnityEngine.UIElements.FocusController;
+        usageHints: UnityEngine.UIElements.UsageHints;
+        transform: UnityEngine.UIElements.ITransform;
+        layout: UnityEngine.Rect;
+        contentRect: UnityEngine.Rect;
+        worldBound: UnityEngine.Rect;
+        localBound: UnityEngine.Rect;
+        worldTransform: UnityEngine.Matrix4x4;
+        pickingMode: UnityEngine.UIElements.PickingMode;
+        name: string;
+        enabledInHierarchy: boolean;
+        enabledSelf: boolean;
+        visible: boolean;
+        generateVisualContent: ((arg0: UnityEngine.UIElements.MeshGenerationContext) => void);
+        experimental: UnityEngine.UIElements.IExperimentalFeatures;
+        hierarchy: UnityEngine.UIElements.VisualElement_Hierarchy;
+        cacheAsBitmap: boolean;
+        parent: UnityEngine.UIElements.VisualElement;
+        panel: UnityEngine.UIElements.IPanel;
+        contentContainer: UnityEngine.UIElements.VisualElement;
+        visualTreeAssetSource: UnityEngine.UIElements.VisualTreeAsset;
+        childCount: number;
+        schedule: UnityEngine.UIElements.IVisualElementScheduler;
+        style: UnityEngine.UIElements.IStyle;
+        customStyle: UnityEngine.UIElements.ICustomStyle;
+        styleSheets: UnityEngine.UIElements.VisualElementStyleSheetSet;
+        tooltip: string;
+        resolvedStyle: UnityEngine.UIElements.IResolvedStyle;
+        focusable: boolean;
+        tabIndex: number;
+        delegatesFocus: boolean;
+        Debug: boolean;
+        AwaitDebugger: boolean;
+        Run(): void;
+        Destroy(): void;
+        Restart(): void;
+        Focus(): void;
+        SendEvent(e: UnityEngine.UIElements.EventBase): void;
+        SetEnabled(value: boolean): void;
+        MarkDirtyRepaint(): void;
+        ContainsPoint(localPoint: UnityEngine.Vector2): boolean;
+        Overlaps(rectangle: UnityEngine.Rect): boolean;
+        ToString(): string;
+        GetClasses(): System.Collections.Generic.IEnumerable<string>;
+        ClearClassList(): void;
+        AddToClassList(className: string): void;
+        RemoveFromClassList(className: string): void;
+        ToggleInClassList(className: string): void;
+        EnableInClassList(className: string, enable: boolean): void;
+        ClassListContains(cls: string): boolean;
+        FindAncestorUserData(): any;
+        Add(child: UnityEngine.UIElements.VisualElement): void;
+        Insert(index: number, element: UnityEngine.UIElements.VisualElement): void;
+        Remove(element: UnityEngine.UIElements.VisualElement): void;
+        RemoveAt(index: number): void;
+        Clear(): void;
+        ElementAt(index: number): UnityEngine.UIElements.VisualElement;
+        IndexOf(element: UnityEngine.UIElements.VisualElement): number;
+        Children(): System.Collections.Generic.IEnumerable<UnityEngine.UIElements.VisualElement>;
+        Sort(comp: System.Comparison<UnityEngine.UIElements.VisualElement>): void;
+        BringToFront(): void;
+        SendToBack(): void;
+        PlaceBehind(sibling: UnityEngine.UIElements.VisualElement): void;
+        PlaceInFront(sibling: UnityEngine.UIElements.VisualElement): void;
+        RemoveFromHierarchy(): void;
+        Contains(child: UnityEngine.UIElements.VisualElement): boolean;
+        FindCommonAncestor(other: UnityEngine.UIElements.VisualElement): UnityEngine.UIElements.VisualElement;
+        Blur(): void;
+        HandleEvent(evt: UnityEngine.UIElements.EventBase): void;
+        HasTrickleDownHandlers(): boolean;
+        HasBubbleUpHandlers(): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
     }
   }
   export namespace Helpers {
@@ -2207,8 +2298,54 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class ReflectionHelpers {
-      static FindType(fullName: string, ignoreCase?: boolean, searchAllAssemblies?: boolean): System.Type;
+    export class EventDictionary<T = any> {
+      constructor();
+      constructor(dict: System.Collections.Generic.IDictionary<string, T>);
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<T>;
+      Count: number;
+      IsReadOnly: boolean;
+      Set(key: string, value: T): void;
+      SetWithoutNotify(key: string, value: T): void;
+      Add(key: string, value: T): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, T>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: string): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, T>>;
+      Remove(key: string): boolean;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(listener: ((arg0: string, arg1: T, arg2: ReactUnity.Helpers.EventDictionary<T>) => void)): (() => void);
+      AddListener(cb: any): (() => void);
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export interface IPropertyBagProvider {
+      GetPropertyBag(): any;
+    }
+    export class EventObjectDictionary {
+      constructor();
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<any>;
+      Count: number;
+      IsReadOnly: boolean;
+      GetPropertyBag(): any;
+      Set(key: string, value: any): void;
+      SetWithoutNotify(key: string, value: any): void;
+      Add(key: string, value: any): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: string): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      Remove(key: string): boolean;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.EventDictionary<any>) => void)): (() => void);
+      AddListener(cb: any): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2216,24 +2353,34 @@ export declare namespace ReactUnity {
     }
     export class GlobalRecord {
       constructor();
-      constructor(dict: System.Collections.Generic.IDictionary<string, any>);
       [key: string]: any;
-      Comparer: System.Collections.Generic.IEqualityComparer<string>;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<any>;
       Count: number;
-      Keys: Record<string, any>;
-      Values: Record<string, any>;
+      IsReadOnly: boolean;
+      static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Dispatchers.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
+      BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
+      UpdateStringObjectDictionary(dict: ReactUnity.Helpers.EventDictionary<UnityEngine.Object>, isSerializing: boolean): void;
+      GetPropertyBag(): any;
+      Set(key: string, value: any): void;
+      SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Clear(): void;
+      ClearWithoutNotify(): void;
       ContainsKey(key: string): boolean;
-      ContainsValue(value: any): boolean;
-      GetEnumerator(): Record<string, any>;
-      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
-      OnDeserialization(sender: any): void;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Remove(key: string): boolean;
-      TryAdd(key: string, value: any): boolean;
-      EnsureCapacity(capacity: number): number;
-      TrimExcess(): void;
-      TrimExcess(capacity: number): void;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.EventDictionary<any>) => void)): (() => void);
+      AddListener(cb: any): (() => void);
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class ReflectionHelpers {
+      static FindType(fullName: string, ignoreCase?: boolean, searchAllAssemblies?: boolean): System.Type;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2248,28 +2395,29 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class StringObjectDictionary {
+    export class SerializableDictionary {
       constructor();
       [key: string]: any;
-      Comparer: System.Collections.Generic.IEqualityComparer<string>;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<UnityEngine.Object>;
       Count: number;
-      Keys: Record<string, UnityEngine.Object>;
-      Values: Record<string, UnityEngine.Object>;
+      IsReadOnly: boolean;
       GetValueOrDefault(key: string): UnityEngine.Object;
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
+      AddReserializeListener(callback: ((arg0: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
+      Set(key: string, value: UnityEngine.Object): void;
+      SetWithoutNotify(key: string, value: UnityEngine.Object): void;
       Add(key: string, value: UnityEngine.Object): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, UnityEngine.Object>): void;
       Clear(): void;
+      ClearWithoutNotify(): void;
       ContainsKey(key: string): boolean;
-      ContainsValue(value: UnityEngine.Object): boolean;
-      GetEnumerator(): Record<string, UnityEngine.Object>;
-      GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
-      OnDeserialization(sender: any): void;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, UnityEngine.Object>>;
       Remove(key: string): boolean;
-      TryAdd(key: string, value: UnityEngine.Object): boolean;
-      EnsureCapacity(capacity: number): number;
-      TrimExcess(): void;
-      TrimExcess(capacity: number): void;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(listener: ((arg0: string, arg1: UnityEngine.Object, arg2: ReactUnity.Helpers.EventDictionary<UnityEngine.Object>) => void)): (() => void);
+      AddListener(cb: any): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2396,6 +2544,7 @@ export declare namespace ReactUnity {
     export class DefaultMediaProvider {
       constructor(mediaType: string, numbers?: Record<string, number>, values?: Record<string, string>);
       MediaType: string;
+      static CreateMediaProvider(type: string, framework: string, isEditor: boolean): ReactUnity.StyleEngine.DefaultMediaProvider;
       RecalculateDefaults(): void;
       GetNumericalValue(property: string): number;
       GetValue(property: string): string;
@@ -2701,14 +2850,19 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
+      GetPropertyBag(): any;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
       Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Clear(): void;
+      ClearWithoutNotify(): void;
       ContainsKey(key: string): boolean;
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Remove(key: string): boolean;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.EventDictionary<any>) => void)): (() => void);
+      AddListener(cb: any): (() => void);
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -4936,7 +5090,7 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      Globals: ReactUnity.Helpers.StringObjectDictionary;
+      Globals: ReactUnity.Helpers.SerializableDictionary;
       Script: ReactUnity.ReactScript;
       Debug: boolean;
       AwaitDebugger: boolean;
@@ -8083,8 +8237,9 @@ export declare namespace ReactUnity {
       constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Helpers.GlobalRecord, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, engineType?: ReactUnity.ScriptEngine.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
       [key: string]: any;
       runner: ReactUnity.ReactUnityRunner;
-      context: ReactUnity.UIToolkit.UIToolkitContext;
+      context: ReactUnity.ReactContext;
       dispatcher: ReactUnity.Dispatchers.IDispatcher;
+      scheduler: ReactUnity.Schedulers.IUnityScheduler;
       MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
       Script: ReactUnity.ReactScript;
       Globals: ReactUnity.Helpers.GlobalRecord;
@@ -8197,7 +8352,7 @@ export declare namespace ReactUnity {
       particleSystem: UnityEngine.Component;
       name: string;
       hideFlags: UnityEngine.HideFlags;
-      Globals: ReactUnity.Helpers.StringObjectDictionary;
+      Globals: ReactUnity.Helpers.SerializableDictionary;
       Script: ReactUnity.ReactScript;
       Debug: boolean;
       AwaitDebugger: boolean;
