@@ -94,7 +94,7 @@ namespace ReactUnity.Helpers
         public bool Remove(string key)
         {
             var res = collection.Remove(key);
-            Change(key, default);
+            if(res) Change(key, default);
             return res;
         }
 
