@@ -8,8 +8,8 @@ const replaceEnd = `/* INJECTABLE_END */`;
 
 const replaceWith = `
 var React = react;
-var ReactUnityRenderer = renderer_Renderer;
-var Renderer = renderer_Renderer;
+var ReactUnityRenderer = ReactUnity.Renderer;
+var Renderer = ReactUnity.Renderer;
 
 /*INJECT_CODE*/
 `;

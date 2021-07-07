@@ -5826,74 +5826,6 @@ if (true) {
 
 /***/ }),
 
-/***/ 93:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-var __webpack_unused_export__;
-/** @license React v17.0.2
- * react-jsx-runtime.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-__webpack_require__(625);
-
-var f = __webpack_require__(359),
-    g = 60103;
-
-__webpack_unused_export__ = 60107;
-
-if ("function" === typeof Symbol && Symbol["for"]) {
-  var h = Symbol["for"];
-  g = h("react.element");
-  __webpack_unused_export__ = h("react.fragment");
-}
-
-var m = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,
-    n = Object.prototype.hasOwnProperty,
-    p = {
-  key: !0,
-  ref: !0,
-  __self: !0,
-  __source: !0
-};
-
-function q(c, a, k) {
-  var b,
-      d = {},
-      e = null,
-      l = null;
-  void 0 !== k && (e = "" + k);
-  void 0 !== a.key && (e = "" + a.key);
-  void 0 !== a.ref && (l = a.ref);
-
-  for (b in a) {
-    n.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
-  }
-
-  if (c && c.defaultProps) for (b in a = c.defaultProps, a) {
-    void 0 === d[b] && (d[b] = a[b]);
-  }
-  return {
-    $$typeof: g,
-    type: c,
-    key: e,
-    ref: l,
-    props: d,
-    _owner: m.current
-  };
-}
-
-exports.jsx = q;
-exports.jsxs = q;
-
-/***/ }),
-
 /***/ 357:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -6327,18 +6259,6 @@ if (true) {
 
 /***/ }),
 
-/***/ 114:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-if (true) {
-  module.exports = __webpack_require__(93);
-} else {}
-
-/***/ }),
-
 /***/ 822:
 /***/ ((__unused_webpack_module, exports) => {
 
@@ -6733,6 +6653,34 @@ if (true) {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -6748,428 +6696,20 @@ var __webpack_exports__ = {};
 (() => {
 "use strict";
 
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/styles-enums.js
-var FontWeight;
+// NAMESPACE OBJECT: ./node_modules/@reactunity/renderer/dist/index.js
+var dist_namespaceObject = {};
+__webpack_require__.r(dist_namespaceObject);
+__webpack_require__.d(dist_namespaceObject, {
+  "GlobalsProvider": () => (GlobalsProvider),
+  "Renderer": () => (Renderer),
+  "createEventDictionaryContext": () => (createEventDictionaryContext),
+  "globalsContext": () => (globalsContext),
+  "useGlobals": () => (useGlobals)
+});
 
-(function (FontWeight) {
-  FontWeight[FontWeight["Thin"] = 100] = "Thin";
-  FontWeight[FontWeight["ExtraLight"] = 200] = "ExtraLight";
-  FontWeight[FontWeight["Light"] = 300] = "Light";
-  FontWeight[FontWeight["Regular"] = 400] = "Regular";
-  FontWeight[FontWeight["Medium"] = 500] = "Medium";
-  FontWeight[FontWeight["SemiBold"] = 600] = "SemiBold";
-  FontWeight[FontWeight["Bold"] = 700] = "Bold";
-  FontWeight[FontWeight["Heavy"] = 800] = "Heavy";
-  FontWeight[FontWeight["Black"] = 900] = "Black";
-})(FontWeight || (FontWeight = {}));
-
-var FontStyles;
-
-(function (FontStyles) {
-  FontStyles[FontStyles["Normal"] = 0] = "Normal";
-  FontStyles[FontStyles["Bold"] = 1] = "Bold";
-  FontStyles[FontStyles["Italic"] = 2] = "Italic";
-  FontStyles[FontStyles["Underline"] = 4] = "Underline";
-  FontStyles[FontStyles["LowerCase"] = 8] = "LowerCase";
-  FontStyles[FontStyles["UpperCase"] = 16] = "UpperCase";
-  FontStyles[FontStyles["SmallCaps"] = 32] = "SmallCaps";
-  FontStyles[FontStyles["Strikethrough"] = 64] = "Strikethrough";
-  FontStyles[FontStyles["Superscript"] = 128] = "Superscript";
-  FontStyles[FontStyles["Subscript"] = 256] = "Subscript";
-  FontStyles[FontStyles["Highlight"] = 512] = "Highlight";
-})(FontStyles || (FontStyles = {}));
-
-var TextOverflowModes;
-
-(function (TextOverflowModes) {
-  TextOverflowModes["Overflow"] = "overflow";
-  TextOverflowModes["Ellipsis"] = "ellipsis";
-  TextOverflowModes["Masking"] = "masking";
-  TextOverflowModes["Truncate"] = "truncate";
-  TextOverflowModes["ScrollRect"] = "scroll-rect";
-  TextOverflowModes["Page"] = "page";
-  TextOverflowModes["Linked"] = "linked";
-})(TextOverflowModes || (TextOverflowModes = {}));
-
-var PointerEvents;
-
-(function (PointerEvents) {
-  PointerEvents["Auto"] = "auto";
-  PointerEvents["Visible"] = "visible";
-  PointerEvents["All"] = "all";
-  PointerEvents["None"] = "none";
-})(PointerEvents || (PointerEvents = {}));
-
-var Visibility;
-
-(function (Visibility) {
-  Visibility["Visible"] = "visible";
-  Visibility["Hidden"] = "hidden";
-})(Visibility || (Visibility = {}));
-
-var Appearance;
-
-(function (Appearance) {
-  Appearance["None"] = "none";
-  Appearance["Button"] = "button";
-  Appearance["Input"] = "input";
-  Appearance["Toggle"] = "toggle";
-})(Appearance || (Appearance = {}));
-
-var NavigationMode;
-
-(function (NavigationMode) {
-  NavigationMode["None"] = "none";
-  NavigationMode["Horizontal"] = "horizontal";
-  NavigationMode["Vertical"] = "vertical";
-  NavigationMode["Automatic"] = "automatic";
-  NavigationMode["Explicit"] = "explicit";
-})(NavigationMode || (NavigationMode = {}));
-
-var WhiteSpace;
-
-(function (WhiteSpace) {
-  WhiteSpace["Normal"] = "normal";
-  WhiteSpace["NoWrap"] = "nowrap";
-})(WhiteSpace || (WhiteSpace = {}));
-
-var CursorType;
-
-(function (CursorType) {
-  CursorType["Auto"] = "auto";
-  CursorType["Default"] = "default";
-  CursorType["None"] = "none";
-  CursorType["ContextMenu"] = "context-menu";
-  CursorType["Help"] = "help";
-  CursorType["Pointer"] = "pointer";
-  CursorType["Progress"] = "progress";
-  CursorType["Wait"] = "wait";
-  CursorType["Cell"] = "cell";
-  CursorType["Crosshair"] = "crosshair";
-  CursorType["Text"] = "text";
-  CursorType["VerticalText"] = "vertical-text";
-  CursorType["Alias"] = "alias";
-  CursorType["Copy"] = "copy";
-  CursorType["Move"] = "move";
-  CursorType["NoDrop"] = "no-drop";
-  CursorType["NotAllowed"] = "not-allowed";
-  CursorType["EResize"] = "e-resize";
-  CursorType["NResize"] = "n-resize";
-  CursorType["NeResize"] = "ne-resize";
-  CursorType["NwResize"] = "nw-resize";
-  CursorType["SResize"] = "s-resize";
-  CursorType["SeResize"] = "se-resize";
-  CursorType["SwResize"] = "sw-resize";
-  CursorType["WResize"] = "w-resize";
-  CursorType["EwResize"] = "ew-resize";
-  CursorType["NsResize"] = "ns-resize";
-  CursorType["NeswResize"] = "nesw-resize";
-  CursorType["NwseResize"] = "nwse-resize";
-  CursorType["ColResize"] = "col-resize";
-  CursorType["RowResize"] = "row-resize";
-  CursorType["AllScroll"] = "all-scroll";
-  CursorType["ZoomIn"] = "zoom-in";
-  CursorType["ZoomOut"] = "zoom-out";
-  CursorType["Grab"] = "grab";
-  CursorType["Grabbing"] = "grabbing";
-})(CursorType || (CursorType = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/yoga-enums.js
-var FlexDirection;
-
-(function (FlexDirection) {
-  FlexDirection[FlexDirection["Column"] = 0] = "Column";
-  FlexDirection[FlexDirection["ColumnReverse"] = 1] = "ColumnReverse";
-  FlexDirection[FlexDirection["Row"] = 2] = "Row";
-  FlexDirection[FlexDirection["RowReverse"] = 3] = "RowReverse";
-})(FlexDirection || (FlexDirection = {}));
-
-var YogaAlign;
-
-(function (YogaAlign) {
-  YogaAlign[YogaAlign["Auto"] = 0] = "Auto";
-  YogaAlign[YogaAlign["FlexStart"] = 1] = "FlexStart";
-  YogaAlign[YogaAlign["Center"] = 2] = "Center";
-  YogaAlign[YogaAlign["FlexEnd"] = 3] = "FlexEnd";
-  YogaAlign[YogaAlign["Stretch"] = 4] = "Stretch";
-  YogaAlign[YogaAlign["Baseline"] = 5] = "Baseline";
-  YogaAlign[YogaAlign["SpaceBetween"] = 6] = "SpaceBetween";
-  YogaAlign[YogaAlign["SpaceAround"] = 7] = "SpaceAround";
-})(YogaAlign || (YogaAlign = {}));
-
-var YogaJustify;
-
-(function (YogaJustify) {
-  YogaJustify["FlexStart"] = "flex-start";
-  YogaJustify["Center"] = "center";
-  YogaJustify["FlexEnd"] = "flex-end";
-  YogaJustify["SpaceBetween"] = "space-between";
-  YogaJustify["SpaceAround"] = "space-around";
-})(YogaJustify || (YogaJustify = {}));
-
-var Display;
-
-(function (Display) {
-  Display["Flex"] = "flex";
-  Display["None"] = "none";
-})(Display || (Display = {}));
-
-var Wrap;
-
-(function (Wrap) {
-  Wrap["NoWrap"] = "no-wrap";
-  Wrap["Wrap"] = "wrap";
-  Wrap["WrapReverse"] = "wrap-reverse";
-})(Wrap || (Wrap = {}));
-
-var Position;
-
-(function (Position) {
-  Position["Relative"] = "relative";
-  Position["Absolute"] = "absolute";
-})(Position || (Position = {}));
-
-var Overflow;
-
-(function (Overflow) {
-  Overflow["Visible"] = "visible";
-  Overflow["Hidden"] = "hidden";
-  Overflow["Scroll"] = "scroll";
-})(Overflow || (Overflow = {}));
-
-var Direction;
-
-(function (Direction) {
-  Direction["Inherit"] = "inherit";
-  Direction["LTR"] = "ltr";
-  Direction["RTL"] = "rtl";
-})(Direction || (Direction = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/index.js
-
-
-
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/components.js
-var ImageFitMode;
-
-(function (ImageFitMode) {
-  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
-  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
-  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
-  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
-  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
-  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
-  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
-})(ImageFitMode || (ImageFitMode = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/input.js
-var TouchScreenKeyboardType;
-
-(function (TouchScreenKeyboardType) {
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Default"] = 0] = "Default";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["ASCIICapable"] = 1] = "ASCIICapable";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NumbersAndPunctuation"] = 2] = "NumbersAndPunctuation";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["URL"] = 3] = "URL";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NumberPad"] = 4] = "NumberPad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["PhonePad"] = 5] = "PhonePad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NamePhonePad"] = 6] = "NamePhonePad";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["EmailAddress"] = 7] = "EmailAddress";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["NintendoNetworkAccount"] = 8] = "NintendoNetworkAccount";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Social"] = 9] = "Social";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["Search"] = 10] = "Search";
-  TouchScreenKeyboardType[TouchScreenKeyboardType["DecimalPad"] = 11] = "DecimalPad";
-})(TouchScreenKeyboardType || (TouchScreenKeyboardType = {}));
-
-var ContentType;
-
-(function (ContentType) {
-  ContentType[ContentType["Standard"] = 0] = "Standard";
-  ContentType[ContentType["Autocorrected"] = 1] = "Autocorrected";
-  ContentType[ContentType["IntegerNumber"] = 2] = "IntegerNumber";
-  ContentType[ContentType["DecimalNumber"] = 3] = "DecimalNumber";
-  ContentType[ContentType["Alphanumeric"] = 4] = "Alphanumeric";
-  ContentType[ContentType["Name"] = 5] = "Name";
-  ContentType[ContentType["EmailAddress"] = 6] = "EmailAddress";
-  ContentType[ContentType["Password"] = 7] = "Password";
-  ContentType[ContentType["Pin"] = 8] = "Pin";
-  ContentType[ContentType["Custom"] = 9] = "Custom";
-})(ContentType || (ContentType = {}));
-
-var CharacterValidation;
-
-(function (CharacterValidation) {
-  CharacterValidation[CharacterValidation["None"] = 0] = "None";
-  CharacterValidation[CharacterValidation["Digit"] = 1] = "Digit";
-  CharacterValidation[CharacterValidation["Integer"] = 2] = "Integer";
-  CharacterValidation[CharacterValidation["Decimal"] = 3] = "Decimal";
-  CharacterValidation[CharacterValidation["Alphanumeric"] = 4] = "Alphanumeric";
-  CharacterValidation[CharacterValidation["Name"] = 5] = "Name";
-  CharacterValidation[CharacterValidation["Regex"] = 6] = "Regex";
-  CharacterValidation[CharacterValidation["EmailAddress"] = 7] = "EmailAddress";
-  CharacterValidation[CharacterValidation["CustomValidator"] = 8] = "CustomValidator";
-})(CharacterValidation || (CharacterValidation = {}));
-
-var LineType;
-
-(function (LineType) {
-  LineType[LineType["SingleLine"] = 0] = "SingleLine";
-  LineType[LineType["MultiLineSubmit"] = 1] = "MultiLineSubmit";
-  LineType[LineType["MultiLineNewline"] = 2] = "MultiLineNewline";
-})(LineType || (LineType = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/runtime/index.js
-
-
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
-// https://gist.github.com/gre/1650294
-var easing = {
-  // no easing, no acceleration
-  linear: function linear(t) {
-    return t;
-  },
-  // accelerating from zero velocity
-  easeInQuad: function easeInQuad(t) {
-    return t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuad: function easeOutQuad(t) {
-    return t * (2 - t);
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuad: function easeInOutQuad(t) {
-    return t < .5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-  },
-  // accelerating from zero velocity
-  easeInCubic: function easeInCubic(t) {
-    return t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutCubic: function easeOutCubic(t) {
-    return --t * t * t + 1;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutCubic: function easeInOutCubic(t) {
-    return t < .5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-  },
-  // accelerating from zero velocity
-  easeInQuart: function easeInQuart(t) {
-    return t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuart: function easeOutQuart(t) {
-    return 1 - --t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuart: function easeInOutQuart(t) {
-    return t < .5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-  },
-  // accelerating from zero velocity
-  easeInQuint: function easeInQuint(t) {
-    return t * t * t * t * t;
-  },
-  // decelerating to zero velocity
-  easeOutQuint: function easeOutQuint(t) {
-    return 1 + --t * t * t * t * t;
-  },
-  // acceleration until halfway, then deceleration
-  easeInOutQuint: function easeInOutQuint(t) {
-    return t < .5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
-  }
-};
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(114);
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(359);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/common-layouts.js
-
-var transparentColor = 'clear';
-var common_layouts_fullScreen = {
-  position: Position.Absolute,
-  top: -5000,
-  right: -5000,
-  bottom: -5000,
-  left: -5000
-};
-var fullCover = {
-  position: Position.Absolute,
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0
-};
-var common_layouts_dropdownBottom = {
-  position: Position.Absolute,
-  top: '100%',
-  left: 0,
-  minWidth: '100%'
-};
-var dropdownTop = {
-  position: Position.Absolute,
-  bottom: '100%',
-  left: 0,
-  minWidth: '100%'
-};
-var common_layouts_bottomEdge = {
-  position: Position.Absolute,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  height: 0
-};
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/dropdown-item.js
-var __extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-
-
-var dropdown_item_DropdownItem =
-/** @class */
-function (_super) {
-  __extends(DropdownItem, _super);
-
-  function DropdownItem(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.state = {};
-    return _this;
-  }
-
-  DropdownItem.prototype.render = function () {
-    return this.props.children;
-  };
-
-  return DropdownItem;
-}(react.Component);
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/dropdown.js
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/event-dictionary.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -7186,561 +6726,62 @@ var __assign = undefined && undefined.__assign || function () {
   return __assign.apply(this, arguments);
 };
 
-var __rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
 
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+function createEventDictionaryContext(dictionary, name) {
+  var ctx = react.createContext(undefined);
+
+  function Provider(_a) {
+    var children = _a.children;
+
+    var _b = react.useState(0),
+        render = _b[0],
+        setRender = _b[1];
+
+    react.useEffect(function () {
+      var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
+        setRender(function (x) {
+          return x + 1;
+        });
+      });
+
+      if (!remove) {
+        if (name) console.warn(name + " dictionary does not provide a change listener");else console.warn('The dictionary does not provide a change listener');
+      }
+
+      return function () {
+        return remove === null || remove === void 0 ? void 0 : remove();
+      };
+    }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    var value = react.useMemo(function () {
+      return __assign({}, dictionary);
+    }, [render]);
+    return react.createElement(ctx.Provider, {
+      value: value
+    }, children);
   }
 
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+  function useContext() {
+    var context = react.useContext(ctx);
+
+    if (context === undefined) {
+      if (name) throw new Error(name + ".useContext must be used within a " + name + ".Provider");else throw new Error('useContext must be used within a provider');
+    }
+
+    return context;
   }
-  return t;
-};
 
-
-
-
-
-
-var dropdownMenuStyle = {
-  boxShadow: '0 3 7 6 black 5'
-};
-var dropdownButtonStyle = {
-  backgroundColor: 'white',
-  borderRadius: 0
-};
-var dropdownBackdropStyle = {
-  backgroundColor: transparentColor,
-  cursor: CursorType.Default
-};
-function Dropdown(_a) {
-  var _b;
-
-  var _c = _a.autoClose,
-      autoClose = _c === void 0 ? true : _c,
-      onChange = _a.onChange,
-      name = _a.name,
-      style = _a.style,
-      children = _a.children,
-      otherProps = __rest(_a, ["autoClose", "onChange", "name", "style", "children"]);
-
-  var childrenArray = React.Children.toArray(children);
-  var nonItems = childrenArray.filter(function (x) {
-    return (x === null || x === void 0 ? void 0 : x.type) !== DropdownItem;
+  return __assign(__assign({}, ctx), {
+    Provider: Provider,
+    useContext: useContext
   });
-  var items = childrenArray.filter(function (x) {
-    return (x === null || x === void 0 ? void 0 : x.type) === DropdownItem;
-  });
-
-  var _d = React.useState(false),
-      opened = _d[0],
-      setOpened = _d[1];
-
-  var _e = React.useState(-1),
-      selectedIndex = _e[0],
-      setSelectedIndex = _e[1];
-
-  var selectedItem = items[selectedIndex];
-
-  var toggle = function toggle() {
-    return setOpened(function (st) {
-      return !st;
-    });
-  };
-
-  var close = function close() {
-    return setOpened(false);
-  };
-
-  var handleChildClick = function handleChildClick(ind, value) {
-    onChange === null || onChange === void 0 ? void 0 : onChange(value, ind);
-    if (autoClose) close();
-    setSelectedIndex(ind);
-  };
-
-  return _jsx("view", __assign({
-    name: name || '<Dropdown>'
-  }, {
-    children: _jsxs("button", __assign({
-      name: "<Dropdown Trigger>",
-      onClick: toggle,
-      style: __assign({
-        flexDirection: 'Column',
-        alignItems: 'Stretch'
-      }, style)
-    }, otherProps, {
-      children: [selectedIndex < 0 ? nonItems : ((_b = selectedItem.props) === null || _b === void 0 ? void 0 : _b.triggerTemplate) || selectedItem, opened && _jsxs("view", __assign({
-        style: __assign({
-          zIndex: 1000
-        }, bottomEdge)
-      }, {
-        children: [_jsx("button", {
-          name: "<Dropdown Backdrop>",
-          onClick: close,
-          style: __assign(__assign({}, dropdownBackdropStyle), fullScreen)
-        }, void 0), _jsx("view", __assign({
-          name: "<Dropdown Menu>",
-          style: __assign(__assign({}, dropdownMenuStyle), dropdownBottom)
-        }, {
-          children: items.map(function (x, i) {
-            return _jsx("button", __assign({
-              style: dropdownButtonStyle,
-              onClick: function onClick() {
-                return handleChildClick(i, x.props.value);
-              }
-            }, {
-              children: x
-            }), i);
-          })
-        }), void 0)]
-      }), void 0)]
-    }), void 0)
-  }), void 0);
 }
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/dropdown/index.js
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/radio/radio.js
-var radio_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var radio_assign = undefined && undefined.__assign || function () {
-  radio_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return radio_assign.apply(this, arguments);
-};
-
-var radio_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-var Radio =
-/** @class */
-function (_super) {
-  radio_extends(Radio, _super);
-
-  function Radio() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  } // static contextType: React.ContextType<RadioContext>;
-
-
-  Radio.prototype.render = function () {
-    var _this = this;
-
-    var _a = this.context.radioGroup,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange;
-    var optional = {};
-
-    if (selectedValue !== undefined) {
-      optional.checked = this.props.value === selectedValue;
-    }
-
-    if (typeof onChange === 'function') {
-      optional.onChange = onChange.bind(null, this.props.value);
-    }
-
-    return (0,jsx_runtime.jsx)("button", {
-      name: "[Radio]",
-      onClick: function onClick() {
-        return optional.onChange(_this.props.value);
-      }
-    }, void 0);
-  };
-
-  return Radio;
-}(react.Component);
-
-
-
-var RadioGroup =
-/** @class */
-function (_super) {
-  radio_extends(RadioGroup, _super);
-
-  function RadioGroup() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-
-  RadioGroup.prototype.getChildContext = function () {
-    var _a = this.props,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange;
-    return {
-      radioGroup: {
-        selectedValue: selectedValue,
-        onChange: onChange
-      }
-    };
-  };
-
-  RadioGroup.prototype.render = function () {
-    var _a = this.props,
-        name = _a.name,
-        selectedValue = _a.selectedValue,
-        onChange = _a.onChange,
-        children = _a.children,
-        rest = radio_rest(_a, ["name", "selectedValue", "onChange", "children"]);
-
-    return (0,jsx_runtime.jsx)("view", radio_assign({
-      name: name || '<RadioGroup>'
-    }, rest, {
-      children: children
-    }), void 0);
-  };
-
-  return RadioGroup;
-}(react.Component);
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/slider/index.js
-var slider_assign = undefined && undefined.__assign || function () {
-  slider_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return slider_assign.apply(this, arguments);
-};
-
-var slider_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-function Slider(_a) {
-  var _b;
-
-  var _c;
-
-  var onChange = _a.onChange,
-      name = _a.name,
-      children = _a.children,
-      initialValue = _a.initialValue,
-      value = _a.value,
-      _d = _a.direction,
-      direction = _d === void 0 ? 'horizontal' : _d,
-      _e = _a.mode,
-      mode = _e === void 0 ? 'normal' : _e,
-      _f = _a.min,
-      min = _f === void 0 ? 0 : _f,
-      _g = _a.max,
-      max = _g === void 0 ? 1 : _g,
-      _h = _a.step,
-      step = _h === void 0 ? 0 : _h,
-      _j = _a.keyStep,
-      keyStep = _j === void 0 ? null : _j,
-      otherProps = slider_rest(_a, ["onChange", "name", "children", "initialValue", "value", "direction", "mode", "min", "max", "step", "keyStep"]);
-
-  var _k = useState((_c = initialValue !== null && initialValue !== void 0 ? initialValue : value) !== null && _c !== void 0 ? _c : min),
-      curValue = _k[0],
-      setCurValue = _k[1];
-
-  var _l = useState(curValue),
-      innerValue = _l[0],
-      setInnerValue = _l[1];
-
-  var orientation = direction === 'vertical' || direction === 'vertical-reverse' ? 'vertical' : 'horizontal';
-  var isReverse = direction === 'vertical-reverse' || direction === 'horizontal-reverse';
-  var sizeProp = orientation === 'horizontal' ? 'width' : 'height';
-  var coordProp = orientation === 'horizontal' ? 'x' : 'y';
-  var crossCoordProp = orientation === 'horizontal' ? 'y' : 'x';
-  var range = max - min;
-  var ref = useRef();
-  var moveStep = keyStep || step || range / 10;
-  var setValWithStep = useCallback(function (val) {
-    val = Math.max(min, Math.min(max, val));
-    setInnerValue(val);
-    if (step > 0) val = Math.round(val / step) * step;
-    setCurValue(val);
-  }, [min, max, step, setCurValue, setInnerValue]);
-  var dragCallback = useCallback(function (ev) {
-    var mul = isReverse ? -1 : 1;
-    var val = innerValue;
-
-    if (mode === 'diff' || mode === 'falloff') {
-      var diff = ev.delta[coordProp] / 200 * range;
-
-      if (mode === 'falloff') {
-        var yDiff = Math.max(Math.abs(ev.pressPosition[crossCoordProp] - ev.position[crossCoordProp]) / 100, 1);
-        val += mul * diff / (yDiff * yDiff);
-      } else val += mul * diff;
-    } else {
-      var relPos = ref.current.GetRelativePosition(ev.position.x, ev.position.y);
-      var relRatio = relPos[coordProp] / ref.current.GameObject.transform.rect[sizeProp];
-      if (isReverse) relRatio = -relRatio;
-      val = (relRatio + 0.5) * range + min;
-    }
-
-    setValWithStep(val);
-  }, [innerValue, setValWithStep, mode, coordProp, crossCoordProp, sizeProp, isReverse, range, min]);
-  var moveCallback = useCallback(function (ev) {
-    var diff = ev.moveVector[coordProp] * moveStep;
-    if (isReverse) diff = -diff;
-    setValWithStep(curValue + diff);
-  }, [coordProp, moveStep, isReverse, curValue, setValWithStep]);
-  useEffect(function () {
-    if (typeof value == 'number') setCurValue(value);
-  }, [setCurValue, value]);
-  useEffect(function () {
-    if (onChange) onChange(curValue);
-  }, [onChange, curValue]);
-  var ratio = (curValue - min) / range;
-  return _jsx("view", slider_assign({
-    tag: "slider",
-    name: name || '<Slider>'
-  }, otherProps, {
-    ref: ref,
-    "data-direction": direction,
-    "data-orientation": orientation,
-    onDrag: dragCallback,
-    onPointerClick: dragCallback,
-    onPotentialDrag: dragCallback,
-    onMove: moveCallback
-  }, {
-    children: _jsx("view", slider_assign({
-      name: "_track"
-    }, {
-      children: _jsx("view", slider_assign({
-        name: "_fill",
-        style: (_b = {}, _b[sizeProp] = ratio * 100 + '%', _b)
-      }, {
-        children: _jsx("view", slider_assign({
-          name: "_thumbContainer"
-        }, {
-          children: _jsx("view", slider_assign({
-            name: "_thumb"
-          }, {
-            children: typeof children === 'function' ? children(curValue) : children
-          }), void 0)
-        }), void 0)
-      }), void 0)
-    }), void 0)
-  }), void 0);
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/components/tooltip/tooltip.js
-var tooltip_extends = undefined && undefined.__extends || function () {
-  var _extendStatics = function extendStatics(d, b) {
-    _extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) {
-        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-      }
-    };
-
-    return _extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-
-    _extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var tooltip_assign = undefined && undefined.__assign || function () {
-  tooltip_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return tooltip_assign.apply(this, arguments);
-};
-
-var tooltip_rest = undefined && undefined.__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-
-
-
-
-var Tooltip =
-/** @class */
-function (_super) {
-  tooltip_extends(Tooltip, _super);
-
-  function Tooltip(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.toggle = function () {
-      return _this.setState(function (st) {
-        return {
-          opened: !st.opened
-        };
-      });
-    };
-
-    _this.open = function () {
-      return _this.setState({
-        opened: true
-      });
-    };
-
-    _this.close = function () {
-      return _this.setState({
-        opened: false
-      });
-    };
-
-    _this.state = {
-      opened: false
-    };
-    return _this;
-  }
-
-  Tooltip.prototype.render = function () {
-    var _a, _b;
-
-    var _c = this.props,
-        tooltipContent = _c.tooltipContent,
-        position = _c.position,
-        offset = _c.offset,
-        otherProps = tooltip_rest(_c, ["tooltipContent", "position", "offset"]);
-
-    var containerProp = Tooltip.containerPositionProp[position];
-    var childProp = Tooltip.childPositionProp[position];
-    return (0,jsx_runtime.jsxs)("view", tooltip_assign({}, otherProps, {
-      onPointerEnter: this.open,
-      onPointerExit: this.close
-    }, {
-      children: [this.props.children, this.state.opened && tooltipContent && (0,jsx_runtime.jsx)("view", tooltip_assign({
-        style: (_a = {
-          position: Position.Absolute
-        }, _a[containerProp] = Tooltip.yogaZeroPercent, _a)
-      }, {
-        children: (0,jsx_runtime.jsx)("view", tooltip_assign({
-          name: "<Tooltip>",
-          style: (_b = {
-            position: Position.Absolute,
-            zIndex: 1003
-          }, _b[childProp] = offset, _b)
-        }, {
-          children: tooltipContent
-        }), void 0)
-      }), void 0)]
-    }), void 0);
-  };
-
-  Tooltip.defaultProps = {
-    position: 'bottom',
-    offset: 10
-  };
-  Tooltip.containerPositionProp = {
-    top: 'top',
-    bottom: 'bottom',
-    left: 'left',
-    right: 'right'
-  };
-  Tooltip.childPositionProp = {
-    top: 'bottom',
-    bottom: 'top',
-    left: 'right',
-    right: 'left'
-  };
-  Tooltip.yogaZeroPercent = 0;
-  return Tooltip;
-}(react.Component);
-
-
+var globalsContext = createEventDictionaryContext(Globals, 'globalsContext');
+var useGlobals = globalsContext.useContext;
+var GlobalsProvider = globalsContext.Provider;
 // EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(84);
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
-var deepDiffProps = {
-  style: 1,
-  layout: 1
-};
 function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
   if (deepDiffing === void 0) {
     deepDiffing = 0;
@@ -7758,7 +6799,7 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     }
 
     var prop = null;
-    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+    var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
     if (depth > 0) {
       prop = diffProperties(lastProps[propKey], null, depth - 1);
@@ -7779,7 +6820,7 @@ function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
     }
 
     var prop = nextProp;
-    var depth = deepDiffing > 0 ? deepDiffing : deepDiffProps[propKey] || 0;
+    var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
 
     if (depth > 0) {
       prop = diffProperties(lastProp, nextProp, depth - 1);
@@ -7839,13 +6880,13 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     if (pre !== isEvent) continue;
 
     if (isEvent) {
-      Unity.setEventListener(instance, attr, value);
+      UnityBridge.setEventListener(instance, attr, value);
       continue;
     }
 
     if (attr === 'children') {
       if (type === 'text') {
-        Unity.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
+        UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
       }
 
       continue;
@@ -7869,9 +6910,9 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     }
 
     if (attr.substring(0, 5) === 'data-') {
-      Unity.setData(instance, attr.substring(5), value);
+      UnityBridge.setData(instance, attr.substring(5), value);
     } else {
-      Unity.setProperty(instance, attr, value);
+      UnityBridge.setProperty(instance, attr, value);
     }
   }
 
@@ -7907,16 +6948,16 @@ var hostConfig = {
 
     if (type === 'text') {
       var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return Unity.createElement(type, text, rootContainerInstance);
+      return UnityBridge.createElement(type, text, rootContainerInstance);
     }
 
-    return Unity.createElement(props.tag || type, null, rootContainerInstance);
+    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance);
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
-    return Unity.createText(text, rootContainerInstance);
+    return UnityBridge.createText(text, rootContainerInstance);
   },
   appendInitialChild: function appendInitialChild(parent, child) {
-    Unity.appendChild(parent, child);
+    UnityBridge.appendChild(parent, child);
   },
   finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
     var propsToUpdate = [];
@@ -7956,25 +6997,25 @@ var hostConfig = {
     console.log('resetTextContent');
   },
   commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    Unity.setText(textInstance, newText);
+    UnityBridge.setText(textInstance, newText);
   },
   appendChild: function appendChild(parent, child) {
-    return Unity.appendChild(parent, child);
+    return UnityBridge.appendChild(parent, child);
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    return Unity.appendChildToContainer(parent, child);
+    return UnityBridge.appendChildToContainer(parent, child);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
+    return UnityBridge.insertBefore(parent, child, beforeChild);
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
+    return UnityBridge.insertBefore(parent, child, beforeChild);
   },
   removeChild: function removeChild(parent, child) {
-    return Unity.removeChild(parent, child);
+    return UnityBridge.removeChild(parent, child);
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    return Unity.removeChild(parent, child);
+    return UnityBridge.removeChild(parent, child);
   },
   // Required for Suspense
   // TODO: implement
@@ -8004,72 +7045,13 @@ var hostConfig = {
   }
 };
 var ReactUnityReconciler = react_reconciler(hostConfig);
-var renderer_Renderer = {
+var Renderer = {
   render: function render(element, hostContainer, callback) {
     if (!hostContainer) hostContainer = RootContainer;
     var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   }
 };
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/tester/test-view.js
-var test_view_assign = undefined && undefined.__assign || function () {
-  test_view_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return test_view_assign.apply(this, arguments);
-};
-
-
-
-var test_view_TestView = react.forwardRef(function (props, ref) {
-  return (0,jsx_runtime.jsx)("view", test_view_assign({
-    ref: ref
-  }, {
-    children: props.children
-  }), void 0);
-});
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/tester/tester.js
-var tester_assign = undefined && undefined.__assign || function () {
-  tester_assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
-
-    return t;
-  };
-
-  return tester_assign.apply(this, arguments);
-};
-
-
-
-
-
-function testRender(element) {
-  return new Promise(function (resolve) {
-    var ref = React.createRef();
-    Renderer.render(_jsx(TestView, tester_assign({
-      ref: ref
-    }, {
-      children: element
-    }), void 0), null, function () {
-      resolve(ref.current);
-    });
-  });
-}
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/index.js
 
 
@@ -8078,19 +7060,12 @@ function testRender(element) {
 
 
 
-
-
-
-
-
-
-
 ;// CONCATENATED MODULE: ./src/app.tsx
-/* INJECTABLE_START */
+var ReactUnity=dist_namespaceObject;/* INJECTABLE_START */
 
 var React = react;
-var ReactUnityRenderer = renderer_Renderer;
-var Renderer = renderer_Renderer;
+var ReactUnityRenderer = ReactUnity.Renderer;
+var Renderer = ReactUnity.Renderer;
 
 /*INJECT_CODE*/
 

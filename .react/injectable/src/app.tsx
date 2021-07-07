@@ -1,12 +1,14 @@
-/* INJECTABLE_START */
-
-import { Renderer } from '@reactunity/renderer';
+import * as ReactUnityModule from '@reactunity/renderer';
 import * as React from 'react';
+
+const ReactUnity = ReactUnityModule;
+
+/* INJECTABLE_START */
 
 function App() {
   return <></>;
 }
 
-Renderer.render(<App />, RootContainer, null);
+ReactUnity.Renderer.render(<App />, RootContainer, null);
 
 /* INJECTABLE_END */
