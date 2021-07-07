@@ -2,6 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 
 namespace ReactUnity.Tests
 {
@@ -38,5 +39,22 @@ Renderer.render( /*#__PURE__*/React.createElement('view', null, 'Hello world', /
 
             Assert.AreEqual("Hello worldHello againSomehow just hello", Host.TextContent);
         }
+
+
+        [UnityTest, ReactInjectableTest(@"
+function App(){var globals=ReactUnity.useGlobals();return/*#__PURE__*/react.createElement('image',{source:globals.image});}ReactUnity.Renderer.render(/*#__PURE__*/react.createElement(ReactUnity.GlobalsProvider,null,/*#__PURE__*/react.createElement(App,null)),RootContainer,null)
+")]
+        public IEnumerator TestGlobalsChange()
+        {
+            yield return null;
+
+            var imgCmp = (Host.QuerySelector("image") as UGUI.ImageComponent).Image;
+            Assert.AreEqual(Texture2D.whiteTexture, imgCmp.mainTexture);
+
+            var tx = new Texture2D(1, 1);
+            Component.Globals.Set("image", tx);
+            Assert.AreEqual(tx, imgCmp.mainTexture);
+        }
+
     }
 }

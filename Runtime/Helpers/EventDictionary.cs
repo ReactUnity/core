@@ -142,6 +142,8 @@ namespace ReactUnity.Helpers
             return () => changed -= listener;
         }
 
+        public Action AddListener(Jint.Native.JsValue cb) => AddListener(cb as object);
+
         protected void Change(string key, T value)
         {
             changed?.Invoke(key, value, this);
