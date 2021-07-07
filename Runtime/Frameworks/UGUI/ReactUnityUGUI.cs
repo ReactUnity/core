@@ -10,10 +10,9 @@ namespace ReactUnity.UGUI
 
         protected override void ClearRoot()
         {
-            foreach (Transform children in Root)
-            {
-                DestroyImmediate(children.gameObject);
-            }
+            if (!Root) return;
+            for (int i = Root.childCount - 1; i >= 0; i--)
+                GameObject.DestroyImmediate(Root.GetChild(i).gameObject);
         }
 
         protected override ReactContext CreateContext(ReactScript script, bool isDevServer)
