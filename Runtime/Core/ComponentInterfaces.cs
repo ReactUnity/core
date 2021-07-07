@@ -41,9 +41,11 @@ namespace ReactUnity
         void SetData(string property, object value);
         void SetEventListener(string eventType, Callback callback);
 
-        public object GetComponent(Type type);
-        public object AddComponent(Type type);
+        object GetComponent(Type type);
+        object AddComponent(Type type);
 
+        IReactComponent QuerySelector(string query);
+        List<IReactComponent> QuerySelectorAll(string query);
     }
 
     [TypescriptListInterfaces]

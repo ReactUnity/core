@@ -35,7 +35,13 @@ namespace ReactUnity.DomProxies
         public object querySelector(string query)
         {
             if (query == "head") return head;
-            return null;
+            return context.Host.QuerySelector(query);
+        }
+
+        public object querySelectorAll(string query)
+        {
+            if (query == "head") return new List<object> { head };
+            return context.Host.QuerySelectorAll(query);
         }
 
         public object getElementById(string query)
