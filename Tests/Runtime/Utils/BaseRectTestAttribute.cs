@@ -26,10 +26,14 @@ namespace ReactUnity.Tests
 
             ru.BeforeStart.AddListener(BeforeStart);
             ru.AfterStart.AddListener(AfterStart);
+
+            // TODO: find out why is Fixture null
+            var testBase = test.Fixture as TestBase;
+            if (testBase != null) ru.EngineType = testBase.EngineType;
+            else ru.EngineType = test.FullName.Contains("(ClearScript)") ? ScriptEngine.JavascriptEngineType.ClearScript : ScriptEngine.JavascriptEngineType.Jint;
+
             ru.AutoRender = false;
             ru.enabled = true;
-            var testBase = test.Fixture as TestBase;
-            ru.EngineType = testBase != null ? testBase.EngineType : ScriptEngine.JavascriptEngineType.Auto;
             ru.Render();
         }
 

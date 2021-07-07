@@ -87,14 +87,16 @@ namespace ReactUnity.ScriptEngine
             {
                 var generatedBag = bagProvider.GetPropertyBag();
                 Engine.AddHostObject(key, generatedBag);
-                Engine.Script.Object.setPrototypeOf(generatedBag, value);
+                Engine.AddHostObject("___host___", value);
+                Engine.Execute($"Object.setPrototypeOf({key}, ___host___)");
             }
             else if (!(value is IPropertyBag) && value is IDictionary<string, object> objectDictionary)
             {
                 var bag = new PropertyBag();
                 foreach (var d in objectDictionary) bag.Add(d.Key, d.Value);
                 Engine.AddHostObject(key, bag);
-                Engine.Script.Object.setPrototypeOf(bag, value);
+                Engine.AddHostObject("___host___", value);
+                Engine.Execute($"Object.setPrototypeOf({key}, ___host___)");
             }
             else Engine.AddHostObject(key, value);
         }
