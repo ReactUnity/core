@@ -94,7 +94,7 @@ namespace ReactUnity.Helpers
         public bool Remove(string key)
         {
             var res = collection.Remove(key);
-            if(res) Change(key, default);
+            if (res) Change(key, default);
             return res;
         }
 
@@ -173,7 +173,6 @@ namespace ReactUnity.Helpers
                 {
                     pb.Add(d.Key, d.Value);
                 }
-                pb.Add("$$self", this);
             };
 
             regenerate();
@@ -190,15 +189,5 @@ namespace ReactUnity.Helpers
             return pb;
         }
 #endif
-    }
-
-    public class InlineData : EventObjectDictionary
-    {
-        internal readonly string Identifier;
-
-        public InlineData(string identifier = null) : base()
-        {
-            Identifier = identifier;
-        }
     }
 }

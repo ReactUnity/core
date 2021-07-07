@@ -71,11 +71,6 @@ namespace ReactUnity.ScriptEngine
         private JsValue CreateValue(object value)
         {
             if (value is Type t) return TypeReference.CreateTypeReference(Engine, t);
-            else if (value is IDictionary<string, object> dd)
-            {
-                dd["$$self"] = value;
-                return JsValue.FromObject(Engine, value);
-            }
             return JsValue.FromObject(Engine, value);
         }
 

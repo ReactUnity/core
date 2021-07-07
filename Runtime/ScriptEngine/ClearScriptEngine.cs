@@ -83,16 +83,18 @@ namespace ReactUnity.ScriptEngine
         public void SetValue<T>(string key, T value)
         {
             if (value is Type t) Engine.AddHostType(key, t);
-            else if (value is IPropertyBagProvider pbp) Engine.AddHostObject(key, pbp.GetPropertyBag());
-            else if (!(value is IPropertyBag) && value is IDictionary<string, object> dd)
+            else if (value is IPropertyBagProvider bagProvider)
             {
-                var pb = new PropertyBag();
-                foreach (var d in dd)
-                {
-                    pb.Add(d.Key, d.Value);
-                }
-                pb.Add("$$self", value);
-                Engine.AddHostObject(key, pb);
+                var generatedBag = bagProvider.GetPropertyBag();
+                Engine.AddHostObject(key, generatedBag);
+                Engine.Script.Object.setPrototypeOf(generatedBag, value);
+            }
+            else if (!(value is IPropertyBag) && value is IDictionary<string, object> objectDictionary)
+            {
+                var bag = new PropertyBag();
+                foreach (var d in objectDictionary) bag.Add(d.Key, d.Value);
+                Engine.AddHostObject(key, bag);
+                Engine.Script.Object.setPrototypeOf(bag, value);
             }
             else Engine.AddHostObject(key, value);
         }
