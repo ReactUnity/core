@@ -9,13 +9,11 @@ using UnityEngine.SceneManagement;
 using UnityEditor.PackageManager;
 using System.Collections;
 using ReactUnity.Helpers.TypescriptUtils;
-using ReactUnity.UGUI;
-using ReactUnity.UIToolkit;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.Editor
 {
-    [TypescriptInclude]
-    internal class QuickStartWindow : ReactWindow
+    public class QuickStartWindow : ReactWindow
     {
         public const string PackageName = "com.reactunity.core";
         public readonly int RequiredNodeVersion = 12;
@@ -91,6 +89,12 @@ namespace ReactUnity.Editor
             }
         }
 
+        public void GetNodeVersion(object callback)
+        {
+            var cb = new Callback(callback);
+            GetNodeVersion(x => cb.Call(x));
+        }
+
         public Process RunCommand(string target, string args, bool hasOutput = false)
         {
             Process process = new Process();
@@ -116,9 +120,9 @@ namespace ReactUnity.Editor
 
             foreach (var obj in objects)
             {
-                if (obj.GetComponentInChildren<ReactUnityUGUI>()) return true;
+                if (obj.GetComponentInChildren<UGUI.ReactUnityUGUI>()) return true;
 #if UNITY_2021_2_OR_NEWER
-                if (obj.GetComponentInChildren<ReactUnityUIDocument>()) return true;
+                if (obj.GetComponentInChildren<UIToolkit.ReactUnityUIDocument>()) return true;
 #endif
             }
 
@@ -131,7 +135,7 @@ namespace ReactUnity.Editor
             var method = type.GetMethod("AddCanvas");
             method.Invoke(null, new[] { new MenuCommand(null) });
             var go = Selection.activeGameObject;
-            go.AddComponent<ReactUnityUGUI>();
+            go.AddComponent<UGUI.ReactUnityUGUI>();
             go.name = "React Canvas";
         }
 
@@ -139,7 +143,7 @@ namespace ReactUnity.Editor
         {
             var objects = SceneManager.GetActiveScene().GetRootGameObjects();
 
-            var canvas = objects.Select(x => x.GetComponentInChildren<ReactUnityUGUI>()).FirstOrDefault(x => x != null);
+            var canvas = objects.Select(x => x.GetComponentInChildren<UGUI.ReactUnityUGUI>()).FirstOrDefault(x => x != null);
 
             if (canvas) Selection.activeObject = canvas.gameObject;
         }
@@ -147,6 +151,12 @@ namespace ReactUnity.Editor
         public void CheckVersion(Action callback)
         {
             dispatcher.StartDeferred(CheckVersionDelegate(callback));
+        }
+
+        public void CheckVersion(object callback)
+        {
+            var cb = new Callback(callback);
+            CheckVersion(() => cb.Call());
         }
 
         private IEnumerator CheckVersionDelegate(Action callback)

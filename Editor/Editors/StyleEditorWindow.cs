@@ -7,8 +7,7 @@ using UnityEngine;
 
 namespace ReactUnity.Editor
 {
-    [TypescriptInclude]
-    internal class StyleEditorWindow : ReactWindow
+    public class StyleEditorWindow : ReactWindow
     {
         [MenuItem("React/Show Style Editor")]
         public static void ShowDefaultWindow()
