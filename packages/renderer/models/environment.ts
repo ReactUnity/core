@@ -15,5 +15,5 @@ declare global {
     [key: string]: any;
   }
 
-  const Globals: DefaultGlobals;
+  const Globals: ReactUnity.Helpers.EventDictionary<any> & DefaultGlobals;
 }
