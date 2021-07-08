@@ -32,8 +32,10 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.UIElements.VisualElement).Assembly,
                     typeof(UnityEngine.AI.NavMesh).Assembly,
                     typeof(UnityEngine.TestTools.LogAssert).Assembly,
+#if UNITY_2021_2_OR_NEWER
                     typeof(UnityEngine.TextCore.Glyph).Assembly,
                     typeof(UnityEngine.TextCore.Text.FontAsset).Assembly,
+#endif
                     //#if REACT_INPUT_SYSTEM
                     //                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
                     //                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
