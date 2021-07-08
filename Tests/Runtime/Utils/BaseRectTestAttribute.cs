@@ -1,7 +1,9 @@
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
+using ReactUnity.Helpers;
 using ReactUnity.UGUI;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -9,9 +11,34 @@ namespace ReactUnity.Tests
 {
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
-        public BaseReactTestAttribute(string customScene = null) :
+        #region Test Debug Toggle
+        const string MenuName = "React/Tests/Debug Tests";
+        public static bool IsDebugEnabled
+        {
+            get { return EditorPrefs.GetBool(MenuName, false); }
+            set { EditorPrefs.SetBool(MenuName, value); }
+        }
+
+        [MenuItem(MenuName)]
+        private static void ToggleTests()
+        {
+            IsDebugEnabled = !IsDebugEnabled;
+        }
+
+        [MenuItem(MenuName, true)]
+        private static bool ToggleTestsValidate()
+        {
+            Menu.SetChecked(MenuName, IsDebugEnabled);
+            return true;
+        }
+        #endregion
+
+        public bool AutoRender;
+
+        public BaseReactTestAttribute(string customScene = null, bool autoRender = true) :
             base(customScene ?? "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity")
         {
+            AutoRender = autoRender;
         }
 
         public override IEnumerator BeforeTest(ITest test)
@@ -23,6 +50,9 @@ namespace ReactUnity.Tests
             var ru = canvas.GetComponent<ReactUnityUGUI>();
 
             ru.Script = GetScript();
+            ru.Globals["test"] = test;
+            var sd = new SerializableDictionary();
+            ru.Globals["inner"] = sd;
 
             ru.BeforeStart.AddListener(BeforeStart);
             ru.AfterStart.AddListener(AfterStart);
@@ -34,7 +64,14 @@ namespace ReactUnity.Tests
 
             ru.AutoRender = false;
             ru.enabled = true;
-            ru.Render();
+
+            if (IsDebugEnabled)
+            {
+                ru.Debug = true;
+                ru.AwaitDebugger = true;
+            }
+
+            if (AutoRender) ru.Render();
         }
 
         public override IEnumerator AfterTest(ITest test)

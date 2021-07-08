@@ -1,3 +1,7 @@
+#if (UNITY_EDITOR || UNITY_STANDALONE) && !REACT_DISABLE_CLEARSCRIPT
+#define REACT_CLEARSCRIPT
+#endif
+
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,21 +12,15 @@ namespace ReactUnity.Helpers
     public class StringObjectPair
     {
         public string Key;
-        public Object Value;
+        [SerializeReference] public UnityEngine.Object Value;
     }
 
     [System.Serializable]
-    public class SerializableDictionary : EventDictionary<Object>, ISerializationCallbackReceiver
+    public class SerializableDictionary : EventObjectDictionary, ISerializationCallbackReceiver
     {
         [SerializeField] List<StringObjectPair> Entries = new List<StringObjectPair>();
 
         internal event System.Action<SerializableDictionary> reserialized;
-
-        public Object GetValueOrDefault(string key)
-        {
-            if (!TryGetValue(key, out var value)) value = default;
-            return value;
-        }
 
         public void OnAfterDeserialize()
         {
@@ -38,7 +36,10 @@ namespace ReactUnity.Helpers
 
         public void OnBeforeSerialize()
         {
-            Entries = this.Select(x => new StringObjectPair() { Key = x.Key, Value = x.Value }).ToList();
+            Entries = this
+                .Where(x => x.Value is Object)
+                .Select(x => new StringObjectPair() { Key = x.Key, Value = x.Value as Object })
+                .ToList();
         }
 
         public System.Action AddReserializeListener(System.Action<SerializableDictionary> callback)

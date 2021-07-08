@@ -1,5 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
+using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -58,5 +59,22 @@ function App(){var globals=ReactUnity.useGlobals();return/*#__PURE__*/react.crea
             Assert.AreEqual(tx, imgCmp.mainTexture);
         }
 
+        [UnityTest, ReactInjectableTest(@"
+var watcher = ReactUnity.createDictionaryWatcher(Globals.inner, 'innerSerializable');
+function App(){var sd=watcher.useContext();debugger;return/*#__PURE__*/react.createElement('image',{source:sd.image});}ReactUnity.Renderer.render(/*#__PURE__*/react.createElement(watcher.Provider,null,/*#__PURE__*/react.createElement(App,null)),RootContainer,null)
+")]
+        public IEnumerator TestArbitraryWatcher()
+        {
+            yield return null;
+
+            var sd = Component.Globals["inner"] as SerializableDictionary;
+
+            var imgCmp = (Host.QuerySelector("image") as UGUI.ImageComponent).Image;
+            Assert.AreEqual(Texture2D.whiteTexture, imgCmp.mainTexture);
+
+            var tx = new Texture2D(1, 1);
+            sd.Set("image", tx);
+            Assert.AreEqual(tx, imgCmp.mainTexture);
+        }
     }
 }

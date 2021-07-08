@@ -1268,10 +1268,10 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.1.3.tgz#6330fdb113de54f303cdeb35a401af2eccab7fce"
-  integrity sha512-izZN489wGNQW9gL0tDf/o0rjcbrrIsqTVDZ25152D4VcXEDjy7Z24nNRl0cixTepBe3qz1b69ZCzQ6xgjc82cQ==
+"@reactunity/renderer@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.1.4.tgz#2618dfbbd93f8482bc102a22e9b66dfe6b0c8f07"
+  integrity sha512-vx4Qd16DSbUhpDmrvk33w7USewuacnMkTMoP0gYceWk/plunqXzjMunog1GXiNqau3PUUBC5+5GFCixq8vHuQg==
   dependencies:
     react-reconciler "^0.26.2"
 
@@ -1408,6 +1408,15 @@
   version "17.0.13"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.13.tgz#6b7c9a8f2868586ad87d941c02337c6888fb874f"
   integrity sha512-D/G3PiuqTfE3IMNjLn/DCp6umjVCSvtZTPdtAFy5+Ved6CsdRvivfKeCzw79W4AatShtU4nGqgvOv5Gro534vQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^17.0.14":
+  version "17.0.14"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.14.tgz#f0629761ca02945c4e8fea99b8177f4c5c61fb0f"
+  integrity sha512-0WwKHUbWuQWOce61UexYuWTGuGY/8JvtUe/dtQ6lR4sZ3UiylHotJeWpf3ArP9+DSGUoLY3wbU59VyMrJps5VQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"

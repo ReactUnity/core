@@ -1,5 +1,4 @@
 using ReactUnity.Dispatchers;
-using UnityEngine;
 
 namespace ReactUnity.Helpers
 {
@@ -37,7 +36,7 @@ namespace ReactUnity.Helpers
         }
 
 
-        public void UpdateStringObjectDictionary(EventDictionary<Object> dict, bool isSerializing)
+        public void UpdateStringObjectDictionary(EventDictionary<object> dict, bool isSerializing)
         {
             ClearWithoutNotify();
             foreach (var entry in dict)

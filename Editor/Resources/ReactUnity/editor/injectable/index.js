@@ -6702,14 +6702,14 @@ __webpack_require__.r(dist_namespaceObject);
 __webpack_require__.d(dist_namespaceObject, {
   "GlobalsProvider": () => (GlobalsProvider),
   "Renderer": () => (Renderer),
-  "createEventDictionaryContext": () => (createEventDictionaryContext),
-  "globalsContext": () => (globalsContext),
+  "createDictionaryWatcher": () => (createDictionaryWatcher),
+  "globalsWatcher": () => (globalsWatcher),
   "useGlobals": () => (useGlobals)
 });
 
 // EXTERNAL MODULE: ./node_modules/react/index.js
 var react = __webpack_require__(359);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/event-dictionary.js
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/dictionary-watcher.js
 var __assign = undefined && undefined.__assign || function () {
   __assign = Object.assign || function (t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -6727,10 +6727,17 @@ var __assign = undefined && undefined.__assign || function () {
 };
 
 
-function createEventDictionaryContext(dictionary, name) {
-  var ctx = react.createContext(undefined);
+/**
+ * Creates a context that updates its value when the values in the dictionary change
+ * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
+ * @param displayName A displayName to identify this context easier in case of problems
+ */
 
-  function Provider(_a) {
+function createDictionaryWatcher(dictionary, displayName) {
+  var ctx = react.createContext(undefined);
+  if (displayName) ctx.displayName = displayName;
+
+  var Provider = function Provider(_a) {
     var children = _a.children;
 
     var _b = react.useState(0),
@@ -6745,7 +6752,7 @@ function createEventDictionaryContext(dictionary, name) {
       });
 
       if (!remove) {
-        if (name) console.warn(name + " dictionary does not provide a change listener");else console.warn('The dictionary does not provide a change listener');
+        if (displayName) console.warn(displayName + " dictionary does not provide a change listener");else console.warn('The dictionary does not provide a change listener');
       }
 
       return function () {
@@ -6759,26 +6766,27 @@ function createEventDictionaryContext(dictionary, name) {
     return react.createElement(ctx.Provider, {
       value: value
     }, children);
-  }
+  };
 
   function useContext() {
     var context = react.useContext(ctx);
 
     if (context === undefined) {
-      if (name) throw new Error(name + ".useContext must be used within a " + name + ".Provider");else throw new Error('useContext must be used within a provider');
+      if (displayName) throw new Error(displayName + ".useContext must be used within a " + displayName + ".Provider");else throw new Error('useContext must be used within a provider');
     }
 
     return context;
   }
 
-  return __assign(__assign({}, ctx), {
+  return {
+    context: ctx,
     Provider: Provider,
     useContext: useContext
-  });
+  };
 }
-var globalsContext = createEventDictionaryContext(Globals, 'globalsContext');
-var useGlobals = globalsContext.useContext;
-var GlobalsProvider = globalsContext.Provider;
+var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
+var useGlobals = globalsWatcher.useContext;
+var GlobalsProvider = globalsWatcher.Provider;
 // EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(84);
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js

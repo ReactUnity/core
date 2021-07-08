@@ -52,7 +52,7 @@ namespace ReactUnity.ScriptEngine
 
         public object Evaluate(string code, string fileName = null)
         {
-            return Engine.Evaluate(fileName, code);
+            return Engine.Evaluate(fileName, fileName == null, code);
         }
 
         public void Execute(string code, string fileName = null)
@@ -62,21 +62,23 @@ namespace ReactUnity.ScriptEngine
 
         public object GetValue(string key)
         {
-            return Engine.Evaluate(key);
+            return Engine.Evaluate(null, true, key);
         }
 
         public void SetProperty<T>(object obj, string key, T value)
         {
             if (obj is ScriptObject so)
             {
-                SetValue<T>("___val___", value);
+                SetValue("___val___", value);
                 so.SetProperty(key, GetValue("___val___"));
+                Engine.Execute(null, true, "delete ___val___");
             }
             else
             {
                 Engine.AddHostObject("___host___", obj);
                 Engine.AddHostObject("___val___", value);
-                Engine.Execute($"___host___['{key}'] = ___val___");
+                Engine.Execute(null, true,
+                    $"___host___['{key}'] = ___val___; delete ___host___; delete ___val___;");
             }
         }
 
@@ -88,7 +90,8 @@ namespace ReactUnity.ScriptEngine
                 var generatedBag = bagProvider.GetPropertyBag();
                 Engine.AddHostObject(key, generatedBag);
                 Engine.AddHostObject("___host___", value);
-                Engine.Execute($"Object.setPrototypeOf({key}, ___host___)");
+                Engine.Execute(null, true,
+                    $"Object.setPrototypeOf({key}, ___host___); delete ___host___;");
             }
             else if (!(value is IPropertyBag) && value is IDictionary<string, object> objectDictionary)
             {
@@ -96,7 +99,8 @@ namespace ReactUnity.ScriptEngine
                 foreach (var d in objectDictionary) bag.Add(d.Key, d.Value);
                 Engine.AddHostObject(key, bag);
                 Engine.AddHostObject("___host___", value);
-                Engine.Execute($"Object.setPrototypeOf({key}, ___host___)");
+                Engine.Execute(null, true,
+                    $"Object.setPrototypeOf({key}, ___host___); delete ___host___;");
             }
             else Engine.AddHostObject(key, value);
         }

@@ -10,7 +10,7 @@ namespace ReactUnity.Tests
         protected string Code;
         protected string Style;
 
-        public ReactInjectableTestAttribute(string code = DefaultCode, string style = "", string customScene = null) : base(customScene)
+        public ReactInjectableTestAttribute(string code = DefaultCode, string style = "", string customScene = null, bool autoRender = true) : base(customScene, autoRender)
         {
             Code = code ?? DefaultCode;
             Style = style;

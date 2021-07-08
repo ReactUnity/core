@@ -144,36 +144,74 @@ namespace ReactUnity.Helpers
 
         public Action AddListener(Jint.Native.JsValue cb) => AddListener(cb as object);
 
+        public T GetValueOrDefault(string key)
+        {
+            if (!TryGetValue(key, out var value)) value = default;
+            return value;
+        }
+
         protected void Change(string key, T value)
         {
             changed?.Invoke(key, value, this);
         }
     }
 
+#if REACT_CLEARSCRIPT
+    public class HostPropertyBag : Microsoft.ClearScript.PropertyBag, Microsoft.ClearScript.IScriptableObject
+    {
+        private readonly ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine> engineSet = new ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine>();
+        private readonly object BaseObject;
+
+        public HostPropertyBag(object baseObject)
+        {
+            BaseObject = baseObject;
+        }
+
+        public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
+        {
+            if ((engine != null) && engineSet.TryAdd(engine))
+            {
+                foreach (var val in Values)
+                {
+                    if (val is Microsoft.ClearScript.IScriptableObject so)
+                        so.OnExposedToScriptCode(engine);
+                }
+
+                engine.AddHostObject("___val___", this);
+                engine.AddHostObject("___host___", BaseObject);
+                engine.Execute(null, true, $"Object.setPrototypeOf(___val___, ___host___); delete ___val___; delete ___host___;");
+            }
+        }
+    }
+#endif
+
     public interface IPropertyBagProvider
     {
 #if REACT_CLEARSCRIPT
-        Microsoft.ClearScript.IPropertyBag GetPropertyBag();
+        HostPropertyBag GetPropertyBag();
 #endif
     }
 
     public class EventObjectDictionary : EventDictionary<object>, IPropertyBagProvider
     {
 #if REACT_CLEARSCRIPT
-        protected Microsoft.ClearScript.IPropertyBag propertyBag;
+        protected HostPropertyBag propertyBag;
 
-        public Microsoft.ClearScript.IPropertyBag GetPropertyBag()
+        public HostPropertyBag GetPropertyBag()
         {
             if (propertyBag != null) return propertyBag;
 
-            var pb = propertyBag = new Microsoft.ClearScript.PropertyBag();
+            var pb = propertyBag = new HostPropertyBag(this);
 
             Action regenerate = () =>
             {
-                pb.Clear();
+                pb.ClearNoCheck();
                 foreach (var d in this)
                 {
-                    pb.Add(d.Key, d.Value);
+                    if (d.Value is IPropertyBagProvider pbb)
+                        pb.Add(d.Key, pbb.GetPropertyBag());
+                    else
+                        pb.Add(d.Key, d.Value);
                 }
             };
 
@@ -183,7 +221,11 @@ namespace ReactUnity.Helpers
             {
                 if (propertyBag != null)
                 {
-                    if (key != null) propertyBag[key] = value;
+                    if (key != null)
+                    {
+                        if (value is IPropertyBagProvider pb) propertyBag[key] = pb.GetPropertyBag();
+                        else propertyBag[key] = value;
+                    }
                     else regenerate();
                 }
             };
