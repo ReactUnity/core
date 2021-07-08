@@ -1309,10 +1309,10 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.1.2.tgz#cd9e32eb0a36db805c88b5c4355af850e503b9c1"
-  integrity sha512-g4BI0xCccKE18zVIRnIhE/Jbd+4M/sEYxQU7lfMRPhtx7D6rkNWfqLqZiKM/lnC6c+DIGwgS/p56edj6Ekfk1A==
+"@reactunity/renderer@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.1.3.tgz#6330fdb113de54f303cdeb35a401af2eccab7fce"
+  integrity sha512-izZN489wGNQW9gL0tDf/o0rjcbrrIsqTVDZ25152D4VcXEDjy7Z24nNRl0cixTepBe3qz1b69ZCzQ6xgjc82cQ==
   dependencies:
     react-reconciler "^0.26.2"
 
@@ -1462,6 +1462,16 @@
   version "7.1.16"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.16.tgz#0fbd04c2500c12105494c83d4a3e45c084e3cb21"
   integrity sha512-f/FKzIrZwZk7YEO9E1yoxIuDNRiDducxkFlkw/GNMGEnK9n4K8wJzlJBghpSuOVDgEUHoDkDF7Gi9lHNQR4siw==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.0"
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
+    redux "^4.0.0"
+
+"@types/react-redux@^7.1.17":
+  version "7.1.17"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.17.tgz#b9ccd01624c2a282b7af3762411cbf8945712438"
+  integrity sha512-vdMbWV4tKltQVPCYOYknqb6M9PP8i82ZAV17q60UTYs/MYafplHNgBVPuKVkTN8LMPlXRw7Fs8Y5BxBIRPxz+g==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.0"
     "@types/react" "*"

@@ -68,3 +68,6 @@ Search.settings
 
 /[Cc]ode[Cc]overage/
 TestResults-*.xml
+
+# Unity layout
+*.dwlt

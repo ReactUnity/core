@@ -4,4 +4,6 @@
   </assembly>
 
   <assembly fullname="Assembly-CSharp"/>
+  
+  <assembly fullname="ReactUnity"/>
 </linker>

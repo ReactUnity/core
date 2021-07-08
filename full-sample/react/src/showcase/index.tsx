@@ -1,4 +1,4 @@
-import { ReactUnity, Renderer, UnityEngine as UE } from '@reactunity/renderer';
+import { GlobalsProvider, ReactUnity, Renderer, UnityEngine as UE, useGlobals } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
@@ -13,7 +13,7 @@ export function RenderObject({ object }: { object: UE.GameObject }) {
       Globals.camera2root.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
     }}
     onScroll={(ev: UE.EventSystems.PointerEventData) => {
-      Globals.camera2.transform.Translate(0, 0, ev.scrollDelta.y / 10, UnityEngine.Space.Self);
+      Globals.camera2.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), UnityEngine.Space.Self);
     }}
     onMount={ev => ev.gameObject.SetActive(true)}
     onUnmount={ev => ev.gameObject.SetActive(false)}
@@ -24,6 +24,7 @@ export function RenderObject({ object }: { object: UE.GameObject }) {
 
 export function App({ className }: { className?: string }) {
   const [videoRef, setVideoRef] = useState<ReactUnity.UGUI.VideoComponent>();
+  const Globals = useGlobals() as any;
 
   useEffect(() => {
     if (videoRef) {
@@ -100,7 +101,7 @@ export function App({ className }: { className?: string }) {
               Globals.cameraRoot.transform.Rotate(new UnityEngine.Vector3(-ev.delta.y, ev.delta.x, 0));
             }}
             onScroll={(ev: UE.EventSystems.PointerEventData) => {
-              Globals.renderCamera.transform.Translate(0, 0, ev.scrollDelta.y / 10, UnityEngine.Space.Self);
+              Globals.renderCamera.transform.Translate(0, 0, Math.fround(ev.scrollDelta.y / 10), UnityEngine.Space.Self);
             }}
             onMount={ev => ev.gameObject.SetActive(true)}
             onUnmount={ev => ev.gameObject.SetActive(false)}
@@ -125,4 +126,8 @@ export function App({ className }: { className?: string }) {
   </scroll>;
 };
 
-Renderer.render(<App />);
+Renderer.render(
+  <GlobalsProvider>
+    <App />
+  </GlobalsProvider>
+);

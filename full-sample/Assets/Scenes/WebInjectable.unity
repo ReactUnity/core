@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
@@ -305,6 +306,9 @@ MonoBehaviour:
     ResourcesPath: 
     UseDevServer: 0
     DevServer: http://localhost:3100
+  Debug: 0
+  AwaitDebugger: 0
+  EngineType: 0
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -443,36 +447,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReactCanvas: {fileID: 420524926}
-  TestScript: "'use strict';\n\nvar _createClass = function () { function defineProperties(target,
-    props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable
-    = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target,
-    descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps)
-    { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps)
-    defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction
-    _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor))
-    { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction
-    _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this
-    hasn't been initialised - super() hasn't been called\"); } return call && (typeof
-    call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction
-    _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass
-    !== null) { throw new TypeError(\"Super expression must either be null or a function,
-    not \" + typeof superClass); } subClass.prototype = Object.create(superClass
-    && superClass.prototype, { constructor: { value: subClass, enumerable: false,
-    writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf
-    ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-    }\n\nvar LightToggleApp = function (_React$Component) {\n  _inherits(LightToggleApp,
-    _React$Component);\n\n  function LightToggleApp() {\n    _classCallCheck(this,
-    LightToggleApp);\n\n    return _possibleConstructorReturn(this, (LightToggleApp.__proto__
-    || Object.getPrototypeOf(LightToggleApp)).apply(this, arguments));\n  }\n\n 
-    _createClass(LightToggleApp, [{\n    key: 'render',\n    value: function render()
-    {\n      return React.createElement(\n        'button',\n        {\n         
-    style: {\n            height: '60px',\n            margin: '10px',\n           
-    backgroundColor: 'crimson',\n            color: 'white'\n          },\n         
-    onClick: function onClick() {\n            return Globals.Light.intensity = 1
-    - Globals.Light.intensity;\n          }\n        },\n        'Toggle Light'\n     
-    );\n    }\n  }]);\n\n  return LightToggleApp;\n}(React.Component);\n\nReactUnityRenderer.render(React.createElement(LightToggleApp,
+  TestScript: "function Example() {\r\n  return /*#__PURE__*/React.createElement(React.Fragment,
+    null, /*#__PURE__*/React.createElement(\"view\", null), /*#__PURE__*/React.createElement(\"view\",
+    null), /*#__PURE__*/React.createElement(\"view\", null), /*#__PURE__*/React.createElement(\"view\",
+    null));\r\n}\r\n\r\n;\r\nReactUnityRenderer.render( /*#__PURE__*/React.createElement(Example,
     null));"
+  TestStyle: "view {\r\n  flex-grow: 1;\r\n}\r\n\r\nview:nth-child(1) {\r\n  background-color:
+    crimson;\r\n}\r\n\r\nview:nth-child(2) {\r\n  background-color: #a5a5a5;\r\n}\r\n\r\nview:nth-child(3)
+    {\r\n  background-color: rgba(10, 10, 235, 0.4);\r\n}\r\n\r\nview:nth-child(4)
+    {\r\n  background-color: #00ff0033;\r\n}\r\n"
   InjectableScript: {fileID: 4900000, guid: 2a395c58d00601541a5ccd68c072bef3, type: 3}
 --- !u!1 &952785539
 GameObject:
