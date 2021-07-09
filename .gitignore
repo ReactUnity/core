@@ -241,3 +241,7 @@ ModelManifest.xml
 
 # Don't ignore Unity sample files
 !/Samples~
+
+# Ignore PDB files
+*.pdb
+*.pdb.meta

@@ -13,6 +13,7 @@ namespace ReactUnity.Editor
 
         public void OnPreprocessBuild(BuildReport report)
         {
+#if !REACT_DISABLE_CLEARSCRIPT
             if (report.summary.platformGroup == BuildTargetGroup.Standalone)
             {
                 var buildDir = Path.GetDirectoryName(report.summary.outputPath);
@@ -47,6 +48,7 @@ namespace ReactUnity.Editor
                         break;
                 }
             }
+#endif
         }
     }
 }

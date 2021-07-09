@@ -285,6 +285,24 @@
             are not required to manage document caches of unlimited size.
             </remarks>
         </member>
+        <member name="M:Microsoft.ClearScript.DocumentLoader.GetCachedDocument(System.Uri)">
+            <summary>
+            Searches for a cached document by <see cref="P:Microsoft.ClearScript.DocumentInfo.Uri">URI</see>.
+            </summary>
+            <param name="uri">The document URI for which to search.</param>
+            <returns>The cached document if it was found, <c>null</c> otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.ClearScript.DocumentLoader.CacheDocument(Microsoft.ClearScript.Document,System.Boolean)">
+            <summary>
+            Stores a document in the cache.
+            </summary>
+            <param name="document">The document to store in the cache.</param>
+            <param name="replace"><c>True</c> to replace any existing document with the same URI, <c>false</c> otherwise.</param>
+            <returns>The cached document, which may be different from <paramref name="document"/> if <paramref name="replace"/> is <c>false</c>.</returns>
+            <remarks>
+            A cached document must have an absolute <see cref="P:Microsoft.ClearScript.DocumentInfo.Uri">URI</see>.
+            </remarks>
+        </member>
         <member name="M:Microsoft.ClearScript.DocumentLoader.DiscardCachedDocuments">
             <summary>
             Discards all cached documents.
