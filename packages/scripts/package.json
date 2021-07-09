@@ -48,7 +48,6 @@
   "dependencies": {
     "@babel/core": "7.14.6",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
-    "@types/node": "^16.0.0",
     "@types/react": "^17.0.13",
     "@types/webpack-env": "1.16.2",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
@@ -60,6 +59,7 @@
     "bfj": "^7.0.2",
     "camelcase": "^6.2.0",
     "case-sensitive-paths-webpack-plugin": "2.4.0",
+    "confusing-browser-globals": "^1.0.10",
     "css-loader": "5.2.6",
     "dotenv": "10.0.0",
     "dotenv-expand": "5.1.0",
