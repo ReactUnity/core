@@ -31,7 +31,9 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 // @remove-on-eject-end
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP === 'true';
+const sourceMapVar = process.env.GENERATE_SOURCEMAP;
+const shouldUseSourceMap = sourceMapVar !== 'false' && sourceMapVar;
+const sourceMapType = sourceMapVar !== 'false' && sourceMapVar !== 'true' && sourceMapVar;
 
 const webpackDevClientEntry = require.resolve(
   './webpackHotDevClient'
@@ -123,10 +125,10 @@ module.exports = function (webpackEnv) {
     // Stop compilation early in production
     bail: isEnvProduction,
     devtool: isEnvProduction
-      ? shouldUseSourceMap
-        ? 'source-map'
-        : false
-      : isEnvDevelopment && 'cheap-module-source-map',
+      ? (shouldUseSourceMap
+        ? (sourceMapType || 'source-map')
+        : false)
+      : isEnvDevelopment && (sourceMapType || 'eval-source-map'),
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry:
