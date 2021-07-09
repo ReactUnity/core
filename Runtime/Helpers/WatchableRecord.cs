@@ -8,12 +8,11 @@ using System.Collections.Generic;
 
 namespace ReactUnity.Helpers
 {
-    [Serializable]
-    public class EventDictionary<T> : IDictionary<string, T>
+    public class WatchableRecord<T> : IDictionary<string, T>
     {
         private Dictionary<string, T> collection;
 
-        internal event Action<string, T, EventDictionary<T>> changed;
+        internal event Action<string, T, WatchableRecord<T>> changed;
 
         public T this[string key]
         {
@@ -29,12 +28,12 @@ namespace ReactUnity.Helpers
             }
         }
 
-        public EventDictionary()
+        public WatchableRecord()
         {
             collection = new Dictionary<string, T>();
         }
 
-        public EventDictionary(IDictionary<string, T> dict)
+        public WatchableRecord(IDictionary<string, T> dict)
         {
             collection = new Dictionary<string, T>(dict);
         }
@@ -128,7 +127,7 @@ namespace ReactUnity.Helpers
             return (collection as ICollection<KeyValuePair<string, T>>).Contains(item);
         }
 
-        public Action AddListener(Action<string, T, EventDictionary<T>> listener)
+        public Action AddListener(Action<string, T, WatchableRecord<T>> listener)
         {
             changed += listener;
             return () => changed -= listener;
@@ -137,7 +136,7 @@ namespace ReactUnity.Helpers
         public Action AddListener(object cb)
         {
             var callback = new Callback(cb);
-            var listener = new Action<string, T, EventDictionary<T>>((key, value, dc) => callback.Call(key, value, dc));
+            var listener = new Action<string, T, WatchableRecord<T>>((key, value, dc) => callback.Call(key, value, dc));
             changed += listener;
             return () => changed -= listener;
         }
@@ -192,7 +191,7 @@ namespace ReactUnity.Helpers
 #endif
     }
 
-    public class EventObjectDictionary : EventDictionary<object>, IPropertyBagProvider
+    public class WatchableObjectRecord : WatchableRecord<object>, IPropertyBagProvider
     {
 #if REACT_CLEARSCRIPT
         protected HostPropertyBag propertyBag;
@@ -217,7 +216,7 @@ namespace ReactUnity.Helpers
 
             regenerate();
 
-            changed += (string key, object value, EventDictionary<object> dc) =>
+            changed += (string key, object value, WatchableRecord<object> dc) =>
             {
                 if (propertyBag != null)
                 {

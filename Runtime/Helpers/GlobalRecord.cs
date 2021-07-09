@@ -2,7 +2,7 @@ using ReactUnity.Dispatchers;
 
 namespace ReactUnity.Helpers
 {
-    public class GlobalRecord : EventObjectDictionary
+    public class GlobalRecord : WatchableObjectRecord
     {
         private System.Action removeStringDictionaryListener;
         private IDispatcher dispatcher;
@@ -36,7 +36,7 @@ namespace ReactUnity.Helpers
         }
 
 
-        public void UpdateStringObjectDictionary(EventDictionary<object> dict, bool isSerializing)
+        public void UpdateStringObjectDictionary(WatchableRecord<object> dict, bool isSerializing)
         {
             ClearWithoutNotify();
             foreach (var entry in dict)

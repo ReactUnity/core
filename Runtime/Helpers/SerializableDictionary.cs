@@ -12,11 +12,11 @@ namespace ReactUnity.Helpers
     public class StringObjectPair
     {
         public string Key;
-        [SerializeReference] public UnityEngine.Object Value;
+        public Object Value;
     }
 
     [System.Serializable]
-    public class SerializableDictionary : EventObjectDictionary, ISerializationCallbackReceiver
+    public class SerializableDictionary : WatchableObjectRecord, ISerializationCallbackReceiver
     {
         [SerializeField] List<StringObjectPair> Entries = new List<StringObjectPair>();
 

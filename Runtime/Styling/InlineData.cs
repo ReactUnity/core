@@ -2,7 +2,7 @@ using ReactUnity.Helpers;
 
 namespace ReactUnity.Styling
 {
-    public class InlineData : EventObjectDictionary
+    public class InlineData : WatchableObjectRecord
     {
         internal readonly string Identifier;
 
