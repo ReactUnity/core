@@ -1,4 +1,4 @@
-#if (UNITY_EDITOR || UNITY_STANDALONE) && !REACT_DISABLE_CLEARSCRIPT
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
 #define REACT_CLEARSCRIPT
 #endif
 
@@ -8,6 +8,7 @@ using Microsoft.ClearScript.V8;
 using ReactUnity.Helpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 
 namespace ReactUnity.ScriptEngine
@@ -20,6 +21,10 @@ namespace ReactUnity.ScriptEngine
 
         public ClearScriptEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
+
+            var location = typeof(ClearScriptEngine).Assembly.Location;
+            HostSettings.AuxiliarySearchPath = Path.GetFullPath(Path.Combine(location, "../../../../../../lib/arm/"));
+
             Engine = new V8ScriptEngine(
                 V8ScriptEngineFlags.MarshalAllLongAsBigInt |
                 V8ScriptEngineFlags.MarshalUnsafeLongAsBigInt |

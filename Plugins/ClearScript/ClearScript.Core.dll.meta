@@ -7,6 +7,7 @@ PluginImporter:
   executionOrder: {}
   defineConstraints:
   - '!REACT_DISABLE_CLEARSCRIPT'
+  - '!ENABLE_IL2CPP'
   isPreloaded: 0
   isOverridable: 1
   isExplicitlyReferenced: 0
@@ -17,7 +18,7 @@ PluginImporter:
     second:
       enabled: 0
       settings:
-        Exclude Android: 1
+        Exclude Android: 0
         Exclude Editor: 0
         Exclude Linux64: 0
         Exclude OSXUniversal: 0
@@ -27,7 +28,7 @@ PluginImporter:
   - first:
       Android: Android
     second:
-      enabled: 0
+      enabled: 1
       settings:
         CPU: ARMv7
   - first:
