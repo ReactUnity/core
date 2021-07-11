@@ -35,10 +35,11 @@
     "build:editor": "tsc -d -p tsconfig.editor.json",
     "build:ugui": "tsc -d -p tsconfig.ugui.json",
     "build:uitoolkit": "tsc -d -p tsconfig.uitoolkit.json",
+    "build:all": "npm run build:clean && npm run build && npm run build:editor && npm run build:ugui && npm run build:uitoolkit",
+    "prepare": "npm run build:all",
     "watch": "tsc -d --watch",
     "build:clean": "rimraf dist",
     "lint": "eslint --ext js,ts,tsx src models",
-    "prepare": "npm run build:clean && npm run build && npm run build:editor && npm run build:ugui && npm run build:uitoolkit",
     "local": "yalc publish --push",
     "pack": "npm pack"
   },
@@ -62,10 +63,10 @@
   },
   "devDependencies": {
     "@types/webpack-env": "^1.16.2",
-    "@types/react": "^17.0.13",
-    "@types/react-reconciler": "^0.26.1",
+    "@types/react": "^17.0.14",
+    "@types/react-reconciler": "^0.26.2",
     "@types/styled-components": "5.1.11",
-    "@reactunity/scripts": "^0.1.19",
+    "@reactunity/scripts": "^0.2.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.3.5"
   }

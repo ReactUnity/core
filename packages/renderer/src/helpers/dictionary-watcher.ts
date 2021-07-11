@@ -39,7 +39,7 @@ export interface DictionaryWatcher<T = Record<string, any>> {
  * @param displayName A displayName to identify this context easier in case of problems
  */
 export function createDictionaryWatcher<ValueType = any, RecordType = Record<string, ValueType>>
-  (dictionary: ReactUnity.Helpers.EventDictionary<ValueType>, displayName?: string): DictionaryWatcher<RecordType> {
+  (dictionary: ReactUnity.Helpers.WatchableRecord<ValueType>, displayName?: string): DictionaryWatcher<RecordType> {
   const ctx = React.createContext<RecordType>(undefined);
   if (displayName) ctx.displayName = displayName;
 

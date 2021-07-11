@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 7.07.2021 19:31:50
+// Generated 11/07/2021 16:53:04
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -467,6 +467,8 @@ export declare namespace ReactUnity {
     SetEventListener(eventType: string, callback: ReactUnity.Helpers.Callback): void;
     GetComponent(type: System.Type): any;
     AddComponent(type: System.Type): any;
+    QuerySelector(query: string): ReactUnity.IReactComponent;
+    QuerySelectorAll(query: string): ReactUnity.IReactComponent[];
   }
   export interface IContainerComponent extends ReactUnity.IReactComponent {
     Children: ReactUnity.IReactComponent[];
@@ -487,12 +489,12 @@ export declare namespace ReactUnity {
     ClearListeners(): void;
   }
   export class ReactContext {
-    constructor(globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.Dispatchers.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void), mergeLayout: ReactUnity.ReactContext_LayoutMergeMode, calculatesLayout: boolean);
+    constructor(globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ScriptSource, dispatcher: ReactUnity.Dispatchers.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void), mergeLayout: ReactUnity.ReactContext_LayoutMergeMode, calculatesLayout: boolean);
     CalculatesLayout: boolean;
     Host: ReactUnity.IHostComponent;
     Globals: ReactUnity.Helpers.GlobalRecord;
     IsDevServer: boolean;
-    Script: ReactUnity.ReactScript;
+    Script: ReactUnity.ScriptSource;
     Scheduler: ReactUnity.Schedulers.IUnityScheduler;
     Dispatcher: ReactUnity.Dispatchers.IDispatcher;
     StateHandlers: Record<string, System.Type>;
@@ -508,7 +510,7 @@ export declare namespace ReactUnity {
     InsertStyle(style: string, importanceOffset?: number): void;
     RemoveStyle(style: string): void;
     ResolvePath(path: string): string;
-    CreateStaticScript(path: string): ReactUnity.ReactScript;
+    CreateStaticScript(path: string): ReactUnity.ScriptSource;
     CreateText(text: string): ReactUnity.ITextComponent;
     CreateComponent(tag: string, text: string): ReactUnity.IReactComponent;
     CreatePseudoComponent(tag: string): ReactUnity.IReactComponent;
@@ -518,34 +520,6 @@ export declare namespace ReactUnity {
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
-  }
-  export class ReactScript {
-    constructor();
-    DevServerFile: string;
-    IsDevServer: boolean;
-    EffectiveScriptSource: ReactUnity.ScriptSource;
-    ScriptSource: ReactUnity.ScriptSource;
-    SourceAsset: UnityEngine.TextAsset;
-    SourcePath: string;
-    SourceText: string;
-    ResourcesPath: string;
-    UseDevServer: boolean;
-    DevServer: string;
-    static Resource(path: string): ReactUnity.ReactScript;
-    static Text(path: string): ReactUnity.ReactScript;
-    GetResolvedSourceUrl(useDevServer?: boolean): string;
-    GetScript(callback: ((arg0: string, arg1: boolean) => void), dispatcher?: ReactUnity.Dispatchers.IDispatcher, useDevServer?: boolean, disableWarnings?: boolean): System.IDisposable;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    GetType(): System.Type;
-    ToString(): string;
-  }
-  export enum ScriptSource {
-    TextAsset = 0,
-    File = 1,
-    Url = 2,
-    Resource = 3,
-    Text = 4,
   }
   export class ReactUnityBase {
     MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
@@ -576,7 +550,7 @@ export declare namespace ReactUnity {
     name: string;
     hideFlags: UnityEngine.HideFlags;
     Globals: ReactUnity.Helpers.SerializableDictionary;
-    Script: ReactUnity.ReactScript;
+    Script: ReactUnity.ScriptSource;
     Debug: boolean;
     AwaitDebugger: boolean;
     EngineType: ReactUnity.ScriptEngine.JavascriptEngineType;
@@ -661,6 +635,34 @@ export declare namespace ReactUnity {
     GetHashCode(): number;
     GetType(): System.Type;
     ToString(): string;
+  }
+  export class ScriptSource {
+    constructor();
+    DevServerFile: string;
+    IsDevServer: boolean;
+    EffectiveScriptSource: ReactUnity.ScriptSourceType;
+    Type: ReactUnity.ScriptSourceType;
+    SourceAsset: UnityEngine.TextAsset;
+    SourcePath: string;
+    SourceText: string;
+    ResourcesPath: string;
+    UseDevServer: boolean;
+    DevServer: string;
+    static Resource(path: string): ReactUnity.ScriptSource;
+    static Text(path: string): ReactUnity.ScriptSource;
+    GetResolvedSourceUrl(useDevServer?: boolean): string;
+    GetScript(callback: ((arg0: string, arg1: boolean) => void), dispatcher?: ReactUnity.Dispatchers.IDispatcher, useDevServer?: boolean, disableWarnings?: boolean): System.IDisposable;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export enum ScriptSourceType {
+    TextAsset = 0,
+    File = 1,
+    Url = 2,
+    Resource = 3,
+    Raw = 4,
   }
   export enum ReactContext_LayoutMergeMode {
     Both = 0,
@@ -1235,6 +1237,7 @@ export declare namespace ReactUnity {
       createElement(type: string): ReactUnity.DomProxies.IDomElementProxy;
       createTextNode(text: string): string;
       querySelector(query: string): any;
+      querySelectorAll(query: string): any;
       getElementById(query: string): any;
       getElementsByTagName(tagName: string): ReactUnity.DomProxies.IDomElementProxy[];
       Equals(obj: any): boolean;
@@ -1646,7 +1649,7 @@ export declare namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export class ReactScriptDrawer {
+    export class ScriptSourceDrawer {
       constructor();
       attribute: any; // UnityEngine.PropertyAttribute
       fieldInfo: System.Reflection.FieldInfo;
@@ -1705,11 +1708,13 @@ export declare namespace ReactUnity {
       GetProjectPath(): string;
       CreateProject(): void;
       GetNodeVersion(callback?: ((arg0: number) => void)): void;
+      GetNodeVersion(callback: any): void;
       RunCommand(target: string, args: string, hasOutput?: boolean): System.Diagnostics.Process;
       CanvasExistsInScene(): boolean;
       CreateCanvas(): void;
       SelectCanvas(): void;
       CheckVersion(callback: (() => void)): void;
+      CheckVersion(callback: any): void;
       UpdatePackage(version: string): void;
       Run(root?: UnityEngine.UIElements.VisualElement): void;
       Restart(root?: UnityEngine.UIElements.VisualElement): void;
@@ -1842,7 +1847,7 @@ export declare namespace ReactUnity {
       ToString(): string;
       GetType(): System.Type;
     }
-    export class EmscriptenBuildFlags {
+    export class ReactUnityBuildPreprocessor {
       constructor();
       callbackOrder: number;
       OnPreprocessBuild(report: any): void;
@@ -1868,13 +1873,13 @@ export declare namespace ReactUnity {
     }
     export namespace Renderer {
       export class EditorContext {
-        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.Dispatchers.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart?: (() => void));
+        constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ScriptSource, dispatcher: ReactUnity.Dispatchers.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart?: (() => void));
         StateHandlers: Record<string, System.Type>;
         CalculatesLayout: boolean;
         Host: ReactUnity.IHostComponent;
         Globals: ReactUnity.Helpers.GlobalRecord;
         IsDevServer: boolean;
-        Script: ReactUnity.ReactScript;
+        Script: ReactUnity.ScriptSource;
         Scheduler: ReactUnity.Schedulers.IUnityScheduler;
         Dispatcher: ReactUnity.Dispatchers.IDispatcher;
         Location: ReactUnity.DomProxies.Location;
@@ -1894,7 +1899,7 @@ export declare namespace ReactUnity {
         InsertStyle(style: string, importanceOffset?: number): void;
         RemoveStyle(style: string): void;
         ResolvePath(path: string): string;
-        CreateStaticScript(path: string): ReactUnity.ReactScript;
+        CreateStaticScript(path: string): ReactUnity.ScriptSource;
         Dispose(): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
@@ -2189,14 +2194,14 @@ export declare namespace ReactUnity {
         ToString(): string;
       }
       export class ReactUnityEditorElement {
-        constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Helpers.GlobalRecord, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, engineType?: ReactUnity.ScriptEngine.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
+        constructor(script: ReactUnity.ScriptSource, globals: ReactUnity.Helpers.GlobalRecord, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, engineType?: ReactUnity.ScriptEngine.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
         [key: string]: any;
         runner: ReactUnity.ReactUnityRunner;
         context: ReactUnity.ReactContext;
         dispatcher: ReactUnity.Dispatchers.IDispatcher;
         scheduler: ReactUnity.Schedulers.IUnityScheduler;
         MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
-        Script: ReactUnity.ReactScript;
+        Script: ReactUnity.ScriptSource;
         Globals: ReactUnity.Helpers.GlobalRecord;
         EngineType: ReactUnity.ScriptEngine.JavascriptEngineType;
         viewDataKey: string;
@@ -2298,59 +2303,6 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
       ToString(): string;
     }
-    export class EventDictionary<T = any> {
-      constructor();
-      constructor(dict: System.Collections.Generic.IDictionary<string, T>);
-      [key: string]: any;
-      Keys: System.Collections.Generic.ICollection<string>;
-      Values: System.Collections.Generic.ICollection<T>;
-      Count: number;
-      IsReadOnly: boolean;
-      Set(key: string, value: T): void;
-      SetWithoutNotify(key: string, value: T): void;
-      Add(key: string, value: T): void;
-      Add(item: System.Collections.Generic.KeyValuePair<string, T>): void;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      ContainsKey(key: string): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, T>>;
-      Remove(key: string): boolean;
-      RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: T, arg2: ReactUnity.Helpers.EventDictionary<T>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
-    export interface IPropertyBagProvider {
-      GetPropertyBag(): any;
-    }
-    export class EventObjectDictionary {
-      constructor();
-      [key: string]: any;
-      Keys: System.Collections.Generic.ICollection<string>;
-      Values: System.Collections.Generic.ICollection<any>;
-      Count: number;
-      IsReadOnly: boolean;
-      GetPropertyBag(): any;
-      Set(key: string, value: any): void;
-      SetWithoutNotify(key: string, value: any): void;
-      Add(key: string, value: any): void;
-      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
-      Clear(): void;
-      ClearWithoutNotify(): void;
-      ContainsKey(key: string): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
-      Remove(key: string): boolean;
-      RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.EventDictionary<any>) => void)): (() => void);
-      AddListener(cb: any): (() => void);
-      Equals(obj: any): boolean;
-      GetHashCode(): number;
-      GetType(): System.Type;
-      ToString(): string;
-    }
     export class GlobalRecord {
       constructor();
       [key: string]: any;
@@ -2360,8 +2312,8 @@ export declare namespace ReactUnity {
       IsReadOnly: boolean;
       static BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, dispatcher: ReactUnity.Dispatchers.IDispatcher, isSerializing: boolean): ReactUnity.Helpers.GlobalRecord;
       BindSerializableDictionary(dict: ReactUnity.Helpers.SerializableDictionary, isSerializing: boolean): void;
-      UpdateStringObjectDictionary(dict: ReactUnity.Helpers.EventDictionary<UnityEngine.Object>, isSerializing: boolean): void;
-      GetPropertyBag(): any;
+      UpdateStringObjectDictionary(dict: ReactUnity.Helpers.WatchableRecord<any>, isSerializing: boolean): void;
+      GetPropertyBag(): ReactUnity.Helpers.HostPropertyBag;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2372,8 +2324,10 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.EventDictionary<any>) => void)): (() => void);
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableRecord<any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(cb: any): (() => void);
+      GetValueOrDefault(key: string): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2399,25 +2353,101 @@ export declare namespace ReactUnity {
       constructor();
       [key: string]: any;
       Keys: System.Collections.Generic.ICollection<string>;
-      Values: System.Collections.Generic.ICollection<UnityEngine.Object>;
+      Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      GetValueOrDefault(key: string): UnityEngine.Object;
       OnAfterDeserialize(): void;
       OnBeforeSerialize(): void;
       AddReserializeListener(callback: ((arg0: ReactUnity.Helpers.SerializableDictionary) => void)): (() => void);
-      Set(key: string, value: UnityEngine.Object): void;
-      SetWithoutNotify(key: string, value: UnityEngine.Object): void;
-      Add(key: string, value: UnityEngine.Object): void;
-      Add(item: System.Collections.Generic.KeyValuePair<string, UnityEngine.Object>): void;
+      GetPropertyBag(): ReactUnity.Helpers.HostPropertyBag;
+      Set(key: string, value: any): void;
+      SetWithoutNotify(key: string, value: any): void;
+      Add(key: string, value: any): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
       Clear(): void;
       ClearWithoutNotify(): void;
       ContainsKey(key: string): boolean;
-      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, UnityEngine.Object>>;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: UnityEngine.Object, arg2: ReactUnity.Helpers.EventDictionary<UnityEngine.Object>) => void)): (() => void);
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableRecord<any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(cb: any): (() => void);
+      GetValueOrDefault(key: string): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class WatchableRecord<T = any> {
+      constructor();
+      constructor(dict: System.Collections.Generic.IDictionary<string, T>);
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<T>;
+      Count: number;
+      IsReadOnly: boolean;
+      Set(key: string, value: T): void;
+      SetWithoutNotify(key: string, value: T): void;
+      Add(key: string, value: T): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, T>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: string): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, T>>;
+      Remove(key: string): boolean;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(listener: ((arg0: string, arg1: T, arg2: ReactUnity.Helpers.WatchableRecord<T>) => void)): (() => void);
+      AddListener(cb: any): (() => void);
+      AddListener(cb: any): (() => void);
+      GetValueOrDefault(key: string): T;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class HostPropertyBag {
+      constructor(baseObject: any);
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<any>;
+      OnExposedToScriptCode(engine: any): void;
+      SetPropertyNoCheck(name: string, value: any): void;
+      RemovePropertyNoCheck(name: string): boolean;
+      ClearNoCheck(): void;
+      ContainsKey(key: string): boolean;
+      Add(key: string, value: any): void;
+      Remove(key: string): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export interface IPropertyBagProvider {
+      GetPropertyBag(): ReactUnity.Helpers.HostPropertyBag;
+    }
+    export class WatchableObjectRecord {
+      constructor();
+      [key: string]: any;
+      Keys: System.Collections.Generic.ICollection<string>;
+      Values: System.Collections.Generic.ICollection<any>;
+      Count: number;
+      IsReadOnly: boolean;
+      GetPropertyBag(): ReactUnity.Helpers.HostPropertyBag;
+      Set(key: string, value: any): void;
+      SetWithoutNotify(key: string, value: any): void;
+      Add(key: string, value: any): void;
+      Add(item: System.Collections.Generic.KeyValuePair<string, any>): void;
+      Clear(): void;
+      ClearWithoutNotify(): void;
+      ContainsKey(key: string): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
+      Remove(key: string): boolean;
+      RemoveWithoutNotify(key: string): boolean;
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableRecord<any>) => void)): (() => void);
+      AddListener(cb: any): (() => void);
+      AddListener(cb: any): (() => void);
+      GetValueOrDefault(key: string): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -2475,6 +2505,7 @@ export declare namespace ReactUnity {
       Engine: any; // Microsoft.ClearScript.V8.V8ScriptEngine
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
       GetValue(key: string): any;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
@@ -2499,6 +2530,7 @@ export declare namespace ReactUnity {
     }
     export interface IJavaScriptEngine {
       Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
       Evaluate(code: string, fileName?: string): any;
       GetValue(key: string): any;
       CreateNativeObject(props: Record<string, any>): any;
@@ -2513,6 +2545,7 @@ export declare namespace ReactUnity {
       Engine: any; // Jint.Engine
       Evaluate(code: string, fileName?: string): any;
       Execute(code: string, fileName?: string): void;
+      TryExecute(code: string, fileName?: string): System.Exception;
       GetValue(key: string): any;
       CreateTypeReference(type: System.Type): any;
       CreateNamespaceReference(ns: string, ...assemblies: System.Reflection.Assembly[]): any;
@@ -2850,7 +2883,7 @@ export declare namespace ReactUnity {
       Values: System.Collections.Generic.ICollection<any>;
       Count: number;
       IsReadOnly: boolean;
-      GetPropertyBag(): any;
+      GetPropertyBag(): ReactUnity.Helpers.HostPropertyBag;
       Set(key: string, value: any): void;
       SetWithoutNotify(key: string, value: any): void;
       Add(key: string, value: any): void;
@@ -2861,8 +2894,10 @@ export declare namespace ReactUnity {
       GetEnumerator(): System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<string, any>>;
       Remove(key: string): boolean;
       RemoveWithoutNotify(key: string): boolean;
-      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.EventDictionary<any>) => void)): (() => void);
+      AddListener(listener: ((arg0: string, arg1: any, arg2: ReactUnity.Helpers.WatchableRecord<any>) => void)): (() => void);
       AddListener(cb: any): (() => void);
+      AddListener(cb: any): (() => void);
+      GetValueOrDefault(key: string): any;
       Equals(obj: any): boolean;
       GetHashCode(): number;
       GetType(): System.Type;
@@ -5091,7 +5126,7 @@ export declare namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       Globals: ReactUnity.Helpers.SerializableDictionary;
-      Script: ReactUnity.ReactScript;
+      Script: ReactUnity.ScriptSource;
       Debug: boolean;
       AwaitDebugger: boolean;
       EngineType: ReactUnity.ScriptEngine.JavascriptEngineType;
@@ -5147,14 +5182,14 @@ export declare namespace ReactUnity {
       GetType(): System.Type;
     }
     export class UGUIContext {
-      constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.Dispatchers.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void));
+      constructor(hostElement: UnityEngine.RectTransform, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ScriptSource, dispatcher: ReactUnity.Dispatchers.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart: (() => void));
       static ComponentCreators: any; // System.Collections.Generic.Dictionary`2[System.String,System.Func`4[System.String,System.String,ReactUnity.UGUI.UGUIContext,ReactUnity.UGUI.UGUIComponent]]
       StateHandlers: Record<string, System.Type>;
       CalculatesLayout: boolean;
       Host: ReactUnity.IHostComponent;
       Globals: ReactUnity.Helpers.GlobalRecord;
       IsDevServer: boolean;
-      Script: ReactUnity.ReactScript;
+      Script: ReactUnity.ScriptSource;
       Scheduler: ReactUnity.Schedulers.IUnityScheduler;
       Dispatcher: ReactUnity.Dispatchers.IDispatcher;
       Location: ReactUnity.DomProxies.Location;
@@ -5175,7 +5210,7 @@ export declare namespace ReactUnity {
       InsertStyle(style: string, importanceOffset?: number): void;
       RemoveStyle(style: string): void;
       ResolvePath(path: string): string;
-      CreateStaticScript(path: string): ReactUnity.ReactScript;
+      CreateStaticScript(path: string): ReactUnity.ScriptSource;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
@@ -8234,14 +8269,14 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class ReactUnityElement {
-      constructor(script: ReactUnity.ReactScript, globals: ReactUnity.Helpers.GlobalRecord, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, engineType?: ReactUnity.ScriptEngine.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
+      constructor(script: ReactUnity.ScriptSource, globals: ReactUnity.Helpers.GlobalRecord, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, engineType?: ReactUnity.ScriptEngine.JavascriptEngineType, debug?: boolean, awaitDebugger?: boolean, autorun?: boolean);
       [key: string]: any;
       runner: ReactUnity.ReactUnityRunner;
       context: ReactUnity.ReactContext;
       dispatcher: ReactUnity.Dispatchers.IDispatcher;
       scheduler: ReactUnity.Schedulers.IUnityScheduler;
       MediaProvider: ReactUnity.StyleEngine.IMediaProvider;
-      Script: ReactUnity.ReactScript;
+      Script: ReactUnity.ScriptSource;
       Globals: ReactUnity.Helpers.GlobalRecord;
       EngineType: ReactUnity.ScriptEngine.JavascriptEngineType;
       viewDataKey: string;
@@ -8353,7 +8388,7 @@ export declare namespace ReactUnity {
       name: string;
       hideFlags: UnityEngine.HideFlags;
       Globals: ReactUnity.Helpers.SerializableDictionary;
-      Script: ReactUnity.ReactScript;
+      Script: ReactUnity.ScriptSource;
       Debug: boolean;
       AwaitDebugger: boolean;
       EngineType: ReactUnity.ScriptEngine.JavascriptEngineType;
@@ -8438,13 +8473,13 @@ export declare namespace ReactUnity {
       ToString(): string;
     }
     export class UIToolkitContext {
-      constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ReactScript, dispatcher: ReactUnity.Dispatchers.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart?: (() => void), onAudioPlayback?: ((arg0: UnityEngine.AudioClip) => void));
+      constructor(hostElement: UnityEngine.UIElements.VisualElement, globals: ReactUnity.Helpers.GlobalRecord, script: ReactUnity.ScriptSource, dispatcher: ReactUnity.Dispatchers.IDispatcher, scheduler: ReactUnity.Schedulers.IUnityScheduler, mediaProvider: ReactUnity.StyleEngine.IMediaProvider, isDevServer: boolean, onRestart?: (() => void), onAudioPlayback?: ((arg0: UnityEngine.AudioClip) => void));
       StateHandlers: Record<string, System.Type>;
       CalculatesLayout: boolean;
       Host: ReactUnity.IHostComponent;
       Globals: ReactUnity.Helpers.GlobalRecord;
       IsDevServer: boolean;
-      Script: ReactUnity.ReactScript;
+      Script: ReactUnity.ScriptSource;
       Scheduler: ReactUnity.Schedulers.IUnityScheduler;
       Dispatcher: ReactUnity.Dispatchers.IDispatcher;
       Location: ReactUnity.DomProxies.Location;
@@ -8466,7 +8501,7 @@ export declare namespace ReactUnity {
       InsertStyle(style: string, importanceOffset?: number): void;
       RemoveStyle(style: string): void;
       ResolvePath(path: string): string;
-      CreateStaticScript(path: string): ReactUnity.ReactScript;
+      CreateStaticScript(path: string): ReactUnity.ScriptSource;
       Dispose(): void;
       Equals(obj: any): boolean;
       GetHashCode(): number;
