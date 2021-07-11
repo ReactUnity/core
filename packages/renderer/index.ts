@@ -4,5 +4,6 @@ export * from './models/jint';
 export * from './models/properties';
 export * from './models/renderer';
 export * from './src/helpers/dictionary-watcher';
+export * from './src/helpers/styled-components-helper';
 export { Renderer } from './src/renderer/renderer';
 
