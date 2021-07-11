@@ -1,6 +1,6 @@
 //
 // Types in assemblies: UnityEditor.CoreModule
-// Generated 3.07.2021 04:18:15
+// Generated 11/07/2021 17:47:12
 //
 import { System } from './system';
 import { Unity, UnityEngine } from './unity';

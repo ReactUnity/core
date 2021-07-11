@@ -1,6 +1,6 @@
 //
 // Types in assemblies: nunit.framework
-// Generated 18.04.2021 01:43:22
+// Generated 11/07/2021 17:47:35
 //
 import { System } from './system';
 
@@ -2010,8 +2010,10 @@ export declare namespace NUnit {
         FlushAsync(): System.Threading.Tasks.Task;
         ToString(): string;
         Dispose(): void;
+        DisposeAsync(): System.Threading.Tasks.ValueTask;
         Flush(): void;
         Write(buffer: System.Char[]): void;
+        Write(buffer: System.ReadOnlySpan<System.Char>): void;
         Write(value: boolean): void;
         Write(value: number): void;
         Write(value: System.UInt32): void;
@@ -2029,6 +2031,7 @@ export declare namespace NUnit {
         WriteLine(value: System.Char): void;
         WriteLine(buffer: System.Char[]): void;
         WriteLine(buffer: System.Char[], index: number, count: number): void;
+        WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
         WriteLine(value: boolean): void;
         WriteLine(value: number): void;
         WriteLine(value: System.UInt32): void;
@@ -2044,7 +2047,9 @@ export declare namespace NUnit {
         WriteLine(format: string, arg0: any, arg1: any, arg2: any): void;
         WriteLine(format: string, ...arg: any[]): void;
         WriteAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         WriteLineAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
+        WriteLineAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         WriteLineAsync(): System.Threading.Tasks.Task;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -3176,6 +3181,9 @@ export declare namespace NUnit {
         OnDeserialization(sender: any): void;
         Remove(key: string): boolean;
         TryAdd(key: string, value: string): boolean;
+        EnsureCapacity(capacity: number): number;
+        TrimExcess(): void;
+        TrimExcess(capacity: number): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -3262,8 +3270,10 @@ export declare namespace NUnit {
         Flush(): void;
         Close(): void;
         Dispose(): void;
+        DisposeAsync(): System.Threading.Tasks.ValueTask;
         Write(buffer: System.Char[]): void;
         Write(buffer: System.Char[], index: number, count: number): void;
+        Write(buffer: System.ReadOnlySpan<System.Char>): void;
         Write(value: boolean): void;
         Write(value: number): void;
         Write(value: System.UInt32): void;
@@ -3281,6 +3291,7 @@ export declare namespace NUnit {
         WriteLine(value: System.Char): void;
         WriteLine(buffer: System.Char[]): void;
         WriteLine(buffer: System.Char[], index: number, count: number): void;
+        WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
         WriteLine(value: boolean): void;
         WriteLine(value: number): void;
         WriteLine(value: System.UInt32): void;
@@ -3298,10 +3309,12 @@ export declare namespace NUnit {
         WriteAsync(value: string): System.Threading.Tasks.Task;
         WriteAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
         WriteAsync(buffer: System.Char[], index: number, count: number): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         WriteLineAsync(value: System.Char): System.Threading.Tasks.Task;
         WriteLineAsync(value: string): System.Threading.Tasks.Task;
         WriteLineAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
         WriteLineAsync(buffer: System.Char[], index: number, count: number): System.Threading.Tasks.Task;
+        WriteLineAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         WriteLineAsync(): System.Threading.Tasks.Task;
         FlushAsync(): System.Threading.Tasks.Task;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
@@ -3445,8 +3458,10 @@ export declare namespace NUnit {
         FlushAsync(): System.Threading.Tasks.Task;
         ToString(): string;
         Dispose(): void;
+        DisposeAsync(): System.Threading.Tasks.ValueTask;
         Flush(): void;
         Write(buffer: System.Char[]): void;
+        Write(buffer: System.ReadOnlySpan<System.Char>): void;
         Write(value: boolean): void;
         Write(value: number): void;
         Write(value: System.UInt32): void;
@@ -3464,6 +3479,7 @@ export declare namespace NUnit {
         WriteLine(value: System.Char): void;
         WriteLine(buffer: System.Char[]): void;
         WriteLine(buffer: System.Char[], index: number, count: number): void;
+        WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
         WriteLine(value: boolean): void;
         WriteLine(value: number): void;
         WriteLine(value: System.UInt32): void;
@@ -3479,7 +3495,9 @@ export declare namespace NUnit {
         WriteLine(format: string, arg0: any, arg1: any, arg2: any): void;
         WriteLine(format: string, ...arg: any[]): void;
         WriteAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
+        WriteAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         WriteLineAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
+        WriteLineAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
         WriteLineAsync(): System.Threading.Tasks.Task;
         CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
         GetLifetimeService(): any;
@@ -3564,6 +3582,7 @@ export declare namespace NUnit {
         Next(maxValue: number): number;
         NextDouble(): number;
         NextBytes(buffer: System.Byte[]): void;
+        NextBytes(buffer: System.Span<System.Byte>): void;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;
@@ -4586,9 +4605,11 @@ export declare namespace NUnit {
           WriteLine(aString: string): void;
           Close(): void;
           Dispose(): void;
+          DisposeAsync(): System.Threading.Tasks.ValueTask;
           Flush(): void;
           Write(buffer: System.Char[]): void;
           Write(buffer: System.Char[], index: number, count: number): void;
+          Write(buffer: System.ReadOnlySpan<System.Char>): void;
           Write(value: boolean): void;
           Write(value: number): void;
           Write(value: System.UInt32): void;
@@ -4606,6 +4627,7 @@ export declare namespace NUnit {
           WriteLine(value: System.Char): void;
           WriteLine(buffer: System.Char[]): void;
           WriteLine(buffer: System.Char[], index: number, count: number): void;
+          WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
           WriteLine(value: boolean): void;
           WriteLine(value: number): void;
           WriteLine(value: System.UInt32): void;
@@ -4623,10 +4645,12 @@ export declare namespace NUnit {
           WriteAsync(value: string): System.Threading.Tasks.Task;
           WriteAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
           WriteAsync(buffer: System.Char[], index: number, count: number): System.Threading.Tasks.Task;
+          WriteAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
           WriteLineAsync(value: System.Char): System.Threading.Tasks.Task;
           WriteLineAsync(value: string): System.Threading.Tasks.Task;
           WriteLineAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
           WriteLineAsync(buffer: System.Char[], index: number, count: number): System.Threading.Tasks.Task;
+          WriteLineAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
           WriteLineAsync(): System.Threading.Tasks.Task;
           FlushAsync(): System.Threading.Tasks.Task;
           CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;
@@ -4671,9 +4695,11 @@ export declare namespace NUnit {
           WriteLine(value: string): void;
           Close(): void;
           Dispose(): void;
+          DisposeAsync(): System.Threading.Tasks.ValueTask;
           Flush(): void;
           Write(buffer: System.Char[]): void;
           Write(buffer: System.Char[], index: number, count: number): void;
+          Write(buffer: System.ReadOnlySpan<System.Char>): void;
           Write(value: boolean): void;
           Write(value: number): void;
           Write(value: System.UInt32): void;
@@ -4691,6 +4717,7 @@ export declare namespace NUnit {
           WriteLine(value: System.Char): void;
           WriteLine(buffer: System.Char[]): void;
           WriteLine(buffer: System.Char[], index: number, count: number): void;
+          WriteLine(buffer: System.ReadOnlySpan<System.Char>): void;
           WriteLine(value: boolean): void;
           WriteLine(value: number): void;
           WriteLine(value: System.UInt32): void;
@@ -4708,10 +4735,12 @@ export declare namespace NUnit {
           WriteAsync(value: string): System.Threading.Tasks.Task;
           WriteAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
           WriteAsync(buffer: System.Char[], index: number, count: number): System.Threading.Tasks.Task;
+          WriteAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
           WriteLineAsync(value: System.Char): System.Threading.Tasks.Task;
           WriteLineAsync(value: string): System.Threading.Tasks.Task;
           WriteLineAsync(buffer: System.Char[]): System.Threading.Tasks.Task;
           WriteLineAsync(buffer: System.Char[], index: number, count: number): System.Threading.Tasks.Task;
+          WriteLineAsync(buffer: System.ReadOnlyMemory<System.Char>, cancellationToken?: System.Threading.CancellationToken): System.Threading.Tasks.Task;
           WriteLineAsync(): System.Threading.Tasks.Task;
           FlushAsync(): System.Threading.Tasks.Task;
           CreateObjRef(requestedType: System.Type): System.Runtime.Remoting.ObjRef;

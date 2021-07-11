@@ -1,6 +1,6 @@
 //
 // Types in assemblies: ReactUnity, ReactUnity.Editor, ReactUnity.UGUI, ReactUnity.UIToolkit
-// Generated 11/07/2021 16:53:04
+// Generated 11/07/2021 17:47:18
 //
 import { InlineStyleRemap } from '../properties/style';
 import { System } from './system';
@@ -1858,13 +1858,15 @@ export declare namespace ReactUnity {
     }
     export namespace Developer {
       export class TypescriptModelsGenerator {
+        constructor(assemblies: System.Reflection.Assembly[], include: string[], exclude: string[], importCS: Record<string, string>, excludeTypes: string[], exportAsClass?: boolean, generateGenericClasses?: boolean, allowIndexer?: boolean);
         static GenerateUnity(): void;
         static GenerateEditor(): void;
         static GenerateReactUnity(): void;
         static GenerateSystem(): void;
         static GenerateCurrentProject(): void;
-        static Generate(assemblies: System.Reflection.Assembly[], include: string[], exclude: string[], importCS: any, excludeTypes: string[], exportAsClass?: boolean, generateGenericClasses?: boolean, allowIndexer?: boolean): void;
-        static GetNameWithoutGenericArity(name: string): string;
+        static GenerateWith(assemblies: System.Reflection.Assembly[], include: string[], exclude: string[], importCS: any, excludeTypes: string[], exportAsClass?: boolean, generateGenericClasses?: boolean, allowIndexer?: boolean): void;
+        Generate(): void;
+        GetTypescript(): string;
         Equals(obj: any): boolean;
         GetHashCode(): number;
         GetType(): System.Type;

@@ -1,6 +1,6 @@
 //
-// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.InputLegacyModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.AIModule, UnityEngine.TestRunner, UnityEngine.TextCoreFontEngineModule, UnityEngine.TextCoreTextEngineModule
-// Generated 3.07.2021 04:17:49
+// Types in assemblies: UnityEngine.CoreModule, UnityEngine.VideoModule, UnityEngine.AudioModule, UnityEngine.UIModule, UnityEngine.UI, UnityEngine.TextRenderingModule, UnityEngine.AnimationModule, UnityEngine.IMGUIModule, UnityEngine.AssetBundleModule, UnityEngine.UnityAnalyticsModule, UnityEngine.UIElementsModule, UnityEngine.AIModule, UnityEngine.TestRunner, UnityEngine.TextCoreFontEngineModule, UnityEngine.TextCoreTextEngineModule, UnityEngine.XRModule, UnityEngine.PhysicsModule, UnityEngine.InputLegacyModule, UnityEngine.UI, Unity.InputSystem, Unity.InputSystem
+// Generated 11/07/2021 17:46:37
 //
 import { System } from './system';
 
@@ -795,6 +795,801 @@ export declare namespace Unity {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+    }
+  }
+  export namespace XR {
+    export namespace GoogleVr {
+      export class DaydreamHMD {
+        constructor();
+        [key: string]: any;
+        leftEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        leftEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        rightEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        rightEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        centerEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        centerEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class DaydreamController {
+        constructor();
+        [key: string]: any;
+        touchpad: UnityEngine.InputSystem.Controls.Vector2Control;
+        volumeUp: UnityEngine.InputSystem.Controls.ButtonControl;
+        recentered: UnityEngine.InputSystem.Controls.ButtonControl;
+        volumeDown: UnityEngine.InputSystem.Controls.ButtonControl;
+        recentering: UnityEngine.InputSystem.Controls.ButtonControl;
+        app: UnityEngine.InputSystem.Controls.ButtonControl;
+        home: UnityEngine.InputSystem.Controls.ButtonControl;
+        touchpadClicked: UnityEngine.InputSystem.Controls.ButtonControl;
+        touchpadTouched: UnityEngine.InputSystem.Controls.ButtonControl;
+        deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+    }
+    export namespace Oculus {
+      export namespace Input {
+        export class OculusHMD {
+          constructor();
+          [key: string]: any;
+          userPresence: UnityEngine.InputSystem.Controls.ButtonControl;
+          deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          rightEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          centerEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+          isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+          devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+        export class OculusTouchController {
+          constructor();
+          [key: string]: any;
+          thumbstick: UnityEngine.InputSystem.Controls.Vector2Control;
+          trigger: UnityEngine.InputSystem.Controls.AxisControl;
+          grip: UnityEngine.InputSystem.Controls.AxisControl;
+          primaryButton: UnityEngine.InputSystem.Controls.ButtonControl;
+          secondaryButton: UnityEngine.InputSystem.Controls.ButtonControl;
+          gripPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+          start: UnityEngine.InputSystem.Controls.ButtonControl;
+          thumbstickClicked: UnityEngine.InputSystem.Controls.ButtonControl;
+          primaryTouched: UnityEngine.InputSystem.Controls.ButtonControl;
+          secondaryTouched: UnityEngine.InputSystem.Controls.ButtonControl;
+          triggerTouched: UnityEngine.InputSystem.Controls.AxisControl;
+          triggerPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+          thumbstickTouched: UnityEngine.InputSystem.Controls.ButtonControl;
+          deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+          isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+          devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          SendImpulse(amplitude: number, duration: number): void;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+        export class OculusTrackingReference {
+          constructor();
+          [key: string]: any;
+          trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+          isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+          devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+        export class OculusRemote {
+          constructor();
+          [key: string]: any;
+          back: UnityEngine.InputSystem.Controls.ButtonControl;
+          start: UnityEngine.InputSystem.Controls.ButtonControl;
+          touchpad: UnityEngine.InputSystem.Controls.Vector2Control;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+        export class OculusHMDExtended {
+          constructor();
+          [key: string]: any;
+          back: UnityEngine.InputSystem.Controls.ButtonControl;
+          touchpad: UnityEngine.InputSystem.Controls.Vector2Control;
+          userPresence: UnityEngine.InputSystem.Controls.ButtonControl;
+          deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          rightEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          centerEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+          isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+          devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+        export class GearVRTrackedController {
+          constructor();
+          [key: string]: any;
+          touchpad: UnityEngine.InputSystem.Controls.Vector2Control;
+          trigger: UnityEngine.InputSystem.Controls.AxisControl;
+          back: UnityEngine.InputSystem.Controls.ButtonControl;
+          triggerPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+          touchpadClicked: UnityEngine.InputSystem.Controls.ButtonControl;
+          touchpadTouched: UnityEngine.InputSystem.Controls.ButtonControl;
+          deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAngularAcceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+          trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+          isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+          devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+      }
+    }
+    export namespace OpenVR {
+      export class OpenVRHMD {
+        constructor();
+        [key: string]: any;
+        deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        leftEyeVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        leftEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        rightEyeVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        rightEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        centerEyeVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        centerEyeAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        leftEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        leftEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        rightEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        rightEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        centerEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        centerEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class OpenVRControllerWMR {
+        constructor();
+        [key: string]: any;
+        deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        touchpadClick: UnityEngine.InputSystem.Controls.ButtonControl;
+        touchpadTouch: UnityEngine.InputSystem.Controls.ButtonControl;
+        gripPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        triggerPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        menu: UnityEngine.InputSystem.Controls.ButtonControl;
+        trigger: UnityEngine.InputSystem.Controls.AxisControl;
+        grip: UnityEngine.InputSystem.Controls.AxisControl;
+        touchpad: UnityEngine.InputSystem.Controls.Vector2Control;
+        joystick: UnityEngine.InputSystem.Controls.Vector2Control;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ViveWand {
+        constructor();
+        [key: string]: any;
+        grip: UnityEngine.InputSystem.Controls.AxisControl;
+        gripPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        primary: UnityEngine.InputSystem.Controls.ButtonControl;
+        trackpadPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        trackpadTouched: UnityEngine.InputSystem.Controls.ButtonControl;
+        trackpad: UnityEngine.InputSystem.Controls.Vector2Control;
+        trigger: UnityEngine.InputSystem.Controls.AxisControl;
+        triggerPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        SendImpulse(amplitude: number, duration: number): void;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ViveLighthouse {
+        constructor();
+        [key: string]: any;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ViveTracker {
+        constructor();
+        [key: string]: any;
+        deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class HandedViveTracker {
+        constructor();
+        [key: string]: any;
+        grip: UnityEngine.InputSystem.Controls.AxisControl;
+        gripPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        primary: UnityEngine.InputSystem.Controls.ButtonControl;
+        trackpadPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        triggerPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class OpenVROculusTouchController {
+        constructor();
+        [key: string]: any;
+        thumbstick: UnityEngine.InputSystem.Controls.Vector2Control;
+        trigger: UnityEngine.InputSystem.Controls.AxisControl;
+        grip: UnityEngine.InputSystem.Controls.AxisControl;
+        primaryButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        secondaryButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        gripPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        triggerPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+        thumbstickClicked: UnityEngine.InputSystem.Controls.ButtonControl;
+        thumbstickTouched: UnityEngine.InputSystem.Controls.ButtonControl;
+        deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        SendImpulse(amplitude: number, duration: number): void;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
       }
     }
   }
@@ -10522,183 +11317,6 @@ export declare namespace UnityEngine {
     GetType(): System.Type;
     ToString(): string;
   }
-  export class AndroidInput {
-    static touchCountSecondary: number;
-    static secondaryTouchEnabled: boolean;
-    static secondaryTouchWidth: number;
-    static secondaryTouchHeight: number;
-    static GetSecondaryTouch(index: number): UnityEngine.Touch;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    GetType(): System.Type;
-    ToString(): string;
-  }
-  export enum TouchPhase {
-    Began = 0,
-    Moved = 1,
-    Stationary = 2,
-    Ended = 3,
-    Canceled = 4,
-  }
-  export enum IMECompositionMode {
-    Auto = 0,
-    On = 1,
-    Off = 2,
-  }
-  export enum TouchType {
-    Direct = 0,
-    Indirect = 1,
-    Stylus = 2,
-  }
-  export class Touch {
-    fingerId: number;
-    position: UnityEngine.Vector2;
-    rawPosition: UnityEngine.Vector2;
-    deltaPosition: UnityEngine.Vector2;
-    deltaTime: number;
-    tapCount: number;
-    phase: UnityEngine.TouchPhase;
-    pressure: number;
-    maximumPossiblePressure: number;
-    type: UnityEngine.TouchType;
-    altitudeAngle: number;
-    azimuthAngle: number;
-    radius: number;
-    radiusVariance: number;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    ToString(): string;
-    GetType(): System.Type;
-  }
-  export enum DeviceOrientation {
-    Unknown = 0,
-    Portrait = 1,
-    PortraitUpsideDown = 2,
-    LandscapeLeft = 3,
-    LandscapeRight = 4,
-    FaceUp = 5,
-    FaceDown = 6,
-  }
-  export class AccelerationEvent {
-    acceleration: UnityEngine.Vector3;
-    deltaTime: number;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    ToString(): string;
-    GetType(): System.Type;
-  }
-  export class Gyroscope {
-    rotationRate: UnityEngine.Vector3;
-    rotationRateUnbiased: UnityEngine.Vector3;
-    gravity: UnityEngine.Vector3;
-    userAcceleration: UnityEngine.Vector3;
-    attitude: UnityEngine.Quaternion;
-    enabled: boolean;
-    updateInterval: number;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    GetType(): System.Type;
-    ToString(): string;
-  }
-  export class LocationInfo {
-    latitude: number;
-    longitude: number;
-    altitude: number;
-    horizontalAccuracy: number;
-    verticalAccuracy: number;
-    timestamp: number;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    ToString(): string;
-    GetType(): System.Type;
-  }
-  export enum LocationServiceStatus {
-    Stopped = 0,
-    Initializing = 1,
-    Running = 2,
-    Failed = 3,
-  }
-  export class LocationService {
-    constructor();
-    isEnabledByUser: boolean;
-    status: UnityEngine.LocationServiceStatus;
-    lastData: UnityEngine.LocationInfo;
-    Start(desiredAccuracyInMeters: number, updateDistanceInMeters: number): void;
-    Start(desiredAccuracyInMeters: number): void;
-    Start(): void;
-    Stop(): void;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    GetType(): System.Type;
-    ToString(): string;
-  }
-  export class Compass {
-    constructor();
-    magneticHeading: number;
-    trueHeading: number;
-    headingAccuracy: number;
-    rawVector: UnityEngine.Vector3;
-    timestamp: number;
-    enabled: boolean;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    GetType(): System.Type;
-    ToString(): string;
-  }
-  export class Input {
-    constructor();
-    static simulateMouseWithTouches: boolean;
-    static anyKey: boolean;
-    static anyKeyDown: boolean;
-    static inputString: string;
-    static mousePosition: UnityEngine.Vector3;
-    static mouseScrollDelta: UnityEngine.Vector2;
-    static imeCompositionMode: UnityEngine.IMECompositionMode;
-    static compositionString: string;
-    static imeIsSelected: boolean;
-    static compositionCursorPos: UnityEngine.Vector2;
-    static eatKeyPressOnTextFieldFocus: boolean;
-    static mousePresent: boolean;
-    static touchCount: number;
-    static touchPressureSupported: boolean;
-    static stylusTouchSupported: boolean;
-    static touchSupported: boolean;
-    static multiTouchEnabled: boolean;
-    static isGyroAvailable: boolean;
-    static deviceOrientation: UnityEngine.DeviceOrientation;
-    static acceleration: UnityEngine.Vector3;
-    static compensateSensors: boolean;
-    static accelerationEventCount: number;
-    static backButtonLeavesApp: boolean;
-    static location: UnityEngine.LocationService;
-    static compass: UnityEngine.Compass;
-    static gyro: UnityEngine.Gyroscope;
-    static touches: UnityEngine.Touch[];
-    static accelerationEvents: UnityEngine.AccelerationEvent[];
-    static GetAxis(axisName: string): number;
-    static GetAxisRaw(axisName: string): number;
-    static GetButton(buttonName: string): boolean;
-    static GetButtonDown(buttonName: string): boolean;
-    static GetButtonUp(buttonName: string): boolean;
-    static GetMouseButton(button: number): boolean;
-    static GetMouseButtonDown(button: number): boolean;
-    static GetMouseButtonUp(button: number): boolean;
-    static ResetInputAxes(): void;
-    static IsJoystickPreconfigured(joystickName: string): boolean;
-    static GetJoystickNames(): string[];
-    static GetTouch(index: number): UnityEngine.Touch;
-    static GetAccelerationEvent(index: number): UnityEngine.AccelerationEvent;
-    static GetKey(key: UnityEngine.KeyCode): boolean;
-    static GetKey(name: string): boolean;
-    static GetKeyUp(key: UnityEngine.KeyCode): boolean;
-    static GetKeyUp(name: string): boolean;
-    static GetKeyDown(key: UnityEngine.KeyCode): boolean;
-    static GetKeyDown(name: string): boolean;
-    Equals(obj: any): boolean;
-    GetHashCode(): number;
-    GetType(): System.Type;
-    ToString(): string;
-  }
   export class AnimationInfo {
     clip: UnityEngine.AnimationClip;
     weight: number;
@@ -12618,6 +13236,1898 @@ export declare namespace UnityEngine {
     GetObject(type: System.Type, key?: string): any;
     GetObject(key: string, defaultValue: any): any;
     GetDictionary(key?: string): System.Collections.Generic.IDictionary<string, any>;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export enum RigidbodyConstraints {
+    None = 0,
+    FreezePositionX = 2,
+    FreezePositionY = 4,
+    FreezePositionZ = 8,
+    FreezeRotationX = 16,
+    FreezeRotationY = 32,
+    FreezeRotationZ = 64,
+    FreezePosition = 14,
+    FreezeRotation = 112,
+    FreezeAll = 126,
+  }
+  export enum ForceMode {
+    Force = 0,
+    Acceleration = 5,
+    Impulse = 1,
+    VelocityChange = 2,
+  }
+  export enum JointProjectionMode {
+    None = 0,
+    PositionAndRotation = 1,
+    PositionOnly = 2,
+  }
+  export enum MeshColliderCookingOptions {
+    None = 0,
+    InflateConvexMesh = 1,
+    CookForFasterSimulation = 2,
+    EnableMeshCleaning = 4,
+    WeldColocatedVertices = 8,
+    UseFastMidphase = 16,
+  }
+  export class WheelFrictionCurve {
+    extremumSlip: number;
+    extremumValue: number;
+    asymptoteSlip: number;
+    asymptoteValue: number;
+    stiffness: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class SoftJointLimit {
+    limit: number;
+    bounciness: number;
+    contactDistance: number;
+    spring: number;
+    damper: number;
+    bouncyness: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class SoftJointLimitSpring {
+    spring: number;
+    damper: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class JointDrive {
+    positionSpring: number;
+    positionDamper: number;
+    maximumForce: number;
+    mode: UnityEngine.JointDriveMode;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export enum RigidbodyInterpolation {
+    None = 0,
+    Interpolate = 1,
+    Extrapolate = 2,
+  }
+  export class JointMotor {
+    targetVelocity: number;
+    force: number;
+    freeSpin: boolean;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class JointSpring {
+    spring: number;
+    damper: number;
+    targetPosition: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class JointLimits {
+    min: number;
+    max: number;
+    bounciness: number;
+    bounceMinVelocity: number;
+    contactDistance: number;
+    minBounce: number;
+    maxBounce: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ControllerColliderHit {
+    constructor();
+    controller: UnityEngine.CharacterController;
+    collider: UnityEngine.Collider;
+    rigidbody: UnityEngine.Rigidbody;
+    gameObject: UnityEngine.GameObject;
+    transform: UnityEngine.Transform;
+    point: UnityEngine.Vector3;
+    normal: UnityEngine.Vector3;
+    moveDirection: UnityEngine.Vector3;
+    moveLength: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export enum PhysicMaterialCombine {
+    Average = 0,
+    Minimum = 2,
+    Multiply = 1,
+    Maximum = 3,
+  }
+  export class Collision {
+    constructor();
+    relativeVelocity: UnityEngine.Vector3;
+    rigidbody: UnityEngine.Rigidbody;
+    articulationBody: UnityEngine.ArticulationBody;
+    body: UnityEngine.Component;
+    collider: UnityEngine.Collider;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    contactCount: number;
+    contacts: UnityEngine.ContactPoint[];
+    impulse: UnityEngine.Vector3;
+    impactForceSum: UnityEngine.Vector3;
+    frictionForceSum: UnityEngine.Vector3;
+    other: UnityEngine.Component;
+    GetContact(index: number): UnityEngine.ContactPoint;
+    GetContacts(contacts: UnityEngine.ContactPoint[]): number;
+    GetContacts(contacts: UnityEngine.ContactPoint[]): number;
+    GetEnumerator(): System.Collections.IEnumerator;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export enum CollisionFlags {
+    None = 0,
+    Sides = 1,
+    Above = 2,
+    Below = 4,
+    CollidedSides = 1,
+    CollidedAbove = 2,
+    CollidedBelow = 4,
+  }
+  export enum QueryTriggerInteraction {
+    UseGlobal = 0,
+    Ignore = 1,
+    Collide = 2,
+  }
+  export enum CollisionDetectionMode {
+    Discrete = 0,
+    Continuous = 1,
+    ContinuousDynamic = 2,
+    ContinuousSpeculative = 3,
+  }
+  export enum ConfigurableJointMotion {
+    Locked = 0,
+    Limited = 1,
+    Free = 2,
+  }
+  export enum RotationDriveMode {
+    XYAndZ = 0,
+    Slerp = 1,
+  }
+  export enum ArticulationJointType {
+    FixedJoint = 0,
+    PrismaticJoint = 1,
+    RevoluteJoint = 2,
+    SphericalJoint = 3,
+  }
+  export enum ArticulationDofLock {
+    LockedMotion = 0,
+    LimitedMotion = 1,
+    FreeMotion = 2,
+  }
+  export class ArticulationDrive {
+    lowerLimit: number;
+    upperLimit: number;
+    stiffness: number;
+    damping: number;
+    forceLimit: number;
+    target: number;
+    targetVelocity: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ArticulationReducedSpace {
+    constructor(a: number);
+    constructor(a: number, b: number);
+    constructor(a: number, b: number, c: number);
+    [key: string]: any;
+    dofCount: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ArticulationJacobian {
+    constructor(rows: number, cols: number);
+    rows: number;
+    columns: number;
+    elements: number[];
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ArticulationBody {
+    constructor();
+    jointType: UnityEngine.ArticulationJointType;
+    anchorPosition: UnityEngine.Vector3;
+    parentAnchorPosition: UnityEngine.Vector3;
+    anchorRotation: UnityEngine.Quaternion;
+    parentAnchorRotation: UnityEngine.Quaternion;
+    isRoot: boolean;
+    computeParentAnchor: boolean;
+    matchAnchors: boolean;
+    linearLockX: UnityEngine.ArticulationDofLock;
+    linearLockY: UnityEngine.ArticulationDofLock;
+    linearLockZ: UnityEngine.ArticulationDofLock;
+    swingYLock: UnityEngine.ArticulationDofLock;
+    swingZLock: UnityEngine.ArticulationDofLock;
+    twistLock: UnityEngine.ArticulationDofLock;
+    xDrive: UnityEngine.ArticulationDrive;
+    yDrive: UnityEngine.ArticulationDrive;
+    zDrive: UnityEngine.ArticulationDrive;
+    immovable: boolean;
+    useGravity: boolean;
+    linearDamping: number;
+    angularDamping: number;
+    jointFriction: number;
+    velocity: UnityEngine.Vector3;
+    angularVelocity: UnityEngine.Vector3;
+    mass: number;
+    centerOfMass: UnityEngine.Vector3;
+    worldCenterOfMass: UnityEngine.Vector3;
+    inertiaTensor: UnityEngine.Vector3;
+    inertiaTensorRotation: UnityEngine.Quaternion;
+    sleepThreshold: number;
+    solverIterations: number;
+    solverVelocityIterations: number;
+    maxAngularVelocity: number;
+    maxLinearVelocity: number;
+    maxJointVelocity: number;
+    maxDepenetrationVelocity: number;
+    jointPosition: UnityEngine.ArticulationReducedSpace;
+    jointVelocity: UnityEngine.ArticulationReducedSpace;
+    jointAcceleration: UnityEngine.ArticulationReducedSpace;
+    jointForce: UnityEngine.ArticulationReducedSpace;
+    dofCount: number;
+    index: number;
+    collisionDetectionMode: UnityEngine.CollisionDetectionMode;
+    enabled: boolean;
+    isActiveAndEnabled: boolean;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    AddForce(force: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddForce(force: UnityEngine.Vector3): void;
+    AddRelativeForce(force: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddRelativeForce(force: UnityEngine.Vector3): void;
+    AddTorque(torque: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddTorque(torque: UnityEngine.Vector3): void;
+    AddRelativeTorque(torque: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddRelativeTorque(torque: UnityEngine.Vector3): void;
+    AddForceAtPosition(force: UnityEngine.Vector3, position: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddForceAtPosition(force: UnityEngine.Vector3, position: UnityEngine.Vector3): void;
+    ResetCenterOfMass(): void;
+    ResetInertiaTensor(): void;
+    Sleep(): void;
+    IsSleeping(): boolean;
+    WakeUp(): void;
+    TeleportRoot(position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion): void;
+    GetClosestPoint(point: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetRelativePointVelocity(relativePoint: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetPointVelocity(worldPoint: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetJointPositions(positions: number[]): number;
+    SetJointPositions(positions: number[]): void;
+    GetJointVelocities(velocities: number[]): number;
+    SetJointVelocities(velocities: number[]): void;
+    GetJointAccelerations(accelerations: number[]): number;
+    SetJointAccelerations(accelerations: number[]): void;
+    GetJointForces(forces: number[]): number;
+    SetJointForces(forces: number[]): void;
+    GetDriveTargets(targets: number[]): number;
+    SetDriveTargets(targets: number[]): void;
+    GetDriveTargetVelocities(targetVelocities: number[]): number;
+    SetDriveTargetVelocities(targetVelocities: number[]): void;
+    GetDofStartIndices(dofStartIndices: number[]): number;
+    SnapAnchorToClosestContact(): void;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class Physics {
+    constructor();
+    static gravity: UnityEngine.Vector3;
+    static defaultContactOffset: number;
+    static sleepThreshold: number;
+    static queriesHitTriggers: boolean;
+    static queriesHitBackfaces: boolean;
+    static bounceThreshold: number;
+    static defaultMaxDepenetrationVelocity: number;
+    static defaultSolverIterations: number;
+    static defaultSolverVelocityIterations: number;
+    static defaultMaxAngularSpeed: number;
+    static improvedPatchFriction: boolean;
+    static defaultPhysicsScene: UnityEngine.PhysicsScene;
+    static autoSimulation: boolean;
+    static autoSyncTransforms: boolean;
+    static reuseCollisionCallbacks: boolean;
+    static interCollisionDistance: number;
+    static interCollisionStiffness: number;
+    static interCollisionSettingsToggle: boolean;
+    static clothGravity: UnityEngine.Vector3;
+    static minPenetrationForPenalty: number;
+    static bounceTreshold: number;
+    static sleepVelocity: number;
+    static sleepAngularVelocity: number;
+    static maxAngularVelocity: number;
+    static solverIterationCount: number;
+    static solverVelocityIterationCount: number;
+    static penetrationPenaltyForce: number;
+    static IgnoreRaycastLayer: number;
+    static DefaultRaycastLayers: number;
+    static AllLayers: number;
+    static kIgnoreRaycastLayer: number;
+    static kDefaultRaycastLayers: number;
+    static kAllLayers: number;
+    static IgnoreCollision(collider1: UnityEngine.Collider, collider2: UnityEngine.Collider, ignore: boolean): void;
+    static IgnoreCollision(collider1: UnityEngine.Collider, collider2: UnityEngine.Collider): void;
+    static IgnoreLayerCollision(layer1: number, layer2: number, ignore: boolean): void;
+    static IgnoreLayerCollision(layer1: number, layer2: number): void;
+    static GetIgnoreLayerCollision(layer1: number, layer2: number): boolean;
+    static GetIgnoreCollision(collider1: UnityEngine.Collider, collider2: UnityEngine.Collider): boolean;
+    static Raycast(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static Raycast(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number): boolean;
+    static Raycast(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, maxDistance: number): boolean;
+    static Raycast(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3): boolean;
+    static Raycast(ray: UnityEngine.Ray, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static Raycast(ray: UnityEngine.Ray, maxDistance: number, layerMask: number): boolean;
+    static Raycast(ray: UnityEngine.Ray, maxDistance: number): boolean;
+    static Raycast(ray: UnityEngine.Ray): boolean;
+    static Linecast(start: UnityEngine.Vector3, end: UnityEngine.Vector3, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static Linecast(start: UnityEngine.Vector3, end: UnityEngine.Vector3, layerMask: number): boolean;
+    static Linecast(start: UnityEngine.Vector3, end: UnityEngine.Vector3): boolean;
+    static CapsuleCast(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static CapsuleCast(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number): boolean;
+    static CapsuleCast(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number): boolean;
+    static CapsuleCast(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3): boolean;
+    static SphereCast(ray: UnityEngine.Ray, radius: number, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static SphereCast(ray: UnityEngine.Ray, radius: number, maxDistance: number, layerMask: number): boolean;
+    static SphereCast(ray: UnityEngine.Ray, radius: number, maxDistance: number): boolean;
+    static SphereCast(ray: UnityEngine.Ray, radius: number): boolean;
+    static BoxCast(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static BoxCast(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, maxDistance: number, layerMask: number): boolean;
+    static BoxCast(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, maxDistance: number): boolean;
+    static BoxCast(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, orientation: UnityEngine.Quaternion): boolean;
+    static BoxCast(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3): boolean;
+    static RaycastAll(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.RaycastHit[];
+    static RaycastAll(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number): UnityEngine.RaycastHit[];
+    static RaycastAll(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, maxDistance: number): UnityEngine.RaycastHit[];
+    static RaycastAll(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3): UnityEngine.RaycastHit[];
+    static RaycastAll(ray: UnityEngine.Ray, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.RaycastHit[];
+    static RaycastAll(ray: UnityEngine.Ray, maxDistance: number, layerMask: number): UnityEngine.RaycastHit[];
+    static RaycastAll(ray: UnityEngine.Ray, maxDistance: number): UnityEngine.RaycastHit[];
+    static RaycastAll(ray: UnityEngine.Ray): UnityEngine.RaycastHit[];
+    static RaycastNonAlloc(ray: UnityEngine.Ray, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static RaycastNonAlloc(ray: UnityEngine.Ray, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number): number;
+    static RaycastNonAlloc(ray: UnityEngine.Ray, results: UnityEngine.RaycastHit[], maxDistance: number): number;
+    static RaycastNonAlloc(ray: UnityEngine.Ray, results: UnityEngine.RaycastHit[]): number;
+    static RaycastNonAlloc(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static RaycastNonAlloc(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number): number;
+    static RaycastNonAlloc(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number): number;
+    static RaycastNonAlloc(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[]): number;
+    static CapsuleCastAll(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.RaycastHit[];
+    static CapsuleCastAll(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number): UnityEngine.RaycastHit[];
+    static CapsuleCastAll(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number): UnityEngine.RaycastHit[];
+    static CapsuleCastAll(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3): UnityEngine.RaycastHit[];
+    static SphereCastAll(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.RaycastHit[];
+    static SphereCastAll(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number, layerMask: number): UnityEngine.RaycastHit[];
+    static SphereCastAll(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, maxDistance: number): UnityEngine.RaycastHit[];
+    static SphereCastAll(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3): UnityEngine.RaycastHit[];
+    static SphereCastAll(ray: UnityEngine.Ray, radius: number, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.RaycastHit[];
+    static SphereCastAll(ray: UnityEngine.Ray, radius: number, maxDistance: number, layerMask: number): UnityEngine.RaycastHit[];
+    static SphereCastAll(ray: UnityEngine.Ray, radius: number, maxDistance: number): UnityEngine.RaycastHit[];
+    static SphereCastAll(ray: UnityEngine.Ray, radius: number): UnityEngine.RaycastHit[];
+    static OverlapCapsule(point0: UnityEngine.Vector3, point1: UnityEngine.Vector3, radius: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.Collider[];
+    static OverlapCapsule(point0: UnityEngine.Vector3, point1: UnityEngine.Vector3, radius: number, layerMask: number): UnityEngine.Collider[];
+    static OverlapCapsule(point0: UnityEngine.Vector3, point1: UnityEngine.Vector3, radius: number): UnityEngine.Collider[];
+    static OverlapSphere(position: UnityEngine.Vector3, radius: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.Collider[];
+    static OverlapSphere(position: UnityEngine.Vector3, radius: number, layerMask: number): UnityEngine.Collider[];
+    static OverlapSphere(position: UnityEngine.Vector3, radius: number): UnityEngine.Collider[];
+    static Simulate(step: number): void;
+    static SyncTransforms(): void;
+    static ClosestPoint(point: UnityEngine.Vector3, collider: UnityEngine.Collider, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion): UnityEngine.Vector3;
+    static OverlapSphereNonAlloc(position: UnityEngine.Vector3, radius: number, results: UnityEngine.Collider[], layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static OverlapSphereNonAlloc(position: UnityEngine.Vector3, radius: number, results: UnityEngine.Collider[], layerMask: number): number;
+    static OverlapSphereNonAlloc(position: UnityEngine.Vector3, radius: number, results: UnityEngine.Collider[]): number;
+    static CheckSphere(position: UnityEngine.Vector3, radius: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static CheckSphere(position: UnityEngine.Vector3, radius: number, layerMask: number): boolean;
+    static CheckSphere(position: UnityEngine.Vector3, radius: number): boolean;
+    static CapsuleCastNonAlloc(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static CapsuleCastNonAlloc(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number): number;
+    static CapsuleCastNonAlloc(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number): number;
+    static CapsuleCastNonAlloc(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[]): number;
+    static SphereCastNonAlloc(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static SphereCastNonAlloc(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number): number;
+    static SphereCastNonAlloc(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance: number): number;
+    static SphereCastNonAlloc(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[]): number;
+    static SphereCastNonAlloc(ray: UnityEngine.Ray, radius: number, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static SphereCastNonAlloc(ray: UnityEngine.Ray, radius: number, results: UnityEngine.RaycastHit[], maxDistance: number, layerMask: number): number;
+    static SphereCastNonAlloc(ray: UnityEngine.Ray, radius: number, results: UnityEngine.RaycastHit[], maxDistance: number): number;
+    static SphereCastNonAlloc(ray: UnityEngine.Ray, radius: number, results: UnityEngine.RaycastHit[]): number;
+    static CheckCapsule(start: UnityEngine.Vector3, end: UnityEngine.Vector3, radius: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static CheckCapsule(start: UnityEngine.Vector3, end: UnityEngine.Vector3, radius: number, layerMask: number): boolean;
+    static CheckCapsule(start: UnityEngine.Vector3, end: UnityEngine.Vector3, radius: number): boolean;
+    static CheckBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, layermask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): boolean;
+    static CheckBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, layerMask: number): boolean;
+    static CheckBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, orientation: UnityEngine.Quaternion): boolean;
+    static CheckBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3): boolean;
+    static OverlapBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.Collider[];
+    static OverlapBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, layerMask: number): UnityEngine.Collider[];
+    static OverlapBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, orientation: UnityEngine.Quaternion): UnityEngine.Collider[];
+    static OverlapBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3): UnityEngine.Collider[];
+    static OverlapBoxNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, results: UnityEngine.Collider[], orientation: UnityEngine.Quaternion, mask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static OverlapBoxNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, results: UnityEngine.Collider[], orientation: UnityEngine.Quaternion, mask: number): number;
+    static OverlapBoxNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, results: UnityEngine.Collider[], orientation: UnityEngine.Quaternion): number;
+    static OverlapBoxNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, results: UnityEngine.Collider[]): number;
+    static BoxCastNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], orientation: UnityEngine.Quaternion, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static BoxCastNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], orientation: UnityEngine.Quaternion): number;
+    static BoxCastNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], orientation: UnityEngine.Quaternion, maxDistance: number): number;
+    static BoxCastNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], orientation: UnityEngine.Quaternion, maxDistance: number, layerMask: number): number;
+    static BoxCastNonAlloc(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[]): number;
+    static BoxCastAll(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, maxDistance: number, layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.RaycastHit[];
+    static BoxCastAll(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, maxDistance: number, layerMask: number): UnityEngine.RaycastHit[];
+    static BoxCastAll(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, maxDistance: number): UnityEngine.RaycastHit[];
+    static BoxCastAll(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, orientation: UnityEngine.Quaternion): UnityEngine.RaycastHit[];
+    static BoxCastAll(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3): UnityEngine.RaycastHit[];
+    static OverlapCapsuleNonAlloc(point0: UnityEngine.Vector3, point1: UnityEngine.Vector3, radius: number, results: UnityEngine.Collider[], layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    static OverlapCapsuleNonAlloc(point0: UnityEngine.Vector3, point1: UnityEngine.Vector3, radius: number, results: UnityEngine.Collider[], layerMask: number): number;
+    static OverlapCapsuleNonAlloc(point0: UnityEngine.Vector3, point1: UnityEngine.Vector3, radius: number, results: UnityEngine.Collider[]): number;
+    static RebuildBroadphaseRegions(worldBounds: UnityEngine.Bounds, subdivisions: number): void;
+    static BakeMesh(meshID: number, convex: boolean): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class ModifiableContactPair {
+    colliderInstanceID: number;
+    otherColliderInstanceID: number;
+    bodyInstanceID: number;
+    otherBodyInstanceID: number;
+    contactCount: number;
+    massProperties: UnityEngine.ModifiableMassProperties;
+    rotation: UnityEngine.Quaternion;
+    position: UnityEngine.Vector3;
+    otherRotation: UnityEngine.Quaternion;
+    otherPosition: UnityEngine.Vector3;
+    GetPoint(i: number): UnityEngine.Vector3;
+    SetPoint(i: number, v: UnityEngine.Vector3): void;
+    GetNormal(i: number): UnityEngine.Vector3;
+    SetNormal(i: number, normal: UnityEngine.Vector3): void;
+    GetSeparation(i: number): number;
+    SetSeparation(i: number, separation: number): void;
+    GetTargetVelocity(i: number): UnityEngine.Vector3;
+    SetTargetVelocity(i: number, velocity: UnityEngine.Vector3): void;
+    GetBounciness(i: number): number;
+    SetBounciness(i: number, bounciness: number): void;
+    GetStaticFriction(i: number): number;
+    SetStaticFriction(i: number, staticFriction: number): void;
+    GetDynamicFriction(i: number): number;
+    SetDynamicFriction(i: number, dynamicFriction: number): void;
+    GetMaxImpulse(i: number): number;
+    SetMaxImpulse(i: number, value: number): void;
+    IgnoreContact(i: number): void;
+    GetFaceIndex(i: number): System.UInt32;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ModifiableMassProperties {
+    inverseMassScale: number;
+    inverseInertiaScale: number;
+    otherInverseMassScale: number;
+    otherInverseInertiaScale: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class PhysicMaterial {
+    constructor();
+    constructor(name: string);
+    bounciness: number;
+    dynamicFriction: number;
+    staticFriction: number;
+    frictionCombine: UnityEngine.PhysicMaterialCombine;
+    bounceCombine: UnityEngine.PhysicMaterialCombine;
+    bouncyness: number;
+    frictionDirection2: UnityEngine.Vector3;
+    dynamicFriction2: number;
+    staticFriction2: number;
+    frictionDirection: UnityEngine.Vector3;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class RaycastHit {
+    collider: UnityEngine.Collider;
+    colliderInstanceID: number;
+    point: UnityEngine.Vector3;
+    normal: UnityEngine.Vector3;
+    barycentricCoordinate: UnityEngine.Vector3;
+    distance: number;
+    triangleIndex: number;
+    textureCoord: UnityEngine.Vector2;
+    textureCoord2: UnityEngine.Vector2;
+    transform: UnityEngine.Transform;
+    rigidbody: UnityEngine.Rigidbody;
+    articulationBody: UnityEngine.ArticulationBody;
+    lightmapCoord: UnityEngine.Vector2;
+    textureCoord1: UnityEngine.Vector2;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class Rigidbody {
+    constructor();
+    velocity: UnityEngine.Vector3;
+    angularVelocity: UnityEngine.Vector3;
+    drag: number;
+    angularDrag: number;
+    mass: number;
+    useGravity: boolean;
+    maxDepenetrationVelocity: number;
+    isKinematic: boolean;
+    freezeRotation: boolean;
+    constraints: UnityEngine.RigidbodyConstraints;
+    collisionDetectionMode: UnityEngine.CollisionDetectionMode;
+    centerOfMass: UnityEngine.Vector3;
+    worldCenterOfMass: UnityEngine.Vector3;
+    inertiaTensorRotation: UnityEngine.Quaternion;
+    inertiaTensor: UnityEngine.Vector3;
+    detectCollisions: boolean;
+    position: UnityEngine.Vector3;
+    rotation: UnityEngine.Quaternion;
+    interpolation: UnityEngine.RigidbodyInterpolation;
+    solverIterations: number;
+    sleepThreshold: number;
+    maxAngularVelocity: number;
+    solverVelocityIterations: number;
+    sleepVelocity: number;
+    sleepAngularVelocity: number;
+    useConeFriction: boolean;
+    solverIterationCount: number;
+    solverVelocityIterationCount: number;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    SetDensity(density: number): void;
+    MovePosition(position: UnityEngine.Vector3): void;
+    MoveRotation(rot: UnityEngine.Quaternion): void;
+    Sleep(): void;
+    IsSleeping(): boolean;
+    WakeUp(): void;
+    ResetCenterOfMass(): void;
+    ResetInertiaTensor(): void;
+    GetRelativePointVelocity(relativePoint: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetPointVelocity(worldPoint: UnityEngine.Vector3): UnityEngine.Vector3;
+    AddForce(force: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddForce(force: UnityEngine.Vector3): void;
+    AddForce(x: number, y: number, z: number, mode: UnityEngine.ForceMode): void;
+    AddForce(x: number, y: number, z: number): void;
+    AddRelativeForce(force: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddRelativeForce(force: UnityEngine.Vector3): void;
+    AddRelativeForce(x: number, y: number, z: number, mode: UnityEngine.ForceMode): void;
+    AddRelativeForce(x: number, y: number, z: number): void;
+    AddTorque(torque: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddTorque(torque: UnityEngine.Vector3): void;
+    AddTorque(x: number, y: number, z: number, mode: UnityEngine.ForceMode): void;
+    AddTorque(x: number, y: number, z: number): void;
+    AddRelativeTorque(torque: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddRelativeTorque(torque: UnityEngine.Vector3): void;
+    AddRelativeTorque(x: number, y: number, z: number, mode: UnityEngine.ForceMode): void;
+    AddRelativeTorque(x: number, y: number, z: number): void;
+    AddForceAtPosition(force: UnityEngine.Vector3, position: UnityEngine.Vector3, mode: UnityEngine.ForceMode): void;
+    AddForceAtPosition(force: UnityEngine.Vector3, position: UnityEngine.Vector3): void;
+    AddExplosionForce(explosionForce: number, explosionPosition: UnityEngine.Vector3, explosionRadius: number, upwardsModifier: number, mode: UnityEngine.ForceMode): void;
+    AddExplosionForce(explosionForce: number, explosionPosition: UnityEngine.Vector3, explosionRadius: number, upwardsModifier: number): void;
+    AddExplosionForce(explosionForce: number, explosionPosition: UnityEngine.Vector3, explosionRadius: number): void;
+    ClosestPointOnBounds(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    SweepTestAll(direction: UnityEngine.Vector3, maxDistance: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): UnityEngine.RaycastHit[];
+    SweepTestAll(direction: UnityEngine.Vector3, maxDistance: number): UnityEngine.RaycastHit[];
+    SweepTestAll(direction: UnityEngine.Vector3): UnityEngine.RaycastHit[];
+    SetMaxAngularVelocity(a: number): void;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class Collider {
+    constructor();
+    enabled: boolean;
+    attachedRigidbody: UnityEngine.Rigidbody;
+    attachedArticulationBody: UnityEngine.ArticulationBody;
+    isTrigger: boolean;
+    contactOffset: number;
+    bounds: UnityEngine.Bounds;
+    hasModifiableContacts: boolean;
+    sharedMaterial: UnityEngine.PhysicMaterial;
+    material: UnityEngine.PhysicMaterial;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    ClosestPoint(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    ClosestPointOnBounds(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class CharacterController {
+    constructor();
+    velocity: UnityEngine.Vector3;
+    isGrounded: boolean;
+    collisionFlags: UnityEngine.CollisionFlags;
+    radius: number;
+    height: number;
+    center: UnityEngine.Vector3;
+    slopeLimit: number;
+    stepOffset: number;
+    skinWidth: number;
+    minMoveDistance: number;
+    detectCollisions: boolean;
+    enableOverlapRecovery: boolean;
+    enabled: boolean;
+    attachedRigidbody: UnityEngine.Rigidbody;
+    attachedArticulationBody: UnityEngine.ArticulationBody;
+    isTrigger: boolean;
+    contactOffset: number;
+    bounds: UnityEngine.Bounds;
+    hasModifiableContacts: boolean;
+    sharedMaterial: UnityEngine.PhysicMaterial;
+    material: UnityEngine.PhysicMaterial;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    SimpleMove(speed: UnityEngine.Vector3): boolean;
+    Move(motion: UnityEngine.Vector3): UnityEngine.CollisionFlags;
+    ClosestPoint(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    ClosestPointOnBounds(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class MeshCollider {
+    constructor();
+    sharedMesh: UnityEngine.Mesh;
+    convex: boolean;
+    cookingOptions: UnityEngine.MeshColliderCookingOptions;
+    smoothSphereCollisions: boolean;
+    skinWidth: number;
+    inflateMesh: boolean;
+    enabled: boolean;
+    attachedRigidbody: UnityEngine.Rigidbody;
+    attachedArticulationBody: UnityEngine.ArticulationBody;
+    isTrigger: boolean;
+    contactOffset: number;
+    bounds: UnityEngine.Bounds;
+    hasModifiableContacts: boolean;
+    sharedMaterial: UnityEngine.PhysicMaterial;
+    material: UnityEngine.PhysicMaterial;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    ClosestPoint(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    ClosestPointOnBounds(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class CapsuleCollider {
+    constructor();
+    center: UnityEngine.Vector3;
+    radius: number;
+    height: number;
+    direction: number;
+    enabled: boolean;
+    attachedRigidbody: UnityEngine.Rigidbody;
+    attachedArticulationBody: UnityEngine.ArticulationBody;
+    isTrigger: boolean;
+    contactOffset: number;
+    bounds: UnityEngine.Bounds;
+    hasModifiableContacts: boolean;
+    sharedMaterial: UnityEngine.PhysicMaterial;
+    material: UnityEngine.PhysicMaterial;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    ClosestPoint(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    ClosestPointOnBounds(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class BoxCollider {
+    constructor();
+    center: UnityEngine.Vector3;
+    size: UnityEngine.Vector3;
+    extents: UnityEngine.Vector3;
+    enabled: boolean;
+    attachedRigidbody: UnityEngine.Rigidbody;
+    attachedArticulationBody: UnityEngine.ArticulationBody;
+    isTrigger: boolean;
+    contactOffset: number;
+    bounds: UnityEngine.Bounds;
+    hasModifiableContacts: boolean;
+    sharedMaterial: UnityEngine.PhysicMaterial;
+    material: UnityEngine.PhysicMaterial;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    ClosestPoint(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    ClosestPointOnBounds(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class SphereCollider {
+    constructor();
+    center: UnityEngine.Vector3;
+    radius: number;
+    enabled: boolean;
+    attachedRigidbody: UnityEngine.Rigidbody;
+    attachedArticulationBody: UnityEngine.ArticulationBody;
+    isTrigger: boolean;
+    contactOffset: number;
+    bounds: UnityEngine.Bounds;
+    hasModifiableContacts: boolean;
+    sharedMaterial: UnityEngine.PhysicMaterial;
+    material: UnityEngine.PhysicMaterial;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    ClosestPoint(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    ClosestPointOnBounds(position: UnityEngine.Vector3): UnityEngine.Vector3;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ConstantForce {
+    constructor();
+    force: UnityEngine.Vector3;
+    relativeForce: UnityEngine.Vector3;
+    torque: UnityEngine.Vector3;
+    relativeTorque: UnityEngine.Vector3;
+    enabled: boolean;
+    isActiveAndEnabled: boolean;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class Joint {
+    constructor();
+    connectedBody: UnityEngine.Rigidbody;
+    connectedArticulationBody: UnityEngine.ArticulationBody;
+    axis: UnityEngine.Vector3;
+    anchor: UnityEngine.Vector3;
+    connectedAnchor: UnityEngine.Vector3;
+    autoConfigureConnectedAnchor: boolean;
+    breakForce: number;
+    breakTorque: number;
+    enableCollision: boolean;
+    enablePreprocessing: boolean;
+    massScale: number;
+    connectedMassScale: number;
+    currentForce: UnityEngine.Vector3;
+    currentTorque: UnityEngine.Vector3;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class HingeJoint {
+    constructor();
+    motor: UnityEngine.JointMotor;
+    limits: UnityEngine.JointLimits;
+    spring: UnityEngine.JointSpring;
+    useMotor: boolean;
+    useLimits: boolean;
+    useSpring: boolean;
+    velocity: number;
+    angle: number;
+    connectedBody: UnityEngine.Rigidbody;
+    connectedArticulationBody: UnityEngine.ArticulationBody;
+    axis: UnityEngine.Vector3;
+    anchor: UnityEngine.Vector3;
+    connectedAnchor: UnityEngine.Vector3;
+    autoConfigureConnectedAnchor: boolean;
+    breakForce: number;
+    breakTorque: number;
+    enableCollision: boolean;
+    enablePreprocessing: boolean;
+    massScale: number;
+    connectedMassScale: number;
+    currentForce: UnityEngine.Vector3;
+    currentTorque: UnityEngine.Vector3;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class SpringJoint {
+    constructor();
+    spring: number;
+    damper: number;
+    minDistance: number;
+    maxDistance: number;
+    tolerance: number;
+    connectedBody: UnityEngine.Rigidbody;
+    connectedArticulationBody: UnityEngine.ArticulationBody;
+    axis: UnityEngine.Vector3;
+    anchor: UnityEngine.Vector3;
+    connectedAnchor: UnityEngine.Vector3;
+    autoConfigureConnectedAnchor: boolean;
+    breakForce: number;
+    breakTorque: number;
+    enableCollision: boolean;
+    enablePreprocessing: boolean;
+    massScale: number;
+    connectedMassScale: number;
+    currentForce: UnityEngine.Vector3;
+    currentTorque: UnityEngine.Vector3;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class FixedJoint {
+    constructor();
+    connectedBody: UnityEngine.Rigidbody;
+    connectedArticulationBody: UnityEngine.ArticulationBody;
+    axis: UnityEngine.Vector3;
+    anchor: UnityEngine.Vector3;
+    connectedAnchor: UnityEngine.Vector3;
+    autoConfigureConnectedAnchor: boolean;
+    breakForce: number;
+    breakTorque: number;
+    enableCollision: boolean;
+    enablePreprocessing: boolean;
+    massScale: number;
+    connectedMassScale: number;
+    currentForce: UnityEngine.Vector3;
+    currentTorque: UnityEngine.Vector3;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class CharacterJoint {
+    constructor();
+    swingAxis: UnityEngine.Vector3;
+    twistLimitSpring: UnityEngine.SoftJointLimitSpring;
+    swingLimitSpring: UnityEngine.SoftJointLimitSpring;
+    lowTwistLimit: UnityEngine.SoftJointLimit;
+    highTwistLimit: UnityEngine.SoftJointLimit;
+    swing1Limit: UnityEngine.SoftJointLimit;
+    swing2Limit: UnityEngine.SoftJointLimit;
+    enableProjection: boolean;
+    projectionDistance: number;
+    projectionAngle: number;
+    connectedBody: UnityEngine.Rigidbody;
+    connectedArticulationBody: UnityEngine.ArticulationBody;
+    axis: UnityEngine.Vector3;
+    anchor: UnityEngine.Vector3;
+    connectedAnchor: UnityEngine.Vector3;
+    autoConfigureConnectedAnchor: boolean;
+    breakForce: number;
+    breakTorque: number;
+    enableCollision: boolean;
+    enablePreprocessing: boolean;
+    massScale: number;
+    connectedMassScale: number;
+    currentForce: UnityEngine.Vector3;
+    currentTorque: UnityEngine.Vector3;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    targetRotation: UnityEngine.Quaternion;
+    targetAngularVelocity: UnityEngine.Vector3;
+    rotationDrive: UnityEngine.JointDrive;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ConfigurableJoint {
+    constructor();
+    secondaryAxis: UnityEngine.Vector3;
+    xMotion: UnityEngine.ConfigurableJointMotion;
+    yMotion: UnityEngine.ConfigurableJointMotion;
+    zMotion: UnityEngine.ConfigurableJointMotion;
+    angularXMotion: UnityEngine.ConfigurableJointMotion;
+    angularYMotion: UnityEngine.ConfigurableJointMotion;
+    angularZMotion: UnityEngine.ConfigurableJointMotion;
+    linearLimitSpring: UnityEngine.SoftJointLimitSpring;
+    angularXLimitSpring: UnityEngine.SoftJointLimitSpring;
+    angularYZLimitSpring: UnityEngine.SoftJointLimitSpring;
+    linearLimit: UnityEngine.SoftJointLimit;
+    lowAngularXLimit: UnityEngine.SoftJointLimit;
+    highAngularXLimit: UnityEngine.SoftJointLimit;
+    angularYLimit: UnityEngine.SoftJointLimit;
+    angularZLimit: UnityEngine.SoftJointLimit;
+    targetPosition: UnityEngine.Vector3;
+    targetVelocity: UnityEngine.Vector3;
+    xDrive: UnityEngine.JointDrive;
+    yDrive: UnityEngine.JointDrive;
+    zDrive: UnityEngine.JointDrive;
+    targetRotation: UnityEngine.Quaternion;
+    targetAngularVelocity: UnityEngine.Vector3;
+    rotationDriveMode: UnityEngine.RotationDriveMode;
+    angularXDrive: UnityEngine.JointDrive;
+    angularYZDrive: UnityEngine.JointDrive;
+    slerpDrive: UnityEngine.JointDrive;
+    projectionMode: UnityEngine.JointProjectionMode;
+    projectionDistance: number;
+    projectionAngle: number;
+    configuredInWorldSpace: boolean;
+    swapBodies: boolean;
+    connectedBody: UnityEngine.Rigidbody;
+    connectedArticulationBody: UnityEngine.ArticulationBody;
+    axis: UnityEngine.Vector3;
+    anchor: UnityEngine.Vector3;
+    connectedAnchor: UnityEngine.Vector3;
+    autoConfigureConnectedAnchor: boolean;
+    breakForce: number;
+    breakTorque: number;
+    enableCollision: boolean;
+    enablePreprocessing: boolean;
+    massScale: number;
+    connectedMassScale: number;
+    currentForce: UnityEngine.Vector3;
+    currentTorque: UnityEngine.Vector3;
+    transform: UnityEngine.Transform;
+    gameObject: UnityEngine.GameObject;
+    tag: string;
+    rigidbody: UnityEngine.Component;
+    rigidbody2D: UnityEngine.Component;
+    camera: UnityEngine.Component;
+    light: UnityEngine.Component;
+    animation: UnityEngine.Component;
+    constantForce: UnityEngine.Component;
+    renderer: UnityEngine.Component;
+    audio: UnityEngine.Component;
+    networkView: UnityEngine.Component;
+    collider: UnityEngine.Component;
+    collider2D: UnityEngine.Component;
+    hingeJoint: UnityEngine.Component;
+    particleSystem: UnityEngine.Component;
+    name: string;
+    hideFlags: UnityEngine.HideFlags;
+    GetComponent(type: System.Type): UnityEngine.Component;
+    GetComponent(type: string): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInChildren(t: System.Type): UnityEngine.Component;
+    GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+    GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+    GetComponentInParent(t: System.Type): UnityEngine.Component;
+    GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+    GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type): UnityEngine.Component[];
+    GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+    CompareTag(tag: string): boolean;
+    SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessageUpwards(methodName: string, value: any): void;
+    SendMessageUpwards(methodName: string): void;
+    SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, value: any): void;
+    SendMessage(methodName: string): void;
+    SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+    SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+    BroadcastMessage(methodName: string, parameter: any): void;
+    BroadcastMessage(methodName: string): void;
+    BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+    GetInstanceID(): number;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class ContactPoint {
+    point: UnityEngine.Vector3;
+    normal: UnityEngine.Vector3;
+    thisCollider: UnityEngine.Collider;
+    otherCollider: UnityEngine.Collider;
+    separation: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class PhysicsScene {
+    ToString(): string;
+    GetHashCode(): number;
+    Equals(other: any): boolean;
+    Equals(other: UnityEngine.PhysicsScene): boolean;
+    IsValid(): boolean;
+    IsEmpty(): boolean;
+    Simulate(step: number): void;
+    Raycast(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, maxDistance?: number, layerMask?: number, queryTriggerInteraction?: UnityEngine.QueryTriggerInteraction): boolean;
+    Raycast(origin: UnityEngine.Vector3, direction: UnityEngine.Vector3, raycastHits: UnityEngine.RaycastHit[], maxDistance?: number, layerMask?: number, queryTriggerInteraction?: UnityEngine.QueryTriggerInteraction): number;
+    CapsuleCast(point1: UnityEngine.Vector3, point2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance?: number, layerMask?: number, queryTriggerInteraction?: UnityEngine.QueryTriggerInteraction): number;
+    OverlapCapsule(point0: UnityEngine.Vector3, point1: UnityEngine.Vector3, radius: number, results: UnityEngine.Collider[], layerMask?: number, queryTriggerInteraction?: UnityEngine.QueryTriggerInteraction): number;
+    SphereCast(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], maxDistance?: number, layerMask?: number, queryTriggerInteraction?: UnityEngine.QueryTriggerInteraction): number;
+    OverlapSphere(position: UnityEngine.Vector3, radius: number, results: UnityEngine.Collider[], layerMask: number, queryTriggerInteraction: UnityEngine.QueryTriggerInteraction): number;
+    OverlapBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, results: UnityEngine.Collider[], orientation: UnityEngine.Quaternion, layerMask?: number, queryTriggerInteraction?: UnityEngine.QueryTriggerInteraction): number;
+    OverlapBox(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, results: UnityEngine.Collider[]): number;
+    BoxCast(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[], orientation: UnityEngine.Quaternion, maxDistance?: number, layerMask?: number, queryTriggerInteraction?: UnityEngine.QueryTriggerInteraction): number;
+    BoxCast(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, direction: UnityEngine.Vector3, results: UnityEngine.RaycastHit[]): number;
+    GetType(): System.Type;
+  }
+  export class PhysicsSceneExtensions {
+    static GetPhysicsScene(scene: UnityEngine.SceneManagement.Scene): UnityEngine.PhysicsScene;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export enum JointDriveMode {
+    None = 0,
+    Position = 1,
+    Velocity = 2,
+    PositionAndVelocity = 3,
+  }
+  export class RaycastCommand {
+    constructor(from: UnityEngine.Vector3, direction: UnityEngine.Vector3, distance?: number, layerMask?: number, maxHits?: number);
+    from: UnityEngine.Vector3;
+    direction: UnityEngine.Vector3;
+    distance: number;
+    layerMask: number;
+    maxHits: number;
+    static ScheduleBatch(commands: any, results: any, minCommandsPerJob: number, dependsOn?: Unity.Jobs.JobHandle): Unity.Jobs.JobHandle;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class SpherecastCommand {
+    constructor(origin: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, distance?: number, layerMask?: number);
+    origin: UnityEngine.Vector3;
+    radius: number;
+    direction: UnityEngine.Vector3;
+    distance: number;
+    layerMask: number;
+    static ScheduleBatch(commands: any, results: any, minCommandsPerJob: number, dependsOn?: Unity.Jobs.JobHandle): Unity.Jobs.JobHandle;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class CapsulecastCommand {
+    constructor(p1: UnityEngine.Vector3, p2: UnityEngine.Vector3, radius: number, direction: UnityEngine.Vector3, distance?: number, layerMask?: number);
+    point1: UnityEngine.Vector3;
+    point2: UnityEngine.Vector3;
+    radius: number;
+    direction: UnityEngine.Vector3;
+    distance: number;
+    layerMask: number;
+    static ScheduleBatch(commands: any, results: any, minCommandsPerJob: number, dependsOn?: Unity.Jobs.JobHandle): Unity.Jobs.JobHandle;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class BoxcastCommand {
+    constructor(center: UnityEngine.Vector3, halfExtents: UnityEngine.Vector3, orientation: UnityEngine.Quaternion, direction: UnityEngine.Vector3, distance?: number, layerMask?: number);
+    center: UnityEngine.Vector3;
+    halfExtents: UnityEngine.Vector3;
+    orientation: UnityEngine.Quaternion;
+    direction: UnityEngine.Vector3;
+    distance: number;
+    layerMask: number;
+    static ScheduleBatch(commands: any, results: any, minCommandsPerJob: number, dependsOn?: Unity.Jobs.JobHandle): Unity.Jobs.JobHandle;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class AndroidInput {
+    static touchCountSecondary: number;
+    static secondaryTouchEnabled: boolean;
+    static secondaryTouchWidth: number;
+    static secondaryTouchHeight: number;
+    static GetSecondaryTouch(index: number): UnityEngine.Touch;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export enum TouchPhase {
+    Began = 0,
+    Moved = 1,
+    Stationary = 2,
+    Ended = 3,
+    Canceled = 4,
+  }
+  export enum IMECompositionMode {
+    Auto = 0,
+    On = 1,
+    Off = 2,
+  }
+  export enum TouchType {
+    Direct = 0,
+    Indirect = 1,
+    Stylus = 2,
+  }
+  export class Touch {
+    fingerId: number;
+    position: UnityEngine.Vector2;
+    rawPosition: UnityEngine.Vector2;
+    deltaPosition: UnityEngine.Vector2;
+    deltaTime: number;
+    tapCount: number;
+    phase: UnityEngine.TouchPhase;
+    pressure: number;
+    maximumPossiblePressure: number;
+    type: UnityEngine.TouchType;
+    altitudeAngle: number;
+    azimuthAngle: number;
+    radius: number;
+    radiusVariance: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export enum DeviceOrientation {
+    Unknown = 0,
+    Portrait = 1,
+    PortraitUpsideDown = 2,
+    LandscapeLeft = 3,
+    LandscapeRight = 4,
+    FaceUp = 5,
+    FaceDown = 6,
+  }
+  export class AccelerationEvent {
+    acceleration: UnityEngine.Vector3;
+    deltaTime: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export class Gyroscope {
+    rotationRate: UnityEngine.Vector3;
+    rotationRateUnbiased: UnityEngine.Vector3;
+    gravity: UnityEngine.Vector3;
+    userAcceleration: UnityEngine.Vector3;
+    attitude: UnityEngine.Quaternion;
+    enabled: boolean;
+    updateInterval: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class LocationInfo {
+    latitude: number;
+    longitude: number;
+    altitude: number;
+    horizontalAccuracy: number;
+    verticalAccuracy: number;
+    timestamp: number;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    ToString(): string;
+    GetType(): System.Type;
+  }
+  export enum LocationServiceStatus {
+    Stopped = 0,
+    Initializing = 1,
+    Running = 2,
+    Failed = 3,
+  }
+  export class LocationService {
+    constructor();
+    isEnabledByUser: boolean;
+    status: UnityEngine.LocationServiceStatus;
+    lastData: UnityEngine.LocationInfo;
+    Start(desiredAccuracyInMeters: number, updateDistanceInMeters: number): void;
+    Start(desiredAccuracyInMeters: number): void;
+    Start(): void;
+    Stop(): void;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class Compass {
+    constructor();
+    magneticHeading: number;
+    trueHeading: number;
+    headingAccuracy: number;
+    rawVector: UnityEngine.Vector3;
+    timestamp: number;
+    enabled: boolean;
+    Equals(obj: any): boolean;
+    GetHashCode(): number;
+    GetType(): System.Type;
+    ToString(): string;
+  }
+  export class Input {
+    constructor();
+    static simulateMouseWithTouches: boolean;
+    static anyKey: boolean;
+    static anyKeyDown: boolean;
+    static inputString: string;
+    static mousePosition: UnityEngine.Vector3;
+    static mouseScrollDelta: UnityEngine.Vector2;
+    static imeCompositionMode: UnityEngine.IMECompositionMode;
+    static compositionString: string;
+    static imeIsSelected: boolean;
+    static compositionCursorPos: UnityEngine.Vector2;
+    static eatKeyPressOnTextFieldFocus: boolean;
+    static mousePresent: boolean;
+    static touchCount: number;
+    static touchPressureSupported: boolean;
+    static stylusTouchSupported: boolean;
+    static touchSupported: boolean;
+    static multiTouchEnabled: boolean;
+    static isGyroAvailable: boolean;
+    static deviceOrientation: UnityEngine.DeviceOrientation;
+    static acceleration: UnityEngine.Vector3;
+    static compensateSensors: boolean;
+    static accelerationEventCount: number;
+    static backButtonLeavesApp: boolean;
+    static location: UnityEngine.LocationService;
+    static compass: UnityEngine.Compass;
+    static gyro: UnityEngine.Gyroscope;
+    static touches: UnityEngine.Touch[];
+    static accelerationEvents: UnityEngine.AccelerationEvent[];
+    static GetAxis(axisName: string): number;
+    static GetAxisRaw(axisName: string): number;
+    static GetButton(buttonName: string): boolean;
+    static GetButtonDown(buttonName: string): boolean;
+    static GetButtonUp(buttonName: string): boolean;
+    static GetMouseButton(button: number): boolean;
+    static GetMouseButtonDown(button: number): boolean;
+    static GetMouseButtonUp(button: number): boolean;
+    static ResetInputAxes(): void;
+    static IsJoystickPreconfigured(joystickName: string): boolean;
+    static GetJoystickNames(): string[];
+    static GetTouch(index: number): UnityEngine.Touch;
+    static GetAccelerationEvent(index: number): UnityEngine.AccelerationEvent;
+    static GetKey(key: UnityEngine.KeyCode): boolean;
+    static GetKey(name: string): boolean;
+    static GetKeyUp(key: UnityEngine.KeyCode): boolean;
+    static GetKeyUp(name: string): boolean;
+    static GetKeyDown(key: UnityEngine.KeyCode): boolean;
+    static GetKeyDown(name: string): boolean;
     Equals(obj: any): boolean;
     GetHashCode(): number;
     GetType(): System.Type;
@@ -16637,6 +19147,7064 @@ export declare namespace UnityEngine {
         GetHashCode(): number;
         GetType(): System.Type;
         ToString(): string;
+      }
+    }
+  }
+  export namespace InputSystem {
+    export interface IInputActionCollection {
+      bindingMask?: System.Nullable<UnityEngine.InputSystem.InputBinding>;
+      devices?: System.Nullable<UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputDevice>>;
+      controlSchemes: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControlScheme>;
+      Contains(action: UnityEngine.InputSystem.InputAction): boolean;
+      Enable(): void;
+      Disable(): void;
+    }
+    export interface IInputActionCollection2 {
+      bindings: System.Collections.Generic.IEnumerable<UnityEngine.InputSystem.InputBinding>;
+      FindAction(actionNameOrId: string, throwIfNotFound?: boolean): UnityEngine.InputSystem.InputAction;
+    }
+    export interface IInputInteraction<TValue = any> {
+    }
+    export class InputAction {
+      constructor();
+      constructor(name?: string, type?: UnityEngine.InputSystem.InputActionType, binding?: string, interactions?: string, processors?: string, expectedControlType?: string);
+      name: string;
+      type: UnityEngine.InputSystem.InputActionType;
+      id: System.Guid;
+      expectedControlType: string;
+      processors: string;
+      interactions: string;
+      actionMap: UnityEngine.InputSystem.InputActionMap;
+      bindingMask?: System.Nullable<UnityEngine.InputSystem.InputBinding>;
+      bindings: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputBinding>;
+      controls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      phase: UnityEngine.InputSystem.InputActionPhase;
+      inProgress: boolean;
+      enabled: boolean;
+      triggered: boolean;
+      activeControl: UnityEngine.InputSystem.InputControl;
+      Dispose(): void;
+      ToString(): string;
+      Enable(): void;
+      Disable(): void;
+      Clone(): UnityEngine.InputSystem.InputAction;
+      ReadValueAsObject(): any;
+      Reset(): void;
+      IsPressed(): boolean;
+      WasPressedThisFrame(): boolean;
+      WasReleasedThisFrame(): boolean;
+      WasPerformedThisFrame(): boolean;
+      GetTimeoutCompletionPercentage(): number;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class InputActionAsset {
+      constructor();
+      [key: string]: any;
+      enabled: boolean;
+      actionMaps: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputActionMap>;
+      controlSchemes: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControlScheme>;
+      bindings: System.Collections.Generic.IEnumerable<UnityEngine.InputSystem.InputBinding>;
+      bindingMask?: System.Nullable<UnityEngine.InputSystem.InputBinding>;
+      devices?: System.Nullable<UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputDevice>>;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      static Extension: string;
+      ToJson(): string;
+      LoadFromJson(json: string): void;
+      static FromJson(json: string): UnityEngine.InputSystem.InputActionAsset;
+      FindAction(actionNameOrId: string, throwIfNotFound?: boolean): UnityEngine.InputSystem.InputAction;
+      FindActionMap(nameOrId: string, throwIfNotFound?: boolean): UnityEngine.InputSystem.InputActionMap;
+      FindActionMap(id: System.Guid): UnityEngine.InputSystem.InputActionMap;
+      FindAction(guid: System.Guid): UnityEngine.InputSystem.InputAction;
+      FindControlSchemeIndex(name: string): number;
+      FindControlScheme(name: string): System.Nullable<UnityEngine.InputSystem.InputControlScheme>;
+      IsUsableWithDevice(device: UnityEngine.InputSystem.InputDevice): boolean;
+      Enable(): void;
+      Disable(): void;
+      Contains(action: UnityEngine.InputSystem.InputAction): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<UnityEngine.InputSystem.InputAction>;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum InputActionChange {
+      ActionEnabled = 0,
+      ActionDisabled = 1,
+      ActionMapEnabled = 2,
+      ActionMapDisabled = 3,
+      ActionStarted = 4,
+      ActionPerformed = 5,
+      ActionCanceled = 6,
+      BoundControlsAboutToChange = 7,
+      BoundControlsChanged = 8,
+    }
+    export class InputActionMap {
+      constructor();
+      constructor(name: string);
+      [key: string]: any;
+      name: string;
+      asset: UnityEngine.InputSystem.InputActionAsset;
+      id: System.Guid;
+      enabled: boolean;
+      actions: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputAction>;
+      bindings: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputBinding>;
+      controlSchemes: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControlScheme>;
+      bindingMask?: System.Nullable<UnityEngine.InputSystem.InputBinding>;
+      devices?: System.Nullable<UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputDevice>>;
+      Dispose(): void;
+      FindAction(actionNameOrId: string, throwIfNotFound?: boolean): UnityEngine.InputSystem.InputAction;
+      FindAction(id: System.Guid): UnityEngine.InputSystem.InputAction;
+      IsUsableWithDevice(device: UnityEngine.InputSystem.InputDevice): boolean;
+      Enable(): void;
+      Disable(): void;
+      Clone(): UnityEngine.InputSystem.InputActionMap;
+      Contains(action: UnityEngine.InputSystem.InputAction): boolean;
+      ToString(): string;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<UnityEngine.InputSystem.InputAction>;
+      static FromJson(json: string): UnityEngine.InputSystem.InputActionMap[];
+      static ToJson(maps: any): string;
+      ToJson(): string;
+      OnBeforeSerialize(): void;
+      OnAfterDeserialize(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export enum InputActionPhase {
+      Disabled = 0,
+      Waiting = 1,
+      Started = 2,
+      Performed = 3,
+      Canceled = 4,
+    }
+    export class InputActionProperty {
+      constructor(action: UnityEngine.InputSystem.InputAction);
+      constructor(reference: UnityEngine.InputSystem.InputActionReference);
+      action: UnityEngine.InputSystem.InputAction;
+      reference: UnityEngine.InputSystem.InputActionReference;
+      Equals(other: UnityEngine.InputSystem.InputActionProperty): boolean;
+      Equals(other: UnityEngine.InputSystem.InputAction): boolean;
+      Equals(other: UnityEngine.InputSystem.InputActionReference): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputActionRebindingExtensions {
+      static GetBindingIndex(action: UnityEngine.InputSystem.InputAction, bindingMask: UnityEngine.InputSystem.InputBinding): number;
+      static GetBindingIndex(actionMap: UnityEngine.InputSystem.InputActionMap, bindingMask: UnityEngine.InputSystem.InputBinding): number;
+      static GetBindingIndex(action: UnityEngine.InputSystem.InputAction, group?: string, path?: string): number;
+      static GetBindingForControl(action: UnityEngine.InputSystem.InputAction, control: UnityEngine.InputSystem.InputControl): any;
+      static GetBindingIndexForControl(action: UnityEngine.InputSystem.InputAction, control: UnityEngine.InputSystem.InputControl): number;
+      static GetBindingDisplayString(action: UnityEngine.InputSystem.InputAction, options?: UnityEngine.InputSystem.InputBinding_DisplayStringOptions, group?: string): string;
+      static GetBindingDisplayString(action: UnityEngine.InputSystem.InputAction, bindingMask: UnityEngine.InputSystem.InputBinding, options?: UnityEngine.InputSystem.InputBinding_DisplayStringOptions): string;
+      static GetBindingDisplayString(action: UnityEngine.InputSystem.InputAction, bindingIndex: number, options?: UnityEngine.InputSystem.InputBinding_DisplayStringOptions): string;
+      static ApplyBindingOverride(action: UnityEngine.InputSystem.InputAction, newPath: string, group?: string, path?: string): void;
+      static ApplyBindingOverride(action: UnityEngine.InputSystem.InputAction, bindingOverride: UnityEngine.InputSystem.InputBinding): void;
+      static ApplyBindingOverride(action: UnityEngine.InputSystem.InputAction, bindingIndex: number, bindingOverride: UnityEngine.InputSystem.InputBinding): void;
+      static ApplyBindingOverride(action: UnityEngine.InputSystem.InputAction, bindingIndex: number, path: string): void;
+      static ApplyBindingOverride(actionMap: UnityEngine.InputSystem.InputActionMap, bindingOverride: UnityEngine.InputSystem.InputBinding): number;
+      static ApplyBindingOverride(actionMap: UnityEngine.InputSystem.InputActionMap, bindingIndex: number, bindingOverride: UnityEngine.InputSystem.InputBinding): void;
+      static RemoveBindingOverride(action: UnityEngine.InputSystem.InputAction, bindingIndex: number): void;
+      static RemoveBindingOverride(action: UnityEngine.InputSystem.InputAction, bindingMask: UnityEngine.InputSystem.InputBinding): void;
+      static RemoveAllBindingOverrides(actions: UnityEngine.InputSystem.IInputActionCollection2): void;
+      static RemoveAllBindingOverrides(action: UnityEngine.InputSystem.InputAction): void;
+      static ApplyBindingOverrides(actionMap: UnityEngine.InputSystem.InputActionMap, overrides: any): void;
+      static RemoveBindingOverrides(actionMap: UnityEngine.InputSystem.InputActionMap, overrides: any): void;
+      static ApplyBindingOverridesOnMatchingControls(action: UnityEngine.InputSystem.InputAction, control: UnityEngine.InputSystem.InputControl): number;
+      static ApplyBindingOverridesOnMatchingControls(actionMap: UnityEngine.InputSystem.InputActionMap, control: UnityEngine.InputSystem.InputControl): number;
+      static SaveBindingOverridesAsJson(actions: UnityEngine.InputSystem.IInputActionCollection2): string;
+      static SaveBindingOverridesAsJson(action: UnityEngine.InputSystem.InputAction): string;
+      static LoadBindingOverridesFromJson(actions: UnityEngine.InputSystem.IInputActionCollection2, json: string, removeExisting?: boolean): void;
+      static LoadBindingOverridesFromJson(action: UnityEngine.InputSystem.InputAction, json: string, removeExisting?: boolean): void;
+      static PerformInteractiveRebinding(action: UnityEngine.InputSystem.InputAction, bindingIndex?: number): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class InputActionReference {
+      constructor();
+      asset: UnityEngine.InputSystem.InputActionAsset;
+      action: UnityEngine.InputSystem.InputAction;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      Set(action: UnityEngine.InputSystem.InputAction): void;
+      Set(asset: UnityEngine.InputSystem.InputActionAsset, mapName: string, actionName: string): void;
+      ToString(): string;
+      static Create(action: UnityEngine.InputSystem.InputAction): UnityEngine.InputSystem.InputActionReference;
+      ToInputAction(): UnityEngine.InputSystem.InputAction;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      GetType(): System.Type;
+    }
+    export class InputActionSetupExtensions {
+      static AddActionMap(asset: UnityEngine.InputSystem.InputActionAsset, name: string): UnityEngine.InputSystem.InputActionMap;
+      static AddActionMap(asset: UnityEngine.InputSystem.InputActionAsset, map: UnityEngine.InputSystem.InputActionMap): void;
+      static RemoveActionMap(asset: UnityEngine.InputSystem.InputActionAsset, map: UnityEngine.InputSystem.InputActionMap): void;
+      static RemoveActionMap(asset: UnityEngine.InputSystem.InputActionAsset, nameOrId: string): void;
+      static AddAction(map: UnityEngine.InputSystem.InputActionMap, name: string, type?: UnityEngine.InputSystem.InputActionType, binding?: string, interactions?: string, processors?: string, groups?: string, expectedControlLayout?: string): UnityEngine.InputSystem.InputAction;
+      static RemoveAction(action: UnityEngine.InputSystem.InputAction): void;
+      static RemoveAction(asset: UnityEngine.InputSystem.InputActionAsset, nameOrId: string): void;
+      static AddBinding(action: UnityEngine.InputSystem.InputAction, path: string, interactions?: string, processors?: string, groups?: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static AddBinding(action: UnityEngine.InputSystem.InputAction, control: UnityEngine.InputSystem.InputControl): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static AddBinding(action: UnityEngine.InputSystem.InputAction, binding?: UnityEngine.InputSystem.InputBinding): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static AddBinding(actionMap: UnityEngine.InputSystem.InputActionMap, path: string, interactions?: string, groups?: string, action?: string, processors?: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static AddBinding(actionMap: UnityEngine.InputSystem.InputActionMap, path: string, action: UnityEngine.InputSystem.InputAction, interactions?: string, groups?: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static AddBinding(actionMap: UnityEngine.InputSystem.InputActionMap, path: string, action: System.Guid, interactions?: string, groups?: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static AddBinding(actionMap: UnityEngine.InputSystem.InputActionMap, binding: UnityEngine.InputSystem.InputBinding): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static AddCompositeBinding(action: UnityEngine.InputSystem.InputAction, composite: string, interactions?: string, processors?: string): UnityEngine.InputSystem.InputActionSetupExtensions_CompositeSyntax;
+      static ChangeBinding(action: UnityEngine.InputSystem.InputAction, index: number): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static ChangeBinding(action: UnityEngine.InputSystem.InputAction, name: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static ChangeBinding(actionMap: UnityEngine.InputSystem.InputActionMap, index: number): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static ChangeBindingWithId(action: UnityEngine.InputSystem.InputAction, id: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static ChangeBindingWithId(action: UnityEngine.InputSystem.InputAction, id: System.Guid): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static ChangeBindingWithGroup(action: UnityEngine.InputSystem.InputAction, group: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static ChangeBindingWithPath(action: UnityEngine.InputSystem.InputAction, path: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static ChangeBinding(action: UnityEngine.InputSystem.InputAction, match: UnityEngine.InputSystem.InputBinding): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static ChangeCompositeBinding(action: UnityEngine.InputSystem.InputAction, compositeName: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      static Rename(action: UnityEngine.InputSystem.InputAction, newName: string): void;
+      static AddControlScheme(asset: UnityEngine.InputSystem.InputActionAsset, controlScheme: UnityEngine.InputSystem.InputControlScheme): void;
+      static AddControlScheme(asset: UnityEngine.InputSystem.InputActionAsset, name: string): UnityEngine.InputSystem.InputActionSetupExtensions_ControlSchemeSyntax;
+      static RemoveControlScheme(asset: UnityEngine.InputSystem.InputActionAsset, name: string): void;
+      static WithBindingGroup(scheme: UnityEngine.InputSystem.InputControlScheme, bindingGroup: string): UnityEngine.InputSystem.InputControlScheme;
+      static WithDevice(scheme: UnityEngine.InputSystem.InputControlScheme, controlPath: string, required: boolean): UnityEngine.InputSystem.InputControlScheme;
+      static WithRequiredDevice(scheme: UnityEngine.InputSystem.InputControlScheme, controlPath: string): UnityEngine.InputSystem.InputControlScheme;
+      static WithOptionalDevice(scheme: UnityEngine.InputSystem.InputControlScheme, controlPath: string): UnityEngine.InputSystem.InputControlScheme;
+      static OrWithRequiredDevice(scheme: UnityEngine.InputSystem.InputControlScheme, controlPath: string): UnityEngine.InputSystem.InputControlScheme;
+      static OrWithOptionalDevice(scheme: UnityEngine.InputSystem.InputControlScheme, controlPath: string): UnityEngine.InputSystem.InputControlScheme;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum InputActionType {
+      Value = 0,
+      Button = 1,
+      PassThrough = 2,
+    }
+    export class InputBinding {
+      constructor(path: string, action?: string, groups?: string, processors?: string, interactions?: string, name?: string);
+      name: string;
+      id: System.Guid;
+      path: string;
+      overridePath: string;
+      interactions: string;
+      overrideInteractions: string;
+      processors: string;
+      overrideProcessors: string;
+      groups: string;
+      action: string;
+      isComposite: boolean;
+      isPartOfComposite: boolean;
+      hasOverrides: boolean;
+      effectivePath: string;
+      effectiveInteractions: string;
+      effectiveProcessors: string;
+      static Separator: System.Char;
+      GetNameOfComposite(): string;
+      static MaskByGroup(group: string): UnityEngine.InputSystem.InputBinding;
+      static MaskByGroups(...groups: string[]): UnityEngine.InputSystem.InputBinding;
+      Equals(other: UnityEngine.InputSystem.InputBinding): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      ToDisplayString(options?: UnityEngine.InputSystem.InputBinding_DisplayStringOptions, control?: UnityEngine.InputSystem.InputControl): string;
+      Matches(binding: UnityEngine.InputSystem.InputBinding): boolean;
+      GetType(): System.Type;
+    }
+    export class InputBindingComposite<TValue = any> {
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class InputBindingCompositeContext {
+      controls: System.Collections.Generic.IEnumerable<UnityEngine.InputSystem.InputBindingCompositeContext_PartBinding>;
+      EvaluateMagnitude(partNumber: number): number;
+      ReadValueAsButton(partNumber: number): boolean;
+      ReadValueAsObject(partNumber: number): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputControlScheme {
+      constructor(name: string, devices?: System.Collections.Generic.IEnumerable<UnityEngine.InputSystem.InputControlScheme_DeviceRequirement>, bindingGroup?: string);
+      name: string;
+      bindingGroup: string;
+      deviceRequirements: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControlScheme_DeviceRequirement>;
+      SupportsDevice(device: UnityEngine.InputSystem.InputDevice): boolean;
+      Equals(other: UnityEngine.InputSystem.InputControlScheme): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputInteractionContext {
+      action: UnityEngine.InputSystem.InputAction;
+      control: UnityEngine.InputSystem.InputControl;
+      phase: UnityEngine.InputSystem.InputActionPhase;
+      time: number;
+      startTime: number;
+      timerHasExpired: boolean;
+      isWaiting: boolean;
+      isStarted: boolean;
+      ComputeMagnitude(): number;
+      ControlIsActuated(threshold?: number): boolean;
+      Started(): void;
+      Performed(): void;
+      PerformedAndStayStarted(): void;
+      PerformedAndStayPerformed(): void;
+      Canceled(): void;
+      Waiting(): void;
+      SetTimeout(seconds: number): void;
+      SetTotalTimeoutCompletionTime(seconds: number): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputSystem {
+      static devices: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.InputDevice]
+      static disconnectedDevices: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.InputDevice]
+      static pollingFrequency: number;
+      static settings: UnityEngine.InputSystem.InputSettings;
+      static remoting: UnityEngine.InputSystem.InputRemoting;
+      static version: System.Version;
+      static metrics: any; // UnityEngine.InputSystem.LowLevel.InputMetrics
+      static RegisterLayout(type: System.Type, name?: string, matches?: any): void;
+      static RegisterLayout(json: string, name?: string, matches?: any): void;
+      static RegisterLayoutOverride(json: string, name?: string): void;
+      static RegisterLayoutMatcher(layoutName: string, matcher: UnityEngine.InputSystem.Layouts.InputDeviceMatcher): void;
+      static RegisterLayoutBuilder(buildMethod: (() => UnityEngine.InputSystem.Layouts.InputControlLayout), name: string, baseLayout?: string, matches?: any): void;
+      static RemoveLayout(name: string): void;
+      static TryFindMatchingLayout(deviceDescription: UnityEngine.InputSystem.Layouts.InputDeviceDescription): string;
+      static ListLayouts(): any;
+      static ListLayoutsBasedOn(baseLayout: string): any;
+      static LoadLayout(name: string): UnityEngine.InputSystem.Layouts.InputControlLayout;
+      static GetNameOfBaseLayout(layoutName: string): string;
+      static IsFirstLayoutBasedOnSecond(firstLayoutName: string, secondLayoutName: string): boolean;
+      static RegisterProcessor(type: System.Type, name?: string): void;
+      static TryGetProcessor(name: string): System.Type;
+      static ListProcessors(): any;
+      static AddDevice(layout: string, name?: string, variants?: string): UnityEngine.InputSystem.InputDevice;
+      static AddDevice(description: UnityEngine.InputSystem.Layouts.InputDeviceDescription): UnityEngine.InputSystem.InputDevice;
+      static AddDevice(device: UnityEngine.InputSystem.InputDevice): void;
+      static RemoveDevice(device: UnityEngine.InputSystem.InputDevice): void;
+      static FlushDisconnectedDevices(): void;
+      static GetDevice(nameOrLayout: string): UnityEngine.InputSystem.InputDevice;
+      static GetDevice(type: System.Type): UnityEngine.InputSystem.InputDevice;
+      static GetDeviceById(deviceId: number): UnityEngine.InputSystem.InputDevice;
+      static GetUnsupportedDevices(): UnityEngine.InputSystem.Layouts.InputDeviceDescription[];
+      static GetUnsupportedDevices(descriptions: UnityEngine.InputSystem.Layouts.InputDeviceDescription[]): number;
+      static EnableDevice(device: UnityEngine.InputSystem.InputDevice): void;
+      static DisableDevice(device: UnityEngine.InputSystem.InputDevice, keepSendingEvents?: boolean): void;
+      static TrySyncDevice(device: UnityEngine.InputSystem.InputDevice): boolean;
+      static TryResetDevice(device: UnityEngine.InputSystem.InputDevice): boolean;
+      static PauseHaptics(): void;
+      static ResumeHaptics(): void;
+      static ResetHaptics(): void;
+      static SetDeviceUsage(device: UnityEngine.InputSystem.InputDevice, usage: string): void;
+      static SetDeviceUsage(device: UnityEngine.InputSystem.InputDevice, usage: UnityEngine.InputSystem.Utilities.InternedString): void;
+      static AddDeviceUsage(device: UnityEngine.InputSystem.InputDevice, usage: string): void;
+      static AddDeviceUsage(device: UnityEngine.InputSystem.InputDevice, usage: UnityEngine.InputSystem.Utilities.InternedString): void;
+      static RemoveDeviceUsage(device: UnityEngine.InputSystem.InputDevice, usage: string): void;
+      static RemoveDeviceUsage(device: UnityEngine.InputSystem.InputDevice, usage: UnityEngine.InputSystem.Utilities.InternedString): void;
+      static FindControl(path: string): UnityEngine.InputSystem.InputControl;
+      static FindControls(path: string): UnityEngine.InputSystem.InputControl[];
+      static QueueEvent(eventPtr: any): void;
+      static QueueConfigChangeEvent(device: UnityEngine.InputSystem.InputDevice, time?: number): void;
+      static QueueTextEvent(device: UnityEngine.InputSystem.InputDevice, character: System.Char, time?: number): void;
+      static Update(): void;
+      static RegisterInteraction(type: System.Type, name?: string): void;
+      static TryGetInteraction(name: string): System.Type;
+      static ListInteractions(): any;
+      static RegisterBindingComposite(type: System.Type, name: string): void;
+      static TryGetBindingComposite(name: string): System.Type;
+      static DisableAllEnabledActions(): void;
+      static ListEnabledActions(): UnityEngine.InputSystem.InputAction[];
+      static ListEnabledActions(actions: UnityEngine.InputSystem.InputAction[]): number;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class CommonUsages {
+      static Primary2DMotion: UnityEngine.InputSystem.Utilities.InternedString;
+      static Secondary2DMotion: UnityEngine.InputSystem.Utilities.InternedString;
+      static PrimaryAction: UnityEngine.InputSystem.Utilities.InternedString;
+      static SecondaryAction: UnityEngine.InputSystem.Utilities.InternedString;
+      static PrimaryTrigger: UnityEngine.InputSystem.Utilities.InternedString;
+      static SecondaryTrigger: UnityEngine.InputSystem.Utilities.InternedString;
+      static Modifier: UnityEngine.InputSystem.Utilities.InternedString;
+      static Position: UnityEngine.InputSystem.Utilities.InternedString;
+      static Orientation: UnityEngine.InputSystem.Utilities.InternedString;
+      static Hatswitch: UnityEngine.InputSystem.Utilities.InternedString;
+      static Back: UnityEngine.InputSystem.Utilities.InternedString;
+      static Forward: UnityEngine.InputSystem.Utilities.InternedString;
+      static Menu: UnityEngine.InputSystem.Utilities.InternedString;
+      static Submit: UnityEngine.InputSystem.Utilities.InternedString;
+      static Cancel: UnityEngine.InputSystem.Utilities.InternedString;
+      static Horizontal: UnityEngine.InputSystem.Utilities.InternedString;
+      static Vertical: UnityEngine.InputSystem.Utilities.InternedString;
+      static Twist: UnityEngine.InputSystem.Utilities.InternedString;
+      static Pressure: UnityEngine.InputSystem.Utilities.InternedString;
+      static ScrollHorizontal: UnityEngine.InputSystem.Utilities.InternedString;
+      static ScrollVertical: UnityEngine.InputSystem.Utilities.InternedString;
+      static Point: UnityEngine.InputSystem.Utilities.InternedString;
+      static LowFreqMotor: UnityEngine.InputSystem.Utilities.InternedString;
+      static HighFreqMotor: UnityEngine.InputSystem.Utilities.InternedString;
+      static LeftHand: UnityEngine.InputSystem.Utilities.InternedString;
+      static RightHand: UnityEngine.InputSystem.Utilities.InternedString;
+      static BatteryStrength: UnityEngine.InputSystem.Utilities.InternedString;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class InputControl<TValue = any> {
+      [key: string]: any;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      ReadValue(): TValue;
+      ReadValueFromPreviousFrame(): TValue;
+      ReadDefaultValue(): TValue;
+      ReadUnprocessedValue(): TValue;
+      ProcessValue(value: TValue): TValue;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class InputControlExtensions {
+      static IsPressed(control: UnityEngine.InputSystem.InputControl, buttonPressPoint?: number): boolean;
+      static IsActuated(control: UnityEngine.InputSystem.InputControl, threshold?: number): boolean;
+      static ReadValueAsObject(control: UnityEngine.InputSystem.InputControl): any;
+      static ReadDefaultValueAsObject(control: UnityEngine.InputSystem.InputControl): any;
+      static ReadValueFromEventAsObject(control: UnityEngine.InputSystem.InputControl, inputEvent: any): any;
+      static WriteValueFromObjectIntoEvent(control: UnityEngine.InputSystem.InputControl, eventPtr: any, value: any): void;
+      static CheckStateIsAtDefault(control: UnityEngine.InputSystem.InputControl): boolean;
+      static CheckStateIsAtDefaultIgnoringNoise(control: UnityEngine.InputSystem.InputControl): boolean;
+      static HasValueChangeInEvent(control: UnityEngine.InputSystem.InputControl, eventPtr: any): boolean;
+      static ResetToDefaultStateInEvent(control: UnityEngine.InputSystem.InputControl, eventPtr: any): boolean;
+      static EnumerateControls(eventPtr: any, flags: UnityEngine.InputSystem.InputControlExtensions_Enumerate, device?: UnityEngine.InputSystem.InputDevice, magnitudeThreshold?: number): UnityEngine.InputSystem.InputControlExtensions_InputEventControlCollection;
+      static EnumerateChangedControls(eventPtr: any, device?: UnityEngine.InputSystem.InputDevice, magnitudeThreshold?: number): UnityEngine.InputSystem.InputControlExtensions_InputEventControlCollection;
+      static Setup(control: UnityEngine.InputSystem.InputControl): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      static Setup(device: UnityEngine.InputSystem.InputDevice, controlCount: number, usageCount: number, aliasCount: number): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum InputControlLayoutChange {
+      Added = 0,
+      Removed = 1,
+      Replaced = 2,
+    }
+    export class InputControlList<TControl = any> {
+      constructor(allocator: Unity.Collections.Allocator, initialCapacity?: number);
+      constructor(values: System.Collections.Generic.IEnumerable<TControl>, allocator?: Unity.Collections.Allocator);
+      constructor(...values: TControl[]);
+      [key: string]: any;
+      Count: number;
+      Capacity: number;
+      IsReadOnly: boolean;
+      Add(item: TControl): void;
+      AddRange(list: System.Collections.Generic.IEnumerable<TControl>, count?: number, destinationIndex?: number): void;
+      Remove(item: TControl): boolean;
+      RemoveAt(index: number): void;
+      CopyTo(array: TControl[], arrayIndex: number): void;
+      IndexOf(item: TControl): number;
+      IndexOf(item: TControl, startIndex: number, count?: number): number;
+      Insert(index: number, item: TControl): void;
+      Clear(): void;
+      Contains(item: TControl): boolean;
+      Contains(item: TControl, startIndex: number, count?: number): boolean;
+      SwapElements(index1: number, index2: number): void;
+      ToArray(dispose?: boolean): TControl[];
+      Dispose(): void;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<TControl>;
+      ToString(): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class InputControlPath {
+      static Wildcard: string;
+      static DoubleWildcard: string;
+      static Separator: System.Char;
+      static Combine(parent: UnityEngine.InputSystem.InputControl, path: string): string;
+      static ToHumanReadableString(path: string, options?: UnityEngine.InputSystem.InputControlPath_HumanReadableStringOptions, control?: UnityEngine.InputSystem.InputControl): string;
+      static TryGetDeviceUsages(path: string): string[];
+      static TryGetDeviceLayout(path: string): string;
+      static TryGetControlLayout(path: string): string;
+      static TryFindControl(control: UnityEngine.InputSystem.InputControl, path: string, indexInPath?: number): UnityEngine.InputSystem.InputControl;
+      static TryFindControls(control: UnityEngine.InputSystem.InputControl, path: string, indexInPath?: number): UnityEngine.InputSystem.InputControl[];
+      static TryFindChild(control: UnityEngine.InputSystem.InputControl, path: string, indexInPath?: number): UnityEngine.InputSystem.InputControl;
+      static Matches(expected: string, control: UnityEngine.InputSystem.InputControl): boolean;
+      static MatchesPrefix(expected: string, control: UnityEngine.InputSystem.InputControl): boolean;
+      static Parse(path: string): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class InputProcessor<TValue = any> {
+      Process(value: TValue, control: UnityEngine.InputSystem.InputControl): TValue;
+      ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class Gamepad {
+      constructor();
+      [key: string]: any;
+      buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+      buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+      buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+      buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+      leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      dpad: UnityEngine.InputSystem.Controls.DpadControl;
+      leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+      rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+      leftStick: UnityEngine.InputSystem.Controls.StickControl;
+      rightStick: UnityEngine.InputSystem.Controls.StickControl;
+      leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+      rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+      aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      static current: UnityEngine.InputSystem.Gamepad;
+      static all: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.Gamepad]
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      PauseHaptics(): void;
+      ResumeHaptics(): void;
+      ResetHaptics(): void;
+      SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class InputDevice {
+      constructor();
+      [key: string]: any;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      static all: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.InputDevice]
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      static InvalidDeviceId: number;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export enum InputDeviceChange {
+      Added = 0,
+      Removed = 1,
+      Disconnected = 2,
+      Reconnected = 3,
+      Enabled = 4,
+      Disabled = 5,
+      UsageChanged = 6,
+      ConfigurationChanged = 7,
+      Destroyed = 8,
+    }
+    export class Joystick {
+      constructor();
+      [key: string]: any;
+      trigger: UnityEngine.InputSystem.Controls.ButtonControl;
+      stick: UnityEngine.InputSystem.Controls.StickControl;
+      twist: UnityEngine.InputSystem.Controls.AxisControl;
+      hatswitch: UnityEngine.InputSystem.Controls.Vector2Control;
+      static current: UnityEngine.InputSystem.Joystick;
+      static all: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.Joystick]
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export enum Key {
+      None = 0,
+      Space = 1,
+      Enter = 2,
+      Tab = 3,
+      Backquote = 4,
+      Quote = 5,
+      Semicolon = 6,
+      Comma = 7,
+      Period = 8,
+      Slash = 9,
+      Backslash = 10,
+      LeftBracket = 11,
+      RightBracket = 12,
+      Minus = 13,
+      Equals = 14,
+      A = 15,
+      B = 16,
+      C = 17,
+      D = 18,
+      E = 19,
+      F = 20,
+      G = 21,
+      H = 22,
+      I = 23,
+      J = 24,
+      K = 25,
+      L = 26,
+      M = 27,
+      N = 28,
+      O = 29,
+      P = 30,
+      Q = 31,
+      R = 32,
+      S = 33,
+      T = 34,
+      U = 35,
+      V = 36,
+      W = 37,
+      X = 38,
+      Y = 39,
+      Z = 40,
+      Digit1 = 41,
+      Digit2 = 42,
+      Digit3 = 43,
+      Digit4 = 44,
+      Digit5 = 45,
+      Digit6 = 46,
+      Digit7 = 47,
+      Digit8 = 48,
+      Digit9 = 49,
+      Digit0 = 50,
+      LeftShift = 51,
+      RightShift = 52,
+      LeftAlt = 53,
+      RightAlt = 54,
+      AltGr = 54,
+      LeftCtrl = 55,
+      RightCtrl = 56,
+      LeftMeta = 57,
+      RightMeta = 58,
+      LeftWindows = 57,
+      RightWindows = 58,
+      LeftApple = 57,
+      RightApple = 58,
+      LeftCommand = 57,
+      RightCommand = 58,
+      ContextMenu = 59,
+      Escape = 60,
+      LeftArrow = 61,
+      RightArrow = 62,
+      UpArrow = 63,
+      DownArrow = 64,
+      Backspace = 65,
+      PageDown = 66,
+      PageUp = 67,
+      Home = 68,
+      End = 69,
+      Insert = 70,
+      Delete = 71,
+      CapsLock = 72,
+      NumLock = 73,
+      PrintScreen = 74,
+      ScrollLock = 75,
+      Pause = 76,
+      NumpadEnter = 77,
+      NumpadDivide = 78,
+      NumpadMultiply = 79,
+      NumpadPlus = 80,
+      NumpadMinus = 81,
+      NumpadPeriod = 82,
+      NumpadEquals = 83,
+      Numpad0 = 84,
+      Numpad1 = 85,
+      Numpad2 = 86,
+      Numpad3 = 87,
+      Numpad4 = 88,
+      Numpad5 = 89,
+      Numpad6 = 90,
+      Numpad7 = 91,
+      Numpad8 = 92,
+      Numpad9 = 93,
+      F1 = 94,
+      F2 = 95,
+      F3 = 96,
+      F4 = 97,
+      F5 = 98,
+      F6 = 99,
+      F7 = 100,
+      F8 = 101,
+      F9 = 102,
+      F10 = 103,
+      F11 = 104,
+      F12 = 105,
+      OEM1 = 106,
+      OEM2 = 107,
+      OEM3 = 108,
+      OEM4 = 109,
+      OEM5 = 110,
+      IMESelected = 111,
+    }
+    export class Keyboard {
+      constructor();
+      [key: string]: any;
+      keyboardLayout: string;
+      anyKey: UnityEngine.InputSystem.Controls.AnyKeyControl;
+      spaceKey: UnityEngine.InputSystem.Controls.KeyControl;
+      enterKey: UnityEngine.InputSystem.Controls.KeyControl;
+      tabKey: UnityEngine.InputSystem.Controls.KeyControl;
+      backquoteKey: UnityEngine.InputSystem.Controls.KeyControl;
+      quoteKey: UnityEngine.InputSystem.Controls.KeyControl;
+      semicolonKey: UnityEngine.InputSystem.Controls.KeyControl;
+      commaKey: UnityEngine.InputSystem.Controls.KeyControl;
+      periodKey: UnityEngine.InputSystem.Controls.KeyControl;
+      slashKey: UnityEngine.InputSystem.Controls.KeyControl;
+      backslashKey: UnityEngine.InputSystem.Controls.KeyControl;
+      leftBracketKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightBracketKey: UnityEngine.InputSystem.Controls.KeyControl;
+      minusKey: UnityEngine.InputSystem.Controls.KeyControl;
+      equalsKey: UnityEngine.InputSystem.Controls.KeyControl;
+      aKey: UnityEngine.InputSystem.Controls.KeyControl;
+      bKey: UnityEngine.InputSystem.Controls.KeyControl;
+      cKey: UnityEngine.InputSystem.Controls.KeyControl;
+      dKey: UnityEngine.InputSystem.Controls.KeyControl;
+      eKey: UnityEngine.InputSystem.Controls.KeyControl;
+      fKey: UnityEngine.InputSystem.Controls.KeyControl;
+      gKey: UnityEngine.InputSystem.Controls.KeyControl;
+      hKey: UnityEngine.InputSystem.Controls.KeyControl;
+      iKey: UnityEngine.InputSystem.Controls.KeyControl;
+      jKey: UnityEngine.InputSystem.Controls.KeyControl;
+      kKey: UnityEngine.InputSystem.Controls.KeyControl;
+      lKey: UnityEngine.InputSystem.Controls.KeyControl;
+      mKey: UnityEngine.InputSystem.Controls.KeyControl;
+      nKey: UnityEngine.InputSystem.Controls.KeyControl;
+      oKey: UnityEngine.InputSystem.Controls.KeyControl;
+      pKey: UnityEngine.InputSystem.Controls.KeyControl;
+      qKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rKey: UnityEngine.InputSystem.Controls.KeyControl;
+      sKey: UnityEngine.InputSystem.Controls.KeyControl;
+      tKey: UnityEngine.InputSystem.Controls.KeyControl;
+      uKey: UnityEngine.InputSystem.Controls.KeyControl;
+      vKey: UnityEngine.InputSystem.Controls.KeyControl;
+      wKey: UnityEngine.InputSystem.Controls.KeyControl;
+      xKey: UnityEngine.InputSystem.Controls.KeyControl;
+      yKey: UnityEngine.InputSystem.Controls.KeyControl;
+      zKey: UnityEngine.InputSystem.Controls.KeyControl;
+      digit1Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit2Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit3Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit4Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit5Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit6Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit7Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit8Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit9Key: UnityEngine.InputSystem.Controls.KeyControl;
+      digit0Key: UnityEngine.InputSystem.Controls.KeyControl;
+      leftShiftKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightShiftKey: UnityEngine.InputSystem.Controls.KeyControl;
+      leftAltKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightAltKey: UnityEngine.InputSystem.Controls.KeyControl;
+      leftCtrlKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightCtrlKey: UnityEngine.InputSystem.Controls.KeyControl;
+      leftMetaKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightMetaKey: UnityEngine.InputSystem.Controls.KeyControl;
+      leftWindowsKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightWindowsKey: UnityEngine.InputSystem.Controls.KeyControl;
+      leftAppleKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightAppleKey: UnityEngine.InputSystem.Controls.KeyControl;
+      leftCommandKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightCommandKey: UnityEngine.InputSystem.Controls.KeyControl;
+      contextMenuKey: UnityEngine.InputSystem.Controls.KeyControl;
+      escapeKey: UnityEngine.InputSystem.Controls.KeyControl;
+      leftArrowKey: UnityEngine.InputSystem.Controls.KeyControl;
+      rightArrowKey: UnityEngine.InputSystem.Controls.KeyControl;
+      upArrowKey: UnityEngine.InputSystem.Controls.KeyControl;
+      downArrowKey: UnityEngine.InputSystem.Controls.KeyControl;
+      backspaceKey: UnityEngine.InputSystem.Controls.KeyControl;
+      pageDownKey: UnityEngine.InputSystem.Controls.KeyControl;
+      pageUpKey: UnityEngine.InputSystem.Controls.KeyControl;
+      homeKey: UnityEngine.InputSystem.Controls.KeyControl;
+      endKey: UnityEngine.InputSystem.Controls.KeyControl;
+      insertKey: UnityEngine.InputSystem.Controls.KeyControl;
+      deleteKey: UnityEngine.InputSystem.Controls.KeyControl;
+      capsLockKey: UnityEngine.InputSystem.Controls.KeyControl;
+      scrollLockKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numLockKey: UnityEngine.InputSystem.Controls.KeyControl;
+      printScreenKey: UnityEngine.InputSystem.Controls.KeyControl;
+      pauseKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numpadEnterKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numpadDivideKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numpadMultiplyKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numpadMinusKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numpadPlusKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numpadPeriodKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numpadEqualsKey: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad0Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad1Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad2Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad3Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad4Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad5Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad6Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad7Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad8Key: UnityEngine.InputSystem.Controls.KeyControl;
+      numpad9Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f1Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f2Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f3Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f4Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f5Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f6Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f7Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f8Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f9Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f10Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f11Key: UnityEngine.InputSystem.Controls.KeyControl;
+      f12Key: UnityEngine.InputSystem.Controls.KeyControl;
+      oem1Key: UnityEngine.InputSystem.Controls.KeyControl;
+      oem2Key: UnityEngine.InputSystem.Controls.KeyControl;
+      oem3Key: UnityEngine.InputSystem.Controls.KeyControl;
+      oem4Key: UnityEngine.InputSystem.Controls.KeyControl;
+      oem5Key: UnityEngine.InputSystem.Controls.KeyControl;
+      shiftKey: UnityEngine.InputSystem.Controls.ButtonControl;
+      ctrlKey: UnityEngine.InputSystem.Controls.ButtonControl;
+      altKey: UnityEngine.InputSystem.Controls.ButtonControl;
+      imeSelected: UnityEngine.InputSystem.Controls.ButtonControl;
+      allKeys: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Controls.KeyControl>;
+      static current: UnityEngine.InputSystem.Keyboard;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      static KeyCount: number;
+      SetIMEEnabled(enabled: boolean): void;
+      SetIMECursorPosition(position: UnityEngine.Vector2): void;
+      MakeCurrent(): void;
+      OnTextInput(character: System.Char): void;
+      FindKeyOnCurrentKeyboardLayout(displayName: string): UnityEngine.InputSystem.Controls.KeyControl;
+      OnIMECompositionChanged(compositionString: any): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class Mouse {
+      constructor();
+      [key: string]: any;
+      scroll: UnityEngine.InputSystem.Controls.Vector2Control;
+      leftButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      middleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      rightButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      backButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      forwardButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      clickCount: UnityEngine.InputSystem.Controls.IntegerControl;
+      static current: UnityEngine.InputSystem.Mouse;
+      position: UnityEngine.InputSystem.Controls.Vector2Control;
+      delta: UnityEngine.InputSystem.Controls.Vector2Control;
+      radius: UnityEngine.InputSystem.Controls.Vector2Control;
+      pressure: UnityEngine.InputSystem.Controls.AxisControl;
+      press: UnityEngine.InputSystem.Controls.ButtonControl;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      WarpCursorPosition(position: UnityEngine.Vector2): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export enum PenButton {
+      Tip = 0,
+      Eraser = 1,
+      BarrelFirst = 2,
+      BarrelSecond = 3,
+      InRange = 4,
+      BarrelThird = 5,
+      BarrelFourth = 6,
+      Barrel1 = 2,
+      Barrel2 = 3,
+      Barrel3 = 5,
+      Barrel4 = 6,
+    }
+    export class Pen {
+      constructor();
+      [key: string]: any;
+      tip: UnityEngine.InputSystem.Controls.ButtonControl;
+      eraser: UnityEngine.InputSystem.Controls.ButtonControl;
+      firstBarrelButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      secondBarrelButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      thirdBarrelButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      fourthBarrelButton: UnityEngine.InputSystem.Controls.ButtonControl;
+      inRange: UnityEngine.InputSystem.Controls.ButtonControl;
+      tilt: UnityEngine.InputSystem.Controls.Vector2Control;
+      twist: UnityEngine.InputSystem.Controls.AxisControl;
+      static current: UnityEngine.InputSystem.Pen;
+      position: UnityEngine.InputSystem.Controls.Vector2Control;
+      delta: UnityEngine.InputSystem.Controls.Vector2Control;
+      radius: UnityEngine.InputSystem.Controls.Vector2Control;
+      pressure: UnityEngine.InputSystem.Controls.AxisControl;
+      press: UnityEngine.InputSystem.Controls.ButtonControl;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class Pointer {
+      constructor();
+      [key: string]: any;
+      position: UnityEngine.InputSystem.Controls.Vector2Control;
+      delta: UnityEngine.InputSystem.Controls.Vector2Control;
+      radius: UnityEngine.InputSystem.Controls.Vector2Control;
+      pressure: UnityEngine.InputSystem.Controls.AxisControl;
+      press: UnityEngine.InputSystem.Controls.ButtonControl;
+      static current: UnityEngine.InputSystem.Pointer;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class InputRemoting {
+      sending: boolean;
+      StartSending(): void;
+      StopSending(): void;
+      Subscribe(observer: System.IObserver<UnityEngine.InputSystem.InputRemoting_Message>): System.IDisposable;
+      RemoveRemoteDevices(participantId: number): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class Sensor {
+      constructor();
+      [key: string]: any;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class Accelerometer {
+      constructor();
+      [key: string]: any;
+      acceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+      static current: UnityEngine.InputSystem.Accelerometer;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class Gyroscope {
+      constructor();
+      [key: string]: any;
+      angularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+      static current: UnityEngine.InputSystem.Gyroscope;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class GravitySensor {
+      constructor();
+      [key: string]: any;
+      gravity: UnityEngine.InputSystem.Controls.Vector3Control;
+      static current: UnityEngine.InputSystem.GravitySensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class AttitudeSensor {
+      constructor();
+      [key: string]: any;
+      attitude: UnityEngine.InputSystem.Controls.QuaternionControl;
+      static current: UnityEngine.InputSystem.AttitudeSensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class LinearAccelerationSensor {
+      constructor();
+      [key: string]: any;
+      acceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+      static current: UnityEngine.InputSystem.LinearAccelerationSensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class MagneticFieldSensor {
+      constructor();
+      [key: string]: any;
+      magneticField: UnityEngine.InputSystem.Controls.Vector3Control;
+      static current: UnityEngine.InputSystem.MagneticFieldSensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class LightSensor {
+      constructor();
+      [key: string]: any;
+      lightLevel: UnityEngine.InputSystem.Controls.AxisControl;
+      static current: UnityEngine.InputSystem.LightSensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class PressureSensor {
+      constructor();
+      [key: string]: any;
+      atmosphericPressure: UnityEngine.InputSystem.Controls.AxisControl;
+      static current: UnityEngine.InputSystem.PressureSensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class ProximitySensor {
+      constructor();
+      [key: string]: any;
+      distance: UnityEngine.InputSystem.Controls.AxisControl;
+      static current: UnityEngine.InputSystem.ProximitySensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class HumiditySensor {
+      constructor();
+      [key: string]: any;
+      relativeHumidity: UnityEngine.InputSystem.Controls.AxisControl;
+      static current: UnityEngine.InputSystem.HumiditySensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class AmbientTemperatureSensor {
+      constructor();
+      [key: string]: any;
+      ambientTemperature: UnityEngine.InputSystem.Controls.AxisControl;
+      static current: UnityEngine.InputSystem.AmbientTemperatureSensor;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class StepCounter {
+      constructor();
+      [key: string]: any;
+      stepCounter: UnityEngine.InputSystem.Controls.IntegerControl;
+      static current: UnityEngine.InputSystem.StepCounter;
+      samplingFrequency: number;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export enum TouchPhase {
+      None = 0,
+      Began = 1,
+      Moved = 2,
+      Ended = 3,
+      Canceled = 4,
+      Stationary = 5,
+    }
+    export class Touchscreen {
+      constructor();
+      [key: string]: any;
+      primaryTouch: UnityEngine.InputSystem.Controls.TouchControl;
+      touches: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Controls.TouchControl>;
+      static current: UnityEngine.InputSystem.Touchscreen;
+      position: UnityEngine.InputSystem.Controls.Vector2Control;
+      delta: UnityEngine.InputSystem.Controls.Vector2Control;
+      radius: UnityEngine.InputSystem.Controls.Vector2Control;
+      pressure: UnityEngine.InputSystem.Controls.AxisControl;
+      press: UnityEngine.InputSystem.Controls.ButtonControl;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class TrackedDevice {
+      constructor();
+      [key: string]: any;
+      trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+      isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+      devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+      deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+      description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+      enabled: boolean;
+      canRunInBackground: boolean;
+      added: boolean;
+      remote: boolean;
+      native: boolean;
+      updateBeforeRender: boolean;
+      deviceId: number;
+      lastUpdateTime: number;
+      wasUpdatedThisFrame: boolean;
+      allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      name: string;
+      displayName: string;
+      shortDisplayName: string;
+      path: string;
+      layout: string;
+      variants: string;
+      device: UnityEngine.InputSystem.InputDevice;
+      parent: UnityEngine.InputSystem.InputControl;
+      children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+      usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+      stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+      noisy: boolean;
+      synthetic: boolean;
+      MakeCurrent(): void;
+      ToString(): string;
+      EvaluateMagnitude(): number;
+      TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class InputExtensions {
+      static IsInProgress(phase: UnityEngine.InputSystem.InputActionPhase): boolean;
+      static IsEndedOrCanceled(phase: UnityEngine.InputSystem.TouchPhase): boolean;
+      static IsActive(phase: UnityEngine.InputSystem.TouchPhase): boolean;
+      static IsModifierKey(key: UnityEngine.InputSystem.Key): boolean;
+      static IsTextInputKey(key: UnityEngine.InputSystem.Key): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class InputSettings {
+      constructor();
+      updateMode: UnityEngine.InputSystem.InputSettings_UpdateMode;
+      compensateForScreenOrientation: boolean;
+      filterNoiseOnCurrent: boolean;
+      defaultDeadzoneMin: number;
+      defaultDeadzoneMax: number;
+      defaultButtonPressPoint: number;
+      buttonReleaseThreshold: number;
+      defaultTapTime: number;
+      defaultSlowTapTime: number;
+      defaultHoldTime: number;
+      tapRadius: number;
+      multiTapDelayTime: number;
+      maxEventBytesPerUpdate: number;
+      maxQueuedEventsPerUpdate: number;
+      supportedDevices: UnityEngine.InputSystem.Utilities.ReadOnlyArray<string>;
+      iOS: UnityEngine.InputSystem.InputSettings_iOSSettings;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      SetDirty(): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class DefaultInputActions {
+      constructor();
+      asset: UnityEngine.InputSystem.InputActionAsset;
+      bindingMask?: System.Nullable<UnityEngine.InputSystem.InputBinding>;
+      devices?: System.Nullable<UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputDevice>>;
+      controlSchemes: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControlScheme>;
+      bindings: System.Collections.Generic.IEnumerable<UnityEngine.InputSystem.InputBinding>;
+      Player: UnityEngine.InputSystem.DefaultInputActions_PlayerActions;
+      UI: UnityEngine.InputSystem.DefaultInputActions_UIActions;
+      KeyboardMouseScheme: UnityEngine.InputSystem.InputControlScheme;
+      GamepadScheme: UnityEngine.InputSystem.InputControlScheme;
+      TouchScheme: UnityEngine.InputSystem.InputControlScheme;
+      JoystickScheme: UnityEngine.InputSystem.InputControlScheme;
+      XRScheme: UnityEngine.InputSystem.InputControlScheme;
+      Dispose(): void;
+      Contains(action: UnityEngine.InputSystem.InputAction): boolean;
+      GetEnumerator(): System.Collections.Generic.IEnumerator<UnityEngine.InputSystem.InputAction>;
+      Enable(): void;
+      Disable(): void;
+      FindAction(actionNameOrId: string, throwIfNotFound?: boolean): UnityEngine.InputSystem.InputAction;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class InputValue {
+      constructor();
+      isPressed: boolean;
+      Get(): any;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class PlayerInput {
+      constructor();
+      inputIsActive: boolean;
+      active: boolean;
+      playerIndex: number;
+      splitScreenIndex: number;
+      actions: UnityEngine.InputSystem.InputActionAsset;
+      currentControlScheme: string;
+      defaultControlScheme: string;
+      neverAutoSwitchControlSchemes: boolean;
+      currentActionMap: UnityEngine.InputSystem.InputActionMap;
+      defaultActionMap: string;
+      notificationBehavior: UnityEngine.InputSystem.PlayerNotifications;
+      actionEvents: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.PlayerInput_ActionEvent>;
+      deviceLostEvent: UnityEngine.InputSystem.PlayerInput_DeviceLostEvent;
+      deviceRegainedEvent: UnityEngine.InputSystem.PlayerInput_DeviceRegainedEvent;
+      controlsChangedEvent: UnityEngine.InputSystem.PlayerInput_ControlsChangedEvent;
+      camera: UnityEngine.Camera;
+      uiInputModule: UnityEngine.InputSystem.UI.InputSystemUIInputModule;
+      user: UnityEngine.InputSystem.Users.InputUser;
+      devices: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputDevice>;
+      hasMissingRequiredDevices: boolean;
+      static all: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.PlayerInput]
+      static isSinglePlayer: boolean;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      static DeviceLostMessage: string;
+      static DeviceRegainedMessage: string;
+      static ControlsChangedMessage: string;
+      ActivateInput(): void;
+      DeactivateInput(): void;
+      PassivateInput(): void;
+      SwitchCurrentControlScheme(...devices: UnityEngine.InputSystem.InputDevice[]): boolean;
+      SwitchCurrentControlScheme(controlScheme: string, ...devices: UnityEngine.InputSystem.InputDevice[]): void;
+      SwitchCurrentActionMap(mapNameOrId: string): void;
+      static GetPlayerByIndex(playerIndex: number): UnityEngine.InputSystem.PlayerInput;
+      static FindFirstPairedToDevice(device: UnityEngine.InputSystem.InputDevice): UnityEngine.InputSystem.PlayerInput;
+      static Instantiate(prefab: UnityEngine.GameObject, playerIndex?: number, controlScheme?: string, splitScreenIndex?: number, pairWithDevice?: UnityEngine.InputSystem.InputDevice): UnityEngine.InputSystem.PlayerInput;
+      static Instantiate(prefab: UnityEngine.GameObject, playerIndex?: number, controlScheme?: string, splitScreenIndex?: number, ...pairWithDevices: UnityEngine.InputSystem.InputDevice[]): UnityEngine.InputSystem.PlayerInput;
+      DebugLogAction(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      IsInvoking(): boolean;
+      CancelInvoke(): void;
+      Invoke(methodName: string, time: number): void;
+      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+      CancelInvoke(methodName: string): void;
+      IsInvoking(methodName: string): boolean;
+      StartCoroutine(methodName: string): UnityEngine.Coroutine;
+      StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StopCoroutine(routine: System.Collections.IEnumerator): void;
+      StopCoroutine(routine: UnityEngine.Coroutine): void;
+      StopCoroutine(methodName: string): void;
+      StopAllCoroutines(): void;
+      GetComponent(type: System.Type): UnityEngine.Component;
+      GetComponent(type: string): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type): UnityEngine.Component;
+      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInParent(t: System.Type): UnityEngine.Component;
+      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      CompareTag(tag: string): boolean;
+      SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+      SendMessageUpwards(methodName: string, value: any): void;
+      SendMessageUpwards(methodName: string): void;
+      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, value: any): void;
+      SendMessage(methodName: string): void;
+      SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: any): void;
+      BroadcastMessage(methodName: string): void;
+      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class PlayerInputManager {
+      constructor();
+      splitScreen: boolean;
+      maintainAspectRatioInSplitScreen: boolean;
+      fixedNumberOfSplitScreens: number;
+      splitScreenArea: UnityEngine.Rect;
+      playerCount: number;
+      maxPlayerCount: number;
+      joiningEnabled: boolean;
+      joinBehavior: UnityEngine.InputSystem.PlayerJoinBehavior;
+      joinAction: UnityEngine.InputSystem.InputActionProperty;
+      notificationBehavior: UnityEngine.InputSystem.PlayerNotifications;
+      playerJoinedEvent: UnityEngine.InputSystem.PlayerInputManager_PlayerJoinedEvent;
+      playerLeftEvent: UnityEngine.InputSystem.PlayerInputManager_PlayerLeftEvent;
+      playerPrefab: UnityEngine.GameObject;
+      static instance: UnityEngine.InputSystem.PlayerInputManager;
+      useGUILayout: boolean;
+      runInEditMode: boolean;
+      enabled: boolean;
+      isActiveAndEnabled: boolean;
+      transform: UnityEngine.Transform;
+      gameObject: UnityEngine.GameObject;
+      tag: string;
+      rigidbody: UnityEngine.Component;
+      rigidbody2D: UnityEngine.Component;
+      camera: UnityEngine.Component;
+      light: UnityEngine.Component;
+      animation: UnityEngine.Component;
+      constantForce: UnityEngine.Component;
+      renderer: UnityEngine.Component;
+      audio: UnityEngine.Component;
+      networkView: UnityEngine.Component;
+      collider: UnityEngine.Component;
+      collider2D: UnityEngine.Component;
+      hingeJoint: UnityEngine.Component;
+      particleSystem: UnityEngine.Component;
+      name: string;
+      hideFlags: UnityEngine.HideFlags;
+      static PlayerJoinedMessage: string;
+      static PlayerLeftMessage: string;
+      EnableJoining(): void;
+      DisableJoining(): void;
+      JoinPlayerFromAction(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      JoinPlayerFromActionIfNotAlreadyJoined(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      JoinPlayer(playerIndex?: number, splitScreenIndex?: number, controlScheme?: string, pairWithDevice?: UnityEngine.InputSystem.InputDevice): UnityEngine.InputSystem.PlayerInput;
+      JoinPlayer(playerIndex?: number, splitScreenIndex?: number, controlScheme?: string, ...pairWithDevices: UnityEngine.InputSystem.InputDevice[]): UnityEngine.InputSystem.PlayerInput;
+      IsInvoking(): boolean;
+      CancelInvoke(): void;
+      Invoke(methodName: string, time: number): void;
+      InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+      CancelInvoke(methodName: string): void;
+      IsInvoking(methodName: string): boolean;
+      StartCoroutine(methodName: string): UnityEngine.Coroutine;
+      StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+      StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+      StopCoroutine(routine: System.Collections.IEnumerator): void;
+      StopCoroutine(routine: UnityEngine.Coroutine): void;
+      StopCoroutine(methodName: string): void;
+      StopAllCoroutines(): void;
+      GetComponent(type: System.Type): UnityEngine.Component;
+      GetComponent(type: string): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInChildren(t: System.Type): UnityEngine.Component;
+      GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+      GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+      GetComponentInParent(t: System.Type): UnityEngine.Component;
+      GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+      GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type): UnityEngine.Component[];
+      GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+      CompareTag(tag: string): boolean;
+      SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+      SendMessageUpwards(methodName: string, value: any): void;
+      SendMessageUpwards(methodName: string): void;
+      SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, value: any): void;
+      SendMessage(methodName: string): void;
+      SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+      SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+      BroadcastMessage(methodName: string, parameter: any): void;
+      BroadcastMessage(methodName: string): void;
+      BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+      GetInstanceID(): number;
+      GetHashCode(): number;
+      Equals(other: any): boolean;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum PlayerJoinBehavior {
+      JoinPlayersWhenButtonIsPressed = 0,
+      JoinPlayersWhenJoinActionIsTriggered = 1,
+      JoinPlayersManually = 2,
+    }
+    export enum PlayerNotifications {
+      SendMessages = 0,
+      BroadcastMessages = 1,
+      InvokeUnityEvents = 2,
+      InvokeCSharpEvents = 3,
+    }
+    export class InputAction_CallbackContext {
+      phase: UnityEngine.InputSystem.InputActionPhase;
+      started: boolean;
+      performed: boolean;
+      canceled: boolean;
+      action: UnityEngine.InputSystem.InputAction;
+      control: UnityEngine.InputSystem.InputControl;
+      interaction: UnityEngine.InputSystem.IInputInteraction;
+      time: number;
+      startTime: number;
+      duration: number;
+      valueType: System.Type;
+      valueSizeInBytes: number;
+      ReadValueAsButton(): boolean;
+      ReadValueAsObject(): any;
+      ToString(): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class InputActionRebindingExtensions_RebindingOperation {
+      constructor();
+      action: UnityEngine.InputSystem.InputAction;
+      bindingMask?: System.Nullable<UnityEngine.InputSystem.InputBinding>;
+      candidates: UnityEngine.InputSystem.InputControl[];
+      scores: UnityEngine.InputSystem.Utilities.ReadOnlyArray<number>;
+      magnitudes: UnityEngine.InputSystem.Utilities.ReadOnlyArray<number>;
+      selectedControl: UnityEngine.InputSystem.InputControl;
+      started: boolean;
+      completed: boolean;
+      canceled: boolean;
+      startTime: number;
+      timeout: number;
+      expectedControlType: string;
+      static kDefaultMagnitudeThreshold: number;
+      WithAction(action: UnityEngine.InputSystem.InputAction): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithMatchingEventsBeingSuppressed(value?: boolean): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithCancelingThrough(binding: string): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithCancelingThrough(control: UnityEngine.InputSystem.InputControl): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithExpectedControlType(layoutName: string): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithExpectedControlType(type: System.Type): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithTargetBinding(bindingIndex: number): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithBindingMask(bindingMask: System.Nullable<UnityEngine.InputSystem.InputBinding>): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithBindingGroup(group: string): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithoutGeneralizingPathOfSelectedControl(): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithRebindAddingNewBinding(group?: string): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithMagnitudeHavingToBeGreaterThan(magnitude: number): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithoutIgnoringNoisyControls(): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithControlsHavingToMatchPath(path: string): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithControlsExcluding(path: string): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      WithTimeout(timeInSeconds: number): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      OnComplete(callback: ((arg0: UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation) => void)): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      OnCancel(callback: ((arg0: UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation) => void)): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      OnPotentialMatch(callback: ((arg0: UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation) => void)): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      OnGeneratePath(callback: ((arg0: UnityEngine.InputSystem.InputControl) => string)): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      OnComputeScore(callback: ((arg0: UnityEngine.InputSystem.InputControl, arg1: any) => number)): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      OnApplyBinding(callback: ((arg0: UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation, arg1: string) => void)): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      OnMatchWaitForAnother(seconds: number): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      Start(): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      Cancel(): void;
+      Complete(): void;
+      AddCandidate(control: UnityEngine.InputSystem.InputControl, score: number, magnitude?: number): void;
+      RemoveCandidate(control: UnityEngine.InputSystem.InputControl): void;
+      Dispose(): void;
+      Reset(): UnityEngine.InputSystem.InputActionRebindingExtensions_RebindingOperation;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class InputActionSetupExtensions_BindingSyntax {
+      valid: boolean;
+      bindingIndex: number;
+      binding: UnityEngine.InputSystem.InputBinding;
+      WithName(name: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      WithPath(path: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      WithGroup(group: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      WithGroups(groups: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      WithInteraction(interaction: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      WithInteractions(interactions: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      WithProcessor(processor: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      WithProcessors(processors: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      Triggering(action: UnityEngine.InputSystem.InputAction): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      To(binding: UnityEngine.InputSystem.InputBinding): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      NextBinding(): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      PreviousBinding(): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      NextPartBinding(partName: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      PreviousPartBinding(partName: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      NextCompositeBinding(compositeName?: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      PreviousCompositeBinding(compositeName?: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      Erase(): void;
+      InsertPartBinding(partName: string, path: string): UnityEngine.InputSystem.InputActionSetupExtensions_BindingSyntax;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputActionSetupExtensions_CompositeSyntax {
+      bindingIndex: number;
+      With(name: string, binding: string, groups?: string, processors?: string): UnityEngine.InputSystem.InputActionSetupExtensions_CompositeSyntax;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputActionSetupExtensions_ControlSchemeSyntax {
+      WithBindingGroup(bindingGroup: string): UnityEngine.InputSystem.InputActionSetupExtensions_ControlSchemeSyntax;
+      WithRequiredDevice(controlPath: string): UnityEngine.InputSystem.InputActionSetupExtensions_ControlSchemeSyntax;
+      WithOptionalDevice(controlPath: string): UnityEngine.InputSystem.InputActionSetupExtensions_ControlSchemeSyntax;
+      OrWithRequiredDevice(controlPath: string): UnityEngine.InputSystem.InputActionSetupExtensions_ControlSchemeSyntax;
+      OrWithOptionalDevice(controlPath: string): UnityEngine.InputSystem.InputActionSetupExtensions_ControlSchemeSyntax;
+      Done(): UnityEngine.InputSystem.InputControlScheme;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum InputBinding_DisplayStringOptions {
+      DontUseShortDisplayNames = 1,
+      DontOmitDevice = 2,
+      DontIncludeInteractions = 4,
+      IgnoreBindingOverrides = 8,
+    }
+    export class InputBindingCompositeContext_PartBinding {
+      part: number;
+      control: UnityEngine.InputSystem.InputControl;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputControlScheme_MatchResult {
+      [key: string]: any;
+      score: number;
+      isSuccessfulMatch: boolean;
+      hasMissingRequiredDevices: boolean;
+      hasMissingOptionalDevices: boolean;
+      devices: UnityEngine.InputSystem.InputDevice[];
+      GetEnumerator(): System.Collections.Generic.IEnumerator<UnityEngine.InputSystem.InputControlScheme_MatchResult_Match>;
+      Dispose(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputControlScheme_DeviceRequirement {
+      controlPath: string;
+      isOptional: boolean;
+      isAND: boolean;
+      isOR: boolean;
+      ToString(): string;
+      Equals(other: UnityEngine.InputSystem.InputControlScheme_DeviceRequirement): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export enum InputControlExtensions_Enumerate {
+      IgnoreControlsInDefaultState = 1,
+      IgnoreControlsInCurrentState = 2,
+      IncludeSyntheticControls = 4,
+      IncludeNoisyControls = 8,
+      IncludeNonLeafControls = 16,
+    }
+    export class InputControlExtensions_InputEventControlCollection {
+      eventPtr: any; // UnityEngine.InputSystem.LowLevel.InputEventPtr
+      GetEnumerator(): UnityEngine.InputSystem.InputControlExtensions_InputEventControlEnumerator;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputControlExtensions_InputEventControlEnumerator {
+      Current: UnityEngine.InputSystem.InputControl;
+      MoveNext(): boolean;
+      Reset(): void;
+      Dispose(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputControlExtensions_ControlBuilder {
+      control: UnityEngine.InputSystem.InputControl;
+      At(device: UnityEngine.InputSystem.InputDevice, index: number): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithParent(parent: UnityEngine.InputSystem.InputControl): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithName(name: string): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithDisplayName(displayName: string): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithShortDisplayName(shortDisplayName: string): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithLayout(layout: UnityEngine.InputSystem.Utilities.InternedString): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithUsages(startIndex: number, count: number): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithAliases(startIndex: number, count: number): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithChildren(startIndex: number, count: number): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithStateBlock(stateBlock: any): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithDefaultState(value: UnityEngine.InputSystem.Utilities.PrimitiveValue): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      WithMinAndMax(min: UnityEngine.InputSystem.Utilities.PrimitiveValue, max: UnityEngine.InputSystem.Utilities.PrimitiveValue): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      IsNoisy(value: boolean): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      IsSynthetic(value: boolean): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      IsButton(value: boolean): UnityEngine.InputSystem.InputControlExtensions_ControlBuilder;
+      Finish(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputControlExtensions_DeviceBuilder {
+      device: UnityEngine.InputSystem.InputDevice;
+      WithName(name: string): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      WithDisplayName(displayName: string): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      WithShortDisplayName(shortDisplayName: string): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      WithLayout(layout: UnityEngine.InputSystem.Utilities.InternedString): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      WithChildren(startIndex: number, count: number): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      WithStateBlock(stateBlock: any): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      IsNoisy(value: boolean): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      WithControlUsage(controlIndex: number, usage: UnityEngine.InputSystem.Utilities.InternedString, control: UnityEngine.InputSystem.InputControl): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      WithControlAlias(controlIndex: number, alias: UnityEngine.InputSystem.Utilities.InternedString): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      WithStateOffsetToControlIndexMap(map: System.UInt32[]): UnityEngine.InputSystem.InputControlExtensions_DeviceBuilder;
+      Finish(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum InputControlPath_HumanReadableStringOptions {
+      None = 0,
+      OmitDevice = 2,
+      UseShortNames = 4,
+    }
+    export class InputControlPath_ParsedPathComponent {
+      layout: string;
+      usages: System.Collections.Generic.IEnumerable<string>;
+      name: string;
+      displayName: string;
+      Matches(control: UnityEngine.InputSystem.InputControl): boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum InputRemoting_MessageType {
+      Connect = 0,
+      Disconnect = 1,
+      NewLayout = 2,
+      NewDevice = 3,
+      NewEvents = 4,
+      RemoveDevice = 5,
+      RemoveLayout = 6,
+      ChangeUsages = 7,
+      StartSending = 8,
+      StopSending = 9,
+    }
+    export class InputRemoting_Message {
+      participantId: number;
+      type: UnityEngine.InputSystem.InputRemoting_MessageType;
+      data: System.Byte[];
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum InputSettings_UpdateMode {
+      ProcessEventsInDynamicUpdate = 1,
+      ProcessEventsInFixedUpdate = 2,
+      ProcessEventsManually = 3,
+    }
+    export class InputSettings_iOSSettings {
+      constructor();
+      motionUsage: UnityEngine.InputSystem.iOS.PrivacyDataUsage;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class DefaultInputActions_PlayerActions {
+      constructor(wrapper: UnityEngine.InputSystem.DefaultInputActions);
+      Move: UnityEngine.InputSystem.InputAction;
+      Look: UnityEngine.InputSystem.InputAction;
+      Fire: UnityEngine.InputSystem.InputAction;
+      enabled: boolean;
+      Get(): UnityEngine.InputSystem.InputActionMap;
+      Enable(): void;
+      Disable(): void;
+      SetCallbacks(instance: UnityEngine.InputSystem.DefaultInputActions_IPlayerActions): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class DefaultInputActions_UIActions {
+      constructor(wrapper: UnityEngine.InputSystem.DefaultInputActions);
+      Navigate: UnityEngine.InputSystem.InputAction;
+      Submit: UnityEngine.InputSystem.InputAction;
+      Cancel: UnityEngine.InputSystem.InputAction;
+      Point: UnityEngine.InputSystem.InputAction;
+      Click: UnityEngine.InputSystem.InputAction;
+      ScrollWheel: UnityEngine.InputSystem.InputAction;
+      MiddleClick: UnityEngine.InputSystem.InputAction;
+      RightClick: UnityEngine.InputSystem.InputAction;
+      TrackedDevicePosition: UnityEngine.InputSystem.InputAction;
+      TrackedDeviceOrientation: UnityEngine.InputSystem.InputAction;
+      enabled: boolean;
+      Get(): UnityEngine.InputSystem.InputActionMap;
+      Enable(): void;
+      Disable(): void;
+      SetCallbacks(instance: UnityEngine.InputSystem.DefaultInputActions_IUIActions): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export interface DefaultInputActions_IPlayerActions {
+      OnMove(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnLook(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnFire(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+    }
+    export interface DefaultInputActions_IUIActions {
+      OnNavigate(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnSubmit(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnCancel(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnPoint(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnClick(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnScrollWheel(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnMiddleClick(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnRightClick(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnTrackedDevicePosition(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      OnTrackedDeviceOrientation(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+    }
+    export class PlayerInput_ActionEvent {
+      constructor();
+      constructor(action: UnityEngine.InputSystem.InputAction);
+      constructor(actionGUID: System.Guid, name?: string);
+      actionId: string;
+      actionName: string;
+      AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.InputAction_CallbackContext>): void;
+      RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.InputAction_CallbackContext>): void;
+      Invoke(arg0: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+      GetPersistentEventCount(): number;
+      GetPersistentTarget(index: number): UnityEngine.Object;
+      GetPersistentMethodName(index: number): string;
+      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
+      RemoveAllListeners(): void;
+      ToString(): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class PlayerInput_DeviceLostEvent {
+      constructor();
+      AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      Invoke(arg0: UnityEngine.InputSystem.PlayerInput): void;
+      GetPersistentEventCount(): number;
+      GetPersistentTarget(index: number): UnityEngine.Object;
+      GetPersistentMethodName(index: number): string;
+      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
+      RemoveAllListeners(): void;
+      ToString(): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class PlayerInput_DeviceRegainedEvent {
+      constructor();
+      AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      Invoke(arg0: UnityEngine.InputSystem.PlayerInput): void;
+      GetPersistentEventCount(): number;
+      GetPersistentTarget(index: number): UnityEngine.Object;
+      GetPersistentMethodName(index: number): string;
+      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
+      RemoveAllListeners(): void;
+      ToString(): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class PlayerInput_ControlsChangedEvent {
+      constructor();
+      AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      Invoke(arg0: UnityEngine.InputSystem.PlayerInput): void;
+      GetPersistentEventCount(): number;
+      GetPersistentTarget(index: number): UnityEngine.Object;
+      GetPersistentMethodName(index: number): string;
+      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
+      RemoveAllListeners(): void;
+      ToString(): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class PlayerInputManager_PlayerJoinedEvent {
+      constructor();
+      AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      Invoke(arg0: UnityEngine.InputSystem.PlayerInput): void;
+      GetPersistentEventCount(): number;
+      GetPersistentTarget(index: number): UnityEngine.Object;
+      GetPersistentMethodName(index: number): string;
+      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
+      RemoveAllListeners(): void;
+      ToString(): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class PlayerInputManager_PlayerLeftEvent {
+      constructor();
+      AddListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      RemoveListener(call: UnityEngine.Events.UnityAction<UnityEngine.InputSystem.PlayerInput>): void;
+      Invoke(arg0: UnityEngine.InputSystem.PlayerInput): void;
+      GetPersistentEventCount(): number;
+      GetPersistentTarget(index: number): UnityEngine.Object;
+      GetPersistentMethodName(index: number): string;
+      SetPersistentListenerState(index: number, state: UnityEngine.Events.UnityEventCallState): void;
+      GetPersistentListenerState(index: number): UnityEngine.Events.UnityEventCallState;
+      RemoveAllListeners(): void;
+      ToString(): string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+    }
+    export class InputControlScheme_MatchResult_Match {
+      control: UnityEngine.InputSystem.InputControl;
+      device: UnityEngine.InputSystem.InputDevice;
+      requirementIndex: number;
+      requirement: UnityEngine.InputSystem.InputControlScheme_DeviceRequirement;
+      isOptional: boolean;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export namespace Android {
+      export class AndroidGamepad {
+        constructor();
+        [key: string]: any;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidJoystick {
+        constructor();
+        [key: string]: any;
+        trigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        stick: UnityEngine.InputSystem.Controls.StickControl;
+        twist: UnityEngine.InputSystem.Controls.AxisControl;
+        hatswitch: UnityEngine.InputSystem.Controls.Vector2Control;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidAccelerometer {
+        constructor();
+        [key: string]: any;
+        acceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidMagneticFieldSensor {
+        constructor();
+        [key: string]: any;
+        magneticField: UnityEngine.InputSystem.Controls.Vector3Control;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidGyroscope {
+        constructor();
+        [key: string]: any;
+        angularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidLightSensor {
+        constructor();
+        [key: string]: any;
+        lightLevel: UnityEngine.InputSystem.Controls.AxisControl;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidPressureSensor {
+        constructor();
+        [key: string]: any;
+        atmosphericPressure: UnityEngine.InputSystem.Controls.AxisControl;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidProximity {
+        constructor();
+        [key: string]: any;
+        distance: UnityEngine.InputSystem.Controls.AxisControl;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidGravitySensor {
+        constructor();
+        [key: string]: any;
+        gravity: UnityEngine.InputSystem.Controls.Vector3Control;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidLinearAccelerationSensor {
+        constructor();
+        [key: string]: any;
+        acceleration: UnityEngine.InputSystem.Controls.Vector3Control;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidRotationVector {
+        constructor();
+        [key: string]: any;
+        attitude: UnityEngine.InputSystem.Controls.QuaternionControl;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidRelativeHumidity {
+        constructor();
+        [key: string]: any;
+        relativeHumidity: UnityEngine.InputSystem.Controls.AxisControl;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidAmbientTemperature {
+        constructor();
+        [key: string]: any;
+        ambientTemperature: UnityEngine.InputSystem.Controls.AxisControl;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AndroidStepCounter {
+        constructor();
+        [key: string]: any;
+        stepCounter: UnityEngine.InputSystem.Controls.IntegerControl;
+        samplingFrequency: number;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+    }
+    export namespace Composites {
+      export class AxisComposite {
+        constructor();
+        midPoint: number;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        negative: number;
+        positive: number;
+        minValue: number;
+        maxValue: number;
+        whichSideWins: UnityEngine.InputSystem.Composites.AxisComposite_WhichSideWins;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ButtonWithOneModifier {
+        constructor();
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        modifier: number;
+        button: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class ButtonWithTwoModifiers {
+        constructor();
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        modifier1: number;
+        modifier2: number;
+        button: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class OneModifierComposite {
+        constructor();
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        modifier: number;
+        binding: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class TwoModifiersComposite {
+        constructor();
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        modifier1: number;
+        modifier2: number;
+        binding: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector2Composite {
+        constructor();
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        up: number;
+        down: number;
+        left: number;
+        right: number;
+        normalize: boolean;
+        mode: UnityEngine.InputSystem.Composites.Vector2Composite_Mode;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Vector3Composite {
+        constructor();
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        up: number;
+        down: number;
+        left: number;
+        right: number;
+        forward: number;
+        backward: number;
+        mode: UnityEngine.InputSystem.Composites.Vector3Composite_Mode;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export enum AxisComposite_WhichSideWins {
+        Neither = 0,
+        Positive = 1,
+        Negative = 2,
+      }
+      export enum Vector2Composite_Mode {
+        Analog = 2,
+        DigitalNormalized = 0,
+        Digital = 1,
+      }
+      export enum Vector3Composite_Mode {
+        Analog = 0,
+        DigitalNormalized = 1,
+        Digital = 2,
+      }
+    }
+    export namespace Controls {
+      export class AnyKeyControl {
+        constructor();
+        [key: string]: any;
+        pressPointOrDefault: number;
+        isPressed: boolean;
+        wasPressedThisFrame: boolean;
+        wasReleasedThisFrame: boolean;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        pressPoint: number;
+        clamp: UnityEngine.InputSystem.Controls.AxisControl_Clamp;
+        clampMin: number;
+        clampMax: number;
+        clampConstant: number;
+        invert: boolean;
+        normalize: boolean;
+        normalizeMin: number;
+        normalizeMax: number;
+        normalizeZero: number;
+        scale: boolean;
+        scaleFactor: number;
+        IsValueConsideredPressed(value: number): boolean;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class AxisControl {
+        constructor();
+        [key: string]: any;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        clamp: UnityEngine.InputSystem.Controls.AxisControl_Clamp;
+        clampMin: number;
+        clampMax: number;
+        clampConstant: number;
+        invert: boolean;
+        normalize: boolean;
+        normalizeMin: number;
+        normalizeMax: number;
+        normalizeZero: number;
+        scale: boolean;
+        scaleFactor: number;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ButtonControl {
+        constructor();
+        [key: string]: any;
+        pressPointOrDefault: number;
+        isPressed: boolean;
+        wasPressedThisFrame: boolean;
+        wasReleasedThisFrame: boolean;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        pressPoint: number;
+        clamp: UnityEngine.InputSystem.Controls.AxisControl_Clamp;
+        clampMin: number;
+        clampMax: number;
+        clampConstant: number;
+        invert: boolean;
+        normalize: boolean;
+        normalizeMin: number;
+        normalizeMax: number;
+        normalizeZero: number;
+        scale: boolean;
+        scaleFactor: number;
+        IsValueConsideredPressed(value: number): boolean;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class DiscreteButtonControl {
+        constructor();
+        [key: string]: any;
+        pressPointOrDefault: number;
+        isPressed: boolean;
+        wasPressedThisFrame: boolean;
+        wasReleasedThisFrame: boolean;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        minValue: number;
+        maxValue: number;
+        wrapAtValue: number;
+        nullValue: number;
+        pressPoint: number;
+        clamp: UnityEngine.InputSystem.Controls.AxisControl_Clamp;
+        clampMin: number;
+        clampMax: number;
+        clampConstant: number;
+        invert: boolean;
+        normalize: boolean;
+        normalizeMin: number;
+        normalizeMax: number;
+        normalizeZero: number;
+        scale: boolean;
+        scaleFactor: number;
+        IsValueConsideredPressed(value: number): boolean;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class DoubleControl {
+        constructor();
+        [key: string]: any;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class DpadControl {
+        constructor();
+        [key: string]: any;
+        up: UnityEngine.InputSystem.Controls.ButtonControl;
+        down: UnityEngine.InputSystem.Controls.ButtonControl;
+        left: UnityEngine.InputSystem.Controls.ButtonControl;
+        right: UnityEngine.InputSystem.Controls.ButtonControl;
+        x: UnityEngine.InputSystem.Controls.AxisControl;
+        y: UnityEngine.InputSystem.Controls.AxisControl;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        static MakeDpadVector(up: boolean, down: boolean, left: boolean, right: boolean, normalize?: boolean): UnityEngine.Vector2;
+        static MakeDpadVector(up: number, down: number, left: number, right: number): UnityEngine.Vector2;
+        ReadValue(): UnityEngine.Vector2;
+        ReadValueFromPreviousFrame(): UnityEngine.Vector2;
+        ReadDefaultValue(): UnityEngine.Vector2;
+        ReadUnprocessedValue(): UnityEngine.Vector2;
+        ProcessValue(value: UnityEngine.Vector2): UnityEngine.Vector2;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class IntegerControl {
+        constructor();
+        [key: string]: any;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class KeyControl {
+        constructor();
+        [key: string]: any;
+        keyCode: UnityEngine.InputSystem.Key;
+        scanCode: number;
+        pressPointOrDefault: number;
+        isPressed: boolean;
+        wasPressedThisFrame: boolean;
+        wasReleasedThisFrame: boolean;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        pressPoint: number;
+        clamp: UnityEngine.InputSystem.Controls.AxisControl_Clamp;
+        clampMin: number;
+        clampMax: number;
+        clampConstant: number;
+        invert: boolean;
+        normalize: boolean;
+        normalizeMin: number;
+        normalizeMax: number;
+        normalizeZero: number;
+        scale: boolean;
+        scaleFactor: number;
+        IsValueConsideredPressed(value: number): boolean;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class QuaternionControl {
+        constructor();
+        [key: string]: any;
+        x: UnityEngine.InputSystem.Controls.AxisControl;
+        y: UnityEngine.InputSystem.Controls.AxisControl;
+        z: UnityEngine.InputSystem.Controls.AxisControl;
+        w: UnityEngine.InputSystem.Controls.AxisControl;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): UnityEngine.Quaternion;
+        ReadValueFromPreviousFrame(): UnityEngine.Quaternion;
+        ReadDefaultValue(): UnityEngine.Quaternion;
+        ReadUnprocessedValue(): UnityEngine.Quaternion;
+        ProcessValue(value: UnityEngine.Quaternion): UnityEngine.Quaternion;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class StickControl {
+        constructor();
+        [key: string]: any;
+        up: UnityEngine.InputSystem.Controls.ButtonControl;
+        down: UnityEngine.InputSystem.Controls.ButtonControl;
+        left: UnityEngine.InputSystem.Controls.ButtonControl;
+        right: UnityEngine.InputSystem.Controls.ButtonControl;
+        x: UnityEngine.InputSystem.Controls.AxisControl;
+        y: UnityEngine.InputSystem.Controls.AxisControl;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): UnityEngine.Vector2;
+        ReadValueFromPreviousFrame(): UnityEngine.Vector2;
+        ReadDefaultValue(): UnityEngine.Vector2;
+        ReadUnprocessedValue(): UnityEngine.Vector2;
+        ProcessValue(value: UnityEngine.Vector2): UnityEngine.Vector2;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class TouchControl {
+        constructor();
+        [key: string]: any;
+        press: UnityEngine.InputSystem.Controls.TouchPressControl;
+        touchId: UnityEngine.InputSystem.Controls.IntegerControl;
+        position: UnityEngine.InputSystem.Controls.Vector2Control;
+        delta: UnityEngine.InputSystem.Controls.Vector2Control;
+        pressure: UnityEngine.InputSystem.Controls.AxisControl;
+        radius: UnityEngine.InputSystem.Controls.Vector2Control;
+        phase: UnityEngine.InputSystem.Controls.TouchPhaseControl;
+        indirectTouch: UnityEngine.InputSystem.Controls.ButtonControl;
+        tap: UnityEngine.InputSystem.Controls.ButtonControl;
+        tapCount: UnityEngine.InputSystem.Controls.IntegerControl;
+        startTime: UnityEngine.InputSystem.Controls.DoubleControl;
+        startPosition: UnityEngine.InputSystem.Controls.Vector2Control;
+        isInProgress: boolean;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): any;
+        ReadValueFromPreviousFrame(): any;
+        ReadDefaultValue(): any;
+        ReadUnprocessedValue(): any;
+        ProcessValue(value: any): any;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class TouchPhaseControl {
+        constructor();
+        [key: string]: any;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): UnityEngine.InputSystem.TouchPhase;
+        ReadValueFromPreviousFrame(): UnityEngine.InputSystem.TouchPhase;
+        ReadDefaultValue(): UnityEngine.InputSystem.TouchPhase;
+        ReadUnprocessedValue(): UnityEngine.InputSystem.TouchPhase;
+        ProcessValue(value: UnityEngine.InputSystem.TouchPhase): UnityEngine.InputSystem.TouchPhase;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class TouchPressControl {
+        constructor();
+        [key: string]: any;
+        pressPointOrDefault: number;
+        isPressed: boolean;
+        wasPressedThisFrame: boolean;
+        wasReleasedThisFrame: boolean;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        pressPoint: number;
+        clamp: UnityEngine.InputSystem.Controls.AxisControl_Clamp;
+        clampMin: number;
+        clampMax: number;
+        clampConstant: number;
+        invert: boolean;
+        normalize: boolean;
+        normalizeMin: number;
+        normalizeMax: number;
+        normalizeZero: number;
+        scale: boolean;
+        scaleFactor: number;
+        IsValueConsideredPressed(value: number): boolean;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class Vector2Control {
+        constructor();
+        [key: string]: any;
+        x: UnityEngine.InputSystem.Controls.AxisControl;
+        y: UnityEngine.InputSystem.Controls.AxisControl;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): UnityEngine.Vector2;
+        ReadValueFromPreviousFrame(): UnityEngine.Vector2;
+        ReadDefaultValue(): UnityEngine.Vector2;
+        ReadUnprocessedValue(): UnityEngine.Vector2;
+        ProcessValue(value: UnityEngine.Vector2): UnityEngine.Vector2;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class Vector3Control {
+        constructor();
+        [key: string]: any;
+        x: UnityEngine.InputSystem.Controls.AxisControl;
+        y: UnityEngine.InputSystem.Controls.AxisControl;
+        z: UnityEngine.InputSystem.Controls.AxisControl;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): UnityEngine.Vector3;
+        ReadValueFromPreviousFrame(): UnityEngine.Vector3;
+        ReadDefaultValue(): UnityEngine.Vector3;
+        ReadUnprocessedValue(): UnityEngine.Vector3;
+        ProcessValue(value: UnityEngine.Vector3): UnityEngine.Vector3;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export enum AxisControl_Clamp {
+        None = 0,
+        BeforeNormalize = 1,
+        AfterNormalize = 2,
+        ToConstantBeforeNormalize = 3,
+      }
+      export class DpadControl_DpadAxisControl {
+        constructor();
+        [key: string]: any;
+        component: number;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        clamp: UnityEngine.InputSystem.Controls.AxisControl_Clamp;
+        clampMin: number;
+        clampMax: number;
+        clampConstant: number;
+        invert: boolean;
+        normalize: boolean;
+        normalizeMin: number;
+        normalizeMax: number;
+        normalizeZero: number;
+        scale: boolean;
+        scaleFactor: number;
+        ReadValue(): number;
+        ReadValueFromPreviousFrame(): number;
+        ReadDefaultValue(): number;
+        ReadUnprocessedValue(): number;
+        ProcessValue(value: number): number;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+    }
+    export namespace DualShock {
+      export class DualShockGamepad {
+        constructor();
+        [key: string]: any;
+        touchpadButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        optionsButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        shareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        L1: UnityEngine.InputSystem.Controls.ButtonControl;
+        R1: UnityEngine.InputSystem.Controls.ButtonControl;
+        L2: UnityEngine.InputSystem.Controls.ButtonControl;
+        R2: UnityEngine.InputSystem.Controls.ButtonControl;
+        L3: UnityEngine.InputSystem.Controls.ButtonControl;
+        R3: UnityEngine.InputSystem.Controls.ButtonControl;
+        static current: UnityEngine.InputSystem.DualShock.DualShockGamepad;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        SetLightBarColor(color: UnityEngine.Color): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class DualShock4GamepadHID {
+        constructor();
+        [key: string]: any;
+        leftTriggerButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTriggerButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        playStationButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        touchpadButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        optionsButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        shareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        L1: UnityEngine.InputSystem.Controls.ButtonControl;
+        R1: UnityEngine.InputSystem.Controls.ButtonControl;
+        L2: UnityEngine.InputSystem.Controls.ButtonControl;
+        R2: UnityEngine.InputSystem.Controls.ButtonControl;
+        L3: UnityEngine.InputSystem.Controls.ButtonControl;
+        R3: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        PauseHaptics(): void;
+        ResetHaptics(): void;
+        ResumeHaptics(): void;
+        SetLightBarColor(color: UnityEngine.Color): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class DualShock3GamepadHID {
+        constructor();
+        [key: string]: any;
+        leftTriggerButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTriggerButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        playStationButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        touchpadButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        optionsButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        shareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        L1: UnityEngine.InputSystem.Controls.ButtonControl;
+        R1: UnityEngine.InputSystem.Controls.ButtonControl;
+        L2: UnityEngine.InputSystem.Controls.ButtonControl;
+        R2: UnityEngine.InputSystem.Controls.ButtonControl;
+        L3: UnityEngine.InputSystem.Controls.ButtonControl;
+        R3: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        SetLightBarColor(color: UnityEngine.Color): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export interface IDualShockHaptics {
+        SetLightBarColor(color: UnityEngine.Color): void;
+      }
+    }
+    export namespace Editor {
+      export class InputActionCodeGenerator {
+        static GenerateWrapperCode(asset: UnityEngine.InputSystem.InputActionAsset, options?: UnityEngine.InputSystem.Editor.InputActionCodeGenerator_Options): string;
+        static GenerateWrapperCode(filePath: string, asset: UnityEngine.InputSystem.InputActionAsset, options: UnityEngine.InputSystem.Editor.InputActionCodeGenerator_Options): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputControlPathEditor {
+        constructor(pathProperty: any, pickerState: UnityEngine.InputSystem.Editor.InputControlPickerState, onModified: (() => void), label?: UnityEngine.GUIContent);
+        pathProperty: any; // UnityEditor.SerializedProperty
+        onModified: (() => void);
+        Dispose(): void;
+        SetControlPathsToMatch(controlPaths: System.Collections.Generic.IEnumerable<string>): void;
+        SetExpectedControlLayout(expectedControlLayout: string): void;
+        SetExpectedControlLayoutFromAttribute(): void;
+        OnGUI(): void;
+        OnGUI(rect: UnityEngine.Rect): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputControlPicker {
+        constructor(mode: UnityEngine.InputSystem.Editor.InputControlPicker_Mode, onPick: ((arg0: string) => void), state: UnityEngine.InputSystem.Editor.InputControlPickerState);
+        state: UnityEngine.InputSystem.Editor.InputControlPickerState;
+        Show(rect: UnityEngine.Rect): void;
+        Dispose(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputControlPickerState {
+        constructor();
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputParameterEditor<TObject = any> {
+        target: TObject;
+        OnGUI(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputActionCodeGenerator_Options {
+        className: string;
+        namespaceName: string;
+        sourceAssetPath: string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export enum InputControlPicker_Mode {
+        PickControl = 0,
+        PickDevice = 1,
+      }
+    }
+    export namespace EnhancedTouch {
+      export class EnhancedTouchSupport {
+        static enabled: boolean;
+        static Enable(): void;
+        static Disable(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Finger {
+        screen: UnityEngine.InputSystem.Touchscreen;
+        index: number;
+        isActive: boolean;
+        screenPosition: UnityEngine.Vector2;
+        lastTouch: UnityEngine.InputSystem.EnhancedTouch.Touch;
+        currentTouch: UnityEngine.InputSystem.EnhancedTouch.Touch;
+        touchHistory: UnityEngine.InputSystem.EnhancedTouch.TouchHistory;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Touch {
+        valid: boolean;
+        finger: UnityEngine.InputSystem.EnhancedTouch.Finger;
+        phase: UnityEngine.InputSystem.TouchPhase;
+        began: boolean;
+        inProgress: boolean;
+        ended: boolean;
+        touchId: number;
+        pressure: number;
+        radius: UnityEngine.Vector2;
+        startTime: number;
+        time: number;
+        screen: UnityEngine.InputSystem.Touchscreen;
+        screenPosition: UnityEngine.Vector2;
+        startScreenPosition: UnityEngine.Vector2;
+        delta: UnityEngine.Vector2;
+        tapCount: number;
+        isTap: boolean;
+        isInProgress: boolean;
+        history: UnityEngine.InputSystem.EnhancedTouch.TouchHistory;
+        static activeTouches: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.EnhancedTouch.Touch]
+        static fingers: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.EnhancedTouch.Finger]
+        static activeFingers: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.EnhancedTouch.Finger]
+        static screens: any; // System.Collections.Generic.IEnumerable`1[UnityEngine.InputSystem.Touchscreen]
+        static maxHistoryLengthPerFinger: number;
+        ToString(): string;
+        Equals(other: UnityEngine.InputSystem.EnhancedTouch.Touch): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class TouchHistory {
+        [key: string]: any;
+        Count: number;
+        GetEnumerator(): System.Collections.Generic.IEnumerator<UnityEngine.InputSystem.EnhancedTouch.Touch>;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class TouchSimulation {
+        constructor();
+        simulatedTouchscreen: UnityEngine.InputSystem.Touchscreen;
+        static instance: UnityEngine.InputSystem.EnhancedTouch.TouchSimulation;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        static Enable(): void;
+        static Disable(): void;
+        static Destroy(): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+    }
+    export namespace Haptics {
+      export interface IDualMotorRumble {
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+      }
+      export interface IHaptics {
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+      }
+    }
+    export namespace HID {
+      export class HID {
+        constructor();
+        [key: string]: any;
+        static QueryHIDReportDescriptorDeviceCommandType: UnityEngine.InputSystem.Utilities.FourCC;
+        static QueryHIDReportDescriptorSizeDeviceCommandType: UnityEngine.InputSystem.Utilities.FourCC;
+        static QueryHIDParsedReportDescriptorDeviceCommandType: UnityEngine.InputSystem.Utilities.FourCC;
+        hidDescriptor: UnityEngine.InputSystem.HID.HID_HIDDeviceDescriptor;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        static UsagePageToString(usagePage: UnityEngine.InputSystem.HID.HID_UsagePage): string;
+        static UsageToString(usagePage: UnityEngine.InputSystem.HID.HID_UsagePage, usage: number): string;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class HIDSupport {
+        static supportedHIDUsages: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.HID.HIDSupport+HIDPageUsage]
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export enum HID_HIDReportType {
+        Unknown = 0,
+        Input = 1,
+        Output = 2,
+        Feature = 3,
+      }
+      export enum HID_HIDCollectionType {
+        Physical = 0,
+        Application = 1,
+        Logical = 2,
+        Report = 3,
+        NamedArray = 4,
+        UsageSwitch = 5,
+        UsageModifier = 6,
+      }
+      export enum HID_HIDElementFlags {
+        Constant = 1,
+        Variable = 2,
+        Relative = 4,
+        Wrap = 8,
+        NonLinear = 16,
+        NoPreferred = 32,
+        NullState = 64,
+        Volatile = 128,
+        BufferedBytes = 256,
+      }
+      export class HID_HIDElementDescriptor {
+        hasNullState: boolean;
+        hasPreferredState: boolean;
+        isArray: boolean;
+        isNonLinear: boolean;
+        isRelative: boolean;
+        isConstant: boolean;
+        isWrapping: boolean;
+        usage: number;
+        usagePage: UnityEngine.InputSystem.HID.HID_UsagePage;
+        unit: number;
+        unitExponent: number;
+        logicalMin: number;
+        logicalMax: number;
+        physicalMin: number;
+        physicalMax: number;
+        reportType: UnityEngine.InputSystem.HID.HID_HIDReportType;
+        collectionIndex: number;
+        reportId: number;
+        reportSizeInBits: number;
+        reportOffsetInBits: number;
+        flags: UnityEngine.InputSystem.HID.HID_HIDElementFlags;
+        usageMin?: number;
+        usageMax?: number;
+        Is(usagePage: UnityEngine.InputSystem.HID.HID_UsagePage, usage: number): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class HID_HIDCollectionDescriptor {
+        type: UnityEngine.InputSystem.HID.HID_HIDCollectionType;
+        usage: number;
+        usagePage: UnityEngine.InputSystem.HID.HID_UsagePage;
+        parent: number;
+        childCount: number;
+        firstChild: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class HID_HIDDeviceDescriptor {
+        vendorId: number;
+        productId: number;
+        usage: number;
+        usagePage: UnityEngine.InputSystem.HID.HID_UsagePage;
+        inputReportSize: number;
+        outputReportSize: number;
+        featureReportSize: number;
+        elements: UnityEngine.InputSystem.HID.HID_HIDElementDescriptor[];
+        collections: UnityEngine.InputSystem.HID.HID_HIDCollectionDescriptor[];
+        ToJson(): string;
+        static FromJson(json: string): UnityEngine.InputSystem.HID.HID_HIDDeviceDescriptor;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class HID_HIDDeviceDescriptorBuilder {
+        constructor(usagePage: UnityEngine.InputSystem.HID.HID_UsagePage, usage: number);
+        constructor(usage: UnityEngine.InputSystem.HID.HID_GenericDesktop);
+        usagePage: UnityEngine.InputSystem.HID.HID_UsagePage;
+        usage: number;
+        StartReport(reportType: UnityEngine.InputSystem.HID.HID_HIDReportType, reportId?: number): UnityEngine.InputSystem.HID.HID_HIDDeviceDescriptorBuilder;
+        AddElement(usagePage: UnityEngine.InputSystem.HID.HID_UsagePage, usage: number, sizeInBits: number): UnityEngine.InputSystem.HID.HID_HIDDeviceDescriptorBuilder;
+        AddElement(usage: UnityEngine.InputSystem.HID.HID_GenericDesktop, sizeInBits: number): UnityEngine.InputSystem.HID.HID_HIDDeviceDescriptorBuilder;
+        WithPhysicalMinMax(min: number, max: number): UnityEngine.InputSystem.HID.HID_HIDDeviceDescriptorBuilder;
+        WithLogicalMinMax(min: number, max: number): UnityEngine.InputSystem.HID.HID_HIDDeviceDescriptorBuilder;
+        Finish(): UnityEngine.InputSystem.HID.HID_HIDDeviceDescriptor;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export enum HID_UsagePage {
+        Undefined = 0,
+        GenericDesktop = 1,
+        Simulation = 2,
+        VRControls = 3,
+        SportControls = 4,
+        GameControls = 5,
+        GenericDeviceControls = 6,
+        Keyboard = 7,
+        LEDs = 8,
+        Button = 9,
+        Ordinal = 10,
+        Telephony = 11,
+        Consumer = 12,
+        Digitizer = 13,
+        PID = 15,
+        Unicode = 16,
+        AlphanumericDisplay = 20,
+        MedicalInstruments = 64,
+        Monitor = 128,
+        Power = 132,
+        BarCodeScanner = 140,
+        MagneticStripeReader = 142,
+        Camera = 144,
+        Arcade = 145,
+        VendorDefined = 65280,
+      }
+      export enum HID_GenericDesktop {
+        Undefined = 0,
+        Pointer = 1,
+        Mouse = 2,
+        Joystick = 4,
+        Gamepad = 5,
+        Keyboard = 6,
+        Keypad = 7,
+        MultiAxisController = 8,
+        TabletPCControls = 9,
+        AssistiveControl = 10,
+        X = 48,
+        Y = 49,
+        Z = 50,
+        Rx = 51,
+        Ry = 52,
+        Rz = 53,
+        Slider = 54,
+        Dial = 55,
+        Wheel = 56,
+        HatSwitch = 57,
+        CountedBuffer = 58,
+        ByteCount = 59,
+        MotionWakeup = 60,
+        Start = 61,
+        Select = 62,
+        Vx = 64,
+        Vy = 65,
+        Vz = 66,
+        Vbrx = 67,
+        Vbry = 68,
+        Vbrz = 69,
+        Vno = 70,
+        FeatureNotification = 71,
+        ResolutionMultiplier = 72,
+        SystemControl = 128,
+        SystemPowerDown = 129,
+        SystemSleep = 130,
+        SystemWakeUp = 131,
+        SystemContextMenu = 132,
+        SystemMainMenu = 133,
+        SystemAppMenu = 134,
+        SystemMenuHelp = 135,
+        SystemMenuExit = 136,
+        SystemMenuSelect = 137,
+        SystemMenuRight = 138,
+        SystemMenuLeft = 139,
+        SystemMenuUp = 140,
+        SystemMenuDown = 141,
+        SystemColdRestart = 142,
+        SystemWarmRestart = 143,
+        DpadUp = 144,
+        DpadDown = 145,
+        DpadRight = 146,
+        DpadLeft = 147,
+        SystemDock = 160,
+        SystemUndock = 161,
+        SystemSetup = 162,
+        SystemBreak = 163,
+        SystemDebuggerBreak = 164,
+        ApplicationBreak = 165,
+        ApplicationDebuggerBreak = 166,
+        SystemSpeakerMute = 167,
+        SystemHibernate = 168,
+        SystemDisplayInvert = 176,
+        SystemDisplayInternal = 177,
+        SystemDisplayExternal = 178,
+        SystemDisplayBoth = 179,
+        SystemDisplayDual = 180,
+        SystemDisplayToggleIntExt = 181,
+        SystemDisplaySwapPrimarySecondary = 182,
+        SystemDisplayLCDAutoScale = 183,
+      }
+      export enum HID_Simulation {
+        Undefined = 0,
+        FlightSimulationDevice = 1,
+        AutomobileSimulationDevice = 2,
+        TankSimulationDevice = 3,
+        SpaceshipSimulationDevice = 4,
+        SubmarineSimulationDevice = 5,
+        SailingSimulationDevice = 6,
+        MotorcycleSimulationDevice = 7,
+        SportsSimulationDevice = 8,
+        AirplaneSimulationDevice = 9,
+        HelicopterSimulationDevice = 10,
+        MagicCarpetSimulationDevice = 11,
+        BicylcleSimulationDevice = 12,
+        FlightControlStick = 32,
+        FlightStick = 33,
+        CyclicControl = 34,
+        CyclicTrim = 35,
+        FlightYoke = 36,
+        TrackControl = 37,
+        Aileron = 176,
+        AileronTrim = 177,
+        AntiTorqueControl = 178,
+        AutopilotEnable = 179,
+        ChaffRelease = 180,
+        CollectiveControl = 181,
+        DiveBreak = 182,
+        ElectronicCountermeasures = 183,
+        Elevator = 184,
+        ElevatorTrim = 185,
+        Rudder = 186,
+        Throttle = 187,
+        FlightCommunications = 188,
+        FlareRelease = 189,
+        LandingGear = 190,
+        ToeBreak = 191,
+        Trigger = 192,
+        WeaponsArm = 193,
+        WeaponsSelect = 194,
+        WingFlaps = 195,
+        Accelerator = 196,
+        Brake = 197,
+        Clutch = 198,
+        Shifter = 199,
+        Steering = 200,
+        TurretDirection = 201,
+        BarrelElevation = 202,
+        DivePlane = 203,
+        Ballast = 204,
+        BicycleCrank = 205,
+        HandleBars = 206,
+        FrontBrake = 207,
+        RearBrake = 208,
+      }
+      export enum HID_Button {
+        Undefined = 0,
+        Primary = 1,
+        Secondary = 2,
+        Tertiary = 3,
+      }
+      export class HIDSupport_HIDPageUsage {
+        constructor(page: UnityEngine.InputSystem.HID.HID_UsagePage, usage: number);
+        constructor(usage: UnityEngine.InputSystem.HID.HID_GenericDesktop);
+        page: UnityEngine.InputSystem.HID.HID_UsagePage;
+        usage: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+    }
+    export namespace Interactions {
+      export class HoldInteraction {
+        constructor();
+        duration: number;
+        pressPoint: number;
+        Reset(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class MultiTapInteraction {
+        constructor();
+        tapTime: number;
+        tapDelay: number;
+        tapCount: number;
+        pressPoint: number;
+        Reset(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class PressInteraction {
+        constructor();
+        pressPoint: number;
+        behavior: UnityEngine.InputSystem.Interactions.PressBehavior;
+        Reset(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export enum PressBehavior {
+        PressOnly = 0,
+        ReleaseOnly = 1,
+        PressAndRelease = 2,
+      }
+      export class SlowTapInteraction {
+        constructor();
+        duration: number;
+        pressPoint: number;
+        Reset(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class TapInteraction {
+        constructor();
+        duration: number;
+        pressPoint: number;
+        Reset(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+    }
+    export namespace iOS {
+      export class PrivacyDataUsage {
+        constructor();
+        enabled: boolean;
+        usageDescription: string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class iOSGameController {
+        constructor();
+        [key: string]: any;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class XboxOneGampadiOS {
+        constructor();
+        [key: string]: any;
+        menu: UnityEngine.InputSystem.Controls.ButtonControl;
+        view: UnityEngine.InputSystem.Controls.ButtonControl;
+        subType: UnityEngine.InputSystem.XInput.XInputController_DeviceSubType;
+        flags: UnityEngine.InputSystem.XInput.XInputController_DeviceFlags;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class DualShock4GampadiOS {
+        constructor();
+        [key: string]: any;
+        touchpadButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        optionsButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        shareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        L1: UnityEngine.InputSystem.Controls.ButtonControl;
+        R1: UnityEngine.InputSystem.Controls.ButtonControl;
+        L2: UnityEngine.InputSystem.Controls.ButtonControl;
+        R2: UnityEngine.InputSystem.Controls.ButtonControl;
+        L3: UnityEngine.InputSystem.Controls.ButtonControl;
+        R3: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        SetLightBarColor(color: UnityEngine.Color): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export namespace LowLevel {
+        export enum MotionAuthorizationStatus {
+          NotDetermined = 0,
+          Restricted = 1,
+          Denied = 2,
+          Authorized = 3,
+        }
+        export class iOSStepCounter {
+          constructor();
+          [key: string]: any;
+          static AuthorizationStatus: UnityEngine.InputSystem.iOS.LowLevel.MotionAuthorizationStatus;
+          stepCounter: UnityEngine.InputSystem.Controls.IntegerControl;
+          samplingFrequency: number;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          static IsAvailable(): boolean;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+      }
+    }
+    export namespace Layouts {
+      export class InputDeviceFindControlLayoutDelegate {
+        constructor(object: any, method: System.IntPtr);
+        Method: System.Reflection.MethodInfo;
+        Target: any; // System.Object
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetInvocationList(): System.Delegate[];
+        DynamicInvoke(...args: any[]): any;
+        Clone(): any;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputControlLayout {
+        [key: string]: any;
+        static DefaultVariant: UnityEngine.InputSystem.Utilities.InternedString;
+        name: UnityEngine.InputSystem.Utilities.InternedString;
+        displayName: string;
+        type: System.Type;
+        variants: UnityEngine.InputSystem.Utilities.InternedString;
+        stateFormat: UnityEngine.InputSystem.Utilities.FourCC;
+        stateSizeInBytes: number;
+        baseLayouts: System.Collections.Generic.IEnumerable<UnityEngine.InputSystem.Utilities.InternedString>;
+        appliedOverrides: System.Collections.Generic.IEnumerable<UnityEngine.InputSystem.Utilities.InternedString>;
+        commonUsages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        controls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Layouts.InputControlLayout_ControlItem>;
+        updateBeforeRender: boolean;
+        isDeviceLayout: boolean;
+        isControlLayout: boolean;
+        isOverride: boolean;
+        isGenericTypeOfDevice: boolean;
+        hideInUI: boolean;
+        static VariantSeparator: string;
+        FindControl(path: UnityEngine.InputSystem.Utilities.InternedString): System.Nullable<UnityEngine.InputSystem.Layouts.InputControlLayout_ControlItem>;
+        GetValueType(): System.Type;
+        static FromType(name: string, type: System.Type): UnityEngine.InputSystem.Layouts.InputControlLayout;
+        ToJson(): string;
+        static FromJson(json: string): UnityEngine.InputSystem.Layouts.InputControlLayout;
+        MergeLayout(other: UnityEngine.InputSystem.Layouts.InputControlLayout): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputDeviceDescription {
+        interfaceName: string;
+        deviceClass: string;
+        manufacturer: string;
+        product: string;
+        serial: string;
+        version: string;
+        capabilities: string;
+        empty: boolean;
+        ToString(): string;
+        Equals(other: UnityEngine.InputSystem.Layouts.InputDeviceDescription): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToJson(): string;
+        static FromJson(json: string): UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        GetType(): System.Type;
+      }
+      export class InputDeviceMatcher {
+        empty: boolean;
+        patterns: System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, any>>;
+        WithInterface(pattern: string, supportRegex?: boolean): UnityEngine.InputSystem.Layouts.InputDeviceMatcher;
+        WithDeviceClass(pattern: string, supportRegex?: boolean): UnityEngine.InputSystem.Layouts.InputDeviceMatcher;
+        WithManufacturer(pattern: string, supportRegex?: boolean): UnityEngine.InputSystem.Layouts.InputDeviceMatcher;
+        WithProduct(pattern: string, supportRegex?: boolean): UnityEngine.InputSystem.Layouts.InputDeviceMatcher;
+        WithVersion(pattern: string, supportRegex?: boolean): UnityEngine.InputSystem.Layouts.InputDeviceMatcher;
+        MatchPercentage(deviceDescription: UnityEngine.InputSystem.Layouts.InputDeviceDescription): number;
+        static FromDeviceDescription(deviceDescription: UnityEngine.InputSystem.Layouts.InputDeviceDescription): UnityEngine.InputSystem.Layouts.InputDeviceMatcher;
+        ToString(): string;
+        Equals(other: UnityEngine.InputSystem.Layouts.InputDeviceMatcher): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class InputControlLayout_ControlItem {
+        name: UnityEngine.InputSystem.Utilities.InternedString;
+        layout: UnityEngine.InputSystem.Utilities.InternedString;
+        variants: UnityEngine.InputSystem.Utilities.InternedString;
+        useStateFrom: string;
+        displayName: string;
+        shortDisplayName: string;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        parameters: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.NamedValue>;
+        processors: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.NameAndParameters>;
+        offset: System.UInt32;
+        bit: System.UInt32;
+        sizeInBits: System.UInt32;
+        format: UnityEngine.InputSystem.Utilities.FourCC;
+        arraySize: number;
+        defaultState: UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        minValue: UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        maxValue: UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        isModifyingExistingControl: boolean;
+        isNoisy: boolean;
+        isSynthetic: boolean;
+        isFirstDefinedInThisLayout: boolean;
+        isArray: boolean;
+        Merge(other: UnityEngine.InputSystem.Layouts.InputControlLayout_ControlItem): UnityEngine.InputSystem.Layouts.InputControlLayout_ControlItem;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class InputControlLayout_Builder {
+        constructor();
+        name: string;
+        displayName: string;
+        type: System.Type;
+        stateFormat: UnityEngine.InputSystem.Utilities.FourCC;
+        stateSizeInBytes: number;
+        extendsLayout: string;
+        updateBeforeRender?: boolean;
+        controls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Layouts.InputControlLayout_ControlItem>;
+        AddControl(name: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithName(name: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder;
+        WithDisplayName(displayName: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder;
+        WithFormat(format: UnityEngine.InputSystem.Utilities.FourCC): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder;
+        WithFormat(format: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder;
+        WithSizeInBytes(sizeInBytes: number): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder;
+        Extend(baseLayoutName: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder;
+        Build(): UnityEngine.InputSystem.Layouts.InputControlLayout;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputControlLayout_LayoutNotFoundException {
+        constructor();
+        constructor(name: string, message: string);
+        constructor(name: string);
+        constructor(message: string, innerException: System.Exception);
+        layout: string;
+        Message: string;
+        Data: System.Collections.IDictionary;
+        InnerException: System.Exception;
+        TargetSite: System.Reflection.MethodBase;
+        StackTrace: string;
+        HelpLink: string;
+        Source: string;
+        HResult: number;
+        GetBaseException(): System.Exception;
+        ToString(): string;
+        GetObjectData(info: System.Runtime.Serialization.SerializationInfo, context: System.Runtime.Serialization.StreamingContext): void;
+        GetType(): System.Type;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class InputControlLayout_Builder_ControlBuilder {
+        WithDisplayName(displayName: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithLayout(layout: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithFormat(format: UnityEngine.InputSystem.Utilities.FourCC): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithFormat(format: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithByteOffset(offset: System.UInt32): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithBitOffset(bit: System.UInt32): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        IsSynthetic(value: boolean): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        IsNoisy(value: boolean): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithSizeInBits(sizeInBits: System.UInt32): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithRange(minValue: number, maxValue: number): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithUsages(...usages: UnityEngine.InputSystem.Utilities.InternedString[]): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithUsages(usages: System.Collections.Generic.IEnumerable<string>): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithUsages(...usages: string[]): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithParameters(parameters: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithProcessors(processors: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        WithDefaultState(value: UnityEngine.InputSystem.Utilities.PrimitiveValue): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        UsingStateFrom(path: string): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        AsArrayOfControlsWithSize(arraySize: number): UnityEngine.InputSystem.Layouts.InputControlLayout_Builder_ControlBuilder;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+    }
+    export namespace OnScreen {
+      export class OnScreenButton {
+        constructor();
+        controlPath: string;
+        control: UnityEngine.InputSystem.InputControl;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        OnPointerUp(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnPointerDown(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class OnScreenControl {
+        controlPath: string;
+        control: UnityEngine.InputSystem.InputControl;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class OnScreenStick {
+        constructor();
+        movementRange: number;
+        controlPath: string;
+        control: UnityEngine.InputSystem.InputControl;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        OnPointerDown(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnDrag(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        OnPointerUp(eventData: UnityEngine.EventSystems.PointerEventData): void;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+    }
+    export namespace Processors {
+      export class AxisDeadzoneProcessor {
+        constructor();
+        min: number;
+        max: number;
+        Process(value: number, control?: UnityEngine.InputSystem.InputControl): number;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ClampProcessor {
+        constructor();
+        min: number;
+        max: number;
+        Process(value: number, control: UnityEngine.InputSystem.InputControl): number;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class EditorWindowSpaceProcessor {
+        constructor();
+        Process(value: UnityEngine.Vector2, control: UnityEngine.InputSystem.InputControl): UnityEngine.Vector2;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InvertProcessor {
+        constructor();
+        Process(value: number, control: UnityEngine.InputSystem.InputControl): number;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class InvertVector2Processor {
+        constructor();
+        invertX: boolean;
+        invertY: boolean;
+        Process(value: UnityEngine.Vector2, control: UnityEngine.InputSystem.InputControl): UnityEngine.Vector2;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class InvertVector3Processor {
+        constructor();
+        invertX: boolean;
+        invertY: boolean;
+        invertZ: boolean;
+        Process(value: UnityEngine.Vector3, control: UnityEngine.InputSystem.InputControl): UnityEngine.Vector3;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class NormalizeProcessor {
+        constructor();
+        min: number;
+        max: number;
+        zero: number;
+        Process(value: number, control: UnityEngine.InputSystem.InputControl): number;
+        static Normalize(value: number, min: number, max: number, zero: number): number;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class NormalizeVector2Processor {
+        constructor();
+        Process(value: UnityEngine.Vector2, control: UnityEngine.InputSystem.InputControl): UnityEngine.Vector2;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class NormalizeVector3Processor {
+        constructor();
+        Process(value: UnityEngine.Vector3, control: UnityEngine.InputSystem.InputControl): UnityEngine.Vector3;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ScaleProcessor {
+        constructor();
+        factor: number;
+        Process(value: number, control: UnityEngine.InputSystem.InputControl): number;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ScaleVector2Processor {
+        constructor();
+        x: number;
+        y: number;
+        Process(value: UnityEngine.Vector2, control: UnityEngine.InputSystem.InputControl): UnityEngine.Vector2;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class ScaleVector3Processor {
+        constructor();
+        x: number;
+        y: number;
+        z: number;
+        Process(value: UnityEngine.Vector3, control: UnityEngine.InputSystem.InputControl): UnityEngine.Vector3;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class StickDeadzoneProcessor {
+        constructor();
+        min: number;
+        max: number;
+        Process(value: UnityEngine.Vector2, control?: UnityEngine.InputSystem.InputControl): UnityEngine.Vector2;
+        ToString(): string;
+        ProcessAsObject(value: any, control: UnityEngine.InputSystem.InputControl): any;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+    }
+    export namespace Switch {
+      export class SwitchProControllerHID {
+        constructor();
+        [key: string]: any;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+    }
+    export namespace UI {
+      export class ExtendedPointerEventData {
+        constructor(eventSystem: UnityEngine.EventSystems.EventSystem);
+        control: UnityEngine.InputSystem.InputControl;
+        device: UnityEngine.InputSystem.InputDevice;
+        touchId: number;
+        pointerType: UnityEngine.InputSystem.UI.UIPointerType;
+        uiToolkitPointerId: number;
+        trackedDevicePosition: UnityEngine.Vector3;
+        trackedDeviceOrientation: UnityEngine.Quaternion;
+        pointerEnter: UnityEngine.GameObject;
+        lastPress: UnityEngine.GameObject;
+        rawPointerPress: UnityEngine.GameObject;
+        pointerDrag: UnityEngine.GameObject;
+        pointerClick: UnityEngine.GameObject;
+        pointerCurrentRaycast: UnityEngine.EventSystems.RaycastResult;
+        pointerPressRaycast: UnityEngine.EventSystems.RaycastResult;
+        eligibleForClick: boolean;
+        pointerId: number;
+        position: UnityEngine.Vector2;
+        delta: UnityEngine.Vector2;
+        pressPosition: UnityEngine.Vector2;
+        worldPosition: UnityEngine.Vector3;
+        worldNormal: UnityEngine.Vector3;
+        clickTime: number;
+        clickCount: number;
+        scrollDelta: UnityEngine.Vector2;
+        useDragThreshold: boolean;
+        dragging: boolean;
+        button: UnityEngine.EventSystems.PointerEventData_InputButton;
+        pressure: number;
+        tangentialPressure: number;
+        altitudeAngle: number;
+        azimuthAngle: number;
+        twist: number;
+        radius: UnityEngine.Vector2;
+        radiusVariance: UnityEngine.Vector2;
+        enterEventCamera: UnityEngine.Camera;
+        pressEventCamera: UnityEngine.Camera;
+        pointerPress: UnityEngine.GameObject;
+        currentInputModule: UnityEngine.EventSystems.BaseInputModule;
+        selectedObject: UnityEngine.GameObject;
+        used: boolean;
+        hovered: UnityEngine.GameObject[];
+        ToString(): string;
+        IsPointerMoving(): boolean;
+        IsScrolling(): boolean;
+        Reset(): void;
+        Use(): void;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export enum UIPointerType {
+        None = 0,
+        MouseOrPen = 1,
+        Touch = 2,
+        Tracked = 3,
+      }
+      export enum UIPointerBehavior {
+        SingleMouseOrPenButMultiTouchAndTrack = 0,
+        SingleUnifiedPointer = 1,
+        AllPointersAsIs = 2,
+      }
+      export class InputSystemUIInputModule {
+        constructor();
+        deselectOnBackgroundClick: boolean;
+        pointerBehavior: UnityEngine.InputSystem.UI.UIPointerBehavior;
+        moveRepeatDelay: number;
+        moveRepeatRate: number;
+        repeatRate: number;
+        repeatDelay: number;
+        xrTrackingOrigin: UnityEngine.Transform;
+        trackedDeviceDragThresholdMultiplier: number;
+        point: UnityEngine.InputSystem.InputActionReference;
+        scrollWheel: UnityEngine.InputSystem.InputActionReference;
+        leftClick: UnityEngine.InputSystem.InputActionReference;
+        middleClick: UnityEngine.InputSystem.InputActionReference;
+        rightClick: UnityEngine.InputSystem.InputActionReference;
+        move: UnityEngine.InputSystem.InputActionReference;
+        submit: UnityEngine.InputSystem.InputActionReference;
+        cancel: UnityEngine.InputSystem.InputActionReference;
+        trackedDeviceOrientation: UnityEngine.InputSystem.InputActionReference;
+        trackedDevicePosition: UnityEngine.InputSystem.InputActionReference;
+        trackedDeviceSelect: UnityEngine.InputSystem.InputActionReference;
+        actionsAsset: UnityEngine.InputSystem.InputActionAsset;
+        input: UnityEngine.EventSystems.BaseInput;
+        inputOverride: UnityEngine.EventSystems.BaseInput;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        ActivateModule(): void;
+        IsPointerOverGameObject(pointerOrTouchId: number): boolean;
+        GetLastRaycastResult(pointerOrTouchId: number): UnityEngine.EventSystems.RaycastResult;
+        AssignDefaultActions(): void;
+        Process(): void;
+        ConvertUIToolkitPointerId(sourcePointerData: UnityEngine.EventSystems.PointerEventData): number;
+        ShouldActivateModule(): boolean;
+        DeactivateModule(): void;
+        UpdateModule(): void;
+        IsModuleSupported(): boolean;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class MultiplayerEventSystem {
+        constructor();
+        playerRoot: UnityEngine.GameObject;
+        sendNavigationEvents: boolean;
+        pixelDragThreshold: number;
+        currentInputModule: UnityEngine.EventSystems.BaseInputModule;
+        firstSelectedGameObject: UnityEngine.GameObject;
+        currentSelectedGameObject: UnityEngine.GameObject;
+        lastSelectedGameObject: UnityEngine.GameObject;
+        isFocused: boolean;
+        alreadySelecting: boolean;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        UpdateModules(): void;
+        SetSelectedGameObject(selected: UnityEngine.GameObject, pointer: UnityEngine.EventSystems.BaseEventData): void;
+        SetSelectedGameObject(selected: UnityEngine.GameObject): void;
+        RaycastAll(eventData: UnityEngine.EventSystems.PointerEventData, raycastResults: UnityEngine.EventSystems.RaycastResult[]): void;
+        IsPointerOverGameObject(): boolean;
+        IsPointerOverGameObject(pointerId: number): boolean;
+        ToString(): string;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        GetType(): System.Type;
+      }
+      export class TrackedDeviceRaycaster {
+        constructor();
+        eventCamera: UnityEngine.Camera;
+        blockingMask: UnityEngine.LayerMask;
+        checkFor3DOcclusion: boolean;
+        checkFor2DOcclusion: boolean;
+        ignoreReversedGraphics: boolean;
+        maxDistance: number;
+        priority: number;
+        sortOrderPriority: number;
+        renderOrderPriority: number;
+        rootRaycaster: UnityEngine.EventSystems.BaseRaycaster;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        Raycast(eventData: UnityEngine.EventSystems.PointerEventData, resultAppendList: UnityEngine.EventSystems.RaycastResult[]): void;
+        ToString(): string;
+        IsActive(): boolean;
+        IsDestroyed(): boolean;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        GetType(): System.Type;
+      }
+      export class VirtualMouseInput {
+        constructor();
+        cursorTransform: UnityEngine.RectTransform;
+        cursorSpeed: number;
+        cursorMode: UnityEngine.InputSystem.UI.VirtualMouseInput_CursorMode;
+        cursorGraphic: UnityEngine.UI.Graphic;
+        scrollSpeed: number;
+        virtualMouse: UnityEngine.InputSystem.Mouse;
+        stickAction: UnityEngine.InputSystem.InputActionProperty;
+        leftButtonAction: UnityEngine.InputSystem.InputActionProperty;
+        rightButtonAction: UnityEngine.InputSystem.InputActionProperty;
+        middleButtonAction: UnityEngine.InputSystem.InputActionProperty;
+        forwardButtonAction: UnityEngine.InputSystem.InputActionProperty;
+        backButtonAction: UnityEngine.InputSystem.InputActionProperty;
+        scrollWheelAction: UnityEngine.InputSystem.InputActionProperty;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export enum VirtualMouseInput_CursorMode {
+        SoftwareCursor = 0,
+        HardwareCursorIfAvailable = 1,
+      }
+    }
+    export namespace Users {
+      export class InputUser {
+        valid: boolean;
+        index: number;
+        id: System.UInt32;
+        platformUserAccountHandle?: System.Nullable<UnityEngine.InputSystem.Users.InputUserAccountHandle>;
+        platformUserAccountName: string;
+        platformUserAccountId: string;
+        pairedDevices: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputDevice>;
+        lostDevices: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputDevice>;
+        actions: UnityEngine.InputSystem.IInputActionCollection;
+        controlScheme?: System.Nullable<UnityEngine.InputSystem.InputControlScheme>;
+        controlSchemeMatch: UnityEngine.InputSystem.InputControlScheme_MatchResult;
+        hasMissingRequiredDevices: boolean;
+        static all: any; // UnityEngine.InputSystem.Utilities.ReadOnlyArray`1[UnityEngine.InputSystem.Users.InputUser]
+        static listenForUnpairedDeviceActivity: number;
+        static InvalidId: System.UInt32;
+        ToString(): string;
+        AssociateActionsWithUser(actions: UnityEngine.InputSystem.IInputActionCollection): void;
+        ActivateControlScheme(schemeName: string): UnityEngine.InputSystem.Users.InputUser_ControlSchemeChangeSyntax;
+        ActivateControlScheme(scheme: UnityEngine.InputSystem.InputControlScheme): UnityEngine.InputSystem.Users.InputUser_ControlSchemeChangeSyntax;
+        UnpairDevice(device: UnityEngine.InputSystem.InputDevice): void;
+        UnpairDevices(): void;
+        UnpairDevicesAndRemoveUser(): void;
+        static GetUnpairedInputDevices(): UnityEngine.InputSystem.InputDevice[];
+        static FindUserPairedToDevice(device: UnityEngine.InputSystem.InputDevice): any;
+        static FindUserByAccount(platformUserAccountHandle: UnityEngine.InputSystem.Users.InputUserAccountHandle): any;
+        static CreateUserWithoutPairedDevices(): UnityEngine.InputSystem.Users.InputUser;
+        static PerformPairingWithDevice(device: UnityEngine.InputSystem.InputDevice, user?: UnityEngine.InputSystem.Users.InputUser, options?: UnityEngine.InputSystem.Users.InputUserPairingOptions): UnityEngine.InputSystem.Users.InputUser;
+        Equals(other: UnityEngine.InputSystem.Users.InputUser): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class InputUserAccountHandle {
+        constructor(apiName: string, handle: System.UInt64);
+        apiName: string;
+        handle: System.UInt64;
+        ToString(): string;
+        Equals(other: UnityEngine.InputSystem.Users.InputUserAccountHandle): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export enum InputUserChange {
+        Added = 0,
+        Removed = 1,
+        DevicePaired = 2,
+        DeviceUnpaired = 3,
+        DeviceLost = 4,
+        DeviceRegained = 5,
+        AccountChanged = 6,
+        AccountNameChanged = 7,
+        AccountSelectionInProgress = 8,
+        AccountSelectionCanceled = 9,
+        AccountSelectionComplete = 10,
+        ControlSchemeChanged = 11,
+        ControlsChanged = 12,
+      }
+      export enum InputUserPairingOptions {
+        None = 0,
+        ForcePlatformUserAccountSelection = 1,
+        ForceNoPlatformUserAccountSelection = 2,
+        UnpairCurrentDevicesFromUser = 8,
+      }
+      export class InputUser_ControlSchemeChangeSyntax {
+        AndPairRemainingDevices(): UnityEngine.InputSystem.Users.InputUser_ControlSchemeChangeSyntax;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+    }
+    export namespace Utilities {
+      export class InputActionTrace {
+        constructor();
+        constructor(action: UnityEngine.InputSystem.InputAction);
+        constructor(actionMap: UnityEngine.InputSystem.InputActionMap);
+        buffer: any; // UnityEngine.InputSystem.LowLevel.InputEventBuffer
+        count: number;
+        SubscribeToAll(): void;
+        UnsubscribeFromAll(): void;
+        SubscribeTo(action: UnityEngine.InputSystem.InputAction): void;
+        SubscribeTo(actionMap: UnityEngine.InputSystem.InputActionMap): void;
+        UnsubscribeFrom(action: UnityEngine.InputSystem.InputAction): void;
+        UnsubscribeFrom(actionMap: UnityEngine.InputSystem.InputActionMap): void;
+        RecordAction(context: UnityEngine.InputSystem.InputAction_CallbackContext): void;
+        Clear(): void;
+        ToString(): string;
+        Dispose(): void;
+        GetEnumerator(): System.Collections.Generic.IEnumerator<UnityEngine.InputSystem.Utilities.InputActionTrace_ActionEventPtr>;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class Vector2MagnitudeComparer {
+        Compare(x: UnityEngine.Vector2, y: UnityEngine.Vector2): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class Vector3MagnitudeComparer {
+        Compare(x: UnityEngine.Vector3, y: UnityEngine.Vector3): number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class FourCC {
+        constructor(code: number);
+        constructor(a: System.Char, b?: System.Char, c?: System.Char, d?: System.Char);
+        constructor(str: string);
+        ToString(): string;
+        Equals(other: UnityEngine.InputSystem.Utilities.FourCC): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        static FromInt32(i: number): UnityEngine.InputSystem.Utilities.FourCC;
+        static ToInt32(fourCC: UnityEngine.InputSystem.Utilities.FourCC): number;
+        GetType(): System.Type;
+      }
+      export class InternedString {
+        constructor(text: string);
+        length: number;
+        IsEmpty(): boolean;
+        ToLower(): string;
+        Equals(obj: any): boolean;
+        Equals(other: UnityEngine.InputSystem.Utilities.InternedString): boolean;
+        CompareTo(other: UnityEngine.InputSystem.Utilities.InternedString): number;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class NameAndParameters {
+        name: string;
+        parameters: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.NamedValue>;
+        ToString(): string;
+        static ParseMultiple(text: string): any;
+        static Parse(text: string): UnityEngine.InputSystem.Utilities.NameAndParameters;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class NamedValue {
+        name: string;
+        value: UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        type: System.TypeCode;
+        static Separator: string;
+        ConvertTo(type: System.TypeCode): UnityEngine.InputSystem.Utilities.NamedValue;
+        ToString(): string;
+        Equals(other: UnityEngine.InputSystem.Utilities.NamedValue): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        static ParseMultiple(parameterString: string): UnityEngine.InputSystem.Utilities.NamedValue[];
+        static Parse(str: string): UnityEngine.InputSystem.Utilities.NamedValue;
+        ApplyToObject(instance: any): void;
+        GetType(): System.Type;
+      }
+      export class PrimitiveValue {
+        constructor(value: boolean);
+        constructor(value: System.Char);
+        constructor(value: System.Byte);
+        constructor(value: System.SByte);
+        constructor(value: System.Int16);
+        constructor(value: System.UInt16);
+        constructor(value: number);
+        constructor(value: System.UInt32);
+        constructor(value: System.Int64);
+        constructor(value: System.UInt64);
+        constructor(value: number);
+        constructor(value: number);
+        type: System.TypeCode;
+        isEmpty: boolean;
+        ConvertTo(type: System.TypeCode): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        Equals(other: UnityEngine.InputSystem.Utilities.PrimitiveValue): boolean;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        static FromString(value: string): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        GetTypeCode(): System.TypeCode;
+        ToBoolean(provider?: System.IFormatProvider): boolean;
+        ToByte(provider?: System.IFormatProvider): System.Byte;
+        ToChar(provider?: System.IFormatProvider): System.Char;
+        ToDateTime(provider?: System.IFormatProvider): System.DateTime;
+        ToDecimal(provider?: System.IFormatProvider): System.Decimal;
+        ToDouble(provider?: System.IFormatProvider): number;
+        ToInt16(provider?: System.IFormatProvider): System.Int16;
+        ToInt32(provider?: System.IFormatProvider): number;
+        ToInt64(provider?: System.IFormatProvider): System.Int64;
+        ToSByte(provider?: System.IFormatProvider): System.SByte;
+        ToSingle(provider?: System.IFormatProvider): number;
+        ToString(provider: System.IFormatProvider): string;
+        ToType(conversionType: System.Type, provider: System.IFormatProvider): any;
+        ToUInt16(provider?: System.IFormatProvider): System.UInt16;
+        ToUInt32(provider?: System.IFormatProvider): System.UInt32;
+        ToUInt64(provider?: System.IFormatProvider): System.UInt64;
+        ToObject(): any;
+        static FromObject(value: any): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromBoolean(value: boolean): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromChar(value: System.Char): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromByte(value: System.Byte): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromSByte(value: System.SByte): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromInt16(value: System.Int16): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromUInt16(value: System.UInt16): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromInt32(value: number): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromUInt32(value: System.UInt32): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromInt64(value: System.Int64): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromUInt64(value: System.UInt64): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromSingle(value: number): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        static FromDouble(value: number): UnityEngine.InputSystem.Utilities.PrimitiveValue;
+        GetType(): System.Type;
+      }
+      export class ReadOnlyArray<TValue = any> {
+        constructor(array: TValue[]);
+        constructor(array: TValue[], index: number, length: number);
+        [key: string]: any;
+        Count: number;
+        ToArray(): TValue[];
+        IndexOf(predicate: System.Predicate<TValue>): number;
+        GetEnumerator(): UnityEngine.InputSystem.Utilities.ReadOnlyArray<TValue>;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class ReadOnlyArrayExtensions {
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class InputActionTrace_ActionEventPtr {
+        action: UnityEngine.InputSystem.InputAction;
+        phase: UnityEngine.InputSystem.InputActionPhase;
+        control: UnityEngine.InputSystem.InputControl;
+        interaction: UnityEngine.InputSystem.IInputInteraction;
+        time: number;
+        startTime: number;
+        duration: number;
+        valueSizeInBytes: number;
+        ReadValueAsObject(): any;
+        ToString(): string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+    }
+    export namespace WebGL {
+      export class WebGLGamepad {
+        constructor();
+        [key: string]: any;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class WebGLJoystick {
+        constructor();
+        [key: string]: any;
+        trigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        stick: UnityEngine.InputSystem.Controls.StickControl;
+        twist: UnityEngine.InputSystem.Controls.AxisControl;
+        hatswitch: UnityEngine.InputSystem.Controls.Vector2Control;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+    }
+    export namespace XInput {
+      export interface IXboxOneRumble {
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number, leftTrigger: number, rightTrigger: number): void;
+      }
+      export class XInputController {
+        constructor();
+        [key: string]: any;
+        menu: UnityEngine.InputSystem.Controls.ButtonControl;
+        view: UnityEngine.InputSystem.Controls.ButtonControl;
+        subType: UnityEngine.InputSystem.XInput.XInputController_DeviceSubType;
+        flags: UnityEngine.InputSystem.XInput.XInputController_DeviceFlags;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class XInputControllerWindows {
+        constructor();
+        [key: string]: any;
+        menu: UnityEngine.InputSystem.Controls.ButtonControl;
+        view: UnityEngine.InputSystem.Controls.ButtonControl;
+        subType: UnityEngine.InputSystem.XInput.XInputController_DeviceSubType;
+        flags: UnityEngine.InputSystem.XInput.XInputController_DeviceFlags;
+        buttonWest: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonNorth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonSouth: UnityEngine.InputSystem.Controls.ButtonControl;
+        buttonEast: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightStickButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        startButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        selectButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        dpad: UnityEngine.InputSystem.Controls.DpadControl;
+        leftShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightShoulder: UnityEngine.InputSystem.Controls.ButtonControl;
+        leftStick: UnityEngine.InputSystem.Controls.StickControl;
+        rightStick: UnityEngine.InputSystem.Controls.StickControl;
+        leftTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        rightTrigger: UnityEngine.InputSystem.Controls.ButtonControl;
+        aButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        bButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        xButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        yButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        triangleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        squareButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        circleButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        crossButton: UnityEngine.InputSystem.Controls.ButtonControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        PauseHaptics(): void;
+        ResumeHaptics(): void;
+        ResetHaptics(): void;
+        SetMotorSpeeds(lowFrequency: number, highFrequency: number): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export enum XInputController_DeviceSubType {
+        Unknown = 0,
+        Gamepad = 1,
+        Wheel = 2,
+        ArcadeStick = 3,
+        FlightStick = 4,
+        DancePad = 5,
+        Guitar = 6,
+        GuitarAlternate = 7,
+        DrumKit = 8,
+        GuitarBass = 11,
+        ArcadePad = 19,
+      }
+      export enum XInputController_DeviceFlags {
+        ForceFeedbackSupported = 1,
+        Wireless = 2,
+        VoiceSupported = 4,
+        PluginModulesSupported = 8,
+        NoNavigation = 16,
+      }
+    }
+    export namespace XR {
+      export class PoseState {
+        constructor(isTracked: boolean, trackingState: UnityEngine.XR.InputTrackingState, position: UnityEngine.Vector3, rotation: UnityEngine.Quaternion, velocity: UnityEngine.Vector3, angularVelocity: UnityEngine.Vector3);
+        format: UnityEngine.InputSystem.Utilities.FourCC;
+        isTracked: boolean;
+        trackingState: UnityEngine.XR.InputTrackingState;
+        position: UnityEngine.Vector3;
+        rotation: UnityEngine.Quaternion;
+        velocity: UnityEngine.Vector3;
+        angularVelocity: UnityEngine.Vector3;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class PoseControl {
+        constructor();
+        [key: string]: any;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        position: UnityEngine.InputSystem.Controls.Vector3Control;
+        rotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        velocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        angularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): UnityEngine.InputSystem.XR.PoseState;
+        ReadValueFromPreviousFrame(): UnityEngine.InputSystem.XR.PoseState;
+        ReadDefaultValue(): UnityEngine.InputSystem.XR.PoseState;
+        ReadUnprocessedValue(): UnityEngine.InputSystem.XR.PoseState;
+        ProcessValue(value: UnityEngine.InputSystem.XR.PoseState): UnityEngine.InputSystem.XR.PoseState;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class XRHMD {
+        constructor();
+        [key: string]: any;
+        leftEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        leftEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        rightEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        rightEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        centerEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        centerEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class XRController {
+        constructor();
+        [key: string]: any;
+        static leftHand: UnityEngine.InputSystem.XR.XRController;
+        static rightHand: UnityEngine.InputSystem.XR.XRController;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class XRControllerWithRumble {
+        constructor();
+        [key: string]: any;
+        trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+        isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+        devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+        enabled: boolean;
+        canRunInBackground: boolean;
+        added: boolean;
+        remote: boolean;
+        native: boolean;
+        updateBeforeRender: boolean;
+        deviceId: number;
+        lastUpdateTime: number;
+        wasUpdatedThisFrame: boolean;
+        allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        SendImpulse(amplitude: number, duration: number): void;
+        MakeCurrent(): void;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class TrackedPoseDriver {
+        constructor();
+        trackingType: UnityEngine.InputSystem.XR.TrackedPoseDriver_TrackingType;
+        updateType: UnityEngine.InputSystem.XR.TrackedPoseDriver_UpdateType;
+        positionAction: UnityEngine.InputSystem.InputAction;
+        rotationAction: UnityEngine.InputSystem.InputAction;
+        useGUILayout: boolean;
+        runInEditMode: boolean;
+        enabled: boolean;
+        isActiveAndEnabled: boolean;
+        transform: UnityEngine.Transform;
+        gameObject: UnityEngine.GameObject;
+        tag: string;
+        rigidbody: UnityEngine.Component;
+        rigidbody2D: UnityEngine.Component;
+        camera: UnityEngine.Component;
+        light: UnityEngine.Component;
+        animation: UnityEngine.Component;
+        constantForce: UnityEngine.Component;
+        renderer: UnityEngine.Component;
+        audio: UnityEngine.Component;
+        networkView: UnityEngine.Component;
+        collider: UnityEngine.Component;
+        collider2D: UnityEngine.Component;
+        hingeJoint: UnityEngine.Component;
+        particleSystem: UnityEngine.Component;
+        name: string;
+        hideFlags: UnityEngine.HideFlags;
+        IsInvoking(): boolean;
+        CancelInvoke(): void;
+        Invoke(methodName: string, time: number): void;
+        InvokeRepeating(methodName: string, time: number, repeatRate: number): void;
+        CancelInvoke(methodName: string): void;
+        IsInvoking(methodName: string): boolean;
+        StartCoroutine(methodName: string): UnityEngine.Coroutine;
+        StartCoroutine(methodName: string, value: any): UnityEngine.Coroutine;
+        StartCoroutine(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StartCoroutine_Auto(routine: System.Collections.IEnumerator): UnityEngine.Coroutine;
+        StopCoroutine(routine: System.Collections.IEnumerator): void;
+        StopCoroutine(routine: UnityEngine.Coroutine): void;
+        StopCoroutine(methodName: string): void;
+        StopAllCoroutines(): void;
+        GetComponent(type: System.Type): UnityEngine.Component;
+        GetComponent(type: string): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInChildren(t: System.Type): UnityEngine.Component;
+        GetComponentsInChildren(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInChildren(t: System.Type): UnityEngine.Component[];
+        GetComponentInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component;
+        GetComponentInParent(t: System.Type): UnityEngine.Component;
+        GetComponentsInParent(t: System.Type, includeInactive: boolean): UnityEngine.Component[];
+        GetComponentsInParent(t: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type): UnityEngine.Component[];
+        GetComponents(type: System.Type, results: UnityEngine.Component[]): void;
+        CompareTag(tag: string): boolean;
+        SendMessageUpwards(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessageUpwards(methodName: string, value: any): void;
+        SendMessageUpwards(methodName: string): void;
+        SendMessageUpwards(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, value: any): void;
+        SendMessage(methodName: string): void;
+        SendMessage(methodName: string, value: any, options: UnityEngine.SendMessageOptions): void;
+        SendMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any, options: UnityEngine.SendMessageOptions): void;
+        BroadcastMessage(methodName: string, parameter: any): void;
+        BroadcastMessage(methodName: string): void;
+        BroadcastMessage(methodName: string, options: UnityEngine.SendMessageOptions): void;
+        GetInstanceID(): number;
+        GetHashCode(): number;
+        Equals(other: any): boolean;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class XRUtilities {
+        static InterfaceMatchAnyVersion: string;
+        static InterfaceV1: string;
+        static InterfaceCurrent: string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export enum FeatureType {
+        Custom = 0,
+        Binary = 1,
+        DiscreteStates = 2,
+        Axis1D = 3,
+        Axis2D = 4,
+        Axis3D = 5,
+        Rotation = 6,
+        Hand = 7,
+        Bone = 8,
+        Eyes = 9,
+      }
+      export class UsageHint {
+        content: string;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class XRFeatureDescriptor {
+        name: string;
+        usageHints: UnityEngine.InputSystem.XR.UsageHint[];
+        featureType: UnityEngine.InputSystem.XR.FeatureType;
+        customSize: System.UInt32;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class XRDeviceDescriptor {
+        constructor();
+        deviceName: string;
+        manufacturer: string;
+        serialNumber: string;
+        characteristics: UnityEngine.XR.InputDeviceCharacteristics;
+        deviceId: number;
+        inputFeatures: UnityEngine.InputSystem.XR.XRFeatureDescriptor[];
+        ToJson(): string;
+        static FromJson(json: string): UnityEngine.InputSystem.XR.XRDeviceDescriptor;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+      export class Bone {
+        parentBoneIndex: System.UInt32;
+        position: UnityEngine.Vector3;
+        rotation: UnityEngine.Quaternion;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class Eyes {
+        leftEyePosition: UnityEngine.Vector3;
+        leftEyeRotation: UnityEngine.Quaternion;
+        rightEyePosition: UnityEngine.Vector3;
+        rightEyeRotation: UnityEngine.Quaternion;
+        fixationPoint: UnityEngine.Vector3;
+        leftEyeOpenAmount: number;
+        rightEyeOpenAmount: number;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        ToString(): string;
+        GetType(): System.Type;
+      }
+      export class BoneControl {
+        constructor();
+        [key: string]: any;
+        parentBoneIndex: UnityEngine.InputSystem.Controls.IntegerControl;
+        position: UnityEngine.InputSystem.Controls.Vector3Control;
+        rotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): UnityEngine.InputSystem.XR.Bone;
+        ReadValueFromPreviousFrame(): UnityEngine.InputSystem.XR.Bone;
+        ReadDefaultValue(): UnityEngine.InputSystem.XR.Bone;
+        ReadUnprocessedValue(): UnityEngine.InputSystem.XR.Bone;
+        ProcessValue(value: UnityEngine.InputSystem.XR.Bone): UnityEngine.InputSystem.XR.Bone;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export class EyesControl {
+        constructor();
+        [key: string]: any;
+        leftEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        leftEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        rightEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+        rightEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+        fixationPoint: UnityEngine.InputSystem.Controls.Vector3Control;
+        leftEyeOpenAmount: UnityEngine.InputSystem.Controls.AxisControl;
+        rightEyeOpenAmount: UnityEngine.InputSystem.Controls.AxisControl;
+        valueType: System.Type;
+        valueSizeInBytes: number;
+        name: string;
+        displayName: string;
+        shortDisplayName: string;
+        path: string;
+        layout: string;
+        variants: string;
+        device: UnityEngine.InputSystem.InputDevice;
+        parent: UnityEngine.InputSystem.InputControl;
+        children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+        usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+        stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+        noisy: boolean;
+        synthetic: boolean;
+        ReadValue(): UnityEngine.InputSystem.XR.Eyes;
+        ReadValueFromPreviousFrame(): UnityEngine.InputSystem.XR.Eyes;
+        ReadDefaultValue(): UnityEngine.InputSystem.XR.Eyes;
+        ReadUnprocessedValue(): UnityEngine.InputSystem.XR.Eyes;
+        ProcessValue(value: UnityEngine.InputSystem.XR.Eyes): UnityEngine.InputSystem.XR.Eyes;
+        ToString(): string;
+        EvaluateMagnitude(): number;
+        TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+      }
+      export enum TrackedPoseDriver_TrackingType {
+        RotationAndPosition = 0,
+        RotationOnly = 1,
+        PositionOnly = 2,
+      }
+      export enum TrackedPoseDriver_UpdateType {
+        UpdateAndBeforeRender = 0,
+        Update = 1,
+        BeforeRender = 2,
+      }
+      export namespace Haptics {
+        export class BufferedRumble {
+          constructor(device: UnityEngine.InputSystem.InputDevice);
+          capabilities: UnityEngine.InputSystem.XR.Haptics.HapticCapabilities;
+          EnqueueRumble(samples: System.Byte[]): void;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          ToString(): string;
+          GetType(): System.Type;
+        }
+        export class HapticState {
+          constructor(samplesQueued: System.UInt32, samplesAvailable: System.UInt32);
+          samplesQueued: System.UInt32;
+          samplesAvailable: System.UInt32;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          ToString(): string;
+          GetType(): System.Type;
+        }
+        export class GetCurrentHapticStateCommand {
+          typeStatic: UnityEngine.InputSystem.Utilities.FourCC;
+          currentState: UnityEngine.InputSystem.XR.Haptics.HapticState;
+          samplesQueued: System.UInt32;
+          samplesAvailable: System.UInt32;
+          static Create(): UnityEngine.InputSystem.XR.Haptics.GetCurrentHapticStateCommand;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          ToString(): string;
+          GetType(): System.Type;
+        }
+        export class HapticCapabilities {
+          constructor(numChannels: System.UInt32, frequencyHz: System.UInt32, maxBufferSize: System.UInt32);
+          numChannels: System.UInt32;
+          frequencyHz: System.UInt32;
+          maxBufferSize: System.UInt32;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          ToString(): string;
+          GetType(): System.Type;
+        }
+        export class GetHapticCapabilitiesCommand {
+          typeStatic: UnityEngine.InputSystem.Utilities.FourCC;
+          capabilities: UnityEngine.InputSystem.XR.Haptics.HapticCapabilities;
+          numChannels: System.UInt32;
+          frequencyHz: System.UInt32;
+          maxBufferSize: System.UInt32;
+          static Create(): UnityEngine.InputSystem.XR.Haptics.GetHapticCapabilitiesCommand;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          ToString(): string;
+          GetType(): System.Type;
+        }
+        export class SendBufferedHapticCommand {
+          typeStatic: UnityEngine.InputSystem.Utilities.FourCC;
+          static Create(rumbleBuffer: System.Byte[]): UnityEngine.InputSystem.XR.Haptics.SendBufferedHapticCommand;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          ToString(): string;
+          GetType(): System.Type;
+        }
+        export class SendHapticImpulseCommand {
+          typeStatic: UnityEngine.InputSystem.Utilities.FourCC;
+          static Create(motorChannel: number, motorAmplitude: number, motorDuration: number): UnityEngine.InputSystem.XR.Haptics.SendHapticImpulseCommand;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          ToString(): string;
+          GetType(): System.Type;
+        }
       }
     }
   }
@@ -34224,6 +43792,660 @@ export declare namespace UnityEngine {
       GetHashCode(): number;
       GetType(): System.Type;
       ToString(): string;
+    }
+  }
+  export namespace XR {
+    export class InputTracking {
+      static disablePositionalTracking: boolean;
+      static GetLocalPosition(node: UnityEngine.XR.XRNode): UnityEngine.Vector3;
+      static GetLocalRotation(node: UnityEngine.XR.XRNode): UnityEngine.Quaternion;
+      static Recenter(): void;
+      static GetNodeName(uniqueId: System.UInt64): string;
+      static GetNodeStates(nodeStates: UnityEngine.XR.XRNodeState[]): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum XRNode {
+      LeftEye = 0,
+      RightEye = 1,
+      CenterEye = 2,
+      Head = 3,
+      LeftHand = 4,
+      RightHand = 5,
+      GameController = 6,
+      TrackingReference = 7,
+      HardwareTracker = 8,
+    }
+    export class XRNodeState {
+      uniqueID: System.UInt64;
+      nodeType: UnityEngine.XR.XRNode;
+      tracked: boolean;
+      position: UnityEngine.Vector3;
+      rotation: UnityEngine.Quaternion;
+      velocity: UnityEngine.Vector3;
+      angularVelocity: UnityEngine.Vector3;
+      acceleration: UnityEngine.Vector3;
+      angularAcceleration: UnityEngine.Vector3;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class HapticCapabilities {
+      numChannels: System.UInt32;
+      supportsImpulse: boolean;
+      supportsBuffer: boolean;
+      bufferFrequencyHz: System.UInt32;
+      bufferMaxSize: System.UInt32;
+      bufferOptimalSize: System.UInt32;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.HapticCapabilities): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum InputDeviceRole {
+      Unknown = 0,
+      Generic = 1,
+      LeftHanded = 2,
+      RightHanded = 3,
+      GameController = 4,
+      TrackingReference = 5,
+      HardwareTracker = 6,
+      LegacyController = 7,
+    }
+    export enum InputDeviceCharacteristics {
+      None = 0,
+      HeadMounted = 1,
+      Camera = 2,
+      HeldInHand = 4,
+      HandTracking = 8,
+      EyeTracking = 16,
+      TrackedDevice = 32,
+      Controller = 64,
+      TrackingReference = 128,
+      Left = 256,
+      Right = 512,
+      Simulated6DOF = 1024,
+    }
+    export enum InputTrackingState {
+      None = 0,
+      Position = 1,
+      Rotation = 2,
+      Velocity = 4,
+      AngularVelocity = 8,
+      Acceleration = 16,
+      AngularAcceleration = 32,
+      All = 63,
+    }
+    export class InputFeatureUsage<T = any> {
+      constructor(usageName: string);
+      name: string;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.InputFeatureUsage<T>): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class CommonUsages {
+      static isTracked: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static primaryButton: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static primaryTouch: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static secondaryButton: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static secondaryTouch: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static gripButton: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static triggerButton: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static menuButton: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static primary2DAxisClick: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static primary2DAxisTouch: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static secondary2DAxisClick: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static secondary2DAxisTouch: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static userPresence: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static trackingState: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.XR.InputTrackingState]
+      static batteryLevel: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      static trigger: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      static grip: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      static primary2DAxis: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector2]
+      static secondary2DAxis: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector2]
+      static devicePosition: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static leftEyePosition: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static rightEyePosition: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static centerEyePosition: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static colorCameraPosition: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static deviceVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static deviceAngularVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static leftEyeVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static leftEyeAngularVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static rightEyeVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static rightEyeAngularVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static centerEyeVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static centerEyeAngularVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static colorCameraVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static colorCameraAngularVelocity: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static deviceAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static deviceAngularAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static leftEyeAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static leftEyeAngularAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static rightEyeAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static rightEyeAngularAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static centerEyeAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static centerEyeAngularAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static colorCameraAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static colorCameraAngularAcceleration: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector3]
+      static deviceRotation: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Quaternion]
+      static leftEyeRotation: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Quaternion]
+      static rightEyeRotation: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Quaternion]
+      static centerEyeRotation: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Quaternion]
+      static colorCameraRotation: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Quaternion]
+      static handData: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.XR.Hand]
+      static eyesData: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.XR.Eyes]
+      static dPad: any; // UnityEngine.XR.InputFeatureUsage`1[UnityEngine.Vector2]
+      static indexFinger: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      static middleFinger: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      static ringFinger: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      static pinkyFinger: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      static thumbrest: any; // UnityEngine.XR.InputFeatureUsage`1[System.Boolean]
+      static indexTouch: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      static thumbTouch: any; // UnityEngine.XR.InputFeatureUsage`1[System.Single]
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class InputDevice {
+      subsystem: UnityEngine.XR.XRInputSubsystem;
+      isValid: boolean;
+      name: string;
+      role: UnityEngine.XR.InputDeviceRole;
+      manufacturer: string;
+      serialNumber: string;
+      characteristics: UnityEngine.XR.InputDeviceCharacteristics;
+      SendHapticImpulse(channel: System.UInt32, amplitude: number, duration?: number): boolean;
+      SendHapticBuffer(channel: System.UInt32, buffer: System.Byte[]): boolean;
+      StopHaptics(): void;
+      TryGetFeatureUsages(featureUsages: UnityEngine.XR.InputFeatureUsage[]): boolean;
+      TryGetFeatureValue(usage: UnityEngine.XR.InputFeatureUsage<System.Byte[]>, value: System.Byte[]): boolean;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.InputDevice): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum HandFinger {
+      Thumb = 0,
+      Index = 1,
+      Middle = 2,
+      Ring = 3,
+      Pinky = 4,
+    }
+    export class Hand {
+      TryGetFingerBones(finger: UnityEngine.XR.HandFinger, bonesOut: UnityEngine.XR.Bone[]): boolean;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.Hand): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class Eyes {
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.Eyes): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class Bone {
+      TryGetChildBones(childBones: UnityEngine.XR.Bone[]): boolean;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.Bone): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class InputDevices {
+      constructor();
+      static GetDeviceAtXRNode(node: UnityEngine.XR.XRNode): UnityEngine.XR.InputDevice;
+      static GetDevicesAtXRNode(node: UnityEngine.XR.XRNode, inputDevices: UnityEngine.XR.InputDevice[]): void;
+      static GetDevices(inputDevices: UnityEngine.XR.InputDevice[]): void;
+      static GetDevicesWithRole(role: UnityEngine.XR.InputDeviceRole, inputDevices: UnityEngine.XR.InputDevice[]): void;
+      static GetDevicesWithCharacteristics(desiredCharacteristics: UnityEngine.XR.InputDeviceCharacteristics, inputDevices: UnityEngine.XR.InputDevice[]): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class XRDisplaySubsystem {
+      constructor();
+      singlePassRenderingDisabled: boolean;
+      displayOpaque: boolean;
+      contentProtectionEnabled: boolean;
+      scaleOfAllViewports: number;
+      scaleOfAllRenderTargets: number;
+      zNear: number;
+      zFar: number;
+      sRGB: boolean;
+      occlusionMaskScale: number;
+      textureLayout: UnityEngine.XR.XRDisplaySubsystem_TextureLayout;
+      supportedTextureLayouts: UnityEngine.XR.XRDisplaySubsystem_TextureLayout;
+      reprojectionMode: UnityEngine.XR.XRDisplaySubsystem_ReprojectionMode;
+      disableLegacyRenderer: boolean;
+      subsystemDescriptor: UnityEngine.XR.XRDisplaySubsystemDescriptor;
+      SubsystemDescriptor: UnityEngine.XR.XRDisplaySubsystemDescriptor;
+      running: boolean;
+      MarkTransformLateLatched(transform: UnityEngine.Transform, nodeType: UnityEngine.XR.XRDisplaySubsystem_LateLatchNode): void;
+      SetFocusPlane(point: UnityEngine.Vector3, normal: UnityEngine.Vector3, velocity: UnityEngine.Vector3): void;
+      SetMSAALevel(level: number): void;
+      GetRenderPassCount(): number;
+      EndRecordingIfLateLatched(camera: UnityEngine.Camera): void;
+      BeginRecordingIfLateLatched(camera: UnityEngine.Camera): void;
+      GetRenderTextureForRenderPass(renderPass: number): UnityEngine.RenderTexture;
+      GetPreferredMirrorBlitMode(): number;
+      SetPreferredMirrorBlitMode(blitMode: number): void;
+      AddGraphicsThreadMirrorViewBlit(cmd: UnityEngine.Rendering.CommandBuffer, allowGraphicsStateInvalidate: boolean): boolean;
+      AddGraphicsThreadMirrorViewBlit(cmd: UnityEngine.Rendering.CommandBuffer, allowGraphicsStateInvalidate: boolean, mode: number): boolean;
+      Start(): void;
+      Stop(): void;
+      Destroy(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum XRDisplaySubsystem_LateLatchNode {
+      Head = 0,
+      LeftHand = 1,
+      RightHand = 2,
+    }
+    export enum XRDisplaySubsystem_TextureLayout {
+      Texture2DArray = 1,
+      SingleTexture2D = 2,
+      SeparateTexture2Ds = 4,
+    }
+    export enum XRDisplaySubsystem_ReprojectionMode {
+      Unspecified = 0,
+      PositionAndOrientation = 1,
+      OrientationOnly = 2,
+      None = 3,
+    }
+    export class XRDisplaySubsystem_XRRenderParameter {
+      view: UnityEngine.Matrix4x4;
+      projection: UnityEngine.Matrix4x4;
+      viewport: UnityEngine.Rect;
+      occlusionMesh: UnityEngine.Mesh;
+      textureArraySlice: number;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class XRDisplaySubsystem_XRRenderPass {
+      renderPassIndex: number;
+      renderTarget: UnityEngine.Rendering.RenderTargetIdentifier;
+      renderTargetDesc: UnityEngine.RenderTextureDescriptor;
+      shouldFillOutDepth: boolean;
+      cullingPassIndex: number;
+      GetRenderParameterCount(): number;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class XRDisplaySubsystem_XRBlitParams {
+      srcTex: UnityEngine.RenderTexture;
+      srcTexArraySlice: number;
+      srcRect: UnityEngine.Rect;
+      destRect: UnityEngine.Rect;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class XRDisplaySubsystem_XRMirrorViewBlitDesc {
+      nativeBlitAvailable: boolean;
+      nativeBlitInvalidStates: boolean;
+      blitParamsCount: number;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class XRMirrorViewBlitMode {
+      static Default: number;
+      static LeftEye: number;
+      static RightEye: number;
+      static SideBySide: number;
+      static SideBySideOcclusionMesh: number;
+      static Distort: number;
+      static None: number;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class XRMirrorViewBlitModeDesc {
+      blitMode: number;
+      blitModeDesc: string;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class XRDisplaySubsystemDescriptor {
+      constructor();
+      disablesLegacyVr: boolean;
+      enableBackBufferMSAA: boolean;
+      id: string;
+      GetAvailableMirrorBlitModeCount(): number;
+      Create(): UnityEngine.XR.XRDisplaySubsystem;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export enum TrackingOriginModeFlags {
+      Unknown = 0,
+      Device = 1,
+      Floor = 2,
+      TrackingReference = 4,
+      Unbounded = 8,
+    }
+    export class XRInputSubsystem {
+      constructor();
+      subsystemDescriptor: UnityEngine.XR.XRInputSubsystemDescriptor;
+      SubsystemDescriptor: UnityEngine.XR.XRInputSubsystemDescriptor;
+      running: boolean;
+      TryRecenter(): boolean;
+      TryGetInputDevices(devices: UnityEngine.XR.InputDevice[]): boolean;
+      TrySetTrackingOriginMode(origin: UnityEngine.XR.TrackingOriginModeFlags): boolean;
+      GetTrackingOriginMode(): UnityEngine.XR.TrackingOriginModeFlags;
+      GetSupportedTrackingOriginModes(): UnityEngine.XR.TrackingOriginModeFlags;
+      TryGetBoundaryPoints(boundaryPoints: UnityEngine.Vector3[]): boolean;
+      Start(): void;
+      Stop(): void;
+      Destroy(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class XRInputSubsystemDescriptor {
+      constructor();
+      disablesLegacyInput: boolean;
+      id: string;
+      Create(): UnityEngine.XR.XRInputSubsystem;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class MeshId {
+      static InvalidId: UnityEngine.XR.MeshId;
+      ToString(): string;
+      GetHashCode(): number;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.MeshId): boolean;
+      GetType(): System.Type;
+    }
+    export enum MeshGenerationStatus {
+      Success = 0,
+      InvalidMeshId = 1,
+      GenerationAlreadyInProgress = 2,
+      Canceled = 3,
+      UnknownError = 4,
+    }
+    export class MeshGenerationResult {
+      MeshId: UnityEngine.XR.MeshId;
+      Mesh: UnityEngine.Mesh;
+      MeshCollider: UnityEngine.MeshCollider;
+      Status: UnityEngine.XR.MeshGenerationStatus;
+      Attributes: UnityEngine.XR.MeshVertexAttributes;
+      Timestamp: System.UInt64;
+      Position: UnityEngine.Vector3;
+      Rotation: UnityEngine.Quaternion;
+      Scale: UnityEngine.Vector3;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.MeshGenerationResult): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export enum MeshVertexAttributes {
+      None = 0,
+      Normals = 1,
+      Tangents = 2,
+      UVs = 4,
+      Colors = 8,
+    }
+    export enum MeshGenerationOptions {
+      None = 0,
+      ConsumeTransform = 1,
+    }
+    export enum MeshChangeState {
+      Added = 0,
+      Updated = 1,
+      Removed = 2,
+      Unchanged = 3,
+    }
+    export class MeshInfo {
+      MeshId: UnityEngine.XR.MeshId;
+      ChangeState: UnityEngine.XR.MeshChangeState;
+      PriorityHint: number;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.MeshInfo): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class MeshTransform {
+      MeshId: UnityEngine.XR.MeshId;
+      Timestamp: System.UInt64;
+      Position: UnityEngine.Vector3;
+      Rotation: UnityEngine.Quaternion;
+      Scale: UnityEngine.Vector3;
+      Equals(obj: any): boolean;
+      Equals(other: UnityEngine.XR.MeshTransform): boolean;
+      GetHashCode(): number;
+      ToString(): string;
+      GetType(): System.Type;
+    }
+    export class XRMeshSubsystem {
+      constructor();
+      meshDensity: number;
+      subsystemDescriptor: UnityEngine.XR.XRMeshSubsystemDescriptor;
+      SubsystemDescriptor: UnityEngine.XR.XRMeshSubsystemDescriptor;
+      running: boolean;
+      TryGetMeshInfos(meshInfosOut: UnityEngine.XR.MeshInfo[]): boolean;
+      GenerateMeshAsync(meshId: UnityEngine.XR.MeshId, mesh: UnityEngine.Mesh, meshCollider: UnityEngine.MeshCollider, attributes: UnityEngine.XR.MeshVertexAttributes, onMeshGenerationComplete: ((arg0: UnityEngine.XR.MeshGenerationResult) => void)): void;
+      GenerateMeshAsync(meshId: UnityEngine.XR.MeshId, mesh: UnityEngine.Mesh, meshCollider: UnityEngine.MeshCollider, attributes: UnityEngine.XR.MeshVertexAttributes, onMeshGenerationComplete: ((arg0: UnityEngine.XR.MeshGenerationResult) => void), options: UnityEngine.XR.MeshGenerationOptions): void;
+      SetBoundingVolume(origin: UnityEngine.Vector3, extents: UnityEngine.Vector3): boolean;
+      GetUpdatedMeshTransforms(allocator: Unity.Collections.Allocator): Unity.Collections.NativeArray<UnityEngine.XR.MeshTransform>;
+      Start(): void;
+      Stop(): void;
+      Destroy(): void;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export class XRMeshSubsystemDescriptor {
+      constructor();
+      id: string;
+      Create(): UnityEngine.XR.XRMeshSubsystem;
+      Equals(obj: any): boolean;
+      GetHashCode(): number;
+      GetType(): System.Type;
+      ToString(): string;
+    }
+    export namespace Provider {
+      export class XRStats {
+        Equals(obj: any): boolean;
+        GetHashCode(): number;
+        GetType(): System.Type;
+        ToString(): string;
+      }
+    }
+    export namespace WindowsMR {
+      export namespace Input {
+        export class WMRHMD {
+          constructor();
+          [key: string]: any;
+          userPresence: UnityEngine.InputSystem.Controls.ButtonControl;
+          leftEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          leftEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          rightEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          rightEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          centerEyePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          centerEyeRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+          isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+          devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+        export class HololensHand {
+          constructor();
+          [key: string]: any;
+          deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          airTap: UnityEngine.InputSystem.Controls.ButtonControl;
+          sourceLossRisk: UnityEngine.InputSystem.Controls.AxisControl;
+          sourceLossMitigationDirection: UnityEngine.InputSystem.Controls.Vector3Control;
+          trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+          isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+          devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+        export class WMRSpatialController {
+          constructor();
+          [key: string]: any;
+          joystick: UnityEngine.InputSystem.Controls.Vector2Control;
+          touchpad: UnityEngine.InputSystem.Controls.Vector2Control;
+          grip: UnityEngine.InputSystem.Controls.AxisControl;
+          gripPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+          menu: UnityEngine.InputSystem.Controls.ButtonControl;
+          trigger: UnityEngine.InputSystem.Controls.AxisControl;
+          triggerPressed: UnityEngine.InputSystem.Controls.ButtonControl;
+          joystickClicked: UnityEngine.InputSystem.Controls.ButtonControl;
+          touchpadClicked: UnityEngine.InputSystem.Controls.ButtonControl;
+          touchpadTouched: UnityEngine.InputSystem.Controls.ButtonControl;
+          deviceVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceAngularVelocity: UnityEngine.InputSystem.Controls.Vector3Control;
+          batteryLevel: UnityEngine.InputSystem.Controls.AxisControl;
+          sourceLossRisk: UnityEngine.InputSystem.Controls.AxisControl;
+          sourceLossMitigationDirection: UnityEngine.InputSystem.Controls.Vector3Control;
+          pointerPosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          pointerRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          trackingState: UnityEngine.InputSystem.Controls.IntegerControl;
+          isTracked: UnityEngine.InputSystem.Controls.ButtonControl;
+          devicePosition: UnityEngine.InputSystem.Controls.Vector3Control;
+          deviceRotation: UnityEngine.InputSystem.Controls.QuaternionControl;
+          description: UnityEngine.InputSystem.Layouts.InputDeviceDescription;
+          enabled: boolean;
+          canRunInBackground: boolean;
+          added: boolean;
+          remote: boolean;
+          native: boolean;
+          updateBeforeRender: boolean;
+          deviceId: number;
+          lastUpdateTime: number;
+          wasUpdatedThisFrame: boolean;
+          allControls: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          valueType: System.Type;
+          valueSizeInBytes: number;
+          name: string;
+          displayName: string;
+          shortDisplayName: string;
+          path: string;
+          layout: string;
+          variants: string;
+          device: UnityEngine.InputSystem.InputDevice;
+          parent: UnityEngine.InputSystem.InputControl;
+          children: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.InputControl>;
+          usages: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          aliases: UnityEngine.InputSystem.Utilities.ReadOnlyArray<UnityEngine.InputSystem.Utilities.InternedString>;
+          stateBlock: any; // UnityEngine.InputSystem.LowLevel.InputStateBlock
+          noisy: boolean;
+          synthetic: boolean;
+          SendImpulse(amplitude: number, duration: number): void;
+          MakeCurrent(): void;
+          ToString(): string;
+          EvaluateMagnitude(): number;
+          TryGetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          GetChildControl(path: string): UnityEngine.InputSystem.InputControl;
+          Equals(obj: any): boolean;
+          GetHashCode(): number;
+          GetType(): System.Type;
+        }
+      }
     }
   }
 }
