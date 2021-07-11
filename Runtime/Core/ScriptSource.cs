@@ -24,7 +24,7 @@ namespace ReactUnity
         {
             return new ScriptSource()
             {
-                Type = ScriptSourceType.Text,
+                Type = ScriptSourceType.Raw,
                 SourceText = path,
                 UseDevServer = false,
             };
@@ -55,7 +55,7 @@ namespace ReactUnity
             }
         }
 
-#if UNITY_EDITOR || REACT_DEV_SERVER_API
+#if UNITY_EDITOR || REACT_ALLOW_DEVSERVER
         private bool DevServerFailed = false;
         public bool IsDevServer => !DevServerFailed && UseDevServer && !string.IsNullOrWhiteSpace(DevServer);
 #else
@@ -66,7 +66,7 @@ namespace ReactUnity
 
         public string GetResolvedSourceUrl(bool useDevServer = true)
         {
-#if UNITY_EDITOR || REACT_DEV_SERVER_API
+#if UNITY_EDITOR || REACT_ALLOW_DEVSERVER
             if (useDevServer && IsDevServer) return DevServer;
 #endif
 
@@ -103,7 +103,7 @@ namespace ReactUnity
 
         public IDisposable GetScript(Action<string, bool> callback, IDispatcher dispatcher = null, bool useDevServer = true, bool disableWarnings = false)
         {
-#if UNITY_EDITOR || REACT_DEV_SERVER_API
+#if UNITY_EDITOR || REACT_ALLOW_DEVSERVER
             if (useDevServer && IsDevServer)
             {
                 var request = UnityEngine.Networking.UnityWebRequest.Get(DevServerFile);
@@ -126,33 +126,27 @@ namespace ReactUnity
                     else callback(SourceAsset.text, false);
                     break;
                 case ScriptSourceType.File:
-#if UNITY_EDITOR || REACT_FILE_API
-#if !REACT_FILE_API
-                    if (!disableWarnings) Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
-#endif
+#if UNITY_EDITOR || !REACT_DISABLE_FILE
                     callback(System.IO.File.ReadAllText(StripHashAndSearch(SourcePath)), false);
                     break;
 #else
-                    throw new Exception("REACT_FILE_API must be defined to use File API outside the editor. Add REACT_FILE_API to build symbols to use this feature.");
+                    throw new Exception("REACT_DISABLE_FILE is defined. File API cannot be used.");
 #endif
                 case ScriptSourceType.Url:
-#if UNITY_EDITOR || REACT_URL_API
-#if !REACT_URL_API
-                    if (!disableWarnings) Debug.LogWarning("REACT_URL_API is not defined. Add REACT_URL_API to build symbols to if you want to use this feature outside editor.");
-#endif
+#if UNITY_EDITOR || !REACT_DISABLE_WEB
                     var request = UnityEngine.Networking.UnityWebRequest.Get(GetResolvedSourceUrl(false));
 
                     return new DisposableHandle(dispatcher,
                         dispatcher.StartDeferred(WatchWebRequest(request, callback)));
 #else
-                    throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
+                    throw new Exception("REACT_DISABLE_WEB is defined. Web API cannot be used.");
 #endif
                 case ScriptSourceType.Resource:
                     var asset = Resources.Load(StripHashAndSearch(SourcePath)) as TextAsset;
                     if (asset) callback(asset.text, false);
                     else callback(null, false);
                     break;
-                case ScriptSourceType.Text:
+                case ScriptSourceType.Raw:
                     callback(SourceText, false);
                     break;
                 default:
@@ -184,6 +178,6 @@ namespace ReactUnity
         File = 1,
         Url = 2,
         Resource = 3,
-        Text = 4,
+        Raw = 4,
     }
 }

@@ -20,7 +20,7 @@ namespace ReactUnity.Editor
 
             if ((int)ScriptSourceType.TextAsset == source.intValue)
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("SourceAsset"));
-            else if ((int)ScriptSourceType.Text == source.intValue)
+            else if ((int)ScriptSourceType.Raw == source.intValue)
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("SourceText"));
             else
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("SourcePath"));

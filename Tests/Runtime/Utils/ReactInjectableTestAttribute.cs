@@ -24,7 +24,7 @@ namespace ReactUnity.Tests
             {
                 UseDevServer = false,
                 SourceText = ResourcesHelper.InjectCode(Code),
-                Type = ScriptSourceType.Text,
+                Type = ScriptSourceType.Raw,
             };
         }
 

@@ -24,7 +24,6 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.CanvasGroup).Assembly,
                     typeof(UnityEngine.UI.Selectable).Assembly,
                     typeof(UnityEngine.UIVertex).Assembly,
-                    typeof(UnityEngine.Input).Assembly,
                     typeof(UnityEngine.Animator).Assembly,
                     typeof(UnityEngine.Event).Assembly,
                     typeof(UnityEngine.BuildCompression).Assembly,
@@ -36,7 +35,10 @@ namespace ReactUnity.Editor.Developer
                     typeof(UnityEngine.TextCore.Glyph).Assembly,
                     typeof(UnityEngine.TextCore.Text.FontAsset).Assembly,
 #endif
-                    //#if REACT_INPUT_SYSTEM
+#if ENABLE_LEGACY_INPUT_MANAGER
+                    typeof(UnityEngine.Input).Assembly,
+#endif
+                    //#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
                     //                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
                     //                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
                     //#endif

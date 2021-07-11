@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-#if REACT_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
 
@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI.EventHandlers
 
         private bool selected = false;
 
-#if REACT_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
         private InputAction action;
 
         private void OnEnable()
@@ -67,7 +67,7 @@ namespace ReactUnity.UGUI.EventHandlers
         public Type input;
         public bool inputSystem;
 
-#if REACT_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
         public InputAction.CallbackContext ctx;
 
         public KeyEventData(EventSystem eventSystem, InputAction.CallbackContext ctx) : base(eventSystem)
