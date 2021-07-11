@@ -6,7 +6,7 @@ export function insertStyledComponentsSheet(sheet: ServerStyleSheet) {
 
     for (const element of styleElements) {
       const styleContent = (element.props as any).dangerouslySetInnerHTML.__html;
-      RootContainer.Context.InsertStyle(styleContent);
+      Context.InsertStyle(styleContent);
     }
   } catch (error) {
     console.error(error);

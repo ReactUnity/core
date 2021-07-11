@@ -235,7 +235,7 @@ export const Renderer = {
     hostContainer?: NativeContainerInstance,
     callback?: () => void,
   ): number {
-    if (!hostContainer) hostContainer = RootContainer;
+    if (!hostContainer) hostContainer = HostContainer;
     const hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   },
