@@ -17,7 +17,7 @@ namespace ReactUnity.UIToolkit
             Root?.Clear();
         }
 
-        protected override ReactContext CreateContext(ReactScript script, bool isDevServer)
+        protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
             var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
             return new UIToolkitContext(Root, globals, script, dispatcher, scheduler, MediaProvider, isDevServer, Render, PlayAudio);

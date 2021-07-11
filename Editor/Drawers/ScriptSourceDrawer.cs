@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ReactUnity.Editor
 {
     [CustomPropertyDrawer(typeof(ScriptSource))]
-    public class ReactScriptDrawer : PropertyDrawer
+    public class ScriptSourceDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

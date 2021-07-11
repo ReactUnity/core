@@ -122,7 +122,7 @@ namespace ReactUnity.Editor
             {
                 if (obj.GetComponentInChildren<UGUI.ReactUnityUGUI>()) return true;
 #if UNITY_2021_2_OR_NEWER
-                if (obj.GetComponentInChildren<UIToolkit.ReactUnityUIDocument>()) return true;
+                if (obj.GetComponentInChildren<ReactUnity.UIToolkit.ReactUnityUIDocument>()) return true;
 #endif
             }
 
