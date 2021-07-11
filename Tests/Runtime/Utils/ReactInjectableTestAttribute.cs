@@ -7,12 +7,14 @@ namespace ReactUnity.Tests
     {
         public const string DefaultCode = @"Renderer.render(React.createElement(""view"", null, ""Hello world""))";
 
+        protected string OriginalCode;
         protected string Code;
         protected string Style;
 
-        public ReactInjectableTestAttribute(string code = DefaultCode, string style = "", string customScene = null, bool autoRender = true) : base(customScene, autoRender)
+        public ReactInjectableTestAttribute(string code = DefaultCode, string style = "", string customScene = null, bool autoRender = true, bool transform = true) : base(customScene, autoRender)
         {
-            Code = code ?? DefaultCode;
+            OriginalCode = code ?? DefaultCode;
+            Code = transform ? CodeTransformer.TransformCode(OriginalCode) : OriginalCode;
             Style = style;
         }
 

@@ -34,8 +34,17 @@ namespace ReactUnity.Tests
 
 
         [UnityTest, ReactInjectableTest(@"
-Renderer.render( /*#__PURE__*/React.createElement('view', null, 'Hello world', /*#__PURE__*/React.createElement('view', null, 'Hello again'), /*#__PURE__*/React.createElement('view', null, 'Somehow ', /*#__PURE__*/React.createElement('view', null, 'just hello'))));
-")]
+            Renderer.render(
+                <view>
+                    Hello world
+                    <view>Hello again</view>
+                    <view>
+                        Somehow
+                        <view> just hello</view>
+                    </view>
+                </view>
+            );
+        ")]
         public IEnumerator TextContent_IsCorrect()
         {
             yield return null;
@@ -45,8 +54,17 @@ Renderer.render( /*#__PURE__*/React.createElement('view', null, 'Hello world', /
 
 
         [UnityTest, ReactInjectableTest(@"
-function App(){var globals=ReactUnity.useGlobals();return/*#__PURE__*/react.createElement('image',{source:globals.image});}ReactUnity.Renderer.render(/*#__PURE__*/react.createElement(ReactUnity.GlobalsProvider,null,/*#__PURE__*/react.createElement(App,null)))
-")]
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <image source={globals.image} />;
+            }
+
+            Renderer.render(
+                <GlobalsProvider>
+                    <App />
+                </GlobalsProvider>
+            );
+        ")]
         public IEnumerator TestGlobalsChange()
         {
             yield return null;
@@ -60,9 +78,18 @@ function App(){var globals=ReactUnity.useGlobals();return/*#__PURE__*/react.crea
         }
 
         [UnityTest, ReactInjectableTest(@"
-var watcher = ReactUnity.createDictionaryWatcher(Globals.inner, 'innerSerializable');
-function App(){var sd=watcher.useContext();debugger;return/*#__PURE__*/react.createElement('image',{source:sd.image});}ReactUnity.Renderer.render(/*#__PURE__*/react.createElement(watcher.Provider,null,/*#__PURE__*/react.createElement(App,null)))
-")]
+            const watcher = ReactUnity.createDictionaryWatcher(Globals.inner, 'innerSerializable');
+            function App() {
+                const globals = watcher.useContext();
+                return <image source={globals.image} />;
+            }
+
+            Renderer.render(
+                <watcher.Provider>
+                    <App />
+                </watcher.Provider>
+            );
+        ")]
         public IEnumerator TestArbitraryWatcher()
         {
             yield return null;
