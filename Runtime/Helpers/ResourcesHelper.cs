@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReactUnity.Helpers
@@ -22,12 +23,25 @@ namespace ReactUnity.Helpers
         private static Material boxShadowMaterial;
         public static Material BoxShadowMaterial => boxShadowMaterial ??= Resources.Load<Material>("ReactUnity/materials/RoundedBoxShadow");
 
+
+        private static Dictionary<string, TextAsset> Polyfills = new Dictionary<string, TextAsset>();
+
         public static string InjectCode(string code)
         {
             var injectableText = Resources.Load<TextAsset>("ReactUnity/editor/injectable/index");
             var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", code);
 
             return injectedText;
+        }
+
+        public static string GetPolyfill(string name)
+        {
+            if (Polyfills.TryGetValue(name, out var asset)) return asset.text;
+            var loaded = Resources.Load<TextAsset>("ReactUnity/polyfills/" + name);
+
+            if (loaded == null) throw new System.Exception($"Polyfill {name} does not exist");
+            Polyfills[name] = loaded;
+            return loaded.text;
         }
     }
 }

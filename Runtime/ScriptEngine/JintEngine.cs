@@ -40,6 +40,13 @@ namespace ReactUnity.ScriptEngine
             var deferred = Engine.RegisterPromise();
             var resolve = deferred.GetType().GetMethod("get_Resolve").Invoke(deferred, new object[] { }) as Action<JsValue>;
             context.Dispatcher.OnEveryUpdate(() => resolve(""));
+
+            LoadPolyfills();
+        }
+
+        private void LoadPolyfills()
+        {
+            Execute(Helpers.ResourcesHelper.GetPolyfill("typedarray"));
         }
 
         public object Evaluate(string code, string fileName = null)

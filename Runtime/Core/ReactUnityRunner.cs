@@ -119,10 +119,9 @@ namespace ReactUnity
 
         void CreatePolyfills(IJavaScriptEngine engine)
         {
-            // Load polyfills
-            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
-            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
-            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/typedarray").text);
+            // Load essential polyfills
+            engine.Execute(ResourcesHelper.GetPolyfill("base64"));
+            engine.Execute(ResourcesHelper.GetPolyfill("fetch"));
         }
 
         void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
