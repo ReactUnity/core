@@ -81,8 +81,8 @@ namespace ReactUnity
         void CreateBaseEngine(bool debug, bool awaitDebugger)
         {
             engine = engineFactory.Create(context, debug, awaitDebugger);
-
-            engine.Execute("globalThis = global = window = parent = this;");
+            
+            engine.Execute("globalThis = global = window = parent = self = this;");
             engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(context.MediaProvider, media)));
 
             engine.SetValue("Engine", engine);
@@ -122,6 +122,7 @@ namespace ReactUnity
             // Load polyfills
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/base64").text);
             engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/fetch").text);
+            engine.Execute(Resources.Load<TextAsset>("ReactUnity/polyfills/typedarray").text);
         }
 
         void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
