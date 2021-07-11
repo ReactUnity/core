@@ -4,6 +4,7 @@ using Jint.Native;
 using Jint.Native.Object;
 using Jint.Runtime;
 using Jint.Runtime.Interop;
+using ReactUnity.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -37,6 +38,8 @@ namespace ReactUnity.ScriptEngine
                 });
 
                 x.DebugMode(debug);
+
+                x.SetTypeConverter(x => new Callback.JintCallbackConverter(x));
             });
 
             var deferred = Engine.RegisterPromise();
