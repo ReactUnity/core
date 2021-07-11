@@ -33,7 +33,7 @@ const getCacheIdentifier = require('react-dev-utils/getCacheIdentifier');
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const sourceMapVar = process.env.GENERATE_SOURCEMAP;
-const shouldUseSourceMap = sourceMapVar !== 'false' && sourceMapVar;
+const shouldUseSourceMap = sourceMapVar !== 'false' && !!sourceMapVar;
 const sourceMapType = sourceMapVar !== 'false' && sourceMapVar !== 'true' && sourceMapVar;
 
 const webpackDevClientEntry = require.resolve(
