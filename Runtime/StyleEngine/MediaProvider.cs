@@ -41,7 +41,7 @@ namespace ReactUnity.StyleEngine
                 new Dictionary<string, string> {
                     { "framework", framework },
                     { "editor", isEditor ? "true" : null },
-                    { "runtime", isEditor ? null : "runtime" },
+                    { "runtime", isEditor ? null : "true" },
                 });
         }
 

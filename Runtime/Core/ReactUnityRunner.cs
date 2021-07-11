@@ -35,6 +35,8 @@ namespace ReactUnity
             CreateScheduler(engine, context);
             CreatePolyfills(engine);
 
+            ctx.MediaProvider.SetValue("engine", engine.Key);
+
             var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (runner) => beforeStart?.Invoke(runner) };
             var afterStartCallbacks = new List<Action<ReactUnityRunner, Exception>>() { (runner, success) => afterStart?.Invoke(runner) };
 

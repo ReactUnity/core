@@ -13,6 +13,7 @@ namespace ReactUnity.ScriptEngine
 
     public interface IJavaScriptEngine
     {
+        string Key { get; }
         void Execute(string code, string fileName = null);
         Exception TryExecute(string code, string fileName = null);
         object Evaluate(string code, string fileName = null);

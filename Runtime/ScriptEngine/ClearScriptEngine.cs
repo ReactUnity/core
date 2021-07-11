@@ -16,6 +16,8 @@ namespace ReactUnity.ScriptEngine
 {
     public class ClearScriptEngine : IJavaScriptEngine
     {
+        public string Key { get; } = "clearscript";
+
         private const string tempKey = "__$__temp_key__$__";
 
         public V8ScriptEngine Engine { get; }

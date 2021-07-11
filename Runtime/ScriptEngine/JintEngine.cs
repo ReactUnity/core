@@ -14,6 +14,7 @@ namespace ReactUnity.ScriptEngine
 {
     public class JintEngine : IJavaScriptEngine
     {
+        public string Key { get; } = "jint";
         public Engine Engine { get; }
 
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
