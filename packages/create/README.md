@@ -22,7 +22,6 @@ Options can be used like: `npm init @reactunity -- <options>`
 
 ```
   -u, --unity                Creates Unity project from scratch and adds React project into it
-  -e, --editor               Create React Unity Editor project
   -i, --install [npm|yarn]   Run 'npm install' or 'yarn install'.
   -h, --help                 Print help
 ```

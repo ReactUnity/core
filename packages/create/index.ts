@@ -10,12 +10,10 @@ const program = new Command();
 
 program
   .option('-u, --unity', 'Create Unity project from scratch', false)
-  .option('-e, --editor', 'Create editor project instead of runtime', false)
   .addOption(new Option('-i, --install [manager]', 'Install packages with selected').choices(['npm', 'yarn']).default(false));
 
 program.parse();
 const options: {
-  editor?: boolean;
   install?: 'npm' | 'yarn' | true | false;
   unity?: boolean;
 } = program.opts();
@@ -28,7 +26,6 @@ const chalkError = chalk.red
 const cwd = process.cwd();
 const install = options.install === true ? 'yarn' : options.install;
 const createUnity = options.unity;
-const createEditor = options.editor;
 
 let targetDir = program.args[0] || 'react';
 
@@ -40,7 +37,7 @@ const reactDir = path.resolve(unityDir, reactFolderName);
 const createdDir = createUnity ? unityDir : reactDir;
 
 const unityScaffold = path.join(__dirname, 'unity-scaffold');
-const reactScaffold = path.join(__dirname, createEditor ? 'editor-scaffold' : 'scaffold');
+const reactScaffold = path.join(__dirname, 'scaffold');
 
 async function isDirEmpty(dirname) {
   const files = await fse.readdir(dirname);
@@ -122,7 +119,9 @@ async function create() {
     }
   }
 
-  console.log(`Successfully created the project. Next steps:`);
+  console.log(`Successfully created the project. Next steps you should do manually:`);
+  console.log(`- Open the project inside Unity and update ReactUnity to latest version in the Package Manager`);
+  console.log(`- Update packages to their latest versions in ${chalkPath(path.join(reactDir, 'package.json'))}`);
   console.log(`- Go to project folder at ${chalkPath(reactDir)}`);
   if (!install) console.log(`- Run ${chalkCmd('yarn')} to install packages`);
   console.log(`- Try running ${chalkCmd('yarn start')} to start the project and test it inside Unity`);

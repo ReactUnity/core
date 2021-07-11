@@ -8,4 +8,4 @@ function App() {
   </scroll>;
 }
 
-Renderer.render(<App />, RootContainer, null);
+Renderer.render(<App />);
