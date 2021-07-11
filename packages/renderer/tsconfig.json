@@ -17,7 +17,9 @@
     "target": "ES5",
     "skipLibCheck": true,
     "preserveConstEnums": true,
-    "lib": []
+    "lib": [
+      "ES2019"
+    ]
   },
   "files": [
     "index.ts",
