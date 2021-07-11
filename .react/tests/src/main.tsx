@@ -1,5 +1,4 @@
-import { Renderer } from '@reactunity/renderer/editor';
-import * as React from 'react';
+import { Renderer } from '@reactunity/renderer';
 
 export function App() {
   return <text>Hello world</text>;

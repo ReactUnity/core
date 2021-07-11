@@ -7425,7 +7425,7 @@ var hostConfig = {
 var ReactUnityReconciler = react_reconciler(hostConfig);
 var Renderer = {
   render: function render(element, hostContainer, callback) {
-    if (!hostContainer) hostContainer = RootContainer;
+    if (!hostContainer) hostContainer = HostContainer;
     var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   }

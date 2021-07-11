@@ -6704,6 +6704,7 @@ __webpack_require__.d(dist_namespaceObject, {
   "Renderer": () => (Renderer),
   "createDictionaryWatcher": () => (createDictionaryWatcher),
   "globalsWatcher": () => (globalsWatcher),
+  "insertStyledComponentsSheet": () => (insertStyledComponentsSheet),
   "useGlobals": () => (useGlobals)
 });
 
@@ -6787,6 +6788,22 @@ function createDictionaryWatcher(dictionary, displayName) {
 var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
 var useGlobals = globalsWatcher.useContext;
 var GlobalsProvider = globalsWatcher.Provider;
+;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/helpers/styled-components-helper.js
+function insertStyledComponentsSheet(sheet) {
+  try {
+    var styleElements = sheet.getStyleElement();
+
+    for (var _i = 0, styleElements_1 = styleElements; _i < styleElements_1.length; _i++) {
+      var element = styleElements_1[_i];
+      var styleContent = element.props.dangerouslySetInnerHTML.__html;
+      Context.InsertStyle(styleContent);
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    sheet.seal();
+  }
+}
 // EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
 var react_reconciler = __webpack_require__(84);
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
@@ -7055,12 +7072,13 @@ var hostConfig = {
 var ReactUnityReconciler = react_reconciler(hostConfig);
 var Renderer = {
   render: function render(element, hostContainer, callback) {
-    if (!hostContainer) hostContainer = RootContainer;
+    if (!hostContainer) hostContainer = HostContainer;
     var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
     return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
   }
 };
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/index.js
+
 
 
 

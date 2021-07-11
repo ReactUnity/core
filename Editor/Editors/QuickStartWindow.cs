@@ -8,7 +8,6 @@ using ReactUnity.Editor.Renderer;
 using UnityEngine.SceneManagement;
 using UnityEditor.PackageManager;
 using System.Collections;
-using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers;
 
 namespace ReactUnity.Editor
@@ -80,13 +79,13 @@ namespace ReactUnity.Editor
                 if (!int.TryParse(major, out var version)) version = 0;
 
                 NodeVersion = version;
-                callback?.Invoke(version);
             }
             catch
             {
                 NodeVersion = 0;
-                callback?.Invoke(0);
             }
+
+            callback?.Invoke(NodeVersion);
         }
 
         public void GetNodeVersion(object callback)
