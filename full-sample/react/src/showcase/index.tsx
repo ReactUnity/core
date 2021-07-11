@@ -1,11 +1,25 @@
-import { GlobalsProvider, ReactUnity, Renderer, UnityEngine as UE, useGlobals } from '@reactunity/renderer';
+import { GlobalsProvider, globalsWatcher, insertStyledComponentsSheet, ReactUnity as ReactUnityNS, Renderer, UnityEngine as UE } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
 import pngImage from 'src/assets/bg.png';
+import styled, { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import style from './index.module.scss';
 
 const webImage = 'https://www.google.com.tr/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png';
 const webVideo = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
+
+const SuperInput = styled.input`
+  appearance: none;
+  background-color: white;
+  box-shadow: 1px 1px 6px -2px black;
+  border-width: 0;
+  border-radius: 4px;
+  transition: background-color 280ms ease-in-out;
+
+  &:hover {
+    background-color: yellow;
+  }
+`;
 
 export function RenderObject({ object }: { object: UE.GameObject }) {
   return <object width={300} height={400} style={{ flexGrow: 0 }}
@@ -22,9 +36,9 @@ export function RenderObject({ object }: { object: UE.GameObject }) {
   />;
 }
 
-export function App({ className }: { className?: string }) {
-  const [videoRef, setVideoRef] = useState<ReactUnity.UGUI.VideoComponent>();
-  const Globals = useGlobals() as any;
+export function App() {
+  const [videoRef, setVideoRef] = useState<ReactUnityNS.UGUI.VideoComponent>();
+  const Globals = globalsWatcher.useContext();
 
   useEffect(() => {
     if (videoRef) {
@@ -46,7 +60,7 @@ export function App({ className }: { className?: string }) {
       <section>
         <h2>Button</h2>
 
-        <button className={style.clickButton}>Click</button>
+        <button className={style.superButton}>Click</button>
       </section>
 
 
@@ -60,7 +74,7 @@ export function App({ className }: { className?: string }) {
       <section>
         <h2>Input</h2>
 
-        <input />
+        <SuperInput />
       </section>
 
 
@@ -126,8 +140,15 @@ export function App({ className }: { className?: string }) {
   </scroll>;
 };
 
+
+const sheet = new ServerStyleSheet()
+
 Renderer.render(
-  <GlobalsProvider>
-    <App />
-  </GlobalsProvider>
+  <StyleSheetManager sheet={sheet.instance}>
+    <GlobalsProvider>
+      <App />
+    </GlobalsProvider>
+  </StyleSheetManager>
 );
+
+insertStyledComponentsSheet(sheet);

@@ -35,7 +35,7 @@ public class ReactWebBridge : MonoBehaviour
         var text = InjectableScript.text;
 
         var injectedScript = text.Replace("/*INJECT_CODE*/", script);
-        ReactCanvas.Script = ReactUnity.ReactScript.Text(injectedScript);
+        ReactCanvas.Script = ReactUnity.ScriptSource.Text(injectedScript);
     }
 
     public void SetCSS(string script)

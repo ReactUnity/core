@@ -13,9 +13,9 @@ public class ReactNodesSample : ReactWindow
     }
 
 
-    protected override ReactScript GetScript()
+    protected override ScriptSource GetScript()
     {
-        var res = ReactScript.Resource("react-editor/index");
+        var res = ScriptSource.Resource("react-editor/index");
         res.UseDevServer = false;
         return res;
     }

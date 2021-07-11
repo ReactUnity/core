@@ -36,21 +36,8 @@ MonoBehaviour:
   m_UserSelectedRegistryName: 
   m_UserAddingNewScopedRegistry: 0
   m_RegistryInfoDraft:
-    m_ErrorMessage: 
-    m_Original:
-      m_Id: scoped:package.openupm.com
-      m_Name: package.openupm.com
-      m_Url: https://package.openupm.com
-      m_Scopes:
-      - com.reactunity.core
-      - com.openupm
-      m_IsDefault: 0
-      m_Capabilities: 0
     m_Modified: 0
-    m_Name: package.openupm.com
-    m_Url: https://package.openupm.com
-    m_Scopes:
-    - com.reactunity.core
-    - com.openupm
-    m_SelectedScopeIndex: 0
+    m_ErrorMessage: 
+    m_UserModificationsInstanceId: -822
+    m_OriginalInstanceId: -826
   m_LoadAssets: 0

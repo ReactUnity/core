@@ -5,19 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach to Jint on port 9222",
-      "type": "chrome",
-      "request": "attach",
-      "port": 9222,
-      "webRoot": "${workspaceFolder}"
-    },
-    {
       "name": "Attach to V8 on port 9222",
-      "type": "node",
+      "type": "pwa-node",
+      "port": 9222,
       "request": "attach",
-      "protocol": "inspector",
-      "address": "localhost",
-      "port": 9222
+      "sourceMaps": true,
+      "pauseForSourceMap": true,
+      "localRoot": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}",
+      "continueOnAttach": true,
+      "trace": true,
+      "skipFiles": [
+      ]
     }
   ]
 }

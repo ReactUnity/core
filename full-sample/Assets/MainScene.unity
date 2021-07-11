@@ -172,16 +172,16 @@ MonoBehaviour:
     - Key: camera2root
       Value: {fileID: 2092347001}
   Script:
-    ScriptSource: 3
+    Type: 3
     SourceAsset: {fileID: 4900000, guid: 1cea8ca938b8ac346ad799e56a0afa8b, type: 3}
     SourcePath: react/index#ugui
     SourceText: 
     ResourcesPath: 
-    UseDevServer: 1
+    UseDevServer: 0
     DevServer: http://localhost:3100#ugui
   Debug: 0
   AwaitDebugger: 0
-  EngineType: 1
+  EngineType: 2
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:

@@ -11,6 +11,10 @@
   align-self: center;
   align-items: stretch;
 
+  anchor {
+    align-self: flex-start;
+  }
+
   h1 {
     font-size: 36px;
     font-style: smallcaps, bold;
@@ -56,11 +60,6 @@
     align-self: stretch;
   }
 
-  input {
-    border-width: 1px;
-    border-color: black;
-  }
-
   object {
     border-width: 1px;
     border-radius: 20px;
@@ -83,7 +82,7 @@
   }
 }
 
-.clickButton {
+.superButton {
   appearance: none;
   background-color: white;
   @include elevation(2);
