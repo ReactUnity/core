@@ -1,10 +1,4 @@
-#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
-#define REACT_CLEARSCRIPT
-#endif
-
-using Esprima;
 using Facebook.Yoga;
-using Jint.Runtime;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
@@ -26,7 +20,7 @@ namespace ReactUnity
         {
             if (string.IsNullOrWhiteSpace(script)) return;
 
-            engineFactory = ResolveEngineFactory(engineType);
+            engineFactory = JavascriptEngineHelpers.GetEngineFactory(engineType);
 
             context = ctx;
             if (engine == null) CreateBaseEngine(debug, awaitDebugger);
@@ -39,38 +33,17 @@ namespace ReactUnity
             CreateScheduler(engine, context);
             CreatePolyfills(engine);
 
-            var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => beforeStart?.Invoke(e) };
-            var afterStartCallbacks = new List<Action<ReactUnityRunner>>() { (e) => afterStart?.Invoke(e) };
+            var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (runner) => beforeStart?.Invoke(runner) };
+            var afterStartCallbacks = new List<Action<ReactUnityRunner, Exception>>() { (runner, success) => afterStart?.Invoke(runner) };
 
             engine.SetValue("addEventListener", new Action<string, Action<ReactUnityRunner>>((e, f) =>
             {
-                if (e == "DOMContentLoaded") afterStartCallbacks.Add(f);
+                if (e == "DOMContentLoaded") afterStartCallbacks.Add((runner, success) => f(runner));
             }));
 
-            try
-            {
-                beforeStartCallbacks.ForEach(x => x?.Invoke(this));
-                engine.Execute(script, "ReactUnity");
-                afterStartCallbacks.ForEach(x => x?.Invoke(this));
-            }
-            catch (ParserException ex)
-            {
-                Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
-                Debug.LogException(ex);
-            }
-            catch (JavaScriptException ex)
-            {
-                Debug.LogError($"JS exception in line {ex.LineNumber} column {ex.Column}");
-                Debug.LogException(ex);
-            }
-            catch (JintException ex)
-            {
-                Debug.LogException(ex);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
+            beforeStartCallbacks.ForEach(x => x?.Invoke(this));
+            var error = engine.TryExecute(script, "ReactUnity");
+            afterStartCallbacks.ForEach(x => x?.Invoke(this, error));
         }
 
         public void ExecuteScript(string script)
@@ -154,22 +127,6 @@ namespace ReactUnity
             engine.SetProperty(engine.GetValue("XMLHttpRequest"), "original", typeof(XMLHttpRequest));
 
             engine.SetValue("document", new DocumentProxy(context, this.ExecuteScript, context.Location.origin));
-        }
-
-        IJavaScriptEngineFactory ResolveEngineFactory(JavascriptEngineType type)
-        {
-            switch (type)
-            {
-                case JavascriptEngineType.Jint:
-                    return new JintEngineFactory();
-#if REACT_CLEARSCRIPT
-                case JavascriptEngineType.ClearScript:
-                    return new ClearScriptEngineFactory();
-#endif
-                case JavascriptEngineType.Auto:
-                default:
-                    return new JintEngineFactory();
-            }
         }
     }
 }

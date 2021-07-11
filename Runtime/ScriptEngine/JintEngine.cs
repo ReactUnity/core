@@ -1,6 +1,8 @@
+using Esprima;
 using Jint;
 using Jint.Native;
 using Jint.Native.Object;
+using Jint.Runtime;
 using Jint.Runtime.Interop;
 using System;
 using System.Collections.Generic;
@@ -57,6 +59,37 @@ namespace ReactUnity.ScriptEngine
         public void Execute(string code, string fileName = null)
         {
             Engine.Execute(code);
+        }
+
+        public Exception TryExecute(string code, string fileName = null)
+        {
+            try
+            {
+                Execute(code, fileName);
+            }
+            catch (ParserException ex)
+            {
+                Debug.LogError($"Parser exception in line {ex.LineNumber} column {ex.Column}");
+                Debug.LogException(ex);
+                return ex;
+            }
+            catch (JavaScriptException ex)
+            {
+                Debug.LogError($"JS exception in line {ex.LineNumber} column {ex.Column}");
+                Debug.LogException(ex);
+                return ex;
+            }
+            catch (JintException ex)
+            {
+                Debug.LogException(ex);
+                return ex;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+                return ex;
+            }
+            return null;
         }
 
         public object GetValue(string key)

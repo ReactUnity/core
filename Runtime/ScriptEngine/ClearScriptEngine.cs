@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using UnityEngine;
 
 namespace ReactUnity.ScriptEngine
 {
@@ -63,6 +64,20 @@ namespace ReactUnity.ScriptEngine
         public void Execute(string code, string fileName = null)
         {
             Engine.Execute(fileName, fileName == null, code);
+        }
+
+        public Exception TryExecute(string code, string fileName = null)
+        {
+            try
+            {
+                Execute(code, fileName);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+                return ex;
+            }
+            return null;
         }
 
         public object GetValue(string key)
