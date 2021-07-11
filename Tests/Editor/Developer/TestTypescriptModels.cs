@@ -13,7 +13,7 @@ namespace ReactUnity.Editor.Tests.Developer
         [UnityEditor.MenuItem("React/Developer/Generate NUnit Typescript Models", priority = 0)]
         public static void GenerateEditor()
         {
-            TypescriptModelsGenerator.Generate(
+            TypescriptModelsGenerator.GenerateWith(
                 new List<Assembly> {
                     typeof(Assert).Assembly,
                 },

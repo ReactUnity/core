@@ -10,13 +10,19 @@ using ReactUnity.Helpers.TypescriptUtils;
 namespace ReactUnity.Editor.Developer
 {
     [ExcludeFromCodeCoverage]
-    public static class TypescriptModelsGenerator
+    public class TypescriptModelsGenerator
     {
+#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
+        const string IgnoreInputSystem = "BogusNamespace";
+#else
+        const string IgnoreInputSystem = "UnityEngine.InputSystem";
+#endif
+
 #if REACT_UNITY_DEVELOPER
         [UnityEditor.MenuItem("React/Developer/Generate Unity Typescript Models", priority = 0)]
         public static void GenerateUnity()
         {
-            Generate(
+            GenerateWith(
                 new List<Assembly> {
                     typeof(UnityEngine.GameObject).Assembly,
                     typeof(UnityEngine.Video.VideoPlayer).Assembly,
@@ -34,20 +40,23 @@ namespace ReactUnity.Editor.Developer
 #if UNITY_2021_2_OR_NEWER
                     typeof(UnityEngine.TextCore.Glyph).Assembly,
                     typeof(UnityEngine.TextCore.Text.FontAsset).Assembly,
+                    typeof(UnityEngine.XR.InputTrackingState).Assembly,
+                    typeof(UnityEngine.MeshCollider).Assembly,
 #endif
-#if ENABLE_LEGACY_INPUT_MANAGER
+#if ENABLE_LEGACY_INPUT_MANAGER || (ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM)
                     typeof(UnityEngine.Input).Assembly,
 #endif
-                    //#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
-                    //                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
-                    //                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
-                    //#endif
-                    //#if REACT_VECTOR_GRAPHICS
-                    //                    typeof(Unity.VectorGraphics.VectorUtils).Assembly,
-                    //#endif
+#if ENABLE_INPUT_SYSTEM && REACT_INPUT_SYSTEM
+                    typeof(UnityEngine.EventSystems.BaseInput).Assembly,
+                    typeof(UnityEngine.InputSystem.InputSystem).Assembly,
+                    typeof(UnityEngine.InputSystem.UI.ExtendedPointerEventData).Assembly,
+#endif
+#if REACT_VECTOR_GRAPHICS && REACT_ENABLE_ADVANCED_TYPES
+                    typeof(Unity.VectorGraphics.VectorUtils).Assembly,
+#endif
                 },
                 new List<string> { "Unity", "UnityEngine" },
-                new List<string> { },
+                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel" },
                 new Dictionary<string, string> { { "System", "./system" } },
                 new List<string> { },
                 true,
@@ -58,12 +67,12 @@ namespace ReactUnity.Editor.Developer
         [UnityEditor.MenuItem("React/Developer/Generate Editor Typescript Models", priority = 0)]
         public static void GenerateEditor()
         {
-            Generate(
+            GenerateWith(
                 new List<Assembly> {
                     typeof(UnityEditor.EditorWindow).Assembly,
                 },
                 new List<string> { "UnityEditor" },
-                new List<string> { "UnityEngine.InputSystem", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEngine.TextCore" },
+                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "UnityEngine.Experimental", "UnityEngine.TerrainTools", "UnityEngine.TextCore" },
                 new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
                 new List<string> { "UnityEngine.ConfigurableJointMotion", "UnityEngine.RaycastHit", "UnityEngine.Terrain", "UnityEngine.TerrainLayer" },
                 true,
@@ -74,10 +83,10 @@ namespace ReactUnity.Editor.Developer
         [UnityEditor.MenuItem("React/Developer/Generate React Unity Typescript Models", priority = 0)]
         public static void GenerateReactUnity()
         {
-            Generate(
+            GenerateWith(
                 new List<Assembly> { typeof(ReactContext).Assembly, typeof(TypescriptModelsGenerator).Assembly, typeof(ReactUnity.UGUI.UGUIContext).Assembly, typeof(ReactUnity.UIToolkit.UIToolkitContext).Assembly, },
                 new List<string> { "ReactUnity", "Facebook.Yoga" },
-                new List<string> { "UnityEngine.InputSystem", "Unity.VectorGraphics" },
+                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
                 new Dictionary<string, string> { { "UnityEngine", "./unity" }, { "Unity", "./unity" }, { "System", "./system" } },
                 new List<string> { },
                 true,
@@ -88,7 +97,7 @@ namespace ReactUnity.Editor.Developer
         [UnityEditor.MenuItem("React/Developer/Generate System Typescript Models", priority = 0)]
         public static void GenerateSystem()
         {
-            Generate(
+            GenerateWith(
                 new List<Assembly> {
                     typeof(System.Convert).Assembly,
                     typeof(System.Object).Assembly,
@@ -121,10 +130,10 @@ namespace ReactUnity.Editor.Developer
             };
 
             var defaultAssemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => assemblySet.Contains(x.GetName().Name)).ToList();
-            Generate(
+            GenerateWith(
                 defaultAssemblies,
                 null,
-                new List<string> { "UnityEngine.InputSystem", "Unity.VectorGraphics" },
+                new List<string> { IgnoreInputSystem, "UnityEngine.InputSystem.LowLevel", "Unity.VectorGraphics" },
                 new Dictionary<string, string> {
                     { "UnityEngine", "@reactunity/renderer" }, { "UnityEditor", "@reactunity/renderer" }, { "Unity", "@reactunity/renderer" },
                     { "System", "@reactunity/renderer" }, { "ReactUnity", "@reactunity/renderer" }, { "Facebook", "@reactunity/renderer" } },
@@ -134,22 +143,46 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        static List<string> IncludedNamespaces;
-        static List<string> ExcludedNamespaces;
-        static List<string> ExcludedTypes;
-        static Dictionary<string, string> ImportNamespaces;
-        static HashSet<string> Imports;
-        static Dictionary<string, string> Remaps;
-        static bool ExportAsClass;
-        static bool AllowGeneric;
-        static bool AllowIndexer;
+        List<Assembly> Assemblies;
+        List<string> IncludedNamespaces;
+        List<string> ExcludedNamespaces;
+        List<string> ExcludedTypes;
+        Dictionary<string, string> ImportNamespaces;
+        HashSet<string> Imports;
+        Dictionary<string, string> Remaps;
+        bool ExportAsClass;
+        bool AllowGeneric;
+        bool AllowIndexer;
 
-        public static void Generate(List<Assembly> assemblies, List<string> include, List<string> exclude, Dictionary<string, string> import, List<string> excludeTypes,
+        public static void GenerateWith(List<Assembly> assemblies, List<string> include, List<string> exclude, Dictionary<string, string> import, List<string> excludeTypes,
             bool exportAsClass = true, bool generateGenericClasses = false, bool allowIndexer = true)
         {
-            var filePath = UnityEditor.EditorUtility.OpenFilePanel("Typescript file", "", "ts");
-            if (string.IsNullOrWhiteSpace(filePath)) return;
+            var generator =
+                new TypescriptModelsGenerator(
+                    assemblies,
+                    include,
+                    exclude,
+                    import,
+                    excludeTypes,
+                    exportAsClass,
+                    generateGenericClasses,
+                    allowIndexer
+                );
+            generator.Generate();
+        }
 
+        public TypescriptModelsGenerator(
+            List<Assembly> assemblies,
+            List<string> include,
+            List<string> exclude,
+            Dictionary<string, string> import,
+            List<string> excludeTypes,
+            bool exportAsClass = true,
+            bool generateGenericClasses = false,
+            bool allowIndexer = true
+        )
+        {
+            Assemblies = assemblies;
             ExcludedTypes = excludeTypes;
             ImportNamespaces = import ?? new Dictionary<string, string>();
             Remaps = new Dictionary<string, string>();
@@ -160,15 +193,23 @@ namespace ReactUnity.Editor.Developer
             AllowGeneric = generateGenericClasses;
             AllowIndexer = allowIndexer;
 
-            var res = GetTypescript(assemblies);
+        }
+
+        public void Generate()
+        {
+            var filePath = UnityEditor.EditorUtility.OpenFilePanel("Typescript file", "", "ts");
+            if (string.IsNullOrWhiteSpace(filePath)) return;
+
+
+            var res = GetTypescript();
             File.WriteAllText(filePath, res);
 
             UnityEngine.Debug.Log("Saved typescript models to: " + filePath);
         }
 
-        static string GetTypescript(List<Assembly> assemblies)
+        public string GetTypescript()
         {
-            var types = assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, AllowGeneric)).OrderBy(x => x.Namespace ?? "")
+            var types = Assemblies.Distinct().SelectMany(a => a.GetTypes()).Where(x => filterType(x, AllowGeneric)).OrderBy(x => x.Namespace ?? "")
                 .GroupBy(x => GetNameWithoutGenericArity(x.ToString()))
                 .Select(x => x.OrderByDescending(x => x.GetGenericArguments().Length).First())
                 .Append(null);
@@ -248,7 +289,9 @@ namespace ReactUnity.Editor.Developer
                     var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
                         .Where(x => !x.IsSpecialName &&
                                     x.GetIndexParameters().Length == 0 &&
-                                    !x.PropertyType.IsPointer);
+                                    !x.PropertyType.IsPointer)
+                        .GroupBy(x => x.Name)
+                        .Select(g => g.First());
                     var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public)
                         .Where(x => !x.IsSpecialName &&
                                     !x.FieldType.IsPointer);
@@ -290,7 +333,7 @@ namespace ReactUnity.Editor.Developer
             var imports = importGroups.Concat(remapGroups).OrderBy(x => x.Key);
 
             return $"//{n}" +
-                $"// Types in assemblies: {string.Join(", ", assemblies.Select(x => x.GetName().Name))}{n}" +
+                $"// Types in assemblies: {string.Join(", ", Assemblies.Select(x => x.GetName().Name))}{n}" +
                 $"// Generated {DateTime.Now}{n}" +
                 $"//{n}" +
                 $"{string.Join(n, imports.Select(x => $"import {{ {string.Join(", ", x.OrderBy(x => x))} }} from '{x.Key}';"))}{n}" +
@@ -298,7 +341,7 @@ namespace ReactUnity.Editor.Developer
                 sb;
         }
 
-        static bool filterType(Type t, bool allowGeneric = false)
+        bool filterType(Type t, bool allowGeneric = false)
         {
             return t != null &&
               (t.DeclaringType == null || filterType(t.DeclaringType, allowGeneric)) &&
@@ -313,7 +356,7 @@ namespace ReactUnity.Editor.Developer
               );
         }
 
-        static string getTypeScriptString(PropertyInfo info)
+        string getTypeScriptString(PropertyInfo info)
         {
             var isStatic = info.GetAccessors(true)[0].IsStatic;
             var remap = info.GetCustomAttribute<TypescriptRemap>();
@@ -329,7 +372,7 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        static string getTypeScriptString(FieldInfo info)
+        string getTypeScriptString(FieldInfo info)
         {
             var isStatic = info.IsStatic;
             var remap = info.GetCustomAttribute<TypescriptRemap>();
@@ -345,7 +388,7 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        static string getTypeScriptString(IGrouping<string, MethodInfo> list)
+        string getTypeScriptString(IGrouping<string, MethodInfo> list)
         {
             var info = list.First();
             var isStatic = info.IsStatic;
@@ -358,7 +401,7 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        static string getTypeScriptString(MethodInfo info)
+        string getTypeScriptString(MethodInfo info)
         {
             var isStatic = info.IsStatic;
             var types = getTypeScriptStringForArgs(info);
@@ -374,7 +417,7 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        static string getTypeScriptStringForArgs(MethodInfo info)
+        string getTypeScriptStringForArgs(MethodInfo info)
         {
             var retType = getTypesScriptType(info.ReturnType, true, false, AllowGeneric && !info.IsStatic);
             var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, AllowGeneric && !info.IsStatic)));
@@ -385,14 +428,14 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        static string getTypeScriptString(ConstructorInfo info)
+        string getTypeScriptString(ConstructorInfo info)
         {
             var args = string.Join(", ", info.GetParameters().Select(x => getTypeScriptString(x, true)));
 
             return string.Format("constructor({0});", args);
         }
 
-        static string getTypeScriptString(ParameterInfo info, bool allowGeneric)
+        string getTypeScriptString(ParameterInfo info, bool allowGeneric)
         {
             var remap = info.GetCustomAttribute<TypescriptRemap>();
             var typeString = RegisterRemap(remap) ?? getTypesScriptType(info.ParameterType, true, false, allowGeneric);
@@ -415,7 +458,7 @@ namespace ReactUnity.Editor.Developer
             );
         }
 
-        static string getTypeScriptValue(object val)
+        string getTypeScriptValue(object val)
         {
             if (val == null) return "undefined";
 
@@ -440,7 +483,7 @@ namespace ReactUnity.Editor.Developer
         }
 
 
-        static string getTypesScriptType(Type type, bool withNs, bool skipKnownTypes = false, bool allowGeneric = false, string suffixGeneric = "")
+        string getTypesScriptType(Type type, bool withNs, bool skipKnownTypes = false, bool allowGeneric = false, string suffixGeneric = "")
         {
             var propertyType = type.ToString();
             var genArgs = type.GetGenericArguments();
@@ -507,6 +550,8 @@ namespace ReactUnity.Editor.Developer
                 if (isList && hasGenericArguments) return getTypesScriptType(genArgs[0], withNs, skipKnownTypes, allowGeneric) + "[]";
             }
 
+            if (!skipKnownTypes && ExcludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return "any";
+
             if (type.IsGenericParameter)
             {
                 if (allowGeneric) return withNs ? propertyType : type.Name;
@@ -549,8 +594,6 @@ namespace ReactUnity.Editor.Developer
                 if (parent == "any") return "any";
                 return parent + "_" + type.Name;
             }
-            if (!skipKnownTypes && ExcludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return "any";
-
 
             var fullName = ((withNs && type.Namespace != null) ? (type.Namespace + ".") : "") + type.Name;
             if (IncludedNamespaces != null && IncludedNamespaces.Any(x => propertyType.StartsWith(x + "."))) return fullName;
@@ -567,14 +610,14 @@ namespace ReactUnity.Editor.Developer
             return "any";
         }
 
-        static string RegisterRemap(TypescriptRemap remap)
+        string RegisterRemap(TypescriptRemap remap)
         {
             if (remap == null) return null;
             Remaps[remap.PropName] = remap.FileName;
             return remap.PropName;
         }
 
-        public static string GetNameWithoutGenericArity(string name)
+        string GetNameWithoutGenericArity(string name)
         {
             int index = name.IndexOf('`');
             return index == -1 ? name : name.Substring(0, index);
