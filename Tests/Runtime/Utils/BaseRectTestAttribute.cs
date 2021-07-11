@@ -99,6 +99,6 @@ namespace ReactUnity.Tests
 
         }
 
-        public abstract ReactScript GetScript();
+        public abstract ScriptSource GetScript();
     }
 }

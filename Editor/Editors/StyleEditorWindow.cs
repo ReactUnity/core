@@ -16,9 +16,9 @@ namespace ReactUnity.Editor
             window.titleContent = new GUIContent("React Style Editor");
         }
 
-        protected override ReactScript GetScript()
+        protected override ScriptSource GetScript()
         {
-            var res = ReactScript.Resource("ReactUnity/editor/style-editor/index");
+            var res = ScriptSource.Resource("ReactUnity/editor/style-editor/index");
 #if REACT_UNITY_DEVELOPER
             res.DevServer = "http://localhost:4000";
             res.UseDevServer = DevServerEnabled;

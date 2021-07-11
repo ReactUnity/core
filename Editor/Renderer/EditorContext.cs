@@ -53,7 +53,7 @@ namespace ReactUnity.Editor.Renderer
                 { "tb-toggle", (tag, text, context) => new ToggleComponent<ToolbarToggle>(context, tag) },
             };
 
-        public EditorContext(VisualElement hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher,
+        public EditorContext(VisualElement hostElement, GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
             IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart = null)
             : base(hostElement, globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart)
         {

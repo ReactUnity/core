@@ -36,7 +36,7 @@ namespace ReactUnity.Editor.Renderer
             rootVisualElement.Q<Button>("run").clicked += () => Restart(rootVisualElement.Q("root"));
         }
 
-        protected override ReactScript GetScript()
+        protected override ScriptSource GetScript()
         {
             var source = rootVisualElement.Q<TextField>("source");
             var useDevServer = rootVisualElement.Q<Toggle>("useDevServer");
@@ -55,9 +55,9 @@ namespace ReactUnity.Editor.Renderer
                 devServer.SetEnabled(x.newValue);
             });
 
-            return new ReactScript()
+            return new ScriptSource()
             {
-                ScriptSource = ScriptSource.Resource,
+                Type = ScriptSourceType.Resource,
                 SourcePath = sourceVal,
                 UseDevServer = useDevServerVal,
                 DevServer = devServerVal,

@@ -57,7 +57,7 @@ namespace ReactUnity.UIToolkit
 
         private Action<AudioClip> OnAudioPlayback = null;
 
-        public UIToolkitContext(VisualElement hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher,
+        public UIToolkitContext(VisualElement hostElement, GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
             IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart = null, Action<AudioClip> onAudioPlayback = null)
             : base(globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, false)
         {

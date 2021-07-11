@@ -12,15 +12,15 @@ namespace ReactUnity.Tests
             Script = script;
         }
 
-        public override ReactScript GetScript()
+        public override ScriptSource GetScript()
         {
             Debug.Assert(Script.EndsWith(".js"), "The script file must be an absolue path ending with .js");
 
-            return new ReactScript
+            return new ScriptSource
             {
                 UseDevServer = false,
                 SourcePath = Path.Combine(Application.dataPath, "..", Script),
-                ScriptSource = ScriptSource.File,
+                Type = ScriptSourceType.File,
             };
         }
     }

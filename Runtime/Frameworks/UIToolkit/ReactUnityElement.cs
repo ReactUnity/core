@@ -17,7 +17,7 @@ namespace ReactUnity.UIToolkit
         public IUnityScheduler scheduler { get; private set; }
         public IMediaProvider MediaProvider { get; private set; }
 
-        public ReactScript Script { get; }
+        public ScriptSource Script { get; }
         public GlobalRecord Globals { get; }
         public JavascriptEngineType EngineType { get; }
 
@@ -25,7 +25,7 @@ namespace ReactUnity.UIToolkit
         public bool AwaitDebugger = false;
 
 
-        public ReactUnityElement(ReactScript script, GlobalRecord globals, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
+        public ReactUnityElement(ScriptSource script, GlobalRecord globals, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
         {
             Script = script;
             Globals = globals;
@@ -70,7 +70,7 @@ namespace ReactUnity.UIToolkit
             Run();
         }
 
-        protected virtual ReactContext CreateContext(ReactScript script, bool isDevServer)
+        protected virtual ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
             return new UIToolkitContext(this, Globals, script, dispatcher, scheduler, MediaProvider, isDevServer, Restart);
         }

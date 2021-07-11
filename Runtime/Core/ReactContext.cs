@@ -34,7 +34,7 @@ namespace ReactUnity
         public GlobalRecord Globals { get; private set; }
         public bool IsDevServer { get; }
 
-        public ReactScript Script { get; }
+        public ScriptSource Script { get; }
         public IUnityScheduler Scheduler { get; }
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
@@ -53,7 +53,7 @@ namespace ReactUnity
         public Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
 
 
-        public ReactContext(GlobalRecord globals, ReactScript script, IDispatcher dispatcher,
+        public ReactContext(GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
             IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart, LayoutMergeMode mergeLayout, bool calculatesLayout)
         {
             Globals = globals;
@@ -150,18 +150,18 @@ namespace ReactUnity
             var source = Script.GetResolvedSourceUrl();
             var type = Script.EffectiveScriptSource;
 
-            if (type == ScriptSource.Url)
+            if (type == ScriptSourceType.Url)
             {
                 var baseUrl = new Uri(source);
                 if (Uri.TryCreate(baseUrl, path, out var res)) return res.AbsoluteUri;
             }
-            else if (type == ScriptSource.File || type == ScriptSource.Resource)
+            else if (type == ScriptSourceType.File || type == ScriptSourceType.Resource)
             {
                 var lastSlash = source.LastIndexOfAny(new[] { '/', '\\' });
                 var parent = source.Substring(0, lastSlash);
 
                 var res = parent + (path.StartsWith("/") ? path : "/" + path);
-                if (type == ScriptSource.Resource) return GetResourceUrl(res);
+                if (type == ScriptSourceType.Resource) return GetResourceUrl(res);
                 return res;
             }
             else
@@ -172,10 +172,10 @@ namespace ReactUnity
             return null;
         }
 
-        public virtual ReactScript CreateStaticScript(string path)
+        public virtual ScriptSource CreateStaticScript(string path)
         {
-            var src = new ReactScript();
-            src.ScriptSource = IsDevServer ? ScriptSource.Url : Script.ScriptSource;
+            var src = new ScriptSource();
+            src.Type = IsDevServer ? ScriptSourceType.Url : Script.Type;
             src.UseDevServer = IsDevServer;
             src.SourcePath = ResolvePath(path);
 

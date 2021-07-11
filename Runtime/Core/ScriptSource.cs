@@ -3,36 +3,35 @@ using ReactUnity.Helpers;
 using System;
 using System.Collections;
 using UnityEngine;
-#if UNITY_WEBGL && !UNITY_EDITOR
-using System.Text.RegularExpressions;
-#endif
+using UnityEngine.Serialization;
 
 namespace ReactUnity
 {
     [Serializable]
-    public class ReactScript
+    public class ScriptSource
     {
-        public static ReactScript Resource(string path)
+        public static ScriptSource Resource(string path)
         {
-            return new ReactScript()
+            return new ScriptSource()
             {
-                ScriptSource = ScriptSource.Resource,
+                Type = ScriptSourceType.Resource,
                 SourcePath = path,
                 UseDevServer = false,
             };
         }
 
-        public static ReactScript Text(string path)
+        public static ScriptSource Text(string path)
         {
-            return new ReactScript()
+            return new ScriptSource()
             {
-                ScriptSource = ScriptSource.Text,
+                Type = ScriptSourceType.Text,
                 SourceText = path,
                 UseDevServer = false,
             };
         }
 
-        public ScriptSource ScriptSource = ScriptSource.TextAsset;
+        [FormerlySerializedAs("ScriptSource")]
+        public ScriptSourceType Type = ScriptSourceType.TextAsset;
 
         public TextAsset SourceAsset;
         public string SourcePath;
@@ -63,7 +62,7 @@ namespace ReactUnity
         public bool IsDevServer => false;
 #endif
 
-        public ScriptSource EffectiveScriptSource => IsDevServer ? ScriptSource.Url : ScriptSource;
+        public ScriptSourceType EffectiveScriptSource => IsDevServer ? ScriptSourceType.Url : Type;
 
         public string GetResolvedSourceUrl(bool useDevServer = true)
         {
@@ -71,11 +70,11 @@ namespace ReactUnity
             if (useDevServer && IsDevServer) return DevServer;
 #endif
 
-            if (ScriptSource == ScriptSource.File || ScriptSource == ScriptSource.Resource)
+            if (Type == ScriptSourceType.File || Type == ScriptSourceType.Resource)
                 return SourcePath;
-            else if (ScriptSource == ScriptSource.TextAsset)
+            else if (Type == ScriptSourceType.TextAsset)
                 return ResourcesPath ?? "Assets/Resources/react/index.js";
-            else if (ScriptSource == ScriptSource.Url)
+            else if (Type == ScriptSourceType.Url)
             {
                 var href = SourcePath;
 
@@ -83,13 +82,13 @@ namespace ReactUnity
                 var abs = UnityEngine.Application.absoluteURL;
                 if (!href.StartsWith("http") && abs != null)
                 {
-                    var parsed = new Regex(@"^(.*:)//([A-Za-z0-9\-\.]+)(:[0-9]+)?(.*)$").Match(abs);
+                    var parsed = new System.Text.RegularExpressions.Regex(@"^(.*:)//([A-Za-z0-9\-\.]+)(:[0-9]+)?(.*)$").Match(abs);
 
                     var parsedProto = parsed.Groups[1].Value;
                     var parsedHost = parsed.Groups[2].Value;
                     var parsedPort = parsed.Groups[3].Value;
 
-                    href = parsedProto + "//" + parsedHost + parsedPort + "/" + new Regex("^/").Replace(href, "");
+                    href = parsedProto + "//" + parsedHost + parsedPort + "/" + new System.Text.RegularExpressions.Regex("^/").Replace(href, "");
                 }
 #endif
                 return href;
@@ -120,13 +119,13 @@ namespace ReactUnity
             }
 #endif
 
-            switch (ScriptSource)
+            switch (Type)
             {
-                case ScriptSource.TextAsset:
+                case ScriptSourceType.TextAsset:
                     if (!SourceAsset) callback(null, false);
                     else callback(SourceAsset.text, false);
                     break;
-                case ScriptSource.File:
+                case ScriptSourceType.File:
 #if UNITY_EDITOR || REACT_FILE_API
 #if !REACT_FILE_API
                     if (!disableWarnings) Debug.LogWarning("REACT_FILE_API is not defined. Add REACT_FILE_API to build symbols to if you want to use this feature outside editor.");
@@ -136,7 +135,7 @@ namespace ReactUnity
 #else
                     throw new Exception("REACT_FILE_API must be defined to use File API outside the editor. Add REACT_FILE_API to build symbols to use this feature.");
 #endif
-                case ScriptSource.Url:
+                case ScriptSourceType.Url:
 #if UNITY_EDITOR || REACT_URL_API
 #if !REACT_URL_API
                     if (!disableWarnings) Debug.LogWarning("REACT_URL_API is not defined. Add REACT_URL_API to build symbols to if you want to use this feature outside editor.");
@@ -148,12 +147,12 @@ namespace ReactUnity
 #else
                     throw new Exception("REACT_URL_API must be defined to use Url API outside the editor. Add REACT_URL_API to build symbols to use this feature.");
 #endif
-                case ScriptSource.Resource:
+                case ScriptSourceType.Resource:
                     var asset = Resources.Load(StripHashAndSearch(SourcePath)) as TextAsset;
                     if (asset) callback(asset.text, false);
                     else callback(null, false);
                     break;
-                case ScriptSource.Text:
+                case ScriptSourceType.Text:
                     callback(SourceText, false);
                     break;
                 default:
@@ -179,7 +178,7 @@ namespace ReactUnity
         }
     }
 
-    public enum ScriptSource
+    public enum ScriptSourceType
     {
         TextAsset = 0,
         File = 1,

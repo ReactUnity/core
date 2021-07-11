@@ -94,7 +94,7 @@ namespace ReactUnity.Editor.Renderer
             (root ?? rootVisualElement).Add(hostElement);
         }
 
-        protected abstract ReactScript GetScript();
+        protected abstract ScriptSource GetScript();
 
         protected virtual GlobalRecord GetGlobals()
         {

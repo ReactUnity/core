@@ -28,7 +28,7 @@ namespace ReactUnity.Editor.Renderer
             return new ReactUnityEditorElement(GetScript(), GetGlobals(property), DefaultMediaProvider.CreateMediaProvider("property", "uitoolkit", true));
         }
 
-        protected abstract ReactScript GetScript();
+        protected abstract ScriptSource GetScript();
 
         protected virtual GlobalRecord GetGlobals(SerializedProperty property)
         {

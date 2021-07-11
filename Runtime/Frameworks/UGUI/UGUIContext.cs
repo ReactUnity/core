@@ -46,7 +46,7 @@ namespace ReactUnity.UGUI
         public static Func<string, UGUIContext, ITextComponent> textCreator =
             (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
 
-        public UGUIContext(RectTransform hostElement, GlobalRecord globals, ReactScript script, IDispatcher dispatcher, IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart)
+        public UGUIContext(RectTransform hostElement, GlobalRecord globals, ScriptSource script, IDispatcher dispatcher, IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart)
             : base(globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
         {
             Host = new HostComponent(hostElement, this);

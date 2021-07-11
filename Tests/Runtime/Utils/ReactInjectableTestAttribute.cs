@@ -16,15 +16,15 @@ namespace ReactUnity.Tests
             Style = style;
         }
 
-        public override ReactScript GetScript()
+        public override ScriptSource GetScript()
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(Code), "The code must be non-empty");
 
-            return new ReactScript
+            return new ScriptSource
             {
                 UseDevServer = false,
                 SourceText = ResourcesHelper.InjectCode(Code),
-                ScriptSource = ScriptSource.Text,
+                Type = ScriptSourceType.Text,
             };
         }
 

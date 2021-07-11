@@ -94,7 +94,7 @@ namespace ReactUnity.Types
                 }
                 else
                 {
-                    realType = context.Script.ScriptSource == ScriptSource.File ? AssetReferenceType.File : AssetReferenceType.Resource;
+                    realType = context.Script.Type == ScriptSourceType.File ? AssetReferenceType.File : AssetReferenceType.Resource;
                     realValue = path;
                 }
             }

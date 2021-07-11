@@ -8,12 +8,12 @@ namespace ReactUnity.Editor.UIToolkit
 {
     public class ReactUnityEditorElement : ReactUnityElement
     {
-        public ReactUnityEditorElement(ReactScript script, GlobalRecord globals, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
+        public ReactUnityEditorElement(ScriptSource script, GlobalRecord globals, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
             : base(script, globals, mediaProvider, engineType, debug, awaitDebugger, autorun)
         {
         }
 
-        protected override ReactContext CreateContext(ReactScript script, bool isDevServer)
+        protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
             return new EditorContext(this, Globals, script, dispatcher, scheduler, MediaProvider, isDevServer, Restart);
         }

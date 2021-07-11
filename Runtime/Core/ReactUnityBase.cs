@@ -12,8 +12,8 @@ namespace ReactUnity
     public abstract class ReactUnityBase : MonoBehaviour
     {
         public SerializableDictionary Globals = new SerializableDictionary();
-        public ReactScript Script = new ReactScript() { ScriptSource = ScriptSource.Resource, SourcePath = "react/index" };
-        private ReactScript TestScript = new ReactScript() { ScriptSource = ScriptSource.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
+        public ScriptSource Script = new ScriptSource() { Type = ScriptSourceType.Resource, SourcePath = "react/index" };
+        private ScriptSource TestScript = new ScriptSource() { Type = ScriptSourceType.Url, SourcePath = "http://localhost:9876/context.html", UseDevServer = false };
 
         public bool Debug = false;
 
@@ -78,7 +78,7 @@ namespace ReactUnity
 
         protected abstract void ClearRoot();
 
-        private IDisposable LoadAndRun(ReactScript script, bool disableWarnings = false)
+        private IDisposable LoadAndRun(ScriptSource script, bool disableWarnings = false)
         {
             dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
             scheduler = new UnityScheduler(dispatcher);
@@ -118,7 +118,7 @@ namespace ReactUnity
             Test(true);
         }
 
-        protected abstract ReactContext CreateContext(ReactScript script, bool isDevServer);
+        protected abstract ReactContext CreateContext(ScriptSource script, bool isDevServer);
         protected abstract IMediaProvider CreateMediaProvider();
     }
 }

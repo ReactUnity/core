@@ -111,7 +111,7 @@ namespace ReactUnity.DomProxies
 
             req = UnityWebRequest.Get(url);
             requestHandle = new DisposableHandle(context.Dispatcher, context.Dispatcher.StartDeferred(
-                ReactScript.WatchWebRequest(req, responseCallback, errorCallback)));
+                ScriptSource.WatchWebRequest(req, responseCallback, errorCallback)));
 
             // TODO: implement methods, headers and other options
 

@@ -35,9 +35,9 @@ namespace ReactUnity.Editor
             window.minSize = new Vector2(300, 200);
         }
 
-        protected override ReactScript GetScript()
+        protected override ScriptSource GetScript()
         {
-            var res = ReactScript.Resource("ReactUnity/editor/quick-start/index");
+            var res = ScriptSource.Resource("ReactUnity/editor/quick-start/index");
 #if REACT_UNITY_DEVELOPER
             res.DevServer = "http://localhost:4200";
             res.UseDevServer = DevServerEnabled;

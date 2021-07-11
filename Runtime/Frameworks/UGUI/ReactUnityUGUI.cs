@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI
                 GameObject.DestroyImmediate(Root.GetChild(i).gameObject);
         }
 
-        protected override ReactContext CreateContext(ReactScript script, bool isDevServer)
+        protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
             var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
             return new UGUIContext(Root, globals, script, dispatcher, scheduler, MediaProvider, isDevServer, Render);
