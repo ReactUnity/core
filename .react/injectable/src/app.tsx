@@ -9,6 +9,6 @@ function App() {
   return <></>;
 }
 
-ReactUnity.Renderer.render(<App />, RootContainer, null);
+ReactUnity.Renderer.render(<App />);
 
 /* INJECTABLE_END */

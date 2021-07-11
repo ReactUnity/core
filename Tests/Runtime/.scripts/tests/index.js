@@ -1,229 +1,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 760:
+/***/ 930:
 /***/ ((module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 "use strict";
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/components.js
-var ImageFitMode;
-
-(function (ImageFitMode) {
-  ImageFitMode[ImageFitMode["Center"] = 0] = "Center";
-  ImageFitMode[ImageFitMode["CenterCrop"] = 1] = "CenterCrop";
-  ImageFitMode[ImageFitMode["CenterInside"] = 2] = "CenterInside";
-  ImageFitMode[ImageFitMode["FitCenter"] = 3] = "FitCenter";
-  ImageFitMode[ImageFitMode["FitStart"] = 4] = "FitStart";
-  ImageFitMode[ImageFitMode["FitEnd"] = 5] = "FitEnd";
-  ImageFitMode[ImageFitMode["Fill"] = 6] = "Fill";
-})(ImageFitMode || (ImageFitMode = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/editor/index.js
-
-
-
-
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/styles-enums.js
-var FontWeight;
-
-(function (FontWeight) {
-  FontWeight[FontWeight["Thin"] = 100] = "Thin";
-  FontWeight[FontWeight["ExtraLight"] = 200] = "ExtraLight";
-  FontWeight[FontWeight["Light"] = 300] = "Light";
-  FontWeight[FontWeight["Regular"] = 400] = "Regular";
-  FontWeight[FontWeight["Medium"] = 500] = "Medium";
-  FontWeight[FontWeight["SemiBold"] = 600] = "SemiBold";
-  FontWeight[FontWeight["Bold"] = 700] = "Bold";
-  FontWeight[FontWeight["Heavy"] = 800] = "Heavy";
-  FontWeight[FontWeight["Black"] = 900] = "Black";
-})(FontWeight || (FontWeight = {}));
-
-var FontStyles;
-
-(function (FontStyles) {
-  FontStyles[FontStyles["Normal"] = 0] = "Normal";
-  FontStyles[FontStyles["Bold"] = 1] = "Bold";
-  FontStyles[FontStyles["Italic"] = 2] = "Italic";
-  FontStyles[FontStyles["Underline"] = 4] = "Underline";
-  FontStyles[FontStyles["LowerCase"] = 8] = "LowerCase";
-  FontStyles[FontStyles["UpperCase"] = 16] = "UpperCase";
-  FontStyles[FontStyles["SmallCaps"] = 32] = "SmallCaps";
-  FontStyles[FontStyles["Strikethrough"] = 64] = "Strikethrough";
-  FontStyles[FontStyles["Superscript"] = 128] = "Superscript";
-  FontStyles[FontStyles["Subscript"] = 256] = "Subscript";
-  FontStyles[FontStyles["Highlight"] = 512] = "Highlight";
-})(FontStyles || (FontStyles = {}));
-
-var TextOverflowModes;
-
-(function (TextOverflowModes) {
-  TextOverflowModes["Overflow"] = "overflow";
-  TextOverflowModes["Ellipsis"] = "ellipsis";
-  TextOverflowModes["Masking"] = "masking";
-  TextOverflowModes["Truncate"] = "truncate";
-  TextOverflowModes["ScrollRect"] = "scroll-rect";
-  TextOverflowModes["Page"] = "page";
-  TextOverflowModes["Linked"] = "linked";
-})(TextOverflowModes || (TextOverflowModes = {}));
-
-var PointerEvents;
-
-(function (PointerEvents) {
-  PointerEvents["Auto"] = "auto";
-  PointerEvents["Visible"] = "visible";
-  PointerEvents["All"] = "all";
-  PointerEvents["None"] = "none";
-})(PointerEvents || (PointerEvents = {}));
-
-var Visibility;
-
-(function (Visibility) {
-  Visibility["Visible"] = "visible";
-  Visibility["Hidden"] = "hidden";
-})(Visibility || (Visibility = {}));
-
-var Appearance;
-
-(function (Appearance) {
-  Appearance["None"] = "none";
-  Appearance["Button"] = "button";
-  Appearance["Input"] = "input";
-  Appearance["Toggle"] = "toggle";
-})(Appearance || (Appearance = {}));
-
-var NavigationMode;
-
-(function (NavigationMode) {
-  NavigationMode["None"] = "none";
-  NavigationMode["Horizontal"] = "horizontal";
-  NavigationMode["Vertical"] = "vertical";
-  NavigationMode["Automatic"] = "automatic";
-  NavigationMode["Explicit"] = "explicit";
-})(NavigationMode || (NavigationMode = {}));
-
-var WhiteSpace;
-
-(function (WhiteSpace) {
-  WhiteSpace["Normal"] = "normal";
-  WhiteSpace["NoWrap"] = "nowrap";
-})(WhiteSpace || (WhiteSpace = {}));
-
-var CursorType;
-
-(function (CursorType) {
-  CursorType["Auto"] = "auto";
-  CursorType["Default"] = "default";
-  CursorType["None"] = "none";
-  CursorType["ContextMenu"] = "context-menu";
-  CursorType["Help"] = "help";
-  CursorType["Pointer"] = "pointer";
-  CursorType["Progress"] = "progress";
-  CursorType["Wait"] = "wait";
-  CursorType["Cell"] = "cell";
-  CursorType["Crosshair"] = "crosshair";
-  CursorType["Text"] = "text";
-  CursorType["VerticalText"] = "vertical-text";
-  CursorType["Alias"] = "alias";
-  CursorType["Copy"] = "copy";
-  CursorType["Move"] = "move";
-  CursorType["NoDrop"] = "no-drop";
-  CursorType["NotAllowed"] = "not-allowed";
-  CursorType["EResize"] = "e-resize";
-  CursorType["NResize"] = "n-resize";
-  CursorType["NeResize"] = "ne-resize";
-  CursorType["NwResize"] = "nw-resize";
-  CursorType["SResize"] = "s-resize";
-  CursorType["SeResize"] = "se-resize";
-  CursorType["SwResize"] = "sw-resize";
-  CursorType["WResize"] = "w-resize";
-  CursorType["EwResize"] = "ew-resize";
-  CursorType["NsResize"] = "ns-resize";
-  CursorType["NeswResize"] = "nesw-resize";
-  CursorType["NwseResize"] = "nwse-resize";
-  CursorType["ColResize"] = "col-resize";
-  CursorType["RowResize"] = "row-resize";
-  CursorType["AllScroll"] = "all-scroll";
-  CursorType["ZoomIn"] = "zoom-in";
-  CursorType["ZoomOut"] = "zoom-out";
-  CursorType["Grab"] = "grab";
-  CursorType["Grabbing"] = "grabbing";
-})(CursorType || (CursorType = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/yoga-enums.js
-var FlexDirection;
-
-(function (FlexDirection) {
-  FlexDirection[FlexDirection["Column"] = 0] = "Column";
-  FlexDirection[FlexDirection["ColumnReverse"] = 1] = "ColumnReverse";
-  FlexDirection[FlexDirection["Row"] = 2] = "Row";
-  FlexDirection[FlexDirection["RowReverse"] = 3] = "RowReverse";
-})(FlexDirection || (FlexDirection = {}));
-
-var YogaAlign;
-
-(function (YogaAlign) {
-  YogaAlign[YogaAlign["Auto"] = 0] = "Auto";
-  YogaAlign[YogaAlign["FlexStart"] = 1] = "FlexStart";
-  YogaAlign[YogaAlign["Center"] = 2] = "Center";
-  YogaAlign[YogaAlign["FlexEnd"] = 3] = "FlexEnd";
-  YogaAlign[YogaAlign["Stretch"] = 4] = "Stretch";
-  YogaAlign[YogaAlign["Baseline"] = 5] = "Baseline";
-  YogaAlign[YogaAlign["SpaceBetween"] = 6] = "SpaceBetween";
-  YogaAlign[YogaAlign["SpaceAround"] = 7] = "SpaceAround";
-})(YogaAlign || (YogaAlign = {}));
-
-var YogaJustify;
-
-(function (YogaJustify) {
-  YogaJustify["FlexStart"] = "flex-start";
-  YogaJustify["Center"] = "center";
-  YogaJustify["FlexEnd"] = "flex-end";
-  YogaJustify["SpaceBetween"] = "space-between";
-  YogaJustify["SpaceAround"] = "space-around";
-})(YogaJustify || (YogaJustify = {}));
-
-var Display;
-
-(function (Display) {
-  Display["Flex"] = "flex";
-  Display["None"] = "none";
-})(Display || (Display = {}));
-
-var Wrap;
-
-(function (Wrap) {
-  Wrap["NoWrap"] = "no-wrap";
-  Wrap["Wrap"] = "wrap";
-  Wrap["WrapReverse"] = "wrap-reverse";
-})(Wrap || (Wrap = {}));
-
-var Position;
-
-(function (Position) {
-  Position["Relative"] = "relative";
-  Position["Absolute"] = "absolute";
-})(Position || (Position = {}));
-
-var Overflow;
-
-(function (Overflow) {
-  Overflow["Visible"] = "visible";
-  Overflow["Hidden"] = "hidden";
-  Overflow["Scroll"] = "scroll";
-})(Overflow || (Overflow = {}));
-
-var Direction;
-
-(function (Direction) {
-  Direction["Inherit"] = "inherit";
-  Direction["LTR"] = "ltr";
-  Direction["RTL"] = "rtl";
-})(Direction || (Direction = {}));
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/models/properties/index.js
-
-
-
-
-
 
 ;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/animation/easing.js
 // https://gist.github.com/gre/1650294
@@ -386,13 +167,13 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     if (pre !== isEvent) continue;
 
     if (isEvent) {
-      Unity.setEventListener(instance, attr, value);
+      UnityBridge.setEventListener(instance, attr, value);
       continue;
     }
 
     if (attr === 'children') {
       if (type === 'text') {
-        Unity.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
+        UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
       }
 
       continue;
@@ -416,9 +197,9 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     }
 
     if (attr.substring(0, 5) === 'data-') {
-      Unity.setData(instance, attr.substring(5), value);
+      UnityBridge.setData(instance, attr.substring(5), value);
     } else {
-      Unity.setProperty(instance, attr, value);
+      UnityBridge.setProperty(instance, attr, value);
     }
   }
 
@@ -454,16 +235,16 @@ var hostConfig = {
 
     if (type === 'text') {
       var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return Unity.createElement(type, text, rootContainerInstance);
+      return UnityBridge.createElement(type, text, rootContainerInstance);
     }
 
-    return Unity.createElement(props.tag || type, null, rootContainerInstance);
+    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance);
   },
   createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
-    return Unity.createText(text, rootContainerInstance);
+    return UnityBridge.createText(text, rootContainerInstance);
   },
   appendInitialChild: function appendInitialChild(parent, child) {
-    Unity.appendChild(parent, child);
+    UnityBridge.appendChild(parent, child);
   },
   finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
     var propsToUpdate = [];
@@ -503,25 +284,25 @@ var hostConfig = {
     console.log('resetTextContent');
   },
   commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    Unity.setText(textInstance, newText);
+    UnityBridge.setText(textInstance, newText);
   },
   appendChild: function appendChild(parent, child) {
-    return Unity.appendChild(parent, child);
+    return UnityBridge.appendChild(parent, child);
   },
   appendChildToContainer: function appendChildToContainer(parent, child) {
-    return Unity.appendChildToContainer(parent, child);
+    return UnityBridge.appendChildToContainer(parent, child);
   },
   insertBefore: function insertBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
+    return UnityBridge.insertBefore(parent, child, beforeChild);
   },
   insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    return Unity.insertBefore(parent, child, beforeChild);
+    return UnityBridge.insertBefore(parent, child, beforeChild);
   },
   removeChild: function removeChild(parent, child) {
-    return Unity.removeChild(parent, child);
+    return UnityBridge.removeChild(parent, child);
   },
   removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    return Unity.removeChild(parent, child);
+    return UnityBridge.removeChild(parent, child);
   },
   // Required for Suspense
   // TODO: implement
@@ -573,7 +354,7 @@ var react = __webpack_require__(359);
 // EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
 var jsx_runtime = __webpack_require__(114);
 ;// CONCATENATED MODULE: ./src/main.tsx
-function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Hello world"});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}),RootContainer,null);
+function App(){return/*#__PURE__*/(0,jsx_runtime.jsx)("text",{children:"Hello world"});}Renderer.render(/*#__PURE__*/(0,jsx_runtime.jsx)(App,{}));
 ;// CONCATENATED MODULE: ./src/index.ts
 /* module decorator */ module = __webpack_require__.hmd(module);
 var _module,_module$hot;(_module=module)===null||_module===void 0?void 0:(_module$hot=_module.hot)===null||_module$hot===void 0?void 0:_module$hot.accept();
@@ -7341,7 +7122,7 @@ if (true) {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__(760);
+/******/ 	var __webpack_exports__ = __webpack_require__(930);
 /******/ 	
 /******/ })()
 ;

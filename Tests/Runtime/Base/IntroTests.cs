@@ -45,7 +45,7 @@ Renderer.render( /*#__PURE__*/React.createElement('view', null, 'Hello world', /
 
 
         [UnityTest, ReactInjectableTest(@"
-function App(){var globals=ReactUnity.useGlobals();return/*#__PURE__*/react.createElement('image',{source:globals.image});}ReactUnity.Renderer.render(/*#__PURE__*/react.createElement(ReactUnity.GlobalsProvider,null,/*#__PURE__*/react.createElement(App,null)),RootContainer,null)
+function App(){var globals=ReactUnity.useGlobals();return/*#__PURE__*/react.createElement('image',{source:globals.image});}ReactUnity.Renderer.render(/*#__PURE__*/react.createElement(ReactUnity.GlobalsProvider,null,/*#__PURE__*/react.createElement(App,null)))
 ")]
         public IEnumerator TestGlobalsChange()
         {
@@ -61,7 +61,7 @@ function App(){var globals=ReactUnity.useGlobals();return/*#__PURE__*/react.crea
 
         [UnityTest, ReactInjectableTest(@"
 var watcher = ReactUnity.createDictionaryWatcher(Globals.inner, 'innerSerializable');
-function App(){var sd=watcher.useContext();debugger;return/*#__PURE__*/react.createElement('image',{source:sd.image});}ReactUnity.Renderer.render(/*#__PURE__*/react.createElement(watcher.Provider,null,/*#__PURE__*/react.createElement(App,null)),RootContainer,null)
+function App(){var sd=watcher.useContext();debugger;return/*#__PURE__*/react.createElement('image',{source:sd.image});}ReactUnity.Renderer.render(/*#__PURE__*/react.createElement(watcher.Provider,null,/*#__PURE__*/react.createElement(App,null)))
 ")]
         public IEnumerator TestArbitraryWatcher()
         {

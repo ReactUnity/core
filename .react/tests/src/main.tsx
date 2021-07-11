@@ -5,4 +5,4 @@ export function App() {
   return <text>Hello world</text>;
 }
 
-Renderer.render(<App />, RootContainer, null);
+Renderer.render(<App />);

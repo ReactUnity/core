@@ -166,4 +166,4 @@ function StylePropRectPart({ prop, part, element }: { prop: StyleProp, element: 
   </>;
 }
 
-Renderer.render(<App />, RootContainer, null);
+Renderer.render(<App />);

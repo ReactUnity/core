@@ -25,6 +25,8 @@ namespace ReactUnity
             context = ctx;
             if (engine == null) CreateBaseEngine(debug, awaitDebugger);
             engine.SetValue("Context", context);
+            engine.SetValue("HostContainer", context.Host);
+            // TODO: deprecate RootContainer in favor of HostContainer
             engine.SetValue("RootContainer", context.Host);
             engine.SetValue("Globals", context.Globals);
             CreateLocation(engine);
@@ -82,8 +84,10 @@ namespace ReactUnity
     log: (...args) => _console.log(...args),
     info: (...args) => _console.info(...args),
     debug: (...args) => _console.debug(...args),
+    trace: (...args) => _console.debug(...args),
     warn: (...args) => _console.warn(...args),
     error: (...args) => _console.error(...args),
+    exception: (...args) => _console.exception(...args),
     dir: (...args) => _console.dir(...args),
     clear: (...args) => _console.clear(...args),
     assert: (...args) => _console.assert(...args),
