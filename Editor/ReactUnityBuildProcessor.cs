@@ -5,13 +5,13 @@ using System.IO;
 
 namespace ReactUnity.Editor
 {
-    public class ReactUnityBuildPreprocessor : IPreprocessBuildWithReport
+    public class ReactUnityBuildPreprocessor : IPostprocessBuildWithReport
     {
         public int callbackOrder => 0;
 
         private static string ClearScriptDllPathTemplate = "Packages/com.reactunity.core/Plugins/ClearScript/ClearScriptV8.{0}";
 
-        public void OnPreprocessBuild(BuildReport report)
+        public void OnPostprocessBuild(BuildReport report)
         {
 #if !REACT_DISABLE_CLEARSCRIPT
             if (report.summary.platformGroup == BuildTargetGroup.Standalone)

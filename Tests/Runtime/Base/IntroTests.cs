@@ -11,6 +11,7 @@ namespace ReactUnity.Tests
     {
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
 
+#if UNITY_EDITOR
         [UnityTest, ReactTest(TestPath)]
         public IEnumerator Base_HelloWorld()
         {
@@ -19,7 +20,7 @@ namespace ReactUnity.Tests
             var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("Hello world", tmp.text);
         }
-
+#endif
 
         [UnityTest, ReactInjectableTest(style: "view { color: red; }")]
         public IEnumerator Injectable_HelloWorld()

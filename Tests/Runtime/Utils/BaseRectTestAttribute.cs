@@ -10,6 +10,8 @@ namespace ReactUnity.Tests
 {
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
+        public const string DefaultSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity";
+
 #if UNITY_EDITOR
         #region Test Debug Toggle
         const string MenuName = "React/Tests/Debug Tests";
@@ -39,7 +41,7 @@ namespace ReactUnity.Tests
         public bool AutoRender;
 
         public BaseReactTestAttribute(string customScene = null, bool autoRender = true) :
-            base(customScene ?? "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity")
+            base(customScene ?? DefaultSceneName)
         {
             AutoRender = autoRender;
         }

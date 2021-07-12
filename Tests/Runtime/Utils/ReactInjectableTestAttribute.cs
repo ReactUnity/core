@@ -22,10 +22,13 @@ namespace ReactUnity.Tests
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(Code), "The code must be non-empty");
 
+            var injectableText = Resources.Load<TextAsset>("ReactUnity/tests/injectable/index");
+            var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", Code);
+
             return new ScriptSource
             {
                 UseDevServer = false,
-                SourceText = ResourcesHelper.InjectCode(Code),
+                SourceText = injectedText,
                 Type = ScriptSourceType.Raw,
             };
         }

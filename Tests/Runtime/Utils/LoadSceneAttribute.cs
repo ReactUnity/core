@@ -5,10 +5,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-#if UNITY_EDITOR
-using UnityEditor.SceneManagement;
-#endif
-
 namespace ReactUnity.Tests
 {
     public class LoadSceneAttribute : NUnitAttribute, IOuterUnityTestAction
@@ -21,7 +17,7 @@ namespace ReactUnity.Tests
         {
             Debug.Assert(scene.EndsWith(".unity"), "The scene file must be an absolue path ending with .unity");
 #if UNITY_EDITOR
-            yield return EditorSceneManager.LoadSceneAsyncInPlayMode(scene, new LoadSceneParameters(LoadSceneMode.Single));
+            yield return UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(scene, new LoadSceneParameters(LoadSceneMode.Single));
 #else
             yield return SceneManager.LoadSceneAsync(scene);
 #endif

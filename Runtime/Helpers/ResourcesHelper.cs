@@ -26,14 +26,6 @@ namespace ReactUnity.Helpers
 
         private static Dictionary<string, TextAsset> Polyfills = new Dictionary<string, TextAsset>();
 
-        public static string InjectCode(string code)
-        {
-            var injectableText = Resources.Load<TextAsset>("ReactUnity/editor/injectable/index");
-            var injectedText = injectableText.text.Replace("/*INJECT_CODE*/", code);
-
-            return injectedText;
-        }
-
         public static string GetPolyfill(string name)
         {
             if (Polyfills.TryGetValue(name, out var asset)) return asset.text;
