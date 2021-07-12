@@ -229,6 +229,8 @@ namespace ReactUnity.UIToolkit
             Element.RemoveFromHierarchy();
         }
 
+        public override void Relayout() { }
+
         #region Setters
 
         public override void SetEventListener(string eventName, Callback fun)

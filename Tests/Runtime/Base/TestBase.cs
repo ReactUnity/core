@@ -28,5 +28,7 @@ namespace ReactUnity.Tests
         {
             EngineType = engineType;
         }
+
+        public void Render() => Component.Render();
     }
 }

@@ -4,7 +4,6 @@ using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.UI;
 
 namespace ReactUnity.Tests
 {

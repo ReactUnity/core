@@ -3,7 +3,6 @@ using NUnit.Framework.Interfaces;
 using ReactUnity.Helpers;
 using ReactUnity.UGUI;
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -11,27 +10,31 @@ namespace ReactUnity.Tests
 {
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
+#if UNITY_EDITOR
         #region Test Debug Toggle
         const string MenuName = "React/Tests/Debug Tests";
         public static bool IsDebugEnabled
         {
-            get { return EditorPrefs.GetBool(MenuName, false); }
-            set { EditorPrefs.SetBool(MenuName, value); }
+            get { return UnityEditor.EditorPrefs.GetBool(MenuName, false); }
+            set { UnityEditor.EditorPrefs.SetBool(MenuName, value); }
         }
 
-        [MenuItem(MenuName)]
+        [UnityEditor.MenuItem(MenuName)]
         private static void ToggleTests()
         {
             IsDebugEnabled = !IsDebugEnabled;
         }
 
-        [MenuItem(MenuName, true)]
+        [UnityEditor.MenuItem(MenuName, true)]
         private static bool ToggleTestsValidate()
         {
-            Menu.SetChecked(MenuName, IsDebugEnabled);
+            UnityEditor.Menu.SetChecked(MenuName, IsDebugEnabled);
             return true;
         }
         #endregion
+#else
+        public static bool IsDebugEnabled => false;
+#endif
 
         public bool AutoRender;
 

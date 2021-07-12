@@ -291,6 +291,7 @@ namespace ReactUnity
             ApplyLayoutStylesSelf();
         }
 
+        public abstract void Relayout();
 
         private void OnStylesUpdated(NodeStyle obj, bool hasLayout)
         {

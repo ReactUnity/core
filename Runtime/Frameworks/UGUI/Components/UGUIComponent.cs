@@ -129,6 +129,12 @@ namespace ReactUnity.UGUI
             UpdateBackgroundGraphic(false, true);
         }
 
+        public override void Relayout()
+        {
+            Layout.MarkDirty();
+            Context.ScheduleLayout();
+        }
+
         #endregion
 
 

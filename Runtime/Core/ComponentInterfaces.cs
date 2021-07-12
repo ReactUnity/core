@@ -33,6 +33,7 @@ namespace ReactUnity
         void ApplyLayoutStyles();
         void ScheduleLayout();
         void ResolveStyle(bool recursive = false);
+        void Relayout();
 
         void Update();
         void Accept(ReactComponentVisitor visitor);

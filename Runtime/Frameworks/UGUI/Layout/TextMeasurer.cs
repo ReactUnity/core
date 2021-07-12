@@ -14,7 +14,7 @@ namespace ReactUnity.UGUI.Layout
         public YogaNode Layout;
         public UGUIContext Context;
 
-        private void Start()
+        void Start()
         {
             if (Layout == null) DestroyImmediate(this);
         }
