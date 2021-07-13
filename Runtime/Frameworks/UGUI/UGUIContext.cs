@@ -28,6 +28,7 @@ namespace ReactUnity.UGUI
                 { "object", (tag, text, context) => new ObjectComponent(context) },
                 { "video", (tag, text, context) => new VideoComponent(context) },
                 { "prefab", (tag, text, context) => new PrefabComponent(context) },
+                { "portal", (tag, text, context) => new PortalComponent(context) },
             };
 
 

@@ -30,5 +30,6 @@ namespace ReactUnity.Tests
         }
 
         public void Render() => Component.Render();
+        public void InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
     }
 }

@@ -19,6 +19,7 @@ namespace ReactUnity.StyleEngine
         public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0, ReactContext.LayoutMergeMode mergeMode = ReactContext.LayoutMergeMode.Both, MediaQueryList mql = null)
         {
             var added = AddSelector(rule.SelectorText, importanceOffset);
+            var addNew = new List<RuleTreeNode<StyleData>>();
             foreach (var leaf in added)
             {
                 var style = rule.Style;
@@ -54,11 +55,12 @@ namespace ReactUnity.StyleEngine
                             importantLeaf.Data.Layouts.AddRange(importantLay);
                     }
 
-                    added.Add(importantLeaf);
+                    addNew.Add(importantLeaf);
                     LeafNodes.InsertIntoSortedList(importantLeaf);
                 }
             }
 
+            added.AddRange(addNew);
             return added;
         }
 
@@ -122,12 +124,14 @@ namespace ReactUnity.StyleEngine
             if (matches) list.Add(component);
             if (matches && singleItem) return true;
 
-            if (component is IContainerComponent cmp)
+            if (component is IContainerComponent cmp && cmp.Children != null)
+            {
                 foreach (var child in cmp.Children)
                 {
                     var childMatches = GetMatchingChildrenInner(child, pseudoElement, list, scope, singleItem, leafList);
                     if (childMatches && singleItem) return true;
                 }
+            }
 
             return false;
         }

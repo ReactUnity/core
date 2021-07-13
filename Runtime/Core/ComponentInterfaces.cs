@@ -75,4 +75,9 @@ namespace ReactUnity
     public interface IHostComponent : IContainerComponent
     {
     }
+
+    public interface IShadowComponent : IReactComponent
+    {
+        public IReactComponent ShadowParent { get; }
+    }
 }

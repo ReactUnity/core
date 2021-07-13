@@ -20,11 +20,12 @@ namespace ReactUnity.StyleEngine
 
         public RuleTreeNode<T> AddChildCascading(string selector)
         {
+            var shadowParent = selector.StartsWith(":deep ") || selector.StartsWith(">>> ");
             var directParent = selector[0] == '>';
             var directSibling = selector[0] == '+';
             var sibling = selector[0] == '~';
             var important = selector[0] == '!';
-            var hasRelative = directParent || directSibling || sibling || important;
+            var hasRelative = shadowParent || directParent || directSibling || sibling || important;
             var selfIndex = hasRelative ? 1 : 0;
 
             var selectorSplit = RuleHelpers.SplitSelectorRegex.Split(selector.Trim(), selfIndex + 2);
@@ -35,6 +36,7 @@ namespace ReactUnity.StyleEngine
             if (hasRelative)
             {
                 RelationType = directParent ? RuleRelationType.DirectParent :
+                    shadowParent ? RuleRelationType.ShadowParent :
                     directSibling ? RuleRelationType.DirectSibling :
                     sibling ? RuleRelationType.Sibling :
                     important ? RuleRelationType.Self :
@@ -85,6 +87,18 @@ namespace ReactUnity.StyleEngine
                     if (ind == 0) return false;
                     relative = relative.Parent.Children[ind - 1];
                 }
+                else if (RelationType == RuleRelationType.ShadowParent)
+                {
+                    while (relative != null)
+                    {
+                        if (relative is IShadowComponent s)
+                        {
+                            relative = s.ShadowParent;
+                            break;
+                        }
+                        relative = relative.Parent;
+                    }
+                }
 
                 if (Parent.Matches(relative, scope)) return true;
                 if (runOnce) return false;
@@ -124,6 +138,7 @@ namespace ReactUnity.StyleEngine
         DirectParent = 2,
         Sibling = 3,
         DirectSibling = 4,
+        ShadowParent = 5,
     }
 
     public enum RuleSelectorPartType
@@ -139,6 +154,7 @@ namespace ReactUnity.StyleEngine
         AdjacentSibling = 11,
         Sibling = 12,
         Self = 13,
+        ShadowDescendant = 14,
 
         Not = 20,
         FirstChild = 21,
@@ -202,6 +218,7 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.AdjacentSibling:
                 case RuleSelectorPartType.Sibling:
                 case RuleSelectorPartType.Self:
+                case RuleSelectorPartType.ShadowDescendant:
                     return true;
                 case RuleSelectorPartType.Not:
                     break;
@@ -214,8 +231,11 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.NthLastChild:
                     return component.Parent != null && ((NthChildParameter) Parameter).Matches(component.Parent.Children.Count - component.Parent.Children.IndexOf(component));
                 case RuleSelectorPartType.Empty:
-                    var cmp = component as IContainerComponent;
-                    return cmp == null || cmp.Children.Count == 0;
+                    if (component is ITextComponent tc)
+                        return string.IsNullOrEmpty(tc.Content);
+                    else if (component is IContainerComponent cc)
+                        return cc?.Children == null || cc.Children.Count == 0;
+                    return true;
                 case RuleSelectorPartType.OnlyChild:
                     return component.Parent != null && component.Parent.Children.Count == 1;
                 case RuleSelectorPartType.Root:
