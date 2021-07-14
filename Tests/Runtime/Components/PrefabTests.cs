@@ -30,7 +30,7 @@ namespace ReactUnity.Tests
 
         public PrefabTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UnityTest, ReactInjectableTest(PrefabBaseScript, PrefabBaseStyle)]
+        [ReactInjectableTest(PrefabBaseScript, PrefabBaseStyle)]
         public IEnumerator CorrectPrefabIsMounted()
         {
             yield return null;
@@ -55,7 +55,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UnityTest, ReactInjectableTest(PrefabBaseScript, PrefabBaseStyle)]
+        [ReactInjectableTest(PrefabBaseScript, PrefabBaseStyle)]
         public IEnumerator PrefabComponentHasCorrectSize()
         {
             yield return null;
@@ -77,7 +77,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UnityTest, ReactInjectableTest(PrefabBaseScript, PrefabBaseStyle)]
+        [ReactInjectableTest(PrefabBaseScript, PrefabBaseStyle)]
         public IEnumerator PrefabTargetResizesCorrectly()
         {
             yield return null;
@@ -86,7 +86,7 @@ namespace ReactUnity.Tests
 
             var target1 = new GameObject("prefabTarget1", typeof(RectTransform));
             target1.AddComponent<PrefabTarget>();
-            
+
             Globals["prefab"] = target1;
             yield return null;
 

@@ -11,7 +11,7 @@ namespace ReactUnity.Tests
     {
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UnityTest, ReactInjectableTest(style: "view { color: red; }")]
+        [ReactInjectableTest(style: "view { color: red; }")]
         public IEnumerator Injectable_HelloWorld()
         {
             yield return null;
@@ -22,7 +22,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UnityTest, ReactInjectableTest(@"
+        [ReactInjectableTest(@"
             Renderer.render(
                 <view>
                     Hello world
@@ -42,7 +42,7 @@ namespace ReactUnity.Tests
         }
 
 
-        [UnityTest, ReactInjectableTest(@"
+        [ReactInjectableTest(@"
             function App() {
                 const globals = ReactUnity.useGlobals();
                 return <image source={globals.image} />;
@@ -66,7 +66,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(tx, imgCmp.mainTexture);
         }
 
-        [UnityTest, ReactInjectableTest(@"
+        [ReactInjectableTest(@"
             const watcher = ReactUnity.createDictionaryWatcher(Globals.inner, 'innerSerializable');
             function App() {
                 const globals = watcher.useContext();
@@ -78,12 +78,14 @@ namespace ReactUnity.Tests
                     <App />
                 </watcher.Provider>
             );
-        ")]
+        ", autoRender: false)]
         public IEnumerator TestArbitraryWatcher()
         {
+            var sd = new SerializableDictionary();
+            Globals["inner"] = sd;
+            Render();
             yield return null;
-
-            var sd = Component.Globals["inner"] as SerializableDictionary;
+            yield return null;
 
             var imgCmp = (Host.QuerySelector("image") as UGUI.ImageComponent).Image;
             Assert.AreEqual(Texture2D.whiteTexture, imgCmp.mainTexture);

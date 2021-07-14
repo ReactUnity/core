@@ -7,19 +7,34 @@ using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
-    public class LoadSceneAttribute : NUnitAttribute, IOuterUnityTestAction
+    public class LoadSceneAttribute : UnityTestAttribute, IOuterUnityTestAction
     {
-        protected string scene;
+        protected string SceneName;
 
-        public LoadSceneAttribute(string scene) => this.scene = scene;
+        public LoadSceneAttribute(string scene) => this.SceneName = scene;
 
         public virtual IEnumerator BeforeTest(ITest test)
+        {
+            yield return Initialize(SceneName);
+        }
+
+        public static IEnumerator Initialize(string scene)
         {
             Debug.Assert(scene.EndsWith(".unity"), "The scene file must be an absolue path ending with .unity");
 #if UNITY_EDITOR
             yield return UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(scene, new LoadSceneParameters(LoadSceneMode.Single));
 #else
             yield return SceneManager.LoadSceneAsync(scene);
+#endif
+        }
+
+        public static IEnumerator TearDown(string scene)
+        {
+            Debug.Assert(scene.EndsWith(".unity"), "The scene file must be an absolue path ending with .unity");
+#if UNITY_EDITOR
+            yield return UnityEditor.SceneManagement.EditorSceneManager.UnloadSceneAsync(scene);
+#else
+            yield return SceneManager.UnloadSceneAsync(scene);
 #endif
         }
 

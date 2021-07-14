@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Helpers;
+using ReactUnity.ScriptEngine;
 using ReactUnity.UGUI;
 using System.Collections;
 using UnityEngine;
@@ -39,34 +40,44 @@ namespace ReactUnity.Tests
 #endif
 
         public bool AutoRender;
+        public bool SkipIfExisting;
 
-        public BaseReactTestAttribute(string customScene = null, bool autoRender = true) :
+        public BaseReactTestAttribute(string customScene = null, bool autoRender = true, bool skipIfExisting = false) :
             base(customScene ?? DefaultSceneName)
         {
             AutoRender = autoRender;
+            SkipIfExisting = skipIfExisting;
         }
 
         public override IEnumerator BeforeTest(ITest test)
         {
+            var canvas = GameObject.Find("REACT_CANVAS");
+            var cmp = canvas?.GetComponent<ReactUnityUGUI>();
+            if (cmp?.Context != null && SkipIfExisting) yield break;
+
             yield return base.BeforeTest(test);
 
+            JavascriptEngineType engineType = JavascriptEngineType.Auto;
+            // TODO: find out why is Fixture null
+            var testBase = test.Fixture as TestBase;
+            if (testBase != null) engineType = testBase.EngineType;
+            else engineType = test.FullName.Contains("(Jint)") ? JavascriptEngineType.Jint : JavascriptEngineType.ClearScript;
+
+            var ru = CreateReactUnity(engineType, GetScript());
+            ru.Globals["test"] = test;
+            ru.BeforeStart.AddListener(BeforeStart);
+            ru.AfterStart.AddListener(AfterStart);
+            if (AutoRender) ru.Render();
+        }
+
+        static public ReactUnityUGUI CreateReactUnity(JavascriptEngineType engineType, ScriptSource script)
+        {
             var canvas = GameObject.Find("REACT_CANVAS");
             Debug.Assert(canvas != null, "The scene must include a canvas object named as REACT_CANVAS");
             var ru = canvas.GetComponent<ReactUnityUGUI>();
 
-            ru.Script = GetScript();
-            ru.Globals["test"] = test;
-            var sd = new SerializableDictionary();
-            ru.Globals["inner"] = sd;
-
-            ru.BeforeStart.AddListener(BeforeStart);
-            ru.AfterStart.AddListener(AfterStart);
-
-            // TODO: find out why is Fixture null
-            var testBase = test.Fixture as TestBase;
-            if (testBase != null) ru.EngineType = testBase.EngineType;
-            else ru.EngineType = test.FullName.Contains("(ClearScript)") ? ScriptEngine.JavascriptEngineType.ClearScript : ScriptEngine.JavascriptEngineType.Jint;
-
+            ru.EngineType = engineType;
+            ru.Script = script;
             ru.AutoRender = false;
             ru.enabled = true;
 
@@ -76,7 +87,7 @@ namespace ReactUnity.Tests
                 ru.AwaitDebugger = true;
             }
 
-            if (AutoRender) ru.Render();
+            return ru;
         }
 
         public override IEnumerator AfterTest(ITest test)
@@ -101,7 +112,6 @@ namespace ReactUnity.Tests
 
         public virtual void AfterStart(ReactUnityRunner runner)
         {
-
         }
 
         public abstract ScriptSource GetScript();

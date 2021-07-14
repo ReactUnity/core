@@ -10,7 +10,7 @@ namespace ReactUnity.Tests
     {
         public MediaQueryTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UnityTest, ReactInjectableTest(style: "view { color: white; } @media (min-asd: 600px) { view { color: red; } }")]
+        [ReactInjectableTest(style: "view { color: white; } @media (min-asd: 600px) { view { color: red; } }")]
         public IEnumerator Injectable_HelloWorld()
         {
             yield return null;

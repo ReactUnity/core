@@ -1,13 +1,16 @@
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
-    [TestFixture(JavascriptEngineType.ClearScript, Category = "ClearScript")]
+    [TestFixture(JavascriptEngineType.Auto, Category = "ClearScript")]
     public class QuerySelectorTests : TestBase
     {
+        public QuerySelectorTests(JavascriptEngineType engineType) : base(engineType) { }
+
         const string BaseScript = @"
             function App() {
                 const globals = ReactUnity.useGlobals();
@@ -82,9 +85,7 @@ namespace ReactUnity.Tests
 
         const string BaseStyle = @"";
 
-        public QuerySelectorTests(JavascriptEngineType engineType) : base(engineType) { }
-
-        [UnityTest, ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
         [TestCase(null, "*")]
         [TestCase("v1", "view")]
         [TestCase("v1", ":root > view")]
@@ -104,12 +105,12 @@ namespace ReactUnity.Tests
         [TestCase("v1v1t4", "text:empty")]
         [TestCase("v1v4", "view:nth-child(4)")]
         [TestCase("v1v1t4", "*:nth-child(4)")]
-        public void SelectsQueriesCorrectly(string id, string query)
+        public void QuerySelector(string id, string query)
         {
             Assert.AreEqual(id, Q(query)?.Id);
         }
 
-        [UnityTest, ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
         [TestCase("#v1", "v1", "*")]
         [TestCase("#v1", "v1", "view")]
         [TestCase("#v1", "v1", ":root > view")]
@@ -127,18 +128,19 @@ namespace ReactUnity.Tests
         [TestCase("#v1", null, ":scope > #v3 ~ view ~ view ~ view")]
         [TestCase("#v1", "v1v1t4", "text:empty")]
         [TestCase("#v1", "v1v1t4", "*:nth-child(4)")]
-        public void QueryWorksCorrectlyWhenScoped(string scope, string id, string query)
+        public void ScopedQuerySelector(string scope, string id, string query)
         {
             var scoped = Q(scope);
             Assert.AreEqual(id, Q(query, scoped)?.Id);
         }
 
-        [UnityTest, ReactInjectableTest(BaseScript, BaseStyle)]
-        public IEnumerator SelectsRootCorrectly()
+        [ReactInjectableTest(BaseScript, BaseStyle, SkipIfExisting = true)]
+        public IEnumerator RootQuerySelector()
         {
             yield return null;
             Assert.AreEqual(Host, Q(":root"));
             Assert.AreEqual(Host, Q(":scope"));
+            Assert.AreEqual(Host, Q("*"));
         }
     }
 }

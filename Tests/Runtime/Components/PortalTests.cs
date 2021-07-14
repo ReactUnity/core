@@ -34,7 +34,7 @@ namespace ReactUnity.Tests
 
         public PortalTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [UnityTest, ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator PortalIsMountedToCorrectParent()
         {
             yield return null;
@@ -69,7 +69,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual(view.Container, portal.RectTransform.parent);
         }
 
-        [UnityTest, ReactInjectableTest(BaseScript, BaseStyle)]
+        [ReactInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator PortalHasCorrectTextContent()
         {
             yield return null;
@@ -77,7 +77,7 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Portal Inner Text", Portal.TextContent);
         }
 
-        [UnityTest, ReactInjectableTest(BaseScript, @"
+        [ReactInjectableTest(BaseScript, @"
             :root :deep text {
                 color: red;
             }
