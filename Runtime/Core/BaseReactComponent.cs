@@ -39,6 +39,7 @@ namespace ReactUnity
         public string ClassName { get; set; } = "";
         public HashSet<string> ClassList { get; private set; } = EmptyClassList;
 
+        public string Id { get; private set; }
         public abstract string Name { get; }
 
         #region Container Properties
@@ -161,6 +162,10 @@ namespace ReactUnity
         {
             switch (propertyName)
             {
+                case "id":
+                    Id = value?.ToString();
+                    ResolveStyle(true);
+                    return;
                 case "className":
                     var oldClassName = ClassName;
                     var oldClassList = ClassList;

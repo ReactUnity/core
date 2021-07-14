@@ -22,6 +22,7 @@ namespace ReactUnity
         StyleState StyleState { get; }
         NodeStyle ComputedStyle { get; }
         InlineData Style { get; }
+        string Id { get; }
         string Name { get; }
         string Tag { get; }
         string ClassName { get; }

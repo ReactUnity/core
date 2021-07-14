@@ -209,7 +209,7 @@ namespace ReactUnity.StyleEngine
                         return component.Name == Name;
                     return Name == component.Tag;
                 case RuleSelectorPartType.Id:
-                    return Name == component.Name;
+                    return Name == component.Id;
                 case RuleSelectorPartType.ClassName:
                     return component.ClassList != null && component.ClassList.Contains(Name);
                 case RuleSelectorPartType.Attribute:

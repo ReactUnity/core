@@ -3,6 +3,7 @@ using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using ReactUnity.UGUI;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -31,5 +32,7 @@ namespace ReactUnity.Tests
 
         public void Render() => Component.Render();
         public void InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
+        public IReactComponent Q(string query, IReactComponent scope = null) => (scope ?? Host).QuerySelector(query);
+        public List<IReactComponent> QA(string query, IReactComponent scope = null) => (scope ?? Host).QuerySelectorAll(query);
     }
 }
