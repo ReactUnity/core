@@ -12,7 +12,7 @@ using UnityEditor.UIElements;
 
 namespace ReactUnity.UIToolkit
 {
-    public interface IUIToolkitComponent<out T> : IReactComponent
+    public interface IUIToolkitComponent<out T> : IReactComponent where T : VisualElement, new()
     {
         T Element { get; }
     }
@@ -28,6 +28,7 @@ namespace ReactUnity.UIToolkit
 
         protected UIToolkitComponent(T element, UIToolkitContext context, string tag) : base(context, tag, true)
         {
+            ClassList = new UITClassList(this);
             Element = element;
             Element.userData = Data;
         }
@@ -287,12 +288,6 @@ namespace ReactUnity.UIToolkit
             }
         }
 
-        public override void UpdateClasses(string oldClassName, HashSet<string> oldClassList)
-        {
-            foreach (var cls in oldClassList) Element.RemoveFromClassList(cls);
-            foreach (var cls in ClassList) Element.AddToClassList(cls);
-        }
-
         #endregion
 
         public override object GetComponent(Type type)
@@ -347,6 +342,42 @@ namespace ReactUnity.UIToolkit
         public bool HasMouseCapture()
         {
             return MouseCaptureController.HasMouseCapture(Element);
+        }
+
+        public class UITClassList : ClassList
+        {
+            private readonly IUIToolkitComponent<T> Component;
+
+            public UITClassList(IUIToolkitComponent<T> component) : base(component)
+            {
+                Component = component;
+            }
+
+            internal override void OnAdd(string item)
+            {
+                base.OnAdd(item);
+                Component.Element.AddToClassList(item);
+            }
+
+            internal override void OnRemove(string item)
+            {
+                base.OnRemove(item);
+                Component.Element.RemoveFromClassList(item);
+            }
+
+            internal override void OnBeforeChange()
+            {
+                base.OnBeforeChange();
+                foreach (var item in Component.ClassList)
+                    Component.Element.RemoveFromClassList(item);
+            }
+
+            internal override void OnAfterChange()
+            {
+                base.OnAfterChange();
+                foreach (var item in Component.ClassList)
+                    Component.Element.AddToClassList(item);
+            }
         }
     }
 }

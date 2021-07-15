@@ -117,8 +117,9 @@ namespace ReactUnity.Tests
             var className = "welcome to-this-place   WhErE destiny_is_made  a  ";
             Bridge.setProperty(view, "className", className);
 
-            Assert.AreEqual(new List<string> { "welcome", "to-this-place", "WhErE", "destiny_is_made", "a" }, view.ClassList);
-            Assert.AreEqual(className, view.ClassName);
+            var expectedClassList = new List<string> { "welcome", "to-this-place", "WhErE", "destiny_is_made", "a" };
+            Assert.AreEqual(expectedClassList, view.ClassList);
+            Assert.AreEqual(string.Join(" ", expectedClassList), view.ClassName);
         }
 
         [ReactInjectableTest]

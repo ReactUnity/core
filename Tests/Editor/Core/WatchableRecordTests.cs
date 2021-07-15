@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ReactUnity.Editor.Tests
 {
     [TestFixture]
-    public class EventDictionaryTests
+    public class WatchableRecordTests
     {
         [Test]
         public void TestChangeCallback()

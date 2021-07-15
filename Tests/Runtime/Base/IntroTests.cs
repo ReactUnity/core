@@ -11,16 +11,32 @@ namespace ReactUnity.Tests
     {
         public IntroTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(style: "view { color: red; }")]
-        public IEnumerator Injectable_HelloWorld()
+        [ReactInjectableTest(style: @"
+            view { color: red; }
+            view.blueClass { color: blue; }
+            view.greenClass { color: magenta; }
+            #test-id { color: white; }
+")]
+        public IEnumerator ClassListChangesCausesRerender()
         {
-            yield return null;
+            var view = Q("view");
 
             var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("Hello world", tmp.text);
             Assert.AreEqual(Color.red, tmp.color);
-        }
 
+            view.ClassList.Add("blueClass");
+            yield return null;
+            Assert.AreEqual(Color.blue, tmp.color);
+
+            view.ClassName = "class-something another-class greenClass";
+            yield return null;
+            Assert.AreEqual(Color.magenta, tmp.color);
+
+            view.Id = "test-id";
+            yield return null;
+            Assert.AreEqual(Color.white, tmp.color);
+        }
 
         [ReactInjectableTest(@"
             Renderer.render(

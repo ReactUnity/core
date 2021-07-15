@@ -22,12 +22,11 @@ namespace ReactUnity
         StyleState StyleState { get; }
         NodeStyle ComputedStyle { get; }
         InlineData Style { get; }
-        string Id { get; }
+        string Id { get; set; }
         string Name { get; }
         string Tag { get; }
-        string ClassName { get; }
-
-        HashSet<string> ClassList { get; }
+        string ClassName { get; set; }
+        ClassList ClassList { get; }
         StateStyles StateStyles { get; }
         InlineData Data { get; }
 

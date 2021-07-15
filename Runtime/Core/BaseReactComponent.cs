@@ -14,7 +14,6 @@ namespace ReactUnity
     public abstract class BaseReactComponent<ContextType> : IReactComponent, IContainerComponent where ContextType : ReactContext
     {
         #region Statics / Defaults
-        private static readonly HashSet<string> EmptyClassList = new HashSet<string>();
         public static readonly NodeStyle TagDefaultStyle = new NodeStyle();
         public static readonly YogaNode TagDefaultLayout = new YogaNode();
         public virtual NodeStyle DefaultStyle => TagDefaultStyle;
@@ -36,10 +35,36 @@ namespace ReactUnity
 
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
-        public string ClassName { get; set; } = "";
-        public HashSet<string> ClassList { get; private set; } = EmptyClassList;
 
-        public string Id { get; private set; }
+        public string ClassName
+        {
+            get => string.Join(" ", ClassList);
+            set
+            {
+                ClassList.OnBeforeChange();
+                ClassList.ClearWithoutNotify();
+
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    var classes = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    for (int i = 0; i < classes.Length; i++)
+                        ClassList.AddWithoutNotify(classes[i]);
+                }
+                ClassList.OnAfterChange();
+            }
+        }
+        public ClassList ClassList { get; protected set; }
+
+        private string id;
+        public string Id
+        {
+            get => id;
+            set
+            {
+                id = value?.ToString();
+                ResolveStyle(true);
+            }
+        }
         public abstract string Name { get; }
 
         #region Container Properties
@@ -68,6 +93,7 @@ namespace ReactUnity
             Context = context;
             Style.changed += StyleChanged;
             Data.changed += StyleChanged;
+            ClassList = new ClassList(this);
 
             if (context.CalculatesLayout) Layout = new YogaNode(DefaultLayout);
 
@@ -164,24 +190,13 @@ namespace ReactUnity
             {
                 case "id":
                     Id = value?.ToString();
-                    ResolveStyle(true);
                     return;
                 case "className":
-                    var oldClassName = ClassName;
-                    var oldClassList = ClassList;
                     ClassName = value?.ToString();
-                    ClassList = string.IsNullOrWhiteSpace(ClassName) ? EmptyClassList :
-                        new HashSet<string>(ClassName.Split(new char[] { ' ' }, System.StringSplitOptions.RemoveEmptyEntries));
-                    UpdateClasses(oldClassName, oldClassList);
-                    ResolveStyle(true);
                     return;
                 default:
                     throw new System.Exception($"Unknown property name specified, '{propertyName}'");
             }
-        }
-
-        public virtual void UpdateClasses(string oldClassName, HashSet<string> oldClassList)
-        {
         }
 
         #endregion

@@ -309,8 +309,12 @@ namespace ReactUnity.UGUI
         public Vector2 GetRelativePosition(float x, float y)
         {
             var screenPoint = new Vector2(x, y);
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(GameObject.transform as RectTransform, screenPoint, RectTransform.GetComponentInParent<Canvas>().worldCamera, out var pos);
-            return pos;
+            var rt = GameObject.transform as RectTransform;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rt, screenPoint, RectTransform.GetComponentInParent<Canvas>().worldCamera, out var pos);
+
+            var midx = rt.pivot.x * rt.rect.width;
+            var midy = rt.pivot.y * rt.rect.height;
+            return new Vector2(pos.x + midx, rt.rect.height - (pos.y + midy));
         }
 
         #endregion
