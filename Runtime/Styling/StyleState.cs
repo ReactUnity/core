@@ -121,6 +121,7 @@ namespace ReactUnity.Styling
             if (animationRunning) UpdateAnimations();
             if (audioRunning) UpdateAudio();
             if (shouldUpdate) OnUpdate?.Invoke(Active, shouldUpdateWithLayout);
+            if (shouldUpdateWithLayout) Context.ScheduleLayout();
             shouldUpdate = false;
             shouldUpdateWithLayout = false;
         }

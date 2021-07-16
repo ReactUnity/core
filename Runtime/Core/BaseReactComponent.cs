@@ -125,7 +125,7 @@ namespace ReactUnity
         protected void MarkForStyleApply(bool hasLayout)
         {
             markedForStyleApply = true;
-            markedForLayoutApply = hasLayout;
+            markedForLayoutApply = markedForLayoutApply || hasLayout;
         }
 
         public virtual void DestroySelf()
