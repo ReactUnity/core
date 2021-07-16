@@ -40,7 +40,7 @@ namespace ReactUnity.UGUI
 
         private void SetSource(VideoReference source)
         {
-            source.Get(Context, (res) =>
+            source?.Get(Context, (res) =>
             {
                 if (res == null)
                 {

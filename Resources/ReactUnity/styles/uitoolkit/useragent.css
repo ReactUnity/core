@@ -1,11 +1,11 @@
 @font-face {
   font-family: sans-serif;
-  src: "resource://ReactUnity/fonts/sans-serif";
+  src: url(resource:ReactUnity/fonts/sans-serif);
 }
 
 @font-face {
   font-family: monospace;
-  src: "resource://ReactUnity/fonts/monospace";
+  src: url(resource:ReactUnity/fonts/monospace);
 }
 
 :root {

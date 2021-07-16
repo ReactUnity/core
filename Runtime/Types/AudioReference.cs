@@ -62,7 +62,7 @@ namespace ReactUnity.Types
             private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
             public object Convert(object value)
             {
-                if (value == null) return AudioReference.None;
+                if (value == null) return None;
                 if (value is AudioReference a) return a;
                 if (value is AudioClip c) return new AudioReference(AssetReferenceType.Object, c);
                 if (value is UnityEngine.Object o) return new AudioReference(AssetReferenceType.Object, o);

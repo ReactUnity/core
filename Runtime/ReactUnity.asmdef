@@ -29,6 +29,16 @@
             "name": "com.unity.editorcoroutines",
             "expression": "",
             "define": "REACT_EDITOR_COROUTINES"
+        },
+        {
+            "name": "com.unity.textmeshpro",
+            "expression": "",
+            "define": "REACT_TMP"
+        },
+        {
+            "name": "Unity",
+            "expression": "2021.2.0a0",
+            "define": "REACT_TEXTCORE"
         }
     ],
     "noEngineReferences": false

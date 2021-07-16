@@ -63,7 +63,7 @@ function App() {
 
   return <scroll className={style.host}>
     <head>
-      <image source="res://ReactUnity/editor/logo" className={style.logo}></image>
+      <image source="url(resource:ReactUnity/editor/logo)" className={style.logo}></image>
 
       <h1>React Unity</h1>
       <h2>Quick Start</h2>

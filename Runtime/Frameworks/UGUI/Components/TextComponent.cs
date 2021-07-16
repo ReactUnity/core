@@ -72,7 +72,7 @@ namespace ReactUnity.UGUI
             base.ApplyStylesSelf();
             ComputedStyle.fontFamily.Get(Context, font =>
             {
-                Text.font = font;
+                if (font?.TmpFontAsset) Text.font = font?.TmpFontAsset;
             });
             Text.fontSize = ComputedStyle.fontSizeActual;
             Text.fontStyle = ComputedStyle.fontStyle;

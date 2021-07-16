@@ -100,24 +100,24 @@ namespace ReactUnity.Editor.Tests
 
             var part0 = converted.Items[0];
             Assert.IsTrue(part0.Valid);
-            Assert.AreEqual(AssetReferenceType.Resource, part0.AudioClip.type);
-            Assert.AreEqual("click", part0.AudioClip.value);
+            Assert.AreEqual(AssetReferenceType.Resource, part0.AudioClip.Type);
+            Assert.AreEqual("click", part0.AudioClip.Value);
             Assert.AreEqual(3000, part0.Delay);
             Assert.AreEqual(5, part0.IterationCount);
             Assert.True(part0.Local);
 
             var part1 = converted.Items[1];
             Assert.IsTrue(part1.Valid);
-            Assert.AreEqual(AssetReferenceType.Url, part1.AudioClip.type);
-            Assert.AreEqual("https://example.com", part1.AudioClip.value);
+            Assert.AreEqual(AssetReferenceType.Url, part1.AudioClip.Type);
+            Assert.AreEqual("https://example.com", part1.AudioClip.Value);
             Assert.AreEqual(2000, part1.Delay);
             Assert.AreEqual(-1, part1.IterationCount);
             Assert.False(part1.Local);
 
             var part2 = converted.Items[2];
             Assert.IsTrue(part2.Valid);
-            Assert.AreEqual(AssetReferenceType.Resource, part2.AudioClip.type);
-            Assert.AreEqual("something", part2.AudioClip.value);
+            Assert.AreEqual(AssetReferenceType.Resource, part2.AudioClip.Type);
+            Assert.AreEqual("something", part2.AudioClip.Value);
             Assert.AreEqual(0, part2.Delay);
             Assert.AreEqual(1, part2.IterationCount);
             Assert.False(part2.Local);

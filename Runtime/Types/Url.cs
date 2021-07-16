@@ -1,12 +1,18 @@
 using ReactUnity.Converters;
+using System;
+using System.Text.RegularExpressions;
 
 namespace ReactUnity.Types
 {
     public class Url
     {
+        private static Regex DataRegex = new Regex(@"^data:(?<mime>[\w/\-\.]+)?(;(?<encoding>\w+))?,?(?<data>.*)", RegexOptions.Compiled);
+
         public UrlProtocol Protocol { get; }
         public string FullUrl { get; }
         public string NormalizedUrl { get; }
+
+        public bool HasKnownProtocol => Protocol != UrlProtocol.Contextual && Protocol != UrlProtocol.None;
 
         public Url(string fullUrl)
         {
@@ -63,6 +69,19 @@ namespace ReactUnity.Types
                 NormalizedUrl = fullUrl;
             }
         }
+
+        public byte[] GetData()
+        {
+            var dataMatch = DataRegex.Match(FullUrl);
+            if (dataMatch.Success)
+            {
+                var mime = dataMatch.Groups["mime"].Value;
+                var encoding = dataMatch.Groups["encoding"].Value;
+                var data = dataMatch.Groups["data"].Value;
+                return Convert.FromBase64String(data);
+            }
+            return null;
+        }
     }
 
     public enum UrlProtocol
@@ -75,5 +94,4 @@ namespace ReactUnity.Types
         Data = 5,
         Global = 6,
     }
-
 }

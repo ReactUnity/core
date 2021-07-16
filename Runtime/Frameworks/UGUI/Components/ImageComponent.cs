@@ -22,7 +22,7 @@ namespace ReactUnity.UGUI
         protected override void SetSource(object value)
         {
             var source = AllConverters.ImageReferenceConverter.Convert(value) as ImageReference;
-            source.Get(Context, SetTexture);
+            source?.Get(Context, SetTexture);
         }
 
         protected void SetTexture(Texture2D texture)

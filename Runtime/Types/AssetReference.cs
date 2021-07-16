@@ -22,47 +22,60 @@ namespace ReactUnity.Types
     {
         public static AssetReference<AssetType> None = new AssetReference<AssetType>(AssetReferenceType.None, null);
         private static Regex HttpRegex = new Regex("^https?://");
-        private static Regex FileRegex = new Regex("^file?://");
+        private static Regex FileRegex = new Regex("^file:");
 
-        public AssetReferenceType type { get; private set; } = AssetReferenceType.None;
-        public object value { get; private set; }
+        public AssetReferenceType Type { get; private set; } = AssetReferenceType.None;
+        public object Value { get; private set; }
 
         protected bool IsCached;
         protected AssetType CachedValue;
 
         public AssetReference(AssetReferenceType type, object value)
         {
-            this.type = type;
-            this.value = value;
+            Type = type;
+            if (type == AssetReferenceType.Data)
+            {
+                try
+                {
+                    if (value is byte[] b) Value = b;
+                    else Value = Convert.FromBase64String(value?.ToString());
+                }
+                catch { }
+            }
+            else
+            {
+                Value = value;
+            }
         }
 
         public AssetReference(Url url)
         {
-            value = url.NormalizedUrl;
+            Value = url.NormalizedUrl;
             switch (url.Protocol)
             {
                 case UrlProtocol.Contextual:
-                    type = AssetReferenceType.Auto;
+                    Type = AssetReferenceType.Auto;
                     break;
                 case UrlProtocol.Web:
-                    type = AssetReferenceType.Url;
+                    Type = AssetReferenceType.Url;
                     break;
                 case UrlProtocol.Resource:
-                    type = AssetReferenceType.Resource;
+                    Type = AssetReferenceType.Resource;
                     break;
                 case UrlProtocol.File:
-                    type = AssetReferenceType.File;
+                    Type = AssetReferenceType.File;
                     break;
                 case UrlProtocol.Data:
-                    type = AssetReferenceType.Data;
+                    Type = AssetReferenceType.Data;
+                    Value = url.GetData();
                     break;
                 case UrlProtocol.Global:
-                    type = AssetReferenceType.Global;
+                    Type = AssetReferenceType.Global;
                     break;
                 case UrlProtocol.None:
                 default:
-                    type = AssetReferenceType.None;
-                    value = null;
+                    Type = AssetReferenceType.None;
+                    Value = null;
                     break;
             }
         }
@@ -76,8 +89,8 @@ namespace ReactUnity.Types
             }
 
 
-            var realType = type;
-            var realValue = value;
+            var realType = Type;
+            var realValue = Value;
             if (realType == AssetReferenceType.Auto || realType == AssetReferenceType.Path)
             {
                 var path = context.ResolvePath(realValue as string);
@@ -108,29 +121,32 @@ namespace ReactUnity.Types
             });
         }
 
-        protected virtual void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<AssetType> callback)
+        protected virtual T Get<T>(ReactContext context, AssetReferenceType realType, object realValue) where T : class
         {
+
             switch (realType)
             {
                 case AssetReferenceType.Resource:
-                    callback(Resources.Load(realValue as string, typeof(AssetType)) as AssetType);
-                    break;
+                    return Resources.Load(realValue as string, typeof(T)) as T;
                 case AssetReferenceType.Global:
-                    if (context.Globals.TryGetValue(realValue as string, out var res)) callback(res as AssetType);
-                    else callback(null);
-                    break;
+                    if (context.Globals.TryGetValue(realValue as string, out var res)) return res as T;
+                    else return default;
                 case AssetReferenceType.Object:
-                    callback(realValue as AssetType);
-                    break;
+                    return realValue as T;
                 case AssetReferenceType.File:
                 case AssetReferenceType.Url:
                 case AssetReferenceType.None:
                 case AssetReferenceType.Procedural:
                 case AssetReferenceType.Data:
                 default:
-                    callback(null);
-                    break;
+                    return null;
             }
+        }
+
+        protected virtual void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<AssetType> callback)
+        {
+            var res = Get<AssetType>(context, realType, realValue);
+            callback(res);
         }
 
         public virtual void Dispose()

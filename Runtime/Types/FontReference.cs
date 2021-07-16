@@ -1,20 +1,75 @@
 using ReactUnity.Converters;
+using ReactUnity.Styling;
 using System;
-using System.Text.RegularExpressions;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReactUnity.Types
 {
-    public class FontReference : AssetReference<TMP_FontAsset>
+    public class FontSource
+    {
+        public Font Font;
+#if REACT_TMP
+        public TMPro.TMP_FontAsset TmpFontAsset;
+#endif
+#if REACT_TEXTCORE
+        public UnityEngine.TextCore.Text.FontAsset TextCoreFontAsset;
+#endif
+
+        public bool Valid =>
+#if REACT_TMP
+            TmpFontAsset != null ||
+#endif
+#if REACT_TEXTCORE
+            TextCoreFontAsset != null ||
+#endif
+            Font != null;
+
+        public FontSource() { }
+
+        public FontSource(FontSource other)
+        {
+            Font = other.Font;
+#if REACT_TMP
+            TmpFontAsset = other.TmpFontAsset;
+#endif
+#if REACT_TEXTCORE
+            TextCoreFontAsset = other.TextCoreFontAsset;
+#endif
+        }
+
+        public FontSource(Font font)
+        {
+            Font = font;
+        }
+
+#if REACT_TMP
+        public FontSource(TMPro.TMP_FontAsset font)
+        {
+            TmpFontAsset = font;
+            Font = font?.sourceFontFile;
+        }
+#endif
+
+#if REACT_TEXTCORE
+        public FontSource(UnityEngine.TextCore.Text.FontAsset font)
+        {
+            TextCoreFontAsset = font;
+            Font = font?.sourceFontFile;
+        }
+#endif
+    }
+
+    public class FontReference : AssetReference<FontSource>
     {
         static public new FontReference None = new FontReference(AssetReferenceType.None, null);
 
         public FontReference(AssetReferenceType type, object value) : base(type, value) { }
+        public FontReference(Url url) : base(url) { }
 
-        protected override void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<TMP_FontAsset> callback)
+        protected override void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<FontSource> callback)
         {
-            if (realType == AssetReferenceType.Procedural)
+            if (realType == AssetReferenceType.Procedural || realType == AssetReferenceType.Auto)
             {
                 if (context.FontFamilies.TryGetValue((realValue as string).ToLowerInvariant(), out var found))
                 {
@@ -28,45 +83,56 @@ namespace ReactUnity.Types
             }
             else
             {
-                base.Get(context, realType, realValue, callback);
-            }
-        }
+                Font altFont;
+#if REACT_TMP
+                var tmpFontAsset = base.Get<TMPro.TMP_FontAsset>(context, realType, realValue);
+                altFont = tmpFontAsset?.sourceFontFile;
+#endif
 
+#if REACT_TEXTCORE
+                var textCoreFontAsset = base.Get<UnityEngine.TextCore.Text.FontAsset>(context, realType, realValue);
+                altFont = textCoreFontAsset?.sourceFontFile ?? altFont;
+#endif
+
+                var res = new FontSource
+                {
+                    Font = base.Get<Font>(context, realType, realValue) ?? altFont,
+#if REACT_TMP
+                    TmpFontAsset = tmpFontAsset,
+#endif
+#if REACT_TEXTCORE
+                    TextCoreFontAsset = textCoreFontAsset,
+#endif
+                };
+
+                if (res.Valid) callback(res);
+                else callback(null);
+            };
+        }
 
         public class Converter : IStyleParser, IStyleConverter
         {
-            private static Regex DataRegex = new Regex(@"^data:(?<mime>[\w/\-\.]+)?(;(?<encoding>\w+))?,?(?<data>.*)", RegexOptions.Compiled);
-            private static Regex ProceduralRegex = new Regex("^procedural://");
-            private static Regex GlobalRegex = new Regex("^globals?://");
-            private static Regex ResourceRegex = new Regex("^res(ources?)?://");
-            private static Regex FileRegex = new Regex("^file://");
-            private static Regex HttpRegex = new Regex("^https?://");
+            private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
 
             public object Convert(object value)
             {
-                if (value == null) return FontReference.None;
-                if (value is Texture2D t) return new FontReference(AssetReferenceType.Object, t);
-                if (value is Sprite s) return new FontReference(AssetReferenceType.Object, s.texture);
-                if (value is UnityEngine.Object o) return new FontReference(AssetReferenceType.Object, o);
-                return FromString(AllConverters.UrlConverter.Convert(value) as string);
+                if (value == null) return None;
+                if (value is FontReference b) return b;
+                if (value is Font v) return new FontReference(AssetReferenceType.Object, v);
+#if REACT_TMP
+                if (value is TMPro.TMP_FontAsset t) return new FontReference(AssetReferenceType.Object, t);
+#endif
+#if REACT_TEXTCORE
+                if (value is UnityEngine.TextCore.Text.FontAsset fa) return new FontReference(AssetReferenceType.Object, fa);
+#endif
+                return FromString(value?.ToString());
             }
 
             public object FromString(string value)
             {
-                if (string.IsNullOrWhiteSpace(value)) return FontReference.None;
-                if (FileRegex.IsMatch(value)) return new FontReference(AssetReferenceType.File, FileRegex.Replace(value, ""));
-                if (HttpRegex.IsMatch(value)) return new FontReference(AssetReferenceType.Url, HttpRegex.Replace(value, ""));
-                if (GlobalRegex.IsMatch(value)) return new FontReference(AssetReferenceType.Global, GlobalRegex.Replace(value, ""));
-                if (ProceduralRegex.IsMatch(value)) return new FontReference(AssetReferenceType.Procedural, ProceduralRegex.Replace(value, ""));
-                if (ResourceRegex.IsMatch(value)) return new FontReference(AssetReferenceType.Resource, ResourceRegex.Replace(value, ""));
-
-                var dataMatch = DataRegex.Match(value);
-                if (dataMatch.Success)
+                if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
                 {
-                    var mime = dataMatch.Groups["mime"].Value;
-                    var encoding = dataMatch.Groups["encoding"].Value;
-                    var data = dataMatch.Groups["data"].Value;
-                    return new FontReference(AssetReferenceType.Data, data);
+                    if (result is Url u) return new FontReference(u);
                 }
 
                 return new FontReference(AssetReferenceType.Procedural, value);

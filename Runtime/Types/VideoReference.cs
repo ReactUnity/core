@@ -1,6 +1,7 @@
 using ReactUnity.Converters;
+using ReactUnity.Styling;
 using System;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
@@ -11,6 +12,25 @@ namespace ReactUnity.Types
         public string Url;
         public VideoClip Clip;
         public VideoSource Type;
+
+        public VideoComponentSource(VideoComponentSource other)
+        {
+            Type = other.Type;
+            Clip = other.Clip;
+            Url = other.Url;
+        }
+
+        public VideoComponentSource(VideoClip clip)
+        {
+            Type = VideoSource.VideoClip;
+            Clip = clip;
+        }
+
+        public VideoComponentSource(string url)
+        {
+            Type = VideoSource.Url;
+            Url = url;
+        }
     }
 
     public class VideoReference : AssetReference<VideoComponentSource>
@@ -18,60 +38,46 @@ namespace ReactUnity.Types
         static public new VideoReference None = new VideoReference(AssetReferenceType.None, null);
 
         public VideoReference(AssetReferenceType type, object value) : base(type, value) { }
+        public VideoReference(Url url) : base(url) { }
 
         protected override void Get(ReactContext context, AssetReferenceType realType, object realValue, Action<VideoComponentSource> callback)
         {
             if (realType == AssetReferenceType.Url)
             {
-                callback(new VideoComponentSource() { Type = UnityEngine.Video.VideoSource.Url, Url = realValue as string });
+                callback(new VideoComponentSource(realValue?.ToString()));
             }
             else if (realType == AssetReferenceType.File)
             {
-                callback(new VideoComponentSource() { Type = UnityEngine.Video.VideoSource.Url, Url = "file://" + realValue as string });
+                callback(new VideoComponentSource("file:" + realValue));
             }
             else
             {
-                base.Get(context, realType, realValue, callback);
+                var vd = base.Get<VideoClip>(context, realType, realValue);
+                callback(vd != null ? new VideoComponentSource(vd) : null);
             }
         }
 
         public class Converter : IStyleParser, IStyleConverter
         {
-            private static Regex DataRegex = new Regex(@"^data:(?<mime>[\w/\-\.]+)?(;(?<encoding>\w+))?,?(?<data>.*)", RegexOptions.Compiled);
-            private static Regex ProceduralRegex = new Regex("^procedural://");
-            private static Regex GlobalRegex = new Regex("^globals?://");
-            private static Regex ResourceRegex = new Regex("^res(ources?)?://");
-            private static Regex FileRegex = new Regex("^file://");
-            private static Regex HttpRegex = new Regex("^https?://");
+            private static HashSet<string> AllowedFunctions = new HashSet<string> { "url" };
 
             public object Convert(object value)
             {
-                if (value == null) return VideoReference.None;
-                if (value is Texture2D t) return new VideoReference(AssetReferenceType.Object, t);
-                if (value is Sprite s) return new VideoReference(AssetReferenceType.Object, s.texture);
+                if (value == null) return None;
+                if (value is VideoReference b) return b;
+                if (value is VideoClip v) return new VideoReference(AssetReferenceType.Object, v);
                 if (value is UnityEngine.Object o) return new VideoReference(AssetReferenceType.Object, o);
-                return FromString(AllConverters.UrlConverter.Convert(value) as string);
+                return FromString(value?.ToString());
             }
 
             public object FromString(string value)
             {
-                if (string.IsNullOrWhiteSpace(value)) return VideoReference.None;
-                if (FileRegex.IsMatch(value)) return new VideoReference(AssetReferenceType.File, FileRegex.Replace(value, ""));
-                if (HttpRegex.IsMatch(value)) return new VideoReference(AssetReferenceType.Url, value);
-                if (GlobalRegex.IsMatch(value)) return new VideoReference(AssetReferenceType.Global, GlobalRegex.Replace(value, ""));
-                if (ProceduralRegex.IsMatch(value)) return new VideoReference(AssetReferenceType.Procedural, ProceduralRegex.Replace(value, ""));
-                if (ResourceRegex.IsMatch(value)) return new VideoReference(AssetReferenceType.Resource, ResourceRegex.Replace(value, ""));
-
-                var dataMatch = DataRegex.Match(value);
-                if (dataMatch.Success)
+                if (CssFunctions.TryCall(value, out var result, AllowedFunctions))
                 {
-                    var mime = dataMatch.Groups["mime"].Value;
-                    var encoding = dataMatch.Groups["encoding"].Value;
-                    var data = dataMatch.Groups["data"].Value;
-                    return new VideoReference(AssetReferenceType.Data, data);
+                    if (result is Url u) return new VideoReference(u);
                 }
 
-                return new VideoReference(AssetReferenceType.Auto, value);
+                return new VideoReference(new Url(value));
             }
         }
     }

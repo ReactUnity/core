@@ -10,6 +10,7 @@ namespace ReactUnity.Styling
 {
     public static class CssFunctions
     {
+        // Static props here will be automatically added to the Functions list
         public static ICssFunction Steps = new StepsFunction();
         public static ICssFunction CubicBezier = new CubicBezierFunction();
         public static ICssFunction Url = new UrlFunction();
