@@ -42,6 +42,7 @@ namespace ReactUnity.StyleEngine
                     { "framework", framework },
                     { "editor", isEditor ? "true" : null },
                     { "runtime", isEditor ? null : "true" },
+                    { "screen", "true" },
                 });
         }
 

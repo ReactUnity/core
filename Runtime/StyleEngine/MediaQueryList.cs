@@ -32,8 +32,8 @@ namespace ReactUnity.StyleEngine
         {
             add
             {
-                if (ListenerCount == 0) Subscribe();
                 EventListenersInline.Add(value);
+                if (ListenerCount == 1) Subscribe();
             }
             remove
             {
@@ -62,8 +62,6 @@ namespace ReactUnity.StyleEngine
         {
             if (type != "change") return;
 
-            if (ListenerCount == 0) Subscribe();
-
             var callback = new Callback(listener);
             Action action = () => callback.Call();
             EventListeners.Add(Tuple.Create(listener, action));
@@ -89,8 +87,6 @@ namespace ReactUnity.StyleEngine
             EventListeners.RemoveAt(ind);
 
             OnUpdate -= tuple.Item2;
-
-            if (ListenerCount == 0) Unsubscribe();
         }
 
         private void Unsubscribe()

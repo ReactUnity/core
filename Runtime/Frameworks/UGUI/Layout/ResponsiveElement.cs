@@ -19,7 +19,7 @@ namespace ReactUnity.UGUI.Layout
             {
                 CurrentWidth = rt.rect.width;
                 CurrentHeight = rt.rect.height;
-                Context?.MediaProvider?.SetDimensions(CurrentWidth, CurrentHeight);
+                Context.MediaProvider.SetDimensions(CurrentWidth, CurrentHeight);
             }
         }
 
@@ -32,12 +32,12 @@ namespace ReactUnity.UGUI.Layout
 
             if (width != CurrentWidth || height != CurrentHeight)
             {
+                CurrentWidth = width;
+                CurrentHeight = height;
+                Context.MediaProvider.SetDimensions(CurrentWidth, CurrentHeight);
                 Layout.Width = width;
                 Layout.Height = height;
                 Context.ScheduleLayout();
-                CurrentWidth = width;
-                CurrentHeight = height;
-                Context?.MediaProvider?.SetDimensions(CurrentWidth, CurrentHeight);
             }
         }
     }
