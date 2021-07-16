@@ -35,6 +35,7 @@ namespace ReactUnity.UIToolkit
 
         public UIToolkitComponent(UIToolkitContext context, string tag, bool isContainer = true) : base(context, tag, isContainer)
         {
+            ClassList = new UITClassList(this);
             Element = new T();
             Element.userData = Data;
         }

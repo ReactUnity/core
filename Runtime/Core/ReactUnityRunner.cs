@@ -58,7 +58,7 @@ namespace ReactUnity
         void CreateBaseEngine(bool debug, bool awaitDebugger)
         {
             engine = engineFactory.Create(context, debug, awaitDebugger);
-            
+
             engine.Execute("globalThis = global = window = parent = self = this;");
             engine.SetValue("matchMedia", new Func<string, MediaQueryList>(media => MediaQueryList.Create(context.MediaProvider, media)));
 
