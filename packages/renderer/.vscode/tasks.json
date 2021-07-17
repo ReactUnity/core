@@ -2,12 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Renderer",
-      "command": "npm run ${input:script}",
-      "type": "shell",
-      "presentation": {
-        "group": "dev",
-      }
+      "label": "Material",
+      "command": "yarn ${input:script}",
+      "type": "shell"
     }
   ],
   "inputs": [
@@ -17,11 +14,8 @@
       "type": "pickString",
       "options": [
         "build",
-        "build:editor",
         "watch",
-        "lint",
-        "pack",
-        "local"
+        "lint"
       ]
     }
   ]
