@@ -125,12 +125,12 @@ namespace ReactUnity
 
                 var condition = match.Groups[1];
                 var mql = MediaQueryList.Create(MediaProvider, condition.Value);
-                mql.OnUpdate += MediaQueryUpdated;
 
                 foreach (var rule in media.Children.OfType<StyleRule>())
                 {
                     StyleTree.AddStyle(rule, importanceOffset, MergeLayout, mql);
                 }
+                mql.OnUpdate += MediaQueryUpdated;
             }
 
             Host.ResolveStyle(true);

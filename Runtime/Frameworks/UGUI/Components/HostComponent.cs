@@ -24,6 +24,7 @@ namespace ReactUnity.UGUI
             var responsive = GetOrAddComponent<ResponsiveElement>();
             responsive.Layout = Layout;
             responsive.Context = context;
+            responsive.Restart();
         }
 
         protected override void ApplyStylesSelf()

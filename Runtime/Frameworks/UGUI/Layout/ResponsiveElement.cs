@@ -12,6 +12,11 @@ namespace ReactUnity.UGUI.Layout
         public YogaNode Layout;
         public UGUIContext Context;
 
+        public void Restart()
+        {
+            OnEnable();
+        }
+
         void OnEnable()
         {
             rt = GetComponent<RectTransform>();
@@ -20,6 +25,11 @@ namespace ReactUnity.UGUI.Layout
                 CurrentWidth = rt.rect.width;
                 CurrentHeight = rt.rect.height;
                 Context.MediaProvider.SetDimensions(CurrentWidth, CurrentHeight);
+            }
+            else
+            {
+                CurrentWidth = -1;
+                CurrentHeight = -1;
             }
         }
 
