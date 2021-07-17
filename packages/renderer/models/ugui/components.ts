@@ -11,6 +11,11 @@ export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T> {
 }
 
 export interface Text extends View<ReactUnity.UGUI.TextComponent> { }
+
+export interface Icon extends View<ReactUnity.UGUI.IconComponent> {
+  set?: ReactUnity.UGUI.IconSet | string;
+}
+
 export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> { }
 
 export interface Button extends View<ReactUnity.UGUI.ButtonComponent> {
@@ -52,4 +57,16 @@ export interface Render<T = ReactUnity.UGUI.RenderComponent> extends BaseImage<T
 
 export interface Object extends Render<ReactUnity.UGUI.ObjectComponent> {
   target: UnityEngine.GameObject;
+}
+
+export interface Prefab<T = ReactUnity.UGUI.PrefabComponent> {
+  target?: UnityEngine.GameObject | UnityEngine.Component;
+  onMount?: (camera: UnityEngine.GameObject, sender: T) => void;
+  onUnmount?: (camera: UnityEngine.GameObject, sender: T) => void;
+}
+
+export interface Portal<T = ReactUnity.UGUI.PortalComponent> {
+  target?: UnityEngine.GameObject | UnityEngine.Component | UnityEngine.Transform | ReactUnity.UGUI.UGUIComponent;
+  onMount?: (camera: UnityEngine.Transform, sender: T) => void;
+  onUnmount?: (camera: UnityEngine.Transform, sender: T) => void;
 }
