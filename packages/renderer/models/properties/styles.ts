@@ -14,8 +14,19 @@ export interface RenderStyle {
 
   backgroundColor?: ColorAux;
   backgroundImage?: AssetReference;
+
   borderRadius?: number;
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+  borderBottomRightRadius?: number;
+  borderBottomLeftRadius?: number;
+
   borderColor?: ColorAux;
+  borderTopColor?: ColorAux;
+  borderRightColor?: ColorAux;
+  borderBottomColor?: ColorAux;
+  borderLeftColor?: ColorAux;
+
   boxShadow?: string;
   objectFit?: 'fill' | 'contain' | 'cover' | 'none' | 'scale-down';
   objectPosition?: YogaValue2Aux;
