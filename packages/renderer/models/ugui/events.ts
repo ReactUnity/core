@@ -6,6 +6,7 @@ export type BaseEventCallback<T = BaseCmp> = (ev: UnityEngine.EventSystems.BaseE
 export type PointerEventCallback<T = BaseCmp> = (ev: UnityEngine.EventSystems.PointerEventData, sender: T) => void;
 export type AxisEventCallback<T = BaseCmp> = (ev: UnityEngine.EventSystems.AxisEventData, sender: T) => void;
 export type KeyEventCallback<T = BaseCmp> = (ev: ReactUnity.UGUI.EventHandlers.KeyEventData, sender: T) => void;
+export type ResizeEventCallback<T = BaseCmp> = (ev: ReactUnity.UGUI.EventHandlers.ResizeEventData, sender: T) => void;
 
 export interface Events<T = BaseCmp> {
   onPointerClick?: PointerEventCallback<T>;
@@ -26,4 +27,5 @@ export interface Events<T = BaseCmp> {
   onPotentialDrag?: PointerEventCallback<T>;
   onDrop?: PointerEventCallback<T>;
   onKeyDown?: KeyEventCallback<T>;
+  onResize?: ResizeEventCallback<T>;
 };
