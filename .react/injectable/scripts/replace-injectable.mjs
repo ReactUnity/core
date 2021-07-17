@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const folder = '../../Editor/Resources/ReactUnity/editor/injectable';
+const folder = '../../Tests/Runtime/Resources/ReactUnity/tests/injectable';
 
 const replaceStart = `/* INJECTABLE_START */`;
 const replaceEnd = `/* INJECTABLE_END */`;

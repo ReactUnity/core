@@ -171,13 +171,16 @@ MonoBehaviour:
   Globals:
     Entries: []
   Script:
-    ScriptSource: 1
+    Type: 1
     SourceAsset: {fileID: 4900000, guid: 1cea8ca938b8ac346ad799e56a0afa8b, type: 3}
     SourcePath: 
     SourceText: 
     ResourcesPath: 
     UseDevServer: 0
     DevServer: http://localhost:3100
+  Debug: 0
+  AwaitDebugger: 0
+  EngineType: 0
   AutoRender: 1
   BeforeStart:
     m_PersistentCalls:
@@ -185,6 +188,8 @@ MonoBehaviour:
   AfterStart:
     m_PersistentCalls:
       m_Calls: []
+  IconSets:
+  - {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
 --- !u!114 &681522763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +261,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -344,6 +350,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -380,6 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018,
@@ -429,6 +437,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2

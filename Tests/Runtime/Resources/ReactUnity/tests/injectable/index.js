@@ -6910,7 +6910,7 @@ function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
     }
 
     if (attr === 'children') {
-      if (type === 'text') {
+      if (type === 'text' || type === 'icon') {
         UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
       }
 
@@ -6971,7 +6971,7 @@ var hostConfig = {
   createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
     var _a;
 
-    if (type === 'text') {
+    if (type === 'text' || type === 'icon') {
       var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
       return UnityBridge.createElement(type, text, rootContainerInstance);
     }
@@ -7003,7 +7003,7 @@ var hostConfig = {
     applyUpdate(instance, props, true);
   },
   shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text';
+    return type === 'text' || type === 'icon';
   },
   shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
     return false;
