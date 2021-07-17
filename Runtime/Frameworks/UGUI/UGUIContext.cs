@@ -29,6 +29,7 @@ namespace ReactUnity.UGUI
                 { "video", (tag, text, context) => new VideoComponent(context) },
                 { "prefab", (tag, text, context) => new PrefabComponent(context) },
                 { "portal", (tag, text, context) => new PortalComponent(context) },
+                { "icon", (tag, text, context) => new IconComponent(text, context, tag) },
             };
 
 
@@ -42,18 +43,38 @@ namespace ReactUnity.UGUI
                 { "hover", typeof(HoverStateHandler) },
             };
 
+        public Dictionary<string, IconSet> IconSets { get; } = new Dictionary<string, IconSet>() { };
+        public IconSet DefaultIconSet
+        {
+            get
+            {
+                if (IconSets.TryGetValue("default", out var i)) return i;
+                return null;
+            }
+        }
+
         public static Func<string, string, UGUIContext, UGUIComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);
 
         public static Func<string, UGUIContext, ITextComponent> textCreator =
             (text, context) => new TextComponent(text, context, "_text") { IsPseudoElement = true };
 
-        public UGUIContext(RectTransform hostElement, GlobalRecord globals, ScriptSource script, IDispatcher dispatcher, IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart)
+        public UGUIContext(
+            RectTransform hostElement, GlobalRecord globals, ScriptSource script,
+            IDispatcher dispatcher, IUnityScheduler scheduler, IMediaProvider mediaProvider,
+            bool isDevServer, Action onRestart, List<IconSet> iconSets
+        )
             : base(globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
             Host.ResolveStyle(true);
+
+            if (iconSets != null)
+            {
+                if (iconSets.Count > 0) IconSets["default"] = iconSets[0];
+                foreach (var ic in iconSets) IconSets[ic.Name] = ic;
+            }
         }
 
         public override IReactComponent CreateComponent(string tag, string text)

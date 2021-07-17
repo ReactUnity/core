@@ -12,6 +12,10 @@
   font-family: sans-serif;
 }
 
+icon {
+  font-size: 24px;
+}
+
 slider {
   height: 20px;
   width: 200px;
