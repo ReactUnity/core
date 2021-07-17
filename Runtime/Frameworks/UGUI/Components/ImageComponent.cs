@@ -29,7 +29,7 @@ namespace ReactUnity.UGUI
         {
             var sprite = texture == null ? null : Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one / 2);
 
-            Image.sprite = sprite;
+            if (Image) Image.sprite = sprite;
             Measurer.Sprite = sprite;
         }
 
