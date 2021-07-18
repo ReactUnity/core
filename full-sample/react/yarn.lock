@@ -1309,17 +1309,17 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
-"@reactunity/renderer@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.2.0.tgz#9826c088768afeb1956de05270dcfb9b17b5df37"
-  integrity sha512-TxwbUZHUn+cnym3wuVwAn3hUlaLtQMhMAo3lPXBTbOl2E/N+EXFr4auIq92xRaZrZrabPuJQ03hyEg8yH1n2tw==
+"@reactunity/renderer@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@reactunity/renderer/-/renderer-0.2.1.tgz#965239f2532958fe8941def5e62f0d9365ef7b85"
+  integrity sha512-JrAEOObi9gaazvd9RV7CiuIjD5oMYt3ldm4y0jUXy1oylT7esZ/FDcrXQQdsGkjtLQn6c8RRHLqxVeAz5qphkw==
   dependencies:
     react-reconciler "^0.26.2"
 
-"@reactunity/scripts@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.2.2.tgz#dd0d5319924aa61666cab5c3078e607363cae1e6"
-  integrity sha512-FVl6437d2ijgw5eld2t+QDGatCXl3/IyxwF8h/c4OC1rZlAtzOrNAmLaqWZOiD75f/DENFas+2onjF4xVhXpvA==
+"@reactunity/scripts@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@reactunity/scripts/-/scripts-0.2.3.tgz#9fc69630bbf3edd35e7345fa8d4ece3d7f3bc064"
+  integrity sha512-tKFeLiWGl2iIBZbi8PGnLQpdEa1cg9zdKqM0qgAPs+ooXQKRKx4gy4Osl6ceMdl0pPyN7nU6dG+w/TCKaOSs0g==
   dependencies:
     "@babel/core" "7.14.6"
     "@pmmmwh/react-refresh-webpack-plugin" "0.4.3"
@@ -2415,11 +2415,6 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
-  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
-
 cliui@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/cliui/-/cliui-5.0.0.tgz#deefcfdb2e800784aa34f46fa08e06851c7bbbc5"
@@ -2428,6 +2423,11 @@ cliui@^5.0.0:
     string-width "^3.1.0"
     strip-ansi "^5.2.0"
     wrap-ansi "^5.1.0"
+
+clsx@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
+  integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
 
 collection-visit@^1.0.0:
   version "1.0.0"

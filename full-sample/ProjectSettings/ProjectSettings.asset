@@ -152,6 +152,14 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -180,7 +188,7 @@ PlayerSettings:
   AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
-  aotOptions: 
+  aotOptions: nimt-trampolines=1024
   stripEngineCode: 0
   iPhoneStrippingLevel: 0
   iPhoneScriptCallOptimization: 0
@@ -410,8 +418,8 @@ PlayerSettings:
     m_GraphicsJobMode: 0
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
-    m_APIs: 150000000b000000
-    m_Automatic: 1
+    m_APIs: 0b00000008000000
+    m_Automatic: 0
   - m_BuildTarget: iOSSupport
     m_APIs: 10000000
     m_Automatic: 1
@@ -670,8 +678,6 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
     0: 
-    1: REACT_UNITY_DEVELOPER
-    13: REACT_UNITY_DEVELOPER
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

@@ -298,8 +298,10 @@ MonoBehaviour:
       Value: {fileID: 1277903368}
     - Key: Cube
       Value: {fileID: 1764012036}
+    - Key: WebInjectable
+      Value: {fileID: 420524925}
   Script:
-    ScriptSource: 4
+    Type: 4
     SourceAsset: {fileID: 0}
     SourcePath: web-interface/index
     SourceText: 
@@ -316,6 +318,8 @@ MonoBehaviour:
   AfterStart:
     m_PersistentCalls:
       m_Calls: []
+  IconSets:
+  - {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
 --- !u!114 &420524927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +459,7 @@ MonoBehaviour:
   TestStyle: "view {\r\n  flex-grow: 1;\r\n}\r\n\r\nview:nth-child(1) {\r\n  background-color:
     crimson;\r\n}\r\n\r\nview:nth-child(2) {\r\n  background-color: #a5a5a5;\r\n}\r\n\r\nview:nth-child(3)
     {\r\n  background-color: rgba(10, 10, 235, 0.4);\r\n}\r\n\r\nview:nth-child(4)
-    {\r\n  background-color: #00ff0033;\r\n}\r\n"
+    {\r\n  background-color: #00ff0033;\r\n}\r\n\r"
   InjectableScript: {fileID: 4900000, guid: 2a395c58d00601541a5ccd68c072bef3, type: 3}
 --- !u!1 &952785539
 GameObject:

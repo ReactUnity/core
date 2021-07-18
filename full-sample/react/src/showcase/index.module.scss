@@ -1,4 +1,4 @@
-@import "./elevation.scss";
+@import "~@reactunity/material/styles";
 
 :root > * {
   background-color: #fafafa;
@@ -10,6 +10,18 @@
   width: 100%;
   align-self: center;
   align-items: stretch;
+
+  :global(.md-button) {
+    align-self: center;
+
+    &:hover {
+      @include elevation(9);
+    }
+
+    &:active {
+      @include elevation(1);
+    }
+  }
 
   anchor {
     align-self: flex-start;
@@ -80,20 +92,11 @@
       audio: url(res:click);
     }
   }
-}
 
-.superButton {
-  appearance: none;
-  background-color: white;
-  @include elevation(2);
-  border-radius: 4px;
-  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    @include elevation(6);
-  }
-
-  &:active {
-    @include elevation(1);
+  portal {
+    position: absolute;
+    left: 10;
+    top: 10;
+    z-index: 1000;
   }
 }

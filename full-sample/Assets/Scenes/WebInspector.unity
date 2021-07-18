@@ -268,6 +268,8 @@ MonoBehaviour:
   AfterStart:
     m_PersistentCalls:
       m_Calls: []
+  IconSets:
+  - {fileID: 11400000, guid: 0a33900e1e17fad43a43d252d61c79ba, type: 2}
 --- !u!114 &420524927
 MonoBehaviour:
   m_ObjectHideFlags: 0

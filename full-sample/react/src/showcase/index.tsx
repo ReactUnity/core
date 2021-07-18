@@ -1,3 +1,7 @@
+import { Accordion } from '@reactunity/material/accordion';
+import { Button } from '@reactunity/material/button';
+import { Card } from '@reactunity/material/card';
+import { Paper } from '@reactunity/material/paper';
 import { GlobalsProvider, globalsWatcher, insertStyledComponentsSheet, ReactUnity as ReactUnityNS, Renderer, UnityEngine as UE } from '@reactunity/renderer';
 import React, { useEffect, useState } from 'react';
 import base64Image from 'src/assets/base64Image.txt';
@@ -17,7 +21,7 @@ const SuperInput = styled.input`
   transition: background-color 280ms ease-in-out;
 
   &:hover {
-    background-color: yellow;
+    background-color: limegreen;
   }
 `;
 
@@ -56,18 +60,35 @@ export function App() {
     <view className={style.app}>
       <h1>React Unity Showcase</h1>
 
-
-      <section>
+      <Paper elevation={2}>
         <h2>Button</h2>
 
-        <button className={style.superButton}>Click</button>
-      </section>
+        <Button elevation={5}>Click</Button>
+      </Paper>
 
 
       <section>
         <h2>Anchor</h2>
 
-        <anchor url="https://www.google.com">Open Google</anchor>
+        <Card>
+          <Card.Content>
+            <anchor url="https://www.google.com">Open Google</anchor>
+          </Card.Content>
+        </Card>
+      </section>
+
+      <section>
+        <h2>Accordion</h2>
+
+        <Accordion>
+          <Accordion.Summary>
+            <view>Some stuff is happening</view>
+          </Accordion.Summary>
+
+          <Accordion.Content>
+            <anchor url="https://www.google.com">Open Google</anchor>
+          </Accordion.Content>
+        </Accordion>
       </section>
 
 
@@ -97,6 +118,22 @@ export function App() {
         </row>
       </section>
 
+      <section>
+        <h2>Prefab</h2>
+
+        <row>
+          <prefab target={Globals.customPrefab} />
+        </row>
+      </section>
+
+
+      <section>
+        <h2>Portal</h2>
+
+        <portal target={Globals.portalRoot}>
+          <span>Hey, Portal here</span>
+        </portal>
+      </section>
 
       <section>
         <h2>Video</h2>
@@ -144,7 +181,7 @@ export function App() {
 const sheet = new ServerStyleSheet()
 
 Renderer.render(
-  <StyleSheetManager sheet={sheet.instance}>
+  <StyleSheetManager disableVendorPrefixes sheet={sheet.instance}>
     <GlobalsProvider>
       <App />
     </GlobalsProvider>
