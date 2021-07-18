@@ -30,8 +30,6 @@ namespace ReactUnity.Tests
         [ReactInjectableTest(BaseScript, BaseStyle)]
         public IEnumerator IconHasCorrectCharacter()
         {
-            yield return null;
-
             Assert.AreEqual(string.Empty, Icon.TextContent);
 
             Globals["icon"] = "search";
@@ -41,6 +39,14 @@ namespace ReactUnity.Tests
             Globals["icon"] = "people_outline";
             yield return null;
             Assert.AreEqual("\ue7fc", Icon.TextContent);
+        }
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator IconShouldBeEmptyForIncorrectIcon()
+        {
+            Globals["icon"] = "searchss";
+            yield return null;
+            Assert.AreEqual(string.Empty, Icon.TextContent);
         }
     }
 }

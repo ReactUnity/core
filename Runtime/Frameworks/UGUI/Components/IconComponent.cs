@@ -45,7 +45,7 @@ namespace ReactUnity.UGUI
             AppliedText = text;
 
             if (text != null && Set != null) Text.text = Set.ConvertTextContent(text);
-            else Text.text = text;
+            else Text.text = "";
             Layout.MarkDirty();
             ScheduleLayout();
         }
@@ -69,9 +69,7 @@ namespace ReactUnity.UGUI
             Text.fontStyle = ComputedStyle.fontStyle;
             Text.fontWeight = ComputedStyle.fontWeight;
             Text.color = ComputedStyle.color;
-            Text.enableWordWrapping = ComputedStyle.textWrap;
             Text.alignment = ComputedStyle.textAlign;
-            Text.overflowMode = ComputedStyle.textOverflow;
 
             if (ComputedStyle.content != null)
             {

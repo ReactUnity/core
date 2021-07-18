@@ -17,8 +17,9 @@ namespace ReactUnity.UGUI
         public string ConvertTextContent(string text)
         {
             if (CharacterMap == null) GenerateCharacterMap();
+
             if (text != null && CharacterMap.TryGetValue(text, out var mapped)) return mapped;
-            return text;
+            return "";
         }
 
         private void GenerateCharacterMap()
