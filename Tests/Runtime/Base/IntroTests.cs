@@ -3,7 +3,6 @@ using NUnit.Framework;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
