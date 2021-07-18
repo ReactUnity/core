@@ -245,6 +245,12 @@ namespace ReactUnity.UIToolkit
         {
             var (register, unregister) = EventHandlerMap.GetEventMethods(eventName);
 
+            if (register == null)
+            {
+                base.SetEventListener(eventName, fun);
+                return;
+            }
+
             // Remove
             if (EventHandlers.TryGetValue(eventName, out var existingHandler))
             {

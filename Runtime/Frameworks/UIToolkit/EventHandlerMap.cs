@@ -75,7 +75,7 @@ namespace ReactUnity.UIToolkit
         public static (MethodInfo, MethodInfo) GetEventMethods(string eventName)
         {
             var eventType = GetEventType(eventName);
-            if (eventType == null) throw new System.Exception($"Unknown event name specified, '{eventName}'");
+            if (eventType == null) return (null, null);
 
             var register = RegisterMethod ??= typeof(CallbackEventHandler).GetMethods()
                 .First(x => x.Name == nameof(CallbackEventHandler.RegisterCallback) && x.GetParameters().Length == 2);

@@ -84,6 +84,7 @@ namespace ReactUnity
         private bool markedForLayoutApply;
         private bool markedStyleResolveRecursive;
         private List<LayoutValue> ModifiedLayoutProperties;
+        protected Dictionary<string, Callback> BaseEventHandlers = new Dictionary<string, Callback>();
 
         protected BaseReactComponent(ContextType context, string tag = "", bool isContainer = true)
         {
@@ -100,6 +101,7 @@ namespace ReactUnity
             StateStyles = new StateStyles(this);
             StyleState = new StyleState(context, Layout, DefaultLayout);
             StyleState.OnUpdate += OnStylesUpdated;
+            StyleState.OnEvent += FireEvent;
             StyleState.SetCurrent(new NodeStyle(DefaultStyle));
         }
 
@@ -177,7 +179,17 @@ namespace ReactUnity
             ResolveStyle(true);
         }
 
-        public abstract void SetEventListener(string eventName, Callback fun);
+
+        public virtual void SetEventListener(string eventName, Callback fun)
+        {
+            BaseEventHandlers[eventName] = fun;
+        }
+
+        public virtual void FireEvent(string eventName, object arg)
+        {
+            if (BaseEventHandlers.TryGetValue(eventName, out var existingHandler))
+                existingHandler?.Call(arg, this);
+        }
 
         public virtual void SetData(string propertyName, object value)
         {

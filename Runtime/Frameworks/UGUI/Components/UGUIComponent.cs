@@ -80,7 +80,11 @@ namespace ReactUnity.UGUI
         public override void SetEventListener(string eventName, Callback fun)
         {
             var eventType = EventHandlerMap.GetEventType(eventName);
-            if (eventType == null) throw new System.Exception($"Unknown event name specified, '{eventName}'");
+            if (eventType == null)
+            {
+                base.SetEventListener(eventName, fun);
+                return;
+            }
 
             // Remove
             var handler = GameObject.GetComponent(eventType) as IEventHandler;

@@ -12,6 +12,17 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "Unity",
+            "expression": "2021.2.0a0",
+            "define": "REACT_TEXTCORE"
+        },
+        {
+            "name": "com.unity.textmeshpro",
+            "expression": "",
+            "define": "REACT_TMP"
+        }
+    ],
     "noEngineReferences": false
 }

@@ -17,6 +17,19 @@ namespace ReactUnity.Styling
             public float LastUpdatedAt = 0;
             public float StartedAt = 0;
             public float Duration = 0;
+
+            public Transition Transition;
+            public string PropertyName;
+
+            public TransitionEvent CreateEvent()
+            {
+                return new TransitionEvent
+                {
+                    ElapsedTime = Duration * Ratio,
+                    PropertyName = PropertyName,
+                    Transition = Transition,
+                };
+            }
         }
 
         private class AudioState
@@ -37,6 +50,7 @@ namespace ReactUnity.Styling
         public NodeStyle Active { get; private set; }
 
         public event Action<NodeStyle, bool> OnUpdate;
+        public event Action<string, object> OnEvent;
         public StyleState Parent { get; private set; }
 
         private ReactContext Context;
@@ -184,33 +198,53 @@ namespace ReactUnity.Styling
 
                     if (state != null)
                     {
+                        state.Transition = tran;
                         lastUpdated = state.LastUpdatedAt;
                         if (state.FromValue == prevValue && state.ToValue == curValue)
                         {
+                            // Continue existing transition
                             t = state.Ratio;
 
                             if (t >= 1)
                             {
+                                // Transition was already finished
                                 state.LastUpdatedAt = currentTime;
                                 continue;
                             }
                         }
                         else if (state.FromValue == curValue)
                         {
-                            state.Duration = Math.Min(tran.Duration, state.Ratio * state.Duration);
+                            if (state.Ratio < 1) OnEvent?.Invoke("onTransitionCancel", state.CreateEvent());
+
+                            // Start running transition in reverse direction
                             state.StartedAt = currentTime;
+                            state.Duration = Math.Min(tran.Duration, state.Ratio * state.Duration);
+                            state.Ratio = 0;
+
+                            OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
                         }
                         else
                         {
+                            if (state.Ratio < 1) OnEvent?.Invoke("onTransitionCancel", state.CreateEvent());
+
+                            // Start a new transition
                             state.StartedAt = currentTime;
                             state.Duration = tran.Duration;
+                            state.Ratio = 0;
+
+                            OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
                         }
                     }
                     else
                     {
+                        // Start a new transition
                         propertyTransitionStates[sp.name] = state = new TransitionState();
                         state.StartedAt = currentTime;
                         state.Duration = tran.Duration;
+                        state.PropertyName = sp.name;
+                        state.Transition = tran;
+
+                        OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
                     }
 
 
@@ -219,10 +253,15 @@ namespace ReactUnity.Styling
                     var tDelta = !delayPassed ? 0 : (state.Duration == 0 ? 1 : delta / state.Duration);
                     t = Mathf.Min(Mathf.Max(0, t + tDelta), 1);
 
+                    var previousRatio = state.Ratio;
+
                     state.FromValue = prevValue;
                     state.ToValue = curValue;
                     state.Ratio = t;
                     state.LastUpdatedAt = currentTime;
+
+                    if (t > 0 && previousRatio == 0) OnEvent?.Invoke("onTransitionStart", state.CreateEvent());
+                    if (t == 1 && previousRatio < 1) OnEvent?.Invoke("onTransitionEnd", state.CreateEvent());
 
                     object activeValue = curValue;
 
