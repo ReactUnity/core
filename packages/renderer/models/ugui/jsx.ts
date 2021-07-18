@@ -3,12 +3,11 @@ import { Attributes, ClassAttributes, RefAttributes } from 'react';
 import { ReactUnity } from '../generated';
 import * as Components from './components';
 import { Input } from './input';
+import NS = ReactUnity.UGUI;
 
 type Children<T = any> = { children?: T };
 
 type Textable = string | number | boolean | null | undefined;
-
-import NS = ReactUnity.UGUI;
 
 export interface UGUIElements {
   [key: string]: Components.View<any> & RefAttributes<NS.UGUIComponent> & Children;

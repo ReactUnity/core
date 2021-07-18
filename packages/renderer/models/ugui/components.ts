@@ -59,13 +59,13 @@ export interface Object extends Render<ReactUnity.UGUI.ObjectComponent> {
   target: UnityEngine.GameObject;
 }
 
-export interface Prefab<T = ReactUnity.UGUI.PrefabComponent> {
+export interface Prefab<T = ReactUnity.UGUI.PrefabComponent> extends View<T> {
   target?: UnityEngine.GameObject | UnityEngine.Component;
   onMount?: (camera: UnityEngine.GameObject, sender: T) => void;
   onUnmount?: (camera: UnityEngine.GameObject, sender: T) => void;
 }
 
-export interface Portal<T = ReactUnity.UGUI.PortalComponent> {
+export interface Portal<T = ReactUnity.UGUI.PortalComponent> extends View<T> {
   target?: UnityEngine.GameObject | UnityEngine.Component | UnityEngine.Transform | ReactUnity.UGUI.UGUIComponent;
   onMount?: (camera: UnityEngine.Transform, sender: T) => void;
   onUnmount?: (camera: UnityEngine.Transform, sender: T) => void;
