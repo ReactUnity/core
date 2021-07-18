@@ -1,3 +1,7 @@
+#if !(ENABLE_IL2CPP || REACT_DISABLE_CLEARSCRIPT)
+#define REACT_CLEARSCRIPT
+#endif
+
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers;
 using System;
@@ -71,39 +75,31 @@ namespace ReactUnity
 
         public void setProperty(object element, string property, object value)
         {
+#if REACT_CLEARSCRIPT
+            value = value is Microsoft.ClearScript.Undefined ? null : value;
+#endif
             if (element is IReactComponent c)
                 c.SetProperty(property, value);
         }
 
         public void setData(object element, string property, object value)
         {
+#if REACT_CLEARSCRIPT
+            value = value is Microsoft.ClearScript.Undefined ? null : value;
+#endif
             if (element is IReactComponent c)
                 c.SetData(property, value);
         }
 
         public void setEventListener(object element, string eventType, object value)
         {
+#if REACT_CLEARSCRIPT
+            value = value is Microsoft.ClearScript.Undefined ? null : value;
+#endif
             if (element is IReactComponent c)
                 c.SetEventListener(eventType, Callback.From(value));
         }
 
         #endregion
-
-        [ExcludeFromCodeCoverage]
-        public string getVersion()
-        {
-#if UNITY_EDITOR
-            try
-            {
-                var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(ReactUnityBridge).Assembly);
-                if (packageInfo != null) return packageInfo.version;
-            }
-            catch (Exception ex)
-            {
-                UnityEngine.Debug.LogException(ex);
-            }
-#endif
-            return null;
-        }
     }
 }

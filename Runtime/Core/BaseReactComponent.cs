@@ -195,7 +195,10 @@ namespace ReactUnity
                     ClassName = value?.ToString();
                     return;
                 default:
-                    throw new System.Exception($"Unknown property name specified, '{propertyName}'");
+#if UNITY_EDITOR
+                    Debug.LogWarning($"Unknown property name specified, '{propertyName}'");
+#endif
+                    return;
             }
         }
 

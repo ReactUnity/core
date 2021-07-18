@@ -102,6 +102,9 @@ namespace ReactUnity.UGUI
                 case "name":
                     GameObject.name = value?.ToString();
                     return;
+                case "active":
+                    GameObject.SetActive(Convert.ToBoolean(value));
+                    return;
                 default:
                     base.SetProperty(propertyName, value);
                     return;

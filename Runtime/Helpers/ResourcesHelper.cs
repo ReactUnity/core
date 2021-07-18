@@ -35,5 +35,23 @@ namespace ReactUnity.Helpers
             Polyfills[name] = loaded;
             return loaded.text;
         }
+
+
+        [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        public static string GetVersion()
+        {
+#if UNITY_EDITOR
+            try
+            {
+                var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(ReactUnityBridge).Assembly);
+                if (packageInfo != null) return packageInfo.version;
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+#endif
+            return null;
+        }
     }
 }

@@ -57,6 +57,32 @@ namespace ReactUnity.Tests
             Assert.AreEqual("Hello worldHello againSomehow just hello", Host.TextContent);
         }
 
+        [ReactInjectableTest(@"
+            function App() {
+                const globals = ReactUnity.useGlobals();
+                return <image active={globals.active} />;
+            }
+
+            Renderer.render(
+                <GlobalsProvider>
+                    <App />
+                </GlobalsProvider>
+            );
+        ")]
+        public IEnumerator ActivePropertyShouldSetGameObjectActive()
+        {
+            yield return null;
+
+            var cmp = (Q("image") as UGUI.ImageComponent).GameObject;
+            Assert.AreEqual(false, cmp.activeSelf);
+
+            Component.Globals.Set("active", true);
+            Assert.AreEqual(true, cmp.activeSelf);
+
+            Component.Globals.Set("active", 0);
+            Assert.AreEqual(false, cmp.activeSelf);
+        }
+
 
         [ReactInjectableTest(@"
             function App() {
