@@ -1,4 +1,4 @@
-import { ReactUnity } from '@reactunity/renderer';
+import { ReactUnity, Style } from '@reactunity/renderer';
 import { UGUIElements } from '@reactunity/renderer/ugui';
 import clsx from 'clsx';
 import React, { useEffect, useRef, useState } from 'react';
@@ -9,6 +9,8 @@ import style from './index.module.scss';
 
 type ViewProps = UGUIElements['view'];
 type Props = ViewProps & MdBase;
+
+const expanderBaseStyle: Style = { height: 0 };
 
 function _Accordion({ children, className, elevation = 1, ...props }: Props) {
   const summary = getOnlyChildOfType(children, _Summary);
@@ -21,23 +23,29 @@ function _Accordion({ children, className, elevation = 1, ...props }: Props) {
 
   const onResize = (ev, sender: ReactUnity.UGUI.UGUIComponent) => {
     if (!expanderRef.current) return;
-    expanderRef.current.Style.Set('height', sender.RectTransform.rect.height);
-    expanderRef.current.Style.Set('opacity', sender.RectTransform.rect.height > 0 ? 1 : 0);
+    if (opened) {
+      expanderRef.current.Style.Set('height', sender.RectTransform.rect.height);
+    }
   };
 
   useEffect(() => {
     if (!expanderRef.current || !wrapperRef.current) return;
-    if (!opened) expanderRef.current.Style.Set('height', 0);
-    else expanderRef.current.Style.Set('height', wrapperRef.current.RectTransform.rect.height);
+    expanderRef.current.Style.Set('height', opened ? wrapperRef.current.RectTransform.rect.height : 0);
+    expanderRef.current.Style.Set('opacity', opened ? 1 : 0);
   }, [opened]);
 
-  return <view name="<Accordion>" className={clsx(className, style.host, getElevationClass(elevation), 'md-accordion')} {...props}>
+  return <view name="<Accordion>"
+    className={clsx(className, style.host, opened && [style.expanded, 'md-expanded'], getElevationClass(elevation), 'md-accordion')}
+    {...props}>
+
     <view name="<AccordionHeader>" className={clsx(style.header, 'md-accordion-header')} onPointerClick={() => setOpened(x => !x)}>
       {summary}
+
+      <icon>expand_more</icon>
     </view>
 
-    <view className={clsx(style.expander, 'md-accordion-expander')} ref={expanderRef}>
-      <view {...{ onResize }} ref={wrapperRef} className={style.contentWrapper}>
+    <view className={clsx(style.expander, 'md-accordion-expander')} ref={expanderRef} style={expanderBaseStyle}>
+      <view onResize={onResize} ref={wrapperRef} className={style.contentWrapper}>
         {content}
       </view>
     </view>

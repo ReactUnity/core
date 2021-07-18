@@ -13,8 +13,8 @@
       "description": "The script to run",
       "type": "pickString",
       "options": [
-        "build",
         "watch",
+        "build",
         "lint"
       ]
     }

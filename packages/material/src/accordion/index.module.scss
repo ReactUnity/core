@@ -7,12 +7,40 @@
   border-radius: 4px;
 }
 
+.header {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  transition: padding-top 200ms, padding-bottom 200ms;
+  cursor: pointer;
+
+  icon {
+    font-size: 32px;
+    transform-origin: center;
+    transition: rotate 200ms;
+  }
+
+  .expanded & {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    icon {
+      rotate: -180deg;
+    }
+  }
+}
+
 .content {
   padding: 16px;
+  padding-top: 6px;
 }
 
 .expander {
-  transition: height 600ms, opacity 600ms;
+  transition: height 200ms, opacity 200ms;
   overflow: hidden;
 }
 
