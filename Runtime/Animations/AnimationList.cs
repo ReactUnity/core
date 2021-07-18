@@ -42,6 +42,7 @@ namespace ReactUnity.Animations
         public bool Valid { get; } = true;
         public AnimationFillMode FillMode { get; }
         public AnimationDirection Direction { get; }
+        public AnimationPlayState PlayState { get; }
 
         public Animation(string definition)
         {
@@ -59,6 +60,7 @@ namespace ReactUnity.Animations
             var countSet = false;
             var directionSet = false;
             var fillModeSet = false;
+            var playStateSet = false;
             var nameSet = false;
             var timingSet = false;
 
@@ -119,6 +121,14 @@ namespace ReactUnity.Animations
                     continue;
                 }
 
+                var ps = !playStateSet ? AllConverters.Get<AnimationPlayState>().Convert(split) : null;
+
+                if (ps is AnimationPlayState psd)
+                {
+                    PlayState = psd;
+                    playStateSet = true;
+                    continue;
+                }
 
                 var tm = !timingSet ? AllConverters.TimingFunctionConverter.Convert(split) : null;
 
@@ -155,5 +165,11 @@ namespace ReactUnity.Animations
         Reverse = 1,
         Alternate = 2,
         AlternateReverse = 3,
+    }
+
+    public enum AnimationPlayState
+    {
+        Running = 0,
+        Paused = 1,
     }
 }
