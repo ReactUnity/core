@@ -5,6 +5,7 @@ import { ActionCallback, Events } from './events';
 
 
 export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T> {
+  active?: boolean;
   name?: string;
   className?: string;
   style?: Style;
