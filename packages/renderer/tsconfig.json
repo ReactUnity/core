@@ -19,7 +19,8 @@
     "preserveConstEnums": true,
     "lib": [
       "ES2019"
-    ]
+    ],
+    "types": []
   },
   "files": [
     "index.ts",
