@@ -1,0 +1,83 @@
+import { ReactUnity, UnityEngine } from '@reactunity/renderer';
+import { PointerEventCallback, UGUIElements } from '@reactunity/renderer/ugui';
+import { useCallback, useRef } from 'react';
+import style from './index.module.scss';
+
+type Props = UGUIElements['view'];
+export type RippleBaseProps = {
+  onPointerDown?: PointerEventCallback<any>;
+  onPointerUp?: PointerEventCallback<any>;
+  noRipple?: boolean;
+};
+
+export interface Ripple {
+  element: ReactUnity.UGUI.UGUIComponent;
+  fade: () => void;
+}
+
+export function addRipple(containerElement: ReactUnity.UGUI.UGUIComponent, pressPosition?: UnityEngine.Vector2) {
+  const ripple = UnityBridge.createElement('view', '', HostContainer);
+  ripple.ClassName = `${style.ripple} md-ripple`;
+
+  const w = containerElement.RectTransform.rect.width;
+  const h = containerElement.RectTransform.rect.height;
+  const maxDimension = Math.max(w, h);
+
+  if (pressPosition) {
+    const pos = containerElement.GetRelativePosition(pressPosition.x, pressPosition.y);
+    ripple.Style.Set('left', pos.x);
+    ripple.Style.Set('top', pos.y);
+
+    const hw = w / 2;
+    const hh = h / 2;
+
+    const rx = pos.x > hw ? 0 : w;
+    const ry = pos.y > hh ? 0 : h;
+
+    const dx = rx - pos.x;
+    const dy = ry - pos.y;
+
+    const mag = Math.sqrt(dx * dx + dy * dy) * 2.1;
+
+    ripple.Style.Set('width', mag);
+    ripple.Style.Set('height', mag);
+  } else {
+    ripple.Style.Set('left', '50%');
+    ripple.Style.Set('top', '50%');
+    ripple.Style.Set('width', maxDimension);
+    ripple.Style.Set('height', maxDimension);
+  }
+
+  UnityBridge.appendChild(containerElement, ripple);
+  return {
+    element: ripple,
+    fade: () => {
+      ripple.ClassList.Add(style.fading);
+
+      setTimeout(() => {
+        UnityBridge.removeChild(containerElement, ripple);
+      }, 400);
+    },
+  } as Ripple;
+}
+
+export function useRipple({ onPointerDown, onPointerUp, noRipple }: RippleBaseProps) {
+  const rippleRef = useRef<Ripple>();
+
+  const pointerDown: Props['onPointerDown'] = useCallback((ev, sender) => {
+    onPointerDown?.call(null, ev, sender);
+
+    if (!noRipple) {
+      rippleRef.current?.fade();
+      rippleRef.current = addRipple(sender, ev.pressPosition);
+    }
+  }, [noRipple, onPointerDown]);
+
+  const pointerUp: Props['onPointerUp'] = useCallback((...args) => {
+    onPointerUp?.apply(null, args);
+    rippleRef.current?.fade();
+    rippleRef.current = null;
+  }, [onPointerUp]);
+
+  return { onPointerDown: pointerDown, onPointerUp: pointerUp };
+}

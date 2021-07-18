@@ -1,0 +1,25 @@
+@import "../styles/elevation.scss";
+
+.host {
+  appearance: none;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.content {
+  padding: 16px;
+}
+
+.expander {
+  transition: height 600ms, opacity 600ms;
+  overflow: hidden;
+}
+
+.contentWrapper {
+  top: 0;
+  left: 0;
+  position: absolute;
+  flex-shrink: 0;
+  height: auto;
+}

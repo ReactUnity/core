@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Material",
+      "command": "yarn ${input:script}",
+      "type": "shell"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "script",
+      "description": "The script to run",
+      "type": "pickString",
+      "options": [
+        "build",
+        "watch",
+        "lint"
+      ]
+    }
+  ]
+}

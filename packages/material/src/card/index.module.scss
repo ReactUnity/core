@@ -1,0 +1,12 @@
+@import "../styles/elevation.scss";
+
+.host {
+  appearance: none;
+  overflow: hidden;
+  background-color: white;
+  border-radius: 4px;
+}
+
+.content {
+  padding: 16px;
+}

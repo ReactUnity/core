@@ -1,0 +1,24 @@
+.ripple {
+  pointer-events: none;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  animation: expandRipple 450ms cubic-bezier(0, 0, 0.2, 1) both;
+  transition: opacity 300ms ease-out;
+  translate: -50% -50%;
+
+  &.fading {
+    opacity: 0;
+    transition: opacity 400ms ease-out;
+  }
+}
+
+@keyframes expandRipple {
+  from {
+    scale: 0;
+  }
+
+  to {
+    scale: 1;
+  }
+}

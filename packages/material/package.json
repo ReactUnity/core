@@ -1,0 +1,66 @@
+{
+  "name": "@reactunity/material",
+  "version": "0.0.1",
+  "description": "Material Design components and utilities for React Unity",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "sideEffects": false,
+  "author": "Gokhan Kurt <krtgkn@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ReactUnity/material"
+  },
+  "keywords": [
+    "react",
+    "material",
+    "material-design",
+    "material-ui",
+    "unity",
+    "unity3d"
+  ],
+  "license": "MIT",
+  "exports": {
+    ".": "./dist/index.js",
+    "./all": "./dist/index.js",
+    "./*": "./dist/src/*"
+  },
+  "typesVersions": {
+    "*": {
+      "all": [
+        "./dist/index.d.ts"
+      ],
+      "*": [
+        "./dist/src/*/index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "preinstall": "npx only-allow@1.0.0 yarn",
+    "prebuild": "yarn clean",
+    "build": "tsc -d && yarn copy-files",
+    "copy-files": "copyfiles -u 1 src/**/*.scss dist/src",
+    "prepare": "yarn clean && yarn build",
+    "watch": "concurrently --kill-others \"yarn watch:tsc\" \"yarn watch:files\"",
+    "watch:tsc": "tsc -d --watch",
+    "watch:files": "onchange -i \"src/**/*.scss\" -- yarn copy-files",
+    "clean": "rimraf dist",
+    "lint": "eslint --ext js,ts,tsx src",
+    "local": "yalc publish --push",
+    "pack": "yarn pack"
+  },
+  "dependencies": {
+    "@reactunity/renderer": "^0.2.1",
+    "react": "^17.0.2"
+  },
+  "devDependencies": {
+    "@reactunity/scripts": "^0.2.3",
+    "@types/react": "^17.0.14",
+    "@types/webpack-env": "^1.16.2",
+    "concurrently": "^6.2.0",
+    "copyfiles": "^2.4.1",
+    "onchange": "^7.1.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.3.5"
+  }
+}
