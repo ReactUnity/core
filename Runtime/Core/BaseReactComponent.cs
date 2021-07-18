@@ -357,7 +357,7 @@ namespace ReactUnity
         public void AddBefore()
         {
             if (!IsContainer || BeforePseudo != null) return;
-            var tc = Context.CreatePseudoComponent("_after");
+            var tc = Context.CreatePseudoComponent("_before");
             BeforePseudo = tc;
             tc.SetParent(this, Children.FirstOrDefault());
         }

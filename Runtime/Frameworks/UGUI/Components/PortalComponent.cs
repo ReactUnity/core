@@ -62,6 +62,10 @@ namespace ReactUnity.UGUI
             if (Container.parent != currentTarget)
             {
                 Container.SetParent(currentTarget ? currentTarget : null, false);
+
+                Layout.Parent?.RemoveChild(Layout);
+                (ShadowParent ?? Context.Host).Layout.AddChild(Layout);
+
                 Context.ScheduleLayout();
                 ResolveStyle(true);
             }
