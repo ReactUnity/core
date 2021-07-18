@@ -1,13 +1,14 @@
-import { UnityEngine } from '../generated';
+import { BaseEvents } from '../base-events';
+import { ReactUnity, UnityEngine } from '../generated';
 
 import ui = UnityEngine.UIElements;
 
-export type Handler<T, TSender> = (ev: T, sender: TSender) => void;
-export type ActionCallback<TSender = any> = (sender: TSender) => void;
+type BaseCmp = ReactUnity.UIToolkit.UIToolkitComponent;
+export type Handler<T, TSender = BaseCmp> = (ev: T, sender: TSender) => void;
+export type ActionCallback<TSender = BaseCmp> = (sender: TSender) => void;
 export type BaseEventCallback = (e: ui.EventBase) => void;
 
-
-export interface Events<TSender = any> {
+export interface Events<TSender = BaseCmp> extends BaseEvents<TSender> {
   onClick?: Handler<ui.ClickEvent, TSender>;
   onPointerUp?: Handler<ui.PointerUpEvent, TSender>;
   onPointerDown?: Handler<ui.PointerDownEvent, TSender>;

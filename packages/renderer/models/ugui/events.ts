@@ -1,3 +1,4 @@
+import { BaseEvents } from '../base-events';
 import { ReactUnity, UnityEngine } from '../generated';
 
 type BaseCmp = ReactUnity.UGUI.UGUIComponent;
@@ -8,7 +9,7 @@ export type AxisEventCallback<T = BaseCmp> = (ev: UnityEngine.EventSystems.AxisE
 export type KeyEventCallback<T = BaseCmp> = (ev: ReactUnity.UGUI.EventHandlers.KeyEventData, sender: T) => void;
 export type ResizeEventCallback<T = BaseCmp> = (ev: ReactUnity.UGUI.EventHandlers.ResizeEventData, sender: T) => void;
 
-export interface Events<T = BaseCmp> {
+export interface Events<T = BaseCmp> extends BaseEvents<T> {
   onPointerClick?: PointerEventCallback<T>;
   onPointerUp?: PointerEventCallback<T>;
   onPointerDown?: PointerEventCallback<T>;
