@@ -7,6 +7,7 @@ using ReactUnity.StyleEngine;
 using ReactUnity.Helpers;
 using ReactUnity.Dispatchers;
 using ReactUnity.UIToolkit.StateHandlers;
+using ReactUnity.Timers;
 
 namespace ReactUnity.UIToolkit
 {
@@ -57,9 +58,11 @@ namespace ReactUnity.UIToolkit
 
         private Action<AudioClip> OnAudioPlayback = null;
 
-        public UIToolkitContext(VisualElement hostElement, GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
-            IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart = null, Action<AudioClip> onAudioPlayback = null)
-            : base(globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, false)
+        public UIToolkitContext(
+            VisualElement hostElement, GlobalRecord globals, ScriptSource script,
+            IDispatcher dispatcher, IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider,
+            bool isDevServer, Action onRestart = null, Action<AudioClip> onAudioPlayback = null
+        ) : base(globals, script, dispatcher, scheduler, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, false)
         {
             OnAudioPlayback = onAudioPlayback;
 

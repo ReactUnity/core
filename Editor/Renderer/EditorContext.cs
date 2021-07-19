@@ -9,6 +9,7 @@ using ReactUnity.StyleEngine;
 using ReactUnity.Helpers;
 using ReactUnity.Dispatchers;
 using ReactUnity.UIToolkit;
+using ReactUnity.Timers;
 
 namespace ReactUnity.Editor.Renderer
 {
@@ -53,9 +54,11 @@ namespace ReactUnity.Editor.Renderer
                 { "tb-toggle", (tag, text, context) => new ToggleComponent<ToolbarToggle>(context, tag) },
             };
 
-        public EditorContext(VisualElement hostElement, GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
-            IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart = null)
-            : base(hostElement, globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart)
+        public EditorContext(
+            VisualElement hostElement, GlobalRecord globals, ScriptSource script,
+            IDispatcher dispatcher, IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider,
+            bool isDevServer, Action onRestart = null
+        ) : base(hostElement, globals, script, dispatcher, scheduler, timer, mediaProvider, isDevServer, onRestart)
         {
         }
 

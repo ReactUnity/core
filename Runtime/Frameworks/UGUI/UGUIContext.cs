@@ -6,6 +6,7 @@ using System;
 using ReactUnity.UGUI.StateHandlers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Dispatchers;
+using ReactUnity.Timers;
 
 namespace ReactUnity.UGUI
 {
@@ -61,10 +62,9 @@ namespace ReactUnity.UGUI
 
         public UGUIContext(
             RectTransform hostElement, GlobalRecord globals, ScriptSource script,
-            IDispatcher dispatcher, IUnityScheduler scheduler, IMediaProvider mediaProvider,
+            IDispatcher dispatcher, IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider,
             bool isDevServer, Action onRestart, List<IconSet> iconSets
-        )
-            : base(globals, script, dispatcher, scheduler, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
+        ) : base(globals, script, dispatcher, scheduler, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);

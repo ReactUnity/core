@@ -3,6 +3,7 @@ using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
+using ReactUnity.Timers;
 using System;
 using UnityEngine.UIElements;
 
@@ -15,6 +16,7 @@ namespace ReactUnity.UIToolkit
         public ReactContext context { get; private set; }
         public IDispatcher dispatcher { get; private set; }
         public IUnityScheduler scheduler { get; private set; }
+        public ITimer timer { get; protected set; } = UnityTimer.Instance;
         public IMediaProvider MediaProvider { get; private set; }
 
         public ScriptSource Script { get; }
@@ -72,7 +74,7 @@ namespace ReactUnity.UIToolkit
 
         protected virtual ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
-            return new UIToolkitContext(this, Globals, script, dispatcher, scheduler, MediaProvider, isDevServer, Restart);
+            return new UIToolkitContext(this, Globals, script, dispatcher, scheduler, timer, MediaProvider, isDevServer, Restart);
         }
     }
 }

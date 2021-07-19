@@ -1,6 +1,5 @@
 using System.Collections;
 using NUnit.Framework;
-using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using UnityEngine;
 
@@ -49,8 +48,9 @@ namespace ReactUnity.Tests
 
         public AnimationTests(JavascriptEngineType engineType) : base(engineType) { }
 
-        [ReactInjectableTest(BaseScript, BaseStyle)]
-        public IEnumerator AnimationShouldWorkOnLayoutStyles()
+
+        [ReactInjectableTest(BaseScript, BaseStyle, realTimer: true)]
+        public IEnumerator AnimationShouldWorkWithRealTimer()
         {
             var cmp = Q("#test") as UGUI.ContainerComponent;
             var rt = cmp.RectTransform;
@@ -59,11 +59,31 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(100, rt.rect.width);
 
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return AdvanceTime(0.5f);
             Assert.IsTrue(rt.rect.width < 500 && rt.rect.width > 100);
 
-            yield return new WaitForSecondsRealtime(1f);
+            yield return AdvanceTime(1f);
             Assert.That(rt.rect.width, Is.EqualTo(500).Within(1));
+        }
+
+
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator AnimationShouldWorkOnLayoutStyles()
+        {
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+
+            cmp.Style.Set("animation", "growWidth 1s 400ms both linear");
+            yield return null;
+            Assert.AreEqual(100, rt.rect.width);
+
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(140, rt.rect.width);
+
+            yield return AdvanceTime(1f);
+            Assert.That(rt.rect.width, Is.EqualTo(500));
         }
 
 
@@ -78,20 +98,20 @@ namespace ReactUnity.Tests
             yield return null;
             Assert.AreEqual(100, rt.rect.width);
 
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return AdvanceTime(0.5f);
             Assert.AreEqual(100, rt.rect.width);
 
 
             cmp.Style.Set("animation", "growWidth 1s 400ms both");
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return AdvanceTime(0.5f);
             Assert.IsTrue(rt.rect.width < 500 && rt.rect.width > 100);
 
             cmp.Style.Set("animation", "growWidth 1s 400ms both paused");
-            yield return new WaitForSecondsRealtime(1f);
+            yield return AdvanceTime(1f);
             Assert.IsTrue(rt.rect.width < 500 && rt.rect.width > 100);
             cmp.Style.Set("animation", "growWidth 1s 400ms both");
 
-            yield return new WaitForSecondsRealtime(1f);
+            yield return AdvanceTime(1f);
             Assert.That(rt.rect.width, Is.EqualTo(500).Within(1));
         }
 
@@ -104,12 +124,13 @@ namespace ReactUnity.Tests
             var text = view.GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
             view.Style.Set("animation", "fadeColor 1s 400ms both");
+            yield return null;
             Assert.AreEqual(Color.black, text.color);
 
-            yield return new WaitForSecondsRealtime(0.5f);
+            yield return AdvanceTime(0.5f);
             Assert.IsTrue(text.color.grayscale < 1 && text.color.grayscale > 0);
 
-            yield return new WaitForSecondsRealtime(1f);
+            yield return AdvanceTime(1f);
             Assert.That(text.color.grayscale, Is.EqualTo(Color.white.grayscale).Within(0.01));
         }
     }

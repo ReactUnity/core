@@ -1,4 +1,3 @@
-using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.Tests
@@ -11,7 +10,10 @@ namespace ReactUnity.Tests
         protected string Code;
         protected string Style;
 
-        public ReactInjectableTestAttribute(string code = DefaultCode, string style = "", string customScene = null, bool autoRender = true, bool transform = true) : base(customScene, autoRender)
+        public ReactInjectableTestAttribute(
+            string code = DefaultCode, string style = "", string customScene = null,
+            bool autoRender = true, bool transform = true, bool skipIfExisting = false, bool realTimer = false
+        ) : base(customScene, autoRender, skipIfExisting, realTimer)
         {
             OriginalCode = code ?? DefaultCode;
             Code = transform ? CodeTransformer.TransformCode(OriginalCode) : OriginalCode;

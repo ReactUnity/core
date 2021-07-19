@@ -5,6 +5,7 @@ using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
+using ReactUnity.Timers;
 using ReactUnity.Types;
 using ReactUnity.Visitors;
 using System;
@@ -36,6 +37,7 @@ namespace ReactUnity
 
         public ScriptSource Script { get; }
         public IUnityScheduler Scheduler { get; }
+        public ITimer Timer { get; }
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
         public Location Location { get; }
@@ -53,13 +55,17 @@ namespace ReactUnity
         public Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
 
 
-        public ReactContext(GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
-            IUnityScheduler scheduler, IMediaProvider mediaProvider, bool isDevServer, Action onRestart, LayoutMergeMode mergeLayout, bool calculatesLayout)
+        public ReactContext(
+            GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
+            IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider, bool isDevServer,
+            Action onRestart, LayoutMergeMode mergeLayout, bool calculatesLayout
+        )
         {
             Globals = globals;
             Script = script;
             IsDevServer = isDevServer;
             Scheduler = scheduler;
+            Timer = timer;
             Dispatcher = dispatcher;
             OnRestart = onRestart ?? (() => { });
             MergeLayout = mergeLayout;

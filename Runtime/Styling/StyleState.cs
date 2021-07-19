@@ -65,7 +65,7 @@ namespace ReactUnity.Styling
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static float getTime() => UnityEngine.Time.realtimeSinceStartup * 1000;
+        private float getTime() => Context.Timer.AnimationTime * 1000;
 
         private static NodeStyle DefaultStyle = new NodeStyle();
         public NodeStyle Previous { get; private set; }
@@ -399,11 +399,11 @@ namespace ReactUnity.Styling
                 float delta = anim.PlayState == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
                 state.ElapsedTimeSinceRun += delta;
 
-                var delayPassed = state.ElapsedTimeSinceRun >= anim.Delay;
-                var ratioDelta = !delayPassed ? 0 : (anim.Duration <= 0 ? 1 : delta / anim.Duration);
-
+                var delayDiff = state.ElapsedTimeSinceRun - anim.Delay;
+                var delayPassed = delayDiff > 0;
+                var ratio = delayDiff / anim.Duration;
                 var maxRatio = anim.IterationCount >= 0 ? anim.IterationCount : float.MaxValue;
-                var ratio = Math.Min(state.Ratio + ratioDelta, maxRatio);
+                ratio = Math.Max(0, Math.Min(ratio, maxRatio));
 
                 var startOffset = ratio * anim.Duration;
 

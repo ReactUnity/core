@@ -3,6 +3,7 @@ using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
+using ReactUnity.Timers;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,6 +30,7 @@ namespace ReactUnity
         private IDisposable ScriptWatchDisposable { get; set; }
         public IDispatcher dispatcher { get; private set; }
         public IUnityScheduler scheduler { get; private set; }
+        public ITimer timer { get; set; } = UnityTimer.Instance;
         public ReactUnityRunner runner { get; private set; }
 
         #region Advanced Options

@@ -1,14 +1,16 @@
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
+using ReactUnity.Timers;
 using ReactUnity.UGUI;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
         public const string DefaultSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity";
@@ -41,12 +43,14 @@ namespace ReactUnity.Tests
 
         public bool AutoRender;
         public bool SkipIfExisting;
+        public bool RealTimer;
 
-        public BaseReactTestAttribute(string customScene = null, bool autoRender = true, bool skipIfExisting = false) :
+        public BaseReactTestAttribute(string customScene = null, bool autoRender = true, bool skipIfExisting = false, bool realTimer = false) :
             base(customScene ?? DefaultSceneName)
         {
             AutoRender = autoRender;
             SkipIfExisting = skipIfExisting;
+            RealTimer = realTimer;
         }
 
         public override IEnumerator BeforeTest(ITest test)
@@ -64,6 +68,7 @@ namespace ReactUnity.Tests
             else engineType = test.FullName.Contains("(Jint)") ? JavascriptEngineType.Jint : JavascriptEngineType.ClearScript;
 
             var ru = CreateReactUnity(engineType, GetScript());
+            ru.timer = RealTimer ? UnityTimer.Instance as ITimer : new ControlledTimer();
             ru.Globals["test"] = test;
             ru.BeforeStart.AddListener(BeforeStart);
             ru.AfterStart.AddListener(AfterStart);

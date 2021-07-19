@@ -2,7 +2,9 @@ using NUnit.Framework;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
+using ReactUnity.Timers;
 using ReactUnity.UGUI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,6 +36,18 @@ namespace ReactUnity.Tests
         public void InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
         public IReactComponent Q(string query, IReactComponent scope = null) => (scope ?? Host).QuerySelector(query);
         public List<IReactComponent> QA(string query, IReactComponent scope = null) => (scope ?? Host).QuerySelectorAll(query);
+        public IEnumerator AdvanceTime(float advanceBy)
+        {
+            if (Context.Timer is ControlledTimer ct)
+            {
+                ct.AdvanceTime(advanceBy);
+                yield return null;
+            }
+            else if (Context.Timer is UnityTimer)
+            {
+                yield return new WaitForSeconds(advanceBy);
+            }
+        }
 
         [OneTimeSetUp]
         public void InitializeFixture()
