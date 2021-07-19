@@ -47,7 +47,7 @@ namespace ReactUnity.Animations
         public Animation(string definition)
         {
             Definition = definition;
-            var splits = ParserHelpers.Split(definition, ' ');
+            var splits = ParserHelpers.SplitWhitespace(definition);
 
             if (splits.Count == 0)
             {
@@ -148,6 +148,8 @@ namespace ReactUnity.Animations
                 }
                 else Valid = false;
             }
+
+            if (!nameSet) Valid = false;
         }
     }
 

@@ -23,11 +23,12 @@ namespace ReactUnity.Editor.Tests
         [Test]
         public void TransitionConverter()
         {
-            var converted = AllConverters.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb") as TransitionList;
+            var converted = AllConverters.TransitionListConverter.Convert("width 2s, height 400ms ease-in-out, 500ms 300ms step-start, bbb, bg paused, 3s 400ms linear") as TransitionList;
 
             var widthTr = converted.Items[0];
             Assert.IsTrue(widthTr.Valid);
             Assert.AreEqual("width", widthTr.Property);
+            Assert.IsFalse(widthTr.All);
             Assert.AreEqual(2000, widthTr.Duration);
             Assert.AreEqual(0, widthTr.Delay);
             Assert.AreEqual("width", widthTr.Property);
@@ -37,6 +38,7 @@ namespace ReactUnity.Editor.Tests
             var heightTr = converted.Items[1];
             Assert.IsTrue(heightTr.Valid);
             Assert.AreEqual("height", heightTr.Property);
+            Assert.IsFalse(heightTr.All);
             Assert.AreEqual(400, heightTr.Duration);
             Assert.AreEqual(0, heightTr.Delay);
             Assert.AreEqual("height", heightTr.Property);
@@ -46,20 +48,37 @@ namespace ReactUnity.Editor.Tests
             var allTr = converted.Items[2];
             Assert.IsTrue(allTr.Valid);
             Assert.AreEqual("all", allTr.Property);
+            Assert.IsTrue(allTr.All);
             Assert.AreEqual(500, allTr.Duration);
             Assert.AreEqual(300, allTr.Delay);
             Assert.AreEqual("all", allTr.Property);
             AssertTimingFunction(TimingFunctions.StepStart, allTr.TimingFunction);
 
             var invalidTr = converted.Items[3];
-            Assert.IsFalse(invalidTr.Valid);
+            Assert.IsTrue(invalidTr.Valid);
+            Assert.IsFalse(invalidTr.All);
             Assert.AreEqual("bbb", invalidTr.Property);
+
+            var pausedTr = converted.Items[4];
+            Assert.IsTrue(pausedTr.Valid);
+            Assert.AreEqual("bg", pausedTr.Property);
+            Assert.IsFalse(pausedTr.All);
+            Assert.AreEqual(AnimationPlayState.Paused, pausedTr.PlayState);
+
+            var namelessTr = converted.Items[5];
+            Assert.IsTrue(namelessTr.Valid);
+            Assert.AreEqual("all", namelessTr.Property);
+            Assert.IsTrue(namelessTr.All);
+            Assert.AreEqual(3000, namelessTr.Duration);
+            Assert.AreEqual(400, namelessTr.Delay);
+            AssertTimingFunction(TimingFunctions.Linear, namelessTr.TimingFunction);
         }
 
         [Test]
         public void AnimationConverter()
         {
-            var converted = AllConverters.AnimationListConverter.Convert("roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing") as AnimationList;
+            var converted = AllConverters.AnimationListConverter.Convert(
+                "roll 3s 1s ease-in 2 reverse both, 500ms linear alternate-reverse slidein, slideout 4s infinite, something not existing, 2s") as AnimationList;
 
             var roll = converted.Items[0];
             Assert.IsTrue(roll.Valid);
@@ -91,6 +110,11 @@ namespace ReactUnity.Editor.Tests
             var something = converted.Items[3];
             Assert.IsFalse(something.Valid);
             Assert.AreEqual("something", something.Name);
+
+
+            var nameless = converted.Items[4];
+            Assert.IsFalse(nameless.Valid);
+            Assert.AreEqual(2000, nameless.Duration);
         }
 
         [Test]

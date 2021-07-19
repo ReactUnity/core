@@ -30,9 +30,9 @@ namespace ReactUnity.Tests
                 width: 100px;
             }
             #test.started {
-                transition: color 1s 400ms linear, width 1s 400ms linear;
                 color: black;
                 width: 500px;
+                transition: color 1s 400ms linear, width 1s 400ms linear;
             }
 ";
 

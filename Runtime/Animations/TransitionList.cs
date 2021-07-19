@@ -37,6 +37,7 @@ namespace ReactUnity.Animations
         public float Delay { get; } = 0;
         public float Duration { get; } = 0;
         public string Property { get; } = "all";
+        public AnimationPlayState PlayState { get; }
         public TimingFunction TimingFunction { get; } = TimingFunctions.Ease;
         public bool Valid { get; } = true;
         public bool All { get; } = true;
@@ -44,8 +45,7 @@ namespace ReactUnity.Animations
         public Transition(string definition)
         {
             Definition = definition;
-            var splits = ParserHelpers.Split(definition, ' ');
-
+            var splits = ParserHelpers.SplitWhitespace(definition);
 
             if (splits.Count == 0)
             {
@@ -53,47 +53,64 @@ namespace ReactUnity.Animations
                 return;
             }
 
-            var offset = 1;
-            var firstChar = splits[0][0];
+            var durationSet = false;
+            var delaySet = false;
+            var playStateSet = false;
+            var nameSet = false;
+            var timingSet = false;
 
-            if (char.IsDigit(firstChar) || firstChar == '.')
+            for (int i = 0; i < splits.Count; i++)
             {
-                offset = 0;
-            }
-            else
-            {
-                Property = splits[0];
-                if (splits.Count < 2)
+                var split = splits[i];
+
+                var dur = AllConverters.DurationConverter.Convert(split);
+
+                if (dur is float f)
                 {
-                    Valid = false;
-                    return;
+                    if (!durationSet)
+                    {
+                        Duration = f;
+                        durationSet = true;
+                    }
+                    else if (!delaySet)
+                    {
+                        Delay = f;
+                        delaySet = true;
+                    }
+                    else
+                    {
+                        Valid = false;
+                    }
+                    continue;
                 }
-                All = Property == "all";
-            }
+
+                var ps = !playStateSet ? AllConverters.Get<AnimationPlayState>().Convert(split) : null;
+
+                if (ps is AnimationPlayState psd)
+                {
+                    PlayState = psd;
+                    playStateSet = true;
+                    continue;
+                }
+
+                var tm = !timingSet ? AllConverters.TimingFunctionConverter.Convert(split) : null;
+
+                if (tm is TimingFunction tmf)
+                {
+                    TimingFunction = tmf;
+                    timingSet = true;
+                    continue;
+                }
 
 
-            var dur = AllConverters.DurationConverter.Convert(splits[offset]);
-            if (dur is float f) Duration = f;
-            else Valid = false;
-
-            if (splits.Count > offset + 1)
-            {
-                var next = splits[offset + 1];
-                var last = splits.Count > offset + 2 ? splits[offset + 2] : null;
-                var nextIsDelay = false;
-
-                firstChar = next[0];
-                if (char.IsDigit(firstChar) || firstChar == '.') nextIsDelay = true;
-
-                var delayString = nextIsDelay ? next : last ?? "0";
-                var easing = nextIsDelay ? last ?? "linear" : next;
-
-                dur = AllConverters.DurationConverter.Convert(delayString);
-                if (dur is float delay) Delay = delay;
+                if (!nameSet)
+                {
+                    Property = split;
+                    All = string.IsNullOrWhiteSpace(Property) || Property.ToLowerInvariant() == "all";
+                    nameSet = true;
+                    continue;
+                }
                 else Valid = false;
-
-                var tm = AllConverters.TimingFunctionConverter.Convert(easing);
-                if (tm is TimingFunction tmf) TimingFunction = tmf;
             }
         }
     }
