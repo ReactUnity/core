@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.IO;
 using UnityEditor.AssetImporters;
+using UnityEngine;
 
 namespace ReactUnity.Editor
 {

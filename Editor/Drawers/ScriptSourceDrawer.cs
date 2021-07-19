@@ -13,14 +13,14 @@ namespace ReactUnity.Editor
             var source = property.FindPropertyRelative("Type");
             position.y += 2;
             position.height = 18;
-            if(source != null) EditorGUI.PropertyField(position, source);
+            if (source != null) EditorGUI.PropertyField(position, source);
 
             position.y += 20;
             position.height = 18;
 
-            if ((int)ScriptSourceType.TextAsset == source.intValue)
+            if ((int) ScriptSourceType.TextAsset == source.intValue)
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("SourceAsset"));
-            else if ((int)ScriptSourceType.Raw == source.intValue)
+            else if ((int) ScriptSourceType.Raw == source.intValue)
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("SourceText"));
             else
                 EditorGUI.PropertyField(position, property.FindPropertyRelative("SourcePath"));

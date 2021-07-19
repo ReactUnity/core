@@ -50,8 +50,7 @@ namespace ReactUnity.Editor.Renderer
             EditorPrefs.SetBool("ReactUnity.EditorTester.useDevServer", useDevServerVal);
             EditorPrefs.SetString("ReactUnity.EditorTester.devServer", devServerVal);
 
-            useDevServer.RegisterValueChangedCallback(x =>
-            {
+            useDevServer.RegisterValueChangedCallback(x => {
                 devServer.SetEnabled(x.newValue);
             });
 

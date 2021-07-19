@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System;
 using System.Text;
-using System.IO;
-using System.Diagnostics.CodeAnalysis;
 using ReactUnity.Helpers.TypescriptUtils;
 
 namespace ReactUnity.Editor.Developer
