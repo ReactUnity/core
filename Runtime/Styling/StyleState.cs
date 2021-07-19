@@ -271,7 +271,9 @@ namespace ReactUnity.Styling
 
 
                     float delta = currentTime - state.LastUpdatedAt;
-                    var delayPassed = (currentTime - state.StartedAt) >= tran.Delay;
+                    var delayDiff = Math.Max(0, currentTime - state.StartedAt - tran.Delay);
+                    var delayPassed = delayDiff > 0;
+                    delta = Math.Min(delayDiff, delta);
                     var tDelta = !delayPassed ? 0 : (state.Duration == 0 ? 1 : delta / state.Duration);
                     ratio = Mathf.Min(Mathf.Max(0, ratio + tDelta), 1);
 
