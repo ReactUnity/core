@@ -279,7 +279,7 @@ namespace Facebook.Yoga
                 {
                     Native.YGNodeStyleSetFlexBasisPercent(_ygNode, value.Value);
                 }
-                else if (value.Unit == YogaUnit.Auto)
+                else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
                 {
                     Native.YGNodeStyleSetFlexBasisAuto(_ygNode);
                 }
@@ -303,7 +303,7 @@ namespace Facebook.Yoga
                 {
                     Native.YGNodeStyleSetWidthPercent(_ygNode, value.Value);
                 }
-                else if (value.Unit == YogaUnit.Auto)
+                else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
                 {
                     Native.YGNodeStyleSetWidthAuto(_ygNode);
                 }
@@ -327,7 +327,7 @@ namespace Facebook.Yoga
                 {
                     Native.YGNodeStyleSetHeightPercent(_ygNode, value.Value);
                 }
-                else if (value.Unit == YogaUnit.Auto)
+                else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
                 {
                     Native.YGNodeStyleSetHeightAuto(_ygNode);
                 }
@@ -351,6 +351,10 @@ namespace Facebook.Yoga
                 {
                     Native.YGNodeStyleSetMaxWidthPercent(_ygNode, value.Value);
                 }
+                else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
+                {
+                    Native.YGNodeStyleSetMaxWidth(_ygNode, float.MaxValue);
+                }
                 else
                 {
                     Native.YGNodeStyleSetMaxWidth(_ygNode, value.Value);
@@ -370,6 +374,10 @@ namespace Facebook.Yoga
                 if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetMaxHeightPercent(_ygNode, value.Value);
+                }
+                else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
+                {
+                    Native.YGNodeStyleSetMaxHeight(_ygNode, float.MaxValue);
                 }
                 else
                 {
@@ -391,6 +399,10 @@ namespace Facebook.Yoga
                 {
                     Native.YGNodeStyleSetMinWidthPercent(_ygNode, value.Value);
                 }
+                else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
+                {
+                    Native.YGNodeStyleSetMinWidth(_ygNode, 0);
+                }
                 else
                 {
                     Native.YGNodeStyleSetMinWidth(_ygNode, value.Value);
@@ -410,6 +422,10 @@ namespace Facebook.Yoga
                 if (value.Unit == YogaUnit.Percent)
                 {
                     Native.YGNodeStyleSetMinHeightPercent(_ygNode, value.Value);
+                }
+                else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
+                {
+                    Native.YGNodeStyleSetMinHeight(_ygNode, 0);
                 }
                 else
                 {

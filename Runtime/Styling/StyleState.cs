@@ -269,8 +269,7 @@ namespace ReactUnity.Styling
                         OnEvent?.Invoke("onTransitionRun", state.CreateEvent());
                     }
 
-
-                    float delta = currentTime - state.LastUpdatedAt;
+                    float delta = tran.PlayState == AnimationPlayState.Paused ? 0 : currentTime - state.LastUpdatedAt;
                     var delayDiff = Math.Max(0, currentTime - state.StartedAt - tran.Delay);
                     var delayPassed = delayDiff > 0;
                     delta = Math.Min(delayDiff, delta);
@@ -291,12 +290,7 @@ namespace ReactUnity.Styling
 
                     if (prevValue != curValue && ratio < 1)
                     {
-                        activeValue = prevValue;
-
-                        if (delayPassed && ratio > 0)
-                        {
-                            activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, tran.TimingFunction, sp.type);
-                        }
+                        activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, tran.TimingFunction, sp.type);
                     }
 
                     updated = updated || (Active.GetStyleValue(sp) != activeValue);

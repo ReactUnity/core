@@ -94,5 +94,36 @@ namespace ReactUnity.Tests
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.black, text.color);
         }
+
+
+        [ReactInjectableTest(BaseScript, @"
+            #test {
+                transition: color 1s 400ms linear, width 1s 400ms linear;
+                background-color: red;
+                color: white;
+                width: 100px;
+            }
+            #test.started {
+                color: black;
+                width: 500px;
+            }
+")]
+        public IEnumerator InitialWidthIsCorrectWithDelayedTransition()
+        {
+            var cmp = Q("#test") as UGUI.ContainerComponent;
+            var rt = cmp.RectTransform;
+
+            Assert.AreEqual(100, rt.rect.width);
+
+            Globals["started"] = true;
+            yield return AdvanceTime(0.1f);
+            Assert.AreEqual(100, rt.rect.width);
+
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(180, rt.rect.width);
+
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(500, rt.rect.width);
+        }
     }
 }

@@ -43,7 +43,10 @@ namespace ReactUnity.Animations
         }
         public static YogaValue Interpolate(YogaValue from, YogaValue to, float t)
         {
-            if (!(from.Unit == to.Unit || from.Value == 0 || to.Value == 0) || !(from.Unit == YogaUnit.Point || from.Unit == YogaUnit.Percent)) return t > 0 ? to : from;
+            var canAnimate = (from.Unit == YogaUnit.Point || from.Unit == YogaUnit.Percent) &&
+                (from.Unit == to.Unit || from.Value == 0 || to.Value == 0);
+
+            if (!canAnimate) return to;
 
             if (from.Value == 0 && to.Value == 0) return YogaValue.Point(0);
 
