@@ -1,8 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.UGUI.Layout;
-using ReactUnity.Styling;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace ReactUnity.UGUI

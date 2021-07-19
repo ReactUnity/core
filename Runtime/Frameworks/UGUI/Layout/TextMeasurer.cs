@@ -1,7 +1,7 @@
-using UnityEngine;
 using Facebook.Yoga;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace ReactUnity.UGUI.Layout
 {

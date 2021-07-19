@@ -1,10 +1,10 @@
+using System;
 using ReactUnity.Dispatchers;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using ReactUnity.Timers;
-using System;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
@@ -47,8 +47,7 @@ namespace ReactUnity.UIToolkit
             dispatcher = new EditorDispatcher();
             scheduler = new UnityScheduler(dispatcher);
 
-            ScriptWatchDisposable = src.GetScript((sc, isDevServer) =>
-            {
+            ScriptWatchDisposable = src.GetScript((sc, isDevServer) => {
                 context = CreateContext(src, isDevServer);
                 runner.RunScript(sc, context, EngineType, Debug, AwaitDebugger);
             }, dispatcher, true, true);

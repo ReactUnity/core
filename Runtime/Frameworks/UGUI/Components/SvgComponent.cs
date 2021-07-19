@@ -1,6 +1,6 @@
+using System;
 using ReactUnity.Converters;
 using ReactUnity.Types;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 

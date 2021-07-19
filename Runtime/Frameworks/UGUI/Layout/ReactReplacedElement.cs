@@ -1,7 +1,7 @@
-using UnityEngine;
+using System.Collections;
 using Facebook.Yoga;
 using ReactUnity.Types;
-using System.Collections;
+using UnityEngine;
 
 namespace ReactUnity.UGUI.Layout
 {

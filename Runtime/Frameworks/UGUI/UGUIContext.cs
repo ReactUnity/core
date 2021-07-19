@@ -1,12 +1,12 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using ReactUnity.Dispatchers;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
-using System;
-using ReactUnity.UGUI.StateHandlers;
 using ReactUnity.StyleEngine;
-using ReactUnity.Dispatchers;
 using ReactUnity.Timers;
+using ReactUnity.UGUI.StateHandlers;
+using UnityEngine;
 
 namespace ReactUnity.UGUI
 {

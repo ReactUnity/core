@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using ReactUnity.Helpers;
 using ReactUnity.StyleEngine;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReactUnity.UGUI

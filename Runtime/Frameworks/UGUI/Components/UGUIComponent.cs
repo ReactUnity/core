@@ -1,14 +1,14 @@
+using System;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
-using ReactUnity.UGUI.Layout;
 using ReactUnity.Styling;
 using ReactUnity.Types;
+using ReactUnity.UGUI.Layout;
+using ReactUnity.UGUI.StateHandlers;
 using ReactUnity.Visitors;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using ReactUnity.UGUI.StateHandlers;
 
 namespace ReactUnity.UGUI
 {
@@ -271,8 +271,7 @@ namespace ReactUnity.UGUI
             }
             if (updateStyle)
             {
-                ComputedStyle.backgroundImage.Get(Context, (res) =>
-                {
+                ComputedStyle.backgroundImage.Get(Context, (res) => {
                     Sprite sprite = res == null ? null : Sprite.Create(res, new Rect(0, 0, res.width, res.height), Vector2.one / 2);
                     image.SetBackgroundColorAndImage(ComputedStyle.backgroundColor, sprite);
                 });

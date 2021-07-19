@@ -1,6 +1,6 @@
 using Facebook.Yoga;
-using ReactUnity.UGUI.Layout;
 using ReactUnity.Styling;
+using ReactUnity.UGUI.Layout;
 using UnityEngine;
 using UnityEngine.UI;
 

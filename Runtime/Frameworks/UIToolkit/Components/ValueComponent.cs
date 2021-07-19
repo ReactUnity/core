@@ -2,8 +2,8 @@
 #define REACT_CLEARSCRIPT
 #endif
 
-using ReactUnity.Helpers;
 using System;
+using ReactUnity.Helpers;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit

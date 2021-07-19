@@ -133,8 +133,7 @@ namespace ReactUnity.UIToolkit
 
             if (computed.HasValue(StyleProperties.fontFamily))
             {
-                if (computed.fontFamily != null) computed.fontFamily?.Get(Context, x =>
-                {
+                if (computed.fontFamily != null) computed.fontFamily?.Get(Context, x => {
                     if (x?.Font != null) Element.style.unityFont = x?.Font;
 #if REACT_TEXTCORE
                     else if (x?.TextCoreFontAsset != null) Element.style.unityFontDefinition = FontDefinition.FromSDFFont(x?.TextCoreFontAsset);

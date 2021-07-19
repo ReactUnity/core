@@ -1,6 +1,6 @@
+using System;
 using ReactUnity.Styling;
 using ReactUnity.UGUI.EventHandlers;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

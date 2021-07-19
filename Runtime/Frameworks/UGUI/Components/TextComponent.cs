@@ -1,6 +1,5 @@
 using Facebook.Yoga;
 using ReactUnity.UGUI.Layout;
-using ReactUnity.Styling;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -70,8 +69,7 @@ namespace ReactUnity.UGUI
         protected override void ApplyStylesSelf()
         {
             base.ApplyStylesSelf();
-            ComputedStyle.fontFamily.Get(Context, font =>
-            {
+            ComputedStyle.fontFamily.Get(Context, font => {
                 if (font?.TmpFontAsset) Text.font = font?.TmpFontAsset;
             });
             Text.fontSize = ComputedStyle.fontSizeActual;
