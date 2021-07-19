@@ -1,10 +1,10 @@
+using System;
+using System.Collections;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using ReactUnity.ScriptEngine;
 using ReactUnity.Timers;
 using ReactUnity.UGUI;
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -20,8 +20,8 @@ namespace ReactUnity.Tests
         const string MenuName = "React/Tests/Debug Tests";
         public static bool IsDebugEnabled
         {
-            get { return UnityEditor.EditorPrefs.GetBool(MenuName, false); }
-            set { UnityEditor.EditorPrefs.SetBool(MenuName, value); }
+            get => UnityEditor.EditorPrefs.GetBool(MenuName, false);
+            set => UnityEditor.EditorPrefs.SetBool(MenuName, value);
         }
 
         [UnityEditor.MenuItem(MenuName)]

@@ -1,9 +1,6 @@
 using System.Collections;
-using Facebook.Yoga;
 using NUnit.Framework;
-using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
-using UnityEngine;
 
 namespace ReactUnity.Tests
 {

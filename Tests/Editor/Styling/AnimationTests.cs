@@ -1,6 +1,6 @@
+using System.Linq;
 using ExCSS;
 using NUnit.Framework;
-using System.Linq;
 using UnityEngine;
 
 namespace ReactUnity.Editor.Tests

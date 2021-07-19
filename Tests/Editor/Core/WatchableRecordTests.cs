@@ -17,8 +17,7 @@ namespace ReactUnity.Editor.Tests
             object calledValue = "";
             var callCount = 0;
 
-            var removeListener = dc.AddListener((key, value, obj) =>
-            {
+            var removeListener = dc.AddListener((key, value, obj) => {
                 calledKey = key;
                 calledValue = value;
                 callCount++;
@@ -66,8 +65,7 @@ namespace ReactUnity.Editor.Tests
             object calledValue = "";
             var callCount = 0;
 
-            var removeListener = gl.AddListener((key, value, obj) =>
-            {
+            var removeListener = gl.AddListener((key, value, obj) => {
                 calledKey = key;
                 calledValue = value;
                 callCount++;
@@ -115,8 +113,7 @@ namespace ReactUnity.Editor.Tests
             object calledValue = "";
             var callCount = 0;
 
-            var removeListener = dc.AddListener((key, value, obj) =>
-            {
+            var removeListener = dc.AddListener((key, value, obj) => {
                 calledKey = key;
                 calledValue = value;
                 callCount++;

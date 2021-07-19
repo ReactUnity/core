@@ -1,6 +1,5 @@
-using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 using System.Collections;
+using NUnit.Framework.Interfaces;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;

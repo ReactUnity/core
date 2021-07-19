@@ -1,11 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using ReactUnity.Timers;
 using ReactUnity.UGUI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReactUnity.Tests

@@ -1,10 +1,9 @@
-using NUnit.Framework;
-using ReactUnity.ScriptEngine;
-using ReactUnity.UGUI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.TestTools;
+using NUnit.Framework;
+using ReactUnity.ScriptEngine;
+using ReactUnity.UGUI;
 
 namespace ReactUnity.Tests
 {
