@@ -94,7 +94,7 @@ namespace ReactUnity.Tests
             var cmp = Q("#test") as UGUI.ContainerComponent;
             var rt = cmp.RectTransform;
 
-            cmp.Style.Set("animation", "growWidth 1s 400ms both paused");
+            cmp.Style.Set("animation", "growWidth 1s 400ms linear both paused");
             yield return null;
             Assert.AreEqual(100, rt.rect.width);
 
@@ -102,17 +102,17 @@ namespace ReactUnity.Tests
             Assert.AreEqual(100, rt.rect.width);
 
 
-            cmp.Style.Set("animation", "growWidth 1s 400ms both");
+            cmp.Style.Set("animation", "growWidth 1s 400ms linear both");
             yield return AdvanceTime(0.5f);
-            Assert.IsTrue(rt.rect.width < 500 && rt.rect.width > 100);
+            Assert.AreEqual(140, rt.rect.width);
 
-            cmp.Style.Set("animation", "growWidth 1s 400ms both paused");
+            cmp.Style.Set("animation", "growWidth 1s 400ms linear both paused");
             yield return AdvanceTime(1f);
-            Assert.IsTrue(rt.rect.width < 500 && rt.rect.width > 100);
-            cmp.Style.Set("animation", "growWidth 1s 400ms both");
+            Assert.AreEqual(140, rt.rect.width);
+            cmp.Style.Set("animation", "growWidth 1s 400ms linear both");
 
             yield return AdvanceTime(1f);
-            Assert.That(rt.rect.width, Is.EqualTo(500).Within(1));
+            Assert.AreEqual(500, rt.rect.width);
         }
 
 
@@ -123,15 +123,15 @@ namespace ReactUnity.Tests
             var view = (Q("#test") as UGUI.ContainerComponent);
             var text = view.GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
 
-            view.Style.Set("animation", "fadeColor 1s 400ms both");
+            view.Style.Set("animation", "fadeColor 1s 400ms linear both");
             yield return null;
             Assert.AreEqual(Color.black, text.color);
 
             yield return AdvanceTime(0.5f);
-            Assert.IsTrue(text.color.grayscale < 1 && text.color.grayscale > 0);
+            Assert.AreEqual(0.1f, text.color.grayscale);
 
             yield return AdvanceTime(1f);
-            Assert.That(text.color.grayscale, Is.EqualTo(Color.white.grayscale).Within(0.01));
+            Assert.AreEqual(Color.white, text.color);
         }
     }
 }

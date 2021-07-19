@@ -29,7 +29,7 @@ namespace ReactUnity.Tests
                 width: 100px;
             }
             #test.started {
-                transition: width 1s 400ms;
+                transition: width 1s 400ms linear;
                 width: 500px;
             }
 ")]
@@ -45,10 +45,10 @@ namespace ReactUnity.Tests
             Assert.AreEqual(100, rt.rect.width);
 
             yield return AdvanceTime(0.5f);
-            Assert.IsTrue(rt.rect.width < 500 && rt.rect.width > 100);
+            Assert.AreEqual(140, rt.rect.width);
 
             yield return AdvanceTime(1f);
-            Assert.That(rt.rect.width, Is.EqualTo(500).Within(1));
+            Assert.AreEqual(500, rt.rect.width);
         }
 
 
@@ -72,7 +72,7 @@ namespace ReactUnity.Tests
                 color: white;
             }
             #test.started {
-                transition: color 1s 400ms;
+                transition: color 1s 400ms linear;
                 color: black;
             }
 ")]
@@ -87,10 +87,10 @@ namespace ReactUnity.Tests
             Assert.AreEqual(Color.white, text.color);
 
             yield return AdvanceTime(0.5f);
-            Assert.IsTrue(text.color.grayscale < 1 && text.color.grayscale > 0);
+            Assert.AreEqual(0.9f, text.color.grayscale);
 
             yield return AdvanceTime(1f);
-            Assert.That(text.color.grayscale, Is.EqualTo(Color.black.grayscale).Within(0.01));
+            Assert.AreEqual(Color.black, text.color);
         }
     }
 }

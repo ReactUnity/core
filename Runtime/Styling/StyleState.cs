@@ -405,8 +405,6 @@ namespace ReactUnity.Styling
                 var maxRatio = anim.IterationCount >= 0 ? anim.IterationCount : float.MaxValue;
                 ratio = Math.Max(0, Math.Min(ratio, maxRatio));
 
-                var startOffset = ratio * anim.Duration;
-
                 var ended = anim.Duration <= 0 || (anim.IterationCount >= 0 && ratio >= anim.IterationCount);
 
                 var cycle = anim.Duration == 0 ? 0 : Mathf.FloorToInt(ratio);

@@ -10,7 +10,7 @@ namespace ReactUnity.Animations
 
     public static class TimingFunctions
     {
-        public static readonly TimingFunction Linear = CubicBezier.Create(0, 0, 1, 1);
+        public static float Linear(float t, float start = 0, float end = 1) => t * (end - start) + start;
         public static readonly TimingFunction Ease = CubicBezier.Create(0.25f, 0.1f, 0.25f, 1f);
         public static readonly TimingFunction EaseIn = CubicBezier.Create(0.42f, 0f, 1f, 1f);
         public static readonly TimingFunction EaseOut = CubicBezier.Create(0f, 0f, 0.58f, 1f);
