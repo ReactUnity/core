@@ -353,7 +353,7 @@ namespace Facebook.Yoga
                 }
                 else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
                 {
-                    Native.YGNodeStyleSetMaxWidth(_ygNode, float.MaxValue);
+                    Native.YGNodeStyleSetMaxWidth(_ygNode, float.NaN);
                 }
                 else
                 {
@@ -377,7 +377,7 @@ namespace Facebook.Yoga
                 }
                 else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
                 {
-                    Native.YGNodeStyleSetMaxHeight(_ygNode, float.MaxValue);
+                    Native.YGNodeStyleSetMaxHeight(_ygNode, float.NaN);
                 }
                 else
                 {
@@ -401,7 +401,7 @@ namespace Facebook.Yoga
                 }
                 else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
                 {
-                    Native.YGNodeStyleSetMinWidth(_ygNode, 0);
+                    Native.YGNodeStyleSetMinWidth(_ygNode, float.NaN);
                 }
                 else
                 {
@@ -425,7 +425,7 @@ namespace Facebook.Yoga
                 }
                 else if (value.Unit == YogaUnit.Auto || value.Unit == YogaUnit.Undefined)
                 {
-                    Native.YGNodeStyleSetMinHeight(_ygNode, 0);
+                    Native.YGNodeStyleSetMinHeight(_ygNode, float.NaN);
                 }
                 else
                 {
@@ -552,7 +552,7 @@ namespace Facebook.Yoga
             }
             _children.Insert(index, node);
             node._parent = new WeakReference(this);
-            Native.YGNodeInsertChild(_ygNode, node._ygNode, (uint)index);
+            Native.YGNodeInsertChild(_ygNode, node._ygNode, (uint) index);
         }
 
         public void RemoveAt(int index)
@@ -583,7 +583,7 @@ namespace Facebook.Yoga
             {
                 while (_children.Count > 0)
                 {
-                    RemoveAt(_children.Count-1);
+                    RemoveAt(_children.Count - 1);
                 }
             }
         }
@@ -596,7 +596,7 @@ namespace Facebook.Yoga
         public void SetMeasureFunction(MeasureFunction measureFunction)
         {
             _measureFunction = measureFunction;
-            _managedMeasure = measureFunction != null ? MeasureInternal : (YogaMeasureFunc)null;
+            _managedMeasure = measureFunction != null ? MeasureInternal : (YogaMeasureFunc) null;
             Native.YGNodeSetMeasureFunc(_ygNode, _managedMeasure);
         }
 
@@ -604,7 +604,7 @@ namespace Facebook.Yoga
         {
             _baselineFunction = baselineFunction;
             _managedBaseline =
-                baselineFunction != null ? BaselineInternal : (YogaBaselineFunc)null;
+                baselineFunction != null ? BaselineInternal : (YogaBaselineFunc) null;
             Native.YGNodeSetBaselineFunc(_ygNode, _managedBaseline);
         }
 
@@ -654,11 +654,11 @@ namespace Facebook.Yoga
         }
 
         public string Print(YogaPrintOptions options =
-            YogaPrintOptions.Layout|YogaPrintOptions.Style|YogaPrintOptions.Children)
+            YogaPrintOptions.Layout | YogaPrintOptions.Style | YogaPrintOptions.Children)
         {
             StringBuilder sb = new StringBuilder();
             Logger orig = _config.Logger;
-            _config.Logger = (config, node, level, message) => {sb.Append(message);};
+            _config.Logger = (config, node, level, message) => { sb.Append(message); };
             Native.YGNodePrint(_ygNode, options);
             _config.Logger = orig;
             return sb.ToString();
@@ -666,13 +666,13 @@ namespace Facebook.Yoga
 
         public IEnumerator<YogaNode> GetEnumerator()
         {
-            return _children != null ? ((IEnumerable<YogaNode>)_children).GetEnumerator() :
+            return _children != null ? ((IEnumerable<YogaNode>) _children).GetEnumerator() :
                 System.Linq.Enumerable.Empty<YogaNode>().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _children != null ? ((IEnumerable<YogaNode>)_children).GetEnumerator() :
+            return _children != null ? ((IEnumerable<YogaNode>) _children).GetEnumerator() :
                 System.Linq.Enumerable.Empty<YogaNode>().GetEnumerator();
         }
     }
