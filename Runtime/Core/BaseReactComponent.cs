@@ -1,12 +1,12 @@
-using Facebook.Yoga;
-using ReactUnity.Helpers.TypescriptUtils;
-using ReactUnity.Helpers;
-using ReactUnity.StyleEngine;
-using ReactUnity.Styling;
-using ReactUnity.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Facebook.Yoga;
+using ReactUnity.Helpers;
+using ReactUnity.Helpers.TypescriptUtils;
+using ReactUnity.StyleEngine;
+using ReactUnity.Styling;
+using ReactUnity.Visitors;
 using UnityEngine;
 
 namespace ReactUnity

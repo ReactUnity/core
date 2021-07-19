@@ -1,8 +1,8 @@
-using ReactUnity.Helpers;
-using ReactUnity.Converters;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ReactUnity.Converters;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.StyleEngine
 {

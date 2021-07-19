@@ -1,6 +1,6 @@
+using System;
 using Facebook.Yoga;
 using ReactUnity.Types;
-using System;
 using UnityEngine;
 
 namespace ReactUnity.Animations

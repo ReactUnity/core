@@ -1,12 +1,12 @@
-using ReactUnity.Helpers;
-using ReactUnity.Converters;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using ReactUnity.Converters;
+using ReactUnity.Helpers;
+using ReactUnity.Styling;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections.Generic;
-using ReactUnity.Styling;
 
 namespace ReactUnity.Types
 {

@@ -1,10 +1,10 @@
-using Facebook.Yoga;
-using ReactUnity.Styling;
-using ReactUnity.Converters;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Facebook.Yoga;
+using ReactUnity.Converters;
+using ReactUnity.Styling;
 using UnityEngine;
 
 namespace ReactUnity.Types

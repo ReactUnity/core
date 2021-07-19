@@ -1,7 +1,7 @@
-using Jint.Native;
-using ReactUnity.Helpers;
 using System;
 using System.Collections.Generic;
+using Jint.Native;
+using ReactUnity.Helpers;
 
 namespace ReactUnity.DomProxies
 {
@@ -148,14 +148,12 @@ namespace ReactUnity.DomProxies
             var script = document.context.CreateStaticScript(src);
             var dispatcher = document.context.Dispatcher;
 
-            Action<string> action = (sc) =>
-            {
+            Action<string> action = (sc) => {
                 document.execute(sc);
                 (onload as Action)?.Invoke();
             };
 
-            Action<string> callback = (sc) =>
-            {
+            Action<string> callback = (sc) => {
                 dispatcher.OnceUpdate(() => action(sc));
             };
 

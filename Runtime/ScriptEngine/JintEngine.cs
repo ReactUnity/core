@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Esprima;
 using Jint;
 using Jint.Native;
@@ -5,9 +8,6 @@ using Jint.Native.Object;
 using Jint.Runtime;
 using Jint.Runtime.Interop;
 using ReactUnity.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 namespace ReactUnity.ScriptEngine
@@ -19,8 +19,7 @@ namespace ReactUnity.ScriptEngine
 
         public JintEngine(ReactContext context, bool debug, bool awaitDebugger)
         {
-            Engine = new Engine(x =>
-            {
+            Engine = new Engine(x => {
                 x.AllowClr(
                     typeof(Convert).Assembly,
 #if UNITY_EDITOR
@@ -32,8 +31,7 @@ namespace ReactUnity.ScriptEngine
                     typeof(Component).Assembly,
                     typeof(ReactUnityRunner).Assembly
                 );
-                x.CatchClrExceptions(ex =>
-                {
+                x.CatchClrExceptions(ex => {
                     Debug.LogException(ex);
                     return true;
                 });

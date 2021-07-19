@@ -1,5 +1,5 @@
-using ReactUnity.Converters;
 using System.Text;
+using ReactUnity.Converters;
 
 namespace ReactUnity.Types
 {

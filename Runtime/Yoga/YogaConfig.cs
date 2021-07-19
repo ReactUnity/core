@@ -47,7 +47,8 @@ namespace Facebook.Yoga
 
         internal YGConfigHandle Handle
         {
-            get {
+            get
+            {
                 return _ygConfig;
             }
         }
@@ -81,11 +82,13 @@ namespace Facebook.Yoga
 
         public Logger Logger
         {
-            get {
+            get
+            {
                 return _logger;
             }
 
-            set {
+            set
+            {
                 _logger = value;
             }
         }

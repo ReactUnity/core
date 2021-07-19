@@ -1,9 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using ExCSS;
 using ReactUnity.Converters;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ReactUnity
 {
@@ -82,8 +82,7 @@ namespace ReactUnity
                 }
             }
 
-            return offsets.Select(o =>
-            {
+            return offsets.Select(o => {
                 var val = new Keyframe();
                 val.Offset = o;
 

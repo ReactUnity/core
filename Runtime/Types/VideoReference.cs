@@ -1,8 +1,7 @@
-using ReactUnity.Converters;
-using ReactUnity.Styling;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using ReactUnity.Converters;
+using ReactUnity.Styling;
 using UnityEngine.Video;
 
 namespace ReactUnity.Types

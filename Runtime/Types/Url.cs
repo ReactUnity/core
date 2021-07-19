@@ -1,6 +1,6 @@
-using ReactUnity.Converters;
 using System;
 using System.Text.RegularExpressions;
+using ReactUnity.Converters;
 
 namespace ReactUnity.Types
 {

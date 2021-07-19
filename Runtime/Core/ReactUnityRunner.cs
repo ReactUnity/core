@@ -1,10 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -40,8 +40,7 @@ namespace ReactUnity
             var beforeStartCallbacks = new List<Action<ReactUnityRunner>>() { (runner) => beforeStart?.Invoke(runner) };
             var afterStartCallbacks = new List<Action<ReactUnityRunner, Exception>>() { (runner, success) => afterStart?.Invoke(runner) };
 
-            engine.SetValue("addEventListener", new Action<string, Action<ReactUnityRunner>>((e, f) =>
-            {
+            engine.SetValue("addEventListener", new Action<string, Action<ReactUnityRunner>>((e, f) => {
                 if (e == "DOMContentLoaded") afterStartCallbacks.Add((runner, success) => f(runner));
             }));
 

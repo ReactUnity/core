@@ -1,7 +1,7 @@
-using ReactUnity.Styling;
-using ReactUnity.Converters;
 using System;
 using System.Collections.Generic;
+using ReactUnity.Converters;
+using ReactUnity.Styling;
 using UnityEngine;
 
 namespace ReactUnity.Animations
@@ -37,8 +37,7 @@ namespace ReactUnity.Animations
 
             var step = 1f / count;
 
-            return delegate (float value, float start, float end)
-            {
+            return delegate (float value, float start, float end) {
                 var diff = end - start;
 
                 var st = value * count;
@@ -167,8 +166,7 @@ namespace ReactUnity.Animations
                     }
                 }
 
-                return delegate (float value, float start, float end)
-                {
+                return delegate (float value, float start, float end) {
                     // Because JavaScript number are imprecise, we should guarantee the extremes are right.
                     if (value == 0 || value == 1)
                     {

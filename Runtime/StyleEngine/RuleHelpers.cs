@@ -1,10 +1,10 @@
-using ExCSS;
-using ReactUnity.Styling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using ExCSS;
+using ReactUnity.Styling;
 
 namespace ReactUnity.StyleEngine
 {

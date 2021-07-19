@@ -23,14 +23,12 @@ namespace ReactUnity.Helpers
 
             UpdateStringObjectDictionary(dict, isSerializing);
 
-            removeStringDictionaryListener = dict.AddListener((key, value, dc) =>
-            {
+            removeStringDictionaryListener = dict.AddListener((key, value, dc) => {
                 if (key != null) this[key] = value;
                 else UpdateStringObjectDictionary(dc, false);
             });
 
-            dict.AddReserializeListener((dc) =>
-            {
+            dict.AddReserializeListener((dc) => {
                 UpdateStringObjectDictionary(dc, true);
             });
         }

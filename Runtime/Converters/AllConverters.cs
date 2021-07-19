@@ -1,10 +1,10 @@
 
-using Facebook.Yoga;
 using System;
-using UnityEngine;
 using System.Collections.Generic;
-using ReactUnity.Types;
+using Facebook.Yoga;
 using ReactUnity.Animations;
+using ReactUnity.Types;
+using UnityEngine;
 
 namespace ReactUnity.Converters
 {

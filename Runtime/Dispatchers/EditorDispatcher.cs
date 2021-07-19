@@ -26,8 +26,7 @@ namespace ReactUnity.Dispatchers
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.update += Update;
 
-            UnityEditor.EditorApplication.playModeStateChanged += (state) =>
-            {
+            UnityEditor.EditorApplication.playModeStateChanged += (state) => {
                 UnityEditor.EditorApplication.update -= Update;
                 UnityEditor.EditorApplication.update += Update;
             };

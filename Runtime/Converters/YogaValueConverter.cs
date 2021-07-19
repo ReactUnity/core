@@ -1,7 +1,7 @@
-using Facebook.Yoga;
-using ReactUnity.Styling;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Facebook.Yoga;
+using ReactUnity.Styling;
 
 namespace ReactUnity.Converters
 {

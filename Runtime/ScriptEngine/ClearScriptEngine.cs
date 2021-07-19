@@ -3,13 +3,13 @@
 #endif
 
 #if REACT_CLEARSCRIPT
-using Microsoft.ClearScript;
-using Microsoft.ClearScript.V8;
-using ReactUnity.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.V8;
+using ReactUnity.Helpers;
 using UnityEngine;
 
 namespace ReactUnity.ScriptEngine

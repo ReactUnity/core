@@ -134,7 +134,7 @@ namespace ReactUnity.DomProxies
 
             if (WebSocketCloseCode.IsDefined(typeof(WebSocketCloseCode), closeCode))
             {
-                return (WebSocketCloseCode)closeCode;
+                return (WebSocketCloseCode) closeCode;
             }
             else
             {
@@ -471,29 +471,25 @@ namespace ReactUnity.DomProxies
                 this.ws = new WebSocketSharp.WebSocket(url);
 
                 // Bind OnOpen event
-                this.ws.OnOpen += (sender, ev) =>
-                {
+                this.ws.OnOpen += (sender, ev) => {
                     this.OnOpen?.Invoke();
                 };
 
                 // Bind OnMessage event
-                this.ws.OnMessage += (sender, ev) =>
-                {
+                this.ws.OnMessage += (sender, ev) => {
                     if (ev.RawData != null)
                         this.OnMessage?.Invoke(ev.RawData);
                 };
 
                 // Bind OnError event
-                this.ws.OnError += (sender, ev) =>
-                {
+                this.ws.OnError += (sender, ev) => {
                     this.OnError?.Invoke(ev.Message);
                 };
 
                 // Bind OnClose event
-                this.ws.OnClose += (sender, ev) =>
-                {
+                this.ws.OnClose += (sender, ev) => {
                     this.OnClose?.Invoke(
-                        WebSocketHelpers.ParseCloseCodeEnum((int)ev.Code),
+                        WebSocketHelpers.ParseCloseCodeEnum((int) ev.Code),
                         ev.Reason
                     );
                 };
@@ -546,7 +542,7 @@ namespace ReactUnity.DomProxies
 
             try
             {
-                this.ws.CloseAsync((ushort)code, reason);
+                this.ws.CloseAsync((ushort) code, reason);
             }
             catch (Exception e)
             {

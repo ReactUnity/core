@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using ExCSS;
 using ReactUnity.Converters;
 using ReactUnity.Dispatchers;
@@ -8,10 +12,6 @@ using ReactUnity.StyleEngine;
 using ReactUnity.Timers;
 using ReactUnity.Types;
 using ReactUnity.Visitors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace ReactUnity
@@ -81,8 +81,7 @@ namespace ReactUnity
 
             if (CalculatesLayout)
             {
-                Action callback = () =>
-                {
+                Action callback = () => {
                     if (LayoutScheduled)
                     {
                         Host?.Layout?.CalculateLayout();

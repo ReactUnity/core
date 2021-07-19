@@ -113,8 +113,7 @@ namespace ReactUnity.Types
             }
 
 
-            Get(context, realType, realValue, (val) =>
-            {
+            Get(context, realType, realValue, (val) => {
                 IsCached = true;
                 CachedValue = val;
                 callback(val);

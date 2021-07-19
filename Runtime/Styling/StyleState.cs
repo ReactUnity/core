@@ -1,9 +1,9 @@
-using Facebook.Yoga;
-using ReactUnity.Animations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Facebook.Yoga;
+using ReactUnity.Animations;
 using Mathf = UnityEngine.Mathf;
 
 namespace ReactUnity.Styling
@@ -585,8 +585,7 @@ namespace ReactUnity.Styling
                 var state = audioStates[i] ??= new AudioState();
 
 
-                Action tryPlayClip = () =>
-                {
+                Action tryPlayClip = () => {
                     if (state.Loaded && state.ShouldStart)
                     {
                         state.ShouldStart = false;
@@ -602,8 +601,7 @@ namespace ReactUnity.Styling
                 {
                     state.Loading = true;
 
-                    part.AudioClip.Get(Context, (clip) =>
-                    {
+                    part.AudioClip.Get(Context, (clip) => {
                         state.Clip = clip;
                         state.Loaded = true;
                         state.Loading = false;

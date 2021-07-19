@@ -1,7 +1,7 @@
-using ReactUnity.Converters;
-using ReactUnity.Styling;
 using System;
 using System.Collections.Generic;
+using ReactUnity.Converters;
+using ReactUnity.Styling;
 using UnityEngine;
 
 namespace ReactUnity.Types

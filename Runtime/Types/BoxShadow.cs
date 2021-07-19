@@ -1,6 +1,6 @@
-using ReactUnity.Styling;
-using ReactUnity.Converters;
 using System.Linq;
+using ReactUnity.Converters;
+using ReactUnity.Styling;
 using UnityEngine;
 
 namespace ReactUnity.Types

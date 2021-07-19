@@ -1,5 +1,5 @@
-using ReactUnity.Dispatchers;
 using System;
+using ReactUnity.Dispatchers;
 
 namespace ReactUnity.Helpers
 {

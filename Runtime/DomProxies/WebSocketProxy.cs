@@ -1,6 +1,6 @@
+using System;
 using Jint.Native;
 using ReactUnity.Helpers;
-using System;
 
 namespace ReactUnity.DomProxies
 {
@@ -55,9 +55,9 @@ namespace ReactUnity.DomProxies
 
         public WebSocketProxy(ReactContext context, string url, params string[] protocols) : this(context, url) { }
 
-        public void close(int code = (int)WebSocketCloseCode.Normal, string reason = null)
+        public void close(int code = (int) WebSocketCloseCode.Normal, string reason = null)
         {
-            socket.Close((WebSocketCloseCode)code, reason);
+            socket.Close((WebSocketCloseCode) code, reason);
         }
 
         public void Dispose()

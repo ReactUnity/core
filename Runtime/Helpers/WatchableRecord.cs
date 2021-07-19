@@ -202,8 +202,7 @@ namespace ReactUnity.Helpers
 
             var pb = propertyBag = new HostPropertyBag(this);
 
-            Action regenerate = () =>
-            {
+            Action regenerate = () => {
                 pb.ClearNoCheck();
                 foreach (var d in this)
                 {
@@ -216,8 +215,7 @@ namespace ReactUnity.Helpers
 
             regenerate();
 
-            changed += (string key, object value, WatchableRecord<object> dc) =>
-            {
+            changed += (string key, object value, WatchableRecord<object> dc) => {
                 if (propertyBag != null)
                 {
                     if (key != null)

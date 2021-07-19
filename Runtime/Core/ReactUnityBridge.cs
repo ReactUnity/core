@@ -2,10 +2,8 @@
 #define REACT_CLEARSCRIPT
 #endif
 
-using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.Helpers;
-using System;
-using System.Diagnostics.CodeAnalysis;
+using ReactUnity.Helpers.TypescriptUtils;
 
 namespace ReactUnity
 {

@@ -2,12 +2,12 @@
 #define REACT_CLEARSCRIPT
 #endif
 
+using System;
+using System.Linq;
 using Jint;
 using Jint.Native;
 using Jint.Native.Function;
 using Jint.Runtime.Interop;
-using System;
-using System.Linq;
 
 namespace ReactUnity.Helpers
 {

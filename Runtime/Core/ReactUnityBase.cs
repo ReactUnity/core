@@ -1,10 +1,10 @@
+using System;
 using ReactUnity.Dispatchers;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using ReactUnity.Timers;
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -86,8 +86,7 @@ namespace ReactUnity
             scheduler = new UnityScheduler(dispatcher);
             runner = new ReactUnityRunner();
             MediaProvider = CreateMediaProvider();
-            var watcherDisposable = script.GetScript((code, isDevServer) =>
-            {
+            var watcherDisposable = script.GetScript((code, isDevServer) => {
                 Context = CreateContext(script, isDevServer);
                 runner.RunScript(code, Context, EngineType, Debug, AwaitDebugger, BeforeStart, AfterStart);
             }, dispatcher, true, disableWarnings);

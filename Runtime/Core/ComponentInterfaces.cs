@@ -1,11 +1,11 @@
+using System;
+using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Helpers.TypescriptUtils;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 using ReactUnity.Visitors;
-using System;
-using System.Collections.Generic;
 
 namespace ReactUnity
 {

@@ -1,8 +1,8 @@
-using Jint;
-using ReactUnity.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Jint;
+using ReactUnity.Helpers;
 using UnityEngine.Networking;
 
 namespace ReactUnity.DomProxies
@@ -79,20 +79,20 @@ namespace ReactUnity.DomProxies
 
         public void setRequestHeader(object name, object value)
         {
-            headers.Add((string)name, (string)value);
+            headers.Add((string) name, (string) value);
         }
 
         public void append(object name, object value)
         {
             List<string> postList;
-            if (!postData.TryGetValue((string)name, out postList))
+            if (!postData.TryGetValue((string) name, out postList))
             {
                 postList = new List<string>();
             }
-            postList.Add((string)value);
+            postList.Add((string) value);
 
-            postData.Remove((string)name);
-            postData.Add((string)name, postList);
+            postData.Remove((string) name);
+            postData.Add((string) name, postList);
         }
 
         public void abort()

@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Animations;
 using ReactUnity.Types;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

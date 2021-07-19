@@ -1,8 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using ExCSS;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ReactUnity.StyleEngine
 {

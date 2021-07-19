@@ -1,7 +1,7 @@
-using ReactUnity.Dispatchers;
-using ReactUnity.Helpers;
 using System;
 using System.Collections;
+using ReactUnity.Dispatchers;
+using ReactUnity.Helpers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -110,8 +110,7 @@ namespace ReactUnity
 
                 return new DisposableHandle(dispatcher,
                     dispatcher.StartDeferred(
-                        WatchWebRequest(request, callback, err =>
-                        {
+                        WatchWebRequest(request, callback, err => {
                             DevServerFailed = true;
                             Debug.LogWarning("DevServer seems to be unaccessible. Falling back to the original script.");
                             GetScript(callback, dispatcher, false);
