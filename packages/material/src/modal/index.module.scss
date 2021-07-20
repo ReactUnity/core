@@ -1,0 +1,77 @@
+@import "../styles";
+
+.host {
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgba($color: #000000, $alpha: 0.45);
+  overflow: auto;
+  overscroll-behavior: contain;
+
+  @include fullCover();
+
+  &.opened {
+    animation: appearAnim 400ms both;
+  }
+
+  &.closed {
+    animation: closeAnim 200ms both;
+    pointer-events: none;
+  }
+
+  &:after {
+    content: "";
+    opacity: 0;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 30%;
+  }
+}
+
+@keyframes appearAnim {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes closeAnim {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.content {
+  @include elevation(5);
+
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1001;
+  background-color: white;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  margin: auto;
+}
+
+.close {
+  border-radius: 50%;
+  background-color: #bfbcbc;
+  color: black;
+  @include elevation(2);
+
+  position: absolute;
+  transform: translate(50%, -50%) scale(0.8);
+  padding: 4px;
+  right: 2px;
+  top: 2px;
+  display: flex;
+}

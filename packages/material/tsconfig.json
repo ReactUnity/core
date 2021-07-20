@@ -20,6 +20,10 @@
     "allowSyntheticDefaultImports": true,
     "lib": [
       "ES2019"
+    ],
+    "types": [
+      "@reactunity/renderer",
+      "@reactunity/scripts"
     ]
   },
   "files": [
