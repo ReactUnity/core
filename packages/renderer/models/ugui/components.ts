@@ -14,7 +14,7 @@ export interface View<T = ReactUnity.UGUI.UGUIComponent> extends Events<T> {
 export interface Text extends View<ReactUnity.UGUI.TextComponent> { }
 
 export interface Icon extends View<ReactUnity.UGUI.IconComponent> {
-  set?: ReactUnity.UGUI.IconSet | string;
+  set?: ReactUnity.Styling.IconSet | string;
 }
 
 export interface Scroll extends View<ReactUnity.UGUI.ScrollComponent> { }

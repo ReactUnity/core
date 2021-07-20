@@ -19,7 +19,7 @@ declare global {
   const UnityBridge: ReactUnity.ReactUnityBridge;
   const Context: ReactUnity.ReactContext;
   const HostContainer: NativeContainerInstance;
-  const UnityScheduler: ReactUnity.Schedulers.IUnityScheduler;
+  const UnityScheduler: ReactUnity.Scheduling.IScheduler;
   const Callback: <T, R>(callback: (...args: T[]) => R) => ReactUnity.Helpers.Callback;
   const location: ReactUnity.DomProxies.Location;
   const localStorage: ReactUnity.DomProxies.LocalStorage;
