@@ -1,5 +1,6 @@
 using Facebook.Yoga;
 using ReactUnity.Helpers;
+using ReactUnity.UGUI.Behaviours;
 using UnityEngine;
 
 namespace ReactUnity.UGUI

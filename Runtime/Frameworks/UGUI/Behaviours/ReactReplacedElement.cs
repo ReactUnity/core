@@ -3,7 +3,7 @@ using Facebook.Yoga;
 using ReactUnity.Types;
 using UnityEngine;
 
-namespace ReactUnity.UGUI.Layout
+namespace ReactUnity.UGUI.Behaviours
 {
     [ExecuteInEditMode]
     [AddComponentMenu("")]

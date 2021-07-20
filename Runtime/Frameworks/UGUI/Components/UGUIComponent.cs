@@ -3,7 +3,7 @@ using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
 using ReactUnity.Types;
-using ReactUnity.UGUI.Layout;
+using ReactUnity.UGUI.Behaviours;
 using ReactUnity.UGUI.StateHandlers;
 using UnityEngine;
 using UnityEngine.EventSystems;

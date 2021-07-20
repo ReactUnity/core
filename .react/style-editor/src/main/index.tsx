@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { CornerLabels, StyleProp, StylePropGroup, StylePropPart, styleProps } from '../common/props';
 import style from './index.module.scss';
 
-type RC = ReactUnity.UGUI.Layout.ReactElement;
+type RC = ReactUnity.UGUI.Behaviours.ReactElement;
 
 const Window = Globals.Window;
 const Inspector = Globals.Inspector;

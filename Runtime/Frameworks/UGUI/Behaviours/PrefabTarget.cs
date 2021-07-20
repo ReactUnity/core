@@ -3,7 +3,7 @@ using ReactUnity.Helpers;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace ReactUnity.UGUI
+namespace ReactUnity.UGUI.Behaviours
 {
     public class PrefabTarget : UIBehaviour, IPrefabTarget
     {

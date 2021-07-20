@@ -1,7 +1,7 @@
 using Facebook.Yoga;
 using UnityEngine;
 
-namespace ReactUnity.UGUI.Layout
+namespace ReactUnity.UGUI.Behaviours
 {
     public class ResponsiveElement : MonoBehaviour
     {

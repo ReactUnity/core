@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactUnity.UGUI.Layout
+namespace ReactUnity.UGUI.Behaviours
 {
     public class TextMeasurer : MonoBehaviour, ILayoutSelfController
     {

@@ -3,7 +3,7 @@ using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactUnity.UGUI.Layout
+namespace ReactUnity.UGUI.Behaviours
 {
     public class ImageMeasurer : MonoBehaviour, ILayoutSelfController
     {

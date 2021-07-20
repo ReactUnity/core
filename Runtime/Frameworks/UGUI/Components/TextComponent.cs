@@ -1,5 +1,5 @@
 using Facebook.Yoga;
-using ReactUnity.UGUI.Layout;
+using ReactUnity.UGUI.Behaviours;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

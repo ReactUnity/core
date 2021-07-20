@@ -25,8 +25,8 @@ export interface StyleProp<T = any> {
   arrangement?: 'row' | 'rect' | 'corner';
   partTemplate?: string | ((part: StylePropPart) => string);
   component: React.FunctionComponent<StylePropComponentProps<T>> | React.ComponentClass<StylePropComponentProps<T>> | string;
-  getter?: (val: any, el: RU.UGUI.Layout.ReactElement) => T;
-  setter?: (val: T, el: RU.UGUI.Layout.ReactElement) => any;
+  getter?: (val: any, el: RU.UGUI.Behaviours.ReactElement) => T;
+  setter?: (val: T, el: RU.UGUI.Behaviours.ReactElement) => any;
 }
 
 export type StylePropPart = 'left' | 'right' | 'top' | 'bottom' | 'start' | 'end' | '';
