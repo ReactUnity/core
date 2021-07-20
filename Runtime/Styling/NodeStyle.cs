@@ -35,10 +35,10 @@ namespace ReactUnity.Styling
             set => SetStyleValue(StyleProperties.visibility, value);
             get => GetStyleValue<bool>(StyleProperties.visibility);
         }
-        public string cursor
+        public CursorList cursor
         {
             set => SetStyleValue(StyleProperties.cursor, value);
-            get => GetStyleValue<string>(StyleProperties.cursor);
+            get => GetStyleValue<CursorList>(StyleProperties.cursor);
         }
         public PointerEvents pointerEvents
         {

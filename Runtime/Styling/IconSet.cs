@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactUnity.UGUI
+namespace ReactUnity.Styling
 {
-    [CreateAssetMenu(fileName = "IconSet", menuName = "React Unity/Create Icon Set", order = 1)]
+    [CreateAssetMenu(fileName = "IconSet", menuName = "React Unity/Icon Set", order = 1)]
     public class IconSet : ScriptableObject
     {
         public string Name;

@@ -4,6 +4,7 @@ using ReactUnity.Dispatchers;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
+using ReactUnity.Styling;
 using ReactUnity.Timers;
 using ReactUnity.UGUI.StateHandlers;
 using UnityEngine;
@@ -54,6 +55,8 @@ namespace ReactUnity.UGUI
             }
         }
 
+        public override CursorSet CursorSet { get; }
+
         public static Func<string, string, UGUIContext, UGUIComponent> defaultCreator =
             (tag, text, context) => new ContainerComponent(context, tag);
 
@@ -63,7 +66,7 @@ namespace ReactUnity.UGUI
         public UGUIContext(
             RectTransform hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider,
-            bool isDevServer, Action onRestart, List<IconSet> iconSets
+            bool isDevServer, Action onRestart, List<IconSet> iconSets, CursorSet cursorSet
         ) : base(globals, script, dispatcher, scheduler, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
         {
             Host = new HostComponent(hostElement, this);
@@ -75,6 +78,8 @@ namespace ReactUnity.UGUI
                 if (iconSets.Count > 0) IconSets["default"] = iconSets[0];
                 foreach (var ic in iconSets) IconSets[ic.Name] = ic;
             }
+
+            CursorSet = cursorSet;
         }
 
         public override IReactComponent CreateComponent(string tag, string text)

@@ -37,6 +37,7 @@ namespace ReactUnity.Converters
         static public IStyleConverter TransitionListConverter = new TransitionList.Converter();
         static public IStyleConverter AnimationListConverter = new AnimationList.Converter();
         static public IStyleConverter AudioListConverter = new AudioList.Converter();
+        static public IStyleConverter CursorListConverter = new CursorList.Converter();
         static public IStyleConverter BoxShadowListConverter = new BoxShadowList.Converter();
         static public IStyleConverter TimingFunctionConverter = new TimingFunctions.Converter();
 
@@ -54,12 +55,14 @@ namespace ReactUnity.Converters
             { typeof(object), DefaultConverter },
             { typeof(Color), ColorConverter },
             { typeof(bool), BoolConverter },
-            { typeof(BoxShadowList), BoxShadowListConverter },
+            { typeof(Url), UrlConverter },
             { typeof(ImageReference), ImageReferenceConverter },
             { typeof(FontReference), FontReferenceConverter},
             { typeof(TransitionList), TransitionListConverter},
             { typeof(AnimationList), AnimationListConverter},
             { typeof(AudioList), AudioListConverter},
+            { typeof(CursorList), CursorListConverter},
+            { typeof(BoxShadowList), BoxShadowListConverter },
             { typeof(TimingFunction), TimingFunctionConverter },
         };
 

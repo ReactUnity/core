@@ -219,8 +219,15 @@ namespace ReactUnity.UGUI
 
         private void SetCursor()
         {
-            if (string.IsNullOrWhiteSpace(ComputedStyle.cursor)) return;
-            var handler = GetOrAddComponent<CursorHandler>();
+            var cursor = ComputedStyle.cursor;
+            var handler = GetComponent<CursorHandler>();
+            if (cursor == null && handler == null) return;
+            if (!handler)
+            {
+                handler = AddComponent<CursorHandler>();
+                handler.Context = Context;
+                handler.Component = this;
+            }
             handler.Cursor = ComputedStyle.cursor;
         }
 

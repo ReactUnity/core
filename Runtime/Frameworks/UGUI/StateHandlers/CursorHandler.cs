@@ -1,4 +1,5 @@
 using ReactUnity.Helpers;
+using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -6,28 +7,37 @@ namespace ReactUnity.UGUI.StateHandlers
 {
     public class CursorHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        private string cursor;
-        public string Cursor
+        public ReactContext Context;
+        public IReactComponent Component;
+
+        private CursorList cursor;
+        public CursorList Cursor
         {
             set
             {
                 cursor = value;
-                if (cursorShown) CursorAPI.SetCursor(cursor);
+                if (cursorShown) Context.CursorAPI.Refresh();
             }
-            get { return cursor; }
+            get => cursor;
         }
 
         private bool cursorShown = false;
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            CursorAPI.SetCursor(cursor);
+            Context.CursorAPI.Push(Component);
             cursorShown = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            CursorAPI.SetCursor("");
+            Context.CursorAPI.Pop(Component);
+            cursorShown = false;
+        }
+
+        private void OnDisable()
+        {
+            Context.CursorAPI.Pop(Component);
             cursorShown = false;
         }
     }

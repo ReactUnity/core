@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI
         {
             backgroundColor = new Color(0.9f, 0.9f, 0.9f),
             borderRadius = 8f,
-            cursor = "pointer",
+            cursor = CursorList.Pointer,
             textAlign = TMPro.TextAlignmentOptions.Midline,
             appearance = Appearance.Button,
         };

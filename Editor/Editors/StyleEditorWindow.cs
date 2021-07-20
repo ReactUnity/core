@@ -8,7 +8,7 @@ namespace ReactUnity.Editor
 {
     public class StyleEditorWindow : ReactWindow
     {
-        [MenuItem("React/Show Style Editor")]
+        [MenuItem("React/Style Editor")]
         public static void ShowDefaultWindow()
         {
             var window = GetWindow<StyleEditorWindow>();

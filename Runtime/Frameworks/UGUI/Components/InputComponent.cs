@@ -25,7 +25,7 @@ namespace ReactUnity.UGUI
             backgroundColor = Color.white,
             borderRadius = 8f,
             fontSize = 24,
-            cursor = "text",
+            cursor = CursorList.Text,
             appearance = Appearance.Input,
         };
 

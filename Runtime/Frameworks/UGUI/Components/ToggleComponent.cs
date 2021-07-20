@@ -15,7 +15,7 @@ namespace ReactUnity.UGUI
         {
             backgroundColor = new Color(0.82f, 0.82f, 0.82f, 1),
             borderRadius = 6f,
-            cursor = "pointer",
+            cursor = CursorList.Pointer,
             appearance = Appearance.Toggle,
         };
         public static YogaNode ToggleDefaultLayout { get; } = new YogaNode()

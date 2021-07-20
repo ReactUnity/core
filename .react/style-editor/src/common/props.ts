@@ -3,7 +3,7 @@ import React from 'react';
 import { BoxShadowField } from '../components/box-shadow';
 import { enumComponent, flagsComponent, objectComponent, sliderComponent, sliderintComponent } from '../components/other';
 import { YogaValue2Field } from '../components/yogavalue2';
-import { convertFloatToLength, convertLengthToFloat, convertLengthToYoga, convertYogaToLength, floatDefaultGetter } from './helpers';
+import { convertFloatToLength, convertLengthToFloat, convertLengthToYoga, convertListToString, convertStringToList, convertYogaToLength, floatDefaultGetter } from './helpers';
 
 export interface StylePropComponentProps<T = any> {
   className?: string;
@@ -58,6 +58,7 @@ export const PartCapitalize = {
 };
 
 const lengthField = { component: 'length', getter: convertYogaToLength, setter: convertLengthToYoga };
+const commaSeparatedListField = { component: 'input', getter: convertListToString, setter: convertStringToList };
 const borderRadiusField = { component: 'length', getter: convertFloatToLength, setter: convertLengthToFloat };
 
 export const styleProps: StylePropGroup[] = [
@@ -104,7 +105,15 @@ export const styleProps: StylePropGroup[] = [
 
   {
     props: [
-      { name: 'cursor', component: 'input', label: 'Cursor' },
+      { name: 'animation', ...commaSeparatedListField, label: 'Animation' },
+      { name: 'transition', ...commaSeparatedListField, label: 'Transition' },
+      { name: 'audio', ...commaSeparatedListField, label: 'Audio' },
+    ],
+  },
+
+  {
+    props: [
+      { name: 'cursor', ...commaSeparatedListField, label: 'Cursor' },
       { name: 'pointerEvents', component: enumComponent('ReactUnity.Types.PointerEvents'), label: 'Pointer Events' },
       { name: 'appearance', component: enumComponent('ReactUnity.Types.Appearance'), label: 'Appearance' },
       { name: 'navigation', component: flagsComponent('UnityEngine.UI.Navigation+Mode'), label: 'Navigation' },

@@ -118,6 +118,46 @@ namespace ReactUnity.Editor.Tests
         }
 
         [Test]
+        public void CursorConverter()
+        {
+            var converted = AllConverters.CursorListConverter.Convert(
+                "url(res:cursors/hand) 5 5, pointer, default, url(https://google.com), asdf 10 20") as CursorList;
+
+            var url0 = converted.Items[0];
+            Assert.IsTrue(url0.Valid);
+            Assert.AreEqual(null, url0.Name);
+            Assert.AreEqual(AssetReferenceType.Resource, url0.Image?.Type);
+            Assert.AreEqual("cursors/hand", url0.Image?.Value);
+            Assert.AreEqual(5, url0.Offset.x);
+            Assert.AreEqual(5, url0.Offset.y);
+
+            var url1 = converted.Items[1];
+            Assert.IsTrue(url1.Valid);
+            Assert.AreEqual("pointer", url1.Name);
+            Assert.AreEqual(null, url1.Image);
+            Assert.AreEqual(0, url1.Offset.x);
+            Assert.AreEqual(0, url1.Offset.y);
+
+            var url2 = converted.Items[2];
+            Assert.IsTrue(url2.Valid);
+            Assert.AreEqual("default", url2.Name);
+            Assert.AreEqual(null, url2.Image);
+            Assert.AreEqual(0, url2.Offset.x);
+            Assert.AreEqual(0, url2.Offset.y);
+
+            var url3 = converted.Items[3];
+            Assert.IsTrue(url3.Valid);
+            Assert.AreEqual(null, url3.Name);
+            Assert.AreEqual(AssetReferenceType.Url, url3.Image?.Type);
+            Assert.AreEqual("https://google.com", url3.Image?.Value);
+            Assert.AreEqual(0, url3.Offset.x);
+            Assert.AreEqual(0, url3.Offset.y);
+
+            var url4 = converted.Items[4];
+            Assert.IsFalse(url4.Valid);
+        }
+
+        [Test]
         public void AudioConverter()
         {
             var converted = AllConverters.AudioListConverter.Convert("url(res:click) 3s 5 local, url(https://example.com) infinite 2s, url(res:something), sound3 5 5 5 5 5") as AudioList;

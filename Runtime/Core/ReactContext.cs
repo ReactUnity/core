@@ -9,6 +9,7 @@ using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
 using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
+using ReactUnity.Styling;
 using ReactUnity.Timers;
 using ReactUnity.Types;
 using ReactUnity.Visitors;
@@ -54,6 +55,8 @@ namespace ReactUnity
         public Dictionary<string, FontReference> FontFamilies = new Dictionary<string, FontReference>();
         public Dictionary<string, KeyframeList> Keyframes = new Dictionary<string, KeyframeList>();
 
+        public virtual CursorSet CursorSet { get; }
+        public CursorAPI CursorAPI { get; }
 
         public ReactContext(
             GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
@@ -72,6 +75,7 @@ namespace ReactUnity
             CalculatesLayout = calculatesLayout;
             Location = new Location(this);
             MediaProvider = mediaProvider;
+            CursorAPI = new CursorAPI(this);
 
             Parser = new StylesheetParser(true, true, true, true, true);
             StyleTree = new StyleTree(Parser);
