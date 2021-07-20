@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.UIToolkit;
@@ -35,8 +36,10 @@ namespace ReactUnity.Editor.Tests
 
         public void Render() => Component.Run();
         public void InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
-        public IReactComponent Q(string query, IReactComponent scope = null) => (scope ?? Host).QuerySelector(query);
-        public List<IReactComponent> QA(string query, IReactComponent scope = null) => (scope ?? Host).QuerySelectorAll(query);
+        public BaseReactComponent<UIToolkitContext> Q(string query, IReactComponent scope = null) =>
+            (scope ?? Host).QuerySelector(query) as BaseReactComponent<UIToolkitContext>;
+        public List<BaseReactComponent<UIToolkitContext>> QA(string query, IReactComponent scope = null) =>
+            (scope ?? Host).QuerySelectorAll(query).OfType<BaseReactComponent<UIToolkitContext>>().ToList();
         public IEnumerator AdvanceTime(float advanceBy)
         {
             if (Context.Timer is ControlledTimer ct)
@@ -44,16 +47,18 @@ namespace ReactUnity.Editor.Tests
                 ct.AdvanceTime(advanceBy);
                 yield return null;
             }
-            else if (Context.Timer is UnityTimer)
+            else if (Context.Timer is EditorTimer)
             {
-                yield return new EditModeWaitForSeconds(advanceBy);
+                yield return new EditModeWaitForSeconds(advanceBy).Perform();
             }
         }
 
         [OneTimeSetUp]
-        public void InitializeFixture()
+        [OneTimeTearDown]
+        public void TearDownFixture()
         {
-            if (Context != null) Window.Close();
+            if (EditorWindow.HasOpenInstances<TestReactWindow>())
+                if (Window != null) Window.Close();
         }
     }
 }

@@ -6,6 +6,7 @@ using ReactUnity.Editor.Renderer;
 using ReactUnity.ScriptEngine;
 using ReactUnity.Timers;
 using ReactUnity.UGUI;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.UIElements;
@@ -46,9 +47,26 @@ namespace ReactUnity.Editor.Tests
         {
             var engineType = test.FullName.Contains("(Jint)") ? JavascriptEngineType.Jint : JavascriptEngineType.ClearScript;
 
+            if (EditorWindow.HasOpenInstances<TestReactWindow>())
+            {
+                var existingWindow = EditorWindow.GetWindow<TestReactWindow>();
+
+                if (existingWindow != null && SkipIfExisting)
+                {
+                    Window = existingWindow;
+                    yield return null;
+                    yield break;
+                }
+                else
+                {
+                    existingWindow.Close();
+                    yield return null;
+                }
+            }
+
             var window = Window = TestReactWindow.CreateWindow(GetScript, engineType);
 
-            window.Timer = RealTimer ? UnityTimer.Instance as ITimer : new ControlledTimer();
+            window.Timer = RealTimer ? EditorTimer.Instance as ITimer : new ControlledTimer();
             window.Globals["test"] = test;
 
             if (IsDebugEnabled)
@@ -57,8 +75,6 @@ namespace ReactUnity.Editor.Tests
                 window.AwaitDebugger = true;
             }
 
-            //ru.BeforeStart.AddListener(BeforeStart);
-            //ru.AfterStart.AddListener(AfterStart);
             if (AutoRender)
             {
                 window.Run();

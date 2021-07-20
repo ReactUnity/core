@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
@@ -33,8 +34,10 @@ namespace ReactUnity.Tests
 
         public void Render() => Component.Render();
         public void InsertStyle(string style, int importanceOffset = 0) => Context.InsertStyle(style, importanceOffset);
-        public IReactComponent Q(string query, IReactComponent scope = null) => (scope ?? Host).QuerySelector(query);
-        public List<IReactComponent> QA(string query, IReactComponent scope = null) => (scope ?? Host).QuerySelectorAll(query);
+        public UGUIComponent Q(string query, IReactComponent scope = null) =>
+            (scope ?? Host).QuerySelector(query) as UGUIComponent;
+        public List<UGUIComponent> QA(string query, IReactComponent scope = null) =>
+            (scope ?? Host).QuerySelectorAll(query).OfType<UGUIComponent>().ToList();
         public IEnumerator AdvanceTime(float advanceBy)
         {
             if (Context.Timer is ControlledTimer ct)

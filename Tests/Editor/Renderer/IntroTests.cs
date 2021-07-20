@@ -2,7 +2,7 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 
-namespace ReactUnity.Editor.Tests
+namespace ReactUnity.Editor.Tests.Renderer
 {
     public class IntroTests : EditorTestBase
     {
