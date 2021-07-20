@@ -1,292 +1,217 @@
-(this["webpackChunkreactunity_sample"] = this["webpackChunkreactunity_sample"] || []).push([[774],{
+(this["webpackChunkreactunity_sample"] = this["webpackChunkreactunity_sample"] || []).push([[790],{
 
-/***/ 612:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 2:
+/***/ ((module) => {
 
 "use strict";
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "T": () => (/* binding */ Renderer)
-});
 
-// EXTERNAL MODULE: ./node_modules/react-reconciler/index.js
-var react_reconciler = __webpack_require__(84);
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/diffing.js
-function diffProperties(lastRawProps, nextRawProps, deepDiffing) {
-  if (deepDiffing === void 0) {
-    deepDiffing = 0;
-  }
+var memo = {};
+/* istanbul ignore next  */
 
-  if (lastRawProps === nextRawProps) return null;
-  var updatePayload = null;
-  var lastProps = lastRawProps;
-  var nextProps = nextRawProps;
-  var propKey;
+function getTarget(target) {
+  if (typeof memo[target] === "undefined") {
+    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
 
-  for (propKey in lastProps) {
-    if (nextProps.hasOwnProperty(propKey) || !lastProps.hasOwnProperty(propKey) || lastProps[propKey] == null) {
-      continue;
-    }
-
-    var prop = null;
-    var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
-
-    if (depth > 0) {
-      prop = diffProperties(lastProps[propKey], null, depth - 1);
-      if (!prop) continue;
-    } // For all other deleted properties we add it to the queue. We use
-    // the whitelist in the commit phase instead.
-
-
-    (updatePayload = updatePayload || []).push(propKey, prop);
-  }
-
-  for (propKey in nextProps) {
-    var nextProp = nextProps[propKey];
-    var lastProp = lastProps != null ? lastProps[propKey] : undefined;
-
-    if (!nextProps.hasOwnProperty(propKey) || nextProp === lastProp || nextProp == null && lastProp == null) {
-      continue;
-    }
-
-    var prop = nextProp;
-    var depth = deepDiffing > 0 ? deepDiffing : propKey === 'style' ? 1 : 0;
-
-    if (depth > 0) {
-      prop = diffProperties(lastProp, nextProp, depth - 1);
-      if (!prop) continue;
-    }
-
-    (updatePayload = updatePayload || []).push(propKey, prop);
-  }
-
-  return updatePayload;
-}
-;// CONCATENATED MODULE: ./node_modules/@reactunity/renderer/dist/src/renderer/renderer.js
-
-
-var hostContext = {};
-var childContext = {};
-
-function applyDiffedUpdate(writeTo, updatePayload, depth) {
-  if (depth === void 0) {
-    depth = 0;
-  }
-
-  if (!updatePayload) return false;
-
-  if (Array.isArray(updatePayload)) {
-    for (var index = 0; index < updatePayload.length; index += 2) {
-      var attr = updatePayload[index];
-      var value = updatePayload[index + 1];
-      if (depth > 0) applyDiffedUpdate(writeTo[attr], value, depth - 1);else writeTo.SetWithoutNotify(attr, value);
-    }
-
-    return updatePayload.length > 0;
-  } else {
-    for (var attr in updatePayload) {
-      if (updatePayload.hasOwnProperty(attr)) {
-        var value = updatePayload[attr];
-        writeTo.SetWithoutNotify(attr, value);
+    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+      try {
+        // This will throw an exception if access to iframe is blocked
+        // due to cross-origin restrictions
+        styleTarget = styleTarget.contentDocument.head;
+      } catch (e) {
+        // istanbul ignore next
+        styleTarget = null;
       }
     }
 
-    return true;
+    memo[target] = styleTarget;
   }
+
+  return memo[target];
 }
 
-function applyUpdate(instance, updatePayload, isAfterMount, type, pre) {
-  if (pre === void 0) {
-    pre = true;
+module.exports = getTarget;
+
+/***/ }),
+
+/***/ 62:
+/***/ ((module) => {
+
+"use strict";
+
+
+var stylesInDom = [];
+
+function getIndexByIdentifier(identifier) {
+  var result = -1;
+
+  for (var i = 0; i < stylesInDom.length; i++) {
+    if (stylesInDom[i].identifier === identifier) {
+      result = i;
+      break;
+    }
   }
 
-  var updateAfterMount = false;
+  return result;
+}
 
-  for (var index = 0; index < updatePayload.length; index += 2) {
-    var attr = updatePayload[index];
-    var value = updatePayload[index + 1];
-    var isEvent = attr.substring(0, 2) === 'on'; // Register events before other properties
+function modulesToDom(list, options) {
+  var idCountMap = {};
+  var identifiers = [];
 
-    if (pre !== isEvent) continue;
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var id = options.base ? item[0] + options.base : item[0];
+    var count = idCountMap[id] || 0;
+    var identifier = "".concat(id, " ").concat(count);
+    idCountMap[id] = count + 1;
+    var index = getIndexByIdentifier(identifier);
+    var obj = {
+      css: item[1],
+      media: item[2],
+      sourceMap: item[3]
+    };
 
-    if (isEvent) {
-      UnityBridge.setEventListener(instance, attr, value);
-      continue;
-    }
-
-    if (attr === 'children') {
-      if (type === 'text') {
-        UnityBridge.setText(instance, value ? Array.isArray(value) && value.join ? value.join('') : value + '' : '');
-      }
-
-      continue;
-    }
-
-    if (attr === 'key') continue;
-    if (attr === 'ref') continue;
-    if (attr === 'tag') continue;
-
-    if (!isAfterMount && attr === 'style') {
-      updateAfterMount = true;
-      continue;
-    }
-
-    if (attr === 'style') {
-      if (applyDiffedUpdate(instance.Style, value)) {
-        instance.ResolveStyle();
-      }
-
-      continue;
-    }
-
-    if (attr.substring(0, 5) === 'data-') {
-      UnityBridge.setData(instance, attr.substring(5), value);
+    if (index !== -1) {
+      stylesInDom[index].references++;
+      stylesInDom[index].updater(obj);
     } else {
-      UnityBridge.setProperty(instance, attr, value);
+      stylesInDom.push({
+        identifier: identifier,
+        updater: addStyle(obj, options),
+        references: 1
+      });
     }
+
+    identifiers.push(identifier);
   }
 
-  if (pre) return applyUpdate(instance, updatePayload, isAfterMount, type, false) || updateAfterMount;
-  return updateAfterMount;
+  return identifiers;
 }
 
-var hostConfig = {
-  getRootHostContext: function getRootHostContext(rootContainerInstance) {
-    return hostContext;
-  },
-  getChildHostContext: function getChildHostContext(parentHostContext, type, rootContainerInstance) {
-    return childContext;
-  },
-  getPublicInstance: function getPublicInstance(instance) {
-    return instance;
-  },
-  prepareForCommit: function prepareForCommit(containerInfo) {
-    return null;
-  },
-  resetAfterCommit: function resetAfterCommit(containerInfo) {
-    return null;
-  },
-  clearContainer: function clearContainer() {
-    return null;
-  },
-  now: Date.now,
-  supportsHydration: false,
-  supportsPersistence: false,
-  isPrimaryRenderer: true,
-  createInstance: function createInstance(type, props, rootContainerInstance, hostContext, internalInstanceHandle) {
-    var _a;
+function addStyle(obj, options) {
+  var api = options.domAPI(options);
+  api.update(obj);
+  return function updateStyle(newObj) {
+    if (newObj) {
+      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
+        return;
+      }
 
-    if (type === 'text') {
-      var text = props.children === true ? '' : Array.isArray(props.children) ? props.children.join('') : ((_a = props.children) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-      return UnityBridge.createElement(type, text, rootContainerInstance);
+      api.update(obj = newObj);
+    } else {
+      api.remove();
+    }
+  };
+}
+
+module.exports = function (list, options) {
+  options = options || {};
+  list = list || [];
+  var lastIdentifiers = modulesToDom(list, options);
+  return function update(newList) {
+    newList = newList || [];
+
+    for (var i = 0; i < lastIdentifiers.length; i++) {
+      var identifier = lastIdentifiers[i];
+      var index = getIndexByIdentifier(identifier);
+      stylesInDom[index].references--;
     }
 
-    return UnityBridge.createElement(props.tag || type, null, rootContainerInstance);
-  },
-  createTextInstance: function createTextInstance(text, rootContainerInstance, hostContext, internalInstanceHandle) {
-    return UnityBridge.createText(text, rootContainerInstance);
-  },
-  appendInitialChild: function appendInitialChild(parent, child) {
-    UnityBridge.appendChild(parent, child);
-  },
-  finalizeInitialChildren: function finalizeInitialChildren(instance, type, props, rootContainerInstance, hostContext) {
-    var propsToUpdate = [];
-    var keys = Object.keys(props);
+    var newLastIdentifiers = modulesToDom(newList, options);
 
-    for (var index = 0; index < keys.length; index++) {
-      var key = keys[index];
-      var value = props[key];
-      propsToUpdate.push(key, value);
+    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
+      var _identifier = lastIdentifiers[_i];
+
+      var _index = getIndexByIdentifier(_identifier);
+
+      if (stylesInDom[_index].references === 0) {
+        stylesInDom[_index].updater();
+
+        stylesInDom.splice(_index, 1);
+      }
     }
 
-    return applyUpdate(instance, propsToUpdate, false);
-  },
-  // Some attributes like style need to be changed only after mount
-  commitMount: function commitMount(instance, type, newProps, internalInstanceHandle) {
-    var props = [];
-    if ('style' in newProps) props.push('style', newProps.style);
-    applyUpdate(instance, props, true);
-  },
-  shouldSetTextContent: function shouldSetTextContent(type, props) {
-    return type === 'text';
-  },
-  shouldDeprioritizeSubtree: function shouldDeprioritizeSubtree(type, props) {
-    return false;
-  },
-  // -------------------
-  //     Mutation
-  // -------------------
-  supportsMutation: true,
-  prepareUpdate: function prepareUpdate(instance, type, oldProps, newProps, rootContainerInstance, hostContext) {
-    return diffProperties(oldProps, newProps);
-  },
-  commitUpdate: function commitUpdate(instance, updatePayload, type, oldProps, newProps, internalInstanceHandle) {
-    applyUpdate(instance, updatePayload, true, type);
-  },
-  resetTextContent: function resetTextContent(instance) {
-    console.log('resetTextContent');
-  },
-  commitTextUpdate: function commitTextUpdate(textInstance, oldText, newText) {
-    UnityBridge.setText(textInstance, newText);
-  },
-  appendChild: function appendChild(parent, child) {
-    return UnityBridge.appendChild(parent, child);
-  },
-  appendChildToContainer: function appendChildToContainer(parent, child) {
-    return UnityBridge.appendChildToContainer(parent, child);
-  },
-  insertBefore: function insertBefore(parent, child, beforeChild) {
-    return UnityBridge.insertBefore(parent, child, beforeChild);
-  },
-  insertInContainerBefore: function insertInContainerBefore(parent, child, beforeChild) {
-    return UnityBridge.insertBefore(parent, child, beforeChild);
-  },
-  removeChild: function removeChild(parent, child) {
-    return UnityBridge.removeChild(parent, child);
-  },
-  removeChildFromContainer: function removeChildFromContainer(parent, child) {
-    return UnityBridge.removeChild(parent, child);
-  },
-  // Required for Suspense
-  // TODO: implement
-  preparePortalMount: function preparePortalMount() {},
-  hideInstance: function hideInstance(instance) {},
-  hideTextInstance: function hideTextInstance(textInstance) {},
-  unhideInstance: function unhideInstance(instance, props) {},
-  unhideTextInstance: function unhideTextInstance(textInstance, text) {},
-  // -------------------
-  //     Scheduling
-  // -------------------
-  scheduleDeferredCallback: function scheduleDeferredCallback(callback, options) {
-    return UnityScheduler.setTimeout(callback, (options === null || options === void 0 ? void 0 : options.timeout) || 0);
-  },
-  cancelDeferredCallback: function cancelDeferredCallback(callBackID) {
-    UnityScheduler.clearTimeout(callBackID);
-  },
-  noTimeout: -1,
-  scheduleTimeout: function scheduleTimeout(callback, timeout) {
-    return UnityScheduler.setTimeout(callback, timeout);
-  },
-  cancelTimeout: function cancelTimeout(handle) {
-    UnityScheduler.clearTimeout(handle);
-  },
-  queueMicrotask: function queueMicrotask(callback) {
-    return UnityScheduler.setTimeout(callback, 0);
-  }
-};
-var ReactUnityReconciler = react_reconciler(hostConfig);
-var Renderer = {
-  render: function render(element, hostContainer, callback) {
-    if (!hostContainer) hostContainer = HostContainer;
-    var hostRoot = ReactUnityReconciler.createContainer(hostContainer, 0, false, {});
-    return ReactUnityReconciler.updateContainer(element, hostRoot, null, callback);
-  }
+    lastIdentifiers = newLastIdentifiers;
+  };
 };
 
 /***/ }),
 
-/***/ 489:
+/***/ 173:
+/***/ ((module) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function insertStyleElement(options) {
+  var style = document.createElement("style");
+  options.setAttributes(style, options.attributes);
+  options.insert(style);
+  return style;
+}
+
+module.exports = insertStyleElement;
+
+/***/ }),
+
+/***/ 36:
+/***/ ((module) => {
+
+"use strict";
+
+
+/* istanbul ignore next  */
+function apply(style, options, obj) {
+  var css = obj.css;
+  var media = obj.media;
+  var sourceMap = obj.sourceMap;
+
+  if (media) {
+    style.setAttribute("media", media);
+  } else {
+    style.removeAttribute("media");
+  }
+
+  if (sourceMap && typeof btoa !== "undefined") {
+    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
+  } // For old IE
+
+  /* istanbul ignore if  */
+
+
+  options.styleTagTransform(css, style);
+}
+
+function removeStyleElement(style) {
+  // istanbul ignore if
+  if (style.parentNode === null) {
+    return false;
+  }
+
+  style.parentNode.removeChild(style);
+}
+/* istanbul ignore next  */
+
+
+function domAPI(options) {
+  var style = options.insertStyleElement(options);
+  return {
+    update: function update(obj) {
+      apply(style, options, obj);
+    },
+    remove: function remove() {
+      removeStyleElement(style);
+    }
+  };
+}
+
+module.exports = domAPI;
+
+/***/ }),
+
+/***/ 531:
 /***/ ((module) => {
 
 "use strict";
@@ -359,7 +284,7 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ 903:
+/***/ 411:
 /***/ ((module) => {
 
 "use strict";
@@ -447,7 +372,7 @@ module.exports = function cssWithMappingToString(item) {
 
 /***/ }),
 
-/***/ 625:
+/***/ 745:
 /***/ ((module) => {
 
 "use strict";
@@ -549,7 +474,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 /***/ }),
 
-/***/ 314:
+/***/ 539:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 /* module decorator */ module = __webpack_require__.nmd(module);
@@ -565,9 +490,9 @@ module.exports = function $$$reconciler($$$hostConfig) {
   var exports = {};
   'use strict';
 
-  var aa = __webpack_require__(625),
-      ba = __webpack_require__(359),
-      m = __webpack_require__(22);
+  var aa = __webpack_require__(745),
+      ba = __webpack_require__(842),
+      m = __webpack_require__(714);
 
   function q(a) {
     for (var b = "https://reactjs.org/docs/error-decoder.html?invariant=" + a, c = 1; c < arguments.length; c++) {
@@ -6260,19 +6185,19 @@ module.exports = function $$$reconciler($$$hostConfig) {
 
 /***/ }),
 
-/***/ 84:
+/***/ 182:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(314);
+  module.exports = __webpack_require__(539);
 } else {}
 
 /***/ }),
 
-/***/ 93:
+/***/ 375:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -6287,9 +6212,9 @@ var __webpack_unused_export__;
  */
 
 
-__webpack_require__(625);
+__webpack_require__(745);
 
-var f = __webpack_require__(359),
+var f = __webpack_require__(842),
     g = 60103;
 
 __webpack_unused_export__ = 60107;
@@ -6340,7 +6265,7 @@ exports.jsxs = q;
 
 /***/ }),
 
-/***/ 357:
+/***/ 130:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -6354,7 +6279,7 @@ exports.jsxs = q;
  */
 
 
-var l = __webpack_require__(625),
+var l = __webpack_require__(745),
     n = 60103,
     p = 60106;
 
@@ -6761,31 +6686,31 @@ exports.version = "17.0.2";
 
 /***/ }),
 
-/***/ 359:
+/***/ 842:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(357);
+  module.exports = __webpack_require__(130);
 } else {}
 
 /***/ }),
 
-/***/ 114:
+/***/ 139:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(93);
+  module.exports = __webpack_require__(375);
 } else {}
 
 /***/ }),
 
-/***/ 822:
+/***/ 240:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7137,228 +7062,17 @@ exports.unstable_wrapCallback = function (a) {
 
 /***/ }),
 
-/***/ 22:
+/***/ 714:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(822);
+  module.exports = __webpack_require__(240);
 } else {}
-
-/***/ }),
-
-/***/ 695:
-/***/ ((module) => {
-
-"use strict";
-
-
-var memo = {};
-/* istanbul ignore next  */
-
-function getTarget(target) {
-  if (typeof memo[target] === "undefined") {
-    var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
-
-    if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-      try {
-        // This will throw an exception if access to iframe is blocked
-        // due to cross-origin restrictions
-        styleTarget = styleTarget.contentDocument.head;
-      } catch (e) {
-        // istanbul ignore next
-        styleTarget = null;
-      }
-    }
-
-    memo[target] = styleTarget;
-  }
-
-  return memo[target];
-}
-
-module.exports = getTarget;
-
-/***/ }),
-
-/***/ 379:
-/***/ ((module) => {
-
-"use strict";
-
-
-var stylesInDom = [];
-
-function getIndexByIdentifier(identifier) {
-  var result = -1;
-
-  for (var i = 0; i < stylesInDom.length; i++) {
-    if (stylesInDom[i].identifier === identifier) {
-      result = i;
-      break;
-    }
-  }
-
-  return result;
-}
-
-function modulesToDom(list, options) {
-  var idCountMap = {};
-  var identifiers = [];
-
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i];
-    var id = options.base ? item[0] + options.base : item[0];
-    var count = idCountMap[id] || 0;
-    var identifier = "".concat(id, " ").concat(count);
-    idCountMap[id] = count + 1;
-    var index = getIndexByIdentifier(identifier);
-    var obj = {
-      css: item[1],
-      media: item[2],
-      sourceMap: item[3]
-    };
-
-    if (index !== -1) {
-      stylesInDom[index].references++;
-      stylesInDom[index].updater(obj);
-    } else {
-      stylesInDom.push({
-        identifier: identifier,
-        updater: addStyle(obj, options),
-        references: 1
-      });
-    }
-
-    identifiers.push(identifier);
-  }
-
-  return identifiers;
-}
-
-function addStyle(obj, options) {
-  var api = options.domAPI(options);
-  api.update(obj);
-  return function updateStyle(newObj) {
-    if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
-        return;
-      }
-
-      api.update(obj = newObj);
-    } else {
-      api.remove();
-    }
-  };
-}
-
-module.exports = function (list, options) {
-  options = options || {};
-  list = list || [];
-  var lastIdentifiers = modulesToDom(list, options);
-  return function update(newList) {
-    newList = newList || [];
-
-    for (var i = 0; i < lastIdentifiers.length; i++) {
-      var identifier = lastIdentifiers[i];
-      var index = getIndexByIdentifier(identifier);
-      stylesInDom[index].references--;
-    }
-
-    var newLastIdentifiers = modulesToDom(newList, options);
-
-    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
-      var _identifier = lastIdentifiers[_i];
-
-      var _index = getIndexByIdentifier(_identifier);
-
-      if (stylesInDom[_index].references === 0) {
-        stylesInDom[_index].updater();
-
-        stylesInDom.splice(_index, 1);
-      }
-    }
-
-    lastIdentifiers = newLastIdentifiers;
-  };
-};
-
-/***/ }),
-
-/***/ 216:
-/***/ ((module) => {
-
-"use strict";
-
-
-/* istanbul ignore next  */
-function insertStyleElement(options) {
-  var style = document.createElement("style");
-  options.setAttributes(style, options.attributes);
-  options.insert(style);
-  return style;
-}
-
-module.exports = insertStyleElement;
-
-/***/ }),
-
-/***/ 795:
-/***/ ((module) => {
-
-"use strict";
-
-
-/* istanbul ignore next  */
-function apply(style, options, obj) {
-  var css = obj.css;
-  var media = obj.media;
-  var sourceMap = obj.sourceMap;
-
-  if (media) {
-    style.setAttribute("media", media);
-  } else {
-    style.removeAttribute("media");
-  }
-
-  if (sourceMap && typeof btoa !== "undefined") {
-    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
-  } // For old IE
-
-  /* istanbul ignore if  */
-
-
-  options.styleTagTransform(css, style);
-}
-
-function removeStyleElement(style) {
-  // istanbul ignore if
-  if (style.parentNode === null) {
-    return false;
-  }
-
-  style.parentNode.removeChild(style);
-}
-/* istanbul ignore next  */
-
-
-function domAPI(options) {
-  var style = options.insertStyleElement(options);
-  return {
-    update: function update(obj) {
-      apply(style, options, obj);
-    },
-    remove: function remove() {
-      removeStyleElement(style);
-    }
-  };
-}
-
-module.exports = domAPI;
 
 /***/ })
 
 }]);
-//# sourceMappingURL=774.js.map
+//# sourceMappingURL=790.js.map

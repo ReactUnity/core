@@ -1,127 +1,166 @@
-(this["webpackChunkreactunity_sample"] = this["webpackChunkreactunity_sample"] || []).push([[657],{
+(this["webpackChunkreactunity_sample"] = this["webpackChunkreactunity_sample"] || []).push([[270],{
 
-/***/ 32:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ 30:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Qc": () => (/* binding */ globalsWatcher),
-/* harmony export */   "Ut": () => (/* binding */ GlobalsProvider)
-/* harmony export */ });
-/* unused harmony exports createDictionaryWatcher, useGlobals */
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(359);
-var __assign = undefined && undefined.__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
 
-      for (var p in s) {
-        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-      }
-    }
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "Z": () => (/* binding */ _slicedToArray)
+});
 
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
-
-/**
- * Creates a context that updates its value when the values in the dictionary change
- * @param dictionary The dictionary to be watched. Must implement the EventDictionary type in the C#
- * @param displayName A displayName to identify this context easier in case of problems
- */
-
-function createDictionaryWatcher(dictionary, displayName) {
-  var ctx = react__WEBPACK_IMPORTED_MODULE_0__.createContext(undefined);
-  if (displayName) ctx.displayName = displayName;
-
-  var Provider = function Provider(_a) {
-    var children = _a.children;
-
-    var _b = react__WEBPACK_IMPORTED_MODULE_0__.useState(0),
-        render = _b[0],
-        setRender = _b[1];
-
-    react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
-      var remove = dictionary === null || dictionary === void 0 ? void 0 : dictionary.AddListener(function (key, value, dic) {
-        setRender(function (x) {
-          return x + 1;
-        });
-      });
-
-      if (!remove) {
-        if (displayName) console.warn(displayName + " dictionary does not provide a change listener");else console.warn('The dictionary does not provide a change listener');
-      }
-
-      return function () {
-        return remove === null || remove === void 0 ? void 0 : remove();
-      };
-    }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
-
-    var value = react__WEBPACK_IMPORTED_MODULE_0__.useMemo(function () {
-      return __assign({}, dictionary);
-    }, [render]);
-    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(ctx.Provider, {
-      value: value
-    }, children);
-  };
-
-  function useContext() {
-    var context = react__WEBPACK_IMPORTED_MODULE_0__.useContext(ctx);
-
-    if (context === undefined) {
-      if (displayName) throw new Error(displayName + ".useContext must be used within a " + displayName + ".Provider");else throw new Error('useContext must be used within a provider');
-    }
-
-    return context;
-  }
-
-  return {
-    context: ctx,
-    Provider: Provider,
-    useContext: useContext
-  };
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
 }
-var globalsWatcher = createDictionaryWatcher(Globals, 'globalsContext');
-var useGlobals = globalsWatcher.useContext;
-var GlobalsProvider = globalsWatcher.Provider;
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
 
-/***/ }),
-
-/***/ 387:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Q": () => (/* binding */ insertStyledComponentsSheet)
-/* harmony export */ });
-function insertStyledComponentsSheet(sheet) {
   try {
-    var styleElements = sheet.getStyleElement();
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
 
-    for (var _i = 0, styleElements_1 = styleElements; _i < styleElements_1.length; _i++) {
-      var element = styleElements_1[_i];
-      var styleContent = element.props.dangerouslySetInnerHTML.__html;
-      Context.InsertStyle(styleContent);
+      if (i && _arr.length === i) break;
     }
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    _d = true;
+    _e = err;
   } finally {
-    sheet.seal();
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
   }
+
+  return _arr;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+;// CONCATENATED MODULE: ../../node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
+
+
+
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
 /***/ }),
 
-/***/ 395:
+/***/ 567:
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ _taggedTemplateLiteral)
+/* harmony export */ });
+function _taggedTemplateLiteral(strings, raw) {
+  if (!raw) {
+    raw = strings.slice(0);
+  }
+
+  return Object.freeze(Object.defineProperties(strings, {
+    raw: {
+      value: Object.freeze(raw)
+    }
+  }));
+}
+
+/***/ }),
+
+/***/ 74:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function toVal(mix) {
+  var k,
+      y,
+      str = '';
+
+  if (typeof mix === 'string' || typeof mix === 'number') {
+    str += mix;
+  } else if (typeof mix === 'object') {
+    if (Array.isArray(mix)) {
+      for (k = 0; k < mix.length; k++) {
+        if (mix[k]) {
+          if (y = toVal(mix[k])) {
+            str && (str += ' ');
+            str += y;
+          }
+        }
+      }
+    } else {
+      for (k in mix) {
+        if (mix[k]) {
+          str && (str += ' ');
+          str += k;
+        }
+      }
+    }
+  }
+
+  return str;
+}
+
+/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {
+  var i = 0,
+      tmp,
+      x,
+      str = '';
+
+  while (i < arguments.length) {
+    if (tmp = arguments[i++]) {
+      if (x = toVal(tmp)) {
+        str && (str += ' ');
+        str += x;
+      }
+    }
+  }
+
+  return str;
+}
+
+/***/ }),
+
+/***/ 788:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var reactIs = __webpack_require__(622);
+var reactIs = __webpack_require__(907);
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -227,7 +266,7 @@ module.exports = hoistNonReactStatics;
 
 /***/ }),
 
-/***/ 25:
+/***/ 162:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -373,19 +412,19 @@ exports.typeOf = z;
 
 /***/ }),
 
-/***/ 622:
+/***/ 907:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
 if (true) {
-  module.exports = __webpack_require__(25);
+  module.exports = __webpack_require__(162);
 } else {}
 
 /***/ }),
 
-/***/ 284:
+/***/ 327:
 /***/ ((module) => {
 
 //
@@ -434,7 +473,7 @@ module.exports = function shallowEqual(objA, objB, compare, compareContext) {
 
 /***/ }),
 
-/***/ 485:
+/***/ 455:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -448,14 +487,14 @@ __webpack_require__.d(__webpack_exports__, {
 
 // UNUSED EXPORTS: StyleSheetConsumer, StyleSheetContext, ThemeConsumer, ThemeContext, ThemeProvider, __PRIVATE__, createGlobalStyle, css, isStyledComponent, keyframes, useTheme, version, withTheme
 
-// EXTERNAL MODULE: ./node_modules/react-is/index.js
-var react_is = __webpack_require__(622);
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(359);
-// EXTERNAL MODULE: ./node_modules/shallowequal/index.js
-var shallowequal = __webpack_require__(284);
+// EXTERNAL MODULE: ../../node_modules/react-is/index.js
+var react_is = __webpack_require__(907);
+// EXTERNAL MODULE: ../../node_modules/react/index.js
+var react = __webpack_require__(842);
+// EXTERNAL MODULE: ../../node_modules/shallowequal/index.js
+var shallowequal = __webpack_require__(327);
 var shallowequal_default = /*#__PURE__*/__webpack_require__.n(shallowequal);
-;// CONCATENATED MODULE: ./node_modules/@emotion/stylis/dist/stylis.browser.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/stylis/dist/stylis.browser.esm.js
 function stylis_min(W) {
   function M(d, c, e, h, a) {
     for (var m = 0, b = 0, v = 0, n = 0, q, g, x = 0, K = 0, k, u = k = q = 0, l = 0, r = 0, I = 0, t = 0, B = e.length, J = B - 1, y, f = '', p = '', F = '', G = '', C; l < B;) {
@@ -1070,7 +1109,7 @@ function stylis_min(W) {
 }
 
 /* harmony default export */ const stylis_browser_esm = (stylis_min);
-;// CONCATENATED MODULE: ./node_modules/@emotion/unitless/dist/unitless.browser.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/unitless/dist/unitless.browser.esm.js
 var unitlessKeys = {
   animationIterationCount: 1,
   borderImageOutset: 1,
@@ -1120,7 +1159,7 @@ var unitlessKeys = {
   strokeWidth: 1
 };
 /* harmony default export */ const unitless_browser_esm = (unitlessKeys);
-;// CONCATENATED MODULE: ./node_modules/@emotion/memoize/dist/memoize.browser.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/memoize/dist/memoize.browser.esm.js
 function memoize(fn) {
   var cache = {};
   return function (arg) {
@@ -1130,7 +1169,7 @@ function memoize(fn) {
 }
 
 /* harmony default export */ const memoize_browser_esm = (memoize);
-;// CONCATENATED MODULE: ./node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js
+;// CONCATENATED MODULE: ../../node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js
 
 var reactPropsRegex = /^((children|dangerouslySetInnerHTML|key|ref|autoFocus|defaultValue|defaultChecked|innerHTML|suppressContentEditableWarning|suppressHydrationWarning|valueLink|accept|acceptCharset|accessKey|action|allow|allowUserMedia|allowPaymentRequest|allowFullScreen|allowTransparency|alt|async|autoComplete|autoPlay|capture|cellPadding|cellSpacing|challenge|charSet|checked|cite|classID|className|cols|colSpan|content|contentEditable|contextMenu|controls|controlsList|coords|crossOrigin|data|dateTime|decoding|default|defer|dir|disabled|disablePictureInPicture|download|draggable|encType|form|formAction|formEncType|formMethod|formNoValidate|formTarget|frameBorder|headers|height|hidden|high|href|hrefLang|htmlFor|httpEquiv|id|inputMode|integrity|is|keyParams|keyType|kind|label|lang|list|loading|loop|low|marginHeight|marginWidth|max|maxLength|media|mediaGroup|method|min|minLength|multiple|muted|name|nonce|noValidate|open|optimum|pattern|placeholder|playsInline|poster|preload|profile|radioGroup|readOnly|referrerPolicy|rel|required|reversed|role|rows|rowSpan|sandbox|scope|scoped|scrolling|seamless|selected|shape|size|sizes|slot|span|spellCheck|src|srcDoc|srcLang|srcSet|start|step|style|summary|tabIndex|target|title|type|useMap|value|width|wmode|wrap|about|datatype|inlist|prefix|property|resource|typeof|vocab|autoCapitalize|autoCorrect|autoSave|color|inert|itemProp|itemScope|itemType|itemID|itemRef|on|results|security|unselectable|accentHeight|accumulate|additive|alignmentBaseline|allowReorder|alphabetic|amplitude|arabicForm|ascent|attributeName|attributeType|autoReverse|azimuth|baseFrequency|baselineShift|baseProfile|bbox|begin|bias|by|calcMode|capHeight|clip|clipPathUnits|clipPath|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|contentScriptType|contentStyleType|cursor|cx|cy|d|decelerate|descent|diffuseConstant|direction|display|divisor|dominantBaseline|dur|dx|dy|edgeMode|elevation|enableBackground|end|exponent|externalResourcesRequired|fill|fillOpacity|fillRule|filter|filterRes|filterUnits|floodColor|floodOpacity|focusable|fontFamily|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontVariant|fontWeight|format|from|fr|fx|fy|g1|g2|glyphName|glyphOrientationHorizontal|glyphOrientationVertical|glyphRef|gradientTransform|gradientUnits|hanging|horizAdvX|horizOriginX|ideographic|imageRendering|in|in2|intercept|k|k1|k2|k3|k4|kernelMatrix|kernelUnitLength|kerning|keyPoints|keySplines|keyTimes|lengthAdjust|letterSpacing|lightingColor|limitingConeAngle|local|markerEnd|markerMid|markerStart|markerHeight|markerUnits|markerWidth|mask|maskContentUnits|maskUnits|mathematical|mode|numOctaves|offset|opacity|operator|order|orient|orientation|origin|overflow|overlinePosition|overlineThickness|panose1|paintOrder|pathLength|patternContentUnits|patternTransform|patternUnits|pointerEvents|points|pointsAtX|pointsAtY|pointsAtZ|preserveAlpha|preserveAspectRatio|primitiveUnits|r|radius|refX|refY|renderingIntent|repeatCount|repeatDur|requiredExtensions|requiredFeatures|restart|result|rotate|rx|ry|scale|seed|shapeRendering|slope|spacing|specularConstant|specularExponent|speed|spreadMethod|startOffset|stdDeviation|stemh|stemv|stitchTiles|stopColor|stopOpacity|strikethroughPosition|strikethroughThickness|string|stroke|strokeDasharray|strokeDashoffset|strokeLinecap|strokeLinejoin|strokeMiterlimit|strokeOpacity|strokeWidth|surfaceScale|systemLanguage|tableValues|targetX|targetY|textAnchor|textDecoration|textRendering|textLength|to|transform|u1|u2|underlinePosition|underlineThickness|unicode|unicodeBidi|unicodeRange|unitsPerEm|vAlphabetic|vHanging|vIdeographic|vMathematical|values|vectorEffect|version|vertAdvY|vertOriginX|vertOriginY|viewBox|viewTarget|visibility|widths|wordSpacing|writingMode|x|xHeight|x1|x2|xChannelSelector|xlinkActuate|xlinkArcrole|xlinkHref|xlinkRole|xlinkShow|xlinkTitle|xlinkType|xmlBase|xmlns|xmlnsXlink|xmlLang|xmlSpace|y|y1|y2|yChannelSelector|z|zoomAndPan|for|class|autofocus)|(([Dd][Aa][Tt][Aa]|[Aa][Rr][Ii][Aa]|x)-.*))$/; // https://esbench.com/bench/5bfee68a4cd7e6009ef61d23
 
@@ -1144,10 +1183,10 @@ var index = memoize_browser_esm(function (prop) {
 /* Z+1 */
 );
 /* harmony default export */ const is_prop_valid_browser_esm = (index);
-// EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
-var hoist_non_react_statics_cjs = __webpack_require__(395);
+// EXTERNAL MODULE: ../../node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
+var hoist_non_react_statics_cjs = __webpack_require__(788);
 var hoist_non_react_statics_cjs_default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics_cjs);
-;// CONCATENATED MODULE: ./node_modules/styled-components/dist/styled-components.browser.esm.js
+;// CONCATENATED MODULE: ../../node_modules/styled-components/dist/styled-components.browser.esm.js
 
 
 
@@ -2062,104 +2101,7 @@ var Ue = function () {
 /* harmony default export */ const styled_components_browser_esm = (qe);
 
 
-/***/ }),
-
-/***/ 17:
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "Z": () => (/* binding */ _slicedToArray)
-});
-
-;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/iterableToArrayLimit.js
-function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _e = undefined;
-
-  try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-;// CONCATENATED MODULE: ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/slicedToArray.js
-
-
-
-
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-/***/ }),
-
-/***/ 328:
-/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (/* binding */ _taggedTemplateLiteral)
-/* harmony export */ });
-function _taggedTemplateLiteral(strings, raw) {
-  if (!raw) {
-    raw = strings.slice(0);
-  }
-
-  return Object.freeze(Object.defineProperties(strings, {
-    raw: {
-      value: Object.freeze(raw)
-    }
-  }));
-}
-
 /***/ })
 
 }]);
-//# sourceMappingURL=657.js.map
+//# sourceMappingURL=270.js.map

@@ -80,7 +80,7 @@ export declare class CustomButtonComponent {
   Button: UnityEngine.UI.Button;
   GameObject: UnityEngine.GameObject;
   RectTransform: UnityEngine.RectTransform;
-  Component: ReactUnity.UGUI.Layout.ReactElement;
+  Component: ReactUnity.UGUI.Behaviours.ReactElement;
   BorderAndBackground: ReactUnity.Styling.BorderAndBackground;
   MaskAndImage: ReactUnity.Styling.MaskAndImage;
   Selectable: UnityEngine.UI.Selectable;

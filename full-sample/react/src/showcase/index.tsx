@@ -1,4 +1,5 @@
 import { Accordion } from '@reactunity/material/accordion';
+import { AlertDialog } from '@reactunity/material/alert';
 import { Button } from '@reactunity/material/button';
 import { Card } from '@reactunity/material/card';
 import { Paper } from '@reactunity/material/paper';
@@ -44,6 +45,8 @@ export function App() {
   const [videoRef, setVideoRef] = useState<ReactUnityNS.UGUI.VideoComponent>();
   const Globals = globalsWatcher.useContext();
 
+  const [dlOpen, setDlOpen] = useState(false);
+
   useEffect(() => {
     if (videoRef) {
       videoRef.VideoPlayer.Pause();
@@ -63,9 +66,10 @@ export function App() {
       <Paper elevation={2}>
         <h2>Button</h2>
 
-        <Button elevation={5}>Click</Button>
+        <Button elevation={5} onClick={() => setDlOpen(true)}>Open Dialog</Button>
       </Paper>
 
+      <AlertDialog open={dlOpen} onClose={() => setDlOpen(false)} backdropClose text={'Some alert'}></AlertDialog>
 
       <section>
         <h2>Anchor</h2>
@@ -124,15 +128,6 @@ export function App() {
         <row>
           <prefab target={Globals.customPrefab} />
         </row>
-      </section>
-
-
-      <section>
-        <h2>Portal</h2>
-
-        <portal target={Globals.portalRoot}>
-          <span>Hey, Portal here</span>
-        </portal>
       </section>
 
       <section>
