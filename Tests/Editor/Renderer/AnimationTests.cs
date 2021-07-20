@@ -2,7 +2,6 @@ using System.Collections;
 using NUnit.Framework;
 using ReactUnity.ScriptEngine;
 using ReactUnity.UIToolkit;
-using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Tests.Renderer

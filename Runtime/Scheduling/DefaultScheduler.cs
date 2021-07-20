@@ -1,4 +1,3 @@
-using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
 
 namespace ReactUnity.Scheduling

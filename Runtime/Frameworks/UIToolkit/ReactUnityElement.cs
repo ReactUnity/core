@@ -1,10 +1,8 @@
 using System;
-using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using ReactUnity.Scheduling;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit

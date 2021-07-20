@@ -1,15 +1,10 @@
 using System;
 using System.Collections;
-using NUnit.Framework;
 using NUnit.Framework.Interfaces;
-using ReactUnity.Editor.Renderer;
-using ReactUnity.ScriptEngine;
 using ReactUnity.Scheduling;
-using ReactUnity.UGUI;
+using ReactUnity.ScriptEngine;
 using UnityEditor;
-using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.UIElements;
 
 namespace ReactUnity.Editor.Tests
 {

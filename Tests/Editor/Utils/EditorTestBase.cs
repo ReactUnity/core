@@ -5,9 +5,9 @@ using NUnit.Framework;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
+using ReactUnity.Scheduling;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using ReactUnity.Scheduling;
 using ReactUnity.UIToolkit;
 using UnityEditor;
 

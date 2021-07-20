@@ -1,6 +1,6 @@
 using System.Collections;
-using UnityEngine.TestTools;
 using UnityEditor;
+using UnityEngine.TestTools;
 
 namespace ReactUnity.Editor.Tests
 {

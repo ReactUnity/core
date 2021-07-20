@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
+using ReactUnity.Scheduling;
 using UnityEngine;
 using UnityEngine.Serialization;
 

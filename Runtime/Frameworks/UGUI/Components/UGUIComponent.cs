@@ -5,7 +5,6 @@ using ReactUnity.Styling;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Layout;
 using ReactUnity.UGUI.StateHandlers;
-using ReactUnity.Visitors;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

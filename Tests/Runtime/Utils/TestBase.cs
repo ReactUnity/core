@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using ReactUnity.Helpers;
+using ReactUnity.Scheduling;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using ReactUnity.Scheduling;
 using ReactUnity.UGUI;
 using UnityEngine;
 

@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
 using ReactUnity.Scheduling;
 using ReactUnity.StyleEngine;
-using ReactUnity.Scheduling;
 using ReactUnity.UIToolkit.StateHandlers;
 using UnityEngine;
 using UnityEngine.UIElements;

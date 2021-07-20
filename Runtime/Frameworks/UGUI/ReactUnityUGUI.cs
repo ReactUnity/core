@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using ReactUnity.Helpers;
+using ReactUnity.Scheduling;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using ReactUnity.Scheduling;
 using UnityEngine;
 
 namespace ReactUnity.UGUI

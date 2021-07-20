@@ -1,8 +1,8 @@
 using System;
 using Jint.Native;
-using ReactUnity.Scheduling;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
+using ReactUnity.Scheduling;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
 using UnityEditor;

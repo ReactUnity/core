@@ -1,4 +1,3 @@
-using ReactUnity.Helpers;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.EventSystems;

@@ -1,7 +1,7 @@
 #if UNITY_2021_2_OR_NEWER
 using ReactUnity.Helpers;
-using ReactUnity.StyleEngine;
 using ReactUnity.Scheduling;
+using ReactUnity.StyleEngine;
 using UnityEngine;
 using UnityEngine.UIElements;
 
