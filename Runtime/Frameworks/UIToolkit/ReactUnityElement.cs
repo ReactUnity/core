@@ -1,10 +1,10 @@
 using System;
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
-using ReactUnity.Schedulers;
+using ReactUnity.Scheduling;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using ReactUnity.Timers;
+using ReactUnity.Scheduling;
 using UnityEngine.UIElements;
 
 namespace ReactUnity.UIToolkit
@@ -15,7 +15,6 @@ namespace ReactUnity.UIToolkit
         public ReactUnityRunner runner { get; private set; }
         public ReactContext context { get; private set; }
         public IDispatcher dispatcher { get; private set; }
-        public IUnityScheduler scheduler { get; private set; }
         public ITimer Timer { get; protected set; }
         public IMediaProvider MediaProvider { get; private set; }
 
@@ -46,7 +45,6 @@ namespace ReactUnity.UIToolkit
 
             runner = new ReactUnityRunner();
             dispatcher = CreateDispatcher();
-            scheduler = new UnityScheduler(dispatcher);
 
             ScriptWatchDisposable = src.GetScript((sc, isDevServer) => {
                 context = CreateContext(src, isDevServer);
@@ -74,7 +72,7 @@ namespace ReactUnity.UIToolkit
 
         protected virtual ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
-            return new UIToolkitContext(this, Globals, script, dispatcher, scheduler, Timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Restart);
+            return new UIToolkitContext(this, Globals, script, dispatcher, Timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Restart);
         }
 
         protected virtual IDispatcher CreateDispatcher() => new RuntimeDispatcher();

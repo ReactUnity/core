@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ReactUnity.Helpers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using ReactUnity.Timers;
+using ReactUnity.Scheduling;
 using UnityEngine;
 
 namespace ReactUnity.UGUI
@@ -23,7 +23,7 @@ namespace ReactUnity.UGUI
         protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
             var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
-            return new UGUIContext(Root, globals, script, dispatcher, scheduler, timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Render, IconSets, CursorSet);
+            return new UGUIContext(Root, globals, script, dispatcher, timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Render, IconSets, CursorSet);
         }
 
         protected override IMediaProvider CreateMediaProvider()

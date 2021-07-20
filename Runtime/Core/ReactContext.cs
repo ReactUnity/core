@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using ExCSS;
 using ReactUnity.Converters;
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 using ReactUnity.DomProxies;
 using ReactUnity.Helpers;
-using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using ReactUnity.Timers;
 using ReactUnity.Types;
 using ReactUnity.Visitors;
 using UnityEngine;
@@ -37,7 +35,6 @@ namespace ReactUnity
         public bool IsDevServer { get; }
 
         public ScriptSource Script { get; }
-        public IUnityScheduler Scheduler { get; }
         public ITimer Timer { get; }
         public IDispatcher Dispatcher { get; }
         public virtual Dictionary<string, Type> StateHandlers { get; }
@@ -60,14 +57,13 @@ namespace ReactUnity
 
         public ReactContext(
             GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
-            IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider, bool isDevServer,
+            ITimer timer, IMediaProvider mediaProvider, bool isDevServer,
             Action onRestart, LayoutMergeMode mergeLayout, bool calculatesLayout
         )
         {
             Globals = globals;
             Script = script;
             IsDevServer = isDevServer;
-            Scheduler = scheduler;
             Timer = timer;
             Dispatcher = dispatcher;
             OnRestart = onRestart ?? (() => { });
@@ -206,7 +202,6 @@ namespace ReactUnity
 
         public void Dispose()
         {
-            Scheduler?.clearAllTimeouts();
             Dispatcher?.Dispose();
             foreach (var item in Disposables) item?.Dispose();
         }

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
-using ReactUnity.Schedulers;
 using ReactUnity.StyleEngine;
-using ReactUnity.Timers;
 using ReactUnity.UIToolkit;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -56,9 +54,9 @@ namespace ReactUnity.Editor.Renderer
 
         public EditorContext(
             VisualElement hostElement, GlobalRecord globals, ScriptSource script,
-            IDispatcher dispatcher, IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider,
+            IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
             bool isDevServer, Action onRestart = null
-        ) : base(hostElement, globals, script, dispatcher, scheduler, timer, mediaProvider, isDevServer, onRestart)
+        ) : base(hostElement, globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart)
         {
         }
 

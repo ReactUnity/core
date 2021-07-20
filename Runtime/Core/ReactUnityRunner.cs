@@ -104,7 +104,7 @@ namespace ReactUnity
 
         void CreateScheduler(IJavaScriptEngine engine, ReactContext context)
         {
-            var scheduler = context.Scheduler;
+            var scheduler = context.Dispatcher.Scheduler;
             engine.SetValue("UnityScheduler", scheduler);
             engine.Execute("global.setTimeout = function setTimeout(fun, delay) { return UnityScheduler.setTimeout(new Callback(fun), delay); }");
             engine.Execute("global.setInterval = function setInterval(fun, delay) { return UnityScheduler.setInterval(new Callback(fun), delay); }");

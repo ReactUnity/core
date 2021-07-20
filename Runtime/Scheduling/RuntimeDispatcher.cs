@@ -2,47 +2,43 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-using Unity.EditorCoroutines.Editor;
-#endif
+using UnityEngine;
 
-namespace ReactUnity.Dispatchers
+namespace ReactUnity.Scheduling
 {
-    public class EditorDispatcher : IDispatcher, IDisposable
+    public class RuntimeDispatcher : MonoBehaviour, IDispatcher, IDisposable
     {
+        System.Threading.Thread mainThread;
+
+        public static RuntimeDispatcher Create()
+        {
+            var go = new GameObject("React Unity Runtime Dispatcher");
+            var dispatcher = go.AddComponent<RuntimeDispatcher>();
+            DontDestroyOnLoad(go);
+            return dispatcher;
+        }
+
         private List<IEnumerator> ToStart = new List<IEnumerator>() { null };
+        private List<Coroutine> Started = new List<Coroutine>();
         private HashSet<int> ToStop = new HashSet<int>();
-        private List<Action> CallOnUpdate = new List<Action>();
         private List<Action> CallOnLateUpdate = new List<Action>();
+        public IScheduler Scheduler { get; }
 
-#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-        private List<EditorCoroutine> Started = new List<EditorCoroutine>();
-#else
-        private  List<object> Started = new List<object>();
-#endif
-
-        public EditorDispatcher()
+        public RuntimeDispatcher() : base()
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.update += Update;
-
-            UnityEditor.EditorApplication.playModeStateChanged += (state) => {
-                UnityEditor.EditorApplication.update -= Update;
-                UnityEditor.EditorApplication.update += Update;
-            };
-#endif
+            Scheduler = new DefaultScheduler(this);
         }
 
-        public int OnEveryUpdate(Action call)
+        public int OnEveryLateUpdate(Action callback)
         {
-            CallOnUpdate.Add(call);
+            CallOnLateUpdate.Add(callback);
             return -1;
         }
 
-        public int OnEveryLateUpdate(Action call)
+        public int OnEveryUpdate(Action callback)
         {
-            CallOnLateUpdate.Add(call);
-            return -1;
+            var handle = GetNextHandle();
+            return StartDeferred(OnEveryUpdateCoroutine(callback, handle), handle);
         }
 
         public int OnceUpdate(Action callback)
@@ -77,8 +73,21 @@ namespace ReactUnity.Dispatchers
 
         public int Immediate(Action callback)
         {
-            var handle = GetNextHandle();
-            return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
+            if (IsMainThread())
+            {
+                callback();
+                return -1;
+            }
+            else
+            {
+                var handle = GetNextHandle();
+                return StartDeferred(OnUpdateCoroutine(callback, handle), handle);
+            }
+        }
+
+        public bool IsMainThread()
+        {
+            return mainThread?.Equals(System.Threading.Thread.CurrentThread) ?? false;
         }
 
         public int StartDeferred(IEnumerator cr)
@@ -96,7 +105,7 @@ namespace ReactUnity.Dispatchers
 
         public void StopDeferred(int cr)
         {
-            ToStop.Add(cr);
+            if (cr >= 0) ToStop.Add(cr);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -105,7 +114,7 @@ namespace ReactUnity.Dispatchers
             return Started.Count + ToStart.Count;
         }
 
-        private void StartAndStopDeferreds()
+        void StartAndStopDeferreds()
         {
             foreach (var cr in ToStop)
             {
@@ -117,7 +126,7 @@ namespace ReactUnity.Dispatchers
                 {
                     // Coroutine was already started, so stop it
                     var coroutine = Started[cr];
-                    if (coroutine != null) StopCoroutine(coroutine);
+                    if (coroutine != null && this) StopCoroutine(coroutine);
                     Started[cr] = null;
                 }
             }
@@ -127,66 +136,43 @@ namespace ReactUnity.Dispatchers
             for (int i = 0; i < ToStart.Count; i++)
             {
                 var cr = ToStart[i];
-                if (cr != null) Started.Add(StartCoroutine(cr));
+                if (cr != null && this) Started.Add(StartCoroutine(cr));
                 else Started.Add(null);
             }
             ToStart.Clear();
         }
 
-        public void StopAll()
+        void StopAll()
         {
             for (int cr = 0; cr < Started.Count; cr++)
             {
                 var coroutine = Started[cr];
-                if (coroutine != null) StopCoroutine(coroutine);
+                if (coroutine != null && this) StopCoroutine(coroutine);
                 Started[cr] = null;
             }
             ToStart.Clear();
             ToStop.Clear();
-            CallOnUpdate.Clear();
             CallOnLateUpdate.Clear();
+        }
+
+        private void OnEnable()
+        {
+            mainThread = System.Threading.Thread.CurrentThread;
         }
 
         void Update()
         {
             StartAndStopDeferreds();
-
-            var ucount = CallOnUpdate.Count;
-            for (int i = 0; i < ucount; i++)
-                CallOnUpdate[i].Invoke();
-
-            var lcount = CallOnLateUpdate.Count;
-            for (int i = 0; i < lcount; i++)
-                CallOnLateUpdate[i].Invoke();
         }
 
-#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-        EditorCoroutine StartCoroutine(IEnumerator cr)
+        void LateUpdate()
         {
-            return EditorCoroutineUtility.StartCoroutine(cr, cr);
-        }
+            StartAndStopDeferreds();
 
-
-        static System.Reflection.FieldInfo mOwnerField = typeof(EditorCoroutine)
-            .GetField("m_Owner", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        static WeakReference DeadRef = new WeakReference(null);
-        void StopCoroutine(EditorCoroutine cr)
-        {
-            EditorCoroutineUtility.StopCoroutine(cr);
-            // This hack prevents EditorCoroutines to tick after it has already been stopped
-            mOwnerField?.SetValue(cr, DeadRef);
+            var count = CallOnLateUpdate.Count;
+            for (int i = 0; i < count; i++)
+                CallOnLateUpdate[i]?.Invoke();
         }
-#else
-         object StartCoroutine(IEnumerator cr)
-        {
-            return null;
-        }
-
-
-         void StopCoroutine(object cr)
-        {
-        }
-#endif
 
 
         private IEnumerator OnUpdateCoroutine(Action callback, int handle)
@@ -195,29 +181,29 @@ namespace ReactUnity.Dispatchers
             if (!ToStop.Contains(handle)) callback();
         }
 
+        private IEnumerator OnEveryUpdateCoroutine(Action callback, int handle)
+        {
+            while (true)
+            {
+                yield return null;
+                if (!ToStop.Contains(handle)) callback();
+                else break;
+            }
+        }
+
         private IEnumerator TimeoutCoroutine(Action callback, float time, int handle)
         {
-#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-            yield return new EditorWaitForSeconds(time);
-#else
-            yield return null;
-#endif
+            yield return new WaitForSeconds(time);
             if (!ToStop.Contains(handle)) callback();
         }
 
         private IEnumerator IntervalCoroutine(Action callback, float interval, int handle)
         {
-#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
-            var br = new EditorWaitForSeconds(interval);
-#endif
+            var br = new WaitForSeconds(interval);
 
             while (true)
             {
-#if UNITY_EDITOR && REACT_EDITOR_COROUTINES
                 yield return br;
-#else
-                yield return null;
-#endif
                 if (!ToStop.Contains(handle)) callback();
                 else break;
             }

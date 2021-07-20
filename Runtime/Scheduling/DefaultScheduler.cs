@@ -1,13 +1,13 @@
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
 
-namespace ReactUnity.Schedulers
+namespace ReactUnity.Scheduling
 {
-    public class UnityScheduler : IUnityScheduler
+    public class DefaultScheduler : IScheduler
     {
         IDispatcher Dispatcher;
 
-        public UnityScheduler(IDispatcher dispatcher)
+        public DefaultScheduler(IDispatcher dispatcher)
         {
             Dispatcher = dispatcher;
         }
@@ -51,10 +51,6 @@ namespace ReactUnity.Schedulers
         public void clearImmediate(int? handle)
         {
             if (handle.HasValue) Dispatcher.StopDeferred(handle.Value);
-        }
-
-        public void clearAllTimeouts()
-        {
         }
     }
 }

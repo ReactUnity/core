@@ -1,4 +1,4 @@
-namespace ReactUnity.Timers
+namespace ReactUnity.Scheduling
 {
     public interface ITimer
     {

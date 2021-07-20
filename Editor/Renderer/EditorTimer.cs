@@ -1,4 +1,4 @@
-using ReactUnity.Timers;
+using ReactUnity.Scheduling;
 using UnityEditor;
 
 namespace ReactUnity.Editor

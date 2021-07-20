@@ -1,11 +1,10 @@
 using System;
 using Jint.Native;
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using ReactUnity.Timers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;

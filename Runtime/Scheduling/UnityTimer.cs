@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactUnity.Timers
+namespace ReactUnity.Scheduling
 {
     public class UnityTimer : ITimer
     {

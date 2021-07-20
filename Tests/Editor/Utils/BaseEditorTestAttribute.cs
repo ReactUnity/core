@@ -4,7 +4,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.ScriptEngine;
-using ReactUnity.Timers;
+using ReactUnity.Scheduling;
 using ReactUnity.UGUI;
 using UnityEditor;
 using UnityEngine;

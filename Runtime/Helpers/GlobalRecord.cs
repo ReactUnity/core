@@ -1,4 +1,4 @@
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 
 namespace ReactUnity.Helpers
 {

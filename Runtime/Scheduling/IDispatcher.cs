@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 
-namespace ReactUnity.Dispatchers
+namespace ReactUnity.Scheduling
 {
     public interface IDispatcher : IDisposable
     {
+        IScheduler Scheduler { get; }
+
         int OnEveryLateUpdate(Action call);
         int OnEveryUpdate(Action call);
 

@@ -1,10 +1,8 @@
 using System;
-using ReactUnity.Dispatchers;
 using ReactUnity.Helpers;
-using ReactUnity.Schedulers;
+using ReactUnity.Scheduling;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
-using ReactUnity.Timers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,7 +27,6 @@ namespace ReactUnity
         public ReactContext Context { get; private set; }
         private IDisposable ScriptWatchDisposable { get; set; }
         public IDispatcher dispatcher { get; private set; }
-        public IUnityScheduler scheduler { get; private set; }
         public ITimer timer { get; set; }
         public ReactUnityRunner runner { get; private set; }
 
@@ -83,7 +80,6 @@ namespace ReactUnity
         private IDisposable LoadAndRun(ScriptSource script, bool disableWarnings = false)
         {
             dispatcher = Application.isPlaying ? RuntimeDispatcher.Create() as IDispatcher : new EditorDispatcher();
-            scheduler = new UnityScheduler(dispatcher);
             runner = new ReactUnityRunner();
             MediaProvider = CreateMediaProvider();
             var watcherDisposable = script.GetScript((code, isDevServer) => {

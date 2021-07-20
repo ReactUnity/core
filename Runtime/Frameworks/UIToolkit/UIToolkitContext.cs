@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
-using ReactUnity.Schedulers;
+using ReactUnity.Scheduling;
 using ReactUnity.StyleEngine;
-using ReactUnity.Timers;
+using ReactUnity.Scheduling;
 using ReactUnity.UIToolkit.StateHandlers;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -60,9 +60,9 @@ namespace ReactUnity.UIToolkit
 
         public UIToolkitContext(
             VisualElement hostElement, GlobalRecord globals, ScriptSource script,
-            IDispatcher dispatcher, IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider,
+            IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
             bool isDevServer, Action onRestart = null, Action<AudioClip> onAudioPlayback = null
-        ) : base(globals, script, dispatcher, scheduler, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, false)
+        ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, false)
         {
             OnAudioPlayback = onAudioPlayback;
 

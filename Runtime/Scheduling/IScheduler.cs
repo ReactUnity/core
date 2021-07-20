@@ -1,9 +1,9 @@
 
 using ReactUnity.Helpers;
 
-namespace ReactUnity.Schedulers
+namespace ReactUnity.Scheduling
 {
-    public interface IUnityScheduler
+    public interface IScheduler
     {
         int setImmediate(Callback callback);
         int setTimeout(Callback callback, int timeout);
@@ -13,6 +13,5 @@ namespace ReactUnity.Schedulers
         void clearInterval(int? handle);
         void clearImmediate(int? handle);
         void cancelAnimationFrame(int? handle);
-        void clearAllTimeouts();
     }
 }

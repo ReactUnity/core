@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
 using UnityEngine;
 using UnityEngine.Serialization;

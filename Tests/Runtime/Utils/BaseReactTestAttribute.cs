@@ -3,7 +3,7 @@ using System.Collections;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using ReactUnity.ScriptEngine;
-using ReactUnity.Timers;
+using ReactUnity.Scheduling;
 using ReactUnity.UGUI;
 using UnityEngine;
 using UnityEngine.TestTools;

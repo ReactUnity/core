@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using ReactUnity.Dispatchers;
+using ReactUnity.Scheduling;
 using ReactUnity.Helpers;
-using ReactUnity.Schedulers;
+using ReactUnity.Scheduling;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
-using ReactUnity.Timers;
+using ReactUnity.Scheduling;
 using ReactUnity.UGUI.StateHandlers;
 using UnityEngine;
 
@@ -65,9 +65,9 @@ namespace ReactUnity.UGUI
 
         public UGUIContext(
             RectTransform hostElement, GlobalRecord globals, ScriptSource script,
-            IDispatcher dispatcher, IUnityScheduler scheduler, ITimer timer, IMediaProvider mediaProvider,
+            IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
             bool isDevServer, Action onRestart, List<IconSet> iconSets, CursorSet cursorSet
-        ) : base(globals, script, dispatcher, scheduler, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
+        ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);
