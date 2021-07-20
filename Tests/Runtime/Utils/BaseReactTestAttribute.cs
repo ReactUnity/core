@@ -68,7 +68,7 @@ namespace ReactUnity.Tests
             else engineType = test.FullName.Contains("(Jint)") ? JavascriptEngineType.Jint : JavascriptEngineType.ClearScript;
 
             var ru = CreateReactUnity(engineType, GetScript());
-            ru.timer = RealTimer ? UnityTimer.Instance as ITimer : new ControlledTimer();
+            ru.timer = RealTimer ? null : new ControlledTimer();
             ru.Globals["test"] = test;
             ru.BeforeStart.AddListener(BeforeStart);
             ru.AfterStart.AddListener(AfterStart);

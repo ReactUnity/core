@@ -1,6 +1,7 @@
 #if UNITY_2021_2_OR_NEWER
 using ReactUnity.Helpers;
 using ReactUnity.StyleEngine;
+using ReactUnity.Timers;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,7 +21,7 @@ namespace ReactUnity.UIToolkit
         protected override ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
             var globals = GlobalRecord.BindSerializableDictionary(Globals, dispatcher, false);
-            return new UIToolkitContext(Root, globals, script, dispatcher, scheduler, MediaProvider, isDevServer, Render, PlayAudio);
+            return new UIToolkitContext(Root, globals, script, dispatcher, scheduler, timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Render, PlayAudio);
         }
 
         public void PlayAudio(AudioClip clip)

@@ -30,7 +30,7 @@ namespace ReactUnity
         private IDisposable ScriptWatchDisposable { get; set; }
         public IDispatcher dispatcher { get; private set; }
         public IUnityScheduler scheduler { get; private set; }
-        public ITimer timer { get; set; } = UnityTimer.Instance;
+        public ITimer timer { get; set; }
         public ReactUnityRunner runner { get; private set; }
 
         #region Advanced Options

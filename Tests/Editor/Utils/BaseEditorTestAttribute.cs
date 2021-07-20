@@ -66,7 +66,7 @@ namespace ReactUnity.Editor.Tests
 
             var window = Window = TestReactWindow.CreateWindow(GetScript, engineType);
 
-            window.Timer = RealTimer ? EditorTimer.Instance as ITimer : new ControlledTimer();
+            window.Timer = RealTimer ? null : new ControlledTimer();
             window.Globals["test"] = test;
 
             if (IsDebugEnabled)
