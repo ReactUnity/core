@@ -12,7 +12,7 @@
     document.addEventListener('touchend', openUrl);
   },
 
-  setCursor: function (cursor) {
+  setWebGLCursor: function (cursor) {
     var canvas = Module.canvas;
     var cursorStyle = Pointer_stringify(cursor);
 

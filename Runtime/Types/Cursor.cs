@@ -7,6 +7,7 @@ namespace ReactUnity.Types
     public class CursorList : CommaSeparatedList<Cursor>
     {
         public static readonly CursorList Default = new CursorList(Cursor.Default);
+        public static readonly CursorList None = new CursorList(Cursor.None);
         public static readonly CursorList Pointer = new CursorList(Cursor.Pointer);
         public static readonly CursorList Text = new CursorList(Cursor.Text);
 
@@ -43,8 +44,8 @@ namespace ReactUnity.Types
 
     public class Cursor : ICommaSeparatedListItem
     {
-        public static readonly Cursor Invalid = new Cursor("");
         public static readonly Cursor Default = new Cursor("default");
+        public static readonly Cursor None = new Cursor("none");
         public static readonly Cursor Pointer = new Cursor("pointer");
         public static readonly Cursor Text = new Cursor("text");
 

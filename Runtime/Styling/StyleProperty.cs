@@ -78,7 +78,7 @@ namespace ReactUnity.Styling
         public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: AllConverters.PercentageConverter);
         public static readonly StyleProperty<int> zIndex = new StyleProperty<int>("zIndex", 0, false);
         public static readonly StyleProperty<bool> visibility = new StyleProperty<bool>("visibility", true, converter: new BoolConverter(new string[] { "visible" }, new string[] { "hidden" }));
-        public static readonly StyleProperty<CursorList> cursor = new StyleProperty<CursorList>("cursor", null, false);
+        public static readonly StyleProperty<CursorList> cursor = new StyleProperty<CursorList>("cursor", null, false, noneValue: CursorList.None);
         public static readonly StyleProperty<PointerEvents> pointerEvents = new StyleProperty<PointerEvents>("pointerEvents", PointerEvents.Auto, noneValue: PointerEvents.None);
         public static readonly StyleProperty<Color> backgroundColor = new StyleProperty<Color>("backgroundColor", new Color(0, 0, 0, 0), true);
         public static readonly StyleProperty<ImageReference> backgroundImage = new StyleProperty<ImageReference>("backgroundImage", ImageReference.None);
