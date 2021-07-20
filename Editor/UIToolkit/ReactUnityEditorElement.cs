@@ -1,3 +1,4 @@
+using ReactUnity.Dispatchers;
 using ReactUnity.Editor.Renderer;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
@@ -18,5 +19,7 @@ namespace ReactUnity.Editor.UIToolkit
         {
             return new EditorContext(this, Globals, script, dispatcher, scheduler, Timer ?? EditorTimer.Instance, MediaProvider, isDevServer, Restart);
         }
+
+        protected override IDispatcher CreateDispatcher() => new EditorDispatcher();
     }
 }

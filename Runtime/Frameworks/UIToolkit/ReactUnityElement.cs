@@ -45,7 +45,7 @@ namespace ReactUnity.UIToolkit
             var src = Script;
 
             runner = new ReactUnityRunner();
-            dispatcher = new EditorDispatcher();
+            dispatcher = CreateDispatcher();
             scheduler = new UnityScheduler(dispatcher);
 
             ScriptWatchDisposable = src.GetScript((sc, isDevServer) => {
@@ -76,5 +76,7 @@ namespace ReactUnity.UIToolkit
         {
             return new UIToolkitContext(this, Globals, script, dispatcher, scheduler, Timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Restart);
         }
+
+        protected virtual IDispatcher CreateDispatcher() => new RuntimeDispatcher();
     }
 }

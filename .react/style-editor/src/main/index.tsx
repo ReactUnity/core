@@ -71,13 +71,24 @@ function Group({ group, element, className }: { group: StylePropGroup, element: 
 function StylePropRow({ prop, element, className }: { prop: StyleProp, element: RC, className?: string }) {
   const cmp = element.Component;
 
-  const changed = () => {
-    cmp.ResolveStyle(true);
-    if (prop.source === 'layout') {
-      cmp.ScheduleLayout();
-      cmp.ApplyLayoutStyles();
+  const changedDebounce = React.useRef<any>();
+
+  const changed = (debounce: number) => {
+    if (changedDebounce.current != null) {
+      clearTimeout(changedDebounce.current);
+      changedDebounce.current = null;
     }
-    setRender(x => x + 1);
+
+    changedDebounce.current = setTimeout(() => {
+      changedDebounce.current = null;
+
+      cmp.ResolveStyle(true);
+      if (prop.source === 'layout') {
+        cmp.ScheduleLayout();
+        cmp.ApplyLayoutStyles();
+      }
+      setRender(x => x + 1);
+    }, debounce);
   }
 
   const changeStyle = (name: string, value: { newValue: any }) => {
@@ -86,7 +97,7 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
       if (res !== undefined) cmp.Style.Set(name, res);
     }
     else cmp.Style.Set(name, value.newValue);
-    changed();
+    changed(500);
   };
 
   const [, setRender] = useState(0);
@@ -98,7 +109,7 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
   const exists = cmp.ComputedStyle.HasValue(prop.name);
   const removeStyle = () => {
     cmp.Style.Remove(prop.name);
-    changed();
+    changed(0);
   };
 
   return <view className={clsx(className, style.row, exists && style.exists)}>

@@ -167,9 +167,14 @@ namespace ReactUnity.Dispatchers
         }
 
 
+        static System.Reflection.FieldInfo mOwnerField = typeof(EditorCoroutine)
+            .GetField("m_Owner", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        static WeakReference DeadRef = new WeakReference(null);
         void StopCoroutine(EditorCoroutine cr)
         {
             EditorCoroutineUtility.StopCoroutine(cr);
+            // This hack prevents EditorCoroutines to tick after it has already been stopped
+            mOwnerField?.SetValue(cr, DeadRef);
         }
 #else
          object StartCoroutine(IEnumerator cr)
