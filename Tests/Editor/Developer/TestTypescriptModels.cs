@@ -1,4 +1,10 @@
 using System.Diagnostics.CodeAnalysis;
+#if REACT_UNITY_DEVELOPER
+using System.Collections.Generic;
+using System.Reflection;
+using NUnit.Framework;
+using ReactUnity.Editor.Developer;
+#endif
 
 namespace ReactUnity.Editor.Tests.Developer
 {
