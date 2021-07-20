@@ -10,7 +10,7 @@ using UnityEngine.TestTools;
 
 namespace ReactUnity.Tests
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public abstract class BaseReactTestAttribute : LoadSceneAttribute
     {
         public const string DefaultSceneName = "Packages/com.reactunity.core/Tests/Runtime/TestScene.unity";
@@ -38,7 +38,7 @@ namespace ReactUnity.Tests
         }
         #endregion
 #else
-        public static bool IsDebugEnabled => false;
+        public static bool IsDebugEnabled { get; set; } = false;
 #endif
 
         public bool AutoRender;

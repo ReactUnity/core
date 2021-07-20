@@ -35,7 +35,6 @@ namespace ReactUnity.UGUI
 
         public RectTransform Container { get; protected set; }
 
-        public string TextContent => new TextContentVisitor().Get(this);
         public override string Name => GameObject.name;
 
         private bool markedUpdateBackgroundImage;

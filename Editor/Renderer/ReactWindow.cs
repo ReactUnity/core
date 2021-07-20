@@ -5,6 +5,7 @@ using ReactUnity.Editor.UIToolkit;
 using ReactUnity.Helpers;
 using ReactUnity.ScriptEngine;
 using ReactUnity.StyleEngine;
+using ReactUnity.Timers;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,11 +16,11 @@ namespace ReactUnity.Editor.Renderer
     {
         private readonly GUIContent resetGUIContent = EditorGUIUtility.TrTextContent("Reload");
 
-        protected ReactUnityRunner runner => hostElement?.runner;
-        protected ReactContext context => hostElement?.context;
-        protected IDispatcher dispatcher => hostElement?.dispatcher;
-        protected IMediaProvider mediaProvider => hostElement?.MediaProvider;
-        protected ReactUnityEditorElement hostElement { get; private set; }
+        public ReactUnityRunner runner => hostElement?.runner;
+        public ReactContext context => hostElement?.context;
+        public IDispatcher dispatcher => hostElement?.dispatcher;
+        public IMediaProvider mediaProvider => hostElement?.MediaProvider;
+        public ReactUnityEditorElement hostElement { get; private set; }
 
         public event Action<ReactWindow> SelectionChange;
         public event Action<bool, ReactWindow> VisibilityChange;
@@ -39,7 +40,7 @@ namespace ReactUnity.Editor.Renderer
         }
 
         private readonly GUIContent enableDebugContent = EditorGUIUtility.TrTextContent("Enable Debug");
-        protected bool DebugEnabled
+        public virtual bool DebugEnabled
         {
             get
             {
@@ -52,7 +53,7 @@ namespace ReactUnity.Editor.Renderer
         }
 
         private readonly GUIContent awaitDebuggerContent = EditorGUIUtility.TrTextContent("Await Debugger");
-        protected bool AwaitDebugger
+        public virtual bool AwaitDebugger
         {
             get
             {
@@ -64,7 +65,7 @@ namespace ReactUnity.Editor.Renderer
             }
         }
 
-        protected JavascriptEngineType EngineType
+        public virtual JavascriptEngineType EngineType
         {
             get
             {
@@ -77,20 +78,24 @@ namespace ReactUnity.Editor.Renderer
         }
 #else
         protected bool DevServerEnabled => false;
-        protected bool DebugEnabled => false;
-        protected bool AwaitDebugger => false;
-        protected JavascriptEngineType EngineType => JavascriptEngineType.Auto;
+        public virtual bool DebugEnabled { get; set; } = false;
+        public virtual bool AwaitDebugger { get; set; } = false;
+        public virtual JavascriptEngineType EngineType { get; set; } = JavascriptEngineType.Auto;
 #endif
+        public virtual ITimer Timer { get; set; }
+        public virtual bool AutoRun => true;
 
         protected virtual void OnEnable()
         {
-            Run();
+            if (AutoRun) Run();
         }
 
         public virtual void Run(VisualElement root = null)
         {
             if (hostElement != null) OnDestroy();
-            hostElement = new ReactUnityEditorElement(GetScript(), GetGlobals(), DefaultMediaProvider.CreateMediaProvider("window", "uitoolkit", true), EngineType, DebugEnabled, AwaitDebugger);
+            hostElement = new ReactUnityEditorElement(GetScript(), GetGlobals(), Timer,
+                DefaultMediaProvider.CreateMediaProvider("window", "uitoolkit", true),
+                EngineType, DebugEnabled, AwaitDebugger);
             (root ?? rootVisualElement).Add(hostElement);
         }
 

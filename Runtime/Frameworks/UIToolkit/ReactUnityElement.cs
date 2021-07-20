@@ -16,7 +16,7 @@ namespace ReactUnity.UIToolkit
         public ReactContext context { get; private set; }
         public IDispatcher dispatcher { get; private set; }
         public IUnityScheduler scheduler { get; private set; }
-        public ITimer timer { get; protected set; }
+        public ITimer Timer { get; protected set; }
         public IMediaProvider MediaProvider { get; private set; }
 
         public ScriptSource Script { get; }
@@ -27,13 +27,14 @@ namespace ReactUnity.UIToolkit
         public bool AwaitDebugger = false;
 
 
-        public ReactUnityElement(ScriptSource script, GlobalRecord globals, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
+        public ReactUnityElement(ScriptSource script, GlobalRecord globals, ITimer timer, IMediaProvider mediaProvider, JavascriptEngineType engineType = JavascriptEngineType.Auto, bool debug = false, bool awaitDebugger = false, bool autorun = true)
         {
             Script = script;
             Globals = globals;
             MediaProvider = mediaProvider;
             EngineType = engineType;
             Debug = debug;
+            Timer = timer;
             AwaitDebugger = awaitDebugger;
             AddToClassList("react-unity__host");
             if (autorun) Run();
@@ -73,7 +74,7 @@ namespace ReactUnity.UIToolkit
 
         protected virtual ReactContext CreateContext(ScriptSource script, bool isDevServer)
         {
-            return new UIToolkitContext(this, Globals, script, dispatcher, scheduler, timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Restart);
+            return new UIToolkitContext(this, Globals, script, dispatcher, scheduler, Timer ?? UnityTimer.Instance, MediaProvider, isDevServer, Restart);
         }
     }
 }

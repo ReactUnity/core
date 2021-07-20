@@ -23,7 +23,7 @@ namespace ReactUnity.Editor.Renderer
 
         public override VisualElement CreateInspectorGUI()
         {
-            return new ReactUnityEditorElement(GetScript(), GetGlobals(), DefaultMediaProvider.CreateMediaProvider("inspector", "uitoolkit", true));
+            return new ReactUnityEditorElement(GetScript(), GetGlobals(), null, DefaultMediaProvider.CreateMediaProvider("inspector", "uitoolkit", true));
         }
 
         protected abstract ScriptSource GetScript();

@@ -25,6 +25,7 @@ namespace ReactUnity
         string Id { get; set; }
         string Name { get; }
         string Tag { get; }
+        string TextContent { get; }
         string ClassName { get; set; }
         ClassList ClassList { get; }
         StateStyles StateStyles { get; }

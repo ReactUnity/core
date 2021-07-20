@@ -35,6 +35,7 @@ namespace ReactUnity
 
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
+        public string TextContent => new TextContentVisitor().Get(this);
 
         public string ClassName
         {
