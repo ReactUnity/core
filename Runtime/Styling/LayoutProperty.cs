@@ -10,7 +10,7 @@ namespace ReactUnity.Styling
 {
     public interface ILayoutProperty : IStyleProperty
     {
-        void Set(YogaNode node, object value, YogaNode defaultNode);
+        void Set(YogaNode node, object value, YogaNode defaultNode, NodeStyle style);
         void SetDefault(YogaNode node);
         void SetDefault(YogaNode node, YogaNode defaultNode);
         object Get(YogaNode node);
@@ -32,9 +32,9 @@ namespace ReactUnity.Styling
         {
             return prop.Get(node);
         }
-        public void Set(YogaNode node, YogaNode defaultNode)
+        public void Set(YogaNode node, YogaNode defaultNode, NodeStyle style)
         {
-            prop.Set(node, value, defaultNode);
+            prop.Set(node, value, defaultNode, style);
         }
         public void SetDefault(YogaNode node)
         {
@@ -55,7 +55,8 @@ namespace ReactUnity.Styling
         private Action<YogaNode, T> setter;
         private Func<YogaNode, T> getter;
 
-        public LayoutProperty(string name, bool transitionable = false, T defaultValue = default, IStyleConverter converter = null) : base(name, defaultValue, transitionable, false, false, converter)
+        public LayoutProperty(string name, bool transitionable = false, T defaultValue = default, IStyleConverter converter = null) :
+            base(LayoutProperties.PascalToKebabCase(name), defaultValue, transitionable, false, false, converter)
         {
             var ygType = typeof(YogaNode);
             propInfo = ygType.GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
@@ -65,8 +66,9 @@ namespace ReactUnity.Styling
             getter = (Func<YogaNode, T>) propInfo.GetGetMethod().CreateDelegate(typeof(Func<YogaNode, T>));
         }
 
-        public void Set(YogaNode node, object value, YogaNode defaultNode)
+        public void Set(YogaNode node, object value, YogaNode defaultNode, NodeStyle style)
         {
+            if (value is IDynamicValue d) value = d.Convert(this, style);
             if (Equals(value, CssKeyword.Invalid) || Equals(value, CssKeyword.None) || Equals(value, CssKeyword.NoKeyword)) return;
             else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Auto)) SetDefault(node, defaultNode);
             else if (Equals(value, CssKeyword.Unset)) SetDefault(node);
@@ -117,8 +119,8 @@ namespace ReactUnity.Styling
         public static LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow", true);
 
         //public static ILayoutProperty Flex = new LayoutProperty<float>("Flex", true);
-        public static LayoutProperty<float> FlexGrow = new LayoutProperty<float>("FlexGrow", true);
-        public static LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true);
+        public static LayoutProperty<float> FlexGrow = new LayoutProperty<float>("FlexGrow", true, float.NaN);
+        public static LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true, float.NaN);
         public static LayoutProperty<YogaValue> FlexBasis = new LayoutProperty<YogaValue>("FlexBasis", true);
 
         public static LayoutProperty<YogaValue> Width = new LayoutProperty<YogaValue>("Width", true);
@@ -127,14 +129,14 @@ namespace ReactUnity.Styling
         public static LayoutProperty<YogaValue> MinHeight = new LayoutProperty<YogaValue>("MinHeight", true);
         public static LayoutProperty<YogaValue> MaxWidth = new LayoutProperty<YogaValue>("MaxWidth", true);
         public static LayoutProperty<YogaValue> MaxHeight = new LayoutProperty<YogaValue>("MaxHeight", true);
-        public static LayoutProperty<float> AspectRatio = new LayoutProperty<float>("AspectRatio", true);
+        public static LayoutProperty<float> AspectRatio = new LayoutProperty<float>("AspectRatio", true, float.NaN);
 
-        public static LayoutProperty<YogaValue> Left = new LayoutProperty<YogaValue>("Left", true);
-        public static LayoutProperty<YogaValue> Right = new LayoutProperty<YogaValue>("Right", true);
-        public static LayoutProperty<YogaValue> Top = new LayoutProperty<YogaValue>("Top", true);
-        public static LayoutProperty<YogaValue> Bottom = new LayoutProperty<YogaValue>("Bottom", true);
-        public static LayoutProperty<YogaValue> Start = new LayoutProperty<YogaValue>("Start", true);
-        public static LayoutProperty<YogaValue> End = new LayoutProperty<YogaValue>("End", true);
+        public static LayoutProperty<YogaValue> Left = new LayoutProperty<YogaValue>("Left", true, YogaValue.Undefined());
+        public static LayoutProperty<YogaValue> Right = new LayoutProperty<YogaValue>("Right", true, YogaValue.Undefined());
+        public static LayoutProperty<YogaValue> Top = new LayoutProperty<YogaValue>("Top", true, YogaValue.Undefined());
+        public static LayoutProperty<YogaValue> Bottom = new LayoutProperty<YogaValue>("Bottom", true, YogaValue.Undefined());
+        public static LayoutProperty<YogaValue> Start = new LayoutProperty<YogaValue>("Start", true, YogaValue.Undefined());
+        public static LayoutProperty<YogaValue> End = new LayoutProperty<YogaValue>("End", true, YogaValue.Undefined());
 
         public static LayoutProperty<YogaValue> Margin = new LayoutProperty<YogaValue>("Margin", true);
         public static LayoutProperty<YogaValue> MarginLeft = new LayoutProperty<YogaValue>("MarginLeft", true);
@@ -164,8 +166,8 @@ namespace ReactUnity.Styling
         public static LayoutProperty<float> BorderStartWidth = new LayoutProperty<float>("BorderStartWidth", true, converter: AllConverters.LengthConverter);
         public static LayoutProperty<float> BorderEndWidth = new LayoutProperty<float>("BorderEndWidth", true, converter: AllConverters.LengthConverter);
 
-        public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.OrdinalIgnoreCase);
-        public static Dictionary<string, ILayoutProperty> CssPropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.OrdinalIgnoreCase)
+        public static Dictionary<string, ILayoutProperty> PropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.InvariantCultureIgnoreCase);
+        public static Dictionary<string, ILayoutProperty> CssPropertyMap = new Dictionary<string, ILayoutProperty>(StringComparer.InvariantCultureIgnoreCase)
         {
             { "direction", StyleDirection },
             { "position", PositionType },
@@ -206,7 +208,7 @@ namespace ReactUnity.Styling
             return prop;
         }
 
-        private static string PascalToKebabCase(string str)
+        internal static string PascalToKebabCase(string str)
         {
             if (string.IsNullOrEmpty(str))
                 return string.Empty;

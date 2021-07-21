@@ -9,14 +9,13 @@ namespace ReactUnity.StyleEngine
     public class StyleData
     {
         public List<Dictionary<string, object>> Rules = new List<Dictionary<string, object>>();
-        public List<LayoutValue> Layouts = new List<LayoutValue>();
     }
 
     public class StyleTree : RuleTree<StyleData>
     {
         public StyleTree(StylesheetParser parser) : base(parser) { }
 
-        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0, ReactContext.LayoutMergeMode mergeMode = ReactContext.LayoutMergeMode.Both, MediaQueryList mql = null)
+        public List<RuleTreeNode<StyleData>> AddStyle(StyleRule rule, int importanceOffset = 0, MediaQueryList mql = null)
         {
             var added = AddSelector(rule.SelectorText, importanceOffset);
             var addNew = new List<RuleTreeNode<StyleData>>();
@@ -31,10 +30,7 @@ namespace ReactUnity.StyleEngine
                 var lay = RuleHelpers.GetLayoutDic(style, false);
                 if (lay != null)
                 {
-                    if (mergeMode == ReactContext.LayoutMergeMode.Both || mergeMode == ReactContext.LayoutMergeMode.CssOnly)
-                        leaf.Data.Rules.Add(lay.ToDictionary(x => x.prop.name, x => x.value));
-                    if (mergeMode == ReactContext.LayoutMergeMode.Both || mergeMode == ReactContext.LayoutMergeMode.LayoutOnly)
-                        leaf.Data.Layouts.AddRange(lay);
+                    leaf.Data.Rules.Add(lay.ToDictionary(x => x.prop.name, x => x.value));
                 }
 
                 var importantDic = RuleHelpers.GetRuleDic(style, true);
@@ -49,10 +45,7 @@ namespace ReactUnity.StyleEngine
 
                     if (importantLay != null)
                     {
-                        if (mergeMode == ReactContext.LayoutMergeMode.Both || mergeMode == ReactContext.LayoutMergeMode.CssOnly)
-                            leaf.Data.Rules.Add(importantLay.ToDictionary(x => x.prop.name, x => x.value));
-                        if (mergeMode == ReactContext.LayoutMergeMode.Both || mergeMode == ReactContext.LayoutMergeMode.LayoutOnly)
-                            importantLeaf.Data.Layouts.AddRange(importantLay);
+                        leaf.Data.Rules.Add(importantLay.ToDictionary(x => x.prop.name, x => x.value));
                     }
 
                     addNew.Add(importantLeaf);

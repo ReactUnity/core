@@ -65,7 +65,7 @@ namespace ReactUnity.UGUI
             RectTransform hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
             bool isDevServer, Action onRestart, List<IconSet> iconSets, CursorSet cursorSet
-        ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, true)
+        ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, true)
         {
             Host = new HostComponent(hostElement, this);
             InsertStyle(ResourcesHelper.UseragentStylesheet?.text, -1);

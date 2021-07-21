@@ -77,8 +77,6 @@ namespace ReactUnity.Styling
         public StyleState Parent { get; private set; }
 
         private ReactContext Context;
-        private YogaNode Layout;
-        private YogaNode DefaultLayout;
 
 
         private Dictionary<string, TransitionState> propertyTransitionStates;
@@ -100,11 +98,9 @@ namespace ReactUnity.Styling
         private bool shouldUpdateWithLayout;
 
 
-        public StyleState(ReactContext context, YogaNode layout, YogaNode defaultLayout)
+        public StyleState(ReactContext context)
         {
             Context = context;
-            Layout = layout;
-            DefaultLayout = defaultLayout;
             SetCurrent(DefaultStyle);
         }
 
@@ -298,9 +294,10 @@ namespace ReactUnity.Styling
 
                     if (sp is ILayoutProperty lp)
                     {
-                        if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout);
+                        //if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout, Active);
                         hasLayout = true;
                     }
+                    else if (sp is VariableProperty) hasLayout = true;
                 }
             }
 
@@ -510,9 +507,10 @@ namespace ReactUnity.Styling
 
                     if (sp is ILayoutProperty lp)
                     {
-                        if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout);
+                        //if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout, Active);
                         hasLayout = true;
                     }
+                    else if (sp is VariableProperty) hasLayout = true;
 
                     if (sp.name == StyleProperties.audio.name)
                     {

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
@@ -11,7 +12,16 @@ namespace ReactUnity.UGUI
 
     public class ButtonComponent : UGUIComponent
     {
-        public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle()
+        public static Dictionary<string, object> DefaultLayout { get; } = new Dictionary<string, object>
+        {
+            { "padding-horizontal", 12 },
+            { "padding-vertical", 8 },
+            { "align-items", YogaAlign.Center },
+            { "justify-content", YogaJustify.Center },
+            { "flex-direction", YogaFlexDirection.Row },
+        };
+
+        public static NodeStyle ButtonDefaultStyle { get; } = new NodeStyle(DefaultLayout)
         {
             backgroundColor = new Color(0.9f, 0.9f, 0.9f),
             borderRadius = 8f,
@@ -19,16 +29,8 @@ namespace ReactUnity.UGUI
             textAlign = TMPro.TextAlignmentOptions.Midline,
             appearance = Appearance.Button,
         };
-        public static YogaNode ButtonDefaultLayout { get; } = new YogaNode()
-        {
-            PaddingHorizontal = 12,
-            PaddingVertical = 8,
-            AlignItems = YogaAlign.Center,
-            JustifyContent = YogaJustify.Center,
-            FlexDirection = YogaFlexDirection.Row,
-        };
+
         public override NodeStyle DefaultStyle => ButtonDefaultStyle;
-        public override YogaNode DefaultLayout => ButtonDefaultLayout;
 
         public Button Button { get; private set; }
 

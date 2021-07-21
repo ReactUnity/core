@@ -234,6 +234,11 @@ namespace ReactUnity.Styling
 
         #endregion
 
+        public NodeStyle(Dictionary<string, object> styles)
+        {
+            StyleMap = new Dictionary<string, object>(styles);
+        }
+
         public NodeStyle(NodeStyle defaultStyle = null, NodeStyle fallback = null)
         {
             StyleMap = new Dictionary<string, object>();
@@ -289,10 +294,12 @@ namespace ReactUnity.Styling
             return value;
         }
 
-        public T GetStyleValue<T>(IStyleProperty prop)
+        public T GetStyleValue<T>(IStyleProperty prop, bool convert = false)
         {
             var value = GetRawStyleValue(prop);
             if (value is IDynamicValue d) value = d.Convert(prop, this);
+
+            if (convert) value = prop.Convert(value);
 
             return value == null ? default : (T) value;
         }

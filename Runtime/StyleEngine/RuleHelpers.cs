@@ -173,7 +173,7 @@ namespace ReactUnity.StyleEngine
 
             foreach (var item in rule)
             {
-                var prop = StyleProperties.GetStyleProperty(item.Key);
+                var prop = CssProperties.GetProperty(item.Key);
                 if (prop != null)
                 {
                     dic[prop.name] = prop.Convert(item.Value);
@@ -181,22 +181,6 @@ namespace ReactUnity.StyleEngine
             }
             return dic;
         }
-        public static List<LayoutValue> GetLayoutDic(IEnumerable<KeyValuePair<string, object>> rule)
-        {
-            List<LayoutValue> dic = null;
-
-            foreach (var item in rule)
-            {
-                var hasCssStyle = LayoutProperties.CssPropertyMap.TryGetValue(item.Key, out var prop);
-                if (hasCssStyle)
-                {
-                    if (dic == null) dic = new List<LayoutValue>();
-                    dic.Add(new LayoutValue(prop, prop.Convert(item.Value)));
-                }
-            }
-            return dic;
-        }
-
 
         public static string NormalizeSelector(string selector)
         {

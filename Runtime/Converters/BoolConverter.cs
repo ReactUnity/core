@@ -11,8 +11,8 @@ namespace ReactUnity.Converters
 
         public BoolConverter(string[] truthyValues, string[] falsyValues)
         {
-            this.truthyValues = new HashSet<string>(truthyValues ?? new string[0], StringComparer.OrdinalIgnoreCase);
-            this.falsyValues = new HashSet<string>(falsyValues ?? new string[0], StringComparer.OrdinalIgnoreCase);
+            this.truthyValues = new HashSet<string>(truthyValues ?? new string[0], StringComparer.InvariantCultureIgnoreCase);
+            this.falsyValues = new HashSet<string>(falsyValues ?? new string[0], StringComparer.InvariantCultureIgnoreCase);
         }
 
         public object Convert(object value)

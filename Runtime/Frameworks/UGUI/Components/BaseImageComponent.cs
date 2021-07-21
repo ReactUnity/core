@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Styling;
 using ReactUnity.UGUI.Behaviours;
@@ -8,10 +9,15 @@ namespace ReactUnity.UGUI
 {
     public abstract class BaseImageComponent : UGUIComponent
     {
-        public static NodeStyle ImageDefaultStyle { get; } = new NodeStyle() { };
-        public static YogaNode ImageDefaultLayout { get; } = new YogaNode() { Overflow = YogaOverflow.Hidden, AlignItems = YogaAlign.Center, JustifyContent = YogaJustify.Center };
+        public static Dictionary<string, object> DefaultLayout { get; } = new Dictionary<string, object>
+        {
+            { "overflow", YogaOverflow.Hidden },
+            { "align-items", YogaAlign.Center },
+            { "justify-content", YogaJustify.Center },
+        };
+
+        public static NodeStyle ImageDefaultStyle { get; } = new NodeStyle(DefaultLayout) { };
         public override NodeStyle DefaultStyle => ImageDefaultStyle;
-        public override YogaNode DefaultLayout => ImageDefaultLayout;
 
         public ImageMeasurer Measurer { get; private set; }
         public GameObject ImageContainer { get; private set; }

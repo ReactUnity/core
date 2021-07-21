@@ -28,8 +28,6 @@ namespace ReactUnity
         protected static Regex ResourcesRegex = new Regex(@"resources(/|\\)", RegexOptions.IgnoreCase);
 
         public bool CalculatesLayout { get; }
-        private LayoutMergeMode MergeLayout { get; }
-
         public IHostComponent Host { get; protected set; }
         public GlobalRecord Globals { get; private set; }
         public bool IsDevServer { get; }
@@ -58,7 +56,7 @@ namespace ReactUnity
         public ReactContext(
             GlobalRecord globals, ScriptSource script, IDispatcher dispatcher,
             ITimer timer, IMediaProvider mediaProvider, bool isDevServer,
-            Action onRestart, LayoutMergeMode mergeLayout, bool calculatesLayout
+            Action onRestart, bool calculatesLayout
         )
         {
             Globals = globals;
@@ -67,7 +65,6 @@ namespace ReactUnity
             Timer = timer;
             Dispatcher = dispatcher;
             OnRestart = onRestart ?? (() => { });
-            MergeLayout = mergeLayout;
             CalculatesLayout = calculatesLayout;
             Location = new Location(this);
             MediaProvider = mediaProvider;
@@ -112,7 +109,7 @@ namespace ReactUnity
 
             foreach (var rule in stylesheet.StyleRules.OfType<StyleRule>())
             {
-                StyleTree.AddStyle(rule, importanceOffset, MergeLayout);
+                StyleTree.AddStyle(rule, importanceOffset);
             }
 
             foreach (var rule in stylesheet.Children.OfType<IKeyframesRule>())
@@ -133,7 +130,7 @@ namespace ReactUnity
 
                 foreach (var rule in media.Children.OfType<StyleRule>())
                 {
-                    StyleTree.AddStyle(rule, importanceOffset, MergeLayout, mql);
+                    StyleTree.AddStyle(rule, importanceOffset, mql);
                 }
                 mql.OnUpdate += MediaQueryUpdated;
             }

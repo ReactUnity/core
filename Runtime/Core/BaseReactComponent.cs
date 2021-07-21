@@ -15,9 +15,7 @@ namespace ReactUnity
     {
         #region Statics / Defaults
         public static readonly NodeStyle TagDefaultStyle = new NodeStyle();
-        public static readonly YogaNode TagDefaultLayout = new YogaNode();
         public virtual NodeStyle DefaultStyle => TagDefaultStyle;
-        public virtual YogaNode DefaultLayout => TagDefaultLayout;
         #endregion
 
         public ContextType Context { get; }
@@ -84,7 +82,6 @@ namespace ReactUnity
         private bool markedForStyleApply;
         private bool markedForLayoutApply;
         private bool markedStyleResolveRecursive;
-        private List<LayoutValue> ModifiedLayoutProperties;
         protected Dictionary<string, Callback> BaseEventHandlers = new Dictionary<string, Callback>();
 
         protected BaseReactComponent(ContextType context, string tag = "", bool isContainer = true)
@@ -97,10 +94,10 @@ namespace ReactUnity
             Data.changed += StyleChanged;
             ClassList = new ClassList(this);
 
-            if (context.CalculatesLayout) Layout = new YogaNode(DefaultLayout);
+            if (context.CalculatesLayout) Layout = new YogaNode();
 
             StateStyles = new StateStyles(this);
-            StyleState = new StyleState(context, Layout, DefaultLayout);
+            StyleState = new StyleState(context);
             StyleState.OnUpdate += OnStylesUpdated;
             StyleState.OnEvent += FireEvent;
             StyleState.SetCurrent(new NodeStyle(DefaultStyle));
@@ -230,8 +227,6 @@ namespace ReactUnity
             markedStyleResolveRecursive = false;
 
             var inlineStyles = RuleHelpers.GetRuleDic(Style);
-            var inlineLayouts = RuleHelpers.GetLayoutDic(Style) ?? new List<LayoutValue>();
-            if (inlineLayouts != null) foreach (var l in inlineLayouts) inlineStyles[l.prop.name] = l.value;
 
             List<RuleTreeNode<StyleData>> matchingRules;
             if (Tag == "_before") matchingRules = Parent.BeforeRules;
@@ -245,50 +240,14 @@ namespace ReactUnity
             cssStyles.Add(inlineStyles);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
-
-
-            var layoutUpdated = false;
-            var calculatesLayout = Context.CalculatesLayout;
-
-            if (Layout != null && ModifiedLayoutProperties != null)
-            {
-                foreach (var item in ModifiedLayoutProperties) item.SetDefault(Layout, DefaultLayout);
-                layoutUpdated = ModifiedLayoutProperties.Count > 0;
-            }
-
-
             var resolvedStyle = new NodeStyle(DefaultStyle);
             resolvedStyle.CssStyles = cssStyles;
 
-
-            if (calculatesLayout)
-            {
-                var layouts = matchingRules.Where(x => x.Data?.Layouts != null).SelectMany(x => x.Data?.Layouts).Concat(inlineLayouts).ToList();
-                ModifiedLayoutProperties = layouts;
-
-                if (layouts.Count > 0)
-                {
-                    layoutUpdated = true;
-
-                    for (int i = matchingRules.Count - 1; i >= importantIndex; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
-                    inlineLayouts.ForEach(x => x.Set(Layout, DefaultLayout));
-                    for (int i = importantIndex - 1; i >= 0; i--) matchingRules[i].Data?.Layouts?.ForEach(x => x.Set(Layout, DefaultLayout));
-                }
-            }
-
             StyleState.SetCurrent(resolvedStyle);
             ApplyStyles();
+            ApplyLayoutStyles();
+            ScheduleLayout();
             resolvedStyle.MarkChangesSeen();
-
-            if (calculatesLayout)
-            {
-                if (layoutUpdated)
-                {
-                    ApplyLayoutStyles();
-                    ScheduleLayout();
-                }
-            }
-            else ApplyLayoutStyles();
 
             if (IsContainer)
             {

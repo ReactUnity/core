@@ -121,9 +121,59 @@ namespace ReactUnity.UGUI
 
         protected override void ApplyLayoutStylesSelf()
         {
+            ApplyYogaValues();
             ResolveOpacityAndInteractable();
             SetOverflow();
             UpdateBackgroundGraphic(true, false);
+        }
+
+        protected void ApplyYogaValues()
+        {
+            var computed = ComputedStyle;
+            Layout.FlexDirection = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.FlexDirection);
+            Layout.Wrap = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Wrap);
+            Layout.FlexGrow = StylingHelpers.GetStyleFloat(computed, LayoutProperties.FlexGrow);
+            Layout.FlexShrink = StylingHelpers.GetStyleFloat(computed, LayoutProperties.FlexShrink);
+
+            Layout.Width = StylingHelpers.GetStyleLength(computed, LayoutProperties.Width);
+            Layout.Height = StylingHelpers.GetStyleLength(computed, LayoutProperties.Height);
+            Layout.FlexBasis = StylingHelpers.GetStyleLength(computed, LayoutProperties.FlexBasis);
+
+            Layout.MinWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MinWidth);
+            Layout.MinHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MinHeight);
+            Layout.MaxWidth = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxWidth);
+            Layout.MaxHeight = StylingHelpers.GetStyleLength(computed, LayoutProperties.MaxHeight);
+
+            Layout.PaddingBottom = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.PaddingBottom, LayoutProperties.PaddingVertical, LayoutProperties.Padding);
+            Layout.PaddingTop = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.PaddingTop, LayoutProperties.PaddingVertical, LayoutProperties.Padding);
+            Layout.PaddingLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.PaddingLeft, LayoutProperties.PaddingHorizontal, LayoutProperties.Padding);
+            Layout.PaddingRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.PaddingRight, LayoutProperties.PaddingHorizontal, LayoutProperties.Padding);
+
+            Layout.MarginBottom = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginBottom, LayoutProperties.MarginVertical, LayoutProperties.Margin);
+            Layout.MarginTop = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginTop, LayoutProperties.MarginVertical, LayoutProperties.Margin);
+            Layout.MarginLeft = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginLeft, LayoutProperties.MarginHorizontal, LayoutProperties.Margin);
+            Layout.MarginRight = StylingHelpers.GetStyleLengthTriple(computed, LayoutProperties.MarginRight, LayoutProperties.MarginHorizontal, LayoutProperties.Margin);
+
+            Layout.Left = StylingHelpers.GetStyleLength(computed, LayoutProperties.Left);
+            Layout.Right = StylingHelpers.GetStyleLength(computed, LayoutProperties.Right);
+            Layout.Top = StylingHelpers.GetStyleLength(computed, LayoutProperties.Top);
+            Layout.Bottom = StylingHelpers.GetStyleLength(computed, LayoutProperties.Bottom);
+
+            Layout.BorderLeftWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderLeftWidth, LayoutProperties.BorderWidth);
+            Layout.BorderRightWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderRightWidth, LayoutProperties.BorderWidth);
+            Layout.BorderTopWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderTopWidth, LayoutProperties.BorderWidth);
+            Layout.BorderBottomWidth = StylingHelpers.GetStyleFloatDouble(computed, LayoutProperties.BorderBottomWidth, LayoutProperties.BorderWidth);
+
+            Layout.Display = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Display);
+            Layout.PositionType = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.PositionType);
+            Layout.Overflow = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.Overflow);
+
+            Layout.AlignContent = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignContent);
+            Layout.AlignItems = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignItems);
+            Layout.AlignSelf = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignSelf);
+            Layout.JustifyContent = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.JustifyContent);
+
+            ScheduleLayout();
         }
 
         protected override void ApplyStylesSelf()

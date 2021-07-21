@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
@@ -11,16 +12,16 @@ namespace ReactUnity.UGUI
 {
     public class InputComponent : UGUIComponent
     {
-        public static YogaNode InputDefaultLayout { get; } = new YogaNode()
+        public static Dictionary<string, object> DefaultLayout { get; } = new Dictionary<string, object>
         {
-            Padding = 8,
-            MinHeight = 40,
-            MinWidth = 200,
-            MaxWidth = YogaValue.Percent(100),
-            Overflow = YogaOverflow.Hidden
+            { "padding", 8 },
+            { "min-height", 40 },
+            { "min-width", 200 },
+            { "max-width", YogaValue.Percent(100) },
+            { "overflow", YogaOverflow.Hidden },
         };
 
-        public static NodeStyle InputDefaultStyle { get; } = new NodeStyle()
+        public static NodeStyle InputDefaultStyle { get; } = new NodeStyle(DefaultLayout)
         {
             backgroundColor = Color.white,
             borderRadius = 8f,
@@ -29,7 +30,6 @@ namespace ReactUnity.UGUI
             appearance = Appearance.Input,
         };
 
-        public override YogaNode DefaultLayout => InputDefaultLayout;
         public override NodeStyle DefaultStyle => InputDefaultStyle;
 
         public string Value

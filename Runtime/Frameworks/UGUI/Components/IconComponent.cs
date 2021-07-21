@@ -8,9 +8,6 @@ namespace ReactUnity.UGUI
 {
     public class IconComponent : UGUIComponent, ITextComponent
     {
-        public static YogaNode TextDefaultLayout { get; } = new YogaNode() { };
-        public override YogaNode DefaultLayout => TextDefaultLayout;
-
         public TextMeshProUGUI Text { get; private set; }
 
         public float Width => LayoutUtility.GetPreferredWidth(RectTransform);

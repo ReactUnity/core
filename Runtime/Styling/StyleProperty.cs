@@ -67,7 +67,7 @@ namespace ReactUnity.Styling
         public static bool operator ==(StyleProperty<T> left, StyleProperty<T> right) => left.name == right.name;
         public static bool operator !=(StyleProperty<T> left, StyleProperty<T> right) => left.name != right.name;
         public override int GetHashCode() => name.GetHashCode();
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj) => obj is IStyleProperty v && v.name == name;
 
         public object GetStyle(NodeStyle style)
         {
@@ -189,7 +189,7 @@ namespace ReactUnity.Styling
 
     public static class CssProperties
     {
-        public static readonly Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.OrdinalIgnoreCase);
+        public static readonly Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase);
         public static readonly HashSet<IStyleProperty> TransitionableProperties = new HashSet<IStyleProperty>();
 
         static CssProperties()

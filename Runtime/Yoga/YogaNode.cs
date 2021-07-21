@@ -176,7 +176,8 @@ namespace Facebook.Yoga
 
             set
             {
-                Native.YGNodeStyleSetAlignItems(_ygNode, value);
+                if (value == YogaAlign.Auto) Native.YGNodeStyleSetAlignItems(_ygNode, YogaAlign.Stretch);
+                else Native.YGNodeStyleSetAlignItems(_ygNode, value);
             }
         }
 
@@ -443,7 +444,8 @@ namespace Facebook.Yoga
 
             set
             {
-                Native.YGNodeStyleSetAspectRatio(_ygNode, value);
+                if (value == 0) Native.YGNodeStyleSetAspectRatio(_ygNode, float.NaN);
+                else Native.YGNodeStyleSetAspectRatio(_ygNode, value);
             }
         }
 

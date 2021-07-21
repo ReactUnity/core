@@ -18,13 +18,17 @@ namespace ReactUnity.UGUI
 
         public HostComponent(RectTransform host, UGUIContext context) : base(host, context, "_root", true)
         {
-            Layout.Width = Width;
-            Layout.Height = Height;
-
             var responsive = GetOrAddComponent<ResponsiveElement>();
             responsive.Layout = Layout;
             responsive.Context = context;
             responsive.Restart();
+        }
+
+        protected override void ApplyLayoutStylesSelf()
+        {
+            base.ApplyLayoutStylesSelf();
+            Layout.Width = Width;
+            Layout.Height = Height;
         }
 
         protected override void ApplyStylesSelf()

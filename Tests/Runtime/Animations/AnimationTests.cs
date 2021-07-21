@@ -163,5 +163,35 @@ namespace ReactUnity.Tests
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.white, text.color);
         }
+
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator CssVariablesShouldBeAnimatableForLayoutStyles()
+        {
+            Context.InsertStyle(@"
+                @keyframes changeVar {
+                    from {
+                        --my-var: 100px;
+                    }
+                    to {
+                        --my-var: 500px;
+                    }
+                }");
+
+            var view = (Q("#test") as UGUI.ContainerComponent);
+            var rt = view.RectTransform;
+
+            view.Style.Set("width", "var(--my-var)");
+            view.Style.Set("animation", "changeVar 1s 400ms linear both");
+            yield return null;
+            Assert.AreEqual(100, rt.rect.width);
+
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(140, rt.rect.width);
+
+            yield return AdvanceTime(1f);
+            Assert.That(rt.rect.width, Is.EqualTo(500));
+        }
     }
 }

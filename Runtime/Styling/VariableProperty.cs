@@ -30,8 +30,9 @@ namespace ReactUnity.Styling
 
         public object GetStyle(NodeStyle style) => style.GetRawStyleValue(this);
 
-        public override bool Equals(object obj) => obj is VariableProperty v && v.name == name;
-
+        public static bool operator ==(VariableProperty left, VariableProperty right) => left.name == right.name;
+        public static bool operator !=(VariableProperty left, VariableProperty right) => left.name != right.name;
         public override int GetHashCode() => name.GetHashCode();
+        public override bool Equals(object obj) => obj is VariableProperty v && v.name == name;
     }
 }

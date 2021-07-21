@@ -60,7 +60,7 @@ namespace ReactUnity.UIToolkit
             VisualElement hostElement, GlobalRecord globals, ScriptSource script,
             IDispatcher dispatcher, ITimer timer, IMediaProvider mediaProvider,
             bool isDevServer, Action onRestart = null, Action<AudioClip> onAudioPlayback = null
-        ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, LayoutMergeMode.Both, false)
+        ) : base(globals, script, dispatcher, timer, mediaProvider, isDevServer, onRestart, false)
         {
             OnAudioPlayback = onAudioPlayback;
 
