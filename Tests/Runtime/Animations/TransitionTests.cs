@@ -124,5 +124,34 @@ namespace ReactUnity.Tests
             yield return AdvanceTime(1f);
             Assert.AreEqual(500, rt.rect.width);
         }
+
+
+        [ReactInjectableTest(BaseScript, @"
+            #test {
+                transition: --my-color 1s 400ms linear;
+                background-color: red;
+                color: var(--my-color);
+                --my-color: white;
+            }
+            #test.started {
+                --my-color: black;
+            }
+")]
+        public IEnumerator CssVariablesCanBeTransitioned()
+        {
+            var text = (Q("#test") as UGUI.ContainerComponent).GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            Assert.AreEqual(Color.white, text.color);
+
+            Globals["started"] = true;
+            yield return AdvanceTime(0.1f);
+            Assert.AreEqual(Color.white, text.color);
+
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(0.8f, text.color.grayscale);
+
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(Color.black, text.color);
+        }
     }
 }

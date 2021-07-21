@@ -54,9 +54,10 @@ namespace ReactUnity.Styling
 
         private Action<YogaNode, T> setter;
         private Func<YogaNode, T> getter;
+        public override bool affectsLayout => true;
 
         public LayoutProperty(string name, bool transitionable = false, T defaultValue = default, IStyleConverter converter = null) :
-            base(LayoutProperties.PascalToKebabCase(name), defaultValue, transitionable, false, false, converter)
+            base(LayoutProperties.PascalToKebabCase(name), defaultValue, transitionable, false, converter)
         {
             var ygType = typeof(YogaNode);
             propInfo = ygType.GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);

@@ -289,14 +289,8 @@ namespace ReactUnity.Styling
                     }
 
                     updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
+                    hasLayout = hasLayout || sp.affectsLayout;
                     Active.SetStyleValue(sp, activeValue);
-
-                    if (sp is ILayoutProperty lp)
-                    {
-                        //if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout, Active);
-                        hasLayout = true;
-                    }
-                    else if (sp is VariableProperty) hasLayout = true;
                 }
             }
 
@@ -502,14 +496,8 @@ namespace ReactUnity.Styling
                     }
 
                     updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
+                    hasLayout = hasLayout || sp.affectsLayout;
                     Active.SetStyleValue(sp, activeValue);
-
-                    if (sp is ILayoutProperty lp)
-                    {
-                        //if (Layout != null) lp.Set(Layout, activeValue, DefaultLayout, Active);
-                        hasLayout = true;
-                    }
-                    else if (sp is VariableProperty) hasLayout = true;
 
                     if (sp.name == StyleProperties.audio.name)
                     {

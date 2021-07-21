@@ -21,7 +21,7 @@ namespace ReactUnity.Styling
         object defaultValue { get; }
         bool transitionable { get; }
         bool inherited { get; }
-        bool proxy { get; }
+        bool affectsLayout { get; }
         object noneValue { get; }
         object GetStyle(NodeStyle style);
     }
@@ -34,12 +34,12 @@ namespace ReactUnity.Styling
         public object noneValue { get; private set; }
         public bool transitionable { get; private set; }
         public bool inherited { get; private set; }
-        public bool proxy { get; private set; }
         public IStyleConverter converter;
 
         private Func<NodeStyle, T> getter;
+        public virtual bool affectsLayout => false;
 
-        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, bool proxy = false, IStyleConverter converter = null, object noneValue = null)
+        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, IStyleConverter converter = null, object noneValue = null)
         {
             this.type = typeof(T);
             this.name = name;
@@ -47,7 +47,6 @@ namespace ReactUnity.Styling
             this.noneValue = noneValue;
             this.transitionable = transitionable;
             this.inherited = inherited;
-            this.proxy = proxy;
 
             if (converter == null) converter = AllConverters.Get(type);
             if (!(converter is GeneralConverter)) converter = new GeneralConverter(converter);
