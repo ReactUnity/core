@@ -74,11 +74,6 @@ namespace ReactUnity.Styling
             return res;
         }
 
-        public object GetStyleValue(IStyleProperty prop)
-        {
-            return ActiveStates.Find(x => x.HasValue(prop.name))?.GetStyleValue(prop);
-        }
-
         public bool GetState(string state)
         {
             if (!Dic.ContainsKey(state)) SubscribeToState(state);

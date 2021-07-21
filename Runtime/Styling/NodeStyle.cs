@@ -246,7 +246,7 @@ namespace ReactUnity.Styling
             StyleMap = new Dictionary<string, object>(copyFrom.StyleMap);
         }
 
-        public object GetStyleValue(IStyleProperty prop, bool fromChild = false)
+        public object GetRawStyleValue(IStyleProperty prop, bool fromChild = false, NodeStyle activeStyle = null)
         {
             if (fromChild) HasInheritedChanges = true;
 
@@ -260,43 +260,40 @@ namespace ReactUnity.Styling
             {
                 if (Fallback != null)
                 {
-                    return Fallback.GetStyleValue(prop, fromChild);
+                    return Fallback.GetRawStyleValue(prop, fromChild, this);
                 }
 
                 if (prop.inherited)
                 {
-                    return Parent?.GetStyleValue(prop, true) ?? prop?.defaultValue;
+                    return Parent?.GetRawStyleValue(prop, true) ?? prop?.defaultValue;
                 }
 
                 return prop?.defaultValue;
             }
 
-            return GetStyleValueSpecial(value, prop);
+            return GetStyleValueSpecial(value, prop, activeStyle ?? this);
         }
 
-        private object GetStyleValueSpecial(object value, IStyleProperty prop)
+        private object GetStyleValueSpecial(object value, IStyleProperty prop, NodeStyle activeStyle)
         {
             if (value == null) return null;
-            if (value is IStyleProperty s)
-            {
-                var res = GetStyleValue(s);
-                return prop.Convert(res);
-            }
             if (Equals(value, CssKeyword.CurrentColor))
             {
                 if (prop as StyleProperty<Color> == StyleProperties.color)
-                    return Parent?.GetStyleValue(StyleProperties.color);
-                return GetStyleValue(StyleProperties.color);
+                    return Parent?.GetRawStyleValue(StyleProperties.color);
+                return activeStyle?.GetRawStyleValue(StyleProperties.color);
             }
             if (Equals(value, CssKeyword.Invalid)) return null;
             else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Unset)) return prop?.defaultValue;
-            else if (Equals(value, CssKeyword.Inherit)) return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;
+            else if (Equals(value, CssKeyword.Inherit)) return Parent?.GetRawStyleValue(prop) ?? prop?.defaultValue;
             return value;
         }
 
         public T GetStyleValue<T>(IStyleProperty prop)
         {
-            var value = GetStyleValue(prop);
+            var value = GetRawStyleValue(prop);
+            if (value is IDynamicValue d) value = d.Convert(prop, this);
+
             return value == null ? default : (T) value;
         }
 

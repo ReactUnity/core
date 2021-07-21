@@ -49,7 +49,9 @@ namespace ReactUnity.Styling
             this.inherited = inherited;
             this.proxy = proxy;
 
-            this.converter = converter ?? AllConverters.Get(type);
+            if (converter == null) converter = AllConverters.Get(type);
+            if (!(converter is GeneralConverter)) converter = new GeneralConverter(converter);
+            this.converter = converter;
 
             var propInfo = typeof(NodeStyle).GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
 

@@ -133,5 +133,35 @@ namespace ReactUnity.Tests
             yield return AdvanceTime(1f);
             Assert.AreEqual(Color.white, text.color);
         }
+
+
+
+        [ReactInjectableTest(BaseScript, BaseStyle)]
+        public IEnumerator CssVariablesShouldBeAnimatableForVisualStyles()
+        {
+            Context.InsertStyle(@"
+                @keyframes changeVar {
+                    from {
+                        --my-color: black;
+                    }
+                    to {
+                        --my-color: white;
+                    }
+                }");
+
+            var view = (Q("#test") as UGUI.ContainerComponent);
+            var text = view.GameObject.GetComponentInChildren<TMPro.TextMeshProUGUI>();
+
+            view.Style.Set("color", "var(--my-color)");
+            view.Style.Set("animation", "changeVar 1s 400ms linear both");
+            yield return null;
+            Assert.AreEqual(Color.black, text.color);
+
+            yield return AdvanceTime(0.5f);
+            Assert.AreEqual(0.1f, text.color.grayscale);
+
+            yield return AdvanceTime(1f);
+            Assert.AreEqual(Color.white, text.color);
+        }
     }
 }

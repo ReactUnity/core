@@ -130,6 +130,7 @@ namespace ReactUnity.Styling
 
         private class VarFunction : ICssFunction
         {
+            static HashSet<string> Allowed = new HashSet<string> { "var" };
             public string Name { get; } = "var";
 
             public object Call(string name, string[] args)
@@ -143,8 +144,10 @@ namespace ReactUnity.Styling
                     fallback = string.Join(", ", args, 1);
                 }
 
-                // TODO: return a variable definition pair with name and fallback
-                return new VariableProperty(varName);
+                var isProperty = TryCall(fallback, out var res, Allowed);
+                var resFallback = isProperty ? res : fallback;
+
+                return new DynamicPropertyValue(new VariableProperty(varName), resFallback);
             }
 
             public bool CanHandleArguments(int count, string name, string[] args) => count >= 1;

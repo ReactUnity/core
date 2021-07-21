@@ -20,17 +20,18 @@ namespace ReactUnity.Styling
         public VariableProperty(string name, Type type = null)
         {
             this.name = name;
-            this.type = type ?? typeof(object);
+            this.type = type;
         }
 
         public object Convert(object value)
         {
-            return value;
+            return value is IDynamicValue d ? d : new DynamicValue(value);
         }
 
-        public object GetStyle(NodeStyle style)
-        {
-            return style.GetStyleValue(this);
-        }
+        public object GetStyle(NodeStyle style) => style.GetRawStyleValue(this);
+
+        public override bool Equals(object obj) => obj is VariableProperty v && v.name == name;
+
+        public override int GetHashCode() => name.GetHashCode();
     }
 }

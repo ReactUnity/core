@@ -210,8 +210,8 @@ namespace ReactUnity.Styling
                     if (sp == null) continue;
                     finished = false;
 
-                    var prevValue = Previous.GetStyleValue(sp);
-                    var curValue = Current.GetStyleValue(sp);
+                    var prevValue = Previous.GetRawStyleValue(sp);
+                    var curValue = Current.GetRawStyleValue(sp);
 
                     propertyTransitionStates.TryGetValue(sp.name, out var state);
 
@@ -293,7 +293,7 @@ namespace ReactUnity.Styling
                         activeValue = Interpolater.Interpolate(prevValue, curValue, ratio, tran.TimingFunction, sp.type);
                     }
 
-                    updated = updated || (Active.GetStyleValue(sp) != activeValue);
+                    updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
                     Active.SetStyleValue(sp, activeValue);
 
                     if (sp is ILayoutProperty lp)
@@ -453,9 +453,9 @@ namespace ReactUnity.Styling
                                     : !(anim.Direction == AnimationDirection.Reverse || anim.Direction == AnimationDirection.AlternateReverse);
 
                             if (!(fillReverse ? keyframes.From : keyframes.To).Rules.TryGetValue(sp.name, out activeValue))
-                                activeValue = Current.GetStyleValue(sp);
+                                activeValue = Current.GetRawStyleValue(sp);
                         }
-                        else activeValue = Current.GetStyleValue(sp);
+                        else activeValue = Current.GetRawStyleValue(sp);
                     }
                     else
                     {
@@ -495,8 +495,8 @@ namespace ReactUnity.Styling
 
                         object lowValue, highValue;
 
-                        if (!lowKf.Rules.TryGetValue(sp.name, out lowValue)) lowValue = Current.GetStyleValue(sp);
-                        if (!highKf.Rules.TryGetValue(sp.name, out highValue)) highValue = Current.GetStyleValue(sp);
+                        if (!lowKf.Rules.TryGetValue(sp.name, out lowValue)) lowValue = Current.GetRawStyleValue(sp);
+                        if (!highKf.Rules.TryGetValue(sp.name, out highValue)) highValue = Current.GetRawStyleValue(sp);
 
                         if (lowValue != highValue)
                         {
@@ -505,7 +505,7 @@ namespace ReactUnity.Styling
                         else activeValue = highValue;
                     }
 
-                    updated = updated || (Active.GetStyleValue(sp) != activeValue);
+                    updated = updated || (Active.GetRawStyleValue(sp) != activeValue);
                     Active.SetStyleValue(sp, activeValue);
 
                     if (sp is ILayoutProperty lp)

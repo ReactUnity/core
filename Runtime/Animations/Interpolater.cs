@@ -1,5 +1,6 @@
 using System;
 using Facebook.Yoga;
+using ReactUnity.Styling;
 using ReactUnity.Types;
 using UnityEngine;
 
@@ -173,6 +174,7 @@ namespace ReactUnity.Animations
             if (from is YogaValue b1 && to is YogaValue b2) return Interpolate(b1, b2, t);
             if (from is YogaValue2 g1 && to is YogaValue2 g2) return Interpolate(g1, g2, t);
             if (from is BoxShadowList s1 && to is BoxShadowList s2) return Interpolate(s1, s2, t);
+            if (from is IDynamicValue d1 && to is IDynamicValue d2) return new DynamicInterpolatedValue(d1, d2, t);
 
             return t > 0.5 ? to : from;
         }
