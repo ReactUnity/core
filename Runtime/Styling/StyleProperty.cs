@@ -171,15 +171,6 @@ namespace ReactUnity.Styling
             AllProperties = PropertyMap.Values.ToArray();
         }
 
-
-        public static IStyleProperty GetStyleProperty(string name)
-        {
-            if (name.StartsWith("--")) return new VariableProperty(name);
-            IStyleProperty style;
-            CssPropertyMap.TryGetValue(name, out style);
-            return style;
-        }
-
         public static bool IsInherited(string name)
         {
             return InheritedProperties.Contains(name);

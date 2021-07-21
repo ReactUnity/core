@@ -119,7 +119,6 @@ namespace ReactUnity.Styling
         public static LayoutProperty<YogaWrap> Wrap = new LayoutProperty<YogaWrap>("Wrap");
         public static LayoutProperty<YogaOverflow> Overflow = new LayoutProperty<YogaOverflow>("Overflow", true);
 
-        //public static ILayoutProperty Flex = new LayoutProperty<float>("Flex", true);
         public static LayoutProperty<float> FlexGrow = new LayoutProperty<float>("FlexGrow", true, float.NaN);
         public static LayoutProperty<float> FlexShrink = new LayoutProperty<float>("FlexShrink", true, float.NaN);
         public static LayoutProperty<YogaValue> FlexBasis = new LayoutProperty<YogaValue>("FlexBasis", true);
@@ -192,21 +191,6 @@ namespace ReactUnity.Styling
             }
 
             AllProperties = PropertyMap.Values.ToArray();
-        }
-
-
-        public static ILayoutProperty GetProperty(string name)
-        {
-            ILayoutProperty prop;
-            PropertyMap.TryGetValue(name, out prop);
-            return prop;
-        }
-
-        public static ILayoutProperty GetCssProperty(string name)
-        {
-            ILayoutProperty prop;
-            CssPropertyMap.TryGetValue(name, out prop);
-            return prop;
         }
 
         internal static string PascalToKebabCase(string str)

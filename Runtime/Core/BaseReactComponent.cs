@@ -29,7 +29,7 @@ namespace ReactUnity
         public StateStyles StateStyles { get; private set; }
 
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
-        public InlineData Style { get; protected set; } = new InlineData("Style");
+        public InlineStyles Style { get; protected set; } = new InlineStyles("Style");
 
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
@@ -113,7 +113,7 @@ namespace ReactUnity
 
         protected void StyleChanged(string key, object value, WatchableRecord<object> style)
         {
-            MarkForStyleResolving((style as InlineData)?.Identifier != "Style" || key == null || StyleProperties.IsInherited(key));
+            MarkForStyleResolving(!(style is InlineStyles) || key == null || StyleProperties.IsInherited(key));
         }
 
         protected void MarkForStyleResolving(bool recursive)
@@ -221,18 +221,16 @@ namespace ReactUnity
             markedStyleResolve = false;
             markedStyleResolveRecursive = false;
 
-            var inlineStyles = RuleHelpers.GetRuleDic(Style);
-
             List<RuleTreeNode<StyleData>> matchingRules;
             if (Tag == "_before") matchingRules = Parent.BeforeRules;
             else if (Tag == "_after") matchingRules = Parent.AfterRules;
             else matchingRules = Context.StyleTree.GetMatchingRules(this).ToList();
 
             var importantIndex = Math.Max(0, matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity));
-            var cssStyles = new List<Dictionary<string, object>> { };
+            var cssStyles = new List<IDictionary<string, object>> { };
 
             for (int i = 0; i < importantIndex; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
-            cssStyles.Add(inlineStyles);
+            cssStyles.Add(Style);
             for (int i = importantIndex; i < matchingRules.Count; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
 
             var resolvedStyle = new NodeStyle(DefaultStyle);

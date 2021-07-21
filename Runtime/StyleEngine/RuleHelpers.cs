@@ -124,7 +124,7 @@ namespace ReactUnity.StyleEngine
             return (priority.Inlines << 24) + (priority.Ids << 16) + (priority.Classes << 8) + priority.Tags;
         }
 
-        public static Dictionary<string, object> GetRuleDic(StyleDeclaration rule, bool important)
+        public static Dictionary<string, object> ConvertStyleDeclarationToRecord(StyleDeclaration rule, bool important)
         {
             var dic = new Dictionary<string, object>();
 
@@ -151,28 +151,12 @@ namespace ReactUnity.StyleEngine
             return dic;
         }
 
-        public static Dictionary<string, object> GetRuleDic(IEnumerable<KeyValuePair<string, object>> rule)
-        {
-            var dic = new Dictionary<string, object>();
-
-            foreach (var item in rule)
-            {
-                var prop = CssProperties.GetProperty(item.Key);
-                if (prop != null)
-                {
-                    dic[prop.name] = prop.Convert(item.Value);
-                }
-            }
-            return dic;
-        }
-
         public static string NormalizeSelector(string selector)
         {
             return NthChildRegex.Replace(
                 SplitSelectorRegex.Replace(selector.Replace(">", " > ").Replace("+", " + ").Replace("~", " ~ ").Trim(), " "),
                 "($1+$2)");
         }
-
 
         public static CssKeyword GetCssKeyword(string value)
         {

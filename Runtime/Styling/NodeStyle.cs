@@ -11,7 +11,7 @@ namespace ReactUnity.Styling
     public class NodeStyle
     {
         Dictionary<string, object> StyleMap;
-        public List<Dictionary<string, object>> CssStyles;
+        public List<IDictionary<string, object>> CssStyles;
         Dictionary<string, object> DefaultStyle;
         NodeStyle Fallback;
         public bool HasInheritedChanges { get; private set; } = false;
@@ -303,12 +303,10 @@ namespace ReactUnity.Styling
         {
             var value = GetRawStyleValue(prop);
             if (value is IDynamicValue d) value = d.Convert(prop, this);
-
-            if (convert) value = prop.Convert(value);
-
-            return value == null ? default : (T) value;
+            if (value == null) return default;
+            if (convert && value.GetType() != typeof(T)) value = prop.Convert(value);
+            return (T) value;
         }
-
 
         public void SetStyleValue(IStyleProperty prop, object value)
         {

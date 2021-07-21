@@ -16,16 +16,8 @@ namespace ReactUnity.Helpers
 
         public T this[string key]
         {
-            get
-            {
-                if (collection.TryGetValue(key, out var val)) return val;
-                return default;
-            }
-            set
-            {
-                collection[key] = value;
-                Change(key, value);
-            }
+            get => RetrieveValue(collection, key);
+            set => SaveValue(collection, key, value);
         }
 
         public WatchableRecord()
@@ -152,6 +144,18 @@ namespace ReactUnity.Helpers
         protected void Change(string key, T value)
         {
             changed?.Invoke(key, value, this);
+        }
+
+        protected virtual T RetrieveValue(Dictionary<string, T> collection, string key)
+        {
+            if (collection.TryGetValue(key, out var val)) return val;
+            return default;
+        }
+
+        protected virtual void SaveValue(Dictionary<string, T> collection, string key, T value)
+        {
+            collection[key] = value;
+            Change(key, value);
         }
     }
 

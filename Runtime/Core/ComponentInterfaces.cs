@@ -21,7 +21,7 @@ namespace ReactUnity
         YogaNode Layout { get; }
         StyleState StyleState { get; }
         NodeStyle ComputedStyle { get; }
-        InlineData Style { get; }
+        InlineStyles Style { get; }
         string Id { get; set; }
         string Name { get; }
         string Tag { get; }

@@ -23,11 +23,11 @@ namespace ReactUnity.StyleEngine
             {
                 var style = rule.Style;
                 if (leaf.Data == null) leaf.Data = new StyleData();
-                var dic = RuleHelpers.GetRuleDic(style, false);
+                var dic = RuleHelpers.ConvertStyleDeclarationToRecord(style, false);
                 leaf.Data.Rules.Add(dic);
                 leaf.MediaQuery = mql;
 
-                var importantDic = RuleHelpers.GetRuleDic(style, true);
+                var importantDic = RuleHelpers.ConvertStyleDeclarationToRecord(style, true);
                 if (importantDic.Count > 0)
                 {
                     var importantLeaf = leaf.AddChildCascading("** !");
