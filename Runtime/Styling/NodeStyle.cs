@@ -276,6 +276,18 @@ namespace ReactUnity.Styling
 
         private object GetStyleValueSpecial(object value, IStyleProperty prop)
         {
+            if (value == null) return null;
+            if (value is IStyleProperty s)
+            {
+                var res = GetStyleValue(s);
+                return prop.Convert(res);
+            }
+            if (Equals(value, CssKeyword.CurrentColor))
+            {
+                if (prop as StyleProperty<Color> == StyleProperties.color)
+                    return Parent?.GetStyleValue(StyleProperties.color);
+                return GetStyleValue(StyleProperties.color);
+            }
             if (Equals(value, CssKeyword.Invalid)) return null;
             else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Unset)) return prop?.defaultValue;
             else if (Equals(value, CssKeyword.Inherit)) return Parent?.GetStyleValue(prop) ?? prop?.defaultValue;

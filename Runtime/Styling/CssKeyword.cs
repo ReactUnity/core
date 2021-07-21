@@ -10,6 +10,7 @@ namespace ReactUnity.Styling
         Auto = 4,
         None = 5,
         Unset = 6,
+        CurrentColor = 7,
     }
 
 }

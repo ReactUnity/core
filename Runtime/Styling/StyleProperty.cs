@@ -173,6 +173,7 @@ namespace ReactUnity.Styling
 
         public static IStyleProperty GetStyleProperty(string name)
         {
+            if (name.StartsWith("--")) return new VariableProperty(name);
             IStyleProperty style;
             CssPropertyMap.TryGetValue(name, out style);
             return style;
@@ -202,6 +203,7 @@ namespace ReactUnity.Styling
 
         public static IStyleProperty GetProperty(string name)
         {
+            if (name.StartsWith("--")) return new VariableProperty(name);
             CssPropertyMap.TryGetValue(name, out var style);
             return style;
         }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ReactUnity.StyleEngine;
 using ReactUnity.Styling;
 
@@ -5,6 +6,7 @@ namespace ReactUnity.Converters
 {
     public class GeneralConverter : IStyleParser, IStyleConverter
     {
+        static private HashSet<string> AllowedFunctions = new HashSet<string> { "var" };
         IStyleConverter baseConverter;
 
         public GeneralConverter(IStyleConverter baseConverter = null)
@@ -22,6 +24,7 @@ namespace ReactUnity.Converters
 
         public object FromString(string value)
         {
+            if (CssFunctions.TryCall(value, out var result, AllowedFunctions)) return result;
             var keyword = RuleHelpers.GetCssKeyword(value);
             if (keyword != CssKeyword.NoKeyword) return keyword;
             return CssKeyword.Invalid;

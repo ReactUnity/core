@@ -130,8 +130,8 @@ namespace ReactUnity.StyleEngine
 
             foreach (var item in rule.Where(x => important == x.IsImportant))
             {
-                var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
-                if (hasCssStyle)
+                var prop = StyleProperties.GetStyleProperty(item.Name);
+                if (prop != null)
                 {
                     var specialName = GetCssKeyword(item.Value);
                     object value;
@@ -173,8 +173,8 @@ namespace ReactUnity.StyleEngine
 
             foreach (var item in rule)
             {
-                var hasCssStyle = StyleProperties.CssPropertyMap.TryGetValue(item.Key, out var prop);
-                if (hasCssStyle)
+                var prop = StyleProperties.GetStyleProperty(item.Key);
+                if (prop != null)
                 {
                     dic[prop.name] = prop.Convert(item.Value);
                 }

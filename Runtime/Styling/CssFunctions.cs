@@ -16,6 +16,7 @@ namespace ReactUnity.Styling
         public static ICssFunction Url = new UrlFunction();
         public static ICssFunction Rgba = new RgbaFunction();
         public static ICssFunction Hsla = new HslaFunction();
+        public static ICssFunction Var = new VarFunction();
 
         private static Dictionary<string, ICssFunction> Functions = new Dictionary<string, ICssFunction>(StringComparer.OrdinalIgnoreCase)
         {
@@ -122,6 +123,28 @@ namespace ReactUnity.Styling
                 var a1 = string.Join(",", args);
 
                 return new Url(a1);
+            }
+
+            public bool CanHandleArguments(int count, string name, string[] args) => count >= 1;
+        }
+
+        private class VarFunction : ICssFunction
+        {
+            public string Name { get; } = "var";
+
+            public object Call(string name, string[] args)
+            {
+                if (args.Length < 1) return null;
+
+                var varName = args[0];
+                string fallback = null;
+                if (args.Length > 1)
+                {
+                    fallback = string.Join(", ", args, 1);
+                }
+
+                // TODO: return a variable definition pair with name and fallback
+                return new VariableProperty(varName);
             }
 
             public bool CanHandleArguments(int count, string name, string[] args) => count >= 1;
