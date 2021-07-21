@@ -8,7 +8,7 @@ namespace ReactUnity.StyleEngine
 {
     public class StyleData
     {
-        public List<Dictionary<string, object>> Rules = new List<Dictionary<string, object>>();
+        public List<Dictionary<IStyleProperty, object>> Rules = new List<Dictionary<IStyleProperty, object>>();
     }
 
     public class StyleTree : RuleTree<StyleData>

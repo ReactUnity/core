@@ -11,7 +11,7 @@ namespace ReactUnity.Styling
     public class NodeStyle
     {
         Dictionary<string, object> StyleMap;
-        public List<IDictionary<string, object>> CssStyles;
+        public List<IDictionary<IStyleProperty, object>> CssStyles;
         Dictionary<string, object> DefaultStyle;
         NodeStyle Fallback;
         public bool HasInheritedChanges { get; private set; } = false;
@@ -63,22 +63,22 @@ namespace ReactUnity.Styling
         public float borderTopLeftRadius
         {
             set => SetStyleValue(StyleProperties.borderTopLeftRadius, value);
-            get => HasValue(StyleProperties.borderTopLeftRadius.name) ? GetStyleValue<float>(StyleProperties.borderTopLeftRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
+            get => HasValue(StyleProperties.borderTopLeftRadius) ? GetStyleValue<float>(StyleProperties.borderTopLeftRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
         }
         public float borderTopRightRadius
         {
             set => SetStyleValue(StyleProperties.borderTopRightRadius, value);
-            get => HasValue(StyleProperties.borderTopRightRadius.name) ? GetStyleValue<float>(StyleProperties.borderTopRightRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
+            get => HasValue(StyleProperties.borderTopRightRadius) ? GetStyleValue<float>(StyleProperties.borderTopRightRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
         }
         public float borderBottomLeftRadius
         {
             set => SetStyleValue(StyleProperties.borderBottomLeftRadius, value);
-            get => HasValue(StyleProperties.borderBottomLeftRadius.name) ? GetStyleValue<float>(StyleProperties.borderBottomLeftRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
+            get => HasValue(StyleProperties.borderBottomLeftRadius) ? GetStyleValue<float>(StyleProperties.borderBottomLeftRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
         }
         public float borderBottomRightRadius
         {
             set => SetStyleValue(StyleProperties.borderBottomRightRadius, value);
-            get => HasValue(StyleProperties.borderBottomRightRadius.name) ? GetStyleValue<float>(StyleProperties.borderBottomRightRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
+            get => HasValue(StyleProperties.borderBottomRightRadius) ? GetStyleValue<float>(StyleProperties.borderBottomRightRadius) : GetStyleValue<float>(StyleProperties.borderRadius);
         }
         public Color borderColor
         {
@@ -88,22 +88,22 @@ namespace ReactUnity.Styling
         public Color borderLeftColor
         {
             set => SetStyleValue(StyleProperties.borderLeftColor, value);
-            get => HasValue(StyleProperties.borderLeftColor.name) ? GetStyleValue<Color>(StyleProperties.borderLeftColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+            get => HasValue(StyleProperties.borderLeftColor) ? GetStyleValue<Color>(StyleProperties.borderLeftColor) : GetStyleValue<Color>(StyleProperties.borderColor);
         }
         public Color borderRightColor
         {
             set => SetStyleValue(StyleProperties.borderRightColor, value);
-            get => HasValue(StyleProperties.borderRightColor.name) ? GetStyleValue<Color>(StyleProperties.borderRightColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+            get => HasValue(StyleProperties.borderRightColor) ? GetStyleValue<Color>(StyleProperties.borderRightColor) : GetStyleValue<Color>(StyleProperties.borderColor);
         }
         public Color borderTopColor
         {
             set => SetStyleValue(StyleProperties.borderTopColor, value);
-            get => HasValue(StyleProperties.borderTopColor.name) ? GetStyleValue<Color>(StyleProperties.borderTopColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+            get => HasValue(StyleProperties.borderTopColor) ? GetStyleValue<Color>(StyleProperties.borderTopColor) : GetStyleValue<Color>(StyleProperties.borderColor);
         }
         public Color borderBottomColor
         {
             set => SetStyleValue(StyleProperties.borderBottomColor, value);
-            get => HasValue(StyleProperties.borderBottomColor.name) ? GetStyleValue<Color>(StyleProperties.borderBottomColor) : GetStyleValue<Color>(StyleProperties.borderColor);
+            get => HasValue(StyleProperties.borderBottomColor) ? GetStyleValue<Color>(StyleProperties.borderBottomColor) : GetStyleValue<Color>(StyleProperties.borderColor);
         }
         public BoxShadowList boxShadow
         {
@@ -218,7 +218,7 @@ namespace ReactUnity.Styling
         {
             get
             {
-                if (HasValue("fontSize"))
+                if (HasValue(StyleProperties.fontSize))
                 {
                     var fs = fontSize;
                     var unit = fs.Unit;
@@ -260,7 +260,7 @@ namespace ReactUnity.Styling
 
             if (
                 !StyleMap.TryGetValue(name, out value) &&
-                !OwnTryGetValue(name, out value) &&
+                !OwnTryGetValue(prop, out value) &&
                 (DefaultStyle == null || !DefaultStyle.TryGetValue(name, out value)))
             {
                 if (Fallback != null)
@@ -341,18 +341,13 @@ namespace ReactUnity.Styling
 
         public bool HasValue(IStyleProperty prop)
         {
-            return HasValue(prop.name);
+            return StyleMap.ContainsKey(prop.name) ||
+                OwnHasValue(prop) ||
+                (DefaultStyle != null && DefaultStyle.ContainsKey(prop.name)) ||
+                (Fallback != null && Fallback.HasValue(prop));
         }
 
-        public bool HasValue(string name)
-        {
-            return StyleMap.ContainsKey(name) ||
-                OwnHasValue(name) ||
-                (DefaultStyle != null && DefaultStyle.ContainsKey(name)) ||
-                (Fallback != null && Fallback.HasValue(name));
-        }
-
-        private bool OwnTryGetValue(string name, out object res)
+        private bool OwnTryGetValue(IStyleProperty prop, out object res)
         {
             if (CssStyles == null)
             {
@@ -362,19 +357,19 @@ namespace ReactUnity.Styling
             for (int i = 0; i < CssStyles.Count; i++)
             {
                 var dic = CssStyles[i];
-                if (dic.TryGetValue(name, out res)) return true;
+                if (dic.TryGetValue(prop, out res)) return true;
             }
             res = null;
             return false;
         }
 
-        private bool OwnHasValue(string name)
+        private bool OwnHasValue(IStyleProperty prop)
         {
             if (CssStyles == null) return false;
             for (int i = 0; i < CssStyles.Count; i++)
             {
                 var dic = CssStyles[i];
-                if (dic.ContainsKey(name)) return true;
+                if (dic.ContainsKey(prop)) return true;
             }
             return false;
         }

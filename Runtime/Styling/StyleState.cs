@@ -442,7 +442,7 @@ namespace ReactUnity.Styling
                                     || (anim.Direction == AnimationDirection.AlternateReverse && anim.IterationCount % 2 != 0))
                                     : !(anim.Direction == AnimationDirection.Reverse || anim.Direction == AnimationDirection.AlternateReverse);
 
-                            if (!(fillReverse ? keyframes.From : keyframes.To).Rules.TryGetValue(sp.name, out activeValue))
+                            if (!(fillReverse ? keyframes.From : keyframes.To).Rules.TryGetValue(sp, out activeValue))
                                 activeValue = Current.GetRawStyleValue(sp);
                         }
                         else activeValue = Current.GetRawStyleValue(sp);
@@ -455,7 +455,7 @@ namespace ReactUnity.Styling
                         for (int i = 0; i < stepCount; i++)
                         {
                             var cur = steps[i];
-                            if (step >= cur.Offset && cur.Rules.ContainsKey(sp.name))
+                            if (step >= cur.Offset && cur.Rules.ContainsKey(sp))
                             {
                                 lowKf = cur;
                             }
@@ -464,7 +464,7 @@ namespace ReactUnity.Styling
                         for (int i = 1; i <= stepCount; i++)
                         {
                             var cur = steps[i];
-                            if (step <= cur.Offset && cur.Rules.ContainsKey(sp.name))
+                            if (step <= cur.Offset && cur.Rules.ContainsKey(sp))
                             {
                                 highKf = cur;
                                 break;
@@ -485,8 +485,8 @@ namespace ReactUnity.Styling
 
                         object lowValue, highValue;
 
-                        if (!lowKf.Rules.TryGetValue(sp.name, out lowValue)) lowValue = Current.GetRawStyleValue(sp);
-                        if (!highKf.Rules.TryGetValue(sp.name, out highValue)) highValue = Current.GetRawStyleValue(sp);
+                        if (!lowKf.Rules.TryGetValue(sp, out lowValue)) lowValue = Current.GetRawStyleValue(sp);
+                        if (!highKf.Rules.TryGetValue(sp, out highValue)) highValue = Current.GetRawStyleValue(sp);
 
                         if (lowValue != highValue)
                         {

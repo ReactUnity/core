@@ -25,7 +25,7 @@ namespace ReactUnity.Helpers
 
             removeStringDictionaryListener = dict.AddListener((key, value, dc) => {
                 if (key != null) this[key] = value;
-                else UpdateStringObjectDictionary(dc, false);
+                else UpdateStringObjectDictionary(dc as WatchableRecord<object>, false);
             });
 
             dict.AddReserializeListener((dc) => {

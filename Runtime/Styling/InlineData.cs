@@ -13,25 +13,40 @@ namespace ReactUnity.Styling
         }
     }
 
-    public class InlineStyles : InlineData
+    public class InlineStyles : WatchableDictionary<IStyleProperty, object>
     {
-        public InlineStyles(string identifier = null) : base(identifier) { }
+        public object this[string key]
+        {
+            get
+            {
+                var prop = CssProperties.GetProperty(key);
+                if (prop == null) return null;
+                return this[prop];
+            }
+            set
+            {
+                var prop = CssProperties.GetProperty(key);
+                if (prop != null) this[prop] = key;
+            }
+        }
 
-        protected override object RetrieveValue(Dictionary<string, object> collection, string key)
+        protected override object RetrieveValue(Dictionary<IStyleProperty, object> collection, IStyleProperty key)
         {
             if (collection.TryGetValue(key, out var val)) return val;
-            var prop = CssProperties.GetProperty(key);
-            if (prop != null && collection.TryGetValue(prop.name, out var normalVal)) return normalVal;
             return default;
         }
 
-        protected override void SaveValue(Dictionary<string, object> collection, string key, object value)
+        protected override void SaveValue(Dictionary<IStyleProperty, object> collection, IStyleProperty key, object value)
         {
-            var prop = CssProperties.GetProperty(key);
-            if (prop == null) return;
-            var normalizedValue = prop.Convert(value);
-            collection[prop.name] = normalizedValue;
-            Change(prop.name, normalizedValue);
+            var normalizedValue = key.Convert(value);
+            collection[key] = normalizedValue;
+            Change(key, normalizedValue);
         }
+
+        public void Set(string key, object value) => Set(CssProperties.GetProperty(key), value);
+        public void SetWithoutNotify(string key, object value) => SetWithoutNotify(CssProperties.GetProperty(key), value);
+        public bool TryGetValue(string key, out object res) => TryGetValue(CssProperties.GetProperty(key), out res);
+        public bool ContainsKey(string key) => ContainsKey(CssProperties.GetProperty(key));
+        public object GetValueOrDefault(string key) => GetValueOrDefault(CssProperties.GetProperty(key));
     }
 }

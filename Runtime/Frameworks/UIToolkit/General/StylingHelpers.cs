@@ -89,70 +89,70 @@ namespace ReactUnity.UIToolkit
 
         public static object GetStyleValue<T>(NodeStyle style, StyleProperty<T> prop)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<T>(prop);
+            if (style.HasValue(prop)) return style.GetStyleValue<T>(prop);
             else return StyleKeyword.Null;
         }
 
         public static StyleColor GetStyleColor(NodeStyle style, StyleProperty<Color> prop)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<Color>(prop);
+            if (style.HasValue(prop)) return style.GetStyleValue<Color>(prop);
             else return StyleKeyword.Null;
         }
 
         public static StyleFloat GetStyleFloat(NodeStyle style, StyleProperty<float> prop)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<float>(prop);
+            if (style.HasValue(prop)) return style.GetStyleValue<float>(prop);
             else return StyleKeyword.Null;
         }
 
         public static StyleFloat GetStyleFloatDouble(NodeStyle style, StyleProperty<float> prop, StyleProperty<float> prop2)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<float>(prop);
-            if (style.HasValue(prop2.name)) return style.GetStyleValue<float>(prop2);
+            if (style.HasValue(prop)) return style.GetStyleValue<float>(prop);
+            if (style.HasValue(prop2)) return style.GetStyleValue<float>(prop2);
             else return StyleKeyword.Null;
         }
 
         public static StyleLength GetStyleLength(NodeStyle style, StyleProperty<YogaValue> prop)
         {
-            if (style.HasValue(prop.name)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop));
+            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop));
             else return StyleKeyword.Null;
         }
 
         public static StyleLength GetStyleLengthDouble(NodeStyle style, StyleProperty<YogaValue> prop, StyleProperty<YogaValue> prop2)
         {
-            if (style.HasValue(prop.name)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop));
-            if (style.HasValue(prop2.name)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop2));
+            if (style.HasValue(prop)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop));
+            if (style.HasValue(prop2)) return YogaValueToStyleLength(style.GetStyleValue<YogaValue>(prop2));
             else return StyleKeyword.Null;
         }
 
         public static StyleEnum<T> GetStyleEnum<T>(NodeStyle style, StyleProperty<T> prop) where T : struct, IConvertible
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<T>(prop);
+            if (style.HasValue(prop)) return style.GetStyleValue<T>(prop);
             else return StyleKeyword.Null;
         }
 
         public static StyleEnum<T> GetStyleEnumCustom<T>(NodeStyle style, IStyleProperty prop) where T : struct, IConvertible
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<T>(prop);
+            if (style.HasValue(prop)) return style.GetStyleValue<T>(prop);
             else return StyleKeyword.Null;
         }
 
         public static StyleEnum<T> GetStyleBoolToEnum<T>(NodeStyle style, StyleProperty<bool> prop, T trueValue, T falseValue) where T : struct, IConvertible
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<bool>(prop) ? trueValue : falseValue;
+            if (style.HasValue(prop)) return style.GetStyleValue<bool>(prop) ? trueValue : falseValue;
             else return StyleKeyword.Null;
         }
 
         public static StyleLength GetStyleBorderRadius(NodeStyle style, StyleProperty<float> prop)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<float>(prop);
+            if (style.HasValue(prop)) return style.GetStyleValue<float>(prop);
             if (style.HasValue(StyleProperties.borderRadius)) return style.borderRadius;
             else return StyleKeyword.Null;
         }
 
         public static StyleColor GetStyleBorderColor(NodeStyle style, StyleProperty<Color> prop)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<Color>(prop);
+            if (style.HasValue(prop)) return style.GetStyleValue<Color>(prop);
             if (style.HasValue(StyleProperties.borderColor)) return style.borderColor;
             else return StyleKeyword.Null;
         }

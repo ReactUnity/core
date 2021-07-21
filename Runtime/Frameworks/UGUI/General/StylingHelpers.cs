@@ -14,8 +14,8 @@ namespace ReactUnity.UGUI
 
         public static float GetStyleFloatDouble(NodeStyle style, StyleProperty<float> prop, StyleProperty<float> prop2)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<float>(prop, true);
-            if (style.HasValue(prop2.name)) return style.GetStyleValue<float>(prop2, true);
+            if (style.HasValue(prop)) return style.GetStyleValue<float>(prop, true);
+            if (style.HasValue(prop2)) return style.GetStyleValue<float>(prop2, true);
             else return float.NaN;
         }
 
@@ -27,16 +27,16 @@ namespace ReactUnity.UGUI
 
         public static YogaValue GetStyleLengthDouble(NodeStyle style, StyleProperty<YogaValue> prop, StyleProperty<YogaValue> prop2)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<YogaValue>(prop, true);
-            if (style.HasValue(prop2.name)) return style.GetStyleValue<YogaValue>(prop2, true);
+            if (style.HasValue(prop)) return style.GetStyleValue<YogaValue>(prop, true);
+            if (style.HasValue(prop2)) return style.GetStyleValue<YogaValue>(prop2, true);
             else return YogaValue.Undefined();
         }
 
         public static YogaValue GetStyleLengthTriple(NodeStyle style, StyleProperty<YogaValue> prop, StyleProperty<YogaValue> prop2, StyleProperty<YogaValue> prop3)
         {
-            if (style.HasValue(prop.name)) return style.GetStyleValue<YogaValue>(prop, true);
-            if (style.HasValue(prop2.name)) return style.GetStyleValue<YogaValue>(prop2, true);
-            if (style.HasValue(prop3.name)) return style.GetStyleValue<YogaValue>(prop3, true);
+            if (style.HasValue(prop)) return style.GetStyleValue<YogaValue>(prop, true);
+            if (style.HasValue(prop2)) return style.GetStyleValue<YogaValue>(prop2, true);
+            if (style.HasValue(prop3)) return style.GetStyleValue<YogaValue>(prop3, true);
             else return YogaValue.Undefined();
         }
 

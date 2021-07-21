@@ -46,7 +46,7 @@ namespace ReactUnity
 
             val.Steps.Sort((a, b) => System.Math.Sign(a.Offset - b.Offset));
 
-            foreach (var prop in val.Steps.SelectMany(x => x.Rules.Keys).Select(x => CssProperties.GetProperty(x)))
+            foreach (var prop in val.Steps.SelectMany(x => x.Rules.Keys))
             {
                 if (prop != null) val.Properties.Add(prop);
             }
@@ -96,7 +96,7 @@ namespace ReactUnity
         }
 
         public bool Valid = true;
-        public Dictionary<string, object> Rules { get; } = new Dictionary<string, object>();
+        public Dictionary<IStyleProperty, object> Rules { get; } = new Dictionary<IStyleProperty, object>();
 
         public float Offset { get; set; } = 0;
     }

@@ -29,7 +29,7 @@ namespace ReactUnity
         public StateStyles StateStyles { get; private set; }
 
         [TypescriptRemap("../properties/style", "InlineStyleRemap")]
-        public InlineStyles Style { get; protected set; } = new InlineStyles("Style");
+        public InlineStyles Style { get; protected set; } = new InlineStyles();
 
         public bool IsPseudoElement { get; set; } = false;
         public string Tag { get; private set; } = "";
@@ -91,7 +91,7 @@ namespace ReactUnity
             Tag = tag;
             Context = context;
             Style.changed += StyleChanged;
-            Data.changed += StyleChanged;
+            Data.changed += DataChanged;
             ClassList = new ClassList(this);
 
             if (context.CalculatesLayout) Layout = new YogaNode();
@@ -111,9 +111,14 @@ namespace ReactUnity
             if (markedForLayoutApply) ApplyLayoutStyles();
         }
 
-        protected void StyleChanged(string key, object value, WatchableRecord<object> style)
+        protected void DataChanged(string key, object value, WatchableDictionary<string, object> style)
         {
-            MarkForStyleResolving(!(style is InlineStyles) || key == null || StyleProperties.IsInherited(key));
+            MarkForStyleResolving(true);
+        }
+
+        protected void StyleChanged(IStyleProperty key, object value, WatchableDictionary<IStyleProperty, object> style)
+        {
+            MarkForStyleResolving(key == null || key.inherited);
         }
 
         protected void MarkForStyleResolving(bool recursive)
@@ -227,7 +232,7 @@ namespace ReactUnity
             else matchingRules = Context.StyleTree.GetMatchingRules(this).ToList();
 
             var importantIndex = Math.Max(0, matchingRules.FindIndex(x => x.Specifity <= RuleHelpers.ImportantSpecifity));
-            var cssStyles = new List<IDictionary<string, object>> { };
+            var cssStyles = new List<IDictionary<IStyleProperty, object>> { };
 
             for (int i = 0; i < importantIndex; i++) cssStyles.AddRange(matchingRules[i].Data?.Rules);
             cssStyles.Add(Style);

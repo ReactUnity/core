@@ -124,9 +124,9 @@ namespace ReactUnity.StyleEngine
             return (priority.Inlines << 24) + (priority.Ids << 16) + (priority.Classes << 8) + priority.Tags;
         }
 
-        public static Dictionary<string, object> ConvertStyleDeclarationToRecord(StyleDeclaration rule, bool important)
+        public static Dictionary<IStyleProperty, object> ConvertStyleDeclarationToRecord(StyleDeclaration rule, bool important)
         {
-            var dic = new Dictionary<string, object>();
+            var dic = new Dictionary<IStyleProperty, object>();
 
             foreach (var item in rule.Where(x => important == x.IsImportant))
             {
@@ -145,7 +145,7 @@ namespace ReactUnity.StyleEngine
                         value = prop.Convert(item.Value);
 
                     if (!Equals(value, CssKeyword.Invalid))
-                        dic[prop.name] = value;
+                        dic[prop] = value;
                 }
             }
             return dic;

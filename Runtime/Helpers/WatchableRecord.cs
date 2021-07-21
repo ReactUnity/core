@@ -8,39 +8,40 @@ using System.Collections.Generic;
 
 namespace ReactUnity.Helpers
 {
-    public class WatchableRecord<T> : IDictionary<string, T>
+    public class WatchableDictionary<TKey, T> : IDictionary<TKey, T>
     {
-        private Dictionary<string, T> collection;
 
-        internal event Action<string, T, WatchableRecord<T>> changed;
+        private Dictionary<TKey, T> collection;
 
-        public T this[string key]
+        internal event Action<TKey, T, WatchableDictionary<TKey, T>> changed;
+
+        public T this[TKey key]
         {
             get => RetrieveValue(collection, key);
             set => SaveValue(collection, key, value);
         }
 
-        public WatchableRecord()
+        public WatchableDictionary()
         {
-            collection = new Dictionary<string, T>();
+            collection = new Dictionary<TKey, T>();
         }
 
-        public WatchableRecord(IDictionary<string, T> dict)
+        public WatchableDictionary(IDictionary<TKey, T> dict)
         {
-            collection = new Dictionary<string, T>(dict);
+            collection = new Dictionary<TKey, T>(dict);
         }
 
-        public void Set(string key, T value)
+        public void Set(TKey key, T value)
         {
             this[key] = value;
         }
 
-        public void SetWithoutNotify(string key, T value)
+        public void SetWithoutNotify(TKey key, T value)
         {
             collection[key] = value;
         }
 
-        public ICollection<string> Keys => collection.Keys;
+        public ICollection<TKey> Keys => collection.Keys;
 
         public ICollection<T> Values => collection.Values;
 
@@ -48,13 +49,13 @@ namespace ReactUnity.Helpers
 
         public bool IsReadOnly => false;
 
-        public void Add(string key, T value)
+        public void Add(TKey key, T value)
         {
             collection.Add(key, value);
             Change(key, value);
         }
 
-        public void Add(KeyValuePair<string, T> item)
+        public void Add(KeyValuePair<TKey, T> item)
         {
             collection.Add(item.Key, item.Value);
             Change(item.Key, item.Value);
@@ -63,7 +64,7 @@ namespace ReactUnity.Helpers
         public void Clear()
         {
             collection.Clear();
-            Change(null, default);
+            Change(default, default);
         }
 
         public void ClearWithoutNotify()
@@ -72,36 +73,36 @@ namespace ReactUnity.Helpers
         }
 
 
-        public bool ContainsKey(string key)
+        public bool ContainsKey(TKey key)
         {
             return collection.ContainsKey(key);
         }
 
-        public IEnumerator<KeyValuePair<string, T>> GetEnumerator()
+        public IEnumerator<KeyValuePair<TKey, T>> GetEnumerator()
         {
             return collection.GetEnumerator();
         }
 
-        public bool Remove(string key)
+        public bool Remove(TKey key)
         {
             var res = collection.Remove(key);
             if (res) Change(key, default);
             return res;
         }
 
-        public bool RemoveWithoutNotify(string key)
+        public bool RemoveWithoutNotify(TKey key)
         {
             return collection.Remove(key);
         }
 
-        public bool TryGetValue(string key, out T value)
+        public bool TryGetValue(TKey key, out T value)
         {
             return collection.TryGetValue(key, out value);
         }
 
-        void ICollection<KeyValuePair<string, T>>.CopyTo(KeyValuePair<string, T>[] array, int arrayIndex)
+        void ICollection<KeyValuePair<TKey, T>>.CopyTo(KeyValuePair<TKey, T>[] array, int arrayIndex)
         {
-            (collection as ICollection<KeyValuePair<string, T>>).CopyTo(array, arrayIndex);
+            (collection as ICollection<KeyValuePair<TKey, T>>).CopyTo(array, arrayIndex);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -109,17 +110,17 @@ namespace ReactUnity.Helpers
             return collection.GetEnumerator();
         }
 
-        bool ICollection<KeyValuePair<string, T>>.Remove(KeyValuePair<string, T> item)
+        bool ICollection<KeyValuePair<TKey, T>>.Remove(KeyValuePair<TKey, T> item)
         {
-            return (collection as ICollection<KeyValuePair<string, T>>).Remove(item);
+            return (collection as ICollection<KeyValuePair<TKey, T>>).Remove(item);
         }
 
-        bool ICollection<KeyValuePair<string, T>>.Contains(KeyValuePair<string, T> item)
+        bool ICollection<KeyValuePair<TKey, T>>.Contains(KeyValuePair<TKey, T> item)
         {
-            return (collection as ICollection<KeyValuePair<string, T>>).Contains(item);
+            return (collection as ICollection<KeyValuePair<TKey, T>>).Contains(item);
         }
 
-        public Action AddListener(Action<string, T, WatchableRecord<T>> listener)
+        public Action AddListener(Action<TKey, T, WatchableDictionary<TKey, T>> listener)
         {
             changed += listener;
             return () => changed -= listener;
@@ -128,36 +129,38 @@ namespace ReactUnity.Helpers
         public Action AddListener(object cb)
         {
             var callback = new Callback(cb);
-            var listener = new Action<string, T, WatchableRecord<T>>((key, value, dc) => callback.Call(key, value, dc));
+            var listener = new Action<TKey, T, WatchableDictionary<TKey, T>>((key, value, dc) => callback.Call(key, value, dc));
             changed += listener;
             return () => changed -= listener;
         }
 
         public Action AddListener(Jint.Native.JsValue cb) => AddListener(cb as object);
 
-        public T GetValueOrDefault(string key)
+        public T GetValueOrDefault(TKey key)
         {
             if (!TryGetValue(key, out var value)) value = default;
             return value;
         }
 
-        protected void Change(string key, T value)
+        protected void Change(TKey key, T value)
         {
             changed?.Invoke(key, value, this);
         }
 
-        protected virtual T RetrieveValue(Dictionary<string, T> collection, string key)
+        protected virtual T RetrieveValue(Dictionary<TKey, T> collection, TKey key)
         {
             if (collection.TryGetValue(key, out var val)) return val;
             return default;
         }
 
-        protected virtual void SaveValue(Dictionary<string, T> collection, string key, T value)
+        protected virtual void SaveValue(Dictionary<TKey, T> collection, TKey key, T value)
         {
             collection[key] = value;
             Change(key, value);
         }
     }
+
+    public class WatchableRecord<T> : WatchableDictionary<string, T> { }
 
 #if REACT_CLEARSCRIPT
     public class HostPropertyBag : Microsoft.ClearScript.PropertyBag, Microsoft.ClearScript.IScriptableObject
@@ -219,7 +222,7 @@ namespace ReactUnity.Helpers
 
             regenerate();
 
-            changed += (string key, object value, WatchableRecord<object> dc) => {
+            changed += (string key, object value, WatchableDictionary<string, object> dc) => {
                 if (propertyBag != null)
                 {
                     if (key != null)
