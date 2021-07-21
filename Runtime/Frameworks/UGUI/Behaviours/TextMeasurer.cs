@@ -22,13 +22,11 @@ namespace ReactUnity.UGUI.Behaviours
         void ILayoutController.SetLayoutHorizontal()
         {
             Layout.MarkDirty();
-            Context.ScheduleLayout();
         }
 
         void ILayoutController.SetLayoutVertical()
         {
             Layout.MarkDirty();
-            Context.ScheduleLayout();
         }
 
         public YogaSize Measure(YogaNode node, float width, YogaMeasureMode widthMode, float height, YogaMeasureMode heightMode)

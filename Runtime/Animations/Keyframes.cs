@@ -87,10 +87,7 @@ namespace ReactUnity
                 val.Offset = o;
 
                 var styles = RuleHelpers.GetRuleDic(rule.Style, false);
-                var layouts = RuleHelpers.GetLayoutDic(rule.Style, false);
-
                 foreach (var rl in styles) val.Rules[rl.Key] = rl.Value;
-                if (layouts != null) foreach (var rl in layouts) val.Rules[rl.prop.name] = rl.value;
 
                 val.Valid = val.Valid && val.Rules.Count > 0 && val.Offset >= 0 && val.Offset <= 1;
 

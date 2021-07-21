@@ -282,15 +282,20 @@ namespace ReactUnity.Styling
         private object GetStyleValueSpecial(object value, IStyleProperty prop, NodeStyle activeStyle)
         {
             if (value == null) return null;
-            if (Equals(value, CssKeyword.CurrentColor))
+            if (value is CssKeyword ck)
             {
-                if (prop as StyleProperty<Color> == StyleProperties.color)
-                    return Parent?.GetRawStyleValue(StyleProperties.color);
-                return activeStyle?.GetRawStyleValue(StyleProperties.color);
+                if (ck == CssKeyword.CurrentColor)
+                {
+                    if (prop as StyleProperty<Color> == StyleProperties.color)
+                        return Parent?.GetRawStyleValue(StyleProperties.color);
+                    return activeStyle?.GetRawStyleValue(StyleProperties.color);
+                }
+                else if (ck == CssKeyword.Invalid) return null;
+                else if (ck == CssKeyword.Auto) return prop?.defaultValue;
+                else if (ck == CssKeyword.None) return prop?.noneValue;
+                else if (ck == CssKeyword.Initial || ck == CssKeyword.Unset) return prop?.defaultValue;
+                else if (ck == CssKeyword.Inherit) return Parent?.GetRawStyleValue(prop) ?? prop?.defaultValue;
             }
-            if (Equals(value, CssKeyword.Invalid)) return null;
-            else if (Equals(value, CssKeyword.Initial) || Equals(value, CssKeyword.Unset)) return prop?.defaultValue;
-            else if (Equals(value, CssKeyword.Inherit)) return Parent?.GetRawStyleValue(prop) ?? prop?.defaultValue;
             return value;
         }
 

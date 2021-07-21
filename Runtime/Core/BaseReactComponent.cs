@@ -216,11 +216,6 @@ namespace ReactUnity
 
         #region Style / Layout
 
-        public void ScheduleLayout()
-        {
-            Context.ScheduleLayout();
-        }
-
         public virtual void ResolveStyle(bool recursive = false)
         {
             markedStyleResolve = false;
@@ -246,7 +241,6 @@ namespace ReactUnity
             StyleState.SetCurrent(resolvedStyle);
             ApplyStyles();
             ApplyLayoutStyles();
-            ScheduleLayout();
             resolvedStyle.MarkChangesSeen();
 
             if (IsContainer)
@@ -376,7 +370,6 @@ namespace ReactUnity
                     Children.Add(child);
                     Layout?.AddChild(child.Layout);
                 }
-                ScheduleLayout();
             }
         }
 
@@ -387,7 +380,6 @@ namespace ReactUnity
             {
                 Children.Remove(child);
                 Layout?.RemoveChild(child.Layout);
-                ScheduleLayout();
             }
         }
 

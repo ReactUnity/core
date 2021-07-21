@@ -172,8 +172,6 @@ namespace ReactUnity.UGUI
             Layout.AlignItems = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignItems);
             Layout.AlignSelf = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.AlignSelf);
             Layout.JustifyContent = StylingHelpers.GetStyleEnumCustom(computed, LayoutProperties.JustifyContent);
-
-            ScheduleLayout();
         }
 
         protected override void ApplyStylesSelf()
@@ -189,7 +187,6 @@ namespace ReactUnity.UGUI
         public override void Relayout()
         {
             Layout.MarkDirty();
-            Context.ScheduleLayout();
         }
 
         #endregion

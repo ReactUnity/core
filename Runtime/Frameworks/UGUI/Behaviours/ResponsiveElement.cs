@@ -47,7 +47,6 @@ namespace ReactUnity.UGUI.Behaviours
                 Context.MediaProvider.SetDimensions(CurrentWidth, CurrentHeight);
                 Layout.Width = width;
                 Layout.Height = height;
-                Context.ScheduleLayout();
             }
         }
     }

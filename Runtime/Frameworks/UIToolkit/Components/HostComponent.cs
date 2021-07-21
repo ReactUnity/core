@@ -22,7 +22,6 @@ namespace ReactUnity.UIToolkit
                 CurrentWidth = width;
                 CurrentHeight = height;
                 Context.MediaProvider.SetDimensions(width, height);
-                Context.ScheduleLayout();
             }
         }
     }

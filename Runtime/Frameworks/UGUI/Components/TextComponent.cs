@@ -46,15 +46,12 @@ namespace ReactUnity.UGUI
 
             ApplyLayoutStylesSelf();
             ApplyStyles();
-
-            ScheduleLayout();
         }
 
         public void SetText(string text)
         {
             if (!TextSetByStyle) Text.text = text;
             TextInside = text;
-            ScheduleLayout();
         }
 
         protected override void ApplyLayoutStylesSelf()

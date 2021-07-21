@@ -43,7 +43,6 @@ namespace ReactUnity.UGUI
             if (text != null && Set != null) Text.text = Set.ConvertTextContent(text);
             else Text.text = "";
             Layout.MarkDirty();
-            ScheduleLayout();
         }
 
         public void SetText(string text)

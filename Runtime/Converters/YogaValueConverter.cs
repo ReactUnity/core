@@ -29,6 +29,9 @@ namespace ReactUnity.Converters
             else if (value is double d) return YogaValue.Point((float) d);
             else if (value is int i) return YogaValue.Point(i);
             else if (value is float v) return YogaValue.Point(v);
+
+            if (value is CssKeyword ck && ck == CssKeyword.Auto) return YogaValue.Auto();
+
             return FromString(value?.ToString());
         }
     }

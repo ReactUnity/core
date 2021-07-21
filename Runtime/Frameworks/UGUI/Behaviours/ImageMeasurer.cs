@@ -61,7 +61,6 @@ namespace ReactUnity.UGUI.Behaviours
         public void MarkDirty()
         {
             if (Layout?.Parent != null) Layout.MarkDirty();
-            Context?.ScheduleLayout();
         }
 
 

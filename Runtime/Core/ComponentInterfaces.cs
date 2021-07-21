@@ -32,7 +32,6 @@ namespace ReactUnity
         InlineData Data { get; }
 
         void ApplyLayoutStyles();
-        void ScheduleLayout();
         void ResolveStyle(bool recursive = false);
         void Relayout();
 

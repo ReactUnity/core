@@ -27,27 +27,14 @@ namespace ReactUnity.StyleEngine
                 leaf.Data.Rules.Add(dic);
                 leaf.MediaQuery = mql;
 
-                var lay = RuleHelpers.GetLayoutDic(style, false);
-                if (lay != null)
-                {
-                    leaf.Data.Rules.Add(lay.ToDictionary(x => x.prop.name, x => x.value));
-                }
-
                 var importantDic = RuleHelpers.GetRuleDic(style, true);
-                var importantLay = RuleHelpers.GetLayoutDic(style, true);
-                if (importantDic.Count > 0 || importantLay != null)
+                if (importantDic.Count > 0)
                 {
                     var importantLeaf = leaf.AddChildCascading("** !");
                     importantLeaf.Specifity = leaf.Specifity + RuleHelpers.ImportantSpecifity;
                     if (importantLeaf.Data == null) importantLeaf.Data = new StyleData();
                     importantLeaf.Data.Rules.Add(importantDic);
                     importantLeaf.MediaQuery = mql;
-
-                    if (importantLay != null)
-                    {
-                        leaf.Data.Rules.Add(importantLay.ToDictionary(x => x.prop.name, x => x.value));
-                    }
-
                     addNew.Add(importantLeaf);
                     LeafNodes.InsertIntoSortedList(importantLeaf);
                 }

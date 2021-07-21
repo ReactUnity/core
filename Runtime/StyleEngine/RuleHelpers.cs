@@ -130,7 +130,7 @@ namespace ReactUnity.StyleEngine
 
             foreach (var item in rule.Where(x => important == x.IsImportant))
             {
-                var prop = StyleProperties.GetStyleProperty(item.Name);
+                var prop = CssProperties.GetProperty(item.Name);
                 if (prop != null)
                 {
                     var specialName = GetCssKeyword(item.Value);
@@ -146,22 +146,6 @@ namespace ReactUnity.StyleEngine
 
                     if (!Equals(value, CssKeyword.Invalid))
                         dic[prop.name] = value;
-                }
-            }
-            return dic;
-        }
-
-        public static List<LayoutValue> GetLayoutDic(StyleDeclaration rule, bool important)
-        {
-            List<LayoutValue> dic = null;
-
-            foreach (var item in rule.Where(x => important == x.IsImportant))
-            {
-                var hasCssStyle = LayoutProperties.CssPropertyMap.TryGetValue(item.Name, out var prop);
-                if (hasCssStyle)
-                {
-                    if (dic == null) dic = new List<LayoutValue>();
-                    dic.Add(new LayoutValue(prop, prop.Convert(item.Value)));
                 }
             }
             return dic;

@@ -76,23 +76,7 @@ namespace ReactUnity
             var updateVisitor = new UpdateVisitor();
             Dispatcher.OnEveryUpdate(() => Host.Accept(updateVisitor));
 
-            if (CalculatesLayout)
-            {
-                Action callback = () => {
-                    if (LayoutScheduled)
-                    {
-                        Host?.Layout?.CalculateLayout();
-                        LayoutScheduled = false;
-                    }
-                };
-                dispatcher.OnEveryLateUpdate(callback);
-            }
-        }
-
-
-        public virtual void ScheduleLayout()
-        {
-            LayoutScheduled = true;
+            if (CalculatesLayout) dispatcher.OnEveryLateUpdate(() => Host.Layout.CalculateLayout());
         }
 
         public virtual void InsertStyle(string style, int importanceOffset = 0)
