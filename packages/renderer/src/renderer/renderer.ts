@@ -10,7 +10,7 @@ import { diffProperties, DiffResult } from './diffing';
 const hostContext = {};
 const childContext = {};
 
-function applyDiffedUpdate(writeTo: ReactUnity.Styling.InlineData, updatePayload: DiffResult | Record<string, any>, depth = 0) {
+function applyDiffedUpdate(writeTo: ReactUnity.Helpers.WatchableDictionary<any>, updatePayload: DiffResult | Record<string, any>, depth = 0) {
   if (!updatePayload) return false;
 
   if (Array.isArray(updatePayload)) {
