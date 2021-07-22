@@ -7,19 +7,19 @@ namespace ReactUnity.Styling.Shorthands
 {
     public static class AllShorthands
     {
-        public static readonly StyleShorthand margin = new FourDirectionalShorthand("margin", FourDirectionalShorthand.PropertyType.Margin);
-        public static readonly StyleShorthand padding = new FourDirectionalShorthand("padding", FourDirectionalShorthand.PropertyType.Padding);
-        public static readonly StyleShorthand inset = new FourDirectionalShorthand("inset", FourDirectionalShorthand.PropertyType.Inset);
-        public static readonly StyleShorthand borderWidth = new FourDirectionalShorthand("border-width", FourDirectionalShorthand.PropertyType.BorderWidth);
-        public static readonly StyleShorthand borderColor = new FourDirectionalShorthand("border-color", FourDirectionalShorthand.PropertyType.BorderColor);
-        public static readonly StyleShorthand borderRadius = new FourDirectionalShorthand("border-radius", FourDirectionalShorthand.PropertyType.BorderRadius);
-        public static readonly StyleShorthand border = new BorderShorthand("border", BorderShorthand.BorderSide.All);
-        public static readonly StyleShorthand borderTop = new BorderShorthand("border-top", BorderShorthand.BorderSide.Top);
-        public static readonly StyleShorthand borderRight = new BorderShorthand("border-right", BorderShorthand.BorderSide.Right);
-        public static readonly StyleShorthand borderBottom = new BorderShorthand("border-bottom", BorderShorthand.BorderSide.Bottom);
-        public static readonly StyleShorthand borderLeft = new BorderShorthand("border-left", BorderShorthand.BorderSide.Left);
-        public static readonly StyleShorthand flex = new FlexShorthand("flex");
-        public static readonly StyleShorthand flexFlow = new FlexFlowShorthand("flex-flow");
+        public static readonly StyleShorthand Margin = new FourDirectionalShorthand("margin", FourDirectionalShorthand.PropertyType.Margin);
+        public static readonly StyleShorthand Padding = new FourDirectionalShorthand("padding", FourDirectionalShorthand.PropertyType.Padding);
+        public static readonly StyleShorthand Inset = new FourDirectionalShorthand("inset", FourDirectionalShorthand.PropertyType.Inset);
+        public static readonly StyleShorthand BorderWidth = new FourDirectionalShorthand("border-width", FourDirectionalShorthand.PropertyType.BorderWidth);
+        public static readonly StyleShorthand BorderColor = new FourDirectionalShorthand("border-color", FourDirectionalShorthand.PropertyType.BorderColor);
+        public static readonly StyleShorthand BorderRadius = new FourDirectionalShorthand("border-radius", FourDirectionalShorthand.PropertyType.BorderRadius);
+        public static readonly StyleShorthand Border = new BorderShorthand("border", BorderShorthand.BorderSide.All);
+        public static readonly StyleShorthand BorderTop = new BorderShorthand("border-top", BorderShorthand.BorderSide.Top);
+        public static readonly StyleShorthand BorderRight = new BorderShorthand("border-right", BorderShorthand.BorderSide.Right);
+        public static readonly StyleShorthand BorderBottom = new BorderShorthand("border-bottom", BorderShorthand.BorderSide.Bottom);
+        public static readonly StyleShorthand BorderLeft = new BorderShorthand("border-left", BorderShorthand.BorderSide.Left);
+        public static readonly StyleShorthand Flex = new FlexShorthand("flex");
+        public static readonly StyleShorthand FlexFlow = new FlexFlowShorthand("flex-flow");
 
         public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase);
         public static readonly StyleShorthand[] List;

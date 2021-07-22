@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using Facebook.Yoga;
-using ReactUnity.Styling.Internal;
 using ReactUnity.Types;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactUnity.Styling
+namespace ReactUnity.Styling.Internal
 {
     public class BorderAndBackground : MonoBehaviour
     {

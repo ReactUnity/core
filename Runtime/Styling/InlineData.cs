@@ -25,8 +25,12 @@ namespace ReactUnity.Styling
             }
             set
             {
-                var prop = CssProperties.GetProperty(key);
-                if (prop != null) this[prop] = key;
+                var prop = CssProperties.GetKey(key);
+                if (prop == null) return;
+                var mod = prop.Modify(collection, value);
+
+                if (mod == null || mod.Count > 1) Change(null, value);
+                else Change(mod[0], value);
             }
         }
 
@@ -43,19 +47,10 @@ namespace ReactUnity.Styling
             Change(key, normalizedValue);
         }
 
-        public void Set(string key, object value)
-        {
-            var prop = CssProperties.GetModifier(key);
-            var mod = prop?.Modify(collection, value);
-
-            if (mod == null || mod.Count > 1) Change(null, value);
-            else Change(mod[0], value);
-
-        }
-
+        public void Set(string key, object value) => this[key] = value;
         public void SetWithoutNotify(string key, object value)
         {
-            var prop = CssProperties.GetModifier(key);
+            var prop = CssProperties.GetKey(key);
             prop?.Modify(collection, value);
         }
 

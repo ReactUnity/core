@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ReactUnity.Styling.Shorthands
 {
-    public abstract class StyleShorthand : IStyleModifier
+    public abstract class StyleShorthand : IStyleKey
     {
         public string Name { get; }
         public abstract List<IStyleProperty> ModifiedProperties { get; }

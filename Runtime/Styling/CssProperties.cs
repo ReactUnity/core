@@ -32,7 +32,7 @@ namespace ReactUnity.Styling
             return style;
         }
 
-        public static IStyleModifier GetModifier(string name)
+        public static IStyleKey GetKey(string name)
         {
             var prop = AllShorthands.GetShorthand(name);
             if (prop == null) return GetProperty(name);

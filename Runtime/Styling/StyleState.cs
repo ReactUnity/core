@@ -198,7 +198,8 @@ namespace ReactUnity.Styling
                 IEnumerable<IStyleProperty> properties;
 
                 if (tran.All) properties = CssProperties.TransitionableProperties;
-                else properties = new List<IStyleProperty>() { CssProperties.GetProperty(tran.Property) };
+                else properties = CssProperties.GetKey(tran.Property).ModifiedProperties;
+
 
                 foreach (var sp in properties)
                 {

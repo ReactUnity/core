@@ -2,6 +2,7 @@ using System;
 using Facebook.Yoga;
 using ReactUnity.Helpers;
 using ReactUnity.Styling;
+using ReactUnity.Styling.Internal;
 using ReactUnity.Types;
 using ReactUnity.UGUI.Behaviours;
 using ReactUnity.UGUI.StateHandlers;

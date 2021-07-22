@@ -2,7 +2,7 @@ using System;
 
 namespace ReactUnity.Styling
 {
-    public interface IStyleProperty : IStyleModifier
+    public interface IStyleProperty : IStyleKey
     {
         string name { get; }
         Type type { get; }

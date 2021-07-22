@@ -130,7 +130,7 @@ namespace ReactUnity.StyleEngine
 
             foreach (var item in rule.Where(x => important == x.IsImportant))
             {
-                var md = CssProperties.GetModifier(item.Name);
+                var md = CssProperties.GetKey(item.Name);
                 md?.Modify(dic, item.Value);
             }
             return dic;
