@@ -84,7 +84,6 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
 
       cmp.ResolveStyle(true);
       if (prop.source === 'layout') {
-        cmp.ScheduleLayout();
         cmp.ApplyLayoutStyles();
       }
       setRender(x => x + 1);
@@ -106,7 +105,7 @@ function StylePropRow({ prop, element, className }: { prop: StyleProp, element: 
 
   const val = prop.source === 'layout' ? element.Layout[prop.name] : cmp.ComputedStyle[prop.name];
   const gval = (prop.getter ? prop.getter(val, element) : val) || null;
-  const exists = cmp.ComputedStyle.HasValue(prop.name);
+  const exists = cmp.Style.ContainsKey(prop.name);
   const removeStyle = () => {
     cmp.Style.Remove(prop.name);
     changed(0);

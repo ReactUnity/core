@@ -57,5 +57,6 @@ namespace ReactUnity.Styling
         public bool TryGetValue(string key, out object res) => TryGetValue(CssProperties.GetProperty(key), out res);
         public bool ContainsKey(string key) => ContainsKey(CssProperties.GetProperty(key));
         public object GetValueOrDefault(string key) => GetValueOrDefault(CssProperties.GetProperty(key));
+        public bool Remove(string key) => Remove(CssProperties.GetProperty(key));
     }
 }
