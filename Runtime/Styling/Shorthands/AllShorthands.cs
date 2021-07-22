@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -17,8 +18,10 @@ namespace ReactUnity.Styling.Shorthands
         public static readonly StyleShorthand borderRight = new BorderShorthand("border-right", BorderShorthand.BorderSide.Right);
         public static readonly StyleShorthand borderBottom = new BorderShorthand("border-bottom", BorderShorthand.BorderSide.Bottom);
         public static readonly StyleShorthand borderLeft = new BorderShorthand("border-left", BorderShorthand.BorderSide.Left);
+        public static readonly StyleShorthand flex = new FlexShorthand("flex");
+        public static readonly StyleShorthand flexFlow = new FlexFlowShorthand("flex-flow");
 
-        public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>();
+        public static readonly Dictionary<string, StyleShorthand> Map = new Dictionary<string, StyleShorthand>(StringComparer.InvariantCultureIgnoreCase);
         public static readonly StyleShorthand[] List;
 
         static AllShorthands()
