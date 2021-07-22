@@ -43,8 +43,22 @@ namespace ReactUnity.Styling
             Change(key, normalizedValue);
         }
 
-        public void Set(string key, object value) => this[key] = value;
-        public void SetWithoutNotify(string key, object value) => SetWithoutNotify(CssProperties.GetProperty(key), value);
+        public void Set(string key, object value)
+        {
+            var prop = CssProperties.GetModifier(key);
+            var mod = prop?.Modify(collection, value);
+
+            if (mod == null || mod.Count > 1) Change(null, value);
+            else Change(mod[0], value);
+
+        }
+
+        public void SetWithoutNotify(string key, object value)
+        {
+            var prop = CssProperties.GetModifier(key);
+            prop?.Modify(collection, value);
+        }
+
         public bool TryGetValue(string key, out object res) => TryGetValue(CssProperties.GetProperty(key), out res);
         public bool ContainsKey(string key) => ContainsKey(CssProperties.GetProperty(key));
         public object GetValueOrDefault(string key) => GetValueOrDefault(CssProperties.GetProperty(key));

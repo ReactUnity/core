@@ -131,29 +131,7 @@ namespace ReactUnity.StyleEngine
             foreach (var item in rule.Where(x => important == x.IsImportant))
             {
                 var md = CssProperties.GetModifier(item.Name);
-                if (md is IStyleProperty prop)
-                {
-                    if (prop != null)
-                    {
-                        var specialName = GetCssKeyword(item.Value);
-                        object value;
-                        if (specialName == CssKeyword.Initial)
-                            value = prop.defaultValue;
-                        if (specialName == CssKeyword.None)
-                            value = prop.noneValue;
-                        else if (specialName != CssKeyword.NoKeyword && specialName != CssKeyword.Invalid)
-                            value = specialName;
-                        else
-                            value = prop.Convert(item.Value);
-
-                        if (!Equals(value, CssKeyword.Invalid))
-                            dic[prop] = value;
-                    }
-                }
-                else
-                {
-                    md.Modify(dic, item.Value);
-                }
+                md?.Modify(dic, item.Value);
             }
             return dic;
         }

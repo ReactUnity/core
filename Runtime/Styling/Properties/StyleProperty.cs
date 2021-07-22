@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using ReactUnity.Converters;
+using ReactUnity.StyleEngine;
 
 namespace ReactUnity.Styling
 {
@@ -56,7 +57,18 @@ namespace ReactUnity.Styling
 
         public List<IStyleProperty> Modify(IDictionary<IStyleProperty, object> collection, object value)
         {
-            collection[this] = Convert(value);
+            if (value is string s)
+            {
+                var specialName = RuleHelpers.GetCssKeyword(s);
+                if (specialName == CssKeyword.Initial) value = defaultValue;
+                else if (specialName == CssKeyword.None) value = noneValue;
+                else if (specialName != CssKeyword.NoKeyword && specialName != CssKeyword.Invalid) value = specialName;
+            }
+
+            value = Convert(value);
+            if (Equals(value, CssKeyword.Invalid)) return null;
+
+            collection[this] = value;
             return ModifiedProperties;
         }
     }

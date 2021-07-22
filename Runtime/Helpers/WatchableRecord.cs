@@ -11,7 +11,7 @@ namespace ReactUnity.Helpers
     public class WatchableDictionary<TKey, T> : IDictionary<TKey, T>
     {
 
-        private Dictionary<TKey, T> collection;
+        protected Dictionary<TKey, T> collection;
 
         internal event Action<TKey, T, WatchableDictionary<TKey, T>> changed;
 

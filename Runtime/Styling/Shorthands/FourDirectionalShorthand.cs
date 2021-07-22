@@ -68,7 +68,7 @@ namespace ReactUnity.Styling.Shorthands
                         LayoutProperties.BorderBottomWidth,
                         LayoutProperties.BorderLeftWidth,
                     };
-                    Converter = AllConverters.FloatConverter;
+                    Converter = AllConverters.LengthConverter;
                     break;
                 case PropertyType.BorderColor:
                     ModifiedProperties = new List<IStyleProperty>
@@ -106,9 +106,9 @@ namespace ReactUnity.Styling.Shorthands
             if (splits.Count == 0) return null;
 
             var top = Converter.Convert(splits[0]);
-            var right = splits.Count > 1 ? Converter.Convert(splits[0]) : top;
-            var bottom = splits.Count > 2 ? Converter.Convert(splits[0]) : top;
-            var left = splits.Count > 3 ? Converter.Convert(splits[0]) : right;
+            var right = splits.Count > 1 ? Converter.Convert(splits[1]) : top;
+            var bottom = splits.Count > 2 ? Converter.Convert(splits[2]) : top;
+            var left = splits.Count > 3 ? Converter.Convert(splits[3]) : right;
 
             collection[ModifiedProperties[0]] = top;
             collection[ModifiedProperties[1]] = right;
