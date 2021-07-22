@@ -43,7 +43,7 @@ namespace ReactUnity.Styling
             Change(key, normalizedValue);
         }
 
-        public void Set(string key, object value) => Set(CssProperties.GetProperty(key), value);
+        public void Set(string key, object value) => this[key] = value;
         public void SetWithoutNotify(string key, object value) => SetWithoutNotify(CssProperties.GetProperty(key), value);
         public bool TryGetValue(string key, out object res) => TryGetValue(CssProperties.GetProperty(key), out res);
         public bool ContainsKey(string key) => ContainsKey(CssProperties.GetProperty(key));

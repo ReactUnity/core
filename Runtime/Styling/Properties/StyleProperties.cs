@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,68 +11,6 @@ using UnityEngine.UI;
 
 namespace ReactUnity.Styling
 {
-    public interface IStyleProperty
-    {
-        object Convert(object value);
-
-        string name { get; }
-        Type type { get; }
-        object defaultValue { get; }
-        bool transitionable { get; }
-        bool inherited { get; }
-        bool affectsLayout { get; }
-        object noneValue { get; }
-        object GetStyle(NodeStyle style);
-    }
-
-    public class StyleProperty<T> : IStyleProperty
-    {
-        public string name { get; private set; }
-        public Type type { get; private set; }
-        public object defaultValue { get; private set; }
-        public object noneValue { get; private set; }
-        public bool transitionable { get; private set; }
-        public bool inherited { get; private set; }
-        public IStyleConverter converter;
-
-        private Func<NodeStyle, T> getter;
-        public virtual bool affectsLayout => false;
-
-        public StyleProperty(string name, object defaultValue = null, bool transitionable = false, bool inherited = false, IStyleConverter converter = null, object noneValue = null)
-        {
-            this.type = typeof(T);
-            this.name = name;
-            this.defaultValue = defaultValue;
-            this.noneValue = noneValue;
-            this.transitionable = transitionable;
-            this.inherited = inherited;
-
-            if (converter == null) converter = AllConverters.Get(type);
-            if (!(converter is GeneralConverter)) converter = new GeneralConverter(converter);
-            this.converter = converter;
-
-            var propInfo = typeof(NodeStyle).GetProperty(name, BindingFlags.Public | BindingFlags.GetProperty | BindingFlags.SetProperty | BindingFlags.Instance);
-
-            if (propInfo != null)
-                getter = (Func<NodeStyle, T>) propInfo.GetGetMethod().CreateDelegate(typeof(Func<NodeStyle, T>));
-        }
-
-        public object Convert(object value)
-        {
-            return converter.Convert(value);
-        }
-
-        public static bool operator ==(StyleProperty<T> left, StyleProperty<T> right) => left.name == right.name;
-        public static bool operator !=(StyleProperty<T> left, StyleProperty<T> right) => left.name != right.name;
-        public override int GetHashCode() => name.GetHashCode();
-        public override bool Equals(object obj) => obj is IStyleProperty v && v.name == name;
-
-        public object GetStyle(NodeStyle style)
-        {
-            return getter != null ? getter(style) : default;
-        }
-    }
-
     public static class StyleProperties
     {
         public static readonly StyleProperty<float> opacity = new StyleProperty<float>("opacity", 1f, true, converter: AllConverters.PercentageConverter);
@@ -169,35 +106,6 @@ namespace ReactUnity.Styling
             }
 
             AllProperties = PropertyMap.Values.ToArray();
-        }
-
-        public static bool IsInherited(string name)
-        {
-            return InheritedProperties.Contains(name);
-        }
-    }
-
-    public static class CssProperties
-    {
-        public static readonly Dictionary<string, IStyleProperty> CssPropertyMap = new Dictionary<string, IStyleProperty>(StringComparer.InvariantCultureIgnoreCase);
-        public static readonly HashSet<IStyleProperty> TransitionableProperties = new HashSet<IStyleProperty>();
-
-        static CssProperties()
-        {
-            foreach (var kv in StyleProperties.CssPropertyMap) CssPropertyMap[kv.Key] = kv.Value;
-            foreach (var kv in LayoutProperties.CssPropertyMap) CssPropertyMap[kv.Key] = kv.Value;
-
-            foreach (var kv in CssPropertyMap)
-            {
-                if (kv.Value.transitionable) TransitionableProperties.Add(kv.Value);
-            }
-        }
-
-        public static IStyleProperty GetProperty(string name)
-        {
-            if (name.StartsWith("--")) return new VariableProperty(name);
-            CssPropertyMap.TryGetValue(name, out var style);
-            return style;
         }
     }
 }
