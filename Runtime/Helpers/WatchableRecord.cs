@@ -5,6 +5,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ReactUnity.Helpers
 {
@@ -160,81 +161,119 @@ namespace ReactUnity.Helpers
         }
     }
 
-    public class WatchableRecord<T> : WatchableDictionary<string, T> { }
-
-#if REACT_CLEARSCRIPT
-    public class HostPropertyBag : Microsoft.ClearScript.PropertyBag, Microsoft.ClearScript.IScriptableObject
+    public abstract class WatchableAdaptibleRecord<TKey, T> : WatchableDictionary<TKey, T>, IDictionary<string, object>
     {
-        private readonly ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine> engineSet = new ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine>();
-        private readonly object BaseObject;
+        public abstract object this[string key] { get; set; }
 
-        public HostPropertyBag(object baseObject)
+        ICollection<string> IDictionary<string, object>.Keys => base.Keys.Select(KeyToString).ToArray();
+
+        ICollection<object> IDictionary<string, object>.Values => base.Values.OfType<object>().ToArray();
+
+        public void Add(string key, object value)
         {
-            BaseObject = baseObject;
+            if (ContainsKey(key)) throw new ArgumentException("A key with this name already exists", nameof(key));
+            this[key] = value;
         }
+
+        public void Add(KeyValuePair<string, object> item)
+        {
+            if (ContainsKey(item.Key)) throw new ArgumentException("A key with this name already exists", nameof(item));
+            this[item.Key] = item.Value;
+        }
+
+        public bool Contains(KeyValuePair<string, object> item) => base.ContainsKey(StringToKey(item.Key));
+
+        public bool ContainsKey(string key) => base.ContainsKey(StringToKey(key));
+
+        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+        {
+            var ind = arrayIndex;
+
+            foreach (var item in this)
+            {
+                array[ind] = new KeyValuePair<string, object>(KeyToString(item.Key), item.Value);
+                ind++;
+            }
+        }
+
+        public bool Remove(string key) => base.Remove(StringToKey(key));
+
+        public bool Remove(KeyValuePair<string, object> item) => Remove(item.Key);
+
+        public bool TryGetValue(string key, out object value)
+        {
+            var val = StringToKey(key);
+            if (val == null)
+            {
+                value = default;
+                return false;
+            }
+            if (base.TryGetValue(val, out var outVal))
+            {
+                value = outVal;
+                return true;
+            }
+            value = default;
+            return false;
+        }
+
+        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
+        {
+            foreach (var item in collection)
+            {
+                yield return new KeyValuePair<string, object>(KeyToString(item.Key), item.Value);
+            }
+        }
+
+        protected virtual string KeyToString(TKey key) => key?.ToString();
+        protected virtual TKey StringToKey(string val) => default;
+    }
+
+    public abstract class WatchableAdaptibleRecordBag<TKey, T> : WatchableAdaptibleRecord<TKey, T>
+#if REACT_CLEARSCRIPT
+        , Microsoft.ClearScript.IPropertyBag
+        , Microsoft.ClearScript.IScriptableObject
+#endif
+    {
+#if REACT_CLEARSCRIPT
+        ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine> exposedEngines = new ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine>();
+        public object prototype;
 
         public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
         {
-            if ((engine != null) && engineSet.TryAdd(engine))
+            if (exposedEngines.TryAdd(engine))
             {
-                foreach (var val in Values)
-                {
-                    if (val is Microsoft.ClearScript.IScriptableObject so)
-                        so.OnExposedToScriptCode(engine);
-                }
-
-                engine.AddHostObject("___val___", this);
-                engine.AddHostObject("___host___", BaseObject);
-                engine.Execute(null, true, $"Object.setPrototypeOf(___val___, ___host___); delete ___val___; delete ___host___;");
+                engine.AddHostObject("___key___", this);
+                engine.AddRestrictedHostObject<WatchableAdaptibleRecord<TKey, T>>("___host___", this);
+                engine.Execute(null, true,
+                    $"Object.setPrototypeOf(___key___, ___host___); delete ___key___; delete ___host___;");
             }
         }
-    }
-#endif
-
-    public interface IPropertyBagProvider
-    {
-#if REACT_CLEARSCRIPT
-        HostPropertyBag GetPropertyBag();
 #endif
     }
 
-    public class WatchableObjectRecord : WatchableRecord<object>, IPropertyBagProvider
+
+    public class WatchableRecord<T> : WatchableDictionary<string, T> { }
+
+    public class WatchableObjectRecord : WatchableRecord<object>
+#if REACT_CLEARSCRIPT
+        , Microsoft.ClearScript.IPropertyBag
+        , Microsoft.ClearScript.IScriptableObject
+#endif
     {
 #if REACT_CLEARSCRIPT
-        protected HostPropertyBag propertyBag;
+        ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine> exposedEngines = new ConcurrentWeakSet<Microsoft.ClearScript.ScriptEngine>();
+        public object prototype;
 
-        public HostPropertyBag GetPropertyBag()
+        public void OnExposedToScriptCode(Microsoft.ClearScript.ScriptEngine engine)
         {
-            if (propertyBag != null) return propertyBag;
-
-            var pb = propertyBag = new HostPropertyBag(this);
-
-            Action regenerate = () => {
-                pb.ClearNoCheck();
-                foreach (var d in this)
-                {
-                    if (d.Value is IPropertyBagProvider pbb)
-                        pb.Add(d.Key, pbb.GetPropertyBag());
-                    else
-                        pb.Add(d.Key, d.Value);
-                }
-            };
-
-            regenerate();
-
-            changed += (string key, object value, WatchableDictionary<string, object> dc) => {
-                if (propertyBag != null)
-                {
-                    if (key != null)
-                    {
-                        if (value is IPropertyBagProvider pb) propertyBag[key] = pb.GetPropertyBag();
-                        else propertyBag[key] = value;
-                    }
-                    else regenerate();
-                }
-            };
-
-            return pb;
+            if (exposedEngines.TryAdd(engine))
+            {
+                engine.AddHostObject("___key___", this);
+                engine.AddRestrictedHostObject<WatchableRecord<object>>("___host___", this);
+                engine.Execute(null, true,
+                    $"Object.setPrototypeOf(___key___, ___host___); delete ___key___; delete ___host___;");
+            }
         }
 #endif
     }

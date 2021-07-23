@@ -13,9 +13,9 @@ namespace ReactUnity.Styling
         }
     }
 
-    public class InlineStyles : WatchableDictionary<IStyleProperty, object>
+    public class InlineStyles : WatchableAdaptibleRecordBag<IStyleProperty, object>
     {
-        public object this[string key]
+        public override object this[string key]
         {
             get
             {
@@ -54,9 +54,8 @@ namespace ReactUnity.Styling
             prop?.Modify(collection, value);
         }
 
-        public bool TryGetValue(string key, out object res) => TryGetValue(CssProperties.GetProperty(key), out res);
-        public bool ContainsKey(string key) => ContainsKey(CssProperties.GetProperty(key));
         public object GetValueOrDefault(string key) => GetValueOrDefault(CssProperties.GetProperty(key));
-        public bool Remove(string key) => Remove(CssProperties.GetProperty(key));
+        protected override string KeyToString(IStyleProperty key) => key.name;
+        protected override IStyleProperty StringToKey(string val) => CssProperties.GetProperty(val);
     }
 }
