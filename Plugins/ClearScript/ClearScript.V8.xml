@@ -347,6 +347,13 @@
             Exceeding this limit causes the V8 runtime to interrupt script execution and throw an
             exception. To re-enable script execution, set this property to a new value.
             </para>
+            <para>
+            Note that
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">ArrayBuffer</see>
+            memory is allocated outside the runtime's heap and is therefore not tracked by heap
+            size monitoring. See <see cref="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxArrayBufferAllocation"/> for
+            additional information.
+            </para>
             </remarks>
         </member>
         <member name="P:Microsoft.ClearScript.V8.V8Runtime.HeapSizeSampleInterval">
@@ -854,6 +861,19 @@
             <see cref="P:Microsoft.ClearScript.V8.V8ScriptEngine.MaxRuntimeHeapSize"/>) to help contain runaway scripts.
             </remarks>
         </member>
+        <member name="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxArrayBufferAllocation">
+            <summary>
+            Gets or sets the maximum amount of
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">ArrayBuffer</see>
+            memory the runtime may allocate.
+            </summary>
+            <remarks>
+            This property is specified in bytes. <c>ArrayBuffer</c> memory is allocated outside the
+            runtime's heap and released when its garbage collector reclaims the corresponding
+            JavaScript <c>ArrayBuffer</c> object. Leave this property at its default value to
+            enforce no limit.
+            </remarks>
+        </member>
         <member name="T:Microsoft.ClearScript.V8.V8RuntimeFlags">
             <summary>
             Defines options for initializing a new V8 runtime instance.
@@ -1091,6 +1111,13 @@
             <para>
             Exceeding this limit causes the V8 runtime to interrupt script execution and throw an
             exception. To re-enable script execution, set this property to a new value.
+            </para>
+            <para>
+            Note that
+            <see href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">ArrayBuffer</see>
+            memory is allocated outside the runtime's heap and is therefore not tracked by heap
+            size monitoring. See <see cref="P:Microsoft.ClearScript.V8.V8RuntimeConstraints.MaxArrayBufferAllocation"/> for
+            additional information.
             </para>
             </remarks>
         </member>

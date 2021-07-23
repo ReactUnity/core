@@ -2656,6 +2656,17 @@
             <seealso cref="F:Microsoft.ClearScript.ScriptMemberFlags.WrapNullResult"/>
             <seealso cref="M:Microsoft.ClearScript.HostFunctions.isNull(System.Object)"/>
         </member>
+        <member name="P:Microsoft.ClearScript.ScriptEngine.DisableFloatNarrowing">
+            <summary>
+            Enables or disables floating point narrowing.
+            </summary>
+            <remarks>
+            When this property is set to <c>true</c>, no attempt is made to convert floating-point
+            values imported from the script engine to the narrowest equivalent .NET representation.
+            The default behavior is more likely to result in successful method binding in specific
+            scenarios, so setting this property to <c>true</c> is not recommended.
+            </remarks>
+        </member>
         <member name="P:Microsoft.ClearScript.ScriptEngine.UseReflectionBindFallback">
             <summary>
             Enables or disables the use of reflection-based method binding as a fallback.
