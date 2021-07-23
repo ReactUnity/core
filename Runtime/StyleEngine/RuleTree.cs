@@ -73,22 +73,22 @@ namespace ReactUnity.StyleEngine
             return AfterNodes.Where(x => x.Matches(component, null));
         }
 
-        public IReactComponent GetMatchingChild(IReactComponent component, bool pseudoElement = false)
+        public IReactComponent GetMatchingChild(IReactComponent component)
         {
             var list = new List<IReactComponent>();
-            GetMatchingChildrenInner(component, pseudoElement, list, component, true, LeafNodes);
+            GetMatchingChildrenInner(component, list, component, true, LeafNodes);
             return list.Count > 0 ? list[0] : default;
         }
 
-        public List<IReactComponent> GetMatchingChildren(IReactComponent component, bool pseudoElement = false)
+        public List<IReactComponent> GetMatchingChildren(IReactComponent component)
         {
             var list = new List<IReactComponent>();
-            GetMatchingChildrenInner(component, pseudoElement, list, component, false, LeafNodes);
+            GetMatchingChildrenInner(component, list, component, false, LeafNodes);
             return list;
         }
 
         private bool GetMatchingChildrenInner(
-            IReactComponent component, bool pseudoElement, List<IReactComponent> list, IReactComponent scope, bool singleItem, List<RuleTreeNode<T>> leafList)
+            IReactComponent component, List<IReactComponent> list, IReactComponent scope, bool singleItem, List<RuleTreeNode<T>> leafList)
         {
             var matches = false;
             for (int i = 0; i < leafList.Count; i++)
@@ -108,7 +108,7 @@ namespace ReactUnity.StyleEngine
             {
                 foreach (var child in cmp.Children)
                 {
-                    var childMatches = GetMatchingChildrenInner(child, pseudoElement, list, scope, singleItem, leafList);
+                    var childMatches = GetMatchingChildrenInner(child, list, scope, singleItem, leafList);
                     if (childMatches && singleItem) return true;
                 }
             }

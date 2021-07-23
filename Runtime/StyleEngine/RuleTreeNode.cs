@@ -205,8 +205,6 @@ namespace ReactUnity.StyleEngine
                 case RuleSelectorPartType.All:
                     return true;
                 case RuleSelectorPartType.Tag:
-                    if (Name != null && Name.StartsWith("_"))
-                        return component.Name == Name;
                     return Name == component.Tag;
                 case RuleSelectorPartType.Id:
                     return Name == component.Id;
