@@ -18,8 +18,8 @@ namespace ReactUnity.Helpers
 
         public T this[TKey key]
         {
-            get => RetrieveValue(collection, key);
-            set => SaveValue(collection, key, value);
+            get => RetrieveValue(key);
+            set => SaveValue(key, value, true);
         }
 
         public WatchableDictionary()
@@ -32,15 +32,9 @@ namespace ReactUnity.Helpers
             collection = new Dictionary<TKey, T>(dict);
         }
 
-        public void Set(TKey key, T value)
-        {
-            this[key] = value;
-        }
+        public void Set(TKey key, T value) => SaveValue(key, value, true);
 
-        public void SetWithoutNotify(TKey key, T value)
-        {
-            collection[key] = value;
-        }
+        public void SetWithoutNotify(TKey key, T value) => SaveValue(key, value, false);
 
         public ICollection<TKey> Keys => collection.Keys;
 
@@ -148,22 +142,26 @@ namespace ReactUnity.Helpers
             changed?.Invoke(key, value, this);
         }
 
-        protected virtual T RetrieveValue(Dictionary<TKey, T> collection, TKey key)
+        protected virtual T RetrieveValue(TKey key)
         {
             if (collection.TryGetValue(key, out var val)) return val;
             return default;
         }
 
-        protected virtual void SaveValue(Dictionary<TKey, T> collection, TKey key, T value)
+        protected virtual void SaveValue(TKey key, T value, bool notify)
         {
             collection[key] = value;
-            Change(key, value);
+            if (notify) Change(key, value);
         }
     }
 
     public abstract class WatchableAdaptibleRecord<TKey, T> : WatchableDictionary<TKey, T>, IDictionary<string, object>
     {
-        public abstract object this[string key] { get; set; }
+        public object this[string key]
+        {
+            get => RetrieveValueAdaptible(key);
+            set => SaveValueAdaptible(key, value, true);
+        }
 
         ICollection<string> IDictionary<string, object>.Keys => base.Keys.Select(KeyToString).ToArray();
 
@@ -227,6 +225,12 @@ namespace ReactUnity.Helpers
 
         protected virtual string KeyToString(TKey key) => key?.ToString();
         protected virtual TKey StringToKey(string val) => default;
+        protected virtual object RetrieveValueAdaptible(string key) => RetrieveValue(StringToKey(key));
+        protected virtual void SaveValueAdaptible(string key, object value, bool notify) => SaveValue(StringToKey(key), (T) value, notify);
+
+        public void Set(string key, object value) => SaveValueAdaptible(key, value, true);
+        public void SetWithoutNotify(string key, object value) => SaveValueAdaptible(key, value, false);
+        public object GetValueOrDefault(string key) => GetValueOrDefault(StringToKey(key));
     }
 
     public abstract class WatchableAdaptibleRecordBag<TKey, T> : WatchableAdaptibleRecord<TKey, T>

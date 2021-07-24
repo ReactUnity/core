@@ -16,7 +16,7 @@ namespace ReactUnity.Tests
                     v.Style.color = 'red';
                 });
 
-                return <view id='test' ref={viewRef}>
+                return <view id='test' ref={viewRef} style={{ fontSize: 23 }}>
                     Hello world
                 </view>;
             }
@@ -30,6 +30,8 @@ namespace ReactUnity.Tests
             var tmp = Canvas.GetComponentInChildren<TMPro.TextMeshProUGUI>();
             Assert.AreEqual("Hello world", tmp.text);
             Assert.AreEqual(Color.red, tmp.color);
+
+            Assert.AreEqual(23, tmp.fontSize);
         }
     }
 }
